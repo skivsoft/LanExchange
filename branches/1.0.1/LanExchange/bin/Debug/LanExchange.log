@@ -1,0 +1,26 @@
+
+28.01.2012 4:32:48 3332:1|Program: C:\SVN\LanExchange\qqq\LanExchange\bin\Debug\LanExchange.exe, version 1.0.1.29
+28.01.2012 4:32:48 3332:1|MainForm init
+28.01.2012 4:32:49 3332:1|MainForm load
+28.01.2012 4:32:49 3332:1|Timer BrowseTimer tick
+28.01.2012 4:32:49 3332:5|Thread for browse network start
+28.01.2012 4:32:49 3332:5|WINAPI NetServerEnum
+28.01.2012 4:32:49 3332:1|Instance showed
+28.01.2012 4:32:49 3332:5|WINAPI NetServerEnum result: entriesread=1, totalentries=1
+28.01.2012 4:32:49 3332:5|Thread for browse network finish
+28.01.2012 4:32:49 3332:4|Thread for checking admin rights start
+28.01.2012 4:32:49 3332:6|Thread for udp receive start
+28.01.2012 4:32:49 3332:6|UDP LISTEN on port 3333
+28.01.2012 4:32:49 3332:1|UDP SEND data [LANEX:LOGIN] to [255.255.255.255:3333]
+28.01.2012 4:32:50 3332:4|Error: The server could not be contacted.
+28.01.2012 4:32:50 3332:4|Thread for checking admin rights finish
+28.01.2012 4:32:58 3332:1|lvComps_ItemActivate on ListViewItem: {W01}
+28.01.2012 4:32:59 3332:1|WINAPI NetShareEnum
+28.01.2012 4:32:59 3332:1|WINAPI NetServerEnum result: entriesread=4, totalentries=4
+28.01.2012 4:32:59 3332:1|Skiping IPC$ share
+28.01.2012 4:32:59 3332:1|lvComps_ItemActivate on ListViewItem: {..}
+28.01.2012 4:33:38 3332:4|Downloading text from url [http://skivsoft.net/lanexchange/update/filelist.php]
+28.01.2012 4:33:55 3332:1|MainForm is closing with reason ApplicationExitCall
+28.01.2012 4:33:55 3332:6|Thread for udp receive finish
+28.01.2012 4:33:55 3332:1|UDP SEND data [LANEX:LOGOUT] to [255.255.255.255:3333]
+28.01.2012 4:33:55 3332:1|Instance closed

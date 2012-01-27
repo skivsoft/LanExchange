@@ -1,0 +1,15 @@
+C:\SVN\LanExchange\qqq\LanExchange\bin\Debug\System.DirectoryServices.AccountManagement.dll
+C:\SVN\LanExchange\qqq\LanExchange\bin\Debug\System.DirectoryServices.AccountManagement.xml
+C:\SVN\LanExchange\qqq\LanExchange\bin\Debug\LanExchange.exe.config
+C:\SVN\LanExchange\qqq\LanExchange\bin\Debug\LanExchange.exe
+C:\SVN\LanExchange\qqq\LanExchange\bin\Debug\LanExchange.pdb
+C:\SVN\LanExchange\qqq\LanExchange\obj\Debug\ResolveAssemblyReference.cache
+C:\SVN\LanExchange\qqq\LanExchange\obj\Debug\LanExchange.AboutForm.resources
+C:\SVN\LanExchange\qqq\LanExchange\obj\Debug\LanExchange.InputBoxForm.resources
+C:\SVN\LanExchange\qqq\LanExchange\obj\Debug\LanExchange.LegendForm.resources
+C:\SVN\LanExchange\qqq\LanExchange\obj\Debug\LanExchange.MainForm.resources
+C:\SVN\LanExchange\qqq\LanExchange\obj\Debug\LanExchange.ParamsForm.resources
+C:\SVN\LanExchange\qqq\LanExchange\obj\Debug\LanExchange.Properties.Resources.resources
+C:\SVN\LanExchange\qqq\LanExchange\obj\Debug\LanExchange.csproj.GenerateResource.Cache
+C:\SVN\LanExchange\qqq\LanExchange\obj\Debug\LanExchange.exe
+C:\SVN\LanExchange\qqq\LanExchange\obj\Debug\LanExchange.pdb

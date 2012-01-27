@@ -1,0 +1,6 @@
+C:\SVN\LanExchange\qqq\Restart\bin\Debug\Restart.exe.config
+C:\SVN\LanExchange\qqq\Restart\bin\Debug\Restart.exe
+C:\SVN\LanExchange\qqq\Restart\bin\Debug\Restart.pdb
+C:\SVN\LanExchange\qqq\Restart\obj\Debug\ResolveAssemblyReference.cache
+C:\SVN\LanExchange\qqq\Restart\obj\Debug\Restart.exe
+C:\SVN\LanExchange\qqq\Restart\obj\Debug\Restart.pdb
