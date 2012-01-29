@@ -13,6 +13,10 @@ namespace Tests
         {
             TestTTabController TestTabs = new TestTTabController();
             //TestTabs.CreateFromEmpyTabControl();
+            {
+                TestTSettings obj = new TestTSettings();
+                obj.SetListValue();
+            }
 
         }
     }

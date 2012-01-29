@@ -146,7 +146,7 @@ namespace LanExchange
             }
             else
             {
-                StoreMainFormParams();
+                TabController.StoreSettings(); 
                 if (DoPing.IsBusy)
                     DoPing.CancelAsync();
                 // останавливаем прием UDP сообщений
@@ -225,41 +225,19 @@ namespace LanExchange
         }
         #endregion
 
-        #region Загрузка и сохранение параметров
-        private void LoadMainFormParams()
+        public void ShowProperties(object obj)
         {
-            /*
-            TTabModel InfoList = TSettings.TabInfoList;
-            int CurrentIndex = 0;
-            for (int index = 0; index < InfoList.InfoList.Count; index++)
-            {
-                TTabInfo Info = InfoList.InfoList[index];
-                if (InfoList.SelectedTabName.Equals(Info.TabName))
-                    CurrentIndex = index;
-                Pages.TabPages[0].Text = Info.TabName;
-                Pages.SelectedIndex = index;
-                ListView LV = GetActiveListView();
-                LV.View = Info.CurrentView;
-                TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
-                ItemList.ListView_SetSelected(LV, Info.SelectedItems);
-                UpdateFilter(Info.FilterText, CurrentIndex == index);
-                if (index > 0)
-                {
-
-                }
-            }
-            Pages.SelectedIndex = CurrentIndex;
-            */
+#if DEBUG
+            Form F = new Form();
+            F.Text = obj.ToString();
+            PropertyGrid Grid = new PropertyGrid();
+            Grid.Dock = DockStyle.Fill;
+            Grid.SelectedObject = obj;
+            F.Controls.Add(Grid);
+            F.Show();
+#endif
         }
-
-        private void StoreMainFormParams()
-        {
-            //TTabInfoList InfoList = new TTabInfoList();
-            //InfoList.AsControl = Pages;
-            //TSettings.TabInfoList = InfoList;
-        }
-        #endregion
-
+        
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
@@ -285,6 +263,14 @@ namespace LanExchange
                 UpdateFlashMovie();
                 e.Handled = true;
             }
+#if DEBUG
+            if (e.Control && e.Alt && e.KeyCode == Keys.C)
+            {
+                //ListView LV = GetActiveListView();
+                ShowProperties(Pages.SelectedTab);
+                e.Handled = true;
+            }
+#endif
         }
 
         #region Фоновые действия: сканирование компов и пинги
@@ -348,7 +334,7 @@ namespace LanExchange
                 {
                     bFirstStart = false;
                     // загрузка списка недавно использованных компов
-                    LoadMainFormParams();
+                    TabController.LoadSettings();
                     // запускаем поток на ожидание UDP сообщений
                     StartReceive();
                     // сообщаем другим клиентам о запуске

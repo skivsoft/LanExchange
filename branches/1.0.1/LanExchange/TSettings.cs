@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace LanExchange
 {
-    class TSettings
+    public class TSettings
     {
 
         public static bool IsAutorun
@@ -62,56 +62,8 @@ namespace LanExchange
             }
         }
 
-
-        #region TabInfoList
-
-        protected static void SetTabInfoList(string name, TTabModel value)
-        {
-            SetStrValue(String.Format(@"{0}\SelectedTabName", name), value.SelectedTabName);
-            SetIntValue(String.Format(@"{0}\Count", name), value.Count);
-            for (int i = 0; i < value.InfoList.Count; i++)
-            {
-                TTabInfo Info = value.InfoList[i];
-                string S = String.Format(@"{0}\{1}\", name, i);
-                SetStrValue(S + "TabName", Info.TabName);
-                SetStrValue(S + "FilterText", Info.FilterText);
-                SetIntValue(S + "CurrentView", (int)Info.CurrentView);
-                SetListValue(S + "SelectedItems", Info.SelectedItems);
-                // элементы нулевой закладки не сохраняем, т.к. они формируются после обзора сети
-                if (i > 0)
-                    SetListValue(S + "Items", Info.Items);
-            }
-        }
-
-        protected static TTabModel GetTabInfoList(string name)
-        {
-            TTabModel Result = new TTabModel();
-            Result.SelectedTabName = GetStrValue(String.Format(@"{0}\SelectedTabName", name), Environment.UserDomainName);
-            int CNT = GetIntValue(String.Format(@"{0}\Count", name), 0);
-            for (int i = 0; i < CNT; i++)
-            {
-                TTabInfo Info = new TTabInfo();
-                string S = String.Format(@"{0}\{1}\", name, i);
-                Info.TabName = GetStrValue(S + "TabName", "");
-                Info.FilterText = GetStrValue(S + "FilterText", "");
-                Info.CurrentView = (View)GetIntValue(S + "CurrentView", (int)View.Details);
-                Info.SelectedItems = GetListValue(S + "SelectedItems");
-                if (i > 0)
-                    Info.Items = GetListValue(S + "Items");
-                Result.InfoList.Add(Info);
-            }
-            return Result;
-        }
-
-        public static TTabModel TabInfoList
-        {
-            get { return GetTabInfoList("Pages"); }
-            set { SetTabInfoList("Pages", value); }
-        }
-        #endregion
-
         #region Сохранение в реестре и чтение из реестра
-        private static string GetStrValue(string name, string defaultValue)
+        public static string GetStrValue(string name, string defaultValue)
         {
             string RegPath = @"SOFTWARE\LanExchange\" + Path.GetDirectoryName(name);
             name = Path.GetFileName(name);
@@ -125,7 +77,7 @@ namespace LanExchange
             return Result;
         }
 
-        private static void SetStrValue(string name, string value)
+        public static void SetStrValue(string name, string value)
         {
             string RegPath = @"SOFTWARE\LanExchange\" + Path.GetDirectoryName(name);
             name = Path.GetFileName(name);
@@ -139,7 +91,7 @@ namespace LanExchange
             }
         }
 
-        private static int GetIntValue(string name, int defaultValue)
+        public static int GetIntValue(string name, int defaultValue)
         {
             string RegPath = @"SOFTWARE\LanExchange\" + Path.GetDirectoryName(name);
             name = Path.GetFileName(name);
@@ -155,7 +107,7 @@ namespace LanExchange
             return Result;
         }
 
-        private static void SetIntValue(string name, int value)
+        public static void SetIntValue(string name, int value)
         {
             string RegPath = @"SOFTWARE\LanExchange\" + Path.GetDirectoryName(name);
             name = Path.GetFileName(name);
@@ -179,24 +131,28 @@ namespace LanExchange
             SetIntValue(name, value ? 1 : 0);
         }
 
-        private static List<string> GetListValue(string name)
+        public static List<string> GetListValue(string name)
         {
             List<string> Result = new List<string>();
             string S = GetStrValue(name, "");
-            string[] A = S.Split(',');
-            foreach (string str in A)
-                Result.Add(str);
+            if (!String.IsNullOrEmpty(S))
+            {
+                string[] A = S.Split(',');
+                foreach (string str in A)
+                    Result.Add(str);
+            }
             return Result;
         }
 
-        private static void SetListValue(string name, List<string> value)
+        public static void SetListValue(string name, List<string> value)
         {
             string S = "";
-            foreach (string str in value)
-            {
-                if (S.Length != 0) S += ",";
-                S += str;
-            }
+            if (value != null)
+                foreach (string str in value)
+                {
+                    if (S.Length != 0) S += ",";
+                    S += str;
+                }
             SetStrValue(name, S);
         }
 
@@ -206,7 +162,7 @@ namespace LanExchange
         private static bool Autorun_Exists(string FileName)
         {
             string ExeName = System.IO.Path.GetFileName(FileName).ToUpper();
-            Microsoft.Win32.RegistryKey Key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run\", false);
+            Microsoft.Win32.RegistryKey Key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run\", false);
             bool Result = false;
             foreach (string str in Key.GetValueNames())
             {
@@ -231,7 +187,8 @@ namespace LanExchange
         private static void Autorun_Add(string FileName)
         {
             string ExeName = System.IO.Path.GetFileName(FileName).ToUpper();
-            Microsoft.Win32.RegistryKey Key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run\", true);
+            string FileNameQuoted = String.Format("\"{0}\"", FileName);
+            Microsoft.Win32.RegistryKey Key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run\", true);
             bool bFound = false;
             foreach (string str in Key.GetValueNames())
             {
@@ -247,7 +204,7 @@ namespace LanExchange
                         if (!bFound)
                         {
                             bFound = true;
-                            Key.SetValue(str, FileName);
+                            Key.SetValue(str, FileNameQuoted);
                         }
                         else
                             Key.DeleteValue(str, false);
@@ -255,14 +212,14 @@ namespace LanExchange
                 }
             }
             if (!bFound)
-                Key.SetValue("LanExchange", FileName);
+                Key.SetValue("LanExchange", FileNameQuoted);
             Key.Close();
         }
 
         private static void Autorun_Delete(string FileName)
         {
             string ExeName = System.IO.Path.GetFileName(FileName).ToUpper();
-            Microsoft.Win32.RegistryKey Key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+            Microsoft.Win32.RegistryKey Key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
             foreach (string str in Key.GetValueNames())
             {
                 RegistryValueKind Kind = Key.GetValueKind(str);

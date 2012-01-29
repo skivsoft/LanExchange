@@ -13,7 +13,9 @@ namespace LanExchange
         [STAThread]
         static void Main()
         {
-            TLogger.Print("Program: {0}, version {1}", Application.ExecutablePath, Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            TLogger.Print("OSVersion: [{0}], Processors count: {1}", Environment.OSVersion, Environment.ProcessorCount);
+            TLogger.Print(@"MachineName: {0}, UserName: {1}\{2}, Interactive: {3}", Environment.MachineName, Environment.UserDomainName, Environment.UserName, Environment.UserInteractive);
+            TLogger.Print("Executable: [{0}], Version: {1}", Application.ExecutablePath, Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
             bool createdNew;
             using (EventWaitHandle eventOneCopyOnly = new EventWaitHandle(false, EventResetMode.AutoReset, EventOneCopyOnlyName, out createdNew))

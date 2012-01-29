@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Drawing;
 
 
 //
@@ -65,26 +66,31 @@ namespace LanExchange
         public List<string> Items = null;
         public List<string> SelectedItems = null;
 
-        public TTabInfo()
+        public TTabInfo(string name)
         {
+            this.TabName = name;
         }
     }
     
     public class TTabModel
     {
-        public List<TTabInfo> InfoList = new List<TTabInfo>();
-        public string SelectedTabName = "";
+        private List<TTabInfo> InfoList = new List<TTabInfo>();
 
-        public event TabInfoEventHandler AfterNewTab;
+        public event TabInfoEventHandler AfterAppendTab;
         public event IndexEventHandler AfterRemove;
         public event TabInfoEventHandler AfterRename;
 
         public int Count { get { return this.InfoList.Count; }  }
 
-        public void DoAfterNewTab(TTabInfo Info)
+        public TTabInfo GetItem(int Index)
         {
-            if (AfterNewTab != null)
-               AfterNewTab(this, new TabInfoEventArgs(Info));
+            return this.InfoList[Index];
+        }
+
+        public void DoAfterAppendTab(TTabInfo Info)
+        {
+            if (AfterAppendTab != null)
+               AfterAppendTab(this, new TabInfoEventArgs(Info));
         }
 
         public void DoAfterRemove(int Index)
@@ -99,12 +105,10 @@ namespace LanExchange
                 AfterRename(this, new TabInfoEventArgs(Info));
         }
 
-        public void CreateNewTab(string NewTabName)
+        public void AddTab(TTabInfo Info)
         {
-            TTabInfo Tab = new TTabInfo();
-            Tab.TabName = NewTabName;
-            InfoList.Add(Tab);
-            DoAfterNewTab(Tab);
+            InfoList.Add(Info);
+            DoAfterAppendTab(Info);
         }
 
         public void InternalAdd(TTabInfo Info)
@@ -132,6 +136,11 @@ namespace LanExchange
             else
                 return InfoList[i].TabName;
         }
+
+        internal void Clear()
+        {
+            InfoList.Clear();
+        }
     }
     #endregion
 
@@ -150,6 +159,8 @@ namespace LanExchange
             this.pages = Pages;
         }
 
+        public string Name { get { return this.pages.Name; }}
+
         public int SelectedIndex 
         { 
             get { return pages.SelectedIndex; }
@@ -167,14 +178,23 @@ namespace LanExchange
             }
         }
 
-        public void AfterNewTab(object sender, TabInfoEventArgs e)
+        public void AfterAppendTab(object sender, TabInfoEventArgs e)
         {
             // создаем новую вкладку
             TabPage NewTab = new TabPage(e.Info.TabName);
+            NewTab.Padding = this.pages.TabPages[0].Padding;
             TLogger.Print("Create control {0}", NewTab.ToString());
+            // создаем ListView
             ListView LV = new ListView();
             TLogger.Print("Create control {0}", LV.ToString());
-            TPanelItemList.ListView_CreateObject(LV);
+            // настраиваем свойства и события ListView
+            ListView_Setup(LV);
+            LV.View = e.Info.CurrentView;
+            // создаем внутренний объект-список для хранения элементов
+            TPanelItemList ItemList = TPanelItemList.ListView_CreateObject(LV);
+            ItemList.ListView_SetSelected(LV, e.Info.SelectedItems);
+            MainForm.MainFormInstance.UpdateFilter(e.Info.FilterText, false);
+
             NewTab.Controls.Add(LV);
             pages.TabPages.Add(NewTab);
             pages.SelectedIndex = pages.TabCount - 1;
@@ -198,10 +218,12 @@ namespace LanExchange
 
         public void ListView_Setup(ListView LV)
         {
+            TLogger.Print("Setup control {0}", LV.ToString());
             LV.Columns.Clear();
             LV.Columns.Add("Сетевое имя", 130);
             LV.Columns.Add("Описание", 250);
             LV.ContextMenuStrip = MainForm.MainFormInstance.popComps;
+            LV.Location = new Point(3, 3);
             LV.Dock = System.Windows.Forms.DockStyle.Fill;
             LV.FullRowSelect = true;
             LV.GridLines = true;
@@ -218,6 +240,11 @@ namespace LanExchange
             LV.KeyPress += new System.Windows.Forms.KeyPressEventHandler(MainForm.MainFormInstance.lvComps_KeyPress);
             LV.KeyDown += new System.Windows.Forms.KeyEventHandler(MainForm.MainFormInstance.lvComps_KeyDown);
             ListView_SetupTip(LV);
+            ListView_Update(LV);
+        }
+
+        public void ListView_Update(ListView LV)
+        {
             TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
             if (ItemList != null)
             {
@@ -235,17 +262,30 @@ namespace LanExchange
             TPanelItemList ItemListReceiver = TPanelItemList.ListView_GetObject(lvReceiver);
 
             int NumAdded = 0;
+            //int[] Indices = new int[lvSender.SelectedIndices.Count];
             foreach (int Index in lvSender.SelectedIndices)
             {
                 TPanelItem PItem = ItemListSender.Get(lvSender.Items[Index].Text);
                 if (PItem != null)
                 {
                     ItemListReceiver.Add(PItem);
+                    //Indices[Index] = ItemListReceiver.Keys.IndexOf(PItem.Name);
                     NumAdded++;
                 }
             }
             ItemListReceiver.ApplyFilter();
-            ListView_Setup(lvReceiver);
+            ListView_Update(lvReceiver);
+            lvReceiver.Focus();
+            // выделяем добавленные итемы
+            if (lvReceiver.Items.Count > 0)
+            {
+                lvReceiver.SelectedIndices.Add(0);
+                /*
+                foreach(int Index in Indices)
+                    if (Index != -1)
+                        lvReceiver.SelectedIndices.Add(Index);
+                 */
+            }
         }
 
         public static string InputBoxAsk(string caption, string prompt, string defText)
@@ -282,27 +322,21 @@ namespace LanExchange
             Model = new TTabModel();
             View = new TTabView(Pages);
             UpdateModelFromView();
-            Model.AfterNewTab += new TabInfoEventHandler(View.AfterNewTab);
+            Model.AfterAppendTab += new TabInfoEventHandler(View.AfterAppendTab);
             Model.AfterRemove += new IndexEventHandler(View.AfterRemove);
             Model.AfterRename += new TabInfoEventHandler(View.AfterRename);
         }
 
-#if DEBUG
         public TTabModel GetModel()
         {
             return this.Model;
         }
-#endif
 
         public void NewTab()
         {
             string NewTabName = TTabView.InputBoxAsk("Новая вкладка", "Введите имя", "");
             if (!String.IsNullOrEmpty(NewTabName))
-            {
-                Model.CreateNewTab(NewTabName);
-                ListView LV = View.GetActiveListView();
-                View.ListView_Setup(LV);
-            }
+                Model.AddTab(new TTabInfo(NewTabName));
         }
 
         public void CloseTab()
@@ -387,12 +421,9 @@ namespace LanExchange
             if (NewTabName == null)
                 return;
             ListView lvSender = View.GetActiveListView();
-            Model.CreateNewTab(NewTabName);
+            Model.AddTab(new TTabInfo(NewTabName));
             ListView lvReceiver = View.GetActiveListView();
             View.SendPanelItems(lvSender, lvReceiver);
-            lvReceiver.Focus();
-            if (lvReceiver.Items.Count > 0)
-                lvReceiver.SelectedIndices.Add(0);
         }
 
         public void mSendToSelectedTab_Click(object sender, EventArgs e)
@@ -419,22 +450,61 @@ namespace LanExchange
         /// </summary>
         public void UpdateModelFromView()
         {
-            Model.SelectedTabName = View.SelectedTabText;
+            Model.Clear();
             foreach (TabPage Tab in View.TabPages)
             {
-                TTabInfo Info = new TTabInfo();
                 if (Tab.Controls.Count == 0) continue;
+                TTabInfo Info = new TTabInfo(Tab.Text);
                 ListView LV = (ListView)Tab.Controls[0];
                 TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
                 Info.Items = ItemList.ListView_GetSelected(LV, true);
                 Info.SelectedItems = ItemList.ListView_GetSelected(LV, false);
-                Info.TabName = Tab.Text;
                 Info.FilterText = ItemList.FilterText;
                 Info.CurrentView = LV.View;
                 Model.InternalAdd(Info);
             }
         }
 
+        public void StoreSettings()
+        {
+            UpdateModelFromView();
+            string name = View.Name;
+            TSettings.SetIntValue(String.Format(@"{0}\SelectedIndex", name), View.SelectedIndex);
+            TSettings.SetIntValue(String.Format(@"{0}\Count", name), Model.Count);
+            for (int i = 0; i < Model.Count; i++)
+            {
+                TTabInfo Info = Model.GetItem(i);
+                string S = String.Format(@"{0}\{1}\", name, i);
+                TSettings.SetStrValue(S + "TabName", Info.TabName);
+                TSettings.SetStrValue(S + "FilterText", Info.FilterText);
+                TSettings.SetIntValue(S + "CurrentView", (int)Info.CurrentView);
+                TSettings.SetListValue(S + "SelectedItems", Info.SelectedItems);
+                // элементы нулевой закладки не сохраняем, т.к. они формируются после обзора сети
+                TSettings.SetListValue(S + "Items", i > 0 ? Info.Items : null);
+            }
+        }
+
+        public void LoadSettings()
+        {
+            string name = View.Name;
+            Model.Clear();
+            int CNT = TSettings.GetIntValue(String.Format(@"{0}\Count", name), 0);
+            for (int i = 0; i < CNT; i++)
+            {
+                string S = String.Format(@"{0}\{1}\", name, i);
+                string tabname = TSettings.GetStrValue(S + "TabName", "");
+                TTabInfo Info = new TTabInfo(tabname);
+                Info.FilterText = TSettings.GetStrValue(S + "FilterText", "");
+                Info.CurrentView = (View)TSettings.GetIntValue(S + "CurrentView", (int)System.Windows.Forms.View.Details);
+                Info.SelectedItems = TSettings.GetListValue(S + "SelectedItems");
+                Info.Items = TSettings.GetListValue(S + "Items");
+                if (i > 0)
+                    Model.AddTab(Info);
+                else
+                    Model.InternalAdd(Info);
+            }
+            View.SelectedIndex = TSettings.GetIntValue(String.Format(@"{0}\SelectedIndex", name), 0);
+        }
     }
     #endregion
 

@@ -24,7 +24,7 @@ namespace Tests
         public void ModelNewTab()
         {
             TTabModel Model = new TTabModel();
-            Model.CreateNewTab("MyTab");
+            Model.AddTab(new TTabInfo("MyTab"));
             Assert.AreEqual("MyTab", Model.GetTabName(0));
             Assert.AreEqual(null, Model.GetTabName(-1));
             Assert.AreEqual(null, Model.GetTabName(1));
@@ -35,7 +35,7 @@ namespace Tests
         public void ModelRenameTab()
         {
             TTabModel Model = new TTabModel();
-            Model.CreateNewTab("MyTab");
+            Model.AddTab(new TTabInfo("MyTab"));
             Model.RenameTab(0, "YourTab");
             Assert.AreEqual("YourTab", Model.GetTabName(0));
         }
@@ -45,7 +45,7 @@ namespace Tests
         public void ModelDelTab()
         {
             TTabModel Model = new TTabModel();
-            Model.CreateNewTab("MyTab");
+            Model.AddTab(new TTabInfo("MyTab"));
             Model.DelTab(0);
             Assert.AreEqual(0, Model.Count, "Count != 0");
         }

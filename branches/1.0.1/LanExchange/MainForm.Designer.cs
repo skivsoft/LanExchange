@@ -716,7 +716,7 @@
             this.toolStripSeparator11,
             this.mListTab});
             this.popPages.Name = "popPages";
-            this.popPages.Size = new System.Drawing.Size(235, 176);
+            this.popPages.Size = new System.Drawing.Size(235, 154);
             this.popPages.Opened += new System.EventHandler(this.popPages_Opened);
             // 
             // mNewTab
