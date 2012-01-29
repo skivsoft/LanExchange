@@ -691,7 +691,6 @@
             // 
             // Pages
             // 
-            this.Pages.AllowDrop = true;
             this.Pages.ContextMenuStrip = this.popPages;
             this.Pages.Controls.Add(this.tabPage1);
             this.Pages.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -701,7 +700,6 @@
             this.Pages.Size = new System.Drawing.Size(564, 398);
             this.Pages.TabIndex = 19;
             this.Pages.Selected += new System.Windows.Forms.TabControlEventHandler(this.Pages_Selected);
-            this.Pages.DragEnter += new System.Windows.Forms.DragEventHandler(this.Pages_DragEnter);
             // 
             // popPages
             // 

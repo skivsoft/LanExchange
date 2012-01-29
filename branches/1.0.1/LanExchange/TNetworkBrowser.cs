@@ -95,7 +95,7 @@ namespace LanExchange
                     // останавливаем поток пингов
                     MainForm.MainFormInstance.CancelCompRelatedThreads();
                     // сбрасываем фильтр
-                    MainForm.MainFormInstance.UpdateFilter("", false);
+                    MainForm.MainFormInstance.UpdateFilter(MainForm.MainFormInstance.GetActiveListView(), "", false);
                     // текущий список добавляем в стек
                     //if (InternalItems == null)
                     //    InternalItems = InternalItemList.ToList();

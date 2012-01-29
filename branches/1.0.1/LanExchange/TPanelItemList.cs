@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define USE_NORTHWIND_DATA
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using OSTools;
@@ -103,6 +105,69 @@ namespace LanExchange
             }
         }
 
+#if USE_NORTHWIND_DATA
+        struct TItem
+        {
+            public string name;
+            public string comment;
+
+            public TItem(string s1, string s2)
+            {
+                name = s1;
+                comment = s2;
+            }
+        };
+
+        public static void AddNorthWindData(List<TPanelItem> Result)
+        {
+            TItem[] Data = new TItem[38] {
+                new TItem("GLADKIH-A", "Гладких Андрей"),
+                new TItem("ILINA-YU", "Ильина Юлия"),
+                new TItem("KLIMOV-S", "Климов Сергей"),
+                new TItem("KOREPIN-V", "Корепин Вадим"),
+                new TItem("KULIKOV-E", "Куликов Евгений"),
+                new TItem("NOVIKOV-N", "Новиков Николай"),
+                new TItem("OZHOGINA-I", "Ожогина Инна"),
+                new TItem("POPKOVA-D", "Попкова Дарья"),
+                new TItem("SERGIENKO-M", "Сергиенко Мария"),
+                new TItem("KOSTERINA-O", "Костерина Ольга"),
+                new TItem("VERNYJ-G", "Верный Григорий"),
+                new TItem("EGOROV-V", "Егоров Владимир"),
+                new TItem("OMELCHENKO-S", "Омельченко Светлана"),
+                new TItem("PESOTSKIJ-S", "Песоцкий Станислав"),
+                new TItem("SHASHKOV-R", "Шашков Руслан"),
+                new TItem("VRONSKIJ-YU", "Вронский Юрий"),
+                new TItem("PODKOLZINA-E", "Подколзина Екатерина"),
+                new TItem("ERJOMENKO-A", "Ерёменко Алексей"),
+                new TItem("GRACHEV-N", "Грачев Николай"),
+                new TItem("OREHOV-A", "Орехов Алексей"),
+                new TItem("VOLODIN-V", "Володин Виктор"),
+                new TItem("TUMANOV-A", "Туманов Александр"),
+                new TItem("GORNOZHENKO-D", "Горноженко Дмитрий"),
+                new TItem("SALIMZYANOVA-D", "Салимзянова Дина"),
+                new TItem("USHAKOV-V", "Ушаков Валерий"),
+                new TItem("VAZHIN-F", "Важин Филип"),
+                new TItem("MISHKOVA-E", "Мишкова Екатерина"),
+                new TItem("EFIMOV-A", "Ефимов Александр"),
+                new TItem("FOMIN-G", "Фомин Георгий"),
+                new TItem("TOLMACHEV-V", "Толмачев Виктор"),
+                new TItem("IGNATOV-S", "Игнатов Степан"),
+                new TItem("ENTIN-M", "Энтин Михаил"),
+                new TItem("SHUTOV-I", "Шутов Игнат"),
+                new TItem("BORISOV-S", "Борисов Сергей"),
+                new TItem("IVANOV-A", "Иванов Андрей"),
+                new TItem("TIMOFEEVA-K", "Тимофеева Кристина"),
+                new TItem("BEREZIN-A", "Березин Артур"),
+                new TItem("YARTSEV-S", "Ярцев Семен")
+            };
+            foreach (TItem Item in Data)
+            {
+                TComputerItem Comp = new TComputerItem(Item.name, Item.comment, 500, 5, 1, 0);
+                Result.Add(Comp);
+            }
+        }
+#endif
+
         // получим список всех компьюетеров
         public static List<TPanelItem> GetServerList()
         {
@@ -135,6 +200,9 @@ namespace LanExchange
             { // освобождаем выделенную память
                 if (pInfo != IntPtr.Zero) LocalNetwork.NetApiBufferFree(pInfo);
             }
+            #if USE_NORTHWIND_DATA
+            AddNorthWindData(Result);
+            #endif
             return Result;
         }
 

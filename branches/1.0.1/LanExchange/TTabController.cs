@@ -180,24 +180,51 @@ namespace LanExchange
 
         public void AfterAppendTab(object sender, TabInfoEventArgs e)
         {
-            // создаем новую вкладку
-            TabPage NewTab = new TabPage(e.Info.TabName);
-            NewTab.Padding = this.pages.TabPages[0].Padding;
-            TLogger.Print("Create control {0}", NewTab.ToString());
-            // создаем ListView
-            ListView LV = new ListView();
-            TLogger.Print("Create control {0}", LV.ToString());
-            // настраиваем свойства и события ListView
-            ListView_Setup(LV);
-            LV.View = e.Info.CurrentView;
-            // создаем внутренний объект-список для хранения элементов
-            TPanelItemList ItemList = TPanelItemList.ListView_CreateObject(LV);
-            ItemList.ListView_SetSelected(LV, e.Info.SelectedItems);
-            MainForm.MainFormInstance.UpdateFilter(e.Info.FilterText, false);
-
-            NewTab.Controls.Add(LV);
-            pages.TabPages.Add(NewTab);
-            pages.SelectedIndex = pages.TabCount - 1;
+            TabPage NewTab = null;
+            ListView LV = null;
+            TPanelItemList ItemList = null;
+            TTabModel Model = (TTabModel)sender;
+            // создаем новую вкладку или получаем существующую
+            if (Model.Count <= this.pages.TabCount)
+            {
+                NewTab = this.pages.TabPages[Model.Count - 1];
+                TLogger.Print("Get existing control {0}", NewTab.ToString());
+            }
+            else
+            {
+                NewTab = new TabPage(e.Info.TabName);
+                NewTab.Padding = this.pages.TabPages[0].Padding;
+                TLogger.Print("Create control {0}", NewTab.ToString());
+                pages.TabPages.Add(NewTab);
+            }
+            // создаем ListView или получаем существующий
+            if (NewTab.Controls.Count > 0)
+            {
+                LV = (ListView)NewTab.Controls[0];
+                TLogger.Print("Get existing control {0}", LV.ToString());
+            }
+            else
+            {
+                LV = new ListView();
+                TLogger.Print("Create control {0}", LV.ToString());
+                // настраиваем свойства и события для нового ListView
+                ListView_Setup(LV);
+                LV.View = e.Info.CurrentView;
+                NewTab.Controls.Add(LV);
+            }
+            // создаем внутренний список для хранения элементов или получаем существующий
+            ItemList = TPanelItemList.ListView_GetObject(LV);
+            if (ItemList != null)
+            {
+                TLogger.Print("Get existing object {0}", ItemList.ToString());
+                ItemList.ListView_SetSelected(LV, e.Info.SelectedItems);
+            }
+            else
+            {
+                ItemList = TPanelItemList.ListView_CreateObject(LV);
+                TLogger.Print("Create object {0}", ItemList.ToString());
+            }
+            MainForm.MainFormInstance.UpdateFilter(LV, e.Info.FilterText, false);
         }
 
         public void AfterRemove(object sender, IndexEventArgs e)
@@ -290,7 +317,7 @@ namespace LanExchange
 
         public static string InputBoxAsk(string caption, string prompt, string defText)
         {
-            return MainForm.MainFormInstance.inputBox.Ask(caption, prompt, defText);
+            return MainForm.MainFormInstance.inputBox.Ask(caption, prompt, defText, false);
         }
 
         internal ListView GetActiveListView()
@@ -367,23 +394,27 @@ namespace LanExchange
             if (Res == DialogResult.OK)
             {
                 ListView LV = View.GetActiveListView();
-                if (LV != null)
+                if (LV == null) return;
+                TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
+                if (ItemList == null) return;
+                // формируем строку для записи в файл
+                StringBuilder S = new StringBuilder();
+                for (int i = 0; i < ItemList.Count; i++)
                 {
-                    // формируем строку для записи в файл
-                    StringBuilder S = new StringBuilder();
-                    for (int i = 0; i < LV.Items.Count; i++)
-                    {
-                        if (S.Length > 0)
-                            S.AppendLine();
-                        S.Append(LV.Items[i].Text);
-                    }
-                    // записываем в файл
-                    using (Stream stream = dlgSave.OpenFile())
-                    {
-                        byte[] data = Encoding.UTF8.GetBytes(S.ToString());
-                        stream.Write(data, 0, data.Length);
-                        stream.Close();
-                    }
+                    TPanelItem PItem = ItemList.Get(ItemList.Keys[i]);
+                    if (PItem == null) continue;
+                    if (S.Length > 0)
+                        S.AppendLine();
+                    S.Append(PItem.Name);
+                    S.Append("\t");
+                    S.Append(PItem.Comment);
+                }
+                // записываем в файл
+                using (Stream stream = dlgSave.OpenFile())
+                {
+                    byte[] data = Encoding.UTF8.GetBytes(S.ToString());
+                    stream.Write(data, 0, data.Length);
+                    stream.Close();
                 }
             }
         }
@@ -498,10 +529,7 @@ namespace LanExchange
                 Info.CurrentView = (View)TSettings.GetIntValue(S + "CurrentView", (int)System.Windows.Forms.View.Details);
                 Info.SelectedItems = TSettings.GetListValue(S + "SelectedItems");
                 Info.Items = TSettings.GetListValue(S + "Items");
-                if (i > 0)
-                    Model.AddTab(Info);
-                else
-                    Model.InternalAdd(Info);
+                Model.AddTab(Info);
             }
             View.SelectedIndex = TSettings.GetIntValue(String.Format(@"{0}\SelectedIndex", name), 0);
         }

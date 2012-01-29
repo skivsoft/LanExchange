@@ -608,9 +608,8 @@ namespace LanExchange
             }
         }
 
-        public void UpdateFilter(string NewFilter, bool bVisualUpdate)
+        public void UpdateFilter(ListView LV, string NewFilter, bool bVisualUpdate)
         {
-            ListView LV = GetActiveListView();
             TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
             List<string> SaveSelected = null;
             //string SaveCurrent = null;
@@ -629,6 +628,7 @@ namespace LanExchange
             }
             // меняем фильтр
             ItemList.FilterText = NewFilter;
+            ItemList.ApplyFilter();
             if (bVisualUpdate)
             {
                 TotalItems = CompBrowser.InternalItemList.Count;
@@ -644,11 +644,13 @@ namespace LanExchange
                 this.ActiveControl = lvComps;
                 lvComps.Focus();
             }
+            else
+                SearchPanelVisible(true);
         }
 
         private void eFilter_TextChanged(object sender, EventArgs e)
         {
-            UpdateFilter((sender as TextBox).Text, true);
+            UpdateFilter(GetActiveListView(), (sender as TextBox).Text, true);
         }
 
         private void eFilter_KeyDown(object sender, KeyEventArgs e)
@@ -794,7 +796,7 @@ namespace LanExchange
                 // запрос нового описания у пользователя
                 inputBox.Caption = "Редактирование описания компьютера";
                 inputBox.Prompt = @"Описание компьютера \\" + Comp.Name;
-                NewValue = inputBox.Ask(OldValue);
+                NewValue = inputBox.Ask(OldValue, true);
                 // если нажали OK и описание отличается от старого надо менять
                 if (NewValue != null && NewValue != OldValue)
                 {
@@ -854,7 +856,7 @@ namespace LanExchange
         {
             Pages.SelectedIndex = pageNetwork;
             lvComps.SelectedIndices.Clear();
-            UpdateFilter("", false);
+            UpdateFilter(GetActiveListView(), "", false);
             // выходим на верхний уровень
             while (CompBrowser.InternalStack.Count > 0)
                 CompBrowser.LevelUp();
@@ -891,7 +893,7 @@ namespace LanExchange
             IPHostEntry DestHost = Dns.GetHostEntry((Comp as TComputerItem).EndPoint.Address);
             inputBox.Caption = String.Format("Отправка сообщения на компьютер {0}", DestHost.HostName);
             inputBox.Prompt = "Текст сообщения";
-            NewValue = inputBox.Ask(NewValue);
+            NewValue = inputBox.Ask(NewValue, false);
             if (NewValue != null && (Comp is TComputerItem))
             {
                 // получаем md5 хэш ID-строки получателя
@@ -903,7 +905,7 @@ namespace LanExchange
             }
         }
 
-        private ListView GetActiveListView()
+        public ListView GetActiveListView()
         {
             return (ListView)Pages.SelectedTab.Controls[0];
         }
@@ -1021,7 +1023,10 @@ namespace LanExchange
             string[] args = Environment.GetCommandLineArgs();
             for (int i = 1; i < args.Length; i++ )
                 if (args[i].ToUpper().Equals("/USER"))
+                {
+                    TLogger.Print("Parameter /USER found in cmd line AdminMode is OFF");
                     return;
+                }
             TLogger.Print("Thread for checking admin rights start");
             try
             {
@@ -1042,6 +1047,8 @@ namespace LanExchange
                             // проверяем текущего пользователя
                             if (group.Sid.Equals(CurrentUser.Sid))
                             {
+                                TLogger.Print("Current user [{0}] found in local group [{1}]", 
+                                    CurrentUser.SamAccountName, groupAdmins.SamAccountName);
                                 e.Result = true;
                                 break;
                             }
@@ -1055,6 +1062,8 @@ namespace LanExchange
                                     // проверяем текущего пользователя на принадлежность группе, которая входит в "Администраторы"
                                     if (gr != null && CurrentUser.IsMemberOf(gr))
                                     {
+                                        TLogger.Print("Current user [{0}] found in domain group [{1}]",
+                                            CurrentUser.SamAccountName, gr.SamAccountName);
                                         e.Result = true;
                                         break;
                                     }
@@ -1466,7 +1475,7 @@ namespace LanExchange
             {
                 if (admin_mode != value)
                 {
-                    TLogger.Print("AdminMode = {0}", value.ToString());
+                    TLogger.Print("AdminMode is {0}", value ? "ON" : "OFF");
                     admin_mode = value;
                     popComps_Opened(popComps, new EventArgs());
                 }
@@ -1478,11 +1487,5 @@ namespace LanExchange
             CancelCompRelatedThreads();
             Application.Exit();
         }
-
-        private void Pages_DragEnter(object sender, DragEventArgs e)
-        {
-            e.Effect = DragDropEffects.Copy;
-        }
-
     }
 }

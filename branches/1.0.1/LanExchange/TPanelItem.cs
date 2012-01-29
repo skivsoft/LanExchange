@@ -118,6 +118,11 @@ namespace LanExchange
             this.pingable = true;
         }
 
+        public static bool IsValidName(string name)
+        {
+            return true;
+        }
+
         public void SetPlatform(uint platform_id, uint ver_major, uint ver_minor, uint type_id)
         {
             this.platform_id = platform_id;

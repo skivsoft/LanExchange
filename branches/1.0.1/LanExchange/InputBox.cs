@@ -59,7 +59,7 @@ namespace LanExchange
         /// </summary>
         /// <param name="defText">Default text for InputBox</param>
         /// <returns>null if Cancel has been pressed or string</returns>
-        public virtual string Ask(string defText)
+        public virtual string Ask(string defText, bool allow_empty)
         {
             if (inputBox == null)
                 inputBox = new InputBoxForm();
@@ -69,7 +69,7 @@ namespace LanExchange
             else
                 inputBox.Text = Application.ProductName;
 
-            inputBox.Prepare(_prompt, _errorMsgOnEmpty, defText);
+            inputBox.Prepare(_prompt, _errorMsgOnEmpty, defText, allow_empty);
 
             DialogResult res = inputBox.ShowDialog();
             if (res != DialogResult.OK)
@@ -78,23 +78,11 @@ namespace LanExchange
                 return inputBox.txtInputText.Text.Trim();
         }
 
-
-
-        /// <summary>
-        /// Shows input-box
-        /// </summary>
-        /// <returns>null if Cancel has been pressed or string</returns>
-        public string Ask()
-        {
-            return Ask("");
-        }
-
-
-        internal string Ask(string caption, string prompt, string defText)
+        internal string Ask(string caption, string prompt, string defText, bool allow_empty)
         {
             this._caption = caption;
             this._prompt = prompt;
-            return Ask(defText);
+            return Ask(defText, allow_empty);
         }
     }
 }
