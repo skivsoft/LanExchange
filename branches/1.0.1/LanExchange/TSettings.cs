@@ -65,7 +65,7 @@ namespace LanExchange
 
         #region TabInfoList
 
-        protected static void SetTabInfoList(string name, TTabInfoList value)
+        protected static void SetTabInfoList(string name, TTabModel value)
         {
             SetStrValue(String.Format(@"{0}\SelectedTabName", name), value.SelectedTabName);
             SetIntValue(String.Format(@"{0}\Count", name), value.Count);
@@ -83,12 +83,12 @@ namespace LanExchange
             }
         }
 
-        protected static TTabInfoList GetTabInfoList(string name)
+        protected static TTabModel GetTabInfoList(string name)
         {
-            TTabInfoList Result = new TTabInfoList();
+            TTabModel Result = new TTabModel();
             Result.SelectedTabName = GetStrValue(String.Format(@"{0}\SelectedTabName", name), Environment.UserDomainName);
-            Result.Count = GetIntValue(String.Format(@"{0}\Count", name), 0);
-            for (int i = 0; i < Result.Count; i++)
+            int CNT = GetIntValue(String.Format(@"{0}\Count", name), 0);
+            for (int i = 0; i < CNT; i++)
             {
                 TTabInfo Info = new TTabInfo();
                 string S = String.Format(@"{0}\{1}\", name, i);
@@ -103,7 +103,7 @@ namespace LanExchange
             return Result;
         }
 
-        public static TTabInfoList TabInfoList
+        public static TTabModel TabInfoList
         {
             get { return GetTabInfoList("Pages"); }
             set { SetTabInfoList("Pages", value); }

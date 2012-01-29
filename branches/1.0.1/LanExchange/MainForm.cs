@@ -6,22 +6,23 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.DirectoryServices.AccountManagement;
 using System.Drawing;
+using System.IO;
 using System.Management;
 using System.Net;
 using System.Net.Sockets;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using OSTools;
-using System.IO;
-using System.DirectoryServices.AccountManagement;
-using System.Security.Cryptography;
 
 namespace LanExchange
 {
     public partial class MainForm : Form
     {
+        #region Константы и переменные
         // индексы страниц
         public const int pageNetwork = 0;
 
@@ -38,6 +39,7 @@ namespace LanExchange
 
         bool bFirstStart = true;
         TNetworkBrowser       CompBrowser = null;
+        TTabController        TabController = null;
         FormWindowState       LastWindowState = FormWindowState.Normal;
         string[] FlashMovies;
         int FlashIndex = -1;
@@ -48,6 +50,7 @@ namespace LanExchange
         lvCompsRefresh myCompsRefresh;
         lvRecentAdd myRecentAdd;
         TrayChat myTrayChat;
+        #endregion
 
         #region Инициализация и загрузка формы
 
@@ -61,6 +64,11 @@ namespace LanExchange
             lvCompsHandle = lvComps.Handle;
             CompBrowser = new TNetworkBrowser(lvComps);
             TPanelItemList.ListView_SetObject(lvComps, CompBrowser.InternalItemList);
+            // содаем контроллер для управления вкладками
+            Pages.TabPages[0].Text = Environment.UserDomainName;
+            TabController = new TTabController(Pages);
+            mSendToNewTab.Click += new System.EventHandler(TabController.mSendToNewTab_Click);
+
             // делегаты для обновления из потоков
             myCompsRefresh = new lvCompsRefresh(lvCompsRefreshMethod);
             myRecentAdd = new lvRecentAdd(lvRecentAddMethod);
@@ -111,9 +119,7 @@ namespace LanExchange
             #endif
             BrowseTimer_Tick(this, new EventArgs());
             // всплывающие подсказки
-            ListView_SetupTip(lvComps);
-            // имя первой вкладки
-            tabPage1.Text = Environment.UserDomainName;
+            TTabView.ListView_SetupTip(lvComps);
         }
 
         private void BrowseTimer_Tick(object sender, EventArgs e)
@@ -222,7 +228,8 @@ namespace LanExchange
         #region Загрузка и сохранение параметров
         private void LoadMainFormParams()
         {
-            TTabInfoList InfoList = TSettings.TabInfoList;
+            /*
+            TTabModel InfoList = TSettings.TabInfoList;
             int CurrentIndex = 0;
             for (int index = 0; index < InfoList.InfoList.Count; index++)
             {
@@ -242,6 +249,7 @@ namespace LanExchange
                 }
             }
             Pages.SelectedIndex = CurrentIndex;
+            */
         }
 
         private void StoreMainFormParams()
@@ -388,7 +396,7 @@ namespace LanExchange
 
         #region Функции общие для всех списков ListView
 
-        private void lvComps_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
+        public void lvComps_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
         {
             ListView LV = sender as ListView;
             if (e.Item == null)
@@ -424,7 +432,7 @@ namespace LanExchange
             SendKeys.Send(NewKeys);
         }
 
-        private void lvComps_KeyPress(object sender, KeyPressEventArgs e)
+        public void lvComps_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (Char.IsLetterOrDigit(e.KeyChar) || Char.IsPunctuation(e.KeyChar) || TPuntoSwitcher.IsValidChar(e.KeyChar))
             {
@@ -495,20 +503,16 @@ namespace LanExchange
                 Clipboard.SetText(S.ToString());
         }
 
-        private void lvComps_KeyDown(object sender, KeyEventArgs e)
+        public void lvComps_KeyDown(object sender, KeyEventArgs e)
         {
             ListView LV = (sender as ListView);
+            // Ctrl+A выделение всех элементов
             if (e.Control && e.KeyCode == Keys.A)
             {
                 NativeMethods.SelectAllItems(lvComps);
                 e.Handled = true;
             }
-            if (Pages.SelectedIndex == pageNetwork)
-                if (e.KeyCode == Keys.Back)
-                {
-                    CompBrowser.LevelUp();
-                    e.Handled = true;
-                }
+            // Ctrl+Enter
             if (e.Shift && e.KeyCode == Keys.Enter)
             {
                 TPanelItem PItem = GetFocusedPanelItem(true, false);
@@ -518,6 +522,7 @@ namespace LanExchange
                     mCompOpen_Click(mFolderOpen, new EventArgs());
                 e.Handled = true;
             }
+            // Shift+Enter в режиме администратора
             if (AdminMode && e.Control && e.KeyCode == Keys.Enter)
             {
                 TPanelItem PItem = GetFocusedPanelItem(true, false);
@@ -528,39 +533,54 @@ namespace LanExchange
                         mCompOpen_Click(mFAROpen, new EventArgs());
                 e.Handled = true;
             }
-        }
-
-        private void lvRecent_KeyDown(object sender, KeyEventArgs e)
-        {
-            ListView LV = (sender as ListView);
-            if (e.Control && e.KeyCode == Keys.A)
-            {
-                NativeMethods.SelectAllItems(LV);
-                e.Handled = true;
-            }
-            if (e.KeyCode == Keys.Delete)
-            {
-                TPanelItem Comp = GetFocusedPanelItem(false, false);
-                if (Comp != null)
-                {
-                    TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
-                    if (ItemList != null)
-                    {
-                        ItemList.Delete(Comp);
-                        ItemList.ApplyFilter();
-                        LV.VirtualListSize = ItemList.Count;
-                        LV.Refresh();
-                        e.Handled = true;
-                    }
-                }
-            }
+            // Ctrl+Alt+Shift+S - отправка текстового сообщения
             if (e.Control && e.Alt && e.Shift && e.KeyCode == Keys.S)
             {
                 SendChatMsg();
                 e.Handled = true;
             }
+            // клавишы для 1 вкладки
+            if (Pages.SelectedIndex == pageNetwork)
+            {
+                if (e.KeyCode == Keys.Back)
+                {
+                    CompBrowser.LevelUp();
+                    e.Handled = true;
+                }
+            }
+            // клавишы для всех пользовательских вкладок
+            else
+            {
+                if (e.KeyCode == Keys.Delete)
+                {
+                    TPanelItem Comp = GetFocusedPanelItem(false, false);
+                    if (Comp != null)
+                    {
+                        TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
+                        if (ItemList != null)
+                        {
+                            ItemList.Delete(Comp);
+                            ItemList.ApplyFilter();
+                            LV.VirtualListSize = ItemList.Count;
+                            LV.Refresh();
+                            e.Handled = true;
+                        }
+                    }
+                }
+            }
         }
 
+        private void lvComps_ItemActivate(object sender, EventArgs e)
+        {
+            TLogger.Print("lvComps_ItemActivate on {0}", lvComps.FocusedItem.ToString());
+            if (CompBrowser.InternalStack.Count == 0)
+            {
+                TPanelItem Comp = GetFocusedPanelItem(true, true);
+                if (Comp == null)
+                    return;
+            }
+            CompBrowser.LevelDown();
+        }
         #endregion
 
         #region Управление панелью для фильтрации
@@ -607,7 +627,7 @@ namespace LanExchange
             ListView LV = GetActiveListView();
             TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
             List<string> SaveSelected = null;
-            string SaveCurrent = null;
+            //string SaveCurrent = null;
             if (bVisualUpdate)
             {
                 SaveSelected = ItemList.ListView_GetSelected(lvComps, false);
@@ -842,18 +862,6 @@ namespace LanExchange
 
         }
         
-        private void lvComps_ItemActivate(object sender, EventArgs e)
-        {
-            TLogger.Print("lvComps_ItemActivate on {0}", lvComps.FocusedItem.ToString());
-            if (CompBrowser.InternalStack.Count == 0)
-            {
-                TPanelItem Comp = GetFocusedPanelItem(true, true);
-                if (Comp == null)
-                    return;
-            }
-            CompBrowser.LevelDown();
-        }
-
         #region Обработка событий для пользовательской вкладке
 
         public void GotoFavoriteComp(string ComputerName)
@@ -870,7 +878,7 @@ namespace LanExchange
                 lvComps_ItemActivate(lvComps, new EventArgs());
         }
 
-        private void lvRecent_ItemActivate(object sender, EventArgs e)
+        public void lvRecent_ItemActivate(object sender, EventArgs e)
         {
             TLogger.Print("lvRecent_ItemActivate on ", (sender as ListView).FocusedItem.ToString());
             TPanelItem PItem = GetFocusedPanelItem(false, true);
@@ -1034,10 +1042,10 @@ namespace LanExchange
                 //Assembly AccountManagement = System.Reflection.Assembly.Load("System.DirectoryServices.AccountManagement.dll");
                 // проверка прав текущего пользователя
                 PrincipalContext pc_local = new PrincipalContext(ContextType.Machine);
-                PrincipalContext pc_domain = new PrincipalContext(ContextType.Domain);
+                PrincipalContext pc_domain = null;
                 UserPrincipal CurrentUser = UserPrincipal.Current;
                 // получаем локальную группу "Администраторы"
-                var groupAdmins = GroupPrincipal.FindByIdentity(pc_local, "Администраторы");
+                var groupAdmins = GroupPrincipal.FindByIdentity(pc_local, IdentityType.Sid, "S-1-5-32-544");
                 if (groupAdmins != null)
                 {
                     var groups = groupAdmins.GetMembers(false);
@@ -1055,7 +1063,9 @@ namespace LanExchange
                                 // ищем доменную группу
                                 if (group.ContextType == ContextType.Domain)
                                 {
-                                    GroupPrincipal gr = GroupPrincipal.FindByIdentity(pc_domain, group.SamAccountName);
+                                    if (pc_domain == null)
+                                        pc_domain = new PrincipalContext(ContextType.Domain);
+                                    GroupPrincipal gr = GroupPrincipal.FindByIdentity(pc_domain, IdentityType.Sid, group.Sid.ToString());
                                     // проверяем текущего пользователя на принадлежность группе, которая входит в "Администраторы"
                                     if (gr != null && CurrentUser.IsMemberOf(gr))
                                     {
@@ -1414,217 +1424,51 @@ namespace LanExchange
             UpdateFlashMovie();
         }
         
-        #region Редактирование и переключение вкладок
-        
-        private void AddTabsToMenuItem(ToolStripMenuItem menuitem, EventHandler handler, bool bHideActive)
-        {
-            for (int i = 0; i < Pages.TabCount; i++)
-            {
-                if (bHideActive && (!CanModifyTab(i) || (i == Pages.SelectedIndex)))
-                    continue;
-                TabPage Tab = Pages.TabPages[i];
-                ToolStripMenuItem Item = new ToolStripMenuItem();
-                Item.Checked = (i == Pages.SelectedIndex);
-                Item.Text = Tab.Text;
-                Item.Click += handler;
-                Item.Tag = i;
-                menuitem.DropDownItems.Add(Item);
-            }
-        }
-        
-        private void popPages_Opened(object sender, EventArgs e)
-        {
-            mSelectTab.DropDownItems.Clear();
-            AddTabsToMenuItem(mSelectTab, mSelectTab_Click, false);
-            mCloseTab.Enabled = CanModifyTab(Pages.SelectedIndex);
-            mRenameTab.Enabled = mCloseTab.Enabled;
-        }
-
-        private void mSelectTab_Click(object sender, EventArgs e)
-        {
-            int Index = (int)(sender as ToolStripMenuItem).Tag;
-            if (Pages.SelectedIndex != Index)
-                Pages.SelectedIndex = Index;
-        }
-
-        private void ListView_SetupTip(ListView LV)
-        {
-            tipComps.SetToolTip(LV, "!");
-            tipComps.Active = true;
-        }
-
-        private string InputBoxAsk(string caption, string prompt, string oldValue)
-        {
-            inputBox.Caption = caption;
-            inputBox.Prompt = prompt;
-            return inputBox.Ask(oldValue);
-        }
-
-        private void CreateNewTab(string NewTabName)
-        {
-            // создаем новую вкладку
-            TabPage NewTab = new TabPage(NewTabName);
-            TLogger.Print("Create control {0}", NewTab.ToString());
-            ListView LV = new ListView();
-            TLogger.Print("Create control {0}", LV.ToString());
-            TPanelItemList.ListView_CreateObject(LV);
-            NewTab.Controls.Add(LV);
-            Pages.TabPages.Add(NewTab);
-            Pages.SelectedIndex = Pages.TabCount - 1;
-        }
-
-        private void ListView_Setup(ListView LV)
-        {
-            LV.Columns.Clear();
-            LV.Columns.Add("Сетевое имя", 130);
-            LV.Columns.Add("Описание", 250);
-            LV.ContextMenuStrip = this.popComps;
-            LV.Dock = System.Windows.Forms.DockStyle.Fill;
-            LV.FullRowSelect = true;
-            LV.GridLines = true;
-            LV.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            LV.HideSelection = false;
-            LV.LargeImageList = this.ilLarge;
-            LV.ShowGroups = false;
-            LV.ShowItemToolTips = true;
-            LV.SmallImageList = this.ilSmall;
-            LV.View = System.Windows.Forms.View.Details;
-            LV.VirtualMode = true;
-            //LV.ItemActivate += new System.EventHandler(this.lvComps_ItemActivate);
-            LV.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.lvComps_RetrieveVirtualItem);
-            //LV.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lvComps_KeyPress);
-            //LV.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvComps_KeyDown);
-            ListView_SetupTip(LV);
-            TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
-            if (ItemList != null)
-            {
-                LV.RetrieveVirtualItem += lvComps_RetrieveVirtualItem;
-                LV.VirtualMode = true;
-                LV.VirtualListSize = ItemList.Count;
-            }
-        }
-
+        #region Редактирование и переключение вкладок    
+  
         private void mNewTab_Click(object sender, EventArgs e)
         {
-            string NewTabName = InputBoxAsk("Новая вкладка", "Введите имя", "");
-            if (NewTabName == null) 
-                return;
-            CreateNewTab(NewTabName);
-            ListView LV = GetActiveListView();
-            ListView_Setup(LV);
-        }
-
-        private void SendPanelItems(ListView lvSender, ListView lvReceiver)
-        {
-            if (lvSender == null || lvReceiver == null)
-                return;
-            TPanelItemList ItemListSender = TPanelItemList.ListView_GetObject(lvSender);
-            TPanelItemList ItemListReceiver = TPanelItemList.ListView_GetObject(lvReceiver);
-
-            int NumAdded = 0;
-            foreach (int Index in lvSender.SelectedIndices)
-            {
-                TPanelItem PItem = ItemListSender.Get(lvSender.Items[Index].Text);
-                if (PItem != null)
-                {
-                    ItemListReceiver.Add(PItem);
-                    NumAdded++;
-                }
-            }
-            ItemListReceiver.ApplyFilter();
-            ListView_Setup(lvReceiver);
-        }
-
-        private void mSendToNewTab_Click(object sender, EventArgs e)
-        {
-            string NewTabName = InputBoxAsk("Новая вкладка", "Введите имя", "");
-            if (NewTabName == null)
-                return;
-            ListView lvSender = GetActiveListView();
-            CreateNewTab(NewTabName);
-            ListView lvReceiver = GetActiveListView();
-            SendPanelItems(lvSender, lvReceiver);
-        }
-
-        private void mSendToSelectedTab_Click(object sender, EventArgs e)
-        {
-            ListView lvSender = GetActiveListView();
-            int Index = (int)(sender as ToolStripMenuItem).Tag;
-            Pages.SelectedIndex = Index;
-            ListView lvReceiver = GetActiveListView();
-            SendPanelItems(lvSender, lvReceiver);
-        }
-
-        /// <summary>
-        /// Определяет можно ли редактировать вкладку (удалять и переименовывать).
-        /// </summary>
-        /// <param name="Index"></param>
-        /// <returns></returns>
-        private bool CanModifyTab(int Index)
-        {
-            return Index != 0;
+            TabController.NewTab();
         }
 
         private void mCloseTab_Click(object sender, EventArgs e)
         {
-            if (!CanModifyTab(Pages.SelectedIndex))
-                return;
-            int Index = Pages.SelectedIndex;
-            Pages.TabPages.RemoveAt(Index);
+            TabController.CloseTab();
         }
 
         private void mRenameTab_Click(object sender, EventArgs e)
         {
-            if (!CanModifyTab(Pages.SelectedIndex))
-                return;
-            string NewTabName = InputBoxAsk("Переименование", "Введите имя", Pages.SelectedTab.Text);
-            if (NewTabName == null)
-                return;
-            Pages.SelectedTab.Text = NewTabName;
+            TabController.RenameTab();
         }
 
         private void mSaveTab_Click(object sender, EventArgs e)
         {
-            dlgSave.FileName = String.Format("{0}.txt", Pages.SelectedTab.Text);
-            DialogResult Res = dlgSave.ShowDialog();
-            if (Res == DialogResult.OK)
-            {
-                ListView LV = GetActiveListView();
-                if (LV != null)
-                {
-                    // формируем строку для записи в файл
-                    StringBuilder S = new StringBuilder();
-                    for (int i = 0; i < LV.Items.Count; i++)
-                    {
-                        if (S.Length > 0)
-                            S.AppendLine();
-                        S.Append(LV.Items[i].Text);
-                    }
-                    // записываем в файл
-                    using (Stream stream = dlgSave.OpenFile())
-                    {
-                        byte[] data = Encoding.UTF8.GetBytes(S.ToString());
-                        stream.Write(data, 0, data.Length);
-                        stream.Close();
-                    }
-                }
-            }
+            TabController.SaveTab();
         }
 
         private void mListTab_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("mListTab_Click");
+            TabController.ListTab();
+        }
+
+        private void popPages_Opened(object sender, EventArgs e)
+        {
+            mSelectTab.DropDownItems.Clear();
+            TabController.AddTabsToMenuItem(mSelectTab, TabController.mSelectTab_Click, false);
+            mCloseTab.Enabled = TabController.CanModifyTab(Pages.SelectedIndex);
+            mRenameTab.Enabled = mCloseTab.Enabled;
         }
 
         private void mSendToTab_DropDownOpened(object sender, EventArgs e)
         {
             while (mSendToTab.DropDownItems.Count > 2)
                 mSendToTab.DropDownItems.RemoveAt(mSendToTab.DropDownItems.Count - 1);
-            AddTabsToMenuItem(mSendToTab, mSendToSelectedTab_Click, true);
+
+            TabController.AddTabsToMenuItem(mSendToTab, TabController.mSendToSelectedTab_Click, true);
             // скрываем разделитель, если нет новых вкладок
             mAfterSendTo.Visible = mSendToTab.DropDownItems.Count > 2;
         }
-      
+
         #endregion
 
         private bool admin_mode = false;

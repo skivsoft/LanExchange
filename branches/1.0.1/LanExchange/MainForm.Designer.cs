@@ -143,7 +143,7 @@
             this.toolStripSeparator2,
             this.mContextClose});
             this.popComps.Name = "popComps";
-            this.popComps.Size = new System.Drawing.Size(266, 298);
+            this.popComps.Size = new System.Drawing.Size(254, 298);
             this.popComps.Opened += new System.EventHandler(this.popComps_Opened);
             // 
             // mComp
@@ -165,7 +165,7 @@
             this.mRadmin8});
             this.mComp.Image = global::LanExchange.Properties.Resources.CompOff;
             this.mComp.Name = "mComp";
-            this.mComp.Size = new System.Drawing.Size(265, 22);
+            this.mComp.Size = new System.Drawing.Size(253, 22);
             this.mComp.Tag = "computer";
             this.mComp.Text = "\\\\COMPUTER";
             this.mComp.Visible = false;
@@ -174,7 +174,7 @@
             // 
             this.mCompOpen.Name = "mCompOpen";
             this.mCompOpen.ShortcutKeyDisplayString = "Shift+Enter";
-            this.mCompOpen.Size = new System.Drawing.Size(323, 22);
+            this.mCompOpen.Size = new System.Drawing.Size(301, 22);
             this.mCompOpen.Tag = "\\\\{0}";
             this.mCompOpen.Text = "Открыть в Проводнике";
             this.mCompOpen.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -182,21 +182,21 @@
             // mWMIDescription
             // 
             this.mWMIDescription.Name = "mWMIDescription";
-            this.mWMIDescription.Size = new System.Drawing.Size(323, 22);
+            this.mWMIDescription.Size = new System.Drawing.Size(301, 22);
             this.mWMIDescription.Text = "Редактировать описание";
             this.mWMIDescription.Click += new System.EventHandler(this.mWMIDescription_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(320, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(298, 6);
             // 
             // mCompService
             // 
             this.mCompService.Image = global::LanExchange.Properties.Resources.Service;
             this.mCompService.Name = "mCompService";
             this.mCompService.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F1)));
-            this.mCompService.Size = new System.Drawing.Size(323, 22);
+            this.mCompService.Size = new System.Drawing.Size(301, 22);
             this.mCompService.Tag = "%systemroot%\\system32\\mmc.exe %systemroot%\\system32\\compmgmt.msc /computer:{0}";
             this.mCompService.Text = "Управление компьютером";
             this.mCompService.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -205,7 +205,7 @@
             // 
             this.mCompMSTSC.Image = global::LanExchange.Properties.Resources.MSTSC;
             this.mCompMSTSC.Name = "mCompMSTSC";
-            this.mCompMSTSC.Size = new System.Drawing.Size(323, 22);
+            this.mCompMSTSC.Size = new System.Drawing.Size(301, 22);
             this.mCompMSTSC.Tag = "%systemroot%\\system32\\mstsc.exe /v:{0}";
             this.mCompMSTSC.Text = "Подключение к удаленному рабочему столу";
             this.mCompMSTSC.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -213,14 +213,14 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(320, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(298, 6);
             // 
             // mRadmin1
             // 
             this.mRadmin1.Image = ((System.Drawing.Image)(resources.GetObject("mRadmin1.Image")));
             this.mRadmin1.Name = "mRadmin1";
             this.mRadmin1.ShortcutKeyDisplayString = "Ctrl+Enter";
-            this.mRadmin1.Size = new System.Drawing.Size(323, 22);
+            this.mRadmin1.Size = new System.Drawing.Size(301, 22);
             this.mRadmin1.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0}";
             this.mRadmin1.Text = "Управление";
             this.mRadmin1.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -229,7 +229,7 @@
             // 
             this.mRadmin2.Image = ((System.Drawing.Image)(resources.GetObject("mRadmin2.Image")));
             this.mRadmin2.Name = "mRadmin2";
-            this.mRadmin2.Size = new System.Drawing.Size(323, 22);
+            this.mRadmin2.Size = new System.Drawing.Size(301, 22);
             this.mRadmin2.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0} /noinput";
             this.mRadmin2.Text = "Просмотр";
             this.mRadmin2.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -238,7 +238,7 @@
             // 
             this.mRadmin3.Image = ((System.Drawing.Image)(resources.GetObject("mRadmin3.Image")));
             this.mRadmin3.Name = "mRadmin3";
-            this.mRadmin3.Size = new System.Drawing.Size(323, 22);
+            this.mRadmin3.Size = new System.Drawing.Size(301, 22);
             this.mRadmin3.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0} /telnet";
             this.mRadmin3.Text = "Телнет";
             this.mRadmin3.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -247,7 +247,7 @@
             // 
             this.mRadmin4.Image = ((System.Drawing.Image)(resources.GetObject("mRadmin4.Image")));
             this.mRadmin4.Name = "mRadmin4";
-            this.mRadmin4.Size = new System.Drawing.Size(323, 22);
+            this.mRadmin4.Size = new System.Drawing.Size(301, 22);
             this.mRadmin4.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0} /file";
             this.mRadmin4.Text = "Передача файлов";
             this.mRadmin4.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -256,7 +256,7 @@
             // 
             this.mRadmin5.Image = ((System.Drawing.Image)(resources.GetObject("mRadmin5.Image")));
             this.mRadmin5.Name = "mRadmin5";
-            this.mRadmin5.Size = new System.Drawing.Size(323, 22);
+            this.mRadmin5.Size = new System.Drawing.Size(301, 22);
             this.mRadmin5.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0} /shutdown";
             this.mRadmin5.Text = "Выключение";
             this.mRadmin5.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -265,7 +265,7 @@
             // 
             this.mRadmin6.Image = ((System.Drawing.Image)(resources.GetObject("mRadmin6.Image")));
             this.mRadmin6.Name = "mRadmin6";
-            this.mRadmin6.Size = new System.Drawing.Size(323, 22);
+            this.mRadmin6.Size = new System.Drawing.Size(301, 22);
             this.mRadmin6.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0} /chat";
             this.mRadmin6.Text = "Текстовый чат";
             this.mRadmin6.Visible = false;
@@ -275,7 +275,7 @@
             // 
             this.mRadmin7.Image = ((System.Drawing.Image)(resources.GetObject("mRadmin7.Image")));
             this.mRadmin7.Name = "mRadmin7";
-            this.mRadmin7.Size = new System.Drawing.Size(323, 22);
+            this.mRadmin7.Size = new System.Drawing.Size(301, 22);
             this.mRadmin7.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0} /voice";
             this.mRadmin7.Text = "Голосовой чат";
             this.mRadmin7.Visible = false;
@@ -285,7 +285,7 @@
             // 
             this.mRadmin8.Image = ((System.Drawing.Image)(resources.GetObject("mRadmin8.Image")));
             this.mRadmin8.Name = "mRadmin8";
-            this.mRadmin8.Size = new System.Drawing.Size(323, 22);
+            this.mRadmin8.Size = new System.Drawing.Size(301, 22);
             this.mRadmin8.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0} /message";
             this.mRadmin8.Text = "Текстовое сообщение";
             this.mRadmin8.Visible = false;
@@ -299,7 +299,7 @@
             this.mFAROpen});
             this.mFolder.Image = global::LanExchange.Properties.Resources.folder2_normal_16x16;
             this.mFolder.Name = "mFolder";
-            this.mFolder.Size = new System.Drawing.Size(265, 22);
+            this.mFolder.Size = new System.Drawing.Size(253, 22);
             this.mFolder.Tag = "folder";
             this.mFolder.Text = "\\\\COMPUTER\\FOLDER";
             this.mFolder.Visible = false;
@@ -308,7 +308,7 @@
             // 
             this.mFolderOpen.Name = "mFolderOpen";
             this.mFolderOpen.ShortcutKeyDisplayString = "Shift+Enter";
-            this.mFolderOpen.Size = new System.Drawing.Size(267, 22);
+            this.mFolderOpen.Size = new System.Drawing.Size(257, 22);
             this.mFolderOpen.Tag = "{0}";
             this.mFolderOpen.Text = "Открыть в Проводнике";
             this.mFolderOpen.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -316,14 +316,14 @@
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(264, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(254, 6);
             // 
             // mFAROpen
             // 
             this.mFAROpen.Image = global::LanExchange.Properties.Resources.FAR_16x16;
             this.mFAROpen.Name = "mFAROpen";
             this.mFAROpen.ShortcutKeyDisplayString = "Ctrl+Enter";
-            this.mFAROpen.Size = new System.Drawing.Size(267, 22);
+            this.mFAROpen.Size = new System.Drawing.Size(257, 22);
             this.mFAROpen.Tag = "FAR.EXE {0}";
             this.mFAROpen.Text = "Менеджер FAR";
             this.mFAROpen.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -331,13 +331,13 @@
             // mSeparatorAdmin
             // 
             this.mSeparatorAdmin.Name = "mSeparatorAdmin";
-            this.mSeparatorAdmin.Size = new System.Drawing.Size(262, 6);
+            this.mSeparatorAdmin.Size = new System.Drawing.Size(250, 6);
             this.mSeparatorAdmin.Visible = false;
             // 
             // mLargeIcons
             // 
             this.mLargeIcons.Name = "mLargeIcons";
-            this.mLargeIcons.Size = new System.Drawing.Size(265, 22);
+            this.mLargeIcons.Size = new System.Drawing.Size(253, 22);
             this.mLargeIcons.Tag = "1";
             this.mLargeIcons.Text = "Крупные значки";
             this.mLargeIcons.Click += new System.EventHandler(this.mLargeIcons_Click);
@@ -345,7 +345,7 @@
             // mSmallIcons
             // 
             this.mSmallIcons.Name = "mSmallIcons";
-            this.mSmallIcons.Size = new System.Drawing.Size(265, 22);
+            this.mSmallIcons.Size = new System.Drawing.Size(253, 22);
             this.mSmallIcons.Tag = "3";
             this.mSmallIcons.Text = "Мелкие значки";
             this.mSmallIcons.Click += new System.EventHandler(this.mLargeIcons_Click);
@@ -353,7 +353,7 @@
             // mList
             // 
             this.mList.Name = "mList";
-            this.mList.Size = new System.Drawing.Size(265, 22);
+            this.mList.Size = new System.Drawing.Size(253, 22);
             this.mList.Tag = "4";
             this.mList.Text = "Список";
             this.mList.Click += new System.EventHandler(this.mLargeIcons_Click);
@@ -363,7 +363,7 @@
             this.mDetails.Checked = true;
             this.mDetails.CheckState = System.Windows.Forms.CheckState.Checked;
             this.mDetails.Name = "mDetails";
-            this.mDetails.Size = new System.Drawing.Size(265, 22);
+            this.mDetails.Size = new System.Drawing.Size(253, 22);
             this.mDetails.Tag = "2";
             this.mDetails.Text = "Таблица";
             this.mDetails.Click += new System.EventHandler(this.mLargeIcons_Click);
@@ -371,34 +371,34 @@
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(262, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(250, 6);
             // 
             // mCopyCompName
             // 
             this.mCopyCompName.Name = "mCopyCompName";
             this.mCopyCompName.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.mCopyCompName.Size = new System.Drawing.Size(265, 22);
+            this.mCopyCompName.Size = new System.Drawing.Size(253, 22);
             this.mCopyCompName.Text = "Копировать «Сетевое имя»";
             this.mCopyCompName.Click += new System.EventHandler(this.mCopyCompName_Click);
             // 
             // mCopyComment
             // 
             this.mCopyComment.Name = "mCopyComment";
-            this.mCopyComment.Size = new System.Drawing.Size(265, 22);
+            this.mCopyComment.Size = new System.Drawing.Size(253, 22);
             this.mCopyComment.Text = "Копировать «Описание»";
             this.mCopyComment.Click += new System.EventHandler(this.mCopyComment_Click);
             // 
             // mCopySelected
             // 
             this.mCopySelected.Name = "mCopySelected";
-            this.mCopySelected.Size = new System.Drawing.Size(265, 22);
+            this.mCopySelected.Size = new System.Drawing.Size(253, 22);
             this.mCopySelected.Text = "Копировать выделенное";
             this.mCopySelected.Click += new System.EventHandler(this.mCopySelected_Click);
             // 
             // toolStripSeparator12
             // 
             this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(262, 6);
+            this.toolStripSeparator12.Size = new System.Drawing.Size(250, 6);
             // 
             // mSendToTab
             // 
@@ -406,43 +406,42 @@
             this.mSendToNewTab,
             this.mAfterSendTo});
             this.mSendToTab.Name = "mSendToTab";
-            this.mSendToTab.Size = new System.Drawing.Size(265, 22);
+            this.mSendToTab.Size = new System.Drawing.Size(253, 22);
             this.mSendToTab.Text = "Отправить в другую вкладку";
             this.mSendToTab.DropDownOpened += new System.EventHandler(this.mSendToTab_DropDownOpened);
             // 
             // mSendToNewTab
             // 
             this.mSendToNewTab.Name = "mSendToNewTab";
-            this.mSendToNewTab.Size = new System.Drawing.Size(166, 22);
+            this.mSendToNewTab.Size = new System.Drawing.Size(162, 22);
             this.mSendToNewTab.Text = "В новую вкладку";
-            this.mSendToNewTab.Click += new System.EventHandler(this.mSendToNewTab_Click);
             // 
             // mAfterSendTo
             // 
             this.mAfterSendTo.Name = "mAfterSendTo";
-            this.mAfterSendTo.Size = new System.Drawing.Size(163, 6);
+            this.mAfterSendTo.Size = new System.Drawing.Size(159, 6);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(262, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(250, 6);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(265, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(253, 22);
             this.toolStripMenuItem1.Text = "Легенда";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(262, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(250, 6);
             // 
             // mContextClose
             // 
             this.mContextClose.Name = "mContextClose";
-            this.mContextClose.Size = new System.Drawing.Size(265, 22);
+            this.mContextClose.Size = new System.Drawing.Size(253, 22);
             this.mContextClose.Text = "Закрыть";
             this.mContextClose.Click += new System.EventHandler(this.mContextClose_Click);
             // 
@@ -494,44 +493,44 @@
             this.mAbout,
             this.mExit});
             this.popTray.Name = "popTray";
-            this.popTray.Size = new System.Drawing.Size(213, 104);
+            this.popTray.Size = new System.Drawing.Size(199, 104);
             this.popTray.Opening += new System.ComponentModel.CancelEventHandler(this.popTray_Opening);
             // 
             // mOpen
             // 
             this.mOpen.Name = "mOpen";
-            this.mOpen.Size = new System.Drawing.Size(212, 22);
+            this.mOpen.Size = new System.Drawing.Size(198, 22);
             this.mOpen.Text = "Открыть";
             this.mOpen.Click += new System.EventHandler(this.mOpen_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(209, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(195, 6);
             // 
             // mSettings
             // 
             this.mSettings.Name = "mSettings";
-            this.mSettings.Size = new System.Drawing.Size(212, 22);
+            this.mSettings.Size = new System.Drawing.Size(198, 22);
             this.mSettings.Text = "Настройки программы...";
             this.mSettings.Click += new System.EventHandler(this.mSettings_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(209, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(195, 6);
             // 
             // mAbout
             // 
             this.mAbout.Name = "mAbout";
-            this.mAbout.Size = new System.Drawing.Size(212, 22);
+            this.mAbout.Size = new System.Drawing.Size(198, 22);
             this.mAbout.Text = "О программе...";
             this.mAbout.Click += new System.EventHandler(this.mAbout_Click);
             // 
             // mExit
             // 
             this.mExit.Name = "mExit";
-            this.mExit.Size = new System.Drawing.Size(212, 22);
+            this.mExit.Size = new System.Drawing.Size(198, 22);
             this.mExit.Text = "Выход";
             this.mExit.Click += new System.EventHandler(this.mExit_Click);
             // 
@@ -717,27 +716,27 @@
             this.toolStripSeparator11,
             this.mListTab});
             this.popPages.Name = "popPages";
-            this.popPages.Size = new System.Drawing.Size(245, 154);
+            this.popPages.Size = new System.Drawing.Size(235, 176);
             this.popPages.Opened += new System.EventHandler(this.popPages_Opened);
             // 
             // mNewTab
             // 
             this.mNewTab.Name = "mNewTab";
             this.mNewTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.mNewTab.Size = new System.Drawing.Size(244, 22);
+            this.mNewTab.Size = new System.Drawing.Size(234, 22);
             this.mNewTab.Text = "Новая вкладка";
             this.mNewTab.Click += new System.EventHandler(this.mNewTab_Click);
             // 
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(241, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(231, 6);
             // 
             // mCloseTab
             // 
             this.mCloseTab.Name = "mCloseTab";
             this.mCloseTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F4)));
-            this.mCloseTab.Size = new System.Drawing.Size(244, 22);
+            this.mCloseTab.Size = new System.Drawing.Size(234, 22);
             this.mCloseTab.Text = "Закрыть вкладку";
             this.mCloseTab.Click += new System.EventHandler(this.mCloseTab_Click);
             // 
@@ -745,7 +744,7 @@
             // 
             this.mRenameTab.Name = "mRenameTab";
             this.mRenameTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.R)));
-            this.mRenameTab.Size = new System.Drawing.Size(244, 22);
+            this.mRenameTab.Size = new System.Drawing.Size(234, 22);
             this.mRenameTab.Text = "Переименовать вкладку";
             this.mRenameTab.Click += new System.EventHandler(this.mRenameTab_Click);
             // 
@@ -753,31 +752,33 @@
             // 
             this.mSaveTab.Name = "mSaveTab";
             this.mSaveTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.mSaveTab.Size = new System.Drawing.Size(244, 22);
+            this.mSaveTab.Size = new System.Drawing.Size(234, 22);
             this.mSaveTab.Text = "Сохранить вкладку";
             this.mSaveTab.Click += new System.EventHandler(this.mSaveTab_Click);
             // 
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(241, 6);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(231, 6);
             // 
             // mSelectTab
             // 
             this.mSelectTab.Name = "mSelectTab";
-            this.mSelectTab.Size = new System.Drawing.Size(244, 22);
+            this.mSelectTab.Size = new System.Drawing.Size(234, 22);
             this.mSelectTab.Text = "Выбрать вкладку";
             // 
             // toolStripSeparator11
             // 
             this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(241, 6);
+            this.toolStripSeparator11.Size = new System.Drawing.Size(231, 6);
+            this.toolStripSeparator11.Visible = false;
             // 
             // mListTab
             // 
             this.mListTab.Name = "mListTab";
-            this.mListTab.Size = new System.Drawing.Size(244, 22);
+            this.mListTab.Size = new System.Drawing.Size(234, 22);
             this.mListTab.Text = "Список вкладок";
+            this.mListTab.Visible = false;
             this.mListTab.Click += new System.EventHandler(this.mListTab_Click);
             // 
             // tabPage1
@@ -882,7 +883,7 @@
         private System.ComponentModel.BackgroundWorker DoBrowse;
         private System.Windows.Forms.Timer BrowseTimer;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ContextMenuStrip popComps;
+        public System.Windows.Forms.ContextMenuStrip popComps;
         private System.Windows.Forms.ToolStripMenuItem mCopyCompName;
         private System.Windows.Forms.ToolStripMenuItem mCopyComment;
         private System.Windows.Forms.ToolStripMenuItem mCopySelected;
@@ -894,7 +895,7 @@
         private System.Windows.Forms.ToolStripMenuItem mDetails;
         private System.Windows.Forms.ToolStripMenuItem mSmallIcons;
         private System.Windows.Forms.ToolStripMenuItem mList;
-        private System.Windows.Forms.ImageList ilLarge;
+        public System.Windows.Forms.ImageList ilLarge;
         public System.Windows.Forms.ImageList ilSmall;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem mComp;
@@ -915,7 +916,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ToolStripMenuItem mWMIDescription;
-        private InputBox inputBox;
+        public InputBox inputBox;
         private System.ComponentModel.BackgroundWorker DoCheckAdmin;
         private System.Windows.Forms.ToolStripMenuItem mSettings;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
@@ -929,7 +930,7 @@
         private System.Windows.Forms.TabControl Pages;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.ListView lvComps;
-        private System.Windows.Forms.ToolTip tipComps;
+        public System.Windows.Forms.ToolTip tipComps;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
@@ -951,7 +952,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
         private System.Windows.Forms.ToolStripMenuItem mListTab;
         private System.Windows.Forms.ToolStripMenuItem mSelectTab;
-        private System.Windows.Forms.SaveFileDialog dlgSave;
+        public System.Windows.Forms.SaveFileDialog dlgSave;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
         private System.Windows.Forms.ToolStripMenuItem mSendToTab;
         private System.Windows.Forms.ToolStripMenuItem mSendToNewTab;

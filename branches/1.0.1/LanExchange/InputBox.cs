@@ -89,5 +89,12 @@ namespace LanExchange
             return Ask("");
         }
 
+
+        internal string Ask(string caption, string prompt, string defText)
+        {
+            this._caption = caption;
+            this._prompt = prompt;
+            return Ask(defText);
+        }
     }
 }

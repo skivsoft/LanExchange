@@ -23,5 +23,15 @@ namespace LanExchange
             ActiveControl = txtInputText;
             errorProvider.SetError(txtInputText, "");
         }
-    }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(txtInputText.Text.Trim()))
+            {
+                errorProvider.SetError(txtInputText, "Строка не должна быть пустой.");
+                DialogResult = DialogResult.None;
+            } else
+                DialogResult = DialogResult.OK;
+        }
+   }
 }
