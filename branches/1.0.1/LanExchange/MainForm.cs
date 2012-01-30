@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.DirectoryServices.AccountManagement;
 using System.Drawing;
 using System.IO;
 using System.Management;
@@ -37,19 +36,17 @@ namespace LanExchange
         private static AboutForm AboutFormInstance = null;
         private static ParamsForm ParamsFormInstance = null;
 
-        bool bFirstStart = true;
-        TNetworkBrowser       CompBrowser = null;
+        public bool bFirstStart = true;
+        public TNetworkBrowser       CompBrowser = null;
         TTabController        TabController = null;
         FormWindowState       LastWindowState = FormWindowState.Normal;
         string[] FlashMovies;
         int FlashIndex = -1;
 
-        public delegate void lvCompsRefresh();
-        public delegate void lvRecentAdd();
-        public delegate void TrayChat();
-        lvCompsRefresh myCompsRefresh;
-        lvRecentAdd myRecentAdd;
-        TrayChat myTrayChat;
+        public delegate void ProcRefresh(object obj);
+        ProcRefresh myTrayChat;
+        ProcRefresh myPagesRefresh;
+        ProcRefresh myCompsRefresh;
         #endregion
 
         #region Инициализация и загрузка формы
@@ -70,9 +67,9 @@ namespace LanExchange
             mSendToNewTab.Click += new System.EventHandler(TabController.mSendToNewTab_Click);
 
             // делегаты для обновления из потоков
-            myCompsRefresh = new lvCompsRefresh(lvCompsRefreshMethod);
-            myRecentAdd = new lvRecentAdd(lvRecentAddMethod);
-            myTrayChat = new TrayChat(TrayChatMethod);
+            myCompsRefresh = new ProcRefresh(lvCompsRefreshMethod);
+            myTrayChat = new ProcRefresh(TrayChatMethod);
+            myPagesRefresh = new ProcRefresh(PagesRefreshMethod);
             // запуск в свернутом режиме
             /*
             if (TSettings.IsRunMinimized)
@@ -82,7 +79,7 @@ namespace LanExchange
             }
             */
         }
-
+      
         private void SetupForm()
         {
             // размещаем форму внизу справа
@@ -134,6 +131,37 @@ namespace LanExchange
         }
         #endregion
 
+
+        #region Методы обновления, вызываемые из асинхронных потоков
+        void PagesRefreshMethod(object sender)
+        {
+            TabPage Tab = Pages.SelectedTab;
+            if (Tab == null) return;
+            ListView LV = (ListView)Tab.Controls[0];
+            LV.Invoke(myCompsRefresh, LV);
+        }
+
+        void lvCompsRefreshMethod(object sender)
+        {
+            ListView LV = (ListView)sender;
+            TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
+            if (LV.Handle != IntPtr.Zero)
+            {
+                int Index = ItemList.Keys.IndexOf(RefreshCompName);
+                if (Index != -1)
+                    LV.RedrawItems(Index, Index, false);
+            }
+        }
+
+        void TrayChatMethod(object sender)
+        {
+            TrayIcon.ShowBalloonTip(10000, "Сообщение от " + RefreshCompName, ChatMessage, ToolTipIcon.Info);
+        }
+
+        #endregion
+
+
+
         #region Сворачивание формы в трей
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -146,7 +174,7 @@ namespace LanExchange
             }
             else
             {
-                TabController.StoreSettings(); 
+                TabController.StoreSettings();
                 if (DoPing.IsBusy)
                     DoPing.CancelAsync();
                 // останавливаем прием UDP сообщений
@@ -202,8 +230,8 @@ namespace LanExchange
                 if (this.Visible)
                 {
                     this.Activate();
-                    this.ActiveControl = lvComps;
-                    lvComps.Focus();
+                    //this.ActiveControl = lvComps;
+                    //lvComps.Focus();
                 }
             }
         }
@@ -311,7 +339,7 @@ namespace LanExchange
                 List<string> RemovedNew = CompareDataSources(ScannedComps, CompBrowser.CurrentDataTable);
                 // если список компов не изменился, ничего не обновляем
                 #if (!DEBUG)
-                if (!(CurrentDataTable != null && (AddedNew.Count == 0 && RemovedNew.Count == 0)))
+                if (!(CompBrowser.CurrentDataTable != null && (AddedNew.Count == 0 && RemovedNew.Count == 0)))
                 #endif
                 {
                     if (DoPing.IsBusy)
@@ -335,6 +363,11 @@ namespace LanExchange
                     bFirstStart = false;
                     // загрузка списка недавно использованных компов
                     TabController.LoadSettings();
+                    // выбираем текущий компьютер, чтобы пользователь видел описание
+                    ListView LV = GetActiveListView();
+                    TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
+                    if (ItemList != null)
+                        ItemList.ListView_SelectComputer(LV, Environment.MachineName);
                     // запускаем поток на ожидание UDP сообщений
                     StartReceive();
                     // сообщаем другим клиентам о запуске
@@ -388,19 +421,19 @@ namespace LanExchange
             if (e.Item == null)
                 e.Item = new ListViewItem();
             TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
-            if (ItemList != null)
+            if (ItemList == null) return;
+            //if (e.ItemIndex < 0 || e.ItemIndex > Math.Min(ItemList.Keys.Count, LV.VirtualListSize)-1)
+            //    return;
+            String ItemName = ItemList.Keys[e.ItemIndex];
+            TPanelItem PItem = ItemList.Get(ItemName);
+            if (PItem != null)
             {
-                String ItemName = ItemList.Keys[e.ItemIndex];
-                TPanelItem PItem = ItemList.Get(ItemName);
-                if (PItem != null)
-                {
-                    e.Item.Text = ItemName;
-                    string[] A = PItem.GetSubItems();
-                    foreach (string str in A)
-                        e.Item.SubItems.Add(str);
-                    e.Item.ImageIndex = PItem.ImageIndex;
-                    e.Item.ToolTipText = PItem.ToolTipText;
-                }
+                e.Item.Text = ItemName;
+                string[] A = PItem.GetSubItems();
+                foreach (string str in A)
+                    e.Item.SubItems.Add(str);
+                e.Item.ImageIndex = PItem.ImageIndex;
+                e.Item.ToolTipText = PItem.ToolTipText;
             }
         }
 
@@ -495,7 +528,7 @@ namespace LanExchange
             // Ctrl+A выделение всех элементов
             if (e.Control && e.KeyCode == Keys.A)
             {
-                NativeMethods.SelectAllItems(lvComps);
+                NativeMethods.SelectAllItems(LV);
                 e.Handled = true;
             }
             // Ctrl+Enter
@@ -539,25 +572,30 @@ namespace LanExchange
             {
                 if (e.KeyCode == Keys.Delete)
                 {
-                    TPanelItem Comp = GetFocusedPanelItem(false, false);
-                    if (Comp != null)
+                    TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
+                    for (int i = LV.SelectedIndices.Count - 1; i >= 0; i--)
                     {
-                        TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
-                        if (ItemList != null)
-                        {
+                        int Index = LV.SelectedIndices[i];
+                        TPanelItem Comp = ItemList.Get(ItemList.Keys[Index]);
+                        if (Comp != null)
                             ItemList.Delete(Comp);
-                            ItemList.ApplyFilter();
-                            LV.VirtualListSize = ItemList.Count;
-                            LV.Refresh();
-                            e.Handled = true;
-                        }
                     }
+                    LV.SelectedIndices.Clear();
+                    ItemList.ApplyFilter();
+                    LV.VirtualListSize = ItemList.FilterCount;
                 }
             }
         }
 
         private void lvComps_ItemActivate(object sender, EventArgs e)
         {
+            if (lvComps.FocusedItem == null)
+            {
+                if (lvComps.VirtualListSize > 0)
+                    lvComps.FocusedItem = lvComps.Items[0];
+                else
+                    return;
+            }
             TLogger.Print("lvComps_ItemActivate on {0}", lvComps.FocusedItem.ToString());
             if (CompBrowser.InternalStack.Count == 0)
             {
@@ -567,6 +605,14 @@ namespace LanExchange
             }
             CompBrowser.LevelDown();
         }
+
+        public void lvRecent_ItemActivate(object sender, EventArgs e)
+        {
+            TLogger.Print("lvRecent_ItemActivate on ", (sender as ListView).FocusedItem.ToString());
+            TPanelItem PItem = GetFocusedPanelItem(false, true);
+            if (PItem != null)
+                GotoFavoriteComp(PItem.Name);
+        }
         #endregion
 
         #region Управление панелью для фильтрации
@@ -574,8 +620,10 @@ namespace LanExchange
         void SearchPanelVisible(bool value)
         {
             tsBottom.Visible = value;
+            /*
             if (!value)
                 Pages.SelectedTab.Refresh();
+             */
         }
 
         public int TotalItems
@@ -615,37 +663,38 @@ namespace LanExchange
             //string SaveCurrent = null;
             if (bVisualUpdate)
             {
-                SaveSelected = ItemList.ListView_GetSelected(lvComps, false);
+                SaveSelected = ItemList.ListView_GetSelected(LV, false);
                 // запоминаем выделенные элементы
                 //if (LV.FocusedItem != null)
                   //  SaveCurrent = lvComps.FocusedItem.Text;
             }
-            else
-            {
-                eFilter.TextChanged -= eFilter_TextChanged;
-                eFilter.Text = NewFilter;
-                eFilter.TextChanged += eFilter_TextChanged;
-            }
             // меняем фильтр
             ItemList.FilterText = NewFilter;
-            ItemList.ApplyFilter();
             if (bVisualUpdate)
             {
                 TotalItems = CompBrowser.InternalItemList.Count;
                 eFilter.BackColor = TotalItems > 0 ? Color.White : Color.FromArgb(255, 102, 102); // Firefox Color
                 // восстанавливаем выделенные элементы
-                CompBrowser.InternalItemList.ListView_SetSelected(lvComps, SaveSelected);
+                ItemList.ListView_SetSelected(LV, SaveSelected);
                 //CompBrowser.SelectComputer(SaveCurrent);
+                UpdateFilterPanel();
             }
-            // убираем панель фильтра если поле ввода пустое
-            if (CompBrowser.InternalItemList.FilterText.Length == 0)
-            {
-                SearchPanelVisible(false);
-                this.ActiveControl = lvComps;
-                lvComps.Focus();
-            }
-            else
-                SearchPanelVisible(true);
+        }
+
+        private void UpdateFilterPanel()
+        {
+            ListView LV = GetActiveListView();
+            TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
+            string Text = ItemList.FilterText;
+            eFilter.TextChanged -= eFilter_TextChanged;
+            eFilter.Text = Text;
+            eFilter.SelectionLength = 0;
+            eFilter.SelectionStart = Text.Length;
+            eFilter.TextChanged += eFilter_TextChanged;
+            // показываем или скрываем панель фильтра
+            SearchPanelVisible(ItemList.IsFiltered);
+            // выводим количество элементов в статус
+            TotalItems = ItemList.Count;
         }
 
         private void eFilter_TextChanged(object sender, EventArgs e)
@@ -856,22 +905,15 @@ namespace LanExchange
         {
             Pages.SelectedIndex = pageNetwork;
             lvComps.SelectedIndices.Clear();
-            UpdateFilter(GetActiveListView(), "", false);
+            ListView LV = GetActiveListView();
+            UpdateFilter(LV, "", false);
             // выходим на верхний уровень
             while (CompBrowser.InternalStack.Count > 0)
                 CompBrowser.LevelUp();
-            CompBrowser.SelectComputer(ComputerName);
+            CompBrowser.InternalItemList.ListView_SelectComputer(LV, ComputerName);
             TPanelItem PItem = GetFocusedPanelItem(false, false);
             if (PItem != null && PItem.Name == ComputerName)
                 lvComps_ItemActivate(lvComps, new EventArgs());
-        }
-
-        public void lvRecent_ItemActivate(object sender, EventArgs e)
-        {
-            TLogger.Print("lvRecent_ItemActivate on ", (sender as ListView).FocusedItem.ToString());
-            TPanelItem PItem = GetFocusedPanelItem(false, true);
-            if (PItem != null)
-                GotoFavoriteComp(PItem.Name);
         }
 
         public string GetMD5FromString(string str)
@@ -973,6 +1015,7 @@ namespace LanExchange
             bool bCopyVisible = PItem != null;
             bool bCompVisible = false;
             bool bFolderVisible = false;
+            bool bSenderIsComputer = (Pages.SelectedIndex > 0) || (CompBrowser.InternalStack.Count == 0);
             if (PItem != null)
             {
                 if (PItem is TComputerItem)
@@ -995,6 +1038,12 @@ namespace LanExchange
                     }
                 }
             }
+            if (!bSenderIsComputer)
+            {
+                bCompVisible = false;
+                bCopyVisible = false;
+            }
+            
             mComp.Visible = bCompVisible;
             mComp.Enabled = bCompVisible;
             mWMIDescription.Visible = bCompVisible;
@@ -1032,11 +1081,14 @@ namespace LanExchange
             {
                 //Assembly AccountManagement = System.Reflection.Assembly.Load("System.DirectoryServices.AccountManagement.dll");
                 // проверка прав текущего пользователя
-                PrincipalContext pc_local = new PrincipalContext(ContextType.Machine);
-                PrincipalContext pc_domain = null;
-                UserPrincipal CurrentUser = UserPrincipal.Current;
+                System.DirectoryServices.AccountManagement.PrincipalContext pc_local =
+                    new System.DirectoryServices.AccountManagement.PrincipalContext(System.DirectoryServices.AccountManagement.ContextType.Machine);
+                System.DirectoryServices.AccountManagement.PrincipalContext pc_domain = null;
+                System.DirectoryServices.AccountManagement.UserPrincipal CurrentUser =
+                    System.DirectoryServices.AccountManagement.UserPrincipal.Current;
                 // получаем локальную группу "Администраторы"
-                var groupAdmins = GroupPrincipal.FindByIdentity(pc_local, IdentityType.Sid, "S-1-5-32-544");
+                var groupAdmins = System.DirectoryServices.AccountManagement.GroupPrincipal.FindByIdentity(pc_local,
+                    System.DirectoryServices.AccountManagement.IdentityType.Sid, "S-1-5-32-544");
                 if (groupAdmins != null)
                 {
                     var groups = groupAdmins.GetMembers(false);
@@ -1054,11 +1106,12 @@ namespace LanExchange
                             }
                             else
                                 // ищем доменную группу
-                                if (group.ContextType == ContextType.Domain)
+                                if (group.ContextType == System.DirectoryServices.AccountManagement.ContextType.Domain)
                                 {
                                     if (pc_domain == null)
-                                        pc_domain = new PrincipalContext(ContextType.Domain);
-                                    GroupPrincipal gr = GroupPrincipal.FindByIdentity(pc_domain, IdentityType.Sid, group.Sid.ToString());
+                                        pc_domain = new System.DirectoryServices.AccountManagement.PrincipalContext(System.DirectoryServices.AccountManagement.ContextType.Domain);
+                                    System.DirectoryServices.AccountManagement.GroupPrincipal gr =
+                                        System.DirectoryServices.AccountManagement.GroupPrincipal.FindByIdentity(pc_domain, System.DirectoryServices.AccountManagement.IdentityType.Sid, group.Sid.ToString());
                                     // проверяем текущего пользователя на принадлежность группе, которая входит в "Администраторы"
                                     if (gr != null && CurrentUser.IsMemberOf(gr))
                                     {
@@ -1186,6 +1239,7 @@ namespace LanExchange
 
                     TPanelItem PItem = CompBrowser.InternalItemList.Get(CompName);
                     TComputerItem Comp = PItem as TComputerItem;
+                    bool bNeedRefresh = false;
                     if (Comp != null)
                     {
                         Comp.EndPoint = ipendpoint;
@@ -1199,24 +1253,24 @@ namespace LanExchange
                             {
                                 Comp.IsLogged = true;
                             }
-                            lvComps.Invoke(myCompsRefresh);
                             // отвечаем на сообщение, чтобы наш комп отрисовался подключенным
                             ipendpoint.Port = 3333;
                             LANEX_SEND(ipendpoint, MSG_LANEX_LOGINOK);
+                            bNeedRefresh = true;
                             break;
                         case MSG_LANEX_LOGINOK:
                             if (Comp != null)
                             {
                                 Comp.IsLogged = true;
                             }
-                            lvComps.Invoke(myCompsRefresh);
+                            bNeedRefresh = true;
                             break;
                         case MSG_LANEX_LOGOUT:
                             if (Comp != null)
                             {
                                 Comp.IsLogged = false;
                             }
-                            lvComps.Invoke(myCompsRefresh);
+                            bNeedRefresh = true;
                             break;
 
                         case MSG_LANEX_SHUTDOWN:
@@ -1225,7 +1279,7 @@ namespace LanExchange
                                 Comp.IsLogged = false;
                                 Comp.IsPingable = false;
                             }
-                            lvComps.Invoke(myCompsRefresh);
+                            bNeedRefresh = true;
                             break;
                         case MSG_LANEX_CHAT:
                             IPHostEntry MyHost = Dns.GetHostEntry(IPAddress.Loopback);
@@ -1236,12 +1290,17 @@ namespace LanExchange
                             {
                                 byte[] data = Convert.FromBase64String(MSG[2]);
                                 ChatMessage = System.Text.ASCIIEncoding.UTF8.GetString(data);
-                                MainFormInstance.Invoke(myTrayChat);
+                                MainFormInstance.Invoke(myTrayChat, MainFormInstance);
                             }
                             break;
                     }
                     // Если дана команда остановить поток, останавливаем бесконечный цикл.
                     if (stopReceive == true) break;
+                    // обовление элемента списка
+                    if (bNeedRefresh)
+                    {
+                        Pages.Invoke(myPagesRefresh, Pages);
+                    }
                 }
 
                 udp.Close();
@@ -1252,41 +1311,6 @@ namespace LanExchange
             TLogger.Print("Thread for udp receive finish");
         }
 
-        void lvCompsRefreshMethod()
-        {
-            if (lvComps.Handle != IntPtr.Zero)
-            {
-                int Index = CompBrowser.InternalItemList.Keys.IndexOf(RefreshCompName);
-                if (Index != -1)
-                    lvComps.RedrawItems(Index, Index, false);
-            }
-        }
-
-        void lvRecentAddMethod()
-        {
-            /*
-            TPanelItem Comp = CompBrowser.InternalItemList.Get(RefreshCompName);
-            if (Comp != null)
-            {
-                RecentBrowser.InternalItemList.Delete(Comp);
-                RecentBrowser.InternalItemList.Add(Comp);
-                RecentBrowser.InternalItemList.ApplyFilter();
-                if (lvRecent.VirtualListSize != RecentBrowser.InternalItemList.Count)
-                {
-                    lvRecent.VirtualListSize = RecentBrowser.InternalItemList.Count;
-                    lvRecent.Refresh();
-                }
-                int Index = RecentBrowser.InternalItemList.Keys.IndexOf(RefreshCompName);
-                if (Index != -1)
-                    lvRecent.RedrawItems(Index, Index, false);
-            }
-            */
-        }
-
-        void TrayChatMethod()
-        {
-            TrayIcon.ShowBalloonTip(10000, "Сообщение от "+RefreshCompName, ChatMessage, ToolTipIcon.Info);
-        }
 
         // Функция безопасной остановки дополнительного потока
         void StopReceive()
@@ -1319,7 +1343,12 @@ namespace LanExchange
 
         private void Pages_Selected(object sender, TabControlEventArgs e)
         {
-            ActiveControl = Pages.SelectedTab.Controls[0];
+            if (Pages.SelectedTab != null)
+            {
+                ActiveControl = Pages.SelectedTab.Controls[0];
+                ActiveControl.Focus();
+                UpdateFilterPanel();
+            }
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
@@ -1487,5 +1516,6 @@ namespace LanExchange
             CancelCompRelatedThreads();
             Application.Exit();
         }
+
     }
 }

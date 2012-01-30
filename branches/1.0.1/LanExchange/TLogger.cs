@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace LanExchange
 {
-    class TLogger
+    public class TLogger
     {
         static bool bFirstRun = true;
 

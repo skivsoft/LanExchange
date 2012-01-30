@@ -1,4 +1,4 @@
-﻿#define USE_NORTHWIND_DATA
+﻿#define NOUSE_NORTHWIND_DATA
 
 using System;
 using System.Collections.Generic;
@@ -24,9 +24,12 @@ namespace LanExchange
         public void Add(TPanelItem Comp)
         {
             TPanelItem Result;
-            if (Data.TryGetValue(Comp.Name, out Result))
-                return;
-            Data.Add(Comp.Name, Comp);
+            if (Comp != null)
+            {
+                if (Data.TryGetValue(Comp.Name, out Result))
+                    return;
+                Data.Add(Comp.Name, Comp);
+            }
         }
 
         public void Delete(TPanelItem Comp)
@@ -281,16 +284,28 @@ namespace LanExchange
             }
         }
 
-        /*
-        public List<TPanelItem> ToList()
+        // <summary>
+        // Выбор компьютера по имени в списке.
+        // </summary>
+        public void ListView_SelectComputer(ListView LV, string CompName)
         {
-            List<TPanelItem> Result = new List<TPanelItem>();
-            foreach (var Pair in Data)
-                Result.Add(Pair.Value);
-            return Result;
+            int index = -1;
+            // пробуем найти запомненный элемент
+            if (CompName != null)
+            {
+                index = this.Keys.IndexOf(CompName);
+                if (index == -1) index = 0;
+            }
+            else
+                index = 0;
+            // установка текущего элемента
+            if (LV.VirtualListSize > 0)
+            {
+                LV.SelectedIndices.Add(index);
+                LV.FocusedItem = LV.Items[index];
+                LV.EnsureVisible(index);
+            }
         }
-         * */
-
 
         #region Привязка своего обьекта к ListView
 
@@ -320,6 +335,12 @@ namespace LanExchange
         }
         #endregion
 
-
-   }
+        public List<string> ToList()
+        {
+            List<string> Result = new List<string>();
+            foreach (var Pair in Data)
+                Result.Add(Pair.Value.Name);
+            return Result;
+        }
+    }
 }

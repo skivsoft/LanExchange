@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace LanExchange
 {
-    class TNetworkBrowser
+    public class TNetworkBrowser
     {
         public ListView LV = null;
         private LVType CurrentType = LVType.COMPUTERS;
@@ -76,6 +76,22 @@ namespace LanExchange
 
         }
 
+        /// <summary>
+        /// Возвращает список элементов с верхнего уровня из стека переходов.
+        /// В частности это будет список копьютеров, даже если мы находимся на уровне списка ресуров.
+        /// </summary>
+        /// <returns></returns>
+        public List<TPanelItem> GetTopItemList()
+        {
+            if (InternalStack.Count == 0)
+                return InternalItems;
+            else
+            {
+                List<TPanelItem>[] Arr = InternalStack.ToArray();
+                return Arr[0];
+            }
+        }
+
         public void LevelDown()
         {
             if (LV == null || LV.FocusedItem == null)
@@ -103,8 +119,12 @@ namespace LanExchange
                     // получаем новый список объектов, в данном случае список ресурсов компа
                     InternalItems = TPanelItemList.EnumNetShares(FocusedText);
                     // устанавливаем новый список для визуального компонента
-                    LV.FocusedItem = null;
                     CurrentDataTable = InternalItems;
+                    if (LV.VirtualListSize > 0)
+                    {
+                        LV.FocusedItem = LV.Items[0];
+                        LV.SelectedIndices.Add(0);
+                    }
                     // меняем колонки в ListView
                     Path = @"\\" + FocusedText;
                     ViewType = LVType.SHARES;
@@ -158,8 +178,7 @@ namespace LanExchange
                     break;
             }
             CurrentDataTable = InternalItems;
-            SelectComputer(CompName);
-
+            InternalItemList.ListView_SelectComputer(MainForm.MainFormInstance.lvComps, CompName);
         }
 
         // Отображаемая таблица
@@ -171,8 +190,12 @@ namespace LanExchange
             }
             set
             {
-                // запоминаем выделенные элементы
-                List<string> SaveSelected = InternalItemList.ListView_GetSelected(LV, false);
+                List<string> SaveSelected = null;
+                if (!MainForm.MainFormInstance.bFirstStart)
+                {
+                    // запоминаем выделенные элементы
+                    SaveSelected = InternalItemList.ListView_GetSelected(LV, false);
+                }
                 // установка нового списка компов
                 InternalItems = value;
                 // обновление внутреннего списка для отображения в ListView
@@ -182,13 +205,13 @@ namespace LanExchange
                     InternalItemList.Clear();
                     foreach (TPanelItem Comp in InternalItems)
                         InternalItemList.Add(Comp);
-                    InternalItemList.ApplyFilter();
-                    MainForm.MainFormInstance.TotalItems = InternalItemList.Count;
-                    // восстанавливаем выделение компов
-                    InternalItemList.ListView_SetSelected(LV, SaveSelected);
-                    // выбираем текущий компьютер, чтобы пользователь видел описание
-                    if (LV.FocusedItem == null)
-                        SelectComputer(Environment.MachineName);
+                    if (!MainForm.MainFormInstance.bFirstStart)
+                    {
+                        InternalItemList.ApplyFilter();
+                        LV.VirtualListSize = InternalItemList.FilterCount;
+                        // восстанавливаем выделение компов
+                        InternalItemList.ListView_SetSelected(LV, SaveSelected);
+                    }
                 }
                 finally
                 {
@@ -196,29 +219,5 @@ namespace LanExchange
                 }
             }
         }
-
-        // <summary>
-        // Выбор компьютера по имени в списке.
-        // </summary>
-        public void SelectComputer(string CompName)
-        {
-            int index = -1;
-            // пробуем найти запомненный элемент
-            if (CompName != null)
-            {
-                index = InternalItemList.Keys.IndexOf(CompName);
-                if (index == -1) index = 0;
-            }
-            else
-                index = 0;
-            // установка текущего элемента
-            if (LV.VirtualListSize > 0)
-            {
-                LV.SelectedIndices.Add(index);
-                LV.FocusedItem = LV.Items[index];
-                LV.EnsureVisible(index);
-            }
-        }
-
     }
 }
