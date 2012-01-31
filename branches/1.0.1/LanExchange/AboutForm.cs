@@ -25,6 +25,10 @@ namespace LanExchange
             this.labelProductName.Text = String.Format("{0} ({1})", AssemblyTitle, AssemblyProduct);
             this.labelVersion.Text = String.Format("Версия {0}", AssemblyVersion);
             this.labelBuildFor.Text = Branding.BuildFor();
+            this.labelWeb.LinkArea = new LinkArea(this.labelWeb.Text.Length, this.labelWeb.LinkArea.Length);
+            this.labelWeb.Text += Branding.GetWebSiteURL();
+            this.labelEmail.LinkArea = new LinkArea(this.labelEmail.Text.Length, this.labelEmail.LinkArea.Length);
+            this.labelEmail.Text += Branding.GetEmailAddress();
             this.labelCopyright.Text = AssemblyCopyright;
             this.textBoxDescription.Text = AssemblyDescription;
             logoPictureBox.Image = MainForm.MainFormInstance.picLogo.Image;
@@ -256,8 +260,9 @@ namespace LanExchange
                     string RemoteMD5 = Arr[0];
                     int RemoteFSize = Int32.Parse(Arr[1]);
                     string RemoteFName = Arr[2];
+                    string MustChangeFName = Arr[3];
 
-                    LocalFName = Path.Combine(ExePath, RemoteFName);
+                    LocalFName = Path.Combine(ExePath, MustChangeFName);
                     LocalDirName = Path.GetDirectoryName(LocalFName);
                     bool bNeedDownload = false;
                     if (File.Exists(LocalFName))
@@ -319,6 +324,21 @@ namespace LanExchange
                     DialogResult = DialogResult.Cancel;
                 }
             }
+        }
+
+        private void textBoxDescription_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelWeb_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("http://" + Branding.GetWebSiteURL());
+        }
+
+        private void labelEmail_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("mailto:" + Branding.GetEmailAddress());
         }
     }
 }

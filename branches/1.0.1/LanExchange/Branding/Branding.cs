@@ -17,5 +17,15 @@ namespace LanExchange
         {
             return UpdateBaseURL() + "filelist.php";
         }
+
+        public static string GetWebSiteURL()
+        {
+            return "code.google.com/p/lanexchange/";
+        }
+
+        public static string GetEmailAddress()
+        {
+            return "skivsoft@gmail.com";
+        }
     }
 }

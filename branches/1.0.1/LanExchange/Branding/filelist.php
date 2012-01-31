@@ -16,13 +16,18 @@ function scan_dir($path)
             continue;
         }
         $fname = $path . $file;
+        $fname2 = $path . preg_replace("/\.exefile$/", '.exe', $file);
         if (in_array($fname, $skip_files))
+            continue;
+        if (preg_match("/\.bin$/", $fname))
             continue;
 
         $md5 = md5_file($path.$file);
         $size = filesize($path.$file);
         $fname = substr($fname, 2, strlen($fname)-2);
-        print "$md5|$size|$fname\n";
+        $fname2 = substr($fname2, 2, strlen($fname2)-2);
+
+        print "$md5|$size|$fname|$fname2\n";
     }
     closedir($dir);
 }
