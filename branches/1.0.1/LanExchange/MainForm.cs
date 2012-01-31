@@ -45,8 +45,9 @@ namespace LanExchange
         string[] FlashMovies;
         int FlashIndex = -1;
 
-        public delegate void ProcRefresh(object obj);
-        ProcRefresh myTrayChat;
+        public delegate void ProcRefresh(object obj, object data);
+        public delegate void ChatRefresh(object obj, object data, object message);
+        ChatRefresh myTrayChat;
         ProcRefresh myPagesRefresh;
         ProcRefresh myCompsRefresh;
         #endregion
@@ -70,8 +71,8 @@ namespace LanExchange
 
             // делегаты для обновления из потоков
             myCompsRefresh = new ProcRefresh(lvCompsRefreshMethod);
-            myTrayChat = new ProcRefresh(TrayChatMethod);
             myPagesRefresh = new ProcRefresh(PagesRefreshMethod);
+            myTrayChat = new ChatRefresh(TrayChatMethod);
             // запуск в свернутом режиме
             /*
             if (TSettings.IsRunMinimized)
@@ -135,16 +136,17 @@ namespace LanExchange
 
 
         #region Методы обновления, вызываемые из асинхронных потоков
-        void PagesRefreshMethod(object sender)
+        void PagesRefreshMethod(object sender, object data)
         {
             TabPage Tab = Pages.SelectedTab;
             if (Tab == null) return;
             ListView LV = (ListView)Tab.Controls[0];
-            LV.Invoke(myCompsRefresh, LV);
+            LV.Invoke(myCompsRefresh, LV, data);
         }
 
-        void lvCompsRefreshMethod(object sender)
+        void lvCompsRefreshMethod(object sender, object data)
         {
+            string RefreshCompName = (string)data;
             ListView LV = (ListView)sender;
             TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
             if (LV.Handle != IntPtr.Zero)
@@ -155,8 +157,10 @@ namespace LanExchange
             }
         }
 
-        void TrayChatMethod(object sender)
+        void TrayChatMethod(object sender, object data, object message)
         {
+            string RefreshCompName = (string)data;
+            string ChatMessage = (string)message;
             TrayIcon.ShowBalloonTip(10000, "Сообщение от " + RefreshCompName, ChatMessage, ToolTipIcon.Info);
         }
 
@@ -354,11 +358,6 @@ namespace LanExchange
                             Comp.CopyExtraFrom(OldComp);
                         }
                     CompBrowser.CurrentDataTable = ScannedComps;
-                    // запускаем процесс пинга
-                    #if USE_PING
-                    if (!DoPing.IsBusy)
-                        DoPing.RunWorkerAsync(ScannedComps);
-                    #endif
                 }
                 if (bFirstStart)
                 {
@@ -375,6 +374,11 @@ namespace LanExchange
                     // сообщаем другим клиентам о запуске
                     LANEX_SEND(null, MSG_LANEX_LOGIN);
                 }
+                // запускаем процесс пинга
+                #if USE_PING
+                if (!DoPing.IsBusy)
+                    DoPing.RunWorkerAsync(ScannedComps);
+                #endif
             }
             // запускаем таймер для следующего обновления
             BrowseTimer.Enabled = true;
@@ -401,8 +405,7 @@ namespace LanExchange
                 if ((Comp as TComputerItem).IsPingable != bNewPingable)
                 {
                         (Comp as TComputerItem).IsPingable = bNewPingable;
-                        RefreshCompName = Comp.Name;
-                        Pages.Invoke(myPagesRefresh, Pages);
+                        //Pages.Invoke(myPagesRefresh, Pages, Comp.Name);
                 }
             }
             e.Cancel = DoPing.CancellationPending;
@@ -1192,8 +1195,6 @@ namespace LanExchange
         private UdpClient udp = null;
         private bool stopReceive = false;
         private static IntPtr lvCompsHandle = new IntPtr(0);
-        private string RefreshCompName = null;
-        private string ChatMessage = null;
 
         // Запуск отдельного потока для приема сообщений
         void StartReceive()
@@ -1236,6 +1237,7 @@ namespace LanExchange
                     TPanelItem PItem = CompBrowser.InternalItemList.Get(CompName);
                     TComputerItem Comp = PItem as TComputerItem;
                     bool bNeedRefresh = false;
+                    string RefreshCompName = String.Empty;
                     if (Comp != null)
                     {
                         Comp.EndPoint = ipendpoint;
@@ -1285,8 +1287,8 @@ namespace LanExchange
                             if (MyID.Equals(MSG[1]))
                             {
                                 byte[] data = Convert.FromBase64String(MSG[2]);
-                                ChatMessage = System.Text.ASCIIEncoding.UTF8.GetString(data);
-                                MainFormInstance.Invoke(myTrayChat, MainFormInstance);
+                                string ChatMessage = System.Text.ASCIIEncoding.UTF8.GetString(data);
+                                MainFormInstance.Invoke(myTrayChat, RefreshCompName, ChatMessage);
                             }
                             break;
                     }
@@ -1295,7 +1297,7 @@ namespace LanExchange
                     // обовление элемента списка
                     if (bNeedRefresh)
                     {
-                        Pages.Invoke(myPagesRefresh, Pages);
+                        Pages.Invoke(myPagesRefresh, Pages, RefreshCompName);
                     }
                 }
 
