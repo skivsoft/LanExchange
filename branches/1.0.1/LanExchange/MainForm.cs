@@ -1,16 +1,18 @@
 ﻿#define CHECK_ADMIN
-#define NOUSE_PING
+#define USE_PING
 #define NOUSE_FLASH
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.DirectoryServices.AccountManagement;
 using System.Drawing;
 using System.IO;
 using System.Management;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
@@ -400,8 +402,7 @@ namespace LanExchange
                 {
                         (Comp as TComputerItem).IsPingable = bNewPingable;
                         RefreshCompName = Comp.Name;
-                        if(lvComps != null)
-                            lvComps.Invoke(myCompsRefresh);
+                        Pages.Invoke(myPagesRefresh, Pages);
                 }
             }
             e.Cancel = DoPing.CancellationPending;
@@ -1079,16 +1080,12 @@ namespace LanExchange
             TLogger.Print("Thread for checking admin rights start");
             try
             {
-                //Assembly AccountManagement = System.Reflection.Assembly.Load("System.DirectoryServices.AccountManagement.dll");
                 // проверка прав текущего пользователя
-                System.DirectoryServices.AccountManagement.PrincipalContext pc_local =
-                    new System.DirectoryServices.AccountManagement.PrincipalContext(System.DirectoryServices.AccountManagement.ContextType.Machine);
-                System.DirectoryServices.AccountManagement.PrincipalContext pc_domain = null;
-                System.DirectoryServices.AccountManagement.UserPrincipal CurrentUser =
-                    System.DirectoryServices.AccountManagement.UserPrincipal.Current;
+                PrincipalContext pc_local = new PrincipalContext(ContextType.Machine);
+                PrincipalContext pc_domain = null;
+                UserPrincipal CurrentUser = UserPrincipal.Current;
                 // получаем локальную группу "Администраторы"
-                var groupAdmins = System.DirectoryServices.AccountManagement.GroupPrincipal.FindByIdentity(pc_local,
-                    System.DirectoryServices.AccountManagement.IdentityType.Sid, "S-1-5-32-544");
+                var groupAdmins = GroupPrincipal.FindByIdentity(pc_local, IdentityType.Sid, "S-1-5-32-544");
                 if (groupAdmins != null)
                 {
                     var groups = groupAdmins.GetMembers(false);
@@ -1106,12 +1103,11 @@ namespace LanExchange
                             }
                             else
                                 // ищем доменную группу
-                                if (group.ContextType == System.DirectoryServices.AccountManagement.ContextType.Domain)
+                                if (group.ContextType == ContextType.Domain)
                                 {
                                     if (pc_domain == null)
-                                        pc_domain = new System.DirectoryServices.AccountManagement.PrincipalContext(System.DirectoryServices.AccountManagement.ContextType.Domain);
-                                    System.DirectoryServices.AccountManagement.GroupPrincipal gr =
-                                        System.DirectoryServices.AccountManagement.GroupPrincipal.FindByIdentity(pc_domain, System.DirectoryServices.AccountManagement.IdentityType.Sid, group.Sid.ToString());
+                                        pc_domain = new PrincipalContext(ContextType.Domain);
+                                    GroupPrincipal gr = GroupPrincipal.FindByIdentity(pc_domain, IdentityType.Sid, group.Sid.ToString());
                                     // проверяем текущего пользователя на принадлежность группе, которая входит в "Администраторы"
                                     if (gr != null && CurrentUser.IsMemberOf(gr))
                                     {

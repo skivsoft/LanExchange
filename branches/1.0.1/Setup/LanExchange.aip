@@ -1,57 +1,84 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="8.9" version="8.9" Modules="simple" RootPath="." Language="en" Id="{98E4F66F-C246-4003-BAE1-9D969E72C922}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="8.8" version="8.8" Modules="professional" RootPath="." Language="ru" Id="{CA9919DC-DFC8-45B2-A9C0-83F8A18E8098}">
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
-    <ROW Property="AI_MINDOTNETVERSION" MultiBuildValue="DefaultBuild:3.5" ValueLocId="-"/>
-    <ROW Property="ALLUSERS" Value="2"/>
-    <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
+    <ROW Property="AI_CF_FrameBottomLeft" Value="frame_bottom_left.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameBottomLeftInactive" Value="frame_bottom_left_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameBottomMid" Value="frame_bottom_mid.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameBottomMidInactive" Value="frame_bottom_mid_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameBottomRight" Value="frame_bottom_right.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameBottomRightInactive" Value="frame_bottom_right_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameCaption" Value="frame_caption.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameCaptionInactive" Value="frame_caption_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameLeft" Value="frame_left.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameLeftInactive" Value="frame_left_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameRight" Value="frame_right.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameRightInactive" Value="frame_right_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameTopLeft" Value="frame_top_left.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameTopLeftInactive" Value="frame_top_left_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameTopMid" Value="frame_top_mid.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameTopMidInactive" Value="frame_top_mid_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameTopRight" Value="frame_top_right.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameTopRightInactive" Value="frame_top_right_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_SysCloseDown" Value="sys_close_down.bmp" Type="1"/>
+    <ROW Property="AI_CF_SysCloseHot" Value="sys_close_hot.bmp" Type="1"/>
+    <ROW Property="AI_CF_SysCloseInactive" Value="sys_close_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_SysCloseNormal" Value="sys_close_normal.bmp" Type="1"/>
+    <ROW Property="AI_CF_SysMinDown" Value="sys_min_down.bmp" Type="1"/>
+    <ROW Property="AI_CF_SysMinHot" Value="sys_min_hot.bmp" Type="1"/>
+    <ROW Property="AI_CF_SysMinInactive" Value="sys_min_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_SysMinNormal" Value="sys_min_normal.bmp" Type="1"/>
+    <ROW Property="AI_CF_TYPE" Value="0" MultiBuildValue="DefaultBuild:1" Type="4"/>
+    <ROW Property="AI_FINDEXE_TITLE" Value="Выберите установочный пакет для [|ProductName]" ValueLocId="AI.Property.FindExeTitle"/>
+    <ROW Property="AI_MINDOTNETVERSION" MultiBuildValue="DefaultBuild:2.0" ValueLocId="-"/>
+    <ROW Property="ALLUSERS" Value="2" MultiBuildValue="DefaultBuild:1"/>
+    <ROW Property="ARPCOMMENTS" Value="Этот установочный пакет содержит все необходимое для установки [|ProductName]." ValueLocId="*"/>
     <ROW Property="ARPNOMODIFY" MultiBuildValue="DefaultBuild:1"/>
-    <ROW Property="ARPNOREPAIR" Value="1"/>
     <ROW Property="ARPPRODUCTICON" Value="LanExchange.exe" Type="8"/>
     <ROW Property="ARPURLINFOABOUT" Value="http://code.google.com/p/lanexchange/"/>
     <ROW Property="ARPURLUPDATEINFO" Value="http://code.google.com/p/lanexchange/downloads/list"/>
     <ROW Property="CTRLS" Value="2"/>
-    <ROW Property="MSIFASTINSTALL" MultiBuildValue="DefaultBuild:7"/>
+    <ROW Property="MSIFASTINSTALL" MultiBuildValue="DefaultBuild:5"/>
     <ROW Property="Manufacturer" Value="SkivSoft" ValueLocId="*"/>
-    <ROW Property="MsiLogging" MultiBuildValue="DefaultBuild:v"/>
-    <ROW Property="ProductCode" Value="1033:{192D9BE3-80A2-4BBF-985D-63DBE6518927} " Type="16"/>
-    <ROW Property="ProductLanguage" Value="1033"/>
+    <ROW Property="ProductCode" Value="1049:{6DD34095-DA6C-42CF-B1CE-EDCF76523DDC} " Type="16"/>
+    <ROW Property="ProductLanguage" Value="1049"/>
     <ROW Property="ProductName" Value="LanExchange" ValueLocId="*"/>
     <ROW Property="ProductVersion" Value="1.0.1"/>
     <ROW Property="REBOOT" MultiBuildValue="DefaultBuild:Suppress"/>
-    <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
-    <ROW Property="UpgradeCode" Value="{F055DFF7-ED37-4D91-AA87-330C77A69FC8}"/>
+    <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
+    <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND;AI_SETUPEXEPATH;SETUPEXEDIR"/>
+    <ROW Property="UpgradeCode" Value="{1764C90E-4299-434B-9AAB-8FCAAEFCE5A1}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
     <ROW Property="WindowsType9XDisplay" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
-    <ROW Directory="LocalAppDataFolder" Directory_Parent="TARGETDIR" DefaultDir="LocalA~1|LocalAppDataFolder" IsPseudoRoot="1"/>
+    <ROW Directory="DesktopFolder" Directory_Parent="TARGETDIR" DefaultDir="Deskto~1|DesktopFolder" IsPseudoRoot="1"/>
     <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
-    <ROW Component="LanExchange.exe" ComponentId="{F18F60C1-3338-4AC4-B6CA-D3BF46364521}" Directory_="APPDIR" Attributes="0" KeyPath="LanExchange.exe"/>
-    <ROW Component="LanExchange.log" ComponentId="{54BB56B1-EC64-4636-BF38-F1FDA316E47A}" Directory_="APPDIR" Attributes="0" KeyPath="System.DirectoryServices.AccountManagement.xml" Type="0"/>
-    <ROW Component="Restart.exe" ComponentId="{EB1A8B18-F474-4E33-A3B8-712C9163923D}" Directory_="APPDIR" Attributes="0" KeyPath="Restart.exe"/>
-    <ROW Component="System.DirectoryServices.AccountManageme" ComponentId="{2BAC5BC0-0731-423A-A6A9-E19CD98A8BBB}" Directory_="APPDIR" Attributes="0" KeyPath="System.DirectoryServices.AccountManagement.dll"/>
+    <ROW Component="AI_ExePath" ComponentId="{E7F0C2F2-BEBD-49AD-B230-B908C61BD3E4}" Directory_="APPDIR" Attributes="4" KeyPath="AI_ExePath"/>
+    <ROW Component="LanExchange.exe" ComponentId="{FFA790A1-4024-4DCB-881C-0B01F0DC66CE}" Directory_="APPDIR" Attributes="0" KeyPath="LanExchange.exe"/>
+    <ROW Component="Restart.exe" ComponentId="{87EF682A-88AD-4489-BF3C-1BE187805B48}" Directory_="APPDIR" Attributes="0" KeyPath="Restart.exe"/>
+    <ROW Component="System.DirectoryServices.AccountManage_1" ComponentId="{00C456E7-BE03-4E1F-9031-01D1F45CDB50}" Directory_="APPDIR" Attributes="0" KeyPath="System.DirectoryServices.AccountManagement.xml" Type="0"/>
+    <ROW Component="System.DirectoryServices.AccountManageme" ComponentId="{A9E14332-17BE-4D6E-B203-1F2EEE5DCA8F}" Directory_="APPDIR" Attributes="0" KeyPath="System.DirectoryServices.AccountManagement.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
-    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="LanExchange.exe LanExchange.log Restart.exe System.DirectoryServices.AccountManageme"/>
+    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_ExePath LanExchange.exe Restart.exe System.DirectoryServices.AccountManage_1 System.DirectoryServices.AccountManageme"/>
     <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
-    <ROW File="LanExchange.exe" Component_="LanExchange.exe" FileName="LanExc~1.exe|LanExchange.exe" Attributes="0" SourcePath="exe\LanExchange.exe" SelfReg="false" NextFile="System.DirectoryServices.AccountManagement.dll"/>
-    <ROW File="LanExchange.log" Component_="LanExchange.log" FileName="LanExc~1.log|LanExchange.log" Attributes="0" SourcePath="exe\LanExchange.log" SelfReg="false"/>
-    <ROW File="Restart.exe" Component_="Restart.exe" FileName="Restart.exe" Attributes="0" SourcePath="exe\Restart.exe" SelfReg="false" NextFile="LanExchange.log"/>
+    <ROW File="LanExchange.exe" Component_="LanExchange.exe" FileName="LanExc~1.exe|LanExchange.exe" Attributes="0" SourcePath="exe\LanExchange.exe" SelfReg="false" NextFile="Restart.exe"/>
+    <ROW File="Restart.exe" Component_="Restart.exe" FileName="Restart.exe" Attributes="0" SourcePath="exe\Restart.exe" SelfReg="false" NextFile="System.DirectoryServices.AccountManagement.dll"/>
     <ROW File="System.DirectoryServices.AccountManagement.dll" Component_="System.DirectoryServices.AccountManageme" FileName="System~1.dll|System.DirectoryServices.AccountManagement.dll" Attributes="0" SourcePath="exe\System.DirectoryServices.AccountManagement.dll" SelfReg="false" NextFile="System.DirectoryServices.AccountManagement.xml"/>
-    <ROW File="System.DirectoryServices.AccountManagement.xml" Component_="LanExchange.log" FileName="System~1.xml|System.DirectoryServices.AccountManagement.xml" Attributes="0" SourcePath="exe\System.DirectoryServices.AccountManagement.xml" SelfReg="false" NextFile="Restart.exe"/>
+    <ROW File="System.DirectoryServices.AccountManagement.xml" Component_="System.DirectoryServices.AccountManage_1" FileName="System~1.xml|System.DirectoryServices.AccountManagement.xml" Attributes="0" SourcePath="exe\System.DirectoryServices.AccountManagement.xml" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
-    <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="0" Languages="en" InstallationType="4"/>
+    <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="0" PackageFolder="." PackageFileName="setup" Languages="ru" InstallationType="2" CabsLocation="1" CompressCabs="false" UseLzma="true" PackageType="1" FilesInsideExe="true" ExtractionFolder="[AppDataFolder][|Manufacturer]\[|ProductName] [|ProductVersion]\install" ExtUI="true"/>
     <ATTRIBUTE name="CurrentBuild" value="DefaultBuild"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
     <ROW Path="&lt;AI_DICTS&gt;ui.ail"/>
-    <ROW Path="&lt;AI_DICTS&gt;ui_en.ail"/>
+    <ROW Path="&lt;AI_DICTS&gt;ui_ru.ail"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.FragmentComponent">
     <ROW Fragment="CommonUI.aip" Path="&lt;AI_FRAGS&gt;CommonUI.aip"/>
@@ -62,46 +89,90 @@
     <ROW Fragment="UI.aip" Path="&lt;AI_THEMES&gt;classic\fragments\UI.aip"/>
     <ROW Fragment="Validation.aip" Path="&lt;AI_FRAGS&gt;Validation.aip"/>
   </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiActionTextComponent">
+    <ROW Action="AI_DeleteLzma" Description="Удаление извлеченных файлов" DescriptionLocId="ActionText.Description.AI_DeleteLzma" TemplateLocId="-"/>
+    <ROW Action="AI_DeleteRLzma" Description="Удаление извлеченных файлов" DescriptionLocId="ActionText.Description.AI_DeleteLzma" TemplateLocId="-"/>
+    <ROW Action="AI_ExtractLzma" Description="Извлечение файлов из архива" DescriptionLocId="ActionText.Description.AI_ExtractLzma" TemplateLocId="-"/>
+  </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiAppSearchComponent">
+    <ROW Property="AI_DOTNET20_SEARCH" Signature_="AI_DotNet20SearchSgn" Builds="DefaultBuild"/>
+    <ROW Property="AI_DOTNET30_SEARCH" Signature_="AI_DotNet30SearchSgn" Builds="DefaultBuild"/>
     <ROW Property="AI_DOTNET35_CLIENTPROFILE_SEARCH" Signature_="AI_DotNet35ClientProfileSearchSgn" Builds="DefaultBuild"/>
     <ROW Property="AI_DOTNET35_SEARCH" Signature_="AI_DotNet35SearchSgn" Builds="DefaultBuild"/>
     <ROW Property="AI_DOTNET40_CLIENTPROFILE_SEARCH" Signature_="AI_DotNet40ClientProfileSearchSgn" Builds="DefaultBuild"/>
     <ROW Property="AI_DOTNET40_SEARCH" Signature_="AI_DotNet40SearchSgn" Builds="DefaultBuild"/>
+    <ROW Property="AI_SETUPEXEPATH" Signature_="AI_EXE_PATH_CU" Builds="DefaultBuild"/>
+    <ROW Property="AI_SETUPEXEPATH" Signature_="AI_EXE_PATH_LM" Builds="DefaultBuild"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiBinaryComponent">
+    <ROW Name="Prereq.dll" SourcePath="&lt;AI_CUSTACTS&gt;Prereq.dll"/>
     <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
+    <ROW Name="frame_bottom_left.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_bottom_left.bmp"/>
+    <ROW Name="frame_bottom_left_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_bottom_left_inactive.bmp"/>
+    <ROW Name="frame_bottom_mid.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_bottom_mid.bmp"/>
+    <ROW Name="frame_bottom_mid_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_bottom_mid_inactive.bmp"/>
+    <ROW Name="frame_bottom_right.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_bottom_right.bmp"/>
+    <ROW Name="frame_bottom_right_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_bottom_right_inactive.bmp"/>
+    <ROW Name="frame_caption.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_caption.bmp"/>
+    <ROW Name="frame_caption_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_caption_inactive.bmp"/>
+    <ROW Name="frame_left.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_left.bmp"/>
+    <ROW Name="frame_left_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_left_inactive.bmp"/>
+    <ROW Name="frame_right.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_right.bmp"/>
+    <ROW Name="frame_right_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_right_inactive.bmp"/>
+    <ROW Name="frame_top_left.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_top_left.bmp"/>
+    <ROW Name="frame_top_left_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_top_left_inactive.bmp"/>
+    <ROW Name="frame_top_mid.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_top_mid.bmp"/>
+    <ROW Name="frame_top_mid_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_top_mid_inactive.bmp"/>
+    <ROW Name="frame_top_right.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_top_right.bmp"/>
+    <ROW Name="frame_top_right_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_top_right_inactive.bmp"/>
+    <ROW Name="lzmaextractor.dll" SourcePath="&lt;AI_CUSTACTS&gt;lzmaextractor.dll"/>
+    <ROW Name="sys_close_down.bmp" SourcePath="&lt;AI_FRAME_BTNS&gt;sys_close_down.bmp"/>
+    <ROW Name="sys_close_hot.bmp" SourcePath="&lt;AI_FRAME_BTNS&gt;sys_close_hot.bmp"/>
+    <ROW Name="sys_close_inactive.bmp" SourcePath="&lt;AI_FRAME_BTNS&gt;sys_close_inactive.bmp"/>
+    <ROW Name="sys_close_normal.bmp" SourcePath="&lt;AI_FRAME_BTNS&gt;sys_close_normal.bmp"/>
+    <ROW Name="sys_min_down.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;sys_min_down.bmp"/>
+    <ROW Name="sys_min_hot.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;sys_min_hot.bmp"/>
+    <ROW Name="sys_min_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;sys_min_inactive.bmp"/>
+    <ROW Name="sys_min_normal.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;sys_min_normal.bmp"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiControlComponent">
     <ATTRIBUTE name="FixedSizeBitmaps" value="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiControlEventComponent">
+    <ROW Dialog_="FolderDlg" Control_="Back" Event="NewDialog" Argument="WelcomeDlg" Condition="AI_INSTALL" Ordering="1"/>
     <ROW Dialog_="WelcomeDlg" Control_="Next" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="1"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="201"/>
+    <ROW Dialog_="FolderDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL" Ordering="201"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_INSTALL" Ordering="197"/>
     <ROW Dialog_="MaintenanceTypeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceWelcomeDlg" Condition="AI_MAINT" Ordering="1"/>
     <ROW Dialog_="MaintenanceWelcomeDlg" Control_="Next" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="99"/>
     <ROW Dialog_="CustomizeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="1"/>
-    <ROW Dialog_="MaintenanceTypeDlg" Control_="ChangeButton" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="401"/>
-    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="204"/>
-    <ROW Dialog_="CustomizeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_MAINT" Ordering="101"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="ChangeButton" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="301"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="202"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_MAINT" Ordering="1"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_MAINT" Ordering="198"/>
-    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PatchWelcomeDlg" Condition="AI_PATCH" Ordering="205"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PatchWelcomeDlg" Condition="AI_PATCH" Ordering="203"/>
     <ROW Dialog_="PatchWelcomeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_PATCH" Ordering="201"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_PATCH" Ordering="199"/>
     <ROW Dialog_="ResumeDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_RESUME" Ordering="299"/>
-    <ROW Dialog_="FolderDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL" Ordering="201"/>
-    <ROW Dialog_="FolderDlg" Control_="Back" Event="NewDialog" Argument="WelcomeDlg" Condition="AI_INSTALL" Ordering="1"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
+    <ROW Action="AI_AppSearchEx" Type="1" Source="Prereq.dll" Target="DoAppSearchEx"/>
     <ROW Action="AI_DOWNGRADE" Type="19" Target="4010"/>
-    <ROW Action="AI_InstallModeCheck" Type="1" Source="aicustact.dll" Target="UpdateInstallMode" WithoutSeq="true"/>
+    <ROW Action="AI_DeleteCadLzma" Type="51" Source="AI_DeleteLzma" Target="[AI_SETUPEXEPATH]"/>
+    <ROW Action="AI_DeleteLzma" Type="1025" Source="lzmaextractor.dll" Target="DeleteLZMAFiles"/>
+    <ROW Action="AI_DeleteRCadLzma" Type="51" Source="AI_DeleteRLzma" Target="[AI_SETUPEXEPATH]"/>
+    <ROW Action="AI_DeleteRLzma" Type="1281" Source="lzmaextractor.dll" Target="DeleteLZMAFiles"/>
+    <ROW Action="AI_ExtractCadLzma" Type="51" Source="AI_ExtractLzma" Target="[AI_SETUPEXEPATH]"/>
+    <ROW Action="AI_ExtractLzma" Type="1025" Source="lzmaextractor.dll" Target="ExtractLZMAFiles"/>
+    <ROW Action="AI_FindExeLzma" Type="1" Source="lzmaextractor.dll" Target="FindEXE"/>
     <ROW Action="AI_LaunchApp" Type="1" Source="aicustact.dll" Target="[#LanExchange.exe]"/>
     <ROW Action="AI_PREPARE_UPGRADE" Type="65" Source="aicustact.dll" Target="PrepareUpgrade"/>
     <ROW Action="AI_RESTORE_LOCATION" Type="65" Source="aicustact.dll" Target="RestoreLocation"/>
     <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
     <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
     <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
-    <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="DefaultBuild:[LocalAppDataFolder]\[ProductName]"/>
+    <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="DefaultBuild:[ProgramFilesFolder]\[ProductName]"/>
     <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
   </COMPONENT>
@@ -114,20 +185,39 @@
     <ROW Action="AI_STORE_LOCATION" Condition="(Not Installed) OR REINSTALL" Sequence="1501"/>
     <ROW Action="AI_PREPARE_UPGRADE" Condition="AI_UPGRADE=&quot;No&quot; AND (Not Installed)" Sequence="1399"/>
     <ROW Action="AI_ResolveKnownFolders" Sequence="51"/>
+    <ROW Action="AI_AppSearchEx" Sequence="101"/>
+    <ROW Action="AI_DeleteCadLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (NOT PATCH)" Sequence="199" Builds="DefaultBuild"/>
+    <ROW Action="AI_DeleteRCadLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (NOT PATCH)" Sequence="198" Builds="DefaultBuild"/>
+    <ROW Action="AI_ExtractCadLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (NOT PATCH)" Sequence="197" Builds="DefaultBuild"/>
+    <ROW Action="AI_FindExeLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (NOT PATCH)" Sequence="196" Builds="DefaultBuild"/>
+    <ROW Action="AI_ExtractLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (NOT PATCH)" Sequence="1549" Builds="DefaultBuild"/>
+    <ROW Action="AI_DeleteRLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (NOT PATCH)" Sequence="1548" Builds="DefaultBuild"/>
+    <ROW Action="AI_DeleteLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (NOT PATCH)" Sequence="6599" Builds="DefaultBuild"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstallUISequenceComponent">
     <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
     <ROW Action="AI_ResolveKnownFolders" Sequence="51"/>
+    <ROW Action="AI_AppSearchEx" Sequence="101"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiLaunchConditionsComponent">
-    <ROW Condition="(AI_DOTNET35_SEARCH = &quot;#1&quot;) OR (AI_DOTNET35_CLIENTPROFILE_SEARCH = &quot;#1&quot;) OR (AI_DOTNET40_CLIENTPROFILE_SEARCH = &quot;#1&quot;) OR (AI_DOTNET40_SEARCH = &quot;#1&quot;)" Description="[ProductName] cannot be installed on systems with .NET Framework version lower than [AI_MINDOTNETVERSION]" DescriptionLocId="AI.LaunchCondition.DotNET" IsPredefined="true" Builds="DefaultBuild"/>
-    <ROW Condition="VersionNT" Description="[ProductName] cannot be installed on [WindowsType9XDisplay]" DescriptionLocId="AI.LaunchCondition.No9X" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="(AI_DOTNET20_SEARCH = &quot;#1&quot;) OR (AI_DOTNET30_SEARCH = &quot;#1&quot;) OR (AI_DOTNET35_SEARCH = &quot;#1&quot;) OR (AI_DOTNET35_CLIENTPROFILE_SEARCH = &quot;#1&quot;) OR (AI_DOTNET40_CLIENTPROFILE_SEARCH = &quot;#1&quot;) OR (AI_DOTNET40_SEARCH = &quot;#1&quot;) OR (AI_DOTNET40_CLIENTPROFILE_SEARCH = &quot;#1&quot;) OR (AI_DOTNET40_SEARCH = &quot;#1&quot;)" Description="Приложение [ProductName] не может быть установлено на компьютере с версией .NET Framework, более ранней, чем [AI_MINDOTNETVERSION]" DescriptionLocId="AI.LaunchCondition.DotNET" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="VersionNT" Description="Приложение [ProductName] не может быть установлено на [WindowsType9XDisplay]" DescriptionLocId="AI.LaunchCondition.No9X" IsPredefined="true" Builds="DefaultBuild"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiRegLocatorComponent">
+    <ROW Signature_="AI_DotNet20SearchSgn" Root="2" Key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v2.0.50727" Name="Install" Type="2"/>
+    <ROW Signature_="AI_DotNet30SearchSgn" Root="2" Key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.0\Setup" Name="InstallSuccess" Type="2"/>
     <ROW Signature_="AI_DotNet35ClientProfileSearchSgn" Root="2" Key="SOFTWARE\Microsoft\NET Framework Setup\DotNetClient\v3.5" Name="Install" Type="2"/>
     <ROW Signature_="AI_DotNet35SearchSgn" Root="2" Key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.5" Name="Install" Type="2"/>
     <ROW Signature_="AI_DotNet40ClientProfileSearchSgn" Root="2" Key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Client" Name="Install" Type="2"/>
     <ROW Signature_="AI_DotNet40SearchSgn" Root="2" Key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full" Name="Install" Type="2"/>
+    <ROW Signature_="AI_EXE_PATH_CU" Root="1" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]\[ProductVersion]" Name="AI_ExePath" Type="2"/>
+    <ROW Signature_="AI_EXE_PATH_LM" Root="2" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]\[ProductVersion]" Name="AI_ExePath" Type="2"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiRegsComponent">
+    <ROW Registry="AI_ExePath" Root="-1" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]\[ProductVersion]" Name="AI_ExePath" Value="[AI_SETUPEXEPATH]" Component_="AI_ExePath"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
+    <ROW Shortcut="LanExchange.exe" Directory_="DesktopFolder" Name="LanExc~1.exe|LanExchange.exe" Component_="LanExchange.exe" Target="[#LanExchange.exe]" Description="LanExchange.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
     <ATTRIBUTE name="UsedTheme" value="classic"/>
@@ -135,5 +225,19 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiUpgradeComponent">
     <ROW UpgradeCode="[|UpgradeCode]" VersionMax="[|ProductVersion]" Attributes="1025" ActionProperty="OLDPRODUCTS"/>
     <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.PreReqComponent">
+    <ROW PrereqKey="B21EBECC_CED3_4773_B2F7_2A9B571B8007" DisplayName=".NET Framework 2.0 SP2" VersionMin="2.0" SetupFileUrl="http://download.microsoft.com/download/c/6/e/c6e88215-0178-4c6c-b5f3-158ff77b1f38/NetFx20SP2_x86.exe" Location="1" ExactSize="0" Win9xVersions="Windows 9x/ME" WinNTVersions="Windows NT 4.0, Windows NT 4.0 Service Pack 1, Windows NT 4.0 Service Pack 2, Windows NT 4.0 Service Pack 3, Windows NT 4.0 Service Pack 4, Windows NT 4.0 Service Pack 5, Windows NT 4.0 Service Pack 6, Windows 2000, Windows 2000 Service Pack 1, Windows 2000 Service Pack 2" Operator="1"/>
+    <ATTRIBUTE name="PrereqsOrder" value="B21EBECC_CED3_4773_B2F7_2A9B571B8007"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.PreReqSearchComponent">
+    <ROW SearchKey="B21EBECC_CED3_4773_B2F7_2A9B571B8007_NET_20_SP2_40_CP_SEARCH" Prereq="B21EBECC_CED3_4773_B2F7_2A9B571B8007" SearchType="9" SearchString="HKLM\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Client\Install" RefContent="M1" Order="4" Property="AI_NET_20_SP2_40_CP_PREREQSEARCH_PROP"/>
+    <ROW SearchKey="B21EBECC_CED3_4773_B2F7_2A9B571B8007_NET_20_SP2_40_SEARCH" Prereq="B21EBECC_CED3_4773_B2F7_2A9B571B8007" SearchType="9" SearchString="HKLM\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\Install" RefContent="M1" Order="5" Property="AI_NET_20_SP2_40_PREREQSEARCH_PROP"/>
+    <ROW SearchKey="B21EBECC_CED3_4773_B2F7_2A9B571B8007_NET_20_SP2_SEARCH_1" Prereq="B21EBECC_CED3_4773_B2F7_2A9B571B8007" SearchType="3" SearchString="{C09FB3CD-3D0C-3F2D-899A-6A1D67F2073F}" Order="2" Property="AI_NET_20_SP2_PREREQSEARCH_1_PROP"/>
+    <ROW SearchKey="B21EBECC_CED3_4773_B2F7_2A9B571B8007_NET_20_SP2_SEARCH_2" Prereq="B21EBECC_CED3_4773_B2F7_2A9B571B8007" SearchType="3" SearchString="{EDDF99D9-9FE3-4871-A7DB-D1522C51EE9A}" Order="1" Property="AI_NET_20_SP2_PREREQSEARCH_2_PROP"/>
+    <ROW SearchKey="B21EBECC_CED3_4773_B2F7_2A9B571B8007_NET_20_SP2_WIN_SEARCH" Prereq="B21EBECC_CED3_4773_B2F7_2A9B571B8007" SearchType="9" SearchString="HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\CurrentBuildNumber" RefContent="G3790" Order="3" Property="AI_NET_20_SP2_WIN_PREREQSEARCH_PROP"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.SynchronizedFolderComponent">
+    <ROW Directory_="APPDIR" SourcePath="exe" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store" ExcludeFlags="6"/>
   </COMPONENT>
 </DOCUMENT>

@@ -66,7 +66,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.DirectoryServices" />
-    <Reference Include="System.DirectoryServices.AccountManagement">
+    <Reference Include="System.DirectoryServices.AccountManagement, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Program Files\Reference Assemblies\Microsoft\Framework\v3.5\System.DirectoryServices.AccountManagement.dll</HintPath>
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Drawing" />
@@ -201,12 +203,6 @@
     <None Include="Resources\folder2_normal_16x16.png" />
     <None Include="Resources\FAR_16x16.png" />
     <Content Include="Resources\LanExchange_16x16.ico" />
-    <Content Include="System.DirectoryServices.AccountManagement.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="System.DirectoryServices.AccountManagement.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="Resources\LanExchange_48x48.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
