@@ -36,10 +36,17 @@ namespace LanExchange
                                 eventOneCopyOnly.WaitOne();
                                 context.MainForm.Invoke(new MethodInvoker(delegate
                                 {
-                                    MainForm F = (MainForm)context.MainForm;
-                                    F.bReActivate = true;
-                                    F.IsFormVisible = true;
-                                    TLogger.Print("Instance activated");
+                                    try
+                                    {
+                                        MainForm F = (MainForm)context.MainForm;
+                                        F.bReActivate = true;
+                                        F.IsFormVisible = true;
+                                        TLogger.Print("Instance activated");
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        TLogger.Print("APP EXCEPTION: {0}\n{1}", e.Message, e.StackTrace);
+                                    }
                                 }));
                             }//while
                         });

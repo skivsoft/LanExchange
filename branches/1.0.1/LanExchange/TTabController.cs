@@ -229,6 +229,7 @@ namespace LanExchange
                     else
                         ItemList.Add(new TComputerItem());
                 }
+                TLogger.Print("Added items to object {0}, Count: {1}", ItemList.ToString(), ItemList.Count);
             }
             // установка фильтра
             MainForm.MainFormInstance.UpdateFilter(LV, e.Info.FilterText, false);

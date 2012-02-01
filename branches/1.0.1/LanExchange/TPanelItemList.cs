@@ -23,13 +23,10 @@ namespace LanExchange
    
         public void Add(TPanelItem Comp)
         {
-            TPanelItem Result;
             if (Comp != null)
-            {
-                if (Data.TryGetValue(Comp.Name, out Result))
-                    return;
-                Data.Add(Comp.Name, Comp);
-            }
+              if (!String.IsNullOrEmpty(Comp.Name))
+                if (!Data.ContainsKey(Comp.Name))
+                    Data.Add(Comp.Name, Comp);
         }
 
         public void Delete(TPanelItem Comp)
@@ -39,9 +36,12 @@ namespace LanExchange
 
         public TPanelItem Get(string key)
         {
-            TPanelItem Result;
+            TPanelItem Result = null;
             if (Data.TryGetValue(key, out Result))
+            {
+                Result.Name = key;
                 return Result;
+            }
             else
                 return null;
         }

@@ -363,7 +363,14 @@ namespace LanExchange
                 {
                     bFirstStart = false;
                     // загрузка списка недавно использованных компов
-                    TabController.LoadSettings();
+                    try
+                    {
+                        TabController.LoadSettings();
+                    }
+                    catch (Exception ex)
+                    {
+                        TLogger.Print("Can't load settings: {0}", ex.ToString());
+                    }
                     // выбираем текущий компьютер, чтобы пользователь видел описание
                     ListView LV = GetActiveListView();
                     TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
