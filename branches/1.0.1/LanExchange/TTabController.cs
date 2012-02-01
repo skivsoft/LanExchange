@@ -227,7 +227,11 @@ namespace LanExchange
                     if (PItem != null)
                         ItemList.Add(PItem);
                     else
-                        ItemList.Add(new TComputerItem());
+                    {
+                        TComputerItem Comp = new TComputerItem();
+                        Comp.Name = ItemName;
+                        ItemList.Add(Comp);
+                    }
                 }
                 TLogger.Print("Added items to object {0}, Count: {1}", ItemList.ToString(), ItemList.Count);
             }
