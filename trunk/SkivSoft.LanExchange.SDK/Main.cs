@@ -51,5 +51,8 @@ namespace SkivSoft.LanExchange.SDK
         void LogPrint(Exception exception);
         void LoggerPrintEventHandlerAdd(LoggerPrintEventHandler handler);
         void LoggerPrintEventHandlerRemove(LoggerPrintEventHandler handler);
+
+        string ComputerName { get; }
+        string UserName { get; }
     }
 }

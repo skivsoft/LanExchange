@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SkivSoft.LanExchange.Properties {
+namespace SkivSoft.LanExchangeDX.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace SkivSoft.LanExchange.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SkivSoft.LanExchange.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SkivSoft.LanExchangeDX.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,27 +57,6 @@ namespace SkivSoft.LanExchange.Properties {
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        internal static System.Drawing.Bitmap CompOff {
-            get {
-                object obj = ResourceManager.GetObject("CompOff", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap LanExchange_48x48 {
-            get {
-                object obj = ResourceManager.GetObject("LanExchange_48x48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap UserName {
-            get {
-                object obj = ResourceManager.GetObject("UserName", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

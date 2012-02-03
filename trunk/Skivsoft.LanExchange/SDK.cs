@@ -111,5 +111,23 @@ namespace SkivSoft.LanExchange
                 }
             }
         }
+
+        public string ComputerName 
+        {
+            get
+            {
+                return Environment.MachineName;
+            }
+        }
+
+        public string UserName
+        {
+            get
+            {
+                System.Security.Principal.WindowsIdentity user = System.Security.Principal.WindowsIdentity.GetCurrent();
+                string[] A = user.Name.Split('\\');
+                return A.Length > 1 ? A[1] : A[0];
+            }
+        }
     }
 }
