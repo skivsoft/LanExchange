@@ -5,15 +5,19 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Reflection;
 
-namespace SkivSoft.LanExchange
+namespace LanExchange
 {
+    #region MainForm
     public partial class MainForm : Form
     {
-        public static TMainApp MainApp;
+        public static MainForm Instance = null;
 
+        
         public MainForm()
         {
+            Instance = this;
             InitializeComponent();
         }
 
@@ -38,19 +42,20 @@ namespace SkivSoft.LanExchange
                                       Screen.PrimaryScreen.WorkingArea.Top + (Screen.PrimaryScreen.WorkingArea.Height - Rect.Height));
             this.SetBounds(Rect.X, Rect.Y, Rect.Width, Rect.Height);
             // выводим имя компьютера
-            lCompName.Text = MainApp.ComputerName;
+            lCompName.Text = TMainApp.App.ComputerName;
             // выводим имя пользователя
-            lUserName.Text = MainApp.UserName;
+            lUserName.Text = TMainApp.App.UserName;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            if (MainForm.MainApp == null)
+            if (TMainApp.App == null)
                 return;
-            MainApp.LogPrint("MainForm load");
+            TMainApp.App.LogPrint("MainForm load");
             SetupForm();
 
             //MainForm.MainApp.LogPrint("MainForm_Load");
+            /*
             listView1.Items.Clear();
             foreach (var Pair in MainApp.plugins)
             {
@@ -60,6 +65,8 @@ namespace SkivSoft.LanExchange
                 Item.SubItems.Add(Pair.Value.Description);
                 listView1.Items.Add(Item);
             }
+             */
         }
     }
+    #endregion
 }

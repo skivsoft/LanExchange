@@ -6,14 +6,14 @@ using System.Text;
 
 namespace SkivSoft.LanExchange.SDK
 {
-    public class TLogger : IMLanEXPlugin
+    public class TLogger : ILanEXPlugin
     {
         static bool bFirstRun = true;
-        private IMLanEXMainApp App;
+        private ILanEXMainApp App;
 
         public void Initialize(IServiceProvider serviceProvider)
         {
-            App = serviceProvider.GetService(typeof(IMLanEXMainApp)) as IMLanEXMainApp;
+            App = serviceProvider.GetService(typeof(ILanEXMainApp)) as ILanEXMainApp;
             if (App != null)
             {
                 App.LoggerPrintEventHandlerAdd(MyLoggerPrint);
@@ -55,14 +55,6 @@ namespace SkivSoft.LanExchange.SDK
                     FS.Flush();
                     FS.Close();
                 }
-            }
-        }
-
-        public void DoIt()
-        {
-            if (App != null)
-            {
-                App.PrintKarrramba();
             }
         }
 

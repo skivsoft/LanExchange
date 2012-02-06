@@ -1,32 +1,34 @@
 ﻿using System;
 using System.Reflection;
-using System.Windows.Forms;
 using SkivSoft.LanExchange.SDK;
 using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Text;
+using System.Drawing;
 
-namespace SkivSoft.LanExchange
+namespace LanExchange
 {
-    public class TMainApp : IMLanEXMainApp, IServiceProvider
+    public abstract class TMainApp : ILanEXMainApp, IServiceProvider
     {
-        public Dictionary<string, IMLanEXPlugin> plugins = null;
-        
+        public static TMainApp App = null;
+
+        public Dictionary<string, ILanEXPlugin> plugins = null;
+
+        private ILanEXForm MainFormInstance = null;
+      
         public TMainApp()
         {
-            plugins = new Dictionary<string, IMLanEXPlugin>();
+            plugins = new Dictionary<string, ILanEXPlugin>();
+            this.MainFormInstance = CreateMainForm();
         }
-        
-        public void PrintKarrramba()
+
+        public ILanEXForm MainForm { get { return this.MainFormInstance; } }
+
+        public virtual object GetService(Type serviceType)
         {
-            MessageBox.Show("Karrramba");
-        }
-        
-        public object GetService(Type serviceType)
-        {
-            if (serviceType == typeof(SkivSoft.LanExchange.SDK.IMLanEXMainApp))
+            if (serviceType == typeof(SkivSoft.LanExchange.SDK.ILanEXMainApp))
             {
                 return this;
             }
@@ -91,11 +93,11 @@ namespace SkivSoft.LanExchange
 
                     foreach (Type type in assembly.GetTypes())
                     {
-                        Type iface = type.GetInterface("SkivSoft.LanExchange.SDK.IMLanEXPlugin");
+                        Type iface = type.GetInterface("SkivSoft.LanExchange.SDK.ILanEXPlugin");
 
                         if (iface != null)
                         {
-                            SkivSoft.LanExchange.SDK.IMLanEXPlugin plugin = (SkivSoft.LanExchange.SDK.IMLanEXPlugin)Activator.CreateInstance(type);
+                            SkivSoft.LanExchange.SDK.ILanEXPlugin plugin = (SkivSoft.LanExchange.SDK.ILanEXPlugin)Activator.CreateInstance(type);
                             if (plugin != null)
                             {
                                 plugins.Add(plugin.Name, plugin);
@@ -129,5 +131,12 @@ namespace SkivSoft.LanExchange
                 return A.Length > 1 ? A[1] : A[0];
             }
         }
+
+        public abstract ILanEXForm CreateMainForm();
+        public abstract ILanEXControl CreateControl(Type type);
+        public abstract void ListView_SetupTip(ILanEXListView LV);
+        public abstract void ListView_Setup(ILanEXListView LV);
+        public abstract void ListView_Update(ILanEXListView LV);
+        public abstract string InputBoxAsk(string caption, string prompt, string defText);
     }
 }

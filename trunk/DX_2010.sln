@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C# Express 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkivSoft.LanExchange.SDK", "SkivSoft.LanExchange.SDK\SkivSoft.LanExchange.SDK.csproj", "{EE20A37F-AD31-42A9-8410-E45CCE737C2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkivSoft.LanExchange.Core", "SkivSoft.LanExchange.Core\SkivSoft.LanExchange.Core.csproj", "{83E20C54-D49E-40D2-BB90-66F0D6131D8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkivSoft.LanExchangeDX", "SkivSoft.LanExchangeDX\SkivSoft.LanExchangeDX.csproj", "{A083FA5A-8C5B-4D36-9AC7-6D0550069BD8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginLogger", "Plugins\1stLogger\PluginLogger.csproj", "{4599E4C6-B4AF-4BAE-BA93-2BDCF0742AB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginNetwork", "Plugins\Network\PluginNetwork.csproj", "{1A5D0147-6AB1-4553-84F0-65F00BEAC626}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EE20A37F-AD31-42A9-8410-E45CCE737C2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE20A37F-AD31-42A9-8410-E45CCE737C2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE20A37F-AD31-42A9-8410-E45CCE737C2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE20A37F-AD31-42A9-8410-E45CCE737C2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83E20C54-D49E-40D2-BB90-66F0D6131D8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83E20C54-D49E-40D2-BB90-66F0D6131D8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83E20C54-D49E-40D2-BB90-66F0D6131D8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83E20C54-D49E-40D2-BB90-66F0D6131D8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A083FA5A-8C5B-4D36-9AC7-6D0550069BD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A083FA5A-8C5B-4D36-9AC7-6D0550069BD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A083FA5A-8C5B-4D36-9AC7-6D0550069BD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A083FA5A-8C5B-4D36-9AC7-6D0550069BD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4599E4C6-B4AF-4BAE-BA93-2BDCF0742AB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4599E4C6-B4AF-4BAE-BA93-2BDCF0742AB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4599E4C6-B4AF-4BAE-BA93-2BDCF0742AB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4599E4C6-B4AF-4BAE-BA93-2BDCF0742AB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A5D0147-6AB1-4553-84F0-65F00BEAC626}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A5D0147-6AB1-4553-84F0-65F00BEAC626}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A5D0147-6AB1-4553-84F0-65F00BEAC626}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A5D0147-6AB1-4553-84F0-65F00BEAC626}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
