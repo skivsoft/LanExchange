@@ -40,6 +40,16 @@ namespace LanExchange
         {
             this.control.Focus();
         }
+
+        public void BringToFront()
+        {
+            this.control.BringToFront();
+        }
+
+        public void SendToBack()
+        {
+            this.control.SendToBack();
+        }
     }
     #endregion
 
@@ -232,12 +242,38 @@ namespace LanExchange
         public override void Add(ILanEXControl childControl)
         {
             ILanEXTabPage Page = childControl as ILanEXTabPage;
-            this.Instance.TabPages.Add(Page.Text);
+            this.Instance.TabPages.Add((Page as TLanEXTabPage).control as TabPage);
         }
 
         public void RemoveAt(int Index)
         {
             this.Instance.TabPages.RemoveAt(Index);
+        }
+    }
+    #endregion
+
+
+    #region
+    public class TLanEXStatusStrip : TLanEXControl, ILanEXStatusStrip
+    {
+        private StatusStrip Instance = null;
+
+        public TLanEXStatusStrip(Control c)
+            : base(c)
+        {
+            if (c == null)
+            {
+                this.Instance = new StatusStrip();
+                this.control = this.Instance;
+            }
+            else
+                this.Instance = c as StatusStrip;
+        }
+
+        public void SetText(int Index, string Text)
+        {
+            int NewIndex = Index * 2;
+            this.Instance.Items[NewIndex].Text = Text;
         }
     }
     #endregion
@@ -266,6 +302,21 @@ namespace LanExchange
             return null;
         }
 
+        public override ILanEXForm CreateMainForm()
+        {
+            return new TLanEXForm(LanExchange.MainForm.Instance);
+        }
+
+        public override ILanEXTabControl CreatePages()
+        {
+            return new TLanEXTabControl(LanExchange.MainForm.Instance.Pages);
+        }
+        
+        public override ILanEXStatusStrip CreateStatusStrip()
+        {
+            return new TLanEXStatusStrip(LanExchange.MainForm.Instance.statusStrip1);
+        }
+
         public override ILanEXControl CreateControl(Type type)
         {
             ILanEXControl Result = null;
@@ -276,15 +327,34 @@ namespace LanExchange
             if (type == typeof(ILanEXTabControl))
             {
                 Result = new TLanEXTabControl(null);
+            } else
+            if (type == typeof(ILanEXTabPage))
+            {
+                Result = new TLanEXTabPage(null);
+            } else
+            if (type == typeof(ILanEXListView))
+            {
+                Result = new TLanEXListView(null);
+            } else
+            if (type == typeof(ILanEXStatusStrip))
+            {
+                Result = new TLanEXStatusStrip(LanExchange.MainForm.Instance.statusStrip1);
             }
+            LogPrint("Create control of type [{0}]: {1}", type.Name, Result);
             return Result;
         }
 
-
-        public override ILanEXForm CreateMainForm()
+        public override void Loaded()
         {
-            ILanEXForm Result = new TLanEXForm(LanExchange.MainForm.Instance);
-            return Result;
+            // set up main form location
+            Rectangle Rect = new Rectangle();
+            Rect.Size = new Size(450, Screen.PrimaryScreen.WorkingArea.Height);
+            Rect.Location = new Point(Screen.PrimaryScreen.WorkingArea.Left + (Screen.PrimaryScreen.WorkingArea.Width - Rect.Width),
+                                      Screen.PrimaryScreen.WorkingArea.Top + (Screen.PrimaryScreen.WorkingArea.Height - Rect.Height));
+            //this.SetBounds(Rect.X, Rect.Y, Rect.Width, Rect.Height);
+            MainForm.Bounds = Rect;
+            // call parent class Loaded() 
+            base.Loaded();
         }
 
         public override void ListView_SetupTip(ILanEXListView LV)

@@ -26,6 +26,10 @@ namespace SkivSoft.LanExchange.SDK
         string Version { get; }
         string Author { get; }
         string Description { get; }
+        /// <summary>
+        /// This method calls when main form were loaded.
+        /// </summary>
+        void Loaded();
     }
 
     #region TPanelItem Model
@@ -164,6 +168,8 @@ namespace SkivSoft.LanExchange.SDK
         string UserName { get; }
 
         ILanEXForm MainForm { get; }
+        ILanEXTabControl Pages { get; }
+        ILanEXStatusStrip StatusStrip { get; }
 
         ILanEXControl CreateControl(Type type);
         void ListView_SetupTip(ILanEXListView LV);

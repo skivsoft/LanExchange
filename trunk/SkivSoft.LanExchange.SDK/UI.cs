@@ -13,6 +13,8 @@ namespace SkivSoft.LanExchange.SDK
         event EventHandler Click;
         void Add(ILanEXControl childControl);
         void Focus();
+        void BringToFront();
+        void SendToBack();
     }
     
     public interface ILanEXForm : ILanEXControl
@@ -51,6 +53,11 @@ namespace SkivSoft.LanExchange.SDK
         int TabCount { get; }
         ILanEXTabPage GetPage(int Index);
         void RemoveAt(int Index);
+    }
+
+    public interface ILanEXStatusStrip : ILanEXControl
+    {
+        void SetText(int Index, string Text);
     }
 
     public interface ILanEXFilterPanel : ILanEXControl

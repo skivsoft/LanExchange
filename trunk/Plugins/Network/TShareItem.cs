@@ -4,9 +4,9 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
+using SkivSoft.LanExchange.SDK;
 
 namespace Network
 {
@@ -97,6 +97,7 @@ namespace Network
         }
     }
 
+    /*
     public static List<TPanelItem> EnumNetShares(string Server)
     {
         List<TPanelItem> Result = new List<TPanelItem>();
@@ -133,5 +134,5 @@ namespace Network
         Result.Sort(comparer);
         return Result;
     }
-
+    */
 }

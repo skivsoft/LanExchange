@@ -2,6 +2,8 @@
 
 using System;
 using System.Collections.Generic;
+using SkivSoft.LanExchange.SDK;
+using System.Net;
 
 namespace Network
 {
@@ -198,10 +200,13 @@ namespace Network
             }
         }
 #endif
-
+    /*
         // получим список всех компьюетеров
         public static List<TPanelItem> GetServerList()
         {
+            return null;
+     */
+            /*
             LocalNetwork.SERVER_INFO_101 si;
             IntPtr pInfo = IntPtr.Zero;
             int entriesread = 0;
@@ -226,14 +231,15 @@ namespace Network
                     }
                 }
             }
-            catch (Exception) { /* обработка ошибки нифига не делаем :(*/ }
+            catch (Exception) {  }
             finally
             { // освобождаем выделенную память
                 if (pInfo != IntPtr.Zero) LocalNetwork.NetApiBufferFree(pInfo);
             }
+            */
             #if USE_NORTHWIND_DATA
             AddNorthWindData(Result);
             #endif
-            return Result;
-        }
+            //return Result;
+        //}
 }

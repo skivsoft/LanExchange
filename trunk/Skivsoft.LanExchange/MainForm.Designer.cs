@@ -52,6 +52,7 @@
             this.mExit = new System.Windows.Forms.ToolStripMenuItem();
             this.TrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.dlgSave = new System.Windows.Forms.SaveFileDialog();
+            this.Pages = new System.Windows.Forms.TabControl();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.statusStrip1.SuspendLayout();
@@ -249,11 +250,21 @@
             this.dlgSave.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
             this.dlgSave.RestoreDirectory = true;
             // 
+            // Pages
+            // 
+            this.Pages.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Pages.Location = new System.Drawing.Point(0, 90);
+            this.Pages.Name = "Pages";
+            this.Pages.SelectedIndex = 0;
+            this.Pages.Size = new System.Drawing.Size(564, 398);
+            this.Pages.TabIndex = 23;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(564, 542);
+            this.Controls.Add(this.Pages);
             this.Controls.Add(this.tsBottom);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.panel1);
@@ -281,8 +292,8 @@
         public System.Windows.Forms.PictureBox picLogo;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        public System.Windows.Forms.ToolStripStatusLabel lItemsCount;
+        public System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel lItemsCount;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel lCompName;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
@@ -299,6 +310,7 @@
         private System.Windows.Forms.ToolStripMenuItem mExit;
         private System.Windows.Forms.NotifyIcon TrayIcon;
         public System.Windows.Forms.SaveFileDialog dlgSave;
+        public System.Windows.Forms.TabControl Pages;
 
     }
 }

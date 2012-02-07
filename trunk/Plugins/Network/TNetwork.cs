@@ -25,6 +25,13 @@ namespace SkivSoft.LanExchange.SDK
         public string Name { get { return "Network"; } }
         public string Description { get { return "Network browser for computers and shared folders."; } }
 
+        public void Loaded()
+        {
+            if (App == null) return;
+            ILanEXTabPage Page = App.CreateControl(typeof(ILanEXTabPage)) as ILanEXTabPage;
+            Page.Text = Environment.UserDomainName;
+            App.Pages.Add(Page);
+        }
     }
 
     #region NETAPI32 Utilities

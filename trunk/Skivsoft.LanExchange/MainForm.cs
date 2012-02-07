@@ -34,27 +34,10 @@ namespace LanExchange
         {
         }
 
-
-        private void SetupForm()
-        {
-            // размещаем форму внизу справа
-            Rectangle Rect = new Rectangle();
-            Rect.Size = new Size(450, Screen.PrimaryScreen.WorkingArea.Height);
-            Rect.Location = new Point(Screen.PrimaryScreen.WorkingArea.Left + (Screen.PrimaryScreen.WorkingArea.Width - Rect.Width),
-                                      Screen.PrimaryScreen.WorkingArea.Top + (Screen.PrimaryScreen.WorkingArea.Height - Rect.Height));
-            this.SetBounds(Rect.X, Rect.Y, Rect.Width, Rect.Height);
-            // выводим имя компьютера
-            lCompName.Text = TMainApp.App.ComputerName;
-            // выводим имя пользователя
-            lUserName.Text = TMainApp.App.UserName;
-        }
-
         private void MainForm_Load(object sender, EventArgs e)
         {
-            if (TMainApp.App == null)
-                return;
-            TMainApp.App.LogPrint("MainForm load");
-            SetupForm();
+            if (TMainApp.App == null) return;
+            TMainApp.App.Loaded();
 
             //MainForm.MainApp.LogPrint("MainForm_Load");
             /*

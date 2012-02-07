@@ -63,5 +63,9 @@ namespace SkivSoft.LanExchange.SDK
         public string Name { get { return "Logger"; } }
         public string Description { get { return "Журналирование действий программы в лог-файл."; } }
 
+        public void Loaded()
+        {
+            // do nothing
+        }
     }
 }

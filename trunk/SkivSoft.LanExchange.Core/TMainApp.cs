@@ -18,6 +18,7 @@ namespace LanExchange
 
         private ILanEXForm MainFormInstance = null;
         private ILanEXTabControl PagesInstance = null;
+        private ILanEXStatusStrip StatusStripInstance = null;
       
         public TMainApp()
         {
@@ -28,14 +29,9 @@ namespace LanExchange
         {
             // create main form wrapper
             this.MainFormInstance = CreateMainForm();
-            // create main tab control and add its to main form
-            this.PagesInstance = CreateControl(typeof(ILanEXTabControl)) as ILanEXTabControl;
-            if (this.MainFormInstance != null && this.PagesInstance != null)
-                this.MainFormInstance.Add(this.PagesInstance);
+            this.PagesInstance = CreatePages();
+            this.StatusStripInstance = CreateStatusStrip();
         }
-
-        public ILanEXForm MainForm { get { return this.MainFormInstance; } }
-        public ILanEXTabControl Pages { get { return this.PagesInstance; } }
 
         public virtual object GetService(Type serviceType)
         {
@@ -143,7 +139,36 @@ namespace LanExchange
             }
         }
 
+        public virtual void Loaded()
+        {
+            LogPrint("MainForm loaded");
+            // shows current computer name and user name
+            StatusStripInstance.SetText(1, this.ComputerName);
+            StatusStripInstance.SetText(2, this.UserName);
+            // call Loaded() for each plugin
+            foreach (var Pair in plugins)
+            {
+                try
+                {
+                    LogPrint("Plugin [{0}].Loaded()", Pair.Key);
+                    Pair.Value.Loaded();
+                }
+                catch (Exception ex)
+                {
+                    LogPrint(ex);
+                }
+            }
+
+        }
+
+        public ILanEXForm MainForm { get { return this.MainFormInstance; } }
+        public ILanEXTabControl Pages { get { return this.PagesInstance; } }
+        public ILanEXStatusStrip StatusStrip { get { return this.StatusStripInstance; } }
+
+        // abstract methods UI related (WinForms/WPF)
         public abstract ILanEXForm CreateMainForm();
+        public abstract ILanEXTabControl CreatePages();
+        public abstract ILanEXStatusStrip CreateStatusStrip();
         public abstract ILanEXControl CreateControl(Type type);
         public abstract void ListView_SetupTip(ILanEXListView LV);
         public abstract void ListView_Setup(ILanEXListView LV);
