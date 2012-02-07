@@ -11,26 +11,13 @@ namespace SkivSoft.LanExchange.SDK
         object Tag { get; set; }
         string Name { get; set; }
         event EventHandler Click;
+        void Add(ILanEXControl childControl);
+        void Focus();
     }
     
     public interface ILanEXForm : ILanEXControl
     {
         Rectangle Bounds { get; set; }
-    }
-
-    public interface ILanEXTabControl : ILanEXControl
-    {
-        int SelectedIndex { get; set; }
-        IList<ILanEXTabPage> TabPages { get; }
-        ILanEXTabPage SelectedTab { get; }
-        int TabCount { get; }
-    }
-
-    public interface ILanEXTabPage : ILanEXControl
-    {
-        string Text { get; set; }
-        bool IsListViewPresent { get; }
-        ILanEXListView ListView { get; set;  }
     }
 
     public interface ILanEXListViewItem
@@ -41,13 +28,29 @@ namespace SkivSoft.LanExchange.SDK
     public interface ILanEXListView : ILanEXControl
     {
         ILanEXListViewItem FocusedItem { get; set; }
-        IList<ILanEXListViewItem> Items { get; }
-        IList SelectedIndices { get; }
+        IList<int> SelectedIndices { get; }
         int VirtualListSize { get; set; }
         int View { get; set; }
-        
+
+        int ItemsCount { get; }
+        ILanEXListViewItem GetItem(int Index);
         void EnsureVisible(int Index);
-        void Focus();
+    }
+
+    public interface ILanEXTabPage : ILanEXControl
+    {
+        string Text { get; set; }
+        bool IsListViewPresent { get; }
+        ILanEXListView ListView { get; set; }
+    }
+
+    public interface ILanEXTabControl : ILanEXControl
+    {
+        int SelectedIndex { get; set; }
+        ILanEXTabPage SelectedTab { get; }
+        int TabCount { get; }
+        ILanEXTabPage GetPage(int Index);
+        void RemoveAt(int Index);
     }
 
     public interface ILanEXFilterPanel : ILanEXControl

@@ -147,22 +147,12 @@ namespace LanExchange
 
     public class TTabView
     {
-        ILanEXTabControl pages;
+        public ILanEXTabControl pages;
 
         public TTabView(ILanEXTabControl Pages)
         {
             this.pages = Pages;
         }
-
-        public string Name { get { return this.pages.Name; }}
-
-        public int SelectedIndex 
-        { 
-            get { return pages.SelectedIndex; }
-            set { pages.SelectedIndex = value; }
-        }
-
-        public IList<ILanEXTabPage> TabPages { get { return pages.TabPages; } }
 
         public string SelectedTabText 
         { 
@@ -182,7 +172,7 @@ namespace LanExchange
             // создаем новую вкладку или получаем существующую
             if (Model.Count <= this.pages.TabCount)
             {
-                NewTab = this.pages.TabPages[Model.Count - 1];
+                NewTab = this.pages.GetPage(Model.Count - 1);
                 TMainApp.App.LogPrint("Get existing control {0}", NewTab.ToString());
             }
             else
@@ -190,7 +180,7 @@ namespace LanExchange
                 NewTab = TMainApp.App.CreateControl(typeof(ILanEXTabPage)) as ILanEXTabPage;
                 NewTab.Name = e.Info.TabName;
                 TMainApp.App.LogPrint("Create control {0}", NewTab.ToString());
-                pages.TabPages.Add(NewTab);
+                pages.Add(NewTab);
             }
             // создаем ListView или получаем существующий
             bool bNewListView = !NewTab.IsListViewPresent;
@@ -247,7 +237,7 @@ namespace LanExchange
 
         public void AfterRemove(object sender, IndexEventArgs e)
         {
-            pages.TabPages.RemoveAt(e.Index);
+            pages.RemoveAt(e.Index);
         }
 
         public void AfterRename(object sender, TabInfoEventArgs e)
@@ -307,7 +297,7 @@ namespace LanExchange
 
         public void CloseTab()
         {
-            int Index = View.SelectedIndex;
+            int Index = View.pages.SelectedIndex;
             if (CanModifyTab(Index))
             {
                 Model.DelTab(Index);
@@ -317,7 +307,7 @@ namespace LanExchange
 
         public void RenameTab()
         {
-            int Index = View.SelectedIndex;
+            int Index = View.pages.SelectedIndex;
             if (CanModifyTab(Index))
             {
                 string NewTabName = TTabView.InputBoxAsk("Переименование", "Введите имя", View.SelectedTabText);
@@ -374,10 +364,10 @@ namespace LanExchange
         {
             for (int i = 0; i < Model.Count; i++)
             {
-                if (bHideActive && (!CanModifyTab(i) || (i == View.SelectedIndex)))
+                if (bHideActive && (!CanModifyTab(i) || (i == View.pages.SelectedIndex)))
                     continue;
                 ILanEXMenuItem Item = TMainApp.App.CreateControl(typeof(ILanEXMenuItem)) as ILanEXMenuItem;
-                Item.Checked = (i == View.SelectedIndex);
+                Item.Checked = (i == View.pages.SelectedIndex);
                 Item.Text = Model.GetTabName(i);
                 Item.Click += handler;
                 Item.Tag = i;
@@ -388,8 +378,8 @@ namespace LanExchange
         public void mSelectTab_Click(object sender, EventArgs e)
         {
             int Index = (int)(sender as ILanEXMenuItem).Tag;
-            if (View.SelectedIndex != Index)
-                View.SelectedIndex = Index;
+            if (View.pages.SelectedIndex != Index)
+                View.pages.SelectedIndex = Index;
         }
 
         public void SendPanelItems(ILanEXListView lvSender, ILanEXListView lvReceiver)
@@ -403,7 +393,7 @@ namespace LanExchange
             //int[] Indices = new int[lvSender.SelectedIndices.Count];
             foreach (int Index in lvSender.SelectedIndices)
             {
-                TPanelItem PItem = ItemListSender.Get(lvSender.Items[Index].Text);
+                TPanelItem PItem = ItemListSender.Get(lvSender.GetItem(Index).Text);
                 if (PItem != null)
                 {
                     ItemListReceiver.Add(PItem);
@@ -415,7 +405,7 @@ namespace LanExchange
             TMainApp.App.ListView_Update(lvReceiver);
             lvReceiver.Focus();
             // выделяем добавленные итемы
-            if (lvReceiver.Items.Count > 0)
+            if (lvReceiver.ItemsCount > 0)
             {
                 lvReceiver.SelectedIndices.Add(0);
                 /*
@@ -476,8 +466,9 @@ namespace LanExchange
         public void UpdateModelFromView()
         {
             Model.Clear();
-            foreach (ILanEXTabPage Tab in View.TabPages)
+            for (int i = 0; i < View.pages.TabCount; i++)
             {
+                ILanEXTabPage Tab = View.pages.GetPage(i);
                 if (!Tab.IsListViewPresent) continue;
                 TTabInfo Info = new TTabInfo(Tab.Text);
                 ILanEXListView LV = Tab.ListView;
@@ -492,8 +483,8 @@ namespace LanExchange
         public void StoreSettings()
         {
             UpdateModelFromView();
-            string name = View.Name;
-            TSettings.SetIntValue(String.Format(@"{0}\SelectedIndex", name), View.SelectedIndex);
+            string name = View.pages.Name;
+            TSettings.SetIntValue(String.Format(@"{0}\SelectedIndex", name), View.pages.SelectedIndex);
             TSettings.SetIntValue(String.Format(@"{0}\Count", name), Model.Count);
             for (int i = 0; i < Model.Count; i++)
             {
@@ -509,7 +500,7 @@ namespace LanExchange
 
         public void LoadSettings()
         {
-            string name = View.Name;
+            string name = View.pages.Name;
             Model.Clear();
             int CNT = TSettings.GetIntValue(String.Format(@"{0}\Count", name), 0);
             if (CNT > 0)
@@ -535,8 +526,8 @@ namespace LanExchange
             }
             int Index = TSettings.GetIntValue(String.Format(@"{0}\SelectedIndex", name), 0);
             // присваиваем сначала -1, чтобы всегда срабатывал евент PageSelected при установке нужной странице
-            View.SelectedIndex = -1;
-            View.SelectedIndex = Index;
+            View.pages.SelectedIndex = -1;
+            View.pages.SelectedIndex = Index;
         }
     }
     #endregion

@@ -31,13 +31,15 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.picLogo = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lItemsCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lCompName = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.Pages = new System.Windows.Forms.TabControl();
+            this.lUserName = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsBottom = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.eFilter = new System.Windows.Forms.TextBox();
@@ -50,14 +52,11 @@
             this.mExit = new System.Windows.Forms.ToolStripMenuItem();
             this.TrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.dlgSave = new System.Windows.Forms.SaveFileDialog();
-            this.lCompName = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lUserName = new System.Windows.Forms.ToolStripStatusLabel();
-            this.picLogo = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.tsBottom.SuspendLayout();
             this.popTray.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -71,6 +70,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(564, 90);
             this.panel1.TabIndex = 14;
+            // 
+            // picLogo
+            // 
+            this.picLogo.Image = global::SkivSoft.LanExchange.Properties.Resources.LanExchange_48x48;
+            this.picLogo.Location = new System.Drawing.Point(16, 16);
+            this.picLogo.Name = "picLogo";
+            this.picLogo.Size = new System.Drawing.Size(48, 48);
+            this.picLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.picLogo.TabIndex = 2;
+            this.picLogo.TabStop = false;
             // 
             // label1
             // 
@@ -126,6 +135,14 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(4, 17);
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
+            // lCompName
+            // 
+            this.lCompName.Image = global::SkivSoft.LanExchange.Properties.Resources.CompOff;
+            this.lCompName.Name = "lCompName";
+            this.lCompName.Size = new System.Drawing.Size(35, 17);
+            this.lCompName.Text = "    ";
+            this.lCompName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // toolStripStatusLabel3
             // 
             this.toolStripStatusLabel3.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
@@ -135,14 +152,13 @@
             this.toolStripStatusLabel3.Size = new System.Drawing.Size(4, 17);
             this.toolStripStatusLabel3.Text = "toolStripStatusLabel3";
             // 
-            // Pages
+            // lUserName
             // 
-            this.Pages.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Pages.Location = new System.Drawing.Point(0, 90);
-            this.Pages.Name = "Pages";
-            this.Pages.SelectedIndex = 0;
-            this.Pages.Size = new System.Drawing.Size(564, 430);
-            this.Pages.TabIndex = 17;
+            this.lUserName.Image = global::SkivSoft.LanExchange.Properties.Resources.UserName;
+            this.lUserName.Name = "lUserName";
+            this.lUserName.Size = new System.Drawing.Size(35, 17);
+            this.lUserName.Text = "    ";
+            this.lUserName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // tsBottom
             // 
@@ -233,39 +249,12 @@
             this.dlgSave.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
             this.dlgSave.RestoreDirectory = true;
             // 
-            // lCompName
-            // 
-            this.lCompName.Image = global::SkivSoft.LanExchange.Properties.Resources.CompOff;
-            this.lCompName.Name = "lCompName";
-            this.lCompName.Size = new System.Drawing.Size(35, 16);
-            this.lCompName.Text = "    ";
-            this.lCompName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lUserName
-            // 
-            this.lUserName.Image = global::SkivSoft.LanExchange.Properties.Resources.UserName;
-            this.lUserName.Name = "lUserName";
-            this.lUserName.Size = new System.Drawing.Size(35, 16);
-            this.lUserName.Text = "    ";
-            this.lUserName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // picLogo
-            // 
-            this.picLogo.Image = global::SkivSoft.LanExchange.Properties.Resources.LanExchange_48x48;
-            this.picLogo.Location = new System.Drawing.Point(16, 16);
-            this.picLogo.Name = "picLogo";
-            this.picLogo.Size = new System.Drawing.Size(48, 48);
-            this.picLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.picLogo.TabIndex = 2;
-            this.picLogo.TabStop = false;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(564, 542);
             this.Controls.Add(this.tsBottom);
-            this.Controls.Add(this.Pages);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -275,12 +264,12 @@
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.tsBottom.ResumeLayout(false);
             this.tsBottom.PerformLayout();
             this.popTray.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -298,7 +287,6 @@
         private System.Windows.Forms.ToolStripStatusLabel lCompName;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
         private System.Windows.Forms.ToolStripStatusLabel lUserName;
-        private System.Windows.Forms.TabControl Pages;
         private System.Windows.Forms.Panel tsBottom;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox eFilter;

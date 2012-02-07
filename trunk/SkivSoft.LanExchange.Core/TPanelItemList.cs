@@ -113,7 +113,7 @@ namespace LanExchange
             else
                 Result.Add("");
             if (bAll)
-                for (int index = 0; index < LV.Items.Count; index++)
+                for (int index = 0; index < LV.ItemsCount; index++)
                     Result.Add(Keys[index]);
             else
                 foreach (int index in LV.SelectedIndices)
@@ -133,7 +133,7 @@ namespace LanExchange
                     if (index == -1) continue;
                     if (i == 0)
                     {
-                        LV.FocusedItem = (ILanEXListViewItem)LV.Items[index];
+                        LV.FocusedItem = (ILanEXListViewItem)LV.GetItem(index);
                         LV.EnsureVisible(index);
                     }
                     else
@@ -160,7 +160,7 @@ namespace LanExchange
             if (LV.VirtualListSize > 0)
             {
                 LV.SelectedIndices.Add(index);
-                LV.FocusedItem = (ILanEXListViewItem)LV.Items[index];
+                LV.FocusedItem = (ILanEXListViewItem)LV.GetItem(index);
                 LV.EnsureVisible(index);
             }
         }

@@ -17,14 +17,25 @@ namespace LanExchange
         public Dictionary<string, ILanEXPlugin> plugins = null;
 
         private ILanEXForm MainFormInstance = null;
+        private ILanEXTabControl PagesInstance = null;
       
         public TMainApp()
         {
             plugins = new Dictionary<string, ILanEXPlugin>();
+        }
+
+        public void Init()
+        {
+            // create main form wrapper
             this.MainFormInstance = CreateMainForm();
+            // create main tab control and add its to main form
+            this.PagesInstance = CreateControl(typeof(ILanEXTabControl)) as ILanEXTabControl;
+            if (this.MainFormInstance != null && this.PagesInstance != null)
+                this.MainFormInstance.Add(this.PagesInstance);
         }
 
         public ILanEXForm MainForm { get { return this.MainFormInstance; } }
+        public ILanEXTabControl Pages { get { return this.PagesInstance; } }
 
         public virtual object GetService(Type serviceType)
         {

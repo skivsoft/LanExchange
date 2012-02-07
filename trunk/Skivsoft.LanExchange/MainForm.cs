@@ -17,8 +17,10 @@ namespace LanExchange
         
         public MainForm()
         {
-            Instance = this;
             InitializeComponent();
+            Instance = this;
+            // initialization of application controller
+            TMainApp.App.Init();
         }
 
         public void ActivateFromNewInstance()

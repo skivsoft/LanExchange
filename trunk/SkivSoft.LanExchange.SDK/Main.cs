@@ -165,7 +165,6 @@ namespace SkivSoft.LanExchange.SDK
 
         ILanEXForm MainForm { get; }
 
-        ILanEXForm CreateMainForm();
         ILanEXControl CreateControl(Type type);
         void ListView_SetupTip(ILanEXListView LV);
         void ListView_Setup(ILanEXListView LV);

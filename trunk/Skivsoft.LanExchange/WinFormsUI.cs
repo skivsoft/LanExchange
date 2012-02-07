@@ -10,7 +10,7 @@ namespace LanExchange
 {
 
     #region TLanEXControl
-    class TLanEXControl : ILanEXControl, IDisposable
+    public class TLanEXControl : ILanEXControl, IDisposable
     {
         public Control control = null;
 
@@ -30,9 +30,21 @@ namespace LanExchange
         public string Name { get { return this.control.Name; } set { this.control.Name = value; } }
         public object Tag { get { return this.control.Tag; } set { this.control.Tag = value; } }
         public event EventHandler Click { add { this.control.Click += value; } remove { this.control.Click -= value; } }
-    }
+        
+        public virtual void Add(ILanEXControl childControl)
+        {
+            this.control.Controls.Add((childControl as TLanEXControl).control);
+        }
 
-    class TLanEXForm : TLanEXControl, ILanEXForm, IServiceProvider
+        public void Focus()
+        {
+            this.control.Focus();
+        }
+    }
+    #endregion
+
+    #region TLanEXForm
+    public class TLanEXForm : TLanEXControl, ILanEXForm
     {
 
         public TLanEXForm(Control c)
@@ -41,18 +53,192 @@ namespace LanExchange
 
         }
 
-        public object GetService(Type serviceType)
-        {
-            if (serviceType == typeof(SkivSoft.LanExchange.SDK.ILanEXForm))
-            {
-                return this;
-            }
-            return null;
-        }
-
         protected Form Instance { get { return this.control as Form; } }
 
         public Rectangle Bounds { get { return this.Instance.Bounds; } set { this.Instance.Bounds = value; } }
+    }
+    #endregion
+
+    #region TLanEXListViewItem
+    public class TLanEXListViewItem : ILanEXListViewItem
+    {
+        public ListViewItem Instance = null;
+
+        public TLanEXListViewItem(ListViewItem item)
+        {
+            if (item == null)
+            {
+                this.Instance = new ListViewItem();
+            }
+            else
+                this.Instance = item;
+        }
+
+        public string Text
+        {
+            get { return this.Instance.Text; }
+            set { this.Instance.Text = value; }
+        }
+    }
+    #endregion
+
+    #region TLanEXListView
+    public class TLanEXListView : TLanEXControl, ILanEXListView
+    {
+        private ListView Instance = null;
+
+        public TLanEXListView(Control c)
+            : base(c)
+        {
+            if (c == null)
+            {
+                this.Instance = new ListView();
+                this.control = this.Instance;
+            }
+            else
+                this.Instance = c as ListView;
+        }
+        
+        public int View
+        {
+            get
+            {
+                return (int)this.Instance.View;
+            }
+            set
+            {
+                this.Instance.View = (View)value;
+            }
+        }
+
+        public int VirtualListSize
+        {
+            get { return this.Instance.VirtualListSize; }
+            set { this.Instance.VirtualListSize = value; }
+        }
+
+        public IList<int> SelectedIndices
+        {
+            get { return this.Instance.SelectedIndices as IList<int>; }
+        }
+
+        public void EnsureVisible(int Index)
+        {
+            this.Instance.EnsureVisible(Index);
+        }
+
+        public ILanEXListViewItem FocusedItem
+        {
+            get 
+            {
+                if (this.Instance.FocusedItem == null)
+                    return null;
+                else
+                    return new TLanEXListViewItem(this.Instance.FocusedItem); 
+            }
+            set
+            {
+                this.Instance.FocusedItem = (value as TLanEXListViewItem).Instance;
+            }
+        }
+
+        public int ItemsCount { get { return this.Instance.Items.Count; } }
+
+        public ILanEXListViewItem GetItem(int Index)
+        {
+            return new TLanEXListViewItem(this.Instance.Items[Index]);
+        }
+
+    }
+    #endregion
+
+    #region TLanEXTabPage
+    class TLanEXTabPage : TLanEXControl, ILanEXTabPage
+    {
+        private TabPage Instance = null;
+
+        public TLanEXTabPage(Control c)
+            : base(c)
+        {
+            if (c == null)
+            {
+                this.Instance = new TabPage();
+                this.control = this.Instance;
+            }
+            else
+                this.Instance = c as TabPage;
+        }
+
+        public string Text 
+        { 
+            get { return this.Instance.Text; }
+            set { this.Instance.Text = value; }
+        }
+
+        public bool IsListViewPresent
+        {
+            get { return this.Instance.Controls.Count > 0; }
+        }
+
+        public ILanEXListView ListView
+        {
+            get
+            {
+                if (IsListViewPresent)
+                    return new TLanEXListView(this.Instance.Controls[0]);
+                else
+                    return null;
+            }
+            set
+            {
+                if (!IsListViewPresent)
+                    this.Add(value);
+            }
+        }
+    }
+    #endregion
+
+    #region TLanEXTabControl
+    class TLanEXTabControl : TLanEXControl, ILanEXTabControl
+    {
+        private TabControl Instance = null;
+
+        public TLanEXTabControl(Control c)
+            : base(c)
+        {
+            if (c == null)
+            {
+                this.Instance = new TabControl();
+                this.Instance.Dock = DockStyle.Fill;
+                this.control = this.Instance;
+            } else
+                this.Instance = c as TabControl;
+        }
+
+        public int TabCount { get { return this.Instance.TabCount; } }
+        public ILanEXTabPage SelectedTab { get { return new TLanEXTabPage(this.Instance.SelectedTab); }}
+        
+        public int SelectedIndex 
+        { 
+            get { return this.Instance.SelectedIndex; }
+            set { this.Instance.SelectedIndex = value; }
+        }
+
+        public ILanEXTabPage GetPage(int Index)
+        {
+            return new TLanEXTabPage(this.Instance.TabPages[Index]);
+        }
+
+        public override void Add(ILanEXControl childControl)
+        {
+            ILanEXTabPage Page = childControl as ILanEXTabPage;
+            this.Instance.TabPages.Add(Page.Text);
+        }
+
+        public void RemoveAt(int Index)
+        {
+            this.Instance.TabPages.RemoveAt(Index);
+        }
     }
     #endregion
 
@@ -82,7 +268,16 @@ namespace LanExchange
 
         public override ILanEXControl CreateControl(Type type)
         {
-            return null;
+            ILanEXControl Result = null;
+            if (type == typeof(ILanEXForm))
+            {
+                Result = new TLanEXForm(null);
+            } else
+            if (type == typeof(ILanEXTabControl))
+            {
+                Result = new TLanEXTabControl(null);
+            }
+            return Result;
         }
 
 
