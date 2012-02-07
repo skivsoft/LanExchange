@@ -32,79 +32,17 @@ namespace SkivSoft.LanExchange.SDK
         void Loaded();
     }
 
-    #region TPanelItem Model
-    public abstract class TPanelItem : IComparable<TPanelItem>
+    #region IPanelItem Interface
+    public interface IPanelItem
     {
-        protected abstract string GetComment();
-        protected abstract void SetComment(string value);
-        protected abstract string GetName();
-        protected abstract void SetName(string value);
+        string Name { get; set; }
+        string Comment { get; set; }
+        int ImageIndex { get; }
+        string ToolTipText { get; }
 
-        protected virtual int GetImageIndex()
-        {
-            return 0;
-        }
-
-        protected virtual string GetToolTipText()
-        {
-            return Comment;
-        }
-
-        public virtual string[] getStrings()
-        {
-            return new string[2] { Name.ToUpper(), Comment.ToUpper() };
-        }
-
-        public virtual string[] GetSubItems()
-        {
-            return new string[1] { Comment };
-        }
-
-        public virtual void CopyExtraFrom(TPanelItem Comp)
-        {
-            // empty for base class
-        }
-
-        public string Name
-        {
-            get { return GetName(); }
-            set { SetName(value); }
-        }
-
-        public string Comment
-        {
-            get { return GetComment(); }
-            set { SetComment(value); }
-        }
-
-        public int ImageIndex
-        {
-            get { return GetImageIndex(); }
-        }
-
-        public string ToolTipText
-        {
-            get { return GetToolTipText(); }
-        }
-
-        public int CompareTo(TPanelItem p2)
-        {
-            return Name.CompareTo(p2.Name);
-        }
-    }
-
-    public class TPanelItemComparer : IComparer<TPanelItem>
-    {
-        public int Compare(TPanelItem Item1, TPanelItem Item2)
-        {
-            if (Item1.Name == "..")
-                if (Item2.Name == "..")
-                    return 0;
-                else
-                    return -1;
-            else
-                return Item1.CompareTo(Item2);
-        }
+        string[] GetStrings();
+        string[] GetSubItems();
+        void CopyExtraFrom(IPanelItem Comp);
     }
     #endregion
 

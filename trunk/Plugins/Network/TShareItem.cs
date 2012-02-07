@@ -13,7 +13,7 @@ namespace Network
     /// <summary>
     /// Модель "Общий ресурс"
     /// </summary>
-    public class TShareItem : TPanelItem
+    public class TShareItem : IPanelItem, IComparable<IPanelItem>
     {
         public const int imgHiddenFolder = 6;
         public const int imgNormalFolder = 7;
@@ -32,24 +32,16 @@ namespace Network
             this.computer_name = computer_name;
         }
 
-        protected override string GetName()
-        {
-            return share_name;
+        public string Name 
+        { 
+            get { return this.share_name; } 
+            set { this.share_name = value; }
         }
 
-        protected override void SetName(string value)
-        {
-            share_name = value;
-        }
-
-        protected override string GetComment()
-        {
-            return this.share_comment;
-        }
-
-        protected override void SetComment(string value)
-        {
-            this.share_comment = value;
+        public string Comment 
+        { 
+            get { return this.share_comment; } 
+            set { this.share_comment = value;}
         }
 
         public uint Type
@@ -64,12 +56,15 @@ namespace Network
             set { computer_name = value; }
         }
 
-        protected override int GetImageIndex()
+        public int ImageIndex
         {
-            if (IsPrinter)
-                return imgPrinterFolder;
-            else
-                return IsHidden ? imgHiddenFolder : imgNormalFolder;
+            get
+            {
+                if (IsPrinter)
+                    return imgPrinterFolder;
+                else
+                    return IsHidden ? imgHiddenFolder : imgNormalFolder;
+            }
         }
 
         public bool IsPrinter
@@ -91,9 +86,42 @@ namespace Network
             }
         }
 
-        public override string[] GetSubItems()
+        public string[] GetStrings()
+        {
+            return new string[2] { Name.ToUpper(), Comment.ToUpper() };
+        }
+
+        public string[] GetSubItems()
         {
             return new string[2] { "", Comment };
+        }
+
+        public string ToolTipText
+        {
+            get { return Comment; }
+        }
+
+        public void CopyExtraFrom(IPanelItem Comp)
+        {
+        }
+
+        public int CompareTo(IPanelItem p2)
+        {
+            return Name.CompareTo(p2.Name);
+        }
+    }
+
+    public class TShareItemComparer : IComparer<TShareItem>
+    {
+        public int Compare(TShareItem Item1, TShareItem Item2)
+        {
+            if (Item1.Name == "..")
+                if (Item2.Name == "..")
+                    return 0;
+                else
+                    return -1;
+            else
+                return Item1.CompareTo(Item2);
         }
     }
 

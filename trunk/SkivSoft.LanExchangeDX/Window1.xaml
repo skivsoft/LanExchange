@@ -8,5 +8,6 @@
             <StatusBarItem HorizontalAlignment="Right">qqqq</StatusBarItem>
             <StatusBarItem HorizontalAlignment="Right">www</StatusBarItem>
         </StatusBar>
+        <ToolBarTray Height="26" HorizontalAlignment="Left" Margin="10,10,0,0" Name="toolBarTray1" VerticalAlignment="Top" Width="200" />
     </Grid>
 </Window>

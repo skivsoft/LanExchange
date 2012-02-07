@@ -6,19 +6,19 @@ using SkivSoft.LanExchange.SDK;
 
 namespace LanExchange
 {
-    public class TPanelItemList 
+    public class TPanelItemList : ILanEXItemList
     {
-        private SortedDictionary<string, TPanelItem> Data = null;
-        public List<string> Keys = null;
+        private SortedDictionary<string, IPanelItem> Data = null;
+        private List<string> keys = null;
         private String Filter = "";
 
         public TPanelItemList()
         {
-            Data = new SortedDictionary<string, TPanelItem>();
-            Keys = new List<string>();
+            Data = new SortedDictionary<string, IPanelItem>();
+            keys = new List<string>();
         }
    
-        public void Add(TPanelItem Comp)
+        public void Add(IPanelItem Comp)
         {
             if (Comp != null)
               if (!String.IsNullOrEmpty(Comp.Name))
@@ -26,14 +26,14 @@ namespace LanExchange
                     Data.Add(Comp.Name, Comp);
         }
 
-        public void Delete(TPanelItem Comp)
+        public void Delete(IPanelItem Comp)
         {
             Data.Remove(Comp.Name);
         }
 
-        public TPanelItem Get(string key)
+        public IPanelItem Get(string key)
         {
-            TPanelItem Result = null;
+            IPanelItem Result = null;
             if (Data.TryGetValue(key, out Result))
             {
                 Result.Name = key;
@@ -66,15 +66,15 @@ namespace LanExchange
         public void ApplyFilter()
         {
             bool bFiltered = IsFiltered;
-            Keys.Clear();
+            keys.Clear();
             string Filter1 = FilterText.ToUpper();
             string Filter2 = TPuntoSwitcher.Change(FilterText);
             if (Filter2 != null) Filter2 = Filter2.ToUpper();
             foreach (var Pair in Data)
             {
-                string[] A = Pair.Value.getStrings();
+                string[] A = Pair.Value.GetStrings();
                 if (!bFiltered || Pair.Value.Name == ".." || GoodForFilter(A, Filter1, Filter2))
-                    Keys.Add(Pair.Value.Name);
+                    keys.Add(Pair.Value.Name);
             }
         }
 
@@ -92,7 +92,7 @@ namespace LanExchange
         // Возвращает число записей в фильтре
         public int FilterCount
         {
-            get { return Keys.Count; }
+            get { return keys.Count; }
         }
 
         public String FilterText
@@ -105,99 +105,12 @@ namespace LanExchange
             }
         }
 
-        public List<string> ListView_GetSelected(ILanEXListView LV, bool bAll)
+        public IList<string> Keys
         {
-            List<string> Result = new List<string>();
-            if (LV.FocusedItem != null)
-                Result.Add(LV.FocusedItem.Text);
-            else
-                Result.Add("");
-            if (bAll)
-                for (int index = 0; index < LV.ItemsCount; index++)
-                    Result.Add(Keys[index]);
-            else
-                foreach (int index in LV.SelectedIndices)
-                    Result.Add(Keys[index]);
-            return Result;
-        }
-        
-        public void ListView_SetSelected(ILanEXListView LV, List<string> SaveSelected)
-        {
-            LV.SelectedIndices.Clear();
-            LV.FocusedItem = null;
-            if (LV.VirtualListSize > 0)
+            get
             {
-                for (int i = 0; i < SaveSelected.Count; i++)
-                {
-                    int index = Keys.IndexOf(SaveSelected[i]);
-                    if (index == -1) continue;
-                    if (i == 0)
-                    {
-                        LV.FocusedItem = (ILanEXListViewItem)LV.GetItem(index);
-                        LV.EnsureVisible(index);
-                    }
-                    else
-                        LV.SelectedIndices.Add(index);
-                }
+                return this.keys as IList<string>;
             }
-        }
-
-        // <summary>
-        // Выбор компьютера по имени в списке.
-        // </summary>
-        public void ListView_SelectComputer(ILanEXListView LV, string CompName)
-        {
-            int index = -1;
-            // пробуем найти запомненный элемент
-            if (CompName != null)
-            {
-                index = this.Keys.IndexOf(CompName);
-                if (index == -1) index = 0;
-            }
-            else
-                index = 0;
-            // установка текущего элемента
-            if (LV.VirtualListSize > 0)
-            {
-                LV.SelectedIndices.Add(index);
-                LV.FocusedItem = (ILanEXListViewItem)LV.GetItem(index);
-                LV.EnsureVisible(index);
-            }
-        }
-
-        #region Привязка своего обьекта к ILanEXListView
-
-        public static void ListView_SetObject(ILanEXListView LV, TPanelItemList ItemList)
-        {
-            LV.Tag = ItemList;
-        }
-
-        public static TPanelItemList ListView_GetObject(ILanEXListView LV)
-        {
-            return LV.Tag as TPanelItemList;
-        }
-
-        public static TPanelItemList ListView_CreateObject(ILanEXListView LV)
-        {
-            TPanelItemList Result = new TPanelItemList();
-            ListView_SetObject(LV, Result);
-            return Result;
-        }
-
-        public static void ListView_DeleteObject(ILanEXListView LV)
-        {
-            TPanelItemList List = ListView_GetObject(LV);
-            if (List != null)
-                ListView_SetObject(LV, null);
-        }
-        #endregion
-
-        public List<string> ToList()
-        {
-            List<string> Result = new List<string>();
-            foreach (var Pair in Data)
-                Result.Add(Pair.Value.Name);
-            return Result;
         }
     }
 }

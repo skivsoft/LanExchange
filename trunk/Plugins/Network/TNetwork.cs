@@ -5,6 +5,7 @@ using System.Threading;
 using System.Text;
 using System.Net;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
 
 namespace SkivSoft.LanExchange.SDK
 {
@@ -31,6 +32,9 @@ namespace SkivSoft.LanExchange.SDK
             ILanEXTabPage Page = App.CreateControl(typeof(ILanEXTabPage)) as ILanEXTabPage;
             Page.Text = Environment.UserDomainName;
             App.Pages.Add(Page);
+
+            List<IPanelItem> LST = TComputerItem.GetServerList();
+            App.LogPrint("Servers: {0}", LST.Count);
         }
     }
 

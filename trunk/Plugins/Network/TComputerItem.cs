@@ -4,13 +4,15 @@ using System;
 using System.Collections.Generic;
 using SkivSoft.LanExchange.SDK;
 using System.Net;
+using System.Runtime.InteropServices;
 
-namespace Network
+namespace SkivSoft.LanExchange.SDK
 {
+
     /// <summary>
     /// Модель "Компьютер"
     /// </summary>
-    public class TComputerItem : TPanelItem
+    public class TComputerItem : IPanelItem, IComparable<IPanelItem>
     {
         // индексы иконок компов
         public const int imgCompDefault = 0;
@@ -58,45 +60,36 @@ namespace Network
             this.version = LocalNetwork.PlatformToString(platform_id, ver_major, ver_minor, type_id);
         }
 
-        protected override string GetName()
-        {
-            return computer_name;
-        }
+        public string Name { get { return this.computer_name; } set { this.computer_name = value; } }
+        public string Comment { get { return this.comment; } set { this.comment = value; } }
 
-        protected override void SetName(string value)
-        {
-            computer_name = value;
-        }
-
-        protected override string GetComment()
-        {
-            return this.comment;
-        }
-
-        protected override void SetComment(string value)
-        {
-            this.comment = value;
-        }
-
-        public override string[] getStrings()
+        public string[] GetStrings()
         {
             return new string[3] { Comment.ToUpper(), Name.ToUpper(), OSVersion.ToUpper() };
         }
 
-        protected override int GetImageIndex()
+        public string[] GetSubItems()
         {
-            if (IsLogged)
-                return imgCompGreen;
-            else
-                if (IsPingable)
-                    return imgCompDefault;
-                else
-                    return imgCompRed;
+            return new String[1] { Name };
         }
 
-        protected override string GetToolTipText()
+        public int ImageIndex
         {
-            return String.Format("{0}\n{1}", Comment, OSVersion);
+            get
+            {
+                if (IsLogged)
+                    return imgCompGreen;
+                else
+                    if (IsPingable)
+                        return imgCompDefault;
+                    else
+                        return imgCompRed;
+            }
+        }
+
+        public string ToolTipText
+        {
+            get { return String.Format("{0}\n{1}", Comment, OSVersion); }
         }
 
         public string OSVersion
@@ -129,14 +122,18 @@ namespace Network
             set { ipendpoint = value; }
         }
 
-        public override void CopyExtraFrom(TPanelItem Comp)
+        public void CopyExtraFrom(IPanelItem Comp)
         {
             if (Comp == null) return;
             pingable = (Comp as TComputerItem).pingable;
             logged = (Comp as TComputerItem).logged;
             ipendpoint = (Comp as TComputerItem).ipendpoint;
         }
-    }
+
+        public int CompareTo(IPanelItem p2)
+        {
+            return Name.CompareTo(p2.Name);
+        }
 
 #if USE_NORTHWIND_DATA
         struct TItem
@@ -151,7 +148,7 @@ namespace Network
             }
         };
 
-        public static void AddNorthWindData(List<TPanelItem> Result)
+        public static void AddNorthWindData(List<IPanelItem> Result)
         {
             TItem[] Data = new TItem[38] {
                 new TItem("GLADKIH-A", "Гладких Андрей"),
@@ -200,25 +197,21 @@ namespace Network
             }
         }
 #endif
-    /*
         // получим список всех компьюетеров
-        public static List<TPanelItem> GetServerList()
+        public static List<IPanelItem> GetServerList()
         {
-            return null;
-     */
-            /*
             LocalNetwork.SERVER_INFO_101 si;
             IntPtr pInfo = IntPtr.Zero;
             int entriesread = 0;
             int totalentries = 0;
-            List<TPanelItem> Result = new List<TPanelItem>();
+            List<IPanelItem> Result = new List<IPanelItem>();
             try
             {
-                TLogger.Print("WINAPI NetServerEnum");
+                //TLogger.Print("WINAPI NetServerEnum");
                 LocalNetwork.NERR err = LocalNetwork.NetServerEnum(null, 101, out pInfo, -1, ref entriesread, ref totalentries, LocalNetwork.SV_101_TYPES.SV_TYPE_ALL, null, 0);
                 if ((err == LocalNetwork.NERR.NERR_Success || err == LocalNetwork.NERR.ERROR_MORE_DATA) && pInfo != IntPtr.Zero)
                 {
-                    TLogger.Print("WINAPI NetServerEnum result: entriesread={0}, totalentries={1}", entriesread, totalentries);
+                    //TLogger.Print("WINAPI NetServerEnum result: entriesread={0}, totalentries={1}", entriesread, totalentries);
                     int ptr = pInfo.ToInt32();
                     for (int i = 0; i < entriesread; i++)
                     {
@@ -231,15 +224,15 @@ namespace Network
                     }
                 }
             }
-            catch (Exception) {  }
+            catch (Exception) { }
             finally
             { // освобождаем выделенную память
                 if (pInfo != IntPtr.Zero) LocalNetwork.NetApiBufferFree(pInfo);
             }
-            */
-            #if USE_NORTHWIND_DATA
+#if USE_NORTHWIND_DATA
             AddNorthWindData(Result);
-            #endif
-            //return Result;
-        //}
+#endif
+            return Result;
+        }
+    }
 }

@@ -22,6 +22,23 @@ namespace SkivSoft.LanExchange.SDK
         Rectangle Bounds { get; set; }
     }
 
+
+    public interface ILanEXItemList 
+    {
+        bool IsFiltered { get; }
+        int Count { get; }
+        int FilterCount { get; }
+        String FilterText { get; set; }
+
+        void Add(IPanelItem Comp);
+        void Delete(IPanelItem Comp);
+        IPanelItem Get(string key);
+        void Clear();
+        void ApplyFilter();
+
+        IList<string> Keys { get; }
+    }
+
     public interface ILanEXListViewItem
     {
         string Text { get; }
@@ -33,10 +50,15 @@ namespace SkivSoft.LanExchange.SDK
         IList<int> SelectedIndices { get; }
         int VirtualListSize { get; set; }
         int View { get; set; }
-
         int ItemsCount { get; }
+        ILanEXItemList ItemList { get; set; }
+
         ILanEXListViewItem GetItem(int Index);
         void EnsureVisible(int Index);
+
+        List<string> GetSelected(bool bAll);
+        void SetSelected(List<string> SaveSelected);
+        void SelectComputer(string CompName);
     }
 
     public interface ILanEXTabPage : ILanEXControl

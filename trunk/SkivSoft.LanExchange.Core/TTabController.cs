@@ -167,7 +167,6 @@ namespace LanExchange
         {
             ILanEXTabPage NewTab = null;
             ILanEXListView LV = null;
-            TPanelItemList ItemList = null;
             TTabModel Model = (TTabModel)sender;
             // создаем новую вкладку или получаем существующую
             if (Model.Count <= this.pages.TabCount)
@@ -198,13 +197,12 @@ namespace LanExchange
                 NewTab.ListView = LV;
             }
             // создаем внутренний список для хранения элементов или получаем существующий
-            ItemList = TPanelItemList.ListView_GetObject(LV);
-            if (ItemList != null)
-                TMainApp.App.LogPrint("Get existing object {0}", ItemList.ToString());
+            if (LV.ItemList != null)
+                TMainApp.App.LogPrint("Get existing object {0}", LV.ItemList.ToString());
             else
             {
-                ItemList = TPanelItemList.ListView_CreateObject(LV);
-                TMainApp.App.LogPrint("Create object {0}", ItemList);
+                LV.ItemList = new TPanelItemList();
+                TMainApp.App.LogPrint("Create object {0}", LV.ItemList);
             }
             // восстанавливаем список элементов
             /*
@@ -386,14 +384,14 @@ namespace LanExchange
         {
             if (lvSender == null || lvReceiver == null)
                 return;
-            TPanelItemList ItemListSender = TPanelItemList.ListView_GetObject(lvSender);
-            TPanelItemList ItemListReceiver = TPanelItemList.ListView_GetObject(lvReceiver);
+            ILanEXItemList ItemListSender = lvSender.ItemList;
+            ILanEXItemList ItemListReceiver = lvReceiver.ItemList;
 
             int NumAdded = 0;
             //int[] Indices = new int[lvSender.SelectedIndices.Count];
             foreach (int Index in lvSender.SelectedIndices)
             {
-                TPanelItem PItem = ItemListSender.Get(lvSender.GetItem(Index).Text);
+                IPanelItem PItem = ItemListSender.Get(lvSender.GetItem(Index).Text);
                 if (PItem != null)
                 {
                     ItemListReceiver.Add(PItem);
@@ -472,9 +470,8 @@ namespace LanExchange
                 if (!Tab.IsListViewPresent) continue;
                 TTabInfo Info = new TTabInfo(Tab.Text);
                 ILanEXListView LV = Tab.ListView;
-                TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
-                Info.Items = ItemList.ListView_GetSelected(LV, true);
-                Info.FilterText = ItemList.FilterText;
+                Info.Items = LV.GetSelected(true);
+                Info.FilterText = LV.ItemList.FilterText;
                 Info.CurrentView = LV.View;
                 Model.InternalAdd(Info);
             }

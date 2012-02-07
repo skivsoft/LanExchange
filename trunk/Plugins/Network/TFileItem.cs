@@ -6,7 +6,8 @@ using SkivSoft.LanExchange.SDK;
 namespace Network
 {
     #region Модель "Элемент диска"
-    public class TFileItem : TPanelItem
+    /*
+    public class TFileItem : IPanelItem
     {
         protected override void SetName(string value)
         {
@@ -28,5 +29,6 @@ namespace Network
             throw new NotImplementedException();
         }
     }
+     */
     #endregion
 }

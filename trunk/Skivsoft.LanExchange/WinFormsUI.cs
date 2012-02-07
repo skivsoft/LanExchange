@@ -96,6 +96,7 @@ namespace LanExchange
     public class TLanEXListView : TLanEXControl, ILanEXListView
     {
         private ListView Instance = null;
+        private ILanEXItemList ItemListInstance = null;
 
         public TLanEXListView(Control c)
             : base(c)
@@ -159,11 +160,78 @@ namespace LanExchange
             return new TLanEXListViewItem(this.Instance.Items[Index]);
         }
 
+        public ILanEXItemList ItemList
+        {
+            get { return this.ItemListInstance; }
+            set { this.ItemListInstance = value; }
+        }
+
+
+        public List<string> GetSelected(bool bAll)
+        {
+            List<string> Result = new List<string>();
+            if (FocusedItem != null)
+                Result.Add(FocusedItem.Text);
+            else
+                Result.Add("");
+            if (bAll)
+                for (int index = 0; index < ItemsCount; index++)
+                    Result.Add(ItemList.Keys[index]);
+            else
+                foreach (int index in SelectedIndices)
+                    Result.Add(ItemList.Keys[index]);
+            return Result;
+        }
+
+        public void SetSelected(List<string> SaveSelected)
+        {
+            SelectedIndices.Clear();
+            FocusedItem = null;
+            if (VirtualListSize > 0)
+            {
+                for (int i = 0; i < SaveSelected.Count; i++)
+                {
+                    int index = ItemList.Keys.IndexOf(SaveSelected[i]);
+                    if (index == -1) continue;
+                    if (i == 0)
+                    {
+                        FocusedItem = (ILanEXListViewItem)GetItem(index);
+                        EnsureVisible(index);
+                    }
+                    else
+                        SelectedIndices.Add(index);
+                }
+            }
+        }
+
+        // <summary>
+        // Выбор компьютера по имени в списке.
+        // </summary>
+        public void SelectComputer(string CompName)
+        {
+            int index = -1;
+            // пробуем найти запомненный элемент
+            if (CompName != null)
+            {
+                index = ItemList.Keys.IndexOf(CompName);
+                if (index == -1) index = 0;
+            }
+            else
+                index = 0;
+            // установка текущего элемента
+            if (VirtualListSize > 0)
+            {
+                SelectedIndices.Add(index);
+                FocusedItem = (ILanEXListViewItem)GetItem(index);
+                EnsureVisible(index);
+            }
+        }
+
     }
     #endregion
 
     #region TLanEXTabPage
-    class TLanEXTabPage : TLanEXControl, ILanEXTabPage
+    public class TLanEXTabPage : TLanEXControl, ILanEXTabPage
     {
         private TabPage Instance = null;
 
@@ -209,7 +277,7 @@ namespace LanExchange
     #endregion
 
     #region TLanEXTabControl
-    class TLanEXTabControl : TLanEXControl, ILanEXTabControl
+    public class TLanEXTabControl : TLanEXControl, ILanEXTabControl
     {
         private TabControl Instance = null;
 
@@ -253,7 +321,7 @@ namespace LanExchange
     #endregion
 
 
-    #region
+    #region TLanEXStatusStrip
     public class TLanEXStatusStrip : TLanEXControl, ILanEXStatusStrip
     {
         private StatusStrip Instance = null;
