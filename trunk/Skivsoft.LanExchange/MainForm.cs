@@ -37,7 +37,7 @@ namespace LanExchange
         private void MainForm_Load(object sender, EventArgs e)
         {
             if (TMainApp.App == null) return;
-            TMainApp.App.Loaded();
+            TMainApp.App.DoLoaded();
 
             //MainForm.MainApp.LogPrint("MainForm_Load");
             /*

@@ -12,10 +12,10 @@ namespace Tests
         static void Main()
         {
             TestTTabController TestTabs = new TestTTabController();
-            //TestTabs.CreateFromEmpyTabControl();
+            //TestTabs.CreateFromNotEmptyTabControl2();
             {
-                TestTSettings obj = new TestTSettings();
-                obj.SetListValue();
+                TestWinFormsUI T = new TestWinFormsUI();
+                T.CreateTLanEXControl();
             }
 
         }

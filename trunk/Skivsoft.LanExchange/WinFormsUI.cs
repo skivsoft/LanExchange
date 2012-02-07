@@ -388,6 +388,10 @@ namespace LanExchange
         public override ILanEXControl CreateControl(Type type)
         {
             ILanEXControl Result = null;
+            if (type == typeof(ILanEXControl))
+            {
+                Result = new TLanEXControl(null);
+            } else
             if (type == typeof(ILanEXForm))
             {
                 Result = new TLanEXForm(null);
@@ -408,11 +412,11 @@ namespace LanExchange
             {
                 Result = new TLanEXStatusStrip(LanExchange.MainForm.Instance.statusStrip1);
             }
-            LogPrint("Create control of type [{0}]: {1}", type.Name, Result);
+            LogPrint("Create control of type [{0}]: {1}", type.Name, Result == null ? "null" : Result.ToString());
             return Result;
         }
 
-        public override void Loaded()
+        public override void DoLoaded()
         {
             // set up main form location
             Rectangle Rect = new Rectangle();
@@ -422,7 +426,7 @@ namespace LanExchange
             //this.SetBounds(Rect.X, Rect.Y, Rect.Width, Rect.Height);
             MainForm.Bounds = Rect;
             // call parent class Loaded() 
-            base.Loaded();
+            base.DoLoaded();
         }
 
         public override void ListView_SetupTip(ILanEXListView LV)

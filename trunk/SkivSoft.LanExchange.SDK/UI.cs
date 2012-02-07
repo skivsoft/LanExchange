@@ -6,6 +6,22 @@ using System.Collections;
 
 namespace SkivSoft.LanExchange.SDK
 {
+    public interface ILanEXItemList
+    {
+        bool IsFiltered { get; }
+        int Count { get; }
+        int FilterCount { get; }
+        String FilterText { get; set; }
+
+        void Add(IPanelItem Comp);
+        void Delete(IPanelItem Comp);
+        IPanelItem Get(string key);
+        void Clear();
+        void ApplyFilter();
+
+        IList<string> Keys { get; }
+    }
+
     public interface ILanEXControl : IDisposable
     {
         object Tag { get; set; }
@@ -20,23 +36,6 @@ namespace SkivSoft.LanExchange.SDK
     public interface ILanEXForm : ILanEXControl
     {
         Rectangle Bounds { get; set; }
-    }
-
-
-    public interface ILanEXItemList 
-    {
-        bool IsFiltered { get; }
-        int Count { get; }
-        int FilterCount { get; }
-        String FilterText { get; set; }
-
-        void Add(IPanelItem Comp);
-        void Delete(IPanelItem Comp);
-        IPanelItem Get(string key);
-        void Clear();
-        void ApplyFilter();
-
-        IList<string> Keys { get; }
     }
 
     public interface ILanEXListViewItem

@@ -16,7 +16,7 @@ namespace SkivSoft.LanExchange.SDK
             App = serviceProvider.GetService(typeof(ILanEXMainApp)) as ILanEXMainApp;
             if (App != null)
             {
-                App.LoggerPrintEventHandlerAdd(MyLoggerPrint);
+                App.LoggerPrint += new LoggerPrintEventHandler(MyLoggerPrint);
             }
         }
 
@@ -62,10 +62,5 @@ namespace SkivSoft.LanExchange.SDK
         public string Version { get { return "1.0"; } }
         public string Name { get { return "Logger"; } }
         public string Description { get { return "Журналирование действий программы в лог-файл."; } }
-
-        public void Loaded()
-        {
-            // do nothing
-        }
     }
 }

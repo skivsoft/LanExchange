@@ -6,13 +6,13 @@ using SkivSoft.LanExchange.SDK;
 
 namespace LanExchange
 {
-    public class TPanelItemList : ILanEXItemList
+    public class TLanEXItemList : ILanEXItemList
     {
         private SortedDictionary<string, IPanelItem> Data = null;
         private List<string> keys = null;
         private String Filter = "";
 
-        public TPanelItemList()
+        public TLanEXItemList()
         {
             Data = new SortedDictionary<string, IPanelItem>();
             keys = new List<string>();

@@ -13,9 +13,7 @@ namespace LanExchange
     public abstract class TMainApp : ILanEXMainApp, IServiceProvider
     {
         public static TMainApp App = null;
-
         public Dictionary<string, ILanEXPlugin> plugins = null;
-
         private ILanEXForm MainFormInstance = null;
         private ILanEXTabControl PagesInstance = null;
         private ILanEXStatusStrip StatusStripInstance = null;
@@ -33,6 +31,10 @@ namespace LanExchange
             this.StatusStripInstance = CreateStatusStrip();
         }
 
+        public event LoggerPrintEventHandler LoggerPrint;
+        public event EventHandler Loaded;
+
+
         public virtual object GetService(Type serviceType)
         {
             if (serviceType == typeof(SkivSoft.LanExchange.SDK.ILanEXMainApp))
@@ -40,21 +42,6 @@ namespace LanExchange
                 return this;
             }
             return null;
-        }
-
-
-        protected event LoggerPrintEventHandler LoggerPrint;
-
-        public void LoggerPrintEventHandlerAdd(LoggerPrintEventHandler handler)
-        {
-            LoggerPrint += handler;
-            LogPrint("Log handler installed {0}", AppDomain.CurrentDomain.FriendlyName);
-        }
-
-        public void LoggerPrintEventHandlerRemove(LoggerPrintEventHandler handler)
-        {
-            LoggerPrint -= handler;
-            LogPrint("Log handler removed");
         }
 
         protected virtual void OnLoggerPrint(LoggerPrintEventArgs e)
@@ -139,26 +126,24 @@ namespace LanExchange
             }
         }
 
-        public virtual void Loaded()
+        public virtual void DoLoaded()
         {
             LogPrint("MainForm loaded");
             // shows current computer name and user name
             StatusStripInstance.SetText(1, this.ComputerName);
             StatusStripInstance.SetText(2, this.UserName);
             // call Loaded() for each plugin
-            foreach (var Pair in plugins)
+            if (Loaded != null)
             {
                 try
                 {
-                    LogPrint("Plugin [{0}].Loaded()", Pair.Key);
-                    Pair.Value.Loaded();
+                    Loaded(this, new EventArgs());
                 }
                 catch (Exception ex)
                 {
                     LogPrint(ex);
                 }
             }
-
         }
 
         public ILanEXForm MainForm { get { return this.MainFormInstance; } }

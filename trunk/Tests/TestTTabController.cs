@@ -92,7 +92,7 @@ namespace Tests
             TLanEXTabPage Tab = new TLanEXTabPage(null);
             Tab.Text = "MyTab";
             TLanEXListView LV = new TLanEXListView(null);
-            LV.ItemList = new TPanelItemList();
+            LV.ItemList = new TLanEXItemList();
             Tab.ListView = LV;
             Pages.Add(Tab);
 

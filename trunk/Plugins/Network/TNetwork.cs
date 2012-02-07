@@ -18,6 +18,7 @@ namespace SkivSoft.LanExchange.SDK
             App = serviceProvider.GetService(typeof(ILanEXMainApp)) as ILanEXMainApp;
             if (App != null)
             {
+                App.Loaded += new EventHandler(this.MainForm_Loaded);
             }
         }
 
@@ -26,7 +27,7 @@ namespace SkivSoft.LanExchange.SDK
         public string Name { get { return "Network"; } }
         public string Description { get { return "Network browser for computers and shared folders."; } }
 
-        public void Loaded()
+        public void MainForm_Loaded(object sender, EventArgs e)
         {
             if (App == null) return;
             ILanEXTabPage Page = App.CreateControl(typeof(ILanEXTabPage)) as ILanEXTabPage;

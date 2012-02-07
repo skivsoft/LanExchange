@@ -201,7 +201,7 @@ namespace LanExchange
                 TMainApp.App.LogPrint("Get existing object {0}", LV.ItemList.ToString());
             else
             {
-                LV.ItemList = new TPanelItemList();
+                LV.ItemList = new TLanEXItemList();
                 TMainApp.App.LogPrint("Create object {0}", LV.ItemList);
             }
             // восстанавливаем список элементов
@@ -471,7 +471,8 @@ namespace LanExchange
                 TTabInfo Info = new TTabInfo(Tab.Text);
                 ILanEXListView LV = Tab.ListView;
                 Info.Items = LV.GetSelected(true);
-                Info.FilterText = LV.ItemList.FilterText;
+                if (LV.ItemList != null)
+                    Info.FilterText = LV.ItemList.FilterText;
                 Info.CurrentView = LV.View;
                 Model.InternalAdd(Info);
             }

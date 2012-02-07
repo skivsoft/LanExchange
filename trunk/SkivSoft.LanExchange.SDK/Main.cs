@@ -29,7 +29,6 @@ namespace SkivSoft.LanExchange.SDK
         /// <summary>
         /// This method calls when main form were loaded.
         /// </summary>
-        void Loaded();
     }
 
     #region IPanelItem Interface
@@ -94,8 +93,8 @@ namespace SkivSoft.LanExchange.SDK
         /// Add/Remove event handlers for LogPrint calls.
         /// </summary>
         /// <param name="handler"></param>
-        void LoggerPrintEventHandlerAdd(LoggerPrintEventHandler handler);
-        void LoggerPrintEventHandlerRemove(LoggerPrintEventHandler handler);
+        event LoggerPrintEventHandler LoggerPrint;
+        event EventHandler Loaded;
         /// <summary>
         /// Returns current computer name.
         /// </summary>
