@@ -71,7 +71,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TMainApp.cs" />
     <Compile Include="Tools.cs" />
-    <Compile Include="TPanelItemList.cs" />
+    <Compile Include="TLanEXItemList.cs" />
     <Compile Include="TPuntoSwitcher.cs" />
     <Compile Include="TSettings.cs" />
     <Compile Include="TTabController.cs" />

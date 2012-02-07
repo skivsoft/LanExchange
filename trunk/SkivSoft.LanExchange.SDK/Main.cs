@@ -45,7 +45,7 @@ namespace SkivSoft.LanExchange.SDK
     }
     #endregion
 
-    #region TSettings Interface
+    #region ILanEXSettings Interface
     public interface ILanEXSettings
     {
 
@@ -53,7 +53,7 @@ namespace SkivSoft.LanExchange.SDK
     }
     #endregion
 
-    #region TTabController Interface
+    #region ILanEXTabController Interface
     public interface ILanEXTabController
     {
 
@@ -61,7 +61,7 @@ namespace SkivSoft.LanExchange.SDK
     #endregion
 
 
-    #region TMainApp Interface
+    #region ILanEXMainApp Interface
     /// <summary>
     /// LogPrint arguments.
     /// </summary>
@@ -90,10 +90,12 @@ namespace SkivSoft.LanExchange.SDK
         void LogPrint(string format, params object[] args);
         void LogPrint(Exception exception);
         /// <summary>
-        /// Add/Remove event handlers for LogPrint calls.
+        /// Print log event handler.
         /// </summary>
-        /// <param name="handler"></param>
         event LoggerPrintEventHandler LoggerPrint;
+        /// <summary>
+        /// This event occurs after main form were loaded.
+        /// </summary>
         event EventHandler Loaded;
         /// <summary>
         /// Returns current computer name.
@@ -104,10 +106,11 @@ namespace SkivSoft.LanExchange.SDK
         /// </summary>
         string UserName { get; }
 
-        ILanEXForm MainForm { get; }
+        ILanEXControl MainForm { get; }
         ILanEXTabControl Pages { get; }
         ILanEXStatusStrip StatusStrip { get; }
 
+        ILanEXComponent CreateComponent(Type type);
         ILanEXControl CreateControl(Type type);
         void ListView_SetupTip(ILanEXListView LV);
         void ListView_Setup(ILanEXListView LV);

@@ -5,70 +5,11 @@ using SkivSoft.LanExchange.SDK;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Reflection;
+using System.ComponentModel;
+using System.Collections;
 
 namespace LanExchange
 {
-
-    #region TLanEXControl
-    public class TLanEXControl : ILanEXControl, IDisposable
-    {
-        public Control control = null;
-
-        public TLanEXControl(Control c)
-        {
-            this.control = c;
-        }
-
-        public void Dispose()
-        {
-            if (this.control != null)
-            {
-                this.control.Dispose();
-            }
-        }
-
-        public string Name { get { return this.control.Name; } set { this.control.Name = value; } }
-        public object Tag { get { return this.control.Tag; } set { this.control.Tag = value; } }
-        public event EventHandler Click { add { this.control.Click += value; } remove { this.control.Click -= value; } }
-        
-        public virtual void Add(ILanEXControl childControl)
-        {
-            this.control.Controls.Add((childControl as TLanEXControl).control);
-        }
-
-        public void Focus()
-        {
-            this.control.Focus();
-        }
-
-        public void BringToFront()
-        {
-            this.control.BringToFront();
-        }
-
-        public void SendToBack()
-        {
-            this.control.SendToBack();
-        }
-    }
-    #endregion
-
-    #region TLanEXForm
-    public class TLanEXForm : TLanEXControl, ILanEXForm
-    {
-
-        public TLanEXForm(Control c)
-            : base(c)
-        {
-
-        }
-
-        protected Form Instance { get { return this.control as Form; } }
-
-        public Rectangle Bounds { get { return this.Instance.Bounds; } set { this.Instance.Bounds = value; } }
-    }
-    #endregion
-
     #region TLanEXListViewItem
     public class TLanEXListViewItem : ILanEXListViewItem
     {
@@ -88,6 +29,87 @@ namespace LanExchange
         {
             get { return this.Instance.Text; }
             set { this.Instance.Text = value; }
+        }
+    }
+    #endregion
+  
+    #region TLanEXMenuItem
+    public class TLanEXMenuItem : ILanEXMenuItem
+    {
+        public ToolStripMenuItem Instance = null;
+
+        public TLanEXMenuItem(ToolStripMenuItem item)
+        {
+            if (item == null)
+            {
+                this.Instance = new ToolStripMenuItem();
+            }
+            else
+                this.Instance = item;
+        }
+
+        public object Tag
+        {
+            get { return this.Instance.Tag; }
+            set { this.Instance.Tag = value; }
+        }
+
+        public event EventHandler Click;
+
+        public IList DropDownItems { get { return this.Instance.DropDownItems; } }
+
+        public string Text
+        {
+            get { return this.Instance.Text; }
+            set { this.Instance.Text = value; }
+        }
+
+        public bool Checked
+        {
+            get { return this.Instance.Checked; }
+            set { this.Instance.Checked = value; }
+        }
+    }
+    #endregion
+
+    #region TLanEXControl
+    public class TLanEXControl : ILanEXControl, IDisposable
+    {
+        public Control control = null;
+
+        public TLanEXControl(Control c)
+        {
+            this.control = c;
+        }
+
+        public void Dispose()
+        {
+            if (this.control != null)
+            {
+                this.control.Dispose();
+            }
+        }
+
+        public string Name
+        {
+            get { return this.control.Name; }
+            set { this.control.Name = value; }
+        }
+
+        public Rectangle Bounds 
+        { 
+            get { return this.control.Bounds; } 
+            set { this.control.Bounds = value; } 
+        }
+        
+        public virtual void Add(ILanEXControl childControl)
+        {
+            this.control.Controls.Add((childControl as TLanEXControl).control);
+        }
+
+        public void Focus()
+        {
+            this.control.Focus();
         }
     }
     #endregion
@@ -320,7 +342,6 @@ namespace LanExchange
     }
     #endregion
 
-
     #region TLanEXStatusStrip
     public class TLanEXStatusStrip : TLanEXControl, ILanEXStatusStrip
     {
@@ -370,9 +391,9 @@ namespace LanExchange
             return null;
         }
 
-        public override ILanEXForm CreateMainForm()
+        public override ILanEXControl CreateMainForm()
         {
-            return new TLanEXForm(LanExchange.MainForm.Instance);
+            return new TLanEXControl(LanExchange.MainForm.Instance);
         }
 
         public override ILanEXTabControl CreatePages()
@@ -385,16 +406,27 @@ namespace LanExchange
             return new TLanEXStatusStrip(LanExchange.MainForm.Instance.statusStrip1);
         }
 
+        public override ILanEXComponent CreateComponent(Type type)
+        {
+            ILanEXComponent Result = null;
+            if (type == typeof(ILanEXItemList))
+                Result = new TLanEXItemList();
+            else
+            if (type == typeof(ILanEXListViewItem))
+                Result = new TLanEXListViewItem(null);
+            else
+            if (type == typeof(ILanEXMenuItem))
+                Result = new TLanEXMenuItem(null);
+            LogPrint("Create component of type [{0}]: {1}", type.Name, Result == null ? "null" : Result.ToString());
+            return Result;
+        }
+
         public override ILanEXControl CreateControl(Type type)
         {
             ILanEXControl Result = null;
             if (type == typeof(ILanEXControl))
             {
                 Result = new TLanEXControl(null);
-            } else
-            if (type == typeof(ILanEXForm))
-            {
-                Result = new TLanEXForm(null);
             } else
             if (type == typeof(ILanEXTabControl))
             {
@@ -407,10 +439,6 @@ namespace LanExchange
             if (type == typeof(ILanEXListView))
             {
                 Result = new TLanEXListView(null);
-            } else
-            if (type == typeof(ILanEXStatusStrip))
-            {
-                Result = new TLanEXStatusStrip(LanExchange.MainForm.Instance.statusStrip1);
             }
             LogPrint("Create control of type [{0}]: {1}", type.Name, Result == null ? "null" : Result.ToString());
             return Result;

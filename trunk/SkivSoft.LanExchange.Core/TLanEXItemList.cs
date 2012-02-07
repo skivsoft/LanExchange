@@ -1,20 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using Tools;
 using SkivSoft.LanExchange.SDK;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace LanExchange
 {
     public class TLanEXItemList : ILanEXItemList
     {
-        private SortedDictionary<string, IPanelItem> Data = null;
+        private SortedDictionary<string, IPanelItem> data = null;
         private List<string> keys = null;
-        private String Filter = "";
+        private String filter = "";
 
         public TLanEXItemList()
         {
-            Data = new SortedDictionary<string, IPanelItem>();
+            data = new SortedDictionary<string, IPanelItem>();
             keys = new List<string>();
         }
    
@@ -22,19 +23,19 @@ namespace LanExchange
         {
             if (Comp != null)
               if (!String.IsNullOrEmpty(Comp.Name))
-                if (!Data.ContainsKey(Comp.Name))
-                    Data.Add(Comp.Name, Comp);
+                if (!data.ContainsKey(Comp.Name))
+                    data.Add(Comp.Name, Comp);
         }
 
         public void Delete(IPanelItem Comp)
         {
-            Data.Remove(Comp.Name);
+            data.Remove(Comp.Name);
         }
 
         public IPanelItem Get(string key)
         {
             IPanelItem Result = null;
-            if (Data.TryGetValue(key, out Result))
+            if (data.TryGetValue(key, out Result))
             {
                 Result.Name = key;
                 return Result;
@@ -45,7 +46,7 @@ namespace LanExchange
 
         public void Clear()
         {
-            Data.Clear();
+            data.Clear();
         }
 
         private bool GoodForFilter(string[] A, string Filter1, string Filter2)
@@ -70,7 +71,7 @@ namespace LanExchange
             string Filter1 = FilterText.ToUpper();
             string Filter2 = TPuntoSwitcher.Change(FilterText);
             if (Filter2 != null) Filter2 = Filter2.ToUpper();
-            foreach (var Pair in Data)
+            foreach (var Pair in data)
             {
                 string[] A = Pair.Value.GetStrings();
                 if (!bFiltered || Pair.Value.Name == ".." || GoodForFilter(A, Filter1, Filter2))
@@ -80,13 +81,13 @@ namespace LanExchange
 
         public bool IsFiltered
         {
-            get { return !String.IsNullOrEmpty(Filter); }
+            get { return !String.IsNullOrEmpty(filter); }
         }
 
         // Возвращает количество компов в списке
         public int Count
         {
-            get { return Data.Count; }
+            get { return data.Count; }
         }
 
         // Возвращает число записей в фильтре
@@ -97,20 +98,17 @@ namespace LanExchange
 
         public String FilterText
         {
-            get { return Filter; }
+            get { return filter; }
             set
             {
-                Filter = value;
+                filter = value;
                 ApplyFilter();
             }
         }
 
         public IList<string> Keys
         {
-            get
-            {
-                return this.keys as IList<string>;
-            }
+            get { return this.keys as IList<string>; }
         }
     }
 }

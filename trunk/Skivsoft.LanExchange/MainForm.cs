@@ -30,10 +30,6 @@ namespace LanExchange
             this.Activate();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-        }
-
         private void MainForm_Load(object sender, EventArgs e)
         {
             if (TMainApp.App == null) return;

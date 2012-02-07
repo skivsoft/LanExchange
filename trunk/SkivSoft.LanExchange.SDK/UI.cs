@@ -6,7 +6,14 @@ using System.Collections;
 
 namespace SkivSoft.LanExchange.SDK
 {
-    public interface ILanEXItemList
+    /// <summary>
+    /// Simple and empty base class for non-controls.
+    /// </summary>
+    public interface ILanEXComponent
+    {
+    }
+
+    public interface ILanEXItemList : ILanEXComponent
     {
         bool IsFiltered { get; }
         int Count { get; }
@@ -22,27 +29,29 @@ namespace SkivSoft.LanExchange.SDK
         IList<string> Keys { get; }
     }
 
+    public interface ILanEXListViewItem : ILanEXComponent
+    {
+        string Text { get; set; }
+    }
+
+    public interface ILanEXMenuItem : ILanEXComponent
+    {
+        event EventHandler Click;
+        object Tag { get; set; }
+        bool Checked { get; set; }
+        string Text { get; set; }
+        IList DropDownItems { get; }
+    }
+
     public interface ILanEXControl : IDisposable
     {
-        object Tag { get; set; }
         string Name { get; set; }
-        event EventHandler Click;
-        void Add(ILanEXControl childControl);
+        Rectangle Bounds { get; set; }
+        
         void Focus();
-        void BringToFront();
-        void SendToBack();
+        void Add(ILanEXControl child);
     }
     
-    public interface ILanEXForm : ILanEXControl
-    {
-        Rectangle Bounds { get; set; }
-    }
-
-    public interface ILanEXListViewItem
-    {
-        string Text { get; }
-    }
-
     public interface ILanEXListView : ILanEXControl
     {
         ILanEXListViewItem FocusedItem { get; set; }
@@ -81,20 +90,4 @@ namespace SkivSoft.LanExchange.SDK
         void SetText(int Index, string Text);
     }
 
-    public interface ILanEXFilterPanel : ILanEXControl
-    {
-
-    }
-
-    public interface ILanEXMenuItem : ILanEXControl
-    {
-        bool Checked { get; set; }
-        string Text { get; set; }
-        IList DropDownItems { get; }
-    }
-
-    public interface ILanEXSaveFileDialog : ILanEXControl
-    {
-
-    }
 }

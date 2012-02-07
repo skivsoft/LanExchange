@@ -11,11 +11,16 @@ namespace Tests
 
         static void Main()
         {
-            TestTTabController TestTabs = new TestTTabController();
-            //TestTabs.CreateFromNotEmptyTabControl2();
+            {
+                TestTTabController T = new TestTTabController();
+            }
             {
                 TestWinFormsUI T = new TestWinFormsUI();
-                T.CreateTLanEXControl();
+                T.TLanEXItemList();
+                T.TLanEXListView();
+                T.TLanEXListViewItem();
+                T.TLanEXMenuItem();
+                T.TLanEXStatusStrip();
             }
 
         }

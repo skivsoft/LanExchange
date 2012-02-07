@@ -14,7 +14,7 @@ namespace LanExchange
     {
         public static TMainApp App = null;
         public Dictionary<string, ILanEXPlugin> plugins = null;
-        private ILanEXForm MainFormInstance = null;
+        private ILanEXControl MainFormInstance = null;
         private ILanEXTabControl PagesInstance = null;
         private ILanEXStatusStrip StatusStripInstance = null;
       
@@ -146,14 +146,15 @@ namespace LanExchange
             }
         }
 
-        public ILanEXForm MainForm { get { return this.MainFormInstance; } }
+        public ILanEXControl MainForm { get { return this.MainFormInstance; } }
         public ILanEXTabControl Pages { get { return this.PagesInstance; } }
         public ILanEXStatusStrip StatusStrip { get { return this.StatusStripInstance; } }
 
         // abstract methods UI related (WinForms/WPF)
-        public abstract ILanEXForm CreateMainForm();
+        public abstract ILanEXControl CreateMainForm();
         public abstract ILanEXTabControl CreatePages();
         public abstract ILanEXStatusStrip CreateStatusStrip();
+        public abstract ILanEXComponent CreateComponent(Type type);
         public abstract ILanEXControl CreateControl(Type type);
         public abstract void ListView_SetupTip(ILanEXListView LV);
         public abstract void ListView_Setup(ILanEXListView LV);
