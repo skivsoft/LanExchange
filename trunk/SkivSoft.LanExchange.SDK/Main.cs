@@ -26,13 +26,22 @@ namespace SkivSoft.LanExchange.SDK
         string Version { get; }
         string Author { get; }
         string Description { get; }
-        /// <summary>
-        /// This method calls when main form were loaded.
-        /// </summary>
     }
 
-    #region IPanelItem Interface
-    public interface IPanelItem
+    #region ILanEXItem Interface
+    public struct TLanEXColumnInfo
+    {
+        string Name;
+        int Width;
+
+        public TLanEXColumnInfo(string NewName, int NewWidth)
+        {
+            this.Name = NewName;
+            this.Width = NewWidth;
+        }
+    }
+
+    public interface ILanEXItem
     {
         string Name { get; set; }
         string Comment { get; set; }
@@ -41,7 +50,8 @@ namespace SkivSoft.LanExchange.SDK
 
         string[] GetStrings();
         string[] GetSubItems();
-        void CopyExtraFrom(IPanelItem Comp);
+        TLanEXColumnInfo[] GetColumns();
+        void CopyExtraFrom(ILanEXItem Comp);
     }
     #endregion
 
@@ -52,14 +62,6 @@ namespace SkivSoft.LanExchange.SDK
 
     }
     #endregion
-
-    #region ILanEXTabController Interface
-    public interface ILanEXTabController
-    {
-
-    }
-    #endregion
-
 
     #region ILanEXMainApp Interface
     /// <summary>
@@ -85,11 +87,6 @@ namespace SkivSoft.LanExchange.SDK
     public interface ILanEXMainApp
     {
         /// <summary>
-        /// Print text string to log.
-        /// </summary>
-        void LogPrint(string format, params object[] args);
-        void LogPrint(Exception exception);
-        /// <summary>
         /// Print log event handler.
         /// </summary>
         event LoggerPrintEventHandler LoggerPrint;
@@ -97,6 +94,7 @@ namespace SkivSoft.LanExchange.SDK
         /// This event occurs after main form were loaded.
         /// </summary>
         event EventHandler Loaded;
+        
         /// <summary>
         /// Returns current computer name.
         /// </summary>
@@ -105,16 +103,23 @@ namespace SkivSoft.LanExchange.SDK
         /// Returns current user name.
         /// </summary>
         string UserName { get; }
-
         ILanEXControl MainForm { get; }
         ILanEXTabControl Pages { get; }
         ILanEXStatusStrip StatusStrip { get; }
+        ILanEXTabController TabController { get; }
 
-        ILanEXComponent CreateComponent(Type type);
-        ILanEXControl CreateControl(Type type);
+        /// <summary>
+        /// Print text string to log.
+        /// </summary>
+        void LogPrint(string format, params object[] args);
+        void LogPrint(Exception exception);
         void ListView_SetupTip(ILanEXListView LV);
         void ListView_Setup(ILanEXListView LV);
         void ListView_Update(ILanEXListView LV);
+
+        int RegisterImageIndex(Bitmap pic16x16, Bitmap pic32x32);
+        ILanEXComponent CreateComponent(Type type);
+        ILanEXControl CreateControl(Type type);
         string InputBoxAsk(string caption, string prompt, string defText);
     }
     #endregion

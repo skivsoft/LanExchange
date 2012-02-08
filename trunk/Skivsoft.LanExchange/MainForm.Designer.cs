@@ -53,11 +53,38 @@
             this.TrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.dlgSave = new System.Windows.Forms.SaveFileDialog();
             this.Pages = new System.Windows.Forms.TabControl();
+            this.popPages = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mNewTab = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.mCloseTab = new System.Windows.Forms.ToolStripMenuItem();
+            this.mRenameTab = new System.Windows.Forms.ToolStripMenuItem();
+            this.mSaveTab = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.mSelectTab = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
+            this.mListTab = new System.Windows.Forms.ToolStripMenuItem();
+            this.tipComps = new System.Windows.Forms.ToolTip(this.components);
+            this.popComps = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mLargeIcons = new System.Windows.Forms.ToolStripMenuItem();
+            this.mSmallIcons = new System.Windows.Forms.ToolStripMenuItem();
+            this.mList = new System.Windows.Forms.ToolStripMenuItem();
+            this.mDetails = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.mCopyCompName = new System.Windows.Forms.ToolStripMenuItem();
+            this.mCopySelected = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
+            this.mSendToTab = new System.Windows.Forms.ToolStripMenuItem();
+            this.mSendToNewTab = new System.Windows.Forms.ToolStripMenuItem();
+            this.mAfterSendTo = new System.Windows.Forms.ToolStripSeparator();
+            this.ilSmall = new System.Windows.Forms.ImageList(this.components);
+            this.ilLarge = new System.Windows.Forms.ImageList(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.tsBottom.SuspendLayout();
             this.popTray.SuspendLayout();
+            this.popPages.SuspendLayout();
+            this.popComps.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -122,7 +149,7 @@
             // lItemsCount
             // 
             this.lItemsCount.Name = "lItemsCount";
-            this.lItemsCount.Size = new System.Drawing.Size(471, 17);
+            this.lItemsCount.Size = new System.Drawing.Size(440, 17);
             this.lItemsCount.Spring = true;
             this.lItemsCount.Text = "    ";
             this.lItemsCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -252,12 +279,199 @@
             // 
             // Pages
             // 
+            this.Pages.ContextMenuStrip = this.popPages;
             this.Pages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Pages.Location = new System.Drawing.Point(0, 90);
             this.Pages.Name = "Pages";
             this.Pages.SelectedIndex = 0;
             this.Pages.Size = new System.Drawing.Size(564, 398);
             this.Pages.TabIndex = 23;
+            // 
+            // popPages
+            // 
+            this.popPages.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mNewTab,
+            this.toolStripSeparator9,
+            this.mCloseTab,
+            this.mRenameTab,
+            this.mSaveTab,
+            this.toolStripSeparator10,
+            this.mSelectTab,
+            this.toolStripSeparator11,
+            this.mListTab});
+            this.popPages.Name = "popPages";
+            this.popPages.Size = new System.Drawing.Size(175, 154);
+            this.popPages.Opened += new System.EventHandler(this.popPages_Opened);
+            // 
+            // mNewTab
+            // 
+            this.mNewTab.Name = "mNewTab";
+            this.mNewTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.mNewTab.Size = new System.Drawing.Size(174, 22);
+            this.mNewTab.Text = "New tab";
+            this.mNewTab.Click += new System.EventHandler(this.mNewTab_Click);
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(171, 6);
+            // 
+            // mCloseTab
+            // 
+            this.mCloseTab.Name = "mCloseTab";
+            this.mCloseTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F4)));
+            this.mCloseTab.Size = new System.Drawing.Size(174, 22);
+            this.mCloseTab.Text = "Close tab";
+            this.mCloseTab.Click += new System.EventHandler(this.mCloseTab_Click);
+            // 
+            // mRenameTab
+            // 
+            this.mRenameTab.Name = "mRenameTab";
+            this.mRenameTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.R)));
+            this.mRenameTab.Size = new System.Drawing.Size(174, 22);
+            this.mRenameTab.Text = "Rename tab";
+            this.mRenameTab.Click += new System.EventHandler(this.mRenameTab_Click);
+            // 
+            // mSaveTab
+            // 
+            this.mSaveTab.Name = "mSaveTab";
+            this.mSaveTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.mSaveTab.Size = new System.Drawing.Size(174, 22);
+            this.mSaveTab.Text = "Save tab";
+            this.mSaveTab.Click += new System.EventHandler(this.mSaveTab_Click);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(171, 6);
+            // 
+            // mSelectTab
+            // 
+            this.mSelectTab.Name = "mSelectTab";
+            this.mSelectTab.Size = new System.Drawing.Size(174, 22);
+            this.mSelectTab.Text = "Select tab";
+            // 
+            // toolStripSeparator11
+            // 
+            this.toolStripSeparator11.Name = "toolStripSeparator11";
+            this.toolStripSeparator11.Size = new System.Drawing.Size(171, 6);
+            this.toolStripSeparator11.Visible = false;
+            // 
+            // mListTab
+            // 
+            this.mListTab.Name = "mListTab";
+            this.mListTab.Size = new System.Drawing.Size(174, 22);
+            this.mListTab.Text = "Tab list";
+            this.mListTab.Visible = false;
+            this.mListTab.Click += new System.EventHandler(this.mListTab_Click);
+            // 
+            // tipComps
+            // 
+            this.tipComps.Active = false;
+            this.tipComps.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.tipComps.ToolTipTitle = "Test";
+            this.tipComps.Popup += new System.Windows.Forms.PopupEventHandler(this.tipComps_Popup);
+            // 
+            // popComps
+            // 
+            this.popComps.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mLargeIcons,
+            this.mSmallIcons,
+            this.mList,
+            this.mDetails,
+            this.toolStripSeparator5,
+            this.mCopyCompName,
+            this.mCopySelected,
+            this.toolStripSeparator12,
+            this.mSendToTab});
+            this.popComps.Name = "popComps";
+            this.popComps.Size = new System.Drawing.Size(179, 170);
+            // 
+            // mLargeIcons
+            // 
+            this.mLargeIcons.Name = "mLargeIcons";
+            this.mLargeIcons.Size = new System.Drawing.Size(178, 22);
+            this.mLargeIcons.Tag = "1";
+            this.mLargeIcons.Text = "Large icons";
+            // 
+            // mSmallIcons
+            // 
+            this.mSmallIcons.Name = "mSmallIcons";
+            this.mSmallIcons.Size = new System.Drawing.Size(178, 22);
+            this.mSmallIcons.Tag = "3";
+            this.mSmallIcons.Text = "Small icons";
+            // 
+            // mList
+            // 
+            this.mList.Name = "mList";
+            this.mList.Size = new System.Drawing.Size(178, 22);
+            this.mList.Tag = "4";
+            this.mList.Text = "List";
+            // 
+            // mDetails
+            // 
+            this.mDetails.Checked = true;
+            this.mDetails.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.mDetails.Name = "mDetails";
+            this.mDetails.Size = new System.Drawing.Size(178, 22);
+            this.mDetails.Tag = "2";
+            this.mDetails.Text = "Details";
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(175, 6);
+            // 
+            // mCopyCompName
+            // 
+            this.mCopyCompName.Name = "mCopyCompName";
+            this.mCopyCompName.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.mCopyCompName.Size = new System.Drawing.Size(178, 22);
+            this.mCopyCompName.Tag = "";
+            this.mCopyCompName.Text = "Copy";
+            // 
+            // mCopySelected
+            // 
+            this.mCopySelected.Name = "mCopySelected";
+            this.mCopySelected.Size = new System.Drawing.Size(178, 22);
+            this.mCopySelected.Text = "Copy row";
+            // 
+            // toolStripSeparator12
+            // 
+            this.toolStripSeparator12.Name = "toolStripSeparator12";
+            this.toolStripSeparator12.Size = new System.Drawing.Size(175, 6);
+            // 
+            // mSendToTab
+            // 
+            this.mSendToTab.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mSendToNewTab,
+            this.mAfterSendTo});
+            this.mSendToTab.Name = "mSendToTab";
+            this.mSendToTab.Size = new System.Drawing.Size(178, 22);
+            this.mSendToTab.Text = "Send to another tab";
+            // 
+            // mSendToNewTab
+            // 
+            this.mSendToNewTab.Name = "mSendToNewTab";
+            this.mSendToNewTab.Size = new System.Drawing.Size(133, 22);
+            this.mSendToNewTab.Text = "To new tab";
+            // 
+            // mAfterSendTo
+            // 
+            this.mAfterSendTo.Name = "mAfterSendTo";
+            this.mAfterSendTo.Size = new System.Drawing.Size(130, 6);
+            // 
+            // ilSmall
+            // 
+            this.ilSmall.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            this.ilSmall.ImageSize = new System.Drawing.Size(16, 16);
+            this.ilSmall.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // ilLarge
+            // 
+            this.ilLarge.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            this.ilLarge.ImageSize = new System.Drawing.Size(32, 32);
+            this.ilLarge.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // MainForm
             // 
@@ -281,6 +495,8 @@
             this.tsBottom.ResumeLayout(false);
             this.tsBottom.PerformLayout();
             this.popTray.ResumeLayout(false);
+            this.popPages.ResumeLayout(false);
+            this.popComps.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -311,6 +527,31 @@
         private System.Windows.Forms.NotifyIcon TrayIcon;
         public System.Windows.Forms.SaveFileDialog dlgSave;
         public System.Windows.Forms.TabControl Pages;
+        private System.Windows.Forms.ContextMenuStrip popPages;
+        private System.Windows.Forms.ToolStripMenuItem mNewTab;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+        private System.Windows.Forms.ToolStripMenuItem mCloseTab;
+        private System.Windows.Forms.ToolStripMenuItem mRenameTab;
+        private System.Windows.Forms.ToolStripMenuItem mSaveTab;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+        private System.Windows.Forms.ToolStripMenuItem mSelectTab;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
+        private System.Windows.Forms.ToolStripMenuItem mListTab;
+        public System.Windows.Forms.ToolTip tipComps;
+        public System.Windows.Forms.ContextMenuStrip popComps;
+        private System.Windows.Forms.ToolStripMenuItem mLargeIcons;
+        private System.Windows.Forms.ToolStripMenuItem mSmallIcons;
+        private System.Windows.Forms.ToolStripMenuItem mList;
+        private System.Windows.Forms.ToolStripMenuItem mDetails;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem mCopyCompName;
+        private System.Windows.Forms.ToolStripMenuItem mCopySelected;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
+        private System.Windows.Forms.ToolStripMenuItem mSendToTab;
+        private System.Windows.Forms.ToolStripMenuItem mSendToNewTab;
+        private System.Windows.Forms.ToolStripSeparator mAfterSendTo;
+        public System.Windows.Forms.ImageList ilSmall;
+        public System.Windows.Forms.ImageList ilLarge;
 
     }
 }

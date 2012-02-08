@@ -74,7 +74,7 @@
     <Compile Include="TLanEXItemList.cs" />
     <Compile Include="TPuntoSwitcher.cs" />
     <Compile Include="TSettings.cs" />
-    <Compile Include="TTabController.cs" />
+    <Compile Include="TLanEXTabController.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">

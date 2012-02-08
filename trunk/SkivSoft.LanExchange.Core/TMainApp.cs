@@ -17,18 +17,26 @@ namespace LanExchange
         private ILanEXControl MainFormInstance = null;
         private ILanEXTabControl PagesInstance = null;
         private ILanEXStatusStrip StatusStripInstance = null;
+        private TLanEXTabController TabControllerInstance = null;
       
         public TMainApp()
         {
             plugins = new Dictionary<string, ILanEXPlugin>();
         }
 
-        public void Init()
+        public virtual void Init()
         {
             // create main form wrapper
-            this.MainFormInstance = CreateMainForm();
-            this.PagesInstance = CreatePages();
-            this.StatusStripInstance = CreateStatusStrip();
+            MainFormInstance = CreateMainForm();
+            // create Pages wrapper
+            PagesInstance = CreatePages();
+            // create statusStrip wrapper
+            StatusStripInstance = CreateStatusStrip();
+            // init tabs
+            TabControllerInstance = new TLanEXTabController(PagesInstance);
+            //mSendToNewTab.Click += new System.EventHandler(TabController.mSendToNewTab_Click);
+            // load plugins
+            LoadPlugins();
         }
 
         public event LoggerPrintEventHandler LoggerPrint;
@@ -149,6 +157,7 @@ namespace LanExchange
         public ILanEXControl MainForm { get { return this.MainFormInstance; } }
         public ILanEXTabControl Pages { get { return this.PagesInstance; } }
         public ILanEXStatusStrip StatusStrip { get { return this.StatusStripInstance; } }
+        public ILanEXTabController TabController { get { return this.TabControllerInstance; } }
 
         // abstract methods UI related (WinForms/WPF)
         public abstract ILanEXControl CreateMainForm();
@@ -160,5 +169,6 @@ namespace LanExchange
         public abstract void ListView_Setup(ILanEXListView LV);
         public abstract void ListView_Update(ILanEXListView LV);
         public abstract string InputBoxAsk(string caption, string prompt, string defText);
+        public abstract int RegisterImageIndex(Bitmap pic16x16, Bitmap pic32x32);
     }
 }

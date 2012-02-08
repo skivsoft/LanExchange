@@ -117,7 +117,7 @@ namespace LanExchange
     #region TLanEXListView
     public class TLanEXListView : TLanEXControl, ILanEXListView
     {
-        private ListView Instance = null;
+        public ListView Instance = null;
         private ILanEXItemList ItemListInstance = null;
 
         public TLanEXListView(Control c)
@@ -255,7 +255,7 @@ namespace LanExchange
     #region TLanEXTabPage
     public class TLanEXTabPage : TLanEXControl, ILanEXTabPage
     {
-        private TabPage Instance = null;
+        public TabPage Instance = null;
 
         public TLanEXTabPage(Control c)
             : base(c)
@@ -374,8 +374,11 @@ namespace LanExchange
 
         public TMainAppUI()
         {
-            // load plugins
-            LoadPlugins();
+        }
+
+        public override void Init()
+        {
+            base.Init();
             // print version info to log
             LogPrint("OSVersion: [{0}], Processors count: {1}", Environment.OSVersion, Environment.ProcessorCount);
             LogPrint(@"MachineName: {0}, UserName: {1}\{2}, Interactive: {3}", Environment.MachineName, Environment.UserDomainName, Environment.UserName, Environment.UserInteractive);
@@ -459,37 +462,36 @@ namespace LanExchange
 
         public override void ListView_SetupTip(ILanEXListView LV)
         {
-            //MainForm.Instance.tipComps.SetToolTip(LV, "!");
-            //MainForm.Instance.tipComps.Active = true;
+            LanExchange.MainForm.Instance.tipComps.SetToolTip((LV as TLanEXListView).Instance, "!");
+            LanExchange.MainForm.Instance.tipComps.Active = true;
         }
 
         public override void ListView_Setup(ILanEXListView LV)
         {
-            /*
-            TMainApp.App.LogPrint("Setup control {0}", LV.ToString());
-            LV.Columns.Clear();
-            LV.Columns.Add("Сетевое имя", 130);
-            LV.Columns.Add("Описание", 250);
-            LV.ContextMenuStrip = MainForm.MainFormInstance.popComps;
-            LV.Location = new Point(3, 3);
-            LV.Dock = System.Windows.Forms.DockStyle.Fill;
-            LV.FullRowSelect = true;
-            LV.GridLines = true;
-            LV.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            LV.HideSelection = false;
-            LV.LargeImageList = MainForm.MainFormInstance.ilLarge;
-            LV.ShowGroups = false;
-            LV.ShowItemToolTips = true;
-            LV.SmallImageList = MainForm.MainFormInstance.ilSmall;
-            LV.View = System.Windows.Forms.View.Details;
-            LV.VirtualMode = true;
-            LV.ItemActivate += new System.EventHandler(MainForm.MainFormInstance.lvRecent_ItemActivate);
-            LV.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(MainForm.MainFormInstance.lvComps_RetrieveVirtualItem);
-            LV.KeyPress += new System.Windows.Forms.KeyPressEventHandler(MainForm.MainFormInstance.lvComps_KeyPress);
-            LV.KeyDown += new System.Windows.Forms.KeyEventHandler(MainForm.MainFormInstance.lvComps_KeyDown);
+            ListView LVInstance = (LV as TLanEXListView).Instance;
+            TMainApp.App.LogPrint("Setup control {0}", LVInstance.ToString());
+            LVInstance.Columns.Clear();
+            LVInstance.Columns.Add("Q1", 130);
+            LVInstance.Columns.Add("Q2", 250);
+            LVInstance.ContextMenuStrip = LanExchange.MainForm.Instance.popComps;
+            LVInstance.Location = new Point(3, 3);
+            LVInstance.Dock = System.Windows.Forms.DockStyle.Fill;
+            LVInstance.FullRowSelect = true;
+            LVInstance.GridLines = true;
+            LVInstance.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            LVInstance.HideSelection = false;
+            LVInstance.LargeImageList = LanExchange.MainForm.Instance.ilLarge;
+            LVInstance.ShowGroups = false;
+            LVInstance.ShowItemToolTips = true;
+            LVInstance.SmallImageList = LanExchange.MainForm.Instance.ilSmall;
+            LVInstance.View = System.Windows.Forms.View.Details;
+            LVInstance.VirtualMode = true;
+            //LVInstance.ItemActivate += new System.EventHandler(lvRecent_ItemActivate);
+            //LVInstance.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(lvComps_RetrieveVirtualItem);
+            //LVInstance.KeyPress += new System.Windows.Forms.KeyPressEventHandler(lvComps_KeyPress);
+            //LVInstance.KeyDown += new System.Windows.Forms.KeyEventHandler(lvComps_KeyDown);
             ListView_SetupTip(LV);
             ListView_Update(LV);
-             */
         }
 
         public override void ListView_Update(ILanEXListView LV)
@@ -510,6 +512,14 @@ namespace LanExchange
             //return MainForm.Instance.inputBox.Ask(caption, prompt, defText, false);
             return "";
         }
+
+        public override int RegisterImageIndex(Bitmap pic16x16, Bitmap pic32x32)
+        {
+            LanExchange.MainForm.Instance.ilSmall.Images.Add(pic16x16);
+            LanExchange.MainForm.Instance.ilLarge.Images.Add(pic32x32);
+            return LanExchange.MainForm.Instance.ilLarge.Images.Count-1;
+        }
+
     }
     #endregion
 

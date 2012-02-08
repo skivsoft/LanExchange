@@ -7,18 +7,15 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using SkivSoft.LanExchange.SDK;
+using Network.Properties;
 
-namespace Network
+namespace SkivSoft.LanExchange.SDK
 {
     /// <summary>
     /// Модель "Общий ресурс"
     /// </summary>
-    public class TShareItem : IPanelItem, IComparable<IPanelItem>
+    public class TShareItem : ILanEXItem, IComparable<ILanEXItem>
     {
-        public const int imgHiddenFolder = 6;
-        public const int imgNormalFolder = 7;
-        public const int imgPrinterFolder = 8;
-
         private string share_name;
         private string share_comment;
         private uint share_type;
@@ -61,9 +58,9 @@ namespace Network
             get
             {
                 if (IsPrinter)
-                    return imgPrinterFolder;
+                    return Globals.imgPrinter;
                 else
-                    return IsHidden ? imgHiddenFolder : imgNormalFolder;
+                    return IsHidden ? Globals.imgFolderHidden : Globals.imgFolderNormal;
             }
         }
 
@@ -96,16 +93,25 @@ namespace Network
             return new string[2] { "", Comment };
         }
 
+        public TLanEXColumnInfo[] GetColumns()
+        {
+            return new TLanEXColumnInfo[3] {
+                new TLanEXColumnInfo(Resources.sSharedResource, 130),
+                new TLanEXColumnInfo("*:", 20),
+                new TLanEXColumnInfo(Resources.sDescription, 250)
+            };
+        }
+
         public string ToolTipText
         {
             get { return Comment; }
         }
 
-        public void CopyExtraFrom(IPanelItem Comp)
+        public void CopyExtraFrom(ILanEXItem Comp)
         {
         }
 
-        public int CompareTo(IPanelItem p2)
+        public int CompareTo(ILanEXItem p2)
         {
             return Name.CompareTo(p2.Name);
         }

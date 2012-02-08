@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using SkivSoft.LanExchange.SDK;
 using System.Net;
 using System.Runtime.InteropServices;
+using Network.Properties;
 
 namespace SkivSoft.LanExchange.SDK
 {
@@ -12,16 +13,8 @@ namespace SkivSoft.LanExchange.SDK
     /// <summary>
     /// Модель "Компьютер"
     /// </summary>
-    public class TComputerItem : IPanelItem, IComparable<IPanelItem>
+    public class TComputerItem : ILanEXItem, IComparable<ILanEXItem>
     {
-        // индексы иконок компов
-        public const int imgCompDefault = 0;
-        public const int imgCompBlue = 1;
-        public const int imgCompMagenta = 2;
-        public const int imgCompGray = 3;
-        public const int imgCompGreen = 4;
-        public const int imgCompRed = 5;
-
         private string computer_name = String.Empty;
         private string comment = String.Empty;
         private string version = String.Empty;
@@ -73,17 +66,25 @@ namespace SkivSoft.LanExchange.SDK
             return new String[1] { Name };
         }
 
+        public TLanEXColumnInfo[] GetColumns()
+        {
+            return new TLanEXColumnInfo[2] {
+                new TLanEXColumnInfo(Resources.sNetworkName, 130),
+                new TLanEXColumnInfo(Resources.sDescription, 250)
+            };
+        }
+
         public int ImageIndex
         {
             get
             {
                 if (IsLogged)
-                    return imgCompGreen;
+                    return Globals.imgCompOnline;
                 else
                     if (IsPingable)
-                        return imgCompDefault;
+                        return Globals.imgCompDefault;
                     else
-                        return imgCompRed;
+                        return Globals.imgCompOff;
             }
         }
 
@@ -122,7 +123,7 @@ namespace SkivSoft.LanExchange.SDK
             set { ipendpoint = value; }
         }
 
-        public void CopyExtraFrom(IPanelItem Comp)
+        public void CopyExtraFrom(ILanEXItem Comp)
         {
             if (Comp == null) return;
             pingable = (Comp as TComputerItem).pingable;
@@ -130,7 +131,7 @@ namespace SkivSoft.LanExchange.SDK
             ipendpoint = (Comp as TComputerItem).ipendpoint;
         }
 
-        public int CompareTo(IPanelItem p2)
+        public int CompareTo(ILanEXItem p2)
         {
             return Name.CompareTo(p2.Name);
         }
@@ -198,13 +199,13 @@ namespace SkivSoft.LanExchange.SDK
         }
 #endif
         // получим список всех компьюетеров
-        public static List<IPanelItem> GetServerList()
+        public static List<ILanEXItem> GetServerList()
         {
             LocalNetwork.SERVER_INFO_101 si;
             IntPtr pInfo = IntPtr.Zero;
             int entriesread = 0;
             int totalentries = 0;
-            List<IPanelItem> Result = new List<IPanelItem>();
+            List<ILanEXItem> Result = new List<ILanEXItem>();
             try
             {
                 //TLogger.Print("WINAPI NetServerEnum");

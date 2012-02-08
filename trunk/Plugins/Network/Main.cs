@@ -6,19 +6,54 @@ using System.Text;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using Network.Properties;
 
 namespace SkivSoft.LanExchange.SDK
 {
-    public class TNetwork : ILanEXPlugin
+
+    public class Globals
     {
-        private ILanEXMainApp App;
+        // image indexes
+        public static int imgCompDefault;
+        public static int imgCompBlue;
+        public static int imgCompMagenta;
+        public static int imgCompOrange;
+        public static int imgCompOnline;
+        public static int imgCompOff;
+        public static int imgCompRadmin;
+        public static int imgFolderHidden;
+        public static int imgFolderNormal;
+        public static int imgFolderBack;
+        public static int imgPrinter;
+    }
+
+    public class Plugin1 : ILanEXPlugin
+    {
+        private ILanEXMainApp App = null;
+        private ILanEXTabModel TabModel = null;
+        private ILanEXTabController TabController = null;
 
         public void Initialize(IServiceProvider serviceProvider)
         {
             App = serviceProvider.GetService(typeof(ILanEXMainApp)) as ILanEXMainApp;
             if (App != null)
             {
+                TabController = App.TabController;
+                if (TabController != null)
+                    TabModel = TabController.Model;
                 App.Loaded += new EventHandler(this.MainForm_Loaded);
+                // registering image indexes
+                Globals.imgCompDefault  = App.RegisterImageIndex(Resources.comp_sm1, Resources.comp_big1);
+                Globals.imgCompBlue     = App.RegisterImageIndex(Resources.comp_sm2, Resources.comp_big2);
+                Globals.imgCompMagenta  = App.RegisterImageIndex(Resources.comp_sm3, Resources.comp_big3);
+                Globals.imgCompOrange   = App.RegisterImageIndex(Resources.comp_sm4, Resources.comp_big4);
+                Globals.imgCompOnline   = App.RegisterImageIndex(Resources.comp_sm5, Resources.comp_big5);
+                Globals.imgCompOff      = App.RegisterImageIndex(Resources.comp_sm6, Resources.comp_big6);
+                Globals.imgCompRadmin   = App.RegisterImageIndex(Resources.comp_sm7, Resources.comp_big7);
+                Globals.imgFolderHidden = App.RegisterImageIndex(Resources.folder_hidden_16, Resources.folder_hidden_32);
+                Globals.imgFolderNormal = App.RegisterImageIndex(Resources.folder_normal_16, Resources.folder_normal_32);
+                Globals.imgFolderBack   = App.RegisterImageIndex(Resources.folder_back_16, Resources.folder_back_32);
+                Globals.imgPrinter      = App.RegisterImageIndex(Resources.printer_16, Resources.printer_32);
             }
         }
 
@@ -29,13 +64,22 @@ namespace SkivSoft.LanExchange.SDK
 
         public void MainForm_Loaded(object sender, EventArgs e)
         {
-            if (App == null) return;
+            if (App == null || TabController == null || TabModel == null) 
+                return;
+            TabInfo Info = new TabInfo(Environment.UserDomainName);
+            Info.Items = new List<string>();
+            Info.Items.Add("TEST1");
+            Info.Items.Add("TEST2");
+            Info.Items.Add("TEST3");
+            TabModel.AddTab(Info);
+            /*
             ILanEXTabPage Page = App.CreateControl(typeof(ILanEXTabPage)) as ILanEXTabPage;
             Page.Text = Environment.UserDomainName;
             App.Pages.Add(Page);
 
             List<IPanelItem> LST = TComputerItem.GetServerList();
             App.LogPrint("Servers: {0}", LST.Count);
+             */
         }
     }
 

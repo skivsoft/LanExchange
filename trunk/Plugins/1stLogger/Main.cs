@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SkivSoft.LanExchange.SDK
 {
-    public class TLogger : ILanEXPlugin
+    public class Plugin1 : ILanEXPlugin
     {
         static bool bFirstRun = true;
         private ILanEXMainApp App;
@@ -61,6 +61,6 @@ namespace SkivSoft.LanExchange.SDK
         public string Author { get { return "Skiv"; } }
         public string Version { get { return "1.0"; } }
         public string Name { get { return "Logger"; } }
-        public string Description { get { return "Журналирование действий программы в лог-файл."; } }
+        public string Description { get { return "Logs all actions to text file."; } }
     }
 }

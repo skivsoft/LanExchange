@@ -20,9 +20,9 @@ namespace SkivSoft.LanExchange.SDK
         int FilterCount { get; }
         String FilterText { get; set; }
 
-        void Add(IPanelItem Comp);
-        void Delete(IPanelItem Comp);
-        IPanelItem Get(string key);
+        void Add(ILanEXItem Comp);
+        void Delete(ILanEXItem Comp);
+        ILanEXItem Get(string key);
         void Clear();
         void ApplyFilter();
 

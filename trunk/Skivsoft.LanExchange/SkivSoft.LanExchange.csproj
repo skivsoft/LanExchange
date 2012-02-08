@@ -122,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="LanExchange.ico" />
+    <None Include="Resources\folder2_normal_16x16.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">

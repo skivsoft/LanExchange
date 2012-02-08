@@ -9,17 +9,17 @@ namespace LanExchange
 {
     public class TLanEXItemList : ILanEXItemList
     {
-        private SortedDictionary<string, IPanelItem> data = null;
+        private SortedDictionary<string, ILanEXItem> data = null;
         private List<string> keys = null;
         private String filter = "";
 
         public TLanEXItemList()
         {
-            data = new SortedDictionary<string, IPanelItem>();
+            data = new SortedDictionary<string, ILanEXItem>();
             keys = new List<string>();
         }
    
-        public void Add(IPanelItem Comp)
+        public void Add(ILanEXItem Comp)
         {
             if (Comp != null)
               if (!String.IsNullOrEmpty(Comp.Name))
@@ -27,14 +27,14 @@ namespace LanExchange
                     data.Add(Comp.Name, Comp);
         }
 
-        public void Delete(IPanelItem Comp)
+        public void Delete(ILanEXItem Comp)
         {
             data.Remove(Comp.Name);
         }
 
-        public IPanelItem Get(string key)
+        public ILanEXItem Get(string key)
         {
-            IPanelItem Result = null;
+            ILanEXItem Result = null;
             if (data.TryGetValue(key, out Result))
             {
                 Result.Name = key;
