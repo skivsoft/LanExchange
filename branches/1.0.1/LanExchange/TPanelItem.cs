@@ -62,9 +62,20 @@ namespace LanExchange
             get { return GetToolTipText(); }
         }
 
-        public int CompareTo(TPanelItem p2)
+        public virtual int CompareTo(TPanelItem p2)
         {
-            return Name.CompareTo(p2.Name);
+            int Result;
+            if (this.Name == "..")
+                if (p2.Name == "..")
+                    Result = 0;
+                else
+                    Result = -1;
+            else
+                if (p2.Name == "..")
+                    Result = +1;
+                else
+                    Result = this.Name.CompareTo(p2.Name);
+            return Result;
         }
     }
 
@@ -72,13 +83,7 @@ namespace LanExchange
     {
         public int Compare(TPanelItem Item1, TPanelItem Item2)
         {
-            if (Item1.Name == "..")
-                if (Item2.Name == "..")
-                    return 0;
-                else
-                    return -1;
-            else
-                return Item1.CompareTo(Item2);
+            return Item1.CompareTo(Item2);
         }
     }
     #endregion
@@ -295,6 +300,28 @@ namespace LanExchange
         public override string[] GetSubItems()
         {
             return new string[2] { "", Comment };
+        }
+
+        /// <summary>
+        /// Сортировка: сначала каталоги, затем принтеры.
+        /// </summary>
+        /// <param name="p2"></param>
+        /// <returns></returns>
+        public override int CompareTo(TPanelItem p2)
+        {
+            bool b2 = (p2 as TShareItem).IsPrinter;
+            int Result;
+            if (this.IsPrinter)
+                if (b2)
+                    Result = base.CompareTo(p2);
+                else
+                    Result = +1;
+            else
+                if (b2)
+                    Result = -1;
+                else
+                    Result = base.CompareTo(p2);
+            return Result;
         }
     }
     #endregion

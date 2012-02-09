@@ -690,9 +690,11 @@ namespace LanExchange
                 //CompBrowser.SelectComputer(SaveCurrent);
                 UpdateFilterPanel();
             }
+            else
+                LV.VirtualListSize = ItemList.FilterCount;
         }
 
-        private void UpdateFilterPanel()
+        public void UpdateFilterPanel()
         {
             ListView LV = GetActiveListView();
             TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
@@ -925,6 +927,7 @@ namespace LanExchange
             TPanelItem PItem = GetFocusedPanelItem(false, false);
             if (PItem != null && PItem.Name == ComputerName)
                 lvComps_ItemActivate(lvComps, new EventArgs());
+            UpdateFilterPanel();
         }
 
         public string GetMD5FromString(string str)

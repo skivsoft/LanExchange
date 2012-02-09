@@ -11,13 +11,13 @@ namespace LanExchange
 {
     public class TPanelItemList 
     {
-        private SortedDictionary<string, TPanelItem> Data = null;
+        private Dictionary<string, TPanelItem> Data = null;
         public List<string> Keys = null;
         private String Filter = "";
 
         public TPanelItemList()
         {
-            Data = new SortedDictionary<string, TPanelItem>();
+            Data = new Dictionary<string, TPanelItem>();
             Keys = new List<string>();
         }
    

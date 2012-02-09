@@ -179,6 +179,7 @@ namespace LanExchange
             }
             CurrentDataTable = InternalItems;
             InternalItemList.ListView_SelectComputer(MainForm.MainFormInstance.lvComps, CompName);
+            MainForm.MainFormInstance.UpdateFilterPanel();
         }
 
         // Отображаемая таблица
