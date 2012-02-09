@@ -8,7 +8,7 @@
     <ProjectGuid>{A31188E3-9DF6-4AAE-A17A-799257CD4599}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Tests</RootNamespace>
+    <RootNamespace>SkivSoft.LanExchange.Tests</RootNamespace>
     <AssemblyName>Tests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -57,17 +57,17 @@
     <Compile Include="TestTTabController.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SkivSoft.LanExchange.Core\SkivSoft.LanExchange.Core.csproj">
+    <ProjectReference Include="..\SkivSoft.LanExchange.Core\Core.csproj">
       <Project>{83E20C54-D49E-40D2-BB90-66F0D6131D8E}</Project>
-      <Name>SkivSoft.LanExchange.Core</Name>
+      <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SkivSoft.LanExchange.SDK\SkivSoft.LanExchange.SDK.csproj">
+    <ProjectReference Include="..\SkivSoft.LanExchange.SDK\SDK.csproj">
       <Project>{EE20A37F-AD31-42A9-8410-E45CCE737C2C}</Project>
-      <Name>SkivSoft.LanExchange.SDK</Name>
+      <Name>SDK</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Skivsoft.LanExchange\SkivSoft.LanExchange.csproj">
+    <ProjectReference Include="..\Skivsoft.LanExchange\LanExchange.csproj">
       <Project>{2796321A-F31B-4A51-906D-4BF8F717E4DD}</Project>
-      <Name>SkivSoft.LanExchange</Name>
+      <Name>LanExchange</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -8,6 +8,7 @@ using Microsoft.Win32;
 // 
 namespace SkivSoft.LanExchange.SDK
 {
+    #region ILanEXInitializable interface
     /// <summary>
     /// Init with service provider.
     /// </summary>
@@ -15,7 +16,9 @@ namespace SkivSoft.LanExchange.SDK
     {
         void Initialize(IServiceProvider serviceProvider);
     }
-    
+    #endregion
+
+    #region ILanEXPlugin interface
     /// <summary>
     /// LanExchange plugin methods. 
     /// Plugin is initializable with serivice provider.
@@ -27,8 +30,9 @@ namespace SkivSoft.LanExchange.SDK
         string Author { get; }
         string Description { get; }
     }
+    #endregion
 
-    #region ILanEXItem Interface
+    #region ILanEXItem interface
     public struct TLanEXColumnInfo
     {
         string Name;
@@ -48,6 +52,8 @@ namespace SkivSoft.LanExchange.SDK
         int ImageIndex { get; }
         string ToolTipText { get; }
 
+        //List<ILanEXItem> GetItems();
+
         string[] GetStrings();
         string[] GetSubItems();
         TLanEXColumnInfo[] GetColumns();
@@ -63,7 +69,7 @@ namespace SkivSoft.LanExchange.SDK
     }
     #endregion
 
-    #region ILanEXMainApp Interface
+    #region LoggerPrintEventHandler & LoggerPrintEventArgs
     /// <summary>
     /// LogPrint arguments.
     /// </summary>
@@ -80,7 +86,9 @@ namespace SkivSoft.LanExchange.SDK
     }
     
     public delegate void LoggerPrintEventHandler(object sender, LoggerPrintEventArgs e);
+    #endregion
 
+    #region ILanEXMainApp interface
     /// <summary>
     /// Main Application class LanExchange.
     /// </summary>
@@ -94,6 +102,10 @@ namespace SkivSoft.LanExchange.SDK
         /// This event occurs after main form were loaded.
         /// </summary>
         event EventHandler Loaded;
+        /// <summary>
+        /// This event calls by main refresh timer.
+        /// </summary>
+        event EventHandler UpdateItemList;
         
         /// <summary>
         /// Returns current computer name.
@@ -112,6 +124,10 @@ namespace SkivSoft.LanExchange.SDK
         /// Print text string to log.
         /// </summary>
         void LogPrint(string format, params object[] args);
+        /// <summary>
+        /// Print Exception to log.
+        /// </summary>
+        /// <param name="exception">An Exception.</param>
         void LogPrint(Exception exception);
         void ListView_SetupTip(ILanEXListView LV);
         void ListView_Setup(ILanEXListView LV);

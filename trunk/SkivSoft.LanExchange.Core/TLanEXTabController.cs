@@ -13,7 +13,7 @@ using System.Collections;
 // Модель ничего «не знает» о Представлении, а Контроллер не содержит 
 // в себе какой-либо бизнес-логики.
 //
-namespace LanExchange
+namespace SkivSoft.LanExchange.Core
 {
     #region Модель (Model)
     // 

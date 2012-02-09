@@ -8,8 +8,8 @@
     <ProjectGuid>{83E20C54-D49E-40D2-BB90-66F0D6131D8E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SkivSoft.LanExchange.Core</RootNamespace>
-    <AssemblyName>SkivSoft.LanExchange.Core</AssemblyName>
+    <RootNamespace>SkivSoft.LanExchange.SkivSoft.LanExchange</RootNamespace>
+    <AssemblyName>Core</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -99,9 +99,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SkivSoft.LanExchange.SDK\SkivSoft.LanExchange.SDK.csproj">
+    <ProjectReference Include="..\SkivSoft.LanExchange.SDK\SDK.csproj">
       <Project>{EE20A37F-AD31-42A9-8410-E45CCE737C2C}</Project>
-      <Name>SkivSoft.LanExchange.SDK</Name>
+      <Name>SDK</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

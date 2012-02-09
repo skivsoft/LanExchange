@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using Microsoft.Win32;
 using System.IO;
 using System.Drawing;
-using Tools;
 
-namespace LanExchange
+namespace SkivSoft.LanExchange.Core
 {
     public class TSettings
     {

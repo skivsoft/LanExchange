@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace LanExchange
+namespace SkivSoft.LanExchange
 {
     public partial class InputBoxForm : Form
     {

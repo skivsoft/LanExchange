@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Tests
+namespace SkivSoft.LanExchange.Tests
 {
 
     class Program

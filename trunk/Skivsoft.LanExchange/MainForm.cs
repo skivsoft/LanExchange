@@ -6,8 +6,9 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Reflection;
+using SkivSoft.LanExchange.Core;
 
-namespace LanExchange
+namespace SkivSoft.LanExchange
 {
     #region MainForm
     public partial class MainForm : Form

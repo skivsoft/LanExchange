@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using LanExchange;
+using SkivSoft.LanExchange.Core;
 using NUnit.Framework;
 using System.Windows.Forms;
 
-namespace Tests
+namespace SkivSoft.LanExchange.Tests
 {
     [TestFixture]
     class TestTSettings

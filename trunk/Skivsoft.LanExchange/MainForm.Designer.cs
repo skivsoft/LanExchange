@@ -1,4 +1,4 @@
-﻿namespace LanExchange
+﻿namespace SkivSoft.LanExchange
 {
     partial class MainForm
     {
@@ -31,15 +31,12 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.picLogo = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lItemsCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lCompName = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lUserName = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsBottom = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.eFilter = new System.Windows.Forms.TextBox();
@@ -78,146 +75,136 @@
             this.mAfterSendTo = new System.Windows.Forms.ToolStripSeparator();
             this.ilSmall = new System.Windows.Forms.ImageList(this.components);
             this.ilLarge = new System.Windows.Forms.ImageList(this.components);
+            this.lCompName = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lUserName = new System.Windows.Forms.ToolStripStatusLabel();
+            this.picLogo = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.tsBottom.SuspendLayout();
             this.popTray.SuspendLayout();
             this.popPages.SuspendLayout();
             this.popComps.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.AccessibleDescription = null;
+            this.panel1.AccessibleName = null;
+            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.BackgroundImage = null;
             this.panel1.Controls.Add(this.picLogo);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.label2);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Font = null;
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(564, 90);
-            this.panel1.TabIndex = 14;
-            // 
-            // picLogo
-            // 
-            this.picLogo.Image = global::SkivSoft.LanExchange.Properties.Resources.LanExchange_48x48;
-            this.picLogo.Location = new System.Drawing.Point(16, 16);
-            this.picLogo.Name = "picLogo";
-            this.picLogo.Size = new System.Drawing.Size(48, 48);
-            this.picLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.picLogo.TabIndex = 2;
-            this.picLogo.TabStop = false;
+            this.tipComps.SetToolTip(this.panel1, resources.GetString("panel1.ToolTip"));
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.AccessibleDescription = null;
+            this.label1.AccessibleName = null;
+            resources.ApplyResources(this.label1, "label1");
             this.label1.ForeColor = System.Drawing.Color.Navy;
-            this.label1.Location = new System.Drawing.Point(70, 12);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(109, 18);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Shared Folders";
+            this.tipComps.SetToolTip(this.label1, resources.GetString("label1.ToolTip"));
             // 
             // label2
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.Location = new System.Drawing.Point(70, 36);
+            this.label2.AccessibleDescription = null;
+            this.label2.AccessibleName = null;
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Font = null;
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(479, 51);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Here you can see computers of local area network. Search by computer description " +
-                "is available.";
+            this.tipComps.SetToolTip(this.label2, resources.GetString("label2.ToolTip"));
             // 
             // statusStrip1
             // 
+            this.statusStrip1.AccessibleDescription = null;
+            this.statusStrip1.AccessibleName = null;
+            resources.ApplyResources(this.statusStrip1, "statusStrip1");
+            this.statusStrip1.BackgroundImage = null;
+            this.statusStrip1.Font = null;
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lItemsCount,
             this.toolStripStatusLabel1,
             this.lCompName,
             this.toolStripStatusLabel3,
             this.lUserName});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 520);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(564, 22);
-            this.statusStrip1.TabIndex = 16;
-            this.statusStrip1.Text = "statusStrip1";
+            this.tipComps.SetToolTip(this.statusStrip1, resources.GetString("statusStrip1.ToolTip"));
             // 
             // lItemsCount
             // 
+            this.lItemsCount.AccessibleDescription = null;
+            this.lItemsCount.AccessibleName = null;
+            resources.ApplyResources(this.lItemsCount, "lItemsCount");
+            this.lItemsCount.BackgroundImage = null;
             this.lItemsCount.Name = "lItemsCount";
-            this.lItemsCount.Size = new System.Drawing.Size(440, 17);
             this.lItemsCount.Spring = true;
-            this.lItemsCount.Text = "    ";
-            this.lItemsCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // toolStripStatusLabel1
             // 
+            this.toolStripStatusLabel1.AccessibleDescription = null;
+            this.toolStripStatusLabel1.AccessibleName = null;
+            resources.ApplyResources(this.toolStripStatusLabel1, "toolStripStatusLabel1");
+            this.toolStripStatusLabel1.BackgroundImage = null;
             this.toolStripStatusLabel1.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
             this.toolStripStatusLabel1.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
             this.toolStripStatusLabel1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(4, 17);
-            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
-            // 
-            // lCompName
-            // 
-            this.lCompName.Image = global::SkivSoft.LanExchange.Properties.Resources.CompOff;
-            this.lCompName.Name = "lCompName";
-            this.lCompName.Size = new System.Drawing.Size(35, 17);
-            this.lCompName.Text = "    ";
-            this.lCompName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // toolStripStatusLabel3
             // 
+            this.toolStripStatusLabel3.AccessibleDescription = null;
+            this.toolStripStatusLabel3.AccessibleName = null;
+            resources.ApplyResources(this.toolStripStatusLabel3, "toolStripStatusLabel3");
+            this.toolStripStatusLabel3.BackgroundImage = null;
             this.toolStripStatusLabel3.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
             this.toolStripStatusLabel3.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
             this.toolStripStatusLabel3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
             this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(4, 17);
-            this.toolStripStatusLabel3.Text = "toolStripStatusLabel3";
-            // 
-            // lUserName
-            // 
-            this.lUserName.Image = global::SkivSoft.LanExchange.Properties.Resources.UserName;
-            this.lUserName.Name = "lUserName";
-            this.lUserName.Size = new System.Drawing.Size(35, 17);
-            this.lUserName.Text = "    ";
-            this.lUserName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // tsBottom
             // 
+            this.tsBottom.AccessibleDescription = null;
+            this.tsBottom.AccessibleName = null;
+            resources.ApplyResources(this.tsBottom, "tsBottom");
+            this.tsBottom.BackgroundImage = null;
             this.tsBottom.Controls.Add(this.label3);
             this.tsBottom.Controls.Add(this.eFilter);
-            this.tsBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tsBottom.Location = new System.Drawing.Point(0, 488);
+            this.tsBottom.Font = null;
             this.tsBottom.Name = "tsBottom";
-            this.tsBottom.Size = new System.Drawing.Size(564, 32);
-            this.tsBottom.TabIndex = 22;
-            this.tsBottom.Visible = false;
+            this.tipComps.SetToolTip(this.tsBottom, resources.GetString("tsBottom.ToolTip"));
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 9);
+            this.label3.AccessibleDescription = null;
+            this.label3.AccessibleName = null;
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Font = null;
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(30, 13);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Find:";
+            this.tipComps.SetToolTip(this.label3, resources.GetString("label3.ToolTip"));
             // 
             // eFilter
             // 
+            this.eFilter.AccessibleDescription = null;
+            this.eFilter.AccessibleName = null;
+            resources.ApplyResources(this.eFilter, "eFilter");
             this.eFilter.BackColor = System.Drawing.Color.White;
-            this.eFilter.Location = new System.Drawing.Point(56, 6);
+            this.eFilter.BackgroundImage = null;
+            this.eFilter.Font = null;
             this.eFilter.Name = "eFilter";
-            this.eFilter.Size = new System.Drawing.Size(200, 20);
-            this.eFilter.TabIndex = 4;
+            this.tipComps.SetToolTip(this.eFilter, resources.GetString("eFilter.ToolTip"));
             // 
             // popTray
             // 
+            this.popTray.AccessibleDescription = null;
+            this.popTray.AccessibleName = null;
+            resources.ApplyResources(this.popTray, "popTray");
+            this.popTray.BackgroundImage = null;
+            this.popTray.Font = null;
             this.popTray.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mOpen,
             this.toolStripSeparator3,
@@ -226,69 +213,89 @@
             this.mAbout,
             this.mExit});
             this.popTray.Name = "popTray";
-            this.popTray.Size = new System.Drawing.Size(145, 104);
+            this.tipComps.SetToolTip(this.popTray, resources.GetString("popTray.ToolTip"));
             // 
             // mOpen
             // 
+            this.mOpen.AccessibleDescription = null;
+            this.mOpen.AccessibleName = null;
+            resources.ApplyResources(this.mOpen, "mOpen");
+            this.mOpen.BackgroundImage = null;
             this.mOpen.Name = "mOpen";
-            this.mOpen.Size = new System.Drawing.Size(144, 22);
-            this.mOpen.Text = "Open";
+            this.mOpen.ShortcutKeyDisplayString = null;
             // 
             // toolStripSeparator3
             // 
+            this.toolStripSeparator3.AccessibleDescription = null;
+            this.toolStripSeparator3.AccessibleName = null;
+            resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(141, 6);
             // 
             // mSettings
             // 
+            this.mSettings.AccessibleDescription = null;
+            this.mSettings.AccessibleName = null;
+            resources.ApplyResources(this.mSettings, "mSettings");
+            this.mSettings.BackgroundImage = null;
             this.mSettings.Name = "mSettings";
-            this.mSettings.Size = new System.Drawing.Size(144, 22);
-            this.mSettings.Text = "Preferences...";
+            this.mSettings.ShortcutKeyDisplayString = null;
             // 
             // toolStripSeparator4
             // 
+            this.toolStripSeparator4.AccessibleDescription = null;
+            this.toolStripSeparator4.AccessibleName = null;
+            resources.ApplyResources(this.toolStripSeparator4, "toolStripSeparator4");
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(141, 6);
             // 
             // mAbout
             // 
+            this.mAbout.AccessibleDescription = null;
+            this.mAbout.AccessibleName = null;
+            resources.ApplyResources(this.mAbout, "mAbout");
+            this.mAbout.BackgroundImage = null;
             this.mAbout.Name = "mAbout";
-            this.mAbout.Size = new System.Drawing.Size(144, 22);
-            this.mAbout.Text = "About...";
+            this.mAbout.ShortcutKeyDisplayString = null;
             // 
             // mExit
             // 
+            this.mExit.AccessibleDescription = null;
+            this.mExit.AccessibleName = null;
+            resources.ApplyResources(this.mExit, "mExit");
+            this.mExit.BackgroundImage = null;
             this.mExit.Name = "mExit";
-            this.mExit.Size = new System.Drawing.Size(144, 22);
-            this.mExit.Text = "Exit";
+            this.mExit.ShortcutKeyDisplayString = null;
             // 
             // TrayIcon
             // 
             this.TrayIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.TrayIcon.BalloonTipTitle = "Оповещение";
+            resources.ApplyResources(this.TrayIcon, "TrayIcon");
             this.TrayIcon.ContextMenuStrip = this.popTray;
-            this.TrayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("TrayIcon.Icon")));
-            this.TrayIcon.Text = "Общие папки";
-            this.TrayIcon.Visible = true;
             // 
             // dlgSave
             // 
             this.dlgSave.DefaultExt = "txt";
-            this.dlgSave.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
+            resources.ApplyResources(this.dlgSave, "dlgSave");
             this.dlgSave.RestoreDirectory = true;
             // 
             // Pages
             // 
+            this.Pages.AccessibleDescription = null;
+            this.Pages.AccessibleName = null;
+            resources.ApplyResources(this.Pages, "Pages");
+            this.Pages.BackgroundImage = null;
             this.Pages.ContextMenuStrip = this.popPages;
-            this.Pages.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Pages.Location = new System.Drawing.Point(0, 90);
+            this.Pages.Font = null;
             this.Pages.Name = "Pages";
             this.Pages.SelectedIndex = 0;
-            this.Pages.Size = new System.Drawing.Size(564, 398);
-            this.Pages.TabIndex = 23;
+            this.tipComps.SetToolTip(this.Pages, resources.GetString("Pages.ToolTip"));
             // 
             // popPages
             // 
+            this.popPages.AccessibleDescription = null;
+            this.popPages.AccessibleName = null;
+            resources.ApplyResources(this.popPages, "popPages");
+            this.popPages.BackgroundImage = null;
+            this.popPages.Font = null;
             this.popPages.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mNewTab,
             this.toolStripSeparator9,
@@ -300,69 +307,87 @@
             this.toolStripSeparator11,
             this.mListTab});
             this.popPages.Name = "popPages";
-            this.popPages.Size = new System.Drawing.Size(175, 154);
+            this.tipComps.SetToolTip(this.popPages, resources.GetString("popPages.ToolTip"));
             this.popPages.Opened += new System.EventHandler(this.popPages_Opened);
             // 
             // mNewTab
             // 
+            this.mNewTab.AccessibleDescription = null;
+            this.mNewTab.AccessibleName = null;
+            resources.ApplyResources(this.mNewTab, "mNewTab");
+            this.mNewTab.BackgroundImage = null;
             this.mNewTab.Name = "mNewTab";
-            this.mNewTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.mNewTab.Size = new System.Drawing.Size(174, 22);
-            this.mNewTab.Text = "New tab";
+            this.mNewTab.ShortcutKeyDisplayString = null;
             this.mNewTab.Click += new System.EventHandler(this.mNewTab_Click);
             // 
             // toolStripSeparator9
             // 
+            this.toolStripSeparator9.AccessibleDescription = null;
+            this.toolStripSeparator9.AccessibleName = null;
+            resources.ApplyResources(this.toolStripSeparator9, "toolStripSeparator9");
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(171, 6);
             // 
             // mCloseTab
             // 
+            this.mCloseTab.AccessibleDescription = null;
+            this.mCloseTab.AccessibleName = null;
+            resources.ApplyResources(this.mCloseTab, "mCloseTab");
+            this.mCloseTab.BackgroundImage = null;
             this.mCloseTab.Name = "mCloseTab";
-            this.mCloseTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F4)));
-            this.mCloseTab.Size = new System.Drawing.Size(174, 22);
-            this.mCloseTab.Text = "Close tab";
+            this.mCloseTab.ShortcutKeyDisplayString = null;
             this.mCloseTab.Click += new System.EventHandler(this.mCloseTab_Click);
             // 
             // mRenameTab
             // 
+            this.mRenameTab.AccessibleDescription = null;
+            this.mRenameTab.AccessibleName = null;
+            resources.ApplyResources(this.mRenameTab, "mRenameTab");
+            this.mRenameTab.BackgroundImage = null;
             this.mRenameTab.Name = "mRenameTab";
-            this.mRenameTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.R)));
-            this.mRenameTab.Size = new System.Drawing.Size(174, 22);
-            this.mRenameTab.Text = "Rename tab";
+            this.mRenameTab.ShortcutKeyDisplayString = null;
             this.mRenameTab.Click += new System.EventHandler(this.mRenameTab_Click);
             // 
             // mSaveTab
             // 
+            this.mSaveTab.AccessibleDescription = null;
+            this.mSaveTab.AccessibleName = null;
+            resources.ApplyResources(this.mSaveTab, "mSaveTab");
+            this.mSaveTab.BackgroundImage = null;
             this.mSaveTab.Name = "mSaveTab";
-            this.mSaveTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.mSaveTab.Size = new System.Drawing.Size(174, 22);
-            this.mSaveTab.Text = "Save tab";
+            this.mSaveTab.ShortcutKeyDisplayString = null;
             this.mSaveTab.Click += new System.EventHandler(this.mSaveTab_Click);
             // 
             // toolStripSeparator10
             // 
+            this.toolStripSeparator10.AccessibleDescription = null;
+            this.toolStripSeparator10.AccessibleName = null;
+            resources.ApplyResources(this.toolStripSeparator10, "toolStripSeparator10");
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(171, 6);
             // 
             // mSelectTab
             // 
+            this.mSelectTab.AccessibleDescription = null;
+            this.mSelectTab.AccessibleName = null;
+            resources.ApplyResources(this.mSelectTab, "mSelectTab");
+            this.mSelectTab.BackgroundImage = null;
             this.mSelectTab.Name = "mSelectTab";
-            this.mSelectTab.Size = new System.Drawing.Size(174, 22);
-            this.mSelectTab.Text = "Select tab";
+            this.mSelectTab.ShortcutKeyDisplayString = null;
             // 
             // toolStripSeparator11
             // 
+            this.toolStripSeparator11.AccessibleDescription = null;
+            this.toolStripSeparator11.AccessibleName = null;
+            resources.ApplyResources(this.toolStripSeparator11, "toolStripSeparator11");
             this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(171, 6);
-            this.toolStripSeparator11.Visible = false;
             // 
             // mListTab
             // 
+            this.mListTab.AccessibleDescription = null;
+            this.mListTab.AccessibleName = null;
+            resources.ApplyResources(this.mListTab, "mListTab");
+            this.mListTab.BackgroundImage = null;
             this.mListTab.Name = "mListTab";
-            this.mListTab.Size = new System.Drawing.Size(174, 22);
-            this.mListTab.Text = "Tab list";
-            this.mListTab.Visible = false;
+            this.mListTab.ShortcutKeyDisplayString = null;
             this.mListTab.Click += new System.EventHandler(this.mListTab_Click);
             // 
             // tipComps
@@ -374,6 +399,11 @@
             // 
             // popComps
             // 
+            this.popComps.AccessibleDescription = null;
+            this.popComps.AccessibleName = null;
+            resources.ApplyResources(this.popComps, "popComps");
+            this.popComps.BackgroundImage = null;
+            this.popComps.Font = null;
             this.popComps.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mLargeIcons,
             this.mSmallIcons,
@@ -385,111 +415,171 @@
             this.toolStripSeparator12,
             this.mSendToTab});
             this.popComps.Name = "popComps";
-            this.popComps.Size = new System.Drawing.Size(179, 170);
+            this.tipComps.SetToolTip(this.popComps, resources.GetString("popComps.ToolTip"));
             // 
             // mLargeIcons
             // 
+            this.mLargeIcons.AccessibleDescription = null;
+            this.mLargeIcons.AccessibleName = null;
+            resources.ApplyResources(this.mLargeIcons, "mLargeIcons");
+            this.mLargeIcons.BackgroundImage = null;
             this.mLargeIcons.Name = "mLargeIcons";
-            this.mLargeIcons.Size = new System.Drawing.Size(178, 22);
+            this.mLargeIcons.ShortcutKeyDisplayString = null;
             this.mLargeIcons.Tag = "1";
-            this.mLargeIcons.Text = "Large icons";
             // 
             // mSmallIcons
             // 
+            this.mSmallIcons.AccessibleDescription = null;
+            this.mSmallIcons.AccessibleName = null;
+            resources.ApplyResources(this.mSmallIcons, "mSmallIcons");
+            this.mSmallIcons.BackgroundImage = null;
             this.mSmallIcons.Name = "mSmallIcons";
-            this.mSmallIcons.Size = new System.Drawing.Size(178, 22);
+            this.mSmallIcons.ShortcutKeyDisplayString = null;
             this.mSmallIcons.Tag = "3";
-            this.mSmallIcons.Text = "Small icons";
             // 
             // mList
             // 
+            this.mList.AccessibleDescription = null;
+            this.mList.AccessibleName = null;
+            resources.ApplyResources(this.mList, "mList");
+            this.mList.BackgroundImage = null;
             this.mList.Name = "mList";
-            this.mList.Size = new System.Drawing.Size(178, 22);
+            this.mList.ShortcutKeyDisplayString = null;
             this.mList.Tag = "4";
-            this.mList.Text = "List";
             // 
             // mDetails
             // 
+            this.mDetails.AccessibleDescription = null;
+            this.mDetails.AccessibleName = null;
+            resources.ApplyResources(this.mDetails, "mDetails");
+            this.mDetails.BackgroundImage = null;
             this.mDetails.Checked = true;
             this.mDetails.CheckState = System.Windows.Forms.CheckState.Checked;
             this.mDetails.Name = "mDetails";
-            this.mDetails.Size = new System.Drawing.Size(178, 22);
+            this.mDetails.ShortcutKeyDisplayString = null;
             this.mDetails.Tag = "2";
-            this.mDetails.Text = "Details";
             // 
             // toolStripSeparator5
             // 
+            this.toolStripSeparator5.AccessibleDescription = null;
+            this.toolStripSeparator5.AccessibleName = null;
+            resources.ApplyResources(this.toolStripSeparator5, "toolStripSeparator5");
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(175, 6);
             // 
             // mCopyCompName
             // 
+            this.mCopyCompName.AccessibleDescription = null;
+            this.mCopyCompName.AccessibleName = null;
+            resources.ApplyResources(this.mCopyCompName, "mCopyCompName");
+            this.mCopyCompName.BackgroundImage = null;
             this.mCopyCompName.Name = "mCopyCompName";
-            this.mCopyCompName.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.mCopyCompName.Size = new System.Drawing.Size(178, 22);
+            this.mCopyCompName.ShortcutKeyDisplayString = null;
             this.mCopyCompName.Tag = "";
-            this.mCopyCompName.Text = "Copy";
             // 
             // mCopySelected
             // 
+            this.mCopySelected.AccessibleDescription = null;
+            this.mCopySelected.AccessibleName = null;
+            resources.ApplyResources(this.mCopySelected, "mCopySelected");
+            this.mCopySelected.BackgroundImage = null;
             this.mCopySelected.Name = "mCopySelected";
-            this.mCopySelected.Size = new System.Drawing.Size(178, 22);
-            this.mCopySelected.Text = "Copy row";
+            this.mCopySelected.ShortcutKeyDisplayString = null;
             // 
             // toolStripSeparator12
             // 
+            this.toolStripSeparator12.AccessibleDescription = null;
+            this.toolStripSeparator12.AccessibleName = null;
+            resources.ApplyResources(this.toolStripSeparator12, "toolStripSeparator12");
             this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(175, 6);
             // 
             // mSendToTab
             // 
+            this.mSendToTab.AccessibleDescription = null;
+            this.mSendToTab.AccessibleName = null;
+            resources.ApplyResources(this.mSendToTab, "mSendToTab");
+            this.mSendToTab.BackgroundImage = null;
             this.mSendToTab.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mSendToNewTab,
             this.mAfterSendTo});
             this.mSendToTab.Name = "mSendToTab";
-            this.mSendToTab.Size = new System.Drawing.Size(178, 22);
-            this.mSendToTab.Text = "Send to another tab";
+            this.mSendToTab.ShortcutKeyDisplayString = null;
             // 
             // mSendToNewTab
             // 
+            this.mSendToNewTab.AccessibleDescription = null;
+            this.mSendToNewTab.AccessibleName = null;
+            resources.ApplyResources(this.mSendToNewTab, "mSendToNewTab");
+            this.mSendToNewTab.BackgroundImage = null;
             this.mSendToNewTab.Name = "mSendToNewTab";
-            this.mSendToNewTab.Size = new System.Drawing.Size(133, 22);
-            this.mSendToNewTab.Text = "To new tab";
+            this.mSendToNewTab.ShortcutKeyDisplayString = null;
             // 
             // mAfterSendTo
             // 
+            this.mAfterSendTo.AccessibleDescription = null;
+            this.mAfterSendTo.AccessibleName = null;
+            resources.ApplyResources(this.mAfterSendTo, "mAfterSendTo");
             this.mAfterSendTo.Name = "mAfterSendTo";
-            this.mAfterSendTo.Size = new System.Drawing.Size(130, 6);
             // 
             // ilSmall
             // 
             this.ilSmall.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
-            this.ilSmall.ImageSize = new System.Drawing.Size(16, 16);
+            resources.ApplyResources(this.ilSmall, "ilSmall");
             this.ilSmall.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // ilLarge
             // 
             this.ilLarge.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
-            this.ilLarge.ImageSize = new System.Drawing.Size(32, 32);
+            resources.ApplyResources(this.ilLarge, "ilLarge");
             this.ilLarge.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // lCompName
+            // 
+            this.lCompName.AccessibleDescription = null;
+            this.lCompName.AccessibleName = null;
+            resources.ApplyResources(this.lCompName, "lCompName");
+            this.lCompName.BackgroundImage = null;
+            this.lCompName.Image = global::SkivSoft.LanExchange.Properties.Resources.CompOff;
+            this.lCompName.Name = "lCompName";
+            // 
+            // lUserName
+            // 
+            this.lUserName.AccessibleDescription = null;
+            this.lUserName.AccessibleName = null;
+            resources.ApplyResources(this.lUserName, "lUserName");
+            this.lUserName.BackgroundImage = null;
+            this.lUserName.Image = global::SkivSoft.LanExchange.Properties.Resources.UserName;
+            this.lUserName.Name = "lUserName";
+            // 
+            // picLogo
+            // 
+            this.picLogo.AccessibleDescription = null;
+            this.picLogo.AccessibleName = null;
+            resources.ApplyResources(this.picLogo, "picLogo");
+            this.picLogo.BackgroundImage = null;
+            this.picLogo.Font = null;
+            this.picLogo.Image = global::SkivSoft.LanExchange.Properties.Resources.LanExchange_48x48;
+            this.picLogo.ImageLocation = null;
+            this.picLogo.Name = "picLogo";
+            this.picLogo.TabStop = false;
+            this.tipComps.SetToolTip(this.picLogo, resources.GetString("picLogo.ToolTip"));
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AccessibleDescription = null;
+            this.AccessibleName = null;
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(564, 542);
+            this.BackgroundImage = null;
             this.Controls.Add(this.Pages);
             this.Controls.Add(this.tsBottom);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.panel1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Font = null;
             this.Name = "MainForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "LanExchange";
+            this.tipComps.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.tsBottom.ResumeLayout(false);
@@ -497,6 +587,7 @@
             this.popTray.ResumeLayout(false);
             this.popPages.ResumeLayout(false);
             this.popComps.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

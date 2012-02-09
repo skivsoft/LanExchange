@@ -8,7 +8,7 @@ using System.Threading;
 using System.Text;
 using System.Drawing;
 
-namespace LanExchange
+namespace SkivSoft.LanExchange.Core
 {
     public abstract class TMainApp : ILanEXMainApp, IServiceProvider
     {
@@ -41,6 +41,7 @@ namespace LanExchange
 
         public event LoggerPrintEventHandler LoggerPrint;
         public event EventHandler Loaded;
+        public event EventHandler UpdateItemList;
 
 
         public virtual object GetService(Type serviceType)

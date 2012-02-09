@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
+using SkivSoft.LanExchange.Core;
 
-namespace LanExchange
+namespace SkivSoft.LanExchange
 {
     static class Program
     {

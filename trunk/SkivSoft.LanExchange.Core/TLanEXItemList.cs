@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Text;
-using Tools;
 using SkivSoft.LanExchange.SDK;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace LanExchange
+namespace SkivSoft.LanExchange.Core
 {
     public class TLanEXItemList : ILanEXItemList
     {
@@ -19,17 +18,17 @@ namespace LanExchange
             keys = new List<string>();
         }
    
-        public void Add(ILanEXItem Comp)
+        public void Add(ILanEXItem Item)
         {
-            if (Comp != null)
-              if (!String.IsNullOrEmpty(Comp.Name))
-                if (!data.ContainsKey(Comp.Name))
-                    data.Add(Comp.Name, Comp);
+            if (Item != null)
+              if (!String.IsNullOrEmpty(Item.Name))
+                if (!data.ContainsKey(Item.Name))
+                    data.Add(Item.Name, Item);
         }
 
-        public void Delete(ILanEXItem Comp)
+        public void Delete(ILanEXItem Item)
         {
-            data.Remove(Comp.Name);
+            data.Remove(Item.Name);
         }
 
         public ILanEXItem Get(string key)

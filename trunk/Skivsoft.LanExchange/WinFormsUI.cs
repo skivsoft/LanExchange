@@ -7,8 +7,9 @@ using System.Drawing;
 using System.Reflection;
 using System.ComponentModel;
 using System.Collections;
+using SkivSoft.LanExchange.Core;
 
-namespace LanExchange
+namespace SkivSoft.LanExchange
 {
     #region TLanEXListViewItem
     public class TLanEXListViewItem : ILanEXListViewItem
@@ -396,17 +397,17 @@ namespace LanExchange
 
         public override ILanEXControl CreateMainForm()
         {
-            return new TLanEXControl(LanExchange.MainForm.Instance);
+            return new TLanEXControl(SkivSoft.LanExchange.MainForm.Instance);
         }
 
         public override ILanEXTabControl CreatePages()
         {
-            return new TLanEXTabControl(LanExchange.MainForm.Instance.Pages);
+            return new TLanEXTabControl(SkivSoft.LanExchange.MainForm.Instance.Pages);
         }
         
         public override ILanEXStatusStrip CreateStatusStrip()
         {
-            return new TLanEXStatusStrip(LanExchange.MainForm.Instance.statusStrip1);
+            return new TLanEXStatusStrip(SkivSoft.LanExchange.MainForm.Instance.statusStrip1);
         }
 
         public override ILanEXComponent CreateComponent(Type type)
@@ -462,8 +463,8 @@ namespace LanExchange
 
         public override void ListView_SetupTip(ILanEXListView LV)
         {
-            LanExchange.MainForm.Instance.tipComps.SetToolTip((LV as TLanEXListView).Instance, "!");
-            LanExchange.MainForm.Instance.tipComps.Active = true;
+            SkivSoft.LanExchange.MainForm.Instance.tipComps.SetToolTip((LV as TLanEXListView).Instance, "!");
+            SkivSoft.LanExchange.MainForm.Instance.tipComps.Active = true;
         }
 
         public override void ListView_Setup(ILanEXListView LV)
@@ -473,17 +474,17 @@ namespace LanExchange
             LVInstance.Columns.Clear();
             LVInstance.Columns.Add("Q1", 130);
             LVInstance.Columns.Add("Q2", 250);
-            LVInstance.ContextMenuStrip = LanExchange.MainForm.Instance.popComps;
+            LVInstance.ContextMenuStrip = SkivSoft.LanExchange.MainForm.Instance.popComps;
             LVInstance.Location = new Point(3, 3);
             LVInstance.Dock = System.Windows.Forms.DockStyle.Fill;
             LVInstance.FullRowSelect = true;
             LVInstance.GridLines = true;
             LVInstance.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             LVInstance.HideSelection = false;
-            LVInstance.LargeImageList = LanExchange.MainForm.Instance.ilLarge;
+            LVInstance.LargeImageList = SkivSoft.LanExchange.MainForm.Instance.ilLarge;
             LVInstance.ShowGroups = false;
             LVInstance.ShowItemToolTips = true;
-            LVInstance.SmallImageList = LanExchange.MainForm.Instance.ilSmall;
+            LVInstance.SmallImageList = SkivSoft.LanExchange.MainForm.Instance.ilSmall;
             LVInstance.View = System.Windows.Forms.View.Details;
             LVInstance.VirtualMode = true;
             //LVInstance.ItemActivate += new System.EventHandler(lvRecent_ItemActivate);
@@ -515,9 +516,9 @@ namespace LanExchange
 
         public override int RegisterImageIndex(Bitmap pic16x16, Bitmap pic32x32)
         {
-            LanExchange.MainForm.Instance.ilSmall.Images.Add(pic16x16);
-            LanExchange.MainForm.Instance.ilLarge.Images.Add(pic32x32);
-            return LanExchange.MainForm.Instance.ilLarge.Images.Count-1;
+            SkivSoft.LanExchange.MainForm.Instance.ilSmall.Images.Add(pic16x16);
+            SkivSoft.LanExchange.MainForm.Instance.ilLarge.Images.Add(pic32x32);
+            return SkivSoft.LanExchange.MainForm.Instance.ilLarge.Images.Count-1;
         }
 
     }

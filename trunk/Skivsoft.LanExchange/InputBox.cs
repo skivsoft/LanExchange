@@ -4,7 +4,7 @@ using System.Text;
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace LanExchange
+namespace SkivSoft.LanExchange
 {
     /// <summary>
     /// Summary description for InputBox.

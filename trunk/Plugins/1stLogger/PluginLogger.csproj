@@ -69,9 +69,9 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SkivSoft.LanExchange.SDK\SkivSoft.LanExchange.SDK.csproj">
+    <ProjectReference Include="..\..\SkivSoft.LanExchange.SDK\SDK.csproj">
       <Project>{EE20A37F-AD31-42A9-8410-E45CCE737C2C}</Project>
-      <Name>SkivSoft.LanExchange.SDK</Name>
+      <Name>SDK</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

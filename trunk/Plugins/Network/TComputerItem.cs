@@ -199,7 +199,7 @@ namespace SkivSoft.LanExchange.SDK
         }
 #endif
         // получим список всех компьюетеров
-        public static List<ILanEXItem> GetServerList()
+        public static List<ILanEXItem> GetItems()
         {
             LocalNetwork.SERVER_INFO_101 si;
             IntPtr pInfo = IntPtr.Zero;

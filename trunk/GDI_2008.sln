@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual C# Express 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkivSoft.LanExchange.SDK", "SkivSoft.LanExchange.SDK\SkivSoft.LanExchange.SDK.csproj", "{EE20A37F-AD31-42A9-8410-E45CCE737C2C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDK", "SkivSoft.LanExchange.SDK\SDK.csproj", "{EE20A37F-AD31-42A9-8410-E45CCE737C2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkivSoft.LanExchange.Core", "SkivSoft.LanExchange.Core\SkivSoft.LanExchange.Core.csproj", "{83E20C54-D49E-40D2-BB90-66F0D6131D8E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "SkivSoft.LanExchange.Core\Core.csproj", "{83E20C54-D49E-40D2-BB90-66F0D6131D8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkivSoft.LanExchange", "Skivsoft.LanExchange\SkivSoft.LanExchange.csproj", "{2796321A-F31B-4A51-906D-4BF8F717E4DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange", "Skivsoft.LanExchange\LanExchange.csproj", "{2796321A-F31B-4A51-906D-4BF8F717E4DD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginLogger", "Plugins\1stLogger\PluginLogger.csproj", "{4599E4C6-B4AF-4BAE-BA93-2BDCF0742AB4}"
 EndProject
@@ -16,8 +16,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj
 		{2796321A-F31B-4A51-906D-4BF8F717E4DD} = {2796321A-F31B-4A51-906D-4BF8F717E4DD}
 		{83E20C54-D49E-40D2-BB90-66F0D6131D8E} = {83E20C54-D49E-40D2-BB90-66F0D6131D8E}
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange", "..\1.0_azf\LanExchange\LanExchange.csproj", "{CC938630-E3FC-426E-A8A7-06EB22ABC703}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,10 +47,6 @@ Global
 		{A31188E3-9DF6-4AAE-A17A-799257CD4599}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A31188E3-9DF6-4AAE-A17A-799257CD4599}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A31188E3-9DF6-4AAE-A17A-799257CD4599}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CC938630-E3FC-426E-A8A7-06EB22ABC703}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CC938630-E3FC-426E-A8A7-06EB22ABC703}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CC938630-E3FC-426E-A8A7-06EB22ABC703}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CC938630-E3FC-426E-A8A7-06EB22ABC703}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

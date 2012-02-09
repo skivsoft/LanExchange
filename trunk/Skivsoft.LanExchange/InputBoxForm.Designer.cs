@@ -1,4 +1,4 @@
-﻿namespace LanExchange
+﻿namespace SkivSoft.LanExchange
 {
     partial class InputBoxForm
     {

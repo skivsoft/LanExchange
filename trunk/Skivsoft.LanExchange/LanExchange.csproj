@@ -88,6 +88,9 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.ru.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -147,13 +150,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SkivSoft.LanExchange.Core\SkivSoft.LanExchange.Core.csproj">
+    <ProjectReference Include="..\SkivSoft.LanExchange.Core\Core.csproj">
       <Project>{83E20C54-D49E-40D2-BB90-66F0D6131D8E}</Project>
-      <Name>SkivSoft.LanExchange.Core</Name>
+      <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SkivSoft.LanExchange.SDK\SkivSoft.LanExchange.SDK.csproj">
+    <ProjectReference Include="..\SkivSoft.LanExchange.SDK\SDK.csproj">
       <Project>{EE20A37F-AD31-42A9-8410-E45CCE737C2C}</Project>
-      <Name>SkivSoft.LanExchange.SDK</Name>
+      <Name>SDK</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

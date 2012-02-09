@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LanExchange
+namespace SkivSoft.LanExchange.Core
 {
     class TPuntoSwitcher
     {

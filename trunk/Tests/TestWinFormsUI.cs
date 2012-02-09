@@ -1,9 +1,9 @@
 ﻿using NUnit.Framework;
 using SkivSoft.LanExchange;
-using LanExchange;
+using SkivSoft.LanExchange.Core;
 using SkivSoft.LanExchange.SDK;
 
-namespace Tests
+namespace SkivSoft.LanExchange.Tests
 {
     [TestFixture]
     class TestWinFormsUI
