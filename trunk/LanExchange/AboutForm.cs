@@ -21,16 +21,14 @@ namespace LanExchange
         public AboutForm()
         {
             InitializeComponent();
-            this.Text = String.Format("О программе «{0}»", AssemblyTitle);
-            this.labelProductName.Text = String.Format("{0} ({1})", AssemblyTitle, AssemblyProduct);
+            this.Text = String.Format("О программе «{0}»", AssemblyProduct);
+            this.labelProductName.Text = AssemblyProduct;
             this.labelVersion.Text = String.Format("Версия {0}", AssemblyVersion);
-            this.labelBuildFor.Text = Branding.BuildFor();
             this.labelWeb.LinkArea = new LinkArea(this.labelWeb.Text.Length, this.labelWeb.LinkArea.Length);
             this.labelWeb.Text += Branding.GetWebSiteURL();
             this.labelEmail.LinkArea = new LinkArea(this.labelEmail.Text.Length, this.labelEmail.LinkArea.Length);
             this.labelEmail.Text += Branding.GetEmailAddress();
             this.labelCopyright.Text = AssemblyCopyright;
-            this.textBoxDescription.Text = AssemblyDescription;
             logoPictureBox.Image = MainForm.MainFormInstance.picLogo.Image;
         }
 

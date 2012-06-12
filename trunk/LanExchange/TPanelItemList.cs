@@ -183,9 +183,9 @@ namespace LanExchange
             {
                 TLogger.Print("WINAPI NetServerEnum");
                 LocalNetwork.NERR err = LocalNetwork.NetServerEnum(null, 101, out pInfo, -1, ref entriesread, ref totalentries, LocalNetwork.SV_101_TYPES.SV_TYPE_ALL, null, 0);
+                TLogger.Print("WINAPI NetServerEnum: result={0}, entriesread={1}, totalentries={2}", err, entriesread, totalentries);
                 if ((err == LocalNetwork.NERR.NERR_Success || err == LocalNetwork.NERR.ERROR_MORE_DATA) && pInfo != IntPtr.Zero)
                 {
-                    TLogger.Print("WINAPI NetServerEnum result: entriesread={0}, totalentries={1}", entriesread, totalentries);
                     int ptr = pInfo.ToInt32();
                     for (int i = 0; i < entriesread; i++)
                     {

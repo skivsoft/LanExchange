@@ -5,7 +5,7 @@ namespace LanExchange
     {
         public static string BuildFor()
         {
-            return "Официальная сборка.";
+            return "";
         }
 
         public static string UpdateBaseURL()

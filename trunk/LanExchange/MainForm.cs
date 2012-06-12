@@ -38,17 +38,22 @@ namespace LanExchange
         private static ParamsForm ParamsFormInstance = null;
 
         public bool bFirstStart = true;
-        public TNetworkBrowser       CompBrowser = null;
-        TTabController        TabController = null;
-        FormWindowState       LastWindowState = FormWindowState.Normal;
+        public TNetworkBrowser  CompBrowser = null;
+        TTabController          TabController = null;
+        FormWindowState         LastWindowState = FormWindowState.Normal;
         string[] FlashMovies;
         int FlashIndex = -1;
+        bool bNetworkConnected = false;
+        bool bNetworkJustPlugged = false;
+        // время ожидания после подключения сети до начала сканирования списка компов
+        int NetworkWaitAfterPluggedInSec = 3; 
 
         public delegate void ProcRefresh(object obj, object data);
         public delegate void ChatRefresh(object obj, object data, object message);
         ChatRefresh myTrayChat;
         ProcRefresh myPagesRefresh;
         ProcRefresh myCompsRefresh;
+        ProcRefresh myTimerRefresh;
         #endregion
 
         #region Инициализация и загрузка формы
@@ -72,6 +77,7 @@ namespace LanExchange
             myCompsRefresh = new ProcRefresh(lvCompsRefreshMethod);
             myPagesRefresh = new ProcRefresh(PagesRefreshMethod);
             myTrayChat = new ChatRefresh(TrayChatMethod);
+            myTimerRefresh = new ProcRefresh(BrowseTimerRefreshMethod);
             // запуск в свернутом режиме
             /*
             if (TSettings.IsRunMinimized)
@@ -101,29 +107,54 @@ namespace LanExchange
             ActiveControl = lvComps;
         }
 
+        private void SetBrowseTimerInterval()
+        {
+            BrowseTimer.Interval = TSettings.RefreshTimeInSec * 1000;
+            #if DEBUG
+            BrowseTimer.Interval = 5 * 1000;
+            #endif
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             TLogger.Print("MainForm load");
             SetupForm();
-            // запуск определения прав администратора
+            // устанавливаем обработчик на изменение подключения к сети
+            bNetworkConnected = System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
+            System.Net.NetworkInformation.NetworkChange.NetworkAvailabilityChanged += new System.Net.NetworkInformation.NetworkAvailabilityChangedEventHandler(NetworkChange_NetworkAvailabilityChanged);
+            // права администратора берем из реестра
             AdminMode = TSettings.IsAdvancedMode;
             // запуск обновления компов
-            BrowseTimer.Interval = TSettings.RefreshTimeInSec * 1000;
-            #if DEBUG
-            //BrowseTimer.Interval = 5 * 1000;
-            #endif
-            BrowseTimer_Tick(this, new EventArgs());
+            SetBrowseTimerInterval();
+            BrowseTimer.Interval = NetworkWaitAfterPluggedInSec * 1000;
+            BrowseTimer.Start();
+            //BrowseTimer_Tick(this, new EventArgs());
             // всплывающие подсказки
             TTabView.ListView_SetupTip(lvComps);
-            // устанавливаем обработчик на изменение подключения к сети
-            System.Net.NetworkInformation.NetworkChange.NetworkAvailabilityChanged += new System.Net.NetworkInformation.NetworkAvailabilityChangedEventHandler(NetworkChange_NetworkAvailabilityChanged);
         }
 
+        /**
+         * Изменилось состояние подключения локальной сети.
+         * 
+         */
         private void NetworkChange_NetworkAvailabilityChanged(object sender, NetworkAvailabilityEventArgs e)
         {
-            //if (e.IsAvailable)
-            //    if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
-            //        BrowseTimer_Tick(this, new EventArgs());
+            TLogger.Print("Network availability changed: IsAvailable = {0}", e.IsAvailable);
+            bNetworkConnected = e.IsAvailable;
+            //BrowseTimer.Stop();
+            if (e.IsAvailable)
+            {
+                //Pages.Invoke(myPagesRefresh, Pages, null);
+                bNetworkJustPlugged = true;
+                this.Invoke(myTimerRefresh, this, null);
+                //BrowseTimer.Start();
+                //bNetworkJustPlugged = false;
+            }
+            else
+            {
+                CancelCompRelatedThreads();
+                Pages.Invoke(myPagesRefresh, Pages, null);
+            }
         }
 
         private void BrowseTimer_Tick(object sender, EventArgs e)
@@ -155,9 +186,17 @@ namespace LanExchange
             TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
             if (LV.Handle != IntPtr.Zero)
             {
-                int Index = ItemList.Keys.IndexOf(RefreshCompName);
-                if (Index != -1)
-                    LV.RedrawItems(Index, Index, false);
+                int Index;
+                if (String.IsNullOrEmpty(RefreshCompName))
+                {
+                    LV.Refresh();
+                }
+                else
+                {
+                    Index = ItemList.Keys.IndexOf(RefreshCompName);
+                    if (Index != -1)
+                        LV.RedrawItems(Index, Index, false);
+                }
             }
         }
 
@@ -166,6 +205,13 @@ namespace LanExchange
             string RefreshCompName = (string)data;
             string ChatMessage = (string)message;
             TrayIcon.ShowBalloonTip(10000, "Сообщение от " + RefreshCompName, ChatMessage, ToolTipIcon.Info);
+        }
+
+        void BrowseTimerRefreshMethod(object sender, object data)
+        {
+            //BrowseTimer_Tick(BrowseTimer, new EventArgs());
+            BrowseTimer.Interval = NetworkWaitAfterPluggedInSec * 1000;
+            BrowseTimer.Start();
         }
 
         #endregion
@@ -349,7 +395,7 @@ namespace LanExchange
                 List<string> RemovedNew = CompareDataSources(ScannedComps, CompBrowser.CurrentDataTable);
                 // если список компов не изменился, ничего не обновляем
                 #if (!DEBUG)
-                if (!(CompBrowser.CurrentDataTable != null && (AddedNew.Count == 0 && RemovedNew.Count == 0)))
+                if (bNetworkJustPlugged || !(CompBrowser.CurrentDataTable != null && (AddedNew.Count == 0 && RemovedNew.Count == 0)))
                 #endif
                 {
                     if (DoPing.IsBusy)
@@ -363,7 +409,7 @@ namespace LanExchange
                         }
                     CompBrowser.CurrentDataTable = ScannedComps;
                 }
-                if (bFirstStart)
+                if (bNetworkConnected && bFirstStart)
                 {
                     bFirstStart = false;
                     // загрузка списка недавно использованных компов
@@ -392,6 +438,7 @@ namespace LanExchange
                 #endif
             }
             // запускаем таймер для следующего обновления
+            SetBrowseTimerInterval();
             BrowseTimer.Enabled = true;
         }
 
@@ -447,7 +494,10 @@ namespace LanExchange
                 string[] A = PItem.GetSubItems();
                 foreach (string str in A)
                     e.Item.SubItems.Add(str);
-                e.Item.ImageIndex = PItem.ImageIndex;
+                if (!bNetworkConnected)
+                    e.Item.ImageIndex = TComputerItem.imgCompRed;
+                else
+                    e.Item.ImageIndex = PItem.ImageIndex;
                 e.Item.ToolTipText = PItem.ToolTipText;
             }
         }

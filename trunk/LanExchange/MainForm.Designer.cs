@@ -79,7 +79,7 @@
             this.mExit = new System.Windows.Forms.ToolStripMenuItem();
             this.DoBrowse = new System.ComponentModel.BackgroundWorker();
             this.BrowseTimer = new System.Windows.Forms.Timer(this.components);
-            this.lvComps = new CListViewEx();
+            this.lvComps = new LanExchange.CListViewEx();
             this.panel1 = new System.Windows.Forms.Panel();
             this.picLogo = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -920,7 +920,6 @@
         private System.ComponentModel.BackgroundWorker DoPing;
         private System.Windows.Forms.TabControl Pages;
         private System.Windows.Forms.TabPage tabPage1;
-        public System.Windows.Forms.ListView lvComps;
         public System.Windows.Forms.ToolTip tipComps;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
@@ -948,6 +947,7 @@
         private System.Windows.Forms.ToolStripMenuItem mSendToTab;
         private System.Windows.Forms.ToolStripMenuItem mSendToNewTab;
         private System.Windows.Forms.ToolStripSeparator mAfterSendTo;
+        public CListViewEx lvComps;
     }
 }
 
