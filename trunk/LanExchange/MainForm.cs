@@ -1,12 +1,10 @@
-﻿#define CHECK_ADMIN
-#define USE_PING
+﻿#define USE_PING
 #define NOUSE_FLASH
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.DirectoryServices.AccountManagement;
 using System.Drawing;
 using System.IO;
 using System.Management;
@@ -18,6 +16,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using OSTools;
+using System.Net.NetworkInformation;
 
 namespace LanExchange
 {
@@ -107,11 +106,7 @@ namespace LanExchange
             TLogger.Print("MainForm load");
             SetupForm();
             // запуск определения прав администратора
-            AdminMode = false;
-            #if CHECK_ADMIN
-            if (!DoCheckAdmin.IsBusy)
-                DoCheckAdmin.RunWorkerAsync();
-            #endif
+            AdminMode = TSettings.IsAdvancedMode;
             // запуск обновления компов
             BrowseTimer.Interval = TSettings.RefreshTimeInSec * 1000;
             #if DEBUG
@@ -120,6 +115,15 @@ namespace LanExchange
             BrowseTimer_Tick(this, new EventArgs());
             // всплывающие подсказки
             TTabView.ListView_SetupTip(lvComps);
+            // устанавливаем обработчик на изменение подключения к сети
+            System.Net.NetworkInformation.NetworkChange.NetworkAvailabilityChanged += new System.Net.NetworkInformation.NetworkAvailabilityChangedEventHandler(NetworkChange_NetworkAvailabilityChanged);
+        }
+
+        private void NetworkChange_NetworkAvailabilityChanged(object sender, NetworkAvailabilityEventArgs e)
+        {
+            //if (e.IsAvailable)
+            //    if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+            //        BrowseTimer_Tick(this, new EventArgs());
         }
 
         private void BrowseTimer_Tick(object sender, EventArgs e)
@@ -140,14 +144,14 @@ namespace LanExchange
         {
             TabPage Tab = Pages.SelectedTab;
             if (Tab == null) return;
-            ListView LV = (ListView)Tab.Controls[0];
+            CListViewEx LV = (CListViewEx)Tab.Controls[0];
             LV.Invoke(myCompsRefresh, LV, data);
         }
 
         void lvCompsRefreshMethod(object sender, object data)
         {
             string RefreshCompName = (string)data;
-            ListView LV = (ListView)sender;
+            CListViewEx LV = (CListViewEx)sender;
             TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
             if (LV.Handle != IntPtr.Zero)
             {
@@ -372,7 +376,7 @@ namespace LanExchange
                         TLogger.Print("Can't load settings: {0}", ex.ToString());
                     }
                     // выбираем текущий компьютер, чтобы пользователь видел описание
-                    ListView LV = GetActiveListView();
+                    CListViewEx LV = GetActiveListView();
                     TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
                     if (ItemList != null)
                         ItemList.ListView_SelectComputer(LV, Environment.MachineName);
@@ -428,7 +432,7 @@ namespace LanExchange
 
         public void lvComps_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
         {
-            ListView LV = sender as ListView;
+            CListViewEx LV = sender as CListViewEx;
             if (e.Item == null)
                 e.Item = new ListViewItem();
             TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
@@ -476,7 +480,7 @@ namespace LanExchange
 
         private void mCopyCompName_Click(object sender, EventArgs e)
         {
-            ListView LV = GetActiveListView();
+            CListViewEx LV = GetActiveListView();
             TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
             StringBuilder S = new StringBuilder();
             foreach (int index in LV.SelectedIndices)
@@ -491,7 +495,7 @@ namespace LanExchange
 
         private void mCopyComment_Click(object sender, EventArgs e)
         {
-            ListView LV = GetActiveListView();
+            CListViewEx LV = GetActiveListView();
             TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
             StringBuilder S = new StringBuilder();
             string ItemName = null;
@@ -511,7 +515,7 @@ namespace LanExchange
 
         private void mCopySelected_Click(object sender, EventArgs e)
         {
-            ListView LV = GetActiveListView();
+            CListViewEx LV = GetActiveListView();
             TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
             StringBuilder S = new StringBuilder();
             string ItemName = null;
@@ -535,7 +539,7 @@ namespace LanExchange
 
         public void lvComps_KeyDown(object sender, KeyEventArgs e)
         {
-            ListView LV = (sender as ListView);
+            CListViewEx LV = (sender as CListViewEx);
             // Ctrl+A выделение всех элементов
             if (e.Control && e.KeyCode == Keys.A)
             {
@@ -641,12 +645,12 @@ namespace LanExchange
         {
             get
             {
-                ListView LV = GetActiveListView();
+                CListViewEx LV = GetActiveListView();
                 return LV.VirtualListSize;
             }
             set
             {
-                ListView LV = GetActiveListView();
+                CListViewEx LV = GetActiveListView();
                 TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
                 int ShowCount, TotalCount;
                 if (ItemList.IsFiltered)
@@ -667,7 +671,7 @@ namespace LanExchange
             }
         }
 
-        public void UpdateFilter(ListView LV, string NewFilter, bool bVisualUpdate)
+        public void UpdateFilter(CListViewEx LV, string NewFilter, bool bVisualUpdate)
         {
             TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
             List<string> SaveSelected = null;
@@ -696,7 +700,7 @@ namespace LanExchange
 
         public void UpdateFilterPanel()
         {
-            ListView LV = GetActiveListView();
+            CListViewEx LV = GetActiveListView();
             TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
             string Text = ItemList.FilterText;
             eFilter.TextChanged -= eFilter_TextChanged;
@@ -741,7 +745,7 @@ namespace LanExchange
         /// <returns>Возвращает TComputer</returns>
         public TPanelItem GetFocusedPanelItem(bool bUpdateRecent, bool bPingAndAsk)
         {
-            ListView LV = GetActiveListView();
+            CListViewEx LV = GetActiveListView();
             if (LV.FocusedItem == null)
                 return null;
             TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
@@ -918,7 +922,7 @@ namespace LanExchange
         {
             Pages.SelectedIndex = pageNetwork;
             lvComps.SelectedIndices.Clear();
-            ListView LV = GetActiveListView();
+            CListViewEx LV = GetActiveListView();
             UpdateFilter(LV, "", false);
             // выходим на верхний уровень
             while (CompBrowser.InternalStack.Count > 0)
@@ -961,9 +965,9 @@ namespace LanExchange
             }
         }
 
-        public ListView GetActiveListView()
+        public CListViewEx GetActiveListView()
         {
-            return (ListView)Pages.SelectedTab.Controls[0];
+            return (CListViewEx)Pages.SelectedTab.Controls[0];
         }
 
         #endregion
@@ -975,7 +979,7 @@ namespace LanExchange
 
         private void mLargeIcons_Click(object sender, EventArgs e)
         {
-            ListView LV = GetActiveListView();
+            CListViewEx LV = GetActiveListView();
             LV.SuspendLayout();
             LV.BeginUpdate();
             try
@@ -1009,7 +1013,7 @@ namespace LanExchange
             mSmallIcons.Checked = false;
             mList.Checked = false;
             mDetails.Checked = false;
-            ListView LV = GetActiveListView();
+            CListViewEx LV = GetActiveListView();
             switch (LV.View)
             {
                 case View.LargeIcon:
@@ -1078,80 +1082,11 @@ namespace LanExchange
             GotoFavoriteComp(Environment.MachineName);
         }
 
-        private void DoCheckAdmin_DoWork(object sender, DoWorkEventArgs e)
-        {
-            #if CHECK_ADMIN
-            e.Result = false;
-            // если задан параметр /USER, то запускаем в режиме пользователя без проверки прав
-            string[] args = Environment.GetCommandLineArgs();
-            for (int i = 1; i < args.Length; i++ )
-                if (args[i].ToUpper().Equals("/USER"))
-                {
-                    TLogger.Print("Parameter /USER found in cmd line AdminMode is OFF");
-                    return;
-                }
-            TLogger.Print("Thread for checking admin rights start");
-            try
-            {
-                // проверка прав текущего пользователя
-                PrincipalContext pc_local = new PrincipalContext(ContextType.Machine);
-                PrincipalContext pc_domain = null;
-                UserPrincipal CurrentUser = UserPrincipal.Current;
-                // получаем локальную группу "Администраторы"
-                var groupAdmins = GroupPrincipal.FindByIdentity(pc_local, IdentityType.Sid, "S-1-5-32-544");
-                if (groupAdmins != null)
-                {
-                    var groups = groupAdmins.GetMembers(false);
-
-                    if (groups != null)
-                        foreach (var group in groups)
-                        {
-                            // проверяем текущего пользователя
-                            if (group.Sid.Equals(CurrentUser.Sid))
-                            {
-                                TLogger.Print("Current user [{0}] found in local group [{1}]", 
-                                    CurrentUser.SamAccountName, groupAdmins.SamAccountName);
-                                e.Result = true;
-                                break;
-                            }
-                            else
-                                // ищем доменную группу
-                                if (group.ContextType == ContextType.Domain)
-                                {
-                                    if (pc_domain == null)
-                                        pc_domain = new PrincipalContext(ContextType.Domain);
-                                    GroupPrincipal gr = GroupPrincipal.FindByIdentity(pc_domain, IdentityType.Sid, group.Sid.ToString());
-                                    // проверяем текущего пользователя на принадлежность группе, которая входит в "Администраторы"
-                                    if (gr != null && CurrentUser.IsMemberOf(gr))
-                                    {
-                                        TLogger.Print("Current user [{0}] found in domain group [{1}]",
-                                            CurrentUser.SamAccountName, gr.SamAccountName);
-                                        e.Result = true;
-                                        break;
-                                    }
-                                }
-                        }
-                }
-            }
-            catch (Exception ex)
-            {
-                TLogger.Print("Error: {0}", ex.Message);
-            }
-            TLogger.Print("Thread for checking admin rights finish");
-            #endif
-        }
-
-        private void DoCheckAdmin_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (!e.Cancelled)
-                AdminMode = (bool)e.Result;
-        }
-
         private void tipComps_Popup(object sender, PopupEventArgs e)
         {
-            if (!(e.AssociatedControl is ListView))
+            if (!(e.AssociatedControl is CListViewEx))
                 return;
-            ListView LV = (ListView)e.AssociatedControl;
+            CListViewEx LV = (CListViewEx)e.AssociatedControl;
             Point P = LV.PointToClient(Control.MousePosition);
             ListViewHitTestInfo Info = LV.HitTest(P);
             if (Info != null && Info.Item != null)

@@ -34,9 +34,9 @@
             this.labelBuildFor = new System.Windows.Forms.Label();
             this.labelVersion = new System.Windows.Forms.Label();
             this.okButton = new System.Windows.Forms.Button();
-            this.labelCopyright = new System.Windows.Forms.Label();
             this.labelWeb = new System.Windows.Forms.LinkLabel();
             this.labelEmail = new System.Windows.Forms.LinkLabel();
+            this.labelCopyright = new System.Windows.Forms.Label();
             this.DoCheckVersion = new System.ComponentModel.BackgroundWorker();
             this.DoUpdate = new System.ComponentModel.BackgroundWorker();
             this.tableLayoutPanel.SuspendLayout();
@@ -48,7 +48,7 @@
             this.tableLayoutPanel.ColumnCount = 3;
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.86811F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85.13189F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 86F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 87F));
             this.tableLayoutPanel.Controls.Add(this.textBoxDescription, 1, 7);
             this.tableLayoutPanel.Controls.Add(this.logoPictureBox, 0, 0);
             this.tableLayoutPanel.Controls.Add(this.labelProductName, 1, 0);
@@ -108,7 +108,7 @@
             this.labelProductName.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
             this.labelProductName.MaximumSize = new System.Drawing.Size(0, 17);
             this.labelProductName.Name = "labelProductName";
-            this.labelProductName.Size = new System.Drawing.Size(272, 17);
+            this.labelProductName.Size = new System.Drawing.Size(271, 17);
             this.labelProductName.TabIndex = 19;
             this.labelProductName.Text = "Product Name";
             this.labelProductName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -120,7 +120,7 @@
             this.labelBuildFor.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
             this.labelBuildFor.MaximumSize = new System.Drawing.Size(0, 17);
             this.labelBuildFor.Name = "labelBuildFor";
-            this.labelBuildFor.Size = new System.Drawing.Size(272, 17);
+            this.labelBuildFor.Size = new System.Drawing.Size(271, 17);
             this.labelBuildFor.TabIndex = 21;
             this.labelBuildFor.Text = "Build For";
             this.labelBuildFor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -132,7 +132,7 @@
             this.labelVersion.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
             this.labelVersion.MaximumSize = new System.Drawing.Size(0, 17);
             this.labelVersion.Name = "labelVersion";
-            this.labelVersion.Size = new System.Drawing.Size(272, 17);
+            this.labelVersion.Size = new System.Drawing.Size(271, 17);
             this.labelVersion.TabIndex = 0;
             this.labelVersion.Text = "Version";
             this.labelVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -146,17 +146,6 @@
             this.okButton.Size = new System.Drawing.Size(75, 21);
             this.okButton.TabIndex = 26;
             this.okButton.Text = "&OK";
-            // 
-            // labelCopyright
-            // 
-            this.labelCopyright.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.labelCopyright.AutoSize = true;
-            this.labelCopyright.Location = new System.Drawing.Point(164, 242);
-            this.labelCopyright.Name = "labelCopyright";
-            this.labelCopyright.Size = new System.Drawing.Size(51, 13);
-            this.labelCopyright.TabIndex = 28;
-            this.labelCopyright.Text = "Copyright";
-            this.labelCopyright.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // labelWeb
             // 
@@ -181,6 +170,17 @@
             this.labelEmail.Text = "Почта: ";
             this.labelEmail.UseCompatibleTextRendering = true;
             this.labelEmail.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.labelEmail_LinkClicked);
+            // 
+            // labelCopyright
+            // 
+            this.labelCopyright.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelCopyright.AutoSize = true;
+            this.labelCopyright.Location = new System.Drawing.Point(52, 242);
+            this.labelCopyright.Name = "labelCopyright";
+            this.labelCopyright.Size = new System.Drawing.Size(51, 13);
+            this.labelCopyright.TabIndex = 28;
+            this.labelCopyright.Text = "Copyright";
+            this.labelCopyright.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // DoCheckVersion
             // 

@@ -322,6 +322,7 @@ namespace OSTools
                             {
                                 case 0: return bServer ? "Windows Server 2008" : "Windows Vista";
                                 case 1: return bServer ? "Windows Server 2008 R2" : "Windows 7";
+                                case 2: return bServer ? "Windows 8 Server" : "Windows 8";
                                 default:
                                     return String.Format("Windows NT {0}.{1}", ver_major, ver_minor);
                             }

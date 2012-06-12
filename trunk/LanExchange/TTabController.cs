@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
@@ -180,7 +179,7 @@ namespace LanExchange
         public void AfterAppendTab(object sender, TabInfoEventArgs e)
         {
             TabPage NewTab = null;
-            ListView LV = null;
+            CListViewEx LV = null;
             TPanelItemList ItemList = null;
             TTabModel Model = (TTabModel)sender;
             // создаем новую вкладку или получаем существующую
@@ -200,12 +199,12 @@ namespace LanExchange
             bool bNewListView = NewTab.Controls.Count == 0;
             if (!bNewListView)
             {
-                LV = (ListView)NewTab.Controls[0];
+                LV = (CListViewEx)NewTab.Controls[0];
                 TLogger.Print("Get existing control {0}", LV.ToString());
             }
             else
             {
-                LV = new ListView();
+                LV = new CListViewEx();
                 TLogger.Print("Create control {0}", LV.ToString());
                 // настраиваем свойства и события для нового ListView
                 LV.View = e.Info.CurrentView;
@@ -227,11 +226,7 @@ namespace LanExchange
                     if (PItem != null)
                         ItemList.Add(PItem);
                     else
-                    {
-                        TComputerItem Comp = new TComputerItem();
-                        Comp.Name = ItemName;
-                        ItemList.Add(Comp);
-                    }
+                        ItemList.Add(new TComputerItem());
                 }
                 TLogger.Print("Added items to object {0}, Count: {1}", ItemList.ToString(), ItemList.Count);
             }

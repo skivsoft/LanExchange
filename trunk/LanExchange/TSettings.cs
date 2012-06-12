@@ -34,6 +34,12 @@ namespace LanExchange
             set { SetBoolValue("RunMinimized", value); }
         }
 
+        public static bool IsAdvancedMode
+        {
+            get { return GetBoolValue("AdvancedMode", true); }
+            set { SetBoolValue("AdvancedMode", value); }
+        }
+
         public static int RefreshTimeInSec
         {
             get { return GetIntValue("RefreshTimeInSec", 5 * 60); }
@@ -162,7 +168,7 @@ namespace LanExchange
         private static bool Autorun_Exists(string FileName)
         {
             string ExeName = System.IO.Path.GetFileName(FileName).ToUpper();
-            Microsoft.Win32.RegistryKey Key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run\", false);
+            Microsoft.Win32.RegistryKey Key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run\", false);
             bool Result = false;
             foreach (string str in Key.GetValueNames())
             {
@@ -186,54 +192,62 @@ namespace LanExchange
 
         private static void Autorun_Add(string FileName)
         {
-            string ExeName = System.IO.Path.GetFileName(FileName).ToUpper();
-            string FileNameQuoted = String.Format("\"{0}\"", FileName);
-            Microsoft.Win32.RegistryKey Key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run\", true);
-            bool bFound = false;
-            foreach (string str in Key.GetValueNames())
+            try
             {
-                RegistryValueKind Kind = Key.GetValueKind(str);
-                if (Kind == RegistryValueKind.String || Kind == RegistryValueKind.ExpandString)
+                string ExeName = System.IO.Path.GetFileName(FileName).ToUpper();
+                string FileNameQuoted = String.Format("\"{0}\"", FileName);
+                Microsoft.Win32.RegistryKey Key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run\", false);
+                bool bFound = false;
+                foreach (string str in Key.GetValueNames())
                 {
-                    string FName;
-                    string Params;
-                    PathUtils.ExplodeCmd(Key.GetValue(str).ToString(), out FName, out Params);
-                    string value = System.IO.Path.GetFileName(FName).ToUpper();
-                    if (ExeName.Equals(value))
+                    RegistryValueKind Kind = Key.GetValueKind(str);
+                    if (Kind == RegistryValueKind.String || Kind == RegistryValueKind.ExpandString)
                     {
-                        if (!bFound)
+                        string FName;
+                        string Params;
+                        PathUtils.ExplodeCmd(Key.GetValue(str).ToString(), out FName, out Params);
+                        string value = System.IO.Path.GetFileName(FName).ToUpper();
+                        if (ExeName.Equals(value))
                         {
-                            bFound = true;
-                            Key.SetValue(str, FileNameQuoted);
+                            if (!bFound)
+                            {
+                                bFound = true;
+                                Key.SetValue(str, FileNameQuoted);
+                            }
+                            else
+                                Key.DeleteValue(str, false);
                         }
-                        else
-                            Key.DeleteValue(str, false);
                     }
                 }
+                if (!bFound)
+                    Key.SetValue("LanExchange", FileNameQuoted);
+                Key.Close();
             }
-            if (!bFound)
-                Key.SetValue("LanExchange", FileNameQuoted);
-            Key.Close();
+            catch { }
         }
 
         private static void Autorun_Delete(string FileName)
         {
-            string ExeName = System.IO.Path.GetFileName(FileName).ToUpper();
-            Microsoft.Win32.RegistryKey Key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
-            foreach (string str in Key.GetValueNames())
+            try
             {
-                RegistryValueKind Kind = Key.GetValueKind(str);
-                if (Kind == RegistryValueKind.String || Kind == RegistryValueKind.ExpandString)
+                string ExeName = System.IO.Path.GetFileName(FileName).ToUpper();
+                Microsoft.Win32.RegistryKey Key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+                foreach (string str in Key.GetValueNames())
                 {
-                    string FName;
-                    string Params;
-                    PathUtils.ExplodeCmd(Key.GetValue(str).ToString(), out FName, out Params);
-                    string value = System.IO.Path.GetFileName(FName).ToUpper();
-                    if (ExeName.Equals(value))
-                        Key.DeleteValue(str, false);
+                    RegistryValueKind Kind = Key.GetValueKind(str);
+                    if (Kind == RegistryValueKind.String || Kind == RegistryValueKind.ExpandString)
+                    {
+                        string FName;
+                        string Params;
+                        PathUtils.ExplodeCmd(Key.GetValue(str).ToString(), out FName, out Params);
+                        string value = System.IO.Path.GetFileName(FName).ToUpper();
+                        if (ExeName.Equals(value))
+                            Key.DeleteValue(str, false);
+                    }
                 }
+                Key.Close();
             }
-            Key.Close();
+            catch { }
         }
         #endregion
     }

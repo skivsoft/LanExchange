@@ -14,6 +14,7 @@ namespace LanExchange
         {
             chAutorun.Checked = TSettings.IsAutorun;
             chMinimized.Checked = TSettings.IsRunMinimized;
+            chAdvanced.Checked = TSettings.IsAdvancedMode;
             eRefreshTime.Value = TSettings.RefreshTimeInSec / 60;
         }
 
@@ -21,7 +22,10 @@ namespace LanExchange
         {
             TSettings.IsAutorun = chAutorun.Checked;
             TSettings.IsRunMinimized = chMinimized.Checked;
+            TSettings.IsAdvancedMode = chAdvanced.Checked;
             TSettings.RefreshTimeInSec = Int32.Parse(eRefreshTime.Value.ToString()) * 60;
+
+            MainForm.MainFormInstance.AdminMode = TSettings.IsAdvancedMode;
         }
 
         private void ParamsForm_KeyDown(object sender, KeyEventArgs e)

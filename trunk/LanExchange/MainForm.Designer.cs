@@ -79,12 +79,11 @@
             this.mExit = new System.Windows.Forms.ToolStripMenuItem();
             this.DoBrowse = new System.ComponentModel.BackgroundWorker();
             this.BrowseTimer = new System.Windows.Forms.Timer(this.components);
-            this.lvComps = new System.Windows.Forms.ListView();
+            this.lvComps = new CListViewEx();
             this.panel1 = new System.Windows.Forms.Panel();
             this.picLogo = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.DoCheckAdmin = new System.ComponentModel.BackgroundWorker();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lItemsCount = new System.Windows.Forms.ToolStripStatusLabel();
@@ -110,7 +109,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.eFilter = new System.Windows.Forms.TextBox();
             this.dlgSave = new System.Windows.Forms.SaveFileDialog();
-            this.inputBox = new LanExchange.InputBox(this.components);
+            this.inputBox = new LanExchange.CInputBox(this.components);
             this.popComps.SuspendLayout();
             this.popTray.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -566,8 +565,8 @@
             this.lvComps.VirtualMode = true;
             this.lvComps.ItemActivate += new System.EventHandler(this.lvComps_ItemActivate);
             this.lvComps.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.lvComps_RetrieveVirtualItem);
-            this.lvComps.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lvComps_KeyPress);
             this.lvComps.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvComps_KeyDown);
+            this.lvComps.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lvComps_KeyPress);
             // 
             // panel1
             // 
@@ -606,20 +605,15 @@
             // 
             // label2
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.Location = new System.Drawing.Point(70, 36);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(479, 51);
             this.label2.TabIndex = 1;
             this.label2.Text = "Здесь показаны компьютеры локальной вычислительной сети. Возможен поиск по имени " +
-                "компьютера и по описанию.";
-            // 
-            // DoCheckAdmin
-            // 
-            this.DoCheckAdmin.DoWork += new System.ComponentModel.DoWorkEventHandler(this.DoCheckAdmin_DoWork);
-            this.DoCheckAdmin.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.DoCheckAdmin_RunWorkerCompleted);
+    "компьютера и по описанию.";
             // 
             // toolStripStatusLabel2
             // 
@@ -851,10 +845,10 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Общие папки";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
-            this.Resize += new System.EventHandler(this.MainForm_Resize);
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.popComps.ResumeLayout(false);
             this.popTray.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
@@ -914,8 +908,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ToolStripMenuItem mWMIDescription;
-        public InputBox inputBox;
-        private System.ComponentModel.BackgroundWorker DoCheckAdmin;
+        public CInputBox inputBox;
         private System.Windows.Forms.ToolStripMenuItem mSettings;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         private System.Windows.Forms.StatusStrip statusStrip1;

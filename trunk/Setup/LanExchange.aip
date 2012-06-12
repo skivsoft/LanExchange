@@ -30,16 +30,18 @@
     <ROW Component="LanExchange.exe" ComponentId="{DD7BCCE2-5D5B-43C7-8830-F71F84572064}" Directory_="APPDIR" Attributes="0" KeyPath="LanExchange.exe"/>
     <ROW Component="LanExchange.log" ComponentId="{2EA470E2-3CA9-4510-AC5A-D651A9C80492}" Directory_="APPDIR" Attributes="0" KeyPath="LanExchange.log" Type="0"/>
     <ROW Component="Restart.exe" ComponentId="{8AFDA1B6-2E4A-40DB-A23D-9120A2DB0988}" Directory_="APPDIR" Attributes="0" KeyPath="Restart.exe"/>
+    <ROW Component="System.DirectoryServices.AccountManageme" ComponentId="{495B83A4-AE9B-47ED-B731-B79F08CEE74D}" Directory_="APPDIR" Attributes="0" KeyPath="System.DirectoryServices.AccountManagement.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
-    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="LanExchange.exe LanExchange.log Restart.exe"/>
+    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="LanExchange.exe LanExchange.log Restart.exe System.DirectoryServices.AccountManageme"/>
     <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
     <ROW File="LanExchange.exe" Component_="LanExchange.exe" FileName="LanExc~1.exe|LanExchange.exe" Attributes="0" SourcePath="..\..\exe\LanExchange.exe" SelfReg="false" NextFile="LanExchange.log"/>
     <ROW File="LanExchange.log" Component_="LanExchange.log" FileName="LanExc~1.log|LanExchange.log" Attributes="0" SourcePath="..\..\exe\LanExchange.log" SelfReg="false" NextFile="Restart.exe"/>
-    <ROW File="Restart.exe" Component_="Restart.exe" FileName="Restart.exe" Attributes="0" SourcePath="..\..\exe\Restart.exe" SelfReg="false" NextFile="Restart.log"/>
-    <ROW File="Restart.log" Component_="LanExchange.log" FileName="Restart.log" Attributes="0" SourcePath="..\..\exe\Restart.log" SelfReg="false"/>
+    <ROW File="Restart.exe" Component_="Restart.exe" FileName="Restart.exe" Attributes="0" SourcePath="..\..\exe\Restart.exe" SelfReg="false" NextFile="System.DirectoryServices.AccountManagement.dll"/>
+    <ROW File="System.DirectoryServices.AccountManagement.dll" Component_="System.DirectoryServices.AccountManageme" FileName="System~1.dll|System.DirectoryServices.AccountManagement.dll" Attributes="0" SourcePath="..\..\exe\System.DirectoryServices.AccountManagement.dll" SelfReg="false" NextFile="System.DirectoryServices.AccountManagement.xml"/>
+    <ROW File="System.DirectoryServices.AccountManagement.xml" Component_="LanExchange.log" FileName="System~1.xml|System.DirectoryServices.AccountManagement.xml" Attributes="0" SourcePath="..\..\exe\System.DirectoryServices.AccountManagement.xml" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
     <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="0" PackageFolder="..\.." PackageFileName="LanExchangeSetup" Languages="en;ru" InstallationType="4"/>

@@ -38,6 +38,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.chAdvanced = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eRefreshTime)).BeginInit();
@@ -56,6 +57,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.chAdvanced);
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.eRefreshTime);
             this.tabPage1.Controls.Add(this.label1);
@@ -102,7 +104,7 @@
             // chMinimized
             // 
             this.chMinimized.AutoSize = true;
-            this.chMinimized.Location = new System.Drawing.Point(18, 41);
+            this.chMinimized.Location = new System.Drawing.Point(18, 209);
             this.chMinimized.Name = "chMinimized";
             this.chMinimized.Size = new System.Drawing.Size(231, 17);
             this.chMinimized.TabIndex = 1;
@@ -153,6 +155,16 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // chAdvanced
+            // 
+            this.chAdvanced.AutoSize = true;
+            this.chAdvanced.Location = new System.Drawing.Point(18, 41);
+            this.chAdvanced.Name = "chAdvanced";
+            this.chAdvanced.Size = new System.Drawing.Size(288, 17);
+            this.chAdvanced.TabIndex = 5;
+            this.chAdvanced.Text = "Расширенный функционал для администрирования";
+            this.chAdvanced.UseVisualStyleBackColor = true;
+            // 
             // ParamsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -190,5 +202,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown eRefreshTime;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox chAdvanced;
     }
 }
