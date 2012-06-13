@@ -17,11 +17,14 @@ using System.Threading;
 using System.Windows.Forms;
 using OSTools;
 using System.Net.NetworkInformation;
+using NLog;
 
 namespace LanExchange
 {
     public partial class MainForm : Form
     {
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         #region Константы и переменные
         // индексы страниц
         public const int pageNetwork = 0;
@@ -60,7 +63,6 @@ namespace LanExchange
 
         public MainForm()
         {
-            TLogger.Print("MainForm init");
             InitializeComponent();
             //SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             //SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
@@ -117,7 +119,6 @@ namespace LanExchange
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            TLogger.Print("MainForm load");
             SetupForm();
             // устанавливаем обработчик на изменение подключения к сети
             bNetworkConnected = System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
@@ -139,19 +140,16 @@ namespace LanExchange
          */
         private void NetworkChange_NetworkAvailabilityChanged(object sender, NetworkAvailabilityEventArgs e)
         {
-            TLogger.Print("Network availability changed: IsAvailable = {0}", e.IsAvailable);
+            logger.Info("Network availability changed: IsAvailable = {0}", e.IsAvailable);
             bNetworkConnected = e.IsAvailable;
-            //BrowseTimer.Stop();
             if (e.IsAvailable)
             {
-                //Pages.Invoke(myPagesRefresh, Pages, null);
                 bNetworkJustPlugged = true;
                 this.Invoke(myTimerRefresh, this, null);
-                //BrowseTimer.Start();
-                //bNetworkJustPlugged = false;
             }
             else
             {
+                BrowseTimer.Stop();
                 CancelCompRelatedThreads();
                 Pages.Invoke(myPagesRefresh, Pages, null);
             }
@@ -159,7 +157,7 @@ namespace LanExchange
 
         private void BrowseTimer_Tick(object sender, EventArgs e)
         {
-            TLogger.Print("Timer BrowseTimer tick");
+            logger.Trace("Timer BrowseTimer tick");
             if (!DoBrowse.IsBusy && CompBrowser.InternalStack.Count == 0)
             {
                 BrowseTimer.Enabled = false;
@@ -222,7 +220,7 @@ namespace LanExchange
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            TLogger.Print("MainForm is closing with reason {0}", e.CloseReason.ToString());
+            logger.Info("MainForm is closing with reason {0}", e.CloseReason.ToString());
             if (e.CloseReason == CloseReason.None || e.CloseReason == CloseReason.UserClosing)
             {
                 e.Cancel = true;
@@ -243,7 +241,7 @@ namespace LanExchange
                     LANEX_SEND(null, MSG_LANEX_LOGOUT);
             }
             if (e.Cancel)
-                TLogger.Print("Closing is canceled");
+                logger.Info("Closing is canceled");
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -251,11 +249,11 @@ namespace LanExchange
             if (this.WindowState != FormWindowState.Minimized)
             {
                 if (LastWindowState != this.WindowState)
-                    TLogger.Print("WindowState is {0}", this.WindowState.ToString());
+                    logger.Info("WindowState is {0}", this.WindowState.ToString());
                 LastWindowState = this.WindowState;
             }
             else
-                TLogger.Print("WindowState is {0}", this.WindowState.ToString());
+                logger.Info("WindowState is {0}", this.WindowState.ToString());
         }
 
         public bool bReActivate = false;
@@ -324,6 +322,12 @@ namespace LanExchange
         
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
+            // перезапуск приложения по Ctrl+Alt+R
+            if (e.KeyCode == Keys.R && e.Control && e.Alt)
+            {
+                RestartApplication();
+                e.Handled = true;
+            }
             if (e.KeyCode == Keys.Escape)
             {
                 if (tsBottom.Visible)
@@ -360,13 +364,13 @@ namespace LanExchange
         #region Фоновые действия: сканирование компов и пинги
         private void DoBrowse_DoWork(object sender, DoWorkEventArgs e)
         {
-            TLogger.Print("Thread for browse network start");
+            logger.Info("Thread for browse network start");
             e.Result = TPanelItemList.GetServerList();
             e.Cancel = DoPing.CancellationPending;
             if (e.Cancel)
-                TLogger.Print("Thread for browse network canceled");
+                logger.Info("Thread for browse network canceled");
             else
-                TLogger.Print("Thread for browse network finish");
+                logger.Info("Thread for browse network finish");
         }
 
         private List<string> CompareDataSources(List<TPanelItem> OldDT, List<TPanelItem> NewDT)
@@ -419,7 +423,7 @@ namespace LanExchange
                     }
                     catch (Exception ex)
                     {
-                        TLogger.Print("Can't load settings: {0}", ex.ToString());
+                        logger.Info("Can't load settings: {0}", ex.ToString());
                     }
                     // выбираем текущий компьютер, чтобы пользователь видел описание
                     CListViewEx LV = GetActiveListView();
@@ -450,7 +454,7 @@ namespace LanExchange
                 return;
             if (!(ScannedComps[0] is TComputerItem))
                 return;
-            TLogger.Print("Thread for ping comps start");
+            logger.Info("Thread for ping comps start");
             // пингуем найденные компы
             foreach (TPanelItem Comp in ScannedComps)
             {
@@ -468,9 +472,9 @@ namespace LanExchange
             }
             e.Cancel = DoPing.CancellationPending;
             if (e.Cancel)
-                TLogger.Print("Thread for ping comps canceled");
+                logger.Info("Thread for ping comps canceled");
             else
-                TLogger.Print("Thread for ping comps finish");
+                logger.Info("Thread for ping comps finish");
 #endif
         }
         #endregion
@@ -661,7 +665,7 @@ namespace LanExchange
                 else
                     return;
             }
-            TLogger.Print("lvComps_ItemActivate on {0}", lvComps.FocusedItem.ToString());
+            logger.Info("lvComps_ItemActivate on {0}", lvComps.FocusedItem.ToString());
             if (CompBrowser.InternalStack.Count == 0)
             {
                 TPanelItem Comp = GetFocusedPanelItem(true, true);
@@ -673,7 +677,7 @@ namespace LanExchange
 
         public void lvRecent_ItemActivate(object sender, EventArgs e)
         {
-            TLogger.Print("lvRecent_ItemActivate on ", (sender as ListView).FocusedItem.ToString());
+            logger.Info("lvRecent_ItemActivate on ", (sender as ListView).FocusedItem.ToString());
             TPanelItem PItem = GetFocusedPanelItem(false, true);
             if (PItem != null)
                 GotoFavoriteComp(PItem.Name);
@@ -957,6 +961,17 @@ namespace LanExchange
             RunCmdOnFocusedItem(MenuItem.Tag.ToString(), ParentItem.Tag.ToString());
         }
 
+
+        public void RestartApplication()
+        {
+            // запуск такого же процесса
+            Process.Start(Application.ExecutablePath, "");
+            // закрываем это приложение
+            MainForm.MainFormInstance.CancelCompRelatedThreads();
+            Application.Exit();
+
+        }
+
         public void CancelCompRelatedThreads()
         {
             if (DoBrowse.IsBusy)
@@ -1174,7 +1189,7 @@ namespace LanExchange
             // до адресата.
             if (sended == message.Length)
             {
-                TLogger.Print("UDP SEND data [{0}] to [{1}]", MSG, ipendpoint.ToString());
+                logger.Info("UDP SEND data [{0}] to [{1}]", MSG, ipendpoint.ToString());
             }
 
 
@@ -1202,7 +1217,7 @@ namespace LanExchange
         // работающая в отдельном потоке.
         void Receive()
         {
-            TLogger.Print("Thread for udp receive start");
+            logger.Info("Thread for udp receive start");
             // При принудительном завершении работы метода 
             // класса UdpClient Receive() и непредвиденных ситуациях 
             // возможны исключения в этом месте исходного кода,
@@ -1214,7 +1229,7 @@ namespace LanExchange
                 if (udp != null) udp.Close();
 
                 int Port = 3333;
-                TLogger.Print("UDP LISTEN on port {0}", Port);
+                logger.Info("UDP LISTEN on port {0}", Port);
                 udp = new UdpClient(Port);
 
                 while (true)
@@ -1227,7 +1242,7 @@ namespace LanExchange
                     string TextMsg = Encoding.Default.GetString(message);
                     string[] MSG = TextMsg.Split('|');
 
-                    TLogger.Print("UDP RECV data [{0}] from [ip={1}, host={2}]", TextMsg, ipendpoint.ToString(), HostName);
+                    logger.Info("UDP RECV data [{0}] from [ip={1}, host={2}]", TextMsg, ipendpoint.ToString(), HostName);
 
                     TPanelItem PItem = CompBrowser.InternalItemList.Get(CompName);
                     TComputerItem Comp = PItem as TComputerItem;
@@ -1301,7 +1316,7 @@ namespace LanExchange
             catch
             {
             }
-            TLogger.Print("Thread for udp receive finish");
+            logger.Info("Thread for udp receive finish");
         }
 
 
@@ -1497,7 +1512,7 @@ namespace LanExchange
             {
                 if (admin_mode != value)
                 {
-                    TLogger.Print("AdminMode is {0}", value ? "ON" : "OFF");
+                    logger.Info("AdminMode is {0}", value ? "ON" : "OFF");
                     admin_mode = value;
                     popComps_Opened(popComps, new EventArgs());
                 }

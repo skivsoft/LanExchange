@@ -73,6 +73,7 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -158,12 +159,15 @@
     </Compile>
     <Compile Include="TPanelItemList.cs" />
     <Compile Include="TNetworkBrowser.cs" />
-    <Compile Include="TLogger.cs" />
     <Compile Include="TPuntoSwitcher.cs" />
     <Compile Include="TSettings.cs" />
     <Compile Include="TTabController.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="NLog.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\UserName.png" />
     <None Include="Resources\Service.png" />
     <None Include="Resources\Radmin.png" />

@@ -8,11 +8,14 @@ using System.Net;
 using System.Text;
 using System.IO;
 using System.Diagnostics;
+using NLog;
 
 namespace LanExchange
 {
     partial class AboutForm : Form
     {
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         private Control MsgControl = null;
         private string UpdateError = null;
         private bool bNeedRestart = false;
@@ -159,12 +162,12 @@ namespace LanExchange
                 {
                     client.Proxy = null;
                     string URL = Branding.FileListURL();
-                    TLogger.Print("Downloading text from url [{0}]", URL);
+                    logger.Info("Downloading text from url [{0}]", URL);
                     e.Result = client.DownloadString(URL);
                 }
                 catch(Exception ex)
                 {
-                    TLogger.Print("Error: {0}", ex.Message);
+                    logger.ErrorException("DoCheckVersion", ex);
                     e.Cancel = true;
                 }
             }
@@ -288,7 +291,7 @@ namespace LanExchange
                                 if (!Directory.Exists(LocalDirName))
                                     Directory.CreateDirectory(LocalDirName);
                         string URL = Branding.UpdateBaseURL() + RemoteFName;
-                        TLogger.Print("Downloading file from url [{0}] and saving to [{1}]", URL, LocalFName);
+                        logger.Info("Downloading file from url [{0}] and saving to [{1}]", URL, LocalFName);
                         client.DownloadFile(URL, LocalFName);
                     }
                 }
@@ -297,7 +300,7 @@ namespace LanExchange
             {
                 e.Cancel = true;
                 UpdateError = ex.Message;
-                TLogger.Print("Error: ", ex.Message);
+                logger.Info("Error: ", ex.Message);
             }
         }
 
@@ -312,21 +315,12 @@ namespace LanExchange
                 ShowMessage("Обвновление успешно завершено.", Color.Gray);
                 if (bNeedRestart)
                 {
-                    // запуск новой версии программы
-                    string ExePath = Path.GetDirectoryName(Application.ExecutablePath);
-                    ExePath = Path.Combine(ExePath, "Restart.exe");
-                    string Params = Process.GetCurrentProcess().Id.ToString();
-                    TLogger.Print("Executing: {0} {1}", ExePath, Params);
-                    Process.Start(ExePath, Params);
                     // закрываем окно
                     DialogResult = DialogResult.Cancel;
+                    // перезапуск приложения
+                    MainForm.MainFormInstance.RestartApplication();
                 }
             }
-        }
-
-        private void textBoxDescription_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void labelWeb_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

@@ -4,6 +4,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Reflection;
 using System.Security.AccessControl;
+using NLog;
 
 namespace LanExchange
 {
@@ -14,11 +15,24 @@ namespace LanExchange
         private static ApplicationContext context;
         private static Thread threadOneCopyOnly;
 
+        private static Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         static void LogHeader()
         {
-            TLogger.Print("OSVersion: [{0}], Processors count: {1}", Environment.OSVersion, Environment.ProcessorCount);
-            TLogger.Print(@"MachineName: {0}, UserName: {1}\{2}, Interactive: {3}", Environment.MachineName, Environment.UserDomainName, Environment.UserName, Environment.UserInteractive);
-            TLogger.Print("Executable: [{0}], Version: {1}", Application.ExecutablePath, Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            logger.Info("OSVersion: [{0}], Processors count: {1}", Environment.OSVersion, Environment.ProcessorCount);
+            logger.Info(@"MachineName: {0}, UserName: {1}\{2}, Interactive: {3}", Environment.MachineName, Environment.UserDomainName, Environment.UserName, Environment.UserInteractive);
+            logger.Info("Executable: [{0}], Version: {1}", Application.ExecutablePath, Assembly.GetExecutingAssembly().GetName().Version.ToString());
+        }
+
+        static void SimpleStartInstance()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false); // must be called before first form created
+            LogHeader();
+            using (context = new ApplicationContext(new MainForm()))
+            {
+                Application.Run(context);
+            }
         }
 
         static void FirstInstance()
@@ -28,7 +42,7 @@ namespace LanExchange
 
             using (context = new ApplicationContext(new MainForm()))
             {
-                context.MainForm.Load += delegate { TLogger.Print("Instance showed"); };
+                context.MainForm.Load += delegate { logger.Trace("Instance showed"); };
 
                 threadOneCopyOnly = new Thread(delegate()
                 {
@@ -42,7 +56,7 @@ namespace LanExchange
                                 MainForm F = (MainForm)context.MainForm;
                                 F.bReActivate = true;
                                 F.IsFormVisible = true;
-                                TLogger.Print("Instance activated");
+                                logger.Trace("Instance activated");
                             });
                             while (Method != null) { }
                             context.MainForm.Invoke(Method);
@@ -50,7 +64,7 @@ namespace LanExchange
                     }
                     catch (ThreadAbortException)
                     {
-                        TLogger.Print("FirstInstanceCheck thread is cancelled.");
+                        logger.Trace("FirstInstanceCheck thread is cancelled.");
                     }
                 });
                 threadOneCopyOnly.Name = "One Copy Only";
@@ -69,13 +83,15 @@ namespace LanExchange
 
         static void SecondInstance()
         {
-            TLogger.Print("Instance is second copy");
+            logger.Trace("Instance is second copy");
             eventOneCopyOnly.Set();
         }
 
         [STAThread]
         static void Main()
         {
+            SimpleStartInstance();
+            /*
             try
             {
                 LogHeader();
@@ -90,8 +106,9 @@ namespace LanExchange
             }
             catch (Exception e)
             {
-                TLogger.Print("Exception in Main(): {0}\n{1}", e.Message, e.StackTrace);
+                logger.ErrorException("Main()", e);
             }
+            */
         }
     }
 }

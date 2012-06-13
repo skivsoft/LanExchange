@@ -150,6 +150,8 @@ namespace LanExchange
 
     public class TTabView
     {
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         TabControl pages;
 
         public TTabView(TabControl Pages)
@@ -186,13 +188,13 @@ namespace LanExchange
             if (Model.Count <= this.pages.TabCount)
             {
                 NewTab = this.pages.TabPages[Model.Count - 1];
-                TLogger.Print("Get existing control {0}", NewTab.ToString());
+                logger.Info("Get existing control {0}", NewTab.ToString());
             }
             else
             {
                 NewTab = new TabPage(e.Info.TabName);
                 NewTab.Padding = this.pages.TabPages[0].Padding;
-                TLogger.Print("Create control {0}", NewTab.ToString());
+                logger.Info("Create control {0}", NewTab.ToString());
                 pages.TabPages.Add(NewTab);
             }
             // создаем ListView или получаем существующий
@@ -200,12 +202,12 @@ namespace LanExchange
             if (!bNewListView)
             {
                 LV = (CListViewEx)NewTab.Controls[0];
-                TLogger.Print("Get existing control {0}", LV.ToString());
+                logger.Info("Get existing control {0}", LV.ToString());
             }
             else
             {
                 LV = new CListViewEx();
-                TLogger.Print("Create control {0}", LV.ToString());
+                logger.Info("Create control {0}", LV.ToString());
                 // настраиваем свойства и события для нового ListView
                 LV.View = e.Info.CurrentView;
                 NewTab.Controls.Add(LV);
@@ -213,7 +215,7 @@ namespace LanExchange
             // создаем внутренний список для хранения элементов или получаем существующий
             ItemList = TPanelItemList.ListView_GetObject(LV);
             if (ItemList != null)
-                TLogger.Print("Get existing object {0}", ItemList.ToString());
+                logger.Info("Get existing object {0}", ItemList.ToString());
             else
                 ItemList = TPanelItemList.ListView_CreateObject(LV);
             // восстанавливаем список элементов
@@ -228,7 +230,7 @@ namespace LanExchange
                     else
                         ItemList.Add(new TComputerItem());
                 }
-                TLogger.Print("Added items to object {0}, Count: {1}", ItemList.ToString(), ItemList.Count);
+                logger.Info("Added items to object {0}, Count: {1}", ItemList.ToString(), ItemList.Count);
             }
             // установка фильтра
             MainForm.MainFormInstance.UpdateFilter(LV, e.Info.FilterText, false);
@@ -257,7 +259,7 @@ namespace LanExchange
 
         public void ListView_Setup(ListView LV)
         {
-            TLogger.Print("Setup control {0}", LV.ToString());
+            logger.Info("Setup control {0}", LV.ToString());
             LV.Columns.Clear();
             LV.Columns.Add("Сетевое имя", 130);
             LV.Columns.Add("Описание", 250);

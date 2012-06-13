@@ -6,11 +6,14 @@ using System.Text;
 using OSTools;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using NLog;
 
 namespace LanExchange
 {
     public class TPanelItemList 
     {
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        
         private Dictionary<string, TPanelItem> Data = null;
         public List<string> Keys = null;
         private String Filter = "";
@@ -181,9 +184,9 @@ namespace LanExchange
             List<TPanelItem> Result = new List<TPanelItem>();
             try
             {
-                TLogger.Print("WINAPI NetServerEnum");
+                logger.Info("WINAPI NetServerEnum");
                 LocalNetwork.NERR err = LocalNetwork.NetServerEnum(null, 101, out pInfo, -1, ref entriesread, ref totalentries, LocalNetwork.SV_101_TYPES.SV_TYPE_ALL, null, 0);
-                TLogger.Print("WINAPI NetServerEnum: result={0}, entriesread={1}, totalentries={2}", err, entriesread, totalentries);
+                logger.Info("WINAPI NetServerEnum: result={0}, entriesread={1}, totalentries={2}", err, entriesread, totalentries);
                 if ((err == LocalNetwork.NERR.NERR_Success || err == LocalNetwork.NERR.ERROR_MORE_DATA) && pInfo != IntPtr.Zero)
                 {
                     int ptr = pInfo.ToInt32();
@@ -219,11 +222,11 @@ namespace LanExchange
             int nStructSize = Marshal.SizeOf(typeof(LocalNetwork.SHARE_INFO_1));
             IntPtr bufPtr = IntPtr.Zero;
             StringBuilder server = new StringBuilder(Server);
-            TLogger.Print("WINAPI NetShareEnum");
+            logger.Info("WINAPI NetShareEnum");
             int ret = LocalNetwork.NetShareEnum(server, 1, ref bufPtr, LocalNetwork.MAX_PREFERRED_LENGTH, ref entriesread, ref totalentries, ref resume_handle);
             if (ret == LocalNetwork.NERR_Success)
             {
-                TLogger.Print("WINAPI NetServerEnum result: entriesread={0}, totalentries={1}", entriesread, totalentries);
+                logger.Info("WINAPI NetServerEnum result: entriesread={0}, totalentries={1}", entriesread, totalentries);
                 IntPtr currentPtr = bufPtr;
                 for (int i = 0; i < entriesread; i++)
                 {
@@ -231,14 +234,14 @@ namespace LanExchange
                     if ((shi1.shi1_type & (uint)LocalNetwork.SHARE_TYPE.STYPE_IPC) != (uint)LocalNetwork.SHARE_TYPE.STYPE_IPC)
                         Result.Add(new TShareItem(shi1.shi1_netname, shi1.shi1_remark, shi1.shi1_type, Server));
                     else
-                        TLogger.Print("Skiping IPC$ share");
+                        logger.Info("Skiping IPC$ share");
                     currentPtr = new IntPtr(currentPtr.ToInt32() + nStructSize);
                 }
                 LocalNetwork.NetApiBufferFree(bufPtr);
             }
             else
             {
-                TLogger.Print("WINAPI NetServerEnum error: {0}", ret);
+                logger.Info("WINAPI NetServerEnum error: {0}", ret);
             }
 
             TPanelItemComparer comparer = new TPanelItemComparer();
@@ -322,7 +325,7 @@ namespace LanExchange
         public static TPanelItemList ListView_CreateObject(ListView LV)
         {
             TPanelItemList Result = new TPanelItemList();
-            TLogger.Print("Create object {0}", Result.ToString());
+            logger.Info("Create object {0}", Result.ToString());
             ListView_SetObject(LV, Result);
             return Result;
         }
