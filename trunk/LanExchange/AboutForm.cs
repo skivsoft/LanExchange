@@ -28,11 +28,31 @@ namespace LanExchange
             this.labelProductName.Text = AssemblyProduct;
             this.labelVersion.Text = String.Format("Версия {0}", AssemblyVersion);
             this.labelWeb.LinkArea = new LinkArea(this.labelWeb.Text.Length, this.labelWeb.LinkArea.Length);
-            this.labelWeb.Text += Branding.GetWebSiteURL();
+            this.labelWeb.Text = GetWebSiteURL();
             this.labelEmail.LinkArea = new LinkArea(this.labelEmail.Text.Length, this.labelEmail.LinkArea.Length);
-            this.labelEmail.Text += Branding.GetEmailAddress();
+            this.labelEmail.Text = GetEmailAddress();
             this.labelCopyright.Text = AssemblyCopyright;
             logoPictureBox.Image = MainForm.MainFormInstance.picLogo.Image;
+        }
+
+        public static string GetUpdateBaseURL()
+        {
+            return "http://skivsoft.net/lanexchange/update/";
+        }
+
+        public static string GetFileListURL()
+        {
+            return GetUpdateBaseURL() + "filelist.php";
+        }
+
+        public static string GetWebSiteURL()
+        {
+            return "code.google.com/p/lanexchange/";
+        }
+
+        public static string GetEmailAddress()
+        {
+            return "skivsoft@gmail.com";
         }
 
         void HideMessage()
@@ -161,7 +181,7 @@ namespace LanExchange
                 try
                 {
                     client.Proxy = null;
-                    string URL = Branding.FileListURL();
+                    string URL = GetFileListURL();
                     logger.Info("Downloading text from url [{0}]", URL);
                     e.Result = client.DownloadString(URL);
                 }
@@ -290,7 +310,7 @@ namespace LanExchange
                             else
                                 if (!Directory.Exists(LocalDirName))
                                     Directory.CreateDirectory(LocalDirName);
-                        string URL = Branding.UpdateBaseURL() + RemoteFName;
+                        string URL = GetUpdateBaseURL() + RemoteFName;
                         logger.Info("Downloading file from url [{0}] and saving to [{1}]", URL, LocalFName);
                         client.DownloadFile(URL, LocalFName);
                     }
@@ -318,19 +338,19 @@ namespace LanExchange
                     // закрываем окно
                     DialogResult = DialogResult.Cancel;
                     // перезапуск приложения
-                    MainForm.MainFormInstance.RestartApplication();
+                    Application.Restart();
                 }
             }
         }
 
         private void labelWeb_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("http://" + Branding.GetWebSiteURL());
+            Process.Start("http://" + GetWebSiteURL());
         }
 
         private void labelEmail_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("mailto:" + Branding.GetEmailAddress());
+            Process.Start("mailto:" + GetEmailAddress());
         }
     }
 }

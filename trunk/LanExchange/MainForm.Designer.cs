@@ -65,6 +65,9 @@
             this.mAfterSendTo = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.mContextClose = new System.Windows.Forms.ToolStripMenuItem();
             this.ilLarge = new System.Windows.Forms.ImageList(this.components);
@@ -79,7 +82,6 @@
             this.mExit = new System.Windows.Forms.ToolStripMenuItem();
             this.DoBrowse = new System.ComponentModel.BackgroundWorker();
             this.BrowseTimer = new System.Windows.Forms.Timer(this.components);
-            this.lvComps = new LanExchange.CListViewEx();
             this.panel1 = new System.Windows.Forms.Panel();
             this.picLogo = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -109,6 +111,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.eFilter = new System.Windows.Forms.TextBox();
             this.dlgSave = new System.Windows.Forms.SaveFileDialog();
+            this.lvComps = new LanExchange.CListViewEx();
             this.inputBox = new LanExchange.CInputBox(this.components);
             this.popComps.SuspendLayout();
             this.popTray.SuspendLayout();
@@ -139,10 +142,13 @@
             this.mSendToTab,
             this.toolStripSeparator6,
             this.toolStripMenuItem1,
+            this.toolStripSeparator13,
+            this.toolStripMenuItem2,
+            this.toolStripMenuItem3,
             this.toolStripSeparator2,
             this.mContextClose});
             this.popComps.Name = "popComps";
-            this.popComps.Size = new System.Drawing.Size(266, 298);
+            this.popComps.Size = new System.Drawing.Size(266, 348);
             this.popComps.Opened += new System.EventHandler(this.popComps_Opened);
             // 
             // mComp
@@ -432,6 +438,25 @@
             this.toolStripMenuItem1.Text = "Легенда";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
+            // toolStripSeparator13
+            // 
+            this.toolStripSeparator13.Name = "toolStripSeparator13";
+            this.toolStripSeparator13.Size = new System.Drawing.Size(262, 6);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(265, 22);
+            this.toolStripMenuItem2.Text = "Настройки программы...";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.mSettings_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(265, 22);
+            this.toolStripMenuItem3.Text = "О программе...";
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.mAbout_Click);
+            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
@@ -479,7 +504,6 @@
             this.TrayIcon.ContextMenuStrip = this.popTray;
             this.TrayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("TrayIcon.Icon")));
             this.TrayIcon.Text = "Общие папки";
-            this.TrayIcon.Visible = true;
             this.TrayIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.TrayIcon_MouseClick);
             // 
             // popTray
@@ -543,30 +567,6 @@
             // 
             this.BrowseTimer.Interval = 300000;
             this.BrowseTimer.Tick += new System.EventHandler(this.BrowseTimer_Tick);
-            // 
-            // lvComps
-            // 
-            this.lvComps.ContextMenuStrip = this.popComps;
-            this.lvComps.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvComps.FullRowSelect = true;
-            this.lvComps.GridLines = true;
-            this.lvComps.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.lvComps.HideSelection = false;
-            this.lvComps.LargeImageList = this.ilLarge;
-            this.lvComps.Location = new System.Drawing.Point(3, 3);
-            this.lvComps.Name = "lvComps";
-            this.lvComps.ShowGroups = false;
-            this.lvComps.ShowItemToolTips = true;
-            this.lvComps.Size = new System.Drawing.Size(550, 366);
-            this.lvComps.SmallImageList = this.ilSmall;
-            this.lvComps.TabIndex = 19;
-            this.lvComps.UseCompatibleStateImageBehavior = false;
-            this.lvComps.View = System.Windows.Forms.View.Details;
-            this.lvComps.VirtualMode = true;
-            this.lvComps.ItemActivate += new System.EventHandler(this.lvComps_ItemActivate);
-            this.lvComps.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.lvComps_RetrieveVirtualItem);
-            this.lvComps.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvComps_KeyDown);
-            this.lvComps.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lvComps_KeyPress);
             // 
             // panel1
             // 
@@ -827,6 +827,30 @@
             this.dlgSave.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
             this.dlgSave.RestoreDirectory = true;
             // 
+            // lvComps
+            // 
+            this.lvComps.ContextMenuStrip = this.popComps;
+            this.lvComps.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvComps.FullRowSelect = true;
+            this.lvComps.GridLines = true;
+            this.lvComps.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvComps.HideSelection = false;
+            this.lvComps.LargeImageList = this.ilLarge;
+            this.lvComps.Location = new System.Drawing.Point(3, 3);
+            this.lvComps.Name = "lvComps";
+            this.lvComps.ShowGroups = false;
+            this.lvComps.ShowItemToolTips = true;
+            this.lvComps.Size = new System.Drawing.Size(550, 366);
+            this.lvComps.SmallImageList = this.ilSmall;
+            this.lvComps.TabIndex = 19;
+            this.lvComps.UseCompatibleStateImageBehavior = false;
+            this.lvComps.View = System.Windows.Forms.View.Details;
+            this.lvComps.VirtualMode = true;
+            this.lvComps.ItemActivate += new System.EventHandler(this.lvComps_ItemActivate);
+            this.lvComps.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.lvComps_RetrieveVirtualItem);
+            this.lvComps.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvComps_KeyDown);
+            this.lvComps.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lvComps_KeyPress);
+            // 
             // inputBox
             // 
             this.inputBox.ErrorMsgOnEmpty = null;
@@ -948,6 +972,9 @@
         private System.Windows.Forms.ToolStripMenuItem mSendToNewTab;
         private System.Windows.Forms.ToolStripSeparator mAfterSendTo;
         public CListViewEx lvComps;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
     }
 }
 

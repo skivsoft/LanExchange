@@ -92,6 +92,7 @@ namespace LanExchange
       
         private void SetupForm()
         {
+            TrayIcon.Visible = CanUseTray();
             // размещаем форму внизу справа
             Rectangle Rect = new Rectangle();
             Rect.Size = new Size(450, Screen.PrimaryScreen.WorkingArea.Height);
@@ -103,7 +104,10 @@ namespace LanExchange
             // выводим имя пользователя
             System.Security.Principal.WindowsIdentity user = System.Security.Principal.WindowsIdentity.GetCurrent();
             string[] A = user.Name.Split('\\');
-            lUserName.Text = A[1];
+            if (A.Length > 1)
+                lUserName.Text = A[1];
+            else
+                lUserName.Text = A[0];
             // режим отображения: Компьютеры
             CompBrowser.ViewType = TNetworkBrowser.LVType.COMPUTERS;
             ActiveControl = lvComps;
@@ -120,18 +124,24 @@ namespace LanExchange
         private void Form1_Load(object sender, EventArgs e)
         {
             SetupForm();
-            // устанавливаем обработчик на изменение подключения к сети
-            bNetworkConnected = System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
-            System.Net.NetworkInformation.NetworkChange.NetworkAvailabilityChanged += new System.Net.NetworkInformation.NetworkAvailabilityChangedEventHandler(NetworkChange_NetworkAvailabilityChanged);
-            // права администратора берем из реестра
-            AdminMode = TSettings.IsAdvancedMode;
-            // запуск обновления компов
-            SetBrowseTimerInterval();
-            BrowseTimer.Interval = NetworkWaitAfterPluggedInSec * 1000;
-            BrowseTimer.Start();
-            //BrowseTimer_Tick(this, new EventArgs());
-            // всплывающие подсказки
-            TTabView.ListView_SetupTip(lvComps);
+            if (!OSLayer.IsRunningOnMono())
+            {
+                // устанавливаем обработчик на изменение подключения к сети
+                bNetworkConnected = System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
+                System.Net.NetworkInformation.NetworkChange.NetworkAvailabilityChanged += new System.Net.NetworkInformation.NetworkAvailabilityChangedEventHandler(NetworkChange_NetworkAvailabilityChanged);
+                // права администратора берем из реестра
+                AdminMode = TSettings.IsAdvancedMode;
+                // запуск обновления компов
+                SetBrowseTimerInterval();
+                BrowseTimer_Tick(this, new EventArgs());
+                // всплывающие подсказки
+                TTabView.ListView_SetupTip(lvComps);
+            }
+        }
+
+        private bool CanUseTray()
+        {
+            return !OSLayer.IsRunningOnMono();
         }
 
         /**
@@ -221,16 +231,23 @@ namespace LanExchange
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             logger.Info("MainForm is closing with reason {0}", e.CloseReason.ToString());
+            bool bExiting = false;
             if (e.CloseReason == CloseReason.None || e.CloseReason == CloseReason.UserClosing)
             {
-                e.Cancel = true;
-                IsFormVisible = false;
+                if (CanUseTray())
+                {
+                    e.Cancel = true;
+                    IsFormVisible = false;
+                }
+                else
+                    bExiting = true;
             }
             else
+                bExiting = true;
+            if (bExiting)
             {
                 TabController.StoreSettings();
-                if (DoPing.IsBusy)
-                    DoPing.CancelAsync();
+                CancelCompRelatedThreads();
                 // останавливаем прием UDP сообщений
                 StopReceive();
                 // сообщаем о выключении компа другим клиентам
@@ -325,7 +342,7 @@ namespace LanExchange
             // перезапуск приложения по Ctrl+Alt+R
             if (e.KeyCode == Keys.R && e.Control && e.Alt)
             {
-                RestartApplication();
+                Application.Restart();
                 e.Handled = true;
             }
             if (e.KeyCode == Keys.Escape)
@@ -961,17 +978,6 @@ namespace LanExchange
             RunCmdOnFocusedItem(MenuItem.Tag.ToString(), ParentItem.Tag.ToString());
         }
 
-
-        public void RestartApplication()
-        {
-            // запуск такого же процесса
-            Process.Start(Application.ExecutablePath, "");
-            // закрываем это приложение
-            MainForm.MainFormInstance.CancelCompRelatedThreads();
-            Application.Exit();
-
-        }
-
         public void CancelCompRelatedThreads()
         {
             if (DoBrowse.IsBusy)
@@ -1039,7 +1045,10 @@ namespace LanExchange
 
         private void mContextClose_Click(object sender, EventArgs e)
         {
-            IsFormVisible = false;
+            if (CanUseTray())
+                IsFormVisible = false;
+            else
+                Application.Exit();
         }
 
         private void mLargeIcons_Click(object sender, EventArgs e)
@@ -1521,7 +1530,6 @@ namespace LanExchange
 
         public void mExit_Click(object sender, EventArgs e)
         {
-            CancelCompRelatedThreads();
             Application.Exit();
         }
 

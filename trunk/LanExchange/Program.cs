@@ -11,9 +11,7 @@ namespace LanExchange
     internal static class Program
     {
         private const string EventOneCopyOnlyName = "{e8813243-5a4d-4569-85ad-e95848a1c579}";
-        private static EventWaitHandle eventOneCopyOnly;
-        private static ApplicationContext context;
-        private static Thread threadOneCopyOnly;
+        //private static ApplicationContext context;
 
         private static Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
@@ -28,12 +26,15 @@ namespace LanExchange
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false); // must be called before first form created
-            LogHeader();
-            using (context = new ApplicationContext(new MainForm()))
-            {
-                Application.Run(context);
-            }
+            Application.Run(new MainForm());
+            // workaround for NLog's bug under Mono (hanging after app exit) 
+            LogManager.Configuration = null;
         }
+
+        /*
+
+        private static EventWaitHandle eventOneCopyOnly;
+        private static Thread threadOneCopyOnly;
 
         static void FirstInstance()
         {
@@ -76,39 +77,51 @@ namespace LanExchange
             }//using
         }
 
-        static void AppExit(object sender, EventArgs e)
-        {
-            threadOneCopyOnly.Abort();
-        }
-
         static void SecondInstance()
         {
             logger.Trace("Instance is second copy");
             eventOneCopyOnly.Set();
         }
 
+        static void AppExit(object sender, EventArgs e)
+        {
+            threadOneCopyOnly.Abort();
+        }
+        */
+
+
+        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Exception ex = (Exception)e.ExceptionObject;
+            MessageBox.Show(ex.ToString());
+            //Console.WriteLine("Observed unhandled exception: {0}", ex.ToString());
+        }
+
         [STAThread]
         static void Main()
         {
-            SimpleStartInstance();
-            /*
+            AppDomain.CurrentDomain.UnhandledException += new
+                  UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+            //throw new Exception("This will go unhandled"); 
             try
             {
                 LogHeader();
-                bool createdNew;
-                using (eventOneCopyOnly = new EventWaitHandle(false, EventResetMode.AutoReset, EventOneCopyOnlyName, out createdNew))
-                {
-                    if (createdNew)
-                        FirstInstance();
-                    else
-                        SecondInstance();
-                } // using
+                SimpleStartInstance();
+                /*
+                    bool createdNew;
+                    using (eventOneCopyOnly = new EventWaitHandle(false, EventResetMode.AutoReset, EventOneCopyOnlyName, out createdNew))
+                    {
+                        if (createdNew)
+                            FirstInstance();
+                        else
+                            SecondInstance();
+                    } // using
+                */
             }
             catch (Exception e)
             {
-                logger.ErrorException("Main()", e);
+                logger.ErrorException("Error in Main()", e);
             }
-            */
         }
     }
 }
