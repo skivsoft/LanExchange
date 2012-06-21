@@ -30,6 +30,8 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label3 = new System.Windows.Forms.Label();
+            this.chAdvanced = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.eRefreshTime = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
@@ -38,7 +40,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.chAdvanced = new System.Windows.Forms.CheckBox();
+            this.cHotKey1 = new LanExchange.Components.CHotKey();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eRefreshTime)).BeginInit();
@@ -57,6 +59,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.cHotKey1);
+            this.tabPage1.Controls.Add(this.label3);
             this.tabPage1.Controls.Add(this.chAdvanced);
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.eRefreshTime);
@@ -70,6 +74,26 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Общие";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(15, 108);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(269, 13);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Горячая клавиша для отображения главной формы";
+            this.label3.Visible = false;
+            // 
+            // chAdvanced
+            // 
+            this.chAdvanced.AutoSize = true;
+            this.chAdvanced.Location = new System.Drawing.Point(18, 41);
+            this.chAdvanced.Name = "chAdvanced";
+            this.chAdvanced.Size = new System.Drawing.Size(288, 17);
+            this.chAdvanced.TabIndex = 1;
+            this.chAdvanced.Text = "Расширенный функционал для администрирования";
+            this.chAdvanced.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
@@ -85,7 +109,7 @@
             this.eRefreshTime.Location = new System.Drawing.Point(244, 72);
             this.eRefreshTime.Name = "eRefreshTime";
             this.eRefreshTime.Size = new System.Drawing.Size(40, 20);
-            this.eRefreshTime.TabIndex = 3;
+            this.eRefreshTime.TabIndex = 2;
             this.eRefreshTime.Value = new decimal(new int[] {
             5,
             0,
@@ -155,15 +179,14 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // chAdvanced
+            // cHotKey1
             // 
-            this.chAdvanced.AutoSize = true;
-            this.chAdvanced.Location = new System.Drawing.Point(18, 41);
-            this.chAdvanced.Name = "chAdvanced";
-            this.chAdvanced.Size = new System.Drawing.Size(288, 17);
-            this.chAdvanced.TabIndex = 5;
-            this.chAdvanced.Text = "Расширенный функционал для администрирования";
-            this.chAdvanced.UseVisualStyleBackColor = true;
+            this.cHotKey1.Location = new System.Drawing.Point(291, 108);
+            this.cHotKey1.Name = "cHotKey1";
+            this.cHotKey1.Size = new System.Drawing.Size(119, 23);
+            this.cHotKey1.TabIndex = 7;
+            this.cHotKey1.Text = "cHotKey1";
+            this.cHotKey1.Visible = false;
             // 
             // ParamsForm
             // 
@@ -203,5 +226,7 @@
         private System.Windows.Forms.NumericUpDown eRefreshTime;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox chAdvanced;
+        private System.Windows.Forms.Label label3;
+        private Components.CHotKey cHotKey1;
     }
 }

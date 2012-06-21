@@ -28,9 +28,9 @@ namespace LanExchange
             this.labelProductName.Text = AssemblyProduct;
             this.labelVersion.Text = String.Format("Версия {0}", AssemblyVersion);
             this.labelWeb.LinkArea = new LinkArea(this.labelWeb.Text.Length, this.labelWeb.LinkArea.Length);
-            this.labelWeb.Text = GetWebSiteURL();
+            this.labelWeb.Text += GetWebSiteURL();
             this.labelEmail.LinkArea = new LinkArea(this.labelEmail.Text.Length, this.labelEmail.LinkArea.Length);
-            this.labelEmail.Text = GetEmailAddress();
+            this.labelEmail.Text += GetEmailAddress();
             this.labelCopyright.Text = AssemblyCopyright;
             logoPictureBox.Image = MainForm.MainFormInstance.picLogo.Image;
         }
@@ -73,7 +73,8 @@ namespace LanExchange
             label.Text = text;
             label.ForeColor = color;
             label.Font = new Font(label.Font, FontStyle.Italic);
-            tableLayoutPanel.Controls.Add(label, 1, 3);
+            tableLayoutPanel.Controls.Add(label, 1, 2);
+            tableLayoutPanel.SetColumnSpan(label, 2);
             MsgControl = label;
         }
 
@@ -212,7 +213,7 @@ namespace LanExchange
                 B.Text = String.Format("Обновить до версии {0}", siteVersion.ToString());
                 B.Click += new System.EventHandler(this.UpdateButton_Click);
                 HideMessage();
-                tableLayoutPanel.Controls.Add(B, 1, 3);
+                tableLayoutPanel.Controls.Add(B, 1, 2);
                 MsgControl = B;
             }
             else

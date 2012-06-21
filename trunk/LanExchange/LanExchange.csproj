@@ -92,7 +92,11 @@
     <Compile Include="AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Localization.cs" />
     <Compile Include="Components\CInputBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\CHotKey.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Components\InputBoxForm.cs">
@@ -101,6 +105,7 @@
     <Compile Include="Components\InputBoxForm.Designer.cs">
       <DependentUpon>InputBoxForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="HotKeys.cs" />
     <Compile Include="LegendForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,6 +121,7 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="OSKeyboard.cs" />
     <Compile Include="OSLayer.cs" />
     <Compile Include="ParamsForm.cs">
       <SubType>Form</SubType>
