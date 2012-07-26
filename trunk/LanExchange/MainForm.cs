@@ -60,7 +60,6 @@ namespace LanExchange
         ProcRefresh myCompsRefresh;
         ProcRefresh myTimerRefresh;
 
-        GlobalHotkeys hotkey;
         #endregion
 
         #region Инициализация и загрузка формы
@@ -68,7 +67,7 @@ namespace LanExchange
         public MainForm()
         {
             InitializeComponent();
-            Localization.GetLocalization().ApplyLanguage(this);
+            //Localization.GetLocalization().ApplyLanguage(this);
             //SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             //SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             MainFormInstance = this;
@@ -93,12 +92,14 @@ namespace LanExchange
                 this.ShowInTaskbar = false;
             }
             */
-
+            /*
             hotkey = new GlobalHotkeys();
             hotkey.Handle = this.Handle;
             hotkey.RegisterGlobalHotKey( (int) Keys.Z, GlobalHotkeys.MOD_CONTROL | GlobalHotkeys.MOD_ALT);
+             */
         }
 
+        /*
         protected override void WndProc(ref Message m)
         {
             const int WM_HOTKEY = 0x0312;
@@ -120,6 +121,7 @@ namespace LanExchange
                     }
             }
         }
+         */
       
         private void SetupForm()
         {

@@ -74,7 +74,9 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL" />
+    <Reference Include="NLog">
+      <HintPath>.\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -96,16 +98,12 @@
     <Compile Include="Components\CInputBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Components\CHotKey.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Components\InputBoxForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Components\InputBoxForm.Designer.cs">
       <DependentUpon>InputBoxForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="HotKeys.cs" />
     <Compile Include="LegendForm.cs">
       <SubType>Form</SubType>
     </Compile>

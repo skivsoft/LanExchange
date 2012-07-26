@@ -5,6 +5,7 @@ using OSTools;
 using System.IO;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Security.AccessControl;
 
 namespace LanExchange
 {
@@ -196,7 +197,19 @@ namespace LanExchange
             {
                 string ExeName = System.IO.Path.GetFileName(FileName).ToUpper();
                 string FileNameQuoted = String.Format("\"{0}\"", FileName);
-                Microsoft.Win32.RegistryKey Key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run\", false);
+                Microsoft.Win32.RegistryKey Key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run\", true);
+
+                /*
+
+                string user = Environment.UserDomainName + "\\" + Environment.UserName;
+                RegistrySecurity mSec = new RegistrySecurity();
+                RegistryAccessRule rule = new RegistryAccessRule(user,
+                    RegistryRights.ReadKey | RegistryRights.WriteKey | RegistryRights.Delete,
+                   InheritanceFlags.ContainerInherit, PropagationFlags.None, AccessControlType.Allow);
+                mSec.AddAccessRule(rule);
+                Key.SetAccessControl(mSec);
+                 */
+
                 bool bFound = false;
                 foreach (string str in Key.GetValueNames())
                 {

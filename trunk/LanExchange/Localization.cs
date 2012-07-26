@@ -39,7 +39,7 @@ namespace LanExchange
                 Group.Text = this[Group.Name];
             foreach (Control C in Group.Controls)
             {
-                ApplyLanguage(C);
+                //ApplyLanguage(C);
             }
 
         }

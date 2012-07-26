@@ -40,7 +40,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.cHotKey1 = new LanExchange.Components.CHotKey();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eRefreshTime)).BeginInit();
@@ -59,7 +58,6 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.cHotKey1);
             this.tabPage1.Controls.Add(this.label3);
             this.tabPage1.Controls.Add(this.chAdvanced);
             this.tabPage1.Controls.Add(this.label2);
@@ -179,15 +177,6 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // cHotKey1
-            // 
-            this.cHotKey1.Location = new System.Drawing.Point(291, 108);
-            this.cHotKey1.Name = "cHotKey1";
-            this.cHotKey1.Size = new System.Drawing.Size(119, 23);
-            this.cHotKey1.TabIndex = 7;
-            this.cHotKey1.Text = "cHotKey1";
-            this.cHotKey1.Visible = false;
-            // 
             // ParamsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -227,6 +216,5 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox chAdvanced;
         private System.Windows.Forms.Label label3;
-        private Components.CHotKey cHotKey1;
     }
 }
