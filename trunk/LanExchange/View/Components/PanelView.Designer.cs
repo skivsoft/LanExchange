@@ -75,6 +75,8 @@
             this.LV.TabIndex = 0;
             this.LV.UseCompatibleStateImageBehavior = false;
             this.LV.View = System.Windows.Forms.View.Details;
+            this.LV.VirtualMode = true;
+            this.LV.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.LV_RetrieveVirtualItem);
             this.LV.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LV_KeyDown);
             this.LV.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.LV_MouseDoubleClick);
             // 

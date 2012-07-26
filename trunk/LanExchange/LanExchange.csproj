@@ -115,10 +115,12 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\ComputerProxy.cs" />
+    <Compile Include="Model\CurrentUserProxy.cs" />
     <Compile Include="Model\DomanProxy.cs" />
     <Compile Include="Model\FileProxy.cs" />
     <Compile Include="Model\PanelItemProxy.cs" />
     <Compile Include="Model\ResourceProxy.cs" />
+    <Compile Include="Model\VO\IntVO.cs" />
     <Compile Include="Model\VO\PanelItemVO.cs" />
     <Compile Include="OSLayer\Detect.cs" />
     <Compile Include="OSLayer\Kernel32.cs" />
@@ -138,12 +140,19 @@
     <Compile Include="View\Components\ListViewEx.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="View\PanelView.cs">
+    <Compile Include="View\Components\PanelView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="View\PanelView.Designer.cs">
+    <Compile Include="View\Components\PanelView.Designer.cs">
       <DependentUpon>PanelView.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\Components\StatusView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\Components\StatusView.Designer.cs">
+      <DependentUpon>StatusView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\StatusViewMediator.cs" />
     <Compile Include="View\PanelViewMediator.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -158,8 +167,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="View\PanelView.resx">
+    <EmbeddedResource Include="View\Components\PanelView.resx">
       <DependentUpon>PanelView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Components\StatusView.resx">
+      <DependentUpon>StatusView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
@@ -191,6 +203,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="LanExchange.ico" />
+    <None Include="Resources\UserName.png" />
+    <None Include="Resources\CompOff.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

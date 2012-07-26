@@ -12,8 +12,9 @@ namespace LanExchange
         #region Notification name constants
         
         public const string STARTUP    = "startup";
-        public const string LEVEL_DOWN = "levelDown";
-        public const string LEVEL_UP   = "levelUp";
+        //public const string LEVEL_DOWN = "levelDown";
+        //public const string LEVEL_UP   = "levelUp";
+        public const string ITEM_COUNT_CHANGED = "itemCountChanged";
 
         #endregion
 

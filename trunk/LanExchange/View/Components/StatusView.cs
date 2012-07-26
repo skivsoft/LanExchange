@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
+using System.Data;
 using System.Text;
 using System.Windows.Forms;
 
-namespace LanExchange
+namespace LanExchange.View.Components
 {
-    public partial class MainForm : Form
+    public partial class StatusView : UserControl
     {
-        public MainForm()
+        public StatusView()
         {
             InitializeComponent();
         }

@@ -24,25 +24,21 @@ namespace LanExchange.View.Components
         public void AddItems(IList<PanelItemVO> items)
         {
             m_CurrentItems = items;
-            LV.Items.Clear();
-            foreach (PanelItemVO item in items)
+            int OldCount = LV.VirtualListSize;
+            LV.VirtualListSize = items.Count;
+            if (OldCount != items.Count)
             {
-                ListViewItem LVI = LV.Items.Add(item.Name);
-                LVI.SubItems.Add(item.Comment);
+                SetItemsCountChanged();
             }
         }
 
         public event EventHandler LevelDown;
         public event EventHandler LevelUp;
+        public event EventHandler ItemsCountChanged;
 
         protected virtual void OnLevelDown(EventArgs e)
         {
             if (LevelDown != null) LevelDown(this, e);
-        }
-
-        protected virtual void SetLevelDown()
-        {
-            OnLevelDown(new EventArgs());
         }
 
         protected virtual void OnLevelUp(EventArgs e)
@@ -50,9 +46,24 @@ namespace LanExchange.View.Components
             if (LevelUp != null) LevelUp(this, e);
         }
 
+        protected virtual void OnItemsCountChanged(EventArgs e)
+        {
+            if (ItemsCountChanged != null) ItemsCountChanged(this, e);
+        }
+
+        protected virtual void SetLevelDown()
+        {
+            OnLevelDown(new EventArgs());
+        }
+
         protected virtual void SetLevelUp()
         {
             OnLevelUp(new EventArgs());
+        }
+
+        protected virtual void SetItemsCountChanged()
+        {
+            OnItemsCountChanged(new EventArgs());
         }
 
         private void LV_KeyDown(object sender, KeyEventArgs e)
@@ -73,6 +84,15 @@ namespace LanExchange.View.Components
         private void LV_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             SetLevelDown();
+        }
+
+        private void LV_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
+        {
+            if (e.ItemIndex < 0 || e.ItemIndex > m_CurrentItems.Count - 1)
+                return;
+            PanelItemVO Item = m_CurrentItems[e.ItemIndex];
+            e.Item = new ListViewItem(Item.Name);
+            e.Item.SubItems.Add(Item.Comment);
         }
     }
 }

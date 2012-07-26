@@ -15,11 +15,14 @@ namespace LanExchange.View
         public new const string NAME = "PanelViewMediator";
 
         private PanelItemProxy currentProxy;
-        private string currentProxyName = "ComputerProxy";
+        private string currentProxyName = "DomainProxy";
 
 		public PanelViewMediator(PanelView PV)
 			: base(NAME, PV)
 		{
+            PV.LevelDown += new EventHandler(PV_LevelDown);
+            PV.LevelUp += new EventHandler(PV_LevelUp);
+            PV.ItemsCountChanged +=new EventHandler(PV_ItemsCountChanged);
         }
 
         private PanelView Panel
@@ -30,12 +33,37 @@ namespace LanExchange.View
         public override void OnRegister()
         {
             base.OnRegister();
+            UpdateItems();
+        }
+
+        private void UpdateItems()
+        {
             currentProxy = (PanelItemProxy)Facade.RetrieveProxy(currentProxyName);
             if (currentProxy != null)
             {
+                currentProxy.Objects.Clear();
                 currentProxy.EnumObjects();
                 Panel.AddItems(currentProxy.Objects);
             }
+        }
+
+        void PV_LevelDown(object sender, EventArgs e)
+        {
+            currentProxyName = "ComputerProxy";
+            UpdateItems();
+            //SendNotification(ApplicationFacade.LEVEL_DOWN, this);
+        }
+
+        void PV_LevelUp(object sender, EventArgs e)
+        {
+            currentProxyName = "DomainProxy";
+            UpdateItems();
+            //SendNotification(ApplicationFacade.LEVEL_UP, this);
+        }
+
+        void PV_ItemsCountChanged(object sender, EventArgs e)
+        {
+            SendNotification(ApplicationFacade.ITEM_COUNT_CHANGED, new IntVO(currentProxy.Objects.Count));
         }
     }
 }

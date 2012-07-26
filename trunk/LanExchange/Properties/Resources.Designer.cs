@@ -61,6 +61,16 @@ namespace LanExchange.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CompOff {
+            get {
+                object obj = ResourceManager.GetObject("CompOff", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error loading core component..
         /// </summary>
         internal static string errLoadingCore {
@@ -75,6 +85,16 @@ namespace LanExchange.Properties {
         internal static string errStartCaption {
             get {
                 return ResourceManager.GetString("errStartCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UserName {
+            get {
+                object obj = ResourceManager.GetObject("UserName", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

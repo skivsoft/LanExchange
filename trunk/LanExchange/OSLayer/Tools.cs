@@ -132,5 +132,16 @@ namespace LanExchange.OSLayer
                     return String.Format("{0} {1}.{2}", platform_id, ver_major, ver_minor);
             }
         }
+
+        public static void ShowProperties(object obj)
+        {
+            Form F = new Form();
+            F.Text = obj.ToString();
+            PropertyGrid Grid = new PropertyGrid();
+            Grid.Dock = DockStyle.Fill;
+            Grid.SelectedObject = obj;
+            F.Controls.Add(Grid);
+            F.Show();
+        }
     }
 }

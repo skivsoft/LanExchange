@@ -28,17 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.statusView1 = new LanExchange.View.Components.StatusView();
             this.panelView1 = new LanExchange.View.Components.PanelView();
             this.SuspendLayout();
+            // 
+            // statusView1
+            // 
+            this.statusView1.AutoSize = true;
+            this.statusView1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.statusView1.Location = new System.Drawing.Point(0, 501);
+            this.statusView1.Name = "statusView1";
+            this.statusView1.Size = new System.Drawing.Size(504, 22);
+            this.statusView1.TabIndex = 1;
             // 
             // panelView1
             // 
             this.panelView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelView1.Location = new System.Drawing.Point(0, 0);
             this.panelView1.Name = "panelView1";
-            this.panelView1.Size = new System.Drawing.Size(504, 523);
+            this.panelView1.Size = new System.Drawing.Size(504, 501);
             this.panelView1.TabIndex = 0;
-            this.panelView1.LevelDown += new System.EventHandler(this.panelView1_LevelDown);
             // 
             // MainForm
             // 
@@ -46,16 +55,19 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(504, 523);
             this.Controls.Add(this.panelView1);
+            this.Controls.Add(this.statusView1);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainForm";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         public View.Components.PanelView panelView1;
+        public View.Components.StatusView statusView1;
 
 
     }
