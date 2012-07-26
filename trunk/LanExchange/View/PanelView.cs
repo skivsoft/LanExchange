@@ -32,7 +32,6 @@ namespace LanExchange.View.Components
             }
         }
 
-
         public event EventHandler LevelDown;
         public event EventHandler LevelUp;
 
@@ -71,5 +70,9 @@ namespace LanExchange.View.Components
             }
         }
 
+        private void LV_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            SetLevelDown();
+        }
     }
 }

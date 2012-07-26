@@ -12,15 +12,14 @@ namespace LanExchange.View
 {
     public class PanelViewMediator : Mediator, IMediator
     {
-        private PanelItemProxy currentProxy;
-        private string currentProxyName = "DomainProxy";
-
         public new const string NAME = "PanelViewMediator";
+
+        private PanelItemProxy currentProxy;
+        private string currentProxyName = "ComputerProxy";
 
 		public PanelViewMediator(PanelView PV)
 			: base(NAME, PV)
 		{
-            PV.LevelDown +=new EventHandler(PV_LevelDown);
         }
 
         private PanelView Panel
@@ -37,11 +36,6 @@ namespace LanExchange.View
                 currentProxy.EnumObjects();
                 Panel.AddItems(currentProxy.Objects);
             }
-        }
-
-        void PV_LevelDown(object sender, EventArgs e)
-        {
-            MessageBox.Show("LD");
         }
     }
 }

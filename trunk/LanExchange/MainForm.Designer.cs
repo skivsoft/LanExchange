@@ -39,7 +39,6 @@
             this.panelView1.Size = new System.Drawing.Size(504, 523);
             this.panelView1.TabIndex = 0;
             this.panelView1.LevelDown += new System.EventHandler(this.panelView1_LevelDown);
-            this.panelView1.LevelUp += new System.EventHandler(this.panelView1_LevelUp);
             // 
             // MainForm
             // 

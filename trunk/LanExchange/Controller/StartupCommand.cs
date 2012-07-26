@@ -15,7 +15,7 @@ namespace LanExchange.Controller
         public override void Execute(INotification notification)
         {
             // network browser
-            Facade.RegisterProxy(new DomainProxy());
+            //Facade.RegisterProxy(new DomainProxy());
             Facade.RegisterProxy(new ComputerProxy());
             //Facade.RegisterProxy(new ResourceProxy());
             //Facade.RegisterProxy(new FileProxy());
@@ -25,8 +25,11 @@ namespace LanExchange.Controller
             //Facade.RegisterProxy(new PersonProxy());
 
             MainForm form = (MainForm)notification.Body;
-            form.Text = "LanExchange 1.5";
-            Facade.RegisterMediator(new PanelViewMediator(form.panelView1));
+            if (form != null)
+            {
+                form.Text = "LanExchange 1.5";
+                Facade.RegisterMediator(new PanelViewMediator(form.panelView1));
+            }
         }
     }
 }

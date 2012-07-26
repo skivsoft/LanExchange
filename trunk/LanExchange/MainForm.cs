@@ -17,12 +17,7 @@ namespace LanExchange
 
         private void panelView1_LevelDown(object sender, EventArgs e)
         {
-            MessageBox.Show("LEVEL DOWN");
-        }
-
-        private void panelView1_LevelUp(object sender, EventArgs e)
-        {
-            MessageBox.Show("LEVEL UP");
+            MessageBox.Show(ApplicationFacade.LEVEL_DOWN);
         }
     }
 }

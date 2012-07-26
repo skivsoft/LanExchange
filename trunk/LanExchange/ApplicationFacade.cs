@@ -10,9 +10,10 @@ namespace LanExchange
     public class ApplicationFacade : Facade
     {
         #region Notification name constants
-        public const string STARTUP = "startup";
-        public const string LEVEL_DOWN = "level_down";
-        public const string LEVEL_UP = "level_up";
+        
+        public const string STARTUP    = "startup";
+        public const string LEVEL_DOWN = "levelDown";
+        public const string LEVEL_UP   = "levelUp";
 
         #endregion
 
