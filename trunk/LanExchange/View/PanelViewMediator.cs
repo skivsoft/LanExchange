@@ -14,8 +14,9 @@ namespace LanExchange.View
     {
         public new const string NAME = "PanelViewMediator";
 
-        private PanelItemProxy currentProxy;
-        private string currentProxyName = "DomainProxy";
+        private PanelItemProxy m_CurrentProxy;
+        private string m_CurrentProxyName = "DomainProxy";
+        private string m_Path = "";
 
 		public PanelViewMediator(PanelView PV)
 			: base(NAME, PV)
@@ -38,32 +39,57 @@ namespace LanExchange.View
 
         private void UpdateItems()
         {
-            currentProxy = (PanelItemProxy)Facade.RetrieveProxy(currentProxyName);
-            if (currentProxy != null)
+            m_CurrentProxy = (PanelItemProxy)Facade.RetrieveProxy(m_CurrentProxyName);
+            if (m_CurrentProxy != null)
             {
-                currentProxy.Objects.Clear();
-                currentProxy.EnumObjects();
-                Panel.AddItems(currentProxy.Objects);
+                m_CurrentProxy.Objects.Clear();
+                m_CurrentProxy.EnumObjects(m_Path);
+                Panel.AddItems(m_CurrentProxy.Objects);
             }
         }
 
         void PV_LevelDown(object sender, EventArgs e)
         {
-            currentProxyName = "ComputerProxy";
-            UpdateItems();
+            switch(m_CurrentProxyName)
+            {
+                case "DomainProxy":
+                    if (Panel.SelectedPanelItem != null)
+                    {
+                        m_CurrentProxyName = "ComputerProxy";
+                        m_Path = Panel.SelectedPanelItem.Name;
+                        UpdateItems();
+                    }
+                    break;
+
+                case "ComputerProxy":
+                    m_CurrentProxyName = "ResourceProxy";
+                    m_Path = "MIKHAILYUK-KA";
+                    break;
+            }
             //SendNotification(ApplicationFacade.LEVEL_DOWN, this);
         }
 
         void PV_LevelUp(object sender, EventArgs e)
         {
-            currentProxyName = "DomainProxy";
-            UpdateItems();
+            switch(m_CurrentProxyName)
+            {
+                case "ComputerProxy":
+                    m_CurrentProxyName = "DomainProxy";
+                    m_Path = "";
+                    UpdateItems();
+                    break;
+                case "ResourseProxy":
+                    m_CurrentProxyName = "ComputerProxy";
+                    m_Path = "FERMAK";
+                    UpdateItems();
+                    break;
+            }
             //SendNotification(ApplicationFacade.LEVEL_UP, this);
         }
 
         void PV_ItemsCountChanged(object sender, EventArgs e)
         {
-            SendNotification(ApplicationFacade.ITEM_COUNT_CHANGED, new IntVO(currentProxy.Objects.Count));
+            SendNotification(ApplicationFacade.ITEM_COUNT_CHANGED, new IntVO(m_CurrentProxy.Objects.Count));
         }
     }
 }

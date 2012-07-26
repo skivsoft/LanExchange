@@ -19,7 +19,7 @@ namespace LanExchange.Model
             get { return (IList<PanelItemVO>)Data; }
         }
 
-        public abstract void EnumObjects();
+        public abstract void EnumObjects(string path);
 
     }
 }

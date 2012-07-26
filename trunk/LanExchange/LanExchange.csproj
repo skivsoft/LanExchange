@@ -122,6 +122,7 @@
     <Compile Include="Model\ResourceProxy.cs" />
     <Compile Include="Model\VO\IntVO.cs" />
     <Compile Include="Model\VO\PanelItemVO.cs" />
+    <Compile Include="Model\VO\StringVO.cs" />
     <Compile Include="OSLayer\Detect.cs" />
     <Compile Include="OSLayer\Kernel32.cs" />
     <Compile Include="OSLayer\Tools.cs" />

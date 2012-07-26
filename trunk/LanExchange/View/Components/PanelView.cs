@@ -66,6 +66,15 @@ namespace LanExchange.View.Components
             OnItemsCountChanged(new EventArgs());
         }
 
+        public PanelItemVO SelectedPanelItem
+        {
+            get 
+            {
+                if (LV.FocusedItem == null) return null;
+                return (PanelItemVO)LV.FocusedItem.Tag;
+            }
+        }
+
         private void LV_KeyDown(object sender, KeyEventArgs e)
         {
             switch(e.KeyCode)
@@ -93,6 +102,7 @@ namespace LanExchange.View.Components
             PanelItemVO Item = m_CurrentItems[e.ItemIndex];
             e.Item = new ListViewItem(Item.Name);
             e.Item.SubItems.Add(Item.Comment);
+            e.Item.Tag = Item;
         }
     }
 }

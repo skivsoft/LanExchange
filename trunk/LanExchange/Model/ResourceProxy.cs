@@ -14,7 +14,7 @@ namespace LanExchange.Model
 
         }
 
-        public override void EnumObjects()
+        public override void EnumObjects(string ComputerName)
         {
             
         }

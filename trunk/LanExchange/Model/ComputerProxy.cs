@@ -18,7 +18,7 @@ namespace LanExchange.Model
 
         }
 
-        public override void EnumObjects()
+        public override void EnumObjects(string Domain)
         {
             NetApi32.SERVER_INFO_101 si;
             IntPtr pInfo = IntPtr.Zero;
@@ -26,7 +26,7 @@ namespace LanExchange.Model
             int totalentries = 0;
             try
             {
-                NetApi32.NERR err = NetApi32.NetServerEnum(null, 101, out pInfo, -1, ref entriesread, ref totalentries, NetApi32.SV_101_TYPES.SV_TYPE_ALL, null, 0);
+                NetApi32.NERR err = NetApi32.NetServerEnum(null, 101, out pInfo, -1, ref entriesread, ref totalentries, NetApi32.SV_101_TYPES.SV_TYPE_ALL, Domain, 0);
                 if ((err == NetApi32.NERR.NERR_Success || err == NetApi32.NERR.ERROR_MORE_DATA) && pInfo != IntPtr.Zero)
                 {
                     int ptr = pInfo.ToInt32();

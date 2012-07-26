@@ -17,7 +17,7 @@ namespace LanExchange.Model
 
         }
 
-        public override void EnumObjects()
+        public override void EnumObjects(string path)
         {
             NetApi32.SERVER_INFO_101 si;
             IntPtr pInfo = IntPtr.Zero;
