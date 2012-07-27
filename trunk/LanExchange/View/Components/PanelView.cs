@@ -16,20 +16,26 @@ namespace LanExchange.View.Components
         public PanelView()
         {
             InitializeComponent();
+        }
+
+        public void SetColumns(ColumnVO[] columns)
+        {
             LV.Columns.Clear();
-            LV.Columns.Add("Сетевое имя", 130);
-            LV.Columns.Add("Описание", 250);
+            for (int i = 0; i < columns.Length; i++)
+            {
+                LV.Columns.Add(columns[i].Title, columns[i].Width);
+            }
         }
 
         public void AddItems(IList<PanelItemVO> items)
         {
             m_CurrentItems = items;
-            int OldCount = LV.VirtualListSize;
-            LV.VirtualListSize = items.Count;
-            if (OldCount != items.Count)
+            if (LV.VirtualListSize != items.Count)
             {
+                LV.VirtualListSize = items.Count;
                 SetItemsCountChanged();
             }
+            LV.Refresh();
         }
 
         public event EventHandler LevelDown;
@@ -51,12 +57,12 @@ namespace LanExchange.View.Components
             if (ItemsCountChanged != null) ItemsCountChanged(this, e);
         }
 
-        protected virtual void SetLevelDown()
+        public virtual void SetLevelDown()
         {
             OnLevelDown(new EventArgs());
         }
 
-        protected virtual void SetLevelUp()
+        public virtual void SetLevelUp()
         {
             OnLevelUp(new EventArgs());
         }
@@ -66,12 +72,25 @@ namespace LanExchange.View.Components
             OnItemsCountChanged(new EventArgs());
         }
 
+        public PanelItemVO FirstPanelItem
+        {
+            get
+            {
+                if (LV.VirtualListSize == 0)
+                    return null;
+                else
+                    return (PanelItemVO)LV.Items[0].Tag;
+            }
+        }
+
         public PanelItemVO SelectedPanelItem
         {
             get 
             {
-                if (LV.FocusedItem == null) return null;
-                return (PanelItemVO)LV.FocusedItem.Tag;
+                if (LV.FocusedItem == null) 
+                    return null;
+                else
+                    return (PanelItemVO)LV.FocusedItem.Tag;
             }
         }
 
@@ -101,7 +120,9 @@ namespace LanExchange.View.Components
                 return;
             PanelItemVO Item = m_CurrentItems[e.ItemIndex];
             e.Item = new ListViewItem(Item.Name);
-            e.Item.SubItems.Add(Item.Comment);
+            string[] SubItems = Item.SubItems;
+            for(int i = 0; i < SubItems.Length; i++)
+                e.Item.SubItems.Add(SubItems[i]);
             e.Item.Tag = Item;
         }
     }

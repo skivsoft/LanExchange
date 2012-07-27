@@ -17,7 +17,14 @@ namespace LanExchange.Model
 
         }
 
-        public override void EnumObjects(string path)
+        public override ColumnVO[] GetColumns()
+        {
+            return new ColumnVO[] { 
+                new ColumnVO("Домен/Группа", 130)
+            };
+        }
+
+        protected override void EnumObjects(string path)
         {
             NetApi32.SERVER_INFO_101 si;
             IntPtr pInfo = IntPtr.Zero;
@@ -36,7 +43,7 @@ namespace LanExchange.Model
                         //bool bServer = (si.sv101_type & 0x8018) != 0;
                         //if (Program.AdminMode || !bServer)
                         //Result.Add(new TComputerItem(si.sv101_name, si.sv101_comment, si.sv101_platform_id, si.sv101_version_major, si.sv101_version_minor, si.sv101_type));
-                        Objects.Add(new PanelItemVO(si.sv101_name, ""));
+                        Objects.Add(new PanelItemVO(si.sv101_name, false, ""));
                         ptr += Marshal.SizeOf(si);
                     }
                 }

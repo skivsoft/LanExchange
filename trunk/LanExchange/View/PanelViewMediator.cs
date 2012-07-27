@@ -7,6 +7,7 @@ using LanExchange.Model;
 using LanExchange.View.Components;
 using LanExchange.Model.VO;
 using System.Windows.Forms;
+using System.IO;
 
 namespace LanExchange.View
 {
@@ -43,30 +44,44 @@ namespace LanExchange.View
             if (m_CurrentProxy != null)
             {
                 m_CurrentProxy.Objects.Clear();
-                m_CurrentProxy.EnumObjects(m_Path);
+                m_CurrentProxy.EnumObjectsSorted(m_Path);
+                Panel.SetColumns(m_CurrentProxy.GetColumns());
                 Panel.AddItems(m_CurrentProxy.Objects);
             }
         }
 
         void PV_LevelDown(object sender, EventArgs e)
         {
+            PanelItemVO Current = Panel.SelectedPanelItem;
+            if (Current == null)
+                return;
+            if (Current.IsBackButton)
+            {
+                Panel.SetLevelUp();
+                return;
+            }
             switch(m_CurrentProxyName)
             {
                 case "DomainProxy":
-                    if (Panel.SelectedPanelItem != null)
+                    m_CurrentProxyName = "ComputerProxy";
+                    m_Path = Current.Name;
+                    UpdateItems();
+                    break;
+                case "ComputerProxy":
+                    m_CurrentProxyName = "ResourceProxy";
+                    m_Path = Current.Name;
+                    UpdateItems();
+                    break;
+                case "ResourceProxy":
+                    PanelItemVO First = Panel.FirstPanelItem;
+                    if (First != null)
                     {
-                        m_CurrentProxyName = "ComputerProxy";
-                        m_Path = Panel.SelectedPanelItem.Name;
+                        m_CurrentProxyName = "FileProxy";
+                        m_Path = Path.Combine(First.SubItems[1], Current.Name);
                         UpdateItems();
                     }
                     break;
-
-                case "ComputerProxy":
-                    m_CurrentProxyName = "ResourceProxy";
-                    m_Path = "MIKHAILYUK-KA";
-                    break;
             }
-            //SendNotification(ApplicationFacade.LEVEL_DOWN, this);
         }
 
         void PV_LevelUp(object sender, EventArgs e)
@@ -78,9 +93,14 @@ namespace LanExchange.View
                     m_Path = "";
                     UpdateItems();
                     break;
-                case "ResourseProxy":
+                case "ResourceProxy":
                     m_CurrentProxyName = "ComputerProxy";
                     m_Path = "FERMAK";
+                    UpdateItems();
+                    break;
+                case "FileProxy":
+                    m_CurrentProxyName = "ResourceProxy";
+                    m_Path = "MIKHAILYUK-KA";
                     UpdateItems();
                     break;
             }
@@ -89,7 +109,7 @@ namespace LanExchange.View
 
         void PV_ItemsCountChanged(object sender, EventArgs e)
         {
-            SendNotification(ApplicationFacade.ITEM_COUNT_CHANGED, new IntVO(m_CurrentProxy.Objects.Count));
+            SendNotification(ApplicationFacade.ITEM_COUNT_CHANGED, new IntVO(m_CurrentProxy.NumObjects));
         }
     }
 }

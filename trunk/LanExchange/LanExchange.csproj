@@ -114,12 +114,14 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\ArchiveProxy.cs" />
     <Compile Include="Model\ComputerProxy.cs" />
     <Compile Include="Model\CurrentUserProxy.cs" />
     <Compile Include="Model\DomanProxy.cs" />
     <Compile Include="Model\FileProxy.cs" />
     <Compile Include="Model\PanelItemProxy.cs" />
     <Compile Include="Model\ResourceProxy.cs" />
+    <Compile Include="Model\VO\ColumnVO.cs" />
     <Compile Include="Model\VO\IntVO.cs" />
     <Compile Include="Model\VO\PanelItemVO.cs" />
     <Compile Include="Model\VO\StringVO.cs" />

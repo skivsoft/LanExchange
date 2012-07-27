@@ -19,7 +19,23 @@ namespace LanExchange.Model
             get { return (IList<PanelItemVO>)Data; }
         }
 
-        public abstract void EnumObjects(string path);
+        public virtual int NumObjects
+        {
+            get { return Objects.Count; }
+        }
 
+        protected abstract void EnumObjects(string path);
+
+        public void EnumObjectsSorted(string path)
+        {
+            EnumObjects(path);
+            PanelItemComparer comparer = new PanelItemComparer();
+            ((List<PanelItemVO>)Data).Sort(comparer);
+        }
+
+        public virtual ColumnVO[] GetColumns()
+        {
+            return new ColumnVO[] { new ColumnVO("", 100) };
+        }
     }
 }

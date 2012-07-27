@@ -18,7 +18,7 @@ namespace LanExchange.Controller
             // network browser
             Facade.RegisterProxy(new DomainProxy());
             Facade.RegisterProxy(new ComputerProxy());
-            //Facade.RegisterProxy(new ResourceProxy());
+            Facade.RegisterProxy(new ResourceProxy());
             //Facade.RegisterProxy(new FileProxy());
             // AD browser
             //Facade.RegisterProxy(new UserProxy());

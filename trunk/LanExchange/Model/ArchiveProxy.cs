@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using LanExchange.Model.VO;
-using System.IO;
 
 namespace LanExchange.Model
 {
-    public class FileProxy : PanelItemProxy
+    public class ArchiveProxy : PanelItemProxy
     {
-        public new const string NAME = "FileProxy";
+        public new const string NAME = "ArchiveProxy";
 
-        public FileProxy()
+        public ArchiveProxy()
             : base(NAME)
         {
 
@@ -34,16 +33,10 @@ namespace LanExchange.Model
             };
         }
 
-        protected override void EnumObjects(string Path)
+        protected override void EnumObjects(string Resource)
         {
             Objects.Add(new PanelItemVO("..", true, "", "", ""));
-            DirectoryInfo Dir = new DirectoryInfo(Path);
-            FileSystemInfo[] Files = Dir.GetFileSystemInfos();
-            foreach (FileSystemInfo Item in Files)
-            {
-                string sType = (Item.Attributes & FileAttributes.Directory) != 0 ? "Папка с файлами" : "Файл";
-                Objects.Add(new PanelItemVO(Item.Name, false, Item.LastWriteTime.ToString(), sType, ""));
-            }
+            
         }
     }
 }
