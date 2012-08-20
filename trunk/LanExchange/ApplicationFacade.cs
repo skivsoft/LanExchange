@@ -1,23 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using PureMVC.Patterns;
+using PurePatterns;
 using LanExchange.Controller;
-using PureMVC.Interfaces;
+using PureInterfaces;
+using LanExchange.SDK;
 
 namespace LanExchange
 {
     public class ApplicationFacade : Facade
     {
-        #region Notification name constants
-        
-        public const string STARTUP    = "startup";
-        //public const string LEVEL_DOWN = "levelDown";
-        //public const string LEVEL_UP   = "levelUp";
-        public const string ITEM_COUNT_CHANGED = "itemCountChanged";
-
-        #endregion
-
         #region Accessors
 
         /// <summary>
@@ -41,18 +33,6 @@ namespace LanExchange
 
         #endregion
 
-        #region Public methods
-
-        /// <summary>
-        /// Start the application
-        /// </summary>
-        /// <param name="app"></param>
-        public void Startup(object app)
-        {
-            SendNotification(STARTUP, app);
-        }
-        #endregion
-
         #region Protected & Internal Methods
 
         protected ApplicationFacade()
@@ -74,7 +54,7 @@ namespace LanExchange
         protected override void InitializeController()
         {
             base.InitializeController();
-            RegisterCommand(STARTUP, typeof(StartupCommand));
+            RegisterCommand(Globals.CMD_STARTUP, typeof(StartupCommand));
         }
 
         #endregion

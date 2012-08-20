@@ -2,46 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
 
 namespace LanExchange.OSLayer
 {
     public class Tools
     {
-
-        /// <summary>
-        /// Select all rows on the given listview
-        /// </summary>
-        /// <param name="list">The listview whose items are to be selected</param>
-        public static void SelectAllItems(ListView list)
-        {
-            SetItemState(list, -1, 2, 2);
-        }
-
-        /// <summary>
-        /// Deselect all rows on the given listview
-        /// </summary>
-        /// <param name="list">The listview whose items are to be deselected</param>
-        public static void DeselectAllItems(ListView list)
-        {
-            SetItemState(list, -1, 2, 0);
-        }
-
-        /// <summary>
-        /// Set the item state on the given item
-        /// </summary>
-        /// <param name="list">The listview whose item's state is to be changed</param>
-        /// <param name="itemIndex">The index of the item to be changed</param>
-        /// <param name="mask">Which bits of the value are to be set?</param>
-        /// <param name="value">The value to be set</param>
-        public static void SetItemState(ListView list, int itemIndex, int mask, int value)
-        {
-            User32.LVITEM lvItem = new User32.LVITEM();
-            lvItem.stateMask = mask;
-            lvItem.state = value;
-            User32.SendMessageLVItem(list.Handle, User32.LVM_SETITEMSTATE, itemIndex, ref lvItem);
-        }
-
         public static void ExplodeCmd(string CmdLine, out string FName, out string Params)
         {
             FName = "";
@@ -133,6 +98,7 @@ namespace LanExchange.OSLayer
             }
         }
 
+        /*
         public static void ShowProperties(object obj)
         {
             Form F = new Form();
@@ -143,5 +109,6 @@ namespace LanExchange.OSLayer
             F.Controls.Add(Grid);
             F.Show();
         }
+        */
     }
 }

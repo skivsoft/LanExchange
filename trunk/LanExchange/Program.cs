@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows.Forms;
+using LanExchange.SDK;
 
 namespace LanExchange
 {
@@ -13,14 +11,9 @@ namespace LanExchange
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false); // must be called before first form created
-            MainForm form = new MainForm();
-            // START MVC NOW
+            // Run Application in MVC-style
             ApplicationFacade facade = (ApplicationFacade)ApplicationFacade.Instance;
-            facade.Startup(form);
-            // RUN
-            Application.Run(form);
+            facade.SendNotification(Globals.CMD_STARTUP);
         }
     }
 
