@@ -134,7 +134,7 @@ namespace ViewWinForms.View.Components
                     e.Handled = true;
                     break;
                 default:
-                    // Ctrl+A выделение всех элементов
+                    // Ctrl+A select all items 
                     if (e.Control && e.KeyCode == Keys.A)
                     {
                         LV.SelectAllItems();
@@ -158,6 +158,9 @@ namespace ViewWinForms.View.Components
             string[] SubItems = Item.SubItems;
             for(int i = 0; i < SubItems.Length; i++)
                 e.Item.SubItems.Add(SubItems[i]);
+            // add empty columns if needed
+            for (int i = 1 + SubItems.Length; i < LV.Columns.Count; i++)
+                e.Item.SubItems.Add("");
             e.Item.Tag = Item;
         }
     }

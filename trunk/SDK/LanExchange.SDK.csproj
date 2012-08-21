@@ -119,10 +119,10 @@
     <Compile Include="IPlugin.cs" />
     <Compile Include="SDKModel\VO\ColumnVO.cs" />
     <Compile Include="SDKModel\VO\PanelItemVO.cs" />
+    <Compile Include="SDKView\IFormMediator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SDKController\" />
-    <Folder Include="SDKView\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

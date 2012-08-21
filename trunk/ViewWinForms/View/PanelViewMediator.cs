@@ -52,7 +52,7 @@ namespace ViewWinForms.View
             {
                 m_CurrentProxy.Objects.Clear();
                 m_CurrentProxy.EnumObjects(m_Path);
-                m_CurrentProxy.Sort();
+                m_CurrentProxy.Sort(0);
                 Panel.SetColumns(m_CurrentProxy.GetColumns());
                 Panel.AddItems(m_CurrentProxy.Objects);
             }
@@ -122,11 +122,17 @@ namespace ViewWinForms.View
 
         void LV_ColumnClick(object sender, ColumnClickEventArgs e)
         {
+            Panel.LV.BeginUpdate();
             Panel.SaveSelected();
-            m_CurrentProxy.ChangeSort(e.Column);
-            m_CurrentProxy.Sort();
-            Panel.RestoreSelected();
-            Panel.Refresh();
+            try
+            {
+                m_CurrentProxy.Sort(e.Column);
+            }
+            finally
+            {
+                Panel.RestoreSelected();
+                Panel.LV.EndUpdate();
+            }
         }
     }
 }

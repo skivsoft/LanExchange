@@ -48,6 +48,95 @@ namespace LanExchange.OSLayer
             public uint sv101_type;
             [MarshalAs(UnmanagedType.LPWStr)]
             public string sv101_comment;
+
+            /// <summary>
+            /// Returns name and version of operation system.
+            /// </summary>
+            /// <returns></returns>
+            public string Version()
+            {
+                //return String.Format("{0}.{1}.{2}.{3}", platform_id, ver_major, ver_minor, type);
+                bool bServer = IsServer();
+                switch ((SV_101_PLATFORM)sv101_platform_id)
+                {
+                    case SV_101_PLATFORM.PLATFORM_ID_DOS:
+                        return String.Format("MS-DOS {0}.{1}", sv101_version_major, sv101_version_minor);
+                    case SV_101_PLATFORM.PLATFORM_ID_OS2:
+                        switch (sv101_version_major)
+                        {
+                            case 3: return "Windows NT 3.51";
+                            case 4:
+                                switch (sv101_version_minor)
+                                {
+                                    case 0: return "Windows 95";
+                                    case 10: return "Windows 98";
+                                    case 90: return "Windows ME";
+                                    default:
+                                        return "Windows 9x";
+                                }
+                            default:
+                                return String.Format("Windows NT {0}.{1}", sv101_version_major, sv101_version_minor);
+                        }
+                    case SV_101_PLATFORM.PLATFORM_ID_NT:
+                        if ((sv101_type & (uint)SV_101_TYPES.SV_TYPE_XENIX_SERVER) != 0)
+                            return String.Format("Xenix Server {0}.{1}", sv101_version_major, sv101_version_minor);
+                        else
+                            switch (sv101_version_major)
+                            {
+                                case 3: return "Windows NT 3.51";
+                                case 4:
+                                    switch (sv101_version_minor)
+                                    {
+                                        case 0: return "Windows 95";
+                                        case 10: return "Windows 98";
+                                        case 90: return "Windows ME";
+                                        default:
+                                            return String.Format("Windows NT {0}.{1}", sv101_version_major, sv101_version_minor);
+                                    }
+                                case 5:
+                                    switch (sv101_version_minor)
+                                    {
+                                        case 0: return bServer ? "Wubdiws Server 2000" : "Windows 2000";
+                                        case 1: return "Windows XP";
+                                        case 2: return "Windows Server 2003 R2";
+                                        default:
+                                            return String.Format("Windows NT {0}.{1}", sv101_version_major, sv101_version_minor);
+                                    }
+                                case 6:
+                                    switch (sv101_version_minor)
+                                    {
+                                        case 0: return bServer ? "Windows Server 2008" : "Windows Vista";
+                                        case 1: return bServer ? "Windows Server 2008 R2" : "Windows 7";
+                                        case 2: return bServer ? "Windows 8 Server" : "Windows 8";
+                                        default:
+                                            return String.Format("Windows NT {0}.{1}", sv101_version_major, sv101_version_minor);
+                                    }
+                                default:
+                                    return String.Format("Windows NT {0}.{1}", sv101_version_major, sv101_version_minor);
+                            }
+                    case SV_101_PLATFORM.PLATFORM_ID_OSF:
+                        return String.Format("OSF {0}.{1}", sv101_version_major, sv101_version_minor);
+                    case SV_101_PLATFORM.PLATFORM_ID_VMS:
+                        return String.Format("VMS {0}.{1}", sv101_version_major, sv101_version_minor);
+                    default:
+                        return String.Format("{0} {1}.{2}", sv101_platform_id, sv101_version_major, sv101_version_minor);
+                }
+            }
+
+            public bool IsDomainController()
+            {
+                uint ctrl = (uint)SV_101_TYPES.SV_TYPE_DOMAIN_CTRL | (uint)SV_101_TYPES.SV_TYPE_DOMAIN_BAKCTRL;
+                return (sv101_type & ctrl) != 0;
+            }
+
+            public bool IsServer()
+            {
+                uint srv    = (uint)SV_101_TYPES.SV_TYPE_SERVER;
+                uint ctrl   = (uint)SV_101_TYPES.SV_TYPE_DOMAIN_CTRL | (uint)SV_101_TYPES.SV_TYPE_DOMAIN_BAKCTRL;
+                uint noctrl = (uint)SV_101_TYPES.SV_TYPE_SERVER_NT;
+                return (sv101_type & srv) != 0 && (sv101_type & (ctrl | noctrl)) != 0;
+            }
+
         }
 
         /// <summary>

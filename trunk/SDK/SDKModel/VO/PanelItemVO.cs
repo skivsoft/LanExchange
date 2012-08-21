@@ -40,7 +40,17 @@ namespace LanExchange.SDK.SDKModel.VO
             if (ColIndex == 0)
                 return m_Name;
             else
-                return SubItems[ColIndex - 1];
+                if (ColIndex - 1 < SubItems.Length)
+                    return SubItems[ColIndex - 1];
+                else
+                    return String.Empty;
+        }
+
+        public virtual int CompareTo(PanelItemVO obj, int Index)
+        {
+            string S1 = this.GetText(Index);
+            string S2 = obj.GetText(Index);
+            return String.Compare(S1, S2, StringComparison.CurrentCultureIgnoreCase);
         }
     }
 
@@ -50,10 +60,22 @@ namespace LanExchange.SDK.SDKModel.VO
         Descending
     }
 
+    public struct PanelItemSortOrder
+    {
+        public int Index;
+        public PanelItemSortDirection Direction;
+
+        public PanelItemSortOrder(int index, PanelItemSortDirection direction)
+        {
+            Index = index;
+            Direction = direction;
+        }
+    }
+
+
     public class PanelItemComparer : IComparer<PanelItemVO>
     {
-        private int m_SortIndex = 0;
-        private PanelItemSortDirection m_SortDirection = PanelItemSortDirection.Ascending;
+        private List<PanelItemSortOrder> m_SortOrders = new List<PanelItemSortOrder>();
 
         public int Compare(PanelItemVO Item1, PanelItemVO Item2)
         {
@@ -68,32 +90,24 @@ namespace LanExchange.SDK.SDKModel.VO
                     Result = +1;
                 else
                 {
-                    string S1, S2;
-                    if (SortDirection == PanelItemSortDirection.Ascending)
+                    Result = 0;
+                    int index = 0;
+                    while (index < m_SortOrders.Count && Result == 0)
                     {
-                        S1 = Item1.GetText(SortIndex);
-                        S2 = Item2.GetText(SortIndex);
+                        PanelItemSortOrder order = m_SortOrders[index];
+                        if (order.Direction == PanelItemSortDirection.Ascending)
+                            Result = Item1.CompareTo(Item2, order.Index);
+                        else
+                            Result = Item2.CompareTo(Item1, order.Index);
+                        index++;
                     }
-                    else
-                    {
-                        S1 = Item2.GetText(SortIndex);
-                        S2 = Item1.GetText(SortIndex);
-                    }
-                    Result = S1.ToUpper().CompareTo(S2.ToUpper());
                 }
             return Result;
         }
 
-        public int SortIndex
+        public List<PanelItemSortOrder> SortOrders
         {
-            get { return m_SortIndex; }
-            set { m_SortIndex = value; }
-        }
-
-        public PanelItemSortDirection SortDirection
-        {
-            get { return m_SortDirection; }
-            set { m_SortDirection = value; }
+            get { return m_SortOrders; }
         }
     }
 

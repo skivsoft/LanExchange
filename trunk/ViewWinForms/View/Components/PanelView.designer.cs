@@ -33,7 +33,7 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.propertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.LV = new ListViewEx();
+            this.LV = new ViewWinForms.View.Components.ListViewEx();
             this.contextMenu.SuspendLayout();
             this.SuspendLayout();
             // 

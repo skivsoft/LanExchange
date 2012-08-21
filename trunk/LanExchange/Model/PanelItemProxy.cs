@@ -11,8 +11,7 @@ namespace LanExchange.Model
 {
     public abstract class PanelItemProxy : Proxy, IPanelItemProxy, IProxy
     {
-        private int m_SortIndex = 0;
-        private PanelItemSortDirection m_SortDirection = PanelItemSortDirection.Ascending;
+        private PanelItemSortOrder m_LastSortOrder = new PanelItemSortOrder(-1, PanelItemSortDirection.Ascending);
 
         public PanelItemProxy(string name)
             : base(name, new List<PanelItemVO>())
@@ -31,26 +30,27 @@ namespace LanExchange.Model
 
         public abstract void EnumObjects(string path);
 
-        public void Sort()
+        public void Sort(int ColIndex)
         {
+            PanelItemSortOrder NewWorldOrder = m_LastSortOrder;
             PanelItemComparer comparer = new PanelItemComparer();
-            comparer.SortIndex = m_SortIndex;
-            comparer.SortDirection = m_SortDirection;
-            ((List<PanelItemVO>)Data).Sort(comparer);
-        }
-
-        public void ChangeSort(int ColIndex)
-        {
-            if (m_SortIndex == ColIndex)
-                if (m_SortDirection == PanelItemSortDirection.Ascending)
-                    m_SortDirection = PanelItemSortDirection.Descending;
+            if (ColIndex == m_LastSortOrder.Index)
+            {
+                if (m_LastSortOrder.Direction == PanelItemSortDirection.Ascending)
+                    m_LastSortOrder.Direction = PanelItemSortDirection.Descending;
                 else
-                    m_SortDirection = PanelItemSortDirection.Ascending;
+                    m_LastSortOrder.Direction = PanelItemSortDirection.Ascending;
+                comparer.SortOrders.Add(m_LastSortOrder);
+            }
             else
             {
-                m_SortIndex = ColIndex;
-                m_SortDirection = PanelItemSortDirection.Ascending;
+                PanelItemSortOrder NewSortOrder = new PanelItemSortOrder(ColIndex, PanelItemSortDirection.Ascending);
+                comparer.SortOrders.Add(NewSortOrder);
+                if (m_LastSortOrder.Index != -1)
+                    comparer.SortOrders.Add(m_LastSortOrder);
+                m_LastSortOrder = NewSortOrder;
             }
+            ((List<PanelItemVO>)Data).Sort(comparer);
         }
 
         public virtual ColumnVO[] GetColumns()
