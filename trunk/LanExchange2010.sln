@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.SDK", "SDK\LanE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelNetwork", "ModelNetwork\ModelNetwork.csproj", "{5908147B-3C07-4F3D-9452-CE4B8254B039}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelNorthwind", "ModelNorthwind\ModelNorthwind.csproj", "{47ABC554-29C5-4801-B844-DD34CBEF7BA8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,12 @@ Global
 		{5908147B-3C07-4F3D-9452-CE4B8254B039}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5908147B-3C07-4F3D-9452-CE4B8254B039}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5908147B-3C07-4F3D-9452-CE4B8254B039}.Release|x86.ActiveCfg = Release|Any CPU
+		{47ABC554-29C5-4801-B844-DD34CBEF7BA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47ABC554-29C5-4801-B844-DD34CBEF7BA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47ABC554-29C5-4801-B844-DD34CBEF7BA8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{47ABC554-29C5-4801-B844-DD34CBEF7BA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47ABC554-29C5-4801-B844-DD34CBEF7BA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47ABC554-29C5-4801-B844-DD34CBEF7BA8}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

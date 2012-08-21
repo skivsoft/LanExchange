@@ -12,7 +12,7 @@ namespace LanExchange.SDK.SDKModel
         int NumObjects { get; }
 
         void EnumObjects(string path);
-        void Sort(int ColIndex);
+        void Sort(IComparer<PanelItemVO> comparer);
 
         ColumnVO[] GetColumns();
     }

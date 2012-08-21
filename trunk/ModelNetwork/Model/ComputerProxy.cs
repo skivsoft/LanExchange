@@ -34,7 +34,7 @@ namespace ModelNetwork.Model
             return new ColumnVO[] { 
                 new ColumnVO(Resources.ColumnNetworkName, 130),
                 new ColumnVO(Resources.ColumnComment, 250),
-                new ColumnVO(Resources.ColumnOSVersion, 100)
+                new ColumnVO(Resources.ColumnOSVersion, 130)
             };
         }
 

@@ -30,8 +30,8 @@ namespace ViewWinForms.View.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.statusView1 = new StatusView();
-            this.panelView1 = new PanelView();
+            this.statusView1 = new ViewWinForms.View.Components.StatusView();
+            this.panelView1 = new ViewWinForms.View.Components.PanelView();
             this.SuspendLayout();
             // 
             // statusView1
@@ -40,7 +40,7 @@ namespace ViewWinForms.View.Forms
             this.statusView1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.statusView1.Location = new System.Drawing.Point(0, 501);
             this.statusView1.Name = "statusView1";
-            this.statusView1.Size = new System.Drawing.Size(504, 22);
+            this.statusView1.Size = new System.Drawing.Size(438, 22);
             this.statusView1.TabIndex = 1;
             // 
             // panelView1
@@ -48,14 +48,14 @@ namespace ViewWinForms.View.Forms
             this.panelView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelView1.Location = new System.Drawing.Point(0, 0);
             this.panelView1.Name = "panelView1";
-            this.panelView1.Size = new System.Drawing.Size(504, 501);
+            this.panelView1.Size = new System.Drawing.Size(438, 501);
             this.panelView1.TabIndex = 0;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(504, 523);
+            this.ClientSize = new System.Drawing.Size(438, 523);
             this.Controls.Add(this.panelView1);
             this.Controls.Add(this.statusView1);
             this.Name = "MainForm";
