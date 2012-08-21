@@ -1,52 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Text;
-using LanExchange.Model.VO;
-using LanExchange.OSLayer;
 using System.Runtime.InteropServices;
 using LanExchange.SDK.SDKModel.VO;
+using ModelNetwork.Properties;
+using LanExchange.SDK.SDKModel;
+using ModelNetwork.OSLayer;
 
-namespace LanExchange.Model
+namespace ModelNetwork.Model
 {
-    public class ComputerProxy : PanelItemProxy
+    public class DomainProxy : PanelItemProxy
     {
-        public new const string NAME = "ComputerProxy";
+        public new const string NAME = "DomainProxy";
 
-        public ComputerProxy()
+        public DomainProxy()
             : base(NAME)
         {
 
         }
 
-        public override int NumObjects
-        {
-            get
-            {
-                return base.NumObjects - 1;
-            }
-        }
-
         public override ColumnVO[] GetColumns()
         {
             return new ColumnVO[] { 
-                new ColumnVO("Сетевое имя", 130),
-                new ColumnVO("Описание", 250),
-                new ColumnVO("Версия ОС", 100)
+                new ColumnVO(Resources.ColumnDomainName, 130)
             };
         }
 
-        public override void EnumObjects(string Domain)
+        public override void EnumObjects(string path)
         {
             NetApi32.SERVER_INFO_101 si;
-            si.sv101_name = Domain;
-            Objects.Add(new PanelItemVO("..", null));
             IntPtr pInfo = IntPtr.Zero;
             int entriesread = 0;
             int totalentries = 0;
             try
             {
-                NetApi32.NERR err = NetApi32.NetServerEnum(null, 101, out pInfo, -1, ref entriesread, ref totalentries, NetApi32.SV_101_TYPES.SV_TYPE_ALL, Domain, 0);
+                NetApi32.NERR err = NetApi32.NetServerEnum(null, 101, out pInfo, -1, ref entriesread, ref totalentries, NetApi32.SV_101_TYPES.SV_TYPE_DOMAIN_ENUM, null, 0);
                 if ((err == NetApi32.NERR.NERR_Success || err == NetApi32.NERR.ERROR_MORE_DATA) && pInfo != IntPtr.Zero)
                 {
                     int ptr = pInfo.ToInt32();
@@ -57,7 +45,7 @@ namespace LanExchange.Model
                         //bool bServer = (si.sv101_type & 0x8018) != 0;
                         //if (Program.AdminMode || !bServer)
                         //Result.Add(new TComputerItem(si.sv101_name, si.sv101_comment, si.sv101_platform_id, si.sv101_version_major, si.sv101_version_minor, si.sv101_type));
-                        Objects.Add(new ComputerVO(@"\\" + si.sv101_name, si));
+                        Objects.Add(new PanelItemVO(si.sv101_name, si));
                         ptr += Marshal.SizeOf(si);
                     }
                 }

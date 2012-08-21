@@ -6,6 +6,7 @@ using PureInterfaces;
 using LanExchange.SDK;
 using ViewWinForms.View.Components;
 using LanExchange.SDK.SDKModel;
+using ViewWinForms.Properties;
 
 namespace ViewWinForms.View
 {
@@ -48,7 +49,7 @@ namespace ViewWinForms.View
             {
                 case Globals.ITEM_COUNT_CHANGED:
                     int Value = (int)note.Body;
-                    Status.lItemsCount.Text = String.Format("Показано элементов: {0}", Value);
+                    Status.lItemsCount.Text = String.Format(Resources.ItemsShowed, Value);
                     break;
             }
         }

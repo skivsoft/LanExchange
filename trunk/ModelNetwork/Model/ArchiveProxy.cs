@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using LanExchange.Model.VO;
 using LanExchange.SDK.SDKModel.VO;
+using ModelNetwork.Properties;
+using LanExchange.SDK.SDKModel;
 
-namespace LanExchange.Model
+namespace ModelNetwork.Model
 {
     public class ArchiveProxy : PanelItemProxy
     {
@@ -27,10 +28,10 @@ namespace LanExchange.Model
         public override ColumnVO[] GetColumns()
         {
             return new ColumnVO[] { 
-                new ColumnVO("Имя", 100),
-                new ColumnVO("Дата изменения", 100),
-                new ColumnVO("Тип", 100),
-                new ColumnVO("Размер", 100)
+                new ColumnVO(Resources.ColumnFileName, 100),
+                new ColumnVO(Resources.ColumnDateModified, 100),
+                new ColumnVO(Resources.ColumnType, 100),
+                new ColumnVO(Resources.ColumnSize, 100)
             };
         }
 

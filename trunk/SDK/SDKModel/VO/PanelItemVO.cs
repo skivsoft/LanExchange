@@ -70,6 +70,11 @@ namespace LanExchange.SDK.SDKModel.VO
             Index = index;
             Direction = direction;
         }
+
+        public void SwitchDirection()
+        {
+            Direction = Direction == PanelItemSortDirection.Ascending ? PanelItemSortDirection.Descending : PanelItemSortDirection.Ascending;
+        }
     }
 
 

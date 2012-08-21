@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using LanExchange.SDK.SDKModel.VO;
-using LanExchange.OSLayer;
+using ModelNetwork.OSLayer;
 
-namespace LanExchange.Model.VO
+namespace ModelNetwork.Model.VO
 {
     public class ComputerVO : PanelItemVO
     {

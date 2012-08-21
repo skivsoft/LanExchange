@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ViewWinForms.View.Properties {
+namespace ViewWinForms.Properties {
     using System;
     
     
@@ -67,6 +67,15 @@ namespace ViewWinForms.View.Properties {
             get {
                 object obj = ResourceManager.GetObject("CompOff", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Items showed: {0}.
+        /// </summary>
+        internal static string ItemsShowed {
+            get {
+                return ResourceManager.GetString("ItemsShowed", resourceCulture);
             }
         }
         

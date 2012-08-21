@@ -70,7 +70,7 @@
             // 
             // lCompName
             // 
-            this.lCompName.Image = global::ViewWinForms.View.Properties.Resources.CompOff;
+            this.lCompName.Image = global::ViewWinForms.Properties.Resources.CompOff;
             this.lCompName.Name = "lCompName";
             this.lCompName.Size = new System.Drawing.Size(35, 17);
             this.lCompName.Text = "    ";
@@ -87,7 +87,7 @@
             // 
             // lUserName
             // 
-            this.lUserName.Image = global::ViewWinForms.View.Properties.Resources.UserName;
+            this.lUserName.Image = global::ViewWinForms.Properties.Resources.UserName;
             this.lUserName.Name = "lUserName";
             this.lUserName.Size = new System.Drawing.Size(35, 17);
             this.lUserName.Text = "    ";

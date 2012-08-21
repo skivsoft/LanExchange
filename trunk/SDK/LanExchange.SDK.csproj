@@ -117,6 +117,7 @@
     <Compile Include="SDKModel\ICurrentUserProxy.cs" />
     <Compile Include="SDKModel\IPanelItemProxy.cs" />
     <Compile Include="IPlugin.cs" />
+    <Compile Include="SDKModel\PanelItemProxy.cs" />
     <Compile Include="SDKModel\VO\ColumnVO.cs" />
     <Compile Include="SDKModel\VO\PanelItemVO.cs" />
     <Compile Include="SDKView\IFormMediator.cs" />

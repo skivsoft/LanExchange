@@ -95,18 +95,7 @@
   <ItemGroup>
     <Compile Include="ApplicationFacade.cs" />
     <Compile Include="Controller\StartupCommand.cs" />
-    <Compile Include="Model\ArchiveProxy.cs" />
-    <Compile Include="Model\ComputerProxy.cs" />
     <Compile Include="Model\CurrentUserProxy.cs" />
-    <Compile Include="Model\DomanProxy.cs" />
-    <Compile Include="Model\FileProxy.cs" />
-    <Compile Include="Model\PanelItemProxy.cs" />
-    <Compile Include="Model\ResourceProxy.cs" />
-    <Compile Include="Model\VO\ComputerVO.cs" />
-    <Compile Include="OSLayer\Detect.cs" />
-    <Compile Include="OSLayer\Kernel32.cs" />
-    <Compile Include="OSLayer\Tools.cs" />
-    <Compile Include="OSLayer\NetApi32.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="app.config" />
@@ -145,6 +134,10 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ModelNetwork\ModelNetwork.csproj">
+      <Project>{5908147B-3C07-4F3D-9452-CE4B8254B039}</Project>
+      <Name>ModelNetwork</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SDK\LanExchange.SDK.csproj">
       <Project>{A1482CF1-5566-4636-8590-30ED9CF3D4D9}</Project>
       <Name>LanExchange.SDK</Name>

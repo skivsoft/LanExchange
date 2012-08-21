@@ -117,14 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="CompOff" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CompOff.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ColumnComment" xml:space="preserve">
+    <value>Comment</value>
   </data>
-  <data name="ItemsShowed" xml:space="preserve">
-    <value>Items showed: {0}</value>
+  <data name="ColumnDateModified" xml:space="preserve">
+    <value>Modification Date</value>
   </data>
-  <data name="UserName" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\UserName.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ColumnDomainName" xml:space="preserve">
+    <value>Domain/Group</value>
+  </data>
+  <data name="ColumnFileName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="ColumnNetworkName" xml:space="preserve">
+    <value>Network name</value>
+  </data>
+  <data name="ColumnOSVersion" xml:space="preserve">
+    <value>OS Version</value>
+  </data>
+  <data name="ColumnResourceName" xml:space="preserve">
+    <value>Shared resource</value>
+  </data>
+  <data name="ColumnSize" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="ColumnType" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="TypeFile" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="TypeFolder" xml:space="preserve">
+    <value>Folder</value>
   </data>
 </root>

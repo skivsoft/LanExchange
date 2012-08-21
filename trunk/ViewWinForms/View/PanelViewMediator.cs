@@ -17,7 +17,7 @@ namespace ViewWinForms.View
         public new const string NAME = "PanelViewMediator";
 
         private IPanelItemProxy m_CurrentProxy;
-        private string m_CurrentProxyName = "DomainProxy";
+        private string m_CurrentProxyName;
         private string m_Path;
 
 		public PanelViewMediator(PanelView PV)
@@ -40,21 +40,33 @@ namespace ViewWinForms.View
             ICurrentUserProxy Obj = (ICurrentUserProxy)Facade.RetrieveProxy("CurrentUserProxy");
             if (Obj != null)
             {
-                m_Path = Obj.DomainName;
-                UpdateItems();
+                UpdateItems("DomainProxy", Obj.DomainName);
             }
         }
 
-        private void UpdateItems()
+        private void UpdateItems(string NewProxyName, string NewPath)
         {
-            m_CurrentProxy = (IPanelItemProxy)Facade.RetrieveProxy(m_CurrentProxyName);
-            if (m_CurrentProxy != null)
+            IPanelItemProxy Proxy = (IPanelItemProxy)Facade.RetrieveProxy(NewProxyName);
+            if (Proxy != null)
             {
-                m_CurrentProxy.Objects.Clear();
-                m_CurrentProxy.EnumObjects(m_Path);
-                m_CurrentProxy.Sort(0);
-                Panel.SetColumns(m_CurrentProxy.GetColumns());
-                Panel.AddItems(m_CurrentProxy.Objects);
+                // set variables
+                m_CurrentProxy = Proxy;
+                m_CurrentProxyName = NewProxyName;
+                m_Path = NewPath;
+                // update items
+                Panel.LV.BeginUpdate();
+                try
+                {
+                    m_CurrentProxy.Objects.Clear();
+                    m_CurrentProxy.EnumObjects(m_Path);
+                    m_CurrentProxy.Sort(0);
+                    Panel.SetColumns(m_CurrentProxy.GetColumns());
+                    Panel.AddItems(m_CurrentProxy.Objects);
+                }
+                finally
+                {
+                    Panel.LV.EndUpdate();
+                }
             }
         }
 
@@ -71,22 +83,16 @@ namespace ViewWinForms.View
             switch(m_CurrentProxyName)
             {
                 case "DomainProxy":
-                    m_CurrentProxyName = "ComputerProxy";
-                    m_Path = Current.Name;
-                    UpdateItems();
+                    UpdateItems("ComputerProxy", Current.Name);
                     break;
                 case "ComputerProxy":
-                    m_CurrentProxyName = "ResourceProxy";
-                    m_Path = Current.Name;
-                    UpdateItems();
+                    UpdateItems("ResourceProxy", Current.Name);
                     break;
                 case "ResourceProxy":
                     PanelItemVO First = Panel.FirstPanelItem;
-                    if (First != null)
+                    if (First != null && First.SubItems.Length > 1)
                     {
-                        m_CurrentProxyName = "FileProxy";
-                        m_Path = Path.Combine(First.SubItems[1], Current.Name);
-                        UpdateItems();
+                        UpdateItems("FileProxy", Path.Combine(First.SubItems[1], Current.Name));
                     }
                     break;
             }
@@ -97,19 +103,14 @@ namespace ViewWinForms.View
             switch(m_CurrentProxyName)
             {
                 case "ComputerProxy":
-                    m_CurrentProxyName = "DomainProxy";
                     m_Path = "";
-                    UpdateItems();
+                    UpdateItems("DomainProxy", "");
                     break;
                 case "ResourceProxy":
-                    m_CurrentProxyName = "ComputerProxy";
-                    m_Path = "FERMAK";
-                    UpdateItems();
+                    UpdateItems("ComputerProxy", "FERMAK");
                     break;
                 case "FileProxy":
-                    m_CurrentProxyName = "ResourceProxy";
-                    m_Path = "MIKHAILYUK-KA";
-                    UpdateItems();
+                    UpdateItems("ResourceProxy", "MIKHAILYUK-KA");
                     break;
             }
             //SendNotification(ApplicationFacade.LEVEL_UP, this);

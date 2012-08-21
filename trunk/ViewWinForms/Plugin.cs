@@ -9,7 +9,7 @@ using ViewWinForms.View;
 
 namespace ViewWinForms
 {
-    [Plugin(Description="Default user interface of LanExchange", Version="1.0", Author="Skiv")]
+    [Plugin(Description="Default user interface", Version="1.0", Author="Skiv")]
     public class ViewWinFormsPlugin : IPlugin
     {
         public IFacade AppFacade = null;

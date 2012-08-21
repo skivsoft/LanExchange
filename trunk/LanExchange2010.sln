@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange", "LanExchange\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.SDK", "SDK\LanExchange.SDK.csproj", "{A1482CF1-5566-4636-8590-30ED9CF3D4D9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelNetwork", "ModelNetwork\ModelNetwork.csproj", "{5908147B-3C07-4F3D-9452-CE4B8254B039}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,12 @@ Global
 		{A1482CF1-5566-4636-8590-30ED9CF3D4D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1482CF1-5566-4636-8590-30ED9CF3D4D9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A1482CF1-5566-4636-8590-30ED9CF3D4D9}.Release|x86.ActiveCfg = Release|Any CPU
+		{5908147B-3C07-4F3D-9452-CE4B8254B039}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5908147B-3C07-4F3D-9452-CE4B8254B039}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5908147B-3C07-4F3D-9452-CE4B8254B039}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5908147B-3C07-4F3D-9452-CE4B8254B039}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5908147B-3C07-4F3D-9452-CE4B8254B039}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5908147B-3C07-4F3D-9452-CE4B8254B039}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
