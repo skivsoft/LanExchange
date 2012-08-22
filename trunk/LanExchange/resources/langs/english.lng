@@ -1,0 +1,17 @@
+﻿[FILE]
+AUTHOR=Skiv (skivsoft@gmail.com)
+Name=English
+
+[MSG]
+ColumnComment=Comment
+ColumnDateModified=Modification date
+ColumnDomainName=Domain/Group
+ColumnFileName=Name
+ColumnNetworkName=Network name
+ColumnOSVersion=OS Version
+ColumnShareName=Shared resource
+ColumnSize=Size
+ColumnType=Type
+TypeFile=File
+TypeFolder=Folder
+ItemsShowed=Items showed: {0}

@@ -1,0 +1,17 @@
+﻿[FILE]
+AUTHOR=Skiv (skivsoft@gmail.com)
+Name=Русский
+
+[MSG]
+ColumnComment=Описание
+ColumnDateModified=Дата изменения
+ColumnDomainName=Домен/Группа
+ColumnFileName=Имя
+ColumnNetworkName=Сетевое имя
+ColumnOSVersion=Версия ОС
+ColumnShareName=Общий ресурс
+ColumnSize=Размер
+ColumnType=Тип
+TypeFile=Файл
+TypeFolder=Папка с файлами
+ItemsShowed=Показано элементов: {0}

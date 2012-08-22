@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using LanExchange.SDK.SDKModel.VO;
-using ModelNetwork.Properties;
 using LanExchange.SDK.SDKModel;
 using ModelNetwork.OSLayer;
+using LanExchange.SDK;
 
 namespace ModelNetwork.Model
 {
-    public class ResourceProxy : PanelItemProxy
+    public class ShareProxy : PanelItemProxy
     {
-        public new const string NAME = "ResourceProxy";
+        public new const string NAME = "ShareProxy";
 
-        public ResourceProxy()
+        public ShareProxy()
             : base(NAME)
         {
 
@@ -30,9 +30,9 @@ namespace ModelNetwork.Model
         public override ColumnVO[] GetColumns()
         {
             return new ColumnVO[] { 
-                new ColumnVO(Resources.ColumnResourceName, 130),
+                new ColumnVO(Globals.T("ColumnResourceName"), 130),
                 new ColumnVO("*:", 20),
-                new ColumnVO(Resources.ColumnComment, 250)
+                new ColumnVO(Globals.T("ColumnComment"), 250)
             };
         }
 

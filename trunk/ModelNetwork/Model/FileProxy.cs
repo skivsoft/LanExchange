@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using LanExchange.SDK.SDKModel.VO;
-using ModelNetwork.Properties;
 using LanExchange.SDK.SDKModel;
+using LanExchange.SDK;
 
 namespace ModelNetwork.Model
 {
@@ -29,10 +29,10 @@ namespace ModelNetwork.Model
         public override ColumnVO[] GetColumns()
         {
             return new ColumnVO[] { 
-                new ColumnVO(Resources.ColumnFileName, 100),
-                new ColumnVO(Resources.ColumnDateModified, 100),
-                new ColumnVO(Resources.ColumnType, 100),
-                new ColumnVO(Resources.ColumnSize, 100)
+                new ColumnVO(Globals.T("ColumnFileName"), 100),
+                new ColumnVO(Globals.T("ColumnDateModified"), 100),
+                new ColumnVO(Globals.T("ColumnType"), 100),
+                new ColumnVO(Globals.T("ColumnSize"), 100)
             };
         }
 
@@ -43,7 +43,7 @@ namespace ModelNetwork.Model
             FileSystemInfo[] Files = Dir.GetFileSystemInfos();
             foreach (FileSystemInfo Item in Files)
             {
-                string sType = (Item.Attributes & FileAttributes.Directory) != 0 ? Resources.TypeFolder : Resources.TypeFile;
+                string sType = (Item.Attributes & FileAttributes.Directory) != 0 ? Globals.T("TypeFolder") : Globals.T("TypeFile");
                 Objects.Add(new PanelItemVO(Item.Name, Item));
             }
         }

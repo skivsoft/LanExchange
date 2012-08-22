@@ -6,7 +6,6 @@ using PureInterfaces;
 using LanExchange.SDK;
 using ViewWinForms.View.Components;
 using LanExchange.SDK.SDKModel;
-using ViewWinForms.Properties;
 
 namespace ViewWinForms.View
 {
@@ -17,12 +16,18 @@ namespace ViewWinForms.View
 		public StatusViewMediator(StatusView Status)
 			: base(NAME, Status)
 		{
-
         }
 
         public override void OnRegister()
         {
             base.OnRegister();
+
+            if (Globals.Resources != null)
+            {
+                Status.lCompName.Image = Globals.Resources.GetImage("current_computer");
+                Status.lUserName.Image = Globals.Resources.GetImage("current_user");
+            }
+            
             ICurrentUserProxy Obj = (ICurrentUserProxy)Facade.RetrieveProxy("CurrentUserProxy");
             if (Obj != null)
             {
@@ -49,7 +54,7 @@ namespace ViewWinForms.View
             {
                 case Globals.ITEM_COUNT_CHANGED:
                     int Value = (int)note.Body;
-                    Status.lItemsCount.Text = String.Format(Resources.ItemsShowed, Value);
+                    Status.lItemsCount.Text = String.Format(Globals.T("ItemsShowed"), Value);
                     break;
             }
         }

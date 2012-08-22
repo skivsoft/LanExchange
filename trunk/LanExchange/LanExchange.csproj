@@ -95,10 +95,21 @@
   <ItemGroup>
     <Compile Include="ApplicationFacade.cs" />
     <Compile Include="Controller\StartupCommand.cs" />
+    <Compile Include="Model\AboutProxy.cs" />
+    <Compile Include="Model\Components\IniFileElement.cs" />
+    <Compile Include="Model\Components\IniFileLight.cs" />
+    <Compile Include="Model\Components\IniFiles.cs" />
+    <Compile Include="Model\PluginProxy.cs" />
+    <Compile Include="Model\MenuProxy.cs" />
+    <Compile Include="Model\ConfigProxy.cs" />
+    <Compile Include="Model\ResourceProxy.cs" />
     <Compile Include="Model\CurrentUserProxy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="app.config" />
+    <None Include="LanExchange.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -108,6 +119,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="resources\langs\english.lng">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="resources\langs\russian.lng">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -127,7 +144,14 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="resources\images\current_computer.png" />
+    <None Include="resources\images\current_user.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Content Include="LanExchange.ico" />
+    <Content Include="plugins\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -138,10 +162,6 @@
       <Project>{5908147B-3C07-4F3D-9452-CE4B8254B039}</Project>
       <Name>ModelNetwork</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ModelNorthwind\ModelNorthwind.csproj">
-      <Project>{47ABC554-29C5-4801-B844-DD34CBEF7BA8}</Project>
-      <Name>ModelNorthwind</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SDK\LanExchange.SDK.csproj">
       <Project>{A1482CF1-5566-4636-8590-30ED9CF3D4D9}</Project>
       <Name>LanExchange.SDK</Name>
@@ -151,6 +171,7 @@
       <Name>ViewWinForms</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>rem md $(TargetDir)lib

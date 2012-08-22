@@ -9,18 +9,16 @@ using ViewWinForms.View;
 
 namespace ViewWinForms
 {
-    [Plugin(Description="Default user interface", Version="1.0", Author="Skiv")]
+    [Plugin(Description="Default user interface based on WinForms", Version="1.0", Author="Skiv")]
     public class ViewWinFormsPlugin : IPlugin
     {
-        public IFacade AppFacade = null;
-
         public void Initialize(IFacade facade)
         {
-            AppFacade = facade;
+            Globals.Facade = facade;
 
-            if (AppFacade != null)
+            if (facade != null)
             {
-                AppFacade.RegisterMediator(new ApplicationMediator());
+                facade.RegisterMediator(new ApplicationMediator());
             }
         }
     }

@@ -10,18 +10,17 @@ namespace ModelNetwork
     [Plugin(Description = "Local network computers and shared folders browser", Version = "1.0", Author = "Skiv")]
     public class ModelNetworkPlugin : IPlugin
     {
-        public IFacade AppFacade = null;
 
         public void Initialize(IFacade facade)
         {
-            AppFacade = facade;
+            Globals.Facade = facade;
 
-            if (AppFacade != null)
+            if (facade != null)
             {
                 // network browser
-                AppFacade.RegisterProxy(new DomainProxy());
-                AppFacade.RegisterProxy(new ComputerProxy());
-                AppFacade.RegisterProxy(new ResourceProxy());
+                facade.RegisterProxy(new DomainProxy());
+                facade.RegisterProxy(new ComputerProxy());
+                facade.RegisterProxy(new ShareProxy());
                 //Facade.RegisterProxy(new FileProxy());
             }
         }

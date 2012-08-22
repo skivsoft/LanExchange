@@ -5,6 +5,7 @@ using PurePatterns;
 using LanExchange.Controller;
 using PureInterfaces;
 using LanExchange.SDK;
+using LanExchange.Model;
 
 namespace LanExchange
 {
@@ -57,6 +58,18 @@ namespace LanExchange
             RegisterCommand(Globals.CMD_STARTUP, typeof(StartupCommand));
         }
 
+        protected override void InitializeModel()
+        {
+            base.InitializeModel();
+            // base models
+            RegisterProxy(new ConfigProxy());
+            RegisterProxy(new ResourceProxy());
+            RegisterProxy(new PluginProxy());
+            // LanExchange models
+            RegisterProxy(new AboutProxy());
+            RegisterProxy(new CurrentUserProxy());
+            RegisterProxy(new MenuProxy());
+        }
         #endregion
 
     }

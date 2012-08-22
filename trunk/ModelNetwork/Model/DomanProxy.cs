@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using LanExchange.SDK.SDKModel.VO;
-using ModelNetwork.Properties;
 using LanExchange.SDK.SDKModel;
 using ModelNetwork.OSLayer;
+using LanExchange.SDK;
 
 namespace ModelNetwork.Model
 {
@@ -22,7 +22,7 @@ namespace ModelNetwork.Model
         public override ColumnVO[] GetColumns()
         {
             return new ColumnVO[] { 
-                new ColumnVO(Resources.ColumnDomainName, 130)
+                new ColumnVO(Globals.T("ColumnDomainName"), 130)
             };
         }
 

@@ -5,6 +5,8 @@ using PureInterfaces;
 using PurePatterns;
 using LanExchange.Model;
 using LanExchange.SDK;
+using LanExchange.SDK.SDKView;
+using LanExchange.SDK.SDKModel;
 
 namespace LanExchange.Controller
 {
@@ -13,20 +15,32 @@ namespace LanExchange.Controller
 
         public override void Execute(INotification notification)
         {
-            Facade.RegisterProxy(new CurrentUserProxy());
-            // AD browser
-            //Facade.RegisterProxy(new UserProxy());
-            // Person browser
-            //Facade.RegisterProxy(new PersonProxy());
+            // set current language
+            IResourceProxy resource = (IResourceProxy)Facade.RetrieveProxy("ResourceProxy");
+            if (resource != null)
+            {
+                resource.CurrentLanguage = "russian";
+            }
+            
+            // load and init plugins
+            IPluginProxy plugins = (IPluginProxy)Facade.RetrieveProxy("PluginProxy");
+            if (plugins != null)
+            {
+                plugins.InitializePlugins();
 
-            IPlugin plugin;
+                IPlugin PLG;
+                PLG = new ModelNetwork.ModelNetworkPlugin();
+                PLG.Initialize(ApplicationFacade.Instance);
+                PLG = new ViewWinForms.ViewWinFormsPlugin();
+                PLG.Initialize(ApplicationFacade.Instance);
+            }
 
-            plugin = new ModelNetwork.ModelNetworkPlugin();
-            plugin.Initialize(ApplicationFacade.Instance);
-
-            plugin = new ViewWinForms.ViewWinFormsPlugin();
-            plugin.Initialize(ApplicationFacade.Instance);
-
+            // run app!
+            IApplicationMediator App = (IApplicationMediator)Facade.RetrieveMediator("ApplicationMediator");
+            if (App != null)
+            {
+                App.Run();
+            }
         }
     }
 }
