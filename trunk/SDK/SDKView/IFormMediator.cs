@@ -6,6 +6,6 @@ namespace LanExchange.SDK.SDKView
 {
     public interface IFormMediator
     {
-        string Text { get; set; }
+        void ShowDialog();
     }
 }

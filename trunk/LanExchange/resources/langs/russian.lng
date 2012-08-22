@@ -15,3 +15,5 @@ ColumnType=Тип
 TypeFile=Файл
 TypeFolder=Папка с файлами
 ItemsShowed=Показано элементов: {0}
+
+AboutForm.Title=О программе «{0}»

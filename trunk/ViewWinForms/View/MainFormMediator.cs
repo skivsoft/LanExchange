@@ -18,10 +18,9 @@ namespace ViewWinForms.View
             m_Component = form;
         }
 
-        public string Text
+        public void ShowDialog()
         {
-            get { return m_Component.Text; }
-            set { m_Component.Text = value; }
+            // do nothing
         }
     }
 }

@@ -61,7 +61,11 @@ namespace LanExchange.Model
 
         public string GetText(string name)
         {
-            return m_LanguageFile.Sections["MSG"][name];
+            string Result = String.Empty;
+            if (m_LanguageFile.Sections.ContainsKey("MSG"))
+                if (m_LanguageFile.Sections["MSG"].ContainsKey(name))
+                    Result = m_LanguageFile.Sections["MSG"][name];
+            return Result;
         }
     }
 }

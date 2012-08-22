@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="View\ApplicationMediator.cs" />
+    <Compile Include="View\AboutFormMediator.cs" />
     <Compile Include="View\Components\ListViewEx.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -54,6 +55,12 @@
     </Compile>
     <Compile Include="View\Components\StatusView.designer.cs">
       <DependentUpon>StatusView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Forms\AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Forms\AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="View\Forms\MainForm.cs">
       <SubType>Form</SubType>
@@ -74,6 +81,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\Components\StatusView.resx">
       <DependentUpon>StatusView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Forms\AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

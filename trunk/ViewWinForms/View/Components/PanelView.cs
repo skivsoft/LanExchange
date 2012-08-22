@@ -5,6 +5,9 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using LanExchange.SDK.SDKModel.VO;
+using ViewWinForms.View.Forms;
+using LanExchange.SDK.SDKView;
+using LanExchange.SDK;
 
 namespace ViewWinForms.View.Components
 {
@@ -162,6 +165,20 @@ namespace ViewWinForms.View.Components
             for (int i = 1 + SubItems.Length; i < LV.Columns.Count; i++)
                 e.Item.SubItems.Add("");
             e.Item.Tag = Item;
+        }
+
+        private void contextMenu_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            IFormMediator M = (IFormMediator)Globals.Facade.RetrieveMediator("AboutFormMediator");
+            if (M != null)
+            {
+                M.ShowDialog();
+            }
         }
     }
 }

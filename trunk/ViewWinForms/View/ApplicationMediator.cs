@@ -29,6 +29,7 @@ namespace ViewWinForms.View
             if (m_MainForm != null)
             {
                 Facade.RegisterMediator(new MainFormMediator(m_MainForm));
+                Facade.RegisterMediator(new AboutFormMediator());
                 Facade.RegisterMediator(new StatusViewMediator(m_MainForm.statusView1));
                 Facade.RegisterMediator(new PanelViewMediator(m_MainForm.panelView1));
             }
