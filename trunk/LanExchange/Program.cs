@@ -1,10 +1,14 @@
 ﻿using System;
 using LanExchange.SDK;
+using System.Reflection;
+using System.Security;
+using System.Security.Permissions;
 
 namespace LanExchange
 {
     static class Program
     {
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

@@ -6,6 +6,7 @@ using LanExchange.Controller;
 using PureInterfaces;
 using LanExchange.SDK;
 using LanExchange.Model;
+using System.IO;
 
 namespace LanExchange
 {
@@ -61,17 +62,31 @@ namespace LanExchange
         protected override void InitializeModel()
         {
             base.InitializeModel();
-            // base models
             RegisterProxy(new ConfigProxy());
             RegisterProxy(new ResourceProxy());
+            RegisterProxy(new NavigatorProxy());
             RegisterProxy(new PluginProxy());
-            // LanExchange models
             RegisterProxy(new AboutProxy());
             RegisterProxy(new CurrentUserProxy());
             RegisterProxy(new MenuProxy());
-            RegisterProxy(new NavigatorProxy());
         }
         #endregion
 
+        public static string ExecutablePath
+        {
+            get
+            {
+                if (m_ExecutablePath == null)
+                {
+                    string[] args = Environment.GetCommandLineArgs();
+                    m_ExecutablePath = Path.GetDirectoryName(args[0]);
+                }
+                return m_ExecutablePath;
+            }
+        }
+
+        private static string m_ExecutablePath = null;
+
+        //public static AppDomain PluginDomain = null;
     }
 }

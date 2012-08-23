@@ -3,6 +3,10 @@ AUTHOR=Skiv (skivsoft@gmail.com)
 Name=Русский
 
 [MSG]
+MainForm.Text=Общие папки
+MainForm.pTop.lCaption.Text=Общие папки
+MainForm.pTop.lDesc.Text=Здесь показаны компьютеры локальной вычислительной сети. Возможен поиск по имени компьютера и по описанию.
+
 ColumnComment=Описание
 ColumnDateModified=Дата изменения
 ColumnDomainName=Домен/Группа
@@ -16,9 +20,16 @@ TypeFile=Файл
 TypeFolder=Папка с файлами
 ItemsShowed=Показано элементов: {0}
 
-AboutForm.Title=О программе «{0}»
+AboutForm.Text=О программе «{0}»
 
 ;PersonProxy
 ColumnPersonName=ФИО
 ColumnPersonPosition=Должность
 ColumnPersonSubdiv=Подразделение
+
+;PluginProxy
+ColumnPluginName=Имя плагина
+ColumnPluginVersion=Версия
+ColumnPluginDesc=Описание
+ColumnPluginAuthor=Автор
+

@@ -5,17 +5,32 @@ using PurePatterns;
 using PureInterfaces;
 using System.Windows.Forms;
 using LanExchange.SDK.SDKView;
+using LanExchange.SDK;
+using ViewWinForms.View.Forms;
+using System.Reflection;
+using System.Drawing;
 
 namespace ViewWinForms.View
 {
     public class MainFormMediator : Mediator, IFormMediator, IMediator
     {
         public new const string NAME = "MainFormMediator";
-        private Form m_Component = null;
+        private MainForm m_Form = null;
 
-        public MainFormMediator(Form form) : base(NAME, form)
+        public MainFormMediator(MainForm form) : base(NAME, form)
         {
-            m_Component = form;
+            m_Form = form;
+        }
+
+        public override void OnRegister()
+        {
+            base.OnRegister();
+
+            if (Globals.Resources != null)
+            {
+                m_Form.picLogo.Image = Globals.Resources.GetImage("logo_icon");
+                Localization.ProcessControl(m_Form);
+            }
         }
 
         public void ShowDialog()

@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Localization.cs" />
     <Compile Include="View\ApplicationMediator.cs" />
     <Compile Include="View\AboutFormMediator.cs" />
     <Compile Include="View\Components\ListViewEx.cs">

@@ -19,7 +19,7 @@ namespace ViewWinForms.View.Forms
 
         private void AboutForm_Load(object sender, EventArgs e)
         {
-            Text = String.Format(Globals.T("AboutForm.Title"), AssemblyProduct);
+            //Text = String.Format(Globals.T("AboutForm.Title"), AssemblyProduct);
             lAppName.Text = AssemblyProduct;
             lVersion.Text = AssemblyVersion;
             lCopyright.Text = AssemblyCopyright;

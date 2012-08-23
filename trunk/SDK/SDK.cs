@@ -14,6 +14,7 @@ namespace LanExchange.SDK
         public const string CMD_STARTUP = "startup";
         public const string UPDATE_ITEMS = "update_items";
         public const string ITEM_COUNT_CHANGED = "item_count_changed";
+        public const string INTERFACE_LANGUAGE_CHANGED = "interface_language_changed";
 
         #endregion
 
@@ -43,7 +44,7 @@ namespace LanExchange.SDK
             if (Resources != null)
                 return Resources.GetText(name);
             else
-                return "";
+                return name;
         }
     }
 }

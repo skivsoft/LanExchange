@@ -22,6 +22,7 @@ namespace ViewWinForms.View
         {
             using (AboutForm form = new AboutForm())
             {
+                form.Text = String.Format(Globals.T("AboutForm.Text"), form.ProductName);
                 if (Globals.Resources != null)
                 {
                     form.picLogo.Image = Globals.Resources.GetImage("logo_icon");
