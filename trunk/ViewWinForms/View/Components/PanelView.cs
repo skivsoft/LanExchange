@@ -39,7 +39,7 @@ namespace ViewWinForms.View.Components
                 LV.VirtualListSize = items.Count;
                 SetItemsCountChanged();
             }
-            LV.Refresh();
+            //LV.Refresh();
         }
 
         public event EventHandler LevelDown;

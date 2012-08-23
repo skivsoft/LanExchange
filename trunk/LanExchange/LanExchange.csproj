@@ -99,6 +99,7 @@
     <Compile Include="Model\Components\IniFileElement.cs" />
     <Compile Include="Model\Components\IniFileLight.cs" />
     <Compile Include="Model\Components\IniFiles.cs" />
+    <Compile Include="Model\NavigatorProxy.cs" />
     <Compile Include="Model\PluginProxy.cs" />
     <Compile Include="Model\MenuProxy.cs" />
     <Compile Include="Model\ConfigProxy.cs" />
@@ -163,17 +164,9 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ModelNetwork\ModelNetwork.csproj">
-      <Project>{5908147B-3C07-4F3D-9452-CE4B8254B039}</Project>
-      <Name>ModelNetwork</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SDK\LanExchange.SDK.csproj">
       <Project>{A1482CF1-5566-4636-8590-30ED9CF3D4D9}</Project>
       <Name>LanExchange.SDK</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ViewWinForms\ViewWinForms.csproj">
-      <Project>{287F05A1-FE9D-42FE-A983-70D055BC3201}</Project>
-      <Name>ViewWinForms</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

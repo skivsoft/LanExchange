@@ -42,15 +42,42 @@ namespace ViewWinForms.View
             get { return (PanelView)ViewComponent; }
         }
 
+        private string GetRootProxyName()
+        {
+            string Result = String.Empty;
+            INavigatorProxy navigator = (INavigatorProxy)Facade.RetrieveProxy("NavigatorProxy");
+            if (navigator != null)
+            {
+                IList<string> list = navigator.GetRoots();
+                if (list.Count > 0)
+                    Result = list[0];
+            }
+            return Result;
+        }
+
         public override void OnRegister()
         {
             base.OnRegister();
-            ICurrentUserProxy Obj = (ICurrentUserProxy)Facade.RetrieveProxy("CurrentUserProxy");
-            if (Obj != null)
+        }
+
+        public override IList<string> ListNotificationInterests()
+        {
+            IList<string> list = new List<string>();
+            list.Add(Globals.UPDATE_ITEMS);
+            return list;
+        }
+
+        public override void HandleNotification(INotification note)
+        {
+            switch (note.Name)
             {
-                UpdateItems("DomainProxy", Obj.DomainName);
+                case Globals.UPDATE_ITEMS:
+                    string path = (string)note.Body;
+                    UpdateItems(GetRootProxyName(), String.Empty);
+                    break;
             }
         }
+
 
         private void UpdateItems(string NewProxyName, string NewPath)
         {
@@ -94,9 +121,9 @@ namespace ViewWinForms.View
                     UpdateItems("ComputerProxy", Current.Name);
                     break;
                 case "ComputerProxy":
-                    UpdateItems("ResourceProxy", Current.Name);
+                    UpdateItems("ShareProxy", Current.Name);
                     break;
-                case "ResourceProxy":
+                case "ShareProxy":
                     PanelItemVO First = Panel.FirstPanelItem;
                     if (First != null && First.SubItems.Length > 1)
                     {
@@ -114,11 +141,11 @@ namespace ViewWinForms.View
                     m_Path = "";
                     UpdateItems("DomainProxy", "");
                     break;
-                case "ResourceProxy":
+                case "ShareProxy":
                     UpdateItems("ComputerProxy", "FERMAK");
                     break;
                 case "FileProxy":
-                    UpdateItems("ResourceProxy", "MIKHAILYUK-KA");
+                    UpdateItems("ShareProxy", "MIKHAILYUK-KA");
                     break;
             }
             //SendNotification(ApplicationFacade.LEVEL_UP, this);

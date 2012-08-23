@@ -11,8 +11,8 @@ namespace LanExchange.SDK
     {
         #region LanExchange SDK notification constants
 
-        public const string CMD_LOAD_PLUGINS = "load_plugins";
         public const string CMD_STARTUP = "startup";
+        public const string UPDATE_ITEMS = "update_items";
         public const string ITEM_COUNT_CHANGED = "item_count_changed";
 
         #endregion

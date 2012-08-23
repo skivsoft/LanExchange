@@ -4,6 +4,7 @@ using System.Text;
 using LanExchange.SDK;
 using PureInterfaces;
 using ModelNetwork.Model;
+using LanExchange.SDK.SDKModel;
 
 namespace ModelNetwork
 {
@@ -22,6 +23,13 @@ namespace ModelNetwork
                 facade.RegisterProxy(new ComputerProxy());
                 facade.RegisterProxy(new ShareProxy());
                 //Facade.RegisterProxy(new FileProxy());
+
+                INavigatorProxy navigator = (INavigatorProxy)facade.RetrieveProxy("NavigatorProxy");
+                if (navigator != null)
+                {
+                    navigator.AddTransition("DomainProxy", "ComputerProxy");
+                    navigator.AddTransition("ComputerProxy", "ShareProxy");
+                }
             }
         }
     }

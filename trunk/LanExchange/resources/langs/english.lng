@@ -15,3 +15,8 @@ ColumnType=Type
 TypeFile=File
 TypeFolder=Folder
 ItemsShowed=Items showed: {0}
+
+;PersonProxy
+ColumnPersonName=Name
+ColumnPersonPosition=Position
+ColumnPersonSubdiv=Subdivision

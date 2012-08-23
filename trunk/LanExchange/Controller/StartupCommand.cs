@@ -28,12 +28,20 @@ namespace LanExchange.Controller
             {
                 plugins.InitializePlugins();
 
+                /*
                 IPlugin PLG;
+
                 PLG = new ModelNetwork.ModelNetworkPlugin();
                 PLG.Initialize(ApplicationFacade.Instance);
                 PLG = new ViewWinForms.ViewWinFormsPlugin();
                 PLG.Initialize(ApplicationFacade.Instance);
+                */
+
+                //PLG = new ModelPersons.ModelPersonsPlugin();
+                //PLG.Initialize(ApplicationFacade.Instance);
             }
+            Facade.SendNotification(Globals.UPDATE_ITEMS);
+
 
             // run app!
             IApplicationMediator App = (IApplicationMediator)Facade.RetrieveMediator("ApplicationMediator");

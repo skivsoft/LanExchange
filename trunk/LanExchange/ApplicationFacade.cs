@@ -69,6 +69,7 @@ namespace LanExchange
             RegisterProxy(new AboutProxy());
             RegisterProxy(new CurrentUserProxy());
             RegisterProxy(new MenuProxy());
+            RegisterProxy(new NavigatorProxy());
         }
         #endregion
 

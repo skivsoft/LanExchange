@@ -16,6 +16,7 @@ namespace LanExchange.Model
         public new const string NAME = "ResourceProxy";
         private string m_CurrentLanguage = "";
         private IniFileLight m_LanguageFile;
+        //private AppDomain m_PluginsDomain;
 
         public ResourceProxy()
             : base(NAME)
@@ -26,7 +27,7 @@ namespace LanExchange.Model
         public Image GetImage(string name)
         {
             Image Result = null;
-            string FileName = Path.Combine(Path.Combine(Path.Combine(GetExecutablePath(), "resources"), "images"), name+".png");
+            string FileName = Path.Combine(Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "resources"), "images"), name + ".png");
             try
             {
                 if (File.Exists(FileName))
@@ -47,15 +48,10 @@ namespace LanExchange.Model
             }
         }
 
-        string GetExecutablePath()
-        {
-            string[] args = Environment.GetCommandLineArgs();
-            return Path.GetDirectoryName(args[0]);
-        }
-
         void LoadLanguage()
         {
-            string FileName = Path.Combine(Path.Combine(Path.Combine(GetExecutablePath(), "resources"), "langs"), m_CurrentLanguage + ".lng");
+            string FileName = Path.Combine(Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "resources"), "langs"), m_CurrentLanguage + ".lng");
+            m_LanguageFile = null;
             m_LanguageFile = new IniFileLight(FileName);
         }
 

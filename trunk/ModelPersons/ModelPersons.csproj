@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5908147B-3C07-4F3D-9452-CE4B8254B039}</ProjectGuid>
+    <ProjectGuid>{3E2B3771-E1E2-4E31-8FD9-C0075716311C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ModelNetwork</RootNamespace>
-    <AssemblyName>ModelNetwork</AssemblyName>
+    <RootNamespace>ModelPersons</RootNamespace>
+    <AssemblyName>ModelPersons</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -37,16 +37,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\ArchiveProxy.cs" />
-    <Compile Include="Model\ComputerProxy.cs" />
-    <Compile Include="Model\DomanProxy.cs" />
-    <Compile Include="Model\FileProxy.cs" />
-    <Compile Include="Model\ShareProxy.cs" />
-    <Compile Include="Model\VO\ComputerVO.cs" />
-    <Compile Include="OSLayer\Detect.cs" />
-    <Compile Include="OSLayer\Kernel32.cs" />
-    <Compile Include="OSLayer\NetApi32.cs" />
-    <Compile Include="OSLayer\Tools.cs" />
+    <Compile Include="Model\PersonProxy.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

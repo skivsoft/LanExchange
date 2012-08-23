@@ -116,6 +116,7 @@
     <Compile Include="PluginAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SDK.cs" />
+    <Compile Include="SDKModel\INavigatorProxy.cs" />
     <Compile Include="SDKModel\IPluginProxy.cs" />
     <Compile Include="SDKModel\ICurrentUserProxy.cs" />
     <Compile Include="SDKModel\IResourceProxy.cs" />
