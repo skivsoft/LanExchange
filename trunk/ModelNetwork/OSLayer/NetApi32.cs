@@ -5,9 +5,13 @@ using System.Runtime.InteropServices;
 
 namespace ModelNetwork.OSLayer
 {
-    public class NetApi32
+    [System.Security.SuppressUnmanagedCodeSecurity]
+    internal static class NetApi32
     {
-        [DllImport("netapi32.dll", EntryPoint = "NetServerEnum")]
+        internal const string NETAPI32 = "netapi32.dll";
+
+        [DllImport(NETAPI32, EntryPoint = "NetServerEnum")]
+        [System.Security.SecurityCritical]
         public static extern NERR NetServerEnum(
              [MarshalAs(UnmanagedType.LPWStr)]string ServerName,
              int Level,
@@ -19,9 +23,10 @@ namespace ModelNetwork.OSLayer
              [MarshalAs(UnmanagedType.LPWStr)] string Domain,
              int ResumeHandle);
 
-        [DllImport("Netapi32.dll", SetLastError = true)]
+        [DllImport(NETAPI32, SetLastError = true)]
+        [System.Security.SecurityCritical]
         public static extern int NetApiBufferFree(IntPtr Buffer);
-        
+        /*
         [DllImport("Netapi32.dll", CharSet = CharSet.Unicode)]
         public static extern int NetShareEnum(
              StringBuilder ServerName,
@@ -32,7 +37,7 @@ namespace ModelNetwork.OSLayer
              ref int totalentries,
              ref int resume_handle
              );
-
+        */
         [StructLayout(LayoutKind.Sequential)]
         public struct SERVER_INFO_101
         {
@@ -207,7 +212,7 @@ namespace ModelNetwork.OSLayer
             PLATFORM_ID_OSF = 600,
             PLATFORM_ID_VMS = 700,
         }
-
+        /*
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         public struct SHARE_INFO_1
         {
@@ -244,6 +249,6 @@ namespace ModelNetwork.OSLayer
             STYPE_IPC = 3,
             STYPE_SPECIAL = 0x80000000,
         }
-
+        */
     }
 }

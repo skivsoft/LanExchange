@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace ModelNetwork.OSLayer
 {
+    /*
     public class Kernel32
     {
         [DllImport("kernel32.dll")]
@@ -20,4 +21,5 @@ namespace ModelNetwork.OSLayer
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool IsWow64Process(IntPtr process, out bool wow64Process);
     }
+     */
 }

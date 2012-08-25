@@ -4,6 +4,7 @@ using System.Text;
 
 namespace ModelNetwork.OSLayer
 {
+    /*
     public class Detect
     {
         public static bool IsRunningOnMono()
@@ -34,4 +35,5 @@ namespace ModelNetwork.OSLayer
             return Kernel32.GetProcAddress(moduleHandle, methodName) != IntPtr.Zero;
         }
     }
+     */
 }
