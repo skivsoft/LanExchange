@@ -3,7 +3,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{AA76684A-2CD5-45AD-B84E-002BF0440CF6}</ProjectGuid>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <OutputType>Library</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
@@ -41,6 +41,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\AboutFormMediator.cs" />
     <Compile Include="View\ApplicationMediator.cs" />
+    <Compile Include="View\Components\Bevel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="View\Components\ListViewEx.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -188,9 +188,11 @@ namespace ViewWinForms.View.Components
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            /*
             if (IsFullyTrusted())
                 MessageBox.Show("FULL");
             else MessageBox.Show("NOT FULL");
+             */
             
             IFormMediator M = (IFormMediator)Globals.Facade.RetrieveMediator("AboutFormMediator");
             if (M != null)

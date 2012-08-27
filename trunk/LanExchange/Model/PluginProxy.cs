@@ -72,7 +72,7 @@ namespace LanExchange.Model
             string[] files = Directory.GetFiles(path, "*.dll", SearchOption.AllDirectories);
             foreach (string file in files)
             {
-                //try
+                try
                 {
                     Assembly assembly = Assembly.LoadFile(file);
                     foreach (Type type in assembly.GetTypes())
@@ -89,7 +89,7 @@ namespace LanExchange.Model
                         }
                     }
                 }
-                //catch(Exception)
+                catch(Exception)
                 {
                 }
             }

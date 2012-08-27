@@ -22,7 +22,7 @@ namespace ModelNetwork
                 facade.RegisterProxy(new DomainProxy());
                 facade.RegisterProxy(new ComputerProxy());
                 facade.RegisterProxy(new ShareProxy());
-                //Facade.RegisterProxy(new FileProxy());
+                facade.RegisterProxy(new FileProxy());
 
                 INavigatorProxy navigator = (INavigatorProxy)facade.RetrieveProxy("NavigatorProxy");
                 if (navigator != null)

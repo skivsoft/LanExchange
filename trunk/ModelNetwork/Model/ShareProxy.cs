@@ -38,7 +38,6 @@ namespace ModelNetwork.Model
 
         public override void EnumObjects(string Server)
         {
-            /*
             NetApi32.SHARE_INFO_1 shi1;
             shi1.shi1_remark = Server;
             Objects.Add(new PanelItemVO("..", null));
@@ -62,7 +61,6 @@ namespace ModelNetwork.Model
                 }
                 NetApi32.NetApiBufferFree(bufPtr);
             }
-             */
         }
     }
 }
