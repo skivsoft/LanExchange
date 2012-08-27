@@ -9,21 +9,92 @@ using PureMVC.PurePatterns;
 
 namespace LanExchange.Model
 {
+    internal static class PluginManager
+    {
+        public const string PluginsPath = "plugins";
+
+        //private static AppDomain m_PluginsDomain;
+        private static Dictionary<string, IPlugin> m_Plugins = null;
+
+        /*
+        public static void DoneAppDomain()
+        {
+            AppDomain.Unload(m_PluginsDomain);
+            m_PluginsDomain = null;
+        }
+         */
+
+        public static void LoadPlugins()
+        {
+            AppDomain.CurrentDomain.AppendPrivatePath(PluginsPath);
+
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, PluginsPath);
+            //string path = AppDomain.CurrentDomain.BaseDirectory;
+            string[] files = Directory.GetFiles(path, "*.dll", SearchOption.AllDirectories);
+            foreach (string file in files)
+            {
+                try
+                {
+                    Assembly assembly = Assembly.LoadFile(file);
+                    foreach (Type type in assembly.GetTypes())
+                    {
+                        Type iface = type.GetInterface("LanExchange.IPlugin");
+                        if (iface != null)
+                        {
+                            LanExchange.IPlugin plugin = (LanExchange.IPlugin)Activator.CreateInstance(type);
+                            if (plugin != null)
+                            {
+                                Plugins.Add(plugin.GetType().Name, plugin);
+                                plugin.Initialize(ApplicationFacade.Instance);
+                            }
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                }
+            }
+        }
+
+        /*
+        public static AppDomain PluginsAppDomain
+        {
+            get 
+            {
+                if (m_PluginsDomain == null)
+                {
+                    AppDomainSetup Setup = new AppDomainSetup();
+                    Setup.PrivateBinPath = PluginsPath;
+                    m_PluginsDomain = AppDomain.CreateDomain("PluginsDomain");
+                }
+                return m_PluginsDomain; 
+            }
+        }
+         */
+
+        public static IDictionary<string, IPlugin> Plugins
+        {
+            get 
+            {
+                if (m_Plugins == null)
+                {
+                    m_Plugins = new Dictionary<string, IPlugin>();
+                }
+                return m_Plugins; 
+            }
+        }
+
+    }
+    
     public class PluginProxy : PanelItemProxy
     {
         public new const string NAME = "PluginProxy";
 
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         
-        
-        public const string PluginsPath = "plugins";
-        private AppDomain m_PluginsDomain;
-        private Dictionary<string, IPlugin> m_Plugins;
-
         public PluginProxy()
             : base(NAME)
         {
-            m_Plugins = new Dictionary<string, IPlugin>();
         }
 
         private void DomAsmsPrint(AppDomain cur_domain)
@@ -49,26 +120,11 @@ namespace LanExchange.Model
 
         public override void OnRegister()
         {
-            AppDomainSetup Setup = new AppDomainSetup();
-            //string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, PluginsPath);
-            Setup.PrivateBinPath = PluginsPath ;
-            m_PluginsDomain = AppDomain.CreateDomain("PluginsDomain");
-            logger.Info(String.Format("Create app domain [{0}]", m_PluginsDomain.FriendlyName));
-            //ApplicationFacade.PluginDomain = m_PluginsDomain;
-
-            /*
-            INavigatorProxy navigator = (INavigatorProxy)Facade.RetrieveProxy("NavigatorProxy");
-            if (navigator != null)
-            {
-                navigator.AddTransition("PluginProxy", String.Empty);
-            }
-             */
         }
 
         public override void OnRemove()
         {
-            logger.Info(String.Format("Unload app domain [{0}]", m_PluginsDomain.FriendlyName));
-            AppDomain.Unload(m_PluginsDomain);
+            //PluginManager.DoneAppDomain();
         }
 
         public override ColumnVO[] GetColumns()
@@ -83,10 +139,8 @@ namespace LanExchange.Model
 
         public override void EnumObjects(string path)
         {
-            
-            foreach (var pair in m_Plugins)
+            foreach (var pair in PluginManager.Plugins)
             {
-
                 PluginAttribute attr = (PluginAttribute)Attribute.GetCustomAttribute(pair.Value.GetType(), typeof(PluginAttribute));
                 Objects.Add(new PluginVO(pair.Key, attr.Version, attr.Description, attr.Author));
             }
@@ -94,35 +148,11 @@ namespace LanExchange.Model
 
         public void InitializePlugins()
         {
-            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, PluginsPath);
-            //string path = AppDomain.CurrentDomain.BaseDirectory;
-            string[] files = Directory.GetFiles(path, "*.dll", SearchOption.AllDirectories);
-            foreach (string file in files)
-            {
-                try
-                {
-                    Assembly assembly = Assembly.LoadFile(file);
-                    foreach (Type type in assembly.GetTypes())
-                    {
-                        Type iface = type.GetInterface("LanExchange.IPlugin");
-                        if (iface != null)
-                        {
-                            LanExchange.IPlugin plugin = (LanExchange.IPlugin)Activator.CreateInstance(type);
-                            if (plugin != null)
-                            {
-                                m_Plugins.Add(plugin.GetType().Name, plugin);
-                                plugin.Initialize(Facade);
-                            }
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-                }
-            }
-
+            //PluginManager.PluginsAppDomain.SetD
+            //PluginManager.PluginsAppDomain.DoCallBack(new CrossAppDomainDelegate(PluginManager.LoadPlugins));
+            PluginManager.LoadPlugins();
             //DomAsmsPrint(AppDomain.CurrentDomain);
-            DomAsmsPrint(m_PluginsDomain);
+            //DomAsmsPrint(PluginManager.PluginsAppDomain);
         }
     }
 }
