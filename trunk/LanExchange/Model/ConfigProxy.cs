@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using PurePatterns;
-using PureInterfaces;
+using PureMVC.PurePatterns;
+using PureMVC.PureInterfaces;
 
 namespace LanExchange.Model
 {

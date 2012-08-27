@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using LanExchange.SDK.SDKModel.VO;
-using LanExchange.SDK;
 
 namespace LanExchange.Model.VO
 {

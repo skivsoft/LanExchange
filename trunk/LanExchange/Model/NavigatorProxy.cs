@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using PurePatterns;
-using PureInterfaces;
-using LanExchange.SDK.SDKModel;
+using PureMVC.PurePatterns;
+using PureMVC.PureInterfaces;
 
 namespace LanExchange.Model
 {
-    public class NavigatorProxy : Proxy, INavigatorProxy, IProxy
+    public class NavigatorProxy : Proxy, IProxy
     {
         public new const string NAME = "NavigatorProxy";
         private Dictionary<string, string> m_Forward;

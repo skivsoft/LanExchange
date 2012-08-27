@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using System.Reflection;
-using LanExchange.SDK;
+using LanExchange;
 
 namespace ViewWinForms.View
 {

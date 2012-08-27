@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using PurePatterns;
-using PureInterfaces;
-using LanExchange.SDK;
+using LanExchange;
+using LanExchange.Model;
+using PureMVC.PureInterfaces;
+using PureMVC.PurePatterns;
 using ViewWinForms.View.Components;
-using LanExchange.SDK.SDKModel;
 
 namespace ViewWinForms.View
 {
@@ -28,7 +28,7 @@ namespace ViewWinForms.View
                 Status.lUserName.Image = Globals.Resources.GetImage("current_user");
             }
             
-            ICurrentUserProxy Obj = (ICurrentUserProxy)Facade.RetrieveProxy("CurrentUserProxy");
+            CurrentUserProxy Obj = (CurrentUserProxy)Facade.RetrieveProxy("CurrentUserProxy");
             if (Obj != null)
             {
                 Status.lCompName.Text = Obj.ComputerName;

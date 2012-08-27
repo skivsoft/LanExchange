@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using LanExchange.SDK;
-using PureInterfaces;
+using LanExchange;
+using PureMVC.PureInterfaces;
 using ModelPersons.Model;
-using LanExchange.SDK.SDKModel;
+using LanExchange.Model;
 
 namespace ModelPersons
 {
@@ -19,7 +19,7 @@ namespace ModelPersons
             {
                 facade.RegisterProxy(new PersonProxy());
 
-                INavigatorProxy navigator = (INavigatorProxy)facade.RetrieveProxy("NavigatorProxy");
+                NavigatorProxy navigator = (NavigatorProxy)facade.RetrieveProxy("NavigatorProxy");
                 if (navigator != null)
                 {
                     navigator.AddTransition("PersonProxy", String.Empty);

@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using PurePatterns;
-using PureInterfaces;
-using LanExchange.SDK.SDKModel;
 using System.IO;
 using System.Reflection;
-using LanExchange.SDK;
-using LanExchange.SDK.SDKModel.VO;
+using System.Text;
 using LanExchange.Model.VO;
+using PureMVC.PureInterfaces;
+using PureMVC.PurePatterns;
 
 namespace LanExchange.Model
 {
-    public class PluginProxy : PanelItemProxy, IPluginProxy
+    public class PluginProxy : PanelItemProxy
     {
         public new const string NAME = "PluginProxy";
+
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        
+        
         public const string PluginsPath = "plugins";
         private AppDomain m_PluginsDomain;
         private Dictionary<string, IPlugin> m_Plugins;
@@ -25,10 +26,34 @@ namespace LanExchange.Model
             m_Plugins = new Dictionary<string, IPlugin>();
         }
 
+        private void DomAsmsPrint(AppDomain cur_domain)
+        {
+            Assembly[] asm_list = cur_domain.GetAssemblies();
+            logger.Info("\n");
+            logger.Info(String.Format("List of assemblies loaded in domain [{0}] ({1}): ", cur_domain.FriendlyName, asm_list.Length));
+            foreach (Assembly item in asm_list)
+            {
+                logger.Info(String.Format("{0}", item.GetName().Name));
+            }
+            if (cur_domain.SetupInformation.PrivateBinPath != null && cur_domain.SetupInformation.PrivateBinPath.Trim() != string.Empty)
+            {
+                string[] s_list = cur_domain.SetupInformation.PrivateBinPath.Split(';');
+                logger.Info("\n");
+                logger.Info(String.Format("Directories specified in PrivateBinPath property of domain [{0}] ({1}): ", cur_domain.FriendlyName, s_list.Length));
+                foreach (string item in s_list)
+                {
+                    logger.Info(item);
+                }
+            }
+        }
+
         public override void OnRegister()
         {
             AppDomainSetup Setup = new AppDomainSetup();
+            //string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, PluginsPath);
+            Setup.PrivateBinPath = PluginsPath ;
             m_PluginsDomain = AppDomain.CreateDomain("PluginsDomain");
+            logger.Info(String.Format("Create app domain [{0}]", m_PluginsDomain.FriendlyName));
             //ApplicationFacade.PluginDomain = m_PluginsDomain;
 
             /*
@@ -42,6 +67,7 @@ namespace LanExchange.Model
 
         public override void OnRemove()
         {
+            logger.Info(String.Format("Unload app domain [{0}]", m_PluginsDomain.FriendlyName));
             AppDomain.Unload(m_PluginsDomain);
         }
 
@@ -69,6 +95,7 @@ namespace LanExchange.Model
         public void InitializePlugins()
         {
             string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, PluginsPath);
+            //string path = AppDomain.CurrentDomain.BaseDirectory;
             string[] files = Directory.GetFiles(path, "*.dll", SearchOption.AllDirectories);
             foreach (string file in files)
             {
@@ -77,10 +104,10 @@ namespace LanExchange.Model
                     Assembly assembly = Assembly.LoadFile(file);
                     foreach (Type type in assembly.GetTypes())
                     {
-                        Type iface = type.GetInterface("LanExchange.SDK.IPlugin");
+                        Type iface = type.GetInterface("LanExchange.IPlugin");
                         if (iface != null)
                         {
-                            LanExchange.SDK.IPlugin plugin = (LanExchange.SDK.IPlugin)Activator.CreateInstance(type);
+                            LanExchange.IPlugin plugin = (LanExchange.IPlugin)Activator.CreateInstance(type);
                             if (plugin != null)
                             {
                                 m_Plugins.Add(plugin.GetType().Name, plugin);
@@ -89,10 +116,13 @@ namespace LanExchange.Model
                         }
                     }
                 }
-                catch(Exception)
+                catch (Exception)
                 {
                 }
             }
+
+            //DomAsmsPrint(AppDomain.CurrentDomain);
+            DomAsmsPrint(m_PluginsDomain);
         }
     }
 }

@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using PureInterfaces;
-using PurePatterns;
 using LanExchange.Model;
-using LanExchange.SDK;
-using LanExchange.SDK.SDKView;
-using LanExchange.SDK.SDKModel;
+using PureMVC.PureInterfaces;
+using PureMVC.PurePatterns;
+using LanExchange.View;
+
 
 namespace LanExchange.Controller
 {
@@ -16,14 +15,14 @@ namespace LanExchange.Controller
         public override void Execute(INotification notification)
         {
             // set current language
-            IResourceProxy resource = (IResourceProxy)Facade.RetrieveProxy("ResourceProxy");
+            ResourceProxy resource = (ResourceProxy)Facade.RetrieveProxy("ResourceProxy");
             if (resource != null)
             {
                 resource.CurrentLanguage = "russian";
             }
             
             // load and init plugins
-            IPluginProxy plugins = (IPluginProxy)Facade.RetrieveProxy("PluginProxy");
+            PluginProxy plugins = (PluginProxy)Facade.RetrieveProxy("PluginProxy");
             if (plugins != null)
             {
                 plugins.InitializePlugins();

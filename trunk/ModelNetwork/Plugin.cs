@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using LanExchange.SDK;
-using PureInterfaces;
+using LanExchange;
+using PureMVC.PureInterfaces;
 using ModelNetwork.Model;
-using LanExchange.SDK.SDKModel;
+using LanExchange.Model;
 
 namespace ModelNetwork
 {
@@ -19,12 +19,12 @@ namespace ModelNetwork
             if (facade != null)
             {
                 // network browser
-                facade.RegisterProxy(new DomainProxy());
-                facade.RegisterProxy(new ComputerProxy());
-                facade.RegisterProxy(new ShareProxy());
-                facade.RegisterProxy(new FileProxy());
+                //facade.RegisterProxy(new DomainProxy());
+                //facade.RegisterProxy(new ComputerProxy());
+                //facade.RegisterProxy(new ShareProxy());
+                //facade.RegisterProxy(new FileProxy());
 
-                INavigatorProxy navigator = (INavigatorProxy)facade.RetrieveProxy("NavigatorProxy");
+                NavigatorProxy navigator = (NavigatorProxy)facade.RetrieveProxy("NavigatorProxy");
                 if (navigator != null)
                 {
                     navigator.AddTransition("DomainProxy", "ComputerProxy");

@@ -3,7 +3,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{08C89BD7-B28D-457B-B553-01914DF8A9AF}</ProjectGuid>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <OutputType>Library</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
@@ -40,9 +40,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SDK\LanExchange.SDK.csproj">
-      <Project>{944CD544-2BB6-4D76-9FDF-E69125E3CF5B}</Project>
-      <Name>LanExchange.SDK</Name>
+    <ProjectReference Include="..\LanExchange\LanExchange.csproj">
+      <Project>{2B7572C8-C793-4E3B-9F83-2692FC96DEE8}</Project>
+      <Name>LanExchange</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />

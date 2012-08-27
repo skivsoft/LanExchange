@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using PurePatterns;
-using PureInterfaces;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
-using LanExchange.SDK.SDKModel;
-using LanExchange.SDK.SDKModel.VO;
-using LanExchange.SDK;
+using LanExchange;
+using LanExchange.Model;
+using LanExchange.Model.VO;
+using PureMVC.PureInterfaces;
+using PureMVC.PurePatterns;
 using ViewWinForms.View.Components;
 
 namespace ViewWinForms.View
@@ -16,7 +16,7 @@ namespace ViewWinForms.View
     {
         public new const string NAME = "PanelViewMediator";
 
-        private IPanelItemProxy m_CurrentProxy;
+        private PanelItemProxy m_CurrentProxy;
         private string m_CurrentProxyName;
         private string m_Path;
 
@@ -45,7 +45,7 @@ namespace ViewWinForms.View
         private string GetRootProxyName()
         {
             string Result = String.Empty;
-            INavigatorProxy navigator = (INavigatorProxy)Facade.RetrieveProxy("NavigatorProxy");
+            NavigatorProxy navigator = (NavigatorProxy)Facade.RetrieveProxy("NavigatorProxy");
             if (navigator != null)
             {
                 IList<string> list = navigator.GetRoots();
@@ -81,7 +81,7 @@ namespace ViewWinForms.View
 
         private void UpdateItems(string NewProxyName, string NewPath)
         {
-            IPanelItemProxy Proxy = (IPanelItemProxy)Facade.RetrieveProxy(NewProxyName);
+            PanelItemProxy Proxy = (PanelItemProxy)Facade.RetrieveProxy(NewProxyName);
             if (Proxy != null)
             {
                 // set variables

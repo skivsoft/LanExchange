@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using PurePatterns;
-using PureInterfaces;
-using System.Windows.Forms;
-using LanExchange.SDK.SDKView;
-using LanExchange.SDK;
-using ViewWinForms.View.Forms;
-using System.Reflection;
 using System.Drawing;
+using System.Reflection;
+using System.Text;
+using System.Windows.Forms;
+using LanExchange;
+using LanExchange.View;
+using PureMVC.PureInterfaces;
+using PureMVC.PurePatterns;
+using ViewWinForms.View.Forms;
 
 namespace ViewWinForms.View
 {

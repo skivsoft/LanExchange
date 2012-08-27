@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Reflection;
-using LanExchange.SDK;
+using LanExchange;
 
 namespace ViewWinForms.View.Forms
 {

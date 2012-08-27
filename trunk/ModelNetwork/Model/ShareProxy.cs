@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
-using LanExchange.SDK.SDKModel.VO;
-using LanExchange.SDK.SDKModel;
-using ModelNetwork.OSLayer;
-using LanExchange.SDK;
+using LanExchange.Model.VO;
+using LanExchange.Model;
+using LanExchange.OSLayer;
+using LanExchange;
 
 namespace ModelNetwork.Model
 {

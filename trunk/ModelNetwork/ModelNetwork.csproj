@@ -20,7 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -36,21 +36,16 @@
   <ItemGroup>
     <Compile Include="Model\ArchiveProxy.cs" />
     <Compile Include="Model\ComputerProxy.cs" />
-    <Compile Include="Model\DomanProxy.cs" />
     <Compile Include="Model\FileProxy.cs" />
     <Compile Include="Model\ShareProxy.cs" />
     <Compile Include="Model\VO\ComputerVO.cs" />
-    <Compile Include="OSLayer\Detect.cs" />
-    <Compile Include="OSLayer\Kernel32.cs" />
-    <Compile Include="OSLayer\NetApi32.cs" />
-    <Compile Include="OSLayer\Tools.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SDK\LanExchange.SDK.csproj">
-      <Project>{944CD544-2BB6-4D76-9FDF-E69125E3CF5B}</Project>
-      <Name>LanExchange.SDK</Name>
+    <ProjectReference Include="..\LanExchange\LanExchange.csproj">
+      <Project>{2B7572C8-C793-4E3B-9F83-2692FC96DEE8}</Project>
+      <Name>LanExchange</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />

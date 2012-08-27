@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using PurePatterns;
-using PureInterfaces;
 using System.Drawing;
-using LanExchange.SDK.SDKModel;
 using System.IO;
-
-using Gajatko.IniFiles.Light;
+using System.Text;
+using LanExchange.Model.Gajatko.IniFiles.Light;
+using PureMVC.PureInterfaces;
+using PureMVC.PurePatterns;
 
 namespace LanExchange.Model
 {
-    public class ResourceProxy : Proxy, IResourceProxy, IProxy
+    public class ResourceProxy : Proxy, IProxy
     {
         public new const string NAME = "ResourceProxy";
         private string m_CurrentLanguage = "";

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Runtime.InteropServices;
-using LanExchange.SDK.SDKModel.VO;
-using LanExchange.SDK.SDKModel;
-using ModelNetwork.OSLayer;
+using System.Text;
+using LanExchange.OSLayer;
+using LanExchange.Model;
+using LanExchange.Model.VO;
 using ModelNetwork.Model.VO;
-using LanExchange.SDK;
+using LanExchange;
 
 namespace ModelNetwork.Model
 {

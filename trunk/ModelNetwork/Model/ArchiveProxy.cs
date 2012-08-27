@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using LanExchange.SDK.SDKModel.VO;
-using LanExchange.SDK.SDKModel;
-using LanExchange.SDK;
+using LanExchange.Model.VO;
+using LanExchange.Model;
+using LanExchange;
 
 namespace ModelNetwork.Model
 {

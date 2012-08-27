@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using LanExchange.SDK.SDKModel.VO;
-using ModelNetwork.OSLayer;
+using LanExchange.Model.VO;
+using LanExchange.OSLayer;
 
 namespace ModelNetwork.Model.VO
 {

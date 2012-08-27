@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using PurePatterns;
+using PureMVC.PurePatterns;
 using LanExchange.Controller;
-using PureInterfaces;
-using LanExchange.SDK;
+using PureMVC.PureInterfaces;
 using LanExchange.Model;
 using System.IO;
 
@@ -69,6 +68,8 @@ namespace LanExchange
             RegisterProxy(new AboutProxy());
             RegisterProxy(new CurrentUserProxy());
             RegisterProxy(new MenuProxy());
+
+            RegisterProxy(new DomainProxy());
         }
         #endregion
 

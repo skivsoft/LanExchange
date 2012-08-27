@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using LanExchange.SDK;
-using PureInterfaces;
-using LanExchange.SDK.SDKModel;
-using PurePatterns;
+using LanExchange;
+using LanExchange.Model;
+using PureMVC.PureInterfaces;
+using PureMVC.PurePatterns;
 using ViewWinForms.View;
 
 namespace ViewWinForms

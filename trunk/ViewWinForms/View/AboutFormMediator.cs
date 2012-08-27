@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using PurePatterns;
-using LanExchange.SDK.SDKView;
-using PureInterfaces;
+using LanExchange;
+using LanExchange.View;
+using PureMVC.PureInterfaces;
+using PureMVC.PurePatterns;
 using ViewWinForms.View.Forms;
-using LanExchange.SDK;
 
 namespace ViewWinForms.View
 {

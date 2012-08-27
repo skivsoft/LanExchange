@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -36,7 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Localization.cs" />
-    <Compile Include="OSLayer\User32.cs" />
+    <Compile Include="NativeMethods.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\AboutFormMediator.cs" />
@@ -90,9 +91,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SDK\LanExchange.SDK.csproj">
-      <Project>{944CD544-2BB6-4D76-9FDF-E69125E3CF5B}</Project>
-      <Name>LanExchange.SDK</Name>
+    <ProjectReference Include="..\LanExchange\LanExchange.csproj">
+      <Project>{2B7572C8-C793-4E3B-9F83-2692FC96DEE8}</Project>
+      <Name>LanExchange</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />

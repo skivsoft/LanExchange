@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
-using System.Windows.Forms;
-using LanExchange.SDK.SDKModel.VO;
-using ViewWinForms.View.Forms;
-using LanExchange.SDK.SDKView;
-using LanExchange.SDK;
 using System.Security;
 using System.Security.Permissions;
+using System.Text;
+using System.Windows.Forms;
+using LanExchange;
+using LanExchange.Model.VO;
+using LanExchange.View;
+using ViewWinForms.View.Forms;
 
 namespace ViewWinForms.View.Components
 {
@@ -173,27 +173,8 @@ namespace ViewWinForms.View.Components
 
         }
 
-        public static bool IsFullyTrusted()
-        {
-            try
-            {
-                (new PermissionSet(PermissionState.Unrestricted)).Demand();
-            }
-            catch (SecurityException)
-            {
-                return false;
-            }
-            return true;
-        }
-
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            /*
-            if (IsFullyTrusted())
-                MessageBox.Show("FULL");
-            else MessageBox.Show("NOT FULL");
-             */
-            
             IFormMediator M = (IFormMediator)Globals.Facade.RetrieveMediator("AboutFormMediator");
             if (M != null)
             {
