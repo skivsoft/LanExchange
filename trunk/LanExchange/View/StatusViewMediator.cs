@@ -5,9 +5,9 @@ using LanExchange;
 using LanExchange.Model;
 using PureMVC.PureInterfaces;
 using PureMVC.PurePatterns;
-using ViewWinForms.View.Components;
+using LanExchange.View.Components;
 
-namespace ViewWinForms.View
+namespace LanExchange.View
 {
     public class StatusViewMediator : Mediator, IMediator
     {

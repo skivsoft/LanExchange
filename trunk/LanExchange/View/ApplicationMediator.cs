@@ -5,10 +5,15 @@ using System.Windows.Forms;
 using LanExchange.View;
 using PureMVC.PureInterfaces;
 using PureMVC.PurePatterns;
-using ViewWinForms.View.Forms;
+using LanExchange.View.Forms;
 
-namespace ViewWinForms.View
+namespace LanExchange.View
 {
+    public interface IApplicationMediator
+    {
+        void Run();
+    }
+    
     public class ApplicationMediator : Mediator, IApplicationMediator, IMediator
     {
         public new const string NAME = "ApplicationMediator";

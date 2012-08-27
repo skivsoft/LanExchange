@@ -31,7 +31,7 @@ namespace LanExchange.Model
 
         void LoadImages()
         {
-            string path = Path.Combine(Path.Combine(ApplicationFacade.ExecutablePath, "resources"), "images");
+            string path = Path.Combine(Path.Combine(AppFacade.ExecutablePath, "resources"), "images");
             string[] files = Directory.GetFiles(path, "*.png", SearchOption.TopDirectoryOnly);
             Image img;
             foreach (string file in files)
@@ -51,7 +51,7 @@ namespace LanExchange.Model
 
         void LoadLanguage()
         {
-            string FileName = Path.Combine(Path.Combine(Path.Combine(ApplicationFacade.ExecutablePath, "resources"), "langs"), m_CurrentLanguage + ".lng");
+            string FileName = Path.Combine(Path.Combine(Path.Combine(AppFacade.ExecutablePath, "resources"), "langs"), m_CurrentLanguage + ".lng");
             if (File.Exists(FileName))
             {
                 m_LanguageFile = null;

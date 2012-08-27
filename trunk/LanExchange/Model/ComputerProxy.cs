@@ -9,7 +9,7 @@ using LanExchange.Model.VO;
 using ModelNetwork.Model.VO;
 using LanExchange;
 
-namespace ModelNetwork.Model
+namespace LanExchange.Model
 {
     public class ComputerProxy : PanelItemProxy
     {

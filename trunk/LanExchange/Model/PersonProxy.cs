@@ -5,7 +5,7 @@ using LanExchange.Model;
 using LanExchange.Model.VO;
 using LanExchange;
 
-namespace ModelPersons.Model
+namespace LanExchange.Model
 {
     public class PersonProxy : PanelItemProxy
     {

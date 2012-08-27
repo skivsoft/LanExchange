@@ -20,27 +20,28 @@ namespace LanExchange.Controller
             {
                 resource.CurrentLanguage = "russian";
             }
-            
-            // load and init plugins
-            PluginProxy plugins = (PluginProxy)Facade.RetrieveProxy("PluginProxy");
-            if (plugins != null)
+
+            // network browser
+            Facade.RegisterProxy(new DomainProxy());
+            Facade.RegisterProxy(new DomainProxy());
+            Facade.RegisterProxy(new ComputerProxy());
+            Facade.RegisterProxy(new ShareProxy());
+            //facade.RegisterProxy(new FileProxy());
+
+            // personal explorer
+            Facade.RegisterProxy(new PersonProxy());
+
+            NavigatorProxy navigator = (NavigatorProxy)Facade.RetrieveProxy("NavigatorProxy");
+            if (navigator != null)
             {
-                plugins.InitializePlugins();
+                navigator.AddTransition("DomainProxy", "ComputerProxy");
+                navigator.AddTransition("ComputerProxy", "ShareProxy");
 
-                /*
-                IPlugin PLG;
-
-                PLG = new ModelNetwork.ModelNetworkPlugin();
-                PLG.Initialize(ApplicationFacade.Instance);
-                PLG = new ViewWinForms.ViewWinFormsPlugin();
-                PLG.Initialize(ApplicationFacade.Instance);
-                */
-
-                //PLG = new ModelPersons.ModelPersonsPlugin();
-                //PLG.Initialize(ApplicationFacade.Instance);
+                navigator.AddTransition("PersonProxy", String.Empty);
             }
-            Facade.SendNotification(Globals.UPDATE_ITEMS);
 
+
+            Facade.SendNotification(Globals.UPDATE_ITEMS);
 
             // run app!
             IApplicationMediator App = (IApplicationMediator)Facade.RetrieveMediator("ApplicationMediator");

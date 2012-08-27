@@ -8,9 +8,9 @@ using LanExchange.Model;
 using LanExchange.Model.VO;
 using PureMVC.PureInterfaces;
 using PureMVC.PurePatterns;
-using ViewWinForms.View.Components;
+using LanExchange.View.Components;
 
-namespace ViewWinForms.View
+namespace LanExchange.View
 {
     public class PanelViewMediator : Mediator, IMediator
     {

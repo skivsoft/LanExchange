@@ -15,7 +15,7 @@ namespace LanExchange
         static void Main()
         {
             // Run Application in MVC-style
-            ApplicationFacade facade = (ApplicationFacade)ApplicationFacade.Instance;
+            AppFacade facade = (AppFacade)AppFacade.Instance;
             facade.SendNotification(Globals.CMD_STARTUP);
         }
     }

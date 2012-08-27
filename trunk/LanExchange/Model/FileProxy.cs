@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 using LanExchange.Model.VO;
 using LanExchange.Model;
 using LanExchange;
 
-namespace ModelNetwork.Model
+namespace LanExchange.Model
 {
-    public class ArchiveProxy : PanelItemProxy
+    public class FileProxy : PanelItemProxy
     {
-        public new const string NAME = "ArchiveProxy";
+        public new const string NAME = "FileProxy";
 
-        public ArchiveProxy()
+        public FileProxy()
             : base(NAME)
         {
 
@@ -35,10 +36,16 @@ namespace ModelNetwork.Model
             };
         }
 
-        public override void EnumObjects(string Resource)
+        public override void EnumObjects(string Path)
         {
             Objects.Add(new PanelItemVO("..", null));
-            
+            DirectoryInfo Dir = new DirectoryInfo(Path);
+            FileSystemInfo[] Files = Dir.GetFileSystemInfos();
+            foreach (FileSystemInfo Item in Files)
+            {
+                string sType = (Item.Attributes & FileAttributes.Directory) != 0 ? Globals.T("TypeFolder") : Globals.T("TypeFile");
+                Objects.Add(new PanelItemVO(Item.Name, Item));
+            }
         }
     }
 }

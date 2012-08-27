@@ -7,7 +7,7 @@ using LanExchange.Model;
 using LanExchange.OSLayer;
 using LanExchange;
 
-namespace ModelNetwork.Model
+namespace LanExchange.Model
 {
     public class ShareProxy : PanelItemProxy
     {

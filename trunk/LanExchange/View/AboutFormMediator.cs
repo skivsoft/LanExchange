@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using LanExchange;
 using LanExchange.View;
+using LanExchange.View.Forms;
 using PureMVC.PureInterfaces;
 using PureMVC.PurePatterns;
-using ViewWinForms.View.Forms;
 
-namespace ViewWinForms.View
+namespace LanExchange.View
 {
     public class AboutFormMediator : Mediator, IFormMediator, IMediator
     {

@@ -8,9 +8,9 @@ using LanExchange;
 using LanExchange.View;
 using PureMVC.PureInterfaces;
 using PureMVC.PurePatterns;
-using ViewWinForms.View.Forms;
+using LanExchange.View.Forms;
 
-namespace ViewWinForms.View
+namespace LanExchange.View
 {
     public class MainFormMediator : Mediator, IFormMediator, IMediator
     {
