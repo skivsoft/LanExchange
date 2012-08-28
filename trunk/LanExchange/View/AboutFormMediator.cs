@@ -22,10 +22,10 @@ namespace LanExchange.View
         {
             using (AboutForm form = new AboutForm())
             {
-                form.Text = String.Format(Globals.T("AboutForm.Text"), form.ProductName);
-                if (Globals.Resources != null)
+                form.Text = String.Format(AppFacade.T("AboutForm.Text"), form.ProductName);
+                if (AppFacade.Resources != null)
                 {
-                    form.picLogo.Image = Globals.Resources.GetImage("logo_icon");
+                    form.picLogo.Image = AppFacade.Resources.GetImage("logo_icon");
                 }
                 form.ShowDialog();
             }

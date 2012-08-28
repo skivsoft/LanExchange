@@ -6,6 +6,9 @@ using LanExchange.Controller;
 using PureMVC.PureInterfaces;
 using LanExchange.Model;
 using System.IO;
+using System.Windows.Forms;
+using LanExchange.View;
+using System.Reflection;
 
 namespace LanExchange
 {
@@ -61,7 +64,7 @@ namespace LanExchange
         protected override void InitializeController()
         {
             base.InitializeController();
-            RegisterCommand(Globals.CMD_STARTUP, typeof(StartupCommand));
+            RegisterCommand(AppFacade.CMD_STARTUP, typeof(StartupCommand));
         }
 
         protected override void InitializeModel()
@@ -73,12 +76,6 @@ namespace LanExchange
             RegisterProxy(new AboutProxy());
             RegisterProxy(new CurrentUserProxy());
             RegisterProxy(new MenuProxy());
-        }
-
-        protected override void InitializeView()
-        {
-            base.InitializeView();
-            RegisterMediator(new ApplicationMediator());
         }
         #endregion
 
@@ -103,7 +100,7 @@ namespace LanExchange
             {
                 if (object.ReferenceEquals(m_Resources, null))
                 {
-                    ResourceProxy temp = (ResourceProxy)Facade.RetrieveProxy("ResourceProxy");
+                    ResourceProxy temp = (ResourceProxy)Instance.RetrieveProxy("ResourceProxy");
                     m_Resources = temp;
                 }
                 return m_Resources;
@@ -132,7 +129,7 @@ namespace LanExchange
             {
                 if (Info.PropertyType.Equals(typeof(String)) && Info.CanWrite)
                 {
-                    string S = Globals.Resources.GetText(String.Format("{0}.{1}", path, Info.Name));
+                    string S = AppFacade.Resources.GetText(String.Format("{0}.{1}", path, Info.Name));
                     if (!String.IsNullOrEmpty(S))
                         type.GetProperty(Info.Name).SetValue(control, S, null);
                 }
@@ -144,7 +141,7 @@ namespace LanExchange
 
         public static void LocalizeControl(Control control)
         {
-            if (Globals.Resources == null)
+            if (AppFacade.Resources == null)
                 return;
             InternalLocalizeControl(control, control.Name);
         }

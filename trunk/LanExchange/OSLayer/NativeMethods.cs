@@ -33,7 +33,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace ViewWinForms
+namespace LanExchange.OSLayer
 {
     /// <summary>
     /// Wrapper for all native method calls on ListView controls

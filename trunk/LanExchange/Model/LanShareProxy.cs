@@ -9,11 +9,11 @@ using LanExchange;
 
 namespace LanExchange.Model
 {
-    public class ShareProxy : PanelItemProxy
+    public class LanShareProxy : PanelItemProxy
     {
-        public new const string NAME = "ShareProxy";
+        public new const string NAME = "LanShareProxy";
 
-        public ShareProxy()
+        public LanShareProxy()
             : base(NAME)
         {
 
@@ -30,9 +30,9 @@ namespace LanExchange.Model
         public override ColumnVO[] GetColumns()
         {
             return new ColumnVO[] { 
-                new ColumnVO(Globals.T("ColumnResourceName"), 130),
+                new ColumnVO(AppFacade.T("ColumnResourceName"), 130),
                 new ColumnVO("*:", 20),
-                new ColumnVO(Globals.T("ColumnComment"), 250)
+                new ColumnVO(AppFacade.T("ColumnComment"), 250)
             };
         }
 

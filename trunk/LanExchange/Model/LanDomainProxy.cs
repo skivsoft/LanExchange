@@ -11,11 +11,11 @@ using LanExchange;
 
 namespace LanExchange.Model
 {
-    public class DomainProxy : PanelItemProxy
+    public class LanDomainProxy : PanelItemProxy
     {
-        public new const string NAME = "DomainProxy";
+        public new const string NAME = "LanDomainProxy";
 
-        public DomainProxy()
+        public LanDomainProxy()
             : base(NAME)
         {
 
@@ -24,7 +24,7 @@ namespace LanExchange.Model
         public override ColumnVO[] GetColumns()
         {
             return new ColumnVO[] { 
-                new ColumnVO(Globals.T("ColumnDomainName"), 130)
+                new ColumnVO(AppFacade.T("ColumnDomainName"), 130)
             };
         }
 

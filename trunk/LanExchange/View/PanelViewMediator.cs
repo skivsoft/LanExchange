@@ -45,7 +45,7 @@ namespace LanExchange.View
         private string GetRootProxyName()
         {
             string Result = String.Empty;
-            NavigatorProxy navigator = (NavigatorProxy)Facade.RetrieveProxy("NavigatorProxy");
+            NavigatorProxy navigator = (NavigatorProxy)Facade.RetrieveProxy(NavigatorProxy.NAME);
             if (navigator != null)
             {
                 IList<string> list = navigator.GetRoots();
@@ -63,7 +63,7 @@ namespace LanExchange.View
         public override IList<string> ListNotificationInterests()
         {
             IList<string> list = new List<string>();
-            list.Add(Globals.UPDATE_ITEMS);
+            list.Add(AppFacade.UPDATE_ITEMS);
             return list;
         }
 
@@ -71,7 +71,7 @@ namespace LanExchange.View
         {
             switch (note.Name)
             {
-                case Globals.UPDATE_ITEMS:
+                case AppFacade.UPDATE_ITEMS:
                     string path = (string)note.Body;
                     UpdateItems(GetRootProxyName(), String.Empty);
                     break;
@@ -153,7 +153,7 @@ namespace LanExchange.View
 
         void PV_ItemsCountChanged(object sender, EventArgs e)
         {
-            SendNotification(Globals.ITEM_COUNT_CHANGED, m_CurrentProxy.NumObjects);
+            SendNotification(AppFacade.ITEM_COUNT_CHANGED, m_CurrentProxy.NumObjects);
         }
 
 

@@ -28,10 +28,10 @@ namespace LanExchange.Model
         public override ColumnVO[] GetColumns()
         {
             return new ColumnVO[] { 
-                new ColumnVO(Globals.T("ColumnFileName"), 100),
-                new ColumnVO(Globals.T("ColumnDateModified"), 100),
-                new ColumnVO(Globals.T("ColumnType"), 100),
-                new ColumnVO(Globals.T("ColumnSize"), 100)
+                new ColumnVO(AppFacade.T("ColumnFileName"), 100),
+                new ColumnVO(AppFacade.T("ColumnDateModified"), 100),
+                new ColumnVO(AppFacade.T("ColumnType"), 100),
+                new ColumnVO(AppFacade.T("ColumnSize"), 100)
             };
         }
 

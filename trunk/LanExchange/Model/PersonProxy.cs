@@ -19,9 +19,9 @@ namespace LanExchange.Model
         public override ColumnVO[] GetColumns()
         {
             return new ColumnVO[] { 
-                new ColumnVO(Globals.T("ColumnPersonName"), 100),
-                new ColumnVO(Globals.T("ColumnPersonPosition"), 100),
-                new ColumnVO(Globals.T("ColumnPersonSubdiv"), 100)
+                new ColumnVO(AppFacade.T("ColumnPersonName"), 100),
+                new ColumnVO(AppFacade.T("ColumnPersonPosition"), 100),
+                new ColumnVO(AppFacade.T("ColumnPersonSubdiv"), 100)
             };
         }
 

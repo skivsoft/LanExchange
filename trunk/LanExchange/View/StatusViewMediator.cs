@@ -22,13 +22,13 @@ namespace LanExchange.View
         {
             base.OnRegister();
 
-            if (Globals.Resources != null)
+            if (AppFacade.Resources != null)
             {
-                Status.lCompName.Image = Globals.Resources.GetImage("current_computer");
-                Status.lUserName.Image = Globals.Resources.GetImage("current_user");
+                Status.lCompName.Image = AppFacade.Resources.GetImage("current_computer");
+                Status.lUserName.Image = AppFacade.Resources.GetImage("current_user");
             }
-            
-            CurrentUserProxy Obj = (CurrentUserProxy)Facade.RetrieveProxy("CurrentUserProxy");
+
+            CurrentUserProxy Obj = (CurrentUserProxy)Facade.RetrieveProxy(CurrentUserProxy.NAME);
             if (Obj != null)
             {
                 Status.lCompName.Text = Obj.ComputerName;
@@ -44,7 +44,7 @@ namespace LanExchange.View
         public override IList<string> ListNotificationInterests()
         {
             IList<string> list = new List<string>();
-            list.Add(Globals.ITEM_COUNT_CHANGED);
+            list.Add(AppFacade.ITEM_COUNT_CHANGED);
             return list;
         }
 
@@ -52,9 +52,9 @@ namespace LanExchange.View
         {
             switch (note.Name)
             {
-                case Globals.ITEM_COUNT_CHANGED:
+                case AppFacade.ITEM_COUNT_CHANGED:
                     int Value = (int)note.Body;
-                    Status.lItemsCount.Text = String.Format(Globals.T("ItemsShowed"), Value);
+                    Status.lItemsCount.Text = String.Format(AppFacade.T("ItemsShowed"), Value);
                     break;
             }
         }

@@ -29,10 +29,10 @@ namespace LanExchange.Model
         public override ColumnVO[] GetColumns()
         {
             return new ColumnVO[] { 
-                new ColumnVO(Globals.T("ColumnFileName"), 100),
-                new ColumnVO(Globals.T("ColumnDateModified"), 100),
-                new ColumnVO(Globals.T("ColumnType"), 100),
-                new ColumnVO(Globals.T("ColumnSize"), 100)
+                new ColumnVO(AppFacade.T("ColumnFileName"), 100),
+                new ColumnVO(AppFacade.T("ColumnDateModified"), 100),
+                new ColumnVO(AppFacade.T("ColumnType"), 100),
+                new ColumnVO(AppFacade.T("ColumnSize"), 100)
             };
         }
 
@@ -43,7 +43,7 @@ namespace LanExchange.Model
             FileSystemInfo[] Files = Dir.GetFileSystemInfos();
             foreach (FileSystemInfo Item in Files)
             {
-                string sType = (Item.Attributes & FileAttributes.Directory) != 0 ? Globals.T("TypeFolder") : Globals.T("TypeFile");
+                string sType = (Item.Attributes & FileAttributes.Directory) != 0 ? AppFacade.T("TypeFolder") : AppFacade.T("TypeFile");
                 Objects.Add(new PanelItemVO(Item.Name, Item));
             }
         }

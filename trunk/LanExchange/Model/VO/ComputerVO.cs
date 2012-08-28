@@ -4,7 +4,7 @@ using System.Text;
 using LanExchange.Model.VO;
 using LanExchange.OSLayer;
 
-namespace ModelNetwork.Model.VO
+namespace LanExchange.Model.VO
 {
     public class ComputerVO : PanelItemVO
     {

@@ -6,16 +6,15 @@ using System.Text;
 using LanExchange.OSLayer;
 using LanExchange.Model;
 using LanExchange.Model.VO;
-using ModelNetwork.Model.VO;
 using LanExchange;
 
 namespace LanExchange.Model
 {
-    public class ComputerProxy : PanelItemProxy
+    public class LanComputerProxy : PanelItemProxy
     {
-        public new const string NAME = "ComputerProxy";
+        public new const string NAME = "LanComputerProxy";
 
-        public ComputerProxy()
+        public LanComputerProxy()
             : base(NAME)
         {
 
@@ -32,9 +31,9 @@ namespace LanExchange.Model
         public override ColumnVO[] GetColumns()
         {
             return new ColumnVO[] { 
-                new ColumnVO(Globals.T("ColumnNetworkName"), 130),
-                new ColumnVO(Globals.T("ColumnComment"), 250),
-                new ColumnVO(Globals.T("ColumnOSVersion"), 130)
+                new ColumnVO(AppFacade.T("ColumnNetworkName"), 130),
+                new ColumnVO(AppFacade.T("ColumnComment"), 250),
+                new ColumnVO(AppFacade.T("ColumnOSVersion"), 130)
             };
         }
 

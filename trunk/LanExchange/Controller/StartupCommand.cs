@@ -15,36 +15,36 @@ namespace LanExchange.Controller
         public override void Execute(INotification notification)
         {
             // set current language
-            ResourceProxy resource = (ResourceProxy)Facade.RetrieveProxy("ResourceProxy");
+            ResourceProxy resource = (ResourceProxy)Facade.RetrieveProxy(ResourceProxy.NAME);
             if (resource != null)
             {
                 resource.CurrentLanguage = "russian";
             }
 
             // network browser
-            Facade.RegisterProxy(new DomainProxy());
-            Facade.RegisterProxy(new DomainProxy());
-            Facade.RegisterProxy(new ComputerProxy());
-            Facade.RegisterProxy(new ShareProxy());
+            Facade.RegisterProxy(new LanDomainProxy());
+            Facade.RegisterProxy(new LanComputerProxy());
+            Facade.RegisterProxy(new LanShareProxy());
             //facade.RegisterProxy(new FileProxy());
 
             // personal explorer
             Facade.RegisterProxy(new PersonProxy());
 
-            NavigatorProxy navigator = (NavigatorProxy)Facade.RetrieveProxy("NavigatorProxy");
+            NavigatorProxy navigator = (NavigatorProxy)Facade.RetrieveProxy(NavigatorProxy.NAME);
             if (navigator != null)
             {
-                navigator.AddTransition("DomainProxy", "ComputerProxy");
-                navigator.AddTransition("ComputerProxy", "ShareProxy");
+                navigator.AddTransition(LanDomainProxy.NAME, LanComputerProxy.NAME);
+                navigator.AddTransition(LanComputerProxy.NAME, LanShareProxy.NAME);
 
-                navigator.AddTransition("PersonProxy", String.Empty);
+                navigator.AddTransition(PersonProxy.NAME, String.Empty);
             }
+            Facade.RegisterMediator(new ApplicationMediator());
 
-
-            Facade.SendNotification(Globals.UPDATE_ITEMS);
+            // initial update of panel
+            Facade.SendNotification(AppFacade.UPDATE_ITEMS);
 
             // run app!
-            IApplicationMediator App = (IApplicationMediator)Facade.RetrieveMediator("ApplicationMediator");
+            IApplicationMediator App = (IApplicationMediator)Facade.RetrieveMediator(ApplicationMediator.NAME);
             if (App != null)
             {
                 App.Run();

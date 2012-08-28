@@ -26,10 +26,10 @@ namespace LanExchange.View
         {
             base.OnRegister();
 
-            if (Globals.Resources != null)
+            if (AppFacade.Resources != null)
             {
-                m_Form.picLogo.Image = Globals.Resources.GetImage("logo_icon");
-                Localization.ProcessControl(m_Form);
+                m_Form.picLogo.Image = AppFacade.Resources.GetImage("logo_icon");
+                AppFacade.LocalizeControl(m_Form);
             }
         }
 
