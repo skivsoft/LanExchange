@@ -31,9 +31,9 @@ namespace LanExchange.Model
         public override ColumnVO[] GetColumns()
         {
             return new ColumnVO[] { 
-                new ColumnVO(AppFacade.T("ColumnNetworkName"), 130),
-                new ColumnVO(AppFacade.T("ColumnComment"), 250),
-                new ColumnVO(AppFacade.T("ColumnOSVersion"), 130)
+                new ColumnVO(AppFacade.T("ColumnNetworkName"), 140),
+                new ColumnVO(AppFacade.T("ColumnComment"), 240),
+                new ColumnVO(AppFacade.T("ColumnOSVersion"), 140, false)
             };
         }
 

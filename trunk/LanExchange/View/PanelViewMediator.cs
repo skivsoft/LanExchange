@@ -115,38 +115,21 @@ namespace LanExchange.View
                 Panel.SetLevelUp();
                 return;
             }
-            switch(m_CurrentProxyName)
+            NavigatorProxy navigator = (NavigatorProxy)Facade.RetrieveProxy(NavigatorProxy.NAME);
+            if (navigator != null)
             {
-                case "DomainProxy":
-                    UpdateItems("ComputerProxy", Current.Name);
-                    break;
-                case "ComputerProxy":
-                    UpdateItems("ShareProxy", Current.Name);
-                    break;
-                case "ShareProxy":
-                    PanelItemVO First = Panel.FirstPanelItem;
-                    if (First != null && First.SubItems.Length > 1)
-                    {
-                        UpdateItems("FileProxy", Path.Combine(First.SubItems[1], Current.Name));
-                    }
-                    break;
+                String S = navigator.GetChildLevel(m_CurrentProxyName);
+                UpdateItems(S, Current.Name);
             }
         }
 
         void PV_LevelUp(object sender, EventArgs e)
         {
-            switch(m_CurrentProxyName)
+            NavigatorProxy navigator = (NavigatorProxy)Facade.RetrieveProxy(NavigatorProxy.NAME);
+            if (navigator != null)
             {
-                case "ComputerProxy":
-                    m_Path = "";
-                    UpdateItems("DomainProxy", "");
-                    break;
-                case "ShareProxy":
-                    UpdateItems("ComputerProxy", "FERMAK");
-                    break;
-                case "FileProxy":
-                    UpdateItems("ShareProxy", "MIKHAILYUK-KA");
-                    break;
+                String S = navigator.GetParentLevel(m_CurrentProxyName);
+                UpdateItems(S, String.Empty);
             }
             //SendNotification(ApplicationFacade.LEVEL_UP, this);
         }

@@ -27,6 +27,22 @@ namespace LanExchange.Model
                 m_Backward.Add(ToProxy, FromProxy);
         }
 
+        public String GetChildLevel(string From)
+        {
+            if (m_Forward.ContainsKey(From))
+                return m_Forward[From];
+            else
+                return String.Empty;
+        }
+
+        public String GetParentLevel(string From)
+        {
+            if (m_Backward.ContainsKey(From))
+                return m_Backward[From];
+            else
+                return String.Empty;
+        }
+
         public IList<string> GetRoots()
         {
             List<string> Result = new List<string>();

@@ -28,6 +28,10 @@ namespace LanExchange.View.Components
             LV.Columns.Clear();
             for (int i = 0; i < columns.Length; i++)
             {
+                ColumnHeader header = new ColumnHeader();
+                header.Text = columns[i].Title;
+                header.Width = columns[i].Width;
+                
                 LV.Columns.Add(columns[i].Title, columns[i].Width);
             }
         }
