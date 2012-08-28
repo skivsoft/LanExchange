@@ -75,11 +75,9 @@
     <Compile Include="Model\PersonProxy.cs" />
     <Compile Include="Model\ResourceProxy.cs" />
     <Compile Include="Model\LanShareProxy.cs" />
-    <Compile Include="Model\VO\ColumnVO.cs" />
     <Compile Include="Model\VO\ComputerVO.cs" />
+    <Compile Include="Model\VO\DomainVO.cs" />
     <Compile Include="Model\VO\PanelItemVO.cs" />
-    <Compile Include="Model\VO\PluginVO.cs" />
-    <Compile Include="OSLayer\NativeMethods.cs" />
     <Compile Include="OSLayer\Detect.cs" />
     <Compile Include="OSLayer\Kernel32.cs" />
     <Compile Include="OSLayer\NetApi32.cs" />
@@ -109,10 +107,7 @@
     <Compile Include="PureMVC\Patterns\Proxy\Proxy.cs" />
     <Compile Include="View\AboutFormMediator.cs" />
     <Compile Include="View\ApplicationMediator.cs" />
-    <Compile Include="View\Components\Bevel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="View\Components\ListViewEx.cs">
+    <Compile Include="View\Components\BevelControl.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="View\Components\PanelView.cs">
@@ -169,6 +164,12 @@
     <EmbeddedResource Include="View\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ObjectListView\ObjectListView2008.csproj">
+      <Project>{18FEDA0C-D147-4286-B39A-01204808106A}</Project>
+      <Name>ObjectListView2008</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>

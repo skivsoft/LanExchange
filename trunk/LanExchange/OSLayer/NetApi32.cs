@@ -84,7 +84,7 @@ namespace LanExchange.OSLayer
                         }
                     case SV_101_PLATFORM.PLATFORM_ID_NT:
                         if ((sv101_type & (uint)SV_101_TYPES.SV_TYPE_XENIX_SERVER) != 0)
-                            return String.Format("Xenix Server {0}.{1}", sv101_version_major, sv101_version_minor);
+                            return String.Format("Linux Server {0}.{1}", sv101_version_major, sv101_version_minor);
                         else
                             switch (sv101_version_major)
                             {

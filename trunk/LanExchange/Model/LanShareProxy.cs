@@ -6,6 +6,7 @@ using LanExchange.Model.VO;
 using LanExchange.Model;
 using LanExchange.OSLayer;
 using LanExchange;
+using BrightIdeasSoftware;
 
 namespace LanExchange.Model
 {
@@ -27,17 +28,22 @@ namespace LanExchange.Model
             }
         }
 
-        public override ColumnVO[] GetColumns()
+        public override OLVColumn[] GetColumns()
         {
-            return new ColumnVO[] { 
-                new ColumnVO(AppFacade.T("ColumnResourceName"), 130),
-                new ColumnVO("*:", 20),
-                new ColumnVO(AppFacade.T("ColumnComment"), 250)
+            OLVColumn[] Result = new OLVColumn[] { 
+                new OLVColumn(AppFacade.T("ColumnShareName"), "Name"),
+                new OLVColumn("*:", "MappedLetter"),
+                new OLVColumn(AppFacade.T("ColumnComment"), "Comment")
             };
+            Result[0].Width = 130;
+            Result[2].Width = 250;
+            return Result;
         }
 
         public override void EnumObjects(string Server)
         {
+            Objects.Clear();
+
             NetApi32.SHARE_INFO_1 shi1;
             shi1.shi1_remark = Server;
             Objects.Add(new PanelItemVO("..", null));

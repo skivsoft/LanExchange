@@ -7,6 +7,7 @@ using LanExchange.OSLayer;
 using LanExchange.Model;
 using LanExchange.Model.VO;
 using LanExchange;
+using BrightIdeasSoftware;
 
 namespace LanExchange.Model
 {
@@ -28,17 +29,24 @@ namespace LanExchange.Model
             }
         }
 
-        public override ColumnVO[] GetColumns()
+        public override OLVColumn[] GetColumns()
         {
-            return new ColumnVO[] { 
-                new ColumnVO(AppFacade.T("ColumnNetworkName"), 140),
-                new ColumnVO(AppFacade.T("ColumnComment"), 240),
-                new ColumnVO(AppFacade.T("ColumnOSVersion"), 140, false)
+            OLVColumn[] Result = new OLVColumn[] { 
+                new OLVColumn(AppFacade.T("ColumnNetworkName"), "Name"),
+                new OLVColumn(AppFacade.T("ColumnComment"), "Comment"),
+                new OLVColumn(AppFacade.T("ColumnOSVersion"), "Version")
             };
+            Result[0].Width = 140;
+            Result[1].Width = 240;
+            Result[2].Width = 140;
+            Result[2].IsVisible = false;
+            return Result;
         }
 
         public override void EnumObjects(string Domain)
         {
+            Objects.Clear();
+
             NetApi32.SERVER_INFO_101 si;
             si.sv101_name = Domain;
             Objects.Add(new PanelItemVO("..", null));

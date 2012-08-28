@@ -12,6 +12,51 @@ using LanExchange.View.Components;
 
 namespace LanExchange.View
 {
+    public class Computer
+    {
+        private string m_Name = String.Empty;
+        private string m_Comment = String.Empty;
+        private string m_Version = String.Empty;
+
+        public Computer(string name)
+        {
+            m_Name = name;
+        }
+
+        public Computer(string name, string comment, string version)
+        {
+            m_Name = name;
+            m_Comment = comment;
+            m_Version = version;
+        }
+
+        public Computer(Computer other)
+        {
+            m_Name = other.m_Name;
+            m_Comment = other.m_Comment;
+            m_Version = other.m_Version;
+        }
+
+        public string Name
+        {
+            get { return m_Name; }
+            set { m_Name = value; }
+        }
+
+        public string Comment
+        {
+            get { return m_Comment; }
+            set { m_Comment = value; }
+        }
+
+        public string Version
+        {
+            get { return m_Version; }
+            set { m_Version = value; }
+        }
+    }
+
+
     public class PanelViewMediator : Mediator, IMediator
     {
         public new const string NAME = "PanelViewMediator";
@@ -31,7 +76,7 @@ namespace LanExchange.View
             PV.LevelDown += new EventHandler(PV_LevelDown);
             PV.LevelUp += new EventHandler(PV_LevelUp);
             PV.ItemsCountChanged += new EventHandler(PV_ItemsCountChanged);
-            PV.LV.ColumnClick += new ColumnClickEventHandler(LV_ColumnClick);
+            //PV.LV.ColumnClick += new ColumnClickEventHandler(LV_ColumnClick);
 
             m_Comparer = new PanelItemComparer();
             m_Comparer.SortOrders.Add(new PanelItemSortOrder(0, PanelItemSortDirection.Ascending));
@@ -89,19 +134,9 @@ namespace LanExchange.View
                 m_CurrentProxyName = NewProxyName;
                 m_Path = NewPath;
                 // update items
-                Panel.LV.BeginUpdate();
-                try
-                {
-                    m_CurrentProxy.Objects.Clear();
-                    m_CurrentProxy.EnumObjects(m_Path);
-                    m_CurrentProxy.Sort(m_Comparer);
-                    Panel.SetColumns(m_CurrentProxy.GetColumns());
-                    Panel.AddItems(m_CurrentProxy.Objects);
-                }
-                finally
-                {
-                    Panel.LV.EndUpdate();
-                }
+                m_CurrentProxy.EnumObjects(m_Path);
+                Panel.SetColumns(m_CurrentProxy.GetColumns());
+                Panel.SetObjects(m_CurrentProxy.Objects);
             }
         }
 
@@ -183,6 +218,7 @@ namespace LanExchange.View
 
         void LV_ColumnClick(object sender, ColumnClickEventArgs e)
         {
+            /*
             Panel.LV.BeginUpdate();
             Panel.SaveSelected();
             try
@@ -195,6 +231,7 @@ namespace LanExchange.View
                 Panel.RestoreSelected();
                 Panel.LV.EndUpdate();
             }
+             */
         }
     }
 }

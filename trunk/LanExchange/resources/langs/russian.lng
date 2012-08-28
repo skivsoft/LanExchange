@@ -7,11 +7,15 @@ MainForm.Text=Общие папки
 MainForm.pTop.lCaption.Text=Общие папки
 MainForm.pTop.lDesc.Text=Здесь показаны компьютеры локальной вычислительной сети. Возможен поиск по имени компьютера и по описанию.
 
+.LV.EmptyListMsg=Нет данных
+
+ColumnDomainName=Домен/Группа
+ColumnMasterBrowser=Главный браузер
+
+ColumnNetworkName=Сетевое имя
 ColumnComment=Описание
 ColumnDateModified=Дата изменения
-ColumnDomainName=Домен/Группа
 ColumnFileName=Имя
-ColumnNetworkName=Сетевое имя
 ColumnOSVersion=Версия ОС
 ColumnShareName=Общий ресурс
 ColumnSize=Размер

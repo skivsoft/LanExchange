@@ -24,7 +24,7 @@ namespace LanExchange.Controller
             // network browser
             Facade.RegisterProxy(new LanDomainProxy());
             Facade.RegisterProxy(new LanComputerProxy());
-            Facade.RegisterProxy(new LanShareProxy());
+            //Facade.RegisterProxy(new LanShareProxy());
             //facade.RegisterProxy(new FileProxy());
 
             // personal explorer
@@ -35,7 +35,9 @@ namespace LanExchange.Controller
             {
                 navigator.AddTransition(LanDomainProxy.NAME, LanComputerProxy.NAME);
                 navigator.AddTransition(LanComputerProxy.NAME, LanShareProxy.NAME);
-
+                navigator.AddTransition(LanShareProxy.NAME, FileProxy.NAME);
+                navigator.AddTransition(FileProxy.NAME, ArchiveProxy.NAME);
+                
                 navigator.AddTransition(PersonProxy.NAME, String.Empty);
             }
             Facade.RegisterMediator(new ApplicationMediator());

@@ -4,6 +4,7 @@ using System.Text;
 using LanExchange.Model;
 using LanExchange.Model.VO;
 using LanExchange;
+using BrightIdeasSoftware;
 
 namespace LanExchange.Model
 {
@@ -16,18 +17,22 @@ namespace LanExchange.Model
         {
         }
 
-        public override ColumnVO[] GetColumns()
+        public override OLVColumn[] GetColumns()
         {
-            return new ColumnVO[] { 
-                new ColumnVO(AppFacade.T("ColumnPersonName"), 100),
-                new ColumnVO(AppFacade.T("ColumnPersonPosition"), 100),
-                new ColumnVO(AppFacade.T("ColumnPersonSubdiv"), 100)
+            OLVColumn[] Result = new OLVColumn[] { 
+                new OLVColumn(AppFacade.T("ColumnPersonName"), "Name"),
+                new OLVColumn(AppFacade.T("ColumnPersonPosition"), "Ocupation"),
+                new OLVColumn(AppFacade.T("ColumnPersonSubdiv"), "Subdiv")
             };
+            Result[0].Width = 100;
+            Result[1].Width = 100;
+            Result[2].Width = 100;
+            return Result;
         }
 
         public override void EnumObjects(string path)
         {
-            Objects.Add(new PanelItemVO("IVANOV", null));
+            Objects.Clear();
         }
     }
 }

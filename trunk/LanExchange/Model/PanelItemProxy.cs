@@ -4,6 +4,7 @@ using System.Text;
 using PureMVC.PurePatterns;
 using PureMVC.PureInterfaces;
 using LanExchange.Model.VO;
+using BrightIdeasSoftware;
 
 
 namespace LanExchange.Model
@@ -33,9 +34,11 @@ namespace LanExchange.Model
             ((List<PanelItemVO>)Data).Sort(comparer);
         }
 
-        public virtual ColumnVO[] GetColumns()
+        public virtual OLVColumn[] GetColumns()
         {
-            return new ColumnVO[] { new ColumnVO("", 100) };
+            OLVColumn column = new OLVColumn("", "Name");
+            column.Width = 100;
+            return new OLVColumn[] { column };
         }
     }
 }

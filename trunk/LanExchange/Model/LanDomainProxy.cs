@@ -8,6 +8,7 @@ using LanExchange.OSLayer;
 using LanExchange.Model;
 using LanExchange.Model.VO;
 using LanExchange;
+using BrightIdeasSoftware;
 
 namespace LanExchange.Model
 {
@@ -21,21 +22,25 @@ namespace LanExchange.Model
 
         }
 
-        public override ColumnVO[] GetColumns()
+        public override OLVColumn[] GetColumns()
         {
-            return new ColumnVO[] { 
-                new ColumnVO(AppFacade.T("ColumnDomainName"), 130)
+            OLVColumn[] Result = new OLVColumn[] { 
+                new OLVColumn(AppFacade.T("ColumnDomainName"), "Name"),
+                new OLVColumn(AppFacade.T("ColumnMasterBrowser"), "MasterBrowser")
             };
+            Result[0].Width = 140;
+            Result[1].Width = 140;
+            return Result;
         }
 
         public override void EnumObjects(string path)
         {
-            
+            Objects.Clear();
+
             NetApi32.SERVER_INFO_101 si;
             IntPtr pInfo = IntPtr.Zero;
             int entriesread = 0;
             int totalentries = 0;
-            //unsafe
             {
                 try
                 {
@@ -46,11 +51,7 @@ namespace LanExchange.Model
                         for (int i = 0; i < entriesread; i++)
                         {
                             si = (NetApi32.SERVER_INFO_101)Marshal.PtrToStructure(new IntPtr(ptr), typeof(NetApi32.SERVER_INFO_101));
-                            // в режиме пользователя не сканируем: сервера, контроллеры домена
-                            //bool bServer = (si.sv101_type & 0x8018) != 0;
-                            //if (Program.AdminMode || !bServer)
-                            //Result.Add(new TComputerItem(si.sv101_name, si.sv101_comment, si.sv101_platform_id, si.sv101_version_major, si.sv101_version_minor, si.sv101_type));
-                            Objects.Add(new PanelItemVO(si.sv101_name, si));
+                            Objects.Add(new DomainVO(si.sv101_name, si.sv101_comment));
                             ptr += Marshal.SizeOf(si);
                         }
                     }

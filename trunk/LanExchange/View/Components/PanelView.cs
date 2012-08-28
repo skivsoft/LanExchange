@@ -9,6 +9,8 @@ using LanExchange;
 using LanExchange.Model.VO;
 using LanExchange.View;
 using LanExchange.View.Forms;
+using System.Collections;
+using BrightIdeasSoftware;
 
 namespace LanExchange.View.Components
 {
@@ -23,17 +25,16 @@ namespace LanExchange.View.Components
             InitializeComponent();
         }
 
-        public void SetColumns(ColumnVO[] columns)
+        public void SetColumns(OLVColumn[] columns)
         {
+            // all columns
+            LV.AllColumns.Clear();
+            LV.AllColumns.AddRange(columns);
+            // visible columns only
             LV.Columns.Clear();
-            for (int i = 0; i < columns.Length; i++)
-            {
-                ColumnHeader header = new ColumnHeader();
-                header.Text = columns[i].Title;
-                header.Width = columns[i].Width;
-                
-                LV.Columns.Add(columns[i].Title, columns[i].Width);
-            }
+            foreach(OLVColumn column in columns)
+                if (column.IsVisible)
+                    LV.Columns.Add(column);
         }
 
         public void AddItems(IList<PanelItemVO> items)
@@ -46,6 +47,12 @@ namespace LanExchange.View.Components
             }
             //LV.Refresh();
         }
+
+        public void SetObjects(IEnumerable collection)
+        {
+            LV.SetObjects(collection);
+        }
+        
 
         public event EventHandler LevelDown;
         public event EventHandler LevelUp;
@@ -96,10 +103,7 @@ namespace LanExchange.View.Components
         {
             get 
             {
-                if (LV.FocusedItem == null) 
-                    return null;
-                else
-                    return (PanelItemVO)LV.FocusedItem.Tag;
+                return (PanelItemVO)LV.SelectedObject;
             }
         }
 
@@ -141,40 +145,7 @@ namespace LanExchange.View.Components
                     SetLevelUp();
                     e.Handled = true;
                     break;
-                default:
-                    // Ctrl+A select all items 
-                    if (e.Control && e.KeyCode == Keys.A)
-                    {
-                        LV.SelectAllItems();
-                        e.Handled = true;
-                    }
-                    break;
             }
-        }
-
-        private void LV_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            SetLevelDown();
-        }
-
-        private void LV_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
-        {
-            if (e.ItemIndex < 0 || e.ItemIndex > m_CurrentItems.Count - 1)
-                return;
-            PanelItemVO Item = m_CurrentItems[e.ItemIndex];
-            e.Item = new ListViewItem(Item.Name);
-            string[] SubItems = Item.SubItems;
-            for(int i = 0; i < SubItems.Length; i++)
-                e.Item.SubItems.Add(SubItems[i]);
-            // add empty columns if needed
-            for (int i = 1 + SubItems.Length; i < LV.Columns.Count; i++)
-                e.Item.SubItems.Add("");
-            e.Item.Tag = Item;
-        }
-
-        private void contextMenu_Opening(object sender, CancelEventArgs e)
-        {
-
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -184,6 +155,11 @@ namespace LanExchange.View.Components
             {
                 M.ShowDialog();
             }
+        }
+
+        private void LV_DoubleClick(object sender, EventArgs e)
+        {
+            SetLevelDown();
         }
     }
 }

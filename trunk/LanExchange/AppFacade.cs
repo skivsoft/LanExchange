@@ -132,6 +132,12 @@ namespace LanExchange
                     string S = AppFacade.Resources.GetText(String.Format("{0}.{1}", path, Info.Name));
                     if (!String.IsNullOrEmpty(S))
                         type.GetProperty(Info.Name).SetValue(control, S, null);
+                    else
+                    {
+                        S = AppFacade.Resources.GetText(String.Format(".{0}.{1}", control.Name, Info.Name));
+                        if (!String.IsNullOrEmpty(S))
+                            type.GetProperty(Info.Name).SetValue(control, S, null);
+                    }
                 }
             }
             // localize child controls
