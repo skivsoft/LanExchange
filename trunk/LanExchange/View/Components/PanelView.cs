@@ -37,26 +37,8 @@ namespace LanExchange.View.Components
                     LV.Columns.Add(column);
         }
 
-        public void AddItems(IList<PanelItemVO> items)
-        {
-            m_CurrentItems = items;
-            if (LV.VirtualListSize != items.Count)
-            {
-                LV.VirtualListSize = items.Count;
-                SetItemsCountChanged();
-            }
-            //LV.Refresh();
-        }
-
-        public void SetObjects(IEnumerable collection)
-        {
-            LV.SetObjects(collection);
-        }
-        
-
         public event EventHandler LevelDown;
         public event EventHandler LevelUp;
-        public event EventHandler ItemsCountChanged;
 
         protected virtual void OnLevelDown(EventArgs e)
         {
@@ -68,11 +50,6 @@ namespace LanExchange.View.Components
             if (LevelUp != null) LevelUp(this, e);
         }
 
-        protected virtual void OnItemsCountChanged(EventArgs e)
-        {
-            if (ItemsCountChanged != null) ItemsCountChanged(this, e);
-        }
-
         public virtual void SetLevelDown()
         {
             OnLevelDown(new EventArgs());
@@ -81,11 +58,6 @@ namespace LanExchange.View.Components
         public virtual void SetLevelUp()
         {
             OnLevelUp(new EventArgs());
-        }
-
-        protected virtual void SetItemsCountChanged()
-        {
-            OnItemsCountChanged(new EventArgs());
         }
 
         public PanelItemVO FirstPanelItem

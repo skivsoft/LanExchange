@@ -9,6 +9,7 @@ using LanExchange.Model.VO;
 using PureMVC.PureInterfaces;
 using PureMVC.PurePatterns;
 using LanExchange.View.Components;
+using BrightIdeasSoftware;
 
 namespace LanExchange.View
 {
@@ -75,7 +76,7 @@ namespace LanExchange.View
 		{
             PV.LevelDown += new EventHandler(PV_LevelDown);
             PV.LevelUp += new EventHandler(PV_LevelUp);
-            PV.ItemsCountChanged += new EventHandler(PV_ItemsCountChanged);
+            PV.LV.ItemsChanged += new EventHandler<BrightIdeasSoftware.ItemsChangedEventArgs>(PV_ItemsChanged);
             //PV.LV.ColumnClick += new ColumnClickEventHandler(LV_ColumnClick);
 
             m_Comparer = new PanelItemComparer();
@@ -136,7 +137,7 @@ namespace LanExchange.View
                 // update items
                 m_CurrentProxy.EnumObjects(m_Path);
                 Panel.SetColumns(m_CurrentProxy.GetColumns());
-                Panel.SetObjects(m_CurrentProxy.Objects);
+                Panel.LV.SetObjects(m_CurrentProxy.Objects);
             }
         }
 
@@ -169,9 +170,9 @@ namespace LanExchange.View
             //SendNotification(ApplicationFacade.LEVEL_UP, this);
         }
 
-        void PV_ItemsCountChanged(object sender, EventArgs e)
+        void PV_ItemsChanged(object sender, BrightIdeasSoftware.ItemsChangedEventArgs e)
         {
-            SendNotification(AppFacade.ITEM_COUNT_CHANGED, m_CurrentProxy.NumObjects);
+            SendNotification(AppFacade.ITEM_COUNT_CHANGED, e.NewObjectCount);
         }
 
 

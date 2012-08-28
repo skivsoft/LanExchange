@@ -34,7 +34,6 @@
             // 
             // LV
             // 
-            this.LV.CheckBoxes = false;
             this.LV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LV.EmptyListMsg = "";
             this.LV.FullRowSelect = true;
@@ -68,6 +67,6 @@
         private System.Windows.Forms.ToolStripMenuItem propertiesToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private BrightIdeasSoftware.FastObjectListView LV;
+        public BrightIdeasSoftware.FastObjectListView LV;
     }
 }
