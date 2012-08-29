@@ -40,6 +40,7 @@
             this.LV.GridLines = true;
             this.LV.Location = new System.Drawing.Point(0, 0);
             this.LV.Name = "LV";
+            this.LV.ShowCommandMenuOnRightClick = true;
             this.LV.ShowGroups = false;
             this.LV.Size = new System.Drawing.Size(368, 520);
             this.LV.TabIndex = 0;

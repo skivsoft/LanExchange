@@ -8,6 +8,15 @@ MainForm.pTop.lCaption.Text=Общие папки
 MainForm.pTop.lDesc.Text=Здесь показаны компьютеры локальной вычислительной сети. Возможен поиск по имени компьютера и по описанию.
 
 .LV.EmptyListMsg=Нет данных
+.LV.MenuLabelColumns=Columns=Колонки
+.LV.MenuLabelGroupBy=Группировка по «{0}»
+.LV.MenuLabelLockGroupingOn=Закрепить группировку на «{0}»
+.LV.MenuLabelSelectColumns=Выбор колонок...
+.LV.MenuLabelSortAscending=По возрастанию по «{0}»
+.LV.MenuLabelSortDescending=По убыванию по «{0}»
+.LV.MenuLabelTurnOffGroups=Отключить группы
+.LV.MenuLabelUnlockGroupingOn=Открепить группировку от «{0}»
+.LV.MenuLabelUnsort=Без сортировки
 
 ColumnDomainName=Домен/Группа
 ColumnMasterBrowser=Главный браузер

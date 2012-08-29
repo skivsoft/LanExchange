@@ -34,12 +34,29 @@ namespace LanExchange.Model
             OLVColumn[] Result = new OLVColumn[] { 
                 new OLVColumn(AppFacade.T("ColumnNetworkName"), "Name"),
                 new OLVColumn(AppFacade.T("ColumnComment"), "Comment"),
-                new OLVColumn(AppFacade.T("ColumnOSVersion"), "Version")
+                new OLVColumn(AppFacade.T("ColumnOSVersion"), "SI")
             };
             Result[0].Width = 140;
             Result[1].Width = 240;
             Result[2].Width = 140;
-            Result[2].IsVisible = false;
+            /*
+            Result[2].AspectGetter = delegate(object rowObject) {
+                ComputerVO comp = rowObject as ComputerVO;
+                if (comp != null)
+                    return comp.SI;
+                else
+                    return null;
+            };
+             */
+            Result[2].AspectToStringConverter = delegate(object x)
+            {
+                ServerInfoVO info = x as ServerInfoVO;
+                if (info != null)
+                    return info.Version();
+                else
+                    return null;
+            };
+            //Result[2].IsVisible = false;
             return Result;
         }
 
@@ -49,7 +66,7 @@ namespace LanExchange.Model
 
             NetApi32.SERVER_INFO_101 si;
             si.sv101_name = Domain;
-            Objects.Add(new PanelItemVO("..", null));
+            Objects.Add(new ComputerVO(null, null));
             IntPtr pInfo = IntPtr.Zero;
             int entriesread = 0;
             int totalentries = 0;
@@ -66,7 +83,7 @@ namespace LanExchange.Model
                         //bool bServer = (si.sv101_type & 0x8018) != 0;
                         //if (Program.AdminMode || !bServer)
                         //Result.Add(new TComputerItem(si.sv101_name, si.sv101_comment, si.sv101_platform_id, si.sv101_version_major, si.sv101_version_minor, si.sv101_type));
-                        Objects.Add(new ComputerVO(@"\\" + si.sv101_name, si));
+                        Objects.Add(new ComputerVO(@"\\" + si.sv101_name, new ServerInfoVO(si)));
                         ptr += Marshal.SizeOf(si);
                     }
                 }

@@ -16,13 +16,12 @@ namespace LanExchange.View.Components
 {
     public partial class PanelView : UserControl
     {
-        private IList<PanelItemVO> m_CurrentItems;
-        private PanelItemVO[] m_SavedSelectedItems;
-        private PanelItemVO m_SavedFocused;
+        //private IList<PanelItemVO> m_CurrentItems;
 
         public PanelView()
         {
             InitializeComponent();
+            LV.VirtualListDataSource = new FastPanelItemDataSource(LV);
         }
 
         public void SetColumns(OLVColumn[] columns)
@@ -79,33 +78,7 @@ namespace LanExchange.View.Components
             }
         }
 
-        public void SaveSelected()
-        {
-            m_SavedSelectedItems = new PanelItemVO[LV.SelectedIndices.Count];
-            for (int i = 0; i < m_SavedSelectedItems.Length; i++)
-                m_SavedSelectedItems[i] = m_CurrentItems[LV.SelectedIndices[i]];
-            m_SavedFocused = m_CurrentItems[LV.FocusedItem.Index];
-        }
-
-        public void RestoreSelected()
-        {
-            int Index;
-            LV.SelectedIndices.Clear();
-            for (int i = 0; i < m_SavedSelectedItems.Length; i++)
-            {
-                Index = m_CurrentItems.IndexOf(m_SavedSelectedItems[i]);
-                if (Index != -1)
-                    LV.SelectedIndices.Add(Index);
-            }
-            Index = m_CurrentItems.IndexOf(m_SavedFocused);
-            if (Index != -1)
-            {
-                LV.FocusedItem = LV.Items[Index];
-                LV.EnsureVisible(Index);
-            }
-        }
-
-        private void LV_KeyDown(object sender, KeyEventArgs e)
+         private void LV_KeyDown(object sender, KeyEventArgs e)
         {
             switch(e.KeyCode)
             {

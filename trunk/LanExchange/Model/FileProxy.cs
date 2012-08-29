@@ -41,7 +41,7 @@ namespace LanExchange.Model
         public override void EnumObjects(string Path)
         {
             Objects.Clear();
-            Objects.Add(new PanelItemVO("..", null));
+            Objects.Add(new PanelItemVO(null, null));
             DirectoryInfo Dir = new DirectoryInfo(Path);
             FileSystemInfo[] Files = Dir.GetFileSystemInfos();
             foreach (FileSystemInfo Item in Files)

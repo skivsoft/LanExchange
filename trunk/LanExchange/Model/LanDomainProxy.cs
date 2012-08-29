@@ -30,13 +30,13 @@ namespace LanExchange.Model
             };
             Result[0].Width = 140;
             Result[1].Width = 140;
+            Result[1].IsVisible = false;
             return Result;
         }
 
         public override void EnumObjects(string path)
         {
             Objects.Clear();
-
             NetApi32.SERVER_INFO_101 si;
             IntPtr pInfo = IntPtr.Zero;
             int entriesread = 0;

@@ -68,7 +68,6 @@ namespace LanExchange.View
 
         private const int MAX_TIME_FOR_MULTISORT = 1000;
         private int LastSortTick = 0;
-        private PanelItemComparer m_Comparer;
 
 
 		public PanelViewMediator(PanelView PV)
@@ -78,9 +77,6 @@ namespace LanExchange.View
             PV.LevelUp += new EventHandler(PV_LevelUp);
             PV.LV.ItemsChanged += new EventHandler<BrightIdeasSoftware.ItemsChangedEventArgs>(PV_ItemsChanged);
             //PV.LV.ColumnClick += new ColumnClickEventHandler(LV_ColumnClick);
-
-            m_Comparer = new PanelItemComparer();
-            m_Comparer.SortOrders.Add(new PanelItemSortOrder(0, PanelItemSortDirection.Ascending));
         }
 
         private PanelView Panel
@@ -173,66 +169,6 @@ namespace LanExchange.View
         void PV_ItemsChanged(object sender, BrightIdeasSoftware.ItemsChangedEventArgs e)
         {
             SendNotification(AppFacade.ITEM_COUNT_CHANGED, e.NewObjectCount);
-        }
-
-
-        public void ChangeSortOrder(int ColIndex)
-        {
-            if (Math.Abs(LastSortTick - System.Environment.TickCount) > MAX_TIME_FOR_MULTISORT)
-            {
-                if (m_Comparer.SortOrders.Count == 0)
-                    m_Comparer.SortOrders.Add(new PanelItemSortOrder(ColIndex, PanelItemSortDirection.Ascending));
-                else
-                {
-                    PanelItemSortOrder order = m_Comparer.SortOrders[0];
-                    if (order.Index == ColIndex)
-                        order.SwitchDirection();
-                    else
-                    {
-                        order.Index = ColIndex;
-                        order.Direction = PanelItemSortDirection.Ascending;
-                    }
-                    m_Comparer.SortOrders.Clear();
-                    m_Comparer.SortOrders.Add(order);
-                }
-            }
-            else
-            {
-                PanelItemSortOrder order;
-                bool bFound = false;
-                for (int i = 0; i < m_Comparer.SortOrders.Count; i++)
-                    if (m_Comparer.SortOrders[i].Index == ColIndex)
-                    {
-                        order = m_Comparer.SortOrders[i];
-                        order.SwitchDirection();
-                        m_Comparer.SortOrders.RemoveAt(i);
-                        m_Comparer.SortOrders.Insert(i, order);
-                        bFound = true;
-                        break;
-                    }
-                if (!bFound)
-                    m_Comparer.SortOrders.Add(new PanelItemSortOrder(ColIndex, PanelItemSortDirection.Ascending));
-            }
-            LastSortTick = System.Environment.TickCount;
-        }
-
-
-        void LV_ColumnClick(object sender, ColumnClickEventArgs e)
-        {
-            /*
-            Panel.LV.BeginUpdate();
-            Panel.SaveSelected();
-            try
-            {
-                ChangeSortOrder(e.Column);
-                m_CurrentProxy.Sort(m_Comparer);
-            }
-            finally
-            {
-                Panel.RestoreSelected();
-                Panel.LV.EndUpdate();
-            }
-             */
         }
     }
 }

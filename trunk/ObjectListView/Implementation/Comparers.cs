@@ -267,10 +267,14 @@ namespace BrightIdeasSoftware
         public int CompareValues(object x, object y)
         {
             // Force case insensitive compares on strings
-            String xStr = x as String;
-            if (xStr != null)
-                return String.Compare(xStr, (String)y, StringComparison.CurrentCultureIgnoreCase);
-            else {
+            if (x is String)
+            {
+                String xStr = x as String;
+                String yStr = y as String;
+                return String.Compare(xStr, yStr, StringComparison.CurrentCultureIgnoreCase);
+            }
+            else
+            {
                 IComparable comparable = x as IComparable;
                 if (comparable != null)
                     return comparable.CompareTo(y);

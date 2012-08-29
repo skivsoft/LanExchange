@@ -333,7 +333,7 @@ namespace BrightIdeasSoftware
         /// Get/set the data source that is behind this virtual list
         /// </summary>
         /// <remarks>Setting this will cause the list to redraw.</remarks>
-        [Browsable(false),
+        [Browsable(true),
          DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public virtual IVirtualListDataSource VirtualListDataSource {
             get {

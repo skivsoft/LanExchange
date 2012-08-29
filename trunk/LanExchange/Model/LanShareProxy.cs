@@ -46,7 +46,7 @@ namespace LanExchange.Model
 
             NetApi32.SHARE_INFO_1 shi1;
             shi1.shi1_remark = Server;
-            Objects.Add(new PanelItemVO("..", null));
+            Objects.Add(new PanelItemVO(null, null));
             int entriesread = 0;
             int totalentries = 0;
             int resume_handle = 0;
