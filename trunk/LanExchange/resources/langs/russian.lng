@@ -8,12 +8,12 @@ MainForm.pTop.lCaption.Text=Общие папки
 MainForm.pTop.lDesc.Text=Здесь показаны компьютеры локальной вычислительной сети. Возможен поиск по имени компьютера и по описанию.
 
 .LV.EmptyListMsg=Нет данных
-.LV.MenuLabelColumns=Columns=Колонки
+.LV.MenuLabelColumns=Колонки
 .LV.MenuLabelGroupBy=Группировка по «{0}»
 .LV.MenuLabelLockGroupingOn=Закрепить группировку на «{0}»
 .LV.MenuLabelSelectColumns=Выбор колонок...
-.LV.MenuLabelSortAscending=По возрастанию по «{0}»
-.LV.MenuLabelSortDescending=По убыванию по «{0}»
+.LV.MenuLabelSortAscending=По возрастанию «{0}»
+.LV.MenuLabelSortDescending=По убыванию «{0}»
 .LV.MenuLabelTurnOffGroups=Отключить группы
 .LV.MenuLabelUnlockGroupingOn=Открепить группировку от «{0}»
 .LV.MenuLabelUnsort=Без сортировки
@@ -23,9 +23,14 @@ ColumnMasterBrowser=Главный браузер
 
 ColumnNetworkName=Сетевое имя
 ColumnComment=Описание
+ColumnOSVersion=Версия ОС
+ColumnSQLServer=S
+ColumnSQLServerHint=SQL-сервер
+ColumnPrintServer=П
+ColumnPrintServerHint=Сервер печати
+
 ColumnDateModified=Дата изменения
 ColumnFileName=Имя
-ColumnOSVersion=Версия ОС
 ColumnShareName=Общий ресурс
 ColumnSize=Размер
 ColumnType=Тип

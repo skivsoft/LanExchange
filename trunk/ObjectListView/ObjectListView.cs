@@ -6161,13 +6161,29 @@ namespace BrightIdeasSoftware
             string label = String.Format(this.MenuLabelSortAscending, column.Text);
             if (column.Sortable && !String.IsNullOrEmpty(label)) {
                 strip.Items.Add(label, ObjectListView.SortAscendingImage, (EventHandler)delegate(object sender, EventArgs args) {
-                    this.Sort(column, SortOrder.Ascending);
+                    this.BeginUpdate();
+                    try
+                    {
+                        this.Sort(column, SortOrder.Ascending);
+                    }
+                    finally
+                    {
+                        this.EndUpdate();
+                    }
                 });
             }
             label = String.Format(this.MenuLabelSortDescending, column.Text);
             if (column.Sortable && !String.IsNullOrEmpty(label)) {
                 strip.Items.Add(label, ObjectListView.SortDescendingImage, (EventHandler)delegate(object sender, EventArgs args) {
-                    this.Sort(column, SortOrder.Descending);
+                    this.BeginUpdate();
+                    try
+                    {
+                        this.Sort(column, SortOrder.Ascending);
+                    }
+                    finally
+                    {
+                        this.EndUpdate();
+                    }
                 });
             }
             if (this.CanShowGroups) {

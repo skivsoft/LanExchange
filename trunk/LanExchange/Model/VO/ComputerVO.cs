@@ -29,5 +29,15 @@ namespace LanExchange.Model.VO
         {
             get { return m_SI; }
         }
+
+        public bool IsSQLServer
+        {
+            get { return m_SI != null ? m_SI.IsSQLServer : false; }
+        }
+
+        public bool IsPrintServer
+        {
+            get { return m_SI != null ? m_SI.IsPrintServer : false; }
+        }
     }
 }

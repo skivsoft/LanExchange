@@ -15,7 +15,7 @@ namespace LanExchange.View.Components
     /// This class isn't intended to be used directly, but it is left as a public
     /// class just in case someone wants to subclass it.
     /// </remarks>
-    public class FastPanelItemDataSource : AbstractVirtualListDataSource
+    public class FastPanelItemDataSource : FastObjectListDataSource
     {
         /// <summary>
         /// Create a FastObjectListDataSource

@@ -133,7 +133,16 @@ namespace LanExchange.View
                 // update items
                 m_CurrentProxy.EnumObjects(m_Path);
                 Panel.SetColumns(m_CurrentProxy.GetColumns());
-                Panel.LV.SetObjects(m_CurrentProxy.Objects);
+                Panel.LV.BeginUpdate();
+                try
+                {
+                    Panel.LV.SetObjects(m_CurrentProxy.Objects);
+                    Panel.LV.Sort(Panel.LV.GetColumn(0));
+                }
+                finally
+                {
+                    Panel.LV.EndUpdate();
+                }
             }
         }
 

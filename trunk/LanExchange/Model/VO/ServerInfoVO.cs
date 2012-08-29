@@ -107,6 +107,22 @@ namespace LanExchange.Model.VO
             return (m_Info.sv101_type & srv) != 0 && (m_Info.sv101_type & (ctrl | noctrl)) != 0;
         }
 
+        public bool IsSQLServer
+        {
+            get
+            {
+                return (m_Info.sv101_type & (uint)NetApi32.SV_101_TYPES.SV_TYPE_SQLSERVER) != 0;
+            }
+
+        }
+
+        public bool IsPrintServer
+        {
+            get
+            {
+                return (m_Info.sv101_type & (uint)NetApi32.SV_101_TYPES.SV_TYPE_PRINTQ_SERVER) != 0;
+            }
+        }
 
         #region IComparable Members
 

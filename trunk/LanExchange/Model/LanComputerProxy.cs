@@ -34,20 +34,14 @@ namespace LanExchange.Model
             OLVColumn[] Result = new OLVColumn[] { 
                 new OLVColumn(AppFacade.T("ColumnNetworkName"), "Name"),
                 new OLVColumn(AppFacade.T("ColumnComment"), "Comment"),
-                new OLVColumn(AppFacade.T("ColumnOSVersion"), "SI")
+                new OLVColumn(AppFacade.T("ColumnOSVersion"), "SI"),
+                new OLVColumn(AppFacade.T("ColumnSQLServer"), "IsSQLServer"),
+                new OLVColumn(AppFacade.T("ColumnPrintServer"), "IsPrintServer")
             };
             Result[0].Width = 140;
             Result[1].Width = 240;
+            // OS Version
             Result[2].Width = 140;
-            /*
-            Result[2].AspectGetter = delegate(object rowObject) {
-                ComputerVO comp = rowObject as ComputerVO;
-                if (comp != null)
-                    return comp.SI;
-                else
-                    return null;
-            };
-             */
             Result[2].AspectToStringConverter = delegate(object x)
             {
                 ServerInfoVO info = x as ServerInfoVO;
@@ -56,7 +50,26 @@ namespace LanExchange.Model
                 else
                     return null;
             };
-            //Result[2].IsVisible = false;
+            Result[2].IsVisible = false;
+            // SQL Server
+            Result[3].TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            Result[3].MinimumWidth = 20;
+            Result[3].MaximumWidth = 20;
+            Result[3].ToolTipText = AppFacade.T("ColumnSQLServerHint");
+            Result[3].IsVisible = false;
+            Result[3].AspectToStringConverter = delegate(object x)
+            {
+                return (bool)x ? "•" : "";
+            };
+            Result[4].TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            Result[4].MinimumWidth = 20;
+            Result[4].MaximumWidth = 20;
+            Result[4].ToolTipText = AppFacade.T("ColumnPrintServerHint");
+            Result[4].IsVisible = false;
+            Result[4].AspectToStringConverter = delegate(object x)
+            {
+                return (bool)x ? "•" : "";
+            };
             return Result;
         }
 

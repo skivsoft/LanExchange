@@ -38,11 +38,14 @@
             this.LV.EmptyListMsg = "";
             this.LV.FullRowSelect = true;
             this.LV.GridLines = true;
+            this.LV.HideSelection = false;
             this.LV.Location = new System.Drawing.Point(0, 0);
             this.LV.Name = "LV";
             this.LV.ShowCommandMenuOnRightClick = true;
             this.LV.ShowGroups = false;
+            this.LV.ShowItemCountOnGroups = true;
             this.LV.Size = new System.Drawing.Size(368, 520);
+            this.LV.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.LV.TabIndex = 0;
             this.LV.UseCompatibleStateImageBehavior = false;
             this.LV.View = System.Windows.Forms.View.Details;
