@@ -12,8 +12,8 @@ namespace LanExchange.Model
     {
         public new const string NAME = "ArchiveProxy";
 
-        public ArchiveProxy()
-            : base(NAME)
+        public ArchiveProxy(IEnumObjectsStrategy strategy)
+            : base(NAME, strategy)
         {
 
         }
@@ -36,12 +36,13 @@ namespace LanExchange.Model
             };
             return Result;
         }
+    }
 
-        public override void EnumObjects(string Resource)
+    public class ArchiveEnumStrategy : IEnumObjectsStrategy
+    {
+        public IList<PanelItemVO> EnumObjects(string path)
         {
-            Objects.Clear();
-            //Objects.Add(new PanelItemVO("..", null));
-            
+            return null;
         }
     }
 }

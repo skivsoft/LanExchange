@@ -13,8 +13,8 @@ namespace LanExchange.Model
     {
         public new const string NAME = "FileProxy";
 
-        public FileProxy()
-            : base(NAME)
+        public FileProxy(IEnumObjectsStrategy strategy)
+            : base(NAME, strategy)
         {
 
         }
@@ -37,18 +37,22 @@ namespace LanExchange.Model
             };
             return Result;
         }
+    }
 
-        public override void EnumObjects(string Path)
+    public class FileEnumStrategy : IEnumObjectsStrategy
+    {
+        public IList<PanelItemVO> EnumObjects(string path)
         {
-            Objects.Clear();
-            Objects.Add(new PanelItemVO(null, null));
-            DirectoryInfo Dir = new DirectoryInfo(Path);
+            List<PanelItemVO> Result = new List<PanelItemVO>();
+            Result.Add(new PanelItemVO(null, null));
+            DirectoryInfo Dir = new DirectoryInfo(path);
             FileSystemInfo[] Files = Dir.GetFileSystemInfos();
             foreach (FileSystemInfo Item in Files)
             {
                 string sType = (Item.Attributes & FileAttributes.Directory) != 0 ? AppFacade.T("TypeFolder") : AppFacade.T("TypeFile");
-                Objects.Add(new PanelItemVO(Item.Name, Item));
+                Result.Add(new PanelItemVO(Item.Name, Item));
             }
+            return Result;
         }
     }
 }

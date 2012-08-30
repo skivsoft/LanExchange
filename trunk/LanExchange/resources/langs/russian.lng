@@ -19,7 +19,7 @@ MainForm.pTop.lDesc.Text=Здесь показаны компьютеры лок
 .LV.MenuLabelUnsort=Без сортировки
 
 ColumnDomainName=Домен/Группа
-ColumnMasterBrowser=Главный браузер
+ColumnMasterBrowser=Главный обозреватель группы
 
 ColumnNetworkName=Сетевое имя
 ColumnComment=Описание

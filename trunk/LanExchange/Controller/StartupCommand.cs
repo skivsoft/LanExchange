@@ -5,6 +5,7 @@ using LanExchange.Model;
 using PureMVC.PureInterfaces;
 using PureMVC.PurePatterns;
 using LanExchange.View;
+using LanExchange.Demodata;
 
 
 namespace LanExchange.Controller
@@ -21,14 +22,27 @@ namespace LanExchange.Controller
                 resource.CurrentLanguage = "russian";
             }
 
-            // network browser
-            Facade.RegisterProxy(new LanDomainProxy());
-            Facade.RegisterProxy(new LanComputerProxy());
-            //Facade.RegisterProxy(new LanShareProxy());
-            //facade.RegisterProxy(new FileProxy());
-
-            // personal explorer
-            Facade.RegisterProxy(new PersonProxy());
+            // register proxies and select strategies (demo or netapi32)
+            bool DemoMode = (bool)notification.Body;
+            if (DemoMode)
+            {
+                // demodata
+                Facade.RegisterProxy(new LanDomainProxy(new DemoDomainEnumStrategy()));
+                Facade.RegisterProxy(new LanComputerProxy(new DemoComputerEnumStrategy()));
+                Facade.RegisterProxy(new LanShareProxy(new DemoShareEnumStrategy()));
+                Facade.RegisterProxy(new PersonProxy(new DemoPersonEnumStrategy()));
+            }
+            else
+            {
+                // network browser
+                Facade.RegisterProxy(new LanDomainProxy(new NetApi32DomainEnumStrategy()));
+                Facade.RegisterProxy(new LanComputerProxy(new NetApi32ComputerEnumStrategy()));
+                Facade.RegisterProxy(new LanShareProxy(new NetApi32ShareEnumStrategy()));
+                //Facade.RegisterProxy(new FileProxy(new FileEnumStrategy()));
+                //Facade.RegisterProxy(new ArchiveProxy(new ArchiveEnumStrategy()));
+                // personal explorer
+                Facade.RegisterProxy(new PersonProxy(new PersonEnumStrategy()));
+            }
 
             NavigatorProxy navigator = (NavigatorProxy)Facade.RetrieveProxy(NavigatorProxy.NAME);
             if (navigator != null)

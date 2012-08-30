@@ -191,7 +191,7 @@ namespace LanExchange.View.Components
         /// <summary>
         /// Rebuild the map that remembers which model object is displayed at which line
         /// </summary>
-        protected void RebuildIndexMap()
+        new protected void RebuildIndexMap()
         {
             this.objectsToIndexMap.Clear();
             for (int i = 0; i < this.filteredObjectList.Count; i++)
@@ -202,7 +202,7 @@ namespace LanExchange.View.Components
         /// <summary>
         /// Build our filtered list from our full list.
         /// </summary>
-        protected void FilterObjects()
+        new protected void FilterObjects()
         {
             if (!this.listView.UseFiltering || (this.modelFilter == null && this.listFilter == null))
             {

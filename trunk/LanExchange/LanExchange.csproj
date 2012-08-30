@@ -3,7 +3,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2B7572C8-C793-4E3B-9F83-2692FC96DEE8}</ProjectGuid>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <OutputType>WinExe</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
@@ -61,6 +61,10 @@
   <ItemGroup>
     <Compile Include="AppFacade.cs" />
     <Compile Include="Controller\StartupCommand.cs" />
+    <Compile Include="Demodata\DemoComputerEnumStrategy.cs" />
+    <Compile Include="Demodata\DemoDomainEnumStrategy.cs" />
+    <Compile Include="Demodata\DemoPersonEnumStrategy.cs" />
+    <Compile Include="Demodata\DemoShareEnumStrategy.cs" />
     <Compile Include="Model\AboutProxy.cs" />
     <Compile Include="Model\ArchiveProxy.cs" />
     <Compile Include="Model\LanComputerProxy.cs" />
@@ -144,6 +148,13 @@
     <Compile Include="View\StatusViewMediator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Demodata\english\FirstNameF.txt" />
+    <Content Include="Demodata\english\FirstNameM.txt" />
+    <Content Include="Demodata\english\LastName.txt" />
+    <Content Include="Demodata\russain\FirstNameF.txt" />
+    <Content Include="Demodata\russain\FirstNameM.txt" />
+    <Content Include="Demodata\russain\LastName.txt" />
+    <Content Include="Demodata\russain\MiddleName.txt" />
     <Content Include="LanExchange.ico" />
     <Content Include="resources\images\current_computer.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -14,10 +14,9 @@ namespace LanExchange.Model
     {
         public new const string NAME = "LanShareProxy";
 
-        public LanShareProxy()
-            : base(NAME)
+        public LanShareProxy(IEnumObjectsStrategy strategy)
+            : base(NAME, strategy)
         {
-
         }
 
         public override int NumObjects
@@ -39,34 +38,37 @@ namespace LanExchange.Model
             Result[2].Width = 250;
             return Result;
         }
+    }
 
-        public override void EnumObjects(string Server)
+    public class NetApi32ShareEnumStrategy : IEnumObjectsStrategy
+    {
+        public IList<PanelItemVO> EnumObjects(string server)
         {
-            Objects.Clear();
-
+            List<PanelItemVO> Objects = new List<PanelItemVO>();
             NetApi32.SHARE_INFO_1 shi1;
-            shi1.shi1_remark = Server;
+            shi1.shi1_remark = server;
             Objects.Add(new PanelItemVO(null, null));
             int entriesread = 0;
             int totalentries = 0;
             int resume_handle = 0;
             int nStructSize = Marshal.SizeOf(typeof(NetApi32.SHARE_INFO_1));
             IntPtr bufPtr = IntPtr.Zero;
-            StringBuilder server = new StringBuilder(Server);
-            int ret = NetApi32.NetShareEnum(server, 1, ref bufPtr, NetApi32.MAX_PREFERRED_LENGTH, ref entriesread, ref totalentries, ref resume_handle);
+            StringBuilder Server = new StringBuilder(server);
+            int ret = NetApi32.NetShareEnum(Server, 1, ref bufPtr, NetApi32.MAX_PREFERRED_LENGTH, ref entriesread, ref totalentries, ref resume_handle);
             if (ret == NetApi32.NERR_Success)
             {
                 IntPtr currentPtr = bufPtr;
                 for (int i = 0; i < entriesread; i++)
                 {
                     shi1 = (NetApi32.SHARE_INFO_1)Marshal.PtrToStructure(currentPtr, typeof(NetApi32.SHARE_INFO_1));
-                    if ((shi1.shi1_type & (uint)NetApi32.SHARE_TYPE.STYPE_IPC) != (uint)NetApi32.SHARE_TYPE.STYPE_IPC)
+                    //if ((shi1.shi1_type & (uint)NetApi32.SHARE_TYPE.STYPE_IPC) != (uint)NetApi32.SHARE_TYPE.STYPE_IPC)
                         Objects.Add(new PanelItemVO(shi1.shi1_netname, shi1));
-                        //Result.Add(new TShareItem(shi1.shi1_netname, shi1.shi1_remark, shi1.shi1_type, Server));
+                    //Result.Add(new TShareItem(shi1.shi1_netname, shi1.shi1_remark, shi1.shi1_type, Server));
                     currentPtr = new IntPtr(currentPtr.ToInt32() + nStructSize);
                 }
                 NetApi32.NetApiBufferFree(bufPtr);
             }
+            return Objects;
         }
     }
 }

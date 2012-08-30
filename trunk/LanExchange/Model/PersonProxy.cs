@@ -12,8 +12,8 @@ namespace LanExchange.Model
     {
         public new const string NAME = "PersonProxy";
 
-        public PersonProxy()
-            : base(NAME)
+        public PersonProxy(IEnumObjectsStrategy strategy)
+            : base(NAME, strategy)
         {
         }
 
@@ -29,10 +29,13 @@ namespace LanExchange.Model
             Result[2].Width = 100;
             return Result;
         }
+    }
 
-        public override void EnumObjects(string path)
+    public class PersonEnumStrategy : IEnumObjectsStrategy
+    {
+        public IList<PanelItemVO> EnumObjects(string path)
         {
-            Objects.Clear();
+            return null;
         }
     }
 }

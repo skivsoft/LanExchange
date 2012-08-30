@@ -36,6 +36,7 @@ namespace LanExchange.View.Forms
             this.pTop = new System.Windows.Forms.Panel();
             this.panelView1 = new LanExchange.View.Components.PanelView();
             this.statusView1 = new LanExchange.View.Components.StatusView();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.pTop.SuspendLayout();
             this.SuspendLayout();
@@ -103,6 +104,11 @@ namespace LanExchange.View.Forms
             this.statusView1.Size = new System.Drawing.Size(438, 22);
             this.statusView1.TabIndex = 1;
             // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -131,6 +137,7 @@ namespace LanExchange.View.Forms
         public System.Windows.Forms.PictureBox picLogo;
         private System.Windows.Forms.Panel pTop;
         public PanelView panelView1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
 
 
     }

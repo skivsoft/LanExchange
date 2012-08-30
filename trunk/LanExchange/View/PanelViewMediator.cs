@@ -10,6 +10,7 @@ using PureMVC.PureInterfaces;
 using PureMVC.PurePatterns;
 using LanExchange.View.Components;
 using BrightIdeasSoftware;
+using System.ComponentModel;
 
 namespace LanExchange.View
 {
@@ -66,10 +67,6 @@ namespace LanExchange.View
         private string m_CurrentProxyName;
         private string m_Path;
 
-        private const int MAX_TIME_FOR_MULTISORT = 1000;
-        private int LastSortTick = 0;
-
-
 		public PanelViewMediator(PanelView PV)
 			: base(NAME, PV)
 		{
@@ -120,6 +117,34 @@ namespace LanExchange.View
             }
         }
 
+        private void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            m_CurrentProxy.EnumObjects(m_Path);
+            e.Result = m_CurrentProxy.Objects;
+        }
+
+        private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Cancelled) return;
+            Panel.LV.BeginUpdate();
+            try
+            {
+                Panel.LV.SetObjects((List<PanelItemVO>)e.Result);
+                Panel.LV.Sort(Panel.LV.GetColumn(0));
+            }
+            finally
+            {
+                Panel.LV.EndUpdate();
+            }
+        }
+
+        private void EnumObjectsInBackground()
+        {
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += new DoWorkEventHandler(worker_DoWork);
+            worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
+            worker.RunWorkerAsync();
+        }
 
         private void UpdateItems(string NewProxyName, string NewPath)
         {
@@ -131,18 +156,8 @@ namespace LanExchange.View
                 m_CurrentProxyName = NewProxyName;
                 m_Path = NewPath;
                 // update items
-                m_CurrentProxy.EnumObjects(m_Path);
                 Panel.SetColumns(m_CurrentProxy.GetColumns());
-                Panel.LV.BeginUpdate();
-                try
-                {
-                    Panel.LV.SetObjects(m_CurrentProxy.Objects);
-                    Panel.LV.Sort(Panel.LV.GetColumn(0));
-                }
-                finally
-                {
-                    Panel.LV.EndUpdate();
-                }
+                EnumObjectsInBackground();
             }
         }
 
