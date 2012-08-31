@@ -4,6 +4,8 @@
  * 
  * Change log
  * 
+ * 2012-08-31 Skiv  - IP address column added for computer
+ *                  - columns for values of sv101_type added
  * 2012-08-30 Skiv  - Strategy Pattern implmented for enum objects in proxies
  * 2012-08-29 Skiv  - Async run EnumObjects via BackgroundWorked
  * 

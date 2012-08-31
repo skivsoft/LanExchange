@@ -28,12 +28,20 @@ namespace LanExchange.View.Components
         {
             // all columns
             LV.AllColumns.Clear();
+            //LV.Columns.Clear();
             LV.AllColumns.AddRange(columns);
+            for (int i = 0; i < LV.AllColumns.Count; i++)
+            {
+                LV.AllColumns[i].DisplayIndex = i;
+                LV.AllColumns[i].LastDisplayIndex = i;
+            }
             // visible columns only
-            LV.Columns.Clear();
+            /*
             foreach(OLVColumn column in columns)
                 if (column.IsVisible)
                     LV.Columns.Add(column);
+             */
+            LV.RebuildColumns();
         }
 
         public event EventHandler LevelDown;
@@ -80,7 +88,11 @@ namespace LanExchange.View.Components
 
          private void LV_KeyDown(object sender, KeyEventArgs e)
         {
-            switch(e.KeyCode)
+            Keys Key = e.KeyCode;
+            // Alt+Up is equal to Back key
+            if (Key == Keys.Up && (e.Modifiers & Keys.Alt) != 0)
+                Key = Keys.Back;
+            switch(Key)
             {
                 case Keys.Enter:
                     SetLevelDown();

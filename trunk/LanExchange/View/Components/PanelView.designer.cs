@@ -34,6 +34,7 @@
             // 
             // LV
             // 
+            this.LV.AllowColumnReorder = true;
             this.LV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LV.EmptyListMsg = "";
             this.LV.FullRowSelect = true;
@@ -58,6 +59,7 @@
             this.Controls.Add(this.LV);
             this.Name = "PanelView";
             this.Size = new System.Drawing.Size(368, 520);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LV_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.LV)).EndInit();
             this.ResumeLayout(false);
 

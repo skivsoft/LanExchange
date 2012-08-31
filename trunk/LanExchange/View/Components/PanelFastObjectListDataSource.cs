@@ -26,67 +26,7 @@ namespace LanExchange.View.Components
         {
         }
 
-        internal ArrayList ObjectList
-        {
-            get { return fullObjectList; }
-        }
-
-        internal ArrayList FilteredObjectList
-        {
-            get { return filteredObjectList; }
-        }
-
         #region IVirtualListDataSource Members
-
-        /// <summary>
-        /// Get n'th object
-        /// </summary>
-        /// <param name="n"></param>
-        /// <returns></returns>
-        public override object GetNthObject(int n)
-        {
-            if (n >= 0 && n < this.filteredObjectList.Count)
-                return this.filteredObjectList[n];
-            else
-                return null;
-        }
-
-        /// <summary>
-        /// How many items are in the data source
-        /// </summary>
-        /// <returns></returns>
-        public override int GetObjectCount()
-        {
-            return this.filteredObjectList.Count;
-        }
-
-        /// <summary>
-        /// Get the index of the given model
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        public override int GetObjectIndex(object model)
-        {
-            int index;
-
-            if (model != null && this.objectsToIndexMap.TryGetValue(model, out index))
-                return index;
-            else
-                return -1;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="first"></param>
-        /// <param name="last"></param>
-        /// <param name="column"></param>
-        /// <returns></returns>
-        public override int SearchText(string value, int first, int last, OLVColumn column)
-        {
-            return DefaultSearchText(value, first, last, column, this);
-        }
 
         /// <summary>
         /// 
@@ -98,138 +38,15 @@ namespace LanExchange.View.Components
             if (sortOrder != SortOrder.None)
             {
                 PanelItemComparer comparer = new PanelItemComparer(column, sortOrder, this.listView.SecondarySortColumn, this.listView.SecondarySortOrder);
-                this.fullObjectList.Sort(comparer);
-                this.filteredObjectList.Sort(comparer);
+                base.fullObjectList.Sort(comparer);
+                base.filteredObjectList.Sort(comparer);
             }
             this.RebuildIndexMap();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="modelObjects"></param>
-        public override void AddObjects(ICollection modelObjects)
-        {
-            foreach (object modelObject in modelObjects)
-            {
-                if (modelObject != null)
-                    this.fullObjectList.Add(modelObject);
-            }
-            this.FilterObjects();
-            this.RebuildIndexMap();
-        }
-
-        /// <summary>
-        /// Remove the given collection of models from this source.
-        /// </summary>
-        /// <param name="modelObjects"></param>
-        public override void RemoveObjects(ICollection modelObjects)
-        {
-            List<int> indicesToRemove = new List<int>();
-            foreach (object modelObject in modelObjects)
-            {
-                int i = this.GetObjectIndex(modelObject);
-                if (i >= 0)
-                    indicesToRemove.Add(i);
-
-                // Remove the objects from the unfiltered list
-                this.fullObjectList.Remove(modelObject);
-            }
-
-            // Sort the indices from highest to lowest so that we
-            // remove latter ones before earlier ones. In this way, the
-            // indices of the rows doesn't change after the deletes.
-            indicesToRemove.Sort();
-            indicesToRemove.Reverse();
-
-            foreach (int i in indicesToRemove)
-                this.listView.SelectedIndices.Remove(i);
-
-            this.FilterObjects();
-            this.RebuildIndexMap();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="collection"></param>
-        public override void SetObjects(IEnumerable collection)
-        {
-            ArrayList newObjects = ObjectListView.EnumerableToArray(collection, true);
-
-            this.fullObjectList = newObjects;
-            this.FilterObjects();
-            this.RebuildIndexMap();
-        }
-
-        private ArrayList fullObjectList = new ArrayList();
-        private ArrayList filteredObjectList = new ArrayList();
-        private IModelFilter modelFilter;
-        private IListFilter listFilter;
 
         #endregion
 
-        #region IFilterableDataSource Members
-
-        /// <summary>
-        /// Apply the given filters to this data source. One or both may be null.
-        /// </summary>
-        /// <param name="iModelFilter"></param>
-        /// <param name="iListFilter"></param>
-        public override void ApplyFilters(IModelFilter iModelFilter, IListFilter iListFilter)
-        {
-            this.modelFilter = iModelFilter;
-            this.listFilter = iListFilter;
-            this.SetObjects(this.fullObjectList);
-        }
-
-        #endregion
-
-
-        #region Implementation
-
-        /// <summary>
-        /// Rebuild the map that remembers which model object is displayed at which line
-        /// </summary>
-        new protected void RebuildIndexMap()
-        {
-            this.objectsToIndexMap.Clear();
-            for (int i = 0; i < this.filteredObjectList.Count; i++)
-                this.objectsToIndexMap[this.filteredObjectList[i]] = i;
-        }
-        readonly Dictionary<Object, int> objectsToIndexMap = new Dictionary<Object, int>();
-
-        /// <summary>
-        /// Build our filtered list from our full list.
-        /// </summary>
-        new protected void FilterObjects()
-        {
-            if (!this.listView.UseFiltering || (this.modelFilter == null && this.listFilter == null))
-            {
-                this.filteredObjectList = new ArrayList(this.fullObjectList);
-                return;
-            }
-
-            IEnumerable objects = (this.listFilter == null) ?
-                this.fullObjectList : this.listFilter.Filter(this.fullObjectList);
-
-            // Apply the object filter if there is one
-            if (this.modelFilter == null)
-            {
-                this.filteredObjectList = ObjectListView.EnumerableToArray(objects, false);
-            }
-            else
-            {
-                this.filteredObjectList = new ArrayList();
-                foreach (object model in objects)
-                {
-                    if (this.modelFilter.Filter(model))
-                        this.filteredObjectList.Add(model);
-                }
-            }
-        }
-
-        #endregion
     }
 
     /// <summary>
@@ -271,15 +88,31 @@ namespace LanExchange.View.Components
         /// <returns></returns>
         public int Compare(object x, object y)
         {
+            /*
+            if (x is PanelItemVO)
+            {
+                try
+                {
+                    PanelItemVO Item1 = x as PanelItemVO;
+                    if (Item1 != null)
+                        if (Item1.Name != null)
+                            if (Item1.Name != PanelItemVO.BACK)
+                                return -1;
+                }
+                catch(Exception)
+                {
+                    x = y;
+                }
+            }
+             */
+            
             if (this.sortOrder == SortOrder.None)
                 return 0;
 
             int result = 0;
             object x1 = this.column.GetValue(x);
             object y1 = this.column.GetValue(y);
-            PanelItemVO Item1 = x as PanelItemVO;
-            PanelItemVO Item2 = y as PanelItemVO;
-            bool bAnyIsBack = Item1.IsBackButton || Item2.IsBackButton;
+            //bool bAnyIsBack = Item1.IsBackButton || Item2.IsBackButton;
 
             // Handle nulls. Null values come last
             bool xIsNull = (x1 == null || x1 == System.DBNull.Value);
@@ -292,20 +125,9 @@ namespace LanExchange.View.Components
                     result = (xIsNull ? -1 : 1);
             }
             else
-            {
-                if (Item1.IsBackButton)
-                    if (Item2.IsBackButton)
-                        result = 0;
-                    else
-                        result = -1;
-                else
-                    if (Item2.IsBackButton)
-                        result = +1;
-                    else
-                        result = this.CompareValues(x1, y1);
-            }
+                result = this.CompareValues(x1, y1);
 
-            if (this.sortOrder == SortOrder.Descending && !bAnyIsBack)
+            if (this.sortOrder == SortOrder.Descending)
                 result = 0 - result;
 
             // If the result was equality, use the secondary comparer to resolve it

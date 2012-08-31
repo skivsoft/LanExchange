@@ -31,18 +31,28 @@ namespace LanExchange.Model
 
         public override OLVColumn[] GetColumns()
         {
+            const int colName    = 0;
+            const int colComment = 1;
+            const int colVersion = 2;
+            const int colIP      = 3;
+            const int colStart   = 4;
+            const int colEnd     = 13;
+
+            string[] Aspects = { "Server", "SQLServer", "DomainController", "TimeSource", "PrintServer", 
+                                 "DialInServer", "PotentialBrowser", "BackupBrowser", "MasterBrowser", "DFSRoot"};
+
             OLVColumn[] Result = new OLVColumn[] { 
                 new OLVColumn(AppFacade.T("ColumnNetworkName"), "Name"),
                 new OLVColumn(AppFacade.T("ColumnComment"), "Comment"),
                 new OLVColumn(AppFacade.T("ColumnOSVersion"), "SI"),
-                new OLVColumn(AppFacade.T("ColumnSQLServer"), "IsSQLServer"),
-                new OLVColumn(AppFacade.T("ColumnPrintServer"), "IsPrintServer")
+                new OLVColumn(AppFacade.T("ColumnIP"), "IPAddresses"),
+                null, null, null, null, null, null, null, null, null, null
             };
-            Result[0].Width = 140;
-            Result[1].Width = 240;
+            Result[colName].Width = 140;
+            Result[colComment].Width = 240;
             // OS Version
-            Result[2].Width = 140;
-            Result[2].AspectToStringConverter = delegate(object x)
+            Result[colVersion].Width = 140;
+            Result[colVersion].AspectToStringConverter = delegate(object x)
             {
                 ServerInfoVO info = x as ServerInfoVO;
                 if (info != null)
@@ -50,27 +60,31 @@ namespace LanExchange.Model
                 else
                     return null;
             };
-            Result[2].IsVisible = false;
-            // SQL Server
-            Result[3].TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            Result[3].MinimumWidth = 20;
-            Result[3].MaximumWidth = 20;
-            Result[3].ToolTipText = AppFacade.T("ColumnSQLServerHint");
-            Result[3].IsVisible = false;
-            Result[3].AspectToStringConverter = delegate(object x)
+            Result[colVersion].IsVisible = false;
+            // IP-address
+            Result[colIP].Width = 90;
+            Result[colIP].ToolTipText = AppFacade.T("ColumnIPHint");
+            Result[colIP].IsVisible = false;
+            // Server type flags
+            for (int i = colStart; i <= colEnd; i++)
             {
-                return (bool)x ? "•" : "";
-            };
-            Result[4].TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            Result[4].MinimumWidth = 20;
-            Result[4].MaximumWidth = 20;
-            Result[4].ToolTipText = AppFacade.T("ColumnPrintServerHint");
-            Result[4].IsVisible = false;
-            Result[4].AspectToStringConverter = delegate(object x)
-            {
-                return (bool)x ? "•" : "";
-            };
+                string asp = Aspects[i - colStart];
+                Result[i] = new OLVColumn(AppFacade.T(String.Format("Column{0}", asp)), "Is"+asp);
+                Result[i].TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+                //Microsoft Sans Serif
+                Result[i].HeaderFont = new System.Drawing.Font("", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                Result[i].MinimumWidth = 30;
+                Result[i].MaximumWidth = 30;
+                Result[i].AspectToStringConverter = new AspectToStringConverterDelegate(BoolAsDot);
+                Result[i].ToolTipText = AppFacade.T(String.Format("Column{0}Hint", asp));
+                Result[i].IsVisible = false;
+            }
             return Result;
+        }
+
+        public string BoolAsDot(object x)
+        {
+            return (bool)x ? "•" : "";
         }
     }
 
@@ -80,8 +94,7 @@ namespace LanExchange.Model
         {
             List<PanelItemVO> Objects = new List<PanelItemVO>();
             NetApi32.SERVER_INFO_101 si;
-            si.sv101_name = domain;
-            Objects.Add(new ComputerVO(null, null));
+            //si.sv101_name = domain;
             IntPtr pInfo = IntPtr.Zero;
             int entriesread = 0;
             int totalentries = 0;
@@ -94,7 +107,7 @@ namespace LanExchange.Model
                     for (int i = 0; i < entriesread; i++)
                     {
                         si = (NetApi32.SERVER_INFO_101)Marshal.PtrToStructure(new IntPtr(ptr), typeof(NetApi32.SERVER_INFO_101));
-                        Objects.Add(new ComputerVO(@"\\" + si.sv101_name, new ServerInfoVO(si)));
+                        Objects.Add(new ComputerVO(si.sv101_name, new ServerInfoVO(si)));
                         ptr += Marshal.SizeOf(si);
                     }
                 }

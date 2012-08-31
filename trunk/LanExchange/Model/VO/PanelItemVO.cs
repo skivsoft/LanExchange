@@ -8,9 +8,7 @@ namespace LanExchange.Model.VO
 {
     public class PanelItemVO
     {
-        private const string BackButtonName = "..";
-
-        private string m_Name;
+        private string m_Name = String.Empty;
         private object m_Data = null;
 
         public PanelItemVO(string name, object data)
@@ -21,14 +19,8 @@ namespace LanExchange.Model.VO
 
         public string Name
         {
-            get { return m_Name == null ? BackButtonName : m_Name; }
+            get { return m_Name; }
             set { m_Name = value; }
-        }
-
-        public bool IsBackButton
-        {
-            get { return m_Name == null; }
-            set { m_Name = null; }
         }
     }
 }

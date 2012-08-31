@@ -129,6 +129,7 @@ namespace LanExchange.View
             Panel.LV.BeginUpdate();
             try
             {
+                Panel.SetColumns(m_CurrentProxy.GetColumns());
                 Panel.LV.SetObjects((List<PanelItemVO>)e.Result);
                 Panel.LV.Sort(Panel.LV.GetColumn(0));
             }
@@ -138,12 +139,21 @@ namespace LanExchange.View
             }
         }
 
+        private void BackgroupWorker_Run()
+        {
+            DoWorkEventArgs e1 = new DoWorkEventArgs(null);
+            worker_DoWork(this, e1);
+            RunWorkerCompletedEventArgs e2 = new RunWorkerCompletedEventArgs(e1.Result, null, false);
+            worker_RunWorkerCompleted(this, e2);
+        }
+
         private void EnumObjectsInBackground()
         {
             BackgroundWorker worker = new BackgroundWorker();
             worker.DoWork += new DoWorkEventHandler(worker_DoWork);
             worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
-            worker.RunWorkerAsync();
+            //worker.RunWorkerAsync();
+            BackgroupWorker_Run();
         }
 
         private void UpdateItems(string NewProxyName, string NewPath)
@@ -156,7 +166,6 @@ namespace LanExchange.View
                 m_CurrentProxyName = NewProxyName;
                 m_Path = NewPath;
                 // update items
-                Panel.SetColumns(m_CurrentProxy.GetColumns());
                 EnumObjectsInBackground();
             }
         }
@@ -166,11 +175,6 @@ namespace LanExchange.View
             PanelItemVO Current = Panel.SelectedPanelItem;
             if (Current == null)
                 return;
-            if (Current.IsBackButton)
-            {
-                Panel.SetLevelUp();
-                return;
-            }
             NavigatorProxy navigator = (NavigatorProxy)Facade.RetrieveProxy(NavigatorProxy.NAME);
             if (navigator != null)
             {

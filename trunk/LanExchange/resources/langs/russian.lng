@@ -24,10 +24,30 @@ ColumnMasterBrowser=Главный обозреватель группы
 ColumnNetworkName=Сетевое имя
 ColumnComment=Описание
 ColumnOSVersion=Версия ОС
-ColumnSQLServer=S
+ColumnIP=IP-адрес
+ColumnIPHint=IP-адрес компьютера
+
+ColumnServer=S
+ColumnSQLServer=SQL
+ColumnDomainController=DC
+ColumnTimeSource=TS
+ColumnPrintServer=P
+ColumnDialInServer=DI
+ColumnPotentialBrowser=PB
+ColumnBackupBrowser=BB
+ColumnMasterBrowser=MB
+ColumnDFSRoot=DFS
+
+ColumnServerHint=Сервер
 ColumnSQLServerHint=SQL-сервер
-ColumnPrintServer=П
+ColumnDomainControllerHint=Контроллер домена
+ColumnTimeSourceHint=Сервер времени
 ColumnPrintServerHint=Сервер печати
+ColumnDialInServerHint=Сервер входящих звонков
+ColumnPotentialBrowserHint=Потенциальный обозреватель сети
+ColumnBackupBrowserHint=Резервный обозреватель сети
+ColumnMasterBrowserHint=Главный обозреватель сети
+ColumnDFSRootHint=Корень динамической файловой системы
 
 ColumnDateModified=Дата изменения
 ColumnFileName=Имя

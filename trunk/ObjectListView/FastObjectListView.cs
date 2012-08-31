@@ -240,8 +240,8 @@ namespace BrightIdeasSoftware
             this.RebuildIndexMap();
         }
 
-        private ArrayList fullObjectList = new ArrayList();
-        private ArrayList filteredObjectList = new ArrayList();
+        protected ArrayList fullObjectList = new ArrayList();
+        protected ArrayList filteredObjectList = new ArrayList();
         private IModelFilter modelFilter;
         private IListFilter listFilter;
 

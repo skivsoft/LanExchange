@@ -44,7 +44,6 @@ namespace LanExchange.Model
         public IList<PanelItemVO> EnumObjects(string path)
         {
             List<PanelItemVO> Result = new List<PanelItemVO>();
-            Result.Add(new PanelItemVO(null, null));
             DirectoryInfo Dir = new DirectoryInfo(path);
             FileSystemInfo[] Files = Dir.GetFileSystemInfos();
             foreach (FileSystemInfo Item in Files)

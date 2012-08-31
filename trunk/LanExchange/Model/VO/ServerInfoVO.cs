@@ -107,21 +107,44 @@ namespace LanExchange.Model.VO
             return (m_Info.sv101_type & srv) != 0 && (m_Info.sv101_type & (ctrl | noctrl)) != 0;
         }
 
-        public bool IsSQLServer
+        public bool IsSQLServer()
         {
-            get
-            {
-                return (m_Info.sv101_type & (uint)NetApi32.SV_101_TYPES.SV_TYPE_SQLSERVER) != 0;
-            }
-
+            return (m_Info.sv101_type & (uint)NetApi32.SV_101_TYPES.SV_TYPE_SQLSERVER) != 0;
         }
 
-        public bool IsPrintServer
+        public bool IsTimeSource()
         {
-            get
-            {
-                return (m_Info.sv101_type & (uint)NetApi32.SV_101_TYPES.SV_TYPE_PRINTQ_SERVER) != 0;
-            }
+            return (m_Info.sv101_type & (uint)NetApi32.SV_101_TYPES.SV_TYPE_TIME_SOURCE) != 0;
+        }
+
+        public bool IsPrintServer()
+        {
+            return (m_Info.sv101_type & (uint)NetApi32.SV_101_TYPES.SV_TYPE_PRINTQ_SERVER) != 0;
+        }
+
+        public bool IsDialInServer()
+        {
+            return (m_Info.sv101_type & (uint)NetApi32.SV_101_TYPES.SV_TYPE_DIALIN_SERVER) != 0;
+        }
+
+        public bool IsPotentialBrowser()
+        {
+            return (m_Info.sv101_type & (uint)NetApi32.SV_101_TYPES.SV_TYPE_POTENTIAL_BROWSER) != 0;
+        }
+
+        public bool IsBackupBrowser()
+        {
+            return (m_Info.sv101_type & (uint)NetApi32.SV_101_TYPES.SV_TYPE_BACKUP_BROWSER) != 0;
+        }
+
+        public bool IsMasterBrowser()
+        {
+            return (m_Info.sv101_type & (uint)NetApi32.SV_101_TYPES.SV_TYPE_MASTER_BROWSER) != 0;
+        }
+
+        public bool IsDFSRoot()
+        {
+            return (m_Info.sv101_type & (uint)NetApi32.SV_101_TYPES.SV_TYPE_DFS) != 0;
         }
 
         #region IComparable Members
