@@ -1,4 +1,17 @@
-﻿using System;
+﻿/*
+ * LanExchange - Computer and shared folders browser for local networks.
+ *   
+ * 
+ * Change log
+ * 
+ * 2012-08-30 Skiv  - Strategy Pattern implmented for enum objects in proxies
+ * 2012-08-29 Skiv  - Async run EnumObjects via BackgroundWorked
+ * 
+ * 
+ * 
+ */
+
+using System;
 using System.Reflection;
 using System.Security;
 using System.Security.Permissions;
@@ -16,7 +29,7 @@ namespace LanExchange
             {
                 if (String.Compare(str, param, true) == 0)
                 {
-                    Result = false;
+                    Result = true;
                     break;
                 }
             }
