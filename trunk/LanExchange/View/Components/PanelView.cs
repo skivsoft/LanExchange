@@ -11,6 +11,7 @@ using LanExchange.View;
 using LanExchange.View.Forms;
 using System.Collections;
 using BrightIdeasSoftware;
+using GongSolutions.Shell;
 
 namespace LanExchange.View.Components
 {
@@ -21,7 +22,9 @@ namespace LanExchange.View.Components
         public PanelView()
         {
             InitializeComponent();
+            this.SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
             LV.VirtualListDataSource = new FastPanelItemDataSource(LV);
+            SystemImageList.UseSystemImageList(LV);
         }
 
         public void SetColumns(OLVColumn[] columns)

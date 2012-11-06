@@ -6,6 +6,7 @@ using System.Text;
 using LanExchange.Model.Gajatko.IniFiles.Light;
 using PureMVC.PureInterfaces;
 using PureMVC.PurePatterns;
+using GongSolutions.Shell.Interop;
 
 namespace LanExchange.Model
 {
@@ -27,6 +28,7 @@ namespace LanExchange.Model
         {
             base.OnRegister();
             LoadImages();
+            LoadSysImages();
         }
 
         void LoadImages()
@@ -46,6 +48,15 @@ namespace LanExchange.Model
                 catch(Exception)
                 {
                 }
+            }
+        }
+
+        void LoadSysImages()
+        {
+            CSIDL[] IDS = new CSIDL[5] {CSIDL.DRIVES, CSIDL.FAVORITES, CSIDL.NETWORK, CSIDL.DESKTOP, CSIDL.NETHOOD};
+            foreach (CSIDL ID in IDS)
+            {
+                //SHGetImageList
             }
         }
 

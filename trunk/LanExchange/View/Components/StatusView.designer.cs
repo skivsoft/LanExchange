@@ -54,7 +54,7 @@
             // lItemsCount
             // 
             this.lItemsCount.Name = "lItemsCount";
-            this.lItemsCount.Size = new System.Drawing.Size(490, 17);
+            this.lItemsCount.Size = new System.Drawing.Size(522, 17);
             this.lItemsCount.Spring = true;
             this.lItemsCount.Text = "    ";
             this.lItemsCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -70,8 +70,9 @@
             // 
             // lCompName
             // 
+            this.lCompName.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lCompName.Name = "lCompName";
-            this.lCompName.Size = new System.Drawing.Size(35, 17);
+            this.lCompName.Size = new System.Drawing.Size(19, 17);
             this.lCompName.Text = "    ";
             this.lCompName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -87,7 +88,7 @@
             // lUserName
             // 
             this.lUserName.Name = "lUserName";
-            this.lUserName.Size = new System.Drawing.Size(35, 17);
+            this.lUserName.Size = new System.Drawing.Size(19, 17);
             this.lUserName.Text = "    ";
             this.lUserName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 

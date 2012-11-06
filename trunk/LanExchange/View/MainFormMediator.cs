@@ -28,7 +28,6 @@ namespace LanExchange.View
 
             if (AppFacade.Resources != null)
             {
-                m_Form.picLogo.Image = AppFacade.Resources.GetImage("logo_icon");
                 AppFacade.LocalizeControl(m_Form);
             }
         }

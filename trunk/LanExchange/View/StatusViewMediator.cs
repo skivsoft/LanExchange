@@ -6,6 +6,7 @@ using LanExchange.Model;
 using PureMVC.PureInterfaces;
 using PureMVC.PurePatterns;
 using LanExchange.View.Components;
+using GongSolutions.Shell.Interop;
 
 namespace LanExchange.View
 {
@@ -24,8 +25,8 @@ namespace LanExchange.View
 
             if (AppFacade.Resources != null)
             {
-                Status.lCompName.Image = AppFacade.Resources.GetImage("current_computer");
-                Status.lUserName.Image = AppFacade.Resources.GetImage("current_user");
+                Status.lCompName.Image = AppFacade.Resources.GetImage(CSIDL.DRIVES.ToString());
+                //Status.lUserName.Image = AppFacade.Resources.GetImage("current_user");
             }
 
             CurrentUserProxy Obj = (CurrentUserProxy)Facade.RetrieveProxy(CurrentUserProxy.NAME);

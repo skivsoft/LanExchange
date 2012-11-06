@@ -3,6 +3,9 @@ AUTHOR=Skiv (skivsoft@gmail.com)
 Name=English
 
 [MSG]
+MainForm.Text=Shared Folders
+MainForm.pTop.lCaption.Text=Shared Folders
+MainForm.pTop.lDesc.Text=Здесь показаны компьютеры локальной вычислительной сети. Возможен поиск по имени компьютера и по описанию.
 
 .LV.EmptyListMsg=No data
 .LV.MenuLabelColumns=Columns=Columns
@@ -27,7 +30,7 @@ ColumnSize=Size
 ColumnType=Type
 TypeFile=File
 TypeFolder=Folder
-ItemsShowed=Items showed: {0}
+ItemsShowed=Items: {0}
 
 ;PersonProxy
 ColumnPersonName=Name

@@ -3,7 +3,7 @@ AUTHOR=Skiv (skivsoft@gmail.com)
 Name=Русский
 
 [MSG]
-MainForm.Text=Общие папки
+MainForm.Text=LanExchange
 MainForm.pTop.lCaption.Text=Общие папки
 MainForm.pTop.lDesc.Text=Здесь показаны компьютеры локальной вычислительной сети. Возможен поиск по имени компьютера и по описанию.
 
@@ -56,7 +56,7 @@ ColumnSize=Размер
 ColumnType=Тип
 TypeFile=Файл
 TypeFolder=Папка с файлами
-ItemsShowed=Показано элементов: {0}
+ItemsShowed=Элементов: {0}
 
 AboutForm.Text=О программе «{0}»
 
