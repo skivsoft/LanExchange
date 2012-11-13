@@ -1,0 +1,38 @@
+﻿[FILE]
+AUTHOR=Skiv (skivsoft@gmail.com)
+Name=English
+
+[MSG]
+MainForm.Text=Shared Folders
+MainForm.pTop.lCaption.Text=Shared Folders
+MainForm.pTop.lDesc.Text=Здесь показаны компьютеры локальной вычислительной сети. Возможен поиск по имени компьютера и по описанию.
+
+.LV.EmptyListMsg=No data
+.LV.MenuLabelColumns=Columns=Columns
+.LV.MenuLabelGroupBy=Group by «{0}»
+.LV.MenuLabelLockGroupingOn=Lock grouping on «{0}»
+.LV.MenuLabelSelectColumns=Select Columns...
+.LV.MenuLabelSortAscending=Sort ascending by «{0}»
+.LV.MenuLabelSortDescending=Sort descending by «{0}»
+.LV.MenuLabelTurnOffGroups=Turn off groups
+.LV.MenuLabelUnlockGroupingOn=Unlock grouping from «{0}»
+.LV.MenuLabelUnsort=Unsort
+
+
+ColumnComment=Comment
+ColumnDateModified=Modification date
+ColumnDomainName=Domain/Group
+ColumnFileName=Name
+ColumnNetworkName=Network name
+ColumnOSVersion=OS Version
+ColumnShareName=Shared resource
+ColumnSize=Size
+ColumnType=Type
+TypeFile=File
+TypeFolder=Folder
+ItemsShowed=Items: {0}
+
+;PersonProxy
+ColumnPersonName=Name
+ColumnPersonPosition=Position
+ColumnPersonSubdiv=Subdivision
