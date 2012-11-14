@@ -12,6 +12,9 @@ public:
 	MAINWINDOW(QWidget *parent = 0, Qt::WFlags flags = 0);
 	~MAINWINDOW();
 
+protected:
+    void closeEvent(QCloseEvent *event);
+
 private slots:
     void NewFolder();
     void NewConnection();
@@ -23,6 +26,9 @@ private slots:
     void About();
 
 private:
+    void readSettings();
+    void writeSettings();
+
 	Ui::MainWindow ui;
 
 };

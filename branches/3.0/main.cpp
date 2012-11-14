@@ -1,4 +1,4 @@
-#include <QApplication>
+#include <QtGui>
 #include "mainwindow.h"
 
 int main(int argc, char *argv[])
@@ -13,7 +13,6 @@ int main(int argc, char *argv[])
     // show main window 
     MAINWINDOW w;
     w.show();
-
     // run
     return app.exec();
 }

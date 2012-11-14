@@ -3,7 +3,23 @@
 
 MAINWINDOW::MAINWINDOW(QWidget *parent, Qt::WFlags flags) : QMainWindow(parent, flags)
 {
-	ui.setupUi(this);
+    ui.setupUi(this);
+
+    /*
+    QFileSystemModel model;
+
+    ui.listView->setModel(&model);
+    ui.listView->setModelColumn(0);
+    ui.listView->hide();
+    ui.listView->show();
+    */
+
+    ui.listWidget->addItem(new QListWidgetItem("TEST"));
+    ui.listWidget->addItem(new QListWidgetItem("THIS"));
+
+
+    readSettings();
+
     // menu "Connection"
     connect(ui.actionNew_Folder, SIGNAL(triggered()), this, SLOT(NewFolder()));
     connect(ui.actionNew_Connection, SIGNAL(triggered()), this, SLOT(NewConnection()));
@@ -22,6 +38,12 @@ MAINWINDOW::~MAINWINDOW()
 {
 
 
+}
+
+void MAINWINDOW::closeEvent(QCloseEvent *event)
+{
+    writeSettings();
+    event->accept();
 }
 
 void MAINWINDOW::NewFolder()
@@ -62,5 +84,21 @@ void MAINWINDOW::ViewFolderTree()
 void MAINWINDOW::About()
 {
    QMessageBox::about(this, tr("About Application"),
-            tr("The <b>LanExchange</b> is a cool program."));
+                      tr("The <b>LanExchange</b> is a cool program."));
+}
+
+void MAINWINDOW::readSettings()
+{
+    QSettings settings;
+    QSize size = settings.value("size", QSize(800, 400)).toSize();
+    resize(size);
+    //QSize desktopSize = qApp->desktop()->size();
+    //QPoint pos = QPoint(desktopSize.width() - this->width(), desktopSize.height() - this->height());
+    //move(pos);
+}
+
+void MAINWINDOW::writeSettings()
+{
+    QSettings settings;
+    settings.setValue("size", size());
 }
