@@ -87,7 +87,51 @@ bool DotRemovalFilter::filterAcceptsRow(int source_row, const QModelIndex &paren
     return fileName != m_dot;
 }
 
-// FolderNavigationModel: Shows path as tooltip.
+#ifdef NETWORK
+class FolderNavigationModel : public QFileSystemModel
+{
+public:
+    explicit FolderNavigationModel(QObject *parent = 0);
+    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
+    //QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+};
+
+FolderNavigationModel::FolderNavigationModel(QObject *parent) :
+    QFileSystemModel(parent)
+{
+}
+
+int FolderNavigationModel::rowCount(const QModelIndex &parent) const
+{
+    return 5;
+}
+
+int FolderNavigationModel::columnCount(const QModelIndex &parent) const
+{
+    return 2;
+}
+
+
+/*
+QVariant NetworkModel::myComputer(int role) const
+{
+}
+*/
+
+QVariant FolderNavigationModel::data(const QModelIndex &index, int role) const
+{
+    return QVariant("Hello");
+}
+
+/*
+QVariant FolderNavigationModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+    return QString("There");
+}
+*/
+#else
 class FolderNavigationModel : public QFileSystemModel
 {
 public:
@@ -107,6 +151,7 @@ QVariant FolderNavigationModel::data(const QModelIndex &index, int role) const
     else
         return QFileSystemModel::data(index, role);
 }
+#endif
 
 /*!
   /class FolderNavigationWidget

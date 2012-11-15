@@ -27,10 +27,16 @@
 **
 ****************************************************************************/
 
+#define NETWORK
+
 #ifndef FOLDERNAVIGATIONWIDGET_H
 #define FOLDERNAVIGATIONWIDGET_H
 
 #include <QWidget>
+
+#ifdef NETWORK
+    #include "networkmodel.h"
+#endif
 
 QT_BEGIN_NAMESPACE
 class QLabel;
@@ -49,6 +55,7 @@ namespace ProjectExplorer {
 //class Node;
 
 namespace Internal {
+
 
 class FolderNavigationWidget : public QWidget
 {
