@@ -7,9 +7,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+        foldernavigationwidget.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+            foldernavigationwidget.h
 
 FORMS    += mainwindow.ui
 

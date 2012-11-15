@@ -1,22 +1,16 @@
-#include "mainwindow.h"
 #include <QtGui>
+
+#include "mainwindow.h"
+#include "foldernavigationwidget.h"
 
 MAINWINDOW::MAINWINDOW(QWidget *parent, Qt::WFlags flags) : QMainWindow(parent, flags)
 {
     ui.setupUi(this);
 
-    /*
-    QFileSystemModel model;
+    ProjectExplorer::Internal::FolderNavigationWidget *Widget = new ProjectExplorer::Internal::FolderNavigationWidget(this);
 
-    ui.listView->setModel(&model);
-    ui.listView->setModelColumn(0);
-    ui.listView->hide();
-    ui.listView->show();
-    */
-
-    ui.listWidget->addItem(new QListWidgetItem("TEST"));
-    ui.listWidget->addItem(new QListWidgetItem("THIS"));
-
+    Widget->setCurrentDirectory(QDir::currentPath());
+    this->setCentralWidget(Widget);
 
     readSettings();
 
