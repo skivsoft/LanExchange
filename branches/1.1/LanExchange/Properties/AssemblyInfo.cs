@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Shared Folders")]
+[assembly: AssemblyTitle("LanExchange")]
 [assembly: AssemblyDescription("Computer and shared folders browser for local networks.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SkivSoft")]

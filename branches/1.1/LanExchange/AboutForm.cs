@@ -32,7 +32,6 @@ namespace LanExchange
             this.labelEmail.LinkArea = new LinkArea(this.labelEmail.Text.Length, this.labelEmail.LinkArea.Length);
             this.labelEmail.Text += GetEmailAddress();
             this.labelCopyright.Text = AssemblyCopyright;
-            logoPictureBox.Image = MainForm.MainFormInstance.picLogo.Image;
         }
 
         public static string GetUpdateBaseURL()

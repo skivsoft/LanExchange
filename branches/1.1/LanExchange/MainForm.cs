@@ -122,10 +122,23 @@ namespace LanExchange
             }
         }
          */
-      
+
+        public string GetMainFormTitle()
+        {
+            Assembly Me = Assembly.GetExecutingAssembly();
+            object[] attributes = Me.GetCustomAttributes(typeof(AssemblyProductAttribute), false);
+            if (attributes.Length == 0)
+            {
+                return "";
+            }
+            Version Ver = Me.GetName().Version;
+            return String.Format("{0} {1}.{2}", ((AssemblyProductAttribute)attributes[0]).Product, Ver.Major, Ver.Minor);
+        }
+
         private void SetupForm()
         {
             TrayIcon.Visible = CanUseTray();
+            this.Text = GetMainFormTitle();
             // размещаем форму внизу справа
             Rectangle Rect = new Rectangle();
             Rect.Size = new Size(450, Screen.PrimaryScreen.WorkingArea.Height);

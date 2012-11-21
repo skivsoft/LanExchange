@@ -279,7 +279,7 @@ namespace LanExchange
                     if (i == 0)
                     {
                         LV.FocusedItem = LV.Items[index];
-                        LV.EnsureVisible(index);
+                        //LV.EnsureVisible(index);
                     }
                     else
                         LV.SelectedIndices.Add(index);

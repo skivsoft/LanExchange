@@ -83,6 +83,7 @@
             // 
             // logoPictureBox
             // 
+            this.logoPictureBox.Image = global::LanExchange.Properties.Resources.LanExchange_48x48;
             this.logoPictureBox.Location = new System.Drawing.Point(3, 3);
             this.logoPictureBox.Name = "logoPictureBox";
             this.tableLayoutPanel.SetRowSpan(this.logoPictureBox, 7);
