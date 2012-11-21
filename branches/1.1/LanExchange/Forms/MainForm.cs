@@ -738,6 +738,41 @@ namespace LanExchange
             CompBrowser.LevelDown();
         }
 
+        private void lvComps_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            if (e.Item == null) 
+                return;
+            if (CompBrowser.InternalStack.Count == 0)
+            {
+                CListViewEx LV = GetActiveListView();
+                TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
+                TPanelItem PItem = ItemList.Get(e.Item.Text);
+                TComputerItem Comp = PItem as TComputerItem;
+                if (Comp == null)
+                    return;
+                lInfoComp.Text = Comp.Name;
+                lInfoDesc.Text = Comp.Comment;
+                lInfoOS.Text   = Comp.OSVersion;
+                imgInfo.Image = ilSmall.Images[PItem.ImageIndex];
+                switch (Comp.ImageIndex)
+                {
+                    case TComputerItem.imgCompDefault:
+                        this.tipComps.SetToolTip(this.imgInfo, "Компьютер найден в результате обзора сети.");
+                        break;
+                    case TComputerItem.imgCompRed:
+                        this.tipComps.SetToolTip(this.imgInfo, "Компьютер не доступен посредством PING.");
+                        break;
+                    case TComputerItem.imgCompGreen:
+                        this.tipComps.SetToolTip(this.imgInfo, "Компьютер с запущенной программой LanExchange.");
+                        break;
+                    default:
+                        this.tipComps.SetToolTip(this.imgInfo, "");
+                        break;
+                }
+            }
+        }
+
+
         public void lvRecent_ItemActivate(object sender, EventArgs e)
         {
             logger.Info("lvRecent_ItemActivate on ", (sender as ListView).FocusedItem.ToString());
@@ -752,10 +787,8 @@ namespace LanExchange
         void SearchPanelVisible(bool value)
         {
             tsBottom.Visible = value;
-            /*
             if (!value)
                 Pages.SelectedTab.Refresh();
-             */
         }
 
         public int TotalItems
@@ -782,9 +815,9 @@ namespace LanExchange
                 }
                 LV.VirtualListSize = ShowCount;
                 if (ShowCount != TotalCount)
-                    lItemsCount.Text = String.Format("Показано элементов: {0} из {1}", ShowCount, TotalCount);
+                    lItemsCount.Text = String.Format("Элементов: {0} из {1}", ShowCount, TotalCount);
                 else
-                    lItemsCount.Text = String.Format("Показано элементов: {0}", ShowCount);
+                    lItemsCount.Text = String.Format("Элементов: {0}", ShowCount);
             }
         }
 
@@ -792,6 +825,13 @@ namespace LanExchange
         {
             TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
             List<string> SaveSelected = null;
+
+            // выходим на верхний уровень
+            if (!String.IsNullOrEmpty(NewFilter))
+                while (CompBrowser.InternalStack.Count > 0)
+                    CompBrowser.LevelUp();
+            
+          
             //string SaveCurrent = null;
             if (bVisualUpdate)
             {
@@ -1038,16 +1078,24 @@ namespace LanExchange
         public void GotoFavoriteComp(string ComputerName)
         {
             Pages.SelectedIndex = pageNetwork;
-            lvComps.SelectedIndices.Clear();
-            CListViewEx LV = GetActiveListView();
-            UpdateFilter(LV, "", false);
-            // выходим на верхний уровень
-            while (CompBrowser.InternalStack.Count > 0)
-                CompBrowser.LevelUp();
-            CompBrowser.InternalItemList.ListView_SelectComputer(LV, ComputerName);
-            TPanelItem PItem = GetFocusedPanelItem(false, false);
-            if (PItem != null && PItem.Name == ComputerName)
-                lvComps_ItemActivate(lvComps, new EventArgs());
+            lvComps.BeginUpdate();
+            try
+            {
+                lvComps.SelectedIndices.Clear();
+                CListViewEx LV = GetActiveListView();
+                UpdateFilter(LV, "", false);
+                // выходим на верхний уровень
+                while (CompBrowser.InternalStack.Count > 0)
+                    CompBrowser.LevelUp();
+                CompBrowser.InternalItemList.ListView_SelectComputer(LV, ComputerName);
+                TPanelItem PItem = GetFocusedPanelItem(false, false);
+                if (PItem != null && PItem.Name == ComputerName)
+                    lvComps_ItemActivate(lvComps, new EventArgs());
+            }
+            finally
+            {
+                lvComps.EndUpdate();
+            }
             UpdateFilterPanel();
         }
 
@@ -1163,7 +1211,7 @@ namespace LanExchange
                 }
                 if (PItem is TShareItem)
                 {
-                    if (PItem.Name == "..")
+                    if (String.IsNullOrEmpty(PItem.Name))
                     {
                         mComp.Text = @"\\" + (PItem as TShareItem).ComputerName;
                         bCompVisible = true;
@@ -1204,20 +1252,24 @@ namespace LanExchange
 
         private void tipComps_Popup(object sender, PopupEventArgs e)
         {
-            if (!(e.AssociatedControl is CListViewEx))
+            if (e.AssociatedControl == imgInfo)
+            {
+                (sender as ToolTip).ToolTipIcon = ToolTipIcon.Info;
+                (sender as ToolTip).ToolTipTitle = "Легенда";
                 return;
-            CListViewEx LV = (CListViewEx)e.AssociatedControl;
-            Point P = LV.PointToClient(Control.MousePosition);
-            ListViewHitTestInfo Info = LV.HitTest(P);
-            if (Info != null && Info.Item != null)
-                (sender as ToolTip).ToolTipTitle = Info.Item.Text;
-            else
-                (sender as ToolTip).ToolTipTitle = "Информация";
-        }
-
-        private void tsBottom_DoubleClick(object sender, EventArgs e)
-        {
-            eFilter.Text = "";
+            }
+            if (e.AssociatedControl is CListViewEx)
+            {
+                CListViewEx LV = (CListViewEx)e.AssociatedControl;
+                Point P = LV.PointToClient(Control.MousePosition);
+                ListViewHitTestInfo Info = LV.HitTest(P);
+                if (Info != null && Info.Item != null)
+                    (sender as ToolTip).ToolTipTitle = Info.Item.Text;
+                else
+                    (sender as ToolTip).ToolTipTitle = "Информация";
+                return;
+            }
+            (sender as ToolTip).ToolTipTitle = "";
         }
 
         // --- ИСХОДНЫЙ КОД ОТПРАВКИ СООБЩЕНИЙ ---
@@ -1414,14 +1466,6 @@ namespace LanExchange
             }
         }
 
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            using (LegendForm F = new LegendForm())
-            {
-                F.ShowDialog();
-            }
-        }
-
         private void mSettings_Click(object sender, EventArgs e)
         {
             if (ParamsFormInstance == null)
@@ -1577,6 +1621,21 @@ namespace LanExchange
         public void mExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            eFilter.Text = "";
+        }
+
+        private void imgClear_MouseHover(object sender, EventArgs e)
+        {
+            imgClear.Image = LanExchange.Properties.Resources.clear_hover;
+        }
+
+        private void imgClear_MouseLeave(object sender, EventArgs e)
+        {
+            imgClear.Image = LanExchange.Properties.Resources.clear_normal;
         }
     }
 }

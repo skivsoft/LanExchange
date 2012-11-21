@@ -27,7 +27,6 @@ namespace LanExchange
         public void Add(TPanelItem Comp)
         {
             if (Comp != null)
-              if (!String.IsNullOrEmpty(Comp.Name))
                 if (!Data.ContainsKey(Comp.Name))
                     Data.Add(Comp.Name, Comp);
         }
@@ -79,7 +78,7 @@ namespace LanExchange
             foreach (var Pair in Data)
             {
                 string[] A = Pair.Value.getStrings();
-                if (!bFiltered || Pair.Value.Name == ".." || GoodForFilter(A, Filter1, Filter2))
+                if (!bFiltered || String.IsNullOrEmpty(Pair.Value.Name) || GoodForFilter(A, Filter1, Filter2))
                     Keys.Add(Pair.Value.Name);
             }
         }
@@ -215,7 +214,7 @@ namespace LanExchange
         public static List<TPanelItem> EnumNetShares(string Server)
         {
             List<TPanelItem> Result = new List<TPanelItem>();
-            Result.Add(new TShareItem("..", @"\\" + Server, 0, Server));
+            Result.Add(new TShareItem("", "", 0, Server));
             int entriesread = 0;
             int totalentries = 0;
             int resume_handle = 0;

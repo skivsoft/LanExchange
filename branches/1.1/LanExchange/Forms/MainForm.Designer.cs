@@ -64,11 +64,6 @@
             this.mSendToNewTab = new System.Windows.Forms.ToolStripMenuItem();
             this.mAfterSendTo = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.mContextClose = new System.Windows.Forms.ToolStripMenuItem();
             this.ilLarge = new System.Windows.Forms.ImageList(this.components);
             this.ilSmall = new System.Windows.Forms.ImageList(this.components);
@@ -102,12 +97,17 @@
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.mListTab = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.lvComps = new LanExchange.CListViewEx();
             this.tipComps = new System.Windows.Forms.ToolTip(this.components);
             this.tsBottom = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
+            this.imgClear = new System.Windows.Forms.PictureBox();
             this.eFilter = new System.Windows.Forms.TextBox();
             this.dlgSave = new System.Windows.Forms.SaveFileDialog();
+            this.pInfo = new System.Windows.Forms.Panel();
+            this.lInfoOS = new System.Windows.Forms.Label();
+            this.imgInfo = new System.Windows.Forms.PictureBox();
+            this.lInfoDesc = new System.Windows.Forms.Label();
+            this.lInfoComp = new System.Windows.Forms.Label();
+            this.lvComps = new LanExchange.CListViewEx();
             this.inputBox = new LanExchange.CInputBox(this.components);
             this.popComps.SuspendLayout();
             this.popTray.SuspendLayout();
@@ -116,6 +116,9 @@
             this.popPages.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tsBottom.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgClear)).BeginInit();
+            this.pInfo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgInfo)).BeginInit();
             this.SuspendLayout();
             // 
             // popComps
@@ -135,14 +138,9 @@
             this.toolStripSeparator12,
             this.mSendToTab,
             this.toolStripSeparator6,
-            this.toolStripMenuItem1,
-            this.toolStripSeparator13,
-            this.toolStripMenuItem2,
-            this.toolStripMenuItem3,
-            this.toolStripSeparator2,
             this.mContextClose});
             this.popComps.Name = "popComps";
-            this.popComps.Size = new System.Drawing.Size(266, 348);
+            this.popComps.Size = new System.Drawing.Size(266, 270);
             this.popComps.Opened += new System.EventHandler(this.popComps_Opened);
             // 
             // mComp
@@ -425,37 +423,6 @@
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(262, 6);
             // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(265, 22);
-            this.toolStripMenuItem1.Text = "Легенда";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
-            // 
-            // toolStripSeparator13
-            // 
-            this.toolStripSeparator13.Name = "toolStripSeparator13";
-            this.toolStripSeparator13.Size = new System.Drawing.Size(262, 6);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(265, 22);
-            this.toolStripMenuItem2.Text = "Настройки программы...";
-            this.toolStripMenuItem2.Click += new System.EventHandler(this.mSettings_Click);
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(265, 22);
-            this.toolStripMenuItem3.Text = "О программе...";
-            this.toolStripMenuItem3.Click += new System.EventHandler(this.mAbout_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(262, 6);
-            // 
             // mContextClose
             // 
             this.mContextClose.Name = "mContextClose";
@@ -476,6 +443,7 @@
             this.ilLarge.Images.SetKeyName(6, "folder2_hidden_32x32.png");
             this.ilLarge.Images.SetKeyName(7, "folder2_normal_32x32.png");
             this.ilLarge.Images.SetKeyName(8, "printer_32x32.png");
+            this.ilLarge.Images.SetKeyName(9, "back_32x32.png");
             // 
             // ilSmall
             // 
@@ -490,6 +458,7 @@
             this.ilSmall.Images.SetKeyName(6, "folder2_hidden_16x16.png");
             this.ilSmall.Images.SetKeyName(7, "folder2_normal_16x16.png");
             this.ilSmall.Images.SetKeyName(8, "printer_16x16.png");
+            this.ilSmall.Images.SetKeyName(9, "back_16x16.png");
             // 
             // TrayIcon
             // 
@@ -635,10 +604,10 @@
             this.Pages.ContextMenuStrip = this.popPages;
             this.Pages.Controls.Add(this.tabPage1);
             this.Pages.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Pages.Location = new System.Drawing.Point(0, 0);
+            this.Pages.Location = new System.Drawing.Point(0, 60);
             this.Pages.Name = "Pages";
             this.Pages.SelectedIndex = 0;
-            this.Pages.Size = new System.Drawing.Size(564, 488);
+            this.Pages.Size = new System.Drawing.Size(564, 428);
             this.Pages.TabIndex = 19;
             this.Pages.Selected += new System.Windows.Forms.TabControlEventHandler(this.Pages_Selected);
             // 
@@ -726,9 +695,110 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(556, 462);
+            this.tabPage1.Size = new System.Drawing.Size(556, 402);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tipComps
+            // 
+            this.tipComps.Active = false;
+            this.tipComps.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.tipComps.ToolTipTitle = "Test";
+            this.tipComps.Popup += new System.Windows.Forms.PopupEventHandler(this.tipComps_Popup);
+            // 
+            // tsBottom
+            // 
+            this.tsBottom.Controls.Add(this.imgClear);
+            this.tsBottom.Controls.Add(this.eFilter);
+            this.tsBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tsBottom.Location = new System.Drawing.Point(0, 488);
+            this.tsBottom.Name = "tsBottom";
+            this.tsBottom.Size = new System.Drawing.Size(564, 32);
+            this.tsBottom.TabIndex = 21;
+            this.tsBottom.Visible = false;
+            // 
+            // imgClear
+            // 
+            this.imgClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.imgClear.BackColor = System.Drawing.Color.Transparent;
+            this.imgClear.Image = global::LanExchange.Properties.Resources.clear_normal;
+            this.imgClear.Location = new System.Drawing.Point(542, 8);
+            this.imgClear.Name = "imgClear";
+            this.imgClear.Size = new System.Drawing.Size(16, 16);
+            this.imgClear.TabIndex = 6;
+            this.imgClear.TabStop = false;
+            this.tipComps.SetToolTip(this.imgClear, "Очистить фильтр");
+            this.imgClear.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.imgClear.MouseLeave += new System.EventHandler(this.imgClear_MouseLeave);
+            this.imgClear.MouseHover += new System.EventHandler(this.imgClear_MouseHover);
+            // 
+            // eFilter
+            // 
+            this.eFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.eFilter.BackColor = System.Drawing.Color.White;
+            this.eFilter.Location = new System.Drawing.Point(8, 6);
+            this.eFilter.Name = "eFilter";
+            this.eFilter.Size = new System.Drawing.Size(530, 20);
+            this.eFilter.TabIndex = 4;
+            this.tipComps.SetToolTip(this.eFilter, "Фильтрация по сетевым именам и описанию");
+            this.eFilter.TextChanged += new System.EventHandler(this.eFilter_TextChanged);
+            this.eFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.eFilter_KeyDown);
+            // 
+            // dlgSave
+            // 
+            this.dlgSave.DefaultExt = "txt";
+            this.dlgSave.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
+            this.dlgSave.RestoreDirectory = true;
+            // 
+            // pInfo
+            // 
+            this.pInfo.BackColor = System.Drawing.Color.White;
+            this.pInfo.Controls.Add(this.lInfoOS);
+            this.pInfo.Controls.Add(this.imgInfo);
+            this.pInfo.Controls.Add(this.lInfoDesc);
+            this.pInfo.Controls.Add(this.lInfoComp);
+            this.pInfo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pInfo.Location = new System.Drawing.Point(0, 0);
+            this.pInfo.Name = "pInfo";
+            this.pInfo.Size = new System.Drawing.Size(564, 60);
+            this.pInfo.TabIndex = 22;
+            // 
+            // lInfoOS
+            // 
+            this.lInfoOS.AutoSize = true;
+            this.lInfoOS.Location = new System.Drawing.Point(30, 42);
+            this.lInfoOS.Name = "lInfoOS";
+            this.lInfoOS.Size = new System.Drawing.Size(19, 13);
+            this.lInfoOS.TabIndex = 3;
+            this.lInfoOS.Text = "    ";
+            // 
+            // imgInfo
+            // 
+            this.imgInfo.Location = new System.Drawing.Point(8, 8);
+            this.imgInfo.Name = "imgInfo";
+            this.imgInfo.Size = new System.Drawing.Size(16, 16);
+            this.imgInfo.TabIndex = 2;
+            this.imgInfo.TabStop = false;
+            // 
+            // lInfoDesc
+            // 
+            this.lInfoDesc.AutoSize = true;
+            this.lInfoDesc.Location = new System.Drawing.Point(30, 25);
+            this.lInfoDesc.Name = "lInfoDesc";
+            this.lInfoDesc.Size = new System.Drawing.Size(19, 13);
+            this.lInfoDesc.TabIndex = 1;
+            this.lInfoDesc.Text = "    ";
+            // 
+            // lInfoComp
+            // 
+            this.lInfoComp.AutoSize = true;
+            this.lInfoComp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lInfoComp.Location = new System.Drawing.Point(30, 8);
+            this.lInfoComp.Name = "lInfoComp";
+            this.lInfoComp.Size = new System.Drawing.Size(23, 13);
+            this.lInfoComp.TabIndex = 0;
+            this.lInfoComp.Text = "    ";
             // 
             // lvComps
             // 
@@ -743,61 +813,17 @@
             this.lvComps.Name = "lvComps";
             this.lvComps.ShowGroups = false;
             this.lvComps.ShowItemToolTips = true;
-            this.lvComps.Size = new System.Drawing.Size(550, 456);
+            this.lvComps.Size = new System.Drawing.Size(550, 396);
             this.lvComps.SmallImageList = this.ilSmall;
             this.lvComps.TabIndex = 19;
             this.lvComps.UseCompatibleStateImageBehavior = false;
             this.lvComps.View = System.Windows.Forms.View.Details;
             this.lvComps.VirtualMode = true;
             this.lvComps.ItemActivate += new System.EventHandler(this.lvComps_ItemActivate);
+            this.lvComps.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lvComps_ItemSelectionChanged);
             this.lvComps.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.lvComps_RetrieveVirtualItem);
             this.lvComps.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvComps_KeyDown);
             this.lvComps.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lvComps_KeyPress);
-            // 
-            // tipComps
-            // 
-            this.tipComps.Active = false;
-            this.tipComps.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.tipComps.ToolTipTitle = "Test";
-            this.tipComps.Popup += new System.Windows.Forms.PopupEventHandler(this.tipComps_Popup);
-            // 
-            // tsBottom
-            // 
-            this.tsBottom.Controls.Add(this.label3);
-            this.tsBottom.Controls.Add(this.eFilter);
-            this.tsBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tsBottom.Location = new System.Drawing.Point(0, 488);
-            this.tsBottom.Name = "tsBottom";
-            this.tsBottom.Size = new System.Drawing.Size(564, 32);
-            this.tsBottom.TabIndex = 21;
-            this.tsBottom.Visible = false;
-            this.tsBottom.DoubleClick += new System.EventHandler(this.tsBottom_DoubleClick);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label3.Location = new System.Drawing.Point(9, 9);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(41, 13);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Найти:";
-            // 
-            // eFilter
-            // 
-            this.eFilter.BackColor = System.Drawing.Color.White;
-            this.eFilter.Location = new System.Drawing.Point(56, 6);
-            this.eFilter.Name = "eFilter";
-            this.eFilter.Size = new System.Drawing.Size(200, 20);
-            this.eFilter.TabIndex = 4;
-            this.eFilter.TextChanged += new System.EventHandler(this.eFilter_TextChanged);
-            this.eFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.eFilter_KeyDown);
-            // 
-            // dlgSave
-            // 
-            this.dlgSave.DefaultExt = "txt";
-            this.dlgSave.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
-            this.dlgSave.RestoreDirectory = true;
             // 
             // inputBox
             // 
@@ -811,6 +837,7 @@
             this.Controls.Add(this.Pages);
             this.Controls.Add(this.tsBottom);
             this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.pInfo);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "MainForm";
@@ -828,6 +855,10 @@
             this.tabPage1.ResumeLayout(false);
             this.tsBottom.ResumeLayout(false);
             this.tsBottom.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgClear)).EndInit();
+            this.pInfo.ResumeLayout(false);
+            this.pInfo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgInfo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -884,8 +915,6 @@
         private System.Windows.Forms.TabControl Pages;
         private System.Windows.Forms.TabPage tabPage1;
         public System.Windows.Forms.ToolTip tipComps;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem mAbout;
         private System.Windows.Forms.ToolStripMenuItem mFolder;
@@ -893,8 +922,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem mFAROpen;
         private System.Windows.Forms.Panel tsBottom;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox eFilter;
+        public System.Windows.Forms.TextBox eFilter;
         private System.Windows.Forms.ContextMenuStrip popPages;
         private System.Windows.Forms.ToolStripMenuItem mNewTab;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
@@ -911,9 +939,12 @@
         private System.Windows.Forms.ToolStripMenuItem mSendToNewTab;
         private System.Windows.Forms.ToolStripSeparator mAfterSendTo;
         public CListViewEx lvComps;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
+        private System.Windows.Forms.Panel pInfo;
+        private System.Windows.Forms.Label lInfoComp;
+        private System.Windows.Forms.PictureBox imgInfo;
+        private System.Windows.Forms.Label lInfoDesc;
+        private System.Windows.Forms.Label lInfoOS;
+        private System.Windows.Forms.PictureBox imgClear;
     }
 }
 

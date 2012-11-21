@@ -104,12 +104,6 @@
     <Compile Include="Components\InputBoxForm.Designer.cs">
       <DependentUpon>InputBoxForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\LegendForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\LegendForm.Designer.cs">
-      <DependentUpon>LegendForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Components\CListViewEx.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -138,10 +132,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Components\InputBoxForm.resx">
       <DependentUpon>InputBoxForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\LegendForm.resx">
-      <DependentUpon>LegendForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
@@ -218,6 +208,8 @@
     <Content Include="LanExchange.ico" />
     <None Include="Resources\folder2_normal_16x16.png" />
     <None Include="Resources\FAR_16x16.png" />
+    <None Include="Resources\clear_hover.png" />
+    <None Include="Resources\clear_normal.png" />
     <Content Include="Resources\LanExchange_16x16.ico" />
     <None Include="Resources\LanExchange_48x48.png" />
   </ItemGroup>

@@ -97,7 +97,7 @@ namespace LanExchange
             if (LV == null || LV.FocusedItem == null)
                 return;
             string FocusedText = LV.FocusedItem.Text;
-            if (FocusedText == "..")
+            if (String.IsNullOrEmpty(FocusedText))
             {
                 LevelUp();
                 return;
@@ -157,8 +157,7 @@ namespace LanExchange
             string CompName = null;
             if (InternalItemList.Count > 0)
             {
-                PItem = InternalItemList.Get("..");
-                CompName = PItem.Comment;
+                CompName = Path;
                 if (CompName.Length > 2 && CompName[0] == '\\' && CompName[1] == '\\')
                     CompName = CompName.Remove(0, 2);
             }
@@ -179,7 +178,9 @@ namespace LanExchange
             }
             CurrentDataTable = InternalItems;
             InternalItemList.ListView_SelectComputer(MainForm.MainFormInstance.lvComps, CompName);
-            MainForm.MainFormInstance.UpdateFilterPanel();
+
+            MainForm.MainFormInstance.UpdateFilter(MainForm.MainFormInstance.GetActiveListView(), MainForm.MainFormInstance.eFilter.Text, true);
+            //MainForm.MainFormInstance.UpdateFilterPanel();
         }
 
         // Отображаемая таблица

@@ -65,13 +65,13 @@ namespace LanExchange
         public virtual int CompareTo(TPanelItem p2)
         {
             int Result;
-            if (this.Name == "..")
-                if (p2.Name == "..")
+            if (String.IsNullOrEmpty(this.Name))
+                if (String.IsNullOrEmpty(p2.Name))
                     Result = 0;
                 else
                     Result = -1;
             else
-                if (p2.Name == "..")
+                if (String.IsNullOrEmpty(p2.Name))
                     Result = +1;
                 else
                     Result = this.Name.CompareTo(p2.Name);
@@ -224,6 +224,7 @@ namespace LanExchange
         public const int imgHiddenFolder  = 6;
         public const int imgNormalFolder  = 7;
         public const int imgPrinterFolder = 8;
+        public const int imgBackFolder    = 9;
 
         private string share_name;
         private string share_comment;
@@ -272,6 +273,9 @@ namespace LanExchange
 
         protected override int GetImageIndex()
         {
+            if (String.IsNullOrEmpty(share_name))
+                return imgBackFolder;
+            else
             if (IsPrinter)
                 return imgPrinterFolder;
             else
