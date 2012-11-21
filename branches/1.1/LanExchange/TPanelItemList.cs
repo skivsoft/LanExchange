@@ -172,9 +172,46 @@ namespace LanExchange
             }
         }
 #endif
+        /// <summary>
+        /// Get domain list.
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> GetDomainList()
+        {
+            List<string> Result = new List<string>();
+
+            LocalNetwork.SERVER_INFO_101 si;
+            IntPtr pInfo = IntPtr.Zero;
+            int entriesread = 0;
+            int totalentries = 0;
+            try
+            {
+                LocalNetwork.NERR err = LocalNetwork.NetServerEnum(null, 101, out pInfo, -1, ref entriesread, ref totalentries, LocalNetwork.SV_101_TYPES.SV_TYPE_DOMAIN_ENUM, null, 0);
+                if ((err == LocalNetwork.NERR.NERR_Success || err == LocalNetwork.NERR.ERROR_MORE_DATA) && pInfo != IntPtr.Zero)
+                {
+                    int ptr = pInfo.ToInt32();
+                    for (int i = 0; i < entriesread; i++)
+                    {
+                        si = (LocalNetwork.SERVER_INFO_101)Marshal.PtrToStructure(new IntPtr(ptr), typeof(LocalNetwork.SERVER_INFO_101));
+                        // в режиме пользователя не сканируем: сервера, контроллеры домена
+                        //bool bServer = (si.sv101_type & 0x8018) != 0;
+                        //if (Program.AdminMode || !bServer)
+                        Result.Add(si.sv101_name);
+                        ptr += Marshal.SizeOf(si);
+                    }
+                }
+            }
+            catch (Exception) { /* обработка ошибки нифига не делаем :(*/ }
+            finally
+            { // освобождаем выделенную память
+                if (pInfo != IntPtr.Zero) LocalNetwork.NetApiBufferFree(pInfo);
+            }
+            return Result;
+        }
+
 
         // получим список всех компьюетеров
-        public static List<TPanelItem> GetServerList()
+        public static IList<TPanelItem> GetServerList(string domain)
         {
             LocalNetwork.SERVER_INFO_101 si;
             IntPtr pInfo = IntPtr.Zero;
@@ -184,7 +221,7 @@ namespace LanExchange
             try
             {
                 logger.Info("WINAPI NetServerEnum");
-                LocalNetwork.NERR err = LocalNetwork.NetServerEnum(null, 101, out pInfo, -1, ref entriesread, ref totalentries, LocalNetwork.SV_101_TYPES.SV_TYPE_ALL, null, 0);
+                LocalNetwork.NERR err = LocalNetwork.NetServerEnum(null, 101, out pInfo, -1, ref entriesread, ref totalentries, LocalNetwork.SV_101_TYPES.SV_TYPE_ALL, domain, 0);
                 logger.Info("WINAPI NetServerEnum: result={0}, entriesread={1}, totalentries={2}", err, entriesread, totalentries);
                 if ((err == LocalNetwork.NERR.NERR_Success || err == LocalNetwork.NERR.ERROR_MORE_DATA) && pInfo != IntPtr.Zero)
                 {
@@ -343,6 +380,28 @@ namespace LanExchange
             foreach (var Pair in Data)
                 Result.Add(Pair.Value.Name);
             return Result;
+        }
+    }
+
+    public class BrowseProcessResult
+    {
+        private IList<TPanelItem> m_ServerList;
+        private string m_Domain;
+
+        public BrowseProcessResult(string domain, IList<TPanelItem> server_list)
+        {
+            m_Domain = domain;
+            m_ServerList = server_list;
+        }
+
+        public string Domain
+        {
+            get { return m_Domain; }
+        }
+
+        public IList<TPanelItem> ServerList
+        {
+            get { return m_ServerList; }
         }
     }
 }

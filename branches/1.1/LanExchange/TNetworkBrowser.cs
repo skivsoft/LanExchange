@@ -12,9 +12,9 @@ namespace LanExchange
         private string path = null;
 
         // внутренний список элементов панели, сравнивается с новым списком при обновлении
-        public List<TPanelItem> InternalItems = null;
+        public IList<TPanelItem> InternalItems = null;
         // стек списков элементов для навигации
-        public Stack<List<TPanelItem>> InternalStack = new Stack<List<TPanelItem>>();
+        public Stack<IList<TPanelItem>> InternalStack = new Stack<IList<TPanelItem>>();
         // внутренний список элементов с возможностью фильтрации для вывода через RetrieveVirtualItem
         public TPanelItemList InternalItemList = new TPanelItemList();
 
@@ -81,13 +81,13 @@ namespace LanExchange
         /// В частности это будет список копьютеров, даже если мы находимся на уровне списка ресуров.
         /// </summary>
         /// <returns></returns>
-        public List<TPanelItem> GetTopItemList()
+        public IList<TPanelItem> GetTopItemList()
         {
             if (InternalStack.Count == 0)
                 return InternalItems;
             else
             {
-                List<TPanelItem>[] Arr = InternalStack.ToArray();
+                IList<TPanelItem>[] Arr = InternalStack.ToArray();
                 return Arr[0];
             }
         }
@@ -184,7 +184,7 @@ namespace LanExchange
         }
 
         // Отображаемая таблица
-        public List<TPanelItem> CurrentDataTable
+        public IList<TPanelItem> CurrentDataTable
         {
             get
             {
@@ -210,7 +210,7 @@ namespace LanExchange
                     if (!MainForm.MainFormInstance.bFirstStart)
                     {
                         InternalItemList.ApplyFilter();
-                        LV.VirtualListSize = InternalItemList.FilterCount;
+                        MainForm.MainFormInstance.TotalItems = InternalItemList.Count;
                         // восстанавливаем выделение компов
                         InternalItemList.ListView_SetSelected(LV, SaveSelected);
                     }

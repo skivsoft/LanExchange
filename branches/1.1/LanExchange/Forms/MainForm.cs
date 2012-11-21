@@ -51,7 +51,9 @@ namespace LanExchange
         bool bNetworkConnected = false;
         bool bNetworkJustPlugged = false;
         // время ожидания после подключения сети до начала сканирования списка компов
-        int NetworkWaitAfterPluggedInSec = 3; 
+        int NetworkWaitAfterPluggedInSec = 3;
+        private string m_CurrentDomain;
+        private string m_NewDomain;
 
         public delegate void ProcRefresh(object obj, object data);
         public delegate void ChatRefresh(object obj, object data, object message);
@@ -75,7 +77,6 @@ namespace LanExchange
             CompBrowser = new TNetworkBrowser(lvComps);
             TPanelItemList.ListView_SetObject(lvComps, CompBrowser.InternalItemList);
             // содаем контроллер для управления вкладками
-            Pages.TabPages[0].Text = Environment.UserDomainName;
             TabController = new TTabController(Pages);
             mSendToNewTab.Click += new System.EventHandler(TabController.mSendToNewTab_Click);
 
@@ -145,15 +146,10 @@ namespace LanExchange
             Rect.Location = new Point(Screen.PrimaryScreen.WorkingArea.Left + (Screen.PrimaryScreen.WorkingArea.Width - Rect.Width),
                                       Screen.PrimaryScreen.WorkingArea.Top + (Screen.PrimaryScreen.WorkingArea.Height - Rect.Height));
             this.SetBounds(Rect.X, Rect.Y, Rect.Width, Rect.Height);
+            // domain name
+            CurrentDomain = Environment.UserDomainName;
             // выводим имя компьютера
             lCompName.Text = Environment.MachineName;
-            // выводим имя пользователя
-            System.Security.Principal.WindowsIdentity user = System.Security.Principal.WindowsIdentity.GetCurrent();
-            string[] A = user.Name.Split('\\');
-            if (A.Length > 1)
-                lUserName.Text = A[1];
-            else
-                lUserName.Text = A[0];
             // режим отображения: Компьютеры
             CompBrowser.ViewType = TNetworkBrowser.LVType.COMPUTERS;
             ActiveControl = lvComps;
@@ -179,6 +175,7 @@ namespace LanExchange
                 AdminMode = TSettings.IsAdvancedMode;
                 // запуск обновления компов
                 SetBrowseTimerInterval();
+                m_NewDomain = CurrentDomain;
                 BrowseTimer_Tick(this, new EventArgs());
                 // всплывающие подсказки
                 TTabView.ListView_SetupTip(lvComps);
@@ -218,7 +215,7 @@ namespace LanExchange
             {
                 BrowseTimer.Enabled = false;
                 // запуск процесса обновления в асинхронном режиме
-                DoBrowse.RunWorkerAsync();
+                DoBrowse.RunWorkerAsync(m_NewDomain);
             }
         }
         #endregion
@@ -425,21 +422,10 @@ namespace LanExchange
         }
 
         #region Фоновые действия: сканирование компов и пинги
-        private void DoBrowse_DoWork(object sender, DoWorkEventArgs e)
-        {
-            logger.Info("Thread for browse network start");
-            e.Result = TPanelItemList.GetServerList();
-            e.Cancel = DoPing.CancellationPending;
-            if (e.Cancel)
-                logger.Info("Thread for browse network canceled");
-            else
-                logger.Info("Thread for browse network finish");
-        }
-
-        private List<string> CompareDataSources(List<TPanelItem> OldDT, List<TPanelItem> NewDT)
+        private List<string> CompareDataSources(IList<TPanelItem> OldDT, IList<TPanelItem> NewDT)
         {
             List<string> Result = new List<string>();
-            if (OldDT == null || NewDT == null) 
+            if (OldDT == null || NewDT == null)
                 return Result;
             Dictionary<string, int> OldHash = new Dictionary<string, int>();
             int value = 0;
@@ -452,14 +438,26 @@ namespace LanExchange
             return Result;
         }
 
+        private void DoBrowse_DoWork(object sender, DoWorkEventArgs e)
+        {
+            logger.Info("Thread for browse network start");
+            string domain = (string)e.Argument;
+            e.Result = new BrowseProcessResult(domain, TPanelItemList.GetServerList(domain));
+            e.Cancel = DoPing.CancellationPending;
+            if (e.Cancel)
+                logger.Info("Thread for browse network canceled");
+            else
+                logger.Info("Thread for browse network finish");
+        }
+
         private void DoBrowse_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            List<TPanelItem> ScannedComps = (List<TPanelItem>)e.Result;
-            
+            BrowseProcessResult Result = (BrowseProcessResult)e.Result;
             if (!e.Cancelled)
             {
-                List<string> AddedNew = CompareDataSources(CompBrowser.CurrentDataTable, ScannedComps);
-                List<string> RemovedNew = CompareDataSources(ScannedComps, CompBrowser.CurrentDataTable);
+                // update server list
+                List<string> AddedNew = CompareDataSources(CompBrowser.CurrentDataTable, Result.ServerList);
+                List<string> RemovedNew = CompareDataSources(Result.ServerList, CompBrowser.CurrentDataTable);
                 // если список компов не изменился, ничего не обновляем
                 #if (!DEBUG)
                 if (bNetworkJustPlugged || !(CompBrowser.CurrentDataTable != null && (AddedNew.Count == 0 && RemovedNew.Count == 0)))
@@ -469,12 +467,13 @@ namespace LanExchange
                         DoPing.CancelAsync();
                     // обновление грида
                     if (CompBrowser.InternalItemList.Count > 0)
-                        foreach (TPanelItem Comp in ScannedComps)
+                        foreach (TPanelItem Comp in Result.ServerList)
                         {
                             TPanelItem OldComp = CompBrowser.InternalItemList.Get(Comp.Name);
                             Comp.CopyExtraFrom(OldComp);
                         }
-                    CompBrowser.CurrentDataTable = ScannedComps;
+                    CompBrowser.CurrentDataTable = Result.ServerList;
+                    CurrentDomain = Result.Domain;
                 }
                 if (bNetworkConnected && bFirstStart)
                 {
@@ -501,7 +500,7 @@ namespace LanExchange
                 // запускаем процесс пинга
                 #if USE_PING
                 if (!DoPing.IsBusy)
-                    DoPing.RunWorkerAsync(ScannedComps);
+                    DoPing.RunWorkerAsync(Result.ServerList);
                 #endif
             }
             // запускаем таймер для следующего обновления
@@ -1212,14 +1211,15 @@ namespace LanExchange
                 }
                 if (PItem is TShareItem)
                 {
-                    mComp.Text = @"\\" + (PItem as TShareItem).ComputerName;
-                    bCompVisible = true;
+                    if (String.IsNullOrEmpty(PItem.Name))
                     {
-                        mFolder.Text = String.Format(@"\\{0}\{1}", (PItem as TShareItem).ComputerName, PItem.Name);
-                        bFolderVisible = AdminMode;
-                        mFAROpen.Enabled = !(PItem as TShareItem).IsPrinter;
-                        mCopyPath.Text = String.Format(@"Копировать «\\{0}\{1}»", (PItem as TShareItem).ComputerName, PItem.Name);
+                        mComp.Text = @"\\" + (PItem as TShareItem).ComputerName;
+                        bCompVisible = AdminMode;
                     }
+                    mFolder.Text = String.Format(@"\\{0}\{1}", (PItem as TShareItem).ComputerName, PItem.Name);
+                    bFolderVisible = true;
+                    mFAROpen.Enabled = !(PItem as TShareItem).IsPrinter;
+                    mCopyPath.Text = String.Format(@"Копировать «\\{0}\{1}»", (PItem as TShareItem).ComputerName, PItem.Name);
                 }
             }
             if (!bSenderIsComputer)
@@ -1630,5 +1630,55 @@ namespace LanExchange
         {
             imgClear.Image = LanExchange.Properties.Resources.clear_normal;
         }
+
+        public string CurrentDomain
+        {
+            get { return m_CurrentDomain; }
+            set
+            {
+                m_CurrentDomain = value;
+                lDomainName.Text = value;
+                Pages.TabPages[0].Text = value;
+            }
+        }
+
+        private void popDomains_Opening(object sender, CancelEventArgs e)
+        {
+            e.Cancel = DoBrowse.IsBusy;
+        }
+
+        private void popDomains_Opened(object sender, EventArgs e)
+        {
+            // update popup menu of domains
+            IList<string> Domains = TPanelItemList.GetDomainList();
+            popDomains.Items.Clear();
+            foreach (string value in Domains)
+            {
+                ToolStripMenuItem MI = new ToolStripMenuItem(value);
+                MI.Click += new EventHandler(Domain_Click);
+                if (value.Equals(CurrentDomain))
+                    MI.Checked = true;
+                popDomains.Items.Add(MI);
+            }
+
+        }
+
+        private void Domain_Click(object sender, EventArgs e)
+        {
+            string domain = (sender as ToolStripMenuItem).Text;
+            if (!CurrentDomain.Equals(domain))
+            {
+                /*
+                if (DoBrowse.IsBusy)
+                    DoBrowse.CancelAsync();
+                if (DoPing.IsBusy)
+                    DoPing.CancelAsync();
+                */
+                m_NewDomain = domain;
+                BrowseTimer_Tick(this, new EventArgs());
+            }
+
+        }
+
     }
 }

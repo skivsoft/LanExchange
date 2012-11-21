@@ -46,6 +46,10 @@
             this.mRadmin6 = new System.Windows.Forms.ToolStripMenuItem();
             this.mRadmin7 = new System.Windows.Forms.ToolStripMenuItem();
             this.mRadmin8 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mFolder = new System.Windows.Forms.ToolStripMenuItem();
+            this.mFolderOpen = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.mFAROpen = new System.Windows.Forms.ToolStripMenuItem();
             this.mSeparatorAdmin = new System.Windows.Forms.ToolStripSeparator();
             this.mCompLargeIcons = new System.Windows.Forms.ToolStripMenuItem();
             this.mCompSmallIcons = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,6 +57,7 @@
             this.mCompDetails = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.mCopyCompName = new System.Windows.Forms.ToolStripMenuItem();
+            this.mCopyPath = new System.Windows.Forms.ToolStripMenuItem();
             this.mCopyComment = new System.Windows.Forms.ToolStripMenuItem();
             this.mCopySelected = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
@@ -76,10 +81,11 @@
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lItemsCount = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lDomainName = new System.Windows.Forms.ToolStripDropDownButton();
+            this.popDomains = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lCompName = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lUserName = new System.Windows.Forms.ToolStripStatusLabel();
             this.DoPing = new System.ComponentModel.BackgroundWorker();
             this.Pages = new System.Windows.Forms.TabControl();
             this.popPages = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -103,11 +109,6 @@
             this.imgInfo = new System.Windows.Forms.PictureBox();
             this.lInfoDesc = new System.Windows.Forms.Label();
             this.lInfoComp = new System.Windows.Forms.Label();
-            this.mFolder = new System.Windows.Forms.ToolStripMenuItem();
-            this.mFolderOpen = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.mFAROpen = new System.Windows.Forms.ToolStripMenuItem();
-            this.mCopyPath = new System.Windows.Forms.ToolStripMenuItem();
             this.lvComps = new LanExchange.CListViewEx();
             this.inputBox = new LanExchange.CInputBox(this.components);
             this.popComps.SuspendLayout();
@@ -290,6 +291,42 @@
             this.mRadmin8.Visible = false;
             this.mRadmin8.Click += new System.EventHandler(this.mCompOpen_Click);
             // 
+            // mFolder
+            // 
+            this.mFolder.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mFolderOpen,
+            this.toolStripSeparator8,
+            this.mFAROpen});
+            this.mFolder.Enabled = false;
+            this.mFolder.Image = global::LanExchange.Properties.Resources.folder2_normal_16x16;
+            this.mFolder.Name = "mFolder";
+            this.mFolder.Size = new System.Drawing.Size(278, 22);
+            this.mFolder.Tag = "folder";
+            this.mFolder.Text = "\\\\COMPUTER\\FOLDER";
+            this.mFolder.Visible = false;
+            // 
+            // mFolderOpen
+            // 
+            this.mFolderOpen.Name = "mFolderOpen";
+            this.mFolderOpen.ShortcutKeyDisplayString = "Shift+Enter";
+            this.mFolderOpen.Size = new System.Drawing.Size(267, 22);
+            this.mFolderOpen.Tag = "{0}";
+            this.mFolderOpen.Text = "Открыть в Проводнике";
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(264, 6);
+            // 
+            // mFAROpen
+            // 
+            this.mFAROpen.Image = global::LanExchange.Properties.Resources.FAR_16x16;
+            this.mFAROpen.Name = "mFAROpen";
+            this.mFAROpen.ShortcutKeyDisplayString = "Ctrl+Enter";
+            this.mFAROpen.Size = new System.Drawing.Size(267, 22);
+            this.mFAROpen.Tag = "FAR.EXE {0}";
+            this.mFAROpen.Text = "Менеджер FAR";
+            // 
             // mSeparatorAdmin
             // 
             this.mSeparatorAdmin.Name = "mSeparatorAdmin";
@@ -342,6 +379,15 @@
             this.mCopyCompName.Size = new System.Drawing.Size(278, 22);
             this.mCopyCompName.Text = "Копировать «Сетевое имя»";
             this.mCopyCompName.Click += new System.EventHandler(this.mCopyCompName_Click);
+            // 
+            // mCopyPath
+            // 
+            this.mCopyPath.Enabled = false;
+            this.mCopyPath.Name = "mCopyPath";
+            this.mCopyPath.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.mCopyPath.Size = new System.Drawing.Size(278, 22);
+            this.mCopyPath.Text = "Копировать «Общий ресурс»";
+            this.mCopyPath.Visible = false;
             // 
             // mCopyComment
             // 
@@ -506,10 +552,10 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lItemsCount,
-            this.toolStripStatusLabel1,
-            this.lCompName,
             this.toolStripStatusLabel3,
-            this.lUserName});
+            this.lDomainName,
+            this.toolStripStatusLabel1,
+            this.lCompName});
             this.statusStrip1.Location = new System.Drawing.Point(0, 520);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(564, 22);
@@ -519,10 +565,33 @@
             // lItemsCount
             // 
             this.lItemsCount.Name = "lItemsCount";
-            this.lItemsCount.Size = new System.Drawing.Size(471, 17);
+            this.lItemsCount.Size = new System.Drawing.Size(474, 17);
             this.lItemsCount.Spring = true;
             this.lItemsCount.Text = "    ";
             this.lItemsCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // toolStripStatusLabel3
+            // 
+            this.toolStripStatusLabel3.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.toolStripStatusLabel3.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            this.toolStripStatusLabel3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
+            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(4, 17);
+            this.toolStripStatusLabel3.Text = "toolStripStatusLabel3";
+            // 
+            // lDomainName
+            // 
+            this.lDomainName.DropDown = this.popDomains;
+            this.lDomainName.Name = "lDomainName";
+            this.lDomainName.Size = new System.Drawing.Size(32, 20);
+            this.lDomainName.Text = "    ";
+            // 
+            // popDomains
+            // 
+            this.popDomains.Name = "popDomains";
+            this.popDomains.Size = new System.Drawing.Size(153, 26);
+            this.popDomains.Opening += new System.ComponentModel.CancelEventHandler(this.popDomains_Opening);
+            this.popDomains.Opened += new System.EventHandler(this.popDomains_Opened);
             // 
             // toolStripStatusLabel1
             // 
@@ -541,23 +610,6 @@
             this.lCompName.Text = "    ";
             this.lCompName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lCompName.Click += new System.EventHandler(this.lCompName_Click);
-            // 
-            // toolStripStatusLabel3
-            // 
-            this.toolStripStatusLabel3.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-            this.toolStripStatusLabel3.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
-            this.toolStripStatusLabel3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
-            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(4, 17);
-            this.toolStripStatusLabel3.Text = "toolStripStatusLabel3";
-            // 
-            // lUserName
-            // 
-            this.lUserName.Image = global::LanExchange.Properties.Resources.UserName;
-            this.lUserName.Name = "lUserName";
-            this.lUserName.Size = new System.Drawing.Size(35, 17);
-            this.lUserName.Text = "    ";
-            this.lUserName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // DoPing
             // 
@@ -765,51 +817,6 @@
             this.lInfoComp.TabIndex = 0;
             this.lInfoComp.Text = "    ";
             // 
-            // mFolder
-            // 
-            this.mFolder.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mFolderOpen,
-            this.toolStripSeparator8,
-            this.mFAROpen});
-            this.mFolder.Enabled = false;
-            this.mFolder.Image = global::LanExchange.Properties.Resources.folder2_normal_16x16;
-            this.mFolder.Name = "mFolder";
-            this.mFolder.Size = new System.Drawing.Size(278, 22);
-            this.mFolder.Tag = "folder";
-            this.mFolder.Text = "\\\\COMPUTER\\FOLDER";
-            this.mFolder.Visible = false;
-            // 
-            // mFolderOpen
-            // 
-            this.mFolderOpen.Name = "mFolderOpen";
-            this.mFolderOpen.ShortcutKeyDisplayString = "Shift+Enter";
-            this.mFolderOpen.Size = new System.Drawing.Size(267, 22);
-            this.mFolderOpen.Tag = "{0}";
-            this.mFolderOpen.Text = "Открыть в Проводнике";
-            // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(264, 6);
-            // 
-            // mFAROpen
-            // 
-            this.mFAROpen.Image = global::LanExchange.Properties.Resources.FAR_16x16;
-            this.mFAROpen.Name = "mFAROpen";
-            this.mFAROpen.ShortcutKeyDisplayString = "Ctrl+Enter";
-            this.mFAROpen.Size = new System.Drawing.Size(267, 22);
-            this.mFAROpen.Tag = "FAR.EXE {0}";
-            this.mFAROpen.Text = "Менеджер FAR";
-            // 
-            // mCopyPath
-            // 
-            this.mCopyPath.Enabled = false;
-            this.mCopyPath.Name = "mCopyPath";
-            this.mCopyPath.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.mCopyPath.Size = new System.Drawing.Size(278, 22);
-            this.mCopyPath.Text = "Копировать «Общий ресурс»";
-            this.mCopyPath.Visible = false;
-            // 
             // lvComps
             // 
             this.lvComps.ContextMenuStrip = this.popComps;
@@ -919,8 +926,6 @@
         public System.Windows.Forms.ToolStripStatusLabel lItemsCount;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel lCompName;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
-        private System.Windows.Forms.ToolStripStatusLabel lUserName;
         private System.ComponentModel.BackgroundWorker DoPing;
         private System.Windows.Forms.TabControl Pages;
         private System.Windows.Forms.TabPage tabPage1;
@@ -956,6 +961,9 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem mFAROpen;
         private System.Windows.Forms.ToolStripMenuItem mCopyPath;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
+        private System.Windows.Forms.ContextMenuStrip popDomains;
+        private System.Windows.Forms.ToolStripDropDownButton lDomainName;
     }
 }
 
