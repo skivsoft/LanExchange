@@ -604,7 +604,7 @@ namespace LanExchange
             {
                 if (S.Length > 0)
                     S.AppendLine();
-                S.Append(ItemList.Keys[index]);
+                S.Append(@"\\" + ItemList.Keys[index]);
             }
             if (S.Length > 0)
                 Clipboard.SetText(S.ToString());
@@ -645,7 +645,7 @@ namespace LanExchange
                 PItem = ItemList.Get(ItemName);
                 if (PItem != null)
                 {
-                    S.Append(ItemName);
+                    S.Append(@"\\" + ItemName);
                     S.Append("\t");
                     S.Append(PItem.Comment);
                 }
@@ -1177,28 +1177,29 @@ namespace LanExchange
 
         private void popComps_Opened(object sender, EventArgs e)
         {
-            mLargeIcons.Checked = false;
-            mSmallIcons.Checked = false;
-            mList.Checked = false;
-            mDetails.Checked = false;
+            #region set radio button
+            mCompLargeIcons.Checked = false;
+            mCompSmallIcons.Checked = false;
+            mCompList.Checked = false;
+            mCompDetails.Checked = false;
             CListViewEx LV = GetActiveListView();
             switch (LV.View)
             {
                 case View.LargeIcon:
-                    mLargeIcons.Checked = true;
+                    mCompLargeIcons.Checked = true;
                     break;
                 case View.SmallIcon:
-                    mSmallIcons.Checked = true;
+                    mCompSmallIcons.Checked = true;
                     break;
                 case View.List:
-                    mList.Checked = true;
+                    mCompList.Checked = true;
                     break;
                 case View.Details:
-                    mDetails.Checked = true;
+                    mCompDetails.Checked = true;
                     break;
             }
+            #endregion
             TPanelItem PItem = GetFocusedPanelItem(false, false);
-            bool bCopyVisible = PItem != null;
             bool bCompVisible = false;
             bool bFolderVisible = false;
             bool bSenderIsComputer = (Pages.SelectedIndex > 0) || (CompBrowser.InternalStack.Count == 0);
@@ -1211,38 +1212,30 @@ namespace LanExchange
                 }
                 if (PItem is TShareItem)
                 {
-                    if (String.IsNullOrEmpty(PItem.Name))
-                    {
-                        mComp.Text = @"\\" + (PItem as TShareItem).ComputerName;
-                        bCompVisible = true;
-                    }
-                    else
+                    mComp.Text = @"\\" + (PItem as TShareItem).ComputerName;
+                    bCompVisible = true;
                     {
                         mFolder.Text = String.Format(@"\\{0}\{1}", (PItem as TShareItem).ComputerName, PItem.Name);
                         bFolderVisible = AdminMode;
                         mFAROpen.Enabled = !(PItem as TShareItem).IsPrinter;
+                        mCopyPath.Text = String.Format(@"Копировать «\\{0}\{1}»", (PItem as TShareItem).ComputerName, PItem.Name);
                     }
                 }
             }
             if (!bSenderIsComputer)
             {
                 bCompVisible = false;
-                bCopyVisible = false;
             }
             
             mComp.Visible = bCompVisible;
             mComp.Enabled = bCompVisible;
-            mWMIDescription.Visible = bCompVisible;
-            mWMIDescription.Enabled = bCompVisible;
-            mSeparatorAdmin.Visible = bCompVisible;
+            //mWMIDescription.Visible = bCompVisible;
+            //mWMIDescription.Enabled = bCompVisible;
 
             mFolder.Visible = bFolderVisible;
             mFolder.Enabled = bFolderVisible;
-
-            mCopyCompName.Enabled = bCopyVisible;
-            mCopyComment.Enabled = bCopyVisible;
-            mCopySelected.Enabled = bCopyVisible;
-            mSendToTab.Enabled = bCopyVisible;
+            
+            mSeparatorAdmin.Visible = bCompVisible || bFolderVisible;
         }
 
         private void lCompName_Click(object sender, EventArgs e)
