@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace LanExchange
 {
@@ -139,13 +140,6 @@ namespace LanExchange
 
                     break;
             }
-            /*
-            ShellContextMenu scm = new ShellContextMenu();
-            FileInfo[] files = new FileInfo[1];
-            files[0] = new FileInfo(@"\\MIKHAILYUK-KA\.\Exchange");
-            //files[0].DirectoryName = @"\\MIKHAILYUK-KA\Exchange";
-            scm.ShowContextMenu(this.Handle, files, Cursor.Position);
-             */
         }
 
         public void LevelUp()

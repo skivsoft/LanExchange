@@ -146,9 +146,9 @@ namespace LanExchange
                                       Screen.PrimaryScreen.WorkingArea.Top + (Screen.PrimaryScreen.WorkingArea.Height - Rect.Height));
             this.SetBounds(Rect.X, Rect.Y, Rect.Width, Rect.Height);
             // domain name
-            CurrentDomain = Environment.UserDomainName;
+            CurrentDomain = SystemInformation.UserDomainName;
             // выводим имя компьютера
-            lCompName.Text = Environment.MachineName;
+            lCompName.Text = SystemInformation.ComputerName;
             // режим отображения: Компьютеры
             CompBrowser.ViewType = TNetworkBrowser.LVType.COMPUTERS;
             ActiveControl = lvComps;
@@ -1287,7 +1287,7 @@ namespace LanExchange
 
         private void lCompName_Click(object sender, EventArgs e)
         {
-            GotoFavoriteComp(Environment.MachineName);
+            GotoFavoriteComp(SystemInformation.ComputerName);
         }
 
         private void tipComps_Popup(object sender, PopupEventArgs e)
