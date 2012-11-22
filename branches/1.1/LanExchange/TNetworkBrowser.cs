@@ -153,7 +153,7 @@ namespace LanExchange
             if (InternalStack.Count == 0)
                 return;
 
-            TPanelItem PItem = null;
+            //TPanelItem PItem = null;
             string CompName = null;
             if (InternalItemList.Count > 0)
             {

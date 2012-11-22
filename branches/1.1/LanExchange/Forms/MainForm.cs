@@ -18,8 +18,7 @@ using System.Windows.Forms;
 using OSTools;
 using System.Net.NetworkInformation;
 using NLog;
-
-using System.Globalization;
+using EventHandlerSupport;
 
 namespace LanExchange
 {
@@ -609,19 +608,40 @@ namespace LanExchange
                 Clipboard.SetText(S.ToString());
         }
 
-        private void mCopyComment_Click(object sender, EventArgs e)
+        private void mCopyPath_Click(object sender, EventArgs e)
         {
             CListViewEx LV = GetActiveListView();
             TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
             StringBuilder S = new StringBuilder();
             string ItemName = null;
-            TPanelItem PItem = null;
+            TShareItem PItem = null;
             foreach (int index in LV.SelectedIndices)
             {
                 if (S.Length > 0)
                     S.AppendLine();
                 ItemName = ItemList.Keys[index];
-                PItem = ItemList.Get(ItemName);
+                if (!String.IsNullOrEmpty(ItemName))
+                {
+                    PItem = ItemList.Get(ItemName) as TShareItem;
+                    if (PItem != null)
+                        S.Append(String.Format(@"\\{0}\{1}", PItem.ComputerName, PItem.Name));
+                }
+            }
+            if (S.Length > 0)
+                Clipboard.SetText(S.ToString());
+        }
+
+        private void mCopyComment_Click(object sender, EventArgs e)
+        {
+            CListViewEx LV = GetActiveListView();
+            TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
+            StringBuilder S = new StringBuilder();
+            TPanelItem PItem = null;
+            foreach (int index in LV.SelectedIndices)
+            {
+                if (S.Length > 0)
+                    S.AppendLine();
+                PItem = ItemList.Get(ItemList.Keys[index]);
                 if (PItem != null)
                     S.Append(PItem.Comment);
             }
@@ -662,17 +682,17 @@ namespace LanExchange
                 NativeMethods.SelectAllItems(LV);
                 e.Handled = true;
             }
-            // Ctrl+Enter
+            // Shift+Enter
             if (e.Shift && e.KeyCode == Keys.Enter)
             {
                 TPanelItem PItem = GetFocusedPanelItem(true, false);
                 if (PItem is TComputerItem)
                     mCompOpen_Click(mCompOpen, new EventArgs());
                 if (PItem is TShareItem)
-                    mCompOpen_Click(mFolderOpen, new EventArgs());
+                    mFolderOpen_Click(mFolderOpen, new EventArgs());
                 e.Handled = true;
             }
-            // Shift+Enter в режиме администратора
+            // Ctrl+Enter в режиме администратора
             if (AdminMode && e.Control && e.KeyCode == Keys.Enter)
             {
                 TPanelItem PItem = GetFocusedPanelItem(true, false);
@@ -680,7 +700,7 @@ namespace LanExchange
                     mCompOpen_Click(mRadmin1, new EventArgs());
                 if (PItem is TShareItem)
                     if (!(PItem as TShareItem).IsPrinter)
-                        mCompOpen_Click(mFAROpen, new EventArgs());
+                        mFolderOpen_Click(mFAROpen, new EventArgs());
                 e.Handled = true;
             }
             // Ctrl+Alt+Shift+S - отправка текстового сообщения
@@ -933,6 +953,16 @@ namespace LanExchange
             return PItem;
         }
 
+        private const string COMPUTER_MENU = "computer";
+        private const string FOLDER_MENU = "folder";
+
+        /// <summary>
+        /// Run parametrized cmdline for focused panel item.
+        /// {0} is computer name
+        /// {1} is folder name
+        /// </summary>
+        /// <param name="TagCmd">cmdline from Tag of menu item</param>
+        /// <param name="TagParent">Can be "computer" or "folder"</param>
         public void RunCmdOnFocusedItem(string TagCmd, string TagParent)
         {
             // получаем выбранный комп
@@ -944,14 +974,14 @@ namespace LanExchange
 
             switch(TagParent)
             {
-                case "computer":
+                case COMPUTER_MENU:
                     if (PItem is TComputerItem)
                         FmtParam = PItem.Name;
                     else
                         if (PItem is TShareItem)
                             FmtParam = (PItem as TShareItem).ComputerName;
                     break;
-                case "folder":
+                case FOLDER_MENU:
                     if (PItem is TComputerItem)
                         return;
                     if (PItem is TShareItem)
@@ -1059,9 +1089,15 @@ namespace LanExchange
         public void mCompOpen_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem MenuItem = sender as ToolStripMenuItem;
-            ToolStripMenuItem ParentItem = MenuItem.OwnerItem as ToolStripMenuItem;
-            RunCmdOnFocusedItem(MenuItem.Tag.ToString(), ParentItem.Tag.ToString());
+            RunCmdOnFocusedItem(MenuItem.Tag.ToString(), COMPUTER_MENU);
         }
+
+        private void mFolderOpen_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem MenuItem = sender as ToolStripMenuItem;
+            RunCmdOnFocusedItem(MenuItem.Tag.ToString(), FOLDER_MENU);
+        }
+
 
         public void CancelCompRelatedThreads()
         {
@@ -1174,6 +1210,18 @@ namespace LanExchange
             }
         }
 
+        private void SetEnabledAndVisible(ToolStripItem Item, bool Value)
+        {
+            Item.Enabled = Value;
+            Item.Visible = Value;
+        }
+
+        private void SetEnabledAndVisible(ToolStripItem[] Items, bool Value)
+        {
+            foreach (ToolStripItem Item in Items)
+                SetEnabledAndVisible(Item, Value);
+        }
+
         private void popComps_Opened(object sender, EventArgs e)
         {
             #region set radio button
@@ -1201,7 +1249,6 @@ namespace LanExchange
             TPanelItem PItem = GetFocusedPanelItem(false, false);
             bool bCompVisible = false;
             bool bFolderVisible = false;
-            bool bSenderIsComputer = (Pages.SelectedIndex > 0) || (CompBrowser.InternalStack.Count == 0);
             if (PItem != null)
             {
                 if (PItem is TComputerItem)
@@ -1211,31 +1258,31 @@ namespace LanExchange
                 }
                 if (PItem is TShareItem)
                 {
-                    if (String.IsNullOrEmpty(PItem.Name))
+                    mComp.Text = @"\\" + (PItem as TShareItem).ComputerName;
+                    bCompVisible = AdminMode;
+                    if (!String.IsNullOrEmpty(PItem.Name))
                     {
-                        mComp.Text = @"\\" + (PItem as TShareItem).ComputerName;
-                        bCompVisible = AdminMode;
+                        mFolder.Text = String.Format(@"\\{0}\{1}", (PItem as TShareItem).ComputerName, PItem.Name);
+                        mFolder.Image = ilSmall.Images[PItem.ImageIndex];
+                        bFolderVisible = true;
+                        mFAROpen.Enabled = !(PItem as TShareItem).IsPrinter;
                     }
-                    mFolder.Text = String.Format(@"\\{0}\{1}", (PItem as TShareItem).ComputerName, PItem.Name);
-                    bFolderVisible = true;
-                    mFAROpen.Enabled = !(PItem as TShareItem).IsPrinter;
-                    mCopyPath.Text = String.Format(@"Копировать «\\{0}\{1}»", (PItem as TShareItem).ComputerName, PItem.Name);
                 }
             }
-            if (!bSenderIsComputer)
-            {
-                bCompVisible = false;
-            }
-            
-            mComp.Visible = bCompVisible;
-            mComp.Enabled = bCompVisible;
-            //mWMIDescription.Visible = bCompVisible;
-            //mWMIDescription.Enabled = bCompVisible;
+            SetEnabledAndVisible(mComp, bCompVisible);
+            SetEnabledAndVisible(mFolder, bFolderVisible);
 
-            mFolder.Visible = bFolderVisible;
-            mFolder.Enabled = bFolderVisible;
-            
+            bool bSenderIsComputer = (Pages.SelectedIndex > 0) || (CompBrowser.InternalStack.Count == 0);
+            SetEnabledAndVisible(new ToolStripItem[] { 
+                mCopyCompName, mCopyComment, mCopySelected, 
+                mSendSeparator, mSendToTab }, bSenderIsComputer);
+            SetEnabledAndVisible(mCopyPath, !bSenderIsComputer);
+
             mSeparatorAdmin.Visible = bCompVisible || bFolderVisible;
+
+            // resolve computer related and folder related shortcut conflict
+            mCompOpen.ShowShortcutKeys = bCompVisible && !bFolderVisible;
+            mRadmin1.ShowShortcutKeys = bCompVisible && !bFolderVisible;
         }
 
         private void lCompName_Click(object sender, EventArgs e)
@@ -1651,14 +1698,21 @@ namespace LanExchange
         {
             // update popup menu of domains
             IList<string> Domains = TPanelItemList.GetDomainList();
+            //Domains.Insert(0, "Вся сеть");
+            //Domains.Insert(1, "");
             popDomains.Items.Clear();
             foreach (string value in Domains)
             {
-                ToolStripMenuItem MI = new ToolStripMenuItem(value);
-                MI.Click += new EventHandler(Domain_Click);
-                if (value.Equals(CurrentDomain))
-                    MI.Checked = true;
-                popDomains.Items.Add(MI);
+                if (String.IsNullOrEmpty(value))
+                    popDomains.Items.Add(new ToolStripSeparator());
+                else
+                {
+                    ToolStripMenuItem MI = new ToolStripMenuItem(value);
+                    MI.Click += new EventHandler(Domain_Click);
+                    if (value.Equals(CurrentDomain))
+                        MI.Checked = true;
+                    popDomains.Items.Add(MI);
+                }
             }
 
         }
@@ -1679,6 +1733,29 @@ namespace LanExchange
             }
 
         }
+
+        private void popTop_Opening(object sender, CancelEventArgs e)
+        {
+            e.Cancel = !AdminMode;
+        }
+
+        private void popTop_Opened(object sender, EventArgs e)
+        {
+            popComps_Opened(sender, e);
+
+            ToolStripItem[] MyItems = new ToolStripItem[mComp.DropDownItems.Count];
+            for (int i = 0; i < MyItems.Length; i++ )
+            {
+                ToolStripItem TI = mComp.DropDownItems[i];
+                if (TI is ToolStripSeparator)
+                    MyItems[i] = new ToolStripSeparator();
+                else
+                if (TI is ToolStripMenuItem)
+                    MyItems[i] = (ToolStripItem)Extensions.Clone(TI as ToolStripMenuItem);
+            }
+            popTop.Items.Clear();
+            popTop.Items.AddRange(MyItems);
+       }
 
     }
 }

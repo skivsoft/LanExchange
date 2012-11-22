@@ -81,6 +81,13 @@ namespace LanExchange.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap explorer {
+            get {
+                object obj = ResourceManager.GetObject("explorer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap FAR_16x16 {
             get {
                 object obj = ResourceManager.GetObject("FAR_16x16", resourceCulture);
