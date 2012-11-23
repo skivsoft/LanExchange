@@ -6,7 +6,9 @@ using System.Text;
 using OSTools;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+#if DEBUG
 using NLog;
+#endif
 
 namespace LanExchange
 {

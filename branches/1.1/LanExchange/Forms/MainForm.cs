@@ -1,5 +1,6 @@
 ﻿#define USE_PING
 #define NOUSE_FLASH
+#define NLOG
 
 using System;
 using System.Collections.Generic;
@@ -17,8 +18,10 @@ using System.Threading;
 using System.Windows.Forms;
 using OSTools;
 using System.Net.NetworkInformation;
-using NLog;
 using EventHandlerSupport;
+#if DEBUG
+using NLog;
+#endif
 
 namespace LanExchange
 {
@@ -162,9 +165,26 @@ namespace LanExchange
             #endif
         }
 
+        private void SetupMenu()
+        {
+            ToolStripItem[] MyItems = new ToolStripItem[mComp.DropDownItems.Count];
+            for (int i = 0; i < MyItems.Length; i++)
+            {
+                ToolStripItem TI = mComp.DropDownItems[i];
+                if (TI is ToolStripSeparator)
+                    MyItems[i] = new ToolStripSeparator();
+                else
+                    if (TI is ToolStripMenuItem)
+                        MyItems[i] = (ToolStripItem)Extensions.Clone(TI as ToolStripMenuItem);
+            }
+            popTop.Items.Clear();
+            popTop.Items.AddRange(MyItems);
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             SetupForm();
+            SetupMenu();
             if (!OSLayer.IsRunningOnMono())
             {
                 // устанавливаем обработчик на изменение подключения к сети
@@ -1222,6 +1242,19 @@ namespace LanExchange
                 SetEnabledAndVisible(Item, Value);
         }
 
+        
+        private void popTop_Opened(object sender, EventArgs e)
+        {
+            popComps_Opened(sender, e);
+            for (int i = 0; i < Math.Min(mComp.DropDownItems.Count, popTop.Items.Count); i++)
+            {
+                ToolStripItem Src = mComp.DropDownItems[i];
+                ToolStripItem Dest = popTop.Items[i];
+                if (Src is ToolStripMenuItem && Dest is ToolStripMenuItem)
+                    (Dest as ToolStripMenuItem).ShowShortcutKeys = (Src as ToolStripMenuItem).ShowShortcutKeys;
+            }
+       }
+
         private void popComps_Opened(object sender, EventArgs e)
         {
             #region set radio button
@@ -1738,24 +1771,6 @@ namespace LanExchange
         {
             e.Cancel = !AdminMode;
         }
-
-        private void popTop_Opened(object sender, EventArgs e)
-        {
-            popComps_Opened(sender, e);
-
-            ToolStripItem[] MyItems = new ToolStripItem[mComp.DropDownItems.Count];
-            for (int i = 0; i < MyItems.Length; i++ )
-            {
-                ToolStripItem TI = mComp.DropDownItems[i];
-                if (TI is ToolStripSeparator)
-                    MyItems[i] = new ToolStripSeparator();
-                else
-                if (TI is ToolStripMenuItem)
-                    MyItems[i] = (ToolStripItem)Extensions.Clone(TI as ToolStripMenuItem);
-            }
-            popTop.Items.Clear();
-            popTop.Items.AddRange(MyItems);
-       }
 
     }
 }
