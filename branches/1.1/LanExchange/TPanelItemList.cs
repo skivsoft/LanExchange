@@ -6,6 +6,7 @@ using System.Text;
 using OSTools;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using LanExchange.Network;
 #if DEBUG
 using NLog;
 #endif
@@ -182,19 +183,19 @@ namespace LanExchange
         {
             List<string> Result = new List<string>();
 
-            LocalNetwork.SERVER_INFO_101 si;
+            NetApi32.SERVER_INFO_101 si;
             IntPtr pInfo = IntPtr.Zero;
             int entriesread = 0;
             int totalentries = 0;
             try
             {
-                LocalNetwork.NERR err = LocalNetwork.NetServerEnum(null, 101, out pInfo, -1, ref entriesread, ref totalentries, LocalNetwork.SV_101_TYPES.SV_TYPE_DOMAIN_ENUM, null, 0);
-                if ((err == LocalNetwork.NERR.NERR_Success || err == LocalNetwork.NERR.ERROR_MORE_DATA) && pInfo != IntPtr.Zero)
+                NetApi32.NERR err = NetApi32.NetServerEnum(null, 101, out pInfo, -1, ref entriesread, ref totalentries, NetApi32.SV_101_TYPES.SV_TYPE_DOMAIN_ENUM, null, 0);
+                if ((err == NetApi32.NERR.NERR_Success || err == NetApi32.NERR.ERROR_MORE_DATA) && pInfo != IntPtr.Zero)
                 {
                     int ptr = pInfo.ToInt32();
                     for (int i = 0; i < entriesread; i++)
                     {
-                        si = (LocalNetwork.SERVER_INFO_101)Marshal.PtrToStructure(new IntPtr(ptr), typeof(LocalNetwork.SERVER_INFO_101));
+                        si = (NetApi32.SERVER_INFO_101)Marshal.PtrToStructure(new IntPtr(ptr), typeof(NetApi32.SERVER_INFO_101));
                         // в режиме пользователя не сканируем: сервера, контроллеры домена
                         //bool bServer = (si.sv101_type & 0x8018) != 0;
                         //if (Program.AdminMode || !bServer)
@@ -206,7 +207,7 @@ namespace LanExchange
             catch (Exception) { /* обработка ошибки нифига не делаем :(*/ }
             finally
             { // освобождаем выделенную память
-                if (pInfo != IntPtr.Zero) LocalNetwork.NetApiBufferFree(pInfo);
+                if (pInfo != IntPtr.Zero) NetApi32.NetApiBufferFree(pInfo);
             }
             return Result;
         }
@@ -215,7 +216,7 @@ namespace LanExchange
         // получим список всех компьюетеров
         public static IList<TPanelItem> GetServerList(string domain)
         {
-            LocalNetwork.SERVER_INFO_101 si;
+            NetApi32.SERVER_INFO_101 si;
             IntPtr pInfo = IntPtr.Zero;
             int entriesread = 0;
             int totalentries = 0;
@@ -223,18 +224,18 @@ namespace LanExchange
             try
             {
                 logger.Info("WINAPI NetServerEnum");
-                LocalNetwork.NERR err = LocalNetwork.NetServerEnum(null, 101, out pInfo, -1, ref entriesread, ref totalentries, LocalNetwork.SV_101_TYPES.SV_TYPE_ALL, domain, 0);
+                NetApi32.NERR err = NetApi32.NetServerEnum(null, 101, out pInfo, -1, ref entriesread, ref totalentries, NetApi32.SV_101_TYPES.SV_TYPE_ALL, domain, 0);
                 logger.Info("WINAPI NetServerEnum: result={0}, entriesread={1}, totalentries={2}", err, entriesread, totalentries);
-                if ((err == LocalNetwork.NERR.NERR_Success || err == LocalNetwork.NERR.ERROR_MORE_DATA) && pInfo != IntPtr.Zero)
+                if ((err == NetApi32.NERR.NERR_Success || err == NetApi32.NERR.ERROR_MORE_DATA) && pInfo != IntPtr.Zero)
                 {
                     int ptr = pInfo.ToInt32();
                     for (int i = 0; i < entriesread; i++)
                     {
-                        si = (LocalNetwork.SERVER_INFO_101)Marshal.PtrToStructure(new IntPtr(ptr), typeof(LocalNetwork.SERVER_INFO_101));
+                        si = (NetApi32.SERVER_INFO_101)Marshal.PtrToStructure(new IntPtr(ptr), typeof(NetApi32.SERVER_INFO_101));
                         // в режиме пользователя не сканируем: сервера, контроллеры домена
                         //bool bServer = (si.sv101_type & 0x8018) != 0;
                         //if (Program.AdminMode || !bServer)
-                        Result.Add(new TComputerItem(si.sv101_name, si.sv101_comment, si.sv101_platform_id, si.sv101_version_major, si.sv101_version_minor, si.sv101_type));
+                        Result.Add(new TComputerItem(si.sv101_name, si));
                         ptr += Marshal.SizeOf(si);
                     }
                 }
@@ -242,7 +243,7 @@ namespace LanExchange
             catch (Exception) { /* обработка ошибки нифига не делаем :(*/ }
             finally
             { // освобождаем выделенную память
-                if (pInfo != IntPtr.Zero) LocalNetwork.NetApiBufferFree(pInfo);
+                if (pInfo != IntPtr.Zero) NetApi32.NetApiBufferFree(pInfo);
             }
             #if USE_NORTHWIND_DATA
             AddNorthWindData(Result);
@@ -257,25 +258,25 @@ namespace LanExchange
             int entriesread = 0;
             int totalentries = 0;
             int resume_handle = 0;
-            int nStructSize = Marshal.SizeOf(typeof(LocalNetwork.SHARE_INFO_1));
+            int nStructSize = Marshal.SizeOf(typeof(NetApi32.SHARE_INFO_1));
             IntPtr bufPtr = IntPtr.Zero;
             StringBuilder server = new StringBuilder(Server);
             logger.Info("WINAPI NetShareEnum");
-            int ret = LocalNetwork.NetShareEnum(server, 1, ref bufPtr, LocalNetwork.MAX_PREFERRED_LENGTH, ref entriesread, ref totalentries, ref resume_handle);
-            if (ret == LocalNetwork.NERR_Success)
+            int ret = NetApi32.NetShareEnum(server, 1, ref bufPtr, NetApi32.MAX_PREFERRED_LENGTH, ref entriesread, ref totalentries, ref resume_handle);
+            if (ret == NetApi32.NERR_Success)
             {
                 logger.Info("WINAPI NetServerEnum result: entriesread={0}, totalentries={1}", entriesread, totalentries);
                 IntPtr currentPtr = bufPtr;
                 for (int i = 0; i < entriesread; i++)
                 {
-                    LocalNetwork.SHARE_INFO_1 shi1 = (LocalNetwork.SHARE_INFO_1)Marshal.PtrToStructure(currentPtr, typeof(LocalNetwork.SHARE_INFO_1));
-                    if ((shi1.shi1_type & (uint)LocalNetwork.SHARE_TYPE.STYPE_IPC) != (uint)LocalNetwork.SHARE_TYPE.STYPE_IPC)
+                    NetApi32.SHARE_INFO_1 shi1 = (NetApi32.SHARE_INFO_1)Marshal.PtrToStructure(currentPtr, typeof(NetApi32.SHARE_INFO_1));
+                    if ((shi1.shi1_type & (uint)NetApi32.SHARE_TYPE.STYPE_IPC) != (uint)NetApi32.SHARE_TYPE.STYPE_IPC)
                         Result.Add(new TShareItem(shi1.shi1_netname, shi1.shi1_remark, shi1.shi1_type, Server));
                     else
                         logger.Info("Skiping IPC$ share");
                     currentPtr = new IntPtr(currentPtr.ToInt32() + nStructSize);
                 }
-                LocalNetwork.NetApiBufferFree(bufPtr);
+                NetApi32.NetApiBufferFree(bufPtr);
             }
             else
             {

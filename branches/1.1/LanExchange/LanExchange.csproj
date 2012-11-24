@@ -114,6 +114,8 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Network\NetApi32.cs" />
+    <Compile Include="Network\ServerInfo.cs" />
     <Compile Include="NLogFake.cs" />
     <Compile Include="OSKeyboard.cs" />
     <Compile Include="OSLayer.cs" />
@@ -123,6 +125,8 @@
     <Compile Include="Forms\ParamsForm.Designer.cs">
       <DependentUpon>ParamsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="TComputerItem.cs" />
+    <Compile Include="TShareItem.cs" />
     <Compile Include="PingThread.cs" />
     <Compile Include="TPanelItem.cs" />
     <Compile Include="OSTools.cs" />
@@ -216,6 +220,7 @@
     <Content Include="Resources\LanExchange_16x16.ico" />
     <None Include="Resources\LanExchange_48x48.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

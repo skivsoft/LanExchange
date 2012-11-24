@@ -791,7 +791,7 @@ namespace LanExchange
                     return;
                 lInfoComp.Text = Comp.Name;
                 lInfoDesc.Text = Comp.Comment;
-                lInfoOS.Text   = Comp.OSVersion;
+                lInfoOS.Text   = Comp.SI.Version();
                 imgInfo.Image = ilSmall.Images[PItem.ImageIndex];
                 switch (Comp.ImageIndex)
                 {
