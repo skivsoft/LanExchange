@@ -35,11 +35,9 @@ namespace LanExchange
         {
             m_Name = computer_name;
             pingable = true;
-            if (data is NetApi32.SERVER_INFO_101)
-            {
-                m_SI = new ServerInfo((NetApi32.SERVER_INFO_101)data);
+            m_SI = data as ServerInfo;
+            if (data != null)
                 m_Comment = m_SI.Comment;
-            }
         }
 
         public static bool IsValidName(string name)

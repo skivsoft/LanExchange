@@ -1,4 +1,4 @@
-﻿#define SINGLE_INSTANCE
+﻿#define __SINGLE_INSTANCE
 
 using System;
 using System.Diagnostics;
@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Reflection;
 using System.Security.AccessControl;
 using NLog;
+using LanExchange.Forms;
 
 namespace LanExchange
 {

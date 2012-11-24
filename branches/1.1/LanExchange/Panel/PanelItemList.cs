@@ -13,13 +13,15 @@ using NLog;
 
 namespace LanExchange
 {
-    public class PanelItemList 
+    public class PanelItemList : ISubscriber
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         
         private Dictionary<string, PanelItem> Data = null;
         public List<string> Keys = null;
         private String Filter = "";
+
+        public event EventHandler Changed;
 
         public PanelItemList()
         {
@@ -175,45 +177,9 @@ namespace LanExchange
             }
         }
 #endif
-        /// <summary>
-        /// Get domain list.
-        /// </summary>
-        /// <returns></returns>
-        public static List<string> GetDomainList()
-        {
-            List<string> Result = new List<string>();
-
-            NetApi32.SERVER_INFO_101 si;
-            IntPtr pInfo = IntPtr.Zero;
-            int entriesread = 0;
-            int totalentries = 0;
-            try
-            {
-                NetApi32.NERR err = NetApi32.NetServerEnum(null, 101, out pInfo, -1, ref entriesread, ref totalentries, NetApi32.SV_101_TYPES.SV_TYPE_DOMAIN_ENUM, null, 0);
-                if ((err == NetApi32.NERR.NERR_Success || err == NetApi32.NERR.ERROR_MORE_DATA) && pInfo != IntPtr.Zero)
-                {
-                    int ptr = pInfo.ToInt32();
-                    for (int i = 0; i < entriesread; i++)
-                    {
-                        si = (NetApi32.SERVER_INFO_101)Marshal.PtrToStructure(new IntPtr(ptr), typeof(NetApi32.SERVER_INFO_101));
-                        // в режиме пользователя не сканируем: сервера, контроллеры домена
-                        //bool bServer = (si.sv101_type & 0x8018) != 0;
-                        //if (Program.AdminMode || !bServer)
-                        Result.Add(si.sv101_name);
-                        ptr += Marshal.SizeOf(si);
-                    }
-                }
-            }
-            catch (Exception) { /* обработка ошибки нифига не делаем :(*/ }
-            finally
-            { // освобождаем выделенную память
-                if (pInfo != IntPtr.Zero) NetApi32.NetApiBufferFree(pInfo);
-            }
-            return Result;
-        }
-
 
         // получим список всех компьюетеров
+        /*
         public static IList<PanelItem> GetServerList(string domain)
         {
             NetApi32.SERVER_INFO_101 si;
@@ -240,7 +206,7 @@ namespace LanExchange
                     }
                 }
             }
-            catch (Exception) { /* обработка ошибки нифига не делаем :(*/ }
+            catch (Exception) { }
             finally
             { // освобождаем выделенную память
                 if (pInfo != IntPtr.Zero) NetApi32.NetApiBufferFree(pInfo);
@@ -250,6 +216,7 @@ namespace LanExchange
             #endif
             return Result;
         }
+        */
 
         public static List<PanelItem> EnumNetShares(string Server)
         {
@@ -384,27 +351,19 @@ namespace LanExchange
                 Result.Add(Pair.Value.Name);
             return Result;
         }
-    }
 
-    public class BrowseProcessResult
-    {
-        private IList<PanelItem> m_ServerList;
-        private string m_Domain;
-
-        public BrowseProcessResult(string domain, IList<PanelItem> server_list)
+        public void DataChanged(ISubscriptionProvider sender, DataChangedEventArgs e)
         {
-            m_Domain = domain;
-            m_ServerList = server_list;
-        }
-
-        public string Domain
-        {
-            get { return m_Domain; }
-        }
-
-        public IList<PanelItem> ServerList
-        {
-            get { return m_ServerList; }
+            IList<ServerInfo> List = (IList<ServerInfo>)e.Data;
+            lock (Data)
+            {
+                Data.Clear();
+                foreach (var SI in List)
+                    Data.Add(SI.Name, new ComputerPanelItem(SI.Name, SI));
+                ApplyFilter();
+            }
+            if (Changed != null)
+                Changed(this, new EventArgs());
         }
     }
 }

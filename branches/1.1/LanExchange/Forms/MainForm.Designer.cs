@@ -1,4 +1,4 @@
-﻿namespace LanExchange
+﻿namespace LanExchange.Forms
 {
     partial class MainForm
     {
@@ -73,7 +73,6 @@
             this.mAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.mExit = new System.Windows.Forms.ToolStripMenuItem();
             this.DoBrowse = new System.ComponentModel.BackgroundWorker();
-            this.BrowseTimer = new System.Windows.Forms.Timer(this.components);
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lItemsCount = new System.Windows.Forms.ToolStripStatusLabel();
@@ -93,20 +92,21 @@
             this.mSelectTab = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.mListTab = new System.Windows.Forms.ToolStripMenuItem();
+            this.mTabParams = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.lvComps = new LanExchange.ListViewEx();
             this.tipComps = new System.Windows.Forms.ToolTip(this.components);
             this.eFilter = new System.Windows.Forms.TextBox();
+            this.lInfoOS = new System.Windows.Forms.Label();
+            this.lInfoDesc = new System.Windows.Forms.Label();
+            this.lInfoComp = new System.Windows.Forms.Label();
             this.imgClear = new System.Windows.Forms.PictureBox();
             this.tsBottom = new System.Windows.Forms.Panel();
             this.dlgSave = new System.Windows.Forms.SaveFileDialog();
             this.pInfo = new System.Windows.Forms.Panel();
             this.popTop = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.lInfoOS = new System.Windows.Forms.Label();
             this.imgInfo = new System.Windows.Forms.PictureBox();
-            this.lInfoDesc = new System.Windows.Forms.Label();
-            this.lInfoComp = new System.Windows.Forms.Label();
-            this.lvComps = new LanExchange.CListViewEx();
-            this.inputBox = new LanExchange.CInputBox(this.components);
+            this.inputBox = new LanExchange.InputBox(this.components);
             this.popComps.SuspendLayout();
             this.popTray.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -499,11 +499,6 @@
             this.DoBrowse.DoWork += new System.ComponentModel.DoWorkEventHandler(this.DoBrowse_DoWork);
             this.DoBrowse.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.DoBrowse_RunWorkerCompleted);
             // 
-            // BrowseTimer
-            // 
-            this.BrowseTimer.Interval = 300000;
-            this.BrowseTimer.Tick += new System.EventHandler(this.BrowseTimer_Tick);
-            // 
             // toolStripStatusLabel2
             // 
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
@@ -594,9 +589,10 @@
             this.toolStripSeparator10,
             this.mSelectTab,
             this.toolStripSeparator11,
-            this.mListTab});
+            this.mListTab,
+            this.mTabParams});
             this.popPages.Name = "popPages";
-            this.popPages.Size = new System.Drawing.Size(246, 154);
+            this.popPages.Size = new System.Drawing.Size(246, 198);
             this.popPages.Opened += new System.EventHandler(this.popPages_Opened);
             // 
             // mNewTab
@@ -651,7 +647,6 @@
             // 
             this.toolStripSeparator11.Name = "toolStripSeparator11";
             this.toolStripSeparator11.Size = new System.Drawing.Size(242, 6);
-            this.toolStripSeparator11.Visible = false;
             // 
             // mListTab
             // 
@@ -660,6 +655,14 @@
             this.mListTab.Text = "Список вкладок";
             this.mListTab.Visible = false;
             this.mListTab.Click += new System.EventHandler(this.mListTab_Click);
+            // 
+            // mTabParams
+            // 
+            this.mTabParams.Name = "mTabParams";
+            this.mTabParams.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.mTabParams.Size = new System.Drawing.Size(245, 22);
+            this.mTabParams.Text = "Настройка вкладки...";
+            this.mTabParams.Click += new System.EventHandler(this.mTabParams_Click);
             // 
             // tabPage1
             // 
@@ -670,6 +673,31 @@
             this.tabPage1.Size = new System.Drawing.Size(556, 402);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // lvComps
+            // 
+            this.lvComps.ContextMenuStrip = this.popComps;
+            this.lvComps.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvComps.FullRowSelect = true;
+            this.lvComps.GridLines = true;
+            this.lvComps.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvComps.HideSelection = false;
+            this.lvComps.LargeImageList = this.ilLarge;
+            this.lvComps.Location = new System.Drawing.Point(3, 3);
+            this.lvComps.Name = "lvComps";
+            this.lvComps.ShowGroups = false;
+            this.lvComps.ShowItemToolTips = true;
+            this.lvComps.Size = new System.Drawing.Size(550, 396);
+            this.lvComps.SmallImageList = this.ilSmall;
+            this.lvComps.TabIndex = 19;
+            this.lvComps.UseCompatibleStateImageBehavior = false;
+            this.lvComps.View = System.Windows.Forms.View.Details;
+            this.lvComps.VirtualMode = true;
+            this.lvComps.ItemActivate += new System.EventHandler(this.lvComps_ItemActivate);
+            this.lvComps.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lvComps_ItemSelectionChanged);
+            this.lvComps.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.lvComps_RetrieveVirtualItem);
+            this.lvComps.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvComps_KeyDown);
+            this.lvComps.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lvComps_KeyPress);
             // 
             // tipComps
             // 
@@ -690,6 +718,37 @@
             this.tipComps.SetToolTip(this.eFilter, "Фильтрация по сетевым именам и описанию");
             this.eFilter.TextChanged += new System.EventHandler(this.eFilter_TextChanged);
             this.eFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.eFilter_KeyDown);
+            // 
+            // lInfoOS
+            // 
+            this.lInfoOS.AutoSize = true;
+            this.lInfoOS.Location = new System.Drawing.Point(30, 42);
+            this.lInfoOS.Name = "lInfoOS";
+            this.lInfoOS.Size = new System.Drawing.Size(19, 13);
+            this.lInfoOS.TabIndex = 3;
+            this.lInfoOS.Text = "    ";
+            this.tipComps.SetToolTip(this.lInfoOS, "Версия ОС");
+            // 
+            // lInfoDesc
+            // 
+            this.lInfoDesc.AutoSize = true;
+            this.lInfoDesc.Location = new System.Drawing.Point(30, 25);
+            this.lInfoDesc.Name = "lInfoDesc";
+            this.lInfoDesc.Size = new System.Drawing.Size(19, 13);
+            this.lInfoDesc.TabIndex = 1;
+            this.lInfoDesc.Text = "    ";
+            this.tipComps.SetToolTip(this.lInfoDesc, "Описание");
+            // 
+            // lInfoComp
+            // 
+            this.lInfoComp.AutoSize = true;
+            this.lInfoComp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lInfoComp.Location = new System.Drawing.Point(30, 8);
+            this.lInfoComp.Name = "lInfoComp";
+            this.lInfoComp.Size = new System.Drawing.Size(23, 13);
+            this.lInfoComp.TabIndex = 0;
+            this.lInfoComp.Text = "    ";
+            this.tipComps.SetToolTip(this.lInfoComp, "Сетевое имя");
             // 
             // imgClear
             // 
@@ -736,23 +795,12 @@
             this.pInfo.Name = "pInfo";
             this.pInfo.Size = new System.Drawing.Size(564, 60);
             this.pInfo.TabIndex = 22;
-            this.pInfo.Visible = false;
             // 
             // popTop
             // 
             this.popTop.Name = "popTop";
             this.popTop.Size = new System.Drawing.Size(61, 4);
             this.popTop.Opened += new System.EventHandler(this.popTop_Opened);
-            // 
-            // lInfoOS
-            // 
-            this.lInfoOS.AutoSize = true;
-            this.lInfoOS.Location = new System.Drawing.Point(30, 42);
-            this.lInfoOS.Name = "lInfoOS";
-            this.lInfoOS.Size = new System.Drawing.Size(19, 13);
-            this.lInfoOS.TabIndex = 3;
-            this.lInfoOS.Text = "    ";
-            this.tipComps.SetToolTip(this.lInfoOS, "Версия ОС");
             // 
             // imgInfo
             // 
@@ -761,52 +809,6 @@
             this.imgInfo.Size = new System.Drawing.Size(16, 16);
             this.imgInfo.TabIndex = 2;
             this.imgInfo.TabStop = false;
-            // 
-            // lInfoDesc
-            // 
-            this.lInfoDesc.AutoSize = true;
-            this.lInfoDesc.Location = new System.Drawing.Point(30, 25);
-            this.lInfoDesc.Name = "lInfoDesc";
-            this.lInfoDesc.Size = new System.Drawing.Size(19, 13);
-            this.lInfoDesc.TabIndex = 1;
-            this.lInfoDesc.Text = "    ";
-            this.tipComps.SetToolTip(this.lInfoDesc, "Описание");
-            // 
-            // lInfoComp
-            // 
-            this.lInfoComp.AutoSize = true;
-            this.lInfoComp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lInfoComp.Location = new System.Drawing.Point(30, 8);
-            this.lInfoComp.Name = "lInfoComp";
-            this.lInfoComp.Size = new System.Drawing.Size(23, 13);
-            this.lInfoComp.TabIndex = 0;
-            this.lInfoComp.Text = "    ";
-            this.tipComps.SetToolTip(this.lInfoComp, "Сетевое имя");
-            // 
-            // lvComps
-            // 
-            this.lvComps.ContextMenuStrip = this.popComps;
-            this.lvComps.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvComps.FullRowSelect = true;
-            this.lvComps.GridLines = true;
-            this.lvComps.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.lvComps.HideSelection = false;
-            this.lvComps.LargeImageList = this.ilLarge;
-            this.lvComps.Location = new System.Drawing.Point(3, 3);
-            this.lvComps.Name = "lvComps";
-            this.lvComps.ShowGroups = false;
-            this.lvComps.ShowItemToolTips = true;
-            this.lvComps.Size = new System.Drawing.Size(550, 396);
-            this.lvComps.SmallImageList = this.ilSmall;
-            this.lvComps.TabIndex = 19;
-            this.lvComps.UseCompatibleStateImageBehavior = false;
-            this.lvComps.View = System.Windows.Forms.View.Details;
-            this.lvComps.VirtualMode = true;
-            this.lvComps.ItemActivate += new System.EventHandler(this.lvComps_ItemActivate);
-            this.lvComps.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lvComps_ItemSelectionChanged);
-            this.lvComps.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.lvComps_RetrieveVirtualItem);
-            this.lvComps.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvComps_KeyDown);
-            this.lvComps.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lvComps_KeyPress);
             // 
             // inputBox
             // 
@@ -854,7 +856,6 @@
         private System.Windows.Forms.ToolStripMenuItem mExit;
         private System.Windows.Forms.ToolStripMenuItem mOpen;
         private System.ComponentModel.BackgroundWorker DoBrowse;
-        private System.Windows.Forms.Timer BrowseTimer;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         public System.Windows.Forms.ContextMenuStrip popComps;
         private System.Windows.Forms.ToolStripMenuItem mCopyCompName;
@@ -882,7 +883,7 @@
         private System.Windows.Forms.ToolStripMenuItem mRadmin4;
         private System.Windows.Forms.ToolStripMenuItem mRadmin5;
         private System.Windows.Forms.ToolStripMenuItem mWMIDescription;
-        public CInputBox inputBox;
+        public InputBox inputBox;
         private System.Windows.Forms.ToolStripMenuItem mSettings;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         private System.Windows.Forms.StatusStrip statusStrip1;
@@ -912,7 +913,7 @@
         private System.Windows.Forms.ToolStripMenuItem mSendToTab;
         private System.Windows.Forms.ToolStripMenuItem mSendToNewTab;
         private System.Windows.Forms.ToolStripSeparator mAfterSendTo;
-        public CListViewEx lvComps;
+        public ListViewEx lvComps;
         private System.Windows.Forms.Panel pInfo;
         private System.Windows.Forms.Label lInfoComp;
         private System.Windows.Forms.PictureBox imgInfo;
@@ -926,6 +927,7 @@
         private System.Windows.Forms.ContextMenuStrip popTop;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
         private System.Windows.Forms.ToolStripStatusLabel lUserName;
+        private System.Windows.Forms.ToolStripMenuItem mTabParams;
     }
 }
 

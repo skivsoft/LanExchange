@@ -12,7 +12,7 @@ using System.Diagnostics;
 using NLog;
 #endif
 
-namespace LanExchange
+namespace LanExchange.Forms
 {
     partial class AboutForm : Form
     {

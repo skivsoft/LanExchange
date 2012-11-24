@@ -1,4 +1,4 @@
-﻿namespace LanExchange
+﻿namespace LanExchange.Forms
 {
     partial class ParamsForm
     {

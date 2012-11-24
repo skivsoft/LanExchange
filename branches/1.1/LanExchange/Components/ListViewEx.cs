@@ -5,10 +5,10 @@ using System.Windows.Forms;
 
 namespace LanExchange
 {
-    public class CListViewEx : ListView
+    public class ListViewEx : ListView
     {
 
-        public CListViewEx()
+        public ListViewEx()
         {
             this.SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
         }

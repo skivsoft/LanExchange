@@ -2,6 +2,9 @@
 #define NOUSE_FLASH
 #define NLOG
 
+#if DEBUG
+using NLog;
+#endif
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,12 +22,9 @@ using System.Windows.Forms;
 using OSTools;
 using System.Net.NetworkInformation;
 using EventHandlerSupport;
-#if DEBUG
-using NLog;
 using LanExchange.Network;
-#endif
 
-namespace LanExchange
+namespace LanExchange.Forms
 {
     public partial class MainForm : Form
     {
@@ -77,7 +77,10 @@ namespace LanExchange
             MainFormInstance = this;
             lvCompsHandle = lvComps.Handle;
             CompBrowser = new NetworkBrowser(lvComps);
-            PanelItemList.ListView_SetObject(lvComps, CompBrowser.InternalItemList);
+            //PanelItemList.ListView_SetObject(lvComps, CompBrowser.InternalItemList);
+            PanelItemList Items = new PanelItemList();
+            Items.Changed += new EventHandler(Items_Changed);
+            PanelItemList.ListView_SetObject(lvComps, Items);
             // содаем контроллер для управления вкладками
             TabController = new TabController(Pages);
             mSendToNewTab.Click += new System.EventHandler(TabController.mSendToNewTab_Click);
@@ -100,6 +103,36 @@ namespace LanExchange
             hotkey.Handle = this.Handle;
             hotkey.RegisterGlobalHotKey( (int) Keys.Z, GlobalHotkeys.MOD_CONTROL | GlobalHotkeys.MOD_ALT);
              */
+        }
+
+        private void Items_Changed(object sender, EventArgs e)
+        {
+            ListViewEx LV = GetActiveListView();
+            PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
+            if (ItemList == null)
+                return;
+            int ShowCount, TotalCount;
+            if (ItemList.IsFiltered)
+            {
+                ShowCount = ItemList.FilterCount;
+                TotalCount = ItemList.Count;
+            }
+            else
+            {
+                ShowCount = ItemList.Count;
+                TotalCount = ItemList.Count;
+            }
+            lock (LV)
+            {
+                LV.VirtualListSize = ShowCount;
+            }
+            lock (lItemsCount)
+            {
+                if (ShowCount != TotalCount)
+                    lItemsCount.Text = String.Format("Элементов: {0} из {1}", ShowCount, TotalCount);
+                else
+                    lItemsCount.Text = String.Format("Элементов: {0}", ShowCount);
+            }
         }
 
         /*
@@ -167,14 +200,6 @@ namespace LanExchange
             ActiveControl = lvComps;
         }
 
-        private void SetBrowseTimerInterval()
-        {
-            BrowseTimer.Interval = Settings.RefreshTimeInSec * 1000;
-            #if DEBUG
-            BrowseTimer.Interval = 5 * 1000;
-            #endif
-        }
-
         private void SetupMenu()
         {
             ToolStripItem[] MyItems = new ToolStripItem[mComp.DropDownItems.Count];
@@ -203,10 +228,21 @@ namespace LanExchange
                 // права администратора берем из реестра
                 AdminMode = Settings.IsAdvancedMode;
                 // запуск обновления компов
-                SetBrowseTimerInterval();
-                BrowseTimer_Tick(this, new EventArgs());
+                #if DEBUG
+                NetworkScanner.GetInstance().RefreshInterval = 5 * 1000;
+                #else
+                NetworkScanner.GetInstance().RefreshInterval = Settings.RefreshTimeInSec * 1000;
+                #endif
+                //SetBrowseTimerInterval();
+                //BrowseTimer_Tick(this, new EventArgs());
                 // всплывающие подсказки
                 TabView.ListView_SetupTip(lvComps);
+                PanelItemList ItemList = PanelItemList.ListView_GetObject(lvComps);
+                if (ItemList != null)
+                {
+                    NetworkScanner.GetInstance().SubscribeToSubject(ItemList, CurrentDomain);
+                    //NetworkScanner.GetInstance().SubscribeToAll(ItemList);
+                }
             }
         }
 
@@ -230,22 +266,11 @@ namespace LanExchange
             }
             else
             {
-                BrowseTimer.Stop();
                 CancelCompRelatedThreads();
                 Pages.Invoke(myPagesRefresh, Pages, null);
             }
         }
 
-        private void BrowseTimer_Tick(object sender, EventArgs e)
-        {
-            logger.Trace("Timer BrowseTimer tick");
-            if (!DoBrowse.IsBusy && CompBrowser.InternalStack.Count == 0)
-            {
-                BrowseTimer.Enabled = false;
-                // запуск процесса обновления в асинхронном режиме
-                DoBrowse.RunWorkerAsync(CurrentDomain);
-            }
-        }
         #endregion
 
 
@@ -254,14 +279,14 @@ namespace LanExchange
         {
             TabPage Tab = Pages.SelectedTab;
             if (Tab == null) return;
-            CListViewEx LV = (CListViewEx)Tab.Controls[0];
+            ListViewEx LV = (ListViewEx)Tab.Controls[0];
             LV.Invoke(myCompsRefresh, LV, data);
         }
 
         void lvCompsRefreshMethod(object sender, object data)
         {
             string RefreshCompName = (string)data;
-            CListViewEx LV = (CListViewEx)sender;
+            ListViewEx LV = (ListViewEx)sender;
             PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
             if (LV.Handle != IntPtr.Zero)
             {
@@ -289,8 +314,8 @@ namespace LanExchange
         void BrowseTimerRefreshMethod(object sender, object data)
         {
             //BrowseTimer_Tick(BrowseTimer, new EventArgs());
-            BrowseTimer.Interval = NetworkWaitAfterPluggedInSec * 1000;
-            BrowseTimer.Start();
+            //BrowseTimer.Interval = NetworkWaitAfterPluggedInSec * 1000;
+            //BrowseTimer.Start();
         }
 
         #endregion
@@ -468,6 +493,7 @@ namespace LanExchange
 
         private void DoBrowse_DoWork(object sender, DoWorkEventArgs e)
         {
+            /*
             logger.Info("Thread for browse network start");
             string domain = (string)e.Argument;
             e.Result = new BrowseProcessResult(domain, PanelItemList.GetServerList(domain));
@@ -476,20 +502,20 @@ namespace LanExchange
                 logger.Info("Thread for browse network canceled");
             else
                 logger.Info("Thread for browse network finish");
+             */
         }
 
         private void DoBrowse_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            BrowseProcessResult Result = (BrowseProcessResult)e.Result;
+            /*
+            NetworkScannerResult Result = (NetworkScannerResult)e.Result;
             if (!e.Cancelled)
             {
                 // update server list
                 List<string> AddedNew = CompareDataSources(CompBrowser.CurrentDataTable, Result.ServerList);
                 List<string> RemovedNew = CompareDataSources(Result.ServerList, CompBrowser.CurrentDataTable);
                 // если список компов не изменился, ничего не обновляем
-                #if (!DEBUG)
                 if (bNetworkJustPlugged || !(CompBrowser.CurrentDataTable != null && (AddedNew.Count == 0 && RemovedNew.Count == 0)))
-                #endif
                 {
                     if (DoPing.IsBusy)
                         DoPing.CancelAsync();
@@ -532,8 +558,9 @@ namespace LanExchange
                 #endif
             }
             // запускаем таймер для следующего обновления
-            SetBrowseTimerInterval();
-            BrowseTimer.Enabled = true;
+            //SetBrowseTimerInterval();
+            //BrowseTimer.Enabled = true;
+             */
         }
 
         private void DoPing_DoWork(object sender, DoWorkEventArgs e)
@@ -573,13 +600,16 @@ namespace LanExchange
 
         public void lvComps_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
         {
-            CListViewEx LV = sender as CListViewEx;
+            ListViewEx LV = sender as ListViewEx;
+            if (LV == null)
+                return;
+            PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
+            if (ItemList == null) 
+                return;
+            if (e.ItemIndex < 0 || e.ItemIndex > Math.Min(ItemList.Keys.Count, LV.VirtualListSize)-1)
+                return;
             if (e.Item == null)
                 e.Item = new ListViewItem();
-            PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
-            if (ItemList == null) return;
-            //if (e.ItemIndex < 0 || e.ItemIndex > Math.Min(ItemList.Keys.Count, LV.VirtualListSize)-1)
-            //    return;
             String ItemName = ItemList.Keys[e.ItemIndex];
             PanelItem PItem = ItemList.Get(ItemName);
             if (PItem != null)
@@ -624,7 +654,7 @@ namespace LanExchange
 
         private void mCopyCompName_Click(object sender, EventArgs e)
         {
-            CListViewEx LV = GetActiveListView();
+            ListViewEx LV = GetActiveListView();
             PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
             StringBuilder S = new StringBuilder();
             foreach (int index in LV.SelectedIndices)
@@ -639,7 +669,7 @@ namespace LanExchange
 
         private void mCopyPath_Click(object sender, EventArgs e)
         {
-            CListViewEx LV = GetActiveListView();
+            ListViewEx LV = GetActiveListView();
             PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
             StringBuilder S = new StringBuilder();
             string ItemName = null;
@@ -662,7 +692,7 @@ namespace LanExchange
 
         private void mCopyComment_Click(object sender, EventArgs e)
         {
-            CListViewEx LV = GetActiveListView();
+            ListViewEx LV = GetActiveListView();
             PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
             StringBuilder S = new StringBuilder();
             PanelItem PItem = null;
@@ -680,7 +710,7 @@ namespace LanExchange
 
         private void mCopySelected_Click(object sender, EventArgs e)
         {
-            CListViewEx LV = GetActiveListView();
+            ListViewEx LV = GetActiveListView();
             PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
             StringBuilder S = new StringBuilder();
             string ItemName = null;
@@ -704,7 +734,7 @@ namespace LanExchange
 
         public void lvComps_KeyDown(object sender, KeyEventArgs e)
         {
-            CListViewEx LV = (sender as CListViewEx);
+            ListViewEx LV = (sender as ListViewEx);
             // Ctrl+A выделение всех элементов
             if (e.Control && e.KeyCode == Keys.A)
             {
@@ -792,17 +822,12 @@ namespace LanExchange
                 return;
             if (CompBrowser.InternalStack.Count == 0)
             {
-                CListViewEx LV = GetActiveListView();
+                ListViewEx LV = GetActiveListView();
                 PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
                 PanelItem PItem = ItemList.Get(e.Item.Text);
                 ComputerPanelItem Comp = PItem as ComputerPanelItem;
                 if (Comp == null)
-                {
-                    pInfo.Visible = false;
                     return;
-                }
-                else
-                    pInfo.Visible = true;
                 lInfoComp.Text = Comp.Name;
                 lInfoDesc.Text = Comp.Comment;
                 lInfoOS.Text   = Comp.SI.Version();
@@ -848,12 +873,13 @@ namespace LanExchange
         {
             get
             {
-                CListViewEx LV = GetActiveListView();
+                ListViewEx LV = GetActiveListView();
                 return LV.VirtualListSize;
             }
             set
             {
-                CListViewEx LV = GetActiveListView();
+                /*
+                ListViewEx LV = GetActiveListView();
                 PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
                 int ShowCount, TotalCount;
                 if (ItemList.IsFiltered)
@@ -871,10 +897,11 @@ namespace LanExchange
                     lItemsCount.Text = String.Format("Элементов: {0} из {1}", ShowCount, TotalCount);
                 else
                     lItemsCount.Text = String.Format("Элементов: {0}", ShowCount);
+                 */
             }
         }
 
-        public void UpdateFilter(CListViewEx LV, string NewFilter, bool bVisualUpdate)
+        public void UpdateFilter(ListViewEx LV, string NewFilter, bool bVisualUpdate)
         {
             PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
             List<string> SaveSelected = null;
@@ -897,12 +924,14 @@ namespace LanExchange
             ItemList.FilterText = NewFilter;
             if (bVisualUpdate)
             {
+                /*
                 TotalItems = CompBrowser.InternalItemList.Count;
                 eFilter.BackColor = TotalItems > 0 ? Color.White : Color.FromArgb(255, 102, 102); // Firefox Color
                 // восстанавливаем выделенные элементы
                 ItemList.ListView_SetSelected(LV, SaveSelected);
                 //CompBrowser.SelectComputer(SaveCurrent);
                 UpdateFilterPanel();
+                 */
             }
             else
                 LV.VirtualListSize = ItemList.FilterCount;
@@ -910,7 +939,7 @@ namespace LanExchange
 
         public void UpdateFilterPanel()
         {
-            CListViewEx LV = GetActiveListView();
+            ListViewEx LV = GetActiveListView();
             PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
             string Text = ItemList.FilterText;
             eFilter.TextChanged -= eFilter_TextChanged;
@@ -955,7 +984,7 @@ namespace LanExchange
         /// <returns>Возвращает TComputer</returns>
         public PanelItem GetFocusedPanelItem(bool bUpdateRecent, bool bPingAndAsk)
         {
-            CListViewEx LV = GetActiveListView();
+            ListViewEx LV = GetActiveListView();
             if (LV.FocusedItem == null)
                 return null;
             PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
@@ -1096,8 +1125,9 @@ namespace LanExchange
                     Comp.Comment = NewValue;
                     if (CompIndex != -1)
                     {
-                        CompBrowser.InternalItemList.ApplyFilter();
-                        CompBrowser.LV.RedrawItems(CompIndex, CompIndex, false);
+                        //!!!
+                        //CompBrowser.InternalItemList.ApplyFilter();
+                        //CompBrowser.LV.RedrawItems(CompIndex, CompIndex, false);
                     }
                     // сообщение об успешной смене описания
                     MessageBox.Show(this,
@@ -1151,12 +1181,13 @@ namespace LanExchange
             try
             {
                 lvComps.SelectedIndices.Clear();
-                CListViewEx LV = GetActiveListView();
+                ListViewEx LV = GetActiveListView();
                 UpdateFilter(LV, "", false);
                 // выходим на верхний уровень
                 while (CompBrowser.InternalStack.Count > 0)
                     CompBrowser.LevelUp();
-                CompBrowser.InternalItemList.ListView_SelectComputer(LV, ComputerName);
+                //!!!
+                //CompBrowser.InternalItemList.ListView_SelectComputer(LV, ComputerName);
                 PanelItem PItem = GetFocusedPanelItem(false, false);
                 if (PItem != null && PItem.Name == ComputerName)
                     lvComps_ItemActivate(lvComps, new EventArgs());
@@ -1199,9 +1230,9 @@ namespace LanExchange
             }
         }
 
-        public CListViewEx GetActiveListView()
+        public ListViewEx GetActiveListView()
         {
-            return (CListViewEx)Pages.SelectedTab.Controls[0];
+            return (ListViewEx)Pages.SelectedTab.Controls[0];
         }
 
         #endregion
@@ -1216,7 +1247,7 @@ namespace LanExchange
 
         private void mLargeIcons_Click(object sender, EventArgs e)
         {
-            CListViewEx LV = GetActiveListView();
+            ListViewEx LV = GetActiveListView();
             LV.SuspendLayout();
             LV.BeginUpdate();
             try
@@ -1276,7 +1307,7 @@ namespace LanExchange
             mCompSmallIcons.Checked = false;
             mCompList.Checked = false;
             mCompDetails.Checked = false;
-            CListViewEx LV = GetActiveListView();
+            ListViewEx LV = GetActiveListView();
             switch (LV.View)
             {
                 case View.LargeIcon:
@@ -1345,9 +1376,9 @@ namespace LanExchange
                 (sender as ToolTip).ToolTipTitle = "Легенда";
                 return;
             }
-            if (e.AssociatedControl is CListViewEx)
+            if (e.AssociatedControl is ListViewEx)
             {
-                CListViewEx LV = (CListViewEx)e.AssociatedControl;
+                ListViewEx LV = (ListViewEx)e.AssociatedControl;
                 Point P = LV.PointToClient(Control.MousePosition);
                 ListViewHitTestInfo Info = LV.HitTest(P);
                 if (Info != null && Info.Item != null)
@@ -1411,6 +1442,7 @@ namespace LanExchange
         // работающая в отдельном потоке.
         void Receive()
         {
+            /*
             logger.Info("Thread for udp receive start");
             // При принудительном завершении работы метода 
             // класса UdpClient Receive() и непредвиденных ситуациях 
@@ -1511,6 +1543,7 @@ namespace LanExchange
             {
             }
             logger.Info("Thread for udp receive finish");
+             */
         }
 
 
@@ -1732,6 +1765,14 @@ namespace LanExchange
             {
                 m_CurrentDomain = value;
                 Pages.TabPages[0].Text = value;
+            }
+        }
+
+        private void mTabParams_Click(object sender, EventArgs e)
+        {
+            using (TabParamsForm Form = new TabParamsForm())
+            {
+                Form.ShowDialog();
             }
         }
     }

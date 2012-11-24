@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Drawing;
+using LanExchange.Forms;
 
 
 //
@@ -181,7 +182,7 @@ namespace LanExchange
         public void AfterAppendTab(object sender, TabInfoEventArgs e)
         {
             TabPage NewTab = null;
-            CListViewEx LV = null;
+            ListViewEx LV = null;
             PanelItemList ItemList = null;
             TabModel Model = (TabModel)sender;
             // создаем новую вкладку или получаем существующую
@@ -201,12 +202,12 @@ namespace LanExchange
             bool bNewListView = NewTab.Controls.Count == 0;
             if (!bNewListView)
             {
-                LV = (CListViewEx)NewTab.Controls[0];
+                LV = (ListViewEx)NewTab.Controls[0];
                 logger.Info("Get existing control {0}", LV.ToString());
             }
             else
             {
-                LV = new CListViewEx();
+                LV = new ListViewEx();
                 logger.Info("Create control {0}", LV.ToString());
                 // настраиваем свойства и события для нового ListView
                 LV.View = e.Info.CurrentView;
@@ -221,6 +222,7 @@ namespace LanExchange
             // восстанавливаем список элементов
             if (e.Info.Items != null)
             {
+                /*
                 PanelItemList TopList = MainForm.MainFormInstance.CompBrowser.InternalItemList;
                 foreach (string ItemName in e.Info.Items)
                 {
@@ -231,6 +233,7 @@ namespace LanExchange
                         ItemList.Add(new ComputerPanelItem());
                 }
                 logger.Info("Added items to object {0}, Count: {1}", ItemList.ToString(), ItemList.Count);
+                 */
             }
             // установка фильтра
             MainForm.MainFormInstance.UpdateFilter(LV, e.Info.FilterText, false);

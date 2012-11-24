@@ -13,6 +13,11 @@ namespace LanExchange.Network
             m_Info = info;
         }
 
+        public string Name
+        {
+            get { return m_Info.sv101_name; }
+        }
+
         public string Comment
         {
             get { return m_Info.sv101_comment; }

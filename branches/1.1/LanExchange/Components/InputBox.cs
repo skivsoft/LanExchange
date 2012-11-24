@@ -10,19 +10,19 @@ namespace LanExchange
     /// Summary description for InputBox.
     /// </summary>
     [ToolboxItem(true)]
-    public class CInputBox : System.ComponentModel.Component
+    public class InputBox : System.ComponentModel.Component
     {
         protected string _prompt = string.Empty;
         protected string _caption = string.Empty;
         protected string _errorMsgOnEmpty;
         private InputBoxForm inputBox;
 
-        public CInputBox(System.ComponentModel.IContainer container)
+        public InputBox(System.ComponentModel.IContainer container)
         {
             container.Add(this);
         }
 
-        public CInputBox() { }
+        public InputBox() { }
 
         /// <summary>
         /// Property Prompt (string)

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace LanExchange
+namespace LanExchange.Forms
 {
     public partial class ParamsForm : Form
     {

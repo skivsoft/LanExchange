@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using LanExchange.Forms;
 
 namespace LanExchange
 {
@@ -17,7 +18,7 @@ namespace LanExchange
         // стек списков элементов для навигации
         public Stack<IList<PanelItem>> InternalStack = new Stack<IList<PanelItem>>();
         // внутренний список элементов с возможностью фильтрации для вывода через RetrieveVirtualItem
-        public PanelItemList InternalItemList = new PanelItemList();
+        //public PanelItemList InternalItemList = new PanelItemList();
 
         public enum LVType
         {
@@ -140,6 +141,7 @@ namespace LanExchange
 
         public void LevelUp()
         {
+            /*
             if (InternalStack.Count == 0)
                 return;
 
@@ -170,7 +172,7 @@ namespace LanExchange
             InternalItemList.ListView_SelectComputer(MainForm.MainFormInstance.lvComps, CompName);
 
             MainForm.MainFormInstance.UpdateFilter(MainForm.MainFormInstance.GetActiveListView(), MainForm.MainFormInstance.eFilter.Text, true);
-            //MainForm.MainFormInstance.UpdateFilterPanel();
+             */
         }
 
         // Отображаемая таблица
@@ -182,6 +184,7 @@ namespace LanExchange
             }
             set
             {
+                /*
                 List<string> SaveSelected = null;
                 if (!MainForm.MainFormInstance.bFirstStart)
                 {
@@ -209,6 +212,7 @@ namespace LanExchange
                 {
                     LV.EndUpdate();
                 }
+                 */
             }
         }
     }

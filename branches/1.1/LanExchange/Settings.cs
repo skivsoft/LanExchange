@@ -6,6 +6,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Security.AccessControl;
+using LanExchange.Forms;
 
 namespace LanExchange
 {
