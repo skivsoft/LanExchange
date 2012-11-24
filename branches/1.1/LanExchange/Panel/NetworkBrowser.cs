@@ -131,13 +131,9 @@ namespace LanExchange
                     ViewType = LVType.SHARES;
                     break;
                 case LVType.SHARES:
-                    MainForm.MainFormInstance.mCompOpen_Click(MainForm.MainFormInstance.mFolderOpen, new EventArgs());
-                    //Path += @"\" + FocusedText;
-                    //LV.VirtualListSize = 1;
-                    //ViewType = LVType.FILES;
+                    MainForm.MainFormInstance.mFolderOpen_Click(MainForm.MainFormInstance.mFolderOpen, new EventArgs());
                     break;
                 case LVType.FILES:
-
                     break;
             }
         }

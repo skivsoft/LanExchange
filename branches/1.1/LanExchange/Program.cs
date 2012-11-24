@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define SINGLE_INSTANCE
+
+using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
@@ -10,8 +12,10 @@ namespace LanExchange
 {
     internal static class Program
     {
+        #if SINGLE_INSTANCE
         private const string EventOneCopyOnlyName = "{e8813243-5a4d-4569-85ad-e95848a1c579}";
-        //private static ApplicationContext context;
+        private static ApplicationContext context;
+        #endif
 
         private static Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
@@ -22,16 +26,7 @@ namespace LanExchange
             logger.Info("Executable: [{0}], Version: {1}", Application.ExecutablePath, Assembly.GetExecutingAssembly().GetName().Version.ToString());
         }
 
-        static void SimpleStartInstance()
-        {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false); // must be called before first form created
-            Application.Run(new MainForm());
-            // workaround for NLog's bug under Mono (hanging after app exit) 
-            LogManager.Configuration = null;
-        }
-
-        /*
+        #if SINGLE_INSTANCE
 
         private static EventWaitHandle eventOneCopyOnly;
         private static Thread threadOneCopyOnly;
@@ -73,7 +68,6 @@ namespace LanExchange
                 threadOneCopyOnly.Start();
                 Application.ApplicationExit += new EventHandler(AppExit);
                 Application.Run(context);
-                
             }//using
         }
 
@@ -87,7 +81,19 @@ namespace LanExchange
         {
             threadOneCopyOnly.Abort();
         }
-        */
+
+        #else
+
+        static void SimpleStartInstance()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false); // must be called before first form created
+            Application.Run(new MainForm());
+            // workaround for NLog's bug under Mono (hanging after app exit) 
+            LogManager.Configuration = null;
+        }
+
+        #endif
 
 
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -106,17 +112,18 @@ namespace LanExchange
             try
             {
                 LogHeader();
+                #if SINGLE_INSTANCE
+                bool createdNew;
+                using (eventOneCopyOnly = new EventWaitHandle(false, EventResetMode.AutoReset, EventOneCopyOnlyName, out createdNew))
+                {
+                    if (createdNew)
+                        FirstInstance();
+                    else
+                        SecondInstance();
+                } // using
+                #else
                 SimpleStartInstance();
-                /*
-                    bool createdNew;
-                    using (eventOneCopyOnly = new EventWaitHandle(false, EventResetMode.AutoReset, EventOneCopyOnlyName, out createdNew))
-                    {
-                        if (createdNew)
-                            FirstInstance();
-                        else
-                            SecondInstance();
-                    } // using
-                */
+                #endif
             }
             catch (Exception e)
             {

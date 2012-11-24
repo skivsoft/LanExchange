@@ -48,7 +48,7 @@ namespace LanExchange
 
         public static string GetWebSiteURL()
         {
-            return "code.google.com/p/lanexchange/";
+            return "skivsoft.net/lanexchange/";
         }
 
         public static string GetEmailAddress()

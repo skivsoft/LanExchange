@@ -797,7 +797,12 @@ namespace LanExchange
                 PanelItem PItem = ItemList.Get(e.Item.Text);
                 ComputerPanelItem Comp = PItem as ComputerPanelItem;
                 if (Comp == null)
+                {
+                    pInfo.Visible = false;
                     return;
+                }
+                else
+                    pInfo.Visible = true;
                 lInfoComp.Text = Comp.Name;
                 lInfoDesc.Text = Comp.Comment;
                 lInfoOS.Text   = Comp.SI.Version();
@@ -1121,7 +1126,7 @@ namespace LanExchange
             RunCmdOnFocusedItem(MenuItem.Tag.ToString(), COMPUTER_MENU);
         }
 
-        private void mFolderOpen_Click(object sender, EventArgs e)
+        public void mFolderOpen_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem MenuItem = sender as ToolStripMenuItem;
             RunCmdOnFocusedItem(MenuItem.Tag.ToString(), FOLDER_MENU);
