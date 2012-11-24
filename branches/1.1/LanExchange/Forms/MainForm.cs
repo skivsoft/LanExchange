@@ -45,8 +45,8 @@ namespace LanExchange
         private static ParamsForm ParamsFormInstance = null;
 
         public bool bFirstStart = true;
-        public TNetworkBrowser  CompBrowser = null;
-        TTabController          TabController = null;
+        public NetworkBrowser  CompBrowser = null;
+        TabController          TabController = null;
         FormWindowState         LastWindowState = FormWindowState.Normal;
         string[] FlashMovies;
         int FlashIndex = -1;
@@ -75,10 +75,10 @@ namespace LanExchange
             //SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             MainFormInstance = this;
             lvCompsHandle = lvComps.Handle;
-            CompBrowser = new TNetworkBrowser(lvComps);
-            TPanelItemList.ListView_SetObject(lvComps, CompBrowser.InternalItemList);
+            CompBrowser = new NetworkBrowser(lvComps);
+            PanelItemList.ListView_SetObject(lvComps, CompBrowser.InternalItemList);
             // содаем контроллер для управления вкладками
-            TabController = new TTabController(Pages);
+            TabController = new TabController(Pages);
             mSendToNewTab.Click += new System.EventHandler(TabController.mSendToNewTab_Click);
 
             // делегаты для обновления из потоков
@@ -150,7 +150,7 @@ namespace LanExchange
             // domain name
             CurrentDomain = SystemInformation.UserDomainName;
             // выводим имя компьютера
-            lCompName.Text = SystemInformation.ComputerName;
+            lCompName.Text = String.Format(@"{0}\{1}", CurrentDomain, SystemInformation.ComputerName);
             // выводим имя пользователя
             System.Security.Principal.WindowsIdentity user = System.Security.Principal.WindowsIdentity.GetCurrent();
             string[] A = user.Name.Split('\\');
@@ -159,13 +159,13 @@ namespace LanExchange
             else
                 lUserName.Text = A[0];            
             // режим отображения: Компьютеры
-            CompBrowser.ViewType = TNetworkBrowser.LVType.COMPUTERS;
+            CompBrowser.ViewType = NetworkBrowser.LVType.COMPUTERS;
             ActiveControl = lvComps;
         }
 
         private void SetBrowseTimerInterval()
         {
-            BrowseTimer.Interval = TSettings.RefreshTimeInSec * 1000;
+            BrowseTimer.Interval = Settings.RefreshTimeInSec * 1000;
             #if DEBUG
             BrowseTimer.Interval = 5 * 1000;
             #endif
@@ -197,12 +197,12 @@ namespace LanExchange
                 bNetworkConnected = System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
                 System.Net.NetworkInformation.NetworkChange.NetworkAvailabilityChanged += new System.Net.NetworkInformation.NetworkAvailabilityChangedEventHandler(NetworkChange_NetworkAvailabilityChanged);
                 // права администратора берем из реестра
-                AdminMode = TSettings.IsAdvancedMode;
+                AdminMode = Settings.IsAdvancedMode;
                 // запуск обновления компов
                 SetBrowseTimerInterval();
                 BrowseTimer_Tick(this, new EventArgs());
                 // всплывающие подсказки
-                TTabView.ListView_SetupTip(lvComps);
+                TabView.ListView_SetupTip(lvComps);
             }
         }
 
@@ -258,7 +258,7 @@ namespace LanExchange
         {
             string RefreshCompName = (string)data;
             CListViewEx LV = (CListViewEx)sender;
-            TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
+            PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
             if (LV.Handle != IntPtr.Zero)
             {
                 int Index;
@@ -446,7 +446,7 @@ namespace LanExchange
         }
 
         #region Фоновые действия: сканирование компов и пинги
-        private List<string> CompareDataSources(IList<TPanelItem> OldDT, IList<TPanelItem> NewDT)
+        private List<string> CompareDataSources(IList<PanelItem> OldDT, IList<PanelItem> NewDT)
         {
             List<string> Result = new List<string>();
             if (OldDT == null || NewDT == null)
@@ -454,9 +454,9 @@ namespace LanExchange
             Dictionary<string, int> OldHash = new Dictionary<string, int>();
             int value = 0;
 
-            foreach (TPanelItem Comp in OldDT)
+            foreach (PanelItem Comp in OldDT)
                 OldHash.Add(Comp.Name, 0);
-            foreach (TPanelItem Comp in NewDT)
+            foreach (PanelItem Comp in NewDT)
                 if (!OldHash.TryGetValue(Comp.Name, out value))
                     Result.Add(Comp.Name);
             return Result;
@@ -466,7 +466,7 @@ namespace LanExchange
         {
             logger.Info("Thread for browse network start");
             string domain = (string)e.Argument;
-            e.Result = new BrowseProcessResult(domain, TPanelItemList.GetServerList(domain));
+            e.Result = new BrowseProcessResult(domain, PanelItemList.GetServerList(domain));
             e.Cancel = DoPing.CancellationPending;
             if (e.Cancel)
                 logger.Info("Thread for browse network canceled");
@@ -491,9 +491,9 @@ namespace LanExchange
                         DoPing.CancelAsync();
                     // обновление грида
                     if (CompBrowser.InternalItemList.Count > 0)
-                        foreach (TPanelItem Comp in Result.ServerList)
+                        foreach (PanelItem Comp in Result.ServerList)
                         {
-                            TPanelItem OldComp = CompBrowser.InternalItemList.Get(Comp.Name);
+                            PanelItem OldComp = CompBrowser.InternalItemList.Get(Comp.Name);
                             Comp.CopyExtraFrom(OldComp);
                         }
                     CompBrowser.CurrentDataTable = Result.ServerList;
@@ -513,7 +513,7 @@ namespace LanExchange
                     }
                     // выбираем текущий компьютер, чтобы пользователь видел описание
                     CListViewEx LV = GetActiveListView();
-                    TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
+                    PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
                     if (ItemList != null)
                         ItemList.ListView_SelectComputer(LV, Environment.MachineName);
                     // запускаем поток на ожидание UDP сообщений
@@ -535,14 +535,14 @@ namespace LanExchange
         private void DoPing_DoWork(object sender, DoWorkEventArgs e)
         {
 #if USE_PING
-            List<TPanelItem> ScannedComps = (List<TPanelItem>)e.Argument;
+            List<PanelItem> ScannedComps = (List<PanelItem>)e.Argument;
             if (ScannedComps == null || ScannedComps.Count == 0)
                 return;
-            if (!(ScannedComps[0] is TComputerItem))
+            if (!(ScannedComps[0] is ComputerPanelItem))
                 return;
             logger.Info("Thread for ping comps start");
             // пингуем найденные компы
-            foreach (TPanelItem Comp in ScannedComps)
+            foreach (PanelItem Comp in ScannedComps)
             {
                 if (DoPing.CancellationPending)
                 {
@@ -550,9 +550,9 @@ namespace LanExchange
                     break;
                 }
                 bool bNewPingable = PingThread.FastPing(Comp.Name);
-                if ((Comp as TComputerItem).IsPingable != bNewPingable)
+                if ((Comp as ComputerPanelItem).IsPingable != bNewPingable)
                 {
-                        (Comp as TComputerItem).IsPingable = bNewPingable;
+                        (Comp as ComputerPanelItem).IsPingable = bNewPingable;
                         //Pages.Invoke(myPagesRefresh, Pages, Comp.Name);
                 }
             }
@@ -572,12 +572,12 @@ namespace LanExchange
             CListViewEx LV = sender as CListViewEx;
             if (e.Item == null)
                 e.Item = new ListViewItem();
-            TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
+            PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
             if (ItemList == null) return;
             //if (e.ItemIndex < 0 || e.ItemIndex > Math.Min(ItemList.Keys.Count, LV.VirtualListSize)-1)
             //    return;
             String ItemName = ItemList.Keys[e.ItemIndex];
-            TPanelItem PItem = ItemList.Get(ItemName);
+            PanelItem PItem = ItemList.Get(ItemName);
             if (PItem != null)
             {
                 e.Item.Text = ItemName;
@@ -585,7 +585,7 @@ namespace LanExchange
                 foreach (string str in A)
                     e.Item.SubItems.Add(str);
                 if (!bNetworkConnected)
-                    e.Item.ImageIndex = TComputerItem.imgCompRed;
+                    e.Item.ImageIndex = ComputerPanelItem.imgCompRed;
                 else
                     e.Item.ImageIndex = PItem.ImageIndex;
                 e.Item.ToolTipText = PItem.ToolTipText;
@@ -608,7 +608,7 @@ namespace LanExchange
 
         public void lvComps_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (Char.IsLetterOrDigit(e.KeyChar) || Char.IsPunctuation(e.KeyChar) || TPuntoSwitcher.IsValidChar(e.KeyChar))
+            if (Char.IsLetterOrDigit(e.KeyChar) || Char.IsPunctuation(e.KeyChar) || PuntoSwitcher.IsValidChar(e.KeyChar))
             {
                 SearchPanelVisible(true);
                 ActiveControl = eFilter;
@@ -621,7 +621,7 @@ namespace LanExchange
         private void mCopyCompName_Click(object sender, EventArgs e)
         {
             CListViewEx LV = GetActiveListView();
-            TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
+            PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
             StringBuilder S = new StringBuilder();
             foreach (int index in LV.SelectedIndices)
             {
@@ -636,10 +636,10 @@ namespace LanExchange
         private void mCopyPath_Click(object sender, EventArgs e)
         {
             CListViewEx LV = GetActiveListView();
-            TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
+            PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
             StringBuilder S = new StringBuilder();
             string ItemName = null;
-            TShareItem PItem = null;
+            SharePanelItem PItem = null;
             foreach (int index in LV.SelectedIndices)
             {
                 if (S.Length > 0)
@@ -647,7 +647,7 @@ namespace LanExchange
                 ItemName = ItemList.Keys[index];
                 if (!String.IsNullOrEmpty(ItemName))
                 {
-                    PItem = ItemList.Get(ItemName) as TShareItem;
+                    PItem = ItemList.Get(ItemName) as SharePanelItem;
                     if (PItem != null)
                         S.Append(String.Format(@"\\{0}\{1}", PItem.ComputerName, PItem.Name));
                 }
@@ -659,9 +659,9 @@ namespace LanExchange
         private void mCopyComment_Click(object sender, EventArgs e)
         {
             CListViewEx LV = GetActiveListView();
-            TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
+            PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
             StringBuilder S = new StringBuilder();
-            TPanelItem PItem = null;
+            PanelItem PItem = null;
             foreach (int index in LV.SelectedIndices)
             {
                 if (S.Length > 0)
@@ -677,10 +677,10 @@ namespace LanExchange
         private void mCopySelected_Click(object sender, EventArgs e)
         {
             CListViewEx LV = GetActiveListView();
-            TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
+            PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
             StringBuilder S = new StringBuilder();
             string ItemName = null;
-            TPanelItem PItem = null;
+            PanelItem PItem = null;
             foreach (int index in LV.SelectedIndices)
             {
                 if (S.Length > 0)
@@ -710,21 +710,21 @@ namespace LanExchange
             // Shift+Enter
             if (e.Shift && e.KeyCode == Keys.Enter)
             {
-                TPanelItem PItem = GetFocusedPanelItem(true, false);
-                if (PItem is TComputerItem)
+                PanelItem PItem = GetFocusedPanelItem(true, false);
+                if (PItem is ComputerPanelItem)
                     mCompOpen_Click(mCompOpen, new EventArgs());
-                if (PItem is TShareItem)
+                if (PItem is SharePanelItem)
                     mFolderOpen_Click(mFolderOpen, new EventArgs());
                 e.Handled = true;
             }
             // Ctrl+Enter в режиме администратора
             if (AdminMode && e.Control && e.KeyCode == Keys.Enter)
             {
-                TPanelItem PItem = GetFocusedPanelItem(true, false);
-                if (PItem is TComputerItem)
+                PanelItem PItem = GetFocusedPanelItem(true, false);
+                if (PItem is ComputerPanelItem)
                     mCompOpen_Click(mRadmin1, new EventArgs());
-                if (PItem is TShareItem)
-                    if (!(PItem as TShareItem).IsPrinter)
+                if (PItem is SharePanelItem)
+                    if (!(PItem as SharePanelItem).IsPrinter)
                         mFolderOpen_Click(mFAROpen, new EventArgs());
                 e.Handled = true;
             }
@@ -748,11 +748,11 @@ namespace LanExchange
             {
                 if (e.KeyCode == Keys.Delete)
                 {
-                    TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
+                    PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
                     for (int i = LV.SelectedIndices.Count - 1; i >= 0; i--)
                     {
                         int Index = LV.SelectedIndices[i];
-                        TPanelItem Comp = ItemList.Get(ItemList.Keys[Index]);
+                        PanelItem Comp = ItemList.Get(ItemList.Keys[Index]);
                         if (Comp != null)
                             ItemList.Delete(Comp);
                     }
@@ -775,7 +775,7 @@ namespace LanExchange
             logger.Info("lvComps_ItemActivate on {0}", lvComps.FocusedItem.ToString());
             if (CompBrowser.InternalStack.Count == 0)
             {
-                TPanelItem Comp = GetFocusedPanelItem(true, true);
+                PanelItem Comp = GetFocusedPanelItem(true, true);
                 if (Comp == null)
                     return;
             }
@@ -789,9 +789,9 @@ namespace LanExchange
             if (CompBrowser.InternalStack.Count == 0)
             {
                 CListViewEx LV = GetActiveListView();
-                TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
-                TPanelItem PItem = ItemList.Get(e.Item.Text);
-                TComputerItem Comp = PItem as TComputerItem;
+                PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
+                PanelItem PItem = ItemList.Get(e.Item.Text);
+                ComputerPanelItem Comp = PItem as ComputerPanelItem;
                 if (Comp == null)
                     return;
                 lInfoComp.Text = Comp.Name;
@@ -800,13 +800,13 @@ namespace LanExchange
                 imgInfo.Image = ilSmall.Images[PItem.ImageIndex];
                 switch (Comp.ImageIndex)
                 {
-                    case TComputerItem.imgCompDefault:
+                    case ComputerPanelItem.imgCompDefault:
                         this.tipComps.SetToolTip(this.imgInfo, "Компьютер найден в результате обзора сети.");
                         break;
-                    case TComputerItem.imgCompRed:
+                    case ComputerPanelItem.imgCompRed:
                         this.tipComps.SetToolTip(this.imgInfo, "Компьютер не доступен посредством PING.");
                         break;
-                    case TComputerItem.imgCompGreen:
+                    case ComputerPanelItem.imgCompGreen:
                         this.tipComps.SetToolTip(this.imgInfo, "Компьютер с запущенной программой LanExchange.");
                         break;
                     default:
@@ -820,7 +820,7 @@ namespace LanExchange
         public void lvRecent_ItemActivate(object sender, EventArgs e)
         {
             logger.Info("lvRecent_ItemActivate on ", (sender as ListView).FocusedItem.ToString());
-            TPanelItem PItem = GetFocusedPanelItem(false, true);
+            PanelItem PItem = GetFocusedPanelItem(false, true);
             if (PItem != null)
                 GotoFavoriteComp(PItem.Name);
         }
@@ -845,7 +845,7 @@ namespace LanExchange
             set
             {
                 CListViewEx LV = GetActiveListView();
-                TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
+                PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
                 int ShowCount, TotalCount;
                 if (ItemList.IsFiltered)
                 {
@@ -867,7 +867,7 @@ namespace LanExchange
 
         public void UpdateFilter(CListViewEx LV, string NewFilter, bool bVisualUpdate)
         {
-            TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
+            PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
             List<string> SaveSelected = null;
 
             // выходим на верхний уровень
@@ -902,7 +902,7 @@ namespace LanExchange
         public void UpdateFilterPanel()
         {
             CListViewEx LV = GetActiveListView();
-            TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
+            PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
             string Text = ItemList.FilterText;
             eFilter.TextChanged -= eFilter_TextChanged;
             eFilter.Text = Text;
@@ -944,24 +944,24 @@ namespace LanExchange
         /// <param name="bUpdateRecent">Добавлять ли комп в закладку Активность</param>
         /// <param name="bPingAndAsk">Пинговать ли комп</param>
         /// <returns>Возвращает TComputer</returns>
-        public TPanelItem GetFocusedPanelItem(bool bUpdateRecent, bool bPingAndAsk)
+        public PanelItem GetFocusedPanelItem(bool bUpdateRecent, bool bPingAndAsk)
         {
             CListViewEx LV = GetActiveListView();
             if (LV.FocusedItem == null)
                 return null;
-            TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
-            TPanelItem PItem = ItemList.Get(LV.FocusedItem.Text);
+            PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
+            PanelItem PItem = ItemList.Get(LV.FocusedItem.Text);
             if (PItem == null)
                 return null;
-            if (PItem is TComputerItem)
+            if (PItem is ComputerPanelItem)
             {
                 // пингуем
-                if (bPingAndAsk && (PItem is TComputerItem))
+                if (bPingAndAsk && (PItem is ComputerPanelItem))
                 {
                     bool bPingResult = PingThread.FastPing(PItem.Name);
-                    if ((PItem as TComputerItem).IsPingable != bPingResult)
+                    if ((PItem as ComputerPanelItem).IsPingable != bPingResult)
                     {
-                        (PItem as TComputerItem).IsPingable = bPingResult;
+                        (PItem as ComputerPanelItem).IsPingable = bPingResult;
                         int FocusedIndex = LV.FocusedItem.Index;
                         LV.RedrawItems(FocusedIndex, FocusedIndex, false);
                     }
@@ -991,7 +991,7 @@ namespace LanExchange
         public void RunCmdOnFocusedItem(string TagCmd, string TagParent)
         {
             // получаем выбранный комп
-            TPanelItem PItem = GetFocusedPanelItem(true, true);
+            PanelItem PItem = GetFocusedPanelItem(true, true);
             if (PItem == null) return;
 
             string CmdLine = TagCmd;
@@ -1000,17 +1000,17 @@ namespace LanExchange
             switch(TagParent)
             {
                 case COMPUTER_MENU:
-                    if (PItem is TComputerItem)
+                    if (PItem is ComputerPanelItem)
                         FmtParam = PItem.Name;
                     else
-                        if (PItem is TShareItem)
-                            FmtParam = (PItem as TShareItem).ComputerName;
+                        if (PItem is SharePanelItem)
+                            FmtParam = (PItem as SharePanelItem).ComputerName;
                     break;
                 case FOLDER_MENU:
-                    if (PItem is TComputerItem)
+                    if (PItem is ComputerPanelItem)
                         return;
-                    if (PItem is TShareItem)
-                        FmtParam = String.Format(@"\\{0}\{1}", (PItem as TShareItem).ComputerName, PItem.Name);
+                    if (PItem is SharePanelItem)
+                        FmtParam = String.Format(@"\\{0}\{1}", (PItem as SharePanelItem).ComputerName, PItem.Name);
                     break;
             }
             
@@ -1036,20 +1036,20 @@ namespace LanExchange
 
         private void mWMIDescription_Click(object sender, EventArgs e)
         {
-            TPanelItem PItem = GetFocusedPanelItem(true, true);
+            PanelItem PItem = GetFocusedPanelItem(true, true);
             if (PItem == null) 
                 return;
-            TComputerItem Comp = null;
+            ComputerPanelItem Comp = null;
             int CompIndex = -1;
-            if (PItem is TComputerItem)
+            if (PItem is ComputerPanelItem)
             {
-                Comp = PItem as TComputerItem;
+                Comp = PItem as ComputerPanelItem;
                 CompIndex = CompBrowser.LV.FocusedItem.Index;
             }
-            if (PItem is TShareItem)
+            if (PItem is SharePanelItem)
             {
-                Comp = new TComputerItem();
-                Comp.Name = (PItem as TShareItem).ComputerName;
+                Comp = new ComputerPanelItem();
+                Comp.Name = (PItem as SharePanelItem).ComputerName;
             }
             string OldValue = "";
             string NewValue = "";
@@ -1148,7 +1148,7 @@ namespace LanExchange
                 while (CompBrowser.InternalStack.Count > 0)
                     CompBrowser.LevelUp();
                 CompBrowser.InternalItemList.ListView_SelectComputer(LV, ComputerName);
-                TPanelItem PItem = GetFocusedPanelItem(false, false);
+                PanelItem PItem = GetFocusedPanelItem(false, false);
                 if (PItem != null && PItem.Name == ComputerName)
                     lvComps_ItemActivate(lvComps, new EventArgs());
             }
@@ -1171,22 +1171,22 @@ namespace LanExchange
 
         private void SendChatMsg()
         {
-            TPanelItem Comp = GetFocusedPanelItem(false, true);
-            if (Comp == null || !(Comp is TComputerItem)) return;
-            if ((Comp as TComputerItem).EndPoint == null) return;
+            PanelItem Comp = GetFocusedPanelItem(false, true);
+            if (Comp == null || !(Comp is ComputerPanelItem)) return;
+            if ((Comp as ComputerPanelItem).EndPoint == null) return;
             string NewValue = "";
-            IPHostEntry DestHost = Dns.GetHostEntry((Comp as TComputerItem).EndPoint.Address);
+            IPHostEntry DestHost = Dns.GetHostEntry((Comp as ComputerPanelItem).EndPoint.Address);
             inputBox.Caption = String.Format("Отправка сообщения на компьютер {0}", DestHost.HostName);
             inputBox.Prompt = "Текст сообщения";
             NewValue = inputBox.Ask(NewValue, false);
-            if (NewValue != null && (Comp is TComputerItem))
+            if (NewValue != null && (Comp is ComputerPanelItem))
             {
                 // получаем md5 хэш ID-строки получателя
                 string[] A = DestHost.HostName.Split('.');
                 string DestID = GetMD5FromString((A[0] + "." + A[1]).ToLower());
                 byte[] toEncodeAsBytes = System.Text.ASCIIEncoding.UTF8.GetBytes(NewValue);
                 string data = Convert.ToBase64String(toEncodeAsBytes);
-                LANEX_SEND((Comp as TComputerItem).EndPoint, String.Format("{0}|{1}|{2}", MSG_LANEX_CHAT, DestID, data));
+                LANEX_SEND((Comp as ComputerPanelItem).EndPoint, String.Format("{0}|{1}|{2}", MSG_LANEX_CHAT, DestID, data));
             }
         }
 
@@ -1284,26 +1284,26 @@ namespace LanExchange
                     break;
             }
             #endregion
-            TPanelItem PItem = GetFocusedPanelItem(false, false);
+            PanelItem PItem = GetFocusedPanelItem(false, false);
             bool bCompVisible = false;
             bool bFolderVisible = false;
             if (PItem != null)
             {
-                if (PItem is TComputerItem)
+                if (PItem is ComputerPanelItem)
                 {
                     mComp.Text = @"\\" + PItem.Name;
                     bCompVisible = AdminMode;
                 }
-                if (PItem is TShareItem)
+                if (PItem is SharePanelItem)
                 {
-                    mComp.Text = @"\\" + (PItem as TShareItem).ComputerName;
+                    mComp.Text = @"\\" + (PItem as SharePanelItem).ComputerName;
                     bCompVisible = AdminMode;
                     if (!String.IsNullOrEmpty(PItem.Name))
                     {
-                        mFolder.Text = String.Format(@"\\{0}\{1}", (PItem as TShareItem).ComputerName, PItem.Name);
+                        mFolder.Text = String.Format(@"\\{0}\{1}", (PItem as SharePanelItem).ComputerName, PItem.Name);
                         mFolder.Image = ilSmall.Images[PItem.ImageIndex];
                         bFolderVisible = true;
-                        mFAROpen.Enabled = !(PItem as TShareItem).IsPrinter;
+                        mFAROpen.Enabled = !(PItem as SharePanelItem).IsPrinter;
                     }
                 }
             }
@@ -1429,8 +1429,8 @@ namespace LanExchange
 
                     logger.Info("UDP RECV data [{0}] from [ip={1}, host={2}]", TextMsg, ipendpoint.ToString(), HostName);
 
-                    TPanelItem PItem = CompBrowser.InternalItemList.Get(CompName);
-                    TComputerItem Comp = PItem as TComputerItem;
+                    PanelItem PItem = CompBrowser.InternalItemList.Get(CompName);
+                    ComputerPanelItem Comp = PItem as ComputerPanelItem;
                     bool bNeedRefresh = false;
                     string RefreshCompName = String.Empty;
                     if (Comp != null)

@@ -8,7 +8,7 @@ using LanExchange.Network;
 
 namespace LanExchange
 {
-    public class TShareItem : TPanelItem
+    public class SharePanelItem : PanelItem
     {
         public const int imgHiddenFolder  = 6;
         public const int imgNormalFolder  = 7;
@@ -20,7 +20,7 @@ namespace LanExchange
         private uint share_type;
         private string computer_name;
 
-        public TShareItem(string share_name, string share_comment, uint share_type, string computer_name)
+        public SharePanelItem(string share_name, string share_comment, uint share_type, string computer_name)
         {
             this.share_name = share_name;
             this.share_comment = share_comment;
@@ -100,9 +100,9 @@ namespace LanExchange
         /// </summary>
         /// <param name="p2"></param>
         /// <returns></returns>
-        public override int CompareTo(TPanelItem p2)
+        public override int CompareTo(PanelItem p2)
         {
-            bool b2 = (p2 as TShareItem).IsPrinter;
+            bool b2 = (p2 as SharePanelItem).IsPrinter;
             int Result;
             if (this.IsPrinter)
                 if (b2)

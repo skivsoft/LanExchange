@@ -6,18 +6,18 @@ using System.IO;
 
 namespace LanExchange
 {
-    public class TNetworkBrowser
+    public class NetworkBrowser
     {
         public ListView LV = null;
         private LVType CurrentType = LVType.COMPUTERS;
         private string path = null;
 
         // внутренний список элементов панели, сравнивается с новым списком при обновлении
-        public IList<TPanelItem> InternalItems = null;
+        public IList<PanelItem> InternalItems = null;
         // стек списков элементов для навигации
-        public Stack<IList<TPanelItem>> InternalStack = new Stack<IList<TPanelItem>>();
+        public Stack<IList<PanelItem>> InternalStack = new Stack<IList<PanelItem>>();
         // внутренний список элементов с возможностью фильтрации для вывода через RetrieveVirtualItem
-        public TPanelItemList InternalItemList = new TPanelItemList();
+        public PanelItemList InternalItemList = new PanelItemList();
 
         public enum LVType
         {
@@ -26,7 +26,7 @@ namespace LanExchange
             FILES
         }
 
-        public TNetworkBrowser(ListView lv)
+        public NetworkBrowser(ListView lv)
         {
             LV = lv;
             RebuildColumns();
@@ -82,13 +82,13 @@ namespace LanExchange
         /// В частности это будет список копьютеров, даже если мы находимся на уровне списка ресуров.
         /// </summary>
         /// <returns></returns>
-        public IList<TPanelItem> GetTopItemList()
+        public IList<PanelItem> GetTopItemList()
         {
             if (InternalStack.Count == 0)
                 return InternalItems;
             else
             {
-                IList<TPanelItem>[] Arr = InternalStack.ToArray();
+                IList<PanelItem>[] Arr = InternalStack.ToArray();
                 return Arr[0];
             }
         }
@@ -118,7 +118,7 @@ namespace LanExchange
                     //    InternalItems = InternalItemList.ToList();
                     InternalStack.Push(InternalItems);
                     // получаем новый список объектов, в данном случае список ресурсов компа
-                    InternalItems = TPanelItemList.EnumNetShares(FocusedText);
+                    InternalItems = PanelItemList.EnumNetShares(FocusedText);
                     // устанавливаем новый список для визуального компонента
                     CurrentDataTable = InternalItems;
                     if (LV.VirtualListSize > 0)
@@ -178,7 +178,7 @@ namespace LanExchange
         }
 
         // Отображаемая таблица
-        public IList<TPanelItem> CurrentDataTable
+        public IList<PanelItem> CurrentDataTable
         {
             get
             {
@@ -199,7 +199,7 @@ namespace LanExchange
                 try
                 {
                     InternalItemList.Clear();
-                    foreach (TPanelItem Comp in InternalItems)
+                    foreach (PanelItem Comp in InternalItems)
                         InternalItemList.Add(Comp);
                     if (!MainForm.MainFormInstance.bFirstStart)
                     {

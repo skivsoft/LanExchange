@@ -21,14 +21,14 @@ namespace LanExchange
 
     public class TabInfoEventArgs : EventArgs
     {
-        private TTabInfo info;
+        private TabInfo info;
 
-        public TabInfoEventArgs(TTabInfo Info)
+        public TabInfoEventArgs(TabInfo Info)
         {
             this.info = Info;
         }
 
-        public TTabInfo Info { get { return this.info; }}
+        public TabInfo Info { get { return this.info; }}
     }
 
     public delegate void TabInfoEventHandler(object sender, TabInfoEventArgs e);
@@ -57,22 +57,22 @@ namespace LanExchange
     // Не содержит информации, как эти знания можно визуализировать.
     // 
 
-    public class TTabInfo
+    public class TabInfo
     {
         public string TabName = "";
         public string FilterText = "";
         public View CurrentView = View.Details;
         public List<string> Items = null;
 
-        public TTabInfo(string name)
+        public TabInfo(string name)
         {
             this.TabName = name;
         }
     }
     
-    public class TTabModel
+    public class TabModel
     {
-        private List<TTabInfo> InfoList = new List<TTabInfo>();
+        private List<TabInfo> InfoList = new List<TabInfo>();
 
         public event TabInfoEventHandler AfterAppendTab;
         public event IndexEventHandler AfterRemove;
@@ -80,12 +80,12 @@ namespace LanExchange
 
         public int Count { get { return this.InfoList.Count; }  }
 
-        public TTabInfo GetItem(int Index)
+        public TabInfo GetItem(int Index)
         {
             return this.InfoList[Index];
         }
 
-        public void DoAfterAppendTab(TTabInfo Info)
+        public void DoAfterAppendTab(TabInfo Info)
         {
             if (AfterAppendTab != null)
                AfterAppendTab(this, new TabInfoEventArgs(Info));
@@ -97,19 +97,19 @@ namespace LanExchange
                 AfterRemove(this, new IndexEventArgs(Index));
         }
 
-        public void DoAfterRename(TTabInfo Info)
+        public void DoAfterRename(TabInfo Info)
         {
             if (AfterRename != null)
                 AfterRename(this, new TabInfoEventArgs(Info));
         }
 
-        public void AddTab(TTabInfo Info)
+        public void AddTab(TabInfo Info)
         {
             InfoList.Add(Info);
             DoAfterAppendTab(Info);
         }
 
-        public void InternalAdd(TTabInfo Info)
+        public void InternalAdd(TabInfo Info)
         {
             InfoList.Add(Info);
         }
@@ -122,7 +122,7 @@ namespace LanExchange
 
         public void RenameTab(int Index, string NewTabName)
         {
-            TTabInfo Info = InfoList[Index];
+            TabInfo Info = InfoList[Index];
             Info.TabName = NewTabName;
             DoAfterRename(Info);
         }
@@ -148,13 +148,13 @@ namespace LanExchange
     // Часто в качестве представления выступает
 
 
-    public class TTabView
+    public class TabView
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         TabControl pages;
 
-        public TTabView(TabControl Pages)
+        public TabView(TabControl Pages)
         {
             this.pages = Pages;
         }
@@ -182,8 +182,8 @@ namespace LanExchange
         {
             TabPage NewTab = null;
             CListViewEx LV = null;
-            TPanelItemList ItemList = null;
-            TTabModel Model = (TTabModel)sender;
+            PanelItemList ItemList = null;
+            TabModel Model = (TabModel)sender;
             // создаем новую вкладку или получаем существующую
             if (Model.Count <= this.pages.TabCount)
             {
@@ -213,22 +213,22 @@ namespace LanExchange
                 NewTab.Controls.Add(LV);
             }
             // создаем внутренний список для хранения элементов или получаем существующий
-            ItemList = TPanelItemList.ListView_GetObject(LV);
+            ItemList = PanelItemList.ListView_GetObject(LV);
             if (ItemList != null)
                 logger.Info("Get existing object {0}", ItemList.ToString());
             else
-                ItemList = TPanelItemList.ListView_CreateObject(LV);
+                ItemList = PanelItemList.ListView_CreateObject(LV);
             // восстанавливаем список элементов
             if (e.Info.Items != null)
             {
-                TPanelItemList TopList = MainForm.MainFormInstance.CompBrowser.InternalItemList;
+                PanelItemList TopList = MainForm.MainFormInstance.CompBrowser.InternalItemList;
                 foreach (string ItemName in e.Info.Items)
                 {
-                    TPanelItem PItem = TopList.Get(ItemName);
+                    PanelItem PItem = TopList.Get(ItemName);
                     if (PItem != null)
                         ItemList.Add(PItem);
                     else
-                        ItemList.Add(new TComputerItem());
+                        ItemList.Add(new ComputerPanelItem());
                 }
                 logger.Info("Added items to object {0}, Count: {1}", ItemList.ToString(), ItemList.Count);
             }
@@ -286,7 +286,7 @@ namespace LanExchange
 
         public void ListView_Update(ListView LV)
         {
-            TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
+            PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
             if (ItemList != null)
             {
                 LV.RetrieveVirtualItem += new RetrieveVirtualItemEventHandler(MainForm.MainFormInstance.lvComps_RetrieveVirtualItem);
@@ -319,32 +319,32 @@ namespace LanExchange
     // функцию связующего звена (glue layer) между отдельными 
     // компонентами системы.   
 
-    public class TTabController
+    public class TabController
     {
-        private TTabModel Model = null;
-        private TTabView View = null;
+        private TabModel Model = null;
+        private TabView View = null;
 
-        public TTabController(TabControl Pages)
+        public TabController(TabControl Pages)
         {
-            Model = new TTabModel();
-            View = new TTabView(Pages);
+            Model = new TabModel();
+            View = new TabView(Pages);
             UpdateModelFromView();
             Model.AfterAppendTab += new TabInfoEventHandler(View.AfterAppendTab);
             Model.AfterRemove += new IndexEventHandler(View.AfterRemove);
             Model.AfterRename += new TabInfoEventHandler(View.AfterRename);
         }
 
-        public TTabModel GetModel()
+        public TabModel GetModel()
         {
             return this.Model;
         }
 
         public void NewTab()
         {
-            string NewTabName = TTabView.InputBoxAsk("Новая вкладка", "Введите имя", "");
+            string NewTabName = TabView.InputBoxAsk("Новая вкладка", "Введите имя", "");
             if (!String.IsNullOrEmpty(NewTabName))
             {
-                Model.AddTab(new TTabInfo(NewTabName));
+                Model.AddTab(new TabInfo(NewTabName));
                 StoreSettings();
             }
         }
@@ -364,7 +364,7 @@ namespace LanExchange
             int Index = View.SelectedIndex;
             if (CanModifyTab(Index))
             {
-                string NewTabName = TTabView.InputBoxAsk("Переименование", "Введите имя", View.SelectedTabText);
+                string NewTabName = TabView.InputBoxAsk("Переименование", "Введите имя", View.SelectedTabText);
                 if (NewTabName != null)
                 {
                     Model.RenameTab(Index, NewTabName);
@@ -384,13 +384,13 @@ namespace LanExchange
             {
                 ListView LV = View.GetActiveListView();
                 if (LV == null) return;
-                TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
+                PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
                 if (ItemList == null) return;
                 // формируем строку для записи в файл
                 StringBuilder S = new StringBuilder();
                 for (int i = 0; i < ItemList.Count; i++)
                 {
-                    TPanelItem PItem = ItemList.Get(ItemList.Keys[i]);
+                    PanelItem PItem = ItemList.Get(ItemList.Keys[i]);
                     if (PItem == null) continue;
                     if (S.Length > 0)
                         S.AppendLine();
@@ -439,14 +439,14 @@ namespace LanExchange
         {
             if (lvSender == null || lvReceiver == null)
                 return;
-            TPanelItemList ItemListSender = TPanelItemList.ListView_GetObject(lvSender);
-            TPanelItemList ItemListReceiver = TPanelItemList.ListView_GetObject(lvReceiver);
+            PanelItemList ItemListSender = PanelItemList.ListView_GetObject(lvSender);
+            PanelItemList ItemListReceiver = PanelItemList.ListView_GetObject(lvReceiver);
 
             int NumAdded = 0;
             //int[] Indices = new int[lvSender.SelectedIndices.Count];
             foreach (int Index in lvSender.SelectedIndices)
             {
-                TPanelItem PItem = ItemListSender.Get(lvSender.Items[Index].Text);
+                PanelItem PItem = ItemListSender.Get(lvSender.Items[Index].Text);
                 if (PItem != null)
                 {
                     ItemListReceiver.Add(PItem);
@@ -474,12 +474,12 @@ namespace LanExchange
             if (View.SelectedIndex == 0 && 
                 MainForm.MainFormInstance.CompBrowser.InternalStack.Count > 0)
                 return;
-            string NewTabName = TTabView.InputBoxAsk("Новая вкладка", "Введите имя", "");
+            string NewTabName = TabView.InputBoxAsk("Новая вкладка", "Введите имя", "");
             if (NewTabName == null)
                 return;
             ListView LV = View.GetActiveListView();
-            TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
-            TTabInfo Info = new TTabInfo(NewTabName);
+            PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
+            TabInfo Info = new TabInfo(NewTabName);
             Info.Items = ItemList.ListView_GetSelected(LV, false);
             Model.AddTab(Info);
             View.SelectedIndex = Model.Count - 1;
@@ -518,9 +518,9 @@ namespace LanExchange
             foreach (TabPage Tab in View.TabPages)
             {
                 if (Tab.Controls.Count == 0) continue;
-                TTabInfo Info = new TTabInfo(Tab.Text);
+                TabInfo Info = new TabInfo(Tab.Text);
                 ListView LV = (ListView)Tab.Controls[0];
-                TPanelItemList ItemList = TPanelItemList.ListView_GetObject(LV);
+                PanelItemList ItemList = PanelItemList.ListView_GetObject(LV);
                 Info.Items = ItemList.ListView_GetSelected(LV, true);
                 Info.FilterText = ItemList.FilterText;
                 Info.CurrentView = LV.View;
@@ -532,17 +532,17 @@ namespace LanExchange
         {
             UpdateModelFromView();
             string name = View.Name;
-            TSettings.SetIntValue(String.Format(@"{0}\SelectedIndex", name), View.SelectedIndex);
-            TSettings.SetIntValue(String.Format(@"{0}\Count", name), Model.Count);
+            Settings.SetIntValue(String.Format(@"{0}\SelectedIndex", name), View.SelectedIndex);
+            Settings.SetIntValue(String.Format(@"{0}\Count", name), Model.Count);
             for (int i = 0; i < Model.Count; i++)
             {
-                TTabInfo Info = Model.GetItem(i);
+                TabInfo Info = Model.GetItem(i);
                 string S = String.Format(@"{0}\{1}\", name, i);
-                TSettings.SetStrValue(S + "TabName", Info.TabName);
-                TSettings.SetStrValue(S + "FilterText", Info.FilterText);
-                TSettings.SetIntValue(S + "CurrentView", (int)Info.CurrentView);
+                Settings.SetStrValue(S + "TabName", Info.TabName);
+                Settings.SetStrValue(S + "FilterText", Info.FilterText);
+                Settings.SetIntValue(S + "CurrentView", (int)Info.CurrentView);
                 // элементы нулевой закладки не сохраняем, т.к. они формируются после обзора сети
-                TSettings.SetListValue(S + "Items", i > 0 ? Info.Items : null);
+                Settings.SetListValue(S + "Items", i > 0 ? Info.Items : null);
             }
         }
 
@@ -550,29 +550,29 @@ namespace LanExchange
         {
             string name = View.Name;
             Model.Clear();
-            int CNT = TSettings.GetIntValue(String.Format(@"{0}\Count", name), 0);
+            int CNT = Settings.GetIntValue(String.Format(@"{0}\Count", name), 0);
             if (CNT > 0)
             {
                 for (int i = 0; i < CNT; i++)
                 {
                     string S = String.Format(@"{0}\{1}\", name, i);
-                    string tabname = TSettings.GetStrValue(S + "TabName", "");
-                    TTabInfo Info = new TTabInfo(tabname);
-                    Info.FilterText = TSettings.GetStrValue(S + "FilterText", "");
-                    Info.CurrentView = (View)TSettings.GetIntValue(S + "CurrentView", (int)System.Windows.Forms.View.Details);
-                    Info.Items = TSettings.GetListValue(S + "Items");
+                    string tabname = Settings.GetStrValue(S + "TabName", "");
+                    TabInfo Info = new TabInfo(tabname);
+                    Info.FilterText = Settings.GetStrValue(S + "FilterText", "");
+                    Info.CurrentView = (View)Settings.GetIntValue(S + "CurrentView", (int)System.Windows.Forms.View.Details);
+                    Info.Items = Settings.GetListValue(S + "Items");
                     Model.AddTab(Info);
                 }
             }
             else
             {
-                TTabInfo Info = new TTabInfo(Environment.UserDomainName);
+                TabInfo Info = new TabInfo(Environment.UserDomainName);
                 Info.FilterText = "";
                 Info.CurrentView = (System.Windows.Forms.View.Details);
                 Info.Items = new List<string>();
                 Model.AddTab(Info);
             }
-            int Index = TSettings.GetIntValue(String.Format(@"{0}\SelectedIndex", name), 0);
+            int Index = Settings.GetIntValue(String.Format(@"{0}\SelectedIndex", name), 0);
             // присваиваем сначала -1, чтобы всегда срабатывал евент PageSelected при установке нужной странице
             View.SelectedIndex = -1;
             View.SelectedIndex = Index;

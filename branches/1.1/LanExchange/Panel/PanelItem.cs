@@ -7,7 +7,7 @@ using System.Net;
 
 namespace LanExchange
 {
-    public abstract class TPanelItem : IComparable<TPanelItem>
+    public abstract class PanelItem : IComparable<PanelItem>
     {
         protected abstract string GetComment();
         protected abstract void SetComment(string value);
@@ -34,7 +34,7 @@ namespace LanExchange
             return new string[1] { Comment };
         }
 
-        public virtual void CopyExtraFrom(TPanelItem Comp)
+        public virtual void CopyExtraFrom(PanelItem Comp)
         {
             // empty for base class
         }
@@ -61,7 +61,7 @@ namespace LanExchange
             get { return GetToolTipText(); }
         }
 
-        public virtual int CompareTo(TPanelItem p2)
+        public virtual int CompareTo(PanelItem p2)
         {
             int Result;
             if (String.IsNullOrEmpty(this.Name))
@@ -78,9 +78,9 @@ namespace LanExchange
         }
     }
 
-    public class TPanelItemComparer : IComparer<TPanelItem>
+    public class PanelItemComparer : IComparer<PanelItem>
     {
-        public int Compare(TPanelItem Item1, TPanelItem Item2)
+        public int Compare(PanelItem Item1, PanelItem Item2)
         {
             return Item1.CompareTo(Item2);
         }

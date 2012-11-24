@@ -95,7 +95,6 @@
     <Compile Include="Forms\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Localization.cs" />
     <Compile Include="Components\CInputBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -117,7 +116,6 @@
     <Compile Include="Network\NetApi32.cs" />
     <Compile Include="Network\ServerInfo.cs" />
     <Compile Include="NLogFake.cs" />
-    <Compile Include="OSKeyboard.cs" />
     <Compile Include="OSLayer.cs" />
     <Compile Include="Forms\ParamsForm.cs">
       <SubType>Form</SubType>
@@ -125,10 +123,10 @@
     <Compile Include="Forms\ParamsForm.Designer.cs">
       <DependentUpon>ParamsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="TComputerItem.cs" />
-    <Compile Include="TShareItem.cs" />
-    <Compile Include="PingThread.cs" />
-    <Compile Include="TPanelItem.cs" />
+    <Compile Include="Panel\ComputerPanelItem.cs" />
+    <Compile Include="Panel\SharePanelItem.cs" />
+    <Compile Include="Network\PingThread.cs" />
+    <Compile Include="Panel\PanelItem.cs" />
     <Compile Include="OSTools.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -158,11 +156,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="TPanelItemList.cs" />
-    <Compile Include="TNetworkBrowser.cs" />
-    <Compile Include="TPuntoSwitcher.cs" />
-    <Compile Include="TSettings.cs" />
-    <Compile Include="TTabController.cs" />
+    <Compile Include="Panel\PanelItemList.cs" />
+    <Compile Include="Panel\NetworkBrowser.cs" />
+    <Compile Include="Panel\PuntoSwitcher.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="TabController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="NLog.config">

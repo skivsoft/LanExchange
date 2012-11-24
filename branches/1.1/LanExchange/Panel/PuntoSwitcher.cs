@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LanExchange
 {
-    class TPuntoSwitcher
+    class PuntoSwitcher
     {
         private static string[] ABC = {"АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя", 
                                        "F<DULT~:PBQRKVYJGHCNEA{WXIO}SM\">Zf,dult`;pbqrkvyjghcnea[wxio]sm'.z"};

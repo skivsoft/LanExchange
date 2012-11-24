@@ -8,7 +8,7 @@ using LanExchange.Network;
 
 namespace LanExchange
 {
-    public class TComputerItem : TPanelItem
+    public class ComputerPanelItem : PanelItem
     {
         // индексы иконок компов
         public const int imgCompDefault = 0;
@@ -26,12 +26,12 @@ namespace LanExchange
         private bool logged;
         private IPEndPoint ipendpoint;
 
-        public TComputerItem()
+        public ComputerPanelItem()
         {
             this.pingable = true;
         }
 
-        public TComputerItem(string computer_name, object data)
+        public ComputerPanelItem(string computer_name, object data)
         {
             m_Name = computer_name;
             pingable = true;
@@ -114,12 +114,12 @@ namespace LanExchange
             set { ipendpoint = value; }
         }
 
-        public override void CopyExtraFrom(TPanelItem Comp)
+        public override void CopyExtraFrom(PanelItem Comp)
         {
             if (Comp == null) return;
-            pingable = (Comp as TComputerItem).pingable;
-            logged = (Comp as TComputerItem).logged;
-            ipendpoint = (Comp as TComputerItem).ipendpoint;
+            pingable = (Comp as ComputerPanelItem).pingable;
+            logged = (Comp as ComputerPanelItem).logged;
+            ipendpoint = (Comp as ComputerPanelItem).ipendpoint;
         }
     }
 }

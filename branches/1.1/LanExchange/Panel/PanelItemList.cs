@@ -13,35 +13,35 @@ using NLog;
 
 namespace LanExchange
 {
-    public class TPanelItemList 
+    public class PanelItemList 
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         
-        private Dictionary<string, TPanelItem> Data = null;
+        private Dictionary<string, PanelItem> Data = null;
         public List<string> Keys = null;
         private String Filter = "";
 
-        public TPanelItemList()
+        public PanelItemList()
         {
-            Data = new Dictionary<string, TPanelItem>();
+            Data = new Dictionary<string, PanelItem>();
             Keys = new List<string>();
         }
    
-        public void Add(TPanelItem Comp)
+        public void Add(PanelItem Comp)
         {
             if (Comp != null)
                 if (!Data.ContainsKey(Comp.Name))
                     Data.Add(Comp.Name, Comp);
         }
 
-        public void Delete(TPanelItem Comp)
+        public void Delete(PanelItem Comp)
         {
             Data.Remove(Comp.Name);
         }
 
-        public TPanelItem Get(string key)
+        public PanelItem Get(string key)
         {
-            TPanelItem Result = null;
+            PanelItem Result = null;
             if (Data.TryGetValue(key, out Result))
             {
                 Result.Name = key;
@@ -62,7 +62,7 @@ namespace LanExchange
             {
                 if (i == 0)
                 {
-                    if (TPuntoSwitcher.RussianContains(A[i], Filter1) || (TPuntoSwitcher.RussianContains(A[i], Filter2)))
+                    if (PuntoSwitcher.RussianContains(A[i], Filter1) || (PuntoSwitcher.RussianContains(A[i], Filter2)))
                         return true;
                 } else
                 if (Filter1 != null && A[i].Contains(Filter1) || Filter2 != null && A[i].Contains(Filter2))
@@ -76,7 +76,7 @@ namespace LanExchange
             bool bFiltered = IsFiltered;
             Keys.Clear();
             string Filter1 = FilterText.ToUpper();
-            string Filter2 = TPuntoSwitcher.Change(FilterText);
+            string Filter2 = PuntoSwitcher.Change(FilterText);
             if (Filter2 != null) Filter2 = Filter2.ToUpper();
             foreach (var Pair in Data)
             {
@@ -214,13 +214,13 @@ namespace LanExchange
 
 
         // получим список всех компьюетеров
-        public static IList<TPanelItem> GetServerList(string domain)
+        public static IList<PanelItem> GetServerList(string domain)
         {
             NetApi32.SERVER_INFO_101 si;
             IntPtr pInfo = IntPtr.Zero;
             int entriesread = 0;
             int totalentries = 0;
-            List<TPanelItem> Result = new List<TPanelItem>();
+            List<PanelItem> Result = new List<PanelItem>();
             try
             {
                 logger.Info("WINAPI NetServerEnum");
@@ -235,7 +235,7 @@ namespace LanExchange
                         // в режиме пользователя не сканируем: сервера, контроллеры домена
                         //bool bServer = (si.sv101_type & 0x8018) != 0;
                         //if (Program.AdminMode || !bServer)
-                        Result.Add(new TComputerItem(si.sv101_name, si));
+                        Result.Add(new ComputerPanelItem(si.sv101_name, si));
                         ptr += Marshal.SizeOf(si);
                     }
                 }
@@ -251,10 +251,10 @@ namespace LanExchange
             return Result;
         }
 
-        public static List<TPanelItem> EnumNetShares(string Server)
+        public static List<PanelItem> EnumNetShares(string Server)
         {
-            List<TPanelItem> Result = new List<TPanelItem>();
-            Result.Add(new TShareItem("", "", 0, Server));
+            List<PanelItem> Result = new List<PanelItem>();
+            Result.Add(new SharePanelItem("", "", 0, Server));
             int entriesread = 0;
             int totalentries = 0;
             int resume_handle = 0;
@@ -271,7 +271,7 @@ namespace LanExchange
                 {
                     NetApi32.SHARE_INFO_1 shi1 = (NetApi32.SHARE_INFO_1)Marshal.PtrToStructure(currentPtr, typeof(NetApi32.SHARE_INFO_1));
                     if ((shi1.shi1_type & (uint)NetApi32.SHARE_TYPE.STYPE_IPC) != (uint)NetApi32.SHARE_TYPE.STYPE_IPC)
-                        Result.Add(new TShareItem(shi1.shi1_netname, shi1.shi1_remark, shi1.shi1_type, Server));
+                        Result.Add(new SharePanelItem(shi1.shi1_netname, shi1.shi1_remark, shi1.shi1_type, Server));
                     else
                         logger.Info("Skiping IPC$ share");
                     currentPtr = new IntPtr(currentPtr.ToInt32() + nStructSize);
@@ -283,7 +283,7 @@ namespace LanExchange
                 logger.Info("WINAPI NetServerEnum error: {0}", ret);
             }
 
-            TPanelItemComparer comparer = new TPanelItemComparer();
+            PanelItemComparer comparer = new PanelItemComparer();
             Result.Sort(comparer);
             return Result;
         }
@@ -351,19 +351,19 @@ namespace LanExchange
 
         #region Привязка своего обьекта к ListView
 
-        public static void ListView_SetObject(ListView LV, TPanelItemList ItemList)
+        public static void ListView_SetObject(ListView LV, PanelItemList ItemList)
         {
             LV.Tag = ItemList;
         }
 
-        public static TPanelItemList ListView_GetObject(ListView LV)
+        public static PanelItemList ListView_GetObject(ListView LV)
         {
-            return LV.Tag as TPanelItemList;
+            return LV.Tag as PanelItemList;
         }
 
-        public static TPanelItemList ListView_CreateObject(ListView LV)
+        public static PanelItemList ListView_CreateObject(ListView LV)
         {
-            TPanelItemList Result = new TPanelItemList();
+            PanelItemList Result = new PanelItemList();
             logger.Info("Create object {0}", Result.ToString());
             ListView_SetObject(LV, Result);
             return Result;
@@ -371,7 +371,7 @@ namespace LanExchange
 
         public static void ListView_DeleteObject(ListView LV)
         {
-            TPanelItemList List = ListView_GetObject(LV);
+            PanelItemList List = ListView_GetObject(LV);
             if (List != null)
                 ListView_SetObject(LV, null);
         }
@@ -388,10 +388,10 @@ namespace LanExchange
 
     public class BrowseProcessResult
     {
-        private IList<TPanelItem> m_ServerList;
+        private IList<PanelItem> m_ServerList;
         private string m_Domain;
 
-        public BrowseProcessResult(string domain, IList<TPanelItem> server_list)
+        public BrowseProcessResult(string domain, IList<PanelItem> server_list)
         {
             m_Domain = domain;
             m_ServerList = server_list;
@@ -402,7 +402,7 @@ namespace LanExchange
             get { return m_Domain; }
         }
 
-        public IList<TPanelItem> ServerList
+        public IList<PanelItem> ServerList
         {
             get { return m_ServerList; }
         }

@@ -9,7 +9,7 @@ using System.Security.AccessControl;
 
 namespace LanExchange
 {
-    public class TSettings
+    public class Settings
     {
 
         public static bool IsAutorun
