@@ -77,9 +77,6 @@
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lItemsCount = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lDomainName = new System.Windows.Forms.ToolStripDropDownButton();
-            this.popDomains = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lCompName = new System.Windows.Forms.ToolStripStatusLabel();
             this.DoPing = new System.ComponentModel.BackgroundWorker();
@@ -95,6 +92,7 @@
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.mListTab = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.lvComps = new LanExchange.CListViewEx();
             this.tipComps = new System.Windows.Forms.ToolTip(this.components);
             this.eFilter = new System.Windows.Forms.TextBox();
             this.imgClear = new System.Windows.Forms.PictureBox();
@@ -106,8 +104,9 @@
             this.imgInfo = new System.Windows.Forms.PictureBox();
             this.lInfoDesc = new System.Windows.Forms.Label();
             this.lInfoComp = new System.Windows.Forms.Label();
-            this.lvComps = new LanExchange.CListViewEx();
             this.inputBox = new LanExchange.CInputBox(this.components);
+            this.lUserName = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.popComps.SuspendLayout();
             this.popTray.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -169,7 +168,7 @@
             this.mCompOpen.Image = global::LanExchange.Properties.Resources.explorer;
             this.mCompOpen.Name = "mCompOpen";
             this.mCompOpen.ShortcutKeyDisplayString = "Shift+Enter";
-            this.mCompOpen.Size = new System.Drawing.Size(323, 22);
+            this.mCompOpen.Size = new System.Drawing.Size(312, 22);
             this.mCompOpen.Tag = "\\\\{0}";
             this.mCompOpen.Text = "Открыть в Проводнике";
             this.mCompOpen.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -177,21 +176,21 @@
             // mWMIDescription
             // 
             this.mWMIDescription.Name = "mWMIDescription";
-            this.mWMIDescription.Size = new System.Drawing.Size(323, 22);
+            this.mWMIDescription.Size = new System.Drawing.Size(312, 22);
             this.mWMIDescription.Text = "Редактировать описание";
             this.mWMIDescription.Click += new System.EventHandler(this.mWMIDescription_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(320, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(309, 6);
             // 
             // mCompService
             // 
             this.mCompService.Image = global::LanExchange.Properties.Resources.Service;
             this.mCompService.Name = "mCompService";
             this.mCompService.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F1)));
-            this.mCompService.Size = new System.Drawing.Size(323, 22);
+            this.mCompService.Size = new System.Drawing.Size(312, 22);
             this.mCompService.Tag = "%systemroot%\\system32\\mmc.exe %systemroot%\\system32\\compmgmt.msc /computer:{0}";
             this.mCompService.Text = "Управление компьютером";
             this.mCompService.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -200,7 +199,7 @@
             // 
             this.mCompMSTSC.Image = global::LanExchange.Properties.Resources.MSTSC;
             this.mCompMSTSC.Name = "mCompMSTSC";
-            this.mCompMSTSC.Size = new System.Drawing.Size(323, 22);
+            this.mCompMSTSC.Size = new System.Drawing.Size(312, 22);
             this.mCompMSTSC.Tag = "%systemroot%\\system32\\mstsc.exe /v:{0}";
             this.mCompMSTSC.Text = "Подключение к удаленному рабочему столу";
             this.mCompMSTSC.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -208,14 +207,14 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(320, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(309, 6);
             // 
             // mRadmin1
             // 
             this.mRadmin1.Image = ((System.Drawing.Image)(resources.GetObject("mRadmin1.Image")));
             this.mRadmin1.Name = "mRadmin1";
             this.mRadmin1.ShortcutKeyDisplayString = "Ctrl+Enter";
-            this.mRadmin1.Size = new System.Drawing.Size(323, 22);
+            this.mRadmin1.Size = new System.Drawing.Size(312, 22);
             this.mRadmin1.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0}";
             this.mRadmin1.Text = "Управление";
             this.mRadmin1.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -224,7 +223,7 @@
             // 
             this.mRadmin2.Image = ((System.Drawing.Image)(resources.GetObject("mRadmin2.Image")));
             this.mRadmin2.Name = "mRadmin2";
-            this.mRadmin2.Size = new System.Drawing.Size(323, 22);
+            this.mRadmin2.Size = new System.Drawing.Size(312, 22);
             this.mRadmin2.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0} /noinput";
             this.mRadmin2.Text = "Просмотр";
             this.mRadmin2.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -233,7 +232,7 @@
             // 
             this.mRadmin3.Image = ((System.Drawing.Image)(resources.GetObject("mRadmin3.Image")));
             this.mRadmin3.Name = "mRadmin3";
-            this.mRadmin3.Size = new System.Drawing.Size(323, 22);
+            this.mRadmin3.Size = new System.Drawing.Size(312, 22);
             this.mRadmin3.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0} /telnet";
             this.mRadmin3.Text = "Телнет";
             this.mRadmin3.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -242,7 +241,7 @@
             // 
             this.mRadmin4.Image = ((System.Drawing.Image)(resources.GetObject("mRadmin4.Image")));
             this.mRadmin4.Name = "mRadmin4";
-            this.mRadmin4.Size = new System.Drawing.Size(323, 22);
+            this.mRadmin4.Size = new System.Drawing.Size(312, 22);
             this.mRadmin4.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0} /file";
             this.mRadmin4.Text = "Передача файлов";
             this.mRadmin4.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -251,7 +250,7 @@
             // 
             this.mRadmin5.Image = ((System.Drawing.Image)(resources.GetObject("mRadmin5.Image")));
             this.mRadmin5.Name = "mRadmin5";
-            this.mRadmin5.Size = new System.Drawing.Size(323, 22);
+            this.mRadmin5.Size = new System.Drawing.Size(312, 22);
             this.mRadmin5.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0} /shutdown";
             this.mRadmin5.Text = "Выключение";
             this.mRadmin5.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -274,7 +273,7 @@
             this.mFolderOpen.Image = global::LanExchange.Properties.Resources.explorer;
             this.mFolderOpen.Name = "mFolderOpen";
             this.mFolderOpen.ShortcutKeyDisplayString = "Shift+Enter";
-            this.mFolderOpen.Size = new System.Drawing.Size(267, 22);
+            this.mFolderOpen.Size = new System.Drawing.Size(268, 22);
             this.mFolderOpen.Tag = "{0}";
             this.mFolderOpen.Text = "Открыть в Проводнике";
             this.mFolderOpen.Click += new System.EventHandler(this.mFolderOpen_Click);
@@ -284,7 +283,7 @@
             this.mFAROpen.Image = global::LanExchange.Properties.Resources.FAR_16x16;
             this.mFAROpen.Name = "mFAROpen";
             this.mFAROpen.ShortcutKeyDisplayString = "Ctrl+Enter";
-            this.mFAROpen.Size = new System.Drawing.Size(267, 22);
+            this.mFAROpen.Size = new System.Drawing.Size(268, 22);
             this.mFAROpen.Tag = "FAR.EXE {0}";
             this.mFAROpen.Text = "Открыть в FAR";
             this.mFAROpen.Click += new System.EventHandler(this.mFolderOpen_Click);
@@ -384,13 +383,13 @@
             // mSendToNewTab
             // 
             this.mSendToNewTab.Name = "mSendToNewTab";
-            this.mSendToNewTab.Size = new System.Drawing.Size(166, 22);
+            this.mSendToNewTab.Size = new System.Drawing.Size(173, 22);
             this.mSendToNewTab.Text = "В новую вкладку";
             // 
             // mAfterSendTo
             // 
             this.mAfterSendTo.Name = "mAfterSendTo";
-            this.mAfterSendTo.Size = new System.Drawing.Size(163, 6);
+            this.mAfterSendTo.Size = new System.Drawing.Size(170, 6);
             // 
             // toolStripSeparator6
             // 
@@ -515,10 +514,10 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lItemsCount,
-            this.toolStripStatusLabel3,
-            this.lDomainName,
             this.toolStripStatusLabel1,
-            this.lCompName});
+            this.lCompName,
+            this.toolStripStatusLabel4,
+            this.lUserName});
             this.statusStrip1.Location = new System.Drawing.Point(0, 520);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(564, 22);
@@ -528,34 +527,10 @@
             // lItemsCount
             // 
             this.lItemsCount.Name = "lItemsCount";
-            this.lItemsCount.Size = new System.Drawing.Size(474, 17);
+            this.lItemsCount.Size = new System.Drawing.Size(440, 17);
             this.lItemsCount.Spring = true;
             this.lItemsCount.Text = "    ";
             this.lItemsCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // toolStripStatusLabel3
-            // 
-            this.toolStripStatusLabel3.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-            this.toolStripStatusLabel3.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
-            this.toolStripStatusLabel3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
-            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(4, 17);
-            this.toolStripStatusLabel3.Text = "toolStripStatusLabel3";
-            // 
-            // lDomainName
-            // 
-            this.lDomainName.DropDown = this.popDomains;
-            this.lDomainName.Name = "lDomainName";
-            this.lDomainName.Size = new System.Drawing.Size(32, 20);
-            this.lDomainName.Text = "    ";
-            // 
-            // popDomains
-            // 
-            this.popDomains.Name = "popDomains";
-            this.popDomains.OwnerItem = this.lDomainName;
-            this.popDomains.Size = new System.Drawing.Size(61, 4);
-            this.popDomains.Opening += new System.ComponentModel.CancelEventHandler(this.popDomains_Opening);
-            this.popDomains.Opened += new System.EventHandler(this.popDomains_Opened);
             // 
             // toolStripStatusLabel1
             // 
@@ -680,6 +655,31 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // lvComps
+            // 
+            this.lvComps.ContextMenuStrip = this.popComps;
+            this.lvComps.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvComps.FullRowSelect = true;
+            this.lvComps.GridLines = true;
+            this.lvComps.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvComps.HideSelection = false;
+            this.lvComps.LargeImageList = this.ilLarge;
+            this.lvComps.Location = new System.Drawing.Point(3, 3);
+            this.lvComps.Name = "lvComps";
+            this.lvComps.ShowGroups = false;
+            this.lvComps.ShowItemToolTips = true;
+            this.lvComps.Size = new System.Drawing.Size(550, 396);
+            this.lvComps.SmallImageList = this.ilSmall;
+            this.lvComps.TabIndex = 19;
+            this.lvComps.UseCompatibleStateImageBehavior = false;
+            this.lvComps.View = System.Windows.Forms.View.Details;
+            this.lvComps.VirtualMode = true;
+            this.lvComps.ItemActivate += new System.EventHandler(this.lvComps_ItemActivate);
+            this.lvComps.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lvComps_ItemSelectionChanged);
+            this.lvComps.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.lvComps_RetrieveVirtualItem);
+            this.lvComps.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvComps_KeyDown);
+            this.lvComps.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lvComps_KeyPress);
+            // 
             // tipComps
             // 
             this.tipComps.Active = false;
@@ -749,8 +749,7 @@
             // popTop
             // 
             this.popTop.Name = "popTop";
-            this.popTop.Size = new System.Drawing.Size(153, 26);
-            this.popTop.Opening += new System.ComponentModel.CancelEventHandler(this.popTop_Opening);
+            this.popTop.Size = new System.Drawing.Size(61, 4);
             this.popTop.Opened += new System.EventHandler(this.popTop_Opened);
             // 
             // lInfoOS
@@ -789,34 +788,25 @@
             this.lInfoComp.TabIndex = 0;
             this.lInfoComp.Text = "    ";
             // 
-            // lvComps
-            // 
-            this.lvComps.ContextMenuStrip = this.popComps;
-            this.lvComps.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvComps.FullRowSelect = true;
-            this.lvComps.GridLines = true;
-            this.lvComps.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.lvComps.HideSelection = false;
-            this.lvComps.LargeImageList = this.ilLarge;
-            this.lvComps.Location = new System.Drawing.Point(3, 3);
-            this.lvComps.Name = "lvComps";
-            this.lvComps.ShowGroups = false;
-            this.lvComps.ShowItemToolTips = true;
-            this.lvComps.Size = new System.Drawing.Size(550, 396);
-            this.lvComps.SmallImageList = this.ilSmall;
-            this.lvComps.TabIndex = 19;
-            this.lvComps.UseCompatibleStateImageBehavior = false;
-            this.lvComps.View = System.Windows.Forms.View.Details;
-            this.lvComps.VirtualMode = true;
-            this.lvComps.ItemActivate += new System.EventHandler(this.lvComps_ItemActivate);
-            this.lvComps.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lvComps_ItemSelectionChanged);
-            this.lvComps.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.lvComps_RetrieveVirtualItem);
-            this.lvComps.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvComps_KeyDown);
-            this.lvComps.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lvComps_KeyPress);
-            // 
             // inputBox
             // 
             this.inputBox.ErrorMsgOnEmpty = null;
+            // 
+            // lUserName
+            // 
+            this.lUserName.Image = global::LanExchange.Properties.Resources.UserName;
+            this.lUserName.Name = "lUserName";
+            this.lUserName.Size = new System.Drawing.Size(35, 17);
+            this.lUserName.Text = "    ";
+            // 
+            // toolStripStatusLabel4
+            // 
+            this.toolStripStatusLabel4.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.toolStripStatusLabel4.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            this.toolStripStatusLabel4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
+            this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
+            this.toolStripStatusLabel4.Size = new System.Drawing.Size(4, 17);
+            this.toolStripStatusLabel4.Text = "toolStripStatusLabel4";
             // 
             // MainForm
             // 
@@ -929,10 +919,9 @@
         public System.Windows.Forms.ToolStripMenuItem mFolderOpen;
         private System.Windows.Forms.ToolStripMenuItem mFAROpen;
         private System.Windows.Forms.ToolStripMenuItem mCopyPath;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
-        private System.Windows.Forms.ContextMenuStrip popDomains;
-        private System.Windows.Forms.ToolStripDropDownButton lDomainName;
         private System.Windows.Forms.ContextMenuStrip popTop;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
+        private System.Windows.Forms.ToolStripStatusLabel lUserName;
     }
 }
 

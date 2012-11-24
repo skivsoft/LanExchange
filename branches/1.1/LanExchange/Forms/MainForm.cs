@@ -55,7 +55,6 @@ namespace LanExchange
         // время ожидания после подключения сети до начала сканирования списка компов
         int NetworkWaitAfterPluggedInSec = 3;
         private string m_CurrentDomain;
-        private string m_NewDomain;
 
         public delegate void ProcRefresh(object obj, object data);
         public delegate void ChatRefresh(object obj, object data, object message);
@@ -152,6 +151,13 @@ namespace LanExchange
             CurrentDomain = SystemInformation.UserDomainName;
             // выводим имя компьютера
             lCompName.Text = SystemInformation.ComputerName;
+            // выводим имя пользователя
+            System.Security.Principal.WindowsIdentity user = System.Security.Principal.WindowsIdentity.GetCurrent();
+            string[] A = user.Name.Split('\\');
+            if (A.Length > 1)
+                lUserName.Text = A[1];
+            else
+                lUserName.Text = A[0];            
             // режим отображения: Компьютеры
             CompBrowser.ViewType = TNetworkBrowser.LVType.COMPUTERS;
             ActiveControl = lvComps;
@@ -194,7 +200,6 @@ namespace LanExchange
                 AdminMode = TSettings.IsAdvancedMode;
                 // запуск обновления компов
                 SetBrowseTimerInterval();
-                m_NewDomain = CurrentDomain;
                 BrowseTimer_Tick(this, new EventArgs());
                 // всплывающие подсказки
                 TTabView.ListView_SetupTip(lvComps);
@@ -234,7 +239,7 @@ namespace LanExchange
             {
                 BrowseTimer.Enabled = false;
                 // запуск процесса обновления в асинхронном режиме
-                DoBrowse.RunWorkerAsync(m_NewDomain);
+                DoBrowse.RunWorkerAsync(CurrentDomain);
             }
         }
         #endregion
@@ -1717,60 +1722,8 @@ namespace LanExchange
             set
             {
                 m_CurrentDomain = value;
-                lDomainName.Text = value;
                 Pages.TabPages[0].Text = value;
             }
         }
-
-        private void popDomains_Opening(object sender, CancelEventArgs e)
-        {
-            e.Cancel = DoBrowse.IsBusy;
-        }
-
-        private void popDomains_Opened(object sender, EventArgs e)
-        {
-            // update popup menu of domains
-            IList<string> Domains = TPanelItemList.GetDomainList();
-            //Domains.Insert(0, "Вся сеть");
-            //Domains.Insert(1, "");
-            popDomains.Items.Clear();
-            foreach (string value in Domains)
-            {
-                if (String.IsNullOrEmpty(value))
-                    popDomains.Items.Add(new ToolStripSeparator());
-                else
-                {
-                    ToolStripMenuItem MI = new ToolStripMenuItem(value);
-                    MI.Click += new EventHandler(Domain_Click);
-                    if (value.Equals(CurrentDomain))
-                        MI.Checked = true;
-                    popDomains.Items.Add(MI);
-                }
-            }
-
-        }
-
-        private void Domain_Click(object sender, EventArgs e)
-        {
-            string domain = (sender as ToolStripMenuItem).Text;
-            if (!CurrentDomain.Equals(domain))
-            {
-                /*
-                if (DoBrowse.IsBusy)
-                    DoBrowse.CancelAsync();
-                if (DoPing.IsBusy)
-                    DoPing.CancelAsync();
-                */
-                m_NewDomain = domain;
-                BrowseTimer_Tick(this, new EventArgs());
-            }
-
-        }
-
-        private void popTop_Opening(object sender, CancelEventArgs e)
-        {
-            e.Cancel = !AdminMode;
-        }
-
     }
 }
