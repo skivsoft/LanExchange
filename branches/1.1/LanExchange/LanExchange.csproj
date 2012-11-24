@@ -115,6 +115,7 @@
     </Compile>
     <Compile Include="Network\NetApi32.cs" />
     <Compile Include="Network\ServerInfo.cs" />
+    <Compile Include="Network\Utils.cs" />
     <Compile Include="NLogFake.cs" />
     <Compile Include="OSLayer.cs" />
     <Compile Include="Forms\ParamsForm.cs">

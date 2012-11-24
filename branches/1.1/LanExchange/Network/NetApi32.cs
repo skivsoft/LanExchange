@@ -9,6 +9,7 @@ namespace LanExchange.Network
     {
         internal const string NETAPI32 = "netapi32.dll";
 
+        #region NetServerEnum
         [DllImport(NETAPI32, EntryPoint = "NetServerEnum")]
         [System.Security.SuppressUnmanagedCodeSecurity]
         public static extern NERR NetServerEnum(
@@ -22,22 +23,6 @@ namespace LanExchange.Network
              [MarshalAs(UnmanagedType.LPWStr)] string Domain,
              int ResumeHandle);
 
-        [DllImport(NETAPI32, SetLastError = true)]
-        [System.Security.SuppressUnmanagedCodeSecurity]
-        public static extern int NetApiBufferFree(IntPtr Buffer);
-
-        [DllImport(NETAPI32, CharSet = CharSet.Unicode)]
-        [System.Security.SuppressUnmanagedCodeSecurity]
-        public static extern int NetShareEnum(
-             StringBuilder ServerName,
-             int level,
-             ref IntPtr bufPtr,
-             uint prefmaxlen,
-             ref int entriesread,
-             ref int totalentries,
-             ref int resume_handle
-             );
-        
         [StructLayout(LayoutKind.Sequential)]
         public struct SERVER_INFO_101
         {
@@ -123,6 +108,26 @@ namespace LanExchange.Network
             PLATFORM_ID_OSF = 600,
             PLATFORM_ID_VMS = 700,
         }
+        #endregion
+
+        #region NetApiBufferFree
+        [DllImport(NETAPI32, SetLastError = true)]
+        [System.Security.SuppressUnmanagedCodeSecurity]
+        public static extern int NetApiBufferFree(IntPtr Buffer);
+        #endregion
+
+        #region NetShareEnum
+        [DllImport(NETAPI32, CharSet = CharSet.Unicode)]
+        [System.Security.SuppressUnmanagedCodeSecurity]
+        public static extern int NetShareEnum(
+             StringBuilder ServerName,
+             int level,
+             ref IntPtr bufPtr,
+             uint prefmaxlen,
+             ref int entriesread,
+             ref int totalentries,
+             ref int resume_handle
+             );
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         public struct SHARE_INFO_1
@@ -160,5 +165,27 @@ namespace LanExchange.Network
             STYPE_IPC = 3,
             STYPE_SPECIAL = 0x80000000,
         }
+        #endregion
+
+        #region NetWkstaGetInfo
+        [DllImport(NETAPI32, CharSet = CharSet.Unicode)]
+        [System.Security.SuppressUnmanagedCodeSecurity]
+        public static extern int NetWkstaGetInfo(string server,
+            int level,
+            out IntPtr info);
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+        public struct WKSTA_INFO_100
+        {
+            public int wki100_platform_id;
+            [MarshalAs(UnmanagedType.LPWStr)]
+            public string wki100_computername;
+            [MarshalAs(UnmanagedType.LPWStr)]
+            public string wki100_langroup;
+            public int wki100_ver_major;
+            public int wki100_ver_minor;
+        }
+        #endregion
+
     }
 }

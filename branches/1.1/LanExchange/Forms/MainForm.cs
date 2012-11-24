@@ -21,6 +21,7 @@ using System.Net.NetworkInformation;
 using EventHandlerSupport;
 #if DEBUG
 using NLog;
+using LanExchange.Network;
 #endif
 
 namespace LanExchange
@@ -148,16 +149,19 @@ namespace LanExchange
                                       Screen.PrimaryScreen.WorkingArea.Top + (Screen.PrimaryScreen.WorkingArea.Height - Rect.Height));
             this.SetBounds(Rect.X, Rect.Y, Rect.Width, Rect.Height);
             // domain name
-            CurrentDomain = SystemInformation.UserDomainName;
+            CurrentDomain = Utils.GetMachineNetBiosDomain(null);
             // выводим имя компьютера
             lCompName.Text = String.Format(@"{0}\{1}", CurrentDomain, SystemInformation.ComputerName);
             // выводим имя пользователя
             System.Security.Principal.WindowsIdentity user = System.Security.Principal.WindowsIdentity.GetCurrent();
+            lUserName.Text = user.Name;
+            /*
             string[] A = user.Name.Split('\\');
             if (A.Length > 1)
                 lUserName.Text = A[1];
             else
                 lUserName.Text = A[0];            
+             */
             // режим отображения: Компьютеры
             CompBrowser.ViewType = NetworkBrowser.LVType.COMPUTERS;
             ActiveControl = lvComps;
