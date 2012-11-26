@@ -1731,14 +1731,14 @@ namespace LanExchange.Forms
             using (TabParamsForm Form = new TabParamsForm())
             {
                 TabModel M = TabController.GetModel();
-                TabInfo Info = M.GetItem(Pages.SelectedIndex);
+                PanelItemList Info = M.GetItem(Pages.SelectedIndex);
                 Form.AllGroups = Info.AllGroups;
                 Form.Groups = Info.Groups;
                 if (Form.ShowDialog() == DialogResult.OK)
                 {
                     Info.AllGroups = Form.AllGroups;
                     Info.Groups = Form.Groups;
-                    TabController.GetModel().UpdateTab(Info);
+                    Info.UpdateSubsctiption();
                 }
             }
         }

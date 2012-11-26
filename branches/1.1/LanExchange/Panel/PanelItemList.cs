@@ -1,6 +1,4 @@
-﻿#define NOUSE_NORTHWIND_DATA
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using OSTools;
@@ -17,34 +15,90 @@ namespace LanExchange
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         
-        private Dictionary<string, PanelItem> Data = null;
-        public List<string> Keys = null;
-        private String Filter = "";
+        private Dictionary<string, PanelItem> m_Data = null;
+        private List<string> m_Keys = null;
+        private String m_Filter = "";
+
+        private string m_TabName = "";
+        private View m_CurrentView = View.Details;
+        private Dictionary<string, PanelItem> m_Items = null;
+        private bool m_AllGroups = false;
+        private List<string> m_Groups = null;
 
         public event EventHandler Changed;
 
-        public PanelItemList()
+        public PanelItemList(string name)
         {
-            Data = new Dictionary<string, PanelItem>();
-            Keys = new List<string>();
+            m_Data = new Dictionary<string, PanelItem>();
+            m_Items = new Dictionary<string, PanelItem>();
+            m_Keys = new List<string>();
+            m_TabName = name;
         }
-   
+
+        public string TabName
+        {
+            get { return m_TabName; }
+            set { m_TabName = value; }
+        }
+
+        public View CurrentView
+        {
+            get { return m_CurrentView; }
+            set { m_CurrentView = value; }
+        }
+
+        public IDictionary<string, PanelItem> Items
+        {
+            get { return m_Items; }
+        }
+
+        public bool AllGroups
+        {
+            get { return m_AllGroups; }
+            set { m_AllGroups = value; }
+        }
+
+        public List<string> Groups
+        {
+            get { return m_Groups; }
+            set { m_Groups = value; }
+        }
+
+        public IList<string> Keys
+        {
+            get { return m_Keys; }
+        }
+
+        public void UpdateSubsctiption()
+        {
+            // оформляем подписку на получение списка компов
+            if (AllGroups)
+                NetworkScanner.GetInstance().SubscribeToAll(this);
+            else
+            {
+                NetworkScanner.GetInstance().UnSubscribe(this);
+                foreach (var group in Groups)
+                    NetworkScanner.GetInstance().SubscribeToSubject(this, group);
+            }
+        }
+
+
         public void Add(PanelItem Comp)
         {
             if (Comp != null)
-                if (!Data.ContainsKey(Comp.Name))
-                    Data.Add(Comp.Name, Comp);
+                if (!m_Data.ContainsKey(Comp.Name))
+                    m_Data.Add(Comp.Name, Comp);
         }
 
         public void Delete(PanelItem Comp)
         {
-            Data.Remove(Comp.Name);
+            m_Data.Remove(Comp.Name);
         }
 
         public PanelItem Get(string key)
         {
             PanelItem Result = null;
-            if (Data.TryGetValue(key, out Result))
+            if (m_Data.TryGetValue(key, out Result))
             {
                 Result.Name = key;
                 return Result;
@@ -55,7 +109,7 @@ namespace LanExchange
 
         public void Clear()
         {
-            Data.Clear();
+            m_Data.Clear();
         }
 
         private bool GoodForFilter(string[] A, string Filter1, string Filter2)
@@ -76,147 +130,44 @@ namespace LanExchange
         public void ApplyFilter()
         {
             bool bFiltered = IsFiltered;
-            Keys.Clear();
+            m_Keys.Clear();
             string Filter1 = FilterText.ToUpper();
             string Filter2 = PuntoSwitcher.Change(FilterText);
             if (Filter2 != null) Filter2 = Filter2.ToUpper();
-            foreach (var Pair in Data)
+            foreach (var Pair in m_Data)
             {
                 string[] A = Pair.Value.getStrings();
                 if (!bFiltered || String.IsNullOrEmpty(Pair.Value.Name) || GoodForFilter(A, Filter1, Filter2))
-                    Keys.Add(Pair.Value.Name);
+                    m_Keys.Add(Pair.Value.Name);
             }
         }
 
         public bool IsFiltered
         {
-            get { return !String.IsNullOrEmpty(Filter); }
+            get { return !String.IsNullOrEmpty(m_Filter); }
         }
 
         // Возвращает количество компов в списке
         public int Count
         {
-            get { return Data.Count; }
+            get { return m_Data.Count; }
         }
 
         // Возвращает число записей в фильтре
         public int FilterCount
         {
-            get { return Keys.Count; }
+            get { return m_Keys.Count; }
         }
 
         public String FilterText
         {
-            get { return Filter; }
+            get { return m_Filter; }
             set
             {
-                Filter = value;
+                m_Filter = value;
                 ApplyFilter();
             }
         }
-
-#if USE_NORTHWIND_DATA
-        struct TItem
-        {
-            public string name;
-            public string comment;
-
-            public TItem(string s1, string s2)
-            {
-                name = s1;
-                comment = s2;
-            }
-        };
-
-        public static void AddNorthWindData(List<TPanelItem> Result)
-        {
-            TItem[] Data = new TItem[38] {
-                new TItem("GLADKIH-A", "Гладких Андрей"),
-                new TItem("ILINA-YU", "Ильина Юлия"),
-                new TItem("KLIMOV-S", "Климов Сергей"),
-                new TItem("KOREPIN-V", "Корепин Вадим"),
-                new TItem("KULIKOV-E", "Куликов Евгений"),
-                new TItem("NOVIKOV-N", "Новиков Николай"),
-                new TItem("OZHOGINA-I", "Ожогина Инна"),
-                new TItem("POPKOVA-D", "Попкова Дарья"),
-                new TItem("SERGIENKO-M", "Сергиенко Мария"),
-                new TItem("KOSTERINA-O", "Костерина Ольга"),
-                new TItem("VERNYJ-G", "Верный Григорий"),
-                new TItem("EGOROV-V", "Егоров Владимир"),
-                new TItem("OMELCHENKO-S", "Омельченко Светлана"),
-                new TItem("PESOTSKIJ-S", "Песоцкий Станислав"),
-                new TItem("SHASHKOV-R", "Шашков Руслан"),
-                new TItem("VRONSKIJ-YU", "Вронский Юрий"),
-                new TItem("PODKOLZINA-E", "Подколзина Екатерина"),
-                new TItem("ERJOMENKO-A", "Ерёменко Алексей"),
-                new TItem("GRACHEV-N", "Грачев Николай"),
-                new TItem("OREHOV-A", "Орехов Алексей"),
-                new TItem("VOLODIN-V", "Володин Виктор"),
-                new TItem("TUMANOV-A", "Туманов Александр"),
-                new TItem("GORNOZHENKO-D", "Горноженко Дмитрий"),
-                new TItem("SALIMZYANOVA-D", "Салимзянова Дина"),
-                new TItem("USHAKOV-V", "Ушаков Валерий"),
-                new TItem("VAZHIN-F", "Важин Филип"),
-                new TItem("MISHKOVA-E", "Мишкова Екатерина"),
-                new TItem("EFIMOV-A", "Ефимов Александр"),
-                new TItem("FOMIN-G", "Фомин Георгий"),
-                new TItem("TOLMACHEV-V", "Толмачев Виктор"),
-                new TItem("IGNATOV-S", "Игнатов Степан"),
-                new TItem("ENTIN-M", "Энтин Михаил"),
-                new TItem("SHUTOV-I", "Шутов Игнат"),
-                new TItem("BORISOV-S", "Борисов Сергей"),
-                new TItem("IVANOV-A", "Иванов Андрей"),
-                new TItem("TIMOFEEVA-K", "Тимофеева Кристина"),
-                new TItem("BEREZIN-A", "Березин Артур"),
-                new TItem("YARTSEV-S", "Ярцев Семен")
-            };
-            foreach (TItem Item in Data)
-            {
-                TComputerItem Comp = new TComputerItem(Item.name, Item.comment, 500, 5, 1, 0);
-                Result.Add(Comp);
-            }
-        }
-#endif
-
-        // получим список всех компьюетеров
-        /*
-        public static IList<PanelItem> GetServerList(string domain)
-        {
-            NetApi32.SERVER_INFO_101 si;
-            IntPtr pInfo = IntPtr.Zero;
-            int entriesread = 0;
-            int totalentries = 0;
-            List<PanelItem> Result = new List<PanelItem>();
-            try
-            {
-                logger.Info("WINAPI NetServerEnum");
-                NetApi32.NERR err = NetApi32.NetServerEnum(null, 101, out pInfo, -1, ref entriesread, ref totalentries, NetApi32.SV_101_TYPES.SV_TYPE_ALL, domain, 0);
-                logger.Info("WINAPI NetServerEnum: result={0}, entriesread={1}, totalentries={2}", err, entriesread, totalentries);
-                if ((err == NetApi32.NERR.NERR_Success || err == NetApi32.NERR.ERROR_MORE_DATA) && pInfo != IntPtr.Zero)
-                {
-                    int ptr = pInfo.ToInt32();
-                    for (int i = 0; i < entriesread; i++)
-                    {
-                        si = (NetApi32.SERVER_INFO_101)Marshal.PtrToStructure(new IntPtr(ptr), typeof(NetApi32.SERVER_INFO_101));
-                        // в режиме пользователя не сканируем: сервера, контроллеры домена
-                        //bool bServer = (si.sv101_type & 0x8018) != 0;
-                        //if (Program.AdminMode || !bServer)
-                        Result.Add(new ComputerPanelItem(si.sv101_name, si));
-                        ptr += Marshal.SizeOf(si);
-                    }
-                }
-            }
-            catch (Exception) { }
-            finally
-            { // освобождаем выделенную память
-                if (pInfo != IntPtr.Zero) NetApi32.NetApiBufferFree(pInfo);
-            }
-            #if USE_NORTHWIND_DATA
-            AddNorthWindData(Result);
-            #endif
-            return Result;
-        }
-        */
 
         public static List<PanelItem> EnumNetShares(string Server)
         {
@@ -265,10 +216,10 @@ namespace LanExchange
                 Result.Add("");
             if (bAll)
                 for (int index = 0; index < LV.Items.Count; index++)
-                    Result.Add(Keys[index]);
+                    Result.Add(m_Keys[index]);
             else
                 foreach (int index in LV.SelectedIndices)
-                    Result.Add(Keys[index]);
+                    Result.Add(m_Keys[index]);
             return Result;
         }
         
@@ -280,7 +231,7 @@ namespace LanExchange
             {
                 for (int i = 0; i < SaveSelected.Count; i++)
                 {
-                    int index = Keys.IndexOf(SaveSelected[i]);
+                    int index = m_Keys.IndexOf(SaveSelected[i]);
                     if (index == -1) continue;
                     if (i == 0)
                     {
@@ -302,7 +253,7 @@ namespace LanExchange
             // пробуем найти запомненный элемент
             if (CompName != null)
             {
-                index = this.Keys.IndexOf(CompName);
+                index = this.m_Keys.IndexOf(CompName);
                 if (index == -1) index = 0;
             }
             else
@@ -319,7 +270,7 @@ namespace LanExchange
         public List<string> ToList()
         {
             List<string> Result = new List<string>();
-            foreach (var Pair in Data)
+            foreach (var Pair in m_Data)
                 Result.Add(Pair.Value.Name);
             return Result;
         }
@@ -327,12 +278,12 @@ namespace LanExchange
         public void DataChanged(ISubscriptionProvider sender, DataChangedEventArgs e)
         {
             IList<ServerInfo> List = (IList<ServerInfo>)e.Data;
-            lock (Data)
-                lock(Keys)
+            lock (m_Data)
+                lock(m_Keys)
                 {
-                    Data.Clear();
+                    m_Data.Clear();
                     foreach (var SI in List)
-                        Data.Add(SI.Name, new ComputerPanelItem(SI.Name, SI));
+                        m_Data.Add(SI.Name, new ComputerPanelItem(SI.Name, SI));
                     ApplyFilter();
                 }
             if (Changed != null)

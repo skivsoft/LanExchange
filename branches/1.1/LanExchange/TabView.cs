@@ -41,31 +41,10 @@ namespace LanExchange
             }
         }
 
-        private void UpdateSubsctiption(TabInfo Info, PanelItemList ItemList)
-        {
-            // оформляем подписку на получение списка компов
-            if (Info.AllGroups)
-                NetworkScanner.GetInstance().SubscribeToAll(ItemList);
-            else
-            {
-                NetworkScanner.GetInstance().UnSubscribe(ItemList);
-                foreach (var group in Info.Groups)
-                    NetworkScanner.GetInstance().SubscribeToSubject(ItemList, group);
-            }
-        }
-
-        public void AfterUpdateTab(object sender, TabInfoEventArgs e)
-        {
-            ListViewEx LV = GetActiveListView();
-            PanelItemList ItemList = LV.GetObject();
-            UpdateSubsctiption(e.Info, ItemList);
-        }
-
-        public void AfterAppendTab(object sender, TabInfoEventArgs e)
+        public void AfterAppendTab(object sender, PanelItemListEventArgs e)
         {
             TabPage NewTab = null;
             ListViewEx LV = null;
-            PanelItemList ItemList = null;
             TabModel Model = (TabModel)sender;
             // создаем новую вкладку
             NewTab = new TabPage(e.Info.TabName);
@@ -78,25 +57,11 @@ namespace LanExchange
             LV.View = e.Info.CurrentView;
             NewTab.Controls.Add(LV);
             // создаем внутренний список для хранения элементов или получаем существующий
-            ItemList = LV.CreateObject();
-            ItemList.Changed +=new EventHandler(ItemList_Changed);
-            UpdateSubsctiption(e.Info, ItemList);
+            LV.SetObject(e.Info);
+            e.Info.Changed +=new EventHandler(ItemList_Changed);
+            e.Info.UpdateSubsctiption();
             // восстанавливаем список элементов
-            if (e.Info.Items != null)
-            {
-                /*
-                PanelItemList TopList = MainForm.GetInstance().CompBrowser.InternalItemList;
-                foreach (string ItemName in e.Info.Items)
-                {
-                    PanelItem PItem = TopList.Get(ItemName);
-                    if (PItem != null)
-                        ItemList.Add(PItem);
-                    else
-                        ItemList.Add(new ComputerPanelItem());
-                }
-                logger.Info("Added items to object {0}, Count: {1}", ItemList.ToString(), ItemList.Count);
-                 */
-            }
+            // ...
             // установка фильтра
             MainForm.GetInstance().UpdateFilter(LV, e.Info.FilterText, false);
             // настройка ListView
@@ -108,7 +73,7 @@ namespace LanExchange
             pages.TabPages.RemoveAt(e.Index);
         }
 
-        public void AfterRename(object sender, TabInfoEventArgs e)
+        public void AfterRename(object sender, PanelItemListEventArgs e)
         {
             pages.SelectedTab.Text = e.Info.TabName;
         }

@@ -23,7 +23,7 @@ namespace Tests
         public void ModelNewTab()
         {
             TabModel Model = new TabModel("TheModel");
-            Model.AddTab(new TabInfo("MyTab"));
+            Model.AddTab(new PanelItemList("MyTab"));
             Assert.AreEqual("MyTab", Model.GetTabName(0));
             Assert.AreEqual(null, Model.GetTabName(-1));
             Assert.AreEqual(null, Model.GetTabName(1));
@@ -34,7 +34,7 @@ namespace Tests
         public void ModelRenameTab()
         {
             TabModel Model = new TabModel("TheModel");
-            Model.AddTab(new TabInfo("MyTab"));
+            Model.AddTab(new PanelItemList("MyTab"));
             Model.RenameTab(0, "YourTab");
             Assert.AreEqual("YourTab", Model.GetTabName(0));
         }
@@ -44,7 +44,7 @@ namespace Tests
         public void ModelDelTab()
         {
             TabModel Model = new TabModel("TheModel");
-            Model.AddTab(new TabInfo("MyTab"));
+            Model.AddTab(new PanelItemList("MyTab"));
             Model.DelTab(0);
             Assert.AreEqual(0, Model.Count, "Count != 0");
         }

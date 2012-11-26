@@ -24,12 +24,5 @@ namespace LanExchange
         {
             return this.Tag as PanelItemList;
         }
-
-        public PanelItemList CreateObject()
-        {
-            PanelItemList Result = new PanelItemList();
-            this.SetObject(Result);
-            return Result;
-        }
     }
 }

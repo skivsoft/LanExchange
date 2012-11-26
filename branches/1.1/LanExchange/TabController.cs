@@ -35,10 +35,9 @@ namespace LanExchange
             Model = new TabModel(Pages.Name);
             View = new TabView(Pages);
             //UpdateModelFromView();
-            Model.AfterAppendTab += new TabInfoEventHandler(View.AfterAppendTab);
+            Model.AfterAppendTab += new PanelItemListEventHandler(View.AfterAppendTab);
             Model.AfterRemove += new IndexEventHandler(View.AfterRemove);
-            Model.AfterRename += new TabInfoEventHandler(View.AfterRename);
-            Model.AfterUpdate += new TabInfoEventHandler(View.AfterUpdateTab);
+            Model.AfterRename += new PanelItemListEventHandler(View.AfterRename);
         }
 
         public TabModel GetModel()
@@ -51,7 +50,7 @@ namespace LanExchange
             string NewTabName = TabView.InputBoxAsk("Новая вкладка", "Введите имя", "");
             if (!String.IsNullOrEmpty(NewTabName))
             {
-                Model.AddTab(new TabInfo(NewTabName));
+                Model.AddTab(new PanelItemList(NewTabName));
                 Model.StoreSettings();
             }
         }
@@ -82,6 +81,7 @@ namespace LanExchange
 
         public void SaveTab()
         {
+            /*
             SaveFileDialog dlgSave = View.GetSaveFileDialog();
             if (dlgSave == null)
                 return;
@@ -97,7 +97,7 @@ namespace LanExchange
                 StringBuilder S = new StringBuilder();
                 for (int i = 0; i < ItemList.Count; i++)
                 {
-                    PanelItem PItem = ItemList.Get(ItemList.Keys[i]);
+                    PanelItem PItem = ItemList.Get(ItemList.m_Keys[i]);
                     if (PItem == null) continue;
                     if (S.Length > 0)
                         S.AppendLine();
@@ -113,6 +113,8 @@ namespace LanExchange
                     stream.Close();
                 }
             }
+             */
+            MessageBox.Show("SaveTab()");
         }
 
         public void ListTab()
@@ -186,8 +188,8 @@ namespace LanExchange
                 return;
             ListViewEx LV = View.GetActiveListView();
             PanelItemList ItemList = LV.GetObject();
-            TabInfo Info = new TabInfo(NewTabName);
-            Info.Items = ItemList.ListView_GetSelected(LV, false);
+            PanelItemList Info = new PanelItemList(NewTabName);
+            //Info.Items = ItemList.ListView_GetSelected(LV, false);
             Model.AddTab(Info);
             View.SelectedIndex = Model.Count - 1;
             Model.StoreSettings();
@@ -226,7 +228,7 @@ namespace LanExchange
             foreach (TabPage Tab in View.TabPages)
             {
                 if (Tab.Controls.Count == 0) continue;
-                TabInfo Info = new TabInfo(Tab.Text);
+                PanelItemList Info = new PanelItemList(Tab.Text);
                 ListViewEx LV = (ListViewEx)Tab.Controls[0];
                 PanelItemList ItemList = LV.GetObject();
                 Info.Items = ItemList.ListView_GetSelected(LV, true);

@@ -37,7 +37,7 @@ namespace LanExchange.Network
         private bool m_InstantUpdate = true;
         private int LockCount = 0;
 
-        public NetworkScanner()
+        private NetworkScanner()
         {
             // lists
             m_AllSubjects = new List<ISubscriber>();

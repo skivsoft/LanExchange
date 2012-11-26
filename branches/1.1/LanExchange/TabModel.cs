@@ -9,19 +9,19 @@ using LanExchange.Network;
 
 namespace LanExchange
 {
-    public class TabInfoEventArgs : EventArgs
+    public class PanelItemListEventArgs : EventArgs
     {
-        private TabInfo info;
+        private PanelItemList info;
 
-        public TabInfoEventArgs(TabInfo Info)
+        public PanelItemListEventArgs(PanelItemList Info)
         {
             this.info = Info;
         }
 
-        public TabInfo Info { get { return this.info; }}
+        public PanelItemList Info { get { return this.info; }}
     }
 
-    public delegate void TabInfoEventHandler(object sender, TabInfoEventArgs e);
+    public delegate void PanelItemListEventHandler(object sender, PanelItemListEventArgs e);
 
     public class IndexEventArgs : EventArgs
     {
@@ -37,21 +37,6 @@ namespace LanExchange
 
     public delegate void IndexEventHandler(object sender,  IndexEventArgs e);
 
-    public class TabInfo
-    {
-        public string TabName = "";
-        public string FilterText = "";
-        public View CurrentView = View.Details;
-        public List<string> Items = null;
-        public bool AllGroups = false;
-        public List<string> Groups = null;
-
-        public TabInfo(string name)
-        {
-            this.TabName = name;
-        }
-    }
-    
     // 
     // Модель предоставляет знания: данные и методы работы с этими данными, 
     // реагирует на запросы, изменяя своё состояние. 
@@ -60,14 +45,13 @@ namespace LanExchange
 
     public class TabModel
     {
-        private List<TabInfo> InfoList = new List<TabInfo>();
+        private List<PanelItemList> InfoList = new List<PanelItemList>();
         private string m_Name = null;
         private int m_SelectedIndex = -1;
 
-        public event TabInfoEventHandler AfterAppendTab;
+        public event PanelItemListEventHandler AfterAppendTab;
         public event IndexEventHandler AfterRemove;
-        public event TabInfoEventHandler AfterRename;
-        public event TabInfoEventHandler AfterUpdate;
+        public event PanelItemListEventHandler AfterRename;
 
         public TabModel(string name)
         {
@@ -85,15 +69,15 @@ namespace LanExchange
             }
         }
 
-        public TabInfo GetItem(int Index)
+        public PanelItemList GetItem(int Index)
         {
             return this.InfoList[Index];
         }
 
-        public void DoAfterAppendTab(TabInfo Info)
+        public void DoAfterAppendTab(PanelItemList Info)
         {
             if (AfterAppendTab != null)
-               AfterAppendTab(this, new TabInfoEventArgs(Info));
+               AfterAppendTab(this, new PanelItemListEventArgs(Info));
         }
 
         public void DoAfterRemove(int Index)
@@ -102,19 +86,19 @@ namespace LanExchange
                 AfterRemove(this, new IndexEventArgs(Index));
         }
 
-        public void DoAfterRename(TabInfo Info)
+        public void DoAfterRename(PanelItemList Info)
         {
             if (AfterRename != null)
-                AfterRename(this, new TabInfoEventArgs(Info));
+                AfterRename(this, new PanelItemListEventArgs(Info));
         }
 
-        public void AddTab(TabInfo Info)
+        public void AddTab(PanelItemList Info)
         {
             InfoList.Add(Info);
             DoAfterAppendTab(Info);
         }
 
-        public void InternalAdd(TabInfo Info)
+        public void InternalAdd(PanelItemList Info)
         {
             InfoList.Add(Info);
         }
@@ -127,15 +111,9 @@ namespace LanExchange
 
         public void RenameTab(int Index, string NewTabName)
         {
-            TabInfo Info = InfoList[Index];
+            PanelItemList Info = InfoList[Index];
             Info.TabName = NewTabName;
             DoAfterRename(Info);
-        }
-
-        public void UpdateTab(TabInfo Info)
-        {
-            if (AfterUpdate != null)
-                AfterUpdate(this, new TabInfoEventArgs(Info));
         }
 
         public string GetTabName(int i)
@@ -160,13 +138,13 @@ namespace LanExchange
             config.SetIntValue(String.Format(@"{0}\Count", m_Name), Count);
             for (int i = 0; i < Count; i++)
             {
-                TabInfo Info = GetItem(i);
+                PanelItemList Info = GetItem(i);
                 string S = String.Format(@"{0}.{1}\", m_Name, i);
                 config.SetStrValue(S + "TabName", Info.TabName);
                 config.SetStrValue(S + "FilterText", Info.FilterText);
                 config.SetIntValue(S + "CurrentView", (int)Info.CurrentView);
                 // элементы нулевой закладки не сохраняем, т.к. они формируются после обзора сети
-                config.SetListValue(S + "Items", i > 0 ? Info.Items : null);
+                //config.SetListValue(S + "Items", i > 0 ? Info.Items : null);
                 config.SetBoolValue(S + "AllGroups", Info.AllGroups);
                 config.SetListValue(S + "Groups", Info.Groups);
             }
@@ -183,10 +161,10 @@ namespace LanExchange
                 {
                     string S = String.Format(@"{0}.{1}\", m_Name, i);
                     string tabname = config.GetStrValue(S + "TabName", "");
-                    TabInfo Info = new TabInfo(tabname);
+                    PanelItemList Info = new PanelItemList(tabname);
                     Info.FilterText = config.GetStrValue(S + "FilterText", "");
                     Info.CurrentView = (View)config.GetIntValue(S + "CurrentView", (int)System.Windows.Forms.View.Details);
-                    Info.Items = config.GetListValue(S + "Items");
+                    //Info.Items = config.GetListValue(S + "Items");
                     Info.AllGroups = config.GetBoolValue(S + "AllGroups", false);
                     Info.Groups = config.GetListValue(S + "Groups");
                     AddTab(Info);
@@ -195,10 +173,9 @@ namespace LanExchange
             else
             {
                 string domain = Utils.GetMachineNetBiosDomain(null);
-                TabInfo Info = new TabInfo(domain);
+                PanelItemList Info = new PanelItemList(domain);
                 Info.FilterText = "";
                 Info.CurrentView = (System.Windows.Forms.View.Details);
-                Info.Items = new List<string>();
                 Info.Groups = new List<string>();
                 Info.Groups.Add(domain);
                 AddTab(Info);
