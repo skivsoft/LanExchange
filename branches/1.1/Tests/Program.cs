@@ -10,10 +10,10 @@ namespace Tests
 
         static void Main()
         {
-            TestTTabController TestTabs = new TestTTabController();
+            TabControllerTest TestTabs = new TabControllerTest();
             //TestTabs.CreateFromEmpyTabControl();
             {
-                TestTSettings obj = new TestTSettings();
+                SettingsTest obj = new SettingsTest();
                 obj.SetListValue();
             }
 

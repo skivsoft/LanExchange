@@ -8,13 +8,13 @@ using System.Windows.Forms;
 namespace Tests
 {
     [TestFixture]
-    class TestTTabController
+    class TabControllerTest
     {
         [Test]
         [Category("Model")]
         public void ModelCreate()
         {
-            TTabModel Model = new TTabModel();
+            TabModel Model = new TabModel("TheModel");
             Assert.AreEqual(0, Model.Count);
         }
 
@@ -22,8 +22,8 @@ namespace Tests
         [Category("Model")]
         public void ModelNewTab()
         {
-            TTabModel Model = new TTabModel();
-            Model.AddTab(new TTabInfo("MyTab"));
+            TabModel Model = new TabModel("TheModel");
+            Model.AddTab(new TabInfo("MyTab"));
             Assert.AreEqual("MyTab", Model.GetTabName(0));
             Assert.AreEqual(null, Model.GetTabName(-1));
             Assert.AreEqual(null, Model.GetTabName(1));
@@ -33,8 +33,8 @@ namespace Tests
         [Category("Model")]
         public void ModelRenameTab()
         {
-            TTabModel Model = new TTabModel();
-            Model.AddTab(new TTabInfo("MyTab"));
+            TabModel Model = new TabModel("TheModel");
+            Model.AddTab(new TabInfo("MyTab"));
             Model.RenameTab(0, "YourTab");
             Assert.AreEqual("YourTab", Model.GetTabName(0));
         }
@@ -43,8 +43,8 @@ namespace Tests
         [Category("Model")]
         public void ModelDelTab()
         {
-            TTabModel Model = new TTabModel();
-            Model.AddTab(new TTabInfo("MyTab"));
+            TabModel Model = new TabModel("TheModel");
+            Model.AddTab(new TabInfo("MyTab"));
             Model.DelTab(0);
             Assert.AreEqual(0, Model.Count, "Count != 0");
         }
@@ -54,7 +54,7 @@ namespace Tests
         public void ViewSelectedTabText()
         {
             TabControl Pages = new TabControl();
-            TTabView View = new TTabView(Pages);
+            TabView View = new TabView(Pages);
             Assert.AreEqual("", View.SelectedTabText);
         }
 
@@ -64,8 +64,8 @@ namespace Tests
         public void CreateFromEmpyTabControl()
         {
             TabControl Pages = new TabControl();
-            TTabController Controller = new TTabController(Pages);
-            //TTabModel Model = Controller.GetModel();
+            TabController Controller = new TabController(Pages);
+            //TabModel Model = Controller.GetModel();
             //Assert.NotNull(Model);
             //Assert.AreEqual(0, Model.Count, "Empty TabControl");
         }
@@ -77,26 +77,9 @@ namespace Tests
             TabControl Pages = new TabControl();
             TabPage Tab = new TabPage("MyTab");
             Pages.TabPages.Add(Tab);
-            TTabController Controller = new TTabController(Pages);
-            TTabModel Model = Controller.GetModel();
+            TabController Controller = new TabController(Pages);
+            TabModel Model = Controller.GetModel();
             Assert.AreEqual(0, Model.Count);
         }
-
-        [Test]
-        [Category("Controller")]
-        public void CreateFromNotEmptyTabControl2()
-        {
-            TabControl Pages = new TabControl();
-            TabPage Tab = new TabPage("MyTab");
-            ListView LV = new ListView();
-            TPanelItemList ItemList = new TPanelItemList();
-            TPanelItemList.ListView_SetObject(LV, ItemList);
-            Tab.Controls.Add(LV);
-            Pages.TabPages.Add(Tab);
-            TTabController Controller = new TTabController(Pages);
-            TTabModel Model = Controller.GetModel();
-            Assert.AreEqual(1, Model.Count);
-        }
-
     }
 }
