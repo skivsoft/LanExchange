@@ -28,6 +28,7 @@ namespace LanExchange.Network
         private IDictionary<string, IList<ISubscriber>> m_Subjects = null;
         private IList<ISubscriber> m_AllSubjects = null;
         private IDictionary<string, IList<ServerInfo>> m_Results = null;
+        private IList<string> m_Domains = null;
 
         private int m_RefreshInterval = 0;
         private bool m_EnabledAll = true;
@@ -42,12 +43,18 @@ namespace LanExchange.Network
             m_AllSubjects = new List<ISubscriber>();
             m_Subjects = new Dictionary<string, IList<ISubscriber>>();
             m_Results = new Dictionary<string, IList<ServerInfo>>();
+            m_Domains = Utils.GetDomainList();
             // timer
             m_RefreshTimer = new Timer();
             m_RefreshTimer.Tick += new EventHandler(RefreshTimer_Tick);
             m_RefreshTimer.Enabled = false;
             // worker for scanning network
             m_Workers = new BackgroundWorkerList();
+        }
+
+        public IList<string> DomainList
+        {
+            get { return m_Domains; }
         }
 
         public int RefreshInterval
@@ -71,10 +78,10 @@ namespace LanExchange.Network
 
         private void RefreshTimer_Tick(object sender, EventArgs e)
         {
-            m_Workers.ClearNotBusy();
             if (!m_Workers.IsBusy)
             {
                 m_Workers.ClearNotBusy();
+                m_Domains = Utils.GetDomainList();
                 // prepare workers to launch
                 foreach (var Pair in m_Subjects)
                 {
@@ -107,6 +114,7 @@ namespace LanExchange.Network
             DataChangedEventArgs args = new DataChangedEventArgs();
             args.Subject = domain;
             args.Data = Utils.GetComputerList(domain);
+            logger.Info(String.Format("NetServerEnum: {0}", ((IList<ServerInfo>)args.Data).Count));
             e.Result = args;
         }
 

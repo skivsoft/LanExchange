@@ -15,26 +15,29 @@ namespace LanExchange.Forms
         {
             InitializeComponent();
             UpdateControls();
+            lvDomains.Items.Clear();
+            foreach (string value in NetworkScanner.GetInstance().DomainList)
+                lvDomains.Items.Add(value);
         }
 
         private void UpdateControls()
         {
-            chDomains.Enabled = rbSelected.Checked;
-        }
-
-        private void TabParamsForm_Load(object sender, EventArgs e)
-        {
-            IList<string> Domains = Utils.GetDomainList();
-            chDomains.Items.Clear();
-            foreach (string value in Domains)
-            {
-                chDomains.Items.Add(value, false);
-            }
+            lvDomains.Enabled = rbSelected.Checked;
         }
 
         private void rbAll_CheckedChanged(object sender, EventArgs e)
         {
             UpdateControls();
+        }
+
+        private void SetChecked(string name, bool Checked)
+        {
+            foreach(ListViewItem item in lvDomains.Items)
+                if (item.Text.Equals(name))
+                {
+                    item.Checked = Checked;
+                    break;
+                }
         }
 
         public bool AllGroups
@@ -54,11 +57,32 @@ namespace LanExchange.Forms
             get
             {
                 List<string> Result = new List<string>();
+                if (rbSelected.Checked)
+                    foreach (ListViewItem item in lvDomains.Items)
+                        if (item.Checked)
+                            Result.Add(item.Text);
                 return Result;
             }
             set
             {
-                
+                if (!rbAll.Checked)
+                {
+                    if (value.Count == 0)
+                        rbDontScan.Checked = true;
+                    else
+                        rbSelected.Checked = true;
+                    foreach (var str in value)
+                        SetChecked(str, true);
+                }
+            }
+        }
+
+        private void TabParamsForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                DialogResult = DialogResult.Cancel;
+                e.Handled = true;
             }
         }
     }

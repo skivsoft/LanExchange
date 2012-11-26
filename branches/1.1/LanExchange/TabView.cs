@@ -41,6 +41,26 @@ namespace LanExchange
             }
         }
 
+        private void UpdateSubsctiption(TabInfo Info, PanelItemList ItemList)
+        {
+            // оформляем подписку на получение списка компов
+            if (Info.AllGroups)
+                NetworkScanner.GetInstance().SubscribeToAll(ItemList);
+            else
+            {
+                NetworkScanner.GetInstance().UnSubscribe(ItemList);
+                foreach (var group in Info.Groups)
+                    NetworkScanner.GetInstance().SubscribeToSubject(ItemList, group);
+            }
+        }
+
+        public void AfterUpdateTab(object sender, TabInfoEventArgs e)
+        {
+            ListViewEx LV = GetActiveListView();
+            PanelItemList ItemList = LV.GetObject();
+            UpdateSubsctiption(e.Info, ItemList);
+        }
+
         public void AfterAppendTab(object sender, TabInfoEventArgs e)
         {
             TabPage NewTab = null;
@@ -60,12 +80,7 @@ namespace LanExchange
             // создаем внутренний список для хранения элементов или получаем существующий
             ItemList = LV.CreateObject();
             ItemList.Changed +=new EventHandler(ItemList_Changed);
-            // оформляем подписку на получение списка компов
-            if (e.Info.AllGroups)
-                NetworkScanner.GetInstance().SubscribeToAll(ItemList);
-            else
-                foreach (var group in e.Info.Groups)
-                    NetworkScanner.GetInstance().SubscribeToSubject(ItemList, group);
+            UpdateSubsctiption(e.Info, ItemList);
             // восстанавливаем список элементов
             if (e.Info.Items != null)
             {

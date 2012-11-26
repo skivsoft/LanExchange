@@ -66,9 +66,11 @@ namespace LanExchange.Forms
 
         #region Инициализация и загрузка формы
 
-        private MainForm()
+        public MainForm()
         {
             InitializeComponent();
+            m_Instance = this;
+            SetupFormBounds();
             // load settings from ini-file
             m_Settings = Settings.GetInstance();
 
@@ -86,11 +88,6 @@ namespace LanExchange.Forms
 
         internal static MainForm GetInstance()
         {
-            if (object.ReferenceEquals(m_Instance, null))
-            {
-                MainForm temp = new MainForm();
-                m_Instance = temp;
-            }
             return m_Instance;
         }
 
@@ -130,16 +127,20 @@ namespace LanExchange.Forms
             return String.Format("{0} {1}.{2}", ((AssemblyProductAttribute)attributes[0]).Product, Ver.Major, Ver.Minor);
         }
 
-        private void SetupForm()
+        private void SetupFormBounds()
         {
-            TrayIcon.Visible = CanUseTray();
-            this.Text = GetMainFormTitle();
             // размещаем форму внизу справа
             Rectangle Rect = new Rectangle();
             Rect.Size = new Size(450, Screen.PrimaryScreen.WorkingArea.Height);
             Rect.Location = new Point(Screen.PrimaryScreen.WorkingArea.Left + (Screen.PrimaryScreen.WorkingArea.Width - Rect.Width),
                                       Screen.PrimaryScreen.WorkingArea.Top + (Screen.PrimaryScreen.WorkingArea.Height - Rect.Height));
             this.SetBounds(Rect.X, Rect.Y, Rect.Width, Rect.Height);
+        }
+
+        private void SetupForm()
+        {
+            TrayIcon.Visible = CanUseTray();
+            this.Text = GetMainFormTitle();
             // выводим имя компьютера
             lCompName.Text = SystemInformation.ComputerName;
             // выводим имя пользователя
@@ -177,8 +178,8 @@ namespace LanExchange.Forms
             if (!OSLayer.IsRunningOnMono())
             {
                 // устанавливаем обработчик на изменение подключения к сети
-                //bNetworkConnected = System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
-                //System.Net.NetworkInformation.NetworkChange.NetworkAvailabilityChanged += new System.Net.NetworkInformation.NetworkAvailabilityChangedEventHandler(NetworkChange_NetworkAvailabilityChanged);
+                bNetworkConnected = System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
+                System.Net.NetworkInformation.NetworkChange.NetworkAvailabilityChanged += new System.Net.NetworkInformation.NetworkAvailabilityChangedEventHandler(NetworkChange_NetworkAvailabilityChanged);
                 // запуск обновления компов
                 #if DEBUG
                 NetworkScanner.GetInstance().RefreshInterval = 5 * 1000;
@@ -1737,6 +1738,7 @@ namespace LanExchange.Forms
                 {
                     Info.AllGroups = Form.AllGroups;
                     Info.Groups = Form.Groups;
+                    TabController.GetModel().UpdateTab(Info);
                 }
             }
         }

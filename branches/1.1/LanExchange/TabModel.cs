@@ -67,6 +67,7 @@ namespace LanExchange
         public event TabInfoEventHandler AfterAppendTab;
         public event IndexEventHandler AfterRemove;
         public event TabInfoEventHandler AfterRename;
+        public event TabInfoEventHandler AfterUpdate;
 
         public TabModel(string name)
         {
@@ -129,6 +130,12 @@ namespace LanExchange
             TabInfo Info = InfoList[Index];
             Info.TabName = NewTabName;
             DoAfterRename(Info);
+        }
+
+        public void UpdateTab(TabInfo Info)
+        {
+            if (AfterUpdate != null)
+                AfterUpdate(this, new TabInfoEventArgs(Info));
         }
 
         public string GetTabName(int i)

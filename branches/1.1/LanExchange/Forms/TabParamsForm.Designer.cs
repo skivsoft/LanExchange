@@ -28,8 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.chDomains = new System.Windows.Forms.CheckedListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lvDomains = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.rbDontScan = new System.Windows.Forms.RadioButton();
             this.rbSelected = new System.Windows.Forms.RadioButton();
             this.rbAll = new System.Windows.Forms.RadioButton();
@@ -38,21 +39,10 @@
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // chDomains
-            // 
-            this.chDomains.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.chDomains.FormattingEnabled = true;
-            this.chDomains.Location = new System.Drawing.Point(15, 88);
-            this.chDomains.Name = "chDomains";
-            this.chDomains.Size = new System.Drawing.Size(165, 199);
-            this.chDomains.TabIndex = 0;
-            // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.lvDomains);
             this.groupBox1.Controls.Add(this.rbDontScan);
-            this.groupBox1.Controls.Add(this.chDomains);
             this.groupBox1.Controls.Add(this.rbSelected);
             this.groupBox1.Controls.Add(this.rbAll);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
@@ -61,6 +51,25 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Сканирование сети";
+            // 
+            // lvDomains
+            // 
+            this.lvDomains.CheckBoxes = true;
+            this.lvDomains.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
+            this.lvDomains.GridLines = true;
+            this.lvDomains.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.lvDomains.Location = new System.Drawing.Point(17, 88);
+            this.lvDomains.Name = "lvDomains";
+            this.lvDomains.Size = new System.Drawing.Size(163, 197);
+            this.lvDomains.TabIndex = 3;
+            this.lvDomains.UseCompatibleStateImageBehavior = false;
+            this.lvDomains.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Группа";
+            this.columnHeader1.Width = 131;
             // 
             // rbDontScan
             // 
@@ -128,10 +137,11 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.KeyPreview = true;
             this.Name = "TabParamsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Настройка вкладки";
-            this.Load += new System.EventHandler(this.TabParamsForm_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TabParamsForm_KeyDown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -140,12 +150,13 @@
 
         #endregion
 
-        private System.Windows.Forms.CheckedListBox chDomains;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton rbDontScan;
         private System.Windows.Forms.RadioButton rbSelected;
         private System.Windows.Forms.RadioButton rbAll;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ListView lvDomains;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
     }
 }

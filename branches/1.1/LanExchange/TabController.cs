@@ -38,6 +38,7 @@ namespace LanExchange
             Model.AfterAppendTab += new TabInfoEventHandler(View.AfterAppendTab);
             Model.AfterRemove += new IndexEventHandler(View.AfterRemove);
             Model.AfterRename += new TabInfoEventHandler(View.AfterRename);
+            Model.AfterUpdate += new TabInfoEventHandler(View.AfterUpdateTab);
         }
 
         public TabModel GetModel()

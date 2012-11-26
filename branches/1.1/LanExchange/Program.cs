@@ -1,4 +1,4 @@
-﻿#define __SINGLE_INSTANCE
+﻿#define SINGLE_INSTANCE
 
 using System;
 using System.Diagnostics;
@@ -37,7 +37,7 @@ namespace LanExchange
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false); // must be called before first form created
 
-            using (context = new ApplicationContext(MainForm.GetInstance()))
+            using (context = new ApplicationContext(new MainForm()))
             {
                 context.MainForm.Load += delegate { logger.Trace("Instance showed"); };
 
@@ -89,7 +89,7 @@ namespace LanExchange
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false); // must be called before first form created
-            Application.Run(MainForm.GetInstance());
+            Application.Run(new MainForm());
             // workaround for NLog's bug under Mono (hanging after app exit) 
             LogManager.Configuration = null;
         }
@@ -100,7 +100,7 @@ namespace LanExchange
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             Exception ex = (Exception)e.ExceptionObject;
-            logger.ErrorException("unhandled", ex);
+            logger.ErrorException("Unhandled: "+ex.Message + Environment.NewLine + ex.StackTrace, ex);
         }
 
         [STAThread]
@@ -127,7 +127,7 @@ namespace LanExchange
             }
             catch (Exception e)
             {
-                logger.ErrorException("Error in Main()", e);
+                logger.ErrorException("Error in Main(): "+e.Message + Environment.NewLine + e.StackTrace, e);
             }
         }
     }

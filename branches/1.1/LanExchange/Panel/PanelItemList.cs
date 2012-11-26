@@ -328,12 +328,13 @@ namespace LanExchange
         {
             IList<ServerInfo> List = (IList<ServerInfo>)e.Data;
             lock (Data)
-            {
-                Data.Clear();
-                foreach (var SI in List)
-                    Data.Add(SI.Name, new ComputerPanelItem(SI.Name, SI));
-                ApplyFilter();
-            }
+                lock(Keys)
+                {
+                    Data.Clear();
+                    foreach (var SI in List)
+                        Data.Add(SI.Name, new ComputerPanelItem(SI.Name, SI));
+                    ApplyFilter();
+                }
             if (Changed != null)
                 Changed(this, new EventArgs());
         }
