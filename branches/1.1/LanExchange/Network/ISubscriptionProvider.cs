@@ -11,5 +11,7 @@ namespace LanExchange.Network
         void UnSubscribe(ISubscriber sender);
         void EnableSubscriptions();
         void DisableSubscriptions();
+        IDictionary<string, IList<ISubscriber>> GetSubjects();
+        IList<ISubscriber> GetAllSubjects();
     }
 }

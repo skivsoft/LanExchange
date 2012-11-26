@@ -38,7 +38,7 @@ namespace LanExchange.Forms
 
         public static string GetUpdateBaseURL()
         {
-            return "http://skivsoft.net/lanexchange/update/";
+            return Settings.GetInstance().GetStrValue("UpdateURL", "http://skivsoft.net/lanexchange/update/");
         }
 
         public static string GetFileListURL()
@@ -48,12 +48,12 @@ namespace LanExchange.Forms
 
         public static string GetWebSiteURL()
         {
-            return "skivsoft.net/lanexchange/";
+            return Settings.GetInstance().GetStrValue("Web", "skivsoft.net/lanexchange/");
         }
 
         public static string GetEmailAddress()
         {
-            return "skivsoft@gmail.com";
+            return Settings.GetInstance().GetStrValue("Email", "skivsoft@gmail.com");
         }
 
         void HideMessage()

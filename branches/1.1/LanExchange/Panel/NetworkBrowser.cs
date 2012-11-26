@@ -111,9 +111,9 @@ namespace LanExchange
                     if (LV.FocusedItem == null)
                         break;
                     // останавливаем поток пингов
-                    MainForm.MainFormInstance.CancelCompRelatedThreads();
+                    MainForm.GetInstance().CancelCompRelatedThreads();
                     // сбрасываем фильтр
-                    MainForm.MainFormInstance.UpdateFilter(MainForm.MainFormInstance.GetActiveListView(), "", false);
+                    MainForm.GetInstance().UpdateFilter(MainForm.GetInstance().GetActiveListView(), "", false);
                     // текущий список добавляем в стек
                     //if (InternalItems == null)
                     //    InternalItems = InternalItemList.ToList();
@@ -132,7 +132,7 @@ namespace LanExchange
                     ViewType = LVType.SHARES;
                     break;
                 case LVType.SHARES:
-                    MainForm.MainFormInstance.mFolderOpen_Click(MainForm.MainFormInstance.mFolderOpen, new EventArgs());
+                    MainForm.GetInstance().mFolderOpen_Click(MainForm.GetInstance().mFolderOpen, new EventArgs());
                     break;
                 case LVType.FILES:
                     break;
@@ -169,9 +169,9 @@ namespace LanExchange
                     break;
             }
             CurrentDataTable = InternalItems;
-            InternalItemList.ListView_SelectComputer(MainForm.MainFormInstance.lvComps, CompName);
+            InternalItemList.ListView_SelectComputer(MainForm.GetInstance().lvComps, CompName);
 
-            MainForm.MainFormInstance.UpdateFilter(MainForm.MainFormInstance.GetActiveListView(), MainForm.MainFormInstance.eFilter.Text, true);
+            MainForm.GetInstance().UpdateFilter(MainForm.GetInstance().GetActiveListView(), MainForm.GetInstance().eFilter.Text, true);
              */
         }
 
@@ -186,7 +186,7 @@ namespace LanExchange
             {
                 /*
                 List<string> SaveSelected = null;
-                if (!MainForm.MainFormInstance.bFirstStart)
+                if (!MainForm.GetInstance().bFirstStart)
                 {
                     // запоминаем выделенные элементы
                     SaveSelected = InternalItemList.ListView_GetSelected(LV, false);
@@ -200,10 +200,10 @@ namespace LanExchange
                     InternalItemList.Clear();
                     foreach (PanelItem Comp in InternalItems)
                         InternalItemList.Add(Comp);
-                    if (!MainForm.MainFormInstance.bFirstStart)
+                    if (!MainForm.GetInstance().bFirstStart)
                     {
                         InternalItemList.ApplyFilter();
-                        MainForm.MainFormInstance.TotalItems = InternalItemList.Count;
+                        MainForm.GetInstance().TotalItems = InternalItemList.Count;
                         // восстанавливаем выделение компов
                         InternalItemList.ListView_SetSelected(LV, SaveSelected);
                     }

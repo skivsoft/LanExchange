@@ -316,34 +316,6 @@ namespace LanExchange
             }
         }
 
-        #region Привязка своего обьекта к ListView
-
-        public static void ListView_SetObject(ListView LV, PanelItemList ItemList)
-        {
-            LV.Tag = ItemList;
-        }
-
-        public static PanelItemList ListView_GetObject(ListView LV)
-        {
-            return LV.Tag as PanelItemList;
-        }
-
-        public static PanelItemList ListView_CreateObject(ListView LV)
-        {
-            PanelItemList Result = new PanelItemList();
-            logger.Info("Create object {0}", Result.ToString());
-            ListView_SetObject(LV, Result);
-            return Result;
-        }
-
-        public static void ListView_DeleteObject(ListView LV)
-        {
-            PanelItemList List = ListView_GetObject(LV);
-            if (List != null)
-                ListView_SetObject(LV, null);
-        }
-        #endregion
-
         public List<string> ToList()
         {
             List<string> Result = new List<string>();

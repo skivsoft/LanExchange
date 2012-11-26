@@ -37,7 +37,7 @@ namespace LanExchange
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false); // must be called before first form created
 
-            using (context = new ApplicationContext(new MainForm()))
+            using (context = new ApplicationContext(MainForm.GetInstance()))
             {
                 context.MainForm.Load += delegate { logger.Trace("Instance showed"); };
 
@@ -89,7 +89,7 @@ namespace LanExchange
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false); // must be called before first form created
-            Application.Run(new MainForm());
+            Application.Run(MainForm.GetInstance());
             // workaround for NLog's bug under Mono (hanging after app exit) 
             LogManager.Configuration = null;
         }
@@ -100,8 +100,7 @@ namespace LanExchange
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             Exception ex = (Exception)e.ExceptionObject;
-            MessageBox.Show(ex.ToString());
-            //Console.WriteLine("Observed unhandled exception: {0}", ex.ToString());
+            logger.ErrorException("unhandled", ex);
         }
 
         [STAThread]

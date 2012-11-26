@@ -36,5 +36,30 @@ namespace LanExchange.Forms
         {
             UpdateControls();
         }
+
+        public bool AllGroups
+        {
+            get
+            {
+                return rbAll.Checked;
+            }
+            set
+            {
+                rbAll.Checked = value;
+            }
+        }
+
+        public List<string> Groups
+        {
+            get
+            {
+                List<string> Result = new List<string>();
+                return Result;
+            }
+            set
+            {
+                
+            }
+        }
     }
 }

@@ -249,6 +249,16 @@ namespace LanExchange.Network
             m_EnabledAll = false;
             SubscribersChanged();
         }
+
+        public IDictionary<string, IList<ISubscriber>> GetSubjects()
+        {
+            return m_Subjects;
+        }
+
+        public IList<ISubscriber> GetAllSubjects()
+        {
+            return m_AllSubjects;
+        }
         #endregion
     }
 }

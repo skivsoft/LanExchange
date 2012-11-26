@@ -30,9 +30,9 @@
         {
             this.chDomains = new System.Windows.Forms.CheckedListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rbAll = new System.Windows.Forms.RadioButton();
-            this.rbSelected = new System.Windows.Forms.RadioButton();
             this.rbDontScan = new System.Windows.Forms.RadioButton();
+            this.rbSelected = new System.Windows.Forms.RadioButton();
+            this.rbAll = new System.Windows.Forms.RadioButton();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
@@ -62,18 +62,17 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Сканирование сети";
             // 
-            // rbAll
+            // rbDontScan
             // 
-            this.rbAll.AutoSize = true;
-            this.rbAll.Checked = true;
-            this.rbAll.Location = new System.Drawing.Point(15, 19);
-            this.rbAll.Name = "rbAll";
-            this.rbAll.Size = new System.Drawing.Size(70, 17);
-            this.rbAll.TabIndex = 0;
-            this.rbAll.TabStop = true;
-            this.rbAll.Text = "Вся сеть";
-            this.rbAll.UseVisualStyleBackColor = true;
-            this.rbAll.CheckedChanged += new System.EventHandler(this.rbAll_CheckedChanged);
+            this.rbDontScan.AutoSize = true;
+            this.rbDontScan.Location = new System.Drawing.Point(15, 42);
+            this.rbDontScan.Name = "rbDontScan";
+            this.rbDontScan.Size = new System.Drawing.Size(155, 17);
+            this.rbDontScan.TabIndex = 2;
+            this.rbDontScan.TabStop = true;
+            this.rbDontScan.Text = "Отключить сканирование";
+            this.rbDontScan.UseVisualStyleBackColor = true;
+            this.rbDontScan.CheckedChanged += new System.EventHandler(this.rbAll_CheckedChanged);
             // 
             // rbSelected
             // 
@@ -87,22 +86,23 @@
             this.rbSelected.UseVisualStyleBackColor = true;
             this.rbSelected.CheckedChanged += new System.EventHandler(this.rbAll_CheckedChanged);
             // 
-            // rbDontScan
+            // rbAll
             // 
-            this.rbDontScan.AutoSize = true;
-            this.rbDontScan.Location = new System.Drawing.Point(15, 42);
-            this.rbDontScan.Name = "rbDontScan";
-            this.rbDontScan.Size = new System.Drawing.Size(155, 17);
-            this.rbDontScan.TabIndex = 2;
-            this.rbDontScan.TabStop = true;
-            this.rbDontScan.Text = "Отключить сканирование";
-            this.rbDontScan.UseVisualStyleBackColor = true;
-            this.rbDontScan.CheckedChanged += new System.EventHandler(this.rbAll_CheckedChanged);
+            this.rbAll.AutoSize = true;
+            this.rbAll.Checked = true;
+            this.rbAll.Location = new System.Drawing.Point(15, 19);
+            this.rbAll.Name = "rbAll";
+            this.rbAll.Size = new System.Drawing.Size(70, 17);
+            this.rbAll.TabIndex = 0;
+            this.rbAll.TabStop = true;
+            this.rbAll.Text = "Вся сеть";
+            this.rbAll.UseVisualStyleBackColor = true;
+            this.rbAll.CheckedChanged += new System.EventHandler(this.rbAll_CheckedChanged);
             // 
             // button1
             // 
             this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.button1.Location = new System.Drawing.Point(237, 12);
+            this.button1.Location = new System.Drawing.Point(236, 19);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 2;
@@ -112,7 +112,7 @@
             // button2
             // 
             this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button2.Location = new System.Drawing.Point(237, 48);
+            this.button2.Location = new System.Drawing.Point(236, 55);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 3;

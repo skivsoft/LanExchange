@@ -119,6 +119,8 @@
     <Compile Include="Forms\TabParamsForm.Designer.cs">
       <DependentUpon>TabParamsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="IniFileElement.cs" />
+    <Compile Include="IniFiles.cs" />
     <Compile Include="Network\BackgroundWorkerList.cs" />
     <Compile Include="Network\ISubscriber.cs" />
     <Compile Include="Network\ISubscriptionProvider.cs" />
@@ -141,6 +143,8 @@
     <Compile Include="OSTools.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TabModel.cs" />
+    <Compile Include="TabView.cs" />
     <EmbeddedResource Include="Forms\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
       <SubType>Designer</SubType>
