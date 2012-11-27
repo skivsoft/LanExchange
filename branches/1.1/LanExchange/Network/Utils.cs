@@ -54,6 +54,7 @@ namespace LanExchange.Network
                         ptr += Marshal.SizeOf(si);
                     }
                 }
+                Result.Sort();
             }
             finally
             {

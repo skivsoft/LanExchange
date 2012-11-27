@@ -45,7 +45,7 @@ namespace LanExchange
 
     public class TabModel
     {
-        private List<PanelItemList> InfoList = new List<PanelItemList>();
+        private List<PanelItemList> m_List = new List<PanelItemList>();
         private string m_Name = null;
         private int m_SelectedIndex = -1;
 
@@ -58,7 +58,7 @@ namespace LanExchange
             m_Name = name;
         }
 
-        public int Count { get { return this.InfoList.Count; }  }
+        public int Count { get { return this.m_List.Count; }  }
 
         public int SelectedIndex
         {
@@ -71,7 +71,7 @@ namespace LanExchange
 
         public PanelItemList GetItem(int Index)
         {
-            return this.InfoList[Index];
+            return this.m_List[Index];
         }
 
         public void DoAfterAppendTab(PanelItemList Info)
@@ -94,24 +94,25 @@ namespace LanExchange
 
         public void AddTab(PanelItemList Info)
         {
-            InfoList.Add(Info);
+            m_List.Add(Info);
             DoAfterAppendTab(Info);
         }
 
         public void InternalAdd(PanelItemList Info)
         {
-            InfoList.Add(Info);
+            m_List.Add(Info);
         }
 
         public void DelTab(int Index)
         {
-            InfoList.RemoveAt(Index);
+            NetworkScanner.GetInstance().UnSubscribe(m_List[Index]);
+            m_List.RemoveAt(Index);
             DoAfterRemove(Index);
         }
 
         public void RenameTab(int Index, string NewTabName)
         {
-            PanelItemList Info = InfoList[Index];
+            PanelItemList Info = m_List[Index];
             Info.TabName = NewTabName;
             DoAfterRename(Info);
         }
@@ -121,12 +122,12 @@ namespace LanExchange
             if (i < 0 || i > Count - 1)
                 return null;
             else
-                return InfoList[i].TabName;
+                return m_List[i].TabName;
         }
 
         internal void Clear()
         {
-            InfoList.Clear();
+            m_List.Clear();
         }
 
 
@@ -145,7 +146,7 @@ namespace LanExchange
                 config.SetIntValue(S + "CurrentView", (int)Info.CurrentView);
                 // элементы нулевой закладки не сохраняем, т.к. они формируются после обзора сети
                 //config.SetListValue(S + "Items", i > 0 ? Info.Items : null);
-                config.SetBoolValue(S + "AllGroups", Info.AllGroups);
+                config.SetIntValue(S + "Scope", (int)(Info.Scope));
                 config.SetListValue(S + "Groups", Info.Groups);
             }
         }
@@ -165,7 +166,7 @@ namespace LanExchange
                     Info.FilterText = config.GetStrValue(S + "FilterText", "");
                     Info.CurrentView = (View)config.GetIntValue(S + "CurrentView", (int)System.Windows.Forms.View.Details);
                     //Info.Items = config.GetListValue(S + "Items");
-                    Info.AllGroups = config.GetBoolValue(S + "AllGroups", false);
+                    Info.Scope = (PanelItemListScope)config.GetIntValue(S + "Scope", 0);
                     Info.Groups = config.GetListValue(S + "Groups");
                     AddTab(Info);
                 }

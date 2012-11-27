@@ -90,7 +90,7 @@ namespace LanExchange.Network
                 }
                 if (m_AllSubjects.Count > 0)
                 {
-                    foreach (var domain in Utils.GetDomainList())
+                    foreach (var domain in m_Domains)
                         if (!m_Subjects.ContainsKey(domain))
                         {
                             if (!m_Workers.Exists(domain))
@@ -110,7 +110,7 @@ namespace LanExchange.Network
         {
             string domain = (string)e.Argument;
             logger.Info("DoWork({0})", domain);
-            
+
             DataChangedEventArgs args = new DataChangedEventArgs();
             args.Subject = domain;
             args.Data = Utils.GetComputerList(domain);
@@ -131,25 +131,54 @@ namespace LanExchange.Network
             bool bModified = SetResult(Result.Subject, (IList<ServerInfo>)Result.Data);
             if (bModified)
             {
-                if (m_Subjects.ContainsKey(Result.Subject))
+                lock (m_Subjects)
                 {
-                    IList<ISubscriber> List = m_Subjects[Result.Subject];
-                    logger.Info("Notify {0} subscriber(s) [one subject]", List.Count);
-                    foreach(var Subscriber in List)
-                        Subscriber.DataChanged(this, Result);
+                    if (m_Subjects.ContainsKey(Result.Subject))
+                    {
+                        IList<ISubscriber> List = m_Subjects[Result.Subject];
+                        logger.Info("Notify {0} subscriber(s) [one subject]", List.Count);
+                        foreach (var Subscriber in List)
+                            Subscriber.DataChanged(this, Result);
+                    }
                 }
-                if (m_AllSubjects.Count > 0)
+                lock (m_AllSubjects)
                 {
-                    logger.Info("Notify {0} subscriber(s) [all subjects]", m_AllSubjects.Count);
-                    foreach(var Subscriber in m_AllSubjects)
-                        Subscriber.DataChanged(this, Result);
+                    if (m_AllSubjects.Count > 0)
+                    {
+                        logger.Info("Notify {0} subscriber(s) [all subjects]", m_AllSubjects.Count);
+                        foreach (var Subscriber in m_AllSubjects)
+                            Subscriber.DataChanged(this, Result);
+                    }
                 }
             }
         }
 
         private bool SetResult(string Domain, IList<ServerInfo> List)
         {
-            bool bModified = true;
+            bool bModified = false;
+            lock (m_Results)
+            {
+                if (!m_Results.ContainsKey(Domain))
+                {
+                    bModified = true;
+                    m_Results.Add(Domain, List);
+                }
+                if (!bModified)
+                {
+                    IList<ServerInfo> ResultList = m_Results[Domain];
+                    if (ResultList.Count != List.Count)
+                        bModified = true;
+                    else
+                        for (int i = 0; i < List.Count - 1; i++)
+                            if (List[i].CompareTo(ResultList[i]) != 0)
+                            {
+                                bModified = true;
+                                break;
+                            }
+                    if (bModified)
+                        m_Results[Domain] = List;
+                }
+            }
             return bModified;
         }
 

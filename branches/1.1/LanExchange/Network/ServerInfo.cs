@@ -151,9 +151,7 @@ namespace LanExchange.Network
             return (m_Info.sv101_type & (uint)NetApi32.SV_101_TYPES.SV_TYPE_DFS) != 0;
         }
 
-        #region IComparable Members
-
-        public int CompareTo(object obj)
+        public int CompareVersionTo(object obj)
         {
             ServerInfo comp = obj as ServerInfo;
             uint u1 = m_Info.sv101_platform_id;
@@ -184,6 +182,14 @@ namespace LanExchange.Network
                 if (u1 > u2) return 1;
                 else
                     return 0;
+        }
+
+        #region IComparable Members
+
+        public int CompareTo(object obj)
+        {
+            ServerInfo comp = obj as ServerInfo;
+            return String.Compare(this.Name, comp.Name, true);
         }
 
         #endregion

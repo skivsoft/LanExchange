@@ -58,7 +58,7 @@ namespace LanExchange
         public void CloseTab()
         {
             int Index = View.SelectedIndex;
-            if (CanModifyTab(Index))
+            if (CanCloseTab(Index))
             {
                 Model.DelTab(Index);
                 Model.StoreSettings();
@@ -68,7 +68,7 @@ namespace LanExchange
         public void RenameTab()
         {
             int Index = View.SelectedIndex;
-            if (CanModifyTab(Index))
+            if (CanCloseTab(Index))
             {
                 string NewTabName = TabView.InputBoxAsk("Переименование", "Введите имя", View.SelectedTabText);
                 if (NewTabName != null)
@@ -79,54 +79,11 @@ namespace LanExchange
             }
         }
 
-        public void SaveTab()
-        {
-            /*
-            SaveFileDialog dlgSave = View.GetSaveFileDialog();
-            if (dlgSave == null)
-                return;
-            dlgSave.FileName = String.Format("{0}.txt", View.SelectedTabText);
-            DialogResult Res = dlgSave.ShowDialog();
-            if (Res == DialogResult.OK)
-            {
-                ListViewEx LV = View.GetActiveListView();
-                if (LV == null) return;
-                PanelItemList ItemList = LV.GetObject();
-                if (ItemList == null) return;
-                // формируем строку для записи в файл
-                StringBuilder S = new StringBuilder();
-                for (int i = 0; i < ItemList.Count; i++)
-                {
-                    PanelItem PItem = ItemList.Get(ItemList.m_Keys[i]);
-                    if (PItem == null) continue;
-                    if (S.Length > 0)
-                        S.AppendLine();
-                    S.Append(PItem.Name);
-                    S.Append("\t");
-                    S.Append(PItem.Comment);
-                }
-                // записываем в файл
-                using (Stream stream = dlgSave.OpenFile())
-                {
-                    byte[] data = Encoding.UTF8.GetBytes(S.ToString());
-                    stream.Write(data, 0, data.Length);
-                    stream.Close();
-                }
-            }
-             */
-            MessageBox.Show("SaveTab()");
-        }
-
-        public void ListTab()
-        {
-            MessageBox.Show("mListTab_Click");
-        }
-
         public void AddTabsToMenuItem(ToolStripMenuItem menuitem, EventHandler handler, bool bHideActive)
         {
             for (int i = 0; i < Model.Count; i++)
             {
-                if (bHideActive && (!CanModifyTab(i) || (i == View.SelectedIndex)))
+                if (bHideActive && (!CanCloseTab(i) || (i == View.SelectedIndex)))
                     continue;
                 ToolStripMenuItem Item = new ToolStripMenuItem();
                 Item.Checked = (i == View.SelectedIndex);
@@ -208,15 +165,9 @@ namespace LanExchange
             Model.StoreSettings();
         }
 
-
-        /// <summary>
-        /// Определяет можно ли редактировать вкладку (удалять и переименовывать).
-        /// </summary>
-        /// <param name="Index"></param>
-        /// <returns></returns>
-        public bool CanModifyTab(int Index)
+        public bool CanCloseTab(int Index)
         {
-            return true;
+            return View.TabPages.Count > 1;
         }
         /// <summary>
         /// Заполняет список страниц внутри модели данными из представления.

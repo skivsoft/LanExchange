@@ -65,6 +65,7 @@
             this.lvDomains.TabIndex = 3;
             this.lvDomains.UseCompatibleStateImageBehavior = false;
             this.lvDomains.View = System.Windows.Forms.View.Details;
+            this.lvDomains.SelectedIndexChanged += new System.EventHandler(this.lvDomains_SelectedIndexChanged);
             // 
             // columnHeader1
             // 
@@ -74,7 +75,8 @@
             // rbDontScan
             // 
             this.rbDontScan.AutoSize = true;
-            this.rbDontScan.Location = new System.Drawing.Point(15, 42);
+            this.rbDontScan.Checked = true;
+            this.rbDontScan.Location = new System.Drawing.Point(15, 19);
             this.rbDontScan.Name = "rbDontScan";
             this.rbDontScan.Size = new System.Drawing.Size(155, 17);
             this.rbDontScan.TabIndex = 2;
@@ -90,7 +92,6 @@
             this.rbSelected.Name = "rbSelected";
             this.rbSelected.Size = new System.Drawing.Size(123, 17);
             this.rbSelected.TabIndex = 1;
-            this.rbSelected.TabStop = true;
             this.rbSelected.Text = "Выбранные группы";
             this.rbSelected.UseVisualStyleBackColor = true;
             this.rbSelected.CheckedChanged += new System.EventHandler(this.rbAll_CheckedChanged);
@@ -98,12 +99,10 @@
             // rbAll
             // 
             this.rbAll.AutoSize = true;
-            this.rbAll.Checked = true;
-            this.rbAll.Location = new System.Drawing.Point(15, 19);
+            this.rbAll.Location = new System.Drawing.Point(15, 42);
             this.rbAll.Name = "rbAll";
             this.rbAll.Size = new System.Drawing.Size(70, 17);
             this.rbAll.TabIndex = 0;
-            this.rbAll.TabStop = true;
             this.rbAll.Text = "Вся сеть";
             this.rbAll.UseVisualStyleBackColor = true;
             this.rbAll.CheckedChanged += new System.EventHandler(this.rbAll_CheckedChanged);
@@ -138,6 +137,8 @@
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.KeyPreview = true;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "TabParamsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Настройка вкладки";

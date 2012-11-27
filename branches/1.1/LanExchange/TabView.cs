@@ -58,7 +58,7 @@ namespace LanExchange
             NewTab.Controls.Add(LV);
             // создаем внутренний список для хранения элементов или получаем существующий
             LV.SetObject(e.Info);
-            e.Info.Changed +=new EventHandler(ItemList_Changed);
+            e.Info.Changed += new EventHandler(MainForm.GetInstance().ItemList_Changed);
             e.Info.UpdateSubsctiption();
             // восстанавливаем список элементов
             // ...
@@ -107,37 +107,10 @@ namespace LanExchange
             LV.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(MainForm.GetInstance().lvComps_RetrieveVirtualItem);
             LV.KeyPress += new System.Windows.Forms.KeyPressEventHandler(MainForm.GetInstance().lvComps_KeyPress);
             LV.KeyDown += new System.Windows.Forms.KeyEventHandler(MainForm.GetInstance().lvComps_KeyDown);
+            LV.SelectedIndexChanged +=new EventHandler(MainForm.GetInstance().lvComps_SelectedIndexChanged);
             ListView_SetupTip(LV);
             ListView_Update(LV);
         }
-
-        private void ItemList_Changed(object sender, EventArgs e)
-        {
-            ListViewEx LV = GetActiveListView();
-            PanelItemList ItemList = LV.GetObject();
-            if (ItemList == null)
-                return;
-            int ShowCount, TotalCount;
-            if (ItemList.IsFiltered)
-            {
-                ShowCount = ItemList.FilterCount;
-                TotalCount = ItemList.Count;
-            }
-            else
-            {
-                ShowCount = ItemList.Count;
-                TotalCount = ItemList.Count;
-            }
-            lock (LV)
-            {
-                LV.VirtualListSize = ShowCount;
-            }
-            if (ShowCount != TotalCount)
-                MainForm.GetInstance().StatusText = String.Format("Элементов: {0} из {1}", ShowCount, TotalCount);
-            else
-                MainForm.GetInstance().StatusText = String.Format("Элементов: {0}", ShowCount);
-        }
-
 
         public void ListView_Update(ListViewEx LV)
         {

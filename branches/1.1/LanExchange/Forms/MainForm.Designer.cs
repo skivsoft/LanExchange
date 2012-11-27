@@ -87,11 +87,8 @@
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.mCloseTab = new System.Windows.Forms.ToolStripMenuItem();
             this.mRenameTab = new System.Windows.Forms.ToolStripMenuItem();
-            this.mSaveTab = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.mSelectTab = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
-            this.mListTab = new System.Windows.Forms.ToolStripMenuItem();
             this.mTabParams = new System.Windows.Forms.ToolStripMenuItem();
             this.tipComps = new System.Windows.Forms.ToolTip(this.components);
             this.eFilter = new System.Windows.Forms.TextBox();
@@ -580,14 +577,11 @@
             this.toolStripSeparator9,
             this.mCloseTab,
             this.mRenameTab,
-            this.mSaveTab,
-            this.toolStripSeparator10,
             this.mSelectTab,
             this.toolStripSeparator11,
-            this.mListTab,
             this.mTabParams});
             this.popPages.Name = "popPages";
-            this.popPages.Size = new System.Drawing.Size(245, 176);
+            this.popPages.Size = new System.Drawing.Size(245, 148);
             this.popPages.Opened += new System.EventHandler(this.popPages_Opened);
             // 
             // mNewTab
@@ -619,19 +613,6 @@
             this.mRenameTab.Text = "Переименовать вкладку";
             this.mRenameTab.Click += new System.EventHandler(this.mRenameTab_Click);
             // 
-            // mSaveTab
-            // 
-            this.mSaveTab.Name = "mSaveTab";
-            this.mSaveTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.mSaveTab.Size = new System.Drawing.Size(244, 22);
-            this.mSaveTab.Text = "Сохранить вкладку";
-            this.mSaveTab.Click += new System.EventHandler(this.mSaveTab_Click);
-            // 
-            // toolStripSeparator10
-            // 
-            this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(241, 6);
-            // 
             // mSelectTab
             // 
             this.mSelectTab.Name = "mSelectTab";
@@ -642,14 +623,6 @@
             // 
             this.toolStripSeparator11.Name = "toolStripSeparator11";
             this.toolStripSeparator11.Size = new System.Drawing.Size(241, 6);
-            // 
-            // mListTab
-            // 
-            this.mListTab.Name = "mListTab";
-            this.mListTab.Size = new System.Drawing.Size(244, 22);
-            this.mListTab.Text = "Список вкладок";
-            this.mListTab.Visible = false;
-            this.mListTab.Click += new System.EventHandler(this.mListTab_Click);
             // 
             // mTabParams
             // 
@@ -861,10 +834,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripMenuItem mCloseTab;
         private System.Windows.Forms.ToolStripMenuItem mRenameTab;
-        private System.Windows.Forms.ToolStripMenuItem mSaveTab;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
-        private System.Windows.Forms.ToolStripMenuItem mListTab;
         private System.Windows.Forms.ToolStripMenuItem mSelectTab;
         public System.Windows.Forms.SaveFileDialog dlgSave;
         private System.Windows.Forms.ToolStripSeparator mSendSeparator;

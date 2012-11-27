@@ -40,15 +40,32 @@ namespace LanExchange.Forms
                 }
         }
 
-        public bool AllGroups
+        public PanelItemListScope Scope
         {
             get
             {
-                return rbAll.Checked;
+                if (rbAll.Checked)
+                    return PanelItemListScope.ALL_GROUPS;
+                else
+                if (rbSelected.Checked)
+                    return PanelItemListScope.SELECTED_GROUPS;
+                else
+                    return PanelItemListScope.DONT_SCAN;
             }
             set
             {
-                rbAll.Checked = value;
+                switch (value)
+                {
+                    case PanelItemListScope.ALL_GROUPS:
+                        rbAll.Checked = true;
+                        break;
+                    case PanelItemListScope.SELECTED_GROUPS:
+                        rbSelected.Checked = true;
+                        break;
+                    default:
+                        rbDontScan.Checked = true;
+                        break;
+                }
             }
         }
 
@@ -57,23 +74,16 @@ namespace LanExchange.Forms
             get
             {
                 List<string> Result = new List<string>();
-                if (rbSelected.Checked)
-                    foreach (ListViewItem item in lvDomains.Items)
-                        if (item.Checked)
-                            Result.Add(item.Text);
+                foreach (ListViewItem item in lvDomains.Items)
+                    if (item.Checked)
+                        Result.Add(item.Text);
                 return Result;
             }
             set
             {
-                if (!rbAll.Checked)
-                {
-                    if (value.Count == 0)
-                        rbDontScan.Checked = true;
-                    else
-                        rbSelected.Checked = true;
+                if (value != null)
                     foreach (var str in value)
                         SetChecked(str, true);
-                }
             }
         }
 
@@ -84,6 +94,11 @@ namespace LanExchange.Forms
                 DialogResult = DialogResult.Cancel;
                 e.Handled = true;
             }
+        }
+
+        private void lvDomains_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

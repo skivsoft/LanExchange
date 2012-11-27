@@ -566,6 +566,38 @@ namespace LanExchange.Forms
 
         #region Функции общие для всех списков ListView
 
+        public void ItemList_Changed(object sender, EventArgs e)
+        {
+            if (Pages.SelectedIndex == -1 || Pages.SelectedTab == null)
+                return;
+            PanelItemList ItemList = sender as PanelItemList;
+            if (ItemList == null)
+                return;
+            // refresh only for current page
+            PanelItemList CurrentItemList = TabController.GetModel().GetItem(Pages.SelectedIndex);
+            if (!ItemList.Equals(CurrentItemList))
+                return;
+            // get number of visible items (filtered) and number of total items
+            int ShowCount, TotalCount;
+            if (ItemList.IsFiltered)
+            {
+                ShowCount = ItemList.FilterCount;
+                TotalCount = ItemList.Count;
+            }
+            else
+            {
+                ShowCount = ItemList.Count;
+                TotalCount = ItemList.Count;
+            }
+            if (ShowCount != TotalCount)
+                StatusText = String.Format("Элементов: {0} из {1}", ShowCount, TotalCount);
+            else
+                StatusText = String.Format("Элементов: {0}", ShowCount);
+            // update list view
+            ListViewEx LV = (ListViewEx)Pages.SelectedTab.Controls[0];
+            LV.VirtualListSize = ShowCount;
+        }
+        
         public void lvComps_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
         {
             ListViewEx LV = sender as ListViewEx;
@@ -780,19 +812,23 @@ namespace LanExchange.Forms
              */
         }
 
-        private void lvComps_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        public void lvComps_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (e.Item == null) 
+            ListViewEx LV = sender as ListViewEx;
+            if (LV == null)
                 return;
-            ListViewEx LV = GetActiveListView();
+            if (LV.FocusedItem == null)
+                return;
             PanelItemList ItemList = LV.GetObject();
-            PanelItem PItem = ItemList.Get(e.Item.Text);
+            if (ItemList == null)
+                return;
+            PanelItem PItem = ItemList.Get(LV.FocusedItem.Text);
             ComputerPanelItem Comp = PItem as ComputerPanelItem;
             if (Comp == null)
                 return;
             lInfoComp.Text = Comp.Name;
             lInfoDesc.Text = Comp.Comment;
-            lInfoOS.Text   = Comp.SI.Version();
+            lInfoOS.Text = Comp.SI.Version();
             imgInfo.Image = ilSmall.Images[PItem.ImageIndex];
             switch (Comp.ImageIndex)
             {
@@ -811,7 +847,6 @@ namespace LanExchange.Forms
             }
         }
 
-
         public void lvRecent_ItemActivate(object sender, EventArgs e)
         {
             logger.Info("lvRecent_ItemActivate on ", (sender as ListView).FocusedItem.ToString());
@@ -828,38 +863,6 @@ namespace LanExchange.Forms
             tsBottom.Visible = value;
             if (!value)
                 Pages.SelectedTab.Refresh();
-        }
-
-        public int TotalItems
-        {
-            get
-            {
-                ListViewEx LV = GetActiveListView();
-                return LV.VirtualListSize;
-            }
-            set
-            {
-                /*
-                ListViewEx LV = GetActiveListView();
-                PanelItemList ItemList = LV.GetObject(LV);
-                int ShowCount, TotalCount;
-                if (ItemList.IsFiltered)
-                {
-                    ShowCount = ItemList.FilterCount;
-                    TotalCount = ItemList.Count;
-                }
-                else
-                {
-                    ShowCount = value;
-                    TotalCount = value;
-                }
-                LV.VirtualListSize = ShowCount;
-                if (ShowCount != TotalCount)
-                    lItemsCount.Text = String.Format("Элементов: {0} из {1}", ShowCount, TotalCount);
-                else
-                    lItemsCount.Text = String.Format("Элементов: {0}", ShowCount);
-                 */
-            }
         }
 
         public void UpdateFilter(ListViewEx LV, string NewFilter, bool bVisualUpdate)
@@ -913,7 +916,7 @@ namespace LanExchange.Forms
             // показываем или скрываем панель фильтра
             SearchPanelVisible(ItemList.IsFiltered);
             // выводим количество элементов в статус
-            TotalItems = ItemList.Count;
+            ItemList_Changed(ItemList, new EventArgs());
         }
 
         private void eFilter_TextChanged(object sender, EventArgs e)
@@ -1550,6 +1553,7 @@ namespace LanExchange.Forms
             {
                 ActiveControl = Pages.SelectedTab.Controls[0];
                 ActiveControl.Focus();
+                lvComps_SelectedIndexChanged(ActiveControl, new EventArgs());
                 UpdateFilterPanel();
             }
         }
@@ -1660,22 +1664,11 @@ namespace LanExchange.Forms
             TabController.RenameTab();
         }
 
-        private void mSaveTab_Click(object sender, EventArgs e)
-        {
-            TabController.SaveTab();
-        }
-
-        private void mListTab_Click(object sender, EventArgs e)
-        {
-            TabController.ListTab();
-        }
-
         private void popPages_Opened(object sender, EventArgs e)
         {
             mSelectTab.DropDownItems.Clear();
             TabController.AddTabsToMenuItem(mSelectTab, TabController.mSelectTab_Click, false);
-            mCloseTab.Enabled = TabController.CanModifyTab(Pages.SelectedIndex);
-            mRenameTab.Enabled = mCloseTab.Enabled;
+            mCloseTab.Enabled = TabController.CanCloseTab(Pages.SelectedIndex);
         }
 
         private void mSendToTab_DropDownOpened(object sender, EventArgs e)
@@ -1732,11 +1725,11 @@ namespace LanExchange.Forms
             {
                 TabModel M = TabController.GetModel();
                 PanelItemList Info = M.GetItem(Pages.SelectedIndex);
-                Form.AllGroups = Info.AllGroups;
+                Form.Scope = Info.Scope;
                 Form.Groups = Info.Groups;
                 if (Form.ShowDialog() == DialogResult.OK)
                 {
-                    Info.AllGroups = Form.AllGroups;
+                    Info.Scope = Form.Scope;
                     Info.Groups = Form.Groups;
                     Info.UpdateSubsctiption();
                 }

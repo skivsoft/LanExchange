@@ -11,6 +11,13 @@ using NLog;
 
 namespace LanExchange
 {
+    public enum PanelItemListScope
+    {
+        DONT_SCAN = 0,
+        ALL_GROUPS = 1,
+        SELECTED_GROUPS = 2
+    }
+    
     public class PanelItemList : ISubscriber
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
@@ -22,7 +29,7 @@ namespace LanExchange
         private string m_TabName = "";
         private View m_CurrentView = View.Details;
         private Dictionary<string, PanelItem> m_Items = null;
-        private bool m_AllGroups = false;
+        private PanelItemListScope m_Scope = PanelItemListScope.DONT_SCAN;
         private List<string> m_Groups = null;
 
         public event EventHandler Changed;
@@ -52,10 +59,10 @@ namespace LanExchange
             get { return m_Items; }
         }
 
-        public bool AllGroups
+        public PanelItemListScope Scope
         {
-            get { return m_AllGroups; }
-            set { m_AllGroups = value; }
+            get { return m_Scope; }
+            set { m_Scope = value; }
         }
 
         public List<string> Groups
@@ -72,13 +79,19 @@ namespace LanExchange
         public void UpdateSubsctiption()
         {
             // оформляем подписку на получение списка компов
-            if (AllGroups)
-                NetworkScanner.GetInstance().SubscribeToAll(this);
-            else
+            switch (Scope)
             {
-                NetworkScanner.GetInstance().UnSubscribe(this);
-                foreach (var group in Groups)
-                    NetworkScanner.GetInstance().SubscribeToSubject(this, group);
+                case PanelItemListScope.ALL_GROUPS:
+                    NetworkScanner.GetInstance().SubscribeToAll(this);
+                    break;
+                case PanelItemListScope.SELECTED_GROUPS:
+                    NetworkScanner.GetInstance().UnSubscribe(this);
+                    foreach (var group in Groups)
+                        NetworkScanner.GetInstance().SubscribeToSubject(this, group);
+                    break;
+                default:
+                    NetworkScanner.GetInstance().UnSubscribe(this);
+                    break;
             }
         }
 
