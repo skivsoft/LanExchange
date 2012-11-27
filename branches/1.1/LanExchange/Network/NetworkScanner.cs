@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define __REMOVE_RANDOM_COMPS
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -111,10 +113,21 @@ namespace LanExchange.Network
             string domain = (string)e.Argument;
             logger.Info("DoWork({0})", domain);
 
+            IList<ServerInfo> List = Utils.GetComputerList(domain);
+            logger.Info(String.Format("NetServerEnum: {0}", List.Count));
+            #if REMOVE_RANDOM_COMPS
+            Random R = new Random();
+            int Count = R.Next(List.Count * 2 / 3);
+            for (int i = 0; i < Count; i++)
+            {
+                int Index = R.Next(List.Count);
+                List.RemoveAt(Index);
+            }
+            logger.Info(String.Format("Random comps removed: {0}", List.Count));
+            #endif
             DataChangedEventArgs args = new DataChangedEventArgs();
             args.Subject = domain;
-            args.Data = Utils.GetComputerList(domain);
-            logger.Info(String.Format("NetServerEnum: {0}", ((IList<ServerInfo>)args.Data).Count));
+            args.Data = List;
             e.Result = args;
         }
 

@@ -21,14 +21,19 @@ namespace LanExchange
     public class PanelItemList : ISubscriber
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-        
-        private Dictionary<string, PanelItem> m_Data = null;
+
+        // items from NetworkScanner for each domain
+        private Dictionary<string, IList<ServerInfo>> m_Results = null;
+        // items added by user
+        private SortedDictionary<string, PanelItem> m_Items = null;
+        // merged all results and user items
+        private SortedDictionary<string, PanelItem> m_Data = null;
+        // keys for filtering
         private List<string> m_Keys = null;
         private String m_Filter = "";
 
         private string m_TabName = "";
         private View m_CurrentView = View.Details;
-        private Dictionary<string, PanelItem> m_Items = null;
         private PanelItemListScope m_Scope = PanelItemListScope.DONT_SCAN;
         private List<string> m_Groups = null;
 
@@ -36,8 +41,9 @@ namespace LanExchange
 
         public PanelItemList(string name)
         {
-            m_Data = new Dictionary<string, PanelItem>();
-            m_Items = new Dictionary<string, PanelItem>();
+            m_Results = new Dictionary<string, IList<ServerInfo>>();
+            m_Items = new SortedDictionary<string, PanelItem>();
+            m_Data = new SortedDictionary<string, PanelItem>();
             m_Keys = new List<string>();
             m_TabName = name;
         }
@@ -291,14 +297,28 @@ namespace LanExchange
         public void DataChanged(ISubscriptionProvider sender, DataChangedEventArgs e)
         {
             IList<ServerInfo> List = (IList<ServerInfo>)e.Data;
-            lock (m_Data)
-                lock(m_Keys)
+            lock (m_Results)
+            {
+                if (m_Results.ContainsKey(e.Subject))
+                    m_Results[e.Subject] = List;
+                else
+                    m_Results.Add(e.Subject, List);
+                lock (m_Data)
                 {
                     m_Data.Clear();
-                    foreach (var SI in List)
-                        m_Data.Add(SI.Name, new ComputerPanelItem(SI.Name, SI));
-                    ApplyFilter();
+                    if (m_Scope != PanelItemListScope.DONT_SCAN)
+                        foreach (var Pair in m_Results)
+                            if (m_Scope == PanelItemListScope.ALL_GROUPS || m_Groups.Contains(Pair.Key))
+                                foreach (var SI in Pair.Value)
+                                    m_Data.Add(SI.Name, new ComputerPanelItem(SI.Name, SI));
+                    foreach (var Pair in m_Items)
+                        m_Data.Add(Pair.Key, Pair.Value);
+                    lock (m_Keys)
+                    {
+                        ApplyFilter();
+                    }
                 }
+            }
             if (Changed != null)
                 Changed(this, new EventArgs());
         }
