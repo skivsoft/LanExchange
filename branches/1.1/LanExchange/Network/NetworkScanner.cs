@@ -42,7 +42,7 @@ namespace LanExchange.Network
 
         public event EventHandler DomainListChanged;
 
-        private NetworkScanner()
+        protected NetworkScanner()
         {
             // lists
             m_AllSubjects = new List<ISubscriber>();
@@ -58,6 +58,16 @@ namespace LanExchange.Network
             // worker for getting domain list
             m_DomainsWorker = CreateDomainsWorker();
             m_DomainsWorker.RunWorkerAsync();
+        }
+
+        public bool IsInstantUpdate
+        {
+            get { return m_InstantUpdate; }
+        }
+
+        public bool IsBusy
+        {
+            get { return m_Workers.IsBusy; }
         }
 
         public IList<ServerInfo> DomainList
@@ -142,7 +152,7 @@ namespace LanExchange.Network
             return Result;
         }
 
-        private void OneWorker_DoWork(object sender, DoWorkEventArgs e)
+        protected virtual void OneWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             string domain = (string)e.Argument;
             logger.Info("DoWork({0})", domain);
@@ -165,7 +175,7 @@ namespace LanExchange.Network
             e.Result = args;
         }
 
-        private void OneWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        protected virtual void OneWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             DataChangedEventArgs Result = (DataChangedEventArgs)e.Result;
             if (e.Cancelled || !m_EnabledAll)
@@ -236,7 +246,7 @@ namespace LanExchange.Network
             return bModified;
         }
 
-        private bool HasSubscribers()
+        public bool HasSubscribers()
         {
             bool Found = false;
             if (m_AllSubjects.Count > 0)
