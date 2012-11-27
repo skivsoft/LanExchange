@@ -308,16 +308,10 @@ namespace LanExchange
                     if (m_Scope != PanelItemListScope.DONT_SCAN)
                         foreach (var Pair in m_Results)
                         {
-                            if (m_Results.Count == 2)
-                            {
-                                //logger.Info("Subject: " + Pair.Key);
-                            }
                             if (m_Scope == PanelItemListScope.ALL_GROUPS || m_Groups.Contains(Pair.Key))
                                 foreach (var SI in Pair.Value)
-                                {
-                                    //logger.Info("  Item: " + SI.Name);
-                                    m_Data.Add(SI.Name, new ComputerPanelItem(SI.Name, SI));
-                                }
+                                    if (!m_Data.ContainsKey(SI.Name))
+                                        m_Data.Add(SI.Name, new ComputerPanelItem(SI.Name, SI));
                         }
                     foreach (var Pair in m_Items)
                         m_Data.Add(Pair.Key, Pair.Value);
