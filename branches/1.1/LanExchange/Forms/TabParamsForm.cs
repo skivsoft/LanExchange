@@ -15,9 +15,30 @@ namespace LanExchange.Forms
         {
             InitializeComponent();
             UpdateControls();
-            lvDomains.Items.Clear();
-            foreach (string value in NetworkScanner.GetInstance().DomainList)
-                lvDomains.Items.Add(value);
+            UpdateDomainList();
+            NetworkScanner.GetInstance().DomainListChanged +=new EventHandler(TabParamsForm_DomainListChanged);
+        }
+
+        private void TabParamsForm_DomainListChanged(object sender, EventArgs e)
+        {
+            UpdateDomainList();
+        }
+
+        private void UpdateDomainList()
+        {
+            if (NetworkScanner.GetInstance().DomainList == null)
+                return;
+            List<string> Saved = lvDomains.GetCheckedList();
+            try
+            {
+                lvDomains.Items.Clear();
+                foreach (var domain in NetworkScanner.GetInstance().DomainList)
+                    lvDomains.Items.Add(domain.Name);
+            }
+            finally
+            {
+                lvDomains.SetCheckedList(Saved);
+            }
         }
 
         private void UpdateControls()

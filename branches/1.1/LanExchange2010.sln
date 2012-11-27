@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange", "LanExchange\LanExchange.csproj", "{CC938630-E3FC-426E-A8A7-06EB22ABC703}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{A31188E3-9DF6-4AAE-A17A-799257CD4599}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CC938630-E3FC-426E-A8A7-06EB22ABC703} = {CC938630-E3FC-426E-A8A7-06EB22ABC703}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

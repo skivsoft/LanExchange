@@ -68,13 +68,9 @@ namespace LanExchange.Network
         /// Get domain list.
         /// </summary>
         /// <returns></returns>
-        public static IList<string> GetDomainList()
+        public static IList<ServerInfo> GetDomainList()
         {
-            IList<ServerInfo> List = GetServerList(null, NetApi32.SV_101_TYPES.SV_TYPE_DOMAIN_ENUM);
-            List<string> Result = new List<string>();
-            foreach (var SI in List)
-                Result.Add(SI.Name);
-            return Result;
+            return GetServerList(null, NetApi32.SV_101_TYPES.SV_TYPE_DOMAIN_ENUM);
         }
 
         /// <summary>

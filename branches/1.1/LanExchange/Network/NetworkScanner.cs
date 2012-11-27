@@ -30,7 +30,8 @@ namespace LanExchange.Network
         private IDictionary<string, IList<ISubscriber>> m_Subjects = null;
         private IList<ISubscriber> m_AllSubjects = null;
         private IDictionary<string, IList<ServerInfo>> m_Results = null;
-        private IList<string> m_Domains = null;
+        private IList<ServerInfo> m_Domains = null;
+        private BackgroundWorker m_DomainsWorker = null;
 
         private int m_RefreshInterval = 0;
         private bool m_EnabledAll = true;
@@ -39,22 +40,27 @@ namespace LanExchange.Network
         private bool m_InstantUpdate = true;
         private int LockCount = 0;
 
+        public event EventHandler DomainListChanged;
+
         private NetworkScanner()
         {
             // lists
             m_AllSubjects = new List<ISubscriber>();
             m_Subjects = new Dictionary<string, IList<ISubscriber>>();
             m_Results = new Dictionary<string, IList<ServerInfo>>();
-            m_Domains = Utils.GetDomainList();
+            m_Domains = new List<ServerInfo>();
             // timer
             m_RefreshTimer = new Timer();
             m_RefreshTimer.Tick += new EventHandler(RefreshTimer_Tick);
             m_RefreshTimer.Enabled = false;
-            // worker for scanning network
+            // worker list for scanning network
             m_Workers = new BackgroundWorkerList();
+            // worker for getting domain list
+            m_DomainsWorker = CreateDomainsWorker();
+            m_DomainsWorker.RunWorkerAsync();
         }
 
-        public IList<string> DomainList
+        public IList<ServerInfo> DomainList
         {
             get { return m_Domains; }
         }
@@ -69,21 +75,13 @@ namespace LanExchange.Network
             }
         }
 
-        private BackgroundWorker CreateOneWorker()
-        {
-            BackgroundWorker Result = new BackgroundWorker();
-            Result.WorkerSupportsCancellation = true;
-            Result.DoWork += new DoWorkEventHandler(OneWorker_DoWork);
-            Result.RunWorkerCompleted += new RunWorkerCompletedEventHandler(OneWorker_RunWorkerCompleted);
-            return Result;
-        }
-
         private void RefreshTimer_Tick(object sender, EventArgs e)
         {
+            if (!m_DomainsWorker.IsBusy)
+                m_DomainsWorker.RunWorkerAsync();
             if (!m_Workers.IsBusy)
             {
                 m_Workers.ClearNotBusy();
-                m_Domains = Utils.GetDomainList();
                 // prepare workers to launch
                 foreach (var Pair in m_Subjects)
                 {
@@ -93,7 +91,7 @@ namespace LanExchange.Network
                 if (m_AllSubjects.Count > 0)
                 {
                     foreach (var domain in m_Domains)
-                        if (!m_Subjects.ContainsKey(domain))
+                        if (!m_Subjects.ContainsKey(domain.Name))
                         {
                             if (!m_Workers.Exists(domain))
                                 m_Workers.Add(domain, CreateOneWorker());
@@ -106,6 +104,42 @@ namespace LanExchange.Network
             {
                 logger.Info("Tick: {0} of {1} worker(s) busy, no action", m_Workers.BusyCount, m_Workers.Count);
             }
+        }
+
+        private BackgroundWorker CreateDomainsWorker()
+        {
+            BackgroundWorker Result = new BackgroundWorker();
+            Result.DoWork += new DoWorkEventHandler(DomainsWorker_DoWork);
+            Result.RunWorkerCompleted += new RunWorkerCompletedEventHandler(DomainsWorker_RunWorkerCompleted);
+            return Result;
+        }
+
+        private void DomainsWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            logger.Info("GetDomainList");
+            e.Result = Utils.GetDomainList();
+        }
+
+        private void DomainsWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            bool bModified;
+            lock (m_DomainsWorker)
+            {
+                bModified = SortedListIsModified(m_Domains, (IList<ServerInfo>)e.Result);
+                bModified = true;
+                if (bModified)
+                    m_Domains = (IList<ServerInfo>)e.Result;
+            }
+            if (DomainListChanged != null && bModified)
+                DomainListChanged(this, new EventArgs());
+        }
+
+        private BackgroundWorker CreateOneWorker()
+        {
+            BackgroundWorker Result = new BackgroundWorker();
+            Result.DoWork += new DoWorkEventHandler(OneWorker_DoWork);
+            Result.RunWorkerCompleted += new RunWorkerCompletedEventHandler(OneWorker_RunWorkerCompleted);
+            return Result;
         }
 
         private void OneWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -166,6 +200,21 @@ namespace LanExchange.Network
             }
         }
 
+        private bool SortedListIsModified(IList<ServerInfo> ListA, IList<ServerInfo> ListB)
+        {
+            bool bModified = false;
+            if (ListA.Count != ListB.Count)
+                bModified = true;
+            else
+                for (int i = 0; i < ListA.Count - 1; i++)
+                    if (ListA[i].CompareTo(ListB[i]) != 0)
+                    {
+                        bModified = true;
+                        break;
+                    }
+            return bModified;
+        }
+
         private bool SetResult(string Domain, IList<ServerInfo> List)
         {
             bool bModified = false;
@@ -179,15 +228,7 @@ namespace LanExchange.Network
                 if (!bModified)
                 {
                     IList<ServerInfo> ResultList = m_Results[Domain];
-                    if (ResultList.Count != List.Count)
-                        bModified = true;
-                    else
-                        for (int i = 0; i < List.Count - 1; i++)
-                            if (List[i].CompareTo(ResultList[i]) != 0)
-                            {
-                                bModified = true;
-                                break;
-                            }
+                    bModified = SortedListIsModified(m_Results[Domain], List);
                     if (bModified)
                         m_Results[Domain] = List;
                 }

@@ -225,7 +225,6 @@ namespace LanExchange
             return Result;
         }
 
-
         public List<string> ListView_GetSelected(ListView LV, bool bAll)
         {
             List<string> Result = new List<string>();
