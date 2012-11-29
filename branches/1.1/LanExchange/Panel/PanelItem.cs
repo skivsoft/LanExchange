@@ -9,8 +9,8 @@ namespace LanExchange
 {
     public abstract class PanelItem : IComparable<PanelItem>
     {
-        protected abstract string GetComment();
-        protected abstract void SetComment(string value);
+        //protected abstract string GetComment();
+        //protected abstract void SetComment(string value);
         protected abstract string GetName();
         protected abstract void SetName(string value);
         
@@ -45,11 +45,7 @@ namespace LanExchange
             set { SetName(value); }
         }
 
-        public string Comment
-        {
-            get { return GetComment(); }
-            set { SetComment(value); }
-        }
+        public abstract string Comment { get; set; }
 
         public int ImageIndex
         {

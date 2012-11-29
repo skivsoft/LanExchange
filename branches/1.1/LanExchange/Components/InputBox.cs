@@ -64,7 +64,7 @@ namespace LanExchange
             if (inputBox == null)
                 inputBox = new InputBoxForm();
 
-            if (_caption != "")
+            if (!String.IsNullOrEmpty(_caption))
                 inputBox.Text = _caption;
             else
                 inputBox.Text = Application.ProductName;

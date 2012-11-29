@@ -515,7 +515,7 @@
             // lItemsCount
             // 
             this.lItemsCount.Name = "lItemsCount";
-            this.lItemsCount.Size = new System.Drawing.Size(471, 17);
+            this.lItemsCount.Size = new System.Drawing.Size(440, 17);
             this.lItemsCount.Spring = true;
             this.lItemsCount.Text = "    ";
             this.lItemsCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -567,7 +567,7 @@
             this.Pages.Name = "Pages";
             this.Pages.SelectedIndex = 0;
             this.Pages.Size = new System.Drawing.Size(564, 428);
-            this.Pages.TabIndex = 19;
+            this.Pages.TabIndex = 1;
             this.Pages.Selected += new System.Windows.Forms.TabControlEventHandler(this.Pages_Selected);
             // 
             // popPages
@@ -581,7 +581,7 @@
             this.toolStripSeparator11,
             this.mTabParams});
             this.popPages.Name = "popPages";
-            this.popPages.Size = new System.Drawing.Size(245, 148);
+            this.popPages.Size = new System.Drawing.Size(245, 126);
             this.popPages.Opened += new System.EventHandler(this.popPages_Opened);
             // 
             // mNewTab
@@ -641,8 +641,8 @@
             // 
             // eFilter
             // 
-            this.eFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.eFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.eFilter.BackColor = System.Drawing.Color.White;
             this.eFilter.Location = new System.Drawing.Point(8, 6);
             this.eFilter.Name = "eFilter";
@@ -727,12 +727,13 @@
             this.pInfo.Location = new System.Drawing.Point(0, 0);
             this.pInfo.Name = "pInfo";
             this.pInfo.Size = new System.Drawing.Size(564, 60);
-            this.pInfo.TabIndex = 22;
+            this.pInfo.TabIndex = 0;
             // 
             // popTop
             // 
             this.popTop.Name = "popTop";
             this.popTop.Size = new System.Drawing.Size(61, 4);
+            this.popTop.Opening += new System.ComponentModel.CancelEventHandler(this.popTop_Opening);
             this.popTop.Opened += new System.EventHandler(this.popTop_Opened);
             // 
             // imgInfo

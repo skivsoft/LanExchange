@@ -38,14 +38,16 @@ namespace LanExchange
             share_name = value;
         }
 
-        protected override string GetComment()
+        public override string Comment
         {
-            return this.share_comment;
-        }
-
-        protected override void SetComment(string value)
-        {
-            this.share_comment = value;
+            get
+            {
+                return this.share_comment;
+            }
+            set
+            {
+                this.share_comment = value;
+            }
         }
 
         public uint Type

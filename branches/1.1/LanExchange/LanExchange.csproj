@@ -53,6 +53,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -175,7 +177,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Panel\PanelItemList.cs" />
-    <Compile Include="Panel\NetworkBrowser.cs" />
     <Compile Include="Panel\PuntoSwitcher.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="TabController.cs" />

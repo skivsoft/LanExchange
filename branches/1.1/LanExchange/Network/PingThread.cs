@@ -19,16 +19,20 @@ namespace LanExchange
 
         public static bool SlowPing(string ip)
         {
-            Ping ping = new Ping();
-            PingReply pingReply = null;
-            try
+            bool Result;
+            using (Ping ping = new Ping())
             {
-                pingReply = ping.Send(ip);
+                PingReply pingReply = null;
+                try
+                {
+                    pingReply = ping.Send(ip);
+                }
+                catch
+                {
+                }
+                Result = (pingReply != null) && (pingReply.Status == IPStatus.Success);
             }
-            catch
-            {
-            }
-            return (pingReply != null) && (pingReply.Status == IPStatus.Success);
+            return Result;
         }
 
         void GO(object ip_obj)
@@ -37,9 +41,11 @@ namespace LanExchange
             if (ip_obj == null) return;
             try
             {
-                var ping = new Ping();
-                var pingReply = ping.Send((string)ip_obj);
-                PingOK = (pingReply != null) && (pingReply.Status == IPStatus.Success);
+                using (var ping = new Ping())
+                {
+                    var pingReply = ping.Send((string)ip_obj);
+                    PingOK = (pingReply != null) && (pingReply.Status == IPStatus.Success);
+                }
             }
             catch (Exception)
             {

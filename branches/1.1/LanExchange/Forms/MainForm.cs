@@ -566,7 +566,7 @@ namespace LanExchange.Forms
 
         #region Функции общие для всех списков ListView
 
-        public void ItemList_Changed(object sender, EventArgs e)
+        public void Items_Changed(object sender, EventArgs e)
         {
             if (Pages.SelectedIndex == -1 || Pages.SelectedTab == null)
                 return;
@@ -595,7 +595,14 @@ namespace LanExchange.Forms
                 StatusText = String.Format("Элементов: {0}", ShowCount);
             // update list view
             ListViewEx LV = (ListViewEx)Pages.SelectedTab.Controls[0];
+            LV.SelectedIndices.Clear();
             LV.VirtualListSize = ShowCount;
+            if (!String.IsNullOrEmpty(ItemList.FocusedItem) && !String.IsNullOrEmpty(ItemList.FocusedItem))
+            {
+                LV.FocusedItem = LV.Items[ItemList.FocusedItem];
+                if (LV.FocusedItem != null)
+                    LV.FocusedItem.Selected = true;
+            }
         }
         
         public void lvComps_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
@@ -826,6 +833,7 @@ namespace LanExchange.Forms
             ComputerPanelItem Comp = PItem as ComputerPanelItem;
             if (Comp == null)
                 return;
+            ItemList.FocusedItem = Comp.Name;
             lInfoComp.Text = Comp.Name;
             lInfoDesc.Text = Comp.Comment;
             lInfoOS.Text = Comp.SI.Version();
@@ -867,8 +875,12 @@ namespace LanExchange.Forms
 
         public void UpdateFilter(ListViewEx LV, string NewFilter, bool bVisualUpdate)
         {
+            if (LV == null)
+                return;
             PanelItemList ItemList = LV.GetObject();
-            List<string> SaveSelected = null;
+            if (ItemList == null)
+                return;
+            //List<string> SaveSelected = null;
 
             // выходим на верхний уровень
             /*
@@ -881,7 +893,7 @@ namespace LanExchange.Forms
             //string SaveCurrent = null;
             if (bVisualUpdate)
             {
-                SaveSelected = ItemList.ListView_GetSelected(LV, false);
+                //SaveSelected = ItemList.ListView_GetSelected(LV, false);
                 // запоминаем выделенные элементы
                 //if (LV.FocusedItem != null)
                   //  SaveCurrent = lvComps.FocusedItem.Text;
@@ -890,17 +902,17 @@ namespace LanExchange.Forms
             ItemList.FilterText = NewFilter;
             if (bVisualUpdate)
             {
-                /*
-                TotalItems = CompBrowser.InternalItemList.Count;
-                eFilter.BackColor = TotalItems > 0 ? Color.White : Color.FromArgb(255, 102, 102); // Firefox Color
+                //TotalItems = CompBrowser.InternalItemList.Count;
+                eFilter.BackColor = ItemList.Count > 0 ? Color.White : Color.FromArgb(255, 102, 102); // Firefox Color
                 // восстанавливаем выделенные элементы
-                ItemList.ListView_SetSelected(LV, SaveSelected);
+                //ItemList.ListView_SetSelected(LV, SaveSelected);
                 //CompBrowser.SelectComputer(SaveCurrent);
                 UpdateFilterPanel();
-                 */
             }
             else
-                LV.VirtualListSize = ItemList.FilterCount;
+            {
+                //LV.VirtualListSize = ItemList.FilterCount;
+            }
         }
 
         public void UpdateFilterPanel()
@@ -916,7 +928,7 @@ namespace LanExchange.Forms
             // показываем или скрываем панель фильтра
             SearchPanelVisible(ItemList.IsFiltered);
             // выводим количество элементов в статус
-            ItemList_Changed(ItemList, new EventArgs());
+            Items_Changed(ItemList, new EventArgs());
         }
 
         private void eFilter_TextChanged(object sender, EventArgs e)
@@ -1261,7 +1273,6 @@ namespace LanExchange.Forms
         
         private void popTop_Opened(object sender, EventArgs e)
         {
-            popComps_Opened(sender, e);
             for (int i = 0; i < Math.Min(mComp.DropDownItems.Count, popTop.Items.Count); i++)
             {
                 ToolStripItem Src = mComp.DropDownItems[i];
@@ -1269,7 +1280,13 @@ namespace LanExchange.Forms
                 if (Src is ToolStripMenuItem && Dest is ToolStripMenuItem)
                     (Dest as ToolStripMenuItem).ShowShortcutKeys = (Src as ToolStripMenuItem).ShowShortcutKeys;
             }
-       }
+        }
+
+        private void popTop_Opening(object sender, CancelEventArgs e)
+        {
+            popComps_Opened(sender, e);
+            e.Cancel = !mComp.Enabled;
+        }
 
         private void popComps_Opened(object sender, EventArgs e)
         {

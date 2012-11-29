@@ -55,14 +55,10 @@ namespace LanExchange
             m_Name = value;
         }
 
-        protected override string GetComment()
+        public override string Comment
         {
-            return m_Comment;
-        }
-
-        protected override void SetComment(string value)
-        {
-            m_Comment = value;
+            get { return m_Comment; }
+            set { m_Comment = value; }
         }
 
         public ServerInfo SI

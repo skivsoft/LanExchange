@@ -1,4 +1,4 @@
-﻿#define __REMOVE_RANDOM_COMPS
+﻿#define REMOVE_RANDOM_COMPS
 
 using System;
 using System.Collections.Generic;

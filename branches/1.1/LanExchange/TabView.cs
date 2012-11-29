@@ -54,11 +54,11 @@ namespace LanExchange
             LV = new ListViewEx();
             logger.Info("Create control {0}", LV.ToString());
             // настраиваем свойства и события для нового ListView
-            LV.View = e.Info.CurrentView;
             NewTab.Controls.Add(LV);
+            LV.View = e.Info.CurrentView;
             // создаем внутренний список для хранения элементов или получаем существующий
             LV.SetObject(e.Info);
-            e.Info.Changed += new EventHandler(MainForm.GetInstance().ItemList_Changed);
+            e.Info.Changed += new EventHandler(MainForm.GetInstance().Items_Changed);
             e.Info.UpdateSubsctiption();
             // восстанавливаем список элементов
             // ...

@@ -17,7 +17,14 @@ namespace LanExchange
         ALL_GROUPS = 1,
         SELECTED_GROUPS = 2
     }
-    
+
+    public enum PanelItemType
+    {
+        COMPUTERS,
+        SHARES,
+        FILES
+    }
+
     public class PanelItemList : ISubscriber
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
@@ -38,6 +45,12 @@ namespace LanExchange
         private List<string> m_Groups = null;
 
         public event EventHandler Changed;
+
+        //private ListViewEx m_LV = null;
+        //private PanelItemType m_CurrentType = PanelItemType.COMPUTERS;
+        //private string m_Path = null;
+
+        private string m_FocusedItem;
 
         public PanelItemList(string name)
         {
@@ -80,6 +93,12 @@ namespace LanExchange
         public IList<string> Keys
         {
             get { return m_Keys; }
+        }
+
+        public string FocusedItem
+        {
+            get { return m_FocusedItem; }
+            set { m_FocusedItem = value; }
         }
 
         public void UpdateSubsctiption()
@@ -323,6 +342,134 @@ namespace LanExchange
             }
             if (Changed != null)
                 Changed(this, new EventArgs());
+        }
+        private void RebuildColumns()
+        {
+            /*
+            if (LV == null) return;
+            LV.Columns.Clear();
+            switch (CurrentType)
+            {
+                case LVType.COMPUTERS:
+                    LV.Columns.Add("Сетевое имя", 130);
+                    LV.Columns.Add("Описание", 250);
+
+                    break;
+                case LVType.SHARES:
+                    LV.Columns.Add("Общий ресурс", 130);
+                    LV.Columns.Add("*:", 20);
+                    LV.Columns.Add("Описание", 250);
+                    break;
+                case LVType.FILES:
+                    LV.Columns.Add("Имя", 100);
+                    LV.Columns.Add("Дата изменения", 100);
+                    LV.Columns.Add("Тип", 100);
+                    LV.Columns.Add("Размер", 100);
+                    break;
+            }
+            */
+        }
+
+        /// <summary>
+        /// Возвращает список элементов с верхнего уровня из стека переходов.
+        /// В частности это будет список копьютеров, даже если мы находимся на уровне списка ресуров.
+        /// </summary>
+        /// <returns></returns>
+        public IList<PanelItem> GetTopItemList()
+        {
+            return null;
+            /*
+            if (InternalStack.Count == 0)
+                return InternalItems;
+            else
+            {
+                IList<PanelItem>[] Arr = InternalStack.ToArray();
+                return Arr[0];
+            }
+             */
+        }
+
+        public void LevelDown()
+        {
+            /*
+            if (LV == null || LV.FocusedItem == null)
+                return;
+            string FocusedText = LV.FocusedItem.Text;
+            if (String.IsNullOrEmpty(FocusedText))
+            {
+                LevelUp();
+                return;
+            }
+
+            switch (ViewType)
+            {
+                case LVType.COMPUTERS:
+                    if (LV.FocusedItem == null)
+                        break;
+                    // останавливаем поток пингов
+                    MainForm.GetInstance().CancelCompRelatedThreads();
+                    // сбрасываем фильтр
+                    MainForm.GetInstance().UpdateFilter(MainForm.GetInstance().GetActiveListView(), "", false);
+                    // текущий список добавляем в стек
+                    //if (InternalItems == null)
+                    //    InternalItems = InternalItemList.ToList();
+                    InternalStack.Push(InternalItems);
+                    // получаем новый список объектов, в данном случае список ресурсов компа
+                    InternalItems = PanelItemList.EnumNetShares(FocusedText);
+                    // устанавливаем новый список для визуального компонента
+                    CurrentDataTable = InternalItems;
+                    if (LV.VirtualListSize > 0)
+                    {
+                        LV.FocusedItem = LV.Items[0];
+                        LV.SelectedIndices.Add(0);
+                    }
+                    // меняем колонки в ListView
+                    Path = @"\\" + FocusedText;
+                    ViewType = LVType.SHARES;
+                    break;
+                case LVType.SHARES:
+                    MainForm.GetInstance().mFolderOpen_Click(MainForm.GetInstance().mFolderOpen, new EventArgs());
+                    break;
+                case LVType.FILES:
+                    break;
+            }
+             */
+        }
+
+        public void LevelUp()
+        {
+            /*
+            if (InternalStack.Count == 0)
+                return;
+
+            //TPanelItem PItem = null;
+            string CompName = null;
+            if (InternalItemList.Count > 0)
+            {
+                CompName = Path;
+                if (CompName.Length > 2 && CompName[0] == '\\' && CompName[1] == '\\')
+                    CompName = CompName.Remove(0, 2);
+            }
+
+            InternalItems = InternalStack.Pop();
+
+            
+            switch (CurrentType)
+            {
+                case LVType.COMPUTERS:
+                    break;
+                case LVType.SHARES:
+                    ViewType = LVType.COMPUTERS;
+                    break;
+                case LVType.FILES:
+                    ViewType = LVType.SHARES;
+                    break;
+            }
+            CurrentDataTable = InternalItems;
+            InternalItemList.ListView_SelectComputer(MainForm.GetInstance().lvComps, CompName);
+
+            MainForm.GetInstance().UpdateFilter(MainForm.GetInstance().GetActiveListView(), MainForm.GetInstance().eFilter.Text, true);
+             */
         }
     }
 }
