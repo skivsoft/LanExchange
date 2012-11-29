@@ -121,7 +121,7 @@ namespace LanExchange
                 }
             }
             ItemListReceiver.ApplyFilter();
-            View.ListView_Update(lvReceiver);
+            //View.ListView_Update(lvReceiver);
             lvReceiver.Focus();
             // выделяем добавленные итемы
             if (lvReceiver.Items.Count > 0)

@@ -20,9 +20,9 @@ namespace LanExchange
 
     public enum PanelItemType
     {
-        COMPUTERS,
-        SHARES,
-        FILES
+        COMPUTERS = 0,
+        SHARES = 1,
+        FILES = 2
     }
 
     public class PanelItemList : ISubscriber

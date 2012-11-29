@@ -515,7 +515,7 @@
             // lItemsCount
             // 
             this.lItemsCount.Name = "lItemsCount";
-            this.lItemsCount.Size = new System.Drawing.Size(440, 17);
+            this.lItemsCount.Size = new System.Drawing.Size(471, 17);
             this.lItemsCount.Spring = true;
             this.lItemsCount.Text = "    ";
             this.lItemsCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -634,7 +634,6 @@
             // 
             // tipComps
             // 
-            this.tipComps.Active = false;
             this.tipComps.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.tipComps.ToolTipTitle = "Test";
             this.tipComps.Popup += new System.Windows.Forms.PopupEventHandler(this.tipComps_Popup);

@@ -78,14 +78,9 @@ namespace LanExchange
             pages.SelectedTab.Text = e.Info.TabName;
         }
 
-        public static void ListView_SetupTip(ListView LV)
-        {
-            MainForm.GetInstance().tipComps.SetToolTip(LV, "!");
-            MainForm.GetInstance().tipComps.Active = true;
-        }
-
         public void ListView_Setup(ListViewEx LV)
         {
+            MainForm Instance = MainForm.GetInstance();
             logger.Info("Setup control {0}", LV.ToString());
             LV.Columns.Clear();
             LV.Columns.Add("Сетевое имя", 130);
@@ -102,25 +97,15 @@ namespace LanExchange
             LV.ShowItemToolTips = true;
             LV.SmallImageList = MainForm.GetInstance().ilSmall;
             LV.View = System.Windows.Forms.View.Details;
+            LV.ItemActivate += new System.EventHandler(Instance.lvRecent_ItemActivate);
+            LV.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(Instance.lvComps_RetrieveVirtualItem);
+            LV.KeyPress += new System.Windows.Forms.KeyPressEventHandler(Instance.lvComps_KeyPress);
+            LV.KeyDown += new System.Windows.Forms.KeyEventHandler(Instance.lvComps_KeyDown);
+            LV.SelectedIndexChanged += new EventHandler(Instance.lvComps_SelectedIndexChanged);
+            LV.RetrieveVirtualItem += new RetrieveVirtualItemEventHandler(Instance.lvComps_RetrieveVirtualItem);
             LV.VirtualMode = true;
-            LV.ItemActivate += new System.EventHandler(MainForm.GetInstance().lvRecent_ItemActivate);
-            LV.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(MainForm.GetInstance().lvComps_RetrieveVirtualItem);
-            LV.KeyPress += new System.Windows.Forms.KeyPressEventHandler(MainForm.GetInstance().lvComps_KeyPress);
-            LV.KeyDown += new System.Windows.Forms.KeyEventHandler(MainForm.GetInstance().lvComps_KeyDown);
-            LV.SelectedIndexChanged +=new EventHandler(MainForm.GetInstance().lvComps_SelectedIndexChanged);
-            ListView_SetupTip(LV);
-            ListView_Update(LV);
-        }
-
-        public void ListView_Update(ListViewEx LV)
-        {
-            PanelItemList ItemList = LV.GetObject();
-            if (ItemList != null)
-            {
-                LV.RetrieveVirtualItem += new RetrieveVirtualItemEventHandler(MainForm.GetInstance().lvComps_RetrieveVirtualItem);
-                LV.VirtualMode = true;
-                //LV.VirtualListSize = ItemList.FilterCount;
-            }
+            Instance.tipComps.SetToolTip(LV, " ");
+            //Instance.tipComps.Active = true;
         }
 
         public static string InputBoxAsk(string caption, string prompt, string defText)

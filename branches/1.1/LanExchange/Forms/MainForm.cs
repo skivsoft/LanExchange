@@ -595,14 +595,29 @@ namespace LanExchange.Forms
                 StatusText = String.Format("Элементов: {0}", ShowCount);
             // update list view
             ListViewEx LV = (ListViewEx)Pages.SelectedTab.Controls[0];
-            LV.SelectedIndices.Clear();
+            //LV.SelectedIndices.Clear();
             LV.VirtualListSize = ShowCount;
+            /*
             if (!String.IsNullOrEmpty(ItemList.FocusedItem) && !String.IsNullOrEmpty(ItemList.FocusedItem))
             {
                 LV.FocusedItem = LV.Items[ItemList.FocusedItem];
                 if (LV.FocusedItem != null)
                     LV.FocusedItem.Selected = true;
             }
+            */
+            /*
+            // update filter panel
+            string Text = ItemList.FilterText;
+            eFilter.TextChanged -= eFilter_TextChanged;
+            eFilter.Text = Text;
+            eFilter.SelectionLength = 0;
+            eFilter.SelectionStart = Text.Length;
+            eFilter.TextChanged += eFilter_TextChanged;
+            // показываем или скрываем панель фильтра
+            tsBottom.Visible = ItemList.IsFiltered;
+            if (!tsBottom.Visible)
+                Pages.SelectedTab.Refresh();
+             */
         }
         
         public void lvComps_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
@@ -917,6 +932,7 @@ namespace LanExchange.Forms
 
         public void UpdateFilterPanel()
         {
+            /*
             ListViewEx LV = GetActiveListView();
             PanelItemList ItemList = LV.GetObject();
             string Text = ItemList.FilterText;
@@ -929,6 +945,7 @@ namespace LanExchange.Forms
             SearchPanelVisible(ItemList.IsFiltered);
             // выводим количество элементов в статус
             Items_Changed(ItemList, new EventArgs());
+             */
         }
 
         private void eFilter_TextChanged(object sender, EventArgs e)
