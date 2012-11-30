@@ -106,9 +106,6 @@
     <Compile Include="Components\InputBoxForm.Designer.cs">
       <DependentUpon>InputBoxForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\ListViewEx.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

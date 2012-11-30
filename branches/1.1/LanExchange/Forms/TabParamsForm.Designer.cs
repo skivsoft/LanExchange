@@ -1,4 +1,5 @@
-﻿namespace LanExchange.Forms
+﻿using System.Windows.Forms;
+namespace LanExchange.Forms
 {
     partial class TabParamsForm
     {
@@ -29,13 +30,13 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lvDomains = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.rbDontScan = new System.Windows.Forms.RadioButton();
             this.rbSelected = new System.Windows.Forms.RadioButton();
             this.rbAll = new System.Windows.Forms.RadioButton();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.lvDomains = new LanExchange.ListViewEx();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,6 +52,28 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Сканирование сети";
+            // 
+            // lvDomains
+            // 
+            this.lvDomains.CheckBoxes = true;
+            this.lvDomains.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
+            this.lvDomains.FullRowSelect = true;
+            this.lvDomains.GridLines = true;
+            this.lvDomains.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.lvDomains.HideSelection = false;
+            this.lvDomains.Location = new System.Drawing.Point(17, 88);
+            this.lvDomains.MultiSelect = false;
+            this.lvDomains.Name = "lvDomains";
+            this.lvDomains.Size = new System.Drawing.Size(163, 197);
+            this.lvDomains.TabIndex = 3;
+            this.lvDomains.UseCompatibleStateImageBehavior = false;
+            this.lvDomains.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Группа";
+            this.columnHeader1.Width = 140;
             // 
             // rbDontScan
             // 
@@ -107,28 +130,6 @@
             this.button2.Text = "Отмена";
             this.button2.UseVisualStyleBackColor = true;
             // 
-            // lvDomains
-            // 
-            this.lvDomains.CheckBoxes = true;
-            this.lvDomains.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1});
-            this.lvDomains.FullRowSelect = true;
-            this.lvDomains.GridLines = true;
-            this.lvDomains.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.lvDomains.Location = new System.Drawing.Point(17, 88);
-            this.lvDomains.MultiSelect = false;
-            this.lvDomains.Name = "lvDomains";
-            this.lvDomains.Size = new System.Drawing.Size(163, 197);
-            this.lvDomains.TabIndex = 3;
-            this.lvDomains.UseCompatibleStateImageBehavior = false;
-            this.lvDomains.View = System.Windows.Forms.View.Details;
-            this.lvDomains.SelectedIndexChanged += new System.EventHandler(this.lvDomains_SelectedIndexChanged);
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Группа";
-            this.columnHeader1.Width = 140;
-            // 
             // TabParamsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -159,7 +160,7 @@
         private System.Windows.Forms.RadioButton rbAll;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
-        private ListViewEx lvDomains;
+        private ListView lvDomains;
         private System.Windows.Forms.ColumnHeader columnHeader1;
     }
 }

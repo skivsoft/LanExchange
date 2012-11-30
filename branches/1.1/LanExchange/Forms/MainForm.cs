@@ -239,15 +239,15 @@ namespace LanExchange.Forms
         {
             TabPage Tab = Pages.SelectedTab;
             if (Tab == null) return;
-            ListViewEx LV = (ListViewEx)Tab.Controls[0];
+            ListView LV = (ListView)Tab.Controls[0];
             LV.Invoke(myCompsRefresh, LV, data);
         }
 
         void lvCompsRefreshMethod(object sender, object data)
         {
             string RefreshCompName = (string)data;
-            ListViewEx LV = (ListViewEx)sender;
-            PanelItemList ItemList = LV.GetObject();
+            ListView LV = (ListView)sender;
+            PanelItemList ItemList = PanelItemList.GetObject(LV);
             if (LV.Handle != IntPtr.Zero)
             {
                 int Index;
@@ -510,7 +510,7 @@ namespace LanExchange.Forms
                         logger.Info("Can't load settings: {0}", ex.ToString());
                     }
                     // выбираем текущий компьютер, чтобы пользователь видел описание
-                    CListViewEx LV = GetActiveListView();
+                    CListView LV = GetActiveListView();
                     PanelItemList ItemList = LV.GetObject(LV);
                     if (ItemList != null)
                         ItemList.ListView_SelectComputer(LV, Environment.MachineName);
@@ -594,7 +594,7 @@ namespace LanExchange.Forms
             else
                 StatusText = String.Format("Элементов: {0}", ShowCount);
             // update list view
-            ListViewEx LV = (ListViewEx)Pages.SelectedTab.Controls[0];
+            ListView LV = (ListView)Pages.SelectedTab.Controls[0];
             //LV.SelectedIndices.Clear();
             LV.VirtualListSize = ShowCount;
             /*
@@ -622,10 +622,10 @@ namespace LanExchange.Forms
         
         public void lvComps_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
         {
-            ListViewEx LV = sender as ListViewEx;
+            ListView LV = sender as ListView;
             if (LV == null)
                 return;
-            PanelItemList ItemList = LV.GetObject();
+            PanelItemList ItemList = PanelItemList.GetObject(LV);
             if (ItemList == null) 
                 return;
             if (e.ItemIndex < 0 || e.ItemIndex > Math.Min(ItemList.Keys.Count, LV.VirtualListSize)-1)
@@ -676,8 +676,8 @@ namespace LanExchange.Forms
 
         private void mCopyCompName_Click(object sender, EventArgs e)
         {
-            ListViewEx LV = GetActiveListView();
-            PanelItemList ItemList = LV.GetObject();
+            ListView LV = GetActiveListView();
+            PanelItemList ItemList = PanelItemList.GetObject(LV);
             StringBuilder S = new StringBuilder();
             foreach (int index in LV.SelectedIndices)
             {
@@ -691,8 +691,8 @@ namespace LanExchange.Forms
 
         private void mCopyPath_Click(object sender, EventArgs e)
         {
-            ListViewEx LV = GetActiveListView();
-            PanelItemList ItemList = LV.GetObject();
+            ListView LV = GetActiveListView();
+            PanelItemList ItemList = PanelItemList.GetObject(LV);
             StringBuilder S = new StringBuilder();
             string ItemName = null;
             SharePanelItem PItem = null;
@@ -714,8 +714,8 @@ namespace LanExchange.Forms
 
         private void mCopyComment_Click(object sender, EventArgs e)
         {
-            ListViewEx LV = GetActiveListView();
-            PanelItemList ItemList = LV.GetObject();
+            ListView LV = GetActiveListView();
+            PanelItemList ItemList = PanelItemList.GetObject(LV);
             StringBuilder S = new StringBuilder();
             PanelItem PItem = null;
             foreach (int index in LV.SelectedIndices)
@@ -732,8 +732,8 @@ namespace LanExchange.Forms
 
         private void mCopySelected_Click(object sender, EventArgs e)
         {
-            ListViewEx LV = GetActiveListView();
-            PanelItemList ItemList = LV.GetObject();
+            ListView LV = GetActiveListView();
+            PanelItemList ItemList = PanelItemList.GetObject(LV);
             StringBuilder S = new StringBuilder();
             string ItemName = null;
             PanelItem PItem = null;
@@ -756,7 +756,7 @@ namespace LanExchange.Forms
 
         public void lvComps_KeyDown(object sender, KeyEventArgs e)
         {
-            ListViewEx LV = (sender as ListViewEx);
+            ListView LV = (sender as ListView);
             // Ctrl+A выделение всех элементов
             if (e.Control && e.KeyCode == Keys.A)
             {
@@ -798,7 +798,7 @@ namespace LanExchange.Forms
             }
             if (e.KeyCode == Keys.Delete)
             {
-                PanelItemList ItemList = LV.GetObject();
+                PanelItemList ItemList = PanelItemList.GetObject(LV);
                 for (int i = LV.SelectedIndices.Count - 1; i >= 0; i--)
                 {
                     int Index = LV.SelectedIndices[i];
@@ -814,7 +814,7 @@ namespace LanExchange.Forms
 
         private void lvComps_ItemActivate(object sender, EventArgs e)
         {
-            ListViewEx LV = (sender as ListViewEx);
+            ListView LV = (sender as ListView);
             if (LV.FocusedItem == null)
             {
                 if (LV.VirtualListSize > 0)
@@ -834,21 +834,11 @@ namespace LanExchange.Forms
              */
         }
 
-        public void lvComps_SelectedIndexChanged(object sender, EventArgs e)
+        private void pInfo_ShowInfo(PanelItem PItem)
         {
-            ListViewEx LV = sender as ListViewEx;
-            if (LV == null)
-                return;
-            if (LV.FocusedItem == null)
-                return;
-            PanelItemList ItemList = LV.GetObject();
-            if (ItemList == null)
-                return;
-            PanelItem PItem = ItemList.Get(LV.FocusedItem.Text);
             ComputerPanelItem Comp = PItem as ComputerPanelItem;
             if (Comp == null)
                 return;
-            ItemList.FocusedItem = Comp.Name;
             lInfoComp.Text = Comp.Name;
             lInfoDesc.Text = Comp.Comment;
             lInfoOS.Text = Comp.SI.Version();
@@ -870,6 +860,35 @@ namespace LanExchange.Forms
             }
         }
 
+        public void lvComps_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            ListView LV = sender as ListView;
+            if (LV == null)
+                return;
+            logger.Info("ItemSelectionChanged. {0}, Selected: {1}, {2}", e.Item, e.IsSelected, LV.FocusedItem);
+            /*
+            PanelItemList ItemList = LV.GetObject();
+            if (ItemList == null)
+                return;
+            // is current item focused?
+            ItemList.Select(e.ItemIndex, e.IsSelected, e.IsSelected);
+            // show current item info in top panel
+            if (e.IsSelected)
+            {
+                string KeyName = ItemList.Keys[e.ItemIndex];
+                pInfo_ShowInfo(ItemList.Get(KeyName));
+            }
+             */
+        }
+
+        public void lvComps_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ListView LV = sender as ListView;
+            if (LV == null)
+                return;
+            logger.Info("SelectedIndexChanged. FocusedItem: {0}", LV.FocusedItem);
+        }
+
         public void lvRecent_ItemActivate(object sender, EventArgs e)
         {
             logger.Info("lvRecent_ItemActivate on ", (sender as ListView).FocusedItem.ToString());
@@ -888,11 +907,11 @@ namespace LanExchange.Forms
                 Pages.SelectedTab.Refresh();
         }
 
-        public void UpdateFilter(ListViewEx LV, string NewFilter, bool bVisualUpdate)
+        public void UpdateFilter(ListView LV, string NewFilter, bool bVisualUpdate)
         {
             if (LV == null)
                 return;
-            PanelItemList ItemList = LV.GetObject();
+            PanelItemList ItemList = PanelItemList.GetObject(LV);
             if (ItemList == null)
                 return;
             //List<string> SaveSelected = null;
@@ -933,7 +952,7 @@ namespace LanExchange.Forms
         public void UpdateFilterPanel()
         {
             /*
-            ListViewEx LV = GetActiveListView();
+            ListView LV = GetActiveListView();
             PanelItemList ItemList = LV.GetObject();
             string Text = ItemList.FilterText;
             eFilter.TextChanged -= eFilter_TextChanged;
@@ -979,10 +998,13 @@ namespace LanExchange.Forms
         /// <returns>Возвращает TComputer</returns>
         public PanelItem GetFocusedPanelItem(bool bUpdateRecent, bool bPingAndAsk)
         {
-            ListViewEx LV = GetActiveListView();
+            ListView LV = GetActiveListView();
+            if (LV == null)
+                return null;
+            logger.Info("GetFocusedPanelItem. {0}", LV.FocusedItem);
             if (LV.FocusedItem == null)
                 return null;
-            PanelItemList ItemList = LV.GetObject();
+            PanelItemList ItemList = PanelItemList.GetObject(LV);
             PanelItem PItem = ItemList.Get(LV.FocusedItem.Text);
             if (PItem == null)
                 return null;
@@ -1069,7 +1091,7 @@ namespace LanExchange.Forms
 
         private void mWMIDescription_Click(object sender, EventArgs e)
         {
-            ListViewEx LV = GetActiveListView();
+            ListView LV = GetActiveListView();
             PanelItem PItem = GetFocusedPanelItem(true, true);
             if (PItem == null) 
                 return;
@@ -1172,7 +1194,7 @@ namespace LanExchange.Forms
 
         public void GotoFavoriteComp(string ComputerName)
         {
-            ListViewEx LV = GetActiveListView();
+            ListView LV = GetActiveListView();
             LV.BeginUpdate();
             try
             {
@@ -1227,12 +1249,15 @@ namespace LanExchange.Forms
             }
         }
 
-        public ListViewEx GetActiveListView()
+        public ListView GetActiveListView()
         {
             if (Pages.SelectedTab == null)
                 return null;
             else
-                return (ListViewEx)Pages.SelectedTab.Controls[0];
+            {
+                Control.ControlCollection ctrls = Pages.SelectedTab.Controls;
+                return ctrls.Count > 0 ? ctrls[0] as ListView : null;
+            }
         }
 
         #endregion
@@ -1247,7 +1272,7 @@ namespace LanExchange.Forms
 
         private void mLargeIcons_Click(object sender, EventArgs e)
         {
-            ListViewEx LV = GetActiveListView();
+            ListView LV = GetActiveListView();
             LV.SuspendLayout();
             LV.BeginUpdate();
             try
@@ -1307,7 +1332,7 @@ namespace LanExchange.Forms
 
         private void popComps_Opened(object sender, EventArgs e)
         {
-            ListViewEx LV = GetActiveListView();
+            ListView LV = GetActiveListView();
             if (LV == null) return;
             #region set radio button
             mCompLargeIcons.Checked = false;
@@ -1382,9 +1407,9 @@ namespace LanExchange.Forms
                 (sender as ToolTip).ToolTipTitle = "Легенда";
                 return;
             }
-            if (e.AssociatedControl is ListViewEx)
+            if (e.AssociatedControl is ListView)
             {
-                ListViewEx LV = (ListViewEx)e.AssociatedControl;
+                ListView LV = (ListView)e.AssociatedControl;
                 Point P = LV.PointToClient(Control.MousePosition);
                 ListViewHitTestInfo Info = LV.HitTest(P);
                 if (Info != null && Info.Item != null)
@@ -1585,10 +1610,14 @@ namespace LanExchange.Forms
         {
             if (Pages.SelectedTab != null)
             {
-                ActiveControl = Pages.SelectedTab.Controls[0];
-                ActiveControl.Focus();
-                lvComps_SelectedIndexChanged(ActiveControl, new EventArgs());
-                UpdateFilterPanel();
+                Control.ControlCollection ctrls = Pages.SelectedTab.Controls;
+                if (ctrls.Count > 0)
+                {
+                    ActiveControl = Pages.SelectedTab.Controls[0];
+                    ActiveControl.Focus();
+                    //lvComps_SelectedIndexChanged(ActiveControl, new EventArgs());
+                    UpdateFilterPanel();
+                }
             }
         }
 

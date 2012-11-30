@@ -46,11 +46,23 @@ namespace LanExchange
 
         public event EventHandler Changed;
 
-        //private ListViewEx m_LV = null;
+        //private ListView m_LV = null;
         //private PanelItemType m_CurrentType = PanelItemType.COMPUTERS;
         //private string m_Path = null;
 
         private string m_FocusedItem;
+
+        public static PanelItemList GetObject(ListView LV)
+        {
+            return LV.Tag as PanelItemList;
+        }
+
+        public void AttachObjectTo(ListView LV)
+        {
+            PanelItemList List = PanelItemList.GetObject(LV);
+            LV.Tag = this;
+            List = null;
+        }
 
         public PanelItemList(string name)
         {
@@ -470,6 +482,11 @@ namespace LanExchange
 
             MainForm.GetInstance().UpdateFilter(MainForm.GetInstance().GetActiveListView(), MainForm.GetInstance().eFilter.Text, true);
              */
+        }
+
+        public void Select(int ItemIndex, bool IsSelected, bool IsFocused)
+        {
+
         }
     }
 }

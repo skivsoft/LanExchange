@@ -101,12 +101,12 @@ namespace LanExchange
                 View.SelectedIndex = Index;
         }
 
-        public void SendPanelItems(ListViewEx lvSender, ListViewEx lvReceiver)
+        public void SendPanelItems(ListView lvSender, ListView lvReceiver)
         {
             if (lvSender == null || lvReceiver == null)
                 return;
-            PanelItemList ItemListSender = lvSender.GetObject();
-            PanelItemList ItemListReceiver = lvReceiver.GetObject();
+            PanelItemList ItemListSender = PanelItemList.GetObject(lvSender);
+            PanelItemList ItemListReceiver = PanelItemList.GetObject(lvReceiver);
 
             int NumAdded = 0;
             //int[] Indices = new int[lvSender.SelectedIndices.Count];
@@ -143,8 +143,8 @@ namespace LanExchange
             string NewTabName = TabView.InputBoxAsk("Новая вкладка", "Введите имя", "");
             if (NewTabName == null)
                 return;
-            ListViewEx LV = View.GetActiveListView();
-            PanelItemList ItemList = LV.GetObject();
+            ListView LV = View.GetActiveListView();
+            PanelItemList ItemList = PanelItemList.GetObject(LV);
             PanelItemList Info = new PanelItemList(NewTabName);
             //Info.Items = ItemList.ListView_GetSelected(LV, false);
             Model.AddTab(Info);
@@ -157,10 +157,10 @@ namespace LanExchange
             if (View.SelectedIndex == 0/* &&
                 MainForm.GetInstance().CompBrowser.InternalStack.Count > 0*/)
                 return;
-            ListViewEx lvSender = View.GetActiveListView();
+            ListView lvSender = View.GetActiveListView();
             int Index = (int)(sender as ToolStripMenuItem).Tag;
             View.SelectedIndex = Index;
-            ListViewEx lvReceiver = View.GetActiveListView();
+            ListView lvReceiver = View.GetActiveListView();
             SendPanelItems(lvSender, lvReceiver);
             Model.StoreSettings();
         }
@@ -180,7 +180,7 @@ namespace LanExchange
             {
                 if (Tab.Controls.Count == 0) continue;
                 PanelItemList Info = new PanelItemList(Tab.Text);
-                ListViewEx LV = (ListViewEx)Tab.Controls[0];
+                ListView LV = (ListView)Tab.Controls[0];
                 PanelItemList ItemList = LV.GetObject();
                 Info.Items = ItemList.ListView_GetSelected(LV, true);
                 Info.FilterText = ItemList.FilterText;

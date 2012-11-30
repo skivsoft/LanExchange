@@ -28,7 +28,7 @@ namespace LanExchange.Forms
         {
             if (NetworkScanner.GetInstance().DomainList == null)
                 return;
-            List<string> Saved = lvDomains.GetCheckedList();
+            List<string> Saved = GetCheckedList(lvDomains);
             try
             {
                 lvDomains.Items.Clear();
@@ -37,7 +37,7 @@ namespace LanExchange.Forms
             }
             finally
             {
-                lvDomains.SetCheckedList(Saved);
+                SetCheckedList(lvDomains, Saved);
             }
         }
 
@@ -117,9 +117,45 @@ namespace LanExchange.Forms
             }
         }
 
-        private void lvDomains_SelectedIndexChanged(object sender, EventArgs e)
-        {
 
+        public List<string> GetCheckedList(ListView LV)
+        {
+            List<string> Result = new List<string>();
+            if (LV.FocusedItem != null)
+                Result.Add(LV.FocusedItem.Text);
+            else
+                Result.Add("");
+            foreach (int index in LV.CheckedIndices)
+                Result.Add(LV.Items[index].Text);
+            return Result;
+        }
+
+        public void SetCheckedList(ListView LV, List<string> SaveSelected)
+        {
+            LV.FocusedItem = null;
+            int Count = LV.VirtualMode ? LV.VirtualListSize : LV.Items.Count;
+            if (Count > 0)
+            {
+                for (int i = 0; i < SaveSelected.Count; i++)
+                {
+                    int index = -1;
+                    for (int j = 0; j < LV.Items.Count; j++)
+                        if (SaveSelected[i].CompareTo(LV.Items[j].Text) == 0)
+                        {
+                            index = j;
+                            break;
+                        }
+                    if (index == -1) continue;
+                    if (i == 0)
+                    {
+                        LV.FocusedItem = LV.Items[index];
+                        LV.SelectedIndices.Add(index);
+                        LV.EnsureVisible(index);
+                    }
+                    else
+                        LV.Items[index].Checked = true;
+                }
+            }
         }
     }
 }

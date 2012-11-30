@@ -105,9 +105,12 @@ namespace LanExchange
 
         public void DelTab(int Index)
         {
-            NetworkScanner.GetInstance().UnSubscribe(m_List[Index]);
-            m_List.RemoveAt(Index);
-            DoAfterRemove(Index);
+            if (Index >= 0 && Index < m_List.Count)
+            {
+                NetworkScanner.GetInstance().UnSubscribe(m_List[Index]);
+                m_List.RemoveAt(Index);
+                DoAfterRemove(Index);
+            }
         }
 
         public void RenameTab(int Index, string NewTabName)

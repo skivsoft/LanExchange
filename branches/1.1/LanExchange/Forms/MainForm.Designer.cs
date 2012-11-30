@@ -149,6 +149,7 @@
             this.mRadmin3,
             this.mRadmin4,
             this.mRadmin5});
+            this.mComp.Enabled = false;
             this.mComp.Image = global::LanExchange.Properties.Resources.CompOff;
             this.mComp.Name = "mComp";
             this.mComp.Size = new System.Drawing.Size(278, 22);
