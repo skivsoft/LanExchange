@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
-using System.IO;
-using System.Drawing;
-using LanExchange.Forms;
-using LanExchange.Network;
 
 
 //
@@ -27,22 +21,22 @@ namespace LanExchange
 
     public class TabController
     {
-        private TabModel Model = null;
-        private TabView View = null;
+        private readonly TabModel Model;
+        private readonly TabView View;
 
         public TabController(TabControl Pages)
         {
             Model = new TabModel(Pages.Name);
             View = new TabView(Pages);
             //UpdateModelFromView();
-            Model.AfterAppendTab += new PanelItemListEventHandler(View.AfterAppendTab);
-            Model.AfterRemove += new IndexEventHandler(View.AfterRemove);
-            Model.AfterRename += new PanelItemListEventHandler(View.AfterRename);
+            Model.AfterAppendTab += View.AfterAppendTab;
+            Model.AfterRemove += View.AfterRemove;
+            Model.AfterRename += View.AfterRename;
         }
 
         public TabModel GetModel()
         {
-            return this.Model;
+            return Model;
         }
 
         public void NewTab()
@@ -85,11 +79,12 @@ namespace LanExchange
             {
                 if (bHideActive && (!CanCloseTab(i) || (i == View.SelectedIndex)))
                     continue;
-                ToolStripMenuItem Item = new ToolStripMenuItem();
-                Item.Checked = (i == View.SelectedIndex);
-                Item.Text = Model.GetTabName(i);
+                ToolStripMenuItem Item = new ToolStripMenuItem { 
+                    Checked = (i == View.SelectedIndex), 
+                    Text = Model.GetTabName(i), 
+                    Tag = i 
+                };
                 Item.Click += handler;
-                Item.Tag = i;
                 menuitem.DropDownItems.Add(Item);
             }
         }
@@ -101,7 +96,7 @@ namespace LanExchange
                 View.SelectedIndex = Index;
         }
 
-        public void SendPanelItems(ListView lvSender, ListView lvReceiver)
+        public static void ListView_SendPanelItems(ListView lvSender, ListView lvReceiver)
         {
             if (lvSender == null || lvReceiver == null)
                 return;
@@ -161,7 +156,7 @@ namespace LanExchange
             int Index = (int)(sender as ToolStripMenuItem).Tag;
             View.SelectedIndex = Index;
             ListView lvReceiver = View.GetActiveListView();
-            SendPanelItems(lvSender, lvReceiver);
+            ListView_SendPanelItems(lvSender, lvReceiver);
             Model.StoreSettings();
         }
 

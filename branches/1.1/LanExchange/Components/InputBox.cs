@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -10,14 +8,13 @@ namespace LanExchange
     /// Summary description for InputBox.
     /// </summary>
     [ToolboxItem(true)]
-    public class InputBox : System.ComponentModel.Component
+    public class InputBox : Component
     {
-        protected string _prompt = string.Empty;
-        protected string _caption = string.Empty;
-        protected string _errorMsgOnEmpty;
+        protected string m_Prompt = string.Empty;
+        protected string m_Caption = string.Empty;
         private InputBoxForm inputBox;
 
-        public InputBox(System.ComponentModel.IContainer container)
+        public InputBox(IContainer container)
         {
             container.Add(this);
         }
@@ -28,31 +25,19 @@ namespace LanExchange
         /// Property Prompt (string)
         /// </summary>
         [DefaultValue("")]
-        public string Prompt
-        {
-            get { return _prompt; }
-            set { _prompt = value; }
-        }
+        public string Prompt { get; set; }
 
         /// <summary>
         /// Property Caption (string)
         /// </summary>
         [DefaultValue("")]
-        public string Caption
-        {
-            get { return _caption; }
-            set { _caption = value; }
-        }
+        public string Caption { get; set; }
 
         /// <summary>
         /// Property ErrorMsgOnEmpty (string)
         /// </summary>
         [DefaultValue("")]
-        public string ErrorMsgOnEmpty
-        {
-            get { return _errorMsgOnEmpty; }
-            set { _errorMsgOnEmpty = value; }
-        }
+        public string ErrorMsgOnEmpty { get; set; }
 
         /// <summary>
         /// Shows input-box
@@ -64,12 +49,12 @@ namespace LanExchange
             if (inputBox == null)
                 inputBox = new InputBoxForm();
 
-            if (!String.IsNullOrEmpty(_caption))
-                inputBox.Text = _caption;
+            if (!String.IsNullOrEmpty(m_Caption))
+                inputBox.Text = m_Caption;
             else
                 inputBox.Text = Application.ProductName;
 
-            inputBox.Prepare(_prompt, _errorMsgOnEmpty, defText, allow_empty);
+            inputBox.Prepare(m_Prompt, ErrorMsgOnEmpty, defText, allow_empty);
 
             DialogResult res = inputBox.ShowDialog();
             if (res != DialogResult.OK)
@@ -80,8 +65,8 @@ namespace LanExchange
 
         internal string Ask(string caption, string prompt, string defText, bool allow_empty)
         {
-            this._caption = caption;
-            this._prompt = prompt;
+            m_Caption = caption;
+            m_Prompt = prompt;
             return Ask(defText, allow_empty);
         }
     }

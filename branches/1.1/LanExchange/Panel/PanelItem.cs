@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Runtime.InteropServices;
-using OSTools;
-using System.Net;
 
 namespace LanExchange
 {
@@ -60,7 +55,7 @@ namespace LanExchange
         public virtual int CompareTo(PanelItem p2)
         {
             int Result;
-            if (String.IsNullOrEmpty(this.Name))
+            if (String.IsNullOrEmpty(Name))
                 if (String.IsNullOrEmpty(p2.Name))
                     Result = 0;
                 else
@@ -69,16 +64,8 @@ namespace LanExchange
                 if (String.IsNullOrEmpty(p2.Name))
                     Result = +1;
                 else
-                    Result = this.Name.CompareTo(p2.Name);
+                    Result = Name.CompareTo(p2.Name);
             return Result;
-        }
-    }
-
-    public class PanelItemComparer : IComparer<PanelItem>
-    {
-        public int Compare(PanelItem Item1, PanelItem Item2)
-        {
-            return Item1.CompareTo(Item2);
         }
     }
 }

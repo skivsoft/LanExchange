@@ -1,4 +1,4 @@
-﻿//#define NET_3_5
+﻿#define __NET_3_5
 // <copyright file="Extensions.cs" company="Brown University">
 // Copyright (c) 2009 by John Mertus
 // </copyright>
@@ -7,22 +7,20 @@
 // <summary></summary>
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
-using System.Text;
 using System.Windows.Forms;
 #if NET_3_5
     using System.Linq;
 #endif
 
-namespace EventHandlerSupport
+namespace LanExchange
 {
 
     /// <summary>
     /// This is a set of extensions for accessing the Event Handlers as well as cloning menu items
     /// </summary>
-    public static class Extensions
+    public static class EventHandlerSupport
     {
         //////////////////////////////////////////////////
         // Private static fields
@@ -32,7 +30,7 @@ namespace EventHandlerSupport
         /// <summary>
         /// This contains a counter to help make names unique
         /// </summary>
-        private static int menuNameCounter = 0;
+        private static int menuNameCounter;
 
         #endregion
 
@@ -86,7 +84,7 @@ namespace EventHandlerSupport
             }
 #endif            
             // Create a new menu name
-            menuItem.Name = sourceToolStripMenuItem.Name + "-" + menuNameCounter++;
+            menuItem.Name = String.Format("{0}-{1}", sourceToolStripMenuItem.Name, menuNameCounter++);
 
             // Process any other properties
             if (sourceToolStripMenuItem.ImageIndex != -1)

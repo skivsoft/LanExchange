@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Runtime.InteropServices;
-using OSTools;
-using System.Net;
 using LanExchange.Network;
 
 namespace LanExchange
@@ -15,56 +10,35 @@ namespace LanExchange
         public const int imgPrinterFolder = 8;
         public const int imgBackFolder    = 9;
 
-        private string share_name;
-        private string share_comment;
-        private uint share_type;
-        private string computer_name;
+        private string m_Name;
 
         public SharePanelItem(string share_name, string share_comment, uint share_type, string computer_name)
         {
-            this.share_name = share_name;
-            this.share_comment = share_comment;
-            this.share_type = share_type;
-            this.computer_name = computer_name;
+            m_Name = share_name;
+            Comment = share_comment;
+            ShareType = share_type;
+            ComputerName = computer_name;
         }
 
         protected override string GetName()
         {
-            return share_name;
+            return m_Name;
         }
 
         protected override void SetName(string value)
         {
-            share_name = value;
+            m_Name = value;
         }
 
-        public override string Comment
-        {
-            get
-            {
-                return this.share_comment;
-            }
-            set
-            {
-                this.share_comment = value;
-            }
-        }
+        public override string Comment { get; set; }
 
-        public uint Type
-        {
-            get { return share_type; }
-            set { share_type = value; }
-        }
+        public uint ShareType { get; set; }
 
-        public string ComputerName
-        {
-            get { return computer_name; }
-            set { computer_name = value; }
-        }
+        public string ComputerName { get; set; }
 
         protected override int GetImageIndex()
         {
-            if (String.IsNullOrEmpty(share_name))
+            if (String.IsNullOrEmpty(m_Name))
                 return imgBackFolder;
             else
             if (IsPrinter)
@@ -77,7 +51,7 @@ namespace LanExchange
         {
             get
             {
-                return (share_type == (uint)NetApi32.SHARE_TYPE.STYPE_PRINTQ);
+                return (ShareType == (uint)NetApi32.SHARE_TYPE.STYPE_PRINTQ);
             }
         }
 
@@ -85,8 +59,8 @@ namespace LanExchange
         {
             get
             {
-                if (!String.IsNullOrEmpty(share_name))
-                    return share_name[share_name.Length - 1] == '$';
+                if (!String.IsNullOrEmpty(m_Name))
+                    return m_Name[m_Name.Length - 1] == '$';
                 else
                     return false;
             }
@@ -106,7 +80,7 @@ namespace LanExchange
         {
             bool b2 = (p2 as SharePanelItem).IsPrinter;
             int Result;
-            if (this.IsPrinter)
+            if (IsPrinter)
                 if (b2)
                     Result = base.CompareTo(p2);
                 else

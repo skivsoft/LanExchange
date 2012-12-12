@@ -16,44 +16,29 @@ namespace LanExchange.Forms
 {
     partial class AboutForm : Form
     {
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private readonly static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        private Control MsgControl = null;
-        private string UpdateError = null;
-        private bool bNeedRestart = false;
-        private string FileListContent = null;
+        private Control MsgControl;
+        private string UpdateError;
+        private bool bNeedRestart;
+        private string FileListContent;
         
         public AboutForm()
         {
             InitializeComponent();
-            this.Text = String.Format("О программе «{0}»", AssemblyProduct);
-            this.labelProductName.Text = AssemblyProduct;
-            this.labelVersion.Text = String.Format("Версия {0}", AssemblyVersion);
-            this.labelWeb.LinkArea = new LinkArea(this.labelWeb.Text.Length, this.labelWeb.LinkArea.Length);
-            this.labelWeb.Text += GetWebSiteURL();
-            this.labelEmail.LinkArea = new LinkArea(this.labelEmail.Text.Length, this.labelEmail.LinkArea.Length);
-            this.labelEmail.Text += GetEmailAddress();
-            this.labelCopyright.Text = AssemblyCopyright;
-        }
-
-        public static string GetUpdateBaseURL()
-        {
-            return Settings.GetInstance().GetStrValue("UpdateURL", "http://skivsoft.net/lanexchange/update/");
+            Text = String.Format("О программе «{0}»", AssemblyProduct);
+            labelProductName.Text = AssemblyProduct;
+            labelVersion.Text = String.Format("Версия {0}", AssemblyVersion);
+            labelWeb.LinkArea = new LinkArea(labelWeb.Text.Length, labelWeb.LinkArea.Length);
+            labelWeb.Text += Settings.Instance.GetWebSiteURL();
+            labelEmail.LinkArea = new LinkArea(labelEmail.Text.Length, labelEmail.LinkArea.Length);
+            labelEmail.Text += Settings.Instance.GetEmailAddress();
+            labelCopyright.Text = AssemblyCopyright;
         }
 
         public static string GetFileListURL()
         {
-            return GetUpdateBaseURL() + "filelist.php";
-        }
-
-        public static string GetWebSiteURL()
-        {
-            return Settings.GetInstance().GetStrValue("Web", "skivsoft.net/lanexchange/");
-        }
-
-        public static string GetEmailAddress()
-        {
-            return Settings.GetInstance().GetStrValue("Email", "skivsoft@gmail.com");
+            return Settings.Instance.GetUpdateURL() + "filelist.php";
         }
 
         void HideMessage()
@@ -82,7 +67,7 @@ namespace LanExchange.Forms
 
         #region Assembly Attribute Accessors
 
-        public string AssemblyTitle
+        public static string AssemblyTitle
         {
             get
             {
@@ -95,11 +80,11 @@ namespace LanExchange.Forms
                         return titleAttribute.Title;
                     }
                 }
-                return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
+                return Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
             }
         }
 
-        public string AssemblyVersion
+        public static string AssemblyVersion
         {
             get
             {
@@ -107,7 +92,7 @@ namespace LanExchange.Forms
             }
         }
 
-        public string AssemblyDescription
+        public static string AssemblyDescription
         {
             get
             {
@@ -120,7 +105,7 @@ namespace LanExchange.Forms
             }
         }
 
-        public string AssemblyProduct
+        public static string AssemblyProduct
         {
             get
             {
@@ -133,7 +118,7 @@ namespace LanExchange.Forms
             }
         }
 
-        public string AssemblyCopyright
+        public static string AssemblyCopyright
         {
             get
             {
@@ -146,7 +131,7 @@ namespace LanExchange.Forms
             }
         }
 
-        public string AssemblyCompany
+        public static string AssemblyCompany
         {
             get
             {
@@ -203,30 +188,31 @@ namespace LanExchange.Forms
                 return;
             }
             FileListContent = (string)e.Result;
-            StringReader Reader = new StringReader(FileListContent);
-            Version siteVersion = new Version(Reader.ReadLine());
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            if (assembly.GetName().Version.CompareTo(siteVersion) < 0)
+            using (StringReader Reader = new StringReader(FileListContent))
             {
-                Label L = new Label();
-                Button B = new Button();
-                B.AutoSize = true;
-                B.Text = String.Format("Обновить до версии {0}", siteVersion.ToString());
-                B.Click += new System.EventHandler(this.UpdateButton_Click);
-                HideMessage();
-                tableLayoutPanel.Controls.Add(B, 1, 2);
-                MsgControl = B;
+                Version siteVersion = new Version(Reader.ReadLine());
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                if (assembly.GetName().Version.CompareTo(siteVersion) < 0)
+                {
+                    Button B = new Button { 
+                        AutoSize = true, 
+                        Text = String.Format("Обновить до версии {0}", 
+                        siteVersion)
+                    };
+                    B.Click += UpdateButton_Click;
+                    HideMessage();
+                    tableLayoutPanel.Controls.Add(B, 1, 2);
+                    MsgControl = B;
+                }
+                else
+                    ShowMessage("Установлена последняя версия LanExchange.", Color.Gray);
             }
-            else
-                ShowMessage("Установлена последняя версия LanExchange.", Color.Gray);
         }
 
         private void UpdateButton_Click(object sender, EventArgs e)
         {
             // рисуем прогресс обновления
-            ProgressBar Progress = new ProgressBar();
-            Progress.Width = MsgControl.Width;
-            Progress.Style = ProgressBarStyle.Marquee;
+            ProgressBar Progress = new ProgressBar { Width = MsgControl.Width, Style = ProgressBarStyle.Marquee };
             HideMessage();
             tableLayoutPanel.Controls.Add(Progress, 1, 3);
             Progress.Update();
@@ -235,7 +221,7 @@ namespace LanExchange.Forms
                 DoUpdate.RunWorkerAsync();
         }
         
-        private bool verifyMd5File(string LocalFName, int RemoteFSize, string RemoteMD5)
+        private static bool verifyMd5File(string LocalFName, int RemoteFSize, string RemoteMD5)
         {
             bool Result;
             using (FileStream FS = File.Open(LocalFName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
@@ -266,55 +252,56 @@ namespace LanExchange.Forms
         {
             try
             {
-                WebClient client = new WebClient();
-                client.Proxy = null;
-                StringReader StrReader = new StringReader(FileListContent);
-                StrReader.ReadLine();
-                string line;
-                string LocalFName;
-                string LocalDirName;
-                string[] Arr;
-                string ExeName = Application.ExecutablePath;
-                string ExePath = Path.GetDirectoryName(ExeName);
-
-                while (!String.IsNullOrEmpty(line = StrReader.ReadLine()))
+                using (WebClient client = new WebClient { Proxy = null })
                 {
-                    Arr = line.Split('|');
-                    string RemoteMD5 = Arr[0];
-                    int RemoteFSize = Int32.Parse(Arr[1]);
-                    string RemoteFName = Arr[2];
-                    string MustChangeFName = Arr[3];
-
-                    LocalFName = Path.Combine(ExePath, MustChangeFName);
-                    LocalDirName = Path.GetDirectoryName(LocalFName);
-                    bool bNeedDownload = false;
-                    if (File.Exists(LocalFName))
+                    using (StringReader StrReader = new StringReader(FileListContent))
                     {
-                        bool verify = verifyMd5File(LocalFName, RemoteFSize, RemoteMD5);
-                        if (!verify)
-                            bNeedDownload = true;
-                    }
-                    else
-                        bNeedDownload = true;
-                    if (bNeedDownload)
-                    {
-                        if (LocalFName.Equals(ExeName))
+                        StrReader.ReadLine();
+                        string line;
+                        string LocalFName;
+                        string LocalDirName;
+                        string[] Arr;
+                        string ExeName = Application.ExecutablePath;
+                        string ExePath = Path.GetDirectoryName(ExeName);
+                        while (!String.IsNullOrEmpty(line = StrReader.ReadLine()))
                         {
-                            string FName = Path.ChangeExtension(LocalFName, ".old.exe");
-                            if (File.Exists(FName))
-                                File.Delete(FName);
-                            File.Move(LocalFName, FName);
-                            bNeedRestart = true;
-                        }
-                        else
+                            Arr = line.Split('|');
+                            string RemoteMD5 = Arr[0];
+                            int RemoteFSize = Int32.Parse(Arr[1]);
+                            string RemoteFName = Arr[2];
+                            string MustChangeFName = Arr[3];
+                            LocalFName = Path.Combine(ExePath, MustChangeFName);
+                            LocalDirName = Path.GetDirectoryName(LocalFName);
+                            bool bNeedDownload = false;
                             if (File.Exists(LocalFName))
-                                File.Delete(LocalFName);
+                            {
+                                bool verify = verifyMd5File(LocalFName, RemoteFSize, RemoteMD5);
+                                if (!verify)
+                                    bNeedDownload = true;
+                            }
                             else
-                                if (!Directory.Exists(LocalDirName))
-                                    Directory.CreateDirectory(LocalDirName);
-                        string URL = GetUpdateBaseURL() + RemoteFName;
-                        logger.Info("Downloading file from url [{0}] and saving to [{1}]", URL, LocalFName);
-                        client.DownloadFile(URL, LocalFName);
+                                bNeedDownload = true;
+                            if (bNeedDownload)
+                            {
+                                if (LocalFName.Equals(ExeName))
+                                {
+                                    string FName = Path.ChangeExtension(LocalFName, ".old.exe");
+                                    if (File.Exists(FName))
+                                        File.Delete(FName);
+                                    File.Move(LocalFName, FName);
+                                    bNeedRestart = true;
+                                }
+                                else
+                                    if (File.Exists(LocalFName))
+                                        File.Delete(LocalFName);
+                                    else
+                                        if (!Directory.Exists(LocalDirName))
+                                            Directory.CreateDirectory(LocalDirName);
+                                string URL = Settings.Instance.GetUpdateURL() + RemoteFName;
+                                logger.Info("Downloading file from url [{0}] and saving to [{1}]", URL, LocalFName);
+                                client.DownloadFile(URL, LocalFName);
+                            }
+                        }
                     }
                 }
             }
@@ -347,12 +334,12 @@ namespace LanExchange.Forms
 
         private void labelWeb_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("http://" + GetWebSiteURL());
+            Process.Start("http://" + Settings.Instance.GetWebSiteURL());
         }
 
         private void labelEmail_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("mailto:" + GetEmailAddress());
+            Process.Start("mailto:" + Settings.Instance.GetEmailAddress());
         }
     }
 }

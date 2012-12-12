@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LanExchange.Network
 {
     public class ServerInfo : IComparable
     {
-        private NetApi32.SERVER_INFO_101 m_Info;
+        private readonly NetApi32.SERVER_INFO_101 m_Info;
 
         public ServerInfo(NetApi32.SERVER_INFO_101 info)
         {

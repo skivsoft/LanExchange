@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using OSTools;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using LanExchange.Network;
@@ -11,38 +10,37 @@ using NLog;
 
 namespace LanExchange
 {
-    public enum PanelItemListScope
-    {
-        DONT_SCAN = 0,
-        ALL_GROUPS = 1,
-        SELECTED_GROUPS = 2
-    }
-
-    public enum PanelItemType
-    {
-        COMPUTERS = 0,
-        SHARES = 1,
-        FILES = 2
-    }
-
     public class PanelItemList : ISubscriber
     {
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        public enum ItemListScope
+        {
+            DONT_SCAN = 0,
+            ALL_GROUPS = 1,
+            SELECTED_GROUPS = 2
+        }
+
+        public enum PanelItemType
+        {
+            COMPUTERS = 0,
+            SHARES = 1,
+            FILES = 2
+        }
+
+        private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
         // items from NetworkScanner for each domain
-        private Dictionary<string, IList<ServerInfo>> m_Results = null;
+        private readonly Dictionary<string, IList<ServerInfo>> m_Results;
         // items added by user
-        private SortedDictionary<string, PanelItem> m_Items = null;
+        private readonly SortedDictionary<string, PanelItem> m_Items;
         // merged all results and user items
-        private SortedDictionary<string, PanelItem> m_Data = null;
+        private readonly SortedDictionary<string, PanelItem> m_Data;
         // keys for filtering
-        private List<string> m_Keys = null;
+        private readonly List<string> m_Keys;
         private String m_Filter = "";
 
-        private string m_TabName = "";
-        private View m_CurrentView = View.Details;
-        private PanelItemListScope m_Scope = PanelItemListScope.DONT_SCAN;
-        private List<string> m_Groups = null;
+        private readonly View m_CurrentView = View.Details;
+        private readonly ItemListScope m_Scope = ItemListScope.DONT_SCAN;
+        private List<string> m_Groups;
 
         public event EventHandler Changed;
 
@@ -70,58 +68,38 @@ namespace LanExchange
             m_Items = new SortedDictionary<string, PanelItem>();
             m_Data = new SortedDictionary<string, PanelItem>();
             m_Keys = new List<string>();
-            m_TabName = name;
+            TabName = name;
         }
 
-        public string TabName
-        {
-            get { return m_TabName; }
-            set { m_TabName = value; }
-        }
+        public string TabName { get; set; }
 
-        public View CurrentView
-        {
-            get { return m_CurrentView; }
-            set { m_CurrentView = value; }
-        }
+        public View CurrentView { get; set; }
 
         public IDictionary<string, PanelItem> Items
         {
             get { return m_Items; }
         }
 
-        public PanelItemListScope Scope
-        {
-            get { return m_Scope; }
-            set { m_Scope = value; }
-        }
+        public ItemListScope Scope { get; set; }
 
-        public List<string> Groups
-        {
-            get { return m_Groups; }
-            set { m_Groups = value; }
-        }
+        public List<string> Groups { get; set; }
 
         public IList<string> Keys
         {
             get { return m_Keys; }
         }
 
-        public string FocusedItem
-        {
-            get { return m_FocusedItem; }
-            set { m_FocusedItem = value; }
-        }
+        public string FocusedItem { get; set; }
 
         public void UpdateSubsctiption()
         {
             // оформляем подписку на получение списка компов
             switch (Scope)
             {
-                case PanelItemListScope.ALL_GROUPS:
+                case ItemListScope.ALL_GROUPS:
                     NetworkScanner.GetInstance().SubscribeToAll(this);
                     break;
-                case PanelItemListScope.SELECTED_GROUPS:
+                case ItemListScope.SELECTED_GROUPS:
                     NetworkScanner.GetInstance().UnSubscribe(this);
                     foreach (var group in Groups)
                         NetworkScanner.GetInstance().SubscribeToSubject(this, group);
@@ -162,7 +140,7 @@ namespace LanExchange
             m_Data.Clear();
         }
 
-        private bool GoodForFilter(string[] A, string Filter1, string Filter2)
+        private static bool GoodForFilter(string[] A, string Filter1, string Filter2)
         {
             for (int i = 0; i < A.Length; i++)
             {
@@ -302,7 +280,7 @@ namespace LanExchange
             // пробуем найти запомненный элемент
             if (CompName != null)
             {
-                index = this.m_Keys.IndexOf(CompName);
+                index = m_Keys.IndexOf(CompName);
                 if (index == -1) index = 0;
             }
             else
@@ -336,10 +314,10 @@ namespace LanExchange
                 lock (m_Data)
                 {
                     m_Data.Clear();
-                    if (m_Scope != PanelItemListScope.DONT_SCAN)
+                    if (m_Scope != ItemListScope.DONT_SCAN)
                         foreach (var Pair in m_Results)
                         {
-                            if (m_Scope == PanelItemListScope.ALL_GROUPS || m_Groups.Contains(Pair.Key))
+                            if (m_Scope == ItemListScope.ALL_GROUPS || m_Groups.Contains(Pair.Key))
                                 foreach (var SI in Pair.Value)
                                     if (!m_Data.ContainsKey(SI.Name))
                                         m_Data.Add(SI.Name, new ComputerPanelItem(SI.Name, SI));
@@ -355,33 +333,7 @@ namespace LanExchange
             if (Changed != null)
                 Changed(this, new EventArgs());
         }
-        private void RebuildColumns()
-        {
-            /*
-            if (LV == null) return;
-            LV.Columns.Clear();
-            switch (CurrentType)
-            {
-                case LVType.COMPUTERS:
-                    LV.Columns.Add("Сетевое имя", 130);
-                    LV.Columns.Add("Описание", 250);
-
-                    break;
-                case LVType.SHARES:
-                    LV.Columns.Add("Общий ресурс", 130);
-                    LV.Columns.Add("*:", 20);
-                    LV.Columns.Add("Описание", 250);
-                    break;
-                case LVType.FILES:
-                    LV.Columns.Add("Имя", 100);
-                    LV.Columns.Add("Дата изменения", 100);
-                    LV.Columns.Add("Тип", 100);
-                    LV.Columns.Add("Размер", 100);
-                    break;
-            }
-            */
-        }
-
+ 
         /// <summary>
         /// Возвращает список элементов с верхнего уровня из стека переходов.
         /// В частности это будет список копьютеров, даже если мы находимся на уровне списка ресуров.

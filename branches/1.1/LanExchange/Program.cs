@@ -1,11 +1,8 @@
 ﻿#define __SINGLE_INSTANCE
 
 using System;
-using System.Diagnostics;
-using System.Threading;
 using System.Windows.Forms;
 using System.Reflection;
-using System.Security.AccessControl;
 using NLog;
 using LanExchange.Forms;
 
@@ -18,7 +15,7 @@ namespace LanExchange
         private static ApplicationContext context;
         #endif
 
-        private static Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private readonly static Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         static void LogHeader()
         {
@@ -100,14 +97,13 @@ namespace LanExchange
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             Exception ex = (Exception)e.ExceptionObject;
-            logger.ErrorException("Unhandled: "+ex.Message + Environment.NewLine + ex.StackTrace, ex);
+            logger.ErrorException(String.Format("Unhandled: {0}{1}{2}", ex.Message, Environment.NewLine, ex.StackTrace), ex);
         }
 
         [STAThread]
         static void Main()
         {
-            AppDomain.CurrentDomain.UnhandledException += new
-                  UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             //throw new Exception("This will go unhandled"); 
             try
             {
@@ -127,7 +123,7 @@ namespace LanExchange
             }
             catch (Exception e)
             {
-                logger.ErrorException("Error in Main(): "+e.Message + Environment.NewLine + e.StackTrace, e);
+                logger.ErrorException(String.Format("Error in Main(): {0}{1}{2}", e.Message, Environment.NewLine, e.StackTrace), e);
             }
         }
     }

@@ -1,70 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
-using LanExchange.Network;
+﻿using LanExchange.Network;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.ComponentModel;
+using System.Collections.Generic;
 
 namespace Tests
 {
-    class NetworkScannerMock : NetworkScanner
+    /// <summary>
+    ///This is a test class for NetworkScannerTest and is intended
+    ///to contain all NetworkScannerTest Unit Tests
+    ///</summary>
+    [TestClass()]
+    public class NetworkScannerTest
     {
-        public DataChangedEventArgs args = new DataChangedEventArgs();
-        public bool DeliverMode = false;
+        private TestContext testContextInstance;
+        private NetworkScannerMock Instance;
 
-        public NetworkScannerMock()
+        
+        /// <summary>
+        ///Gets or sets the test context which provides
+        ///information about and functionality for the current test run.
+        ///</summary>
+        public TestContext TestContext
         {
-            //RefreshInterval = 100 * 1000;
+            get
+            {
+                return testContextInstance;
+            }
+            set
+            {
+                testContextInstance = value;
+            }
         }
 
-        protected override void OneWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            e.Result = args;
-        }
-
-        protected override void OneWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (DeliverMode)
-                base.OneWorker_RunWorkerCompleted(sender, e);
-        }
-    }
-
-    class SubscriberMock : ISubscriber
-    {
-        public bool IsEventFired = false;
-        public DataChangedEventArgs e = new DataChangedEventArgs();
-
-        public SubscriberMock()
-        {
-
-        }
-
-        public void DataChanged(ISubscriptionProvider sender, DataChangedEventArgs e)
-        {
-            IsEventFired = true;
-            this.e = e;
-        }
-    }
-    
-    
-    [TestFixture]
-    class NetworkScannerTest
-    {
-        NetworkScannerMock Instance = null;
-
-        [SetUp]
-        public void SetUp()
+        [TestInitialize()]
+        public void MyTestInitialize()
         {
             Instance = new NetworkScannerMock();
         }
-
-        [TearDown]
-        public void TearDown()
+        
+        [TestCleanup()]
+        public void MyTestCleanup()
         {
             Instance = null;
         }
 
-        [Test]
+        [TestMethod()]
         public void CheckSingleton()
         {
             NetworkScanner instance1 = NetworkScannerMock.GetInstance();
@@ -72,8 +53,11 @@ namespace Tests
             Assert.AreSame(instance1, instance2);
         }
 
-        [Test]
-        public void SubscribeToSubject()
+        /// <summary>
+        ///A test for SubscribeToSubject
+        ///</summary>
+        [TestMethod()]
+        public void SubscribeToSubjectTest()
         {
             ISubscriber sub1 = null;
             Instance.SubscribeToSubject(sub1, "test");
@@ -82,8 +66,11 @@ namespace Tests
             Assert.IsFalse(Instance.HasSubscribers(), "0 subscriber");
         }
 
-        [Test]
-        public void InstantUpdate1()
+        /// <summary>
+        ///A test for IsInstantUpdate
+        ///</summary>
+        [TestMethod()]
+        public void IsInstantUpdateTest()
         {
             Assert.IsTrue(Instance.IsInstantUpdate, "init");
             Instance.DisableSubscriptions();
@@ -101,7 +88,7 @@ namespace Tests
             Assert.IsFalse(Instance.IsInstantUpdate, "1 subscriber after enable");
         }
 
-        [Test]
+        [TestMethod()]
         public void DeliveryForOneSubject()
         {
             SubscriberMock sub1 = new SubscriberMock();
@@ -119,7 +106,7 @@ namespace Tests
             }
             if (sub1.IsEventFired)
             {
-                Assert.IsInstanceOf(typeof(IList<ServerInfo>), sub1.e.Data);
+                Assert.IsInstanceOfType(sub1.e.Data, typeof(IList<ServerInfo>));
                 List = (IList<ServerInfo>)sub1.e.Data;
                 Assert.AreEqual(1, List.Count);
                 Assert.AreEqual("HELLO", List[0].Name);
@@ -127,13 +114,12 @@ namespace Tests
             Instance.DeliverMode = false;
         }
 
-        [Test]
+        [TestMethod()]
         public void UpdateAfterUnsubscribe()
         {
             SubscriberMock sub1 = new SubscriberMock();
             IList<ServerInfo> List = new List<ServerInfo>();
-            NetApi32.SERVER_INFO_101 info = new NetApi32.SERVER_INFO_101();
-            info.sv101_name = "HELLO";
+            NetApi32.SERVER_INFO_101 info = new NetApi32.SERVER_INFO_101 { sv101_name = "HELLO" };
             List.Add(new ServerInfo(info));
             Instance.args.Subject = "one";
             Instance.args.Data = List;
@@ -149,5 +135,6 @@ namespace Tests
 
 
         }
+
     }
 }

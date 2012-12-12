@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel;
 
 namespace LanExchange.Network
 {
     public class BackgroundWorkerList
     {
-        private IDictionary<object, BackgroundWorker> m_Workers = null;
+        private readonly IDictionary<object, BackgroundWorker> m_Workers;
 
         public BackgroundWorkerList()
         {
@@ -52,9 +51,7 @@ namespace LanExchange.Network
                         if (!Pair.Value.IsBusy)
                         {
                             Found = true;
-                            BackgroundWorker worker = Pair.Value;
-                            m_Workers.Remove(Pair.Key);
-                            worker = null;
+                            m_Workers.Remove(Pair.Value);
                             break;
                         }
                 } while (Found);

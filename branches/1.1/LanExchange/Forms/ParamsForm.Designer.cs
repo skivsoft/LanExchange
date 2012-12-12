@@ -30,7 +30,6 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.label3 = new System.Windows.Forms.Label();
             this.chAdvanced = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.eRefreshTime = new System.Windows.Forms.NumericUpDown();
@@ -58,7 +57,6 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.label3);
             this.tabPage1.Controls.Add(this.chAdvanced);
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.eRefreshTime);
@@ -73,16 +71,6 @@
             this.tabPage1.Text = "Общие";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(15, 108);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(269, 13);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Горячая клавиша для отображения главной формы";
-            this.label3.Visible = false;
-            // 
             // chAdvanced
             // 
             this.chAdvanced.AutoSize = true;
@@ -96,7 +84,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(288, 74);
+            this.label2.Location = new System.Drawing.Point(295, 74);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(30, 13);
             this.label2.TabIndex = 4;
@@ -104,7 +92,7 @@
             // 
             // eRefreshTime
             // 
-            this.eRefreshTime.Location = new System.Drawing.Point(244, 72);
+            this.eRefreshTime.Location = new System.Drawing.Point(251, 72);
             this.eRefreshTime.Name = "eRefreshTime";
             this.eRefreshTime.Size = new System.Drawing.Size(40, 20);
             this.eRefreshTime.TabIndex = 2;
@@ -119,9 +107,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(15, 74);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(223, 13);
+            this.label1.Size = new System.Drawing.Size(230, 13);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Обновление списка компьютеров каждые";
+            this.label1.Text = "Интервал обновления списка компьютеров";
             // 
             // chMinimized
             // 
@@ -215,6 +203,5 @@
         private System.Windows.Forms.NumericUpDown eRefreshTime;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox chAdvanced;
-        private System.Windows.Forms.Label label3;
     }
 }

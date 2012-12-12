@@ -21,14 +21,14 @@ using System.Threading;
 using System.Windows.Forms;
 using OSTools;
 using System.Net.NetworkInformation;
-using EventHandlerSupport;
 using LanExchange.Network;
+using System.Security.Principal;
 
 namespace LanExchange.Forms
 {
     public partial class MainForm : Form
     {
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
         #region Константы и переменные
 
@@ -39,28 +39,28 @@ namespace LanExchange.Forms
         public const string MSG_LANEX_SHUTDOWN = "LANEX:SHUTDOWN";
         public const string MSG_LANEX_CHAT     = "LANEX:CHAT";
 
-        private static MainForm m_Instance = null;
-        private static AboutForm AboutFormInstance = null;
-        private static ParamsForm ParamsFormInstance = null;
+        public static MainForm Instance;
+        private static AboutForm AboutFormInstance;
+        private static ParamsForm ParamsFormInstance;
 
         public bool bFirstStart = true;
         //public NetworkBrowser  CompBrowser = null;
-        TabController          TabController = null;
+        TabController          TabController;
         FormWindowState         LastWindowState = FormWindowState.Normal;
         string[] FlashMovies;
         int FlashIndex = -1;
-        bool bNetworkConnected = false;
+        bool bNetworkConnected;
         //bool bNetworkJustPlugged = false;
         // время ожидания после подключения сети до начала сканирования списка компов
         //int NetworkWaitAfterPluggedInSec = 3;
-        private Settings m_Settings = null;
 
         public delegate void ProcRefresh(object obj, object data);
         public delegate void ChatRefresh(object obj, object data, object message);
-        ChatRefresh myTrayChat;
-        ProcRefresh myPagesRefresh;
-        ProcRefresh myCompsRefresh;
-        ProcRefresh myTimerRefresh;
+        
+        private readonly ChatRefresh myTrayChat;
+        private readonly ProcRefresh myPagesRefresh;
+        private readonly ProcRefresh myCompsRefresh;
+        private readonly ProcRefresh myTimerRefresh;
 
         #endregion
 
@@ -69,26 +69,20 @@ namespace LanExchange.Forms
         public MainForm()
         {
             InitializeComponent();
-            m_Instance = this;
+            Instance = this;
             SetupFormBounds();
             // load settings from ini-file
-            m_Settings = Settings.GetInstance();
-
+            Settings.LoadSettings();
             // делегаты для обновления из потоков
-            myCompsRefresh = new ProcRefresh(lvCompsRefreshMethod);
-            myPagesRefresh = new ProcRefresh(PagesRefreshMethod);
-            myTrayChat = new ChatRefresh(TrayChatMethod);
-            myTimerRefresh = new ProcRefresh(BrowseTimerRefreshMethod);
+            myCompsRefresh = lvCompsRefreshMethod;
+            myPagesRefresh = PagesRefreshMethod;
+            myTrayChat = TrayChatMethod;
+            //myTimerRefresh = BrowseTimerRefreshMethod;
             /*
             hotkey = new GlobalHotkeys();
             hotkey.Handle = this.Handle;
             hotkey.RegisterGlobalHotKey( (int) Keys.Z, GlobalHotkeys.MOD_CONTROL | GlobalHotkeys.MOD_ALT);
              */
-        }
-
-        internal static MainForm GetInstance()
-        {
-            return m_Instance;
         }
 
         /*
@@ -115,42 +109,42 @@ namespace LanExchange.Forms
         }
          */
 
-        public string GetMainFormTitle()
+        public static string GetMainFormTitle()
         {
-            Assembly Me = Assembly.GetExecutingAssembly();
+            var Me = Assembly.GetExecutingAssembly();
             object[] attributes = Me.GetCustomAttributes(typeof(AssemblyProductAttribute), false);
             if (attributes.Length == 0)
             {
                 return "";
             }
-            Version Ver = Me.GetName().Version;
+            var Ver = Me.GetName().Version;
             return String.Format("{0} {1}.{2}", ((AssemblyProductAttribute)attributes[0]).Product, Ver.Major, Ver.Minor);
         }
 
         private void SetupFormBounds()
         {
             // размещаем форму внизу справа
-            Rectangle Rect = new Rectangle();
+            var Rect = new Rectangle();
             Rect.Size = new Size(450, Screen.PrimaryScreen.WorkingArea.Height);
             Rect.Location = new Point(Screen.PrimaryScreen.WorkingArea.Left + (Screen.PrimaryScreen.WorkingArea.Width - Rect.Width),
                                       Screen.PrimaryScreen.WorkingArea.Top + (Screen.PrimaryScreen.WorkingArea.Height - Rect.Height));
-            this.SetBounds(Rect.X, Rect.Y, Rect.Width, Rect.Height);
+            SetBounds(Rect.X, Rect.Y, Rect.Width, Rect.Height);
         }
 
         private void SetupForm()
         {
             TrayIcon.Visible = CanUseTray();
-            this.Text = GetMainFormTitle();
+            Text = GetMainFormTitle();
             // выводим имя компьютера
             lCompName.Text = SystemInformation.ComputerName;
             // выводим имя пользователя
-            System.Security.Principal.WindowsIdentity user = System.Security.Principal.WindowsIdentity.GetCurrent();
+            WindowsIdentity user = WindowsIdentity.GetCurrent();
             lUserName.Text = user.Name;
             string[] A = user.Name.Split('\\');
             if (A.Length > 1)
                 lUserName.Text = A[1];
             else
-                lUserName.Text = A[0];            
+                lUserName.Text = A[0];
             // режим отображения: Компьютеры
             //CompBrowser.ViewType = NetworkBrowser.LVType.COMPUTERS;
         }
@@ -165,7 +159,7 @@ namespace LanExchange.Forms
                     MyItems[i] = new ToolStripSeparator();
                 else
                     if (TI is ToolStripMenuItem)
-                        MyItems[i] = (ToolStripItem)Extensions.Clone(TI as ToolStripMenuItem);
+                        MyItems[i] = (ToolStripItem)EventHandlerSupport.Clone(TI as ToolStripMenuItem);
             }
             popTop.Items.Clear();
             popTop.Items.AddRange(MyItems);
@@ -175,29 +169,26 @@ namespace LanExchange.Forms
         {
             SetupForm();
             SetupMenu();
-            if (!OSLayer.IsRunningOnMono())
-            {
-                // устанавливаем обработчик на изменение подключения к сети
-                bNetworkConnected = System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
-                System.Net.NetworkInformation.NetworkChange.NetworkAvailabilityChanged += new System.Net.NetworkInformation.NetworkAvailabilityChangedEventHandler(NetworkChange_NetworkAvailabilityChanged);
-                // запуск обновления компов
-                #if DEBUG
-                NetworkScanner.GetInstance().RefreshInterval = 5 * 1000;
-                #else
-                NetworkScanner.GetInstance().RefreshInterval = Settings.RefreshTimeInSec * 1000;
-                #endif
-                //CompBrowser = new NetworkBrowser(lvComps);
-                // содаем контроллер для управления вкладками
-                TabController = new TabController(Pages);
-                mSendToNewTab.Click += new System.EventHandler(TabController.mSendToNewTab_Click);
-                TabController.GetModel().LoadSettings();
-                //SetBrowseTimerInterval();
-                //BrowseTimer_Tick(this, new EventArgs());
-                //NetworkScanner.GetInstance().SubscribeToSubject(ItemList, CurrentDomain);
-                //NetworkScanner.GetInstance().SubscribeToAll(ItemList);
-                // права администратора берем из реестра
-                AdminMode = m_Settings.IsAdvancedMode;
-            }
+            // устанавливаем обработчик на изменение подключения к сети
+            bNetworkConnected = NetworkInterface.GetIsNetworkAvailable();
+            NetworkChange.NetworkAvailabilityChanged += NetworkChange_NetworkAvailabilityChanged;
+            // запуск обновления компов
+#if DEBUG
+            NetworkScanner.GetInstance().RefreshInterval = 5 * 1000;
+#else
+            NetworkScanner.GetInstance().RefreshInterval = Settings.RefreshTimeInSec * 1000;
+#endif
+            //CompBrowser = new NetworkBrowser(lvComps);
+            // содаем контроллер для управления вкладками
+            TabController = new TabController(Pages);
+            mSendToNewTab.Click += TabController.mSendToNewTab_Click;
+            TabController.GetModel().LoadSettings();
+            //SetBrowseTimerInterval();
+            //BrowseTimer_Tick(this, new EventArgs());
+            //NetworkScanner.GetInstance().SubscribeToSubject(ItemList, CurrentDomain);
+            //NetworkScanner.GetInstance().SubscribeToAll(ItemList);
+            // права администратора берем из реестра
+            AdminMode = Settings.Instance.AdvancedMode;
         }
 
         public string StatusText
@@ -206,9 +197,9 @@ namespace LanExchange.Forms
             set { lItemsCount.Text = value; }
         }
 
-        private bool CanUseTray()
+        private static bool CanUseTray()
         {
-            return !OSLayer.IsRunningOnMono();
+            return Type.GetType("Mono.Runtime") == null;
         }
 
         /**
@@ -222,7 +213,7 @@ namespace LanExchange.Forms
             if (e.IsAvailable)
             {
                 //bNetworkJustPlugged = true;
-                this.Invoke(myTimerRefresh, this, null);
+                Invoke(myTimerRefresh, this, null);
             }
             else
             {
@@ -243,7 +234,7 @@ namespace LanExchange.Forms
             LV.Invoke(myCompsRefresh, LV, data);
         }
 
-        void lvCompsRefreshMethod(object sender, object data)
+        static void lvCompsRefreshMethod(object sender, object data)
         {
             string RefreshCompName = (string)data;
             ListView LV = (ListView)sender;
@@ -269,13 +260,6 @@ namespace LanExchange.Forms
             string RefreshCompName = (string)data;
             string ChatMessage = (string)message;
             TrayIcon.ShowBalloonTip(10000, "Сообщение от " + RefreshCompName, ChatMessage, ToolTipIcon.Info);
-        }
-
-        void BrowseTimerRefreshMethod(object sender, object data)
-        {
-            //BrowseTimer_Tick(BrowseTimer, new EventArgs());
-            //BrowseTimer.Interval = NetworkWaitAfterPluggedInSec * 1000;
-            //BrowseTimer.Start();
         }
 
         #endregion
@@ -319,17 +303,17 @@ namespace LanExchange.Forms
 
         private void MainForm_Resize(object sender, EventArgs e)
         {
-            if (this.WindowState != FormWindowState.Minimized)
+            if (WindowState != FormWindowState.Minimized)
             {
-                if (LastWindowState != this.WindowState)
-                    logger.Info("WindowState is {0}", this.WindowState.ToString());
-                LastWindowState = this.WindowState;
+                if (LastWindowState != WindowState)
+                    logger.Info("WindowState is {0}", WindowState.ToString());
+                LastWindowState = WindowState;
             }
             else
-                logger.Info("WindowState is {0}", this.WindowState.ToString());
+                logger.Info("WindowState is {0}", WindowState.ToString());
         }
 
-        public bool bReActivate = false;
+        public bool bReActivate;
 
 
         public bool IsFormVisible
@@ -383,9 +367,9 @@ namespace LanExchange.Forms
 #if DEBUG
         public void Debug_ShowProperties(object obj)
         {
-            Form F = new Form();
+            var F = new Form();
             F.Text = obj.ToString();
-            PropertyGrid Grid = new PropertyGrid();
+            var Grid = new PropertyGrid();
             Grid.Dock = DockStyle.Fill;
             Grid.SelectedObject = obj;
             F.Controls.Add(Grid);
@@ -394,7 +378,7 @@ namespace LanExchange.Forms
 
         public void Debug_ShowSubscribers()
         {
-            StringBuilder S = new StringBuilder();
+            var S = new StringBuilder();
             foreach(var Pair in NetworkScanner.GetInstance().GetSubjects())
                 S.AppendLine(String.Format("{0} - {1}", Pair.Key, Pair.Value.Count));
             S.AppendLine(String.Format("ALL - {0}", NetworkScanner.GetInstance().GetAllSubjects().Count));
@@ -619,7 +603,12 @@ namespace LanExchange.Forms
                 Pages.SelectedTab.Refresh();
              */
         }
-        
+
+        public void lvComps_CacheVirtualItems(object sender, CacheVirtualItemsEventArgs e)
+        {
+
+        }
+
         public void lvComps_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
         {
             ListView LV = sender as ListView;
@@ -760,7 +749,7 @@ namespace LanExchange.Forms
             // Ctrl+A выделение всех элементов
             if (e.Control && e.KeyCode == Keys.A)
             {
-                NativeMethods.SelectAllItems(LV);
+                User32.SelectAllItems(LV);
                 e.Handled = true;
             }
             // Shift+Enter
@@ -1069,7 +1058,7 @@ namespace LanExchange.Forms
                     break;
             }
             
-            if (!OsVersionHelper.Is64BitOperatingSystem())
+            if (!Kernel32.Is64BitOperatingSystem())
                 CmdLine = TagCmd.Replace("%ProgramFiles(x86)%", "%ProgramFiles%");
             else
                 CmdLine = TagCmd;
@@ -1077,7 +1066,7 @@ namespace LanExchange.Forms
             CmdLine = String.Format(Environment.ExpandEnvironmentVariables(CmdLine), FmtParam);
             string FName;
             string Params;
-            PathUtils.ExplodeCmd(CmdLine, out FName, out Params);
+            AutorunUtils.ExplodeCmd(CmdLine, out FName, out Params);
             try
             {
                 Process.Start(FName, Params);
@@ -1801,7 +1790,7 @@ namespace LanExchange.Forms
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            m_Settings.Save();
+            LanExchange.Settings.SaveSettings();
         }
     }
 }

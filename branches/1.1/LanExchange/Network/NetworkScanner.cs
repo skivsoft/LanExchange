@@ -2,11 +2,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 using System.ComponentModel;
 using System.Windows.Forms;
-
+using LanExchange.Network;
+using NLog;
 
 namespace LanExchange.Network
 {
@@ -14,8 +14,8 @@ namespace LanExchange.Network
     {
         #region Static fields and methods
 
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-        private static NetworkScanner m_Instance = null;
+        private readonly static Logger logger = LogManager.GetCurrentClassLogger();
+        private static NetworkScanner m_Instance;
 
         public static NetworkScanner GetInstance()
         {
@@ -27,18 +27,18 @@ namespace LanExchange.Network
         }
         #endregion
 
-        private IDictionary<string, IList<ISubscriber>> m_Subjects = null;
-        private IList<ISubscriber> m_AllSubjects = null;
-        private IDictionary<string, IList<ServerInfo>> m_Results = null;
-        private IList<ServerInfo> m_Domains = null;
-        private BackgroundWorker m_DomainsWorker = null;
+        private readonly IDictionary<string, IList<ISubscriber>> m_Subjects;
+        private readonly IList<ISubscriber> m_AllSubjects;
+        private readonly IDictionary<string, IList<ServerInfo>> m_Results;
+        private IList<ServerInfo> m_Domains;
+        private readonly BackgroundWorker m_DomainsWorker;
 
-        private int m_RefreshInterval = 0;
+        private int m_RefreshInterval;
         private bool m_EnabledAll = true;
-        private Timer m_RefreshTimer = null;
-        private BackgroundWorkerList m_Workers = null;
+        private readonly Timer m_RefreshTimer;
+        private readonly BackgroundWorkerList m_Workers;
         private bool m_InstantUpdate = true;
-        private int LockCount = 0;
+        private int LockCount;
 
         public event EventHandler DomainListChanged;
 
@@ -51,7 +51,7 @@ namespace LanExchange.Network
             m_Domains = new List<ServerInfo>();
             // timer
             m_RefreshTimer = new Timer();
-            m_RefreshTimer.Tick += new EventHandler(RefreshTimer_Tick);
+            m_RefreshTimer.Tick += RefreshTimer_Tick;
             m_RefreshTimer.Enabled = false;
             // worker list for scanning network
             m_Workers = new BackgroundWorkerList();
@@ -118,16 +118,16 @@ namespace LanExchange.Network
 
         private BackgroundWorker CreateDomainsWorker()
         {
-            BackgroundWorker Result = new BackgroundWorker();
-            Result.DoWork += new DoWorkEventHandler(DomainsWorker_DoWork);
-            Result.RunWorkerCompleted += new RunWorkerCompletedEventHandler(DomainsWorker_RunWorkerCompleted);
+            var Result = new BackgroundWorker();
+            Result.DoWork += DomainsWorker_DoWork;
+            Result.RunWorkerCompleted += DomainsWorker_RunWorkerCompleted;
             return Result;
         }
 
-        private void DomainsWorker_DoWork(object sender, DoWorkEventArgs e)
+        private static void DomainsWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             logger.Info("GetDomainList");
-            e.Result = Utils.GetDomainList();
+            e.Result = NetApi32Utils.GetDomainList();
         }
 
         private void DomainsWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -146,9 +146,9 @@ namespace LanExchange.Network
 
         private BackgroundWorker CreateOneWorker()
         {
-            BackgroundWorker Result = new BackgroundWorker();
-            Result.DoWork += new DoWorkEventHandler(OneWorker_DoWork);
-            Result.RunWorkerCompleted += new RunWorkerCompletedEventHandler(OneWorker_RunWorkerCompleted);
+            var Result = new BackgroundWorker();
+            Result.DoWork += OneWorker_DoWork;
+            Result.RunWorkerCompleted += OneWorker_RunWorkerCompleted;
             return Result;
         }
 
@@ -157,7 +157,7 @@ namespace LanExchange.Network
             string domain = (string)e.Argument;
             logger.Info("DoWork({0})", domain);
 
-            IList<ServerInfo> List = Utils.GetComputerList(domain);
+            var List = NetApi32Utils.GetComputerList(domain);
             logger.Info(String.Format("NetServerEnum: {0}", List.Count));
             #if REMOVE_RANDOM_COMPS
             Random R = new Random();
@@ -169,15 +169,13 @@ namespace LanExchange.Network
             }
             logger.Info(String.Format("Random comps removed: {0}", List.Count));
             #endif
-            DataChangedEventArgs args = new DataChangedEventArgs();
-            args.Subject = domain;
-            args.Data = List;
+            var args = new DataChangedEventArgs { Subject = domain, Data = List };
             e.Result = args;
         }
 
         protected virtual void OneWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            DataChangedEventArgs Result = (DataChangedEventArgs)e.Result;
+            var Result = (DataChangedEventArgs)e.Result;
             if (e.Cancelled || !m_EnabledAll)
             {
                 logger.Info("Cancelled({0})", Result.Subject);
@@ -192,7 +190,7 @@ namespace LanExchange.Network
                 {
                     if (m_Subjects.ContainsKey(Result.Subject))
                     {
-                        IList<ISubscriber> List = m_Subjects[Result.Subject];
+                        var List = m_Subjects[Result.Subject];
                         logger.Info("Notify {0} subscriber(s) [one subject]", List.Count);
                         foreach (var Subscriber in List)
                             Subscriber.DataChanged(this, Result);
@@ -210,7 +208,7 @@ namespace LanExchange.Network
             }
         }
 
-        private bool SortedListIsModified(IList<ServerInfo> ListA, IList<ServerInfo> ListB)
+        private static bool SortedListIsModified(IList<ServerInfo> ListA, IList<ServerInfo> ListB)
         {
             bool bModified = false;
             if (ListA.Count != ListB.Count)
@@ -237,7 +235,7 @@ namespace LanExchange.Network
                 }
                 if (!bModified)
                 {
-                    IList<ServerInfo> ResultList = m_Results[Domain];
+                    var ResultList = m_Results[Domain];
                     bModified = SortedListIsModified(m_Results[Domain], List);
                     if (bModified)
                         m_Results[Domain] = List;
@@ -291,7 +289,7 @@ namespace LanExchange.Network
         {
             if (m_Subjects.ContainsKey(subject))
             {
-                IList<ISubscriber> List = m_Subjects[subject];
+                var List = m_Subjects[subject];
                 if (!List.Contains(sender))
                 {
                     List.Add(sender);
@@ -300,7 +298,7 @@ namespace LanExchange.Network
             }
             else
             {
-                List<ISubscriber> List = new List<ISubscriber>();
+                var List = new List<ISubscriber>();
                 List.Add(sender);
                 m_Subjects.Add(subject, List);
                 SubscribersChanged();

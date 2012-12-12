@@ -6,7 +6,7 @@ namespace LanExchange
 {
     class PingThread
     {
-        bool PingOK = false;
+        private bool PingOK;
         
         public static bool FastPing(string ip)
         {
@@ -27,9 +27,7 @@ namespace LanExchange
                 {
                     pingReply = ping.Send(ip);
                 }
-                catch
-                {
-                }
+                catch { }
                 Result = (pingReply != null) && (pingReply.Status == IPStatus.Success);
             }
             return Result;
@@ -47,9 +45,7 @@ namespace LanExchange
                     PingOK = (pingReply != null) && (pingReply.Status == IPStatus.Success);
                 }
             }
-            catch (Exception)
-            {
-            }
+            catch { }
         }
 
     }

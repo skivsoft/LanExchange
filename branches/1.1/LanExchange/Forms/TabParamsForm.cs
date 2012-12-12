@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using LanExchange.Network;
 
@@ -16,7 +12,7 @@ namespace LanExchange.Forms
             InitializeComponent();
             UpdateControls();
             UpdateDomainList();
-            NetworkScanner.GetInstance().DomainListChanged +=new EventHandler(TabParamsForm_DomainListChanged);
+            NetworkScanner.GetInstance().DomainListChanged += TabParamsForm_DomainListChanged;
         }
 
         private void TabParamsForm_DomainListChanged(object sender, EventArgs e)
@@ -28,7 +24,7 @@ namespace LanExchange.Forms
         {
             if (NetworkScanner.GetInstance().DomainList == null)
                 return;
-            List<string> Saved = GetCheckedList(lvDomains);
+            List<string> Saved = ListView_GetCheckedList(lvDomains);
             try
             {
                 lvDomains.Items.Clear();
@@ -37,7 +33,7 @@ namespace LanExchange.Forms
             }
             finally
             {
-                SetCheckedList(lvDomains, Saved);
+                ListView_SetCheckedList(lvDomains, Saved);
             }
         }
 
@@ -61,29 +57,29 @@ namespace LanExchange.Forms
                 }
         }
 
-        public PanelItemListScope Scope
+        public LanExchange.PanelItemList.ItemListScope Scope
         {
             get
             {
                 if (rbAll.Checked)
-                    return PanelItemListScope.ALL_GROUPS;
+                    return LanExchange.PanelItemList.ItemListScope.ALL_GROUPS;
                 else
                 if (rbSelected.Checked)
-                    return PanelItemListScope.SELECTED_GROUPS;
+                    return LanExchange.PanelItemList.ItemListScope.SELECTED_GROUPS;
                 else
-                    return PanelItemListScope.DONT_SCAN;
+                    return LanExchange.PanelItemList.ItemListScope.DONT_SCAN;
             }
             set
             {
                 switch (value)
                 {
-                    case PanelItemListScope.ALL_GROUPS:
+                    case PanelItemList.ItemListScope.ALL_GROUPS:
                         rbAll.Checked = true;
                         break;
-                    case PanelItemListScope.SELECTED_GROUPS:
+                    case PanelItemList.ItemListScope.SELECTED_GROUPS:
                         rbSelected.Checked = true;
                         break;
-                    default:
+                    case PanelItemList.ItemListScope.DONT_SCAN:
                         rbDontScan.Checked = true;
                         break;
                 }
@@ -118,7 +114,7 @@ namespace LanExchange.Forms
         }
 
 
-        public List<string> GetCheckedList(ListView LV)
+        public static List<string> ListView_GetCheckedList(ListView LV)
         {
             List<string> Result = new List<string>();
             if (LV.FocusedItem != null)
@@ -130,7 +126,7 @@ namespace LanExchange.Forms
             return Result;
         }
 
-        public void SetCheckedList(ListView LV, List<string> SaveSelected)
+        public static void ListView_SetCheckedList(ListView LV, List<string> SaveSelected)
         {
             LV.FocusedItem = null;
             int Count = LV.VirtualMode ? LV.VirtualListSize : LV.Items.Count;
@@ -157,5 +153,6 @@ namespace LanExchange.Forms
                 }
             }
         }
+
     }
 }

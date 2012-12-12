@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LanExchange.Network
 {
@@ -14,4 +12,5 @@ namespace LanExchange.Network
     {
         void DataChanged(ISubscriptionProvider sender, DataChangedEventArgs e);
     }
+
 }

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Runtime.InteropServices;
-using OSTools;
 using System.Net;
 using LanExchange.Network;
 
@@ -20,21 +16,17 @@ namespace LanExchange
 
         private string m_Name = String.Empty;
         private string m_Comment = String.Empty;
-        private ServerInfo m_SI = null;
-
-        private bool pingable;
-        private bool logged;
-        private IPEndPoint ipendpoint;
+        private readonly ServerInfo m_SI;
 
         public ComputerPanelItem()
         {
-            this.pingable = true;
+            IsPingable = true;
         }
 
         public ComputerPanelItem(string computer_name, object data)
         {
             m_Name = computer_name;
-            pingable = true;
+            IsPingable = true;
             m_SI = data as ServerInfo;
             if (data != null)
                 m_Comment = m_SI.Comment;
@@ -90,30 +82,18 @@ namespace LanExchange
             return String.Format("{0}\n{1}", Comment, m_SI.Version());
         }
 
-        public bool IsPingable
-        {
-            get { return pingable; }
-            set { pingable = value; }
-        }
+        public bool IsPingable { get; set; }
 
-        public bool IsLogged
-        {
-            get { return logged; }
-            set { logged = value; }
-        }
+        public bool IsLogged { get; set; }
 
-        public IPEndPoint EndPoint
-        {
-            get { return ipendpoint; }
-            set { ipendpoint = value; }
-        }
+        public IPEndPoint EndPoint { get; set; }
 
         public override void CopyExtraFrom(PanelItem Comp)
         {
             if (Comp == null) return;
-            pingable = (Comp as ComputerPanelItem).pingable;
-            logged = (Comp as ComputerPanelItem).logged;
-            ipendpoint = (Comp as ComputerPanelItem).ipendpoint;
+            IsPingable = (Comp as ComputerPanelItem).IsPingable;
+            IsLogged = (Comp as ComputerPanelItem).IsLogged;
+            EndPoint = (Comp as ComputerPanelItem).EndPoint;
         }
     }
 }

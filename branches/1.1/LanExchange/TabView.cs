@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
-using System.IO;
 using System.Drawing;
 using LanExchange.Forms;
-using LanExchange.Network;
 using System.Reflection;
 
 namespace LanExchange
@@ -14,16 +10,16 @@ namespace LanExchange
     // Часто в качестве представления выступает
     public class TabView
     {
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private readonly static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        TabControl m_Pages;
+        private readonly TabControl m_Pages;
 
         public TabView(TabControl Pages)
         {
             m_Pages = Pages;
         }
 
-        public string Name { get { return this.m_Pages.Name; }}
+        public string Name { get { return m_Pages.Name; }}
 
         public int SelectedIndex 
         { 
@@ -42,11 +38,8 @@ namespace LanExchange
             }
         }
 
-        public void AfterAppendTab(object sender, PanelItemListEventArgs e)
+        public void AfterAppendTab(object sender, LanExchange.TabModel.PanelItemListEventArgs e)
         {
-            MainForm Instance = MainForm.GetInstance();
-            if (Instance == null)
-                return;
             logger.Info("AfterAppendTab()");
             TabModel Model = (TabModel)sender;
             // init controls
@@ -72,26 +65,27 @@ namespace LanExchange
             LV.View = e.Info.CurrentView;
             LV.Columns.Add("Сетевое имя", 130);
             LV.Columns.Add("Описание", 250);
-            LV.ContextMenuStrip = Instance.popComps;
+            LV.ContextMenuStrip = MainForm.Instance.popComps;
             LV.FullRowSelect = true;
             LV.GridLines = true;
-            LV.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            LV.HeaderStyle = ColumnHeaderStyle.Nonclickable;
             LV.HideSelection = false;
-            LV.LargeImageList = Instance.ilLarge;
+            LV.LargeImageList = MainForm.Instance.ilLarge;
             LV.ShowGroups = false;
             LV.ShowItemToolTips = true;
-            LV.SmallImageList = Instance.ilSmall;
+            LV.SmallImageList = MainForm.Instance.ilSmall;
             LV.VirtualMode = true;
             // events
-            LV.ItemActivate += new System.EventHandler(Instance.lvRecent_ItemActivate);
-            LV.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(Instance.lvComps_RetrieveVirtualItem);
-            LV.KeyPress += new System.Windows.Forms.KeyPressEventHandler(Instance.lvComps_KeyPress);
-            LV.KeyDown += new System.Windows.Forms.KeyEventHandler(Instance.lvComps_KeyDown);
-            LV.ItemSelectionChanged += new ListViewItemSelectionChangedEventHandler(Instance.lvComps_ItemSelectionChanged);
-            LV.SelectedIndexChanged += new EventHandler(Instance.lvComps_SelectedIndexChanged);
-            LV.RetrieveVirtualItem += new RetrieveVirtualItemEventHandler(Instance.lvComps_RetrieveVirtualItem);
+            LV.ItemActivate += MainForm.Instance.lvRecent_ItemActivate;
+            LV.RetrieveVirtualItem += MainForm.Instance.lvComps_RetrieveVirtualItem;
+            LV.KeyPress += MainForm.Instance.lvComps_KeyPress;
+            LV.KeyDown += MainForm.Instance.lvComps_KeyDown;
+            LV.ItemSelectionChanged += MainForm.Instance.lvComps_ItemSelectionChanged;
+            LV.SelectedIndexChanged += MainForm.Instance.lvComps_SelectedIndexChanged;
+            //LV.CacheVirtualItems += MainForm.Instance.lvComps_CacheVirtualItems;
+            LV.RetrieveVirtualItem += MainForm.Instance.lvComps_RetrieveVirtualItem;
             e.Info.AttachObjectTo(LV);
-            e.Info.Changed += new EventHandler(MainForm.GetInstance().Items_Changed);
+            e.Info.Changed += MainForm.Instance.Items_Changed;
             e.Info.UpdateSubsctiption();
             //
             // NewTab
@@ -100,7 +94,7 @@ namespace LanExchange
             NewTab.Text = e.Info.TabName;
             NewTab.UseVisualStyleBackColor = true;
             // resume layouts
-            Instance.tipComps.SetToolTip(LV, " ");
+            MainForm.Instance.tipComps.SetToolTip(LV, " ");
             //NewTab.ResumeLayout(false);
             //m_Pages.ResumeLayout(false);
             //Instance.ResumeLayout(false);
@@ -109,19 +103,19 @@ namespace LanExchange
             //MainForm.GetInstance().UpdateFilter(LV, e.Info.FilterText, false);
         }
 
-        public void AfterRemove(object sender, IndexEventArgs e)
+        public void AfterRemove(object sender, LanExchange.TabModel.IndexEventArgs e)
         {
             m_Pages.TabPages.RemoveAt(e.Index);
         }
 
-        public void AfterRename(object sender, PanelItemListEventArgs e)
+        public void AfterRename(object sender, LanExchange.TabModel.PanelItemListEventArgs e)
         {
             m_Pages.SelectedTab.Text = e.Info.TabName;
         }
 
         public static string InputBoxAsk(string caption, string prompt, string defText)
         {
-            return MainForm.GetInstance().inputBox.Ask(caption, prompt, defText, false);
+            return MainForm.Instance.inputBox.Ask(caption, prompt, defText, false);
         }
 
         internal ListView GetActiveListView()
@@ -129,9 +123,9 @@ namespace LanExchange
             return (ListView)m_Pages.SelectedTab.Controls[0];
         }
 
-        internal SaveFileDialog GetSaveFileDialog()
+        internal static SaveFileDialog GetSaveFileDialog()
         {
-            return MainForm.GetInstance().dlgSave;
+            return MainForm.Instance.dlgSave;
         }
     }
 }

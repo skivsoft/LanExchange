@@ -1,42 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
-using System.IO;
-using System.Drawing;
-using LanExchange.Forms;
 using LanExchange.Network;
 
 namespace LanExchange
 {
-    public class PanelItemListEventArgs : EventArgs
-    {
-        private PanelItemList info;
-
-        public PanelItemListEventArgs(PanelItemList Info)
-        {
-            this.info = Info;
-        }
-
-        public PanelItemList Info { get { return this.info; }}
-    }
-
-    public delegate void PanelItemListEventHandler(object sender, PanelItemListEventArgs e);
-
-    public class IndexEventArgs : EventArgs
-    {
-        private int index;
-
-        public IndexEventArgs(int Index)
-        {
-            this.index = Index;
-        }
-
-        public int Index { get { return this.index; } }
-    }
-
-    public delegate void IndexEventHandler(object sender,  IndexEventArgs e);
-
     // 
     // Модель предоставляет знания: данные и методы работы с этими данными, 
     // реагирует на запросы, изменяя своё состояние. 
@@ -45,9 +13,38 @@ namespace LanExchange
 
     public class TabModel
     {
-        private List<PanelItemList> m_List = new List<PanelItemList>();
-        private string m_Name = null;
-        private int m_SelectedIndex = -1;
+        #region Subclasses and delegates
+        public class PanelItemListEventArgs : EventArgs
+        {
+            private readonly PanelItemList m_Info;
+
+            public PanelItemListEventArgs(PanelItemList Info)
+            {
+                m_Info = Info;
+            }
+
+            public PanelItemList Info { get { return m_Info; } }
+        }
+
+        public class IndexEventArgs : EventArgs
+        {
+            private readonly int m_Index;
+
+            public IndexEventArgs(int Index)
+            {
+                m_Index = Index;
+            }
+
+            public int Index { get { return m_Index; } }
+        }
+
+        public delegate void PanelItemListEventHandler(object sender, PanelItemListEventArgs e);
+        public delegate void IndexEventHandler(object sender, IndexEventArgs e);
+        #endregion
+
+
+        private readonly List<PanelItemList> m_List;
+        private readonly string m_Name;
 
         public event PanelItemListEventHandler AfterAppendTab;
         public event IndexEventHandler AfterRemove;
@@ -55,23 +52,18 @@ namespace LanExchange
 
         public TabModel(string name)
         {
+            m_List = new List<PanelItemList>();
             m_Name = name;
+            SelectedIndex = -1;
         }
 
         public int Count { get { return this.m_List.Count; }  }
 
-        public int SelectedIndex
-        {
-            get { return this.m_SelectedIndex; }
-            set
-            {
-                m_SelectedIndex = value;
-            }
-        }
+        public int SelectedIndex { get; set; }
 
         public PanelItemList GetItem(int Index)
         {
-            return this.m_List[Index];
+            return m_List[Index];
         }
 
         public void DoAfterAppendTab(PanelItemList Info)
@@ -136,6 +128,7 @@ namespace LanExchange
 
         public void StoreSettings()
         {
+            /*
             //UpdateModelFromView();
             Settings config = Settings.GetInstance();
             config.SetIntValue(String.Format(@"{0}\SelectedIndex", m_Name), SelectedIndex);
@@ -152,10 +145,12 @@ namespace LanExchange
                 config.SetIntValue(S + "Scope", (int)(Info.Scope));
                 config.SetListValue(S + "Groups", Info.Groups);
             }
+             */
         }
 
         public void LoadSettings()
         {
+            /*
             Clear();
             Settings config = Settings.GetInstance();
             int CNT = config.GetIntValue(String.Format(@"{0}\Count", m_Name), 0);
@@ -165,22 +160,22 @@ namespace LanExchange
                 {
                     string S = String.Format(@"{0}.{1}\", m_Name, i);
                     string tabname = config.GetStrValue(S + "TabName", "");
-                    PanelItemList Info = new PanelItemList(tabname);
-                    Info.FilterText = config.GetStrValue(S + "FilterText", "");
-                    Info.CurrentView = (View)config.GetIntValue(S + "CurrentView", (int)System.Windows.Forms.View.Details);
-                    //Info.Items = config.GetListValue(S + "Items");
-                    Info.Scope = (PanelItemListScope)config.GetIntValue(S + "Scope", 0);
-                    Info.Groups = config.GetListValue(S + "Groups");
+                    PanelItemList Info = new PanelItemList(tabname) { 
+                        FilterText = config.GetStrValue(S + "FilterText", ""), 
+                        CurrentView = (View)config.GetIntValue(S + "CurrentView", (int)View.Details), 
+                        Scope = (PanelItemList.PanelItemListScope)config.GetIntValue(S + "Scope", 0), 
+                        Groups = config.GetListValue(S + "Groups") 
+                    };
                     AddTab(Info);
                 }
             }
             else
             {
-                string domain = Utils.GetMachineNetBiosDomain(null);
-                PanelItemList Info = new PanelItemList(domain);
-                Info.FilterText = "";
-                Info.CurrentView = (System.Windows.Forms.View.Details);
-                Info.Groups = new List<string>();
+                string domain = NetApi32Utils.GetMachineNetBiosDomain(null);
+                PanelItemList Info = new PanelItemList(domain) { 
+                    FilterText = "", 
+                    CurrentView = (View.Details), 
+                    Groups = new List<string>() };
                 Info.Groups.Add(domain);
                 AddTab(Info);
             }
@@ -188,6 +183,16 @@ namespace LanExchange
             // присваиваем сначала -1, чтобы всегда срабатывал евент PageSelected при установке нужной странице
             SelectedIndex = -1;
             SelectedIndex = Index;
+             */
+            string domain = NetApi32Utils.GetMachineNetBiosDomain(null);
+            PanelItemList Info = new PanelItemList(domain)
+            {
+                FilterText = "",
+                CurrentView = (View.Details),
+                Groups = new List<string>()
+            };
+            Info.Groups.Add(domain);
+            AddTab(Info);
         }
 
     }
