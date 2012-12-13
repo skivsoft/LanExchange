@@ -62,14 +62,11 @@ namespace LanExchange
         public void RenameTab()
         {
             int Index = View.SelectedIndex;
-            if (CanCloseTab(Index))
+            string NewTabName = TabView.InputBoxAsk("Переименование", "Введите имя", View.SelectedTabText);
+            if (NewTabName != null)
             {
-                string NewTabName = TabView.InputBoxAsk("Переименование", "Введите имя", View.SelectedTabText);
-                if (NewTabName != null)
-                {
-                    Model.RenameTab(Index, NewTabName);
-                    Model.StoreSettings();
-                }
+                Model.RenameTab(Index, NewTabName);
+                Model.StoreSettings();
             }
         }
 

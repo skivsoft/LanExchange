@@ -1,6 +1,4 @@
-﻿#define USE_PING
-#define NOUSE_FLASH
-#define NLOG
+﻿#define NLOG
 
 #if DEBUG
 using NLog;
@@ -20,95 +18,51 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using OSTools;
-using System.Net.NetworkInformation;
 using LanExchange.Network;
 using System.Security.Principal;
+using LanExchange.Properties;
 
 namespace LanExchange.Forms
 {
     public partial class MainForm : Form
     {
+        // logger object 
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
-
-        #region Константы и переменные
-
-        // тексты сообщений собственного протокола LANEX
-        public const string MSG_LANEX_LOGIN    = "LANEX:LOGIN";
-        public const string MSG_LANEX_LOGINOK  = "LANEX:LOGINOK";
-        public const string MSG_LANEX_LOGOUT   = "LANEX:LOGOUT";
-        public const string MSG_LANEX_SHUTDOWN = "LANEX:SHUTDOWN";
-        public const string MSG_LANEX_CHAT     = "LANEX:CHAT";
-
+        // single instance for MainForm
         public static MainForm Instance;
-        private static AboutForm AboutFormInstance;
-        private static ParamsForm ParamsFormInstance;
-
-        public bool bFirstStart = true;
-        //public NetworkBrowser  CompBrowser = null;
-        TabController          TabController;
-        FormWindowState         LastWindowState = FormWindowState.Normal;
-        string[] FlashMovies;
-        int FlashIndex = -1;
-        bool bNetworkConnected;
-        //bool bNetworkJustPlugged = false;
-        // время ожидания после подключения сети до начала сканирования списка компов
-        //int NetworkWaitAfterPluggedInSec = 3;
-
-        public delegate void ProcRefresh(object obj, object data);
-        public delegate void ChatRefresh(object obj, object data, object message);
+        // controller for Pages (MVC-style)
+        readonly TabController TabController;
         
-        private readonly ChatRefresh myTrayChat;
-        private readonly ProcRefresh myPagesRefresh;
-        private readonly ProcRefresh myCompsRefresh;
-        private readonly ProcRefresh myTimerRefresh;
-
-        #endregion
-
-        #region Инициализация и загрузка формы
+        FormWindowState  LastWindowState = FormWindowState.Normal;
 
         public MainForm()
         {
             InitializeComponent();
             Instance = this;
-            SetupFormBounds();
-            // load settings from ini-file
+            // load settings from cfg-file
             Settings.LoadSettings();
-            // делегаты для обновления из потоков
-            myCompsRefresh = lvCompsRefreshMethod;
-            myPagesRefresh = PagesRefreshMethod;
-            myTrayChat = TrayChatMethod;
-            //myTimerRefresh = BrowseTimerRefreshMethod;
-            /*
-            hotkey = new GlobalHotkeys();
-            hotkey.Handle = this.Handle;
-            hotkey.RegisterGlobalHotKey( (int) Keys.Z, GlobalHotkeys.MOD_CONTROL | GlobalHotkeys.MOD_ALT);
-             */
+            // init main form
+            SetupFormBounds();
+            SetupForm();
+            SetupMenu();
+            // init network scanner
+#if DEBUG
+            NetworkScanner.GetInstance().RefreshInterval = 10 * 1000; // refresh every 5 sec in debug mode
+#else
+            NetworkScanner.GetInstance().RefreshInterval = Settings.RefreshTimeInSec * 1000;
+#endif
+            // init tab manager
+            TabController = new TabController(Pages);
+            mSendToNewTab.Click += new EventHandler(TabController.mSendToNewTab_Click);
+            TabController.GetModel().LoadSettings();
+            // set admin mode
+            AdminMode = Settings.Instance.AdvancedMode;
         }
 
-        /*
-        protected override void WndProc(ref Message m)
-        {
-            const int WM_HOTKEY = 0x0312;
-
-            switch (m.Msg)
-            {
-                case WM_HOTKEY:
-                    {
-                        if ((short)m.WParam == hotkey.HotkeyID)
-                        {
-                            IsFormVisible = true;
-                        }
-                        break;
-                    }
-                default:
-                    {
-                        base.WndProc(ref m);
-                        break;
-                    }
-            }
-        }
-         */
-
+        /// <summary>
+        /// Returns ProductName and Version for MainForm title.
+        /// </summary>
+        /// <returns>a MainForm title</returns>
         public static string GetMainFormTitle()
         {
             var Me = Assembly.GetExecutingAssembly();
@@ -123,7 +77,6 @@ namespace LanExchange.Forms
 
         private void SetupFormBounds()
         {
-            // размещаем форму внизу справа
             var Rect = new Rectangle();
             Rect.Size = new Size(450, Screen.PrimaryScreen.WorkingArea.Height);
             Rect.Location = new Point(Screen.PrimaryScreen.WorkingArea.Left + (Screen.PrimaryScreen.WorkingArea.Width - Rect.Width),
@@ -133,20 +86,18 @@ namespace LanExchange.Forms
 
         private void SetupForm()
         {
-            TrayIcon.Visible = CanUseTray();
+            TrayIcon.Visible = true;
             Text = GetMainFormTitle();
             // выводим имя компьютера
             lCompName.Text = SystemInformation.ComputerName;
             // выводим имя пользователя
-            WindowsIdentity user = WindowsIdentity.GetCurrent();
+            var user = WindowsIdentity.GetCurrent();
             lUserName.Text = user.Name;
             string[] A = user.Name.Split('\\');
             if (A.Length > 1)
                 lUserName.Text = A[1];
             else
                 lUserName.Text = A[0];
-            // режим отображения: Компьютеры
-            //CompBrowser.ViewType = NetworkBrowser.LVType.COMPUTERS;
         }
 
         private void SetupMenu()
@@ -154,41 +105,15 @@ namespace LanExchange.Forms
             ToolStripItem[] MyItems = new ToolStripItem[mComp.DropDownItems.Count];
             for (int i = 0; i < MyItems.Length; i++)
             {
-                ToolStripItem TI = mComp.DropDownItems[i];
+                var TI = mComp.DropDownItems[i];
                 if (TI is ToolStripSeparator)
                     MyItems[i] = new ToolStripSeparator();
                 else
                     if (TI is ToolStripMenuItem)
-                        MyItems[i] = (ToolStripItem)EventHandlerSupport.Clone(TI as ToolStripMenuItem);
+                        MyItems[i] = (ToolStripItem)MenuUtils.Clone(TI as ToolStripMenuItem);
             }
             popTop.Items.Clear();
             popTop.Items.AddRange(MyItems);
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            SetupForm();
-            SetupMenu();
-            // устанавливаем обработчик на изменение подключения к сети
-            bNetworkConnected = NetworkInterface.GetIsNetworkAvailable();
-            NetworkChange.NetworkAvailabilityChanged += NetworkChange_NetworkAvailabilityChanged;
-            // запуск обновления компов
-#if DEBUG
-            NetworkScanner.GetInstance().RefreshInterval = 5 * 1000;
-#else
-            NetworkScanner.GetInstance().RefreshInterval = Settings.RefreshTimeInSec * 1000;
-#endif
-            //CompBrowser = new NetworkBrowser(lvComps);
-            // содаем контроллер для управления вкладками
-            TabController = new TabController(Pages);
-            mSendToNewTab.Click += TabController.mSendToNewTab_Click;
-            TabController.GetModel().LoadSettings();
-            //SetBrowseTimerInterval();
-            //BrowseTimer_Tick(this, new EventArgs());
-            //NetworkScanner.GetInstance().SubscribeToSubject(ItemList, CurrentDomain);
-            //NetworkScanner.GetInstance().SubscribeToAll(ItemList);
-            // права администратора берем из реестра
-            AdminMode = Settings.Instance.AdvancedMode;
         }
 
         public string StatusText
@@ -197,108 +122,22 @@ namespace LanExchange.Forms
             set { lItemsCount.Text = value; }
         }
 
-        private static bool CanUseTray()
-        {
-            return Type.GetType("Mono.Runtime") == null;
-        }
 
-        /**
-         * Изменилось состояние подключения локальной сети.
-         * 
-         */
-        private void NetworkChange_NetworkAvailabilityChanged(object sender, NetworkAvailabilityEventArgs e)
-        {
-            logger.Info("Network availability changed: IsAvailable = {0}", e.IsAvailable);
-            bNetworkConnected = e.IsAvailable;
-            if (e.IsAvailable)
-            {
-                //bNetworkJustPlugged = true;
-                Invoke(myTimerRefresh, this, null);
-            }
-            else
-            {
-                CancelCompRelatedThreads();
-                Pages.Invoke(myPagesRefresh, Pages, null);
-            }
-        }
-
-        #endregion
-
-
-        #region Методы обновления, вызываемые из асинхронных потоков
-        void PagesRefreshMethod(object sender, object data)
-        {
-            TabPage Tab = Pages.SelectedTab;
-            if (Tab == null) return;
-            ListView LV = (ListView)Tab.Controls[0];
-            LV.Invoke(myCompsRefresh, LV, data);
-        }
-
-        static void lvCompsRefreshMethod(object sender, object data)
-        {
-            string RefreshCompName = (string)data;
-            ListView LV = (ListView)sender;
-            PanelItemList ItemList = PanelItemList.GetObject(LV);
-            if (LV.Handle != IntPtr.Zero)
-            {
-                int Index;
-                if (String.IsNullOrEmpty(RefreshCompName))
-                {
-                    LV.Refresh();
-                }
-                else
-                {
-                    Index = ItemList.Keys.IndexOf(RefreshCompName);
-                    if (Index != -1)
-                        LV.RedrawItems(Index, Index, false);
-                }
-            }
-        }
-
-        void TrayChatMethod(object sender, object data, object message)
-        {
-            string RefreshCompName = (string)data;
-            string ChatMessage = (string)message;
-            TrayIcon.ShowBalloonTip(10000, "Сообщение от " + RefreshCompName, ChatMessage, ToolTipIcon.Info);
-        }
-
-        #endregion
-
-
-
-        #region Сворачивание формы в трей
-
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             logger.Info("MainForm is closing with reason {0}", e.CloseReason.ToString());
-            bool bExiting = false;
             if (e.CloseReason == CloseReason.None || e.CloseReason == CloseReason.UserClosing)
             {
-                if (CanUseTray())
-                {
-                    e.Cancel = true;
-                    IsFormVisible = false;
-                }
-                else
-                    bExiting = true;
-            }
-            else
-                bExiting = true;
-            if (bExiting)
-            {
-                TabController.GetModel().StoreSettings();
-                CancelCompRelatedThreads();
-                // останавливаем прием UDP сообщений
-                StopReceive();
-                // сообщаем о выключении компа другим клиентам
-                if (e.CloseReason == CloseReason.WindowsShutDown)
-                    LANEX_SEND(null, MSG_LANEX_SHUTDOWN);
-                else
-                    // сообщаем о выходе из программы другим клиентам
-                    LANEX_SEND(null, MSG_LANEX_LOGOUT);
-            }
-            if (e.Cancel)
+                e.Cancel = true;
+                IsFormVisible = false;
                 logger.Info("Closing is canceled");
+            }
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            TabController.GetModel().StoreSettings();
+            Settings.SaveSettings();
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -315,32 +154,31 @@ namespace LanExchange.Forms
 
         public bool bReActivate;
 
-
         public bool IsFormVisible
         {
-            get { return this.WindowState != FormWindowState.Minimized && this.Visible; }
+            get { return WindowState != FormWindowState.Minimized && Visible; }
             set
             {
-                bool bMinimized = this.WindowState == FormWindowState.Minimized;
+                bool bMinimized = WindowState == FormWindowState.Minimized;
                 if (bMinimized)
                 {
-                    this.ShowInTaskbar = true;
-                    this.WindowState = LastWindowState;
+                    ShowInTaskbar = true;
+                    WindowState = LastWindowState;
                 }
                 else
                 {
                     if (bReActivate)
                     {
                         bReActivate = false;
-                        this.ShowInTaskbar = true;
-                        this.WindowState = FormWindowState.Minimized;
-                        this.WindowState = LastWindowState;
+                        ShowInTaskbar = true;
+                        WindowState = FormWindowState.Minimized;
+                        WindowState = LastWindowState;
                     }
                 }
-                this.Visible = value;
-                if (this.Visible)
+                Visible = value;
+                if (Visible)
                 {
-                    this.Activate();
+                    Activate();
                     //this.ActiveControl = lvComps;
                     //lvComps.Focus();
                 }
@@ -349,23 +187,22 @@ namespace LanExchange.Forms
 
         private void popTray_Opening(object sender, CancelEventArgs e)
         {
-            mOpen.Text = this.IsFormVisible ? "Скрыть" : "Открыть";
+            mOpen.Text = IsFormVisible ? "Скрыть" : "Открыть";
         }
 
         private void mOpen_Click(object sender, EventArgs e)
         {
-            this.IsFormVisible = !this.IsFormVisible;
+            IsFormVisible = !IsFormVisible;
         }
 
         private void TrayIcon_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
-                this.IsFormVisible = !this.IsFormVisible;
+                IsFormVisible = !IsFormVisible;
         }
-        #endregion
 
 #if DEBUG
-        public void Debug_ShowProperties(object obj)
+        public static void Debug_ShowProperties(object obj)
         {
             var F = new Form();
             F.Text = obj.ToString();
@@ -376,7 +213,7 @@ namespace LanExchange.Forms
             F.Show();
         }
 
-        public void Debug_ShowSubscribers()
+        public static void Debug_ShowSubscribers()
         {
             var S = new StringBuilder();
             foreach(var Pair in NetworkScanner.GetInstance().GetSubjects())
@@ -396,28 +233,14 @@ namespace LanExchange.Forms
                     IsFormVisible = false;
                 e.Handled = true;
             }
-            if (e.Control && e.KeyCode == Keys.Tab)
-            {
-                if (e.Shift)
-                    IncFlashMovieIndex(-1);
-                else
-                    IncFlashMovieIndex(+1);
-                UpdateFlashMovie();
-                e.Handled = true;
-            }
-            if (e.Control && e.KeyCode == Keys.Home)
-            {
-                FlashIndex = -1;
-                UpdateFlashMovie();
-                e.Handled = true;
-            }
 #if DEBUG
+            // Ctrl+Alt+C - show properties of current page in debug mode
             if (e.Control && e.Alt && e.KeyCode == Keys.C)
             {
-                //ListView LV = GetActiveListView();
                 Debug_ShowProperties(Pages.SelectedTab);
                 e.Handled = true;
             }
+            // Ctrl+Alt+S - show subscibers in debug mode
             if (e.Control && e.Alt && e.KeyCode == Keys.S)
             {
                 Debug_ShowSubscribers();
@@ -425,130 +248,6 @@ namespace LanExchange.Forms
             }
 #endif
         }
-
-        #region Фоновые действия: сканирование компов и пинги
-        private List<string> CompareDataSources(IList<PanelItem> OldDT, IList<PanelItem> NewDT)
-        {
-            List<string> Result = new List<string>();
-            if (OldDT == null || NewDT == null)
-                return Result;
-            Dictionary<string, int> OldHash = new Dictionary<string, int>();
-            int value = 0;
-
-            foreach (PanelItem Comp in OldDT)
-                OldHash.Add(Comp.Name, 0);
-            foreach (PanelItem Comp in NewDT)
-                if (!OldHash.TryGetValue(Comp.Name, out value))
-                    Result.Add(Comp.Name);
-            return Result;
-        }
-
-        private void DoBrowse_DoWork(object sender, DoWorkEventArgs e)
-        {
-            /*
-            logger.Info("Thread for browse network start");
-            string domain = (string)e.Argument;
-            e.Result = new BrowseProcessResult(domain, PanelItemList.GetServerList(domain));
-            e.Cancel = DoPing.CancellationPending;
-            if (e.Cancel)
-                logger.Info("Thread for browse network canceled");
-            else
-                logger.Info("Thread for browse network finish");
-             */
-        }
-
-        private void DoBrowse_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            /*
-            NetworkScannerResult Result = (NetworkScannerResult)e.Result;
-            if (!e.Cancelled)
-            {
-                // update server list
-                List<string> AddedNew = CompareDataSources(CompBrowser.CurrentDataTable, Result.ServerList);
-                List<string> RemovedNew = CompareDataSources(Result.ServerList, CompBrowser.CurrentDataTable);
-                // если список компов не изменился, ничего не обновляем
-                if (bNetworkJustPlugged || !(CompBrowser.CurrentDataTable != null && (AddedNew.Count == 0 && RemovedNew.Count == 0)))
-                {
-                    if (DoPing.IsBusy)
-                        DoPing.CancelAsync();
-                    // обновление грида
-                    if (CompBrowser.InternalItemList.Count > 0)
-                        foreach (PanelItem Comp in Result.ServerList)
-                        {
-                            PanelItem OldComp = CompBrowser.InternalItemList.Get(Comp.Name);
-                            Comp.CopyExtraFrom(OldComp);
-                        }
-                    CompBrowser.CurrentDataTable = Result.ServerList;
-                    CurrentDomain = Result.Domain;
-                }
-                if (bNetworkConnected && bFirstStart)
-                {
-                    bFirstStart = false;
-                    // загрузка списка недавно использованных компов
-                    try
-                    {
-                        TabController.LoadSettings();
-                    }
-                    catch (Exception ex)
-                    {
-                        logger.Info("Can't load settings: {0}", ex.ToString());
-                    }
-                    // выбираем текущий компьютер, чтобы пользователь видел описание
-                    CListView LV = GetActiveListView();
-                    PanelItemList ItemList = LV.GetObject(LV);
-                    if (ItemList != null)
-                        ItemList.ListView_SelectComputer(LV, Environment.MachineName);
-                    // запускаем поток на ожидание UDP сообщений
-                    StartReceive();
-                    // сообщаем другим клиентам о запуске
-                    LANEX_SEND(null, MSG_LANEX_LOGIN);
-                }
-                // запускаем процесс пинга
-                #if USE_PING
-                if (!DoPing.IsBusy)
-                    DoPing.RunWorkerAsync(Result.ServerList);
-                #endif
-            }
-            // запускаем таймер для следующего обновления
-            //SetBrowseTimerInterval();
-            //BrowseTimer.Enabled = true;
-             */
-        }
-
-        private void DoPing_DoWork(object sender, DoWorkEventArgs e)
-        {
-#if USE_PING
-            List<PanelItem> ScannedComps = (List<PanelItem>)e.Argument;
-            if (ScannedComps == null || ScannedComps.Count == 0)
-                return;
-            if (!(ScannedComps[0] is ComputerPanelItem))
-                return;
-            logger.Info("Thread for ping comps start");
-            // пингуем найденные компы
-            foreach (PanelItem Comp in ScannedComps)
-            {
-                if (DoPing.CancellationPending)
-                {
-                    e.Cancel = true;
-                    break;
-                }
-                bool bNewPingable = PingThread.FastPing(Comp.Name);
-                if ((Comp as ComputerPanelItem).IsPingable != bNewPingable)
-                {
-                        (Comp as ComputerPanelItem).IsPingable = bNewPingable;
-                        //Pages.Invoke(myPagesRefresh, Pages, Comp.Name);
-                }
-            }
-            e.Cancel = DoPing.CancellationPending;
-            if (e.Cancel)
-                logger.Info("Thread for ping comps canceled");
-            else
-                logger.Info("Thread for ping comps finish");
-#endif
-        }
-        #endregion
-
-        #region Функции общие для всех списков ListView
 
         public void Items_Changed(object sender, EventArgs e)
         {
@@ -629,10 +328,7 @@ namespace LanExchange.Forms
                 string[] A = PItem.GetSubItems();
                 foreach (string str in A)
                     e.Item.SubItems.Add(str);
-                if (!bNetworkConnected)
-                    e.Item.ImageIndex = ComputerPanelItem.imgCompRed;
-                else
-                    e.Item.ImageIndex = PItem.ImageIndex;
+                e.Item.ImageIndex = PItem.ImageIndex;
                 e.Item.ToolTipText = PItem.ToolTipText;
             }
         }
@@ -773,12 +469,6 @@ namespace LanExchange.Forms
                         mFolderOpen_Click(mFAROpen, new EventArgs());
                 e.Handled = true;
             }
-            // Ctrl+Alt+Shift+S - отправка текстового сообщения
-            if (e.Control && e.Alt && e.Shift && e.KeyCode == Keys.S)
-            {
-                SendChatMsg();
-                e.Handled = true;
-            }
             // клавишы для всех пользовательских вкладок
             if (e.KeyCode == Keys.Back)
             {
@@ -885,9 +575,6 @@ namespace LanExchange.Forms
             if (PItem != null)
                 GotoFavoriteComp(PItem.Name);
         }
-        #endregion
-
-        #region Управление панелью для фильтрации
 
         void SearchPanelVisible(bool value)
         {
@@ -965,19 +652,17 @@ namespace LanExchange.Forms
         {
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
             {
-                this.ActiveControl = GetActiveListView();
-                this.ActiveControl.Focus();
+                ActiveControl = GetActiveListView();
+                ActiveControl.Focus();
                 if (e.KeyCode == Keys.Up) SendKeys.Send("{UP}");
                 if (e.KeyCode == Keys.Down) SendKeys.Send("{DOWN}");
                 e.Handled = true;
             }
             if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
             {
-                this.ActiveControl = GetActiveListView();
+                ActiveControl = GetActiveListView();
             }
         }
-        #endregion
-
 
         /// <summary>
         /// Возвращает имя выбранного компьютера, предварительно проверив пингом включен ли он.
@@ -1170,17 +855,6 @@ namespace LanExchange.Forms
         }
 
 
-        public void CancelCompRelatedThreads()
-        {
-            if (DoBrowse.IsBusy)
-                DoBrowse.CancelAsync();
-            if (DoPing.IsBusy)
-                DoPing.CancelAsync();
-
-        }
-        
-        #region Обработка событий для пользовательской вкладке
-
         public void GotoFavoriteComp(string ComputerName)
         {
             ListView LV = GetActiveListView();
@@ -1217,27 +891,6 @@ namespace LanExchange.Forms
             return sBuilder.ToString();
         }
 
-        private void SendChatMsg()
-        {
-            PanelItem Comp = GetFocusedPanelItem(false, true);
-            if (Comp == null || !(Comp is ComputerPanelItem)) return;
-            if ((Comp as ComputerPanelItem).EndPoint == null) return;
-            string NewValue = "";
-            IPHostEntry DestHost = Dns.GetHostEntry((Comp as ComputerPanelItem).EndPoint.Address);
-            inputBox.Caption = String.Format("Отправка сообщения на компьютер {0}", DestHost.HostName);
-            inputBox.Prompt = "Текст сообщения";
-            NewValue = inputBox.Ask(NewValue, false);
-            if (NewValue != null && (Comp is ComputerPanelItem))
-            {
-                // получаем md5 хэш ID-строки получателя
-                string[] A = DestHost.HostName.Split('.');
-                string DestID = GetMD5FromString((A[0] + "." + A[1]).ToLower());
-                byte[] toEncodeAsBytes = System.Text.ASCIIEncoding.UTF8.GetBytes(NewValue);
-                string data = Convert.ToBase64String(toEncodeAsBytes);
-                LANEX_SEND((Comp as ComputerPanelItem).EndPoint, String.Format("{0}|{1}|{2}", MSG_LANEX_CHAT, DestID, data));
-            }
-        }
-
         public ListView GetActiveListView()
         {
             if (Pages.SelectedTab == null)
@@ -1247,16 +900,6 @@ namespace LanExchange.Forms
                 Control.ControlCollection ctrls = Pages.SelectedTab.Controls;
                 return ctrls.Count > 0 ? ctrls[0] as ListView : null;
             }
-        }
-
-        #endregion
-
-        private void mContextClose_Click(object sender, EventArgs e)
-        {
-            if (CanUseTray())
-                IsFormVisible = false;
-            else
-                Application.Exit();
         }
 
         private void mLargeIcons_Click(object sender, EventArgs e)
@@ -1323,7 +966,6 @@ namespace LanExchange.Forms
         {
             ListView LV = GetActiveListView();
             if (LV == null) return;
-            #region set radio button
             mCompLargeIcons.Checked = false;
             mCompSmallIcons.Checked = false;
             mCompList.Checked = false;
@@ -1343,7 +985,7 @@ namespace LanExchange.Forms
                     mCompDetails.Checked = true;
                     break;
             }
-            #endregion
+
             PanelItem PItem = GetFocusedPanelItem(false, false);
             bool bCompVisible = false;
             bool bFolderVisible = false;
@@ -1443,158 +1085,6 @@ namespace LanExchange.Forms
             udp.Close();
         }
 
-
-        // --- ИСХОДНЫЙ КОД ИЗВЛЕЧЕНИЯ СООБЩЕНИЙ ---
-
-        private Thread rec = null;
-        private UdpClient udp = null;
-        private bool stopReceive = false;
-
-        // Запуск отдельного потока для приема сообщений
-        void StartReceive()
-        {
-            rec = new Thread(new ThreadStart(Receive));
-            rec.Start();
-        }
-
-        // Функция извлекающая пришедшие сообщения
-        // работающая в отдельном потоке.
-        void Receive()
-        {
-            /*
-            logger.Info("Thread for udp receive start");
-            // При принудительном завершении работы метода 
-            // класса UdpClient Receive() и непредвиденных ситуациях 
-            // возможны исключения в этом месте исходного кода,
-            // заключим его в блок try чтобы не появлялись окна ошибок.
-            try
-            {
-                // Перед созданием нового объекта закрываем старый
-                // для освобождения занятых ресурсов.
-                if (udp != null) udp.Close();
-
-                int Port = 3333;
-                logger.Info("UDP LISTEN on port {0}", Port);
-                udp = new UdpClient(Port);
-
-                while (true)
-                {
-
-                    IPEndPoint ipendpoint = new IPEndPoint(IPAddress.Any, 0);
-                    byte[] message = udp.Receive(ref ipendpoint);
-                    string HostName = Dns.GetHostEntry(ipendpoint.Address).HostName;
-                    string CompName = HostName.Remove(HostName.IndexOf('.'), HostName.Length - HostName.IndexOf('.')).ToUpper();
-                    string TextMsg = Encoding.Default.GetString(message);
-                    string[] MSG = TextMsg.Split('|');
-
-                    logger.Info("UDP RECV data [{0}] from [ip={1}, host={2}]", TextMsg, ipendpoint.ToString(), HostName);
-
-                    PanelItem PItem = CompBrowser.InternalItemList.Get(CompName);
-                    ComputerPanelItem Comp = PItem as ComputerPanelItem;
-                    bool bNeedRefresh = false;
-                    string RefreshCompName = String.Empty;
-                    if (Comp != null)
-                    {
-                        Comp.EndPoint = ipendpoint;
-                        Comp.EndPoint.Port = 3333;
-                        RefreshCompName = Comp.Name;
-                    }
-                    switch (MSG[0])
-                    {
-                        case MSG_LANEX_LOGIN:
-                            if (Comp != null)
-                            {
-                                Comp.IsLogged = true;
-                            }
-                            // отвечаем на сообщение, чтобы наш комп отрисовался подключенным
-                            ipendpoint.Port = 3333;
-                            LANEX_SEND(ipendpoint, MSG_LANEX_LOGINOK);
-                            bNeedRefresh = true;
-                            break;
-                        case MSG_LANEX_LOGINOK:
-                            if (Comp != null)
-                            {
-                                Comp.IsLogged = true;
-                            }
-                            bNeedRefresh = true;
-                            break;
-                        case MSG_LANEX_LOGOUT:
-                            if (Comp != null)
-                            {
-                                Comp.IsLogged = false;
-                            }
-                            bNeedRefresh = true;
-                            break;
-
-                        case MSG_LANEX_SHUTDOWN:
-                            if (Comp != null)
-                            {
-                                Comp.IsLogged = false;
-                                Comp.IsPingable = false;
-                            }
-                            bNeedRefresh = true;
-                            break;
-                        case MSG_LANEX_CHAT:
-                            IPHostEntry MyHost = Dns.GetHostEntry(IPAddress.Loopback);
-                            string[] A = MyHost.HostName.Split('.');
-                            // получаем md5 хэш ID-строки получателя
-                            string MyID = GetMD5FromString((A[0] + "." + A[1]).ToLower());
-                            if (MyID.Equals(MSG[1]))
-                            {
-                                byte[] data = Convert.FromBase64String(MSG[2]);
-                                string ChatMessage = System.Text.ASCIIEncoding.UTF8.GetString(data);
-                                MainFormInstance.Invoke(myTrayChat, RefreshCompName, ChatMessage);
-                            }
-                            break;
-                    }
-                    // Если дана команда остановить поток, останавливаем бесконечный цикл.
-                    if (stopReceive == true) break;
-                    // обовление элемента списка
-                    if (bNeedRefresh)
-                    {
-                        Pages.Invoke(myPagesRefresh, Pages, RefreshCompName);
-                    }
-                }
-
-                udp.Close();
-            }
-            catch
-            {
-            }
-            logger.Info("Thread for udp receive finish");
-             */
-        }
-
-
-        // Функция безопасной остановки дополнительного потока
-        void StopReceive()
-        {
-            // Останавливаем цикл в дополнительном потоке
-            stopReceive = true;
-
-            // Принудительно закрываем объект класса UdpClient 
-            if (udp != null) udp.Close();
-
-            // Для корректного завершения дополнительного потока
-            // подключаем его к основному потоку.
-            if (rec != null) rec.Join();
-        }
-
-        //функция _getHost для сервера отличается только портом. Вместо 9050, отправлять всегда будем на 9051
-        private EndPoint _getHost(string text)
-        {
-	        //вырезаем из строки только IP адрес формата IPv4
-	        string host = text.Remove(text.IndexOf(":"), text.Length - text.IndexOf(":"));
-
-	        //создаем объект адреса. Переменная host уже имеет вид [0-255].[0-255].[0-255].[0-255]
-	        IPAddress hostIPAddress = IPAddress.Parse(host);
-
-	        //создаем конечную точку. В нашем случае это адрес сервера, который слушает порт 9051
-	        IPEndPoint hostIPEndPoint = new IPEndPoint(hostIPAddress, 9051);
-	        EndPoint To = (EndPoint)(hostIPEndPoint);
-	        return To;
-        }
-
         private void Pages_Selected(object sender, TabControlEventArgs e)
         {
             if (Pages.SelectedTab != null)
@@ -1612,26 +1102,24 @@ namespace LanExchange.Forms
 
         private void mSettings_Click(object sender, EventArgs e)
         {
-            if (ParamsFormInstance == null)
+            if (ParamsForm.Instance != null)
+                return;
+            using (ParamsForm.Instance = new ParamsForm())
             {
-                using (ParamsFormInstance = new ParamsForm())
-                {
-                    ParamsFormInstance.ShowDialog();
-                }
-                ParamsFormInstance = null;
+                ParamsForm.Instance.ShowDialog();
             }
+            ParamsForm.Instance = null;
         }
 
         private void mAbout_Click(object sender, EventArgs e)
         {
-            if (AboutFormInstance == null)
+            if (AboutForm.Instance != null)
+                return;
+            using (AboutForm.Instance = new AboutForm())
             {
-                using (AboutFormInstance = new AboutForm())
-                {
-                    AboutFormInstance.ShowDialog();
-                }
-                AboutFormInstance = null;
+                AboutForm.Instance.ShowDialog();
             }
+            AboutForm.Instance = null;
         }
 
         private void panel1_DragEnter(object sender, DragEventArgs e)
@@ -1642,64 +1130,15 @@ namespace LanExchange.Forms
 
         void SetControlsVisible(bool bVisible)
         {
-            foreach (Control control in this.Controls)
+            foreach (Control control in Controls)
                 control.Visible = bVisible;
-        }
-
-        void UpdateFlashMovie()
-        {
-            #if USE_FLASH
-            if (FlashIndex == -1)
-            {
-                SetControlsVisible(true);
-                axShockwaveFlash1.Stop();
-                axShockwaveFlash1.Visible = false;
-                axShockwaveFlash1.Movie = null;
-            }
-            else
-            {
-                SetControlsVisible(false);
-                axShockwaveFlash1.Visible = true;
-                axShockwaveFlash1.Movie = FlashMovies[FlashIndex];
-            }
-            #endif
-        }
-
-        void IncFlashMovieIndex(int Delta)
-        {
-            FlashIndex += Delta;
-            if (FlashIndex < -1)
-                FlashIndex = FlashMovies.Length - 1;
-            if (FlashIndex > FlashMovies.Length - 1)
-                FlashIndex = -1;
         }
 
         private void panel1_DragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            // скрываем все элементы формы
-            SetControlsVisible(false);
-            List<string> SWFFiles = new List<string>();
-            foreach (string file in files)
-            {
-                if (Directory.Exists(file))
-                {
-                    string[] files2 = Directory.GetFiles(file, "*.swf", SearchOption.AllDirectories);
-                    foreach (string file2 in files2)
-                        SWFFiles.Add(file2);
-                } else
-                if (Path.GetExtension(file) == ".swf")
-                    SWFFiles.Add(file);
-            }
-            FlashMovies = SWFFiles.ToArray();
-            if (FlashMovies.Length > 0)
-                FlashIndex = 0;
-            else
-                FlashIndex = -1;
-            UpdateFlashMovie();
         }
         
-        #region Редактирование и переключение вкладок    
   
         private void mNewTab_Click(object sender, EventArgs e)
         {
@@ -1733,19 +1172,17 @@ namespace LanExchange.Forms
             mAfterSendTo.Visible = mSendToTab.DropDownItems.Count > 2;
         }
 
-        #endregion
-
-        private bool admin_mode = false;
+        private bool m_AdminMode;
 
         public bool AdminMode
         {
-            get { return admin_mode; }
+            get { return m_AdminMode; }
             set
             {
-                if (admin_mode != value)
+                if (m_AdminMode != value)
                 {
                     logger.Info("AdminMode is {0}", value ? "ON" : "OFF");
-                    admin_mode = value;
+                    m_AdminMode = value;
                     popComps_Opened(popComps, new EventArgs());
                 }
             }
@@ -1763,12 +1200,12 @@ namespace LanExchange.Forms
 
         private void imgClear_MouseHover(object sender, EventArgs e)
         {
-            imgClear.Image = LanExchange.Properties.Resources.clear_hover;
+            imgClear.Image = Resources.clear_hover;
         }
 
         private void imgClear_MouseLeave(object sender, EventArgs e)
         {
-            imgClear.Image = LanExchange.Properties.Resources.clear_normal;
+            imgClear.Image = Resources.clear_normal;
         }
 
         private void mTabParams_Click(object sender, EventArgs e)
@@ -1777,20 +1214,30 @@ namespace LanExchange.Forms
             {
                 TabModel M = TabController.GetModel();
                 PanelItemList Info = M.GetItem(Pages.SelectedIndex);
-                Form.Scope = Info.Scope;
+                Form.ScanMode = Info.ScanMode;
                 Form.Groups = Info.Groups;
                 if (Form.ShowDialog() == DialogResult.OK)
                 {
-                    Info.Scope = Form.Scope;
+                    Info.ScanMode = Form.ScanMode;
                     Info.Groups = Form.Groups;
                     Info.UpdateSubsctiption();
                 }
             }
         }
 
-        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        private void mContextClose_Click(object sender, EventArgs e)
         {
-            LanExchange.Settings.SaveSettings();
+            IsFormVisible = false;
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void popComps_Opening(object sender, CancelEventArgs e)
+        {
+
         }
     }
 }

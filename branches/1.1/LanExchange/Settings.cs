@@ -2,6 +2,9 @@
 using System.IO;
 using LanExchange.Utils;
 using System.ComponentModel;
+using System.Windows.Forms;
+using System.Collections.Generic;
+using LanExchange.Network;
 
 namespace LanExchange
 {
@@ -16,6 +19,7 @@ namespace LanExchange
         public Settings()
         {
             RefreshTimeInSec = 5 * 60;
+
         }
 
         public static Settings Instance
@@ -24,7 +28,7 @@ namespace LanExchange
             {
                 if (m_Instance == null)
                 {
-                    Settings temp = new Settings();
+                    var temp = new Settings();
                     m_Instance = temp;
                 }
                 return m_Instance;
@@ -35,7 +39,7 @@ namespace LanExchange
         {
             try
             {
-                Settings temp = (Settings)SerializeUtils.DeserializeObjectFromXMLFile(GetConfigFileName(), typeof(Settings));
+                var temp = (Settings)SerializeUtils.DeserializeObjectFromXMLFile(GetConfigFileName(), typeof(Settings));
                 m_Instance = null;
                 m_Instance = temp;
             }
@@ -44,7 +48,7 @@ namespace LanExchange
 
         public static void SaveSettings()
         {
-            SerializeUtils.SerializeTypeToXMLFile(GetConfigFileName(), Instance, typeof(Settings));
+            SerializeUtils.SerializeTypeToXMLFile(GetConfigFileName(), Instance);
         }
 
         public static string GetExecutableFileName()
@@ -100,5 +104,7 @@ namespace LanExchange
         {
             return String.IsNullOrEmpty(EmailAddress) ? EmailAddress_Default : EmailAddress;
         }
+
+        public int SelectedIndex { get; set; }
     }
 }

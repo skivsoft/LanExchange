@@ -5,6 +5,8 @@ namespace LanExchange.Forms
 {
     public partial class ParamsForm : Form
     {
+        public static ParamsForm Instance;
+        
         public ParamsForm()
         {
             InitializeComponent();

@@ -12,7 +12,7 @@ namespace LanExchange.Forms
             InitializeComponent();
             UpdateControls();
             UpdateDomainList();
-            NetworkScanner.GetInstance().DomainListChanged += TabParamsForm_DomainListChanged;
+            NetworkScanner.GetInstance().DomainListChanged += new EventHandler(TabParamsForm_DomainListChanged);
         }
 
         private void TabParamsForm_DomainListChanged(object sender, EventArgs e)
@@ -57,29 +57,29 @@ namespace LanExchange.Forms
                 }
         }
 
-        public LanExchange.PanelItemList.ItemListScope Scope
+        public LanExchange.PanelItemList.PanelScanMode ScanMode
         {
             get
             {
                 if (rbAll.Checked)
-                    return LanExchange.PanelItemList.ItemListScope.ALL_GROUPS;
+                    return LanExchange.PanelItemList.PanelScanMode.All;
                 else
                 if (rbSelected.Checked)
-                    return LanExchange.PanelItemList.ItemListScope.SELECTED_GROUPS;
+                    return LanExchange.PanelItemList.PanelScanMode.Selected;
                 else
-                    return LanExchange.PanelItemList.ItemListScope.DONT_SCAN;
+                    return LanExchange.PanelItemList.PanelScanMode.None;
             }
             set
             {
                 switch (value)
                 {
-                    case PanelItemList.ItemListScope.ALL_GROUPS:
+                    case PanelItemList.PanelScanMode.All:
                         rbAll.Checked = true;
                         break;
-                    case PanelItemList.ItemListScope.SELECTED_GROUPS:
+                    case PanelItemList.PanelScanMode.Selected:
                         rbSelected.Checked = true;
                         break;
-                    case PanelItemList.ItemListScope.DONT_SCAN:
+                    case PanelItemList.PanelScanMode.None:
                         rbDontScan.Checked = true;
                         break;
                 }

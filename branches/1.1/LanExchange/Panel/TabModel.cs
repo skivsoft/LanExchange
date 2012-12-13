@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using LanExchange.Network;
+using LanExchange.Utils;
+using System.IO;
 
 namespace LanExchange
 {
@@ -50,14 +52,17 @@ namespace LanExchange
         public event IndexEventHandler AfterRemove;
         public event PanelItemListEventHandler AfterRename;
 
+        private LanExchangeTabs m_Pages;
+
         public TabModel(string name)
         {
             m_List = new List<PanelItemList>();
+            m_Pages = new LanExchangeTabs();
             m_Name = name;
             SelectedIndex = -1;
         }
 
-        public int Count { get { return this.m_List.Count; }  }
+        public int Count { get { return m_List.Count; }  }
 
         public int SelectedIndex { get; set; }
 
@@ -107,17 +112,14 @@ namespace LanExchange
 
         public void RenameTab(int Index, string NewTabName)
         {
-            PanelItemList Info = m_List[Index];
+            var Info = m_List[Index];
             Info.TabName = NewTabName;
             DoAfterRename(Info);
         }
 
         public string GetTabName(int i)
         {
-            if (i < 0 || i > Count - 1)
-                return null;
-            else
-                return m_List[i].TabName;
+            return i >= 0 && i <= Count - 1 ? m_List[i].TabName : null;
         }
 
         internal void Clear()
@@ -125,74 +127,51 @@ namespace LanExchange
             m_List.Clear();
         }
 
+        public static string GetConfigFileName()
+        {
+            return Path.Combine(Path.GetDirectoryName(Settings.GetExecutableFileName()), "Pages.cfg");
+        }
 
         public void StoreSettings()
         {
-            /*
-            //UpdateModelFromView();
-            Settings config = Settings.GetInstance();
-            config.SetIntValue(String.Format(@"{0}\SelectedIndex", m_Name), SelectedIndex);
-            config.SetIntValue(String.Format(@"{0}\Count", m_Name), Count);
+            m_Pages.SelectedIndex = SelectedIndex;
+            TabSettings[] pages = new TabSettings[Count];
             for (int i = 0; i < Count; i++)
-            {
-                PanelItemList Info = GetItem(i);
-                string S = String.Format(@"{0}.{1}\", m_Name, i);
-                config.SetStrValue(S + "TabName", Info.TabName);
-                config.SetStrValue(S + "FilterText", Info.FilterText);
-                config.SetIntValue(S + "CurrentView", (int)Info.CurrentView);
-                // элементы нулевой закладки не сохраняем, т.к. они формируются после обзора сети
-                //config.SetListValue(S + "Items", i > 0 ? Info.Items : null);
-                config.SetIntValue(S + "Scope", (int)(Info.Scope));
-                config.SetListValue(S + "Groups", Info.Groups);
-            }
-             */
+                pages[i] = GetItem(i).Settings;
+            m_Pages.Items = pages;
+            SerializeUtils.SerializeTypeToXMLFile(GetConfigFileName(), m_Pages);
         }
 
         public void LoadSettings()
         {
-            /*
             Clear();
-            Settings config = Settings.GetInstance();
-            int CNT = config.GetIntValue(String.Format(@"{0}\Count", m_Name), 0);
-            if (CNT > 0)
+            try
             {
-                for (int i = 0; i < CNT; i++)
-                {
-                    string S = String.Format(@"{0}.{1}\", m_Name, i);
-                    string tabname = config.GetStrValue(S + "TabName", "");
-                    PanelItemList Info = new PanelItemList(tabname) { 
-                        FilterText = config.GetStrValue(S + "FilterText", ""), 
-                        CurrentView = (View)config.GetIntValue(S + "CurrentView", (int)View.Details), 
-                        Scope = (PanelItemList.PanelItemListScope)config.GetIntValue(S + "Scope", 0), 
-                        Groups = config.GetListValue(S + "Groups") 
-                    };
-                    AddTab(Info);
-                }
+                m_Pages = (LanExchangeTabs)SerializeUtils.DeserializeObjectFromXMLFile(GetConfigFileName(), typeof(LanExchangeTabs));
             }
+            catch { }
+            if (m_Pages.Items.Length > 0)
+                Array.ForEach(m_Pages.Items, Page =>
+                {
+                    var Info = new PanelItemList(Page.Name);
+                    Info.Settings = Page;
+                    AddTab(Info);
+                });
             else
             {
                 string domain = NetApi32Utils.GetMachineNetBiosDomain(null);
-                PanelItemList Info = new PanelItemList(domain) { 
-                    FilterText = "", 
-                    CurrentView = (View.Details), 
-                    Groups = new List<string>() };
+                var Info = new PanelItemList(domain)
+                {
+                    CurrentView = View.Details,
+                    ScanMode = PanelItemList.PanelScanMode.Selected
+                };
                 Info.Groups.Add(domain);
                 AddTab(Info);
             }
-            int Index = config.GetIntValue(String.Format(@"{0}\SelectedIndex", m_Name), 0);
+
             // присваиваем сначала -1, чтобы всегда срабатывал евент PageSelected при установке нужной странице
             SelectedIndex = -1;
-            SelectedIndex = Index;
-             */
-            string domain = NetApi32Utils.GetMachineNetBiosDomain(null);
-            PanelItemList Info = new PanelItemList(domain)
-            {
-                FilterText = "",
-                CurrentView = (View.Details),
-                Groups = new List<string>()
-            };
-            Info.Groups.Add(domain);
-            AddTab(Info);
+            SelectedIndex = Settings.Instance.SelectedIndex;
         }
 
     }

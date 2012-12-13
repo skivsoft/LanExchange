@@ -72,7 +72,6 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.mAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.mExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.DoBrowse = new System.ComponentModel.BackgroundWorker();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lItemsCount = new System.Windows.Forms.ToolStripStatusLabel();
@@ -80,7 +79,6 @@
             this.lCompName = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lUserName = new System.Windows.Forms.ToolStripStatusLabel();
-            this.DoPing = new System.ComponentModel.BackgroundWorker();
             this.Pages = new System.Windows.Forms.TabControl();
             this.popPages = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mNewTab = new System.Windows.Forms.ToolStripMenuItem();
@@ -101,6 +99,12 @@
             this.pInfo = new System.Windows.Forms.Panel();
             this.popTop = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.imgInfo = new System.Windows.Forms.PictureBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.сетьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mSettingsMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.mAboutMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.mExitMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.inputBox = new LanExchange.InputBox(this.components);
             this.popComps.SuspendLayout();
             this.popTray.SuspendLayout();
@@ -110,6 +114,7 @@
             this.tsBottom.SuspendLayout();
             this.pInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgInfo)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // popComps
@@ -133,6 +138,7 @@
             this.mContextClose});
             this.popComps.Name = "popComps";
             this.popComps.Size = new System.Drawing.Size(279, 292);
+            this.popComps.Opening += new System.ComponentModel.CancelEventHandler(this.popComps_Opening);
             this.popComps.Opened += new System.EventHandler(this.popComps_Opened);
             // 
             // mComp
@@ -487,12 +493,6 @@
             this.mExit.Text = "Выход";
             this.mExit.Click += new System.EventHandler(this.mExit_Click);
             // 
-            // DoBrowse
-            // 
-            this.DoBrowse.WorkerSupportsCancellation = true;
-            this.DoBrowse.DoWork += new System.ComponentModel.DoWorkEventHandler(this.DoBrowse_DoWork);
-            this.DoBrowse.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.DoBrowse_RunWorkerCompleted);
-            // 
             // toolStripStatusLabel2
             // 
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
@@ -555,19 +555,14 @@
             this.lUserName.Size = new System.Drawing.Size(35, 17);
             this.lUserName.Text = "    ";
             // 
-            // DoPing
-            // 
-            this.DoPing.WorkerSupportsCancellation = true;
-            this.DoPing.DoWork += new System.ComponentModel.DoWorkEventHandler(this.DoPing_DoWork);
-            // 
             // Pages
             // 
             this.Pages.ContextMenuStrip = this.popPages;
             this.Pages.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Pages.Location = new System.Drawing.Point(0, 60);
+            this.Pages.Location = new System.Drawing.Point(0, 84);
             this.Pages.Name = "Pages";
             this.Pages.SelectedIndex = 0;
-            this.Pages.Size = new System.Drawing.Size(564, 428);
+            this.Pages.Size = new System.Drawing.Size(564, 404);
             this.Pages.TabIndex = 1;
             this.Pages.Selected += new System.Windows.Forms.TabControlEventHandler(this.Pages_Selected);
             // 
@@ -724,7 +719,7 @@
             this.pInfo.Controls.Add(this.lInfoDesc);
             this.pInfo.Controls.Add(this.lInfoComp);
             this.pInfo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pInfo.Location = new System.Drawing.Point(0, 0);
+            this.pInfo.Location = new System.Drawing.Point(0, 24);
             this.pInfo.Name = "pInfo";
             this.pInfo.Size = new System.Drawing.Size(564, 60);
             this.pInfo.TabIndex = 0;
@@ -744,9 +739,59 @@
             this.imgInfo.TabIndex = 2;
             this.imgInfo.TabStop = false;
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.сетьToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(564, 24);
+            this.menuStrip1.TabIndex = 22;
+            this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
+            // 
+            // сетьToolStripMenuItem
+            // 
+            this.сетьToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mSettingsMenu,
+            this.toolStripSeparator2,
+            this.mAboutMenu,
+            this.mExitMenu});
+            this.сетьToolStripMenuItem.Name = "сетьToolStripMenuItem";
+            this.сетьToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.сетьToolStripMenuItem.Text = "Сеть";
+            // 
+            // mSettingsMenu
+            // 
+            this.mSettingsMenu.Name = "mSettingsMenu";
+            this.mSettingsMenu.Size = new System.Drawing.Size(158, 22);
+            this.mSettingsMenu.Text = "Настройки...";
+            this.mSettingsMenu.Click += new System.EventHandler(this.mSettings_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(155, 6);
+            // 
+            // mAboutMenu
+            // 
+            this.mAboutMenu.Name = "mAboutMenu";
+            this.mAboutMenu.Size = new System.Drawing.Size(158, 22);
+            this.mAboutMenu.Text = "О программе...";
+            this.mAboutMenu.Click += new System.EventHandler(this.mAbout_Click);
+            // 
+            // mExitMenu
+            // 
+            this.mExitMenu.Name = "mExitMenu";
+            this.mExitMenu.Size = new System.Drawing.Size(158, 22);
+            this.mExitMenu.Text = "Выход";
+            this.mExitMenu.Click += new System.EventHandler(this.mExit_Click);
+            // 
             // inputBox
             // 
+            this.inputBox.Caption = null;
             this.inputBox.ErrorMsgOnEmpty = null;
+            this.inputBox.Prompt = null;
             // 
             // MainForm
             // 
@@ -757,13 +802,14 @@
             this.Controls.Add(this.tsBottom);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.pInfo);
+            this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.popComps.ResumeLayout(false);
@@ -777,6 +823,8 @@
             this.pInfo.ResumeLayout(false);
             this.pInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgInfo)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -788,7 +836,6 @@
         private System.Windows.Forms.ContextMenuStrip popTray;
         private System.Windows.Forms.ToolStripMenuItem mExit;
         private System.Windows.Forms.ToolStripMenuItem mOpen;
-        private System.ComponentModel.BackgroundWorker DoBrowse;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         public System.Windows.Forms.ContextMenuStrip popComps;
         private System.Windows.Forms.ToolStripMenuItem mCopyCompName;
@@ -823,7 +870,6 @@
         public System.Windows.Forms.ToolStripStatusLabel lItemsCount;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel lCompName;
-        private System.ComponentModel.BackgroundWorker DoPing;
         private System.Windows.Forms.TabControl Pages;
         public System.Windows.Forms.ToolTip tipComps;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
@@ -856,6 +902,12 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
         private System.Windows.Forms.ToolStripStatusLabel lUserName;
         private System.Windows.Forms.ToolStripMenuItem mTabParams;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem сетьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mSettingsMenu;
+        private System.Windows.Forms.ToolStripMenuItem mExitMenu;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem mAboutMenu;
     }
 }
 

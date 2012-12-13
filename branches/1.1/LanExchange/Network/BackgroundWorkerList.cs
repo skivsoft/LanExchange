@@ -24,7 +24,7 @@ namespace LanExchange.Network
         public bool Exists(object argument)
         {
             bool Found;
-            lock (m_Workers)
+            //lock (m_Workers)
             {
                 Found = m_Workers.ContainsKey(argument);
             }
@@ -33,7 +33,7 @@ namespace LanExchange.Network
         
         public void Add(object argument, BackgroundWorker worker)
         {
-            lock (m_Workers)
+            //lock (m_Workers)
             {
                 m_Workers.Add(argument, worker);
             }
@@ -41,7 +41,7 @@ namespace LanExchange.Network
 
         public void ClearNotBusy()
         {
-            lock (m_Workers)
+            //lock (m_Workers)
             {
                 bool Found;
                 do
@@ -60,7 +60,7 @@ namespace LanExchange.Network
 
         public void RunWorkerAsync()
         {
-            lock (m_Workers)
+            //lock (m_Workers)
             {
                 foreach (var Pair in m_Workers)
                     if (!Pair.Value.IsBusy)
@@ -70,7 +70,7 @@ namespace LanExchange.Network
 
         public void CancelAsync()
         {
-            lock (m_Workers)
+            //lock (m_Workers)
             {
                 foreach (var Pair in m_Workers)
                     if (Pair.Value.IsBusy)
@@ -83,7 +83,7 @@ namespace LanExchange.Network
             get
             {
                 int Count = 0;
-                lock (m_Workers)
+                //lock (m_Workers)
                 {
                     foreach (var Pair in m_Workers)
                         if (Pair.Value.IsBusy)
@@ -98,7 +98,7 @@ namespace LanExchange.Network
             get
             {
                 bool bFound = false;
-                lock (m_Workers)
+                //lock (m_Workers)
                 {
                     foreach (var Pair in m_Workers)
                         if (Pair.Value.IsBusy)

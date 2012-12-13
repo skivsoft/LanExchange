@@ -8,6 +8,7 @@ using System.Net;
 using System.Text;
 using System.IO;
 using System.Diagnostics;
+using NLog;
 #if NLOG
 using NLog;
 #endif
@@ -16,7 +17,8 @@ namespace LanExchange.Forms
 {
     partial class AboutForm : Form
     {
-        private readonly static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        public static AboutForm Instance;
+        private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
         private Control MsgControl;
         private string UpdateError;
@@ -199,7 +201,7 @@ namespace LanExchange.Forms
                         Text = String.Format("Обновить до версии {0}", 
                         siteVersion)
                     };
-                    B.Click += UpdateButton_Click;
+                    B.Click += new EventHandler(UpdateButton_Click);
                     HideMessage();
                     tableLayoutPanel.Controls.Add(B, 1, 2);
                     MsgControl = B;

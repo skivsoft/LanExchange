@@ -143,7 +143,7 @@ namespace LanExchange.Forms
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TabParamsForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Настройка вкладки";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TabParamsForm_KeyDown);
             this.groupBox1.ResumeLayout(false);

@@ -20,7 +20,7 @@ namespace LanExchange
     /// <summary>
     /// This is a set of extensions for accessing the Event Handlers as well as cloning menu items
     /// </summary>
-    public static class EventHandlerSupport
+    public static class MenuUtils
     {
         //////////////////////////////////////////////////
         // Private static fields
@@ -50,7 +50,7 @@ namespace LanExchange
 #endif
             ToolStripMenuItem sourceToolStripMenuItem)
         {
-            ToolStripMenuItem menuItem = new ToolStripMenuItem();
+            var menuItem = new ToolStripMenuItem();
 #if NET_3_5
             var propInfoList = from p in typeof(ToolStripMenuItem).GetProperties()
                                let attributes = p.GetCustomAttributes(true)
@@ -76,7 +76,7 @@ namespace LanExchange
                         Browsable = false;
                         break;
                     }
-                if (Browsable && p.CanRead && p.CanWrite && p.Name != "DropDown")
+                if (Browsable && p.CanRead && p.CanWrite && !p.Name.Equals("DropDown"))
                 {
                     object propertyInfoValue = p.GetValue(sourceToolStripMenuItem, null);
                     p.SetValue(menuItem, propertyInfoValue, null);

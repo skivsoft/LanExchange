@@ -90,7 +90,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventHandlerSupport.cs" />
+    <Compile Include="Utils\MenuUtils.cs" />
     <Compile Include="Forms\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -118,13 +118,15 @@
     <Compile Include="Forms\TabParamsForm.Designer.cs">
       <DependentUpon>TabParamsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="OSLayer\Kernel32.cs" />
+    <Compile Include="Panel\LanExchangeTabs.cs" />
+    <Compile Include="Utils\Kernel32.cs" />
     <Compile Include="Network\BackgroundWorkerList.cs" />
     <Compile Include="Network\ISubscriber.cs" />
     <Compile Include="Network\ISubscriptionProvider.cs" />
-    <Compile Include="OSLayer\NetApi32.cs" />
+    <Compile Include="Utils\NetApi32.cs" />
     <Compile Include="Network\NetworkScanner.cs" />
     <Compile Include="Network\ServerInfo.cs" />
+    <Compile Include="Panel\TabSettings.cs" />
     <Compile Include="Utils\NetApi32Utils.cs" />
     <Compile Include="NLogFake.cs" />
     <Compile Include="Forms\ParamsForm.cs">
@@ -138,12 +140,12 @@
     <Compile Include="Panel\SharePanelItem.cs" />
     <Compile Include="Network\PingThread.cs" />
     <Compile Include="Panel\PanelItem.cs" />
-    <Compile Include="OSLayer\User32.cs" />
+    <Compile Include="Utils\User32.cs" />
     <Compile Include="Utils\AutorunUtils.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TabModel.cs" />
-    <Compile Include="TabView.cs" />
+    <Compile Include="Panel\TabModel.cs" />
+    <Compile Include="Panel\TabView.cs" />
     <Compile Include="Utils\SerializeUtils.cs" />
     <EmbeddedResource Include="Forms\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
@@ -177,7 +179,7 @@
     <Compile Include="Panel\PanelItemList.cs" />
     <Compile Include="Panel\PuntoSwitcher.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="TabController.cs" />
+    <Compile Include="Panel\TabController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="NLog.config">

@@ -12,11 +12,11 @@ namespace LanExchange
 {
     public class PanelItemList : ISubscriber
     {
-        public enum ItemListScope
+        public enum PanelScanMode
         {
-            DONT_SCAN = 0,
-            ALL_GROUPS = 1,
-            SELECTED_GROUPS = 2
+            None = 0,
+            All = 1,
+            Selected = 2
         }
 
         public enum PanelItemType
@@ -38,9 +38,7 @@ namespace LanExchange
         private readonly List<string> m_Keys;
         private String m_Filter = "";
 
-        private readonly View m_CurrentView = View.Details;
-        private readonly ItemListScope m_Scope = ItemListScope.DONT_SCAN;
-        private List<string> m_Groups;
+        private readonly PanelScanMode m_ScanMode = PanelScanMode.None;
 
         public event EventHandler Changed;
 
@@ -48,7 +46,38 @@ namespace LanExchange
         //private PanelItemType m_CurrentType = PanelItemType.COMPUTERS;
         //private string m_Path = null;
 
-        private string m_FocusedItem;
+        public PanelItemList(string name)
+        {
+            m_Results = new Dictionary<string, IList<ServerInfo>>();
+            m_Items = new SortedDictionary<string, PanelItem>();
+            m_Data = new SortedDictionary<string, PanelItem>();
+            m_Keys = new List<string>();
+            Groups = new List<string>();
+            TabName = name;
+        }
+
+        public TabSettings Settings
+        {
+            get
+            {
+                var Page = new TabSettings();
+                Page.Name = TabName;
+                Page.Filter = FilterText;
+                Page.CurrentView = CurrentView;
+                Page.ScanMode = ScanMode;
+                Page.ScanGroups = Groups;
+                return Page;
+            }
+            set
+            {
+                TabName = value.Name;
+                FilterText = value.Filter;
+                CurrentView = value.CurrentView;
+                ScanMode = value.ScanMode;
+                Groups = value.ScanGroups;
+            }
+            
+        }
 
         public static PanelItemList GetObject(ListView LV)
         {
@@ -62,15 +91,6 @@ namespace LanExchange
             List = null;
         }
 
-        public PanelItemList(string name)
-        {
-            m_Results = new Dictionary<string, IList<ServerInfo>>();
-            m_Items = new SortedDictionary<string, PanelItem>();
-            m_Data = new SortedDictionary<string, PanelItem>();
-            m_Keys = new List<string>();
-            TabName = name;
-        }
-
         public string TabName { get; set; }
 
         public View CurrentView { get; set; }
@@ -80,7 +100,7 @@ namespace LanExchange
             get { return m_Items; }
         }
 
-        public ItemListScope Scope { get; set; }
+        public PanelScanMode ScanMode { get; set; }
 
         public List<string> Groups { get; set; }
 
@@ -94,12 +114,12 @@ namespace LanExchange
         public void UpdateSubsctiption()
         {
             // оформляем подписку на получение списка компов
-            switch (Scope)
+            switch (ScanMode)
             {
-                case ItemListScope.ALL_GROUPS:
+                case PanelScanMode.All:
                     NetworkScanner.GetInstance().SubscribeToAll(this);
                     break;
-                case ItemListScope.SELECTED_GROUPS:
+                case PanelScanMode.Selected:
                     NetworkScanner.GetInstance().UnSubscribe(this);
                     foreach (var group in Groups)
                         NetworkScanner.GetInstance().SubscribeToSubject(this, group);
@@ -192,7 +212,10 @@ namespace LanExchange
             get { return m_Filter; }
             set
             {
-                m_Filter = value;
+                if (value == null)
+                    m_Filter = String.Empty;
+                else
+                    m_Filter = value;
                 ApplyFilter();
             }
         }
@@ -305,26 +328,26 @@ namespace LanExchange
         public void DataChanged(ISubscriptionProvider sender, DataChangedEventArgs e)
         {
             IList<ServerInfo> List = (IList<ServerInfo>)e.Data;
-            lock (m_Results)
+            //lock (m_Results)
             {
                 if (m_Results.ContainsKey(e.Subject))
                     m_Results[e.Subject] = List;
                 else
                     m_Results.Add(e.Subject, List);
-                lock (m_Data)
+                //lock (m_Data)
                 {
                     m_Data.Clear();
-                    if (m_Scope != ItemListScope.DONT_SCAN)
+                    if (m_ScanMode != PanelScanMode.None)
                         foreach (var Pair in m_Results)
                         {
-                            if (m_Scope == ItemListScope.ALL_GROUPS || m_Groups.Contains(Pair.Key))
+                            if (m_ScanMode == PanelScanMode.All || Groups.Contains(Pair.Key))
                                 foreach (var SI in Pair.Value)
                                     if (!m_Data.ContainsKey(SI.Name))
                                         m_Data.Add(SI.Name, new ComputerPanelItem(SI.Name, SI));
                         }
                     foreach (var Pair in m_Items)
                         m_Data.Add(Pair.Key, Pair.Value);
-                    lock (m_Keys)
+                    //lock (m_Keys)
                     {
                         ApplyFilter();
                     }

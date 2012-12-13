@@ -101,6 +101,7 @@ namespace LanExchange
             //Instance.PerformLayout();
             // update filter
             //MainForm.GetInstance().UpdateFilter(LV, e.Info.FilterText, false);
+            Model.SelectedIndex = Model.Count - 1;
         }
 
         public void AfterRemove(object sender, LanExchange.TabModel.IndexEventArgs e)

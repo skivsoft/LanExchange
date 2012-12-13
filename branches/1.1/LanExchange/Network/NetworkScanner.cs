@@ -51,7 +51,7 @@ namespace LanExchange.Network
             m_Domains = new List<ServerInfo>();
             // timer
             m_RefreshTimer = new Timer();
-            m_RefreshTimer.Tick += RefreshTimer_Tick;
+            m_RefreshTimer.Tick += new EventHandler(RefreshTimer_Tick);
             m_RefreshTimer.Enabled = false;
             // worker list for scanning network
             m_Workers = new BackgroundWorkerList();
@@ -87,6 +87,8 @@ namespace LanExchange.Network
 
         private void RefreshTimer_Tick(object sender, EventArgs e)
         {
+            return;
+            m_RefreshTimer.Enabled = false;
             if (!m_DomainsWorker.IsBusy)
                 m_DomainsWorker.RunWorkerAsync();
             if (!m_Workers.IsBusy)
@@ -114,29 +116,29 @@ namespace LanExchange.Network
             {
                 logger.Info("Tick: {0} of {1} worker(s) busy, no action", m_Workers.BusyCount, m_Workers.Count);
             }
+            m_RefreshTimer.Enabled = true;
         }
 
         private BackgroundWorker CreateDomainsWorker()
         {
             var Result = new BackgroundWorker();
-            Result.DoWork += DomainsWorker_DoWork;
-            Result.RunWorkerCompleted += DomainsWorker_RunWorkerCompleted;
+            Result.DoWork += new DoWorkEventHandler(DomainsWorker_DoWork);
+            Result.RunWorkerCompleted += new RunWorkerCompletedEventHandler(DomainsWorker_RunWorkerCompleted);
             return Result;
         }
 
         private static void DomainsWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             logger.Info("GetDomainList");
-            e.Result = NetApi32Utils.GetDomainList();
+            //e.Result = NetApi32Utils.GetDomainList();
         }
 
         private void DomainsWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             bool bModified;
-            lock (m_DomainsWorker)
+            //lock (m_DomainsWorker)
             {
                 bModified = SortedListIsModified(m_Domains, (IList<ServerInfo>)e.Result);
-                bModified = true;
                 if (bModified)
                     m_Domains = (IList<ServerInfo>)e.Result;
             }
@@ -147,8 +149,8 @@ namespace LanExchange.Network
         private BackgroundWorker CreateOneWorker()
         {
             var Result = new BackgroundWorker();
-            Result.DoWork += OneWorker_DoWork;
-            Result.RunWorkerCompleted += OneWorker_RunWorkerCompleted;
+            Result.DoWork += new DoWorkEventHandler(OneWorker_DoWork);
+            Result.RunWorkerCompleted += new RunWorkerCompletedEventHandler(OneWorker_RunWorkerCompleted);
             return Result;
         }
 
@@ -186,7 +188,7 @@ namespace LanExchange.Network
             bool bModified = SetResult(Result.Subject, (IList<ServerInfo>)Result.Data);
             if (bModified)
             {
-                lock (m_Subjects)
+                //lock (m_Subjects)
                 {
                     if (m_Subjects.ContainsKey(Result.Subject))
                     {
@@ -196,7 +198,7 @@ namespace LanExchange.Network
                             Subscriber.DataChanged(this, Result);
                     }
                 }
-                lock (m_AllSubjects)
+                //lock (m_AllSubjects)
                 {
                     if (m_AllSubjects.Count > 0)
                     {
@@ -210,6 +212,8 @@ namespace LanExchange.Network
 
         private static bool SortedListIsModified(IList<ServerInfo> ListA, IList<ServerInfo> ListB)
         {
+            if (ListA == null || ListB == null)
+                return false;
             bool bModified = false;
             if (ListA.Count != ListB.Count)
                 bModified = true;
@@ -226,7 +230,7 @@ namespace LanExchange.Network
         private bool SetResult(string Domain, IList<ServerInfo> List)
         {
             bool bModified = false;
-            lock (m_Results)
+            //lock (m_Results)
             {
                 if (!m_Results.ContainsKey(Domain))
                 {
