@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace LanExchange.Network
+namespace LanExchange.Model
 {
     public class BackgroundWorkerList
     {

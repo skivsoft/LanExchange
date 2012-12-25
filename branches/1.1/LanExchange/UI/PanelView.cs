@@ -9,6 +9,7 @@ using System.Management;
 using NLog;
 using LanExchange.Utils;
 using System.Reflection;
+using LanExchange.Model;
 
 namespace LanExchange.UI
 {

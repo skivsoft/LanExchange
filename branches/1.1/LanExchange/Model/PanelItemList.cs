@@ -3,30 +3,29 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using LanExchange.Network;
 #if DEBUG
 using NLog;
 using LanExchange.Utils;
 #endif
 
-namespace LanExchange
+namespace LanExchange.Model
 {
+    public enum PanelScanMode
+    {
+        None = 0,
+        All = 1,
+        Selected = 2
+    }
+
+    public enum PanelItemType
+    {
+        COMPUTERS = 0,
+        SHARES = 1,
+        FILES = 2
+    }
+
     public class PanelItemList : ISubscriber
     {
-        public enum PanelScanMode
-        {
-            None = 0,
-            All = 1,
-            Selected = 2
-        }
-
-        public enum PanelItemType
-        {
-            COMPUTERS = 0,
-            SHARES = 1,
-            FILES = 2
-        }
-
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
         // items from NetworkScanner for each domain

@@ -5,11 +5,10 @@ using System.Collections.Generic;
 
 using System.ComponentModel;
 using System.Windows.Forms;
-using LanExchange.Network;
 using NLog;
 using LanExchange.Utils;
 
-namespace LanExchange.Network
+namespace LanExchange.Model
 {
     public class NetworkScanner : ISubscriptionProvider
     {

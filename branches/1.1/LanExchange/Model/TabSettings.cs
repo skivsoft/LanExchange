@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace LanExchange
+namespace LanExchange.Model
 {
     public class TabSettings
     {
         public string Name { get; set; }
         public System.Windows.Forms.View CurrentView { get; set; }
-        public PanelItemList.PanelScanMode ScanMode { get; set; }
+        public PanelScanMode ScanMode { get; set; }
         public List<string> ScanGroups { get; set; }
         public string Filter { get; set; }
 

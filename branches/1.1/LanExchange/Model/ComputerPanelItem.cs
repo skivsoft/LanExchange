@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Net;
-using LanExchange.Network;
 
-namespace LanExchange
+namespace LanExchange.Model
 {
     public class ComputerPanelItem : PanelItem
     {

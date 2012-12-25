@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LanExchange
+namespace LanExchange.Model
 {
     public abstract class PanelItem : IComparable<PanelItem>
     {

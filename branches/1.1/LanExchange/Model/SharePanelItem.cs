@@ -1,8 +1,7 @@
 ﻿using System;
-using LanExchange.Network;
 using LanExchange.Utils;
 
-namespace LanExchange
+namespace LanExchange.Model
 {
     public class SharePanelItem : PanelItem
     {

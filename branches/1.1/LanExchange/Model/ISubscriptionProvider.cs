@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LanExchange.Network
+namespace LanExchange.Model
 {
     public interface ISubscriptionProvider
     {

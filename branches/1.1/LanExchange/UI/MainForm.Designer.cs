@@ -64,8 +64,8 @@
             this.mExitMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.ilLarge = new System.Windows.Forms.ImageList(this.components);
             this.ilSmall = new System.Windows.Forms.ImageList(this.components);
-            this.MainPanel = new LanExchange.UI.PanelView();
             this.pInfo = new LanExchange.UI.InfoView();
+            this.Pages = new LanExchange.UI.TabControlView();
             this.popTray.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.popPages.SuspendLayout();
@@ -299,26 +299,26 @@
             // mSettingsMenu
             // 
             this.mSettingsMenu.Name = "mSettingsMenu";
-            this.mSettingsMenu.Size = new System.Drawing.Size(158, 22);
+            this.mSettingsMenu.Size = new System.Drawing.Size(150, 22);
             this.mSettingsMenu.Text = "Настройки...";
             this.mSettingsMenu.Click += new System.EventHandler(this.mSettings_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(155, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(147, 6);
             // 
             // mAboutMenu
             // 
             this.mAboutMenu.Name = "mAboutMenu";
-            this.mAboutMenu.Size = new System.Drawing.Size(158, 22);
+            this.mAboutMenu.Size = new System.Drawing.Size(150, 22);
             this.mAboutMenu.Text = "О программе...";
             this.mAboutMenu.Click += new System.EventHandler(this.mAbout_Click);
             // 
             // mExitMenu
             // 
             this.mExitMenu.Name = "mExitMenu";
-            this.mExitMenu.Size = new System.Drawing.Size(158, 22);
+            this.mExitMenu.Size = new System.Drawing.Size(150, 22);
             this.mExitMenu.Text = "Выход";
             this.mExitMenu.Click += new System.EventHandler(this.mExit_Click);
             // 
@@ -352,16 +352,6 @@
             this.ilSmall.Images.SetKeyName(8, "printer_16x16.png");
             this.ilSmall.Images.SetKeyName(9, "back_16x16.png");
             // 
-            // MainPanel
-            // 
-            this.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainPanel.LargeImageList = this.ilLarge;
-            this.MainPanel.Location = new System.Drawing.Point(0, 84);
-            this.MainPanel.Name = "MainPanel";
-            this.MainPanel.Size = new System.Drawing.Size(564, 436);
-            this.MainPanel.SmallImageList = this.ilSmall;
-            this.MainPanel.TabIndex = 24;
-            // 
             // pInfo
             // 
             this.pInfo.BackColor = System.Drawing.Color.White;
@@ -371,12 +361,22 @@
             this.pInfo.Size = new System.Drawing.Size(564, 60);
             this.pInfo.TabIndex = 23;
             // 
+            // Pages
+            // 
+            this.Pages.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
+            this.Pages.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Pages.Location = new System.Drawing.Point(0, 84);
+            this.Pages.Name = "Pages";
+            this.Pages.SelectedIndex = 0;
+            this.Pages.Size = new System.Drawing.Size(564, 436);
+            this.Pages.TabIndex = 24;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(564, 542);
-            this.Controls.Add(this.MainPanel);
+            this.Controls.Add(this.Pages);
             this.Controls.Add(this.pInfo);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -435,9 +435,9 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem mAboutMenu;
         private InfoView pInfo;
-        private PanelView MainPanel;
         public System.Windows.Forms.ImageList ilLarge;
         public System.Windows.Forms.ImageList ilSmall;
+        private TabControlView Pages;
     }
 }
 

@@ -1,9 +1,9 @@
-﻿using LanExchange.Network;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using LanExchange.Utils;
+using LanExchange.Model;
 
 namespace Tests
 {

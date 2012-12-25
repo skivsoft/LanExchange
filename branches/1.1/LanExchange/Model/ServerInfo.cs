@@ -1,7 +1,7 @@
 ﻿using System;
 using LanExchange.Utils;
 
-namespace LanExchange.Network
+namespace LanExchange.Model
 {
     public class ServerInfo : IComparable
     {

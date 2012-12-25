@@ -1,51 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using LanExchange.Network;
 using LanExchange.Utils;
 using System.IO;
-using LanExchange.Model;
 
-namespace LanExchange
+namespace LanExchange.Model
 {
+    public class PanelItemListEventArgs : EventArgs
+    {
+        private readonly PanelItemList m_Info;
+
+        public PanelItemListEventArgs(PanelItemList Info)
+        {
+            m_Info = Info;
+        }
+
+        public PanelItemList Info { get { return m_Info; } }
+    }
+
+    public class IndexEventArgs : EventArgs
+    {
+        private readonly int m_Index;
+
+        public IndexEventArgs(int Index)
+        {
+            m_Index = Index;
+        }
+
+        public int Index { get { return m_Index; } }
+    }
+
+    public delegate void PanelItemListEventHandler(object sender, PanelItemListEventArgs e);
+    public delegate void IndexEventHandler(object sender, IndexEventArgs e);
+
     // 
     // Модель предоставляет знания: данные и методы работы с этими данными, 
     // реагирует на запросы, изменяя своё состояние. 
     // Не содержит информации, как эти знания можно визуализировать.
     // 
 
-    public class TabModel
+    public class TabControlModel
     {
-        #region Subclasses and delegates
-        public class PanelItemListEventArgs : EventArgs
-        {
-            private readonly PanelItemList m_Info;
-
-            public PanelItemListEventArgs(PanelItemList Info)
-            {
-                m_Info = Info;
-            }
-
-            public PanelItemList Info { get { return m_Info; } }
-        }
-
-        public class IndexEventArgs : EventArgs
-        {
-            private readonly int m_Index;
-
-            public IndexEventArgs(int Index)
-            {
-                m_Index = Index;
-            }
-
-            public int Index { get { return m_Index; } }
-        }
-
-        public delegate void PanelItemListEventHandler(object sender, PanelItemListEventArgs e);
-        public delegate void IndexEventHandler(object sender, IndexEventArgs e);
-        #endregion
-
-
         private readonly List<PanelItemList> m_List;
         private readonly string m_Name;
 
@@ -55,7 +50,7 @@ namespace LanExchange
 
         private LanExchangeTabs m_Pages;
 
-        public TabModel(string name)
+        public TabControlModel(string name)
         {
             m_List = new List<PanelItemList>();
             m_Pages = new LanExchangeTabs();
@@ -164,7 +159,7 @@ namespace LanExchange
                 var Info = new PanelItemList(domain)
                 {
                     CurrentView = System.Windows.Forms.View.Details,
-                    ScanMode = PanelItemList.PanelScanMode.Selected
+                    ScanMode = PanelScanMode.Selected
                 };
                 Info.Groups.Add(domain);
                 AddTab(Info);

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace LanExchange
+namespace LanExchange.Model
 {
     public class PanelItemComparer : IComparer<PanelItem>
     {

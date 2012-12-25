@@ -1,5 +1,5 @@
-using LanExchange.Network;
 using System;
+using LanExchange.Model;
 
 namespace Tests
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LanExchange.Network
+namespace LanExchange.Model
 {
     public class DataChangedEventArgs : EventArgs
     {

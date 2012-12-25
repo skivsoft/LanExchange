@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LanExchange.View
 {
-    interface ITabParamsView
+    public interface ITabParamsView
     {
     }
 }

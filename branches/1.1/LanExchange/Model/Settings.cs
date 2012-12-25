@@ -4,7 +4,7 @@ using LanExchange.Utils;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using LanExchange.Network;
+using System.Security.Principal;
 
 namespace LanExchange.Model
 {
@@ -108,6 +108,13 @@ namespace LanExchange.Model
         public string GetEmailAddress()
         {
             return String.IsNullOrEmpty(EmailAddress) ? EmailAddress_Default : EmailAddress;
+        }
+
+        public static string GetCurrentUserName()
+        {
+            var user = WindowsIdentity.GetCurrent();
+            string[] A = user.Name.Split('\\');
+            return A.Length > 1 ? A[1] : A[0];
         }
     }
 }

@@ -107,6 +107,12 @@
     <Compile Include="UI\PanelView.Designer.cs">
       <DependentUpon>PanelView.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\TabControlView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\TabControlView.Designer.cs">
+      <DependentUpon>TabControlView.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\IAboutView.cs" />
     <Compile Include="Utils\MenuUtils.cs" />
     <Compile Include="UI\AboutForm.cs">
@@ -136,15 +142,15 @@
     <Compile Include="UI\TabParamsForm.Designer.cs">
       <DependentUpon>TabParamsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Panel\LanExchangeTabs.cs" />
+    <Compile Include="Model\LanExchangeTabs.cs" />
     <Compile Include="Utils\Kernel32.cs" />
-    <Compile Include="Network\BackgroundWorkerList.cs" />
-    <Compile Include="Network\ISubscriber.cs" />
-    <Compile Include="Network\ISubscriptionProvider.cs" />
+    <Compile Include="Model\BackgroundWorkerList.cs" />
+    <Compile Include="Model\ISubscriber.cs" />
+    <Compile Include="Model\ISubscriptionProvider.cs" />
     <Compile Include="Utils\NetApi32.cs" />
-    <Compile Include="Network\NetworkScanner.cs" />
-    <Compile Include="Network\ServerInfo.cs" />
-    <Compile Include="Panel\TabSettings.cs" />
+    <Compile Include="Model\NetworkScanner.cs" />
+    <Compile Include="Model\ServerInfo.cs" />
+    <Compile Include="Model\TabSettings.cs" />
     <Compile Include="Utils\NetApi32Utils.cs" />
     <Compile Include="NLogFake.cs" />
     <Compile Include="UI\ParamsForm.cs">
@@ -153,22 +159,22 @@
     <Compile Include="UI\ParamsForm.Designer.cs">
       <DependentUpon>ParamsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Panel\ComputerPanelItem.cs" />
-    <Compile Include="Panel\PanelItemComparer.cs" />
-    <Compile Include="Panel\SharePanelItem.cs" />
-    <Compile Include="Network\PingThread.cs" />
-    <Compile Include="Panel\PanelItem.cs" />
+    <Compile Include="Model\ComputerPanelItem.cs" />
+    <Compile Include="Model\PanelItemComparer.cs" />
+    <Compile Include="Model\SharePanelItem.cs" />
+    <Compile Include="Model\PingThread.cs" />
+    <Compile Include="Model\PanelItem.cs" />
     <Compile Include="Utils\User32.cs" />
     <Compile Include="Utils\AutorunUtils.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Panel\TabModel.cs" />
-    <Compile Include="Panel\TabView.cs" />
+    <Compile Include="Model\TabControlModel.cs" />
     <Compile Include="Utils\SerializeUtils.cs" />
     <Compile Include="View\IInfoView.cs" />
     <Compile Include="View\IMainView.cs" />
     <Compile Include="View\IPanelView.cs" />
     <Compile Include="View\IParamsView.cs" />
+    <Compile Include="View\ITabControlView.cs" />
     <Compile Include="View\ITabParamsView.cs" />
     <EmbeddedResource Include="UI\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
@@ -205,10 +211,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Panel\PanelItemList.cs" />
-    <Compile Include="Panel\PuntoSwitcher.cs" />
+    <Compile Include="Model\PanelItemList.cs" />
+    <Compile Include="Model\PuntoSwitcher.cs" />
     <Compile Include="Model\Settings.cs" />
-    <Compile Include="Panel\TabController.cs" />
+    <Compile Include="Presenter\TabControlPresenter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="NLog.config">

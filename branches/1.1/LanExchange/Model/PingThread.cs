@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Net.NetworkInformation;
 
-namespace LanExchange
+namespace LanExchange.Model
 {
     class PingThread
     {

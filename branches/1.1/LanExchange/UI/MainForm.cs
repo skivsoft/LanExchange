@@ -10,7 +10,6 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
-using LanExchange.Network;
 using System.Security.Principal;
 using LanExchange.Model;
 using LanExchange.View;
@@ -89,13 +88,7 @@ namespace LanExchange.UI
             // выводим имя компьютера
             lCompName.Text = SystemInformation.ComputerName;
             // выводим имя пользователя
-            var user = WindowsIdentity.GetCurrent();
-            lUserName.Text = user.Name;
-            string[] A = user.Name.Split('\\');
-            if (A.Length > 1)
-                lUserName.Text = A[1];
-            else
-                lUserName.Text = A[0];
+            lUserName.Text = Settings.GetCurrentUserName();
         }
 
         private void SetupMenu()

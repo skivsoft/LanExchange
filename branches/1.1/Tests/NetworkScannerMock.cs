@@ -1,6 +1,6 @@
-using LanExchange.Network;
 using System;
 using System.ComponentModel;
+using LanExchange.Model;
 
 namespace Tests
 {

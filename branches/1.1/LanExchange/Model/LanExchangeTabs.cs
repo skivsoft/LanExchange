@@ -1,6 +1,6 @@
 using System;
 
-namespace LanExchange
+namespace LanExchange.Model
 {
     public class LanExchangeTabs
     {

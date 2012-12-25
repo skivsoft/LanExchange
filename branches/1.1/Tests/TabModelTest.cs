@@ -2,6 +2,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Windows.Forms;
+using LanExchange.Model;
+using LanExchange.Presenter;
+using LanExchange.UI;
 
 namespace Tests
 {
@@ -71,7 +74,7 @@ namespace Tests
         [TestMethod()]
         public void TabModelConstructorTest()
         {
-            TabModel Model = new TabModel("TheModel");
+            TabControlModel Model = new TabControlModel("TheModel");
             Assert.AreEqual(0, Model.Count);
         }
 
@@ -81,7 +84,7 @@ namespace Tests
         [TestMethod()]
         public void DelTabTest()
         {
-            TabModel Model = new TabModel("TheModel");
+            TabControlModel Model = new TabControlModel("TheModel");
             Model.AddTab(new PanelItemList("MyTab"));
             Model.DelTab(0);
             Assert.AreEqual(0, Model.Count, "Count != 0");
@@ -93,7 +96,7 @@ namespace Tests
         [TestMethod()]
         public void AddTabTest()
         {
-            TabModel Model = new TabModel("TheModel");
+            TabControlModel Model = new TabControlModel("TheModel");
             Model.AddTab(new PanelItemList("MyTab"));
             Assert.AreEqual("MyTab", Model.GetTabName(0));
             Assert.AreEqual(null, Model.GetTabName(-1));
@@ -106,26 +109,17 @@ namespace Tests
         [TestMethod()]
         public void RenameTabTest()
         {
-            TabModel Model = new TabModel("TheModel");
+            TabControlModel Model = new TabControlModel("TheModel");
             Model.AddTab(new PanelItemList("MyTab"));
             Model.RenameTab(0, "YourTab");
             Assert.AreEqual("YourTab", Model.GetTabName(0));
         }
 
         [TestMethod()]
-        public void ViewSelectedTabText()
-        {
-            TabControl Pages = new TabControl();
-            TabView View = new TabView(Pages);
-            Assert.AreEqual("", View.SelectedTabText);
-        }
-
-
-        [TestMethod()]
         public void CreateFromEmpyTabControl()
         {
-            TabControl Pages = new TabControl();
-            TabController Controller = new TabController(Pages);
+            TabControlView Pages = new TabControlView();
+            TabControlPresenter Controller = new TabControlPresenter(Pages);
             //TabModel Model = Controller.GetModel();
             //Assert.NotNull(Model);
             //Assert.AreEqual(0, Model.Count, "Empty TabControl");
@@ -134,11 +128,11 @@ namespace Tests
         [TestMethod()]
         public void CreateFromNotEmptyTabControl1()
         {
-            TabControl Pages = new TabControl();
+            TabControlView Pages = new TabControlView();
             TabPage Tab = new TabPage("MyTab");
             Pages.TabPages.Add(Tab);
-            TabController Controller = new TabController(Pages);
-            TabModel Model = Controller.GetModel();
+            TabControlPresenter Controller = new TabControlPresenter(Pages);
+            TabControlModel Model = Controller.GetModel();
             Assert.AreEqual(0, Model.Count);
         }
 

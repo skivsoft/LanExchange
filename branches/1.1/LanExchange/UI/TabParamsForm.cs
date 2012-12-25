@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using LanExchange.Network;
 using LanExchange.View;
+using LanExchange.Model;
 
 namespace LanExchange.UI
 {
@@ -58,29 +58,29 @@ namespace LanExchange.UI
                 }
         }
 
-        public LanExchange.PanelItemList.PanelScanMode ScanMode
+        public PanelScanMode ScanMode
         {
             get
             {
                 if (rbAll.Checked)
-                    return LanExchange.PanelItemList.PanelScanMode.All;
+                    return PanelScanMode.All;
                 else
                 if (rbSelected.Checked)
-                    return LanExchange.PanelItemList.PanelScanMode.Selected;
+                    return PanelScanMode.Selected;
                 else
-                    return LanExchange.PanelItemList.PanelScanMode.None;
+                    return PanelScanMode.None;
             }
             set
             {
                 switch (value)
                 {
-                    case PanelItemList.PanelScanMode.All:
+                    case PanelScanMode.All:
                         rbAll.Checked = true;
                         break;
-                    case PanelItemList.PanelScanMode.Selected:
+                    case PanelScanMode.Selected:
                         rbSelected.Checked = true;
                         break;
-                    case PanelItemList.PanelScanMode.None:
+                    case PanelScanMode.None:
                         rbDontScan.Checked = true;
                         break;
                 }
