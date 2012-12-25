@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
-using LanExchange.Network;
 
 namespace LanExchange.Utils
 {
@@ -34,27 +33,25 @@ namespace LanExchange.Utils
         /// <param name="domain"></param>
         /// <param name="types"></param>
         /// <returns></returns>
-        public static IList<ServerInfo> GetServerList(string domain, NetApi32.SV_101_TYPES types)
+        public static NetApi32.SERVER_INFO_101[] GetServerList(string domain, NetApi32.SV_101_TYPES types)
         {
-            List<ServerInfo> Result = new List<ServerInfo>();
-            NetApi32.SERVER_INFO_101 si;
-            IntPtr pInfo = IntPtr.Zero;
+            NetApi32.SERVER_INFO_101[] Result = new NetApi32.SERVER_INFO_101[0];
+            var pInfo = IntPtr.Zero;
             int entriesread = 0;
             int totalentries = 0;
+            NetApi32.NERR err = NetApi32.NetServerEnum(null, 101, out pInfo, -1, ref entriesread, ref totalentries, types, domain, 0);
             try
             {
-                NetApi32.NERR err = NetApi32.NetServerEnum(null, 101, out pInfo, -1, ref entriesread, ref totalentries, types, domain, 0);
                 if ((err == NetApi32.NERR.NERR_Success || err == NetApi32.NERR.ERROR_MORE_DATA) && pInfo != IntPtr.Zero)
                 {
                     int ptr = pInfo.ToInt32();
+                    Result = new NetApi32.SERVER_INFO_101[entriesread];
                     for (int i = 0; i < entriesread; i++)
                     {
-                        si = (NetApi32.SERVER_INFO_101)Marshal.PtrToStructure(new IntPtr(ptr), typeof(NetApi32.SERVER_INFO_101));
-                        Result.Add(new ServerInfo(si));
-                        ptr += Marshal.SizeOf(si);
+                        Result[i] = (NetApi32.SERVER_INFO_101)Marshal.PtrToStructure(new IntPtr(ptr), typeof(NetApi32.SERVER_INFO_101));
+                        ptr += Marshal.SizeOf(typeof(NetApi32.SERVER_INFO_101));
                     }
                 }
-                Result.Sort();
             }
             finally
             {
@@ -68,7 +65,7 @@ namespace LanExchange.Utils
         /// Get domain list.
         /// </summary>
         /// <returns></returns>
-        public static IList<ServerInfo> GetDomainList()
+        public static NetApi32.SERVER_INFO_101[] GetDomainList()
         {
             return GetServerList(null, NetApi32.SV_101_TYPES.SV_TYPE_DOMAIN_ENUM);
         }
@@ -78,7 +75,7 @@ namespace LanExchange.Utils
         /// </summary>
         /// <param name="domain"></param>
         /// <returns></returns>
-        public static IList<ServerInfo> GetComputerList(string domain)
+        public static NetApi32.SERVER_INFO_101[] GetComputerList(string domain)
         {
             return GetServerList(domain, NetApi32.SV_101_TYPES.SV_TYPE_ALL);
         }

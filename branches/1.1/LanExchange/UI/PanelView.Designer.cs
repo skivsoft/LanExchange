@@ -34,6 +34,8 @@
             this.imgClear = new System.Windows.Forms.PictureBox();
             this.eFilter = new System.Windows.Forms.TextBox();
             this.LV = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.popComps = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mComp = new System.Windows.Forms.ToolStripMenuItem();
             this.mCompOpen = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,8 +68,6 @@
             this.mAfterSendTo = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.mContextClose = new System.Windows.Forms.ToolStripMenuItem();
-            this.ilLarge = new System.Windows.Forms.ImageList(this.components);
-            this.ilSmall = new System.Windows.Forms.ImageList(this.components);
             this.tsBottom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgClear)).BeginInit();
             this.popComps.SuspendLayout();
@@ -112,19 +112,21 @@
             // 
             // LV
             // 
+            this.LV.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
             this.LV.ContextMenuStrip = this.popComps;
             this.LV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LV.FullRowSelect = true;
             this.LV.GridLines = true;
             this.LV.HideSelection = false;
-            this.LV.LargeImageList = this.ilLarge;
             this.LV.Location = new System.Drawing.Point(0, 0);
             this.LV.Name = "LV";
             this.LV.ShowItemToolTips = true;
             this.LV.Size = new System.Drawing.Size(470, 455);
-            this.LV.SmallImageList = this.ilSmall;
             this.LV.TabIndex = 23;
             this.LV.UseCompatibleStateImageBehavior = false;
+            this.LV.View = System.Windows.Forms.View.Details;
             this.LV.CacheVirtualItems += new System.Windows.Forms.CacheVirtualItemsEventHandler(this.lvComps_CacheVirtualItems);
             this.LV.ItemActivate += new System.EventHandler(this.lvRecent_ItemActivate);
             this.LV.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lvComps_ItemSelectionChanged);
@@ -132,6 +134,16 @@
             this.LV.SelectedIndexChanged += new System.EventHandler(this.lvComps_SelectedIndexChanged);
             this.LV.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvComps_KeyDown);
             this.LV.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lvComps_KeyPress);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Сетевое имя";
+            this.columnHeader1.Width = 130;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Описание";
+            this.columnHeader2.Width = 250;
             // 
             // popComps
             // 
@@ -153,7 +165,7 @@
             this.toolStripSeparator6,
             this.mContextClose});
             this.popComps.Name = "popComps";
-            this.popComps.Size = new System.Drawing.Size(279, 314);
+            this.popComps.Size = new System.Drawing.Size(279, 292);
             this.popComps.Opened += new System.EventHandler(this.popComps_Opened);
             // 
             // mComp
@@ -397,36 +409,6 @@
             this.mContextClose.Size = new System.Drawing.Size(278, 22);
             this.mContextClose.Text = "Закрыть";
             // 
-            // ilLarge
-            // 
-            this.ilLarge.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ilLarge.ImageStream")));
-            this.ilLarge.TransparentColor = System.Drawing.Color.Transparent;
-            this.ilLarge.Images.SetKeyName(0, "CompOffBig.png");
-            this.ilLarge.Images.SetKeyName(1, "Comp_Big_Blue.png");
-            this.ilLarge.Images.SetKeyName(2, "Comp_Big_DarkMagenta.png");
-            this.ilLarge.Images.SetKeyName(3, "Comp_Big_Gray.png");
-            this.ilLarge.Images.SetKeyName(4, "Comp_Big_Green.png");
-            this.ilLarge.Images.SetKeyName(5, "Comp_Big_Red.png");
-            this.ilLarge.Images.SetKeyName(6, "folder2_hidden_32x32.png");
-            this.ilLarge.Images.SetKeyName(7, "folder2_normal_32x32.png");
-            this.ilLarge.Images.SetKeyName(8, "printer_32x32.png");
-            this.ilLarge.Images.SetKeyName(9, "back_32x32.png");
-            // 
-            // ilSmall
-            // 
-            this.ilSmall.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ilSmall.ImageStream")));
-            this.ilSmall.TransparentColor = System.Drawing.Color.Transparent;
-            this.ilSmall.Images.SetKeyName(0, "CompOff.png");
-            this.ilSmall.Images.SetKeyName(1, "Comp_Small_Blue.png");
-            this.ilSmall.Images.SetKeyName(2, "Comp_Small_DarkMagenta.png");
-            this.ilSmall.Images.SetKeyName(3, "Comp_Small_Gray.png");
-            this.ilSmall.Images.SetKeyName(4, "Comp_Small_Green.png");
-            this.ilSmall.Images.SetKeyName(5, "Comp_Small_Red.png");
-            this.ilSmall.Images.SetKeyName(6, "folder2_hidden_16x16.png");
-            this.ilSmall.Images.SetKeyName(7, "folder2_normal_16x16.png");
-            this.ilSmall.Images.SetKeyName(8, "printer_16x16.png");
-            this.ilSmall.Images.SetKeyName(9, "back_16x16.png");
-            // 
             // PanelView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -481,7 +463,7 @@
         private System.Windows.Forms.ToolStripSeparator mAfterSendTo;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem mContextClose;
-        public System.Windows.Forms.ImageList ilLarge;
-        public System.Windows.Forms.ImageList ilSmall;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
     }
 }

@@ -160,7 +160,7 @@ namespace LanExchange.Network
             logger.Info("DoWork({0})", domain);
 
             var List = NetApi32Utils.GetComputerList(domain);
-            logger.Info(String.Format("NetServerEnum: {0}", List.Count));
+            logger.Info(String.Format("NetServerEnum: {0}", List.Length));
             #if REMOVE_RANDOM_COMPS
             Random R = new Random();
             int Count = R.Next(List.Count * 2 / 3);

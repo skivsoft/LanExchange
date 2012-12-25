@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Text;
 using System.Windows.Forms;
 using LanExchange.View;
 using LanExchange.Properties;
@@ -12,6 +8,7 @@ using System.Diagnostics;
 using System.Management;
 using NLog;
 using LanExchange.Utils;
+using System.Reflection;
 
 namespace LanExchange.UI
 {
@@ -19,12 +16,41 @@ namespace LanExchange.UI
     {
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
-        private PanelPresenter m_Presenter;
+        private readonly PanelPresenter m_Presenter;
         
         public PanelView()
         {
             InitializeComponent();
+            // Enable double buffer for ListView
+            var mi = typeof(Control).GetMethod("SetStyle", BindingFlags.Instance | BindingFlags.NonPublic);
+            mi.Invoke(LV, new object[] { ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true });
+            // init presenter
             m_Presenter = new PanelPresenter(this);
+        }
+
+
+        public ImageList SmallImageList
+        {
+            get
+            {
+                return LV.SmallImageList;
+            }
+            set
+            {
+                LV.SmallImageList = value;
+            }
+        }
+
+        public ImageList LargeImageList
+        {
+            get
+            {
+                return LV.LargeImageList;
+            }
+            set
+            {
+                LV.LargeImageList = value;
+            }
         }
 
         private void eFilter_TextChanged(object sender, EventArgs e)
@@ -603,7 +629,8 @@ namespace LanExchange.UI
                     if (!String.IsNullOrEmpty(PItem.Name))
                     {
                         mFolder.Text = String.Format(@"\\{0}\{1}", (PItem as SharePanelItem).ComputerName, PItem.Name);
-                        mFolder.Image = ilSmall.Images[PItem.ImageIndex];
+                        if (SmallImageList != null)
+                        mFolder.Image = SmallImageList.Images[PItem.ImageIndex];
                         bFolderVisible = true;
                         mFAROpen.Enabled = !(PItem as SharePanelItem).IsPrinter;
                     }

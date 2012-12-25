@@ -4,22 +4,14 @@
 using NLog;
 #endif
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
-using System.IO;
-using System.Management;
-using System.Net;
-using System.Net.Sockets;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading;
 using System.Windows.Forms;
 using LanExchange.Network;
 using System.Security.Principal;
-using LanExchange.Properties;
 using LanExchange.Model;
 using LanExchange.View;
 using LanExchange.Presenter;
@@ -252,86 +244,6 @@ namespace LanExchange.UI
             //#endif
         }
 
-        private void mCopyCompName_Click(object sender, EventArgs e)
-        {
-            ListView LV = GetActiveListView();
-            PanelItemList ItemList = PanelItemList.GetObject(LV);
-            StringBuilder S = new StringBuilder();
-            foreach (int index in LV.SelectedIndices)
-            {
-                if (S.Length > 0)
-                    S.AppendLine();
-                S.Append(@"\\" + ItemList.Keys[index]);
-            }
-            if (S.Length > 0)
-                Clipboard.SetText(S.ToString());
-        }
-
-        private void mCopyPath_Click(object sender, EventArgs e)
-        {
-            ListView LV = GetActiveListView();
-            PanelItemList ItemList = PanelItemList.GetObject(LV);
-            StringBuilder S = new StringBuilder();
-            string ItemName = null;
-            SharePanelItem PItem = null;
-            foreach (int index in LV.SelectedIndices)
-            {
-                if (S.Length > 0)
-                    S.AppendLine();
-                ItemName = ItemList.Keys[index];
-                if (!String.IsNullOrEmpty(ItemName))
-                {
-                    PItem = ItemList.Get(ItemName) as SharePanelItem;
-                    if (PItem != null)
-                        S.Append(String.Format(@"\\{0}\{1}", PItem.ComputerName, PItem.Name));
-                }
-            }
-            if (S.Length > 0)
-                Clipboard.SetText(S.ToString());
-        }
-
-        private void mCopyComment_Click(object sender, EventArgs e)
-        {
-            ListView LV = GetActiveListView();
-            PanelItemList ItemList = PanelItemList.GetObject(LV);
-            StringBuilder S = new StringBuilder();
-            PanelItem PItem = null;
-            foreach (int index in LV.SelectedIndices)
-            {
-                if (S.Length > 0)
-                    S.AppendLine();
-                PItem = ItemList.Get(ItemList.Keys[index]);
-                if (PItem != null)
-                    S.Append(PItem.Comment);
-            }
-            if (S.Length > 0)
-                Clipboard.SetText(S.ToString());
-        }
-
-        private void mCopySelected_Click(object sender, EventArgs e)
-        {
-            ListView LV = GetActiveListView();
-            PanelItemList ItemList = PanelItemList.GetObject(LV);
-            StringBuilder S = new StringBuilder();
-            string ItemName = null;
-            PanelItem PItem = null;
-            foreach (int index in LV.SelectedIndices)
-            {
-                if (S.Length > 0)
-                    S.AppendLine();
-                ItemName = ItemList.Keys[index];
-                PItem = ItemList.Get(ItemName);
-                if (PItem != null)
-                {
-                    S.Append(@"\\" + ItemName);
-                    S.Append("\t");
-                    S.Append(PItem.Comment);
-                }
-            }
-            if (S.Length > 0)
-                Clipboard.SetText(S.ToString());
-        }
-
         public string GetMD5FromString(string str)
         {
             MD5 md5Hasher = MD5.Create();
@@ -453,39 +365,6 @@ namespace LanExchange.UI
                 return;
             }
             (sender as ToolTip).ToolTipTitle = "";
-        }
-
-        // --- ИСХОДНЫЙ КОД ОТПРАВКИ СООБЩЕНИЙ ---
-
-        // Отправка сообщения
-        void LANEX_SEND(IPEndPoint ipendpoint, string MSG)
-        {
-            UdpClient udp = new UdpClient();
-
-            // Указываем адрес отправки сообщения
-            //IPAddress ipaddress = IPAddress.Parse("255.255.255.255");
-            if (ipendpoint == null)
-                ipendpoint = new IPEndPoint(IPAddress.Broadcast, 3333);
-
-            // Формирование оправляемого сообщения и его отправка.
-            // Сеть "понимает" только поток байтов и ей безраличны
-            // объекты классов, строки и т.п. Поэтому преобразуем текстовое
-            /// сообщение в поток байтов.
-            byte[] message = Encoding.Default.GetBytes(MSG);
-            int sended = udp.Send(message, message.Length, ipendpoint);
-
-            // Если количество переданных байтов и предназначенных для 
-            // отправки совпадают, то 99,9% вероятности, что они доберутся 
-            // до адресата.
-            if (sended == message.Length)
-            {
-                logger.Info("UDP SEND data [{0}] to [{1}]", MSG, ipendpoint.ToString());
-            }
-
-
-            // После окончания попытки отправки закрываем UDP соединение,
-            // и освобождаем занятые объектом UdpClient ресурсы.
-            udp.Close();
         }
 
         private void Pages_Selected(object sender, TabControlEventArgs e)

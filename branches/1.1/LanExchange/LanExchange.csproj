@@ -165,6 +165,7 @@
     <Compile Include="Panel\TabModel.cs" />
     <Compile Include="Panel\TabView.cs" />
     <Compile Include="Utils\SerializeUtils.cs" />
+    <Compile Include="View\IInfoView.cs" />
     <Compile Include="View\IMainView.cs" />
     <Compile Include="View\IPanelView.cs" />
     <Compile Include="View\IParamsView.cs" />
