@@ -64,8 +64,8 @@
             this.mExitMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.ilLarge = new System.Windows.Forms.ImageList(this.components);
             this.ilSmall = new System.Windows.Forms.ImageList(this.components);
-            this.pInfo = new LanExchange.UI.InfoView();
             this.Pages = new LanExchange.UI.TabControlView();
+            this.pInfo = new LanExchange.UI.InfoView();
             this.popTray.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.popPages.SuspendLayout();
@@ -91,44 +91,44 @@
             this.mAbout,
             this.mExit});
             this.popTray.Name = "popTray";
-            this.popTray.Size = new System.Drawing.Size(159, 104);
+            this.popTray.Size = new System.Drawing.Size(151, 104);
             this.popTray.Opening += new System.ComponentModel.CancelEventHandler(this.popTray_Opening);
             // 
             // mOpen
             // 
             this.mOpen.Name = "mOpen";
-            this.mOpen.Size = new System.Drawing.Size(158, 22);
+            this.mOpen.Size = new System.Drawing.Size(150, 22);
             this.mOpen.Text = "Открыть";
             this.mOpen.Click += new System.EventHandler(this.mOpen_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(155, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(147, 6);
             // 
             // mSettings
             // 
             this.mSettings.Name = "mSettings";
-            this.mSettings.Size = new System.Drawing.Size(158, 22);
+            this.mSettings.Size = new System.Drawing.Size(150, 22);
             this.mSettings.Text = "Настройки...";
             this.mSettings.Click += new System.EventHandler(this.mSettings_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(155, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(147, 6);
             // 
             // mAbout
             // 
             this.mAbout.Name = "mAbout";
-            this.mAbout.Size = new System.Drawing.Size(158, 22);
+            this.mAbout.Size = new System.Drawing.Size(150, 22);
             this.mAbout.Text = "О программе...";
             this.mAbout.Click += new System.EventHandler(this.mAbout_Click);
             // 
             // mExit
             // 
             this.mExit.Name = "mExit";
-            this.mExit.Size = new System.Drawing.Size(158, 22);
+            this.mExit.Size = new System.Drawing.Size(150, 22);
             this.mExit.Text = "Выход";
             this.mExit.Click += new System.EventHandler(this.mExit_Click);
             // 
@@ -205,27 +205,27 @@
             this.toolStripSeparator11,
             this.mTabParams});
             this.popPages.Name = "popPages";
-            this.popPages.Size = new System.Drawing.Size(245, 126);
+            this.popPages.Size = new System.Drawing.Size(235, 148);
             this.popPages.Opened += new System.EventHandler(this.popPages_Opened);
             // 
             // mNewTab
             // 
             this.mNewTab.Name = "mNewTab";
             this.mNewTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.mNewTab.Size = new System.Drawing.Size(244, 22);
+            this.mNewTab.Size = new System.Drawing.Size(234, 22);
             this.mNewTab.Text = "Новая вкладка";
             this.mNewTab.Click += new System.EventHandler(this.mNewTab_Click);
             // 
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(241, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(231, 6);
             // 
             // mCloseTab
             // 
             this.mCloseTab.Name = "mCloseTab";
             this.mCloseTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F4)));
-            this.mCloseTab.Size = new System.Drawing.Size(244, 22);
+            this.mCloseTab.Size = new System.Drawing.Size(234, 22);
             this.mCloseTab.Text = "Закрыть вкладку";
             this.mCloseTab.Click += new System.EventHandler(this.mCloseTab_Click);
             // 
@@ -233,26 +233,26 @@
             // 
             this.mRenameTab.Name = "mRenameTab";
             this.mRenameTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.R)));
-            this.mRenameTab.Size = new System.Drawing.Size(244, 22);
+            this.mRenameTab.Size = new System.Drawing.Size(234, 22);
             this.mRenameTab.Text = "Переименовать вкладку";
             this.mRenameTab.Click += new System.EventHandler(this.mRenameTab_Click);
             // 
             // mSelectTab
             // 
             this.mSelectTab.Name = "mSelectTab";
-            this.mSelectTab.Size = new System.Drawing.Size(244, 22);
+            this.mSelectTab.Size = new System.Drawing.Size(234, 22);
             this.mSelectTab.Text = "Выбрать вкладку";
             // 
             // toolStripSeparator11
             // 
             this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(241, 6);
+            this.toolStripSeparator11.Size = new System.Drawing.Size(231, 6);
             // 
             // mTabParams
             // 
             this.mTabParams.Name = "mTabParams";
             this.mTabParams.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.mTabParams.Size = new System.Drawing.Size(244, 22);
+            this.mTabParams.Size = new System.Drawing.Size(234, 22);
             this.mTabParams.Text = "Настройка вкладки...";
             this.mTabParams.Click += new System.EventHandler(this.mTabParams_Click);
             // 
@@ -352,24 +352,28 @@
             this.ilSmall.Images.SetKeyName(8, "printer_16x16.png");
             this.ilSmall.Images.SetKeyName(9, "back_16x16.png");
             // 
-            // pInfo
-            // 
-            this.pInfo.BackColor = System.Drawing.Color.White;
-            this.pInfo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pInfo.Location = new System.Drawing.Point(0, 24);
-            this.pInfo.Name = "pInfo";
-            this.pInfo.Size = new System.Drawing.Size(564, 60);
-            this.pInfo.TabIndex = 23;
-            // 
             // Pages
             // 
             this.Pages.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
+            this.Pages.ContextMenuStrip = this.popPages;
             this.Pages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Pages.Location = new System.Drawing.Point(0, 84);
             this.Pages.Name = "Pages";
             this.Pages.SelectedIndex = 0;
             this.Pages.Size = new System.Drawing.Size(564, 436);
             this.Pages.TabIndex = 24;
+            // 
+            // pInfo
+            // 
+            this.pInfo.BackColor = System.Drawing.Color.White;
+            this.pInfo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pInfo.InfoComp = "    ";
+            this.pInfo.InfoDesc = "    ";
+            this.pInfo.InfoOS = "    ";
+            this.pInfo.Location = new System.Drawing.Point(0, 24);
+            this.pInfo.Name = "pInfo";
+            this.pInfo.Size = new System.Drawing.Size(564, 60);
+            this.pInfo.TabIndex = 23;
             // 
             // MainForm
             // 

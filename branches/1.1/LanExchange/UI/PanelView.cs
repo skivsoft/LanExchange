@@ -511,10 +511,9 @@ namespace LanExchange.UI
                     break;
                 }
                 // запрос нового описания у пользователя
-                InputBox inputBox = new InputBox();
-                inputBox.Caption = "Редактирование описания компьютера";
-                inputBox.Prompt = @"Описание компьютера \\" + Comp.Name;
-                NewValue = inputBox.Ask(OldValue, true);
+                NewValue = InputBoxForm.Ask("Редактирование описания компьютера", 
+                    @"Описание компьютера \\" + Comp.Name,
+                    OldValue, true);
                 // если нажали OK и описание отличается от старого надо менять
                 if (NewValue != null && NewValue != OldValue)
                 {

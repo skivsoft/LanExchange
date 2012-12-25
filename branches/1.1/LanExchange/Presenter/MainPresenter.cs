@@ -1,5 +1,6 @@
 ﻿using System;
 using LanExchange.View;
+using LanExchange.Model;
 
 namespace LanExchange.Presenter
 {
@@ -12,6 +13,8 @@ namespace LanExchange.Presenter
         {
             m_Instance = this;
             m_View = view;
+            // load settings from cfg-file
+            Settings.LoadSettings();
         }
 
         public static MainPresenter Instance

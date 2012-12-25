@@ -121,9 +121,6 @@
     <Compile Include="UI\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\InputBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="UI\InputBoxForm.cs">
       <SubType>Form</SubType>
     </Compile>

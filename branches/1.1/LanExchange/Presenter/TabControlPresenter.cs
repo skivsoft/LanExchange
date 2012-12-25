@@ -2,53 +2,42 @@
 using System.Windows.Forms;
 using LanExchange.Model;
 using LanExchange.View;
+using NLog;
+using LanExchange.UI;
 
-
-//
-// попробуем организовать управление вкладками 
-// по схеме MVC (Модель-Представление-Поведение) 
-//
-// Контроллер представляет собой связующее звено между двумя 
-// основными компонентами системы — Моделью (Model) и Представлением (View). 
-// Модель ничего «не знает» о Представлении, а Контроллер не содержит 
-// в себе какой-либо бизнес-логики.
-//
 namespace LanExchange.Presenter
 {
-
-    // контроллеры должны избавляться от логики приложения (бизнес-логики). 
-    // Таким образом Контроллер становится «тонким» и выполняет исключительно 
-    // функцию связующего звена (glue layer) между отдельными 
-    // компонентами системы.   
-
     public class TabControlPresenter
     {
+        // logger object 
+        private readonly static Logger logger = LogManager.GetCurrentClassLogger();
+
         private readonly ITabControlView m_View;
-        private readonly TabControlModel Model;
+        private readonly TabControlModel m_Model;
 
         public TabControlPresenter(ITabControlView pages)
         {
             m_View = pages;
-            Model = new TabControlModel(m_View.Name);
-            //UpdateModelFromView();
-            //Model.AfterAppendTab += View.AfterAppendTab;
-            //Model.AfterRemove += View.AfterRemove;
-            //Model.AfterRename += View.AfterRename;
+            m_Model = new TabControlModel(m_View.Name);
+            m_Model.AfterAppendTab += AfterAppendTab;
+            m_Model.AfterRemove += AfterRemove;
+            m_Model.AfterRename += AfterRename;
+            m_Model.LoadSettings();
         }
 
         public TabControlModel GetModel()
         {
-            return Model;
+            return m_Model;
         }
 
         public void NewTab()
         {
-            //string NewTabName = TabView.InputBoxAsk("Новая вкладка", "Введите имя", "");
-            //if (!String.IsNullOrEmpty(NewTabName))
-            //{
-            //    Model.AddTab(new PanelItemList(NewTabName));
-            //    Model.StoreSettings();
-            //}
+            string NewTabName = InputBoxForm.Ask("Новая вкладка", "Введите имя", "", false);
+            if (!String.IsNullOrEmpty(NewTabName))
+            {
+                m_Model.AddTab(new PanelItemList(NewTabName));
+                m_Model.StoreSettings();
+            }
         }
 
         public void CloseTab()
@@ -56,8 +45,8 @@ namespace LanExchange.Presenter
             int Index = m_View.SelectedIndex;
             if (CanCloseTab(Index))
             {
-                Model.DelTab(Index);
-                Model.StoreSettings();
+                m_Model.DelTab(Index);
+                m_Model.StoreSettings();
             }
         }
 
@@ -74,14 +63,14 @@ namespace LanExchange.Presenter
 
         public void AddTabsToMenuItem(ToolStripMenuItem menuitem, EventHandler handler, bool bHideActive)
         {
-            for (int i = 0; i < Model.Count; i++)
+            for (int i = 0; i < m_Model.Count; i++)
             {
                 if (bHideActive && (!CanCloseTab(i) || (i == m_View.SelectedIndex)))
                     continue;
                 ToolStripMenuItem Item = new ToolStripMenuItem
                 {
                     Checked = (i == m_View.SelectedIndex),
-                    Text = Model.GetTabName(i),
+                    Text = m_Model.GetTabName(i),
                     Tag = i
                 };
                 Item.Click += handler;
@@ -188,69 +177,8 @@ namespace LanExchange.Presenter
 
         public void AfterAppendTab(object sender, PanelItemListEventArgs e)
         {
-            //logger.Info("AfterAppendTab()");
-            //TabControlModel Model = (TabControlModel)sender;
-            //// init controls
-            //TabPage NewTab = new TabPage();
-            //ListView LV = new ListView();
-            //// suspend layouts
-            ////Instance.SuspendLayout();
-            ////m_Pages.SuspendLayout();
-            ////NewTab.SuspendLayout();
-            ////
-            //// m_Pages
-            ////
-            //m_Pages.Controls.Add(NewTab);
-            ////
-            //// LV
-            ////
-            //logger.Info("Setup control {0}", LV.ToString());
-            //MethodInfo mi = typeof(Control).GetMethod("SetStyle", BindingFlags.Instance | BindingFlags.NonPublic);
-            //mi.Invoke(LV, new object[] { ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true });
-            ////LV.Dock = DockStyle.Fill;
-            ////LV.Location = new Point(3, 3);
-            ////LV.Size = new Size(NewTab.Size.Width - 6, NewTab.Size.Height - 6);
-            ////LV.View = e.Info.CurrentView;
-            ////LV.Columns.Add("Сетевое имя", 130);
-            ////LV.Columns.Add("Описание", 250);
-            ////LV.ContextMenuStrip = MainForm.Instance.popComps;
-            ////LV.FullRowSelect = true;
-            ////LV.GridLines = true;
-            ////LV.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            ////LV.HideSelection = false;
-            ////LV.LargeImageList = MainForm.Instance.ilLarge;
-            ////LV.ShowGroups = false;
-            ////LV.ShowItemToolTips = true;
-            ////LV.SmallImageList = MainForm.Instance.ilSmall;
-            ////LV.VirtualMode = true;
-
-            //// events
-            ////LV.ItemActivate += MainForm.Instance.lvRecent_ItemActivate;
-            ////LV.RetrieveVirtualItem += MainForm.Instance.lvComps_RetrieveVirtualItem;
-            ////LV.KeyPress += MainForm.Instance.lvComps_KeyPress;
-            ////LV.KeyDown += MainForm.Instance.lvComps_KeyDown;
-            ////LV.ItemSelectionChanged += MainForm.Instance.lvComps_ItemSelectionChanged;
-            ////LV.SelectedIndexChanged += MainForm.Instance.lvComps_SelectedIndexChanged;
-            ////LV.CacheVirtualItems += MainForm.Instance.lvComps_CacheVirtualItems;
-            ////LV.RetrieveVirtualItem += MainForm.Instance.lvComps_RetrieveVirtualItem;
-            //e.Info.AttachObjectTo(LV);
-            ////e.Info.Changed += MainForm.Instance.Items_Changed;
-            //e.Info.UpdateSubsctiption();
-            ////
-            //// NewTab
-            ////
-            //NewTab.Controls.Add(LV);
-            //NewTab.Text = e.Info.TabName;
-            //NewTab.UseVisualStyleBackColor = true;
-            //// resume layouts
-            //MainForm.Instance.tipComps.SetToolTip(LV, " ");
-            ////NewTab.ResumeLayout(false);
-            ////m_Pages.ResumeLayout(false);
-            ////Instance.ResumeLayout(false);
-            ////Instance.PerformLayout();
-            //// update filter
-            ////MainForm.GetInstance().UpdateFilter(LV, e.Info.FilterText, false);
-            //Model.SelectedIndex = Model.Count - 1;
+            logger.Info("AfterAppendTab()");
+            m_View.NewTab(e.Info.TabName);
         }
 
         public void AfterRemove(object sender, IndexEventArgs e)

@@ -22,9 +22,9 @@ namespace LanExchange.UI
         // logger object 
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
         // controller for Pages (MVC-style)
-        //readonly TabController TabController;
 
         private readonly MainPresenter m_Presenter;
+        private readonly TabControlPresenter m_Pages;
         
         public static MainForm Instance;
         
@@ -34,10 +34,12 @@ namespace LanExchange.UI
         {
             InitializeComponent();
             Instance = this;
+            // init MainForm presenter
             m_Presenter = new MainPresenter(this);
+            // init Pages presenter
+            m_Pages = new TabControlPresenter(Pages);
+            //mSendToNewTab.Click += new EventHandler(TabController.mSendToNewTab_Click);
 
-            // load settings from cfg-file
-            Settings.LoadSettings();
             // init main form
             SetupFormBounds();
             SetupForm();
@@ -48,10 +50,6 @@ namespace LanExchange.UI
 #else
             NetworkScanner.GetInstance().RefreshInterval = Settings.RefreshTimeInSec * 1000;
 #endif
-            // init tab manager
-            //TabController = new TabController(Pages);
-            //mSendToNewTab.Click += new EventHandler(TabController.mSendToNewTab_Click);
-            //TabController.GetModel().LoadSettings();
             // set admin mode
             AdminMode = Settings.Instance.AdvancedMode;
         }
@@ -127,7 +125,7 @@ namespace LanExchange.UI
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            //TabController.GetModel().StoreSettings();
+            m_Pages.GetModel().StoreSettings();
             Settings.SaveSettings();
         }
 
@@ -247,30 +245,30 @@ namespace LanExchange.UI
             return sBuilder.ToString();
         }
 
-        private void pInfo_ShowInfo(PictureBox imgInfo, PanelItem PItem)
+        private void pInfo_ShowInfo(PanelItem PItem)
         {
-            //ComputerPanelItem Comp = PItem as ComputerPanelItem;
-            //if (Comp == null)
-            //    return;
-            //lInfoComp.Text = Comp.Name;
-            //lInfoDesc.Text = Comp.Comment;
-            //lInfoOS.Text = Comp.SI.Version();
-            //imgInfo.Image = ilSmall.Images[PItem.ImageIndex];
-            //switch (Comp.ImageIndex)
-            //{
-            //    case ComputerPanelItem.imgCompDefault:
-            //        this.tipComps.SetToolTip(imgInfo, "Компьютер найден в результате обзора сети.");
-            //        break;
-            //    case ComputerPanelItem.imgCompRed:
-            //        this.tipComps.SetToolTip(imgInfo, "Компьютер не доступен посредством PING.");
-            //        break;
-            //    case ComputerPanelItem.imgCompGreen:
-            //        this.tipComps.SetToolTip(imgInfo, "Компьютер с запущенной программой LanExchange.");
-            //        break;
-            //    default:
-            //        this.tipComps.SetToolTip(imgInfo, "");
-            //        break;
-            //}
+            ComputerPanelItem Comp = PItem as ComputerPanelItem;
+            if (Comp == null)
+                return;
+            pInfo.InfoComp = Comp.Name;
+            pInfo.InfoDesc = Comp.Comment;
+            pInfo.InfoOS = Comp.SI.Version();
+            pInfo.Picture.Image = ilSmall.Images[PItem.ImageIndex];
+            switch (Comp.ImageIndex)
+            {
+                case ComputerPanelItem.imgCompDefault:
+                    this.tipComps.SetToolTip(pInfo.Picture, "Компьютер найден в результате обзора сети.");
+                    break;
+                case ComputerPanelItem.imgCompRed:
+                    this.tipComps.SetToolTip(pInfo.Picture, "Компьютер не доступен посредством PING.");
+                    break;
+                case ComputerPanelItem.imgCompGreen:
+                    this.tipComps.SetToolTip(pInfo.Picture, "Компьютер с запущенной программой LanExchange.");
+                    break;
+                default:
+                    this.tipComps.SetToolTip(pInfo.Picture, "");
+                    break;
+            }
         }
 
 
@@ -417,24 +415,24 @@ namespace LanExchange.UI
   
         private void mNewTab_Click(object sender, EventArgs e)
         {
-            //TabController.NewTab();
+            m_Pages.NewTab();
         }
 
         private void mCloseTab_Click(object sender, EventArgs e)
         {
-            //TabController.CloseTab();
+            m_Pages.CloseTab();
         }
 
         private void mRenameTab_Click(object sender, EventArgs e)
         {
-            //TabController.RenameTab();
+            m_Pages.RenameTab();
         }
 
         private void popPages_Opened(object sender, EventArgs e)
         {
-            //mSelectTab.DropDownItems.Clear();
-            //TabController.AddTabsToMenuItem(mSelectTab, TabController.mSelectTab_Click, false);
-            //mCloseTab.Enabled = TabController.CanCloseTab(Pages.SelectedIndex);
+            mSelectTab.DropDownItems.Clear();
+            m_Pages.AddTabsToMenuItem(mSelectTab, m_Pages.mSelectTab_Click, false);
+            mCloseTab.Enabled = m_Pages.CanCloseTab(Pages.SelectedIndex);
         }
 
         private bool m_AdminMode;
@@ -460,19 +458,19 @@ namespace LanExchange.UI
 
         private void mTabParams_Click(object sender, EventArgs e)
         {
-            //using (TabParamsForm Form = new TabParamsForm())
-            //{
-            //    TabModel M = TabController.GetModel();
-            //    PanelItemList Info = M.GetItem(Pages.SelectedIndex);
-            //    Form.ScanMode = Info.ScanMode;
-            //    Form.Groups = Info.Groups;
-            //    if (Form.ShowDialog() == DialogResult.OK)
-            //    {
-            //        Info.ScanMode = Form.ScanMode;
-            //        Info.Groups = Form.Groups;
-            //        Info.UpdateSubsctiption();
-            //    }
-            //}
+            using (TabParamsForm Form = new TabParamsForm())
+            {
+                TabControlModel M = m_Pages.GetModel();
+                PanelItemList Info = M.GetItem(Pages.SelectedIndex);
+                Form.ScanMode = Info.ScanMode;
+                Form.Groups = Info.Groups;
+                if (Form.ShowDialog() == DialogResult.OK)
+                {
+                    Info.ScanMode = Form.ScanMode;
+                    Info.Groups = Form.Groups;
+                    Info.UpdateSubsctiption();
+                }
+            }
         }
 
         private void mContextClose_Click(object sender, EventArgs e)

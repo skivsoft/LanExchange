@@ -9,5 +9,6 @@ namespace LanExchange.View
         string Name { get; set; }
         int SelectedIndex { get; set; }
         int TabPagesCount { get; }
+        void NewTab(string tabname);
     }
 }

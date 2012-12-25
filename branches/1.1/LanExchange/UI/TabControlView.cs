@@ -21,14 +21,16 @@ namespace LanExchange.UI
             base.OnPaint(pe);
         }
 
-        #region ITabControlView Members
-
-
         public int TabPagesCount
         {
             get { return TabPages.Count; }
         }
 
-        #endregion
+        public void NewTab(string tabname)
+        {
+            TabPage Tab = new TabPage(tabname);
+            Controls.Add(Tab);
+        }
+
     }
 }
