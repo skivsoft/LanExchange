@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
+using LanExchange.Network;
 
-namespace LanExchange.Network
+namespace LanExchange.Utils
 {
     class NetApi32Utils
     {

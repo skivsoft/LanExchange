@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LanExchange.View
 {
-    interface IMainView
+    public interface IMainView
     {
+        bool AdminMode { get; set; }
+        void Restart();
     }
 }

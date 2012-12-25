@@ -1,4 +1,5 @@
 ﻿using System;
+using LanExchange.Utils;
 
 namespace LanExchange.Network
 {

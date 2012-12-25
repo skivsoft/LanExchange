@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace OSTools
+namespace LanExchange.Utils
 {
     class User32
     {

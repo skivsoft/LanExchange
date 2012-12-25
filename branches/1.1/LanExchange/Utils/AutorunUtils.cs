@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using Microsoft.Win32;
 
-namespace LanExchange
+namespace LanExchange.Utils
 {
     public class AutorunUtils
     {

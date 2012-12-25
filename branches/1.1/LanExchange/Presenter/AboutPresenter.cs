@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using LanExchange.View;
 using LanExchange.Model;
@@ -11,7 +10,6 @@ using System.Diagnostics;
 using System.Net;
 using NLog;
 using System.Reflection;
-using System.Windows.Forms;
 
 namespace LanExchange.Presenter
 {
@@ -49,7 +47,6 @@ namespace LanExchange.Presenter
 
         public void LoadFromModel()
         {
-            if (m_View == null) return;
             m_View.WebText += Settings.Instance.GetWebSiteURL();
             m_View.EmailText += Settings.Instance.GetEmailAddress();
         }
@@ -81,9 +78,9 @@ namespace LanExchange.Presenter
             return Settings.Instance.GetUpdateURL() + "filelist.php";
         }
 
-        private void DoCheckVersion_DoWork(object sender, DoWorkEventArgs e)
+        private static void DoCheckVersion_DoWork(object sender, DoWorkEventArgs e)
         {
-            using (WebClient client = new WebClient())
+            using (var client = new WebClient())
             {
                 try
                 {
@@ -108,10 +105,10 @@ namespace LanExchange.Presenter
                 return;
             }
             FileListContent = (string)e.Result;
-            using (StringReader Reader = new StringReader(FileListContent))
+            using (var Reader = new StringReader(FileListContent))
             {
-                Version siteVersion = new Version(Reader.ReadLine());
-                Assembly assembly = Assembly.GetExecutingAssembly();
+                var siteVersion = new Version(Reader.ReadLine());
+                var assembly = Assembly.GetExecutingAssembly();
                 if (assembly.GetName().Version.CompareTo(siteVersion) < 0)
                     m_View.ShowUpdateButton(siteVersion);
                 else
@@ -123,16 +120,16 @@ namespace LanExchange.Presenter
         {
             try
             {
-                using (WebClient client = new WebClient { Proxy = null })
+                using (var client = new WebClient { Proxy = null })
                 {
-                    using (StringReader StrReader = new StringReader(FileListContent))
+                    using (var StrReader = new StringReader(FileListContent))
                     {
                         StrReader.ReadLine();
                         string line;
                         string LocalFName;
                         string LocalDirName;
                         string[] Arr;
-                        string ExeName = Application.ExecutablePath;
+                        string ExeName = Settings.GetExecutableFileName();
                         string ExePath = Path.GetDirectoryName(ExeName);
                         while (!String.IsNullOrEmpty(line = StrReader.ReadLine()))
                         {
@@ -198,7 +195,7 @@ namespace LanExchange.Presenter
                     // закрываем окно
                     m_View.CancelView();
                     // перезапуск приложения
-                    Application.Restart();
+                    MainPresenter.Instance.MainView.Restart();
                 }
             }
         }
@@ -206,21 +203,21 @@ namespace LanExchange.Presenter
         private static bool verifyMd5File(string LocalFName, int RemoteFSize, string RemoteMD5)
         {
             bool Result;
-            using (FileStream FS = File.Open(LocalFName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (var FS = File.Open(LocalFName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 if (FS.Length == RemoteFSize)
                 {
                     byte[] content = new byte[FS.Length];
                     FS.Read(content, 0, (int)FS.Length);
 
-                    MD5 md5Hasher = MD5.Create();
+                    var md5Hasher = MD5.Create();
                     byte[] data = md5Hasher.ComputeHash(content);
-                    StringBuilder sBuilder = new StringBuilder();
+                    var sBuilder = new StringBuilder();
                     for (int i = 0; i < data.Length; i++)
                         sBuilder.Append(data[i].ToString("x2"));
                     string hashOfInput = sBuilder.ToString();
 
-                    StringComparer comparer = StringComparer.OrdinalIgnoreCase;
+                    var comparer = StringComparer.OrdinalIgnoreCase;
                     Result = (0 == comparer.Compare(hashOfInput, RemoteMD5));
                 }
                 else

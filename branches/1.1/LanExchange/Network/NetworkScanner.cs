@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using LanExchange.Network;
 using NLog;
+using LanExchange.Utils;
 
 namespace LanExchange.Network
 {

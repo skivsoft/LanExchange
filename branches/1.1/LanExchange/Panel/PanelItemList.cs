@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using LanExchange.Network;
 #if DEBUG
 using NLog;
+using LanExchange.Utils;
 #endif
 
 namespace LanExchange

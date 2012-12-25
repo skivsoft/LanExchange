@@ -1,5 +1,6 @@
 ﻿using System;
 using LanExchange.Network;
+using LanExchange.Utils;
 
 namespace LanExchange
 {

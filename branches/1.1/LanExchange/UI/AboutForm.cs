@@ -46,7 +46,7 @@ namespace LanExchange.UI
         public void ShowMessage(string text, Color color)
         {
             HideMessage();
-            Label label = new Label();
+            var label = new Label();
             label.AutoSize = true;
             label.Text = text;
             label.ForeColor = color;
@@ -149,7 +149,7 @@ namespace LanExchange.UI
         public void ShowProgressBar()
         {
             // рисуем прогресс обновления
-            ProgressBar Progress = new ProgressBar { Width = MsgControl.Width, Style = ProgressBarStyle.Marquee };
+            var Progress = new ProgressBar { Width = MsgControl.Width, Style = ProgressBarStyle.Marquee };
             HideMessage();
             tableLayoutPanel.Controls.Add(Progress, 1, 3);
             Progress.Update();
@@ -158,12 +158,12 @@ namespace LanExchange.UI
 
         public void ShowUpdateButton(Version version)
         {
-            Button B = new Button
-            {
-                AutoSize = true,
-                Text = String.Format("Обновить до версии {0}", version)
-            };
-            B.Click += new EventHandler(UpdateButton_Click);
+            var B = new Button
+                        {
+                            AutoSize = true,
+                            Text = String.Format("Обновить до версии {0}", version)
+                        };
+            B.Click += UpdateButton_Click;
             HideMessage();
             tableLayoutPanel.Controls.Add(B, 1, 2);
             MsgControl = B;

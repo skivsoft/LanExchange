@@ -59,33 +59,34 @@ namespace LanExchange
             logger.Info("Setup control {0}", LV.ToString());
             MethodInfo mi = typeof(Control).GetMethod("SetStyle", BindingFlags.Instance | BindingFlags.NonPublic);
             mi.Invoke(LV, new object[] { ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true });
-            LV.Dock = DockStyle.Fill;
-            LV.Location = new Point(3, 3);
-            LV.Size = new Size(NewTab.Size.Width - 6, NewTab.Size.Height - 6);
-            LV.View = e.Info.CurrentView;
-            LV.Columns.Add("Сетевое имя", 130);
-            LV.Columns.Add("Описание", 250);
-            LV.ContextMenuStrip = MainForm.Instance.popComps;
-            LV.FullRowSelect = true;
-            LV.GridLines = true;
-            LV.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            LV.HideSelection = false;
-            LV.LargeImageList = MainForm.Instance.ilLarge;
-            LV.ShowGroups = false;
-            LV.ShowItemToolTips = true;
-            LV.SmallImageList = MainForm.Instance.ilSmall;
-            LV.VirtualMode = true;
+            //LV.Dock = DockStyle.Fill;
+            //LV.Location = new Point(3, 3);
+            //LV.Size = new Size(NewTab.Size.Width - 6, NewTab.Size.Height - 6);
+            //LV.View = e.Info.CurrentView;
+            //LV.Columns.Add("Сетевое имя", 130);
+            //LV.Columns.Add("Описание", 250);
+            //LV.ContextMenuStrip = MainForm.Instance.popComps;
+            //LV.FullRowSelect = true;
+            //LV.GridLines = true;
+            //LV.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            //LV.HideSelection = false;
+            //LV.LargeImageList = MainForm.Instance.ilLarge;
+            //LV.ShowGroups = false;
+            //LV.ShowItemToolTips = true;
+            //LV.SmallImageList = MainForm.Instance.ilSmall;
+            //LV.VirtualMode = true;
+
             // events
-            LV.ItemActivate += MainForm.Instance.lvRecent_ItemActivate;
-            LV.RetrieveVirtualItem += MainForm.Instance.lvComps_RetrieveVirtualItem;
-            LV.KeyPress += MainForm.Instance.lvComps_KeyPress;
-            LV.KeyDown += MainForm.Instance.lvComps_KeyDown;
-            LV.ItemSelectionChanged += MainForm.Instance.lvComps_ItemSelectionChanged;
-            LV.SelectedIndexChanged += MainForm.Instance.lvComps_SelectedIndexChanged;
+            //LV.ItemActivate += MainForm.Instance.lvRecent_ItemActivate;
+            //LV.RetrieveVirtualItem += MainForm.Instance.lvComps_RetrieveVirtualItem;
+            //LV.KeyPress += MainForm.Instance.lvComps_KeyPress;
+            //LV.KeyDown += MainForm.Instance.lvComps_KeyDown;
+            //LV.ItemSelectionChanged += MainForm.Instance.lvComps_ItemSelectionChanged;
+            //LV.SelectedIndexChanged += MainForm.Instance.lvComps_SelectedIndexChanged;
             //LV.CacheVirtualItems += MainForm.Instance.lvComps_CacheVirtualItems;
-            LV.RetrieveVirtualItem += MainForm.Instance.lvComps_RetrieveVirtualItem;
+            //LV.RetrieveVirtualItem += MainForm.Instance.lvComps_RetrieveVirtualItem;
             e.Info.AttachObjectTo(LV);
-            e.Info.Changed += MainForm.Instance.Items_Changed;
+            //e.Info.Changed += MainForm.Instance.Items_Changed;
             e.Info.UpdateSubsctiption();
             //
             // NewTab
@@ -116,7 +117,8 @@ namespace LanExchange
 
         public static string InputBoxAsk(string caption, string prompt, string defText)
         {
-            return MainForm.Instance.inputBox.Ask(caption, prompt, defText, false);
+            return null;
+            //return MainForm.Instance.inputBox.Ask(caption, prompt, defText, false);
         }
 
         internal ListView GetActiveListView()

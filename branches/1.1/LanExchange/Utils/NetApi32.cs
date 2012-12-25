@@ -2,7 +2,7 @@
 using System.Text;
 using System.Runtime.InteropServices;
 
-namespace LanExchange.Network
+namespace LanExchange.Utils
 {
     public static class NetApi32
     {

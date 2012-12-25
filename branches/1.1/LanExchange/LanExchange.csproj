@@ -92,7 +92,21 @@
   <ItemGroup>
     <Compile Include="Presenter\AboutPresenter.cs" />
     <Compile Include="Presenter\IPresenter.cs" />
+    <Compile Include="Presenter\MainPresenter.cs" />
+    <Compile Include="Presenter\PanelPresenter.cs" />
     <Compile Include="Presenter\ParamsPresenter.cs" />
+    <Compile Include="UI\InfoView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\InfoView.Designer.cs">
+      <DependentUpon>InfoView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\PanelView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\PanelView.Designer.cs">
+      <DependentUpon>PanelView.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\IAboutView.cs" />
     <Compile Include="Utils\MenuUtils.cs" />
     <Compile Include="UI\AboutForm.cs">
@@ -152,11 +166,15 @@
     <Compile Include="Panel\TabView.cs" />
     <Compile Include="Utils\SerializeUtils.cs" />
     <Compile Include="View\IMainView.cs" />
+    <Compile Include="View\IPanelView.cs" />
     <Compile Include="View\IParamsView.cs" />
     <Compile Include="View\ITabParamsView.cs" />
     <EmbeddedResource Include="UI\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\InfoView.resx">
+      <DependentUpon>InfoView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\InputBoxForm.resx">
       <DependentUpon>InputBoxForm.cs</DependentUpon>
@@ -165,6 +183,9 @@
     <EmbeddedResource Include="UI\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\PanelView.resx">
+      <DependentUpon>PanelView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\TabParamsForm.resx">
       <DependentUpon>TabParamsForm.cs</DependentUpon>
@@ -241,6 +262,7 @@
     <None Include="Resources\clear_hover.png" />
     <None Include="Resources\clear_normal.png" />
     <None Include="Resources\explorer.png" />
+    <Content Include="Presenter\Readme.txt" />
     <Content Include="Resources\LanExchange_16x16.ico" />
     <None Include="Resources\LanExchange_48x48.png" />
   </ItemGroup>

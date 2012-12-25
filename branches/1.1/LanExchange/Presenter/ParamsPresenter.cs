@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using LanExchange.View;
 using LanExchange.Model;
-using LanExchange.UI;
 
 namespace LanExchange.Presenter
 {
@@ -21,7 +18,6 @@ namespace LanExchange.Presenter
 
         public void LoadFromModel()
         {
-            if (m_View == null) return;
             m_View.IsAutorun = Settings.IsAutorun;
             m_View.RunMinimized = Settings.Instance.RunMinimized;
             m_View.AdvancedMode = Settings.Instance.AdvancedMode;
@@ -30,12 +26,11 @@ namespace LanExchange.Presenter
 
         public void SaveToModel()
         {
-            if (m_View == null) return;
             Settings.IsAutorun = m_View.IsAutorun;
             Settings.Instance.RunMinimized = m_View.RunMinimized;
             Settings.Instance.AdvancedMode = m_View.AdvancedMode;
             Settings.Instance.RefreshTimeInSec = m_View.RefreshTimeInMin * 60;
-            MainForm.Instance.AdminMode = Settings.Instance.AdvancedMode;
+            MainPresenter.Instance.MainView.AdminMode = Settings.Instance.AdvancedMode;
         }
     }
 }

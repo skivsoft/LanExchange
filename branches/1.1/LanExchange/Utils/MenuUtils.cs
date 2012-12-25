@@ -14,7 +14,7 @@ using System.Windows.Forms;
     using System.Linq;
 #endif
 
-namespace LanExchange
+namespace LanExchange.Utils
 {
 
     /// <summary>
