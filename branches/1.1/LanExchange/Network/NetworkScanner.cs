@@ -87,36 +87,35 @@ namespace LanExchange.Network
 
         private void RefreshTimer_Tick(object sender, EventArgs e)
         {
-            return;
-            m_RefreshTimer.Enabled = false;
-            if (!m_DomainsWorker.IsBusy)
-                m_DomainsWorker.RunWorkerAsync();
-            if (!m_Workers.IsBusy)
-            {
-                m_Workers.ClearNotBusy();
-                // prepare workers to launch
-                foreach (var Pair in m_Subjects)
-                {
-                    if (!m_Workers.Exists(Pair.Key))
-                        m_Workers.Add(Pair.Key, CreateOneWorker());
-                }
-                if (m_AllSubjects.Count > 0)
-                {
-                    foreach (var domain in m_Domains)
-                        if (!m_Subjects.ContainsKey(domain.Name))
-                        {
-                            if (!m_Workers.Exists(domain))
-                                m_Workers.Add(domain, CreateOneWorker());
-                        }
-                }
-                // launch!
-                m_Workers.RunWorkerAsync();
-            }
-            else
-            {
-                logger.Info("Tick: {0} of {1} worker(s) busy, no action", m_Workers.BusyCount, m_Workers.Count);
-            }
-            m_RefreshTimer.Enabled = true;
+            //m_RefreshTimer.Enabled = false;
+            //if (!m_DomainsWorker.IsBusy)
+            //    m_DomainsWorker.RunWorkerAsync();
+            //if (!m_Workers.IsBusy)
+            //{
+            //    m_Workers.ClearNotBusy();
+            //    // prepare workers to launch
+            //    foreach (var Pair in m_Subjects)
+            //    {
+            //        if (!m_Workers.Exists(Pair.Key))
+            //            m_Workers.Add(Pair.Key, CreateOneWorker());
+            //    }
+            //    if (m_AllSubjects.Count > 0)
+            //    {
+            //        foreach (var domain in m_Domains)
+            //            if (!m_Subjects.ContainsKey(domain.Name))
+            //            {
+            //                if (!m_Workers.Exists(domain))
+            //                    m_Workers.Add(domain, CreateOneWorker());
+            //            }
+            //    }
+            //    // launch!
+            //    m_Workers.RunWorkerAsync();
+            //}
+            //else
+            //{
+            //    logger.Info("Tick: {0} of {1} worker(s) busy, no action", m_Workers.BusyCount, m_Workers.Count);
+            //}
+            //m_RefreshTimer.Enabled = true;
         }
 
         private BackgroundWorker CreateDomainsWorker()

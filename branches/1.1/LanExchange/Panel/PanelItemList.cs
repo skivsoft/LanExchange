@@ -93,7 +93,7 @@ namespace LanExchange
 
         public string TabName { get; set; }
 
-        public View CurrentView { get; set; }
+        public System.Windows.Forms.View CurrentView { get; set; }
 
         public IDictionary<string, PanelItem> Items
         {

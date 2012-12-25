@@ -1,4 +1,4 @@
-﻿namespace LanExchange.Forms
+﻿namespace LanExchange.UI
 {
     partial class MainForm
     {
@@ -105,7 +105,7 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.mAboutMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.mExitMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.inputBox = new LanExchange.InputBox(this.components);
+            this.inputBox = new InputBox(this.components);
             this.popComps.SuspendLayout();
             this.popTray.SuspendLayout();
             this.statusStrip1.SuspendLayout();

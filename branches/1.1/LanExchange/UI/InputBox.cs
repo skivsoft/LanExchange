@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace LanExchange
+namespace LanExchange.UI
 {
     /// <summary>
     /// Summary description for InputBox.

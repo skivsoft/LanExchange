@@ -6,8 +6,11 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using LanExchange.Network;
 
-namespace LanExchange
+namespace LanExchange.Model
 {
+    /// <summary>
+    /// Program settings. Implemented as Singleton.
+    /// </summary>
     public class Settings
     {
         private const string UpdateURL_Default = "http://skivsoft.net/lanexchange/update/";
@@ -78,11 +81,13 @@ namespace LanExchange
             }
         }
 
+        public int SelectedIndex { get; set; }
+
         public bool RunMinimized { get; set; }
 
         public bool AdvancedMode { get; set; }
 
-        public int RefreshTimeInSec { get; set; }
+        public decimal RefreshTimeInSec { get; set; }
 
         public string UpdateURL { get; set; }
 
@@ -104,7 +109,5 @@ namespace LanExchange
         {
             return String.IsNullOrEmpty(EmailAddress) ? EmailAddress_Default : EmailAddress;
         }
-
-        public int SelectedIndex { get; set; }
     }
 }

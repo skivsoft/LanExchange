@@ -1,4 +1,4 @@
-﻿namespace LanExchange
+﻿namespace LanExchange.UI
 {
     partial class InputBoxForm
     {

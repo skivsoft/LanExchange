@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using LanExchange.Network;
+using LanExchange.View;
 
-namespace LanExchange.Forms
+namespace LanExchange.UI
 {
-    public partial class TabParamsForm : Form
+    public partial class TabParamsForm : Form, ITabParamsView
     {
         public TabParamsForm()
         {

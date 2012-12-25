@@ -4,7 +4,7 @@ using System;
 using System.Windows.Forms;
 using System.Reflection;
 using NLog;
-using LanExchange.Forms;
+using LanExchange.UI;
 
 namespace LanExchange
 {

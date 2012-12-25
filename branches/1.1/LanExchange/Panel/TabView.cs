@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Drawing;
-using LanExchange.Forms;
 using System.Reflection;
+using LanExchange.UI;
 
 namespace LanExchange
 {

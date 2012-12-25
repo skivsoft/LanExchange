@@ -1,4 +1,4 @@
-﻿namespace LanExchange.Forms
+﻿namespace LanExchange.UI
 {
     partial class ParamsForm
     {
@@ -179,7 +179,6 @@
             this.Name = "ParamsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Настройки программы";
-            this.Load += new System.EventHandler(this.ParamsForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ParamsForm_KeyDown);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

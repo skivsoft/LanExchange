@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using LanExchange.Network;
 using LanExchange.Utils;
 using System.IO;
+using LanExchange.Model;
 
 namespace LanExchange
 {
@@ -162,7 +163,7 @@ namespace LanExchange
                 string domain = NetApi32Utils.GetMachineNetBiosDomain(null);
                 var Info = new PanelItemList(domain)
                 {
-                    CurrentView = View.Details,
+                    CurrentView = System.Windows.Forms.View.Details,
                     ScanMode = PanelItemList.PanelScanMode.Selected
                 };
                 Info.Groups.Add(domain);

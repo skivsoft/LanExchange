@@ -21,8 +21,9 @@ using OSTools;
 using LanExchange.Network;
 using System.Security.Principal;
 using LanExchange.Properties;
+using LanExchange.Model;
 
-namespace LanExchange.Forms
+namespace LanExchange.UI
 {
     public partial class MainForm : Form
     {
@@ -912,16 +913,16 @@ namespace LanExchange.Forms
                 switch (Int32.Parse((sender as ToolStripMenuItem).Tag.ToString()))
                 {
                     case 1:
-                        LV.View = View.LargeIcon;
+                        LV.View = System.Windows.Forms.View.LargeIcon;
                         break;
                     case 2:
-                        LV.View = View.Details;
+                        LV.View = System.Windows.Forms.View.Details;
                         break;
                     case 3:
-                        LV.View = View.SmallIcon;
+                        LV.View = System.Windows.Forms.View.SmallIcon;
                         break;
                     case 4:
-                        LV.View = View.List;
+                        LV.View = System.Windows.Forms.View.List;
                         break;
                 }
             }
@@ -972,16 +973,16 @@ namespace LanExchange.Forms
             mCompDetails.Checked = false;
             switch (LV.View)
             {
-                case View.LargeIcon:
+                case System.Windows.Forms.View.LargeIcon:
                     mCompLargeIcons.Checked = true;
                     break;
-                case View.SmallIcon:
+                case System.Windows.Forms.View.SmallIcon:
                     mCompSmallIcons.Checked = true;
                     break;
-                case View.List:
+                case System.Windows.Forms.View.List:
                     mCompList.Checked = true;
                     break;
-                case View.Details:
+                case System.Windows.Forms.View.Details:
                     mCompDetails.Checked = true;
                     break;
             }

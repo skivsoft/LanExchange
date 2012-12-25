@@ -1,4 +1,4 @@
-﻿namespace LanExchange.Forms
+﻿namespace LanExchange.UI
 {
     partial class AboutForm
     {
@@ -35,8 +35,6 @@
             this.labelWeb = new System.Windows.Forms.LinkLabel();
             this.labelEmail = new System.Windows.Forms.LinkLabel();
             this.labelCopyright = new System.Windows.Forms.Label();
-            this.DoCheckVersion = new System.ComponentModel.BackgroundWorker();
-            this.DoUpdate = new System.ComponentModel.BackgroundWorker();
             this.tableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
             this.SuspendLayout();
@@ -154,18 +152,6 @@
             this.labelCopyright.Text = "Copyright";
             this.labelCopyright.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // DoCheckVersion
-            // 
-            this.DoCheckVersion.WorkerSupportsCancellation = true;
-            this.DoCheckVersion.DoWork += new System.ComponentModel.DoWorkEventHandler(this.DoCheckVersion_DoWork);
-            this.DoCheckVersion.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.DoCheckVersion_RunWorkerCompleted);
-            // 
-            // DoUpdate
-            // 
-            this.DoUpdate.WorkerSupportsCancellation = true;
-            this.DoUpdate.DoWork += new System.ComponentModel.DoWorkEventHandler(this.DoUpdate_DoWork);
-            this.DoUpdate.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.DoUpdate_RunWorkerCompleted);
-            // 
             // AboutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -182,7 +168,6 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AboutForm";
-            this.Load += new System.EventHandler(this.AboutForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AboutForm_KeyDown);
             this.tableLayoutPanel.ResumeLayout(false);
             this.tableLayoutPanel.PerformLayout();
@@ -196,8 +181,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
         private System.Windows.Forms.Label labelProductName;
         protected System.Windows.Forms.PictureBox logoPictureBox;
-        private System.ComponentModel.BackgroundWorker DoCheckVersion;
-        private System.ComponentModel.BackgroundWorker DoUpdate;
         private System.Windows.Forms.LinkLabel labelWeb;
         private System.Windows.Forms.LinkLabel labelEmail;
         private System.Windows.Forms.Label labelVersion;

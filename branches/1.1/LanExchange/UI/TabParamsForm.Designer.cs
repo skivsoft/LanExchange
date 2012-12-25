@@ -1,5 +1,5 @@
 ﻿using System.Windows.Forms;
-namespace LanExchange.Forms
+namespace LanExchange.UI
 {
     partial class TabParamsForm
     {
