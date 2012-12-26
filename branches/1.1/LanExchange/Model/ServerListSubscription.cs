@@ -10,18 +10,18 @@ using LanExchange.Utils;
 
 namespace LanExchange.Model
 {
-    public class NetworkScanner : ISubscriptionProvider
+    public class ServerListSubscription : ISubscription
     {
         #region Static fields and methods
 
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
-        private static NetworkScanner m_Instance;
+        private static ServerListSubscription m_Instance;
 
-        public static NetworkScanner GetInstance()
+        public static ServerListSubscription GetInstance()
         {
             if (m_Instance == null)
             {
-                m_Instance = new NetworkScanner();
+                m_Instance = new ServerListSubscription();
             }
             return m_Instance;
         }
@@ -42,7 +42,7 @@ namespace LanExchange.Model
 
         public event EventHandler DomainListChanged;
 
-        protected NetworkScanner()
+        protected ServerListSubscription()
         {
             // lists
             m_AllSubjects = new List<ISubscriber>();

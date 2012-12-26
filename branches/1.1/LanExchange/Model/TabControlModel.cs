@@ -100,7 +100,7 @@ namespace LanExchange.Model
         {
             if (Index >= 0 && Index < m_List.Count)
             {
-                NetworkScanner.GetInstance().UnSubscribe(m_List[Index]);
+                ServerListSubscription.GetInstance().UnSubscribe(m_List[Index]);
                 m_List.RemoveAt(Index);
                 DoAfterRemove(Index);
             }

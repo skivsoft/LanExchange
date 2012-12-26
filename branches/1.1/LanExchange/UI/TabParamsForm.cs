@@ -13,7 +13,7 @@ namespace LanExchange.UI
             InitializeComponent();
             UpdateControls();
             UpdateDomainList();
-            NetworkScanner.GetInstance().DomainListChanged += new EventHandler(TabParamsForm_DomainListChanged);
+            ServerListSubscription.GetInstance().DomainListChanged += new EventHandler(TabParamsForm_DomainListChanged);
         }
 
         private void TabParamsForm_DomainListChanged(object sender, EventArgs e)
@@ -23,13 +23,13 @@ namespace LanExchange.UI
 
         private void UpdateDomainList()
         {
-            if (NetworkScanner.GetInstance().DomainList == null)
+            if (ServerListSubscription.GetInstance().DomainList == null)
                 return;
             List<string> Saved = ListView_GetCheckedList(lvDomains);
             try
             {
                 lvDomains.Items.Clear();
-                foreach (var domain in NetworkScanner.GetInstance().DomainList)
+                foreach (var domain in ServerListSubscription.GetInstance().DomainList)
                     lvDomains.Items.Add(domain.Name);
             }
             finally

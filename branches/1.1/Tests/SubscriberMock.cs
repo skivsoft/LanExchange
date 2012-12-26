@@ -13,7 +13,7 @@ namespace Tests
 
         }
 
-        public void DataChanged(ISubscriptionProvider sender, DataChangedEventArgs e)
+        public void DataChanged(ISubscription sender, DataChangedEventArgs e)
         {
             IsEventFired = true;
             this.e = e;

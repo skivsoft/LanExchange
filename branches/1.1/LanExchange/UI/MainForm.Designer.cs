@@ -299,26 +299,26 @@
             // mSettingsMenu
             // 
             this.mSettingsMenu.Name = "mSettingsMenu";
-            this.mSettingsMenu.Size = new System.Drawing.Size(150, 22);
+            this.mSettingsMenu.Size = new System.Drawing.Size(158, 22);
             this.mSettingsMenu.Text = "Настройки...";
             this.mSettingsMenu.Click += new System.EventHandler(this.mSettings_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(147, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(155, 6);
             // 
             // mAboutMenu
             // 
             this.mAboutMenu.Name = "mAboutMenu";
-            this.mAboutMenu.Size = new System.Drawing.Size(150, 22);
+            this.mAboutMenu.Size = new System.Drawing.Size(158, 22);
             this.mAboutMenu.Text = "О программе...";
             this.mAboutMenu.Click += new System.EventHandler(this.mAbout_Click);
             // 
             // mExitMenu
             // 
             this.mExitMenu.Name = "mExitMenu";
-            this.mExitMenu.Size = new System.Drawing.Size(150, 22);
+            this.mExitMenu.Size = new System.Drawing.Size(158, 22);
             this.mExitMenu.Text = "Выход";
             this.mExitMenu.Click += new System.EventHandler(this.mExit_Click);
             // 
@@ -360,7 +360,7 @@
             this.Pages.Location = new System.Drawing.Point(0, 84);
             this.Pages.Name = "Pages";
             this.Pages.SelectedIndex = 0;
-            this.Pages.Size = new System.Drawing.Size(564, 436);
+            this.Pages.Size = new System.Drawing.Size(564, 458);
             this.Pages.TabIndex = 24;
             // 
             // pInfo
@@ -380,9 +380,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(564, 542);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.Pages);
             this.Controls.Add(this.pInfo);
-            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;

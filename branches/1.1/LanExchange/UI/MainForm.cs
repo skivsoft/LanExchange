@@ -46,7 +46,7 @@ namespace LanExchange.UI
             SetupMenu();
             // init network scanner
 #if DEBUG
-            NetworkScanner.GetInstance().RefreshInterval = 10 * 1000; // refresh every 5 sec in debug mode
+            ServerListSubscription.GetInstance().RefreshInterval = 10 * 1000; // refresh every 5 sec in debug mode
 #else
             NetworkScanner.GetInstance().RefreshInterval = Settings.RefreshTimeInSec * 1000;
 #endif
@@ -205,9 +205,9 @@ namespace LanExchange.UI
         public static void Debug_ShowSubscribers()
         {
             var S = new StringBuilder();
-            foreach(var Pair in NetworkScanner.GetInstance().GetSubjects())
+            foreach(var Pair in ServerListSubscription.GetInstance().GetSubjects())
                 S.AppendLine(String.Format("{0} - {1}", Pair.Key, Pair.Value.Count));
-            S.AppendLine(String.Format("ALL - {0}", NetworkScanner.GetInstance().GetAllSubjects().Count));
+            S.AppendLine(String.Format("ALL - {0}", ServerListSubscription.GetInstance().GetAllSubjects().Count));
             MessageBox.Show(S.ToString());
         }
 #endif

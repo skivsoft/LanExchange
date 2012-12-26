@@ -117,15 +117,15 @@ namespace LanExchange.Model
             switch (ScanMode)
             {
                 case PanelScanMode.All:
-                    NetworkScanner.GetInstance().SubscribeToAll(this);
+                    ServerListSubscription.GetInstance().SubscribeToAll(this);
                     break;
                 case PanelScanMode.Selected:
-                    NetworkScanner.GetInstance().UnSubscribe(this);
+                    ServerListSubscription.GetInstance().UnSubscribe(this);
                     foreach (var group in Groups)
-                        NetworkScanner.GetInstance().SubscribeToSubject(this, group);
+                        ServerListSubscription.GetInstance().SubscribeToSubject(this, group);
                     break;
                 default:
-                    NetworkScanner.GetInstance().UnSubscribe(this);
+                    ServerListSubscription.GetInstance().UnSubscribe(this);
                     break;
             }
         }
@@ -325,7 +325,7 @@ namespace LanExchange.Model
             return Result;
         }
 
-        public void DataChanged(ISubscriptionProvider sender, DataChangedEventArgs e)
+        public void DataChanged(ISubscription sender, DataChangedEventArgs e)
         {
             IList<ServerInfo> List = (IList<ServerInfo>)e.Data;
             //lock (m_Results)

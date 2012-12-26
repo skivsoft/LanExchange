@@ -16,9 +16,6 @@ namespace LanExchange.UI
             InitializeComponent();
         }
 
-
-        #region IInfoView Members
-
         public string InfoComp
         {
             get
@@ -62,7 +59,5 @@ namespace LanExchange.UI
                 return imgInfo;
             }
         }
-
-        #endregion
     }
 }

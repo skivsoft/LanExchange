@@ -10,7 +10,7 @@ namespace LanExchange.Model
 
     public interface ISubscriber
     {
-        void DataChanged(ISubscriptionProvider sender, DataChangedEventArgs e);
+        void DataChanged(ISubscription sender, DataChangedEventArgs e);
     }
 
 }
