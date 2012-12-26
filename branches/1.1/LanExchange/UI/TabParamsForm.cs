@@ -6,30 +6,27 @@ using LanExchange.Model;
 
 namespace LanExchange.UI
 {
-    public partial class TabParamsForm : Form, ITabParamsView
+    public partial class TabParamsForm : Form, ITabParamsView, ISubscriber
     {
         public TabParamsForm()
         {
             InitializeComponent();
             UpdateControls();
-            UpdateDomainList();
-            ServerListSubscription.GetInstance().DomainListChanged += new EventHandler(TabParamsForm_DomainListChanged);
+            // subscribe this object to domain list (subject = null)
+            ServerListSubscription.Instance.SubscribeToSubject(this, null);
         }
 
-        private void TabParamsForm_DomainListChanged(object sender, EventArgs e)
-        {
-            UpdateDomainList();
-        }
 
-        private void UpdateDomainList()
+        public void DataChanged(ISubscription sender, DataChangedEventArgs e)
         {
-            if (ServerListSubscription.GetInstance().DomainList == null)
+            var DomainList = (IList<ServerInfo>)e.Data;
+            if (DomainList == null)
                 return;
-            List<string> Saved = ListView_GetCheckedList(lvDomains);
+            var Saved = ListView_GetCheckedList(lvDomains);
             try
             {
                 lvDomains.Items.Clear();
-                foreach (var domain in ServerListSubscription.GetInstance().DomainList)
+                foreach (var domain in DomainList)
                     lvDomains.Items.Add(domain.Name);
             }
             finally
@@ -50,37 +47,31 @@ namespace LanExchange.UI
 
         private void SetChecked(string name, bool Checked)
         {
-            foreach(ListViewItem item in lvDomains.Items)
-                if (item.Text.Equals(name))
+            foreach (var item in lvDomains.Items)
+                if (((ListViewItem)item).Text.Equals(name))
                 {
-                    item.Checked = Checked;
+                    ((ListViewItem)item).Checked = Checked;
                     break;
                 }
         }
 
-        public PanelScanMode ScanMode
+        public bool ScanMode
         {
             get
             {
-                if (rbAll.Checked)
-                    return PanelScanMode.All;
-                else
                 if (rbSelected.Checked)
-                    return PanelScanMode.Selected;
+                    return true;
                 else
-                    return PanelScanMode.None;
+                    return false;
             }
             set
             {
                 switch (value)
                 {
-                    case PanelScanMode.All:
-                        rbAll.Checked = true;
-                        break;
-                    case PanelScanMode.Selected:
+                    case true:
                         rbSelected.Checked = true;
                         break;
-                    case PanelScanMode.None:
+                    case false:
                         rbDontScan.Checked = true;
                         break;
                 }

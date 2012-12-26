@@ -49,8 +49,8 @@ namespace Tests
         [TestMethod()]
         public void CheckSingleton()
         {
-            ServerListSubscription instance1 = NetworkScannerMock.GetInstance();
-            ServerListSubscription instance2 = NetworkScannerMock.GetInstance();
+            ServerListSubscription instance1 = NetworkScannerMock.Instance;
+            ServerListSubscription instance2 = NetworkScannerMock.Instance;
             Assert.AreSame(instance1, instance2);
         }
 
@@ -65,28 +65,6 @@ namespace Tests
             Assert.IsTrue(Instance.HasSubscribers(), "1 subscriber");
             Instance.UnSubscribe(sub1);
             Assert.IsFalse(Instance.HasSubscribers(), "0 subscriber");
-        }
-
-        /// <summary>
-        ///A test for IsInstantUpdate
-        ///</summary>
-        [TestMethod()]
-        public void IsInstantUpdateTest()
-        {
-            Assert.IsTrue(Instance.IsInstantUpdate, "init");
-            Instance.DisableSubscriptions();
-            Assert.IsTrue(Instance.IsInstantUpdate, "after disable");
-            Instance.EnableSubscriptions();
-            Assert.IsTrue(Instance.IsInstantUpdate, "after enable");
-
-            ISubscriber sub1 = null;
-            Instance.SubscribeToSubject(sub1, "test");
-            Assert.IsTrue(Instance.HasSubscribers(), "1 subscriber");
-            Assert.IsFalse(Instance.IsInstantUpdate, "must instant update after first subscribe");
-            Instance.DisableSubscriptions();
-            Assert.IsTrue(Instance.IsInstantUpdate, "1 subscriber after disable");
-            Instance.EnableSubscriptions();
-            Assert.IsFalse(Instance.IsInstantUpdate, "1 subscriber after enable");
         }
 
         [TestMethod()]

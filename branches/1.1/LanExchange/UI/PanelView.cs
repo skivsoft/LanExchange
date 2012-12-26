@@ -13,11 +13,13 @@ using LanExchange.Model;
 
 namespace LanExchange.UI
 {
-    public partial class PanelView : UserControl, IPanelView
+    public partial class PanelView : UserControl, IPanelView, IListViewItemGetter
     {
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
         private readonly PanelPresenter m_Presenter;
+        private PanelItemList m_Objects;
+        private readonly ListViewItemCache m_Cache;
         
         public PanelView()
         {
@@ -27,8 +29,40 @@ namespace LanExchange.UI
             mi.Invoke(LV, new object[] { ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true });
             // init presenter
             m_Presenter = new PanelPresenter(this);
+            // setup items cache
+            m_Cache = new ListViewItemCache(this);
+            LV.CacheVirtualItems += m_Cache.CacheVirtualItems;
+            LV.RetrieveVirtualItem += m_Cache.RetrieveVirtualItem;
         }
 
+        public ListView.ListViewItemCollection Items
+        {
+            get
+            {
+                return LV.Items;
+            }
+        }
+
+        public ListView.SelectedIndexCollection SelectedIndices
+        {
+            get
+            {
+                return LV.SelectedIndices;
+            }
+        }
+
+        public PanelItemList Objects
+        {
+            get
+            {
+                return m_Objects;
+            }
+            set
+            {
+            	m_Objects = value;
+                LV.VirtualListSize = m_Objects.Count;
+            }
+        }
 
         public ImageList SmallImageList
         {
@@ -90,39 +124,30 @@ namespace LanExchange.UI
         {
             eFilter.Text = "";
         }
-        public void lvComps_CacheVirtualItems(object sender, CacheVirtualItemsEventArgs e)
-        {
 
-        }
-
-        public void lvComps_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
+        public ListViewItem GetListViewItemAt(int Index)
         {
-            ListView LV = sender as ListView;
-            if (LV == null)
-                return;
-            PanelItemList ItemList = PanelItemList.GetObject(LV);
-            if (ItemList == null)
-                return;
-            if (e.ItemIndex < 0 || e.ItemIndex > Math.Min(ItemList.Keys.Count, LV.VirtualListSize) - 1)
-                return;
-            if (e.Item == null)
-                e.Item = new ListViewItem();
-            String ItemName = ItemList.Keys[e.ItemIndex];
-            PanelItem PItem = ItemList.Get(ItemName);
+            if (m_Objects == null)
+                return null;
+            if (Index < 0 || Index > Math.Min(m_Objects.Keys.Count, LV.VirtualListSize) - 1)
+                return null;
+            ListViewItem Result = new ListViewItem();
+            string ItemName = m_Objects.Keys[Index];
+            var PItem = m_Objects.Get(ItemName);
             if (PItem != null)
             {
-                e.Item.Text = ItemName;
+                Result.Text = ItemName;
                 string[] A = PItem.GetSubItems();
-                foreach (string str in A)
-                    e.Item.SubItems.Add(str);
-                e.Item.ImageIndex = PItem.ImageIndex;
-                e.Item.ToolTipText = PItem.ToolTipText;
+                Array.ForEach(A, str => Result.SubItems.Add(str));
+                Result.ImageIndex = PItem.ImageIndex;
+                Result.ToolTipText = PItem.ToolTipText;
             }
+            return Result;
         }
 
-        public void SendKeysCorrect(string Keys)
+        public static void SendKeysCorrect(string Keys)
         {
-            string Chars = "+^%~{}()[]";
+            const string Chars = "+^%~{}()[]";
             string NewKeys = "";
             foreach (Char Ch in Keys)
             {
@@ -213,7 +238,7 @@ namespace LanExchange.UI
             ListView LV = sender as ListView;
             if (LV == null)
                 return;
-            logger.Info("ItemSelectionChanged. {0}, Selected: {1}, {2}", e.Item, e.IsSelected, LV.FocusedItem);
+           // logger.Info("ItemSelectionChanged. {0}, Selected: {1}, {2}", e.Item, e.IsSelected, LV.FocusedItem);
             /*
             PanelItemList ItemList = LV.GetObject();
             if (ItemList == null)
@@ -227,14 +252,6 @@ namespace LanExchange.UI
                 pInfo_ShowInfo(ItemList.Get(KeyName));
             }
              */
-        }
-
-        public void lvComps_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ListView LV = sender as ListView;
-            if (LV == null)
-                return;
-            logger.Info("SelectedIndexChanged. FocusedItem: {0}", LV.FocusedItem);
         }
 
         public void lvRecent_ItemActivate(object sender, EventArgs e)
@@ -283,17 +300,16 @@ namespace LanExchange.UI
             }
             if (e.KeyCode == Keys.Delete)
             {
-                PanelItemList ItemList = PanelItemList.GetObject(LV);
                 for (int i = LV.SelectedIndices.Count - 1; i >= 0; i--)
                 {
                     int Index = LV.SelectedIndices[i];
-                    PanelItem Comp = ItemList.Get(ItemList.Keys[Index]);
+                    PanelItem Comp = m_Objects.Get(m_Objects.Keys[Index]);
                     if (Comp != null)
-                        ItemList.Delete(Comp);
+                        m_Objects.Delete(Comp);
                 }
                 LV.SelectedIndices.Clear();
-                ItemList.ApplyFilter();
-                LV.VirtualListSize = ItemList.FilterCount;
+                m_Objects.ApplyFilter();
+                LV.VirtualListSize = m_Objects.FilterCount;
             }
         }
 
@@ -322,7 +338,7 @@ namespace LanExchange.UI
         {
             if (LV == null)
                 return;
-            PanelItemList ItemList = PanelItemList.GetObject(LV);
+            PanelItemList ItemList = null;// PanelItemList.GetObject(LV);
             if (ItemList == null)
                 return;
             //List<string> SaveSelected = null;
@@ -389,8 +405,7 @@ namespace LanExchange.UI
             logger.Info("GetFocusedPanelItem. {0}", LV.FocusedItem);
             if (LV.FocusedItem == null)
                 return null;
-            PanelItemList ItemList = PanelItemList.GetObject(LV);
-            PanelItem PItem = ItemList.Get(LV.FocusedItem.Text);
+            PanelItem PItem = m_Objects.Get(LV.FocusedItem.Text);
             if (PItem == null)
                 return null;
             if (PItem is ComputerPanelItem)
@@ -674,5 +689,6 @@ namespace LanExchange.UI
             // скрываем разделитель, если нет новых вкладок
             mAfterSendTo.Visible = mSendToTab.DropDownItems.Count > 2;
         }
+
     }
 }

@@ -51,7 +51,7 @@ namespace LanExchange.Model
 
         public static void SaveSettings()
         {
-            SerializeUtils.SerializeTypeToXMLFile(GetConfigFileName(), Instance);
+            SerializeUtils.SerializeObjectToXMLFile(GetConfigFileName(), Instance);
         }
 
         public static string GetExecutableFileName()

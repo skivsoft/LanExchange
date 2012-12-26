@@ -127,11 +127,9 @@
             this.LV.TabIndex = 23;
             this.LV.UseCompatibleStateImageBehavior = false;
             this.LV.View = System.Windows.Forms.View.Details;
-            this.LV.CacheVirtualItems += new System.Windows.Forms.CacheVirtualItemsEventHandler(this.lvComps_CacheVirtualItems);
+            this.LV.VirtualMode = true;
             this.LV.ItemActivate += new System.EventHandler(this.lvRecent_ItemActivate);
             this.LV.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lvComps_ItemSelectionChanged);
-            this.LV.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.lvComps_RetrieveVirtualItem);
-            this.LV.SelectedIndexChanged += new System.EventHandler(this.lvComps_SelectedIndexChanged);
             this.LV.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvComps_KeyDown);
             this.LV.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lvComps_KeyPress);
             // 
@@ -195,27 +193,27 @@
             this.mCompOpen.Image = global::LanExchange.Properties.Resources.explorer;
             this.mCompOpen.Name = "mCompOpen";
             this.mCompOpen.ShortcutKeyDisplayString = "Shift+Enter";
-            this.mCompOpen.Size = new System.Drawing.Size(301, 22);
+            this.mCompOpen.Size = new System.Drawing.Size(323, 22);
             this.mCompOpen.Tag = "\\\\{0}";
             this.mCompOpen.Text = "Открыть в Проводнике";
             // 
             // mWMIDescription
             // 
             this.mWMIDescription.Name = "mWMIDescription";
-            this.mWMIDescription.Size = new System.Drawing.Size(301, 22);
+            this.mWMIDescription.Size = new System.Drawing.Size(323, 22);
             this.mWMIDescription.Text = "Редактировать описание";
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(298, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(320, 6);
             // 
             // mCompService
             // 
             this.mCompService.Image = global::LanExchange.Properties.Resources.Service;
             this.mCompService.Name = "mCompService";
             this.mCompService.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F1)));
-            this.mCompService.Size = new System.Drawing.Size(301, 22);
+            this.mCompService.Size = new System.Drawing.Size(323, 22);
             this.mCompService.Tag = "%systemroot%\\system32\\mmc.exe %systemroot%\\system32\\compmgmt.msc /computer:{0}";
             this.mCompService.Text = "Управление компьютером";
             // 
@@ -223,21 +221,21 @@
             // 
             this.mCompMSTSC.Image = global::LanExchange.Properties.Resources.MSTSC;
             this.mCompMSTSC.Name = "mCompMSTSC";
-            this.mCompMSTSC.Size = new System.Drawing.Size(301, 22);
+            this.mCompMSTSC.Size = new System.Drawing.Size(323, 22);
             this.mCompMSTSC.Tag = "%systemroot%\\system32\\mstsc.exe /v:{0}";
             this.mCompMSTSC.Text = "Подключение к удаленному рабочему столу";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(298, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(320, 6);
             // 
             // mRadmin1
             // 
             this.mRadmin1.Image = ((System.Drawing.Image)(resources.GetObject("mRadmin1.Image")));
             this.mRadmin1.Name = "mRadmin1";
             this.mRadmin1.ShortcutKeyDisplayString = "Ctrl+Enter";
-            this.mRadmin1.Size = new System.Drawing.Size(301, 22);
+            this.mRadmin1.Size = new System.Drawing.Size(323, 22);
             this.mRadmin1.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0}";
             this.mRadmin1.Text = "Управление";
             // 
@@ -245,7 +243,7 @@
             // 
             this.mRadmin2.Image = ((System.Drawing.Image)(resources.GetObject("mRadmin2.Image")));
             this.mRadmin2.Name = "mRadmin2";
-            this.mRadmin2.Size = new System.Drawing.Size(301, 22);
+            this.mRadmin2.Size = new System.Drawing.Size(323, 22);
             this.mRadmin2.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0} /noinput";
             this.mRadmin2.Text = "Просмотр";
             // 
@@ -253,7 +251,7 @@
             // 
             this.mRadmin3.Image = ((System.Drawing.Image)(resources.GetObject("mRadmin3.Image")));
             this.mRadmin3.Name = "mRadmin3";
-            this.mRadmin3.Size = new System.Drawing.Size(301, 22);
+            this.mRadmin3.Size = new System.Drawing.Size(323, 22);
             this.mRadmin3.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0} /telnet";
             this.mRadmin3.Text = "Телнет";
             // 
@@ -261,7 +259,7 @@
             // 
             this.mRadmin4.Image = ((System.Drawing.Image)(resources.GetObject("mRadmin4.Image")));
             this.mRadmin4.Name = "mRadmin4";
-            this.mRadmin4.Size = new System.Drawing.Size(301, 22);
+            this.mRadmin4.Size = new System.Drawing.Size(323, 22);
             this.mRadmin4.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0} /file";
             this.mRadmin4.Text = "Передача файлов";
             // 
@@ -269,7 +267,7 @@
             // 
             this.mRadmin5.Image = ((System.Drawing.Image)(resources.GetObject("mRadmin5.Image")));
             this.mRadmin5.Name = "mRadmin5";
-            this.mRadmin5.Size = new System.Drawing.Size(301, 22);
+            this.mRadmin5.Size = new System.Drawing.Size(323, 22);
             this.mRadmin5.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0} /shutdown";
             this.mRadmin5.Text = "Выключение";
             // 
@@ -291,7 +289,7 @@
             this.mFolderOpen.Image = global::LanExchange.Properties.Resources.explorer;
             this.mFolderOpen.Name = "mFolderOpen";
             this.mFolderOpen.ShortcutKeyDisplayString = "Shift+Enter";
-            this.mFolderOpen.Size = new System.Drawing.Size(257, 22);
+            this.mFolderOpen.Size = new System.Drawing.Size(267, 22);
             this.mFolderOpen.Tag = "{0}";
             this.mFolderOpen.Text = "Открыть в Проводнике";
             // 
@@ -300,7 +298,7 @@
             this.mFAROpen.Image = global::LanExchange.Properties.Resources.FAR_16x16;
             this.mFAROpen.Name = "mFAROpen";
             this.mFAROpen.ShortcutKeyDisplayString = "Ctrl+Enter";
-            this.mFAROpen.Size = new System.Drawing.Size(257, 22);
+            this.mFAROpen.Size = new System.Drawing.Size(267, 22);
             this.mFAROpen.Tag = "FAR.EXE {0}";
             this.mFAROpen.Text = "Открыть в FAR";
             // 
@@ -390,13 +388,13 @@
             // mSendToNewTab
             // 
             this.mSendToNewTab.Name = "mSendToNewTab";
-            this.mSendToNewTab.Size = new System.Drawing.Size(162, 22);
+            this.mSendToNewTab.Size = new System.Drawing.Size(166, 22);
             this.mSendToNewTab.Text = "В новую вкладку";
             // 
             // mAfterSendTo
             // 
             this.mAfterSendTo.Name = "mAfterSendTo";
-            this.mAfterSendTo.Size = new System.Drawing.Size(159, 6);
+            this.mAfterSendTo.Size = new System.Drawing.Size(163, 6);
             // 
             // toolStripSeparator6
             // 

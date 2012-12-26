@@ -1,12 +1,30 @@
 ﻿using System;
 using System.Xml.Serialization;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace LanExchange.Utils
 {
     public static class SerializeUtils
     {
-        public static string SerializeTypeToXML(object obj)
+        public static void SerializeObjectToBinaryFile(string FileName, object obj)
+        {
+            var stream = File.Open(FileName, FileMode.Create);
+            var bformatter = new BinaryFormatter();
+            bformatter.Serialize(stream, obj);
+            stream.Close();
+        }
+
+        public static object DeserializeObjectFromBinaryFile(string FileName)
+        {
+            var stream = File.Open(FileName, FileMode.Open);
+            var bformatter = new BinaryFormatter();
+            var Result = bformatter.Deserialize(stream);
+            stream.Close();
+            return Result;
+        }
+
+        public static string SerializeObjectToXML(object obj)
         {
             if (obj == null) return null;
             var ser = new XmlSerializer(obj.GetType());
@@ -17,7 +35,7 @@ namespace LanExchange.Utils
             }
         }
 
-        public static void SerializeTypeToXMLFile(string FileName, object obj)
+        public static void SerializeObjectToXMLFile(string FileName, object obj)
         {
             if (obj == null) return;
             var writer = new XmlSerializer(obj.GetType());

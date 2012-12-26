@@ -1,19 +1,14 @@
-﻿#define NLOG
-
-#if DEBUG
-using NLog;
-#endif
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
-using System.Security.Principal;
 using LanExchange.Model;
 using LanExchange.View;
 using LanExchange.Presenter;
+using NLog;
 
 namespace LanExchange.UI
 {
@@ -46,9 +41,9 @@ namespace LanExchange.UI
             SetupMenu();
             // init network scanner
 #if DEBUG
-            ServerListSubscription.GetInstance().RefreshInterval = 10 * 1000; // refresh every 5 sec in debug mode
+            ServerListSubscription.Instance.RefreshInterval = 10 * 1000; // refresh every 5 sec in debug mode
 #else
-            NetworkScanner.GetInstance().RefreshInterval = Settings.RefreshTimeInSec * 1000;
+            ServerListSubscription.Instance.RefreshInterval = (int)Settings.Instance.RefreshTimeInSec * 1000;
 #endif
             // set admin mode
             AdminMode = Settings.Instance.AdvancedMode;
@@ -204,11 +199,11 @@ namespace LanExchange.UI
 
         public static void Debug_ShowSubscribers()
         {
-            var S = new StringBuilder();
-            foreach(var Pair in ServerListSubscription.GetInstance().GetSubjects())
-                S.AppendLine(String.Format("{0} - {1}", Pair.Key, Pair.Value.Count));
-            S.AppendLine(String.Format("ALL - {0}", ServerListSubscription.GetInstance().GetAllSubjects().Count));
-            MessageBox.Show(S.ToString());
+            //var S = new StringBuilder();
+            //foreach(var Pair in ServerListSubscription.Instance().GetSubjects())
+            //    S.AppendLine(String.Format("{0} - {1}", Pair.Key, Pair.Value.Count));
+            //S.AppendLine(String.Format("ALL - {0}", ServerListSubscription.Instance().GetAllSubjects().Count));
+            //MessageBox.Show(S.ToString());
         }
 #endif
 

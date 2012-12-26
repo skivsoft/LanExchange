@@ -88,19 +88,15 @@ namespace LanExchange.Model
         public void AddTab(PanelItemList Info)
         {
             m_List.Add(Info);
+            Info.UpdateSubsctiption();
             DoAfterAppendTab(Info);
-        }
-
-        public void InternalAdd(PanelItemList Info)
-        {
-            m_List.Add(Info);
         }
 
         public void DelTab(int Index)
         {
             if (Index >= 0 && Index < m_List.Count)
             {
-                ServerListSubscription.GetInstance().UnSubscribe(m_List[Index]);
+                ServerListSubscription.Instance.UnSubscribe(m_List[Index]);
                 m_List.RemoveAt(Index);
                 DoAfterRemove(Index);
             }
@@ -135,7 +131,7 @@ namespace LanExchange.Model
             for (int i = 0; i < Count; i++)
                 pages[i] = GetItem(i).Settings;
             m_Pages.Items = pages;
-            SerializeUtils.SerializeTypeToXMLFile(GetConfigFileName(), m_Pages);
+            SerializeUtils.SerializeObjectToXMLFile(GetConfigFileName(), m_Pages);
         }
 
         public void LoadSettings()
@@ -158,8 +154,7 @@ namespace LanExchange.Model
                 string domain = NetApi32Utils.GetMachineNetBiosDomain(null);
                 var Info = new PanelItemList(domain)
                 {
-                    CurrentView = System.Windows.Forms.View.Details,
-                    ScanMode = PanelScanMode.Selected
+                    ScanMode = true
                 };
                 Info.Groups.Add(domain);
                 AddTab(Info);

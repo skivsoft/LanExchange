@@ -6,11 +6,6 @@ namespace LanExchange.Model
     public interface ISubscription
     {
         void SubscribeToSubject(ISubscriber sender, string subject);
-        void SubscribeToAll(ISubscriber sender);
         void UnSubscribe(ISubscriber sender);
-        void EnableSubscriptions();
-        void DisableSubscriptions();
-        IDictionary<string, IList<ISubscriber>> GetSubjects();
-        IList<ISubscriber> GetAllSubjects();
     }
 }

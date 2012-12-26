@@ -3,6 +3,7 @@ using LanExchange.Utils;
 
 namespace LanExchange.Model
 {
+    [Serializable]
     public class ServerInfo : IComparable
     {
         private readonly NetApi32.SERVER_INFO_101 m_Info;
@@ -152,7 +153,7 @@ namespace LanExchange.Model
 
         public int CompareVersionTo(object obj)
         {
-            ServerInfo comp = obj as ServerInfo;
+            var comp = obj as ServerInfo;
             uint u1 = m_Info.sv101_platform_id;
             uint u2 = comp.m_Info.sv101_platform_id;
             if (u1 < u2) return -1;
@@ -178,17 +179,23 @@ namespace LanExchange.Model
             u2 = comp.m_Info.sv101_version_minor;
             if (u1 < u2) return -1;
             else
+            {
                 if (u1 > u2) return 1;
-                else
-                    return 0;
+                return 0;
+            }
+        }
+
+        public NetApi32.SERVER_INFO_101 GetInfo()
+        {
+            return m_Info;
         }
 
         #region IComparable Members
 
         public int CompareTo(object obj)
         {
-            ServerInfo comp = obj as ServerInfo;
-            return String.Compare(this.Name, comp.Name, true);
+            var comp = obj as ServerInfo;
+            return String.Compare(Name, comp.Name, true);
         }
 
         #endregion

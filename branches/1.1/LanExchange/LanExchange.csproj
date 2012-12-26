@@ -113,6 +113,7 @@
     <Compile Include="UI\TabControlView.Designer.cs">
       <DependentUpon>TabControlView.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\ListViewItemCache.cs" />
     <Compile Include="View\IAboutView.cs" />
     <Compile Include="Utils\MenuUtils.cs" />
     <Compile Include="UI\AboutForm.cs">
@@ -143,9 +144,9 @@
     <Compile Include="Utils\Kernel32.cs" />
     <Compile Include="Model\BackgroundWorkerList.cs" />
     <Compile Include="Model\ISubscriber.cs" />
-    <Compile Include="Model\ISubscriptionProvider.cs" />
+    <Compile Include="Model\ISubscription.cs" />
     <Compile Include="Utils\NetApi32.cs" />
-    <Compile Include="Model\NetworkScanner.cs" />
+    <Compile Include="Model\ServerListSubscription.cs" />
     <Compile Include="Model\ServerInfo.cs" />
     <Compile Include="Model\TabSettings.cs" />
     <Compile Include="Utils\NetApi32Utils.cs" />

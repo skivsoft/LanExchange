@@ -1,0 +1,46 @@
+﻿using System;
+using System.Windows.Forms;
+
+namespace LanExchange.Utils
+{
+    public interface IListViewItemGetter
+    {
+        ListViewItem GetListViewItemAt(int Index);
+    }
+    
+    public class ListViewItemCache
+    {
+        private ListViewItem[] TableCache;
+        private int TableCacheStartIndex;
+        private readonly IListViewItemGetter m_Getter;
+
+        public ListViewItemCache(IListViewItemGetter getter)
+        {
+            m_Getter = getter;
+            TableCache = new ListViewItem[0];
+        }
+        
+        public void CacheVirtualItems(object sender, CacheVirtualItemsEventArgs e)
+        {
+            int Count = e.EndIndex - e.StartIndex + 1;
+            TableCacheStartIndex = e.StartIndex;
+            TableCache = new ListViewItem[Count];
+            if (m_Getter != null)
+            for (int i = 0; i < Count; i++)
+                TableCache[i] = m_Getter.GetListViewItemAt(TableCacheStartIndex + i);
+        }
+
+        public void RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
+        {
+            int TableCacheEndIndex = TableCacheStartIndex + TableCache.Length - 1;
+            if (e.ItemIndex >= TableCacheStartIndex && e.ItemIndex <= TableCacheEndIndex)
+                e.Item = TableCache[e.ItemIndex - TableCacheStartIndex];
+            else
+            {
+                e.Item = new ListViewItem();
+                for (int i = 0; i < (sender as ListView).Columns.Count - 1; i++)
+                    e.Item.SubItems.Add(String.Empty);
+            }
+        }
+    }
+}

@@ -22,6 +22,7 @@ namespace LanExchange.Utils
              [MarshalAs(UnmanagedType.LPWStr)] string Domain,
              int ResumeHandle);
 
+        [Serializable]
         [StructLayout(LayoutKind.Sequential)]
         public struct SERVER_INFO_101
         {

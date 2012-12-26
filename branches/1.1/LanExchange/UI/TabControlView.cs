@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using LanExchange.View;
 
@@ -32,5 +27,36 @@ namespace LanExchange.UI
             Controls.Add(Tab);
         }
 
+
+
+        public string SelectedTabText
+        {
+            get
+            {
+                if (TabPages.Count > 0 && SelectedTab != null)
+                    return SelectedTab.Text;
+                else
+                    return String.Empty;
+            }
+            set
+            {
+                if (TabPages.Count > 0 && SelectedTab != null)
+                    SelectedTab.Text = value;
+            }
+        }
+
+
+        public void AddControl(int Index, Control control)
+        {
+            if (Index < 0 || Index > TabPages.Count - 1)
+                throw new ArgumentOutOfRangeException("Index");
+            TabPages[Index].Controls.Add(control);
+        }
+
+
+        public void RemoveTabAt(int Index)
+        {
+            TabPages.RemoveAt(Index);
+        }
     }
 }

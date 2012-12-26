@@ -3,20 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-#if DEBUG
 using NLog;
 using LanExchange.Utils;
-#endif
 
 namespace LanExchange.Model
 {
-    public enum PanelScanMode
-    {
-        None = 0,
-        All = 1,
-        Selected = 2
-    }
-
     public enum PanelItemType
     {
         COMPUTERS = 0,
@@ -38,8 +29,6 @@ namespace LanExchange.Model
         private readonly List<string> m_Keys;
         private String m_Filter = "";
 
-        private readonly PanelScanMode m_ScanMode = PanelScanMode.None;
-
         public event EventHandler Changed;
 
         //private ListView m_LV = null;
@@ -54,6 +43,8 @@ namespace LanExchange.Model
             m_Keys = new List<string>();
             Groups = new List<string>();
             TabName = name;
+            CurrentView = System.Windows.Forms.View.Details;
+            ScanMode = false;
         }
 
         public TabSettings Settings
@@ -79,17 +70,17 @@ namespace LanExchange.Model
             
         }
 
-        public static PanelItemList GetObject(ListView LV)
-        {
-            return LV.Tag as PanelItemList;
-        }
+        //public static PanelItemList GetObject(ListView LV)
+        //{
+        //    return LV.Tag as PanelItemList;
+        //}
 
-        public void AttachObjectTo(ListView LV)
-        {
-            PanelItemList List = PanelItemList.GetObject(LV);
-            LV.Tag = this;
-            List = null;
-        }
+        //public void AttachObjectTo(ListView LV)
+        //{
+        //    PanelItemList List = PanelItemList.GetObject(LV);
+        //    LV.Tag = this;
+        //    List = null;
+        //}
 
         public string TabName { get; set; }
 
@@ -100,7 +91,7 @@ namespace LanExchange.Model
             get { return m_Items; }
         }
 
-        public PanelScanMode ScanMode { get; set; }
+        public bool ScanMode { get; set; }
 
         public List<string> Groups { get; set; }
 
@@ -113,19 +104,14 @@ namespace LanExchange.Model
 
         public void UpdateSubsctiption()
         {
-            // оформляем подписку на получение списка компов
             switch (ScanMode)
             {
-                case PanelScanMode.All:
-                    ServerListSubscription.GetInstance().SubscribeToAll(this);
-                    break;
-                case PanelScanMode.Selected:
-                    ServerListSubscription.GetInstance().UnSubscribe(this);
-                    foreach (var group in Groups)
-                        ServerListSubscription.GetInstance().SubscribeToSubject(this, group);
+                case true:
+                    ServerListSubscription.Instance.UnSubscribe(this);
+                    Groups.ForEach(group => ServerListSubscription.Instance.SubscribeToSubject(this, group));
                     break;
                 default:
-                    ServerListSubscription.GetInstance().UnSubscribe(this);
+                    ServerListSubscription.Instance.UnSubscribe(this);
                     break;
             }
         }
@@ -337,10 +323,10 @@ namespace LanExchange.Model
                 //lock (m_Data)
                 {
                     m_Data.Clear();
-                    if (m_ScanMode != PanelScanMode.None)
+                    if (ScanMode)
                         foreach (var Pair in m_Results)
                         {
-                            if (m_ScanMode == PanelScanMode.All || Groups.Contains(Pair.Key))
+                            if (Groups.Contains(Pair.Key))
                                 foreach (var SI in Pair.Value)
                                     if (!m_Data.ContainsKey(SI.Name))
                                         m_Data.Add(SI.Name, new ComputerPanelItem(SI.Name, SI));

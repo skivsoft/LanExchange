@@ -8,7 +8,7 @@ namespace LanExchange.Model
     {
         public string Name { get; set; }
         public System.Windows.Forms.View CurrentView { get; set; }
-        public PanelScanMode ScanMode { get; set; }
+        public bool ScanMode { get; set; }
         public List<string> ScanGroups { get; set; }
         public string Filter { get; set; }
 

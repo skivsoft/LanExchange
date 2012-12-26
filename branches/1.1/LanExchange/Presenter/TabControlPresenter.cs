@@ -2,8 +2,8 @@
 using System.Windows.Forms;
 using LanExchange.Model;
 using LanExchange.View;
-using NLog;
 using LanExchange.UI;
+using NLog;
 
 namespace LanExchange.Presenter
 {
@@ -52,13 +52,13 @@ namespace LanExchange.Presenter
 
         public void RenameTab()
         {
-            //int Index = View.SelectedIndex;
-            //string NewTabName = TabView.InputBoxAsk("Переименование", "Введите имя", View.SelectedTabText);
-            //if (NewTabName != null)
-            //{
-            //    Model.RenameTab(Index, NewTabName);
-            //    Model.StoreSettings();
-            //}
+            int Index = m_View.SelectedIndex;
+            string NewTabName = InputBoxForm.Ask("Переименование", "Введите имя", m_View.SelectedTabText, false);
+            if (NewTabName != null)
+            {
+                m_Model.RenameTab(Index, NewTabName);
+                m_Model.StoreSettings();
+            }
         }
 
         public void AddTabsToMenuItem(ToolStripMenuItem menuitem, EventHandler handler, bool bHideActive)
@@ -85,12 +85,12 @@ namespace LanExchange.Presenter
                 m_View.SelectedIndex = Index;
         }
 
-        public static void ListView_SendPanelItems(ListView lvSender, ListView lvReceiver)
+        public static void PanelView_SendPanelItems(PanelView lvSender, PanelView lvReceiver)
         {
             if (lvSender == null || lvReceiver == null)
                 return;
-            PanelItemList ItemListSender = PanelItemList.GetObject(lvSender);
-            PanelItemList ItemListReceiver = PanelItemList.GetObject(lvReceiver);
+            PanelItemList ItemListSender = lvSender.Objects;
+            PanelItemList ItemListReceiver = lvReceiver.Objects;
 
             int NumAdded = 0;
             //int[] Indices = new int[lvSender.SelectedIndices.Count];
@@ -153,42 +153,27 @@ namespace LanExchange.Presenter
         {
             return m_View.TabPagesCount > 1;
         }
-        /// <summary>
-        /// Заполняет список страниц внутри модели данными из представления.
-        /// </summary>
-        /*
-        public void UpdateModelFromView()
-        {
-            Model.Clear();
-            foreach (TabPage Tab in View.TabPages)
-            {
-                if (Tab.Controls.Count == 0) continue;
-                PanelItemList Info = new PanelItemList(Tab.Text);
-                ListView LV = (ListView)Tab.Controls[0];
-                PanelItemList ItemList = LV.GetObject();
-                Info.Items = ItemList.ListView_GetSelected(LV, true);
-                Info.FilterText = ItemList.FilterText;
-                Info.CurrentView = LV.View;
-                Model.InternalAdd(Info);
-            }
-        }
-        */
-
 
         public void AfterAppendTab(object sender, PanelItemListEventArgs e)
         {
             logger.Info("AfterAppendTab()");
+            // create panel
+            var PV = new PanelView { Dock = DockStyle.Fill, Objects = e.Info };
+            PV.SmallImageList = MainForm.Instance.ilSmall;
+            //PV.LargeImageList = MainForm.Instance.ilLarge;
+            // add new tab and insert panel into it
             m_View.NewTab(e.Info.TabName);
+            m_View.AddControl(m_View.TabPagesCount - 1, PV);
         }
 
         public void AfterRemove(object sender, IndexEventArgs e)
         {
-            //m_Pages.TabPages.RemoveAt(e.Index);
+            m_View.RemoveTabAt(e.Index);
         }
 
         public void AfterRename(object sender, PanelItemListEventArgs e)
         {
-            //m_Pages.SelectedTab.Text = e.Info.TabName;
+            m_View.SelectedTabText = e.Info.TabName;
         }
     }
 
