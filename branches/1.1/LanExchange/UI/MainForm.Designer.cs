@@ -354,7 +354,6 @@
             // 
             // Pages
             // 
-            this.Pages.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
             this.Pages.ContextMenuStrip = this.popPages;
             this.Pages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Pages.Location = new System.Drawing.Point(0, 84);

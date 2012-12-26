@@ -19,8 +19,6 @@ namespace LanExchange.Model
     {
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
-        // items from NetworkScanner for each domain
-        private readonly Dictionary<string, IList<ServerInfo>> m_Results;
         // items added by user
         private readonly SortedDictionary<string, PanelItem> m_Items;
         // merged all results and user items
@@ -37,7 +35,6 @@ namespace LanExchange.Model
 
         public PanelItemList(string name)
         {
-            m_Results = new Dictionary<string, IList<ServerInfo>>();
             m_Items = new SortedDictionary<string, PanelItem>();
             m_Data = new SortedDictionary<string, PanelItem>();
             m_Keys = new List<string>();
@@ -313,30 +310,21 @@ namespace LanExchange.Model
 
         public void DataChanged(ISubscription sender, DataChangedEventArgs e)
         {
-            IList<ServerInfo> List = (IList<ServerInfo>)e.Data;
-            //lock (m_Results)
+            //lock (m_Data)
             {
-                if (m_Results.ContainsKey(e.Subject))
-                    m_Results[e.Subject] = List;
-                else
-                    m_Results.Add(e.Subject, List);
-                //lock (m_Data)
-                {
-                    m_Data.Clear();
-                    if (ScanMode)
-                        foreach (var Pair in m_Results)
-                        {
-                            if (Groups.Contains(Pair.Key))
-                                foreach (var SI in Pair.Value)
-                                    if (!m_Data.ContainsKey(SI.Name))
-                                        m_Data.Add(SI.Name, new ComputerPanelItem(SI.Name, SI));
-                        }
-                    foreach (var Pair in m_Items)
-                        m_Data.Add(Pair.Key, Pair.Value);
-                    //lock (m_Keys)
+                m_Data.Clear();
+                if (ScanMode)
+                    Groups.ForEach(group =>
                     {
-                        ApplyFilter();
-                    }
+                        foreach (ServerInfo SI in sender.GetListBySubject(group))
+                            if (!m_Data.ContainsKey(SI.Name))
+                                m_Data.Add(SI.Name, new ComputerPanelItem(SI.Name, SI));
+                    });
+                foreach (var Pair in m_Items)
+                    m_Data.Add(Pair.Key, Pair.Value);
+                //lock (m_Keys)
+                {
+                    ApplyFilter();
                 }
             }
             if (Changed != null)

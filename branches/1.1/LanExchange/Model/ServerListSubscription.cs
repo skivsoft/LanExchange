@@ -18,7 +18,7 @@ namespace LanExchange.Model
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
         private static ServerListSubscription m_Instance;
 
-        public static ServerListSubscription Instance
+        public static ISubscription Instance
         {
             get
             {
@@ -31,8 +31,8 @@ namespace LanExchange.Model
         }
         #endregion
 
-        private readonly Dictionary<string, IList<ISubscriber>> m_Subjects;
-        private readonly Dictionary<string, List<ServerInfo>> m_Results;
+        private readonly IDictionary<string, IList<ISubscriber>> m_Subjects;
+        private readonly IDictionary<string, IList<ServerInfo>> m_Results;
 
         private int m_RefreshInterval;
         private readonly Timer m_RefreshTimer;
@@ -43,7 +43,7 @@ namespace LanExchange.Model
         {
             // lists
             m_Subjects = new Dictionary<string, IList<ISubscriber>>();
-            m_Results = new Dictionary<string, List<ServerInfo>>();
+            m_Results = new Dictionary<string, IList<ServerInfo>>();
             // load cached results
             LoadResultFromCache();
             // timer
@@ -120,10 +120,10 @@ namespace LanExchange.Model
         /// </summary>
         /// <param name="domain"></param>
         /// <returns></returns>
-        private List<ServerInfo> GetResultNow(string domain, bool cachePref)
+        private IList<ServerInfo> GetResultNow(string domain, bool cachePref)
         {
             NetApi32.SERVER_INFO_101[] List;
-            List<ServerInfo> Result;
+            IList<ServerInfo> Result;
             if (cachePref && m_Results.ContainsKey(domain))
             {
                 logger.Info("GetFromCache(\"{0}\")", domain);
@@ -153,7 +153,7 @@ namespace LanExchange.Model
             return Result;
         }
 
-        private bool SetResult(string Domain, List<ServerInfo> List)
+        private bool SetResult(string Domain, IList<ServerInfo> List)
         {
             bool bModified = false;
             lock (m_Results)
@@ -370,5 +370,18 @@ namespace LanExchange.Model
             }
         }
         #endregion
+        public IDictionary<string, IList<ISubscriber>> GetSubjects()
+        {
+            return m_Subjects;
+        }
+
+
+        public System.Collections.IEnumerable GetListBySubject(string subject)
+        {
+            if (!m_Results.ContainsKey(subject))
+                yield break;
+            foreach (var SI in m_Results[subject])
+                yield return SI;
+        }
     }
 }

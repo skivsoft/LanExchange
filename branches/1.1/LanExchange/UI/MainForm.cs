@@ -19,7 +19,6 @@ namespace LanExchange.UI
         // controller for Pages (MVC-style)
 
         private readonly MainPresenter m_Presenter;
-        private readonly TabControlPresenter m_Pages;
         
         public static MainForm Instance;
         
@@ -32,7 +31,7 @@ namespace LanExchange.UI
             // init MainForm presenter
             m_Presenter = new MainPresenter(this);
             // init Pages presenter
-            m_Pages = new TabControlPresenter(Pages);
+            m_Presenter.Pages = new TabControlPresenter(Pages);
             //mSendToNewTab.Click += new EventHandler(TabController.mSendToNewTab_Click);
 
             // init main form
@@ -120,7 +119,7 @@ namespace LanExchange.UI
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            m_Pages.GetModel().StoreSettings();
+            m_Presenter.Pages.GetModel().StoreSettings();
             Settings.SaveSettings();
         }
 
@@ -199,35 +198,34 @@ namespace LanExchange.UI
 
         public static void Debug_ShowSubscribers()
         {
-            //var S = new StringBuilder();
-            //foreach(var Pair in ServerListSubscription.Instance().GetSubjects())
-            //    S.AppendLine(String.Format("{0} - {1}", Pair.Key, Pair.Value.Count));
-            //S.AppendLine(String.Format("ALL - {0}", ServerListSubscription.Instance().GetAllSubjects().Count));
-            //MessageBox.Show(S.ToString());
+            var S = new StringBuilder();
+            foreach (var Pair in ServerListSubscription.Instance.GetSubjects())
+                S.AppendLine(String.Format("{0} - {1}", Pair.Key, Pair.Value.Count));
+            MessageBox.Show(S.ToString());
         }
 #endif
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            //            if (e.KeyCode == Keys.Escape)
-            //            {
-            //                m_Presenter.CancelCurrentFilter();
-            //                e.Handled = true;
-            //            }
-            //#if DEBUG
-            //            // Ctrl+Alt+C - show properties of current page in debug mode
-            //            if (e.Control && e.Alt && e.KeyCode == Keys.C)
-            //            {
-            //                Debug_ShowProperties(Pages.SelectedTab);
-            //                e.Handled = true;
-            //            }
-            //            // Ctrl+Alt+S - show subscibers in debug mode
-            //            if (e.Control && e.Alt && e.KeyCode == Keys.S)
-            //            {
-            //                Debug_ShowSubscribers();
-            //                e.Handled = true;
-            //            }
-            //#endif
+            if (e.KeyCode == Keys.Escape)
+            {
+                m_Presenter.CancelCurrentFilter();
+                e.Handled = true;
+            }
+#if DEBUG
+            // Ctrl+Alt+C - show properties of current page in debug mode
+            if (e.Control && e.Alt && e.KeyCode == Keys.C)
+            {
+                Debug_ShowProperties(Pages.SelectedTab);
+                e.Handled = true;
+            }
+            // Ctrl+Alt+S - show subscibers in debug mode
+            if (e.Control && e.Alt && e.KeyCode == Keys.S)
+            {
+                Debug_ShowSubscribers();
+                e.Handled = true;
+            }
+#endif
         }
 
         public string GetMD5FromString(string str)
@@ -410,24 +408,24 @@ namespace LanExchange.UI
   
         private void mNewTab_Click(object sender, EventArgs e)
         {
-            m_Pages.NewTab();
+            m_Presenter.Pages.NewTab();
         }
 
         private void mCloseTab_Click(object sender, EventArgs e)
         {
-            m_Pages.CloseTab();
+            m_Presenter.Pages.CloseTab();
         }
 
         private void mRenameTab_Click(object sender, EventArgs e)
         {
-            m_Pages.RenameTab();
+            m_Presenter.Pages.RenameTab();
         }
 
         private void popPages_Opened(object sender, EventArgs e)
         {
             mSelectTab.DropDownItems.Clear();
-            m_Pages.AddTabsToMenuItem(mSelectTab, m_Pages.mSelectTab_Click, false);
-            mCloseTab.Enabled = m_Pages.CanCloseTab(Pages.SelectedIndex);
+            m_Presenter.Pages.AddTabsToMenuItem(mSelectTab, m_Presenter.Pages.mSelectTab_Click, false);
+            mCloseTab.Enabled = m_Presenter.Pages.CanCloseTab(Pages.SelectedIndex);
         }
 
         private bool m_AdminMode;
@@ -455,7 +453,7 @@ namespace LanExchange.UI
         {
             using (TabParamsForm Form = new TabParamsForm())
             {
-                TabControlModel M = m_Pages.GetModel();
+                TabControlModel M = m_Presenter.Pages.GetModel();
                 PanelItemList Info = M.GetItem(Pages.SelectedIndex);
                 Form.ScanMode = Info.ScanMode;
                 Form.Groups = Info.Groups;

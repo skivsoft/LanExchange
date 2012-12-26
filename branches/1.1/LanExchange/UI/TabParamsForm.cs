@@ -13,9 +13,13 @@ namespace LanExchange.UI
             InitializeComponent();
             UpdateControls();
             // subscribe this object to domain list (subject = null)
-            ServerListSubscription.Instance.SubscribeToSubject(this, null);
+            ServerListSubscription.Instance.SubscribeToSubject(this, string.Empty);
         }
 
+        private void TabParamsForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            ServerListSubscription.Instance.UnSubscribe(this);
+        }
 
         public void DataChanged(ISubscription sender, DataChangedEventArgs e)
         {
@@ -145,6 +149,5 @@ namespace LanExchange.UI
                 }
             }
         }
-
     }
 }

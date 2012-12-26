@@ -25,6 +25,18 @@ namespace LanExchange.Presenter
             m_Model.LoadSettings();
         }
 
+        public int SelectedIndex
+        {
+            get
+            {
+                return m_View.SelectedIndex;
+            }
+            set
+            {
+                m_View.SelectedIndex = value;
+            }
+        }
+
         public TabControlModel GetModel()
         {
             return m_Model;
@@ -160,10 +172,12 @@ namespace LanExchange.Presenter
             // create panel
             var PV = new PanelView { Dock = DockStyle.Fill, Objects = e.Info };
             PV.SmallImageList = MainForm.Instance.ilSmall;
-            //PV.LargeImageList = MainForm.Instance.ilLarge;
+            PV.LargeImageList = MainForm.Instance.ilLarge;
             // add new tab and insert panel into it
             m_View.NewTab(e.Info.TabName);
             m_View.AddControl(m_View.TabPagesCount - 1, PV);
+            // set update event
+            e.Info.Changed += PV.Items_Changed;
         }
 
         public void AfterRemove(object sender, IndexEventArgs e)

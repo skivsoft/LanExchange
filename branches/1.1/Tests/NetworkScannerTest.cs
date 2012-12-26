@@ -49,8 +49,8 @@ namespace Tests
         [TestMethod()]
         public void CheckSingleton()
         {
-            ServerListSubscription instance1 = NetworkScannerMock.Instance;
-            ServerListSubscription instance2 = NetworkScannerMock.Instance;
+            var instance1 = NetworkScannerMock.Instance;
+            var instance2 = NetworkScannerMock.Instance;
             Assert.AreSame(instance1, instance2);
         }
 

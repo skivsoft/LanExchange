@@ -173,35 +173,30 @@ namespace LanExchange.UI
 
         public void Items_Changed(object sender, EventArgs e)
         {
-            /*
-            PanelItemList ItemList = sender as PanelItemList;
-            if (ItemList == null)
+            if (m_Objects == null)
                 return;
             // refresh only for current page
-            PanelItemList CurrentItemList = TabController.GetModel().GetItem(Pages.SelectedIndex);
-            if (!ItemList.Equals(CurrentItemList))
+            PanelItemList CurrentItemList = MainPresenter.Instance.Pages.GetModel().GetItem(MainPresenter.Instance.Pages.SelectedIndex);
+            if (!m_Objects.Equals(CurrentItemList))
                 return;
             // get number of visible items (filtered) and number of total items
             int ShowCount, TotalCount;
-            if (ItemList.IsFiltered)
+            if (m_Objects.IsFiltered)
             {
-                ShowCount = ItemList.FilterCount;
-                TotalCount = ItemList.Count;
+                ShowCount = m_Objects.FilterCount;
+                TotalCount = m_Objects.Count;
             }
             else
             {
-                ShowCount = ItemList.Count;
-                TotalCount = ItemList.Count;
+                ShowCount = m_Objects.Count;
+                TotalCount = m_Objects.Count;
             }
-            if (ShowCount != TotalCount)
-                StatusText = String.Format("Элементов: {0} из {1}", ShowCount, TotalCount);
-            else
-                StatusText = String.Format("Элементов: {0}", ShowCount);
-            // update list view
-            ListView LV = (ListView)Pages.SelectedTab.Controls[0];
+            //if (ShowCount != TotalCount)
+            //    StatusText = String.Format("Элементов: {0} из {1}", ShowCount, TotalCount);
+            //else
+            //    StatusText = String.Format("Элементов: {0}", ShowCount);
             //LV.SelectedIndices.Clear();
             LV.VirtualListSize = ShowCount;
-            */
             
             /*
             if (!String.IsNullOrEmpty(ItemList.FocusedItem) && !String.IsNullOrEmpty(ItemList.FocusedItem))
