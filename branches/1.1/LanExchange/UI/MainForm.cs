@@ -19,7 +19,7 @@ namespace LanExchange.UI
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
         // controller for Pages (MVC-style)
 
-        private readonly MainPresenter m_Presenter;
+        private static MainPresenter m_Presenter;
         
         public static MainForm Instance;
         
@@ -29,14 +29,15 @@ namespace LanExchange.UI
         {
             InitializeComponent();
             Instance = this;
+            // load settings from cfg-file
+            Settings.LoadSettings();
             // init MainForm presenter
             m_Presenter = new MainPresenter(this);
             // init Pages presenter
             m_Presenter.Pages = new TabControlPresenter(Pages);
             //mSendToNewTab.Click += new EventHandler(TabController.mSendToNewTab_Click);
-
+            
             // init main form
-            SetupFormBounds();
             SetupForm();
             SetupMenu();
             // init network scanner
@@ -49,38 +50,38 @@ namespace LanExchange.UI
             AdminMode = Settings.Instance.AdvancedMode;
         }
 
-        /// <summary>
-        /// Returns ProductName and Version for MainForm title.
-        /// </summary>
-        /// <returns>a MainForm title</returns>
-        public static string GetMainFormTitle()
+        public static void OnApplicationExit(object sender, EventArgs e)
         {
-            var Me = Assembly.GetExecutingAssembly();
-            object[] attributes = Me.GetCustomAttributes(typeof(AssemblyProductAttribute), false);
-            if (attributes.Length == 0)
-            {
-                return "";
-            }
-            var Ver = Me.GetName().Version;
-            return String.Format("{0} {1}.{2}", ((AssemblyProductAttribute)attributes[0]).Product, Ver.Major, Ver.Minor);
+            Settings.SaveSettings();
+            m_Presenter.Pages.GetModel().StoreSettings();
         }
 
-        private void SetupFormBounds()
+        private void SetupRunMinimized()
         {
+            if (Settings.Instance.RunMinimized)
+            {
+                WindowState = FormWindowState.Minimized;
+                ShowInTaskbar = false;
+                Visible = false;
+            }
+        }
+
+        private void SetupForm()
+        {
+            // form pos at right
             var Rect = new Rectangle();
             Rect.Size = new Size(450, Screen.PrimaryScreen.WorkingArea.Height);
             Rect.Location = new Point(Screen.PrimaryScreen.WorkingArea.Left + (Screen.PrimaryScreen.WorkingArea.Width - Rect.Width),
                                       Screen.PrimaryScreen.WorkingArea.Top + (Screen.PrimaryScreen.WorkingArea.Height - Rect.Height));
             SetBounds(Rect.X, Rect.Y, Rect.Width, Rect.Height);
-        }
-
-        private void SetupForm()
-        {
+            // set mainform title
+            var Ver = Assembly.GetExecutingAssembly().GetName().Version;
+            Text = String.Format("{0} {1}.{2}", Application.ProductName, Ver.Major, Ver.Minor);
+            // show tray
             TrayIcon.Visible = true;
-            Text = GetMainFormTitle();
-            // выводим имя компьютера
+            // show computer name
             lCompName.Text = SystemInformation.ComputerName;
-            // выводим имя пользователя
+            // show current user
             lUserName.Text = Settings.GetCurrentUserName();
         }
 
@@ -116,12 +117,6 @@ namespace LanExchange.UI
                 IsFormVisible = false;
                 logger.Info("Closing is canceled");
             }
-        }
-
-        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            m_Presenter.Pages.GetModel().StoreSettings();
-            Settings.SaveSettings();
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -239,45 +234,14 @@ namespace LanExchange.UI
             return sBuilder.ToString();
         }
 
-        public ListView GetActiveListView()
+        public PanelView GetActivePanelView()
         {
-            return null;
-            //if (Pages.SelectedTab == null)
-            //    return null;
-            //else
-            //{
-            //    Control.ControlCollection ctrls = Pages.SelectedTab.Controls;
-            //    return ctrls.Count > 0 ? ctrls[0] as ListView : null;
-            //}
-        }
-
-        private void mLargeIcons_Click(object sender, EventArgs e)
-        {
-            ListView LV = GetActiveListView();
-            LV.SuspendLayout();
-            LV.BeginUpdate();
-            try
+            if (Pages.TabCount == 0 || Pages.SelectedTab == null)
+                return null;
+            else
             {
-                switch (Int32.Parse((sender as ToolStripMenuItem).Tag.ToString()))
-                {
-                    case 1:
-                        LV.View = System.Windows.Forms.View.LargeIcon;
-                        break;
-                    case 2:
-                        LV.View = System.Windows.Forms.View.Details;
-                        break;
-                    case 3:
-                        LV.View = System.Windows.Forms.View.SmallIcon;
-                        break;
-                    case 4:
-                        LV.View = System.Windows.Forms.View.List;
-                        break;
-                }
-            }
-            finally
-            {
-                LV.EndUpdate();
-                LV.SuspendLayout();
+                Control.ControlCollection ctrls = Pages.SelectedTab.Controls;
+                return ctrls.Count > 0 ? ctrls[0] as PanelView : null;
             }
         }
 
@@ -294,8 +258,12 @@ namespace LanExchange.UI
 
         private void popTop_Opening(object sender, CancelEventArgs e)
         {
-            //popComps_Opened(sender, e);
-            //e.Cancel = !mComp.Enabled;
+            PanelView PV = GetActivePanelView();
+            if (PV != null)
+            {
+                PV.popComps_Opening(sender, e);
+                e.Cancel = !PV.mComp.Enabled;
+            }
         }
 
         private void lCompName_Click(object sender, EventArgs e)
@@ -304,17 +272,19 @@ namespace LanExchange.UI
             //Process.Start("explorer.exe", "/n, /e,::{20D04FE0-3AEA-1069-A2D8-08002B30309D}");
             // Network
             //Process.Start("explorer.exe", "/n, ::{208D2C60-3AEA-1069-A2D7-08002B30309D},FERMAK");
-            //GotoFavoriteComp(SystemInformation.ComputerName);
+            PanelView PV = GetActivePanelView();
+            if (PV != null)
+                PV.GotoFavoriteComp(SystemInformation.ComputerName);
         }
 
         private void tipComps_Popup(object sender, PopupEventArgs e)
         {
-            //if (e.AssociatedControl == imgInfo)
-            //{
-            //    (sender as ToolTip).ToolTipIcon = ToolTipIcon.Info;
-            //    (sender as ToolTip).ToolTipTitle = "Легенда";
-            //    return;
-            //}
+            if (e.AssociatedControl == pInfo.Picture)
+            {
+                (sender as ToolTip).ToolTipIcon = ToolTipIcon.Info;
+                (sender as ToolTip).ToolTipTitle = "Легенда";
+                return;
+            }
             if (e.AssociatedControl is ListView)
             {
                 ListView LV = (ListView)e.AssociatedControl;
@@ -333,6 +303,8 @@ namespace LanExchange.UI
         {
             if (Pages.TabCount > 0 && Pages.SelectedTab != null)
             {
+                // synchronize selected page index with Pages model
+                m_Presenter.Pages.GetModel().SelectedIndex = Pages.SelectedIndex;
                 Control.ControlCollection ctrls = Pages.SelectedTab.Controls;
                 if (ctrls.Count > 0)
                 {
@@ -500,6 +472,11 @@ namespace LanExchange.UI
                     tipComps.SetToolTip(pInfo.Picture, "");
                     break;
             }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            SetupRunMinimized();
         }
     }
 }

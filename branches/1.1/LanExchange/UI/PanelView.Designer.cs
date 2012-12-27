@@ -163,7 +163,7 @@
             this.toolStripSeparator6,
             this.mContextClose});
             this.popComps.Name = "popComps";
-            this.popComps.Size = new System.Drawing.Size(279, 292);
+            this.popComps.Size = new System.Drawing.Size(279, 314);
             this.popComps.Opening += new System.ComponentModel.CancelEventHandler(this.popComps_Opening);
             // 
             // mComp
@@ -314,20 +314,23 @@
             this.mCompLargeIcons.Size = new System.Drawing.Size(278, 22);
             this.mCompLargeIcons.Tag = "1";
             this.mCompLargeIcons.Text = "Крупные значки";
+            this.mCompLargeIcons.Click += new System.EventHandler(this.mLargeIcons_Click);
             // 
             // mCompSmallIcons
             // 
             this.mCompSmallIcons.Name = "mCompSmallIcons";
             this.mCompSmallIcons.Size = new System.Drawing.Size(278, 22);
-            this.mCompSmallIcons.Tag = "3";
+            this.mCompSmallIcons.Tag = "2";
             this.mCompSmallIcons.Text = "Мелкие значки";
+            this.mCompSmallIcons.Click += new System.EventHandler(this.mLargeIcons_Click);
             // 
             // mCompList
             // 
             this.mCompList.Name = "mCompList";
             this.mCompList.Size = new System.Drawing.Size(278, 22);
-            this.mCompList.Tag = "4";
+            this.mCompList.Tag = "3";
             this.mCompList.Text = "Список";
+            this.mCompList.Click += new System.EventHandler(this.mLargeIcons_Click);
             // 
             // mCompDetails
             // 
@@ -335,8 +338,9 @@
             this.mCompDetails.CheckState = System.Windows.Forms.CheckState.Checked;
             this.mCompDetails.Name = "mCompDetails";
             this.mCompDetails.Size = new System.Drawing.Size(278, 22);
-            this.mCompDetails.Tag = "2";
+            this.mCompDetails.Tag = "4";
             this.mCompDetails.Text = "Таблица";
+            this.mCompDetails.Click += new System.EventHandler(this.mLargeIcons_Click);
             // 
             // toolStripSeparator5
             // 
@@ -351,6 +355,7 @@
             this.mCopyPath.Size = new System.Drawing.Size(278, 22);
             this.mCopyPath.Text = "Копировать «Общий ресурс»";
             this.mCopyPath.Visible = false;
+            this.mCopyPath.Click += new System.EventHandler(this.mCopyPath_Click);
             // 
             // mCopyCompName
             // 
@@ -358,18 +363,21 @@
             this.mCopyCompName.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
             this.mCopyCompName.Size = new System.Drawing.Size(278, 22);
             this.mCopyCompName.Text = "Копировать «Сетевое имя»";
+            this.mCopyCompName.Click += new System.EventHandler(this.mCopyCompName_Click);
             // 
             // mCopyComment
             // 
             this.mCopyComment.Name = "mCopyComment";
             this.mCopyComment.Size = new System.Drawing.Size(278, 22);
             this.mCopyComment.Text = "Копировать «Описание»";
+            this.mCopyComment.Click += new System.EventHandler(this.mCopyComment_Click);
             // 
             // mCopySelected
             // 
             this.mCopySelected.Name = "mCopySelected";
             this.mCopySelected.Size = new System.Drawing.Size(278, 22);
             this.mCopySelected.Text = "Копировать выделенное";
+            this.mCopySelected.Click += new System.EventHandler(this.mCopySelected_Click);
             // 
             // mSendSeparator
             // 
@@ -430,7 +438,7 @@
         public System.Windows.Forms.TextBox eFilter;
         private System.Windows.Forms.ListView LV;
         public System.Windows.Forms.ContextMenuStrip popComps;
-        private System.Windows.Forms.ToolStripMenuItem mComp;
+        public System.Windows.Forms.ToolStripMenuItem mComp;
         private System.Windows.Forms.ToolStripMenuItem mCompOpen;
         private System.Windows.Forms.ToolStripMenuItem mWMIDescription;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;

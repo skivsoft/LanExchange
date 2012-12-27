@@ -1,9 +1,6 @@
 ﻿using System;
 using System.IO;
 using LanExchange.Utils;
-using System.ComponentModel;
-using System.Windows.Forms;
-using System.Collections.Generic;
 using System.Security.Principal;
 
 namespace LanExchange.Model
@@ -19,10 +16,18 @@ namespace LanExchange.Model
 
         private static Settings m_Instance;
 
+        public bool RunMinimized { get; set; }
+        public bool AdvancedMode { get; set; }
+        public decimal RefreshTimeInSec { get; set; }
+
+        public string UpdateURL { get; set; }
+        public string WebSiteURL { get; set; }
+        public string EmailAddress { get; set; }
+
         public Settings()
         {
+            RunMinimized = true;
             RefreshTimeInSec = 5 * 60;
-
         }
 
         public static Settings Instance
@@ -84,20 +89,6 @@ namespace LanExchange.Model
                     AutorunUtils.Autorun_Delete(ExeFName);
             }
         }
-
-        public int SelectedIndex { get; set; }
-
-        public bool RunMinimized { get; set; }
-
-        public bool AdvancedMode { get; set; }
-
-        public decimal RefreshTimeInSec { get; set; }
-
-        public string UpdateURL { get; set; }
-
-        public string WebSiteURL { get; set; }
-
-        public string EmailAddress { get; set; }
 
         public string GetUpdateURL()
         {

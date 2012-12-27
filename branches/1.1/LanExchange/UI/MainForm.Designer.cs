@@ -297,6 +297,7 @@
             this.Pages.ContextMenuStrip = this.popPages;
             this.Pages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Pages.Location = new System.Drawing.Point(0, 60);
+            this.Pages.Multiline = true;
             this.Pages.Name = "Pages";
             this.Pages.SelectedIndex = 0;
             this.Pages.SelectedTabText = "";
@@ -329,7 +330,7 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.popTray.ResumeLayout(false);

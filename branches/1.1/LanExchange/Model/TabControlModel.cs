@@ -43,24 +43,37 @@ namespace LanExchange.Model
     {
         private readonly List<PanelItemList> m_List;
         private readonly string m_Name;
+        private int m_SelectedIndex;
 
         public event PanelItemListEventHandler AfterAppendTab;
         public event IndexEventHandler AfterRemove;
         public event PanelItemListEventHandler AfterRename;
+        public event IndexEventHandler SelectedIndexChanged;
 
-        private LanExchangeTabs m_Pages;
+        private LanExchangeTabs m_PagesSettings;
 
         public TabControlModel(string name)
         {
             m_List = new List<PanelItemList>();
-            m_Pages = new LanExchangeTabs();
+            m_PagesSettings = new LanExchangeTabs();
             m_Name = name;
-            SelectedIndex = -1;
+            m_SelectedIndex = -1;
         }
 
         public int Count { get { return m_List.Count; }  }
 
-        public int SelectedIndex { get; set; }
+        public int SelectedIndex 
+        {
+            get
+            {
+                return m_SelectedIndex;
+            }
+            set
+            {
+                m_SelectedIndex = value;
+                DoSelectedIndexChanged(value);
+            }
+        }
 
         public PanelItemList GetItem(int Index)
         {
@@ -83,6 +96,12 @@ namespace LanExchange.Model
         {
             if (AfterRename != null)
                 AfterRename(this, new PanelItemListEventArgs(Info));
+        }
+
+        public void DoSelectedIndexChanged(int Index)
+        {
+            if (SelectedIndexChanged != null)
+                SelectedIndexChanged(this, new IndexEventArgs(Index));
         }
 
         public void AddTab(PanelItemList Info)
@@ -126,12 +145,12 @@ namespace LanExchange.Model
 
         public void StoreSettings()
         {
-            m_Pages.SelectedIndex = SelectedIndex;
+            m_PagesSettings.SelectedIndex = SelectedIndex;
             TabSettings[] pages = new TabSettings[Count];
             for (int i = 0; i < Count; i++)
                 pages[i] = GetItem(i).Settings;
-            m_Pages.Items = pages;
-            SerializeUtils.SerializeObjectToXMLFile(GetConfigFileName(), m_Pages);
+            m_PagesSettings.Items = pages;
+            SerializeUtils.SerializeObjectToXMLFile(GetConfigFileName(), m_PagesSettings);
         }
 
         public void LoadSettings()
@@ -139,11 +158,11 @@ namespace LanExchange.Model
             Clear();
             try
             {
-                m_Pages = (LanExchangeTabs)SerializeUtils.DeserializeObjectFromXMLFile(GetConfigFileName(), typeof(LanExchangeTabs));
+                m_PagesSettings = (LanExchangeTabs)SerializeUtils.DeserializeObjectFromXMLFile(GetConfigFileName(), typeof(LanExchangeTabs));
             }
             catch { }
-            if (m_Pages.Items.Length > 0)
-                Array.ForEach(m_Pages.Items, Page =>
+            if (m_PagesSettings.Items.Length > 0)
+                Array.ForEach(m_PagesSettings.Items, Page =>
                 {
                     var Info = new PanelItemList(Page.Name);
                     Info.Settings = Page;
@@ -160,9 +179,7 @@ namespace LanExchange.Model
                 AddTab(Info);
             }
 
-            // присваиваем сначала -1, чтобы всегда срабатывал евент PageSelected при установке нужной странице
-            SelectedIndex = -1;
-            SelectedIndex = Settings.Instance.SelectedIndex;
+            SelectedIndex = m_PagesSettings.SelectedIndex;
         }
 
     }

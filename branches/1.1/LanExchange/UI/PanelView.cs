@@ -10,6 +10,7 @@ using NLog;
 using LanExchange.Utils;
 using System.Reflection;
 using LanExchange.Model;
+using System.Collections.Generic;
 
 namespace LanExchange.UI
 {
@@ -45,11 +46,12 @@ namespace LanExchange.UI
             }
         }
 
-        public ListView.SelectedIndexCollection SelectedIndices
+        public IEnumerable<int> SelectedIndices
         {
             get
             {
-                return LV.SelectedIndices;
+                foreach (int index in LV.SelectedIndices)
+                    yield return index;
             }
         }
 
@@ -232,7 +234,6 @@ namespace LanExchange.UI
 
         private void DoFocusedItemChanged()
         {
-            logger.Info("FocusedItemChanged {0}", LV.FocusedItem);
             if (FocusedItemChanged != null)
                 FocusedItemChanged(this, new EventArgs());
         }
@@ -617,7 +618,7 @@ namespace LanExchange.UI
             }
         }
 
-        private void popComps_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        public void popComps_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (LV.FocusedItem != null)
                 if (LV.FocusedItem.Selected)
@@ -676,16 +677,74 @@ namespace LanExchange.UI
                 SetEnabledAndVisible(Item, Value);
         }
 
-
-        private void mSendToTab_DropDownOpened(object sender, EventArgs e)
+        private void mLargeIcons_Click(object sender, EventArgs e)
         {
-            while (mSendToTab.DropDownItems.Count > 2)
-                mSendToTab.DropDownItems.RemoveAt(mSendToTab.DropDownItems.Count - 1);
-
-            //TabController.AddTabsToMenuItem(mSendToTab, TabController.mSendToSelectedTab_Click, true);
-            // скрываем разделитель, если нет новых вкладок
-            mAfterSendTo.Visible = mSendToTab.DropDownItems.Count > 2;
+            LV.SuspendLayout();
+            LV.BeginUpdate();
+            try
+            {
+                int Tag;
+                if (!int.TryParse((sender as ToolStripMenuItem).Tag.ToString(), out Tag))
+                    Tag = 0;
+                switch (Tag)
+                {
+                    case 1:
+                        LV.View = System.Windows.Forms.View.LargeIcon;
+                        break;
+                    case 2:
+                        LV.View = System.Windows.Forms.View.SmallIcon;
+                        break;
+                    case 3:
+                        LV.View = System.Windows.Forms.View.List;
+                        break;
+                    case 4:
+                        LV.View = System.Windows.Forms.View.Details;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            finally
+            {
+                LV.EndUpdate();
+                LV.SuspendLayout();
+            }
         }
 
+        private void mCopyCompName_Click(object sender, EventArgs e)
+        {
+            m_Presenter.CopyCompNameCommand();
+        }
+
+        private void mCopyComment_Click(object sender, EventArgs e)
+        {
+            m_Presenter.CopyCommentCommand();
+        }
+
+        private void mCopySelected_Click(object sender, EventArgs e)
+        {
+            m_Presenter.CopySelectedCommand();
+        }
+
+        private void mCopyPath_Click(object sender, EventArgs e)
+        {
+            m_Presenter.CopyPathCommand();
+        }
+
+        /// <summary>
+        /// IPanelView.GetItem implementation
+        /// </summary>
+        /// <param name="Index"></param>
+        /// <returns></returns>
+        public PanelItem GetItem(int Index)
+        {
+            return m_Objects.Get(m_Objects.Keys[Index]);
+        }
+
+
+        public void SelectItem(int Index)
+        {
+            LV.SelectedIndices.Add(Index);
+        }
     }
 }

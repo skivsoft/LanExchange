@@ -19,9 +19,10 @@ namespace LanExchange.Presenter
         {
             m_View = pages;
             m_Model = new TabControlModel(m_View.Name);
-            m_Model.AfterAppendTab += AfterAppendTab;
-            m_Model.AfterRemove += AfterRemove;
-            m_Model.AfterRename += AfterRename;
+            m_Model.AfterAppendTab += Model_AfterAppendTab;
+            m_Model.AfterRemove += Model_AfterRemove;
+            m_Model.AfterRename += Model_AfterRename;
+            m_Model.SelectedIndexChanged += Model_SelectedIndexChanged;
             m_Model.LoadSettings();
         }
 
@@ -122,7 +123,7 @@ namespace LanExchange.Presenter
             // выделяем добавленные итемы
             if (lvReceiver.Items.Count > 0)
             {
-                lvReceiver.SelectedIndices.Add(0);
+                lvReceiver.SelectItem(0);
                 /*
                 foreach(int Index in Indices)
                     if (Index != -1)
@@ -166,9 +167,9 @@ namespace LanExchange.Presenter
             return m_View.TabPagesCount > 1;
         }
 
-        public void AfterAppendTab(object sender, PanelItemListEventArgs e)
+        public void Model_AfterAppendTab(object sender, PanelItemListEventArgs e)
         {
-            logger.Info("AfterAppendTab()");
+            logger.Info("AfterAppendTab({0})", e.Info.TabName);
             // create panel
             var PV = new PanelView { Dock = DockStyle.Fill, Objects = e.Info };
             PV.SmallImageList = MainForm.Instance.ilSmall;
@@ -181,14 +182,19 @@ namespace LanExchange.Presenter
             e.Info.Changed += PV.Items_Changed;
         }
 
-        public void AfterRemove(object sender, IndexEventArgs e)
+        public void Model_AfterRemove(object sender, IndexEventArgs e)
         {
             m_View.RemoveTabAt(e.Index);
         }
 
-        public void AfterRename(object sender, PanelItemListEventArgs e)
+        public void Model_AfterRename(object sender, PanelItemListEventArgs e)
         {
             m_View.SelectedTabText = e.Info.TabName;
+        }
+
+        public void Model_SelectedIndexChanged(object sender, IndexEventArgs e)
+        {
+            m_View.SelectedIndex = e.Index;
         }
     }
 

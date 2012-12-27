@@ -74,7 +74,7 @@
             // chAdvanced
             // 
             this.chAdvanced.AutoSize = true;
-            this.chAdvanced.Location = new System.Drawing.Point(18, 41);
+            this.chAdvanced.Location = new System.Drawing.Point(18, 58);
             this.chAdvanced.Name = "chAdvanced";
             this.chAdvanced.Size = new System.Drawing.Size(288, 17);
             this.chAdvanced.TabIndex = 1;
@@ -84,7 +84,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(295, 74);
+            this.label2.Location = new System.Drawing.Point(295, 84);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(30, 13);
             this.label2.TabIndex = 4;
@@ -92,7 +92,7 @@
             // 
             // eRefreshTime
             // 
-            this.eRefreshTime.Location = new System.Drawing.Point(251, 72);
+            this.eRefreshTime.Location = new System.Drawing.Point(251, 82);
             this.eRefreshTime.Name = "eRefreshTime";
             this.eRefreshTime.Size = new System.Drawing.Size(40, 20);
             this.eRefreshTime.TabIndex = 2;
@@ -105,7 +105,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 74);
+            this.label1.Location = new System.Drawing.Point(15, 84);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(230, 13);
             this.label1.TabIndex = 2;
@@ -114,13 +114,12 @@
             // chMinimized
             // 
             this.chMinimized.AutoSize = true;
-            this.chMinimized.Location = new System.Drawing.Point(18, 209);
+            this.chMinimized.Location = new System.Drawing.Point(18, 38);
             this.chMinimized.Name = "chMinimized";
             this.chMinimized.Size = new System.Drawing.Size(231, 17);
             this.chMinimized.TabIndex = 1;
             this.chMinimized.Text = "Запускать программу в свёрнутом виде";
             this.chMinimized.UseVisualStyleBackColor = true;
-            this.chMinimized.Visible = false;
             // 
             // chAutorun
             // 

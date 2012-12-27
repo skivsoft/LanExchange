@@ -85,6 +85,7 @@ namespace LanExchange
 
         static void SimpleStartInstance()
         {
+            Application.ApplicationExit += MainForm.OnApplicationExit;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false); // must be called before first form created
             Application.Run(new MainForm());
@@ -124,7 +125,7 @@ namespace LanExchange
             }
             catch (Exception e)
             {
-                logger.ErrorException(String.Format("Error in Main(): {0}{1}{2}", e.Message, Environment.NewLine, e.StackTrace), e);
+                logger.Error("Main(): {0}{1}{2}", e.Message, Environment.NewLine, e.StackTrace);
             }
         }
     }

@@ -40,7 +40,7 @@
             // lblInputLabel
             // 
             this.lblInputLabel.AutoSize = true;
-            this.lblInputLabel.Location = new System.Drawing.Point(12, 9);
+            this.lblInputLabel.Location = new System.Drawing.Point(9, 9);
             this.lblInputLabel.Name = "lblInputLabel";
             this.lblInputLabel.Size = new System.Drawing.Size(35, 13);
             this.lblInputLabel.TabIndex = 0;
