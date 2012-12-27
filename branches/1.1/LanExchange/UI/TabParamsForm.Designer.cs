@@ -57,7 +57,6 @@ namespace LanExchange.UI
             this.lvDomains.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1});
             this.lvDomains.FullRowSelect = true;
-            this.lvDomains.GridLines = true;
             this.lvDomains.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lvDomains.HideSelection = false;
             this.lvDomains.Location = new System.Drawing.Point(15, 65);
@@ -67,6 +66,7 @@ namespace LanExchange.UI
             this.lvDomains.TabIndex = 3;
             this.lvDomains.UseCompatibleStateImageBehavior = false;
             this.lvDomains.View = System.Windows.Forms.View.Details;
+            this.lvDomains.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.lvDomains_ItemChecked);
             // 
             // columnHeader1
             // 
@@ -84,7 +84,7 @@ namespace LanExchange.UI
             this.rbDontScan.TabStop = true;
             this.rbDontScan.Text = "Отключить сканирование";
             this.rbDontScan.UseVisualStyleBackColor = true;
-            this.rbDontScan.CheckedChanged += new System.EventHandler(this.rbAll_CheckedChanged);
+            this.rbDontScan.CheckedChanged += new System.EventHandler(this.rbDontScan_CheckedChanged);
             // 
             // rbSelected
             // 
@@ -95,7 +95,6 @@ namespace LanExchange.UI
             this.rbSelected.TabIndex = 1;
             this.rbSelected.Text = "Выбранные группы";
             this.rbSelected.UseVisualStyleBackColor = true;
-            this.rbSelected.CheckedChanged += new System.EventHandler(this.rbAll_CheckedChanged);
             // 
             // button1
             // 

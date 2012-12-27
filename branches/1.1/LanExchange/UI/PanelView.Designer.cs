@@ -163,8 +163,8 @@
             this.toolStripSeparator6,
             this.mContextClose});
             this.popComps.Name = "popComps";
-            this.popComps.Size = new System.Drawing.Size(262, 314);
-            this.popComps.Opened += new System.EventHandler(this.popComps_Opened);
+            this.popComps.Size = new System.Drawing.Size(279, 292);
+            this.popComps.Opening += new System.ComponentModel.CancelEventHandler(this.popComps_Opening);
             // 
             // mComp
             // 
@@ -183,7 +183,7 @@
             this.mComp.Enabled = false;
             this.mComp.Image = global::LanExchange.Properties.Resources.CompOff;
             this.mComp.Name = "mComp";
-            this.mComp.Size = new System.Drawing.Size(261, 22);
+            this.mComp.Size = new System.Drawing.Size(278, 22);
             this.mComp.Tag = "";
             this.mComp.Text = "\\\\COMPUTER";
             this.mComp.Visible = false;
@@ -279,7 +279,7 @@
             this.mFolder.Enabled = false;
             this.mFolder.Image = global::LanExchange.Properties.Resources.folder2_normal_16x16;
             this.mFolder.Name = "mFolder";
-            this.mFolder.Size = new System.Drawing.Size(261, 22);
+            this.mFolder.Size = new System.Drawing.Size(278, 22);
             this.mFolder.Tag = "";
             this.mFolder.Text = "\\\\COMPUTER\\FOLDER";
             this.mFolder.Visible = false;
@@ -305,27 +305,27 @@
             // mSeparatorAdmin
             // 
             this.mSeparatorAdmin.Name = "mSeparatorAdmin";
-            this.mSeparatorAdmin.Size = new System.Drawing.Size(258, 6);
+            this.mSeparatorAdmin.Size = new System.Drawing.Size(275, 6);
             this.mSeparatorAdmin.Visible = false;
             // 
             // mCompLargeIcons
             // 
             this.mCompLargeIcons.Name = "mCompLargeIcons";
-            this.mCompLargeIcons.Size = new System.Drawing.Size(261, 22);
+            this.mCompLargeIcons.Size = new System.Drawing.Size(278, 22);
             this.mCompLargeIcons.Tag = "1";
             this.mCompLargeIcons.Text = "Крупные значки";
             // 
             // mCompSmallIcons
             // 
             this.mCompSmallIcons.Name = "mCompSmallIcons";
-            this.mCompSmallIcons.Size = new System.Drawing.Size(261, 22);
+            this.mCompSmallIcons.Size = new System.Drawing.Size(278, 22);
             this.mCompSmallIcons.Tag = "3";
             this.mCompSmallIcons.Text = "Мелкие значки";
             // 
             // mCompList
             // 
             this.mCompList.Name = "mCompList";
-            this.mCompList.Size = new System.Drawing.Size(261, 22);
+            this.mCompList.Size = new System.Drawing.Size(278, 22);
             this.mCompList.Tag = "4";
             this.mCompList.Text = "Список";
             // 
@@ -334,21 +334,21 @@
             this.mCompDetails.Checked = true;
             this.mCompDetails.CheckState = System.Windows.Forms.CheckState.Checked;
             this.mCompDetails.Name = "mCompDetails";
-            this.mCompDetails.Size = new System.Drawing.Size(261, 22);
+            this.mCompDetails.Size = new System.Drawing.Size(278, 22);
             this.mCompDetails.Tag = "2";
             this.mCompDetails.Text = "Таблица";
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(258, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(275, 6);
             // 
             // mCopyPath
             // 
             this.mCopyPath.Enabled = false;
             this.mCopyPath.Name = "mCopyPath";
             this.mCopyPath.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.mCopyPath.Size = new System.Drawing.Size(261, 22);
+            this.mCopyPath.Size = new System.Drawing.Size(278, 22);
             this.mCopyPath.Text = "Копировать «Общий ресурс»";
             this.mCopyPath.Visible = false;
             // 
@@ -356,25 +356,25 @@
             // 
             this.mCopyCompName.Name = "mCopyCompName";
             this.mCopyCompName.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.mCopyCompName.Size = new System.Drawing.Size(261, 22);
+            this.mCopyCompName.Size = new System.Drawing.Size(278, 22);
             this.mCopyCompName.Text = "Копировать «Сетевое имя»";
             // 
             // mCopyComment
             // 
             this.mCopyComment.Name = "mCopyComment";
-            this.mCopyComment.Size = new System.Drawing.Size(261, 22);
+            this.mCopyComment.Size = new System.Drawing.Size(278, 22);
             this.mCopyComment.Text = "Копировать «Описание»";
             // 
             // mCopySelected
             // 
             this.mCopySelected.Name = "mCopySelected";
-            this.mCopySelected.Size = new System.Drawing.Size(261, 22);
+            this.mCopySelected.Size = new System.Drawing.Size(278, 22);
             this.mCopySelected.Text = "Копировать выделенное";
             // 
             // mSendSeparator
             // 
             this.mSendSeparator.Name = "mSendSeparator";
-            this.mSendSeparator.Size = new System.Drawing.Size(258, 6);
+            this.mSendSeparator.Size = new System.Drawing.Size(275, 6);
             // 
             // mSendToTab
             // 
@@ -382,7 +382,7 @@
             this.mSendToNewTab,
             this.mAfterSendTo});
             this.mSendToTab.Name = "mSendToTab";
-            this.mSendToTab.Size = new System.Drawing.Size(261, 22);
+            this.mSendToTab.Size = new System.Drawing.Size(278, 22);
             this.mSendToTab.Text = "Отправить в другую вкладку";
             // 
             // mSendToNewTab
@@ -399,12 +399,12 @@
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(258, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(275, 6);
             // 
             // mContextClose
             // 
             this.mContextClose.Name = "mContextClose";
-            this.mContextClose.Size = new System.Drawing.Size(261, 22);
+            this.mContextClose.Size = new System.Drawing.Size(278, 22);
             this.mContextClose.Text = "Закрыть";
             // 
             // PanelView

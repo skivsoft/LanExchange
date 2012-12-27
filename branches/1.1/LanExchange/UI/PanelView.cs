@@ -20,6 +20,8 @@ namespace LanExchange.UI
         private readonly PanelPresenter m_Presenter;
         private PanelItemList m_Objects;
         private readonly ListViewItemCache m_Cache;
+
+        public event EventHandler FocusedItemChanged;
         
         public PanelView()
         {
@@ -228,25 +230,17 @@ namespace LanExchange.UI
             //    Pages.SelectedTab.Refresh();
         }
 
+        private void DoFocusedItemChanged()
+        {
+            logger.Info("FocusedItemChanged {0}", LV.FocusedItem);
+            if (FocusedItemChanged != null)
+                FocusedItemChanged(this, new EventArgs());
+        }
+
         public void lvComps_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            ListView LV = sender as ListView;
-            if (LV == null)
-                return;
-           // logger.Info("ItemSelectionChanged. {0}, Selected: {1}, {2}", e.Item, e.IsSelected, LV.FocusedItem);
-            /*
-            PanelItemList ItemList = LV.GetObject();
-            if (ItemList == null)
-                return;
-            // is current item focused?
-            ItemList.Select(e.ItemIndex, e.IsSelected, e.IsSelected);
-            // show current item info in top panel
             if (e.IsSelected)
-            {
-                string KeyName = ItemList.Keys[e.ItemIndex];
-                pInfo_ShowInfo(ItemList.Get(KeyName));
-            }
-             */
+                DoFocusedItemChanged();
         }
 
         public void lvRecent_ItemActivate(object sender, EventArgs e)
@@ -397,7 +391,7 @@ namespace LanExchange.UI
         /// <returns>Возвращает TComputer</returns>
         public PanelItem GetFocusedPanelItem(bool bUpdateRecent, bool bPingAndAsk)
         {
-            logger.Info("GetFocusedPanelItem. {0}", LV.FocusedItem);
+            //logger.Info("GetFocusedPanelItem. {0}", LV.FocusedItem);
             if (LV.FocusedItem == null)
                 return null;
             PanelItem PItem = m_Objects.Get(LV.FocusedItem.Text);
@@ -600,7 +594,7 @@ namespace LanExchange.UI
             UpdateFilterPanel();
         }
 
-        private void popComps_Opened(object sender, EventArgs e)
+        private void UpdateViewTypeMenu()
         {
             mCompLargeIcons.Checked = false;
             mCompSmallIcons.Checked = false;
@@ -621,6 +615,14 @@ namespace LanExchange.UI
                     mCompDetails.Checked = true;
                     break;
             }
+        }
+
+        private void popComps_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (LV.FocusedItem != null)
+                if (LV.FocusedItem.Selected)
+                    DoFocusedItemChanged();
+            UpdateViewTypeMenu();
 
             PanelItem PItem = GetFocusedPanelItem(false, false);
             bool bCompVisible = false;
@@ -640,7 +642,7 @@ namespace LanExchange.UI
                     {
                         mFolder.Text = String.Format(@"\\{0}\{1}", (PItem as SharePanelItem).ComputerName, PItem.Name);
                         if (SmallImageList != null)
-                        mFolder.Image = SmallImageList.Images[PItem.ImageIndex];
+                            mFolder.Image = SmallImageList.Images[PItem.ImageIndex];
                         bFolderVisible = true;
                         mFAROpen.Enabled = !(PItem as SharePanelItem).IsPrinter;
                     }
@@ -649,7 +651,7 @@ namespace LanExchange.UI
             SetEnabledAndVisible(mComp, bCompVisible);
             SetEnabledAndVisible(mFolder, bFolderVisible);
 
-            bool bSenderIsComputer = false; // (Pages.SelectedIndex > 0) /*|| (CompBrowser.InternalStack.Count == 0)*/;
+            bool bSenderIsComputer = true; // (Pages.SelectedIndex > 0) /*|| (CompBrowser.InternalStack.Count == 0)*/;
             SetEnabledAndVisible(new ToolStripItem[] { 
                 mCopyCompName, mCopyComment, mCopySelected, 
                 mSendSeparator, mSendToTab }, bSenderIsComputer);

@@ -432,10 +432,5 @@ namespace LanExchange.Model
             MainForm.GetInstance().UpdateFilter(MainForm.GetInstance().GetActiveListView(), MainForm.GetInstance().eFilter.Text, true);
              */
         }
-
-        public void Select(int ItemIndex, bool IsSelected, bool IsFocused)
-        {
-
-        }
     }
 }

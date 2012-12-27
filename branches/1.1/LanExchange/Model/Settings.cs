@@ -42,9 +42,13 @@ namespace LanExchange.Model
         {
             try
             {
-                var temp = (Settings)SerializeUtils.DeserializeObjectFromXMLFile(GetConfigFileName(), typeof(Settings));
-                m_Instance = null;
-                m_Instance = temp;
+                string FileName = GetConfigFileName();
+                if (File.Exists(FileName))
+                {
+                    var temp = (Settings)SerializeUtils.DeserializeObjectFromXMLFile(FileName, typeof(Settings));
+                    m_Instance = null;
+                    m_Instance = temp;
+                }
             }
             catch { }
         }

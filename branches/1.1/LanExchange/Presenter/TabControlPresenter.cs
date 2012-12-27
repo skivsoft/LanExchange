@@ -173,6 +173,7 @@ namespace LanExchange.Presenter
             var PV = new PanelView { Dock = DockStyle.Fill, Objects = e.Info };
             PV.SmallImageList = MainForm.Instance.ilSmall;
             PV.LargeImageList = MainForm.Instance.ilLarge;
+            PV.FocusedItemChanged += MainForm.Instance.PV_FocusedItemChanged;
             // add new tab and insert panel into it
             m_View.NewTab(e.Info.TabName);
             m_View.AddControl(m_View.TabPagesCount - 1, PV);

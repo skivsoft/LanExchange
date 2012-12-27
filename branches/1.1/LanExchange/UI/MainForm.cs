@@ -9,6 +9,7 @@ using LanExchange.Model;
 using LanExchange.View;
 using LanExchange.Presenter;
 using NLog;
+using System.Diagnostics;
 
 namespace LanExchange.UI
 {
@@ -238,33 +239,6 @@ namespace LanExchange.UI
             return sBuilder.ToString();
         }
 
-        private void pInfo_ShowInfo(PanelItem PItem)
-        {
-            ComputerPanelItem Comp = PItem as ComputerPanelItem;
-            if (Comp == null)
-                return;
-            pInfo.InfoComp = Comp.Name;
-            pInfo.InfoDesc = Comp.Comment;
-            pInfo.InfoOS = Comp.SI.Version();
-            pInfo.Picture.Image = ilSmall.Images[PItem.ImageIndex];
-            switch (Comp.ImageIndex)
-            {
-                case ComputerPanelItem.imgCompDefault:
-                    this.tipComps.SetToolTip(pInfo.Picture, "Компьютер найден в результате обзора сети.");
-                    break;
-                case ComputerPanelItem.imgCompRed:
-                    this.tipComps.SetToolTip(pInfo.Picture, "Компьютер не доступен посредством PING.");
-                    break;
-                case ComputerPanelItem.imgCompGreen:
-                    this.tipComps.SetToolTip(pInfo.Picture, "Компьютер с запущенной программой LanExchange.");
-                    break;
-                default:
-                    this.tipComps.SetToolTip(pInfo.Picture, "");
-                    break;
-            }
-        }
-
-
         public ListView GetActiveListView()
         {
             return null;
@@ -326,6 +300,10 @@ namespace LanExchange.UI
 
         private void lCompName_Click(object sender, EventArgs e)
         {
+            // Open MyComputer
+            //Process.Start("explorer.exe", "/n, /e,::{20D04FE0-3AEA-1069-A2D8-08002B30309D}");
+            // Network
+            //Process.Start("explorer.exe", "/n, ::{208D2C60-3AEA-1069-A2D7-08002B30309D},FERMAK");
             //GotoFavoriteComp(SystemInformation.ComputerName);
         }
 
@@ -353,17 +331,19 @@ namespace LanExchange.UI
 
         private void Pages_Selected(object sender, TabControlEventArgs e)
         {
-            //if (Pages.SelectedTab != null)
-            //{
-            //    Control.ControlCollection ctrls = Pages.SelectedTab.Controls;
-            //    if (ctrls.Count > 0)
-            //    {
-            //        ActiveControl = Pages.SelectedTab.Controls[0];
-            //        ActiveControl.Focus();
-            //        //lvComps_SelectedIndexChanged(ActiveControl, new EventArgs());
-            //        UpdateFilterPanel();
-            //    }
-            //}
+            if (Pages.TabCount > 0 && Pages.SelectedTab != null)
+            {
+                Control.ControlCollection ctrls = Pages.SelectedTab.Controls;
+                if (ctrls.Count > 0)
+                {
+                    ActiveControl = Pages.SelectedTab.Controls[0];
+                    ActiveControl.Focus();
+                    // update top info panel
+                    PV_FocusedItemChanged(ActiveControl, new EventArgs());
+                    //lvComps_SelectedIndexChanged(ActiveControl, new EventArgs());
+                    //UpdateFilterPanel();
+                }
+            }
         }
 
         private void mSettings_Click(object sender, EventArgs e)
@@ -474,6 +454,52 @@ namespace LanExchange.UI
         public void Restart()
         {
             Application.Restart();
+        }
+
+        private void lItemsCount_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                Point P = Status.PointToScreen(new Point(0, 0));
+                popTray.Show(P);
+            }
+        }
+
+        /// <summary>
+        /// This event fires when focused item of PanelView has been changed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void PV_FocusedItemChanged(object sender, EventArgs e)
+        {
+            // get focused item from current PanelView
+            PanelItem PItem = (sender as PanelView).GetFocusedPanelItem(false, false);
+            if (PItem == null)
+                return;
+            // is focused item a computer?
+            ComputerPanelItem Comp = PItem as ComputerPanelItem;
+            if (Comp == null)
+                return;
+            // update info panel at top of the form
+            pInfo.InfoComp = Comp.Name;
+            pInfo.InfoDesc = Comp.Comment;
+            pInfo.InfoOS = Comp.SI.Version();
+            pInfo.Picture.Image = ilSmall.Images[PItem.ImageIndex];
+            switch (Comp.ImageIndex)
+            {
+                case ComputerPanelItem.imgCompDefault:
+                    tipComps.SetToolTip(pInfo.Picture, "Компьютер найден в результате обзора сети.");
+                    break;
+                case ComputerPanelItem.imgCompRed:
+                    tipComps.SetToolTip(pInfo.Picture, "Компьютер не доступен посредством PING.");
+                    break;
+                case ComputerPanelItem.imgCompGreen:
+                    tipComps.SetToolTip(pInfo.Picture, "Компьютер с запущенной программой LanExchange.");
+                    break;
+                default:
+                    tipComps.SetToolTip(pInfo.Picture, "");
+                    break;
+            }
         }
     }
 }

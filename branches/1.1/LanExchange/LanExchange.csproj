@@ -114,6 +114,7 @@
       <DependentUpon>TabControlView.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\ListViewItemCache.cs" />
+    <Compile Include="Utils\ListViewUtils.cs" />
     <Compile Include="View\IAboutView.cs" />
     <Compile Include="Utils\MenuUtils.cs" />
     <Compile Include="UI\AboutForm.cs">

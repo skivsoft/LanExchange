@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <metadata name="TrayIcon.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>206, 50</value>
+    <value>104, 26</value>
   </metadata>
   <metadata name="popTray.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>7, 22</value>
+    <value>10, 24</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="TrayIcon.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -219,33 +219,27 @@
         AACAAAAAgAAAAIABAADAAQAA4AEAAPABAAD4AwAA
 </value>
   </data>
-  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>129, 25</value>
+  <metadata name="Status.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>103, 7</value>
   </metadata>
   <metadata name="popPages.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>9, 3</value>
   </metadata>
   <metadata name="tipComps.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>231, 24</value>
-  </metadata>
-  <metadata name="dlgSave.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>328, 20</value>
+    <value>209, 11</value>
   </metadata>
   <metadata name="popTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>8, 47</value>
-  </metadata>
-  <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>102, 47</value>
+    <value>11, 49</value>
   </metadata>
   <metadata name="ilLarge.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>304, 50</value>
+    <value>313, 41</value>
   </metadata>
   <data name="ilLarge.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABG
-        kQAAAk1TRnQBSQFMAgEBCgEAAXgBEQF4AREBIAEAASABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAGA
+        kQAAAk1TRnQBSQFMAgEBCgEAAcABEQHAAREBIAEAASABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAGA
         AwABYAMAAQEBAAEgBgABwP8A/wAYAAMBAQIDBAEGAwkBDAMKAQ4DDwEUAxABFgMTBBoBJAMaASQDGgEk
         AxoBJAMaASQDGgEkAxwBKAMjATQDIwE0AxwBKAMaASQDGgEkAxoBJAMaASQDGgEkAxgBIgMSARgDEAEW
         Aw8BFAMKAQ4DBwEKAwQBBgMBAQL/AIUAAxABFgM6AWIDSgGNA1IBowNUAa8DWQG/A1oBxQNbAcsDXQHX
@@ -868,14 +862,14 @@
 </value>
   </data>
   <metadata name="ilSmall.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>392, 50</value>
+    <value>314, 13</value>
   </metadata>
   <data name="ilSmall.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADc
-        KwAAAk1TRnQBSQFMAgEBCgEAAYABEQGAAREBEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        KwAAAk1TRnQBSQFMAgEBCgEAAcgBEQHIAREBEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABMAMAAQEBAAEgBgABMBYAAwMBBAMGAQgDCQEMAw0BEgMNARIDDQESAxEBFwMRARcDDQESAw0BEgMN
         AREDCAELAwYBCAMDAQTEAAMgAS8DSgGKA14BzgNfAdsDYQHkA2QB5wNfAegDZAHsA2AB6wNfAegDZAHn
         A2EB5ANhAdoDXgHOA0wBkAMdASnEAANZAb4CzAHLAf8CuwG6Af8DAAH/AwAB/wMAAf8DAAH/AwAB/wMA
@@ -1066,7 +1060,7 @@
 </value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>81</value>
+    <value>89</value>
   </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
