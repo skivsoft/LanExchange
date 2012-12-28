@@ -6,14 +6,6 @@ namespace LanExchange.Model
 {
     public class ComputerPanelItem : PanelItem
     {
-        // индексы иконок компов
-        public const int imgCompDefault = Shell32Utils.MyComputerIndex;
-        //public const int imgCompBlue = 1;
-        //public const int imgCompMagenta = 2;
-        //public const int imgCompGray = 3;
-        public const int imgCompGreen = Shell32Utils.MyComputerIndex;
-        public const int imgCompRed = Shell32Utils.MyComputerIndex;
-
         private string m_Name = String.Empty;
         private string m_Comment = String.Empty;
         private readonly ServerInfo m_SI;
@@ -69,12 +61,12 @@ namespace LanExchange.Model
         protected override int GetImageIndex()
         {
             if (IsLogged)
-                return imgCompGreen;
+                return LanExchangeIcons.imgCompGreen;
             else
                 if (IsPingable)
-                    return  imgCompDefault;
+                    return LanExchangeIcons.imgCompDefault;
                 else
-                    return imgCompRed;
+                    return LanExchangeIcons.imgCompDisabled;
         }
 
         protected override string GetToolTipText()

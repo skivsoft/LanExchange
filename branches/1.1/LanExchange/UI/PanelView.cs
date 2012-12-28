@@ -38,7 +38,9 @@ namespace LanExchange.UI
             m_Cache = new ListViewItemCache(this);
             LV.CacheVirtualItems += m_Cache.CacheVirtualItems;
             LV.RetrieveVirtualItem += m_Cache.RetrieveVirtualItem;
-            //SystemImageList.InitializeImageLists();
+            // set mycomputer image
+            mComp.Image = LanExchangeIcons.SmallImageList.Images[LanExchangeIcons.imgCompDefault];
+            mFolder.Image = LanExchangeIcons.SmallImageList.Images[LanExchangeIcons.imgFolderNormal];
         }
 
         /// <summary>
@@ -672,6 +674,8 @@ namespace LanExchange.UI
             // resolve computer related and folder related shortcut conflict
             mCompOpen.ShowShortcutKeys = bCompVisible && !bFolderVisible;
             mRadmin1.ShowShortcutKeys = bCompVisible && !bFolderVisible;
+
+            mFolder.Visible = true;
         }
 
         private void SetEnabledAndVisible(ToolStripItem Item, bool Value)

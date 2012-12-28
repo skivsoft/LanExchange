@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using LanExchange.View;
+using LanExchange.Model;
 
 namespace LanExchange.UI
 {
@@ -21,9 +22,27 @@ namespace LanExchange.UI
             get { return TabPages.Count; }
         }
 
+        /// <summary>
+        /// Simple solution for long strings. 
+        /// TODO: Changes needed here. Max length must be in pixels instead number of chars.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        private string Ellipsis(string text, int length)
+        {
+            if (text.Length > length)
+                return text.Substring(0, length) + "…";
+            else
+                return text;
+        }
+
         public void NewTab(string tabname)
         {
-            TabPage Tab = new TabPage(tabname);
+            TabPage Tab = new TabPage();
+            Tab.Text = Ellipsis(tabname, 20);
+            Tab.ImageIndex = LanExchangeIcons.imgWorkgroup;
+            Tab.ToolTipText = tabname;
             Controls.Add(Tab);
         }
 

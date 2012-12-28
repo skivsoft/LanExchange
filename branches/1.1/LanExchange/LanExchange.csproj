@@ -90,6 +90,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\LanExchangeIcons.cs" />
     <Compile Include="Presenter\AboutPresenter.cs" />
     <Compile Include="Presenter\IPresenter.cs" />
     <Compile Include="Presenter\MainPresenter.cs" />
@@ -128,7 +129,7 @@
     <Compile Include="Utils\ListViewUtils.cs" />
     <Compile Include="Utils\Shell32.cs" />
     <Compile Include="Utils\Shell32Utils.cs" />
-    <Compile Include="Utils\SystemImageList.cs" />
+    <Compile Include="Utils\SysImageList.cs" />
     <Compile Include="Utils\User32.cs" />
     <Compile Include="View\IAboutView.cs" />
     <Compile Include="Utils\MenuUtils.cs" />

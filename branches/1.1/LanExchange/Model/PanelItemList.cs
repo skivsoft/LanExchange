@@ -15,7 +15,7 @@ namespace LanExchange.Model
         FILES = 2
     }
 
-    public class PanelItemList : ISubscriber
+    public class PanelItemList : ISubscriber, IEquatable<PanelItemList>
     {
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -431,6 +431,11 @@ namespace LanExchange.Model
 
             MainForm.GetInstance().UpdateFilter(MainForm.GetInstance().GetActiveListView(), MainForm.GetInstance().eFilter.Text, true);
              */
+        }
+
+        public bool Equals(PanelItemList other)
+        {
+            return string.Compare(TabName, other.TabName, true) == 0;
         }
     }
 }

@@ -5,11 +5,6 @@ namespace LanExchange.Model
 {
     public class SharePanelItem : PanelItem
     {
-        public const int imgHiddenFolder  = 6;
-        public const int imgNormalFolder  = 7;
-        public const int imgPrinterFolder = 8;
-        public const int imgBackFolder    = 9;
-
         private string m_Name;
 
         public SharePanelItem(string share_name, string share_comment, uint share_type, string computer_name)
@@ -39,12 +34,12 @@ namespace LanExchange.Model
         protected override int GetImageIndex()
         {
             if (String.IsNullOrEmpty(m_Name))
-                return imgBackFolder;
+                return LanExchangeIcons.imgFolderBack;
             else
             if (IsPrinter)
-                return imgPrinterFolder;
+                return LanExchangeIcons.imgFolderPrinter;
             else
-                return IsHidden ? imgHiddenFolder : imgNormalFolder;
+                return IsHidden ? LanExchangeIcons.imgFolderHidden : LanExchangeIcons.imgFolderNormal;
         }
 
         public bool IsPrinter

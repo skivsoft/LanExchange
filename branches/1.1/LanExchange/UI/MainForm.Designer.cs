@@ -145,7 +145,7 @@
             // lItemsCount
             // 
             this.lItemsCount.Name = "lItemsCount";
-            this.lItemsCount.Size = new System.Drawing.Size(472, 17);
+            this.lItemsCount.Size = new System.Drawing.Size(503, 17);
             this.lItemsCount.Spring = true;
             this.lItemsCount.Text = "    ";
             this.lItemsCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -267,6 +267,7 @@
             this.Pages.Name = "Pages";
             this.Pages.SelectedIndex = 0;
             this.Pages.SelectedTabText = "";
+            this.Pages.ShowToolTips = true;
             this.Pages.Size = new System.Drawing.Size(564, 460);
             this.Pages.TabIndex = 24;
             this.Pages.Selected += new System.Windows.Forms.TabControlEventHandler(this.Pages_Selected);

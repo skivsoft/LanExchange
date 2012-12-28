@@ -10,6 +10,9 @@ using LanExchange.View;
 using LanExchange.Presenter;
 using NLog;
 using System.Diagnostics;
+using GongSolutions.Shell.Interop;
+using GongSolutions.Shell;
+using vbAccelerator.Components.ImageList;
 
 namespace LanExchange.UI
 {
@@ -39,6 +42,7 @@ namespace LanExchange.UI
             
             // init main form
             SetupForm();
+            SetupImages();
             SetupMenu();
             // init network scanner
 #if DEBUG
@@ -81,8 +85,15 @@ namespace LanExchange.UI
             TrayIcon.Visible = true;
             // show computer name
             lCompName.Text = SystemInformation.ComputerName;
-            // show current user
+            lCompName.ImageIndex = LanExchangeIcons.imgCompDefault;
+                // show current user
             lUserName.Text = Settings.GetCurrentUserName();
+        }
+
+        private void SetupImages()
+        {
+            Pages.ImageList = LanExchangeIcons.SmallImageList;
+            Status.ImageList = LanExchangeIcons.SmallImageList;
         }
 
         private void SetupMenu()
@@ -451,20 +462,20 @@ namespace LanExchange.UI
             pInfo.InfoComp = Comp.Name;
             pInfo.InfoDesc = Comp.Comment;
             pInfo.InfoOS = Comp.SI.Version();
-            //pInfo.Picture.Image = ilSmall.Images[PItem.ImageIndex];
+            pInfo.Picture.Image = LanExchangeIcons.ExtraLargeImageList.Images[PItem.ImageIndex];
             switch (Comp.ImageIndex)
             {
-                case ComputerPanelItem.imgCompDefault:
+                case LanExchangeIcons.imgCompDefault:
                     tipComps.SetToolTip(pInfo.Picture, "Компьютер найден в результате обзора сети.");
                     break;
-                    /*
-                case ComputerPanelItem.imgCompRed:
+                case LanExchangeIcons.imgCompDisabled:
                     tipComps.SetToolTip(pInfo.Picture, "Компьютер не доступен посредством PING.");
                     break;
-                case ComputerPanelItem.imgCompGreen:
+                /*
+                case LanExchangeIcons.imgCompGreen:
                     tipComps.SetToolTip(pInfo.Picture, "Компьютер с запущенной программой LanExchange.");
                     break;
-                     */
+                 */
                 default:
                     tipComps.SetToolTip(pInfo.Picture, "");
                     break;
@@ -474,6 +485,11 @@ namespace LanExchange.UI
         private void MainForm_Load(object sender, EventArgs e)
         {
             SetupRunMinimized();
+        }
+
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

@@ -104,11 +104,20 @@ namespace LanExchange.Model
                 SelectedIndexChanged(this, new IndexEventArgs(Index));
         }
 
+        public bool Contains(PanelItemList Info)
+        {
+            return m_List.Contains(Info);
+        }
+        
         public void AddTab(PanelItemList Info)
         {
-            m_List.Add(Info);
-            Info.UpdateSubsctiption();
-            DoAfterAppendTab(Info);
+            // ommit duplicates
+            if (!m_List.Contains(Info))
+            {
+                m_List.Add(Info);
+                Info.UpdateSubsctiption();
+                DoAfterAppendTab(Info);
+            }
         }
 
         public void DelTab(int Index)
@@ -181,6 +190,5 @@ namespace LanExchange.Model
 
             SelectedIndex = m_PagesSettings.SelectedIndex;
         }
-
     }
 }

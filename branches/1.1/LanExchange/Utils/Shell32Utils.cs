@@ -9,7 +9,7 @@ namespace LanExchange.Utils
 {
     class Shell32Utils
     {
-        public const int MyComputerIndex = 49;
+        public const int MyComputerIndex = 15;
         public const int WorkgroupIndex = 18;
         public const int UsersIndex = 206;
 

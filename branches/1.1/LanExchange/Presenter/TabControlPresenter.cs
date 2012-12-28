@@ -46,6 +46,7 @@ namespace LanExchange.Presenter
             return m_Model;
         }
 
+        // TODO: Need check duplicates on new tab
         public void NewTab()
         {
             string NewTabName = InputBoxForm.Ask("Новая вкладка", "Введите имя", "", false);
@@ -66,6 +67,7 @@ namespace LanExchange.Presenter
             }
         }
 
+        // TODO: Need check duplicates on rename tab
         public void RenameTab()
         {
             int Index = m_View.SelectedIndex;
@@ -179,8 +181,8 @@ namespace LanExchange.Presenter
             //PV.LargeImageList = MainForm.Instance.ilLarge;
             //SystemImageList.UseSystemImageList(PV.Controls[0] as ListView);
             ListView LV = PV.Controls[0] as ListView;
-            User32.SendMessage(LV.Handle, MSG.LVM_SETIMAGELIST, (int)LVSIL.LVSIL_SMALL, SystemImageList.SmallImageList);
-            User32.SendMessage(LV.Handle, MSG.LVM_SETIMAGELIST, (int)LVSIL.LVSIL_NORMAL, SystemImageList.LargeImageList);
+            LV.SmallImageList = LanExchangeIcons.SmallImageList;
+            LV.LargeImageList = LanExchangeIcons.LargeImageList;
             PV.FocusedItemChanged += MainForm.Instance.PV_FocusedItemChanged;
             // add new tab and insert panel into it
             m_View.NewTab(e.Info.TabName);
