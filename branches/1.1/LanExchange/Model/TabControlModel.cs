@@ -157,7 +157,7 @@ namespace LanExchange.Model
             m_PagesSettings.SelectedIndex = SelectedIndex;
             List<TabSettings> pages = new List<TabSettings>();
             for (int i = 0; i < Count; i++)
-                pages[i] = GetItem(i).Settings;
+                pages.Add(GetItem(i).Settings);
             pages.Sort();
             m_PagesSettings.Items = pages.ToArray();
             SerializeUtils.SerializeObjectToXMLFile(GetConfigFileName(), m_PagesSettings);
