@@ -418,11 +418,6 @@ namespace LanExchange.UI
             }
         }
 
-        private void mContextClose_Click(object sender, EventArgs e)
-        {
-            IsFormVisible = false;
-        }
-
         public void Restart()
         {
             Application.Restart();
@@ -456,18 +451,20 @@ namespace LanExchange.UI
             pInfo.InfoComp = Comp.Name;
             pInfo.InfoDesc = Comp.Comment;
             pInfo.InfoOS = Comp.SI.Version();
-            pInfo.Picture.Image = ilSmall.Images[PItem.ImageIndex];
+            //pInfo.Picture.Image = ilSmall.Images[PItem.ImageIndex];
             switch (Comp.ImageIndex)
             {
                 case ComputerPanelItem.imgCompDefault:
                     tipComps.SetToolTip(pInfo.Picture, "Компьютер найден в результате обзора сети.");
                     break;
+                    /*
                 case ComputerPanelItem.imgCompRed:
                     tipComps.SetToolTip(pInfo.Picture, "Компьютер не доступен посредством PING.");
                     break;
                 case ComputerPanelItem.imgCompGreen:
                     tipComps.SetToolTip(pInfo.Picture, "Компьютер с запущенной программой LanExchange.");
                     break;
+                     */
                 default:
                     tipComps.SetToolTip(pInfo.Picture, "");
                     break;

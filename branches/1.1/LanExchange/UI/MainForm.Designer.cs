@@ -55,8 +55,6 @@
             this.mTabParams = new System.Windows.Forms.ToolStripMenuItem();
             this.tipComps = new System.Windows.Forms.ToolTip(this.components);
             this.popTop = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.ilLarge = new System.Windows.Forms.ImageList(this.components);
-            this.ilSmall = new System.Windows.Forms.ImageList(this.components);
             this.Pages = new LanExchange.UI.TabControlView();
             this.pInfo = new LanExchange.UI.InfoView();
             this.popTray.SuspendLayout();
@@ -147,7 +145,7 @@
             // lItemsCount
             // 
             this.lItemsCount.Name = "lItemsCount";
-            this.lItemsCount.Size = new System.Drawing.Size(471, 17);
+            this.lItemsCount.Size = new System.Drawing.Size(472, 17);
             this.lItemsCount.Spring = true;
             this.lItemsCount.Text = "    ";
             this.lItemsCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -164,9 +162,8 @@
             // 
             // lCompName
             // 
-            this.lCompName.Image = global::LanExchange.Properties.Resources.CompOff;
             this.lCompName.Name = "lCompName";
-            this.lCompName.Size = new System.Drawing.Size(35, 17);
+            this.lCompName.Size = new System.Drawing.Size(19, 17);
             this.lCompName.Text = "    ";
             this.lCompName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lCompName.Click += new System.EventHandler(this.lCompName_Click);
@@ -182,9 +179,8 @@
             // 
             // lUserName
             // 
-            this.lUserName.Image = global::LanExchange.Properties.Resources.UserName;
             this.lUserName.Name = "lUserName";
-            this.lUserName.Size = new System.Drawing.Size(35, 17);
+            this.lUserName.Size = new System.Drawing.Size(19, 17);
             this.lUserName.Text = "    ";
             // 
             // popPages
@@ -261,36 +257,6 @@
             this.popTop.Size = new System.Drawing.Size(61, 4);
             this.popTop.Opening += new System.ComponentModel.CancelEventHandler(this.popTop_Opening);
             this.popTop.Opened += new System.EventHandler(this.popTop_Opened);
-            // 
-            // ilLarge
-            // 
-            this.ilLarge.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ilLarge.ImageStream")));
-            this.ilLarge.TransparentColor = System.Drawing.Color.Transparent;
-            this.ilLarge.Images.SetKeyName(0, "CompOffBig.png");
-            this.ilLarge.Images.SetKeyName(1, "Comp_Big_Blue.png");
-            this.ilLarge.Images.SetKeyName(2, "Comp_Big_DarkMagenta.png");
-            this.ilLarge.Images.SetKeyName(3, "Comp_Big_Gray.png");
-            this.ilLarge.Images.SetKeyName(4, "Comp_Big_Green.png");
-            this.ilLarge.Images.SetKeyName(5, "Comp_Big_Red.png");
-            this.ilLarge.Images.SetKeyName(6, "folder2_hidden_32x32.png");
-            this.ilLarge.Images.SetKeyName(7, "folder2_normal_32x32.png");
-            this.ilLarge.Images.SetKeyName(8, "printer_32x32.png");
-            this.ilLarge.Images.SetKeyName(9, "back_32x32.png");
-            // 
-            // ilSmall
-            // 
-            this.ilSmall.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ilSmall.ImageStream")));
-            this.ilSmall.TransparentColor = System.Drawing.Color.Transparent;
-            this.ilSmall.Images.SetKeyName(0, "CompOff.png");
-            this.ilSmall.Images.SetKeyName(1, "Comp_Small_Blue.png");
-            this.ilSmall.Images.SetKeyName(2, "Comp_Small_DarkMagenta.png");
-            this.ilSmall.Images.SetKeyName(3, "Comp_Small_Gray.png");
-            this.ilSmall.Images.SetKeyName(4, "Comp_Small_Green.png");
-            this.ilSmall.Images.SetKeyName(5, "Comp_Small_Red.png");
-            this.ilSmall.Images.SetKeyName(6, "folder2_hidden_16x16.png");
-            this.ilSmall.Images.SetKeyName(7, "folder2_normal_16x16.png");
-            this.ilSmall.Images.SetKeyName(8, "printer_16x16.png");
-            this.ilSmall.Images.SetKeyName(9, "back_16x16.png");
             // 
             // Pages
             // 
@@ -370,8 +336,6 @@
         private System.Windows.Forms.ToolStripStatusLabel lUserName;
         private System.Windows.Forms.ToolStripMenuItem mTabParams;
         private InfoView pInfo;
-        public System.Windows.Forms.ImageList ilLarge;
-        public System.Windows.Forms.ImageList ilSmall;
         private TabControlView Pages;
     }
 }

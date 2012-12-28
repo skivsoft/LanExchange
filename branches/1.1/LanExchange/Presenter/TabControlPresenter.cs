@@ -4,6 +4,9 @@ using LanExchange.Model;
 using LanExchange.View;
 using LanExchange.UI;
 using NLog;
+using GongSolutions.Shell;
+using GongSolutions.Shell.Interop;
+using System.Drawing;
 
 namespace LanExchange.Presenter
 {
@@ -172,8 +175,12 @@ namespace LanExchange.Presenter
             logger.Info("AfterAppendTab({0})", e.Info.TabName);
             // create panel
             var PV = new PanelView { Dock = DockStyle.Fill, Objects = e.Info };
-            PV.SmallImageList = MainForm.Instance.ilSmall;
-            PV.LargeImageList = MainForm.Instance.ilLarge;
+            //PV.SmallImageList = MainForm.Instance.ilSmall;
+            //PV.LargeImageList = MainForm.Instance.ilLarge;
+            //SystemImageList.UseSystemImageList(PV.Controls[0] as ListView);
+            ListView LV = PV.Controls[0] as ListView;
+            User32.SendMessage(LV.Handle, MSG.LVM_SETIMAGELIST, (int)LVSIL.LVSIL_SMALL, SystemImageList.SmallImageList);
+            User32.SendMessage(LV.Handle, MSG.LVM_SETIMAGELIST, (int)LVSIL.LVSIL_NORMAL, SystemImageList.LargeImageList);
             PV.FocusedItemChanged += MainForm.Instance.PV_FocusedItemChanged;
             // add new tab and insert panel into it
             m_View.NewTab(e.Info.TabName);

@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Net;
+using LanExchange.Utils;
 
 namespace LanExchange.Model
 {
     public class ComputerPanelItem : PanelItem
     {
         // индексы иконок компов
-        public const int imgCompDefault = 0;
-        public const int imgCompBlue = 1;
-        public const int imgCompMagenta = 2;
-        public const int imgCompGray = 3;
-        public const int imgCompGreen = 4;
-        public const int imgCompRed = 5;
+        public const int imgCompDefault = Shell32Utils.MyComputerIndex;
+        //public const int imgCompBlue = 1;
+        //public const int imgCompMagenta = 2;
+        //public const int imgCompGray = 3;
+        public const int imgCompGreen = Shell32Utils.MyComputerIndex;
+        public const int imgCompRed = Shell32Utils.MyComputerIndex;
 
         private string m_Name = String.Empty;
         private string m_Comment = String.Empty;

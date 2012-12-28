@@ -101,20 +101,35 @@
     <Compile Include="UI\InfoView.Designer.cs">
       <DependentUpon>InfoView.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\InputBoxForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\InputBoxForm.Designer.cs">
+      <DependentUpon>InputBoxForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\PanelView.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\PanelView.Designer.cs">
       <DependentUpon>PanelView.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\ListViewItemCache.cs" />
     <Compile Include="UI\TabControlView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\TabControlView.Designer.cs">
       <DependentUpon>TabControlView.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\ListViewItemCache.cs" />
+    <Compile Include="Utils\ComCtl32.cs" />
+    <Compile Include="Utils\HResult.cs" />
+    <Compile Include="Utils\IEnumIDList.cs" />
+    <Compile Include="Utils\IShellFolder.cs" />
+    <Compile Include="Utils\IShellItem.cs" />
     <Compile Include="Utils\ListViewUtils.cs" />
+    <Compile Include="Utils\Shell32.cs" />
+    <Compile Include="Utils\Shell32Utils.cs" />
+    <Compile Include="Utils\SystemImageList.cs" />
+    <Compile Include="Utils\User32.cs" />
     <Compile Include="View\IAboutView.cs" />
     <Compile Include="Utils\MenuUtils.cs" />
     <Compile Include="UI\AboutForm.cs">
@@ -122,12 +137,6 @@
     </Compile>
     <Compile Include="UI\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\InputBoxForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\InputBoxForm.Designer.cs">
-      <DependentUpon>InputBoxForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\MainForm.cs">
       <SubType>Form</SubType>
@@ -163,7 +172,7 @@
     <Compile Include="Model\SharePanelItem.cs" />
     <Compile Include="Model\PingThread.cs" />
     <Compile Include="Model\PanelItem.cs" />
-    <Compile Include="Utils\User32.cs" />
+    <Compile Include="Utils\User32Utils.cs" />
     <Compile Include="Utils\AutorunUtils.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -184,7 +193,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\InputBoxForm.resx">
       <DependentUpon>InputBoxForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -220,13 +228,7 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\UserName.png" />
-    <None Include="Resources\Service.png" />
-    <None Include="Resources\Radmin.png" />
-    <None Include="Resources\MSTSC.png" />
-    <None Include="Resources\CompOff.png" />
     <None Include="Properties\app.manifest" />
-    <None Include="Resources\search.gif" />
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
@@ -263,11 +265,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="LanExchange.ico" />
-    <None Include="Resources\folder2_normal_16x16.png" />
-    <None Include="Resources\FAR_16x16.png" />
     <None Include="Resources\clear_hover.png" />
     <None Include="Resources\clear_normal.png" />
-    <None Include="Resources\explorer.png" />
     <Content Include="Presenter\Readme.txt" />
     <Content Include="Resources\LanExchange_16x16.ico" />
     <None Include="Resources\LanExchange_48x48.png" />

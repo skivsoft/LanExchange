@@ -11,6 +11,8 @@ using LanExchange.Utils;
 using System.Reflection;
 using LanExchange.Model;
 using System.Collections.Generic;
+using GongSolutions.Shell;
+using GongSolutions.Shell.Interop;
 
 namespace LanExchange.UI
 {
@@ -36,6 +38,33 @@ namespace LanExchange.UI
             m_Cache = new ListViewItemCache(this);
             LV.CacheVirtualItems += m_Cache.CacheVirtualItems;
             LV.RetrieveVirtualItem += m_Cache.RetrieveVirtualItem;
+            //SystemImageList.InitializeImageLists();
+        }
+
+        /// <summary>
+        /// IListViewItemGetter implementation. 
+        /// This method will be called by ListViewItemCache.
+        /// </summary>
+        /// <param name="Index"></param>
+        /// <returns></returns>
+        public ListViewItem GetListViewItemAt(int Index)
+        {
+            if (m_Objects == null)
+                return null;
+            if (Index < 0 || Index > Math.Min(m_Objects.Keys.Count, LV.VirtualListSize) - 1)
+                return null;
+            ListViewItem Result = new ListViewItem();
+            string ItemName = m_Objects.Keys[Index];
+            var PItem = m_Objects.Get(ItemName);
+            if (PItem != null)
+            {
+                Result.Text = ItemName;
+                string[] A = PItem.GetSubItems();
+                Array.ForEach(A, str => Result.SubItems.Add(str));
+                Result.ImageIndex = PItem.ImageIndex;
+                Result.ToolTipText = PItem.ToolTipText;
+            }
+            return Result;
         }
 
         public ListView.ListViewItemCollection Items
@@ -127,26 +156,6 @@ namespace LanExchange.UI
         private void imgClear_Click(object sender, EventArgs e)
         {
             eFilter.Text = "";
-        }
-
-        public ListViewItem GetListViewItemAt(int Index)
-        {
-            if (m_Objects == null)
-                return null;
-            if (Index < 0 || Index > Math.Min(m_Objects.Keys.Count, LV.VirtualListSize) - 1)
-                return null;
-            ListViewItem Result = new ListViewItem();
-            string ItemName = m_Objects.Keys[Index];
-            var PItem = m_Objects.Get(ItemName);
-            if (PItem != null)
-            {
-                Result.Text = ItemName;
-                string[] A = PItem.GetSubItems();
-                Array.ForEach(A, str => Result.SubItems.Add(str));
-                Result.ImageIndex = PItem.ImageIndex;
-                Result.ToolTipText = PItem.ToolTipText;
-            }
-            return Result;
         }
 
         public static void SendKeysCorrect(string Keys)
@@ -258,7 +267,7 @@ namespace LanExchange.UI
             // Ctrl+A выделение всех элементов
             if (e.Control && e.KeyCode == Keys.A)
             {
-                User32.SelectAllItems(LV);
+                User32Utils.SelectAllItems(LV);
                 e.Handled = true;
             }
             // Shift+Enter
@@ -745,6 +754,11 @@ namespace LanExchange.UI
         public void SelectItem(int Index)
         {
             LV.SelectedIndices.Add(Index);
+        }
+
+        private void mContextClose_Click(object sender, EventArgs e)
+        {
+            MainForm.Instance.IsFormVisible = false;
         }
     }
 }
