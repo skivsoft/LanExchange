@@ -155,10 +155,11 @@ namespace LanExchange.Model
         public void StoreSettings()
         {
             m_PagesSettings.SelectedIndex = SelectedIndex;
-            TabSettings[] pages = new TabSettings[Count];
+            List<TabSettings> pages = new List<TabSettings>();
             for (int i = 0; i < Count; i++)
                 pages[i] = GetItem(i).Settings;
-            m_PagesSettings.Items = pages;
+            pages.Sort();
+            m_PagesSettings.Items = pages.ToArray();
             SerializeUtils.SerializeObjectToXMLFile(GetConfigFileName(), m_PagesSettings);
         }
 
@@ -171,12 +172,14 @@ namespace LanExchange.Model
             }
             catch { }
             if (m_PagesSettings.Items.Length > 0)
+            {
                 Array.ForEach(m_PagesSettings.Items, Page =>
                 {
                     var Info = new PanelItemList(Page.Name);
                     Info.Settings = Page;
                     AddTab(Info);
                 });
+            }
             else
             {
                 string domain = NetApi32Utils.GetMachineNetBiosDomain(null);

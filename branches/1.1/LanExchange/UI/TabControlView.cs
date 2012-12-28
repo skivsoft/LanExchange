@@ -29,7 +29,7 @@ namespace LanExchange.UI
         /// <param name="text"></param>
         /// <param name="length"></param>
         /// <returns></returns>
-        private string Ellipsis(string text, int length)
+        public string Ellipsis(string text, int length)
         {
             if (text.Length > length)
                 return text.Substring(0, length) + "…";

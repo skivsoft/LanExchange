@@ -79,16 +79,19 @@ namespace LanExchange.Presenter
             }
         }
 
+
         public void AddTabsToMenuItem(ToolStripMenuItem menuitem, EventHandler handler, bool bHideActive)
         {
             for (int i = 0; i < m_Model.Count; i++)
             {
                 if (bHideActive && (!CanCloseTab(i) || (i == m_View.SelectedIndex)))
                     continue;
+                string S = m_Model.GetTabName(i);
                 ToolStripMenuItem Item = new ToolStripMenuItem
                 {
                     Checked = (i == m_View.SelectedIndex),
-                    Text = m_Model.GetTabName(i),
+                    Text = m_View.Ellipsis(S, 20),
+                    ToolTipText = S,
                     Tag = i
                 };
                 Item.Click += handler;
@@ -174,12 +177,9 @@ namespace LanExchange.Presenter
 
         public void Model_AfterAppendTab(object sender, PanelItemListEventArgs e)
         {
-            logger.Info("AfterAppendTab({0})", e.Info.TabName);
+            logger.Info("AfterAppendTab(\"{0}\")", e.Info.TabName);
             // create panel
             var PV = new PanelView { Dock = DockStyle.Fill, Objects = e.Info };
-            //PV.SmallImageList = MainForm.Instance.ilSmall;
-            //PV.LargeImageList = MainForm.Instance.ilLarge;
-            //SystemImageList.UseSystemImageList(PV.Controls[0] as ListView);
             ListView LV = PV.Controls[0] as ListView;
             LV.SmallImageList = LanExchangeIcons.SmallImageList;
             LV.LargeImageList = LanExchangeIcons.LargeImageList;

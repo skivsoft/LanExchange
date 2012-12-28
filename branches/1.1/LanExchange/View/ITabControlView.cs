@@ -14,5 +14,6 @@ namespace LanExchange.View
         void NewTab(string tabname);
         void RemoveTabAt(int Index);
         void AddControl(int Index, Control control);
+        string Ellipsis(string text, int length);
     }
 }

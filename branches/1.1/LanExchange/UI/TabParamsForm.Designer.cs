@@ -76,12 +76,10 @@ namespace LanExchange.UI
             // rbDontScan
             // 
             this.rbDontScan.AutoSize = true;
-            this.rbDontScan.Checked = true;
             this.rbDontScan.Location = new System.Drawing.Point(15, 19);
             this.rbDontScan.Name = "rbDontScan";
             this.rbDontScan.Size = new System.Drawing.Size(155, 17);
             this.rbDontScan.TabIndex = 2;
-            this.rbDontScan.TabStop = true;
             this.rbDontScan.Text = "Отключить сканирование";
             this.rbDontScan.UseVisualStyleBackColor = true;
             this.rbDontScan.CheckedChanged += new System.EventHandler(this.rbDontScan_CheckedChanged);
