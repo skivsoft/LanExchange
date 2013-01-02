@@ -82,6 +82,7 @@ namespace LanExchange.UI
             var Ver = Assembly.GetExecutingAssembly().GetName().Version;
             Text = String.Format("{0} {1}.{2}", Application.ProductName, Ver.Major, Ver.Minor);
             // show tray
+            TrayIcon.Text = Text;
             TrayIcon.Visible = true;
             // show computer name
             lCompName.Text = SystemInformation.ComputerName;

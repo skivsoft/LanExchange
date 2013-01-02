@@ -105,9 +105,8 @@ namespace LanExchange
         [STAThread]
         static void Main()
         {
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            //throw new Exception("This will go unhandled"); 
-            try
+            //AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            //try
             {
                 LogHeader();
                 #if SINGLE_INSTANCE
@@ -123,10 +122,10 @@ namespace LanExchange
                 SimpleStartInstance();
                 #endif
             }
-            catch (Exception e)
-            {
-                logger.Error("Main(): {0}{1}{2}", e.Message, Environment.NewLine, e.StackTrace);
-            }
+            //catch (Exception e)
+            //{
+            //    logger.Error("Main(): {0}{1}{2}", e.Message, Environment.NewLine, e.StackTrace);
+            //}
         }
     }
 }

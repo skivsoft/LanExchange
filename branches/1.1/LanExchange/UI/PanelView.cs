@@ -5,14 +5,11 @@ using LanExchange.View;
 using LanExchange.Properties;
 using LanExchange.Presenter;
 using System.Diagnostics;
-using System.Management;
 using NLog;
 using LanExchange.Utils;
 using System.Reflection;
 using LanExchange.Model;
 using System.Collections.Generic;
-using GongSolutions.Shell;
-using GongSolutions.Shell.Interop;
 
 namespace LanExchange.UI
 {
@@ -293,6 +290,12 @@ namespace LanExchange.UI
                         mFolderOpen_Click(mFAROpen, new EventArgs());
                 e.Handled = true;
             }
+            // Alt+Enter
+            if (MainForm.Instance.AdminMode && e.Alt && e.KeyCode == Keys.Enter)
+            {
+                mWMI_Click(mWMI, new EventArgs());
+                e.Handled = true;
+            }
             // клавишы для всех пользовательских вкладок
             if (e.KeyCode == Keys.Back)
             {
@@ -490,11 +493,11 @@ namespace LanExchange.UI
             }
         }
 
-        private void mWMIDescription_Click(object sender, EventArgs e)
+        private ComputerPanelItem GetFocusedComputer()
         {
             PanelItem PItem = GetFocusedPanelItem(true, true);
             if (PItem == null)
-                return;
+                return null;
             ComputerPanelItem Comp = null;
             int CompIndex = -1;
             if (PItem is ComputerPanelItem)
@@ -507,65 +510,19 @@ namespace LanExchange.UI
                 Comp = new ComputerPanelItem();
                 Comp.Name = (PItem as SharePanelItem).ComputerName;
             }
-            string OldValue = "";
-            string NewValue = "";
+            return Comp;
+        }
 
-            // изменение описания компьютера через WMI
-            try
+        private void mWMI_Click(object sender, EventArgs e)
+        {
+            ComputerPanelItem comp = GetFocusedComputer();
+            if (comp == null) return;
+            WMIForm form = new WMIForm(comp);
+            using (Bitmap bitmap = new Bitmap(LanExchangeIcons.SmallImageList.Images[LanExchangeIcons.imgCompDefault]))
             {
-                // подключаемся к компьютеру
-                ConnectionOptions connection = new ConnectionOptions();
-                ManagementScope scope = new ManagementScope(String.Format(@"\\{0}\root\CIMV2", Comp.Name), connection);
-                scope.Connect();
-                // WMI-запрос
-                ObjectQuery query = new ObjectQuery("SELECT * FROM Win32_OperatingSystem");
-                ManagementObjectSearcher searcher = new ManagementObjectSearcher(scope, query);
-                // читаем описание
-                foreach (ManagementObject queryObj in searcher.Get())
-                {
-                    OldValue = queryObj["Description"].ToString();
-                    break;
-                }
-                // запрос нового описания у пользователя
-                NewValue = InputBoxForm.Ask("Редактирование описания компьютера", 
-                    @"Описание компьютера \\" + Comp.Name,
-                    OldValue, true);
-                // если нажали OK и описание отличается от старого надо менять
-                if (NewValue != null && NewValue != OldValue)
-                {
-                    // записываем описание компа
-                    foreach (ManagementObject queryObj in searcher.Get())
-                    {
-                        queryObj["Description"] = NewValue;
-                        queryObj.Put();
-                    }
-                    // обновляем в списке
-                    Comp.Comment = NewValue;
-                    if (CompIndex != -1)
-                    {
-                        //!!!
-                        //CompBrowser.InternalItemList.ApplyFilter();
-                        //CompBrowser.LV.RedrawItems(CompIndex, CompIndex, false);
-                    }
-                    // сообщение об успешной смене описания
-                    MessageBox.Show(this,
-                        String.Format("Описание компьютера «{0}» успешно изменено.", Comp.Name), "Информация",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
-                }
+                form.Icon = Icon.FromHandle(bitmap.GetHicon());
             }
-            catch (System.Runtime.InteropServices.COMException ex)
-            {
-                if ((uint)ex.ErrorCode == 0x800706BA)
-                    MessageBox.Show(String.Format(
-                        "Не удалось поделючиться к компьютеру \\\\{0}.\n" +
-                        "Возможно удаленное подключение было заблокировано брэнмауэром.", Comp.Name), "Ошибка подключения",
-                        MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка подключения",
-                    MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
-            }
+            form.Show();
         }
 
         public void mCompOpen_Click(object sender, EventArgs e)
@@ -674,8 +631,6 @@ namespace LanExchange.UI
             // resolve computer related and folder related shortcut conflict
             mCompOpen.ShowShortcutKeys = bCompVisible && !bFolderVisible;
             mRadmin1.ShowShortcutKeys = bCompVisible && !bFolderVisible;
-
-            mFolder.Visible = true;
         }
 
         private void SetEnabledAndVisible(ToolStripItem Item, bool Value)
@@ -692,8 +647,7 @@ namespace LanExchange.UI
 
         private void mLargeIcons_Click(object sender, EventArgs e)
         {
-            LV.SuspendLayout();
-            LV.BeginUpdate();
+            //LV.BeginUpdate();
             try
             {
                 int Tag;
@@ -719,8 +673,7 @@ namespace LanExchange.UI
             }
             finally
             {
-                LV.EndUpdate();
-                LV.SuspendLayout();
+                //LV.EndUpdate();
             }
         }
 
@@ -764,5 +717,6 @@ namespace LanExchange.UI
         {
             MainForm.Instance.IsFormVisible = false;
         }
+
     }
 }

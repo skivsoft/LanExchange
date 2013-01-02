@@ -90,12 +90,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Utils\DynamicObject.cs" />
     <Compile Include="Model\LanExchangeIcons.cs" />
     <Compile Include="Presenter\AboutPresenter.cs" />
     <Compile Include="Presenter\IPresenter.cs" />
     <Compile Include="Presenter\MainPresenter.cs" />
     <Compile Include="Presenter\PanelPresenter.cs" />
     <Compile Include="Presenter\ParamsPresenter.cs" />
+    <Compile Include="Presenter\WMIPresenter.cs" />
     <Compile Include="UI\InfoView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -115,6 +117,12 @@
       <DependentUpon>PanelView.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\ListViewItemCache.cs" />
+    <Compile Include="UI\WMIForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\WMIForm.Designer.cs">
+      <DependentUpon>WMIForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\TabControlView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -131,6 +139,7 @@
     <Compile Include="Utils\Shell32Utils.cs" />
     <Compile Include="Utils\SysImageList.cs" />
     <Compile Include="Utils\User32.cs" />
+    <Compile Include="Utils\WMIUtils.cs" />
     <Compile Include="View\IAboutView.cs" />
     <Compile Include="Utils\MenuUtils.cs" />
     <Compile Include="UI\AboutForm.cs">
@@ -185,6 +194,7 @@
     <Compile Include="View\IParamsView.cs" />
     <Compile Include="View\ITabControlView.cs" />
     <Compile Include="View\ITabParamsView.cs" />
+    <Compile Include="View\IWMIView.cs" />
     <EmbeddedResource Include="UI\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -201,6 +211,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\PanelView.resx">
       <DependentUpon>PanelView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\WMIForm.resx">
+      <DependentUpon>WMIForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\TabParamsForm.resx">
       <DependentUpon>TabParamsForm.cs</DependentUpon>

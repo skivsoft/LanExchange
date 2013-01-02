@@ -68,7 +68,6 @@
             this.TrayIcon.BalloonTipTitle = "Оповещение";
             this.TrayIcon.ContextMenuStrip = this.popTray;
             this.TrayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("TrayIcon.Icon")));
-            this.TrayIcon.Text = "Общие папки";
             this.TrayIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.TrayIcon_MouseClick);
             // 
             // popTray
