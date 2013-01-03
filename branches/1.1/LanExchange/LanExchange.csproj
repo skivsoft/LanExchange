@@ -76,10 +76,6 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\NLog.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -135,8 +131,12 @@
     <Compile Include="Utils\IShellFolder.cs" />
     <Compile Include="Utils\IShellItem.cs" />
     <Compile Include="Utils\ListViewUtils.cs" />
+    <Compile Include="Windows\ExternDll.cs" />
+    <Compile Include="Windows\NativeMethods.cs" />
+    <Compile Include="Windows\SafeNativeMethods.cs" />
     <Compile Include="Utils\Shell32.cs" />
     <Compile Include="Utils\Shell32Utils.cs" />
+    <Compile Include="Utils\SingleInstanceCheck.cs" />
     <Compile Include="Utils\SysImageList.cs" />
     <Compile Include="Utils\User32.cs" />
     <Compile Include="Utils\WMIUtils.cs" />
@@ -195,6 +195,7 @@
     <Compile Include="View\ITabControlView.cs" />
     <Compile Include="View\ITabParamsView.cs" />
     <Compile Include="View\IWMIView.cs" />
+    <Compile Include="Windows\UnsafeNativeMethods.cs" />
     <EmbeddedResource Include="UI\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
       <SubType>Designer</SubType>

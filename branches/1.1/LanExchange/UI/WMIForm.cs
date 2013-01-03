@@ -7,6 +7,7 @@ using System.Management;
 using LanExchange.Utils;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Reflection;
 
 namespace LanExchange.UI
 {
@@ -21,6 +22,10 @@ namespace LanExchange.UI
         public WMIForm(ComputerPanelItem comp)
         {
             InitializeComponent();
+            // Enable double buffer for ListView
+            var mi = typeof(Control).GetMethod("SetStyle", BindingFlags.Instance | BindingFlags.NonPublic);
+            mi.Invoke(lvInstances, new object[] { ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true });
+
             m_Presenter = new WMIPresenter(comp, this);
             m_Classes = new List<string>();
             if (comp != null)
@@ -65,9 +70,13 @@ namespace LanExchange.UI
 
         private void WMIForm_Load(object sender, EventArgs e)
         {
-            m_Presenter.EnumDynamicClasses();
-            UpdateClassesMenu();
-            CurrentWMIClass = "Win32_OperatingSystem";
+            if (m_Presenter.EnumDynamicClasses())
+            {
+                UpdateClassesMenu();
+                CurrentWMIClass = "Win32_OperatingSystem";
+            }
+            else
+                Close();
         }
 
         public void ShowStat(int ClassCount, int PropCount, int MethodCount)
@@ -259,13 +268,15 @@ namespace LanExchange.UI
                 Message += String.Format("\n\nСвойство {0} успешно изменено.", PropName);
                 MessageBox.Show(Message, Caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch(ManagementException ex)
+            catch(Exception ex)
             {
                 // property not changed
                 var dynObj = PropGrid.SelectedObject as DynamicObject;
                 if (dynObj != null)
                     dynObj[PropName] = e.OldValue;
                 Message += "\n\n" + ex.Message;
+                if (ex.InnerException != null)
+                    Message += "\n\n" + ex.InnerException.Message;
                 MessageBox.Show(Message, Caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

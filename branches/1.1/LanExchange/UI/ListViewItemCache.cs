@@ -26,7 +26,7 @@ namespace LanExchange.Utils
         
         public void CacheVirtualItems(object sender, CacheVirtualItemsEventArgs e)
         {
-            logger.Info("CacheViertualItems({0}, {1})", e.StartIndex, e.EndIndex);
+            //logger.Info("CacheViertualItems({0}, {1})", e.StartIndex, e.EndIndex);
             /*
             int Count = e.EndIndex - e.StartIndex + 1;
             TableCacheStartIndex = e.StartIndex;

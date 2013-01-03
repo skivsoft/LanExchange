@@ -91,7 +91,7 @@ namespace LanExchange.Presenter
                 }
                 catch (Exception ex)
                 {
-                    logger.ErrorException("DoCheckVersion", ex);
+                    logger.Error("DoCheckVersion_DoWork() {0}", ex.Message);
                     e.Cancel = true;
                 }
             }

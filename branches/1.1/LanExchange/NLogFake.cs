@@ -8,8 +8,8 @@ namespace NLog
     public class Logger
     {
         public void Info(string message, params object[] args) { }
+        public void Error(string message, params object[] args) { }
         public void Trace(string message, params object[] args) { }
-        public void ErrorException(string message, Exception e) { }
     }
 
     public class LogManager

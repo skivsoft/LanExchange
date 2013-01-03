@@ -1,20 +1,14 @@
-﻿#define __SINGLE_INSTANCE
-
-using System;
+﻿using System;
 using System.Windows.Forms;
 using System.Reflection;
 using NLog;
 using LanExchange.UI;
+using LanExchange.Utils;
 
 namespace LanExchange
 {
     internal static class Program
     {
-        #if SINGLE_INSTANCE
-        private const string EventOneCopyOnlyName = "{e8813243-5a4d-4569-85ad-e95848a1c579}";
-        private static ApplicationContext context;
-        #endif
-
         private readonly static Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         static void LogHeader()
@@ -25,107 +19,22 @@ namespace LanExchange
             logger.Info("OSVersion: [{0}], Processors count: {1}", Environment.OSVersion, Environment.ProcessorCount);
         }
 
-        #if SINGLE_INSTANCE
-
-        private static EventWaitHandle eventOneCopyOnly;
-        private static Thread threadOneCopyOnly;
-
-        static void FirstInstance()
+        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false); // must be called before first form created
-
-            using (context = new ApplicationContext(new MainForm()))
-            {
-                context.MainForm.Load += delegate { logger.Trace("Instance showed"); };
-
-                threadOneCopyOnly = new Thread(delegate()
-                {
-                    try
-                    {
-                        while (true)
-                        {
-                            eventOneCopyOnly.WaitOne();
-                            MethodInvoker Method = new MethodInvoker(delegate
-                            {
-                                MainForm F = (MainForm)context.MainForm;
-                                F.bReActivate = true;
-                                F.IsFormVisible = true;
-                                logger.Trace("Instance activated");
-                            });
-                            while (Method != null) { }
-                            context.MainForm.Invoke(Method);
-                        }//while
-                    }
-                    catch (ThreadAbortException)
-                    {
-                        logger.Trace("FirstInstanceCheck thread is cancelled.");
-                    }
-                });
-                threadOneCopyOnly.Name = "One Copy Only";
-                threadOneCopyOnly.IsBackground = true;
-                threadOneCopyOnly.Start();
-                Application.ApplicationExit += new EventHandler(AppExit);
-                Application.Run(context);
-            }//using
+            Exception ex = (Exception)e.ExceptionObject;
+            logger.Error("Unhandled: {0}{1}{2}", ex.Message, Environment.NewLine, ex.StackTrace);
         }
 
-        static void SecondInstance()
+        [STAThread]
+        static void Main()
         {
-            logger.Trace("Instance is second copy");
-            eventOneCopyOnly.Set();
-        }
-
-        static void AppExit(object sender, EventArgs e)
-        {
-            threadOneCopyOnly.Abort();
-        }
-
-        #else
-
-        static void SimpleStartInstance()
-        {
+            SingleInstanceCheck.Check();
             Application.ApplicationExit += MainForm.OnApplicationExit;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false); // must be called before first form created
             Application.Run(new MainForm());
             // workaround for NLog's bug under Mono (hanging after app exit) 
             LogManager.Configuration = null;
-        }
-
-        #endif
-
-
-        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
-        {
-            Exception ex = (Exception)e.ExceptionObject;
-            logger.ErrorException(String.Format("Unhandled: {0}{1}{2}", ex.Message, Environment.NewLine, ex.StackTrace), ex);
-        }
-
-        [STAThread]
-        static void Main()
-        {
-            //AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            //try
-            {
-                LogHeader();
-                #if SINGLE_INSTANCE
-                bool createdNew;
-                using (eventOneCopyOnly = new EventWaitHandle(false, EventResetMode.AutoReset, EventOneCopyOnlyName, out createdNew))
-                {
-                    if (createdNew)
-                        FirstInstance();
-                    else
-                        SecondInstance();
-                } // using
-                #else
-                SimpleStartInstance();
-                #endif
-            }
-            //catch (Exception e)
-            //{
-            //    logger.Error("Main(): {0}{1}{2}", e.Message, Environment.NewLine, e.StackTrace);
-            //}
         }
     }
 }

@@ -143,8 +143,6 @@ namespace LanExchange.UI
                 logger.Info("WindowState is {0}", WindowState.ToString());
         }
 
-        public bool bReActivate;
-
         public bool IsFormVisible
         {
             get { return WindowState != FormWindowState.Minimized && Visible; }
@@ -155,16 +153,6 @@ namespace LanExchange.UI
                 {
                     ShowInTaskbar = true;
                     WindowState = LastWindowState;
-                }
-                else
-                {
-                    if (bReActivate)
-                    {
-                        bReActivate = false;
-                        ShowInTaskbar = true;
-                        WindowState = FormWindowState.Minimized;
-                        WindowState = LastWindowState;
-                    }
                 }
                 Visible = value;
                 if (Visible)
