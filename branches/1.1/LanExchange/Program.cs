@@ -1,12 +1,34 @@
-﻿using System;
-using System.Windows.Forms;
-using System.Reflection;
-using NLog;
-using LanExchange.UI;
-using LanExchange.Utils;
-
+﻿// *****************************************************************************
+// RELEASE 1.1 MAJOR TODO LIST
+//   TODO * Autoupdate computer lists
+//   TODO * Sending items to another tab
+//   TODO * Updating menu lists after changing tab list (add, remove)
+//   DONE * Update counts in status list
+//   TODO * Filtering computer items
+//   TODO * ContextMenuStrip for top panel
+//   TODO * MSI installer
+//   TODO * Publishing and autoupdate from v1.0
+//
+// RELEASE 1.1 MINOR TODO LIST
+//   TODO  Manual creation of computer items
+//   TODO  Enum shares after ItemActivate
+//   TODO  Multi-langual support (Russian, Engligh)
+//   TODO  Internal language editor
+//   TODO  Recently used items must appears when Tray.onMouseOver event fired
+//   TODO  WMI-commands execution with parameters
+//   TODO  Refactoring for strict Model-View-Presenter pattern
+//   
+// 
+// *****************************************************************************
 namespace LanExchange
 {
+    using System;
+    using System.Windows.Forms;
+    using System.Reflection;
+    using NLog;
+    using LanExchange.UI;
+    using LanExchange.Utils;
+
     internal static class Program
     {
         private readonly static Logger logger = NLog.LogManager.GetCurrentClassLogger();
@@ -29,6 +51,7 @@ namespace LanExchange
         static void Main()
         {
             SingleInstanceCheck.Check();
+            LogHeader();
             Application.ApplicationExit += MainForm.OnApplicationExit;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false); // must be called before first form created

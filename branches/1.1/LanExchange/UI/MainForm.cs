@@ -1,18 +1,14 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Drawing;
-using System.Reflection;
-using System.Security.Cryptography;
-using System.Text;
 using System.Windows.Forms;
-using LanExchange.Model;
 using LanExchange.View;
+using LanExchange.Model;
 using LanExchange.Presenter;
 using NLog;
-using System.Diagnostics;
-using GongSolutions.Shell.Interop;
-using GongSolutions.Shell;
-using vbAccelerator.Components.ImageList;
+using System.Drawing;
+using System.Reflection;
+using System.ComponentModel;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace LanExchange.UI
 {
@@ -38,6 +34,12 @@ namespace LanExchange.UI
             m_Presenter = new MainPresenter(this);
             // init Pages presenter
             m_Presenter.Pages = new TabControlPresenter(Pages);
+            // load pages from cfg-file
+            m_Presenter.Pages.GetModel().LoadSettings();
+            // here we call event for update items count in statusline
+            if (Pages.SelectedIndex != -1)
+                Pages_Selected(Pages, new TabControlEventArgs(Pages.SelectedTab, Pages.SelectedIndex, TabControlAction.Selected));
+
             //mSendToNewTab.Click += new EventHandler(TabController.mSendToNewTab_Click);
             
             // init main form
@@ -112,13 +114,6 @@ namespace LanExchange.UI
             //popTop.Items.Clear();
             //popTop.Items.AddRange(MyItems);
         }
-
-        public string StatusText
-        {
-            get { return lItemsCount.Text; }
-            set { lItemsCount.Text = value; }
-        }
-
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -299,7 +294,7 @@ namespace LanExchange.UI
             (sender as ToolTip).ToolTipTitle = "";
         }
 
-        private void Pages_Selected(object sender, TabControlEventArgs e)
+        public void Pages_Selected(object sender, TabControlEventArgs e)
         {
             if (Pages.TabCount > 0 && Pages.SelectedTab != null)
             {
@@ -313,7 +308,9 @@ namespace LanExchange.UI
                     // update top info panel
                     PV_FocusedItemChanged(ActiveControl, new EventArgs());
                     //lvComps_SelectedIndexChanged(ActiveControl, new EventArgs());
-                    //UpdateFilterPanel();
+                    PanelView PV = ActiveControl as PanelView;
+                    if (PV != null)
+                        PV.UpdateFilterPanel();
                 }
             }
         }
@@ -476,9 +473,10 @@ namespace LanExchange.UI
             SetupRunMinimized();
         }
 
-        private void pictureBox1_Paint(object sender, PaintEventArgs e)
-        {
 
+        public void ShowStatusText(string format, params object[] args)
+        {
+            lItemsCount.Text = String.Format(format, args);
         }
     }
 }

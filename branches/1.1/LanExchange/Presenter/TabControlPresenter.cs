@@ -26,7 +26,6 @@ namespace LanExchange.Presenter
             m_Model.AfterRemove += Model_AfterRemove;
             m_Model.AfterRename += Model_AfterRename;
             m_Model.SelectedIndexChanged += Model_SelectedIndexChanged;
-            m_Model.LoadSettings();
         }
 
         public int SelectedIndex
@@ -183,6 +182,7 @@ namespace LanExchange.Presenter
             ListView LV = PV.Controls[0] as ListView;
             LV.SmallImageList = LanExchangeIcons.SmallImageList;
             LV.LargeImageList = LanExchangeIcons.LargeImageList;
+            MainForm.Instance.tipComps.SetToolTip(LV, " ");
             PV.FocusedItemChanged += MainForm.Instance.PV_FocusedItemChanged;
             // add new tab and insert panel into it
             m_View.NewTab(e.Info.TabName);

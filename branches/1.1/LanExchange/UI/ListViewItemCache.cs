@@ -17,7 +17,7 @@ namespace LanExchange.Utils
         //private int TableCacheStartIndex;
         private readonly IListViewItemGetter m_Getter;
 
-        // TODO: Cache is currently OFF. Need perfomance stress-tests.
+        // TODO Cache is currently OFF. Need perfomance stress-tests.
         public ListViewItemCache(IListViewItemGetter getter)
         {
             m_Getter = getter;

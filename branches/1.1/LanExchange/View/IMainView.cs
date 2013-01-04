@@ -6,5 +6,6 @@ namespace LanExchange.View
     {
         bool AdminMode { get; set; }
         void Restart();
+        void ShowStatusText(string format, params object[] args);
     }
 }

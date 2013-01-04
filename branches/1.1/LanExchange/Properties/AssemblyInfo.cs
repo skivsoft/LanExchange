@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("LanExchange")]
-[assembly: AssemblyDescription("Computer and shared folders browser for local networks.")]
+[assembly: AssemblyDescription("User-friendly browser of computers and shared folders in local area network for regular users and administrators of workstations.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SkivSoft")]
 [assembly: AssemblyProduct("LanExchange")]
-[assembly: AssemblyCopyright("© 2012 SkivSoft")]
+[assembly: AssemblyCopyright("© 2013 SkivSoft")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

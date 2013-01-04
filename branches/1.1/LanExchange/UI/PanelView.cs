@@ -203,11 +203,11 @@ namespace LanExchange.UI
                 ShowCount = m_Objects.Count;
                 TotalCount = m_Objects.Count;
             }
-            //if (ShowCount != TotalCount)
-            //    StatusText = String.Format("Элементов: {0} из {1}", ShowCount, TotalCount);
-            //else
-            //    StatusText = String.Format("Элементов: {0}", ShowCount);
-            //LV.SelectedIndices.Clear();
+            if (ShowCount != TotalCount)
+                MainForm.Instance.ShowStatusText("Элементов: {0} из {1}", ShowCount, TotalCount);
+            else
+                MainForm.Instance.ShowStatusText("Элементов: {0}", ShowCount);
+            LV.SelectedIndices.Clear();
             LV.VirtualListSize = ShowCount;
             
             /*
@@ -288,12 +288,6 @@ namespace LanExchange.UI
                 if (PItem is SharePanelItem)
                     if (!(PItem as SharePanelItem).IsPrinter)
                         mFolderOpen_Click(mFAROpen, new EventArgs());
-                e.Handled = true;
-            }
-            // Alt+Enter
-            if (MainForm.Instance.AdminMode && e.Alt && e.KeyCode == Keys.Enter)
-            {
-                mWMI_Click(mWMI, new EventArgs());
                 e.Handled = true;
             }
             // клавишы для всех пользовательских вкладок
@@ -382,20 +376,16 @@ namespace LanExchange.UI
 
         public void UpdateFilterPanel()
         {
-            /*
-            ListView LV = GetActiveListView();
-            PanelItemList ItemList = LV.GetObject();
-            string Text = ItemList.FilterText;
-            eFilter.TextChanged -= eFilter_TextChanged;
-            eFilter.Text = Text;
-            eFilter.SelectionLength = 0;
-            eFilter.SelectionStart = Text.Length;
-            eFilter.TextChanged += eFilter_TextChanged;
-            // показываем или скрываем панель фильтра
-            SearchPanelVisible(ItemList.IsFiltered);
-            // выводим количество элементов в статус
-            Items_Changed(ItemList, new EventArgs());
-             */
+            //string Text = m_Objects.FilterText;
+            //eFilter.TextChanged -= eFilter_TextChanged;
+            //eFilter.Text = Text;
+            //eFilter.SelectionLength = 0;
+            //eFilter.SelectionStart = Text.Length;
+            //eFilter.TextChanged += eFilter_TextChanged;
+            //// показываем или скрываем панель фильтра
+            //SearchPanelVisible(m_Objects.IsFiltered);
+            // show count items in the current panel
+            Items_Changed(m_Objects, new EventArgs());
         }
 
         /// <summary>
