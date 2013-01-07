@@ -12,10 +12,10 @@ namespace Tests
     ///to contain all NetworkScannerTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class NetworkScannerTest
+    public class ServerListSubscriptionTest
     {
         private TestContext testContextInstance;
-        private NetworkScannerMock Instance;
+        private ServerListSubscriptionMock Instance;
 
         
         /// <summary>
@@ -37,7 +37,7 @@ namespace Tests
         [TestInitialize()]
         public void MyTestInitialize()
         {
-            Instance = new NetworkScannerMock();
+            Instance = new ServerListSubscriptionMock();
         }
         
         [TestCleanup()]
@@ -49,8 +49,8 @@ namespace Tests
         [TestMethod()]
         public void CheckSingleton()
         {
-            var instance1 = NetworkScannerMock.Instance;
-            var instance2 = NetworkScannerMock.Instance;
+            var instance1 = ServerListSubscriptionMock.Instance;
+            var instance2 = ServerListSubscriptionMock.Instance;
             Assert.AreSame(instance1, instance2);
         }
 

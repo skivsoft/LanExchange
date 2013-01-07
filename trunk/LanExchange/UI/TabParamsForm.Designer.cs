@@ -49,7 +49,7 @@ namespace LanExchange.UI
             this.groupBox1.Size = new System.Drawing.Size(198, 288);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Сканирование сети";
+            this.groupBox1.Text = "Обзор сети";
             // 
             // lvDomains
             // 
@@ -78,9 +78,9 @@ namespace LanExchange.UI
             this.rbDontScan.AutoSize = true;
             this.rbDontScan.Location = new System.Drawing.Point(15, 19);
             this.rbDontScan.Name = "rbDontScan";
-            this.rbDontScan.Size = new System.Drawing.Size(155, 17);
+            this.rbDontScan.Size = new System.Drawing.Size(80, 17);
             this.rbDontScan.TabIndex = 2;
-            this.rbDontScan.Text = "Отключить сканирование";
+            this.rbDontScan.Text = "Отключить";
             this.rbDontScan.UseVisualStyleBackColor = true;
             this.rbDontScan.CheckedChanged += new System.EventHandler(this.rbDontScan_CheckedChanged);
             // 
@@ -89,9 +89,9 @@ namespace LanExchange.UI
             this.rbSelected.AutoSize = true;
             this.rbSelected.Location = new System.Drawing.Point(15, 42);
             this.rbSelected.Name = "rbSelected";
-            this.rbSelected.Size = new System.Drawing.Size(123, 17);
+            this.rbSelected.Size = new System.Drawing.Size(168, 17);
             this.rbSelected.TabIndex = 1;
-            this.rbSelected.Text = "Выбранные группы";
+            this.rbSelected.Text = "Выбранные домены/группы";
             this.rbSelected.UseVisualStyleBackColor = true;
             // 
             // button1

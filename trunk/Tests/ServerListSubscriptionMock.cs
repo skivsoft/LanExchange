@@ -4,7 +4,7 @@ using LanExchange.Model;
 
 namespace Tests
 {
-    class NetworkScannerMock : ServerListSubscription
+    class ServerListSubscriptionMock : ServerListSubscription
     {
         public DataChangedEventArgs args = new DataChangedEventArgs();
         public bool DeliverMode;

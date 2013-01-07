@@ -4,7 +4,6 @@ using System.Windows.Forms;
 using LanExchange.View;
 using LanExchange.Properties;
 using LanExchange.Presenter;
-using System.Diagnostics;
 using NLog;
 using LanExchange.Utils;
 using System.Reflection;
@@ -57,14 +56,13 @@ namespace LanExchange.UI
         {
             if (m_Presenter.Objects == null)
                 return null;
-            if (Index < 0 || Index > Math.Min(m_Presenter.Objects.Keys.Count, LV.VirtualListSize) - 1)
+            if (Index < 0 || Index > Math.Min(m_Presenter.Objects.FilterCount, LV.VirtualListSize) - 1)
                 return null;
             ListViewItem Result = new ListViewItem();
-            string ItemName = m_Presenter.Objects.Keys[Index];
-            var PItem = m_Presenter.Objects.Get(ItemName);
+            var PItem = m_Presenter.Objects.GetAt(Index);
             if (PItem != null)
             {
-                Result.Text = ItemName;
+                Result.Text = PItem.Name;
                 string[] A = PItem.GetSubItems();
                 Array.ForEach(A, str => Result.SubItems.Add(str));
                 Result.ImageIndex = PItem.ImageIndex;
@@ -121,38 +119,6 @@ namespace LanExchange.UI
             }
         }
 
-
-        public bool FilterVisible
-        {
-            get
-            {
-                return pFilter.Visible;
-            }
-            set
-            {
-                pFilter.Visible = value;
-                //if (!value)
-                //    Pages.SelectedTab.Refresh();
-            }
-        }
-
-        public string FilterText
-        {
-            get
-            {
-                return eFilter.Text;
-            }
-            set
-            {
-                eFilter.Text = value;
-            }
-        }
-
-        public void SetIsFound(bool value)
-        {
-            eFilter.BackColor = value ? Color.White : Color.FromArgb(255, 102, 102); // Firefox Color
-        }
-
         #endregion
 
         #region PanelView class implementation
@@ -194,66 +160,17 @@ namespace LanExchange.UI
             }
         }
 
-        private void eFilter_TextChanged(object sender, EventArgs e)
-        {
-            m_Presenter.UpdateFilter((sender as TextBox).Text, true);
-        }
-
-        private void eFilter_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
-            {
-                ActiveControl = LV;
-                ActiveControl.Focus();
-                if (e.KeyCode == Keys.Up) SendKeys.Send("{UP}");
-                if (e.KeyCode == Keys.Down) SendKeys.Send("{DOWN}");
-                e.Handled = true;
-            }
-            if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
-            {
-                ActiveControl = LV;
-            }
-        
-        }
-
-        private void imgClear_MouseHover(object sender, EventArgs e)
-        {
-            imgClear.Image = Resources.clear_hover;
-        }
-
-        private void imgClear_MouseLeave(object sender, EventArgs e)
-        {
-            imgClear.Image = Resources.clear_normal;
-        }
-
-        private void imgClear_Click(object sender, EventArgs e)
-        {
-            FilterText = "";
-        }
-
-        public static void SendKeysCorrect(string Keys)
-        {
-            const string Chars = "+^%~{}()[]";
-            string NewKeys = "";
-            foreach (Char Ch in Keys)
-            {
-                if (Chars.Contains(Ch.ToString()))
-                    NewKeys += "{" + Ch.ToString() + "}";
-                else
-                    NewKeys = Ch.ToString();
-            }
-            SendKeys.Send(NewKeys);
-        }
 
         public void lvComps_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (Char.IsLetterOrDigit(e.KeyChar) || Char.IsPunctuation(e.KeyChar) || PuntoSwitcher.IsValidChar(e.KeyChar))
             {
-                FilterVisible = true;
-                ActiveControl = eFilter;
-                eFilter.Focus();
-                SendKeysCorrect(e.KeyChar.ToString());
-                e.Handled = true;
+                // TODO uncomment this
+                //FilterVisible = true;
+                //ActiveControl = eFilter;
+                //eFilter.Focus();
+                //FilterView.SendKeysCorrect(e.KeyChar.ToString());
+                //e.Handled = true;
             }
         }
 
@@ -272,11 +189,6 @@ namespace LanExchange.UI
         public void lvComps_KeyDown(object sender, KeyEventArgs e)
         {
             ListView LV = (sender as ListView);
-            if (e.KeyCode == Keys.Escape)
-            {
-                m_Presenter.CancelCurrentFilter();
-                e.Handled = true;
-            }
             // Ctrl+A выделение всех элементов
             if (e.Control && e.KeyCode == Keys.A)
             {
@@ -372,32 +284,6 @@ namespace LanExchange.UI
             m_Presenter.RunCmdOnFocusedItem(MenuItem.Tag.ToString(), PanelPresenter.FOLDER_MENU);
         }
 
-
-        public void GotoFavoriteComp(string ComputerName)
-        {
-            LV.BeginUpdate();
-            try
-            {
-                LV.SelectedIndices.Clear();
-                m_Presenter.UpdateFilter("", false);
-                // выходим на верхний уровень
-                /*
-                while (CompBrowser.InternalStack.Count > 0)
-                    CompBrowser.LevelUp();
-                 */
-                //!!!
-                //CompBrowser.InternalItemList.ListView_SelectComputer(LV, ComputerName);
-                PanelItem PItem = m_Presenter.GetFocusedPanelItem(false, false);
-                if (PItem != null && PItem.Name == ComputerName)
-                    lvComps_ItemActivate(LV, new EventArgs());
-            }
-            finally
-            {
-                LV.EndUpdate();
-            }
-            m_Presenter.UpdateFilterPanel();
-        }
-
         private void UpdateViewTypeMenu()
         {
             mCompLargeIcons.Checked = false;
@@ -417,6 +303,9 @@ namespace LanExchange.UI
                     break;
                 case System.Windows.Forms.View.Details:
                     mCompDetails.Checked = true;
+                    break;
+                case System.Windows.Forms.View.Tile:
+                default:
                     break;
             }
         }
@@ -468,13 +357,13 @@ namespace LanExchange.UI
             mRadmin1.ShowShortcutKeys = bCompVisible && !bFolderVisible;
         }
 
-        private void SetEnabledAndVisible(ToolStripItem Item, bool Value)
+        private static void SetEnabledAndVisible(ToolStripItem Item, bool Value)
         {
             Item.Enabled = Value;
             Item.Visible = Value;
         }
 
-        private void SetEnabledAndVisible(ToolStripItem[] Items, bool Value)
+        private static void SetEnabledAndVisible(ToolStripItem[] Items, bool Value)
         {
             foreach (ToolStripItem Item in Items)
                 SetEnabledAndVisible(Item, Value);
@@ -482,33 +371,25 @@ namespace LanExchange.UI
 
         private void mLargeIcons_Click(object sender, EventArgs e)
         {
-            //LV.BeginUpdate();
-            try
+            int Tag;
+            if (!int.TryParse((sender as ToolStripMenuItem).Tag.ToString(), out Tag))
+                Tag = 0;
+            switch (Tag)
             {
-                int Tag;
-                if (!int.TryParse((sender as ToolStripMenuItem).Tag.ToString(), out Tag))
-                    Tag = 0;
-                switch (Tag)
-                {
-                    case 1:
-                        LV.View = System.Windows.Forms.View.LargeIcon;
-                        break;
-                    case 2:
-                        LV.View = System.Windows.Forms.View.SmallIcon;
-                        break;
-                    case 3:
-                        LV.View = System.Windows.Forms.View.List;
-                        break;
-                    case 4:
-                        LV.View = System.Windows.Forms.View.Details;
-                        break;
-                    default:
-                        break;
-                }
-            }
-            finally
-            {
-                //LV.EndUpdate();
+                case 1:
+                    LV.View = System.Windows.Forms.View.LargeIcon;
+                    break;
+                case 2:
+                    LV.View = System.Windows.Forms.View.SmallIcon;
+                    break;
+                case 3:
+                    LV.View = System.Windows.Forms.View.List;
+                    break;
+                case 4:
+                    LV.View = System.Windows.Forms.View.Details;
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -535,6 +416,23 @@ namespace LanExchange.UI
         private void mContextClose_Click(object sender, EventArgs e)
         {
             MainForm.Instance.IsFormVisible = false;
+        }
+
+        public void FocusListView()
+        {
+            ActiveControl = LV;
+            if (LV.FocusedItem != null)
+            {
+                if (!LV.FocusedItem.Selected)
+                    LV.FocusedItem.Selected = true;
+            }
+            else
+            if (LV.VirtualListSize > 0)
+            {
+                //LV.FocusedItem = GetListViewItemAt(0);
+                //LV.FocusedItem.Selected = true;
+            }
+            DoFocusedItemChanged();
         }
         #endregion
     }
