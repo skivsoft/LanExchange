@@ -118,22 +118,11 @@ namespace Tests
         [TestMethod()]
         public void CreateFromEmpyTabControl()
         {
-            TabControlView Pages = new TabControlView();
-            TabControlPresenter Controller = new TabControlPresenter(Pages);
+            PagesView Pages = new PagesView();
+            PagesPresenter Controller = new PagesPresenter(Pages);
             //TabModel Model = Controller.GetModel();
             //Assert.NotNull(Model);
             //Assert.AreEqual(0, Model.Count, "Empty TabControl");
-        }
-
-        [TestMethod()]
-        public void CreateFromNotEmptyTabControl1()
-        {
-            TabControlView Pages = new TabControlView();
-            TabPage Tab = new TabPage("MyTab");
-            Pages.TabPages.Add(Tab);
-            TabControlPresenter Controller = new TabControlPresenter(Pages);
-            TabControlModel Model = Controller.GetModel();
-            Assert.AreEqual(0, Model.Count);
         }
 
     }

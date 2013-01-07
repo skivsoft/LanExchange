@@ -9,8 +9,6 @@ namespace LanExchange.Presenter
         private static MainPresenter m_Instance;
         private readonly IMainView m_View;
 
-        public TabControlPresenter Pages { get; set; }
-
         public MainPresenter(IMainView view)
         {
             m_Instance = this;
@@ -32,5 +30,7 @@ namespace LanExchange.Presenter
                 return m_View;
             }
         }
+
+        public PagesPresenter Pages { get; set; }
     }
 }

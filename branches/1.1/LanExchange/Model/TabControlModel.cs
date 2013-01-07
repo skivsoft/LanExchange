@@ -80,6 +80,11 @@ namespace LanExchange.Model
             return m_List[Index];
         }
 
+        internal int GetItemIndex(PanelItemList Item)
+        {
+            return m_List.IndexOf(Item);
+        }
+
         public void DoAfterAppendTab(PanelItemList Info)
         {
             if (AfterAppendTab != null)

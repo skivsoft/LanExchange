@@ -96,7 +96,8 @@ namespace LanExchange.Presenter
             if (m_Objects == null)
                 return;
             // refresh only for current page
-            PanelItemList CurrentItemList = MainPresenter.Instance.Pages.GetModel().GetItem(MainPresenter.Instance.Pages.SelectedIndex);
+            PagesPresenter Pages = MainPresenter.Instance.Pages;
+            PanelItemList CurrentItemList = Pages.GetModel().GetItem(Pages.SelectedIndex);
             if (!m_Objects.Equals(CurrentItemList))
                 return;
             // get number of visible items (filtered) and number of total items

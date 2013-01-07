@@ -57,7 +57,7 @@ namespace LanExchange
         {
             SingleInstanceCheck.Check();
             LogHeader();
-            Application.ApplicationExit += MainForm.OnApplicationExit;
+            Application.ApplicationExit += new EventHandler(MainForm.OnApplicationExit);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false); // must be called before first form created
             Application.Run(new MainForm());

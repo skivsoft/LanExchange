@@ -10,15 +10,15 @@ using System.Drawing;
 
 namespace LanExchange.Presenter
 {
-    public class TabControlPresenter
+    public class PagesPresenter
     {
         // logger object 
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
-        private readonly ITabControlView m_View;
+        private readonly IPagesView m_View;
         private readonly TabControlModel m_Model;
 
-        public TabControlPresenter(ITabControlView pages)
+        public PagesPresenter(IPagesView pages)
         {
             m_View = pages;
             m_Model = new TabControlModel(m_View.Name);
@@ -70,7 +70,9 @@ namespace LanExchange.Presenter
         public void RenameTab()
         {
             int Index = m_View.SelectedIndex;
-            string NewTabName = InputBoxForm.Ask("Переименование", "Введите имя", m_View.SelectedTabText, false);
+            PanelItemList ItemList = GetModel().GetItem(Index);
+            if (ItemList == null) return;
+            string NewTabName = InputBoxForm.Ask("Переименование", "Введите имя", ItemList.TabName, false);
             if (NewTabName != null)
             {
                 m_Model.RenameTab(Index, NewTabName);
@@ -186,10 +188,20 @@ namespace LanExchange.Presenter
             MainForm.Instance.tipComps.SetToolTip(LV, " ");
             PV.FocusedItemChanged += MainForm.Instance.PV_FocusedItemChanged;
             // add new tab and insert panel into it
-            m_View.NewTab(e.Info.TabName);
+            m_View.NewTab(e.Info);
             m_View.AddControl(m_View.TabPagesCount - 1, PV);
             // set update event
             e.Info.Changed += PV.GetPresenter().Items_Changed;
+            e.Info.SubscriptionChanged += Item_SubscriptionChanged;
+        }
+
+        public void Item_SubscriptionChanged(object sender, EventArgs e)
+        {
+            PanelItemList Item = sender as PanelItemList;
+            if (Item == null) return;
+            int Index = m_Model.GetItemIndex(Item);
+            if (Index != -1)
+                m_View.SetTabToolTip(Index, Item.GetTabToolTip());
         }
 
         public void Model_AfterRemove(object sender, IndexEventArgs e)

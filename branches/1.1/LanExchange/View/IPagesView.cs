@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
+using LanExchange.Model;
 
 namespace LanExchange.View
 {
-    public interface ITabControlView
+    public interface IPagesView
     {
         // properties
         string Name { get; set; }
@@ -11,9 +12,10 @@ namespace LanExchange.View
         string SelectedTabText { get; set; }
         int TabPagesCount { get; }
         // methods
-        void NewTab(string tabname);
+        void NewTab(PanelItemList Info);
         void RemoveTabAt(int Index);
         void AddControl(int Index, Control control);
         string Ellipsis(string text, int length);
+        void SetTabToolTip(int Index, string value);
     }
 }

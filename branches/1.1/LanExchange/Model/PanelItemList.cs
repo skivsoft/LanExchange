@@ -28,6 +28,7 @@ namespace LanExchange.Model
         private String m_Filter = "";
 
         public event EventHandler Changed;
+        public event EventHandler SubscriptionChanged;
 
         //private ListView m_LV = null;
         //private PanelItemType m_CurrentType = PanelItemType.COMPUTERS;
@@ -111,6 +112,8 @@ namespace LanExchange.Model
                     ServerListSubscription.Instance.UnSubscribe(this);
                     break;
             }
+            if (SubscriptionChanged != null)
+                SubscriptionChanged(this, new EventArgs());
         }
 
 
@@ -437,6 +440,25 @@ namespace LanExchange.Model
         public bool Equals(PanelItemList other)
         {
             return string.Compare(TabName, other.TabName, true) == 0;
+        }
+
+        public string GetTabToolTip()
+        {
+            StringBuilder sb = new StringBuilder();
+            if (ScanMode)
+            {
+                sb.Append("Обзор сети: ");
+                for (int i = 0; i < Groups.Count; i++)
+                {
+                    if (i > 0)
+                        sb.Append(", ");
+                    sb.Append(Groups[i]);
+                }
+                sb.Append(".");
+            }
+            else
+                sb.Append("Обзор сети отключен.");
+            return sb.ToString();
         }
     }
 }

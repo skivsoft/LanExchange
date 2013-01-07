@@ -32,20 +32,21 @@ namespace LanExchange.UI
             Settings.LoadSettings();
             // init MainForm presenter
             m_Presenter = new MainPresenter(this);
-            // init Pages presenter
-            m_Presenter.Pages = new TabControlPresenter(Pages);
+            m_Presenter.Pages = Pages.GetPresenter();
             // load pages from cfg-file
             m_Presenter.Pages.GetModel().LoadSettings();
             // here we call event for update items count in statusline
-            if (Pages.SelectedIndex != -1)
-                Pages_Selected(Pages, new TabControlEventArgs(Pages.SelectedTab, Pages.SelectedIndex, TabControlAction.Selected));
+            Pages.UpdateSelectedTab();
 
             //mSendToNewTab.Click += new EventHandler(TabController.mSendToNewTab_Click);
             
             // init main form
             SetupForm();
-            SetupImages();
             SetupMenu();
+            // setup images
+            MainForm.Instance.tipComps.SetToolTip(Pages.Pages, " ");
+            Pages.Pages.ImageList = LanExchangeIcons.SmallImageList;
+            Status.ImageList = LanExchangeIcons.SmallImageList;
             // init network scanner
 #if DEBUG
             ServerListSubscription.Instance.RefreshInterval = 10 * 1000; // refresh every 5 sec in debug mode
@@ -91,12 +92,6 @@ namespace LanExchange.UI
             lCompName.ImageIndex = LanExchangeIcons.imgCompDefault;
                 // show current user
             lUserName.Text = Settings.GetCurrentUserName();
-        }
-
-        private void SetupImages()
-        {
-            Pages.ImageList = LanExchangeIcons.SmallImageList;
-            Status.ImageList = LanExchangeIcons.SmallImageList;
         }
 
         private void SetupMenu()
@@ -199,12 +194,6 @@ namespace LanExchange.UI
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
 #if DEBUG
-            // Ctrl+Alt+C - show properties of current page in debug mode
-            if (e.Control && e.Alt && e.KeyCode == Keys.C)
-            {
-                Debug_ShowProperties(Pages.SelectedTab);
-                e.Handled = true;
-            }
             // Ctrl+Alt+S - show subscibers in debug mode
             if (e.Control && e.Alt && e.KeyCode == Keys.S)
             {
@@ -224,17 +213,6 @@ namespace LanExchange.UI
             return sBuilder.ToString();
         }
 
-        public PanelView GetActivePanelView()
-        {
-            if (Pages.TabCount == 0 || Pages.SelectedTab == null)
-                return null;
-            else
-            {
-                Control.ControlCollection ctrls = Pages.SelectedTab.Controls;
-                return ctrls.Count > 0 ? ctrls[0] as PanelView : null;
-            }
-        }
-
         private void popTop_Opened(object sender, EventArgs e)
         {
             //for (int i = 0; i < Math.Min(mComp.DropDownItems.Count, popTop.Items.Count); i++)
@@ -248,7 +226,7 @@ namespace LanExchange.UI
 
         private void popTop_Opening(object sender, CancelEventArgs e)
         {
-            PanelView PV = GetActivePanelView();
+            PanelView PV = Pages.GetActivePanelView();
             if (PV != null)
             {
                 PV.popComps_Opening(sender, e);
@@ -262,7 +240,7 @@ namespace LanExchange.UI
             //Process.Start("explorer.exe", "/n, /e,::{20D04FE0-3AEA-1069-A2D8-08002B30309D}");
             // Network
             //Process.Start("explorer.exe", "/n, ::{208D2C60-3AEA-1069-A2D7-08002B30309D},FERMAK");
-            PanelView PV = GetActivePanelView();
+            PanelView PV = Pages.GetActivePanelView();
             if (PV != null)
                 PV.GotoFavoriteComp(SystemInformation.ComputerName);
         }
@@ -287,39 +265,15 @@ namespace LanExchange.UI
                     (sender as ToolTip).ToolTipTitle = "Информация";
                 return;
             }
-            if (e.AssociatedControl is TabPage)
+            if (e.AssociatedControl is TabControl && e.AssociatedControl == Pages.Pages)
             {
-                TabPage Tab = (TabPage)e.AssociatedControl;
-                (sender as ToolTip).ToolTipTitle = Tab.Text;
-                return;
-            }
-            if (e.AssociatedControl is TabControlView)
-            {
-                TabControlView Tabs = (TabControlView)e.AssociatedControl;
+                Point P = e.AssociatedControl.PointToClient(Control.MousePosition);
+                TabPage Tab = Pages.GetTabPageByPoint(P);
+                if (Tab != null)
+                    (sender as ToolTip).ToolTipTitle = Tab.Text;
                 return;
             }
             (sender as ToolTip).ToolTipTitle = "";
-        }
-
-        public void Pages_Selected(object sender, TabControlEventArgs e)
-        {
-            if (Pages.TabCount > 0 && Pages.SelectedTab != null)
-            {
-                // synchronize selected page index with Pages model
-                m_Presenter.Pages.GetModel().SelectedIndex = Pages.SelectedIndex;
-                Control.ControlCollection ctrls = Pages.SelectedTab.Controls;
-                if (ctrls.Count > 0)
-                {
-                    ActiveControl = Pages.SelectedTab.Controls[0];
-                    ActiveControl.Focus();
-                    // update top info panel
-                    PV_FocusedItemChanged(ActiveControl, new EventArgs());
-                    //lvComps_SelectedIndexChanged(ActiveControl, new EventArgs());
-                    PanelView PV = ActiveControl as PanelView;
-                    if (PV != null)
-                        PV.GetPresenter().UpdateFilterPanel();
-                }
-            }
         }
 
         private void mSettings_Click(object sender, EventArgs e)
@@ -361,28 +315,6 @@ namespace LanExchange.UI
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
         }
         
-  
-        private void mNewTab_Click(object sender, EventArgs e)
-        {
-            m_Presenter.Pages.NewTab();
-        }
-
-        private void mCloseTab_Click(object sender, EventArgs e)
-        {
-            m_Presenter.Pages.CloseTab();
-        }
-
-        private void mRenameTab_Click(object sender, EventArgs e)
-        {
-            m_Presenter.Pages.RenameTab();
-        }
-
-        private void popPages_Opened(object sender, EventArgs e)
-        {
-            mSelectTab.DropDownItems.Clear();
-            m_Presenter.Pages.AddTabsToMenuItem(mSelectTab, m_Presenter.Pages.mSelectTab_Click, false);
-            mCloseTab.Enabled = m_Presenter.Pages.CanCloseTab(Pages.SelectedIndex);
-        }
 
         private bool m_AdminMode;
 
@@ -403,23 +335,6 @@ namespace LanExchange.UI
         public void mExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
-        }
-
-        private void mTabParams_Click(object sender, EventArgs e)
-        {
-            using (TabParamsForm Form = new TabParamsForm())
-            {
-                TabControlModel M = m_Presenter.Pages.GetModel();
-                PanelItemList Info = M.GetItem(Pages.SelectedIndex);
-                Form.ScanMode = Info.ScanMode;
-                Form.Groups = Info.Groups;
-                if (Form.ShowDialog() == DialogResult.OK)
-                {
-                    Info.ScanMode = Form.ScanMode;
-                    Info.Groups = Form.Groups;
-                    Info.UpdateSubsctiption();
-                }
-            }
         }
 
         public void Restart()

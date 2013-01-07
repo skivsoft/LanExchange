@@ -89,10 +89,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UI\PagesView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\PagesView.Designer.cs">
+      <DependentUpon>PagesView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utils\DynamicObject.cs" />
     <Compile Include="Model\LanExchangeIcons.cs" />
     <Compile Include="Presenter\AboutPresenter.cs" />
-    <Compile Include="Presenter\IPresenter.cs" />
     <Compile Include="Presenter\MainPresenter.cs" />
     <Compile Include="Presenter\PanelPresenter.cs" />
     <Compile Include="Presenter\ParamsPresenter.cs" />
@@ -121,12 +126,6 @@
     </Compile>
     <Compile Include="UI\WMIForm.Designer.cs">
       <DependentUpon>WMIForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\TabControlView.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\TabControlView.Designer.cs">
-      <DependentUpon>TabControlView.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils\ComCtl32.cs" />
     <Compile Include="Utils\HResult.cs" />
@@ -195,7 +194,7 @@
     <Compile Include="View\IMainView.cs" />
     <Compile Include="View\IPanelView.cs" />
     <Compile Include="View\IParamsView.cs" />
-    <Compile Include="View\ITabControlView.cs" />
+    <Compile Include="View\IPagesView.cs" />
     <Compile Include="View\ITabParamsView.cs" />
     <Compile Include="View\IWMIView.cs" />
     <Compile Include="Windows\UnsafeNativeMethods.cs" />
@@ -212,6 +211,9 @@
     <EmbeddedResource Include="UI\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\PagesView.resx">
+      <DependentUpon>PagesView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\PanelView.resx">
       <DependentUpon>PanelView.cs</DependentUpon>
@@ -239,7 +241,7 @@
     <Compile Include="Model\PanelItemList.cs" />
     <Compile Include="Model\PuntoSwitcher.cs" />
     <Compile Include="Model\Settings.cs" />
-    <Compile Include="Presenter\TabControlPresenter.cs" />
+    <Compile Include="Presenter\PagesPresenter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="NLog.config">

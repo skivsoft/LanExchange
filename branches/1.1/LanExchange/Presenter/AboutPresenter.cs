@@ -16,7 +16,7 @@ namespace LanExchange.Presenter
     /// <summary>
     /// Presenter for Settings (model) and AboutForm (view).
     /// </summary>
-    public class AboutPresenter : IPresenter
+    public class AboutPresenter
     {
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
