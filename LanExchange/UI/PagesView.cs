@@ -46,7 +46,7 @@ namespace LanExchange.UI
                 return text;
         }
 
-        public void NewTab(PanelItemList Info)
+        public void NewTabFromItemList(PanelItemList Info)
         {
             TabPage Tab = new TabPage();
             Tab.Text = Ellipsis(Info.TabName, 20);
@@ -64,6 +64,7 @@ namespace LanExchange.UI
             set
             {
                 Pages.SelectedIndex = value;
+                m_Presenter.GetModel().SelectedIndex = value;
             }
         }
 
@@ -98,21 +99,21 @@ namespace LanExchange.UI
             Pages.TabPages.RemoveAt(Index);
         }
 
-        public PanelItemList GetPanelItemListByPoint(Point point)
-        {
-            int Index = -1;
-            for (int i = 0; i < Pages.TabPages.Count; i++)
-            {
-                TabPage page = Pages.TabPages[i];
-                if (Pages.GetTabRect(i).Contains(point))
-                {
-                    Index = i;
-                    break;
-                }
-            }
-            if (Index == -1) return null;
-            return m_Presenter.GetModel().GetItem(Index);
-        }
+        //public PanelItemList GetPanelItemListByPoint(Point point)
+        //{
+        //    int Index = -1;
+        //    for (int i = 0; i < Pages.TabPages.Count; i++)
+        //    {
+        //        TabPage page = Pages.TabPages[i];
+        //        if (Pages.GetTabRect(i).Contains(point))
+        //        {
+        //            Index = i;
+        //            break;
+        //        }
+        //    }
+        //    if (Index == -1) return null;
+        //    return m_Presenter.GetModel().GetItem(Index);
+        //}
 
         public TabPage GetTabPageByPoint(Point point)
         {
@@ -144,15 +145,15 @@ namespace LanExchange.UI
         {
             mSelectTab.DropDownItems.Clear();
             m_Presenter.AddTabsToMenuItem(mSelectTab, m_Presenter.mSelectTab_Click, false);
-            mCloseTab.Enabled = m_Presenter.CanCloseTab(m_Presenter.SelectedIndex);
+            mCloseTab.Enabled = m_Presenter.CanCloseTab(m_Presenter.GetModel().SelectedIndex);
         }
 
         private void mTabParams_Click(object sender, EventArgs e)
         {
             using (TabParamsForm Form = new TabParamsForm())
             {
-                TabControlModel M = m_Presenter.GetModel();
-                PanelItemList Info = M.GetItem(m_Presenter.SelectedIndex);
+                PagesModel M = m_Presenter.GetModel();
+                PanelItemList Info = M.GetItem(M.SelectedIndex);
                 Form.ScanMode = Info.ScanMode;
                 Form.Groups = Info.Groups;
                 if (Form.ShowDialog() == DialogResult.OK)
@@ -164,28 +165,9 @@ namespace LanExchange.UI
             }
         }
 
-        public void UpdateSelectedTab()
-        {
-            if (Pages.TabCount == 0 || Pages.SelectedTab == null) return;
-            // synchronize selected page index with Pages model
-            m_Presenter.GetModel().SelectedIndex = Pages.SelectedIndex;
-            Control.ControlCollection ctrls = Pages.SelectedTab.Controls;
-            if (ctrls.Count > 0)
-            {
-                ActiveControl = Pages.SelectedTab.Controls[0];
-                ActiveControl.Focus();
-                // update top info panel
-                MainForm.Instance.PV_FocusedItemChanged(ActiveControl, new EventArgs());
-                //lvComps_SelectedIndexChanged(ActiveControl, new EventArgs());
-                PanelView PV = ActiveControl as PanelView;
-                if (PV != null)
-                    PV.GetPresenter().UpdateFilterPanel();
-            }
-        }
-
         private void Pages_Selected(object sender, TabControlEventArgs e)
         {
-            UpdateSelectedTab();
+            m_Presenter.GetModel().SelectedIndex = e.TabPageIndex;
         }
 
         public PanelView GetActivePanelView()
@@ -203,6 +185,17 @@ namespace LanExchange.UI
         {
             if (Index >= 0 && Index <= Pages.TabCount-1)
                 Pages.TabPages[Index].ToolTipText = value;
+        }
+
+        public void FocusPanelView()
+        {
+            PanelView PV = GetActivePanelView();
+            if (PV != null)
+            {
+                ActiveControl = PV;
+                PV.FocusListView();
+                PV.GetPresenter().UpdateItemsAndStatus();
+            }
         }
     }
 }

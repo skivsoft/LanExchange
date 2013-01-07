@@ -4,9 +4,6 @@ using LanExchange.Model;
 using LanExchange.View;
 using LanExchange.UI;
 using NLog;
-using GongSolutions.Shell;
-using GongSolutions.Shell.Interop;
-using System.Drawing;
 
 namespace LanExchange.Presenter
 {
@@ -16,31 +13,21 @@ namespace LanExchange.Presenter
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
         private readonly IPagesView m_View;
-        private readonly TabControlModel m_Model;
+        private readonly PagesModel m_Model;
+
+        public event EventHandler PanelViewFocusedItemChanged;
 
         public PagesPresenter(IPagesView pages)
         {
             m_View = pages;
-            m_Model = new TabControlModel(m_View.Name);
+            m_Model = new PagesModel(m_View.Name);
             m_Model.AfterAppendTab += Model_AfterAppendTab;
             m_Model.AfterRemove += Model_AfterRemove;
             m_Model.AfterRename += Model_AfterRename;
-            m_Model.SelectedIndexChanged += Model_SelectedIndexChanged;
+            m_Model.IndexChanged += Model_IndexChanged;
         }
 
-        public int SelectedIndex
-        {
-            get
-            {
-                return m_View.SelectedIndex;
-            }
-            set
-            {
-                m_View.SelectedIndex = value;
-            }
-        }
-
-        public TabControlModel GetModel()
+        public PagesModel GetModel()
         {
             return m_Model;
         }
@@ -185,14 +172,24 @@ namespace LanExchange.Presenter
             ListView LV = PV.Controls[0] as ListView;
             LV.SmallImageList = LanExchangeIcons.SmallImageList;
             LV.LargeImageList = LanExchangeIcons.LargeImageList;
-            MainForm.Instance.tipComps.SetToolTip(LV, " ");
-            PV.FocusedItemChanged += MainForm.Instance.PV_FocusedItemChanged;
+            if (MainForm.Instance != null)
+                MainForm.Instance.tipComps.SetToolTip(LV, " ");
+            PV.FocusedItemChanged += new EventHandler(PV_FocusedItemChanged);
             // add new tab and insert panel into it
-            m_View.NewTab(e.Info);
+            m_View.NewTabFromItemList(e.Info);
             m_View.AddControl(m_View.TabPagesCount - 1, PV);
             // set update event
-            e.Info.Changed += PV.GetPresenter().Items_Changed;
+            PanelPresenter PP = PV.GetPresenter();
+            e.Info.Changed += PP.Items_Changed;
+            e.Info.FilterChanged += PP.Items_FilterChanged;
             e.Info.SubscriptionChanged += Item_SubscriptionChanged;
+            logger.Info("e.Info.FilterChanged += Items_FilterChanged");
+        }
+
+        public void PV_FocusedItemChanged(object sender, EventArgs e)
+        {
+            if (PanelViewFocusedItemChanged != null)
+                PanelViewFocusedItemChanged(sender, e);
         }
 
         public void Item_SubscriptionChanged(object sender, EventArgs e)
@@ -214,9 +211,11 @@ namespace LanExchange.Presenter
             m_View.SelectedTabText = e.Info.TabName;
         }
 
-        public void Model_SelectedIndexChanged(object sender, IndexEventArgs e)
+        public void Model_IndexChanged(object sender, IndexEventArgs e)
         {
+            logger.Info("PagesModel_IndexChanged({0})", e.Index);
             m_View.SelectedIndex = e.Index;
+            m_View.FocusPanelView();
         }
     }
 

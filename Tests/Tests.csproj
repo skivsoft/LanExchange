@@ -53,11 +53,12 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NetworkScannerMock.cs" />
-    <Compile Include="NetworkScannerTest.cs" />
+    <Compile Include="PagesViewTest.cs" />
+    <Compile Include="ServerListSubscriptionMock.cs" />
+    <Compile Include="ServerListSubscriptionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubscriberMock.cs" />
-    <Compile Include="TabModelTest.cs" />
+    <Compile Include="PagesModelTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Shadow Include="Test References\LanExchange.accessor" />

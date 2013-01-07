@@ -184,7 +184,7 @@
             // popTop
             // 
             this.popTop.Name = "popTop";
-            this.popTop.Size = new System.Drawing.Size(153, 26);
+            this.popTop.Size = new System.Drawing.Size(61, 4);
             this.popTop.Opening += new System.ComponentModel.CancelEventHandler(this.popTop_Opening);
             this.popTop.Opened += new System.EventHandler(this.popTop_Opened);
             // 

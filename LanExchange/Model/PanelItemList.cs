@@ -29,6 +29,7 @@ namespace LanExchange.Model
 
         public event EventHandler Changed;
         public event EventHandler SubscriptionChanged;
+        public event EventHandler FilterChanged;
 
         //private ListView m_LV = null;
         //private PanelItemType m_CurrentType = PanelItemType.COMPUTERS;
@@ -49,12 +50,13 @@ namespace LanExchange.Model
         {
             get
             {
-                var Page = new TabSettings();
-                Page.Name = TabName;
-                Page.Filter = FilterText;
-                Page.CurrentView = CurrentView;
-                Page.ScanMode = ScanMode;
-                Page.ScanGroups = Groups;
+                var Page = new TabSettings { 
+                    Name = TabName, 
+                    Filter = FilterText, 
+                    CurrentView = CurrentView, 
+                    ScanMode = ScanMode, 
+                    ScanGroups = Groups 
+                };
                 return Page;
             }
             set
@@ -67,18 +69,6 @@ namespace LanExchange.Model
             }
             
         }
-
-        //public static PanelItemList GetObject(ListView LV)
-        //{
-        //    return LV.Tag as PanelItemList;
-        //}
-
-        //public void AttachObjectTo(ListView LV)
-        //{
-        //    PanelItemList List = PanelItemList.GetObject(LV);
-        //    LV.Tag = this;
-        //    List = null;
-        //}
 
         public string TabName { get; set; }
 
@@ -93,10 +83,10 @@ namespace LanExchange.Model
 
         public List<string> Groups { get; set; }
 
-        public IList<string> Keys
-        {
-            get { return m_Keys; }
-        }
+        //public IList<string> Keys
+        //{
+        //    get { return m_Keys; }
+        //}
 
         public string FocusedItem { get; set; }
 
@@ -127,6 +117,11 @@ namespace LanExchange.Model
         public void Delete(PanelItem Comp)
         {
             m_Data.Remove(Comp.Name);
+        }
+
+        public PanelItem GetAt(int Index)
+        {
+            return Get(m_Keys[Index]);
         }
 
         public PanelItem Get(string key)
@@ -194,6 +189,8 @@ namespace LanExchange.Model
             get { return m_Keys.Count; }
         }
 
+        private int FilterLockCount;
+
         public String FilterText
         {
             get { return m_Filter; }
@@ -203,8 +200,22 @@ namespace LanExchange.Model
                     m_Filter = String.Empty;
                 else
                     m_Filter = value;
-                ApplyFilter();
+                logger.Info("PanelItemList.FilterText={0}", value);
+                if (FilterLockCount == 0)
+                {
+                    FilterLockCount++;
+                    ApplyFilter();
+                    DoFilterChanged();
+                    FilterLockCount--;
+                }
             }
+        }
+
+        private void DoFilterChanged()
+        {
+            logger.Info("PanelItemList.DoFilterChanged()");
+            if (FilterChanged != null)
+                FilterChanged(this, new EventArgs());
         }
 
         public static List<PanelItem> EnumNetShares(string Server)

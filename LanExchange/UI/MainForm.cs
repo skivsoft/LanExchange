@@ -32,12 +32,12 @@ namespace LanExchange.UI
             Settings.LoadSettings();
             // init MainForm presenter
             m_Presenter = new MainPresenter(this);
-            m_Presenter.Pages = Pages.GetPresenter();
             // load pages from cfg-file
+            m_Presenter.Pages = Pages.GetPresenter();
+            m_Presenter.Pages.PanelViewFocusedItemChanged += Pages_PanelViewFocusedItemChanged;
             m_Presenter.Pages.GetModel().LoadSettings();
             // here we call event for update items count in statusline
-            Pages.UpdateSelectedTab();
-
+            //Pages.UpdateSelectedTab();
             //mSendToNewTab.Click += new EventHandler(TabController.mSendToNewTab_Click);
             
             // init main form
@@ -57,12 +57,21 @@ namespace LanExchange.UI
             AdminMode = Settings.Instance.AdvancedMode;
         }
 
+        /// <summary>
+        /// Store settings to cfg-files when we exiting program.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public static void OnApplicationExit(object sender, EventArgs e)
         {
             Settings.SaveSettings();
             m_Presenter.Pages.GetModel().StoreSettings();
         }
 
+        /// <summary>
+        /// Setup form according to RunMinimized flag.
+        /// This method must be called from Form_Load() only.
+        /// </summary>
         private void SetupRunMinimized()
         {
             if (Settings.Instance.RunMinimized)
@@ -148,8 +157,7 @@ namespace LanExchange.UI
                 if (Visible)
                 {
                     Activate();
-                    //this.ActiveControl = lvComps;
-                    //lvComps.Focus();
+                    Pages.FocusPanelView();
                 }
             }
         }
@@ -193,6 +201,16 @@ namespace LanExchange.UI
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.KeyCode == Keys.Escape)
+            {
+                // TODO uncomment this
+                //PanelView PV = Pages.GetActivePanelView();
+                //if (PV != null && PV.FilterVisible)
+                //    PV.FilterText = "";
+                //else
+                //    MainForm.Instance.IsFormVisible = false;
+                e.Handled = true;
+            }
 #if DEBUG
             // Ctrl+Alt+S - show subscibers in debug mode
             if (e.Control && e.Alt && e.KeyCode == Keys.S)
@@ -240,14 +258,14 @@ namespace LanExchange.UI
             //Process.Start("explorer.exe", "/n, /e,::{20D04FE0-3AEA-1069-A2D8-08002B30309D}");
             // Network
             //Process.Start("explorer.exe", "/n, ::{208D2C60-3AEA-1069-A2D7-08002B30309D},FERMAK");
-            PanelView PV = Pages.GetActivePanelView();
-            if (PV != null)
-                PV.GotoFavoriteComp(SystemInformation.ComputerName);
+            //PanelView PV = Pages.GetActivePanelView();
+            //if (PV != null)
+            //    PV.GotoFavoriteComp(SystemInformation.ComputerName);
         }
 
         private void tipComps_Popup(object sender, PopupEventArgs e)
         {
-            logger.Info("tipComps_Popup: {0}", e.AssociatedControl.GetType().Name);
+            //logger.Info("tipComps_Popup: {0}", e.AssociatedControl.GetType().Name);
             if (e.AssociatedControl == pInfo.Picture)
             {
                 (sender as ToolTip).ToolTipIcon = ToolTipIcon.Info;
@@ -271,6 +289,8 @@ namespace LanExchange.UI
                 TabPage Tab = Pages.GetTabPageByPoint(P);
                 if (Tab != null)
                     (sender as ToolTip).ToolTipTitle = Tab.Text;
+                else
+                    e.Cancel = true;
                 return;
             }
             (sender as ToolTip).ToolTipTitle = "";
@@ -356,10 +376,12 @@ namespace LanExchange.UI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void PV_FocusedItemChanged(object sender, EventArgs e)
+        public void Pages_PanelViewFocusedItemChanged(object sender, EventArgs e)
         {
             // get focused item from current PanelView
-            PanelItem PItem = (sender as PanelView).GetPresenter().GetFocusedPanelItem(false, false);
+            PanelView PV = sender as PanelView;
+            if (PV == null) return;
+            PanelItem PItem = PV.GetPresenter().GetFocusedPanelItem(false, false);
             if (PItem == null)
                 return;
             // is focused item a computer?

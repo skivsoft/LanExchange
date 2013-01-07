@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using LanExchange.Utils;
 using System.IO;
 
@@ -30,29 +29,26 @@ namespace LanExchange.Model
         public int Index { get { return m_Index; } }
     }
 
-    public delegate void PanelItemListEventHandler(object sender, PanelItemListEventArgs e);
-    public delegate void IndexEventHandler(object sender, IndexEventArgs e);
-
     // 
     // Модель предоставляет знания: данные и методы работы с этими данными, 
     // реагирует на запросы, изменяя своё состояние. 
     // Не содержит информации, как эти знания можно визуализировать.
     // 
 
-    public class TabControlModel
+    public class PagesModel
     {
         private readonly List<PanelItemList> m_List;
         private readonly string m_Name;
         private int m_SelectedIndex;
 
-        public event PanelItemListEventHandler AfterAppendTab;
-        public event IndexEventHandler AfterRemove;
-        public event PanelItemListEventHandler AfterRename;
-        public event IndexEventHandler SelectedIndexChanged;
+        public event EventHandler<PanelItemListEventArgs> AfterAppendTab;
+        public event EventHandler<IndexEventArgs> AfterRemove;
+        public event EventHandler<PanelItemListEventArgs> AfterRename;
+        public event EventHandler<IndexEventArgs> IndexChanged;
 
         private LanExchangeTabs m_PagesSettings;
 
-        public TabControlModel(string name)
+        public PagesModel(string name)
         {
             m_List = new List<PanelItemList>();
             m_PagesSettings = new LanExchangeTabs();
@@ -61,6 +57,8 @@ namespace LanExchange.Model
         }
 
         public int Count { get { return m_List.Count; }  }
+
+        private int LockCount;
 
         public int SelectedIndex 
         {
@@ -71,7 +69,12 @@ namespace LanExchange.Model
             set
             {
                 m_SelectedIndex = value;
-                DoSelectedIndexChanged(value);
+                if (LockCount == 0)
+                {
+                    LockCount++;
+                    DoIndexChanged(value);
+                    LockCount--;
+                }
             }
         }
 
@@ -103,10 +106,10 @@ namespace LanExchange.Model
                 AfterRename(this, new PanelItemListEventArgs(Info));
         }
 
-        public void DoSelectedIndexChanged(int Index)
+        public void DoIndexChanged(int Index)
         {
-            if (SelectedIndexChanged != null)
-                SelectedIndexChanged(this, new IndexEventArgs(Index));
+            if (IndexChanged != null)
+                IndexChanged(this, new IndexEventArgs(Index));
         }
 
         public bool Contains(PanelItemList Info)
@@ -175,13 +178,12 @@ namespace LanExchange.Model
             {
                 m_PagesSettings = (LanExchangeTabs)SerializeUtils.DeserializeObjectFromXMLFile(GetConfigFileName(), typeof(LanExchangeTabs));
             }
-            catch { }
+            catch {}
             if (m_PagesSettings.Items.Length > 0)
             {
                 Array.ForEach(m_PagesSettings.Items, Page =>
                 {
-                    var Info = new PanelItemList(Page.Name);
-                    Info.Settings = Page;
+                    var Info = new PanelItemList(Page.Name) { Settings = Page };
                     AddTab(Info);
                 });
             }

@@ -12,10 +12,11 @@ namespace LanExchange.View
         string SelectedTabText { get; set; }
         int TabPagesCount { get; }
         // methods
-        void NewTab(PanelItemList Info);
+        void NewTabFromItemList(PanelItemList Info);
         void RemoveTabAt(int Index);
         void AddControl(int Index, Control control);
         string Ellipsis(string text, int length);
         void SetTabToolTip(int Index, string value);
+        void FocusPanelView();
     }
 }

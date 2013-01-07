@@ -7,11 +7,15 @@ using LanExchange.Model;
 using LanExchange.UI;
 using LanExchange.Utils;
 using System.Diagnostics;
+using NLog;
 
 namespace LanExchange.Presenter
 {
     public class PanelPresenter
     {
+        // logger object 
+        private readonly static Logger logger = LogManager.GetCurrentClassLogger();
+
         public const string COMPUTER_MENU = "computer";
         public const string FOLDER_MENU = "folder";
 
@@ -25,13 +29,14 @@ namespace LanExchange.Presenter
         }
         public void CopyCompNameCommand()
         {
+            if (m_Objects == null) return;
             StringBuilder S = new StringBuilder();
             PanelItem PItem;
             foreach (int index in m_View.SelectedIndices)
             {
                 if (S.Length > 0)
                     S.AppendLine();
-                PItem = GetItem(index);
+                PItem = m_Objects.GetAt(index);
                 if (PItem != null)
                     S.Append(@"\\" + PItem.Name);
             }
@@ -41,13 +46,14 @@ namespace LanExchange.Presenter
 
         public void CopyCommentCommand()
         {
+            if (m_Objects == null) return;
             StringBuilder S = new StringBuilder();
             PanelItem PItem;
             foreach (int index in m_View.SelectedIndices)
             {
                 if (S.Length > 0)
                     S.AppendLine();
-                PItem = GetItem(index);
+                PItem = m_Objects.GetAt(index);
                 if (PItem != null)
                     S.Append(PItem.Comment);
             }
@@ -57,13 +63,14 @@ namespace LanExchange.Presenter
 
         public void CopySelectedCommand()
         {
+            if (m_Objects == null) return;
             StringBuilder S = new StringBuilder();
             PanelItem PItem;
             foreach (int index in m_View.SelectedIndices)
             {
                 if (S.Length > 0)
                     S.AppendLine();
-                PItem = GetItem(index);
+                PItem = m_Objects.GetAt(index);
                 if (PItem != null)
                 {
                     S.Append(@"\\" + PItem.Name);
@@ -77,13 +84,14 @@ namespace LanExchange.Presenter
 
         public void CopyPathCommand()
         {
+            if (m_Objects == null) return;
             StringBuilder S = new StringBuilder();
             SharePanelItem PItem;
             foreach (int index in m_View.SelectedIndices)
             {
                 if (S.Length > 0)
                     S.AppendLine();
-                PItem = GetItem(index) as SharePanelItem;
+                PItem = m_Objects.GetAt(index) as SharePanelItem;
                 if (PItem != null)
                     S.Append(String.Format(@"\\{0}\{1}", PItem.ComputerName, PItem.Name));
             }
@@ -93,11 +101,16 @@ namespace LanExchange.Presenter
 
         public void Items_Changed(object sender, EventArgs e)
         {
-            if (m_Objects == null)
-                return;
+            UpdateItemsAndStatus();
+        }
+
+        public void UpdateItemsAndStatus()
+        {
+            if (m_Objects == null) return;
+            if (MainPresenter.Instance == null) return;
             // refresh only for current page
-            PagesPresenter Pages = MainPresenter.Instance.Pages;
-            PanelItemList CurrentItemList = Pages.GetModel().GetItem(Pages.SelectedIndex);
+            PagesModel Model = MainPresenter.Instance.Pages.GetModel();
+            PanelItemList CurrentItemList = Model.GetItem(Model.SelectedIndex);
             if (!m_Objects.Equals(CurrentItemList))
                 return;
             // get number of visible items (filtered) and number of total items
@@ -117,90 +130,15 @@ namespace LanExchange.Presenter
             else
                 MainForm.Instance.ShowStatusText("Элементов: {0}", ShowCount);
             m_View.SetVirtualListSize(ShowCount);
-
-            /*
-            if (!String.IsNullOrEmpty(ItemList.FocusedItem) && !String.IsNullOrEmpty(ItemList.FocusedItem))
-            {
-                LV.FocusedItem = LV.Items[ItemList.FocusedItem];
-                if (LV.FocusedItem != null)
-                    LV.FocusedItem.Selected = true;
-            }
-            */
-            /*
-            // update filter panel
-            string Text = ItemList.FilterText;
-            eFilter.TextChanged -= eFilter_TextChanged;
-            eFilter.Text = Text;
-            eFilter.SelectionLength = 0;
-            eFilter.SelectionStart = Text.Length;
-            eFilter.TextChanged += eFilter_TextChanged;
-            // показываем или скрываем панель фильтра
-            tsBottom.Visible = ItemList.IsFiltered;
-            if (!tsBottom.Visible)
-                Pages.SelectedTab.Refresh();
-             */
         }
 
-        public void UpdateFilter(string NewFilter, bool bVisualUpdate)
+        public void Items_FilterChanged(object sender, EventArgs e)
         {
-            if (m_Objects == null) return;
-            //List<string> SaveSelected = null;
-
-            // выходим на верхний уровень
-            /*
-            if (!String.IsNullOrEmpty(NewFilter))
-                while (CompBrowser.InternalStack.Count > 0)
-                    CompBrowser.LevelUp();
-             */
-
-
-            //string SaveCurrent = null;
-            if (bVisualUpdate)
-            {
-                //SaveSelected = ItemList.ListView_GetSelected(LV, false);
-                // запоминаем выделенные элементы
-                //if (LV.FocusedItem != null)
-                //  SaveCurrent = lvComps.FocusedItem.Text;
-            }
-            // меняем фильтр
-            m_Objects.FilterText = NewFilter;
-            if (bVisualUpdate)
-            {
-                //TotalItems = CompBrowser.InternalItemList.Count;
-                m_View.SetIsFound(m_Objects.Count > 0);
-                // восстанавливаем выделенные элементы
-                //ItemList.ListView_SetSelected(LV, SaveSelected);
-                //CompBrowser.SelectComputer(SaveCurrent);
-                UpdateFilterPanel();
-            }
-            else
-            {
-                //LV.VirtualListSize = ItemList.FilterCount;
-            }
-        }
-
-        public void UpdateFilterPanel()
-        {
-            //string Text = m_Objects.FilterText;
-            //eFilter.TextChanged -= eFilter_TextChanged;
-            //eFilter.Text = Text;
-            //eFilter.SelectionLength = 0;
-            //eFilter.SelectionStart = Text.Length;
-            //eFilter.TextChanged += eFilter_TextChanged;
-            // показываем или скрываем панель фильтра
-            m_View.FilterVisible = m_Objects.IsFiltered;
-            // show count items in the current panel
-            Items_Changed(m_Objects, new EventArgs());
-        }
-
-        /// <summary>
-        /// IPanelView.GetItem implementation
-        /// </summary>
-        /// <param name="Index"></param>
-        /// <returns></returns>
-        public PanelItem GetItem(int Index)
-        {
-            return m_Objects.Get(m_Objects.Keys[Index]);
+            // TODO uncomment this
+            //logger.Info("Items_FilterChanged");
+            //m_View.InitFilterText(Objects.FilterText);
+            //m_View.SetIsFound(m_Objects.FilterCount > 0);
+            //m_View.FilterVisible = Objects.IsFiltered;
         }
 
         public PanelItemList Objects
@@ -320,14 +258,6 @@ namespace LanExchange.Presenter
                 Comp.Name = (PItem as SharePanelItem).ComputerName;
             }
             return Comp;
-        }
-
-        public void CancelCurrentFilter()
-        {
-            if (m_View.FilterVisible)
-                m_View.FilterText = "";
-            else
-                MainForm.Instance.IsFormVisible = false;
         }
     }
 }
