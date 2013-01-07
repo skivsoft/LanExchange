@@ -39,9 +39,9 @@ namespace LanExchange.UI
             mComp.Image = LanExchangeIcons.SmallImageList.Images[LanExchangeIcons.imgCompDefault];
             mFolder.Image = LanExchangeIcons.SmallImageList.Images[LanExchangeIcons.imgFolderNormal];
             // set dropdown direction for sub-menus (actual for dual-monitor system)
-            mComp.DropDownDirection = ToolStripDropDownDirection.BelowLeft;
-            mFolder.DropDownDirection = ToolStripDropDownDirection.BelowLeft;
-            mSendToTab.DropDownDirection = ToolStripDropDownDirection.BelowLeft;
+            mComp.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
+            mFolder.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
+            mSendToTab.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
         }
         #endregion
 
@@ -73,6 +73,14 @@ namespace LanExchange.UI
         #endregion
 
         #region IPanelView interface implementation
+
+        public IFilterView Filter
+        {
+            get
+            {
+                return pFilter;
+            }
+        }
 
         public IEnumerable<int> SelectedIndices
         {
@@ -161,18 +169,6 @@ namespace LanExchange.UI
         }
 
 
-        public void lvComps_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (Char.IsLetterOrDigit(e.KeyChar) || Char.IsPunctuation(e.KeyChar) || PuntoSwitcher.IsValidChar(e.KeyChar))
-            {
-                // TODO uncomment this
-                //FilterVisible = true;
-                //ActiveControl = eFilter;
-                //eFilter.Focus();
-                //FilterView.SendKeysCorrect(e.KeyChar.ToString());
-                //e.Handled = true;
-            }
-        }
 
         private void DoFocusedItemChanged()
         {
@@ -186,16 +182,22 @@ namespace LanExchange.UI
                 DoFocusedItemChanged();
         }
 
+        public void lvComps_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            pFilter.GetPresenter().LinkedControl_KeyPress(sender, e);
+        }
+
         public void lvComps_KeyDown(object sender, KeyEventArgs e)
         {
+            pFilter.GetPresenter().LinkedControl_KeyDown(sender, e);
             ListView LV = (sender as ListView);
-            // Ctrl+A выделение всех элементов
+            // Ctrl+A - Select all items
             if (e.Control && e.KeyCode == Keys.A)
             {
                 User32Utils.SelectAllItems(LV);
                 e.Handled = true;
             }
-            // Shift+Enter
+            // Shift+Enter - Open current item
             if (e.Shift && e.KeyCode == Keys.Enter)
             {
                 PanelItem PItem = m_Presenter.GetFocusedPanelItem(true, false);
@@ -205,7 +207,7 @@ namespace LanExchange.UI
                     mFolderOpen_Click(mFolderOpen, new EventArgs());
                 e.Handled = true;
             }
-            // Ctrl+Enter в режиме администратора
+            // Ctrl+Enter - Run RAdmin for computer and FAR for folder
             if (MainForm.Instance.AdminMode && e.Control && e.KeyCode == Keys.Enter)
             {
                 PanelItem PItem = m_Presenter.GetFocusedPanelItem(true, false);
@@ -216,12 +218,28 @@ namespace LanExchange.UI
                         mFolderOpen_Click(mFAROpen, new EventArgs());
                 e.Handled = true;
             }
-            // клавишы для всех пользовательских вкладок
+            // Backspace - Go level up
             if (e.KeyCode == Keys.Back)
             {
                 //CompBrowser.LevelUp();
                 e.Handled = true;
             }
+            // Ctrl+Ins - Copy to clipboard (similar to Ctrl+C)
+            // Ctrl+Alt+C - Copy to clipboard and close window
+            if (e.Control && e.KeyCode == Keys.Insert || 
+                e.Control && e.Alt && e.KeyCode == Keys.C)
+            {
+                if (mCopyCompName.Enabled)
+                    m_Presenter.CopyCompNameCommand();
+                else
+                    if (mCopyPath.Enabled)
+                        m_Presenter.CopyPathCommand();
+                if (e.KeyCode == Keys.C)
+                    MainForm.Instance.IsFormVisible = false;
+                e.Handled = true;
+            }
+
+
             // TODO need delete only for user items
             //if (e.KeyCode == Keys.Delete)
             //{
@@ -435,5 +453,10 @@ namespace LanExchange.UI
             DoFocusedItemChanged();
         }
         #endregion
+
+        private void pFilter_FilterCountChanged(object sender, EventArgs e)
+        {
+            m_Presenter.UpdateItemsAndStatus();
+        }
     }
 }

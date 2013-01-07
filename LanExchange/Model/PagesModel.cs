@@ -80,7 +80,10 @@ namespace LanExchange.Model
 
         public PanelItemList GetItem(int Index)
         {
-            return m_List[Index];
+            if (Index < 0 || Index >= m_List.Count)
+                return null;
+            else
+                return m_List[Index];
         }
 
         internal int GetItemIndex(PanelItemList Item)

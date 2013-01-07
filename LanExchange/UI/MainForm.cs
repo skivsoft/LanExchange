@@ -203,12 +203,11 @@ namespace LanExchange.UI
         {
             if (e.KeyCode == Keys.Escape)
             {
-                // TODO uncomment this
-                //PanelView PV = Pages.GetActivePanelView();
-                //if (PV != null && PV.FilterVisible)
-                //    PV.FilterText = "";
-                //else
-                //    MainForm.Instance.IsFormVisible = false;
+                PanelView PV = Pages.GetActivePanelView();
+                if (PV != null && PV.Filter.Visible)
+                    PV.Filter.FilterText = "";
+                else
+                    MainForm.Instance.IsFormVisible = false;
                 e.Handled = true;
             }
 #if DEBUG

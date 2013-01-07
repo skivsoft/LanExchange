@@ -88,6 +88,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\IFilterModel.cs" />
     <Compile Include="Presenter\FilterPresenter.cs" />
     <Compile Include="UI\FilterView.cs">
       <SubType>UserControl</SubType>

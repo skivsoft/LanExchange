@@ -111,34 +111,16 @@ namespace LanExchange.Presenter
             // refresh only for current page
             PagesModel Model = MainPresenter.Instance.Pages.GetModel();
             PanelItemList CurrentItemList = Model.GetItem(Model.SelectedIndex);
-            if (!m_Objects.Equals(CurrentItemList))
-                return;
+            if (CurrentItemList == null) return;
+            if (!m_Objects.Equals(CurrentItemList)) return;
             // get number of visible items (filtered) and number of total items
-            int ShowCount, TotalCount;
-            if (m_Objects.IsFiltered)
-            {
-                ShowCount = m_Objects.FilterCount;
-                TotalCount = m_Objects.Count;
-            }
-            else
-            {
-                ShowCount = m_Objects.Count;
-                TotalCount = m_Objects.Count;
-            }
+            int ShowCount = m_Objects.FilterCount;
+            int TotalCount = m_Objects.Count;
             if (ShowCount != TotalCount)
                 MainForm.Instance.ShowStatusText("Элементов: {0} из {1}", ShowCount, TotalCount);
             else
                 MainForm.Instance.ShowStatusText("Элементов: {0}", ShowCount);
             m_View.SetVirtualListSize(ShowCount);
-        }
-
-        public void Items_FilterChanged(object sender, EventArgs e)
-        {
-            // TODO uncomment this
-            //logger.Info("Items_FilterChanged");
-            //m_View.InitFilterText(Objects.FilterText);
-            //m_View.SetIsFound(m_Objects.FilterCount > 0);
-            //m_View.FilterVisible = Objects.IsFiltered;
         }
 
         public PanelItemList Objects
@@ -147,7 +129,8 @@ namespace LanExchange.Presenter
             set
             {
                 m_Objects = value;
-                m_View.SetVirtualListSize(m_Objects.Count);
+                m_View.Filter.GetPresenter().SetModel(value);
+                //m_View.SetVirtualListSize(m_Objects.Count);
             }
         }
 
