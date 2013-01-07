@@ -42,7 +42,9 @@ namespace LanExchange.UI
             TabPage Tab = new TabPage();
             Tab.Text = Ellipsis(tabname, 20);
             Tab.ImageIndex = LanExchangeIcons.imgWorkgroup;
-            Tab.ToolTipText = tabname;
+            // TODO Tab.ToolTipText commented
+            //Tab.ToolTipText = tabname;
+            Tab.ToolTipText = " ";
             Controls.Add(Tab);
         }
 

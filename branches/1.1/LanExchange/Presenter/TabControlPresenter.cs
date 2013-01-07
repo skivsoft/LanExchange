@@ -109,8 +109,8 @@ namespace LanExchange.Presenter
         {
             if (lvSender == null || lvReceiver == null)
                 return;
-            PanelItemList ItemListSender = lvSender.Objects;
-            PanelItemList ItemListReceiver = lvReceiver.Objects;
+            PanelItemList ItemListSender = lvSender.GetPresenter().Objects;
+            PanelItemList ItemListReceiver = lvReceiver.GetPresenter().Objects;
 
             int NumAdded = 0;
             //int[] Indices = new int[lvSender.SelectedIndices.Count];
@@ -178,7 +178,8 @@ namespace LanExchange.Presenter
         {
             logger.Info("AfterAppendTab(\"{0}\")", e.Info.TabName);
             // create panel
-            var PV = new PanelView { Dock = DockStyle.Fill, Objects = e.Info };
+            var PV = new PanelView { Dock = DockStyle.Fill };
+            PV.GetPresenter().Objects = e.Info;
             ListView LV = PV.Controls[0] as ListView;
             LV.SmallImageList = LanExchangeIcons.SmallImageList;
             LV.LargeImageList = LanExchangeIcons.LargeImageList;
@@ -188,7 +189,7 @@ namespace LanExchange.Presenter
             m_View.NewTab(e.Info.TabName);
             m_View.AddControl(m_View.TabPagesCount - 1, PV);
             // set update event
-            e.Info.Changed += PV.Items_Changed;
+            e.Info.Changed += PV.GetPresenter().Items_Changed;
         }
 
         public void Model_AfterRemove(object sender, IndexEventArgs e)

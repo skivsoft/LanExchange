@@ -198,11 +198,6 @@ namespace LanExchange.UI
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape)
-            {
-                m_Presenter.CancelCurrentFilter();
-                e.Handled = true;
-            }
 #if DEBUG
             // Ctrl+Alt+C - show properties of current page in debug mode
             if (e.Control && e.Alt && e.KeyCode == Keys.C)
@@ -274,6 +269,7 @@ namespace LanExchange.UI
 
         private void tipComps_Popup(object sender, PopupEventArgs e)
         {
+            logger.Info("tipComps_Popup: {0}", e.AssociatedControl.GetType().Name);
             if (e.AssociatedControl == pInfo.Picture)
             {
                 (sender as ToolTip).ToolTipIcon = ToolTipIcon.Info;
@@ -289,6 +285,17 @@ namespace LanExchange.UI
                     (sender as ToolTip).ToolTipTitle = Info.Item.Text;
                 else
                     (sender as ToolTip).ToolTipTitle = "Информация";
+                return;
+            }
+            if (e.AssociatedControl is TabPage)
+            {
+                TabPage Tab = (TabPage)e.AssociatedControl;
+                (sender as ToolTip).ToolTipTitle = Tab.Text;
+                return;
+            }
+            if (e.AssociatedControl is TabControlView)
+            {
+                TabControlView Tabs = (TabControlView)e.AssociatedControl;
                 return;
             }
             (sender as ToolTip).ToolTipTitle = "";
@@ -310,7 +317,7 @@ namespace LanExchange.UI
                     //lvComps_SelectedIndexChanged(ActiveControl, new EventArgs());
                     PanelView PV = ActiveControl as PanelView;
                     if (PV != null)
-                        PV.UpdateFilterPanel();
+                        PV.GetPresenter().UpdateFilterPanel();
                 }
             }
         }
@@ -424,7 +431,7 @@ namespace LanExchange.UI
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Right)
             {
-                Point P = Status.PointToScreen(new Point(0, 0));
+                Point P = Status.PointToScreen(new Point(e.X, e.Y));
                 popTray.Show(P);
             }
         }
@@ -437,7 +444,7 @@ namespace LanExchange.UI
         public void PV_FocusedItemChanged(object sender, EventArgs e)
         {
             // get focused item from current PanelView
-            PanelItem PItem = (sender as PanelView).GetFocusedPanelItem(false, false);
+            PanelItem PItem = (sender as PanelView).GetPresenter().GetFocusedPanelItem(false, false);
             if (PItem == null)
                 return;
             // is focused item a computer?

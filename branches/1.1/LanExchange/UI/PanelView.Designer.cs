@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.tsBottom = new System.Windows.Forms.Panel();
+            this.pFilter = new System.Windows.Forms.Panel();
             this.imgClear = new System.Windows.Forms.PictureBox();
             this.eFilter = new System.Windows.Forms.TextBox();
             this.LV = new System.Windows.Forms.ListView();
@@ -67,21 +67,21 @@
             this.mAfterSendTo = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.mContextClose = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsBottom.SuspendLayout();
+            this.pFilter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgClear)).BeginInit();
             this.popComps.SuspendLayout();
             this.SuspendLayout();
             // 
-            // tsBottom
+            // pFilter
             // 
-            this.tsBottom.Controls.Add(this.imgClear);
-            this.tsBottom.Controls.Add(this.eFilter);
-            this.tsBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tsBottom.Location = new System.Drawing.Point(0, 455);
-            this.tsBottom.Name = "tsBottom";
-            this.tsBottom.Size = new System.Drawing.Size(470, 32);
-            this.tsBottom.TabIndex = 22;
-            this.tsBottom.Visible = false;
+            this.pFilter.Controls.Add(this.imgClear);
+            this.pFilter.Controls.Add(this.eFilter);
+            this.pFilter.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pFilter.Location = new System.Drawing.Point(0, 455);
+            this.pFilter.Name = "pFilter";
+            this.pFilter.Size = new System.Drawing.Size(470, 32);
+            this.pFilter.TabIndex = 22;
+            this.pFilter.Visible = false;
             // 
             // imgClear
             // 
@@ -127,7 +127,7 @@
             this.LV.UseCompatibleStateImageBehavior = false;
             this.LV.View = System.Windows.Forms.View.Details;
             this.LV.VirtualMode = true;
-            this.LV.ItemActivate += new System.EventHandler(this.lvRecent_ItemActivate);
+            this.LV.ItemActivate += new System.EventHandler(this.lvComps_ItemActivate);
             this.LV.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lvComps_ItemSelectionChanged);
             this.LV.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvComps_KeyDown);
             this.LV.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lvComps_KeyPress);
@@ -162,7 +162,7 @@
             this.toolStripSeparator6,
             this.mContextClose});
             this.popComps.Name = "popComps";
-            this.popComps.Size = new System.Drawing.Size(279, 314);
+            this.popComps.Size = new System.Drawing.Size(279, 292);
             this.popComps.Opening += new System.ComponentModel.CancelEventHandler(this.popComps_Opening);
             // 
             // mComp
@@ -421,11 +421,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.LV);
-            this.Controls.Add(this.tsBottom);
+            this.Controls.Add(this.pFilter);
             this.Name = "PanelView";
             this.Size = new System.Drawing.Size(470, 487);
-            this.tsBottom.ResumeLayout(false);
-            this.tsBottom.PerformLayout();
+            this.pFilter.ResumeLayout(false);
+            this.pFilter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgClear)).EndInit();
             this.popComps.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -434,7 +434,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel tsBottom;
+        private System.Windows.Forms.Panel pFilter;
         private System.Windows.Forms.PictureBox imgClear;
         public System.Windows.Forms.TextBox eFilter;
         private System.Windows.Forms.ListView LV;

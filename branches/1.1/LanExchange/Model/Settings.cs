@@ -10,8 +10,8 @@ namespace LanExchange.Model
     /// </summary>
     public class Settings
     {
-        private const string UpdateURL_Default = "http://skivsoft.net/lanexchange/update/";
-        private const string WebSiteURL_Default = "skivsoft.net/lanexchange/";
+        private const string UpdateURL_Default = "http://www.skivsoft.net/lanexchange/update/";
+        private const string WebSiteURL_Default = "www.skivsoft.net/lanexchange/";
         private const string EmailAddress_Default = "skivsoft@gmail.com";
 
         private static Settings m_Instance;

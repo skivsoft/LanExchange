@@ -32,13 +32,5 @@ namespace LanExchange.Presenter
                 return m_View;
             }
         }
-
-        public void CancelCurrentFilter()
-        {
-            //if (tsBottom.Visible)
-            //    eFilter.Text = "";
-            //else
-            //    IsFormVisible = false;
-        }
     }
 }

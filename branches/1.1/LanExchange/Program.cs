@@ -4,7 +4,7 @@
 //   TODO * Sending items to another tab
 //   TODO * Updating menu lists after changing tab list (add, remove)
 //   DONE * Update counts in status list
-//   TODO * Filtering computer items
+//   DONE * Filtering computer items
 //   TODO * ContextMenuStrip for top panel
 //   TODO * MSI installer
 //   TODO * Publishing and autoupdate from v1.0
@@ -17,7 +17,12 @@
 //   TODO  Recently used items must appears when Tray.onMouseOver event fired
 //   TODO  WMI-commands execution with parameters
 //   TODO  Refactoring for strict Model-View-Presenter pattern
-//   
+//   TODO  Columns sort
+//   TODO  Save/restore sort order for each tab
+// 
+// RELEASE 1.2 TODO LIST
+//   TODO  Map disk to share
+//   TODO  Ask username/password if needed when connect to share
 // 
 // *****************************************************************************
 namespace LanExchange

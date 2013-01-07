@@ -10,8 +10,16 @@ namespace LanExchange.View
     /// </summary>
     public interface IPanelView
     {
+        // properties
         IEnumerable<int> SelectedIndices { get; }
+        string FocusedItemText { get; }
+        int FocusedItemIndex { get; }
+        bool FilterVisible { get; set; }
+        string FilterText { get; set; }
+        // methods
         void SelectItem(int Index);
-        PanelItem GetItem(int Index);
+        void SetIsFound(bool value);
+        void SetVirtualListSize(int count);
+        void RedrawFocusedItem();
     }
 }

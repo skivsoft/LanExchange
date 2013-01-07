@@ -128,6 +128,7 @@ namespace LanExchange.Model
 
         public PanelItem Get(string key)
         {
+            if (key == null) return null;
             PanelItem Result = null;
             if (m_Data.TryGetValue(key, out Result))
             {
