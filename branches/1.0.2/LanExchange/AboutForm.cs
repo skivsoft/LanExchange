@@ -37,7 +37,7 @@ namespace LanExchange
 
         public static string GetUpdateBaseURL()
         {
-            return "http://skivsoft.net/lanexchange/update/";
+            return "http://www.skivsoft.net/lanexchange/update/";
         }
 
         public static string GetFileListURL()
