@@ -53,6 +53,8 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FilterModelMock.cs" />
+    <Compile Include="FilterViewTest.cs" />
     <Compile Include="PagesViewTest.cs" />
     <Compile Include="ServerListSubscriptionMock.cs" />
     <Compile Include="ServerListSubscriptionTest.cs" />

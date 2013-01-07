@@ -64,6 +64,7 @@
             this.mAfterSendTo = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.mContextClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.pFilter = new LanExchange.UI.FilterView();
             this.popComps.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,7 +81,7 @@
             this.LV.Location = new System.Drawing.Point(0, 0);
             this.LV.Name = "LV";
             this.LV.ShowItemToolTips = true;
-            this.LV.Size = new System.Drawing.Size(470, 487);
+            this.LV.Size = new System.Drawing.Size(470, 457);
             this.LV.TabIndex = 23;
             this.LV.UseCompatibleStateImageBehavior = false;
             this.LV.View = System.Windows.Forms.View.Details;
@@ -374,11 +375,24 @@
             this.mContextClose.Text = "Закрыть";
             this.mContextClose.Click += new System.EventHandler(this.mContextClose_Click);
             // 
+            // pFilter
+            // 
+            this.pFilter.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pFilter.FilterText = "";
+            this.pFilter.LinkedControl = this.LV;
+            this.pFilter.Location = new System.Drawing.Point(0, 457);
+            this.pFilter.Name = "pFilter";
+            this.pFilter.Size = new System.Drawing.Size(470, 30);
+            this.pFilter.TabIndex = 24;
+            this.pFilter.Visible = false;
+            this.pFilter.FilterCountChanged += new System.EventHandler(this.pFilter_FilterCountChanged);
+            // 
             // PanelView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.LV);
+            this.Controls.Add(this.pFilter);
             this.Name = "PanelView";
             this.Size = new System.Drawing.Size(470, 487);
             this.popComps.ResumeLayout(false);
@@ -423,5 +437,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ToolStripMenuItem mWMI;
+        private FilterView pFilter;
     }
 }

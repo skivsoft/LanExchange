@@ -181,9 +181,7 @@ namespace LanExchange.Presenter
             // set update event
             PanelPresenter PP = PV.GetPresenter();
             e.Info.Changed += PP.Items_Changed;
-            e.Info.FilterChanged += PP.Items_FilterChanged;
             e.Info.SubscriptionChanged += Item_SubscriptionChanged;
-            logger.Info("e.Info.FilterChanged += Items_FilterChanged");
         }
 
         public void PV_FocusedItemChanged(object sender, EventArgs e)

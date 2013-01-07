@@ -4,17 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using LanExchange.UI;
-using LanExchange.Model;
 
 namespace Tests
 {
     /// <summary>
-    /// Summary description for PagesViewTest
+    /// Summary description for FilterViewTest
     /// </summary>
     [TestClass]
-    public class PagesViewTest
+    public class FilterViewTest
     {
-        public PagesViewTest()
+        public FilterViewTest()
         {
             //
             // TODO: Add constructor logic here
@@ -62,37 +61,19 @@ namespace Tests
         #endregion
 
         [TestMethod]
-        public void View_SelectedIndex()
+        public void View_FilterText()
         {
-            using (var View = new PagesView())
-            {
-                var Presenter = View.GetPresenter();
-                var Model = Presenter.GetModel();
-                var Items1 = new PanelItemList("test1");
-                var Items2 = new PanelItemList("test2");
-                View.NewTabFromItemList(Items1);
-                View.NewTabFromItemList(Items2);
-                View.SelectedIndex = 1;
-                Assert.AreEqual(1, View.SelectedIndex);
-                Assert.AreEqual(1, Model.SelectedIndex);
-            }
-        }
-
-        [TestMethod]
-        public void Model_SelectedIndex()
-        {
-            using (var View = new PagesView())
-            {
-                var Presenter = View.GetPresenter();
-                var Model = Presenter.GetModel();
-                var Items1 = new PanelItemList("test1");
-                var Items2 = new PanelItemList("test2");
-                View.NewTabFromItemList(Items1);
-                View.NewTabFromItemList(Items2);
-                Model.SelectedIndex = 1;
-                Assert.AreEqual(1, View.SelectedIndex);
-                Assert.AreEqual(1, Model.SelectedIndex);
-            }
+            var View = new FilterView();
+            var Presenter = View.GetPresenter();
+            Assert.AreEqual("", View.FilterText);
+            Assert.AreEqual(false, View.Visible);
+            View.FilterText = "test";
+            Assert.AreEqual(true, View.Visible);
+            Assert.AreEqual("test", View.FilterText);
+            var Model = new FilterModelMock();
+            Model.FilterText = "hello";
+            Presenter.SetModel(Model);
+            Assert.AreEqual("hello", View.FilterText);
         }
     }
 }

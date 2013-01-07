@@ -10,17 +10,22 @@ namespace LanExchange.UI
     public partial class FilterView : UserControl, IFilterView
     {
         private readonly FilterPresenter m_Presenter;
-        
+
+        public event EventHandler FilterCountChanged;
+
         public FilterView()
         {
             InitializeComponent();
             m_Presenter = new FilterPresenter(this);
+            Visible = false;
         }
 
         public FilterPresenter GetPresenter()
         {
             return m_Presenter;
         }
+
+        public Control LinkedControl { get; set; }
 
         public void eFilter_TextChanged(object sender, EventArgs e)
         {
@@ -31,18 +36,15 @@ namespace LanExchange.UI
         {
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
             {
-                //ActiveControl = LV;
-                ActiveControl.Focus();
-                if (e.KeyCode == Keys.Up) SendKeys.Send("{UP}");
+                if (Parent == null) return;
+                if (!(Parent is ContainerControl)) return;
+                if (LinkedControl == null || !LinkedControl.Visible) return;
+                (Parent as ContainerControl).ActiveControl = LinkedControl;
+                LinkedControl.Focus();
+                if (!e.Control && e.KeyCode == Keys.Up) SendKeys.Send("{UP}");
                 if (e.KeyCode == Keys.Down) SendKeys.Send("{DOWN}");
                 e.Handled = true;
             }
-            if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
-            {
-                //ActiveControl = LV;
-                e.Handled = true;
-            }
-
         }
 
         private void imgClear_MouseHover(object sender, EventArgs e)
@@ -60,7 +62,7 @@ namespace LanExchange.UI
             FilterText = "";
         }
 
-        public static void SendKeysCorrect(string Keys)
+        public void SendKeysCorrect(string Keys)
         {
             const string Chars = "+^%~{}()[]";
             string NewKeys = "";
@@ -86,18 +88,23 @@ namespace LanExchange.UI
             }
         }
 
-        public void InitFilterText(string value)
-        {
-            eFilter.TextChanged -= eFilter_TextChanged;
-            eFilter.Text = value;
-            //eFilter.SelectionLength = 0;
-            //eFilter.SelectionStart = Text.Length;
-            eFilter.TextChanged += eFilter_TextChanged;
-        }
-
         public void SetIsFound(bool value)
         {
             eFilter.BackColor = value ? Color.White : Color.FromArgb(255, 102, 102); // Firefox Color
+        }
+
+        public void FocusMe()
+        {
+            if (Parent != null && Parent is ContainerControl)
+                (Parent as ContainerControl).ActiveControl = this;
+            ActiveControl = eFilter;
+            eFilter.Focus();
+        }
+
+        public void DoFilterCountChanged()
+        {
+            if (FilterCountChanged != null)
+                FilterCountChanged(this, new EventArgs());
         }
     }
 }

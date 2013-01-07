@@ -15,7 +15,7 @@ namespace LanExchange.Model
         FILES = 2
     }
 
-    public class PanelItemList : ISubscriber, IEquatable<PanelItemList>
+    public class PanelItemList : ISubscriber, IEquatable<PanelItemList>, IFilterModel
     {
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -25,11 +25,9 @@ namespace LanExchange.Model
         private readonly SortedDictionary<string, PanelItem> m_Data;
         // keys for filtering
         private readonly List<string> m_Keys;
-        private String m_Filter = "";
 
         public event EventHandler Changed;
         public event EventHandler SubscriptionChanged;
-        public event EventHandler FilterChanged;
 
         //private ListView m_LV = null;
         //private PanelItemType m_CurrentType = PanelItemType.COMPUTERS;
@@ -157,9 +155,19 @@ namespace LanExchange.Model
             return false;
         }
 
+        /// <summary>
+        /// IFilterModel.FilterText
+        /// </summary>
+        public String FilterText { get; set; }
+
+        /// <summary>
+        /// IFilterModel.AppliFilter()
+        /// </summary>
         public void ApplyFilter()
         {
-            bool bFiltered = IsFiltered;
+            bool bFiltered = !String.IsNullOrEmpty(FilterText);
+            if (!bFiltered)
+                FilterText = String.Empty;
             m_Keys.Clear();
             string Filter1 = FilterText.ToUpper();
             string Filter2 = PuntoSwitcher.Change(FilterText);
@@ -172,11 +180,6 @@ namespace LanExchange.Model
             }
         }
 
-        public bool IsFiltered
-        {
-            get { return !String.IsNullOrEmpty(m_Filter); }
-        }
-
         // Возвращает количество компов в списке
         public int Count
         {
@@ -187,35 +190,6 @@ namespace LanExchange.Model
         public int FilterCount
         {
             get { return m_Keys.Count; }
-        }
-
-        private int FilterLockCount;
-
-        public String FilterText
-        {
-            get { return m_Filter; }
-            set
-            {
-                if (value == null)
-                    m_Filter = String.Empty;
-                else
-                    m_Filter = value;
-                logger.Info("PanelItemList.FilterText={0}", value);
-                if (FilterLockCount == 0)
-                {
-                    FilterLockCount++;
-                    ApplyFilter();
-                    DoFilterChanged();
-                    FilterLockCount--;
-                }
-            }
-        }
-
-        private void DoFilterChanged()
-        {
-            logger.Info("PanelItemList.DoFilterChanged()");
-            if (FilterChanged != null)
-                FilterChanged(this, new EventArgs());
         }
 
         public static List<PanelItem> EnumNetShares(string Server)

@@ -11,6 +11,7 @@ namespace LanExchange.View
     public interface IPanelView
     {
         // properties
+        IFilterView Filter { get; }
         IEnumerable<int> SelectedIndices { get; }
         string FocusedItemText { get; }
         int FocusedItemIndex { get; }
