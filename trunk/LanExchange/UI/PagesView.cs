@@ -5,17 +5,34 @@ using System.Windows.Forms;
 using LanExchange.Presenter;
 using LanExchange.Model;
 using LanExchange.View;
+using NLog;
 
 namespace LanExchange.UI
 {
     public partial class PagesView : UserControl, IPagesView
     {
+        private readonly static Logger logger = LogManager.GetCurrentClassLogger();
         private readonly PagesPresenter m_Presenter;
+        private int m_PopupSelectedIndex = -1;
+
+        /// <summary>
+        /// Mouse right click was pressed.
+        /// </summary>
+        private bool bMouseDown;
+        /// <summary>
+        /// Popup menu was opened.
+        /// </summary>
+        private bool bOpened;
+        /// <summary>
+        /// Menu item in popup menu was clicked.
+        /// </summary>
+        private bool bClicked;
 
         public PagesView()
         {
             InitializeComponent();
             m_Presenter = new PagesPresenter(this);
+            mSelectTab.DropDownDirection = ToolStripDropDownDirection.BelowLeft;
         }
 
         public PagesPresenter GetPresenter()
@@ -65,7 +82,6 @@ namespace LanExchange.UI
             }
         }
 
-
         public string SelectedTabText
         {
             get
@@ -111,6 +127,17 @@ namespace LanExchange.UI
         //    if (Index == -1) return null;
         //    return m_Presenter.GetModel().GetItem(Index);
         //}
+
+        public int GetTabIndexByPoint(Point point)
+        {
+            for (int i = 0; i < Pages.TabPages.Count; i++)
+            {
+                TabPage page = Pages.TabPages[i];
+                if (Pages.GetTabRect(i).Contains(point))
+                    return i;
+            }
+            return -1;
+        }
 
         public TabPage GetTabPageByPoint(Point point)
         {
@@ -194,5 +221,62 @@ namespace LanExchange.UI
                 PV.GetPresenter().UpdateItemsAndStatus();
             }
         }
+
+        private void Pages_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                m_PopupSelectedIndex = GetTabIndexByPoint(e.Location);
+                bMouseDown = true;
+                bOpened = false;
+                bClicked = false;
+            }
+            //logger.Info("MouseDown={0}", bMouseDown);
+        }
+
+        private void popPages_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            bClicked = bOpened;
+            //logger.Info("Clicked={0}", bClicked);
+        }
+
+        private void popPages_Opened(object sender, EventArgs e)
+        {
+            if (bMouseDown && !bOpened)
+            {
+                bOpened = true;
+                bMouseDown = false;
+            }
+            else
+                bOpened = false;
+            //logger.Info("Opened={0}", bOpened);
+        }
+
+        private void popPages_Closed(object sender, ToolStripDropDownClosedEventArgs e)
+        {
+            bOpened = false;
+            //logger.Info("Closed={0}", bClosed);
+        }
+
+        public int PopupSelectedIndex
+        {
+            get
+            {
+                //logger.Info("MouseDown={0}, Opened={1}, Clicked={2}, Closed={3}", bMouseDown, bOpened, bClicked, bClosed);
+                if (bClicked && !bOpened)
+                {
+                    bMouseDown = false;
+                    bOpened = false;
+                    bClicked = false;
+                    if (m_PopupSelectedIndex < 0 || m_PopupSelectedIndex > Pages.TabCount - 1)
+                        return Pages.SelectedIndex;
+                    else
+                        return m_PopupSelectedIndex;
+                }
+                else
+                    return Pages.SelectedIndex;
+            }
+        }
+
     }
 }

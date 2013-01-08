@@ -378,7 +378,7 @@ namespace LanExchange.UI
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Right)
             {
-                Point P = Status.PointToScreen(new Point(e.X, e.Y));
+                Point P = Status.PointToScreen(e.Location);
                 popTray.Show(P);
             }
         }
