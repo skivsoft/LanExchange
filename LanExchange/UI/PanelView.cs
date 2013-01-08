@@ -115,6 +115,8 @@ namespace LanExchange.UI
         public void SetVirtualListSize(int count)
         {
             LV.VirtualListSize = count;
+            if (LV.FocusedItem != null)
+                LV.FocusedItem.Selected = true;
         }
 
         public void RedrawFocusedItem()

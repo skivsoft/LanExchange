@@ -14,13 +14,25 @@ namespace LanExchange.UI
 {
     public partial class MainForm : Form, IMainView
     {
-        // logger object 
+        /// <summary>
+        /// Logger object.
+        /// </summary>
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
-
+        /// <summary>
+        /// Default width of MainForm.
+        /// </summary>
         private const int MAINFORM_DEFAULTWIDTH = 450;
-
+        /// <summary>
+        /// Presenter for MainForm.
+        /// </summary>
         private static MainPresenter m_Presenter;
+        /// <summary>
+        /// ManiForm single instance.
+        /// </summary>
         public static MainForm Instance;
+        /// <summary>
+        /// Last window state for correct show/hide MainForm in IsFormVisible.
+        /// </summary>
         FormWindowState  LastWindowState = FormWindowState.Normal;
 
         public MainForm()
@@ -48,7 +60,7 @@ namespace LanExchange.UI
             Status.ImageList = LanExchangeIcons.SmallImageList;
             // init network scanner
 #if DEBUG
-            ServerListSubscription.Instance.RefreshInterval = 10 * 1000; // refresh every 5 sec in debug mode
+            ServerListSubscription.Instance.RefreshInterval = 5 * 1000; // refresh every 5 sec in debug mode
 #else
             ServerListSubscription.Instance.RefreshInterval = (int)Settings.Instance.RefreshTimeInSec * 1000;
 #endif

@@ -77,35 +77,20 @@ namespace LanExchange.Model
 
         private void RefreshTimer_Tick(object sender, EventArgs e)
         {
-            //m_RefreshTimer.Enabled = false;
-            //if (!m_DomainsWorker.IsBusy)
-            //    m_DomainsWorker.RunWorkerAsync();
-            //if (!m_Workers.IsBusy)
-            //{
-            //    m_Workers.ClearNotBusy();
-            //    // prepare workers to launch
-            //    foreach (var Pair in m_Subjects)
-            //    {
-            //        if (!m_Workers.Exists(Pair.Key))
-            //            m_Workers.Add(Pair.Key, CreateOneWorker());
-            //    }
-            //    if (m_AllSubjects.Count > 0)
-            //    {
-            //        foreach (var domain in m_Domains)
-            //            if (!m_Subjects.ContainsKey(domain.Name))
-            //            {
-            //                if (!m_Workers.Exists(domain))
-            //                    m_Workers.Add(domain, CreateOneWorker());
-            //            }
-            //    }
-            //    // launch!
-            //    m_Workers.RunWorkerAsync();
-            //}
-            //else
-            //{
-            //    logger.Info("Tick: {0} of {1} worker(s) busy, no action", m_Workers.BusyCount, m_Workers.Count);
-            //}
-            //m_RefreshTimer.Enabled = true;
+            logger.Info("RefreshTimer.Tick() executed. Next tick in {0} sec.", (int)(m_RefreshInterval/1000));
+            if (!m_Workers.IsBusy)
+            {
+                // prepare workers to launch
+                foreach (var Pair in m_Subjects)
+                {
+                    if (!m_Workers.Exists(Pair.Key))
+                        m_Workers.Add(Pair.Key, CreateOneWorker());
+                }
+                // launch!
+                m_Workers.RunWorkerAsync();
+            }
+            else
+                logger.Info("Tick: {0} of {1} worker(s) busy, no action", m_Workers.BusyCount, m_Workers.Count);
         }
 
         private BackgroundWorker CreateOneWorker()
@@ -121,35 +106,30 @@ namespace LanExchange.Model
         /// </summary>
         /// <param name="domain"></param>
         /// <returns></returns>
-        private IList<ServerInfo> GetResultNow(string domain, bool cachePref)
+        private IList<ServerInfo> GetResultNow(string domain, bool cachePref, out bool Modified)
         {
             NetApi32.SERVER_INFO_101[] List;
             IList<ServerInfo> Result;
             if (cachePref && m_Results.ContainsKey(domain))
             {
-                logger.Info("GetFromCache(\"{0}\")", domain);
+                logger.Info("GetFromCache(domain:{0})", domain);
                 Result = m_Results[domain];
+                Modified = true;
             }
             else
             {
                 // get server list via OS api
                 if (String.IsNullOrEmpty(domain))
-                {
-                    logger.Info("GetDomainList()");
                     List = NetApi32Utils.GetDomainList();
-                }
                 else
-                {
-                    logger.Info("GetComputerList(\"{0}\")", domain);
                     List = NetApi32Utils.GetComputerList(domain);
-                }
                 // convert array to IList<ServerInfo>
                 Result = new List<ServerInfo>();
                 Array.ForEach(List, item =>
                 {
                     Result.Add(new ServerInfo(item));
                 });
-                SetResult(domain, Result);
+                Modified = SetResult(domain, Result);
             }
             return Result;
         }
@@ -179,15 +159,19 @@ namespace LanExchange.Model
             return bModified;
         }
 
+        /// <summary>
+        /// Browsing network process.
+        /// This method virtual for unit-tests.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected virtual void OneWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             string domain = (string)e.Argument;
-            logger.Info("DoWork({0})", domain);
-
-            var List = GetResultNow(domain, false);
-            logger.Info(String.Format("NetServerEnum: {0}", List.Count));
+            bool Modified;
+            var List = GetResultNow(domain, false, out Modified);
             #if REMOVE_RANDOM_COMPS
-            Random R = new Random();
+            var R = new Random();
             int Count = R.Next(List.Count * 2 / 3);
             for (int i = 0; i < Count; i++)
             {
@@ -196,32 +180,32 @@ namespace LanExchange.Model
             }
             logger.Info(String.Format("Random comps removed: {0}", List.Count));
             #endif
-            var args = new DataChangedEventArgs { Subject = domain, Data = List };
-            e.Result = args;
+            if (Modified)
+                e.Result = domain;
+            else
+                e.Result = null;
         }
 
+        /// <summary>
+        /// Browsing network complete. If serveinfo list is not modified e.Cancel set to False.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected virtual void OneWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            var Result = (DataChangedEventArgs)e.Result;
-            if (e.Cancelled)
-            {
-                logger.Info("Cancelled({0})", Result.Subject);
+            var Subject = (string)e.Result;
+            if (e.Cancelled || Subject == null)
                 return;
-            }
-            logger.Info("Completed({0})", Result.Subject);
-
-            bool bModified = SetResult(Result.Subject, (List<ServerInfo>)Result.Data);
-            if (bModified)
+            logger.Info("Completed(domain:{0})", Subject);
+            // notify all subscribers for current subject
+            lock (m_Subjects)
             {
-                //lock (m_Subjects)
+                if (m_Subjects.ContainsKey(Subject))
                 {
-                    if (m_Subjects.ContainsKey(Result.Subject))
-                    {
-                        var List = m_Subjects[Result.Subject];
-                        logger.Info("Notify {0} subscriber(s) [one subject]", List.Count);
-                        foreach (var Subscriber in List)
-                            Subscriber.DataChanged(this, Result);
-                    }
+                    var List = m_Subjects[Subject];
+                    logger.Info("Notify {0} subscriber(s) with subject \"{1}\"", List.Count, Subject);
+                    foreach (var Subscriber in List)
+                        Subscriber.DataChanged(this, Subject);
                 }
             }
         }
@@ -290,16 +274,10 @@ namespace LanExchange.Model
 
         public bool HasSubscribers()
         {
-            bool Found = false;
             foreach (var Pair in m_Subjects)
-            {
                 if (Pair.Value.Count > 0)
-                {
-                    Found = true;
-                    break;
-                }
-            }
-            return Found;
+                    return true;
+            return false;
         }
 
         private void SubscribersChanged()
@@ -307,6 +285,7 @@ namespace LanExchange.Model
             bool Found = HasSubscribers();
             if (!Found)
             {
+                logger.Info("RefreshTimer stopped.");
                 m_RefreshTimer.Enabled = false;
                 m_InstantUpdate = true;
             }
@@ -318,6 +297,7 @@ namespace LanExchange.Model
                     RefreshTimer_Tick(m_RefreshTimer, new EventArgs());
                     m_RefreshTimer.Enabled = true;
                     m_InstantUpdate = false;
+                    logger.Info("RefreshTimer started. Next tick in {0} sec.", (int)(m_RefreshInterval/1000));
                 }
             }
         }
@@ -346,8 +326,10 @@ namespace LanExchange.Model
             }
             if (Modified)
             {
-                var Result = GetResultNow(subject, true);
-                sender.DataChanged(this, new DataChangedEventArgs() { Subject = subject, Data = Result });
+                bool ResultsModified;
+                var Result = GetResultNow(subject, true, out ResultsModified);
+                sender.DataChanged(this, subject);
+                SubscribersChanged();
             }
         }
 
@@ -366,8 +348,8 @@ namespace LanExchange.Model
             }
             if (Modified)
             {
-                var args = new DataChangedEventArgs() { Subject = null, Data = null };
-                sender.DataChanged(this, args);
+                sender.DataChanged(this, null);
+                SubscribersChanged();
             }
         }
         #endregion
@@ -379,10 +361,15 @@ namespace LanExchange.Model
 
         public IEnumerable GetListBySubject(string subject)
         {
-            if (!m_Results.ContainsKey(subject))
+            if (subject == null)
                 yield break;
-            foreach (var SI in m_Results[subject])
-                yield return SI;
+            lock (m_Results)
+            {
+                if (!m_Results.ContainsKey(subject))
+                    yield break;
+                foreach (var SI in m_Results[subject])
+                    yield return SI;
+            }
         }
     }
 }
