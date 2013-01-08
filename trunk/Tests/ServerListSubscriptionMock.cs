@@ -6,12 +6,14 @@ namespace Tests
 {
     class ServerListSubscriptionMock : ServerListSubscription
     {
-        public DataChangedEventArgs args = new DataChangedEventArgs();
+        public string args;
+        public bool Cancelled;
         public bool DeliverMode;
 
         protected override void OneWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             e.Result = args;
+            e.Cancel = Cancelled;
         }
 
         protected override void OneWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

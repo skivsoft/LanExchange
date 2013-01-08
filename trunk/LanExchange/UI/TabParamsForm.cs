@@ -13,26 +13,16 @@ namespace LanExchange.UI
         public TabParamsForm()
         {
             InitializeComponent();
-            // subscribe this object to domain list (subject = null)
-            ServerListSubscription.Instance.SubscribeToSubject(this, string.Empty);
         }
 
-        private void TabParamsForm_FormClosed(object sender, FormClosedEventArgs e)
+        public void DataChanged(ISubscription sender, string subject)
         {
-            ServerListSubscription.Instance.UnSubscribe(this);
-        }
-
-        public void DataChanged(ISubscription sender, DataChangedEventArgs e)
-        {
-            var DomainList = (IList<ServerInfo>)e.Data;
-            if (DomainList == null)
-                return;
             var Saved = ListViewUtils.GetCheckedList(lvDomains);
             try
             {
                 lvDomains.Items.Clear();
-                foreach (var domain in DomainList)
-                    lvDomains.Items.Add(domain.Name);
+                foreach (ServerInfo SI in sender.GetListBySubject(subject))
+                    lvDomains.Items.Add(SI.Name);
             }
             finally
             {

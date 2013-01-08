@@ -297,7 +297,12 @@ namespace LanExchange.Model
             return Result;
         }
 
-        public void DataChanged(ISubscription sender, DataChangedEventArgs e)
+        /// <summary>
+        /// ISubsctiber.DataChanged implementation.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void DataChanged(ISubscription sender, string subject)
         {
             //lock (m_Data)
             {

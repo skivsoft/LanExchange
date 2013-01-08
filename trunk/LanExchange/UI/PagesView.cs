@@ -176,15 +176,25 @@ namespace LanExchange.UI
         {
             using (TabParamsForm Form = new TabParamsForm())
             {
+                int Index = PopupSelectedIndex;
                 PagesModel M = m_Presenter.GetModel();
-                PanelItemList Info = M.GetItem(M.SelectedIndex);
-                Form.ScanMode = Info.ScanMode;
-                Form.Groups = Info.Groups;
-                if (Form.ShowDialog() == DialogResult.OK)
+                PanelItemList Info = M.GetItem(Index);
+                if (Info != null)
                 {
-                    Info.ScanMode = Form.ScanMode;
-                    Info.Groups = Form.Groups;
-                    Info.UpdateSubsctiption();
+                    // subscribe Form to domain list (subject = "")
+                    ServerListSubscription.Instance.SubscribeToSubject(Form, string.Empty);
+                    TabPage Tab = Pages.TabPages[Index];
+                    Form.Text = String.Format(Form.Text, Tab != null ? Tab.Text : "???");
+                    Form.ScanMode = Info.ScanMode;
+                    Form.Groups = Info.Groups;
+                    if (Form.ShowDialog() == DialogResult.OK)
+                    {
+                        Info.ScanMode = Form.ScanMode;
+                        Info.Groups = Form.Groups;
+                        Info.UpdateSubsctiption();
+                    }
+                    // unsubscribe Form from any subjects
+                    ServerListSubscription.Instance.UnSubscribe(Form);
                 }
             }
         }

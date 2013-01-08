@@ -52,7 +52,7 @@
             this.toolStripSeparator11,
             this.mTabParams});
             this.popPages.Name = "popPages";
-            this.popPages.Size = new System.Drawing.Size(245, 148);
+            this.popPages.Size = new System.Drawing.Size(245, 126);
             this.popPages.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.popPages_Closed);
             this.popPages.Opening += new System.ComponentModel.CancelEventHandler(this.popPages_Opening);
             this.popPages.Opened += new System.EventHandler(this.popPages_Opened);

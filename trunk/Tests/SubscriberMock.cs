@@ -6,17 +6,17 @@ namespace Tests
     class SubscriberMock : ISubscriber
     {
         public bool IsEventFired;
-        public DataChangedEventArgs e = new DataChangedEventArgs();
+        public string Subject;
 
         public SubscriberMock()
         {
 
         }
 
-        public void DataChanged(ISubscription sender, DataChangedEventArgs e)
+        public void DataChanged(ISubscription sender, string subject)
         {
             IsEventFired = true;
-            this.e = e;
+            Subject = subject;
         }
     }
 }

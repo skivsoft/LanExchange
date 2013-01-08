@@ -128,8 +128,7 @@ namespace LanExchange.UI
             this.MinimizeBox = false;
             this.Name = "TabParamsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Настройка вкладки";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TabParamsForm_FormClosed);
+            this.Text = "Настройка вкладки «{0}»";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TabParamsForm_KeyDown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

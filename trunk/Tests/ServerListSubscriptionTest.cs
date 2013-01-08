@@ -67,53 +67,53 @@ namespace Tests
             Assert.IsFalse(Instance.HasSubscribers(), "0 subscriber");
         }
 
-        [TestMethod()]
-        public void DeliveryForOneSubject()
-        {
-            SubscriberMock sub1 = new SubscriberMock();
-            IList<ServerInfo> List = new List<ServerInfo>();
-            NetApi32.SERVER_INFO_101 info = new NetApi32.SERVER_INFO_101();
-            info.sv101_name = "HELLO";
-            List.Add(new ServerInfo(info));
-            Instance.args.Subject = "one";
-            Instance.args.Data = List;
-            Instance.DeliverMode = true;
-            Instance.SubscribeToSubject(sub1, "one");
-            while (Instance.IsBusy)
-            {
-                // wait for delivery
-            }
-            if (sub1.IsEventFired)
-            {
-                Assert.IsInstanceOfType(sub1.e.Data, typeof(IList<ServerInfo>));
-                List = (IList<ServerInfo>)sub1.e.Data;
-                Assert.AreEqual(1, List.Count);
-                Assert.AreEqual("HELLO", List[0].Name);
-            }
-            Instance.DeliverMode = false;
-        }
+        //[TestMethod()]
+        //public void DeliveryForOneSubject()
+        //{
+        //    SubscriberMock sub1 = new SubscriberMock();
+        //    IList<ServerInfo> List = new List<ServerInfo>();
+        //    NetApi32.SERVER_INFO_101 info = new NetApi32.SERVER_INFO_101();
+        //    info.sv101_name = "HELLO";
+        //    List.Add(new ServerInfo(info));
+        //    Instance.args.Subject = "one";
+        //    Instance.args.Data = List;
+        //    Instance.DeliverMode = true;
+        //    Instance.SubscribeToSubject(sub1, "one");
+        //    while (Instance.IsBusy)
+        //    {
+        //        // wait for delivery
+        //    }
+        //    if (sub1.IsEventFired)
+        //    {
+        //        Assert.IsInstanceOfType(sub1.e.Data, typeof(IList<ServerInfo>));
+        //        List = (IList<ServerInfo>)sub1.e.Data;
+        //        Assert.AreEqual(1, List.Count);
+        //        Assert.AreEqual("HELLO", List[0].Name);
+        //    }
+        //    Instance.DeliverMode = false;
+        //}
 
-        [TestMethod()]
-        public void UpdateAfterUnsubscribe()
-        {
-            SubscriberMock sub1 = new SubscriberMock();
-            IList<ServerInfo> List = new List<ServerInfo>();
-            NetApi32.SERVER_INFO_101 info = new NetApi32.SERVER_INFO_101 { sv101_name = "HELLO" };
-            List.Add(new ServerInfo(info));
-            Instance.args.Subject = "one";
-            Instance.args.Data = List;
-            Instance.SubscribeToSubject(sub1, "one");
-            Instance.DeliverMode = true;
-            Instance.UnSubscribe(sub1);
-            Assert.IsTrue(sub1.IsEventFired);
-            if (sub1.IsEventFired)
-            {
-                Assert.IsNull(sub1.e.Data);
-            }
-            Instance.DeliverMode = false;
+        //[TestMethod()]
+        //public void UpdateAfterUnsubscribe()
+        //{
+        //    SubscriberMock sub1 = new SubscriberMock();
+        //    IList<ServerInfo> List = new List<ServerInfo>();
+        //    NetApi32.SERVER_INFO_101 info = new NetApi32.SERVER_INFO_101 { sv101_name = "HELLO" };
+        //    List.Add(new ServerInfo(info));
+        //    Instance.args.Subject = "one";
+        //    Instance.args.Data = List;
+        //    Instance.SubscribeToSubject(sub1, "one");
+        //    Instance.DeliverMode = true;
+        //    Instance.UnSubscribe(sub1);
+        //    Assert.IsTrue(sub1.IsEventFired);
+        //    if (sub1.IsEventFired)
+        //    {
+        //        Assert.IsNull(sub1.e.Data);
+        //    }
+        //    Instance.DeliverMode = false;
 
 
-        }
+        //}
 
     }
 }
