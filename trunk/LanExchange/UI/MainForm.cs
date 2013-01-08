@@ -96,7 +96,9 @@ namespace LanExchange.UI
             // get save pos and size from config
             var Rect = new Rectangle(Settings.Instance.MainFormPos, Settings.Instance.MainFormSize);
             // correct width and height
-            Rectangle WorkingArea = Screen.GetWorkingArea(Rect);
+            ;
+            bool BoundsIsNotSet = Settings.Instance.MainFormSize.Width == 0;
+            Rectangle WorkingArea = BoundsIsNotSet ?  Screen.PrimaryScreen.WorkingArea : Screen.GetWorkingArea(Rect);
             Rect.Width = Math.Min(Math.Max(MAINFORM_DEFAULTWIDTH, Rect.Width), WorkingArea.Width);
             Rect.Height = WorkingArea.Height;
             // shift rect into working area
@@ -107,12 +109,12 @@ namespace LanExchange.UI
             // determination side to snap right or left
             int CenterX = (Rect.Left + Rect.Right) >> 1;
             int WorkingAreaCenterX = (WorkingArea.Left + WorkingArea.Right) >> 1;
-            if (CenterX < WorkingAreaCenterX)
-                // snap to left side
-                Rect.X -= Rect.Left - WorkingArea.Left;
-            else
+            if (BoundsIsNotSet || CenterX >= WorkingAreaCenterX)
                 // snap to right side
                 Rect.X = WorkingArea.Right - Rect.Width;
+            else
+                // snap to left side
+                Rect.X -= Rect.Left - WorkingArea.Left;
             // set mainform bounds
             SetBounds(Rect.X, Rect.Y, Rect.Width, Rect.Height);
             // set mainform title
