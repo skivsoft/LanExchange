@@ -36,7 +36,7 @@ namespace LanExchange
 
     internal static class Program
     {
-        private readonly static Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
         static void LogHeader()
         {
@@ -46,10 +46,14 @@ namespace LanExchange
             logger.Info("OSVersion: [{0}], Processors count: {1}", Environment.OSVersion, Environment.ProcessorCount);
         }
 
-        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        static void Application_ThreadExit(object sender, EventArgs e)
         {
-            Exception ex = (Exception)e.ExceptionObject;
-            logger.Error("Unhandled: {0}{1}{2}", ex.Message, Environment.NewLine, ex.StackTrace);
+            logger.Info("ThreadExit");
+        }
+
+        static void Application_ApplicationExit(object sender, EventArgs e)
+        {
+            logger.Info("ApplicationExit");
         }
 
         [STAThread]
@@ -57,7 +61,8 @@ namespace LanExchange
         {
             SingleInstanceCheck.Check();
             LogHeader();
-            Application.ApplicationExit += new EventHandler(MainForm.OnApplicationExit);
+            Application.ThreadExit += Application_ThreadExit;
+            Application.ApplicationExit += Application_ApplicationExit;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false); // must be called before first form created
             Application.Run(new MainForm());

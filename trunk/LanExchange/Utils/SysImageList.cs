@@ -261,17 +261,17 @@ namespace vbAccelerator.Components.ImageList
 		[StructLayout(LayoutKind.Sequential)]
 			private struct RECT
 		{
-			int left;
-			int top;
-			int right;
-			int bottom;
+            readonly int left;
+            readonly int top;
+            readonly int right;
+            readonly int bottom;
 		}
 
 		[StructLayout(LayoutKind.Sequential)]
 			private struct POINT
 		{
-			int x;
-			int y;
+            readonly int x;
+            readonly int y;
 		}
 
 		[StructLayout(LayoutKind.Sequential)]
@@ -483,9 +483,9 @@ namespace vbAccelerator.Components.ImageList
 
 		#region Member Variables
 		private IntPtr hIml = IntPtr.Zero;
-		private IImageList iImageList = null;
+        private IImageList iImageList;
 		private SysImageListSize size = SysImageListSize.smallIcons;
-		private bool disposed = false;
+        private bool disposed;
 		#endregion
 
 		#region Implementation
@@ -498,7 +498,7 @@ namespace vbAccelerator.Components.ImageList
 		{
 			get
 			{
-				return this.hIml;				
+				return hIml;				
 			}
 		}
 		/// <summary>
@@ -554,7 +554,7 @@ namespace vbAccelerator.Components.ImageList
 		/// <returns>The specified icon</returns>
 		public Icon Icon(int index)
 		{
-			Icon icon = null;
+            Icon icon;
 
 			IntPtr hIcon = IntPtr.Zero;
 			if (iImageList == null)
@@ -573,10 +573,10 @@ namespace vbAccelerator.Components.ImageList
 					ref hIcon);
 			}
 
-			if (hIcon != IntPtr.Zero)
-			{
-				icon = System.Drawing.Icon.FromHandle(hIcon);
-			}				
+            if (hIcon != IntPtr.Zero)
+                icon = System.Drawing.Icon.FromHandle(hIcon);
+            else
+                icon = null;				
 			return icon;
 		}
 
@@ -850,7 +850,7 @@ namespace vbAccelerator.Components.ImageList
 		/// or above
 		/// </summary>
 		/// <returns>True if system is running XP or above, False otherwise</returns>
-		private bool isXpOrAbove()
+		private static bool isXpOrAbove()
 		{
 			bool ret = false;
 			if (Environment.OSVersion.Version.Major > 5)
@@ -1015,11 +1015,11 @@ namespace vbAccelerator.Components.ImageList
 			bool forStateImages
 			)
 		{
-			IntPtr wParam = (IntPtr)LVSIL_NORMAL;
-			if (sysImageList.ImageListSize == SysImageListSize.smallIcons)
-			{
-				wParam = (IntPtr)LVSIL_SMALL;
-			}
+            IntPtr wParam;
+            if (sysImageList.ImageListSize == SysImageListSize.smallIcons)
+                wParam = (IntPtr)LVSIL_SMALL;
+            else
+                wParam = (IntPtr)LVSIL_NORMAL;
 			if (forStateImages)
 			{
 				wParam = (IntPtr)LVSIL_STATE;
@@ -1043,11 +1043,11 @@ namespace vbAccelerator.Components.ImageList
 			bool forStateImages
 			)
 		{
-			IntPtr wParam = (IntPtr)TVSIL_NORMAL;
-			if (forStateImages)
-			{
-				wParam = (IntPtr)TVSIL_STATE;
-			}
+            IntPtr wParam;
+            if (forStateImages)
+                wParam = (IntPtr)TVSIL_STATE;
+            else
+                wParam = (IntPtr)TVSIL_NORMAL;
 			SendMessage(
 				treeView.Handle,
 				TVM_SETIMAGELIST,

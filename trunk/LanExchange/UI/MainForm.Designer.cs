@@ -71,44 +71,44 @@
             this.mAbout,
             this.mExit});
             this.popTray.Name = "popTray";
-            this.popTray.Size = new System.Drawing.Size(151, 104);
+            this.popTray.Size = new System.Drawing.Size(159, 104);
             this.popTray.Opening += new System.ComponentModel.CancelEventHandler(this.popTray_Opening);
             // 
             // mOpen
             // 
             this.mOpen.Name = "mOpen";
-            this.mOpen.Size = new System.Drawing.Size(150, 22);
+            this.mOpen.Size = new System.Drawing.Size(158, 22);
             this.mOpen.Text = "Открыть";
             this.mOpen.Click += new System.EventHandler(this.mOpen_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(147, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(155, 6);
             // 
             // mSettings
             // 
             this.mSettings.Name = "mSettings";
-            this.mSettings.Size = new System.Drawing.Size(150, 22);
+            this.mSettings.Size = new System.Drawing.Size(158, 22);
             this.mSettings.Text = "Настройки...";
             this.mSettings.Click += new System.EventHandler(this.mSettings_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(147, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(155, 6);
             // 
             // mAbout
             // 
             this.mAbout.Name = "mAbout";
-            this.mAbout.Size = new System.Drawing.Size(150, 22);
+            this.mAbout.Size = new System.Drawing.Size(158, 22);
             this.mAbout.Text = "О программе...";
             this.mAbout.Click += new System.EventHandler(this.mAbout_Click);
             // 
             // mExit
             // 
             this.mExit.Name = "mExit";
-            this.mExit.Size = new System.Drawing.Size(150, 22);
+            this.mExit.Size = new System.Drawing.Size(158, 22);
             this.mExit.Text = "Выход";
             this.mExit.Click += new System.EventHandler(this.mExit_Click);
             // 
@@ -223,6 +223,7 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.Resize += new System.EventHandler(this.MainForm_Resize);

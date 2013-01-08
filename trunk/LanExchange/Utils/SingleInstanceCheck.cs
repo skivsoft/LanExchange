@@ -4,9 +4,6 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Threading;
 using LanExchange.Windows;
-using System.ComponentModel;
-using System.Collections;
-using System.Text;
 
 namespace LanExchange.Utils
 {

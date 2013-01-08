@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net;
-using LanExchange.Utils;
 
 namespace LanExchange.Model
 {
@@ -62,11 +61,7 @@ namespace LanExchange.Model
         {
             if (IsLogged)
                 return LanExchangeIcons.imgCompGreen;
-            else
-                if (IsPingable)
-                    return LanExchangeIcons.imgCompDefault;
-                else
-                    return LanExchangeIcons.imgCompDisabled;
+            return IsPingable ? LanExchangeIcons.imgCompDefault : LanExchangeIcons.imgCompDisabled;
         }
 
         protected override string GetToolTipText()

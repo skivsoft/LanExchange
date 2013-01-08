@@ -32,7 +32,7 @@ namespace LanExchange.UI
             m_Presenter = new AboutPresenter(this);
             m_Presenter.LoadFromModel();
         }
-
+       
         public void HideMessage()
         {
             if (MsgControl != null)

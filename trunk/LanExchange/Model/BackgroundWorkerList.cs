@@ -23,12 +23,10 @@ namespace LanExchange.Model
 
         public bool Exists(object argument)
         {
-            bool Found;
             //lock (m_Workers)
             {
-                Found = m_Workers.ContainsKey(argument);
+                return m_Workers.ContainsKey(argument);
             }
-            return Found;
         }
         
         public void Add(object argument, BackgroundWorker worker)

@@ -56,15 +56,9 @@ namespace LanExchange.Model
         {
             int Result;
             if (String.IsNullOrEmpty(Name))
-                if (String.IsNullOrEmpty(p2.Name))
-                    Result = 0;
-                else
-                    Result = -1;
+                Result = String.IsNullOrEmpty(p2.Name) ? 0 : -1;
             else
-                if (String.IsNullOrEmpty(p2.Name))
-                    Result = +1;
-                else
-                    Result = Name.CompareTo(p2.Name);
+                Result = String.IsNullOrEmpty(p2.Name) ? +1 : Name.CompareTo(p2.Name);
             return Result;
         }
     }

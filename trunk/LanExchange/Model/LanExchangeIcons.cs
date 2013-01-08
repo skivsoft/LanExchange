@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
 using vbAccelerator.Components.ImageList;
 using System.Drawing;
@@ -24,9 +22,9 @@ namespace LanExchange.Model
         public const int imgCompGreen = 0;
 
         private static LanExchangeIcons m_Instance;
-        private ImageList m_SmallImageList;
-        private ImageList m_LargeImageList;
-        private ImageList m_ExtraLargeImageList;
+        private readonly ImageList m_SmallImageList;
+        private readonly ImageList m_LargeImageList;
+        private readonly ImageList m_ExtraLargeImageList;
 
         private LanExchangeIcons()
         {
@@ -77,7 +75,7 @@ namespace LanExchange.Model
             ExtraLarge.Dispose();
         }
 
-        private Bitmap MadeDisabledBitmap(Bitmap bmp)
+        private static Bitmap MadeDisabledBitmap(Bitmap bmp)
         {
             Bitmap Result = new Bitmap(bmp.Width, bmp.Height);
             using (Graphics GR = Graphics.FromImage(Result))

@@ -2,6 +2,7 @@
 using System.IO;
 using LanExchange.Utils;
 using System.Security.Principal;
+using System.Drawing;
 
 namespace LanExchange.Model
 {
@@ -19,6 +20,8 @@ namespace LanExchange.Model
         public bool RunMinimized { get; set; }
         public bool AdvancedMode { get; set; }
         public decimal RefreshTimeInSec { get; set; }
+        public Point MainFormPos { get; set; }
+        public Size MainFormSize { get; set; }
 
         public string UpdateURL { get; set; }
         public string WebSiteURL { get; set; }
@@ -46,8 +49,7 @@ namespace LanExchange.Model
         public static void LoadSettings()
         {
             try
-            {
-                string FileName = GetConfigFileName();
+            {string FileName = GetConfigFileName();
                 if (File.Exists(FileName))
                 {
                     var temp = (Settings)SerializeUtils.DeserializeObjectFromXMLFile(FileName, typeof(Settings));
@@ -58,7 +60,7 @@ namespace LanExchange.Model
             catch { }
         }
 
-        public static void SaveSettings()
+        public static void StoreSettings()
         {
             SerializeUtils.SerializeObjectToXMLFile(GetConfigFileName(), Instance);
         }
