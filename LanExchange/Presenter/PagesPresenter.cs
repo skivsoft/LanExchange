@@ -45,7 +45,7 @@ namespace LanExchange.Presenter
 
         public void CloseTab()
         {
-            int Index = m_View.SelectedIndex;
+            int Index = m_View.PopupSelectedIndex;
             if (CanCloseTab(Index))
             {
                 m_Model.DelTab(Index);
@@ -56,7 +56,7 @@ namespace LanExchange.Presenter
         // TODO: Need check duplicates on rename tab
         public void RenameTab()
         {
-            int Index = m_View.SelectedIndex;
+            int Index = m_View.PopupSelectedIndex;
             PanelItemList ItemList = GetModel().GetItem(Index);
             if (ItemList == null) return;
             string NewTabName = InputBoxForm.Ask("Переименование", "Введите имя", ItemList.TabName, false);

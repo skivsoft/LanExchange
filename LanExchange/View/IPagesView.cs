@@ -11,6 +11,7 @@ namespace LanExchange.View
         int SelectedIndex { get; set; }
         string SelectedTabText { get; set; }
         int TabPagesCount { get; }
+        int PopupSelectedIndex { get; }
         // methods
         void NewTabFromItemList(PanelItemList Info);
         void RemoveTabAt(int Index);
