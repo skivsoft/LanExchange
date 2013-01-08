@@ -16,12 +16,11 @@ namespace LanExchange.UI
     {
         // logger object 
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
-        // controller for Pages (MVC-style)
+
+        private const int MAINFORM_DEFAULTWIDTH = 450;
 
         private static MainPresenter m_Presenter;
-        
         public static MainForm Instance;
-        
         FormWindowState  LastWindowState = FormWindowState.Normal;
 
         public MainForm()
@@ -57,14 +56,12 @@ namespace LanExchange.UI
             AdminMode = Settings.Instance.AdvancedMode;
         }
 
-        /// <summary>
-        /// Store settings to cfg-files when we exiting program.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public static void OnApplicationExit(object sender, EventArgs e)
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Settings.SaveSettings();
+            logger.Info("MainForm is closed. Saving settings.");
+            Settings.Instance.MainFormPos = Location;
+            Settings.Instance.MainFormSize = Size;
+            Settings.StoreSettings();
             m_Presenter.Pages.GetModel().StoreSettings();
         }
 
@@ -84,11 +81,27 @@ namespace LanExchange.UI
 
         private void SetupForm()
         {
-            // form pos at right
-            var Rect = new Rectangle();
-            Rect.Size = new Size(450, Screen.PrimaryScreen.WorkingArea.Height);
-            Rect.Location = new Point(Screen.PrimaryScreen.WorkingArea.Left + (Screen.PrimaryScreen.WorkingArea.Width - Rect.Width),
-                                      Screen.PrimaryScreen.WorkingArea.Top + (Screen.PrimaryScreen.WorkingArea.Height - Rect.Height));
+            // get save pos and size from config
+            var Rect = new Rectangle(Settings.Instance.MainFormPos, Settings.Instance.MainFormSize);
+            // correct width and height
+            Rectangle WorkingArea = Screen.GetWorkingArea(Rect);
+            Rect.Width = Math.Min(Math.Max(MAINFORM_DEFAULTWIDTH, Rect.Width), WorkingArea.Width);
+            Rect.Height = WorkingArea.Height;
+            // shift rect into working area
+            if (Rect.Left < WorkingArea.Left) Rect.X = WorkingArea.Left;
+            if (Rect.Top < WorkingArea.Top) Rect.Y = WorkingArea.Top;
+            if (Rect.Right > WorkingArea.Right) Rect.X -= Rect.Right - WorkingArea.Right;
+            if (Rect.Bottom > WorkingArea.Bottom) Rect.Y -= Rect.Bottom - WorkingArea.Bottom;
+            // determination side to snap right or left
+            int CenterX = (Rect.Left + Rect.Right) >> 1;
+            int WorkingAreaCenterX = (WorkingArea.Left + WorkingArea.Right) >> 1;
+            if (CenterX < WorkingAreaCenterX)
+                // snap to left side
+                Rect.X -= Rect.Left - WorkingArea.Left;
+            else
+                // snap to right side
+                Rect.X = WorkingArea.Right - Rect.Width;
+            // set mainform bounds
             SetBounds(Rect.X, Rect.Y, Rect.Width, Rect.Height);
             // set mainform title
             var Ver = Assembly.GetExecutingAssembly().GetName().Version;
@@ -211,6 +224,12 @@ namespace LanExchange.UI
                 e.Handled = true;
             }
 #if DEBUG
+            // Ctrl+R - restart application
+            if (e.Control && e.KeyCode == Keys.R)
+            {
+                Restart();
+                e.Handled = true;
+            }
             // Ctrl+Alt+S - show subscibers in debug mode
             if (e.Control && e.Alt && e.KeyCode == Keys.S)
             {
@@ -220,7 +239,7 @@ namespace LanExchange.UI
 #endif
         }
 
-        public string GetMD5FromString(string str)
+        public static string GetMD5FromString(string str)
         {
             MD5 md5Hasher = MD5.Create();
             byte[] data = md5Hasher.ComputeHash(System.Text.ASCIIEncoding.ASCII.GetBytes(str));
@@ -323,12 +342,6 @@ namespace LanExchange.UI
                 e.Effect = DragDropEffects.Copy;
         }
 
-        void SetControlsVisible(bool bVisible)
-        {
-            foreach (Control control in Controls)
-                control.Visible = bVisible;
-        }
-
         private void panel1_DragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
@@ -379,19 +392,27 @@ namespace LanExchange.UI
         {
             // get focused item from current PanelView
             PanelView PV = sender as PanelView;
-            if (PV == null) return;
-            PanelItem PItem = PV.GetPresenter().GetFocusedPanelItem(false, false);
-            if (PItem == null)
-                return;
+            ComputerPanelItem Comp = null;
+            if (PV != null) 
+            {
+                PanelItem PItem = PV.GetPresenter().GetFocusedPanelItem(false, false);
+                if (PItem != null)
+                    Comp = PItem as ComputerPanelItem;
+            }
             // is focused item a computer?
-            ComputerPanelItem Comp = PItem as ComputerPanelItem;
             if (Comp == null)
+            {
+                pInfo.Picture.Image = LanExchangeIcons.ExtraLargeImageList.Images[LanExchangeIcons.imgCompDefault];
+                pInfo.InfoComp = "";
+                pInfo.InfoDesc = "";
+                pInfo.InfoOS = "";
                 return;
+            }
             // update info panel at top of the form
             pInfo.InfoComp = Comp.Name;
             pInfo.InfoDesc = Comp.Comment;
             pInfo.InfoOS = Comp.SI.Version();
-            pInfo.Picture.Image = LanExchangeIcons.ExtraLargeImageList.Images[PItem.ImageIndex];
+            pInfo.Picture.Image = LanExchangeIcons.ExtraLargeImageList.Images[Comp.ImageIndex];
             switch (Comp.ImageIndex)
             {
                 case LanExchangeIcons.imgCompDefault:
