@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using NLog;
 using LanExchange.Utils;
 using System.IO;
+using System.Collections;
 
 namespace LanExchange.Model
 {
@@ -48,7 +49,7 @@ namespace LanExchange.Model
             LoadResultFromCache();
             // timer
             m_RefreshTimer = new Timer();
-            m_RefreshTimer.Tick += new EventHandler(RefreshTimer_Tick);
+            m_RefreshTimer.Tick += RefreshTimer_Tick;
             m_RefreshTimer.Enabled = false;
             // worker list for scanning network
             m_Workers = new BackgroundWorkerList();
@@ -110,8 +111,8 @@ namespace LanExchange.Model
         private BackgroundWorker CreateOneWorker()
         {
             var Result = new BackgroundWorker();
-            Result.DoWork += new DoWorkEventHandler(OneWorker_DoWork);
-            Result.RunWorkerCompleted += new RunWorkerCompletedEventHandler(OneWorker_RunWorkerCompleted);
+            Result.DoWork += OneWorker_DoWork;
+            Result.RunWorkerCompleted += OneWorker_RunWorkerCompleted;
             return Result;
         }
 
@@ -242,7 +243,7 @@ namespace LanExchange.Model
             return bModified;
         }
 
-        private string GetCacheFileName()
+        private static string GetCacheFileName()
         {
             return Path.ChangeExtension(Settings.GetExecutableFileName(), ".cache");
         }
@@ -376,7 +377,7 @@ namespace LanExchange.Model
         }
 
 
-        public System.Collections.IEnumerable GetListBySubject(string subject)
+        public IEnumerable GetListBySubject(string subject)
         {
             if (!m_Results.ContainsKey(subject))
                 yield break;

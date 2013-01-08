@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using GongSolutions.Shell.Interop;
-using System.Drawing;
 using System.Runtime.InteropServices;
 
 namespace LanExchange.Utils
@@ -16,8 +13,7 @@ namespace LanExchange.Utils
         public static int GetIconIndex(CSIDL csidl)
         {
             IntPtr ppidl;
-            HResult res;
-            res = Shell32.SHGetSpecialFolderLocation(IntPtr.Zero, csidl, out ppidl);
+            HResult res = Shell32.SHGetSpecialFolderLocation(IntPtr.Zero, csidl, out ppidl);
             SHFILEINFO shfi = new SHFILEINFO();
             uint shfiSize = (uint)Marshal.SizeOf(shfi.GetType());
             IntPtr retVal = Shell32.SHGetFileInfo(

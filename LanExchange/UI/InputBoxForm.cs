@@ -36,20 +36,19 @@ namespace LanExchange.UI
 
         public static string Ask(string caption, string prompt, string defText, bool allow_empty)
         {
-            var inputBox = new InputBoxForm();
-
-            if (!String.IsNullOrEmpty(caption))
-                inputBox.Text = caption;
-            else
-                inputBox.Text = Application.ProductName;
-
-            inputBox.Prepare(prompt, ErrorMsgOnEmpty, defText, allow_empty);
-
-            DialogResult res = inputBox.ShowDialog();
-            if (res != DialogResult.OK)
-                return null;
-            else
-                return inputBox.txtInputText.Text.Trim();
+            using (var inputBox = new InputBoxForm())
+            {
+                if (!String.IsNullOrEmpty(caption))
+                    inputBox.Text = caption;
+                else
+                    inputBox.Text = Application.ProductName;
+                inputBox.Prepare(prompt, ErrorMsgOnEmpty, defText, allow_empty);
+                DialogResult res = inputBox.ShowDialog();
+                if (res != DialogResult.OK)
+                    return null;
+                else
+                    return inputBox.txtInputText.Text.Trim();
+            }
         }
 
    }

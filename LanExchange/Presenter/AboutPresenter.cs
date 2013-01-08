@@ -51,11 +51,6 @@ namespace LanExchange.Presenter
             m_View.EmailText += Settings.Instance.GetEmailAddress();
         }
 
-        public void SaveToModel()
-        {
-            // empty
-        }
-
         public void StartUpdate()
         {
             m_View.ShowProgressBar();

@@ -16,7 +16,7 @@ namespace LanExchange.UI
         private readonly WMIPresenter m_Presenter;
         private string m_CurrentWMIClass;
         private readonly List<string> m_Classes;
-        private ComputerPanelItem m_Comp;
+        private readonly ComputerPanelItem m_Comp;
         private ManagementObject wmiObject;
 
         public WMIForm(ComputerPanelItem comp)

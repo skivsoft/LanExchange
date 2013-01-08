@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.View;
-using LanExchange.Properties;
 using LanExchange.Presenter;
 using NLog;
 using LanExchange.Utils;
@@ -383,8 +382,7 @@ namespace LanExchange.UI
 
         private static void SetEnabledAndVisible(ToolStripItem[] Items, bool Value)
         {
-            foreach (ToolStripItem Item in Items)
-                SetEnabledAndVisible(Item, Value);
+            Array.ForEach(Items, Item => SetEnabledAndVisible(Item, Value));
         }
 
         private void mLargeIcons_Click(object sender, EventArgs e)
