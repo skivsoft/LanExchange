@@ -33,9 +33,9 @@
             this.lStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.pLeft = new System.Windows.Forms.Panel();
             this.lvInstances = new System.Windows.Forms.ListView();
-            this.menuCommands = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.PropGrid = new System.Windows.Forms.PropertyGrid();
+            this.menuCommands = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.pTop = new System.Windows.Forms.Panel();
             this.menuClasses = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.lDescription = new System.Windows.Forms.Label();
@@ -88,11 +88,6 @@
             this.lvInstances.View = System.Windows.Forms.View.Details;
             this.lvInstances.ItemActivate += new System.EventHandler(this.lvInstances_ItemActivate);
             // 
-            // menuCommands
-            // 
-            this.menuCommands.Name = "menuCommands";
-            this.menuCommands.Size = new System.Drawing.Size(61, 4);
-            // 
             // splitter1
             // 
             this.splitter1.Location = new System.Drawing.Point(300, 0);
@@ -111,6 +106,11 @@
             this.PropGrid.Size = new System.Drawing.Size(300, 451);
             this.PropGrid.TabIndex = 5;
             this.PropGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.PropGrid_PropertyValueChanged);
+            // 
+            // menuCommands
+            // 
+            this.menuCommands.Name = "menuCommands";
+            this.menuCommands.Size = new System.Drawing.Size(61, 4);
             // 
             // pTop
             // 

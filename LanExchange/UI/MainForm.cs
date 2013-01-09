@@ -33,7 +33,7 @@ namespace LanExchange.UI
         /// <summary>
         /// Last window state for correct show/hide MainForm in IsFormVisible.
         /// </summary>
-        FormWindowState  LastWindowState = FormWindowState.Normal;
+        FormWindowState  LastWindowState;
 
         public MainForm()
         {
@@ -59,11 +59,7 @@ namespace LanExchange.UI
             Pages.Pages.ImageList = LanExchangeIcons.SmallImageList;
             Status.ImageList = LanExchangeIcons.SmallImageList;
             // init network scanner
-#if DEBUG
-            ServerListSubscription.Instance.RefreshInterval = 5 * 1000; // refresh every 5 sec in debug mode
-#else
             ServerListSubscription.Instance.RefreshInterval = (int)Settings.Instance.RefreshTimeInSec * 1000;
-#endif
             // set admin mode
             AdminMode = Settings.Instance.AdvancedMode;
         }
@@ -75,20 +71,6 @@ namespace LanExchange.UI
             Settings.Instance.MainFormSize = Size;
             Settings.StoreSettings();
             m_Presenter.Pages.GetModel().StoreSettings();
-        }
-
-        /// <summary>
-        /// Setup form according to RunMinimized flag.
-        /// This method must be called from Form_Load() only.
-        /// </summary>
-        private void SetupRunMinimized()
-        {
-            if (Settings.Instance.RunMinimized)
-            {
-                WindowState = FormWindowState.Minimized;
-                ShowInTaskbar = false;
-                Visible = false;
-            }
         }
 
         private void SetupForm()
@@ -175,34 +157,19 @@ namespace LanExchange.UI
             set
             {
                 bool bMinimized = WindowState == FormWindowState.Minimized;
+                Visible = value;
                 if (bMinimized)
                 {
-                    ShowInTaskbar = true;
+                    //TODO uncomment or del
+                    //ShowInTaskbar = true;
                     WindowState = LastWindowState;
                 }
-                Visible = value;
                 if (Visible)
                 {
                     Activate();
                     Pages.FocusPanelView();
                 }
             }
-        }
-
-        private void popTray_Opening(object sender, CancelEventArgs e)
-        {
-            mOpen.Text = IsFormVisible ? "Скрыть" : "Открыть";
-        }
-
-        private void mOpen_Click(object sender, EventArgs e)
-        {
-            IsFormVisible = !IsFormVisible;
-        }
-
-        private void TrayIcon_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-                IsFormVisible = !IsFormVisible;
         }
 
 #if DEBUG
@@ -378,11 +345,6 @@ namespace LanExchange.UI
             }
         }
 
-        public void mExit_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
         public void Restart()
         {
             Application.Restart();
@@ -446,15 +408,42 @@ namespace LanExchange.UI
             }
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            SetupRunMinimized();
-        }
-
-
         public void ShowStatusText(string format, params object[] args)
         {
             lItemsCount.Text = String.Format(format, args);
+        }
+
+        private void TrayIcon_MouseUp(object sender, MouseEventArgs e)
+        {
+            //logger.Info("TrayIcon_MouseUp");
+            if (e.Button == MouseButtons.Left)
+                //Visible = !Visible;
+                IsFormVisible = !IsFormVisible;
+        }
+
+        private void popTray_Opening(object sender, CancelEventArgs e)
+        {
+            mOpen.Text = IsFormVisible ? "Скрыть" : "Открыть";
+        }
+
+        private void mOpen_Click(object sender, EventArgs e)
+        {
+            IsFormVisible = !IsFormVisible;
+        }
+
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            if (Settings.Instance.RunMinimized)
+            {
+                logger.Info("Hiding MainForm cause RunMinimized is ON.");
+                WindowState = FormWindowState.Minimized;
+                Visible = false;
+            }
+        }
+
+        public void mExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
