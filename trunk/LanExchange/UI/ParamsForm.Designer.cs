@@ -176,6 +176,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ParamsForm";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Настройки программы";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ParamsForm_KeyDown);

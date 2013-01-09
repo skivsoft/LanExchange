@@ -93,6 +93,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "InputBoxForm";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "InputBoxForm";
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();

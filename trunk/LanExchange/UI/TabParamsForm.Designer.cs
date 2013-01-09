@@ -127,6 +127,7 @@ namespace LanExchange.UI
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TabParamsForm";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Настройка вкладки «{0}»";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TabParamsForm_KeyDown);

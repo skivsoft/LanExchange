@@ -30,7 +30,7 @@ namespace LanExchange.UI
             m_Classes = new List<string>();
             if (comp != null)
             {
-                Text += String.Format(" — {0}", comp.Name);
+                Text = String.Format("{0} — {1}", comp.Name, comp.Comment);
                 m_Comp = comp;
             }
         }

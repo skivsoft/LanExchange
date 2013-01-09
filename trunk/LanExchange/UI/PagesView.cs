@@ -183,6 +183,8 @@ namespace LanExchange.UI
                 {
                     // subscribe Form to domain list (subject = "")
                     ServerListSubscription.Instance.SubscribeToSubject(Form, string.Empty);
+                    // unsubscribe Form from any subjects
+                    ServerListSubscription.Instance.UnSubscribe(Form);
                     TabPage Tab = Pages.TabPages[Index];
                     Form.Text = String.Format(Form.Text, Tab != null ? Tab.Text : "???");
                     Form.ScanMode = Info.ScanMode;
@@ -193,8 +195,6 @@ namespace LanExchange.UI
                         Info.Groups = Form.Groups;
                         Info.UpdateSubsctiption();
                     }
-                    // unsubscribe Form from any subjects
-                    ServerListSubscription.Instance.UnSubscribe(Form);
                 }
             }
         }
