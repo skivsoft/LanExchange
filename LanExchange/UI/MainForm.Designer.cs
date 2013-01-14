@@ -223,11 +223,9 @@
             this.KeyPreview = true;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
-            this.Shown += new System.EventHandler(this.MainForm_Shown);
+            this.Activated += new System.EventHandler(this.MainForm_Activated);
+            this.ResizeEnd += new System.EventHandler(this.MainForm_ResizeEnd);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
-            this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.popTray.ResumeLayout(false);
             this.Status.ResumeLayout(false);
             this.Status.PerformLayout();

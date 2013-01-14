@@ -74,7 +74,7 @@ namespace Tests
         [TestMethod()]
         public void TabModelConstructorTest()
         {
-            PagesModel Model = new PagesModel("TheModel");
+            PagesModel Model = new PagesModel();
             Assert.AreEqual(0, Model.Count);
         }
 
@@ -84,7 +84,7 @@ namespace Tests
         [TestMethod()]
         public void DelTabTest()
         {
-            PagesModel Model = new PagesModel("TheModel");
+            PagesModel Model = new PagesModel();
             Model.AddTab(new PanelItemList("MyTab"));
             Model.DelTab(0);
             Assert.AreEqual(0, Model.Count, "Count != 0");
@@ -96,7 +96,7 @@ namespace Tests
         [TestMethod()]
         public void AddTabTest()
         {
-            PagesModel Model = new PagesModel("TheModel");
+            PagesModel Model = new PagesModel();
             Model.AddTab(new PanelItemList("MyTab"));
             Assert.AreEqual("MyTab", Model.GetTabName(0));
             Assert.AreEqual(null, Model.GetTabName(-1));
@@ -109,7 +109,7 @@ namespace Tests
         [TestMethod()]
         public void RenameTabTest()
         {
-            PagesModel Model = new PagesModel("TheModel");
+            PagesModel Model = new PagesModel();
             Model.AddTab(new PanelItemList("MyTab"));
             Model.RenameTab(0, "YourTab");
             Assert.AreEqual("YourTab", Model.GetTabName(0));

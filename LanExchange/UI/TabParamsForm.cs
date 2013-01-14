@@ -13,10 +13,14 @@ namespace LanExchange.UI
         public TabParamsForm()
         {
             InitializeComponent();
+            // subscribe Form to domain list (subject = "")
+            ServerListSubscription.Instance.SubscribeToSubject(this, string.Empty);
         }
 
         public void DataChanged(ISubscription sender, string subject)
         {
+            // do not update list after unsubscribe
+            if (subject == null) return;
             var Saved = ListViewUtils.GetCheckedList(lvDomains);
             try
             {
@@ -97,6 +101,12 @@ namespace LanExchange.UI
         private void rbDontScan_CheckedChanged(object sender, EventArgs e)
         {
             UpdateBackColor();
+        }
+
+        private void TabParamsForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            // unsubscribe Form from any subjects
+            ServerListSubscription.Instance.UnSubscribe(this);
         }
     }
 }

@@ -203,9 +203,12 @@ namespace LanExchange.Model
                 if (m_Subjects.ContainsKey(Subject))
                 {
                     var List = m_Subjects[Subject];
-                    logger.Info("Notify {0} subscriber(s) with subject \"{1}\"", List.Count, Subject);
-                    foreach (var Subscriber in List)
-                        Subscriber.DataChanged(this, Subject);
+                    if (List.Count > 0)
+                    {
+                        logger.Info("Notify {0} subscriber(s) with subject \"{1}\"", List.Count, Subject);
+                        foreach (var Subscriber in List)
+                            Subscriber.DataChanged(this, Subject);
+                    }
                 }
             }
         }

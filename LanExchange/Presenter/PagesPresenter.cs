@@ -20,7 +20,7 @@ namespace LanExchange.Presenter
         public PagesPresenter(IPagesView pages)
         {
             m_View = pages;
-            m_Model = new PagesModel(m_View.Name);
+            m_Model = new PagesModel();
             m_Model.AfterAppendTab += Model_AfterAppendTab;
             m_Model.AfterRemove += Model_AfterRemove;
             m_Model.AfterRename += Model_AfterRename;
@@ -39,7 +39,7 @@ namespace LanExchange.Presenter
             if (!String.IsNullOrEmpty(NewTabName))
             {
                 m_Model.AddTab(new PanelItemList(NewTabName));
-                m_Model.StoreSettings();
+                m_Model.SaveSettings();
             }
         }
 
@@ -49,7 +49,7 @@ namespace LanExchange.Presenter
             if (CanCloseTab(Index))
             {
                 m_Model.DelTab(Index);
-                m_Model.StoreSettings();
+                m_Model.SaveSettings();
             }
         }
 
@@ -63,7 +63,7 @@ namespace LanExchange.Presenter
             if (NewTabName != null)
             {
                 m_Model.RenameTab(Index, NewTabName);
-                m_Model.StoreSettings();
+                m_Model.SaveSettings();
             }
         }
 
@@ -75,7 +75,7 @@ namespace LanExchange.Presenter
                 if (bHideActive && (!CanCloseTab(i) || (i == m_View.SelectedIndex)))
                     continue;
                 string S = m_Model.GetTabName(i);
-                ToolStripMenuItem Item = new ToolStripMenuItem
+                var Item = new ToolStripMenuItem
                 {
                     Checked = (i == m_View.SelectedIndex),
                     Text = m_View.Ellipsis(S, 20),

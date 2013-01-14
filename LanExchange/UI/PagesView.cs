@@ -181,10 +181,6 @@ namespace LanExchange.UI
                 PanelItemList Info = M.GetItem(Index);
                 if (Info != null)
                 {
-                    // subscribe Form to domain list (subject = "")
-                    ServerListSubscription.Instance.SubscribeToSubject(Form, string.Empty);
-                    // unsubscribe Form from any subjects
-                    ServerListSubscription.Instance.UnSubscribe(Form);
                     TabPage Tab = Pages.TabPages[Index];
                     Form.Text = String.Format(Form.Text, Tab != null ? Tab.Text : "???");
                     Form.ScanMode = Info.ScanMode;
@@ -194,6 +190,7 @@ namespace LanExchange.UI
                         Info.ScanMode = Form.ScanMode;
                         Info.Groups = Form.Groups;
                         Info.UpdateSubsctiption();
+                        m_Presenter.GetModel().SaveSettings();
                     }
                 }
             }
@@ -202,6 +199,7 @@ namespace LanExchange.UI
         private void Pages_Selected(object sender, TabControlEventArgs e)
         {
             m_Presenter.GetModel().SelectedIndex = e.TabPageIndex;
+            m_Presenter.GetModel().SaveSettings();
         }
 
         public PanelView GetActivePanelView()
