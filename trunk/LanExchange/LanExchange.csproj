@@ -82,7 +82,6 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -105,13 +104,11 @@
     <Compile Include="UI\RunMinimizedForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Utils\DynamicObject.cs" />
     <Compile Include="Model\LanExchangeIcons.cs" />
     <Compile Include="Presenter\AboutPresenter.cs" />
     <Compile Include="Presenter\MainPresenter.cs" />
     <Compile Include="Presenter\PanelPresenter.cs" />
     <Compile Include="Presenter\ParamsPresenter.cs" />
-    <Compile Include="Presenter\WMIPresenter.cs" />
     <Compile Include="UI\InfoView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -131,12 +128,6 @@
       <DependentUpon>PanelView.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\ListViewItemCache.cs" />
-    <Compile Include="UI\WMIForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\WMIForm.Designer.cs">
-      <DependentUpon>WMIForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Utils\ComCtl32.cs" />
     <Compile Include="Utils\HResult.cs" />
     <Compile Include="Utils\IEnumIDList.cs" />
@@ -152,7 +143,6 @@
     <Compile Include="Utils\SingleInstanceCheck.cs" />
     <Compile Include="Utils\SysImageList.cs" />
     <Compile Include="Utils\User32.cs" />
-    <Compile Include="Utils\WMIUtils.cs" />
     <Compile Include="View\IAboutView.cs" />
     <Compile Include="Utils\MenuUtils.cs" />
     <Compile Include="UI\AboutForm.cs">
@@ -205,7 +195,6 @@
     <Compile Include="View\IPanelView.cs" />
     <Compile Include="View\IParamsView.cs" />
     <Compile Include="View\IPagesView.cs" />
-    <Compile Include="View\IWMIView.cs" />
     <Compile Include="Windows\UnsafeNativeMethods.cs" />
     <EmbeddedResource Include="UI\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
@@ -229,9 +218,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\PanelView.resx">
       <DependentUpon>PanelView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\WMIForm.resx">
-      <DependentUpon>WMIForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\TabParamsForm.resx">
       <DependentUpon>TabParamsForm.cs</DependentUpon>
@@ -304,7 +290,12 @@
     <Content Include="Resources\LanExchange_16x16.ico" />
     <None Include="Resources\LanExchange_48x48.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\LanExchange.WMI\LanExchange.WMI.csproj">
+      <Project>{9334927C-8235-4533-83CA-57A819AD5E22}</Project>
+      <Name>LanExchange.WMI</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

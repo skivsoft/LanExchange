@@ -1,9 +1,10 @@
 ﻿using System;
+using LanExchange.WMI;
 //using System.Net;
 
 namespace LanExchange.Model
 {
-    public class ComputerPanelItem : PanelItem
+    public class ComputerPanelItem : PanelItem, IWMIComputer
     {
         private string m_Name = String.Empty;
         private string m_Comment = String.Empty;

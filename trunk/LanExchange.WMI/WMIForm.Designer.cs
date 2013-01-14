@@ -1,4 +1,4 @@
-﻿namespace LanExchange.UI
+﻿namespace LanExchange.WMI
 {
     partial class WMIForm
     {

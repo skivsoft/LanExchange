@@ -120,9 +120,9 @@ namespace Tests
         {
             PagesView Pages = new PagesView();
             PagesPresenter Controller = new PagesPresenter(Pages);
-            //TabModel Model = Controller.GetModel();
-            //Assert.NotNull(Model);
-            //Assert.AreEqual(0, Model.Count, "Empty TabControl");
+            PagesModel Model = Controller.GetModel();
+            Assert.IsNotNull(Model);
+            Assert.AreEqual(0, Model.Count, "Empty TabControl");
         }
 
     }

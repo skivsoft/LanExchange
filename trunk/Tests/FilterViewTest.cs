@@ -13,14 +13,7 @@ namespace Tests
     [TestClass]
     public class FilterViewTest
     {
-        public FilterViewTest()
-        {
-            //
-            // TODO: Add constructor logic here
-            //
-        }
-
-        private TestContext testContextInstance;
+        private TestContext m_TestContextInstance;
 
         /// <summary>
         ///Gets or sets the test context which provides
@@ -30,11 +23,11 @@ namespace Tests
         {
             get
             {
-                return testContextInstance;
+                return m_TestContextInstance;
             }
             set
             {
-                testContextInstance = value;
+                m_TestContextInstance = value;
             }
         }
 

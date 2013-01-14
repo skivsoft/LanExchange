@@ -8,6 +8,7 @@ using LanExchange.Utils;
 using System.Reflection;
 using LanExchange.Model;
 using System.Collections.Generic;
+using LanExchange.WMI;
 
 namespace LanExchange.UI
 {
@@ -363,15 +364,15 @@ namespace LanExchange.UI
             mRadmin1.ShowShortcutKeys = bCompVisible && !bFolderVisible;
         }
 
-        private static void SetEnabledAndVisible(ToolStripItem Item, bool Value)
+        private static void SetEnabledAndVisible(ToolStripItem item, bool value)
         {
-            Item.Enabled = Value;
-            Item.Visible = Value;
+            item.Enabled = value;
+            item.Visible = value;
         }
 
-        private static void SetEnabledAndVisible(ToolStripItem[] Items, bool Value)
+        private static void SetEnabledAndVisible(ToolStripItem[] items, bool value)
         {
-            Array.ForEach(Items, Item => SetEnabledAndVisible(Item, Value));
+            Array.ForEach(items, item => SetEnabledAndVisible(item, value));
         }
 
         private void mLargeIcons_Click(object sender, EventArgs e)
@@ -434,8 +435,9 @@ namespace LanExchange.UI
             else
             if (LV.VirtualListSize > 0)
             {
-                //LV.FocusedItem = GetListViewItemAt(0);
-                //LV.FocusedItem.Selected = true;
+                // TODO need select item with index 0
+                LV.Items[0].Selected = true;
+                LV.Select();
             }
             DoFocusedItemChanged();
         }

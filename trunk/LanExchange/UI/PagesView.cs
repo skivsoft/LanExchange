@@ -203,8 +203,8 @@ namespace LanExchange.UI
             if (pv != null && ActiveControl != pv)
             {
                 ActiveControl = pv;
-                pv.FocusListView();
                 pv.GetPresenter().UpdateItemsAndStatus();
+                pv.FocusListView();
             }
         }
 
