@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
-using vbAccelerator.Components.ImageList;
 using System.Drawing;
 using GongSolutions.Shell.Interop;
+using LanExchange.Utils;
 
 namespace LanExchange.Model
 {
@@ -10,16 +10,16 @@ namespace LanExchange.Model
     /// Icons collection for LanExchange program.
     /// Lazy load pattern used.
     /// </summary>
-    public class LanExchangeIcons
+    public class LanExchangeIcons : IDisposable
     {
-        public const int imgCompDefault   = 0; // MyComputer icon
-        public const int imgCompDisabled  = 1; // Disabled MyComputer icon
-        public const int imgWorkgroup     = 2; // Workgroup icon
-        public const int imgFolderNormal  = 3; // Folder icon
-        public const int imgFolderHidden  = 4; // Disabled Folder icon
-        public const int imgFolderPrinter = 5;
-        public const int imgFolderBack    = 6;
-        public const int imgCompGreen = 0;
+        public const int CompDefault   = 0; // MyComputer icon
+        public const int CompDisabled  = 1; // Disabled MyComputer icon
+        public const int Workgroup     = 2; // Workgroup icon
+        public const int FolderNormal  = 3; // Folder icon
+        public const int FolderHidden  = 4; // Disabled Folder icon
+        public const int FolderPrinter = 5;
+        public const int FolderBack    = 6;
+        public const int CompGreen = 0;
 
         private const int SYSTEM_INDEX_MYCOMPUTER = 15;
         private const int SYSTEM_INDEX_WORKGROUP  = 18;
@@ -33,8 +33,8 @@ namespace LanExchange.Model
         {
             // init system images
             Shell32.FileIconInit(true);
-            SysImageList Small = new SysImageList(SysImageListSize.smallIcons);
-            SysImageList Large = new SysImageList(SysImageListSize.largeIcons);
+            var Small = new SysImageList(SysImageListSize.smallIcons);
+            var Large = new SysImageList(SysImageListSize.largeIcons);
             // init image lists
             m_SmallImageList = new ImageList();
             m_SmallImageList.ColorDepth = ColorDepth.Depth32Bit;
@@ -64,6 +64,12 @@ namespace LanExchange.Model
             // release sys images list
             Small.Dispose();
             Large.Dispose();
+        }
+
+        public void Dispose()
+        {
+            m_SmallImageList.Dispose();
+            m_LargeImageList.Dispose();
         }
 
         private static Bitmap MadeDisabledBitmap(Bitmap bmp)

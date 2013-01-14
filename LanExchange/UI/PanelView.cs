@@ -35,8 +35,8 @@ namespace LanExchange.UI
             LV.CacheVirtualItems += m_Cache.CacheVirtualItems;
             LV.RetrieveVirtualItem += m_Cache.RetrieveVirtualItem;
             // set mycomputer image
-            mComp.Image = LanExchangeIcons.SmallImageList.Images[LanExchangeIcons.imgCompDefault];
-            mFolder.Image = LanExchangeIcons.SmallImageList.Images[LanExchangeIcons.imgFolderNormal];
+            mComp.Image = LanExchangeIcons.SmallImageList.Images[LanExchangeIcons.CompDefault];
+            mFolder.Image = LanExchangeIcons.SmallImageList.Images[LanExchangeIcons.FolderNormal];
             // set dropdown direction for sub-menus (actual for dual-monitor system)
             mComp.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
             mFolder.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
@@ -49,16 +49,16 @@ namespace LanExchange.UI
         /// IListViewItemGetter implementation. 
         /// This method will be called by ListViewItemCache.
         /// </summary>
-        /// <param name="Index"></param>
+        /// <param name="index"></param>
         /// <returns></returns>
-        public ListViewItem GetListViewItemAt(int Index)
+        public ListViewItem GetListViewItemAt(int index)
         {
             if (m_Presenter.Objects == null)
                 return null;
-            if (Index < 0 || Index > Math.Min(m_Presenter.Objects.FilterCount, LV.VirtualListSize) - 1)
+            if (index < 0 || index > Math.Min(m_Presenter.Objects.FilterCount, LV.VirtualListSize) - 1)
                 return null;
             ListViewItem Result = new ListViewItem();
-            var PItem = m_Presenter.Objects.GetAt(Index);
+            var PItem = m_Presenter.Objects.GetAt(index);
             if (PItem != null)
             {
                 Result.Text = PItem.Name;
@@ -106,9 +106,9 @@ namespace LanExchange.UI
             }
         }
 
-        public void SelectItem(int Index)
+        public void SelectItem(int index)
         {
-            LV.SelectedIndices.Add(Index);
+            LV.SelectedIndices.Add(index);
         }
 
 
@@ -137,37 +137,25 @@ namespace LanExchange.UI
             return m_Presenter;
         }
 
-        public ListView.ListViewItemCollection Items
-        {
-            get
-            {
-                return LV.Items;
-            }
-        }
+        //public ImageList SmallImageList
+        //{
+        //    get
+        //    {
+        //        return LV.SmallImageList;
+        //    }
+        //}
 
-        public ImageList SmallImageList
-        {
-            get
-            {
-                return LV.SmallImageList;
-            }
-            set
-            {
-                LV.SmallImageList = value;
-            }
-        }
-
-        public ImageList LargeImageList
-        {
-            get
-            {
-                return LV.LargeImageList;
-            }
-            set
-            {
-                LV.LargeImageList = value;
-            }
-        }
+        //public ImageList LargeImageList
+        //{
+        //    get
+        //    {
+        //        return LV.LargeImageList;
+        //    }
+        //    set
+        //    {
+        //        LV.LargeImageList = value;
+        //    }
+        //}
 
 
 
@@ -191,11 +179,11 @@ namespace LanExchange.UI
         public void lvComps_KeyDown(object sender, KeyEventArgs e)
         {
             pFilter.GetPresenter().LinkedControl_KeyDown(sender, e);
-            ListView LV = (sender as ListView);
+            ListView lv = (sender as ListView);
             // Ctrl+A - Select all items
             if (e.Control && e.KeyCode == Keys.A)
             {
-                User32Utils.SelectAllItems(LV);
+                User32Utils.SelectAllItems(lv);
                 e.Handled = true;
             }
             // Shift+Enter - Open current item
@@ -259,15 +247,16 @@ namespace LanExchange.UI
 
         private void lvComps_ItemActivate(object sender, EventArgs e)
         {
-            ListView LV = (sender as ListView);
-            if (LV.FocusedItem == null)
+            ListView lv = (sender as ListView);
+            if (lv == null) return;
+            if (lv.FocusedItem == null)
             {
-                if (LV.VirtualListSize > 0)
-                    LV.FocusedItem = LV.Items[0];
+                if (lv.VirtualListSize > 0)
+                    lv.FocusedItem = lv.Items[0];
                 else
                     return;
             }
-            logger.Info("LV_ItemActivate on {0}", LV.FocusedItem.ToString());
+            logger.Info("LV_ItemActivate on {0}", lv.FocusedItem.ToString());
             /*
             if (CompBrowser.InternalStack.Count == 0)
             {
@@ -284,7 +273,7 @@ namespace LanExchange.UI
             ComputerPanelItem comp = m_Presenter.GetFocusedComputer();
             if (comp == null) return;
             WMIForm form = new WMIForm(comp);
-            using (Bitmap bitmap = new Bitmap(LanExchangeIcons.SmallImageList.Images[LanExchangeIcons.imgCompDefault]))
+            using (Bitmap bitmap = new Bitmap(LanExchangeIcons.SmallImageList.Images[LanExchangeIcons.CompDefault]))
             {
                 form.Icon = Icon.FromHandle(bitmap.GetHicon());
             }
@@ -294,13 +283,15 @@ namespace LanExchange.UI
         public void mCompOpen_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem MenuItem = sender as ToolStripMenuItem;
-            m_Presenter.RunCmdOnFocusedItem(MenuItem.Tag.ToString(), PanelPresenter.COMPUTER_MENU);
+            if (MenuItem != null)
+                m_Presenter.RunCmdOnFocusedItem(MenuItem.Tag.ToString(), PanelPresenter.COMPUTER_MENU);
         }
 
         public void mFolderOpen_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem MenuItem = sender as ToolStripMenuItem;
-            m_Presenter.RunCmdOnFocusedItem(MenuItem.Tag.ToString(), PanelPresenter.FOLDER_MENU);
+            if (MenuItem != null)
+                m_Presenter.RunCmdOnFocusedItem(MenuItem.Tag.ToString(), PanelPresenter.FOLDER_MENU);
         }
 
         private void UpdateViewTypeMenu()
@@ -322,9 +313,6 @@ namespace LanExchange.UI
                     break;
                 case System.Windows.Forms.View.Details:
                     mCompDetails.Checked = true;
-                    break;
-                case System.Windows.Forms.View.Tile:
-                default:
                     break;
             }
         }
@@ -353,8 +341,7 @@ namespace LanExchange.UI
                     if (!String.IsNullOrEmpty(PItem.Name))
                     {
                         mFolder.Text = String.Format(@"\\{0}\{1}", (PItem as SharePanelItem).ComputerName, PItem.Name);
-                        if (SmallImageList != null)
-                            mFolder.Image = SmallImageList.Images[PItem.ImageIndex];
+                        mFolder.Image = LanExchangeIcons.SmallImageList.Images[PItem.ImageIndex];
                         bFolderVisible = true;
                         mFAROpen.Enabled = !(PItem as SharePanelItem).IsPrinter;
                     }
@@ -363,7 +350,7 @@ namespace LanExchange.UI
             SetEnabledAndVisible(mComp, bCompVisible);
             SetEnabledAndVisible(mFolder, bFolderVisible);
 
-            bool bSenderIsComputer = true; // (Pages.SelectedIndex > 0) /*|| (CompBrowser.InternalStack.Count == 0)*/;
+            const bool bSenderIsComputer = true; // (Pages.SelectedIndex > 0) /*|| (CompBrowser.InternalStack.Count == 0)*/;
             SetEnabledAndVisible(new ToolStripItem[] { 
                 mCopyCompName, mCopyComment, mCopySelected, 
                 mSendSeparator, mSendToTab }, bSenderIsComputer);
@@ -389,10 +376,12 @@ namespace LanExchange.UI
 
         private void mLargeIcons_Click(object sender, EventArgs e)
         {
-            int Tag;
-            if (!int.TryParse((sender as ToolStripMenuItem).Tag.ToString(), out Tag))
-                Tag = 0;
-            switch (Tag)
+            var menuItem = sender as ToolStripMenuItem;
+            if (menuItem == null) return;
+            int tag;
+            if (!int.TryParse(menuItem.Tag.ToString(), out tag))
+                tag = 0;
+            switch (tag)
             {
                 case 1:
                     LV.View = System.Windows.Forms.View.LargeIcon;
@@ -405,8 +394,6 @@ namespace LanExchange.UI
                     break;
                 case 4:
                     LV.View = System.Windows.Forms.View.Details;
-                    break;
-                default:
                     break;
             }
         }

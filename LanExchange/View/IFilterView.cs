@@ -1,5 +1,4 @@
-﻿using System;
-using LanExchange.Presenter;
+﻿using LanExchange.Presenter;
 
 namespace LanExchange.View
 {
@@ -12,7 +11,7 @@ namespace LanExchange.View
         FilterPresenter GetPresenter();
         void SetIsFound(bool value);
         void FocusMe();
-        void SendKeysCorrect(string Keys);
+        void SendKeysCorrect(string keys);
         void DoFilterCountChanged();
     }
 }

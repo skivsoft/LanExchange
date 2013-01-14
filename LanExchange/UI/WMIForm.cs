@@ -17,7 +17,7 @@ namespace LanExchange.UI
         private string m_CurrentWMIClass;
         private readonly List<string> m_Classes;
         private readonly ComputerPanelItem m_Comp;
-        private ManagementObject wmiObject;
+        private ManagementObject m_WMIObject;
 
         public WMIForm(ComputerPanelItem comp)
         {
@@ -33,6 +33,12 @@ namespace LanExchange.UI
                 Text = String.Format("{0} — {1}", comp.Name, comp.Comment);
                 m_Comp = comp;
             }
+        }
+
+        public override sealed string Text
+        {
+            get { return base.Text; }
+            set { base.Text = value; }
         }
 
         public ListView LV
@@ -79,31 +85,31 @@ namespace LanExchange.UI
                 Close();
         }
 
-        public void ShowStat(int ClassCount, int PropCount, int MethodCount)
+        public void ShowStat(int classCount, int propCount, int methodCount)
         {
-            Status.Items[0].Text = String.Format("Классов: {0}, Свойств: {1}, Методов: {2}", ClassCount, PropCount, MethodCount);
+            Status.Items[0].Text = String.Format("Классов: {0}, Свойств: {1}, Методов: {2}", classCount, propCount, methodCount);
         }
 
-        public static void dynObj_AddProperty<T>(DynamicObject dynObj, PropertyData Prop, string Description, string Category, bool IsReadOnly)
+        public static void dynObj_AddProperty<T>(DynamicObject dynObj, PropertyData prop, string description, string category, bool isReadOnly)
         {
-            if (Prop.Value == null)
-                dynObj.AddPropertyNull<T>(Prop.Name, Description, Category, IsReadOnly);
+            if (prop.Value == null)
+                dynObj.AddPropertyNull<T>(prop.Name, description, category, isReadOnly);
             else
-                if (Prop.IsArray)
-                    dynObj.AddProperty<T[]>(Prop.Name, (T[])Prop.Value, Description, Category, IsReadOnly);
+                if (prop.IsArray)
+                    dynObj.AddProperty(prop.Name, (T[])prop.Value, description, category, isReadOnly);
                 else
-                    dynObj.AddProperty<T>(Prop.Name, (T)Prop.Value, Description, Category, IsReadOnly);
+                    dynObj.AddProperty(prop.Name, (T)prop.Value, description, category, isReadOnly);
         }
 
         private void lvInstances_ItemActivate(object sender, EventArgs e)
         {
             if (m_Presenter.WMIClass == null) return;
             if (lvInstances.FocusedItem == null) return;
-            wmiObject = (ManagementObject)lvInstances.FocusedItem.Tag;
-            if (wmiObject == null) return;
+            m_WMIObject = (ManagementObject)lvInstances.FocusedItem.Tag;
+            if (m_WMIObject == null) return;
 
             var dynObj = new DynamicObject();
-            foreach (PropertyData Prop in wmiObject.Properties)
+            foreach (PropertyData Prop in m_WMIObject.Properties)
             {
                 // skip array of bytes
                 if (Prop.Type == CimType.UInt8 && Prop.IsArray)
@@ -111,20 +117,20 @@ namespace LanExchange.UI
                 
                 PropertyData ClassProp = m_Presenter.WMIClass.Properties[Prop.Name];
 
-                bool IsCIM_Key = false;
+                bool isCimKey = false;
                 bool IsReadOnly = true;
                 string Description = "";
 
                 foreach (QualifierData qd in ClassProp.Qualifiers)
                 {
                     if (qd.Name.Equals("CIM_Key"))
-                        IsCIM_Key = true;
+                        isCimKey = true;
                     if (qd.Name.Equals("write"))
                         IsReadOnly = false;
                     if (qd.Name.Equals("Description"))
                         Description = qd.Value.ToString();
                 }
-                if (IsCIM_Key) continue;
+                if (isCimKey) continue;
                 string Category = Prop.Type.ToString();
                 switch (Prop.Type)
                 {
@@ -192,7 +198,7 @@ namespace LanExchange.UI
                         if (Prop.Value == null)
                             dynObj.AddPropertyNull<DateTime>(Prop.Name, Description, Category, IsReadOnly);
                         else
-                            dynObj.AddProperty<DateTime>(Prop.Name, WMIUtils.ToDateTime(Prop.Value.ToString()), Description, Category, IsReadOnly);
+                            dynObj.AddProperty(Prop.Name, WMIUtils.ToDateTime(Prop.Value.ToString()), Description, Category, IsReadOnly);
                         break;
                     //     A reference to another object. This is represented by a string containing
                     //     the path to the referenced object. This value maps to the System.Int16 type.
@@ -203,10 +209,9 @@ namespace LanExchange.UI
                     case CimType.Char16:
                         dynObj_AddProperty<Char>(dynObj, Prop, Description, Category, IsReadOnly);
                         break;
-                    case CimType.None:
                     default:
                         string Value = Prop.Value == null ? null : Prop.Value.ToString();
-                        dynObj.AddProperty<String>(String.Format("{0} : {1}", Prop.Name, Prop.Type), Value, Description, "Unknown", IsReadOnly);
+                        dynObj.AddProperty(String.Format("{0} : {1}", Prop.Name, Prop.Type), Value, Description, "Unknown", IsReadOnly);
                         break;
                 }
             }
@@ -219,23 +224,25 @@ namespace LanExchange.UI
             m_Classes.Clear();
         }
 
-        public void AddClass(string ClassName)
+        public void AddClass(string className)
         {
-            m_Classes.Add(ClassName);
+            m_Classes.Add(className);
         }
 
         public void menuClasses_Click(object sender, EventArgs e)
         {
-            CurrentWMIClass = (sender as ToolStripMenuItem).Text;
+            var menuItem = sender as ToolStripMenuItem;
+            if (menuItem != null)
+                CurrentWMIClass = menuItem.Text;
         }
 
         public void UpdateClassesMenu()
         {
             m_Classes.Sort();
             menuClasses.Items.Clear();
-            m_Classes.ForEach(STR =>
+            m_Classes.ForEach(str =>
             {
-                ToolStripMenuItem MI = new ToolStripMenuItem { Text = STR };
+                ToolStripMenuItem MI = new ToolStripMenuItem { Text = str };
                 MI.Click += menuClasses_Click;
                 menuClasses.Items.Add(MI);
             });
@@ -250,6 +257,7 @@ namespace LanExchange.UI
         private void PropGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
             string PropName = e.ChangedItem.Label;
+            if (PropName == null) return;
             object PropValue = e.ChangedItem.Value;
             string Caption = String.Format("Изменение свойства {0}", PropName);
             string Message = String.Format("Компьютер: \\\\{0}\n\nСтарое значение: «{1}»\nНовое значение: «{2}»",
@@ -257,8 +265,8 @@ namespace LanExchange.UI
             try
             {
                 // trying to change wmi property
-                wmiObject[PropName] = PropValue;
-                wmiObject.Put();
+                m_WMIObject[PropName] = PropValue;
+                m_WMIObject.Put();
 
                 // update computer comment if we changes Win32_OperatingSystme.Description
                 if (CurrentWMIClass.Equals("Win32_OperatingSystem") && PropName.Equals("Description"))

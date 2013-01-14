@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Net;
+//using System.Net;
 
 namespace LanExchange.Model
 {
@@ -60,8 +60,8 @@ namespace LanExchange.Model
         protected override int GetImageIndex()
         {
             if (IsLogged)
-                return LanExchangeIcons.imgCompGreen;
-            return IsPingable ? LanExchangeIcons.imgCompDefault : LanExchangeIcons.imgCompDisabled;
+                return LanExchangeIcons.CompGreen;
+            return IsPingable ? LanExchangeIcons.CompDefault : LanExchangeIcons.CompDisabled;
         }
 
         protected override string GetToolTipText()
@@ -73,17 +73,17 @@ namespace LanExchange.Model
 
         private bool IsLogged { get; set; }
 
-        private IPEndPoint EndPoint { get; set; }
+        //private IPEndPoint EndPoint { get; set; }
 
-        public override void CopyExtraFrom(PanelItem pitem)
-        {
-            var comp = pitem as ComputerPanelItem;
-            if (comp != null)
-            {
-                IsPingable = comp.IsPingable;
-                IsLogged = comp.IsLogged;
-                EndPoint = comp.EndPoint;
-            }
-        }
+        //public override void CopyExtraFrom(PanelItem pitem)
+        //{
+        //    var comp = pitem as ComputerPanelItem;
+        //    if (comp != null)
+        //    {
+        //        IsPingable = comp.IsPingable;
+        //        IsLogged = comp.IsLogged;
+        //        EndPoint = comp.EndPoint;
+        //    }
+        //}
     }
 }

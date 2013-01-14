@@ -61,22 +61,9 @@ namespace LanExchange.UI
         {
             TabPage Tab = new TabPage();
             Tab.Text = Ellipsis(info.TabName, 20);
-            Tab.ImageIndex = LanExchangeIcons.imgWorkgroup;
+            Tab.ImageIndex = LanExchangeIcons.Workgroup;
             Tab.ToolTipText = info.GetTabToolTip();
             Pages.Controls.Add(Tab);
-        }
-
-        public int SelectedIndex
-        {
-            get
-            {
-                return Pages.SelectedIndex;
-            }
-            set
-            {
-                Pages.SelectedIndex = value;
-                m_Presenter.GetModel().SelectedIndex = value;
-            }
         }
 
         public string SelectedTabText
@@ -275,5 +262,15 @@ namespace LanExchange.UI
             }
         }
 
+        public void SetSelectedIndex(int value)
+        {
+            Pages.SelectedIndex = value;
+            m_Presenter.GetModel().SelectedIndex = value;
+        }
+
+        public int GetSelectedIndex()
+        {
+            return Pages.SelectedIndex;
+        }
     }
 }

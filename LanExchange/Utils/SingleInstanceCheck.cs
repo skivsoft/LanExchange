@@ -38,10 +38,10 @@ namespace LanExchange.Utils
             if (SafeNativeMethods.GetWindowTextLength(wndRef) == 0)
                 return true;
             // retrieve process id for a window
-            int ProcID;
-            SafeNativeMethods.GetWindowThreadProcessId(wndRef, out ProcID);
+            int procId;
+            SafeNativeMethods.GetWindowThreadProcessId(wndRef, out procId);
             // we found or not
-            if (ProcID == lParam.ToInt32())
+            if (procId == lParam.ToInt32())
             {
                 UnsafeNativeMethods.ShowWindowAsync(wndRef, NativeMethods.SW_NORMAL);
                 UnsafeNativeMethods.SetForegroundWindow(wndRef);
@@ -54,8 +54,8 @@ namespace LanExchange.Utils
         {
             // http://snipplr.com/view/19272/ - C#, single-instance-check using mutex
             // http://iridescence.no/post/CreatingaSingleInstanceApplicationinC.aspx
-            bool isOwnedHere = false;
-            appStartMutex = new Mutex(
+            bool isOwnedHere;
+            m_AppStartMutex = new Mutex(
                 true,
                 Application.ProductName,
                 out isOwnedHere
@@ -87,7 +87,10 @@ namespace LanExchange.Utils
 
         // volatile is intended to prevent GC. Otherwise, GC.KeepAlive(appStartMutex) might be needed.
         // This appears to be a concern in In release builds but not debug builds.
-        static volatile Mutex appStartMutex;
+
+        // ReSharper disable NotAccessedField.Local
+        static volatile Mutex m_AppStartMutex;
+        // ReSharper restore NotAccessedField.Local
 
     }
 }

@@ -6,9 +6,9 @@ namespace LanExchange.Utils
 {
 	public class DynamicObject : ICustomTypeDescriptor
 	{
-        private string _Filter = String.Empty;
-        private readonly PropertyDescriptorCollection _FilteredPropertyDescriptors = new PropertyDescriptorCollection(null);
-        private readonly PropertyDescriptorCollection _FullPropertyDescriptors = new PropertyDescriptorCollection(null);
+        private string m_Filter = String.Empty;
+        private readonly PropertyDescriptorCollection m_FilteredPropertyDescriptors = new PropertyDescriptorCollection(null);
+        private readonly PropertyDescriptorCollection m_FullPropertyDescriptors = new PropertyDescriptorCollection(null);
 
         public void AddProperty<T>(
           string name,
@@ -34,7 +34,7 @@ namespace LanExchange.Utils
             if (readOnly)
                 attrs.Add(new ReadOnlyAttribute(true));
 
-            _FullPropertyDescriptors.Add(new GenericPropertyDescriptor<T>(
+            m_FullPropertyDescriptors.Add(new GenericPropertyDescriptor<T>(
               name, value, attrs.ToArray()));
         }
 
@@ -61,7 +61,7 @@ namespace LanExchange.Utils
             if (readOnly)
                 attrs.Add(new ReadOnlyAttribute(true));
 
-            _FullPropertyDescriptors.Add(new GenericPropertyDescriptor<T>(
+            m_FullPropertyDescriptors.Add(new GenericPropertyDescriptor<T>(
               name, attrs.ToArray()));
         }
 
@@ -72,7 +72,7 @@ namespace LanExchange.Utils
           string category,
           bool readOnly)
         {
-            AddProperty<T>(name, value, name, description, category, readOnly, null);
+            AddProperty(name, value, name, description, category, readOnly, null);
         }
 
         public void AddPropertyNull<T>(
@@ -87,9 +87,9 @@ namespace LanExchange.Utils
 
         public void RemoveProperty(string propertyName)
         {
-            var descriptor = _FullPropertyDescriptors.Find(propertyName, true);
+            var descriptor = m_FullPropertyDescriptors.Find(propertyName, true);
             if (descriptor != null)
-                _FullPropertyDescriptors.Remove(descriptor);
+                m_FullPropertyDescriptors.Remove(descriptor);
             else
                 throw new Exception("Property is not found");
         }
@@ -97,22 +97,22 @@ namespace LanExchange.Utils
 
         public string Filter
         {
-            get { return _Filter; }
+            get { return m_Filter; }
             set
             {
-                _Filter = value.Trim().ToLower();
-                if (_Filter.Length != 0)
-                    FilterProperties(_Filter);
+                m_Filter = value.Trim().ToLower();
+                if (m_Filter.Length != 0)
+                    FilterProperties(m_Filter);
             }
         }
 
         private void FilterProperties(string filter)
         {
-            _FilteredPropertyDescriptors.Clear();
+            m_FilteredPropertyDescriptors.Clear();
 
-            foreach (var descriptor in _FullPropertyDescriptors)
-                if (((PropertyDescriptor)descriptor).Name.ToLower().IndexOf(filter) > -1)
-                    _FilteredPropertyDescriptors.Add(((PropertyDescriptor)descriptor));
+            foreach (var descriptor in m_FullPropertyDescriptors)
+                if (((PropertyDescriptor)descriptor).Name.ToLower().IndexOf(filter, StringComparison.Ordinal) > -1)
+                    m_FilteredPropertyDescriptors.Add(value: ((PropertyDescriptor)descriptor));
         }
 
 
@@ -124,16 +124,15 @@ namespace LanExchange.Utils
 
         private object GetPropertyValue(string propertyName)
         {
-            var descriptor = _FullPropertyDescriptors.Find(propertyName, true);
+            var descriptor = m_FullPropertyDescriptors.Find(propertyName, true);
             if (descriptor != null)
                 return descriptor.GetValue(null);
-            else
-                throw new Exception("Property is not found");
+            throw new Exception("Property is not found");
         }
 
         private void SetPropertyValue(string propertyName, object value)
         {
-            var descriptor = _FullPropertyDescriptors.Find(propertyName, true);
+            var descriptor = m_FullPropertyDescriptors.Find(propertyName, true);
             if (descriptor != null)
                 descriptor.SetValue(null, value);
             else
@@ -176,7 +175,7 @@ namespace LanExchange.Utils
 
         public PropertyDescriptorCollection GetProperties(Attribute[] attributes)
         {
-            return _Filter.Length != 0 ? _FilteredPropertyDescriptors : _FullPropertyDescriptors;
+            return m_Filter.Length != 0 ? m_FilteredPropertyDescriptors : m_FullPropertyDescriptors;
         }
 
         public PropertyDescriptorCollection GetProperties()
@@ -209,7 +208,7 @@ namespace LanExchange.Utils
 
     public class GenericPropertyDescriptor<T> : PropertyDescriptor
     {
-        private T _value;
+        private T m_Value;
 
         public GenericPropertyDescriptor(string name, Attribute[] attrs)
             : base(name, attrs)
@@ -219,7 +218,7 @@ namespace LanExchange.Utils
         public GenericPropertyDescriptor(string name, T value, Attribute[] attrs)
             : base(name, attrs)
         {
-            _value = value;
+            m_Value = value;
         }
         protected GenericPropertyDescriptor(MemberDescriptor descr)
             : base(descr)
@@ -248,7 +247,7 @@ namespace LanExchange.Utils
 
         public override object GetValue(object component)
         {
-            return _value;
+            return m_Value;
         }
 
         public override bool IsReadOnly
@@ -274,7 +273,7 @@ namespace LanExchange.Utils
 
         public override void SetValue(object component, object value)
         {
-            _value = (T)value;
+            m_Value = (T)value;
         }
 
         public override bool ShouldSerializeValue(object component)

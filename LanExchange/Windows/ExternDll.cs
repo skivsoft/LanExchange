@@ -1,12 +1,7 @@
-﻿using System;
-
-namespace LanExchange.Windows
+﻿namespace LanExchange.Windows
 {
-    internal class ExternDll
+    internal static class ExternDll
     {
-        private ExternDll() 
-        { }
-
         //internal const string Gdiplus = "gdiplus.dll";
         internal const string User32 = "user32.dll";
         //internal const string Shfolder = "shfolder.dll";

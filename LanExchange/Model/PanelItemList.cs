@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using NLog;
-using LanExchange.Utils;
+//using NLog;
 
 namespace LanExchange.Model
 {
@@ -17,7 +14,7 @@ namespace LanExchange.Model
 
     public class PanelItemList : ISubscriber, IEquatable<PanelItemList>, IFilterModel
     {
-        private readonly static Logger logger = LogManager.GetCurrentClassLogger();
+        //private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
         // items added by user
         private readonly SortedDictionary<string, PanelItem> m_Items;
@@ -282,7 +279,7 @@ namespace LanExchange.Model
         /// ISubsctiber.DataChanged implementation.
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="subject"></param>
         public void DataChanged(ISubscription sender, string subject)
         {
             //lock (m_Data)

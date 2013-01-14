@@ -29,10 +29,10 @@ namespace LanExchange.Model
             return new[] { Comment };
         }
 
-        public virtual void CopyExtraFrom(PanelItem pitem)
-        {
-            // empty for base class
-        }
+        //public virtual void CopyExtraFrom(PanelItem pitem)
+        //{
+        //    // empty for base class
+        //}
         
         public string Name 
         {

@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using LanExchange.View;
 using LanExchange.Model;
 using LanExchange.Utils;
 using System.Drawing;
 
 namespace LanExchange.UI
 {
-    public partial class TabParamsForm : Form, ITabParamsView, ISubscriber
+    public partial class TabParamsForm : Form, ISubscriber
     {
         public TabParamsForm()
         {
@@ -33,7 +32,7 @@ namespace LanExchange.UI
                 if (Saved.Contains(SI.Name))
                     LVI.Checked = true;
                 lvDomains.Items.Add(LVI);
-                if (FocusedText != null && String.Compare(SI.Name, FocusedText) == 0)
+                if (FocusedText != null && String.CompareOrdinal(SI.Name, FocusedText) == 0)
                 {
                     lvDomains.FocusedItem = lvDomains.Items[index];
                     lvDomains.FocusedItem.Selected = true;
@@ -50,17 +49,10 @@ namespace LanExchange.UI
             }
             set
             {
-                switch (value)
-                {
-                    case true:
-                        rbSelected.Checked = true;
-                        break;
-                    case false:
-                        rbDontScan.Checked = true;
-                        break;
-                    default:
-                        break;
-                }
+                if (value)
+                    rbSelected.Checked = true;
+                else
+                    rbDontScan.Checked = true;
             }
         }
 

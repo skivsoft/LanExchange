@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace vbAccelerator.Components.ImageList
+namespace LanExchange.Utils
 {
 
 	#region Public Enumerations
@@ -319,9 +319,9 @@ namespace vbAccelerator.Components.ImageList
 		#endregion
 
 		#region Private ImageList COM Interop (XP)
-		[ComImportAttribute()]
-			[GuidAttribute("46EB5926-582E-4017-9FDF-E8998DAA0950")]
-			[InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
+		[ComImport]
+			[Guid("46EB5926-582E-4017-9FDF-E8998DAA0950")]
+			[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 			//helpstring("Image List"),
 			interface IImageList
 		{
@@ -521,7 +521,7 @@ namespace vbAccelerator.Components.ImageList
 		/// <summary>
 		/// Returns the size of the Image List Icons.
 		/// </summary>
-		public System.Drawing.Size Size
+		public Size Size
 		{
 			get
 			{
@@ -538,9 +538,7 @@ namespace vbAccelerator.Components.ImageList
 				{
 					iImageList.GetIconSize(ref cx, ref cy);
 				}
-				System.Drawing.Size sz = new System.Drawing.Size(
-					cx, cy);
-				return sz;
+				return new Size(cx, cy);
 			}		
 		}
 		#endregion
@@ -624,7 +622,7 @@ namespace vbAccelerator.Components.ImageList
 			)
 		{
 			SHGetFileInfoConstants dwFlags = SHGetFileInfoConstants.SHGFI_SYSICONINDEX;
-			int dwAttr = 0;
+			int dwAttr;
 			if (size == SysImageListSize.smallIcons)
 			{
 				dwFlags |= SHGetFileInfoConstants.SHGFI_SMALLICON;
@@ -657,10 +655,7 @@ namespace vbAccelerator.Components.ImageList
 				System.Diagnostics.Debug.Assert((!retVal.Equals(IntPtr.Zero)),"Failed to get icon index");
 				return 0;
 			}
-			else
-			{
-				return shfi.iIcon;
-			}
+		    return shfi.iIcon;
 		}
 
 		/// <summary>
@@ -792,10 +787,10 @@ namespace vbAccelerator.Components.ImageList
 			ImageListDrawItemConstants flags,
 			int cx,
 			int cy,
-			System.Drawing.Color foreColor,
+			Color foreColor,
 			ImageListDrawStateConstants stateFlags,
-			System.Drawing.Color saturateColorOrAlpha,
-			System.Drawing.Color glowOrShadowColor
+			Color saturateColorOrAlpha,
+			Color glowOrShadowColor
 			)
 		{
 			IMAGELISTDRAWPARAMS pimldp = new IMAGELISTDRAWPARAMS();
@@ -808,14 +803,14 @@ namespace vbAccelerator.Components.ImageList
 			pimldp.cy = cy;
 			pimldp.rgbFg = Color.FromArgb(0, 
 				foreColor.R, foreColor.G, foreColor.B).ToArgb();
-			Console.WriteLine("{0}", pimldp.rgbFg);
+			//Console.WriteLine(pimldp.rgbFg);
 			pimldp.fStyle = (int)flags;
 			pimldp.fState = (int)stateFlags;
 			if ((stateFlags & ImageListDrawStateConstants.ILS_ALPHA) ==
 				ImageListDrawStateConstants.ILS_ALPHA)
 			{
 				// Set the alpha:
-				pimldp.Frame = (int)saturateColorOrAlpha.A;
+				pimldp.Frame = saturateColorOrAlpha.A;
 			}
 			else if ((stateFlags & ImageListDrawStateConstants.ILS_SATURATE) ==
 				ImageListDrawStateConstants.ILS_SATURATE)

@@ -349,7 +349,7 @@ namespace GongSolutions.Shell.Interop
         public IntPtr cStr;
     }
 
-    class Shell32
+    static class Shell32
     {
         [DllImport("shell32.dll", EntryPoint = "#660")]
         public static extern bool FileIconInit(bool bFullInit);

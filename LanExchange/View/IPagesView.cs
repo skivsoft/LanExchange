@@ -6,11 +6,12 @@ namespace LanExchange.View
     public interface IPagesView
     {
         // properties
-        int SelectedIndex { get; set; }
         string SelectedTabText { get; set; }
         int TabPagesCount { get; }
         int PopupSelectedIndex { get; }
         // methods
+        void SetSelectedIndex(int value);
+        int GetSelectedIndex();
         void NewTabFromItemList(PanelItemList info);
         void RemoveTabAt(int index);
         void AddControl(int index, Control control);

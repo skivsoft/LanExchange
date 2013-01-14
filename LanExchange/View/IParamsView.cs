@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LanExchange.View
+﻿namespace LanExchange.View
 {
     public interface IParamsView
     {

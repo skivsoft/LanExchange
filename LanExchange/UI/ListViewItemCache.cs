@@ -1,19 +1,19 @@
-﻿using System;
-using System.Windows.Forms;
-using NLog;
+﻿using System.Windows.Forms;
+//using NLog;
 
-namespace LanExchange.Utils
+namespace LanExchange.UI
 {
     public interface IListViewItemGetter
     {
-        ListViewItem GetListViewItemAt(int Index);
+        ListViewItem GetListViewItemAt(int index);
     }
     
+    // TODO need use cache
     public class ListViewItemCache
     {
-        private readonly static Logger logger = LogManager.GetCurrentClassLogger();
+        //private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
-        private ListViewItem[] TableCache;
+        //private ListViewItem[] TableCache;
         //private int TableCacheStartIndex;
         private readonly IListViewItemGetter m_Getter;
 
@@ -21,7 +21,7 @@ namespace LanExchange.Utils
         public ListViewItemCache(IListViewItemGetter getter)
         {
             m_Getter = getter;
-            TableCache = new ListViewItem[0];
+            //TableCache = new ListViewItem[0];
         }
         
         public void CacheVirtualItems(object sender, CacheVirtualItemsEventArgs e)

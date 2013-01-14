@@ -21,8 +21,7 @@ namespace LanExchange.Utils
                 (SHGFI.SYSICONINDEX | SHGFI.SMALLICON | SHGFI.PIDL));
             if (!retVal.Equals(IntPtr.Zero))
                 return shfi.iIcon;
-            else
-                return -1;
+            return -1;
         }
     }
 }

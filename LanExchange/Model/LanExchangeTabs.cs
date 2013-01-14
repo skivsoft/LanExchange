@@ -1,5 +1,3 @@
-using System;
-
 namespace LanExchange.Model
 {
     public class LanExchangeTabs
