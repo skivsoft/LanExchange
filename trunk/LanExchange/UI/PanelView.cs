@@ -236,7 +236,7 @@ namespace LanExchange.UI
                     if (mCopyPath.Enabled)
                         m_Presenter.CopyPathCommand();
                 if (e.KeyCode == Keys.C)
-                    MainForm.Instance.IsFormVisible = false;
+                    MainForm.Instance.Hide();
                 e.Handled = true;
             }
 
@@ -433,7 +433,7 @@ namespace LanExchange.UI
 
         private void mContextClose_Click(object sender, EventArgs e)
         {
-            MainForm.Instance.IsFormVisible = false;
+            MainForm.Instance.Hide();
         }
 
         public void FocusListView()

@@ -5,28 +5,26 @@ using System.Windows.Forms;
 using LanExchange.Presenter;
 using LanExchange.Model;
 using LanExchange.View;
-using NLog;
 
 namespace LanExchange.UI
 {
     public partial class PagesView : UserControl, IPagesView
     {
-        private readonly static Logger logger = LogManager.GetCurrentClassLogger();
         private readonly PagesPresenter m_Presenter;
         private int m_PopupSelectedIndex = -1;
 
         /// <summary>
         /// Mouse right click was pressed.
         /// </summary>
-        private bool bMouseDown;
+        private bool m_MouseDown;
         /// <summary>
         /// Popup menu was opened.
         /// </summary>
-        private bool bOpened;
+        private bool m_Opened;
         /// <summary>
         /// Menu item in popup menu was clicked.
         /// </summary>
-        private bool bClicked;
+        private bool m_Clicked;
 
         public PagesView()
         {
@@ -56,16 +54,15 @@ namespace LanExchange.UI
         {
             if (text.Length > length)
                 return text.Substring(0, length) + "…";
-            else
-                return text;
+            return text;
         }
 
-        public void NewTabFromItemList(PanelItemList Info)
+        public void NewTabFromItemList(PanelItemList info)
         {
             TabPage Tab = new TabPage();
-            Tab.Text = Ellipsis(Info.TabName, 20);
+            Tab.Text = Ellipsis(info.TabName, 20);
             Tab.ImageIndex = LanExchangeIcons.imgWorkgroup;
-            Tab.ToolTipText = Info.GetTabToolTip();
+            Tab.ToolTipText = info.GetTabToolTip();
             Pages.Controls.Add(Tab);
         }
 
@@ -88,8 +85,7 @@ namespace LanExchange.UI
             {
                 if (Pages.TabPages.Count > 0 && Pages.SelectedTab != null)
                     return Pages.SelectedTab.Text;
-                else
-                    return String.Empty;
+                return String.Empty;
             }
             set
             {
@@ -99,17 +95,17 @@ namespace LanExchange.UI
         }
 
 
-        public void AddControl(int Index, Control control)
+        public void AddControl(int index, Control control)
         {
-            if (Index < 0 || Index > Pages.TabPages.Count - 1)
-                throw new ArgumentOutOfRangeException("Index");
-            Pages.TabPages[Index].Controls.Add(control);
+            if (index < 0 || index > Pages.TabPages.Count - 1)
+                throw new ArgumentOutOfRangeException("index");
+            Pages.TabPages[index].Controls.Add(control);
         }
 
 
-        public void RemoveTabAt(int Index)
+        public void RemoveTabAt(int index)
         {
-            Pages.TabPages.RemoveAt(Index);
+            Pages.TabPages.RemoveAt(index);
         }
 
         //public PanelItemList GetPanelItemListByPoint(Point point)
@@ -128,25 +124,19 @@ namespace LanExchange.UI
         //    return m_Presenter.GetModel().GetItem(Index);
         //}
 
-        public int GetTabIndexByPoint(Point point)
+        private int GetTabIndexByPoint(Point point)
         {
             for (int i = 0; i < Pages.TabPages.Count; i++)
-            {
-                TabPage page = Pages.TabPages[i];
                 if (Pages.GetTabRect(i).Contains(point))
                     return i;
-            }
             return -1;
         }
 
         public TabPage GetTabPageByPoint(Point point)
         {
             for (int i = 0; i < Pages.TabPages.Count; i++)
-            {
-                TabPage page = Pages.TabPages[i];
                 if (Pages.GetTabRect(i).Contains(point))
                     return Pages.TabPages[i];
-            }
             return null;
         }
 
@@ -167,14 +157,18 @@ namespace LanExchange.UI
 
         private void popPages_Opening(object sender, CancelEventArgs e)
         {
-            mSelectTab.DropDownItems.Clear();
-            m_Presenter.AddTabsToMenuItem(mSelectTab, m_Presenter.mSelectTab_Click, false);
             mCloseTab.Enabled = m_Presenter.CanCloseTab(m_Presenter.GetModel().SelectedIndex);
+            mSelectTab.Enabled = m_Presenter.GetModel().Count > 1;
+            if (mSelectTab.Enabled)
+            {
+                mSelectTab.DropDownItems.Clear();
+                m_Presenter.AddTabsToMenuItem(mSelectTab, m_Presenter.mSelectTab_Click, false);
+            }
         }
 
         private void mTabParams_Click(object sender, EventArgs e)
         {
-            using (TabParamsForm Form = new TabParamsForm())
+            using (var Form = new TabParamsForm())
             {
                 int Index = PopupSelectedIndex;
                 PagesModel M = m_Presenter.GetModel();
@@ -206,63 +200,60 @@ namespace LanExchange.UI
         {
             if (Pages.TabCount == 0 || Pages.SelectedTab == null)
                 return null;
-            else
-            {
-                Control.ControlCollection ctrls = Pages.SelectedTab.Controls;
-                return ctrls.Count > 0 ? ctrls[0] as PanelView : null;
-            }
+            ControlCollection ctrls = Pages.SelectedTab.Controls;
+            return ctrls.Count > 0 ? ctrls[0] as PanelView : null;
         }
 
-        public void SetTabToolTip(int Index, string value)
+        public void SetTabToolTip(int index, string value)
         {
-            if (Index >= 0 && Index <= Pages.TabCount-1)
-                Pages.TabPages[Index].ToolTipText = value;
+            if (index >= 0 && index <= Pages.TabCount-1)
+                Pages.TabPages[index].ToolTipText = value;
         }
 
         public void FocusPanelView()
         {
-            PanelView PV = GetActivePanelView();
-            if (PV != null)
+            PanelView pv = GetActivePanelView();
+            if (pv != null && ActiveControl != pv)
             {
-                ActiveControl = PV;
-                PV.FocusListView();
-                PV.GetPresenter().UpdateItemsAndStatus();
+                ActiveControl = pv;
+                pv.FocusListView();
+                pv.GetPresenter().UpdateItemsAndStatus();
             }
         }
 
         private void Pages_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            if (e.Button == MouseButtons.Right)
             {
                 m_PopupSelectedIndex = GetTabIndexByPoint(e.Location);
-                bMouseDown = true;
-                bOpened = false;
-                bClicked = false;
+                m_MouseDown = true;
+                m_Opened = false;
+                m_Clicked = false;
             }
             //logger.Info("MouseDown={0}", bMouseDown);
         }
 
         private void popPages_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            bClicked = bOpened;
+            m_Clicked = m_Opened;
             //logger.Info("Clicked={0}", bClicked);
         }
 
         private void popPages_Opened(object sender, EventArgs e)
         {
-            if (bMouseDown && !bOpened)
+            if (m_MouseDown && !m_Opened)
             {
-                bOpened = true;
-                bMouseDown = false;
+                m_Opened = true;
+                m_MouseDown = false;
             }
             else
-                bOpened = false;
+                m_Opened = false;
             //logger.Info("Opened={0}", bOpened);
         }
 
         private void popPages_Closed(object sender, ToolStripDropDownClosedEventArgs e)
         {
-            bOpened = false;
+            m_Opened = false;
             //logger.Info("Closed={0}", bClosed);
         }
 
@@ -271,18 +262,16 @@ namespace LanExchange.UI
             get
             {
                 //logger.Info("MouseDown={0}, Opened={1}, Clicked={2}, Closed={3}", bMouseDown, bOpened, bClicked, bClosed);
-                if (bClicked && !bOpened)
+                if (m_Clicked && !m_Opened)
                 {
-                    bMouseDown = false;
-                    bOpened = false;
-                    bClicked = false;
+                    m_MouseDown = false;
+                    m_Opened = false;
+                    m_Clicked = false;
                     if (m_PopupSelectedIndex < 0 || m_PopupSelectedIndex > Pages.TabCount - 1)
                         return Pages.SelectedIndex;
-                    else
-                        return m_PopupSelectedIndex;
+                    return m_PopupSelectedIndex;
                 }
-                else
-                    return Pages.SelectedIndex;
+                return Pages.SelectedIndex;
             }
         }
 

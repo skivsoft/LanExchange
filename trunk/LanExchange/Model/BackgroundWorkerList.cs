@@ -77,14 +77,14 @@ namespace LanExchange.Model
         {
             get
             {
-                int Count = 0;
+                int count = 0;
                 lock (m_Workers)
                 {
                     foreach (var Pair in m_Workers)
                         if (Pair.Value.IsBusy)
-                            Count++;
+                            count++;
                 }
-                return Count;
+                return count;
             }
         }
 

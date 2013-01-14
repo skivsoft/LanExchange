@@ -22,15 +22,23 @@ namespace LanExchange.UI
             // do not update list after unsubscribe
             if (subject == null) return;
             var Saved = ListViewUtils.GetCheckedList(lvDomains);
-            try
+            string FocusedText = null;
+            if (lvDomains.FocusedItem != null)
+                FocusedText = lvDomains.FocusedItem.Text;
+            lvDomains.Items.Clear();
+            int index = 0;
+            foreach (ServerInfo SI in sender.GetListBySubject(subject))
             {
-                lvDomains.Items.Clear();
-                foreach (ServerInfo SI in sender.GetListBySubject(subject))
-                    lvDomains.Items.Add(SI.Name);
-            }
-            finally
-            {
-                ListViewUtils.SetCheckedList(lvDomains, Saved);
+                var LVI = new ListViewItem(SI.Name);
+                if (Saved.Contains(SI.Name))
+                    LVI.Checked = true;
+                lvDomains.Items.Add(LVI);
+                if (FocusedText != null && String.Compare(SI.Name, FocusedText) == 0)
+                {
+                    lvDomains.FocusedItem = lvDomains.Items[index];
+                    lvDomains.FocusedItem.Selected = true;
+                }
+                index++;
             }
         }
 

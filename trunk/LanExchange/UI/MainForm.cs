@@ -8,7 +8,6 @@ using System.Drawing;
 using System.Reflection;
 using System.ComponentModel;
 using System.Text;
-using System.Security.Cryptography;
 using LanExchange.Windows;
 
 namespace LanExchange.UI
@@ -19,10 +18,7 @@ namespace LanExchange.UI
         /// Logger object.
         /// </summary>
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
-        /// <summary>
-        /// Default width of MainForm.
-        /// </summary>
-        private const int MAINFORM_DEFAULTWIDTH = 450;
+
         /// <summary>
         /// Presenter for MainForm.
         /// </summary>
@@ -38,8 +34,7 @@ namespace LanExchange.UI
             Instance = this;
             // load settings from cfg-file
             Settings.LoadSettings();
-            RunMinimized = Settings.Instance.RunMinimized;
-            SetupForm();
+            SetRunMinimized(Settings.Instance.RunMinimized);
             // init MainForm presenter
             m_Presenter = new MainPresenter(this);
             m_Presenter.Pages = Pages.GetPresenter();
@@ -48,9 +43,11 @@ namespace LanExchange.UI
             // here we call event for update items count in statusline
             //Pages.UpdateSelectedTab();
             //mSendToNewTab.Click += new EventHandler(TabController.mSendToNewTab_Click);
+            // init main form
+            SetupForm();
             
             // setup images
-            MainForm.Instance.tipComps.SetToolTip(Pages.Pages, " ");
+            Instance.tipComps.SetToolTip(Pages.Pages, " ");
             Pages.Pages.ImageList = LanExchangeIcons.SmallImageList;
             Status.ImageList = LanExchangeIcons.SmallImageList;
             // init network scanner
@@ -75,35 +72,32 @@ namespace LanExchange.UI
             lUserName.Text = Settings.GetCurrentUserName();
         }
 
-        private void SetupMenu()
-        {
-            //ToolStripItem[] MyItems = new ToolStripItem[mComp.DropDownItems.Count];
-            //for (int i = 0; i < MyItems.Length; i++)
-            //{
-            //    var TI = mComp.DropDownItems[i];
-            //    if (TI is ToolStripSeparator)
-            //        MyItems[i] = new ToolStripSeparator();
-            //    else
-            //        if (TI is ToolStripMenuItem)
-            //            MyItems[i] = (ToolStripItem)MenuUtils.Clone(TI as ToolStripMenuItem);
-            //}
-            //popTop.Items.Clear();
-            //popTop.Items.AddRange(MyItems);
-        }
+        //private void SetupMenu()
+        //{
+        //    ToolStripItem[] MyItems = new ToolStripItem[mComp.DropDownItems.Count];
+        //    for (int i = 0; i < MyItems.Length; i++)
+        //    {
+        //        var TI = mComp.DropDownItems[i];
+        //        if (TI is ToolStripSeparator)
+        //            MyItems[i] = new ToolStripSeparator();
+        //        else
+        //            if (TI is ToolStripMenuItem)
+        //                MyItems[i] = (ToolStripItem)MenuUtils.Clone(TI as ToolStripMenuItem);
+        //    }
+        //    popTop.Items.Clear();
+        //    popTop.Items.AddRange(MyItems);
+        //}
 
 #if DEBUG
-        public static void Debug_ShowProperties(object obj)
-        {
-            var F = new Form();
-            F.Text = obj.ToString();
-            var Grid = new PropertyGrid();
-            Grid.Dock = DockStyle.Fill;
-            Grid.SelectedObject = obj;
-            F.Controls.Add(Grid);
-            F.Show();
-        }
+        //public static void Debug_ShowProperties(object obj)
+        //{
+        //    var F = new Form {Text = obj.ToString()};
+        //    var Grid = new PropertyGrid {Dock = DockStyle.Fill, SelectedObject = obj};
+        //    F.Controls.Add(Grid);
+        //    F.Show();
+        //}
 
-        public static void Debug_ShowSubscribers()
+        private static void Debug_ShowSubscribers()
         {
             var S = new StringBuilder();
             foreach (var Pair in ServerListSubscription.Instance.GetSubjects())
@@ -116,11 +110,11 @@ namespace LanExchange.UI
         {
             if (e.KeyCode == Keys.Escape)
             {
-                PanelView PV = Pages.GetActivePanelView();
-                if (PV != null && PV.Filter.Visible)
-                    PV.Filter.FilterText = "";
+                PanelView pv = Pages.GetActivePanelView();
+                if (pv != null && pv.Filter.Visible)
+                    pv.Filter.FilterText = "";
                 else
-                    MainForm.Instance.IsFormVisible = false;
+                    Instance.Hide();
                 e.Handled = true;
             }
 #if DEBUG
@@ -139,15 +133,15 @@ namespace LanExchange.UI
 #endif
         }
 
-        public static string GetMD5FromString(string str)
-        {
-            MD5 md5Hasher = MD5.Create();
-            byte[] data = md5Hasher.ComputeHash(System.Text.ASCIIEncoding.ASCII.GetBytes(str));
-            StringBuilder sBuilder = new StringBuilder();
-            for (int i = 0; i < data.Length; i++)
-                sBuilder.Append(data[i].ToString("x2"));
-            return sBuilder.ToString();
-        }
+        //public static string GetMd5FromString(string str)
+        //{
+        //    MD5 md5Hasher = MD5.Create();
+        //    byte[] data = md5Hasher.ComputeHash(Encoding.ASCII.GetBytes(str));
+        //    var sBuilder = new StringBuilder();
+        //    for (int i = 0; i < data.Length; i++)
+        //        sBuilder.Append(data[i].ToString("x2"));
+        //    return sBuilder.ToString();
+        //}
 
         private void popTop_Opened(object sender, EventArgs e)
         {
@@ -162,11 +156,11 @@ namespace LanExchange.UI
 
         private void popTop_Opening(object sender, CancelEventArgs e)
         {
-            PanelView PV = Pages.GetActivePanelView();
-            if (PV != null)
+            var pv = Pages.GetActivePanelView();
+            if (pv != null)
             {
-                PV.popComps_Opening(sender, e);
-                e.Cancel = !PV.mComp.Enabled;
+                pv.popComps_Opening(sender, e);
+                e.Cancel = !pv.mComp.Enabled;
             }
         }
 
@@ -184,34 +178,33 @@ namespace LanExchange.UI
         private void tipComps_Popup(object sender, PopupEventArgs e)
         {
             //logger.Info("tipComps_Popup: {0}", e.AssociatedControl.GetType().Name);
+            var tooltip = (sender as ToolTip);
+            if (tooltip == null) return;
             if (e.AssociatedControl == pInfo.Picture)
             {
-                (sender as ToolTip).ToolTipIcon = ToolTipIcon.Info;
-                (sender as ToolTip).ToolTipTitle = "Легенда";
+                tooltip.ToolTipIcon = ToolTipIcon.Info;
+                tooltip.ToolTipTitle = "Легенда";
                 return;
             }
             if (e.AssociatedControl is ListView)
             {
-                ListView LV = (ListView)e.AssociatedControl;
-                Point P = LV.PointToClient(Control.MousePosition);
-                ListViewHitTestInfo Info = LV.HitTest(P);
-                if (Info != null && Info.Item != null)
-                    (sender as ToolTip).ToolTipTitle = Info.Item.Text;
-                else
-                    (sender as ToolTip).ToolTipTitle = "Информация";
+                var listview = e.AssociatedControl as ListView;
+                Point P = listview.PointToClient(MousePosition);
+                ListViewHitTestInfo Info = listview.HitTest(P);
+                tooltip.ToolTipTitle = Info.Item != null ? Info.Item.Text : "Информация";
                 return;
             }
             if (e.AssociatedControl is TabControl && e.AssociatedControl == Pages.Pages)
             {
-                Point P = e.AssociatedControl.PointToClient(Control.MousePosition);
+                Point P = e.AssociatedControl.PointToClient(MousePosition);
                 TabPage Tab = Pages.GetTabPageByPoint(P);
                 if (Tab != null)
-                    (sender as ToolTip).ToolTipTitle = Tab.Text;
+                    tooltip.ToolTipTitle = Tab.Text;
                 else
                     e.Cancel = true;
                 return;
             }
-            (sender as ToolTip).ToolTipTitle = "";
+            tooltip.ToolTipTitle = "";
         }
 
         private void mSettings_Click(object sender, EventArgs e)
@@ -236,16 +229,16 @@ namespace LanExchange.UI
             AboutForm.Instance = null;
         }
 
-        private void panel1_DragEnter(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                e.Effect = DragDropEffects.Copy;
-        }
+        //private void panel1_DragEnter(object sender, DragEventArgs e)
+        //{
+        //    if (e.Data.GetDataPresent(DataFormats.FileDrop))
+        //        e.Effect = DragDropEffects.Copy;
+        //}
 
-        private void panel1_DragDrop(object sender, DragEventArgs e)
-        {
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-        }
+        //private void panel1_DragDrop(object sender, DragEventArgs e)
+        //{
+        //    string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+        //}
         
         public void Restart()
         {
@@ -254,7 +247,7 @@ namespace LanExchange.UI
 
         private void lItemsCount_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            if (e.Button == MouseButtons.Right)
             {
                 Point P = Status.PointToScreen(e.Location);
                 popTray.Show(P);
@@ -266,14 +259,14 @@ namespace LanExchange.UI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Pages_PanelViewFocusedItemChanged(object sender, EventArgs e)
+        private void Pages_PanelViewFocusedItemChanged(object sender, EventArgs e)
         {
             // get focused item from current PanelView
-            PanelView PV = sender as PanelView;
+            var pv = sender as PanelView;
             ComputerPanelItem Comp = null;
-            if (PV != null) 
+            if (pv != null) 
             {
-                PanelItem PItem = PV.GetPresenter().GetFocusedPanelItem(false, false);
+                PanelItem PItem = pv.GetPresenter().GetFocusedPanelItem(false, false);
                 if (PItem != null)
                     Comp = PItem as ComputerPanelItem;
             }
@@ -317,7 +310,7 @@ namespace LanExchange.UI
 
         private void popTray_Opening(object sender, CancelEventArgs e)
         {
-            mOpen.Text = IsFormVisible ? "Скрыть" : "Открыть";
+            mOpen.Text = Visible ? "Скрыть" : "Открыть";
         }
 
         //private void MainForm_Shown(object sender, EventArgs e)
@@ -344,16 +337,16 @@ namespace LanExchange.UI
 
         private void mOpen_Click(object sender, EventArgs e)
         {
-            IsFormVisible = !IsFormVisible;
+            ToggleVisible();
         }
 
         private void TrayIcon_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
-                IsFormVisible = !IsFormVisible;
+                ToggleVisible();
         }
 
-        public void mExit_Click(object sender, EventArgs e)
+        private void mExit_Click(object sender, EventArgs e)
         {
             ApplicationExit();
         }
@@ -385,7 +378,5 @@ namespace LanExchange.UI
         {
             Pages.FocusPanelView();
         }
-
-
     }
 }

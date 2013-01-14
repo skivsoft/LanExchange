@@ -33,32 +33,30 @@ namespace LanExchange.Utils
             return Result;
         }
 
-        public static void SetCheckedList(ListView LV, IList<string> SaveSelected)
-        {
-            LV.FocusedItem = null;
-            int Count = LV.VirtualMode ? LV.VirtualListSize : LV.Items.Count;
-            if (Count > 0)
-            {
-                for (int i = 0; i < SaveSelected.Count; i++)
-                {
-                    int index = -1;
-                    for (int j = 0; j < LV.Items.Count; j++)
-                        if (SaveSelected[i].CompareTo(LV.Items[j].Text) == 0)
-                        {
-                            index = j;
-                            break;
-                        }
-                    if (index == -1) continue;
-                    if (i == 0)
-                    {
-                        LV.FocusedItem = LV.Items[index];
-                        LV.SelectedIndices.Add(index);
-                        LV.EnsureVisible(index);
-                    }
-                    else
-                        LV.Items[index].Checked = true;
-                }
-            }
-        }
+        //public static void SetCheckedList(ListView LV, IList<string> SaveSelected)
+        //{
+        //    LV.FocusedItem = null;
+        //    int Count = LV.VirtualMode ? LV.VirtualListSize : LV.Items.Count;
+        //    if (Count > 0)
+        //    {
+        //        for (int i = 0; i < SaveSelected.Count; i++)
+        //        {
+        //            int index = -1;
+        //            for (int j = 0; j < LV.Items.Count; j++)
+        //                if (SaveSelected[i].CompareTo(LV.Items[j].Text) == 0)
+        //                {
+        //                    index = j;
+        //                    break;
+        //                }
+        //            if (index == -1) continue;
+        //            LV.Items[index].Checked = true;
+        //            if (i == 0)
+        //            {
+        //                LV.FocusedItem = LV.Items[index];
+        //                LV.SelectedIndices.Add(index);
+        //            }
+        //        }
+        //    }
+        //}
     }
 }
