@@ -207,12 +207,12 @@ namespace LanExchange.Model
 
         public string GetUpdateUrl()
         {
-            return String.IsNullOrEmpty(UpdateUrl) ? UpdateUrlDefault : UpdateUrl;
+            return String.IsNullOrEmpty(UpdateURL) ? UpdateUrlDefault : UpdateURL;
         }
 
         public string GetWebSiteUrl()
         {
-            return String.IsNullOrEmpty(WebSiteUrl) ? WebSiteUrlDefault : WebSiteUrl;
+            return String.IsNullOrEmpty(WebSiteURL) ? WebSiteUrlDefault : WebSiteURL;
         }
 
         public string GetEmailAddress()
@@ -235,8 +235,8 @@ namespace LanExchange.Model
 
         public int MainFormX { get; set; }
         public int MainFormWidth { get; set; }
-        public string UpdateUrl { get; set; }
-        public string WebSiteUrl { get; set; }
+        public string UpdateURL { get; set; }
+        public string WebSiteURL { get; set; }
         public string EmailAddress { get; set; }
     }
 }
