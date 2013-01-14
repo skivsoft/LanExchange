@@ -11,7 +11,7 @@ namespace LanExchange.Model
         // methods
         void SubscribeToSubject(ISubscriber sender, string subject);
         void UnSubscribe(ISubscriber sender);
-        IDictionary<string, IList<ISubscriber>> GetSubjects();
+        IEnumerable<KeyValuePair<string, IList<ISubscriber>>> GetSubjects();
         IEnumerable GetListBySubject(string subject);
     }
 }

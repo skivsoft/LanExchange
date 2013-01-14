@@ -201,7 +201,7 @@ namespace LanExchange.UI
             // Shift+Enter - Open current item
             if (e.Shift && e.KeyCode == Keys.Enter)
             {
-                PanelItem PItem = m_Presenter.GetFocusedPanelItem(true, false);
+                PanelItem PItem = m_Presenter.GetFocusedPanelItem(false);
                 if (PItem is ComputerPanelItem)
                     mCompOpen_Click(mCompOpen, new EventArgs());
                 if (PItem is SharePanelItem)
@@ -211,7 +211,7 @@ namespace LanExchange.UI
             // Ctrl+Enter - Run RAdmin for computer and FAR for folder
             if (Settings.Instance.AdvancedMode && e.Control && e.KeyCode == Keys.Enter)
             {
-                PanelItem PItem = m_Presenter.GetFocusedPanelItem(true, false);
+                PanelItem PItem = m_Presenter.GetFocusedPanelItem(false);
                 if (PItem is ComputerPanelItem)
                     mCompOpen_Click(mRadmin1, new EventArgs());
                 if (PItem is SharePanelItem)
@@ -336,7 +336,7 @@ namespace LanExchange.UI
                     DoFocusedItemChanged();
             UpdateViewTypeMenu();
 
-            PanelItem PItem = m_Presenter.GetFocusedPanelItem(false, false);
+            PanelItem PItem = m_Presenter.GetFocusedPanelItem(false);
             bool bCompVisible = false;
             bool bFolderVisible = false;
             if (PItem != null)

@@ -3,16 +3,16 @@ using LanExchange.Utils;
 
 namespace LanExchange.Model
 {
-    public class SharePanelItem : PanelItem
+    public abstract class SharePanelItem : PanelItem
     {
         private string m_Name;
 
-        public SharePanelItem(string share_name, string share_comment, uint share_type, string computer_name)
+        public SharePanelItem(string shareName, string shareComment, uint shareType, string computerName)
         {
-            m_Name = share_name;
-            Comment = share_comment;
-            ShareType = share_type;
-            ComputerName = computer_name;
+            m_Name = shareName;
+            Comment = shareComment;
+            ShareType = shareType;
+            ComputerName = computerName;
         }
 
         protected override string GetName()
@@ -25,7 +25,7 @@ namespace LanExchange.Model
             m_Name = value;
         }
 
-        public override string Comment { get; set; }
+        public override sealed string Comment { get; set; }
 
         public uint ShareType { get; set; }
 
@@ -35,11 +35,9 @@ namespace LanExchange.Model
         {
             if (String.IsNullOrEmpty(m_Name))
                 return LanExchangeIcons.imgFolderBack;
-            else
             if (IsPrinter)
                 return LanExchangeIcons.imgFolderPrinter;
-            else
-                return IsHidden ? LanExchangeIcons.imgFolderHidden : LanExchangeIcons.imgFolderNormal;
+            return IsHidden ? LanExchangeIcons.imgFolderHidden : LanExchangeIcons.imgFolderNormal;
         }
 
         public bool IsPrinter
@@ -56,14 +54,13 @@ namespace LanExchange.Model
             {
                 if (!String.IsNullOrEmpty(m_Name))
                     return m_Name[m_Name.Length - 1] == '$';
-                else
-                    return false;
+                return false;
             }
         }
 
         public override string[] GetSubItems()
         {
-            return new string[2] { "", Comment };
+            return new[] { "", Comment };
         }
 
         /// <summary>
@@ -73,7 +70,9 @@ namespace LanExchange.Model
         /// <returns></returns>
         public override int CompareTo(PanelItem p2)
         {
-            bool b2 = (p2 as SharePanelItem).IsPrinter;
+            var shareItem = (p2 as SharePanelItem);
+            if (shareItem == null) return 1;
+            bool b2 = shareItem.IsPrinter;
             int Result;
             if (IsPrinter)
                 if (b2)

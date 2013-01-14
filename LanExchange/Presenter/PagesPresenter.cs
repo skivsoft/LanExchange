@@ -46,7 +46,7 @@ namespace LanExchange.Presenter
         public void CloseTab()
         {
             int Index = m_View.PopupSelectedIndex;
-            if (CanCloseTab(Index))
+            if (CanCloseTab())
             {
                 m_Model.DelTab(Index);
                 m_Model.SaveSettings();
@@ -72,7 +72,7 @@ namespace LanExchange.Presenter
         {
             for (int i = 0; i < m_Model.Count; i++)
             {
-                if (bHideActive && (!CanCloseTab(i) || (i == m_View.SelectedIndex)))
+                if (bHideActive && (!CanCloseTab() || (i == m_View.SelectedIndex)))
                     continue;
                 string S = m_Model.GetTabName(i);
                 var Item = new ToolStripMenuItem
@@ -89,76 +89,83 @@ namespace LanExchange.Presenter
 
         public void mSelectTab_Click(object sender, EventArgs e)
         {
-            int Index = (int)(sender as ToolStripMenuItem).Tag;
-            if (m_View.SelectedIndex != Index)
-                m_View.SelectedIndex = Index;
-        }
-
-        public static void PanelView_SendPanelItems(PanelView lvSender, PanelView lvReceiver)
-        {
-            if (lvSender == null || lvReceiver == null)
-                return;
-            PanelItemList ItemListSender = lvSender.GetPresenter().Objects;
-            PanelItemList ItemListReceiver = lvReceiver.GetPresenter().Objects;
-
-            int NumAdded = 0;
-            //int[] Indices = new int[lvSender.SelectedIndices.Count];
-            foreach (int Index in lvSender.SelectedIndices)
+            var menu = sender as ToolStripMenuItem;
+            if (menu != null && m_View != null)
             {
-                PanelItem PItem = ItemListSender.Get(lvSender.Items[Index].Text);
-                if (PItem != null)
-                {
-                    ItemListReceiver.Add(PItem);
-                    //Indices[Index] = ItemListReceiver.Keys.IndexOf(PItem.Name);
-                    NumAdded++;
-                }
-            }
-            ItemListReceiver.ApplyFilter();
-            //View.ListView_Update(lvReceiver);
-            lvReceiver.Focus();
-            // выделяем добавленные итемы
-            if (lvReceiver.Items.Count > 0)
-            {
-                lvReceiver.SelectItem(0);
-                /*
-                foreach(int Index in Indices)
-                    if (Index != -1)
-                        lvReceiver.SelectedIndices.Add(Index);
-                 */
+                int Index = (int)menu.Tag;
+                if (!Equals(m_View.SelectedIndex, Index))
+                    m_View.SelectedIndex = Index;
             }
         }
 
-        public void mSendToNewTab_Click(object sender, EventArgs e)
-        {
-            //if (View.SelectedIndex == 0/* && 
-            //    MainForm.GetInstance().CompBrowser.InternalStack.Count > 0*/)
-            //    return;
-            //string NewTabName = TabView.InputBoxAsk("Новая вкладка", "Введите имя", "");
-            //if (NewTabName == null)
-            //    return;
-            //ListView LV = View.GetActiveListView();
-            //PanelItemList ItemList = PanelItemList.GetObject(LV);
-            //PanelItemList Info = new PanelItemList(NewTabName);
-            ////Info.Items = ItemList.ListView_GetSelected(LV, false);
-            //Model.AddTab(Info);
-            //View.SelectedIndex = Model.Count - 1;
-            //Model.StoreSettings();
-        }
+        // TOD uncomment SendPanelItems
+        //public static void PanelView_SendPanelItems(PanelView lvSender, PanelView lvReceiver)
+        //{
+        //    if (lvSender == null || lvReceiver == null)
+        //        return;
+        //    PanelItemList ItemListSender = lvSender.GetPresenter().Objects;
+        //    PanelItemList ItemListReceiver = lvReceiver.GetPresenter().Objects;
 
-        public void mSendToSelectedTab_Click(object sender, EventArgs e)
-        {
-            //if (View.SelectedIndex == 0/* &&
-            //    MainForm.GetInstance().CompBrowser.InternalStack.Count > 0*/)
-            //    return;
-            //ListView lvSender = View.GetActiveListView();
-            //int Index = (int)(sender as ToolStripMenuItem).Tag;
-            //View.SelectedIndex = Index;
-            //ListView lvReceiver = View.GetActiveListView();
-            //ListView_SendPanelItems(lvSender, lvReceiver);
-            //Model.StoreSettings();
-        }
+        //    int NumAdded = 0;
+        //    //int[] Indices = new int[lvSender.SelectedIndices.Count];
+        //    foreach (int Index in lvSender.SelectedIndices)
+        //    {
+        //        PanelItem PItem = ItemListSender.Get(lvSender.Items[Index].Text);
+        //        if (PItem != null)
+        //        {
+        //            ItemListReceiver.Add(PItem);
+        //            //Indices[Index] = ItemListReceiver.Keys.IndexOf(PItem.Name);
+        //            NumAdded++;
+        //        }
+        //    }
+        //    ItemListReceiver.ApplyFilter();
+        //    //View.ListView_Update(lvReceiver);
+        //    lvReceiver.Focus();
+        //    // выделяем добавленные итемы
+        //    if (lvReceiver.Items.Count > 0)
+        //    {
+        //        lvReceiver.SelectItem(0);
+        //        /*
+        //        foreach(int Index in Indices)
+        //            if (Index != -1)
+        //                lvReceiver.SelectedIndices.Add(Index);
+        //         */
+        //    }
+        //}
 
-        public bool CanCloseTab(int Index)
+        // TODO uncomment mSendToNewTab_Click
+        //public void mSendToNewTab_Click(object sender, EventArgs e)
+        //{
+        //    if (View.SelectedIndex == 0/* && 
+        //        MainForm.GetInstance().CompBrowser.InternalStack.Count > 0*/)
+        //        return;
+        //    string NewTabName = TabView.InputBoxAsk("Новая вкладка", "Введите имя", "");
+        //    if (NewTabName == null)
+        //        return;
+        //    ListView LV = View.GetActiveListView();
+        //    PanelItemList ItemList = PanelItemList.GetObject(LV);
+        //    PanelItemList Info = new PanelItemList(NewTabName);
+        //    //Info.Items = ItemList.ListView_GetSelected(LV, false);
+        //    Model.AddTab(Info);
+        //    View.SelectedIndex = Model.Count - 1;
+        //    Model.StoreSettings();
+        //}
+
+        // TODO uncommment mSendToSelectedTab_Click
+        //public void mSendToSelectedTab_Click(object sender, EventArgs e)
+        //{
+        //    if (View.SelectedIndex == 0/* &&
+        //        MainForm.GetInstance().CompBrowser.InternalStack.Count > 0*/)
+        //        return;
+        //    ListView lvSender = View.GetActiveListView();
+        //    int Index = (int)(sender as ToolStripMenuItem).Tag;
+        //    View.SelectedIndex = Index;
+        //    ListView lvReceiver = View.GetActiveListView();
+        //    ListView_SendPanelItems(lvSender, lvReceiver);
+        //    Model.StoreSettings();
+        //}
+
+        public bool CanCloseTab()
         {
             return m_View.TabPagesCount > 1;
         }
@@ -170,17 +177,20 @@ namespace LanExchange.Presenter
             var PV = new PanelView { Dock = DockStyle.Fill };
             PV.GetPresenter().Objects = e.Info;
             ListView LV = PV.Controls[0] as ListView;
-            LV.SmallImageList = LanExchangeIcons.SmallImageList;
-            LV.LargeImageList = LanExchangeIcons.LargeImageList;
-            if (MainForm.Instance != null)
-                MainForm.Instance.tipComps.SetToolTip(LV, " ");
-            PV.FocusedItemChanged += new EventHandler(PV_FocusedItemChanged);
+            if (LV != null)
+            {
+                LV.SmallImageList = LanExchangeIcons.SmallImageList;
+                LV.LargeImageList = LanExchangeIcons.LargeImageList;
+                if (MainForm.Instance != null)
+                    MainForm.Instance.tipComps.SetToolTip(LV, " ");
+            }
+            PV.FocusedItemChanged += PV_FocusedItemChanged;
             // add new tab and insert panel into it
             m_View.NewTabFromItemList(e.Info);
             m_View.AddControl(m_View.TabPagesCount - 1, PV);
             // set update event
-            PanelPresenter PP = PV.GetPresenter();
-            e.Info.Changed += PP.Items_Changed;
+            PanelPresenter presenter = PV.GetPresenter();
+            e.Info.Changed += presenter.Items_Changed;
             e.Info.SubscriptionChanged += Item_SubscriptionChanged;
         }
 

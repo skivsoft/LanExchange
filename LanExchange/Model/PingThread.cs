@@ -1,12 +1,11 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Net.NetworkInformation;
 
 namespace LanExchange.Model
 {
     class PingThread
     {
-        private bool PingOK;
+        private bool m_PingOk;
         
         public static bool FastPing(string ip)
         {
@@ -14,38 +13,40 @@ namespace LanExchange.Model
             Thread t = new Thread(instance.GO);
             t.Start(ip);
             t.Join(1000);
-            return instance.PingOK;
+            return instance.m_PingOk;
         }
 
-        public static bool SlowPing(string ip)
-        {
-            bool Result;
-            using (Ping ping = new Ping())
-            {
-                PingReply pingReply = null;
-                try
-                {
-                    pingReply = ping.Send(ip);
-                }
-                catch { }
-                Result = (pingReply != null) && (pingReply.Status == IPStatus.Success);
-            }
-            return Result;
-        }
+        //public static bool SlowPing(string ip)
+        //{
+        //    bool Result;
+        //    using (Ping ping = new Ping())
+        //    {
+        //        PingReply pingReply = null;
+        //        try
+        //        {
+        //            pingReply = ping.Send(ip);
+        //        }
+        //        catch { }
+        //        Result = (pingReply != null) && (pingReply.Status == IPStatus.Success);
+        //    }
+        //    return Result;
+        //}
 
-        void GO(object ip_obj)
+        void GO(object ip)
         {
-            PingOK = false;
-            if (ip_obj == null) return;
+            m_PingOk = false;
+            if (ip == null) return;
             try
             {
                 using (var ping = new Ping())
                 {
-                    var pingReply = ping.Send((string)ip_obj);
-                    PingOK = (pingReply != null) && (pingReply.Status == IPStatus.Success);
+                    var pingReply = ping.Send((string) ip);
+                    m_PingOk = (pingReply != null) && (pingReply.Status == IPStatus.Success);
                 }
             }
-            catch { }
+            catch
+            {
+            }
         }
 
     }

@@ -32,10 +32,10 @@ namespace LanExchange.Presenter
 
         private string MakeConnectionString()
         {
-            if (m_Comp == null || String.Compare(m_Comp.Name, SystemInformation.ComputerName, true) == 0)
+            if (m_Comp == null || 
+                String.Compare(m_Comp.Name, SystemInformation.ComputerName, StringComparison.OrdinalIgnoreCase) == 0)
                 return @"root\cimv2";
-            else
-                return String.Format(@"\\{0}\root\cimv2", m_Comp.Name);
+            return String.Format(@"\\{0}\root\cimv2", m_Comp.Name);
         }
 
         private void ConnectToComputer()
@@ -71,7 +71,7 @@ namespace LanExchange.Presenter
 
         }
 
-        public string GetClassDescription(string ClassName)
+        public string GetClassDescription(string className)
         {
             string Result = "";
             try
@@ -79,7 +79,7 @@ namespace LanExchange.Presenter
                 // Gets the property qualifiers.
                 var op = new ObjectGetOptions(null, TimeSpan.MaxValue, true);
 
-                var path = new ManagementPath(ClassName);
+                var path = new ManagementPath(className);
                 using (var mc = new ManagementClass(m_Scope, path, op))
                 {
                     mc.Options.UseAmendedQualifiers = true;
@@ -116,7 +116,7 @@ namespace LanExchange.Presenter
                         if (((ManagementClass)wmiClass).Derivation.Contains("__Event"))
                             continue;
                         // skip classes in exclude list
-                        string ClassName = ((ManagementClass)wmiClass)["__CLASS"].ToString();
+                        string ClassName = wmiClass["__CLASS"].ToString();
                         if (m_ExcludeClasses.Contains(ClassName))
                             continue;
                         bool IsDynamic = false;
@@ -125,7 +125,7 @@ namespace LanExchange.Presenter
                         bool IsSupportsUpdate = false;
                         bool IsSupportsCreate = false;
                         bool IsSupportsDelete = false;
-                        foreach (var qd in ((ManagementClass)wmiClass).Qualifiers)
+                        foreach (var qd in wmiClass.Qualifiers)
                         {
                             //if (qd.Name.Equals("Aggregation")) IsAggregation = true;
                             if (qd.Name.Equals("Association")) IsAssociation = true;
@@ -138,7 +138,7 @@ namespace LanExchange.Presenter
                         {
                             m_View.AddClass(ClassName);
                             ClassCount++;
-                            PropCount += ((ManagementClass)wmiClass).Properties.Count;
+                            PropCount += wmiClass.Properties.Count;
                             MethodCount += ((ManagementClass)wmiClass).Methods.Count;
                         }
                     }
@@ -157,7 +157,7 @@ namespace LanExchange.Presenter
             get { return m_Class; }
         }
 
-        public void EnumObjects(string ClassName)
+        public void EnumObjects(string className)
         {
             ConnectToComputer();
 
@@ -165,26 +165,26 @@ namespace LanExchange.Presenter
 
 
             var op = new ObjectGetOptions(null, TimeSpan.MaxValue, true);
-            var mc = new ManagementClass(m_Scope, new ManagementPath(ClassName), op);
+            var mc = new ManagementClass(m_Scope, new ManagementPath(className), op);
             mc.Options.UseAmendedQualifiers = true;
 
             m_Class = mc;
 
             foreach (var Prop in m_Class.Properties)
             {
-                bool IsCIM_Key = false;
+                bool isCimKey = false;
                 foreach (var qd in Prop.Qualifiers)
                     if (qd.Name.Equals("CIM_Key"))
                     {
-                        IsCIM_Key = true;
+                        isCimKey = true;
                         break;
                     }
-                if (IsCIM_Key || Prop.IsArray || Prop.Type.Equals(CimType.Boolean) || Prop.Type.Equals(CimType.DateTime))
+                if (isCimKey || Prop.IsArray || Prop.Type.Equals(CimType.Boolean) || Prop.Type.Equals(CimType.DateTime))
                     continue;
                 m_View.LV.Columns.Add(Prop.Name);
             }
 
-            var query = new ObjectQuery("select * from " + ClassName);
+            var query = new ObjectQuery("select * from " + className);
             using (var searcher = new ManagementObjectSearcher(m_Scope, query))
             {
                 try

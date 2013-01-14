@@ -29,7 +29,7 @@ namespace LanExchange.Model
         private bool m_AdvancedMode;
         private decimal m_RefreshTimeInSec;
 
-        public Settings()
+        private Settings()
         {
             RunMinimized = true;
             RefreshTimeInSec = 5 * 60;
@@ -90,7 +90,7 @@ namespace LanExchange.Model
             return Params.Length > 0 ? Params[0] : String.Empty;
         }
 
-        public static string GetConfigFileName()
+        private static string GetConfigFileName()
         {
             return Path.ChangeExtension(GetExecutableFileName(), ".cfg");
         }
@@ -235,8 +235,10 @@ namespace LanExchange.Model
 
         public int MainFormX { get; set; }
         public int MainFormWidth { get; set; }
+        // ReSharper disable UnusedAutoPropertyAccessor.Global
         public string UpdateURL { get; set; }
         public string WebSiteURL { get; set; }
         public string EmailAddress { get; set; }
+        // ReSharper restore UnusedAutoPropertyAccessor.Global
     }
 }

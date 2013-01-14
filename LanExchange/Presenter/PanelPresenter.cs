@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using LanExchange.View;
 using System.Windows.Forms;
@@ -7,15 +6,11 @@ using LanExchange.Model;
 using LanExchange.UI;
 using LanExchange.Utils;
 using System.Diagnostics;
-using NLog;
 
 namespace LanExchange.Presenter
 {
     public class PanelPresenter
     {
-        // logger object 
-        private readonly static Logger logger = LogManager.GetCurrentClassLogger();
-
         public const string COMPUTER_MENU = "computer";
         public const string FOLDER_MENU = "folder";
 
@@ -31,12 +26,11 @@ namespace LanExchange.Presenter
         {
             if (m_Objects == null) return;
             StringBuilder S = new StringBuilder();
-            PanelItem PItem;
             foreach (int index in m_View.SelectedIndices)
             {
                 if (S.Length > 0)
                     S.AppendLine();
-                PItem = m_Objects.GetAt(index);
+                PanelItem PItem = m_Objects.GetAt(index);
                 if (PItem != null)
                     S.Append(@"\\" + PItem.Name);
             }
@@ -48,12 +42,11 @@ namespace LanExchange.Presenter
         {
             if (m_Objects == null) return;
             StringBuilder S = new StringBuilder();
-            PanelItem PItem;
             foreach (int index in m_View.SelectedIndices)
             {
                 if (S.Length > 0)
                     S.AppendLine();
-                PItem = m_Objects.GetAt(index);
+                PanelItem PItem = m_Objects.GetAt(index);
                 if (PItem != null)
                     S.Append(PItem.Comment);
             }
@@ -65,12 +58,11 @@ namespace LanExchange.Presenter
         {
             if (m_Objects == null) return;
             StringBuilder S = new StringBuilder();
-            PanelItem PItem;
             foreach (int index in m_View.SelectedIndices)
             {
                 if (S.Length > 0)
                     S.AppendLine();
-                PItem = m_Objects.GetAt(index);
+                PanelItem PItem = m_Objects.GetAt(index);
                 if (PItem != null)
                 {
                     S.Append(@"\\" + PItem.Name);
@@ -86,12 +78,11 @@ namespace LanExchange.Presenter
         {
             if (m_Objects == null) return;
             StringBuilder S = new StringBuilder();
-            SharePanelItem PItem;
             foreach (int index in m_View.SelectedIndices)
             {
                 if (S.Length > 0)
                     S.AppendLine();
-                PItem = m_Objects.GetAt(index) as SharePanelItem;
+                SharePanelItem PItem = m_Objects.GetAt(index) as SharePanelItem;
                 if (PItem != null)
                     S.Append(String.Format(@"\\{0}\{1}", PItem.ComputerName, PItem.Name));
             }
@@ -137,10 +128,9 @@ namespace LanExchange.Presenter
         /// <summary>
         /// Возвращает имя выбранного компьютера, предварительно проверив пингом включен ли он.
         /// </summary>
-        /// <param name="bUpdateRecent">Добавлять ли комп в закладку Активность</param>
         /// <param name="bPingAndAsk">Пинговать ли комп</param>
         /// <returns>Возвращает TComputer</returns>
-        public PanelItem GetFocusedPanelItem(bool bUpdateRecent, bool bPingAndAsk)
+        public PanelItem GetFocusedPanelItem(bool bPingAndAsk)
         {
             //logger.Info("GetFocusedPanelItem. {0}", LV.FocusedItem);
             PanelItem PItem = m_Objects.Get(m_View.FocusedItemText);
@@ -149,7 +139,7 @@ namespace LanExchange.Presenter
             if (PItem is ComputerPanelItem)
             {
                 // пингуем
-                if (bPingAndAsk && (PItem is ComputerPanelItem))
+                if (bPingAndAsk)
                 {
                     bool bPingResult = PingThread.FastPing(PItem.Name);
                     if ((PItem as ComputerPanelItem).IsPingable != bPingResult)
@@ -175,18 +165,18 @@ namespace LanExchange.Presenter
         /// {0} is computer name
         /// {1} is folder name
         /// </summary>
-        /// <param name="TagCmd">cmdline from Tag of menu item</param>
-        /// <param name="TagParent">Can be "computer" or "folder"</param>
-        public void RunCmdOnFocusedItem(string TagCmd, string TagParent)
+        /// <param name="tagCmd">cmdline from Tag of menu item</param>
+        /// <param name="tagParent">Can be "computer" or "folder"</param>
+        public void RunCmdOnFocusedItem(string tagCmd, string tagParent)
         {
             // получаем выбранный комп
-            PanelItem PItem = GetFocusedPanelItem(true, true);
+            PanelItem PItem = GetFocusedPanelItem(true);
             if (PItem == null) return;
 
-            string CmdLine = TagCmd;
+            string CmdLine;
             string FmtParam = null;
 
-            switch (TagParent)
+            switch (tagParent)
             {
                 case COMPUTER_MENU:
                     if (PItem is ComputerPanelItem)
@@ -204,9 +194,9 @@ namespace LanExchange.Presenter
             }
 
             if (!Kernel32.Is64BitOperatingSystem())
-                CmdLine = TagCmd.Replace("%ProgramFiles(x86)%", "%ProgramFiles%");
+                CmdLine = tagCmd.Replace("%ProgramFiles(x86)%", "%ProgramFiles%");
             else
-                CmdLine = TagCmd;
+                CmdLine = tagCmd;
 
             CmdLine = String.Format(Environment.ExpandEnvironmentVariables(CmdLine), FmtParam);
             string FName;
@@ -225,15 +215,13 @@ namespace LanExchange.Presenter
 
         public ComputerPanelItem GetFocusedComputer()
         {
-            PanelItem PItem = GetFocusedPanelItem(true, true);
+            PanelItem PItem = GetFocusedPanelItem(true);
             if (PItem == null)
                 return null;
             ComputerPanelItem Comp = null;
-            int CompIndex = -1;
             if (PItem is ComputerPanelItem)
             {
                 Comp = PItem as ComputerPanelItem;
-                CompIndex = m_View.FocusedItemIndex;
             }
             if (PItem is SharePanelItem)
             {
@@ -242,5 +230,25 @@ namespace LanExchange.Presenter
             }
             return Comp;
         }
+
+        // TODO uncomment SelectComputer
+        //public void ListView_SelectComputer(ListView lv, string compName)
+        //{
+        //    int index = -1;
+        //    if (compName != null)
+        //    {
+
+        //        index = m_Keys.IndexOf(compName);
+        //        if (index == -1) index = 0;
+        //    }
+        //    else
+        //        index = 0;
+        //    if (lv.VirtualListSize > 0)
+        //    {
+        //        lv.SelectedIndices.Add(index);
+        //        lv.FocusedItem = lv.Items[index];
+        //        lv.EnsureVisible(index);
+        //    }
+        //}
     }
 }

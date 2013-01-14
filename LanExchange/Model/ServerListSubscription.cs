@@ -347,7 +347,7 @@ namespace LanExchange.Model
             }
         }
         #endregion
-        public IDictionary<string, IList<ISubscriber>> GetSubjects()
+        public IEnumerable<KeyValuePair<string, IList<ISubscriber>>> GetSubjects()
         {
             return m_Subjects;
         }

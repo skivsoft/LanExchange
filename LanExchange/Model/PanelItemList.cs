@@ -8,12 +8,12 @@ using LanExchange.Utils;
 
 namespace LanExchange.Model
 {
-    public enum PanelItemType
-    {
-        COMPUTERS = 0,
-        SHARES = 1,
-        FILES = 2
-    }
+    //public enum PanelItemType
+    //{
+    //    COMPUTERS = 0,
+    //    SHARES = 1,
+    //    FILES = 2
+    //}
 
     public class PanelItemList : ISubscriber, IEquatable<PanelItemList>, IFilterModel
     {
@@ -72,10 +72,10 @@ namespace LanExchange.Model
 
         public System.Windows.Forms.View CurrentView { get; set; }
 
-        public IDictionary<string, PanelItem> Items
-        {
-            get { return m_Items; }
-        }
+        //public IDictionary<string, PanelItem> Items
+        //{
+        //    get { return m_Items; }
+        //}
 
         public bool ScanMode { get; set; }
 
@@ -86,7 +86,7 @@ namespace LanExchange.Model
         //    get { return m_Keys; }
         //}
 
-        public string FocusedItem { get; set; }
+        //public string FocusedItem { get; set; }
 
         public void UpdateSubsctiption()
         {
@@ -105,51 +105,51 @@ namespace LanExchange.Model
         }
 
 
-        public void Add(PanelItem Comp)
+        public void Add(PanelItem comp)
         {
-            if (Comp != null)
-                if (!m_Data.ContainsKey(Comp.Name))
-                    m_Data.Add(Comp.Name, Comp);
+            if (comp != null)
+                if (!m_Data.ContainsKey(comp.Name))
+                    m_Data.Add(comp.Name, comp);
         }
 
-        public void Delete(PanelItem Comp)
-        {
-            m_Data.Remove(Comp.Name);
-        }
+        //TODO: add delete item
+        //public void Delete(PanelItem comp)
+        //{
+        //    m_Data.Remove(comp.Name);
+        //}
 
-        public PanelItem GetAt(int Index)
+        public PanelItem GetAt(int index)
         {
-            return Get(m_Keys[Index]);
+            return Get(m_Keys[index]);
         }
 
         public PanelItem Get(string key)
         {
             if (key == null) return null;
-            PanelItem Result = null;
+            PanelItem Result;
             if (m_Data.TryGetValue(key, out Result))
             {
                 Result.Name = key;
                 return Result;
             }
-            else
-                return null;
+            return null;
         }
 
-        public void Clear()
-        {
-            m_Data.Clear();
-        }
+        //public void Clear()
+        //{
+        //    m_Data.Clear();
+        //}
 
-        private static bool GoodForFilter(string[] A, string Filter1, string Filter2)
+        private static bool GoodForFilter(string[] strList, string filter1, string filter2)
         {
-            for (int i = 0; i < A.Length; i++)
+            for (int i = 0; i < strList.Length; i++)
             {
                 if (i == 0)
                 {
-                    if (PuntoSwitcher.RussianContains(A[i], Filter1) || (PuntoSwitcher.RussianContains(A[i], Filter2)))
+                    if (PuntoSwitcher.RussianContains(strList[i], filter1) || (PuntoSwitcher.RussianContains(strList[i], filter2)))
                         return true;
                 } else
-                if (Filter1 != null && A[i].Contains(Filter1) || Filter2 != null && A[i].Contains(Filter2))
+                if (filter1 != null && strList[i].Contains(filter1) || filter2 != null && strList[i].Contains(filter2))
                     return true;
             }
             return false;
@@ -192,102 +192,83 @@ namespace LanExchange.Model
             get { return m_Keys.Count; }
         }
 
-        public static List<PanelItem> EnumNetShares(string Server)
-        {
-            List<PanelItem> Result = new List<PanelItem>();
-            Result.Add(new SharePanelItem("", "", 0, Server));
-            int entriesread = 0;
-            int totalentries = 0;
-            int resume_handle = 0;
-            int nStructSize = Marshal.SizeOf(typeof(NetApi32.SHARE_INFO_1));
-            IntPtr bufPtr = IntPtr.Zero;
-            StringBuilder server = new StringBuilder(Server);
-            logger.Info("WINAPI NetShareEnum");
-            int ret = NetApi32.NetShareEnum(server, 1, ref bufPtr, NetApi32.MAX_PREFERRED_LENGTH, ref entriesread, ref totalentries, ref resume_handle);
-            if (ret == NetApi32.NERR_Success)
-            {
-                logger.Info("WINAPI NetServerEnum result: entriesread={0}, totalentries={1}", entriesread, totalentries);
-                IntPtr currentPtr = bufPtr;
-                for (int i = 0; i < entriesread; i++)
-                {
-                    NetApi32.SHARE_INFO_1 shi1 = (NetApi32.SHARE_INFO_1)Marshal.PtrToStructure(currentPtr, typeof(NetApi32.SHARE_INFO_1));
-                    if ((shi1.shi1_type & (uint)NetApi32.SHARE_TYPE.STYPE_IPC) != (uint)NetApi32.SHARE_TYPE.STYPE_IPC)
-                        Result.Add(new SharePanelItem(shi1.shi1_netname, shi1.shi1_remark, shi1.shi1_type, Server));
-                    else
-                        logger.Info("Skiping IPC$ share");
-                    currentPtr = new IntPtr(currentPtr.ToInt32() + nStructSize);
-                }
-                NetApi32.NetApiBufferFree(bufPtr);
-            }
-            else
-            {
-                logger.Info("WINAPI NetServerEnum error: {0}", ret);
-            }
+        // TODO: uncomment EnumNetShares
+        //public static List<PanelItem> EnumNetShares(string Server)
+        //{
+        //    List<PanelItem> Result = new List<PanelItem>();
+        //    Result.Add(new SharePanelItem("", "", 0, Server));
+        //    int entriesread = 0;
+        //    int totalentries = 0;
+        //    int resume_handle = 0;
+        //    int nStructSize = Marshal.SizeOf(typeof(NetApi32.SHARE_INFO_1));
+        //    IntPtr bufPtr = IntPtr.Zero;
+        //    StringBuilder server = new StringBuilder(Server);
+        //    logger.Info("WINAPI NetShareEnum");
+        //    int ret = NetApi32.NetShareEnum(server, 1, ref bufPtr, NetApi32.MAX_PREFERRED_LENGTH, ref entriesread, ref totalentries, ref resume_handle);
+        //    if (ret == NetApi32.NERR_Success)
+        //    {
+        //        logger.Info("WINAPI NetServerEnum result: entriesread={0}, totalentries={1}", entriesread, totalentries);
+        //        IntPtr currentPtr = bufPtr;
+        //        for (int i = 0; i < entriesread; i++)
+        //        {
+        //            NetApi32.SHARE_INFO_1 shi1 = (NetApi32.SHARE_INFO_1)Marshal.PtrToStructure(currentPtr, typeof(NetApi32.SHARE_INFO_1));
+        //            if ((shi1.shi1_type & (uint)NetApi32.SHARE_TYPE.STYPE_IPC) != (uint)NetApi32.SHARE_TYPE.STYPE_IPC)
+        //                Result.Add(new SharePanelItem(shi1.shi1_netname, shi1.shi1_remark, shi1.shi1_type, Server));
+        //            else
+        //                logger.Info("Skiping IPC$ share");
+        //            currentPtr = new IntPtr(currentPtr.ToInt32() + nStructSize);
+        //        }
+        //        NetApi32.NetApiBufferFree(bufPtr);
+        //    }
+        //    else
+        //    {
+        //        logger.Info("WINAPI NetServerEnum error: {0}", ret);
+        //    }
 
-            PanelItemComparer comparer = new PanelItemComparer();
-            Result.Sort(comparer);
-            return Result;
-        }
+        //    PanelItemComparer comparer = new PanelItemComparer();
+        //    Result.Sort(comparer);
+        //    return Result;
+        //}
 
-        public List<string> ListView_GetSelected(ListView LV, bool bAll)
-        {
-            List<string> Result = new List<string>();
-            if (LV.FocusedItem != null)
-                Result.Add(LV.FocusedItem.Text);
-            else
-                Result.Add("");
-            if (bAll)
-                for (int index = 0; index < LV.Items.Count; index++)
-                    Result.Add(m_Keys[index]);
-            else
-                foreach (int index in LV.SelectedIndices)
-                    Result.Add(m_Keys[index]);
-            return Result;
-        }
+        // TODO uncomment ListView_GetSelected
+        //public List<string> ListView_GetSelected(ListView LV, bool bAll)
+        //{
+        //    List<string> Result = new List<string>();
+        //    if (LV.FocusedItem != null)
+        //        Result.Add(LV.FocusedItem.Text);
+        //    else
+        //        Result.Add("");
+        //    if (bAll)
+        //        for (int index = 0; index < LV.Items.Count; index++)
+        //            Result.Add(m_Keys[index]);
+        //    else
+        //        foreach (int index in LV.SelectedIndices)
+        //            Result.Add(m_Keys[index]);
+        //    return Result;
+        //}
         
-        public void ListView_SetSelected(ListView LV, List<string> SaveSelected)
-        {
-            LV.SelectedIndices.Clear();
-            LV.FocusedItem = null;
-            if (LV.VirtualListSize > 0)
-            {
-                for (int i = 0; i < SaveSelected.Count; i++)
-                {
-                    int index = m_Keys.IndexOf(SaveSelected[i]);
-                    if (index == -1) continue;
-                    if (i == 0)
-                    {
-                        LV.FocusedItem = LV.Items[index];
-                        //LV.EnsureVisible(index);
-                    }
-                    else
-                        LV.SelectedIndices.Add(index);
-                }
-            }
-        }
+        // TODO uncomment ListView_SetSelected
+        //public void ListView_SetSelected(ListView LV, List<string> SaveSelected)
+        //{
+        //    LV.SelectedIndices.Clear();
+        //    LV.FocusedItem = null;
+        //    if (LV.VirtualListSize > 0)
+        //    {
+        //        for (int i = 0; i < SaveSelected.Count; i++)
+        //        {
+        //            int index = m_Keys.IndexOf(SaveSelected[i]);
+        //            if (index == -1) continue;
+        //            if (i == 0)
+        //            {
+        //                LV.FocusedItem = LV.Items[index];
+        //                //LV.EnsureVisible(index);
+        //            }
+        //            else
+        //                LV.SelectedIndices.Add(index);
+        //        }
+        //    }
+        //}
 
-        // <summary>
-        // Выбор компьютера по имени в списке.
-        // </summary>
-        public void ListView_SelectComputer(ListView LV, string CompName)
-        {
-            int index = -1;
-            // пробуем найти запомненный элемент
-            if (CompName != null)
-            {
-                index = m_Keys.IndexOf(CompName);
-                if (index == -1) index = 0;
-            }
-            else
-                index = 0;
-            // установка текущего элемента
-            if (LV.VirtualListSize > 0)
-            {
-                LV.SelectedIndices.Add(index);
-                LV.FocusedItem = LV.Items[index];
-                LV.EnsureVisible(index);
-            }
-        }
 
         public List<string> ToList()
         {
@@ -310,9 +291,9 @@ namespace LanExchange.Model
                 if (ScanMode)
                     Groups.ForEach(group =>
                     {
-                        foreach (ServerInfo SI in sender.GetListBySubject(group))
-                            if (!m_Data.ContainsKey(SI.Name))
-                                m_Data.Add(SI.Name, new ComputerPanelItem(SI.Name, SI));
+                        foreach (ServerInfo si in sender.GetListBySubject(group))
+                            if (!m_Data.ContainsKey(si.Name))
+                                m_Data.Add(si.Name, new ComputerPanelItem(si.Name, si));
                     });
                 foreach (var Pair in m_Items)
                     m_Data.Add(Pair.Key, Pair.Value);
@@ -429,7 +410,7 @@ namespace LanExchange.Model
 
         public bool Equals(PanelItemList other)
         {
-            return string.Compare(TabName, other.TabName, true) == 0;
+            return String.Compare(TabName, other.TabName, StringComparison.OrdinalIgnoreCase) == 0;
         }
 
         public string GetTabToolTip()
