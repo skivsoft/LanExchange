@@ -23,10 +23,8 @@ namespace LanExchange.Model
         {
             get
             {
-                if (m_Instance == null)
-                {
-                    m_Instance = new ServerListSubscription();
-                }
+                if (m_Instance != null) return m_Instance;
+                m_Instance = new ServerListSubscription();
                 return m_Instance;
             }
         }
@@ -55,15 +53,15 @@ namespace LanExchange.Model
             m_Workers = new BackgroundWorkerList();
         }
 
-        public bool IsInstantUpdate
-        {
-            get { return m_InstantUpdate; }
-        }
+        //public bool IsInstantUpdate
+        //{
+        //    get { return m_InstantUpdate; }
+        //}
 
-        public bool IsBusy
-        {
-            get { return m_Workers.IsBusy; }
-        }
+        //public bool IsBusy
+        //{
+        //    get { return m_Workers.IsBusy; }
+        //}
 
         public int RefreshInterval
         {
@@ -77,7 +75,7 @@ namespace LanExchange.Model
 
         private void RefreshTimer_Tick(object sender, EventArgs e)
         {
-            logger.Info("RefreshTimer.Tick() executed. Next tick in {0} sec.", (int)(m_RefreshInterval/1000));
+            logger.Info("RefreshTimer.Tick() executed. Next tick in {0} sec.", m_RefreshInterval/1000);
             if (!m_Workers.IsBusy)
             {
                 // prepare workers to launch
@@ -104,52 +102,40 @@ namespace LanExchange.Model
         /// <summary>
         /// This method must return server list instantly. Use cache is preferred.
         /// </summary>
-        /// <param name="domain"></param>
-        /// <returns></returns>
-        private IList<ServerInfo> GetResultNow(string domain, bool cachePref, out bool Modified)
+        private bool PrepareResult(string domain, bool cachePref)
         {
-            NetApi32.SERVER_INFO_101[] List;
-            IList<ServerInfo> Result;
             if (cachePref && m_Results.ContainsKey(domain))
             {
                 logger.Info("GetFromCache(domain:{0})", domain);
-                Result = m_Results[domain];
-                Modified = true;
+                return true;
             }
+            // get server list via OS api
+            NetApi32.SERVER_INFO_101[] List;
+            if (String.IsNullOrEmpty(domain))
+                List = NetApi32Utils.GetDomainList();
             else
-            {
-                // get server list via OS api
-                if (String.IsNullOrEmpty(domain))
-                    List = NetApi32Utils.GetDomainList();
-                else
-                    List = NetApi32Utils.GetComputerList(domain);
-                // convert array to IList<ServerInfo>
-                Result = new List<ServerInfo>();
-                Array.ForEach(List, item =>
-                {
-                    Result.Add(new ServerInfo(item));
-                });
-                Modified = SetResult(domain, Result);
-            }
-            return Result;
+                List = NetApi32Utils.GetComputerList(domain);
+            // convert array to IList<ServerInfo>
+            var result = new List<ServerInfo>();
+            Array.ForEach(List, item => result.Add(new ServerInfo(item)));
+            return SetResult(domain, result);
         }
 
-        private bool SetResult(string Domain, IList<ServerInfo> List)
+        private bool SetResult(string domain, IList<ServerInfo> list)
         {
             bool bModified = false;
             lock (m_Results)
             {
-                if (!m_Results.ContainsKey(Domain))
+                if (!m_Results.ContainsKey(domain))
                 {
                     bModified = true;
-                    m_Results.Add(Domain, List);
+                    m_Results.Add(domain, list);
                 }
                 if (!bModified)
                 {
-                    var ResultList = m_Results[Domain];
-                    bModified = SortedListIsModified(m_Results[Domain], List);
+                    bModified = SortedListIsModified(m_Results[domain], list);
                     if (bModified)
-                        m_Results[Domain] = List;
+                        m_Results[domain] = list;
                 }
             }
             if (bModified)
@@ -167,10 +153,9 @@ namespace LanExchange.Model
         /// <param name="e"></param>
         protected virtual void OneWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            string domain = (string)e.Argument;
-            bool Modified;
-            var List = GetResultNow(domain, false, out Modified);
+            var domain = (string)e.Argument;
             #if REMOVE_RANDOM_COMPS
+            var List = m_Results[domain];
             var R = new Random();
             int Count = R.Next(List.Count * 2 / 3);
             for (int i = 0; i < Count; i++)
@@ -178,9 +163,10 @@ namespace LanExchange.Model
                 int Index = R.Next(List.Count);
                 List.RemoveAt(Index);
             }
+            m_Results[domain] = List;
             logger.Info(String.Format("Random comps removed: {0}", List.Count));
             #endif
-            if (Modified)
+            if (PrepareResult(domain, false))
                 e.Result = domain;
             else
                 e.Result = null;
@@ -213,16 +199,16 @@ namespace LanExchange.Model
             }
         }
 
-        private static bool SortedListIsModified(IList<ServerInfo> ListA, IList<ServerInfo> ListB)
+        private static bool SortedListIsModified(IList<ServerInfo> listA, IList<ServerInfo> listB)
         {
-            if (ListA == null || ListB == null)
+            if (listA == null || listB == null)
                 return false;
             bool bModified = false;
-            if (ListA.Count != ListB.Count)
+            if (listA.Count != listB.Count)
                 bModified = true;
             else
-                for (int i = 0; i < ListA.Count - 1; i++)
-                    if (ListA[i].CompareTo(ListB[i]) != 0)
+                for (int i = 0; i < listA.Count - 1; i++)
+                    if (listA[i].CompareTo(listB[i]) != 0)
                     {
                         bModified = true;
                         break;
@@ -242,7 +228,7 @@ namespace LanExchange.Model
             var Temp = new Dictionary<string, NetApi32.SERVER_INFO_101[]>();
             foreach (var Pair in m_Results)
             {
-                NetApi32.SERVER_INFO_101[] TempList = new NetApi32.SERVER_INFO_101[Pair.Value.Count];
+                var TempList = new NetApi32.SERVER_INFO_101[Pair.Value.Count];
                 for (int i = 0; i < Pair.Value.Count; i++)
                     TempList[i] = Pair.Value[i].GetInfo();
                 Temp.Add(Pair.Key, TempList);
@@ -251,7 +237,10 @@ namespace LanExchange.Model
             {
                 SerializeUtils.SerializeObjectToBinaryFile(GetCacheFileName(), Temp);
             }
-            catch { }
+            catch (Exception E)
+            {
+                logger.Error("SaveResultToCache: {0}", E.Message);
+            }
         }
 
         private void LoadResultFromCache()
@@ -266,13 +255,16 @@ namespace LanExchange.Model
                     foreach (var Pair in Temp)
                     {
                         var TempList = new List<ServerInfo>();
-                        Array.ForEach(Pair.Value, Info => TempList.Add(new ServerInfo(Info)));
+                        Array.ForEach(Pair.Value, info => TempList.Add(new ServerInfo(info)));
                         m_Results.Add(Pair.Key, TempList);
                         TempList.Sort();
                     }
                 }
             }
-            catch { }
+            catch (Exception E)
+            {
+                logger.Error("LoadResultFromCache: {0}", E.Message);
+            }
         }
 
         public bool HasSubscribers()
@@ -300,7 +292,7 @@ namespace LanExchange.Model
                     RefreshTimer_Tick(m_RefreshTimer, new EventArgs());
                     m_RefreshTimer.Enabled = true;
                     m_InstantUpdate = false;
-                    logger.Info("RefreshTimer started. Next tick in {0} sec.", (int)(m_RefreshInterval/1000));
+                    logger.Info("RefreshTimer started. Next tick in {0} sec.", m_RefreshInterval/1000);
                 }
             }
         }
@@ -329,8 +321,7 @@ namespace LanExchange.Model
             }
             if (Modified)
             {
-                bool ResultsModified;
-                var Result = GetResultNow(subject, true, out ResultsModified);
+                PrepareResult(subject, true);
                 sender.DataChanged(this, subject);
                 SubscribersChanged();
             }
@@ -370,8 +361,8 @@ namespace LanExchange.Model
             {
                 if (!m_Results.ContainsKey(subject))
                     yield break;
-                foreach (var SI in m_Results[subject])
-                    yield return SI;
+                foreach (var si in m_Results[subject])
+                    yield return si;
             }
         }
     }

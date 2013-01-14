@@ -123,8 +123,10 @@ namespace LanExchange.Model
             if (!m_List.Contains(info))
             {
                 m_List.Add(info);
-                info.UpdateSubsctiption();
+                if (m_SelectedIndex == -1 && m_List.Count == 1)
+                    m_SelectedIndex = 0;
                 DoAfterAppendTab(info);
+                info.UpdateSubsctiption();
             }
         }
 
@@ -195,8 +197,8 @@ namespace LanExchange.Model
                 Info.Groups.Add(domain);
                 AddTab(Info);
             }
-
-            SelectedIndex = m_PagesSettings.SelectedIndex;
+            if (m_PagesSettings.SelectedIndex != -1)
+                SelectedIndex = m_PagesSettings.SelectedIndex;
         }
 
         public void SaveSettings()

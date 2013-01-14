@@ -1,33 +1,40 @@
 ﻿using System.Windows.Forms;
 using NLog;
+using System;
 
 namespace LanExchange.UI
 {
-    public partial class RunMinimizedForm : Form
+    /// <summary>
+    /// We must not use ShowInTaskbar=false for MainForm. 
+    /// This is need for correctly work system-wide hot-keys in future.
+    /// </summary>
+    public class RunMinimizedForm : Form
     {
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
+        private FormWindowState m_LastWindowState;
         private bool m_RunMinimized;
-        /// <summary>
-        /// Last window state for correct show/hide MainForm in IsFormVisible.
-        /// </summary>
-        //private FormWindowState LastWindowState;
+        private bool m_AllowVisible;
+        private bool m_AllowClose;
+        private bool m_ResizeBegan;
 
-        private bool m_AllowVisible;     // ContextMenu's Show command used
-        private bool m_AllowClose;       // ContextMenu's Exit command used
-        //private bool m_LoadFired;        // Form was shown once
-
-        public RunMinimizedForm()
+        protected RunMinimizedForm()
         {
-
+            Resize += Form_Resize;
+            ResizeBegin += (sender, args) => m_ResizeBegan = true;
+            ResizeEnd += (sender, args) => m_ResizeBegan = false;
         }
 
         protected override void SetVisibleCore(bool value)
         {
-            logger.Info("SetVisibleCore({0})", value);
             if (m_RunMinimized && !m_AllowVisible)
+            {
                 value = false;
+                m_AllowVisible = true;
+            }
             base.SetVisibleCore(value);
+            if (value && WindowState == FormWindowState.Minimized)
+                WindowState = m_LastWindowState;
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -41,60 +48,40 @@ namespace LanExchange.UI
             base.OnFormClosing(e);
         }
 
-        protected bool RunMinimized
+        protected void SetRunMinimized(bool value)
         {
-            get { return m_RunMinimized; }
-            set
-            {
-                m_RunMinimized = value;
-                if (value)
-                    logger.Info("RunMinimized is ON");
-                else
-                    logger.Info("RunMinimized is OFF");
-            }
+            m_RunMinimized = value;
+            logger.Info(value ? "RunMinimized is ON" : "RunMinimized is OFF");
         }
 
-        /// <summary>
-        /// We must not use ShowInTaskbar=false for MainForm. 
-        /// This is need for correctly work system-wide hot-keys in future.
-        /// </summary>
-        public bool IsFormVisible
-        {
-            get
-            {
-                return Visible;
-                //return WindowState != FormWindowState.Minimized && Visible; 
-            }
-            set
-            {
-                m_AllowVisible = true;
-                //m_LoadFired = true;
-                Visible = value;
-                if (value)
-                    Activate();
-                /*
-                bool bMinimized = WindowState == FormWindowState.Minimized;
-                Visible = value;
-                if (bMinimized)
-                {
-                    //TODO uncomment or del
-                    //ShowInTaskbar = true;
-                    WindowState = LastWindowState;
-                }
-                if (Visible)
-                {
-                    Activate();
-                    Pages.FocusPanelView();
-                }
-                 */
-            }
-        }
-
-        public void ApplicationExit()
+        protected void ApplicationExit()
         {
             m_AllowClose = true;
             Application.Exit();
         }
 
+
+        private void Form_Resize(object sender, EventArgs e)
+        {
+            if (m_ResizeBegan) return;
+
+            if (WindowState != FormWindowState.Minimized)
+            {
+                if (m_LastWindowState != WindowState)
+                    logger.Info("WindowState is {0}", WindowState.ToString());
+                m_LastWindowState = WindowState;
+            }
+            else
+            {
+                logger.Info("WindowState is {0}", WindowState.ToString());
+                Visible = false;
+            }
+        }
+
+        protected void ToggleVisible()
+        {
+            Visible = !Visible;
+            if (Visible) Activate();
+        }
     }
 }
