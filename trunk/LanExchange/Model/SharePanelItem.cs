@@ -34,10 +34,10 @@ namespace LanExchange.Model
         protected override int GetImageIndex()
         {
             if (String.IsNullOrEmpty(m_Name))
-                return LanExchangeIcons.imgFolderBack;
+                return LanExchangeIcons.FolderBack;
             if (IsPrinter)
-                return LanExchangeIcons.imgFolderPrinter;
-            return IsHidden ? LanExchangeIcons.imgFolderHidden : LanExchangeIcons.imgFolderNormal;
+                return LanExchangeIcons.FolderPrinter;
+            return IsHidden ? LanExchangeIcons.FolderHidden : LanExchangeIcons.FolderNormal;
         }
 
         public bool IsPrinter

@@ -1,23 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace LanExchange.Utils
 {
-    public class ListViewUtils
+    public static class ListViewUtils
     {
-        public static int GetCountChecked(ListView LV)
+        public static int GetCountChecked(ListView lv)
         {
             int Result = 0;
-            foreach (ListViewItem LVI in LV.Items)
+            foreach (ListViewItem LVI in lv.Items)
                 if (LVI.Checked)
                     Result++;
             return Result;
         }
 
-        public static void SetChecked(ListView LV, string name, bool Checked)
+        public static void SetChecked(ListView lv, string name, bool Checked)
         {
-            foreach (ListViewItem LVI in LV.Items)
+            foreach (ListViewItem LVI in lv.Items)
                 if (LVI.Text.Equals(name))
                 {
                     LVI.Checked = Checked;
@@ -25,11 +24,11 @@ namespace LanExchange.Utils
                 }
         }
 
-        public static IList<string> GetCheckedList(ListView LV)
+        public static IList<string> GetCheckedList(ListView lv)
         {
             IList<string> Result = new List<string>();
-            foreach (int index in LV.CheckedIndices)
-                Result.Add(LV.Items[index].Text);
+            foreach (int index in lv.CheckedIndices)
+                Result.Add(lv.Items[index].Text);
             return Result;
         }
 

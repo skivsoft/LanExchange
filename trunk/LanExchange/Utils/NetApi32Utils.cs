@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace LanExchange.Utils
 {
-    class NetApi32Utils
+    static class NetApi32Utils
     {
         /// <summary>
         /// Get domain name for specified machine.
@@ -13,7 +13,7 @@ namespace LanExchange.Utils
         /// <returns></returns>
         public static string GetMachineNetBiosDomain(string server)
         {
-            IntPtr pBuffer = IntPtr.Zero;
+            IntPtr pBuffer;
 
             NetApi32.WKSTA_INFO_100 info;
             int retval = NetApi32.NetWkstaGetInfo(server, 100, out pBuffer);
@@ -35,7 +35,7 @@ namespace LanExchange.Utils
         public static NetApi32.SERVER_INFO_101[] GetServerList(string domain, NetApi32.SV_101_TYPES types)
         {
             NetApi32.SERVER_INFO_101[] Result = new NetApi32.SERVER_INFO_101[0];
-            var pInfo = IntPtr.Zero;
+            IntPtr pInfo;
             int entriesread = 0;
             int totalentries = 0;
             NetApi32.NERR err = NetApi32.NetServerEnum(null, 101, out pInfo, -1, ref entriesread, ref totalentries, types, domain, 0);

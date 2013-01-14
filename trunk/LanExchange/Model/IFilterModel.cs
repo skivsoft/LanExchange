@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LanExchange.Model
+﻿namespace LanExchange.Model
 {
     public interface IFilterModel
     {

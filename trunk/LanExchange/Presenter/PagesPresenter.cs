@@ -72,12 +72,12 @@ namespace LanExchange.Presenter
         {
             for (int i = 0; i < m_Model.Count; i++)
             {
-                if (bHideActive && (!CanCloseTab() || (i == m_View.SelectedIndex)))
+                if (bHideActive && (!CanCloseTab() || (i == m_View.GetSelectedIndex())))
                     continue;
                 string S = m_Model.GetTabName(i);
                 var Item = new ToolStripMenuItem
                 {
-                    Checked = (i == m_View.SelectedIndex),
+                    Checked = (i == m_View.GetSelectedIndex()),
                     Text = m_View.Ellipsis(S, 20),
                     ToolTipText = S,
                     Tag = i
@@ -93,8 +93,8 @@ namespace LanExchange.Presenter
             if (menu != null && m_View != null)
             {
                 int Index = (int)menu.Tag;
-                if (!Equals(m_View.SelectedIndex, Index))
-                    m_View.SelectedIndex = Index;
+                if (!Equals(m_View.GetSelectedIndex(), Index))
+                    m_View.SetSelectedIndex(Index);
             }
         }
 
@@ -222,7 +222,7 @@ namespace LanExchange.Presenter
         public void Model_IndexChanged(object sender, IndexEventArgs e)
         {
             logger.Info("PagesModel_IndexChanged({0})", e.Index);
-            m_View.SelectedIndex = e.Index;
+            m_View.SetSelectedIndex(e.Index);
             m_View.FocusPanelView();
         }
     }

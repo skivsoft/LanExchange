@@ -67,7 +67,7 @@ namespace LanExchange.UI
             TrayIcon.Visible = true;
             // show computer name
             lCompName.Text = SystemInformation.ComputerName;
-            lCompName.ImageIndex = LanExchangeIcons.imgCompDefault;
+            lCompName.ImageIndex = LanExchangeIcons.CompDefault;
             // show current user
             lUserName.Text = Settings.GetCurrentUserName();
         }
@@ -274,7 +274,7 @@ namespace LanExchange.UI
             // is focused item a computer?
             if (Comp == null)
             {
-                pInfo.Picture.Image = LanExchangeIcons.LargeImageList.Images[LanExchangeIcons.imgCompDefault];
+                pInfo.Picture.Image = LanExchangeIcons.LargeImageList.Images[LanExchangeIcons.CompDefault];
                 pInfo.InfoComp = "";
                 pInfo.InfoDesc = "";
                 pInfo.InfoOS = "";
@@ -287,10 +287,10 @@ namespace LanExchange.UI
             pInfo.Picture.Image = LanExchangeIcons.LargeImageList.Images[Comp.ImageIndex];
             switch (Comp.ImageIndex)
             {
-                case LanExchangeIcons.imgCompDefault:
+                case LanExchangeIcons.CompDefault:
                     tipComps.SetToolTip(pInfo.Picture, "Компьютер найден в результате обзора сети.");
                     break;
-                case LanExchangeIcons.imgCompDisabled:
+                case LanExchangeIcons.CompDisabled:
                     tipComps.SetToolTip(pInfo.Picture, "Компьютер не доступен посредством PING.");
                     break;
                 /*

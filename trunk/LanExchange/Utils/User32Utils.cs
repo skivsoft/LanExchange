@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace LanExchange.Utils
 {
-    class User32Utils
+    static class User32Utils
     {
         private const int LVM_FIRST = 0x1000;
         private const int LVM_SETITEMSTATE = LVM_FIRST + 43;

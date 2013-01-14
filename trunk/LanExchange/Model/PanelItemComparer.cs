@@ -1,13 +1,12 @@
-using System;
 using System.Collections.Generic;
 
 namespace LanExchange.Model
 {
     public class PanelItemComparer : IComparer<PanelItem>
     {
-        public int Compare(PanelItem Item1, PanelItem Item2)
+        public int Compare(PanelItem item1, PanelItem item2)
         {
-            return Item1.CompareTo(Item2);
+            return item1.CompareTo(item2);
         }
     }
 }

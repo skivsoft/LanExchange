@@ -30,7 +30,7 @@ namespace LanExchange.Utils
         /// <summary>
         /// This contains a counter to help make names unique
         /// </summary>
-        private static int menuNameCounter;
+        private static int m_MenuNameCounter;
 
         #endregion
 
@@ -71,11 +71,14 @@ namespace LanExchange.Utils
             {
                 bool Browsable = true;
                 foreach (var a in p.GetCustomAttributes(true))
-                    if (a.GetType() == typeof(BrowsableAttribute) && !(a as BrowsableAttribute).Browsable)
+                {
+                    var b = a as BrowsableAttribute;
+                    if (b != null && !b.Browsable)
                     {
                         Browsable = false;
                         break;
                     }
+                }
                 if (Browsable && p.CanRead && p.CanWrite && !p.Name.Equals("DropDown"))
                 {
                     object propertyInfoValue = p.GetValue(sourceToolStripMenuItem, null);
@@ -84,7 +87,7 @@ namespace LanExchange.Utils
             }
 #endif            
             // Create a new menu name
-            menuItem.Name = String.Format("{0}-{1}", sourceToolStripMenuItem.Name, menuNameCounter++);
+            menuItem.Name = String.Format("{0}-{1}", sourceToolStripMenuItem.Name, m_MenuNameCounter++);
 
             // Process any other properties
             if (sourceToolStripMenuItem.ImageIndex != -1)
@@ -104,12 +107,13 @@ namespace LanExchange.Utils
             foreach (var item in sourceToolStripMenuItem.DropDownItems)
             {
                 ToolStripItem newItem;
-                if (item is ToolStripMenuItem)
+                var stripMenuItem = item as ToolStripMenuItem;
+                if (stripMenuItem != null)
                 {
 #if NET_3_5
                     newItem = ((ToolStripMenuItem)item).Clone();
 #else
-                    newItem = Clone((ToolStripMenuItem)item);
+                    newItem = Clone(stripMenuItem);
 #endif
                 }
                 else if (item is ToolStripSeparator)

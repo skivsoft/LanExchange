@@ -31,8 +31,8 @@ namespace LanExchange
     using System.Windows.Forms;
     using System.Reflection;
     using NLog;
-    using LanExchange.UI;
-    using LanExchange.Utils;
+    using UI;
+    using Utils;
 
     internal static class Program
     {

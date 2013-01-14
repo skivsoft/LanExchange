@@ -64,11 +64,11 @@ namespace LanExchange.UI
             FilterText = "";
         }
 
-        public void SendKeysCorrect(string Keys)
+        public void SendKeysCorrect(string keys)
         {
             const string Chars = "+^%~{}()[]";
             string NewKeys = "";
-            foreach (Char Ch in Keys)
+            foreach (Char Ch in keys)
             {
                 if (Chars.Contains(Ch.ToString()))
                     NewKeys += String.Format("{{{0}}}", Ch);
@@ -97,7 +97,7 @@ namespace LanExchange.UI
 
         public void FocusMe()
         {
-            if (Parent != null && Parent is ContainerControl)
+            if (Parent is ContainerControl)
                 (Parent as ContainerControl).ActiveControl = this;
             ActiveControl = eFilter;
             eFilter.Focus();

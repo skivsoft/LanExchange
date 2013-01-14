@@ -16,7 +16,7 @@ namespace LanExchange.UI
     {
         public static AboutForm Instance;
 
-        private Control MsgControl;
+        private Control m_MsgControl;
         private readonly AboutPresenter m_Presenter;
         
         public AboutForm()
@@ -35,11 +35,11 @@ namespace LanExchange.UI
        
         public void HideMessage()
         {
-            if (MsgControl != null)
+            if (m_MsgControl != null)
             {
-                tableLayoutPanel.Controls.Remove(MsgControl);
-                MsgControl.Dispose();
-                MsgControl = null;
+                tableLayoutPanel.Controls.Remove(m_MsgControl);
+                m_MsgControl.Dispose();
+                m_MsgControl = null;
             }
         }
 
@@ -53,7 +53,7 @@ namespace LanExchange.UI
             label.Font = new Font(label.Font, FontStyle.Italic);
             tableLayoutPanel.Controls.Add(label, 1, 2);
             tableLayoutPanel.SetColumnSpan(label, 2);
-            MsgControl = label;
+            m_MsgControl = label;
         }
 
 
@@ -149,11 +149,11 @@ namespace LanExchange.UI
         public void ShowProgressBar()
         {
             // рисуем прогресс обновления
-            var Progress = new ProgressBar { Width = MsgControl.Width, Style = ProgressBarStyle.Marquee };
+            var Progress = new ProgressBar { Width = m_MsgControl.Width, Style = ProgressBarStyle.Marquee };
             HideMessage();
             tableLayoutPanel.Controls.Add(Progress, 1, 3);
             Progress.Update();
-            MsgControl = Progress;
+            m_MsgControl = Progress;
         }
 
         public void ShowUpdateButton(Version version)
@@ -166,7 +166,7 @@ namespace LanExchange.UI
             B.Click += UpdateButton_Click;
             HideMessage();
             tableLayoutPanel.Controls.Add(B, 1, 2);
-            MsgControl = B;
+            m_MsgControl = B;
         }
 
         private void UpdateButton_Click(object sender, EventArgs e)

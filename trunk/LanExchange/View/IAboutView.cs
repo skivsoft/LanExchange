@@ -8,8 +8,7 @@ namespace LanExchange.View
         string WebText { get; set; }
         string EmailText { get; set; }
 
-        void ShowMessage(string Text, Color color);
-        void HideMessage();
+        void ShowMessage(string text, Color color);
         void ShowProgressBar();
         void CancelView();
         void ShowUpdateButton(Version version);

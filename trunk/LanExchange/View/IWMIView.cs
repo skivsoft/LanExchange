@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace LanExchange.View
 {
@@ -7,8 +6,8 @@ namespace LanExchange.View
     {
         ListView LV { get; }
         ContextMenuStrip MENU { get; }
-        void ShowStat(int ClassCount, int PropCount, int MethodCount);
+        void ShowStat(int classCount, int propCount, int methodCount);
         void ClearClasses();
-        void AddClass(string ClassName);
+        void AddClass(string className);
     }
 }

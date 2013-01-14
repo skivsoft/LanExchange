@@ -16,33 +16,39 @@ namespace LanExchange.Presenter
     /// <summary>
     /// Presenter for Settings (model) and AboutForm (view).
     /// </summary>
-    public class AboutPresenter
+    public class AboutPresenter : IDisposable
     {
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
         private readonly IAboutView m_View;
-        private readonly BackgroundWorker DoCheckVersion;
-        private readonly BackgroundWorker DoUpdate;
+        private readonly BackgroundWorker m_DoCheckVersion;
+        private readonly BackgroundWorker m_DoUpdate;
 
-        private string UpdateError;
-        private bool bNeedRestart;
-        private string FileListContent;
+        private string m_UpdateError;
+        private bool m_NeedRestart;
+        private string m_FileListContent;
 
 
         public AboutPresenter(IAboutView view)
         {
             // initialize background workers
-            DoCheckVersion = new BackgroundWorker();
-            DoCheckVersion.DoWork += DoCheckVersion_DoWork;
-            DoCheckVersion.RunWorkerCompleted += DoCheckVersion_RunWorkerCompleted;
-            DoUpdate = new BackgroundWorker();
-            DoUpdate.DoWork += DoUpdate_DoWork;
-            DoUpdate.RunWorkerCompleted += DoUpdate_RunWorkerCompleted;
+            m_DoCheckVersion = new BackgroundWorker();
+            m_DoCheckVersion.DoWork += DoCheckVersion_DoWork;
+            m_DoCheckVersion.RunWorkerCompleted += DoCheckVersion_RunWorkerCompleted;
+            m_DoUpdate = new BackgroundWorker();
+            m_DoUpdate.DoWork += DoUpdate_DoWork;
+            m_DoUpdate.RunWorkerCompleted += DoUpdate_RunWorkerCompleted;
 
             m_View = view;
             m_View.ShowMessage("Проверка обновлений...", Color.Gray);
-            if (!DoCheckVersion.IsBusy)
-                DoCheckVersion.RunWorkerAsync();
+            if (!m_DoCheckVersion.IsBusy)
+                m_DoCheckVersion.RunWorkerAsync();
+        }
+
+        public void Dispose()
+        {
+            m_DoCheckVersion.Dispose();
+            m_DoUpdate.Dispose();
         }
 
         public void LoadFromModel()
@@ -54,8 +60,8 @@ namespace LanExchange.Presenter
         public void StartUpdate()
         {
             m_View.ShowProgressBar();
-            if (!DoUpdate.IsBusy)
-                DoUpdate.RunWorkerAsync();
+            if (!m_DoUpdate.IsBusy)
+                m_DoUpdate.RunWorkerAsync();
         }
 
         public static void OpenWebLink()
@@ -99,15 +105,19 @@ namespace LanExchange.Presenter
                 m_View.ShowMessage("Не удалось подключиться к серверу обновлений.", Color.Red);
                 return;
             }
-            FileListContent = (string)e.Result;
-            using (var Reader = new StringReader(FileListContent))
+            m_FileListContent = (string)e.Result;
+            using (var Reader = new StringReader(m_FileListContent))
             {
-                var siteVersion = new Version(Reader.ReadLine());
-                var assembly = Assembly.GetExecutingAssembly();
-                if (assembly.GetName().Version.CompareTo(siteVersion) < 0)
-                    m_View.ShowUpdateButton(siteVersion);
-                else
-                    m_View.ShowMessage("Установлена последняя версия LanExchange.", Color.Gray);
+                var line = Reader.ReadLine();
+                if (line != null)
+                {
+                    var siteVersion = new Version(line);
+                    var assembly = Assembly.GetExecutingAssembly();
+                    if (assembly.GetName().Version.CompareTo(siteVersion) < 0)
+                        m_View.ShowUpdateButton(siteVersion);
+                    else
+                        m_View.ShowMessage("Установлена последняя версия LanExchange.", Color.Gray);
+                }
             }
         }
 
@@ -117,28 +127,25 @@ namespace LanExchange.Presenter
             {
                 using (var client = new WebClient { Proxy = null })
                 {
-                    using (var StrReader = new StringReader(FileListContent))
+                    using (var StrReader = new StringReader(m_FileListContent))
                     {
                         StrReader.ReadLine();
                         string line;
-                        string LocalFName;
-                        string LocalDirName;
-                        string[] Arr;
                         string ExeName = Settings.GetExecutableFileName();
                         string ExePath = Path.GetDirectoryName(ExeName);
                         while (!String.IsNullOrEmpty(line = StrReader.ReadLine()))
                         {
-                            Arr = line.Split('|');
-                            string RemoteMD5 = Arr[0];
+                            string[] Arr = line.Split('|');
+                            string remoteMd5 = Arr[0];
                             int RemoteFSize = Int32.Parse(Arr[1]);
                             string RemoteFName = Arr[2];
                             string MustChangeFName = Arr[3];
-                            LocalFName = Path.Combine(ExePath, MustChangeFName);
-                            LocalDirName = Path.GetDirectoryName(LocalFName);
+                            string LocalFName = Path.Combine(ExePath, MustChangeFName);
+                            string LocalDirName = Path.GetDirectoryName(LocalFName);
                             bool bNeedDownload = false;
                             if (File.Exists(LocalFName))
                             {
-                                bool verify = verifyMd5File(LocalFName, RemoteFSize, RemoteMD5);
+                                bool verify = verifyMd5File(LocalFName, RemoteFSize, remoteMd5);
                                 if (!verify)
                                     bNeedDownload = true;
                             }
@@ -152,7 +159,7 @@ namespace LanExchange.Presenter
                                     if (File.Exists(FName))
                                         File.Delete(FName);
                                     File.Move(LocalFName, FName);
-                                    bNeedRestart = true;
+                                    m_NeedRestart = true;
                                 }
                                 else
                                     if (File.Exists(LocalFName))
@@ -171,7 +178,7 @@ namespace LanExchange.Presenter
             catch (Exception ex)
             {
                 e.Cancel = true;
-                UpdateError = ex.Message;
+                m_UpdateError = ex.Message;
                 logger.Info("Error: ", ex.Message);
             }
         }
@@ -180,12 +187,12 @@ namespace LanExchange.Presenter
         {
             if (e.Cancelled)
             {
-                m_View.ShowMessage("Обновление не удалось: " + UpdateError, Color.Red);
+                m_View.ShowMessage("Обновление не удалось: " + m_UpdateError, Color.Red);
             }
             else
             {
                 m_View.ShowMessage("Обвновление успешно завершено.", Color.Gray);
-                if (bNeedRestart)
+                if (m_NeedRestart)
                 {
                     // закрываем окно
                     m_View.CancelView();
@@ -195,12 +202,12 @@ namespace LanExchange.Presenter
             }
         }
 
-        private static bool verifyMd5File(string LocalFName, int RemoteFSize, string RemoteMD5)
+        private static bool verifyMd5File(string localFName, int remoteFSize, string remoteMd5)
         {
             bool Result;
-            using (var FS = File.Open(LocalFName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (var FS = File.Open(localFName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
-                if (FS.Length == RemoteFSize)
+                if (FS.Length == remoteFSize)
                 {
                     byte[] content = new byte[FS.Length];
                     FS.Read(content, 0, (int)FS.Length);
@@ -213,7 +220,7 @@ namespace LanExchange.Presenter
                     string hashOfInput = sBuilder.ToString();
 
                     var comparer = StringComparer.OrdinalIgnoreCase;
-                    Result = (0 == comparer.Compare(hashOfInput, RemoteMD5));
+                    Result = (0 == comparer.Compare(hashOfInput, remoteMd5));
                 }
                 else
                     Result = false;

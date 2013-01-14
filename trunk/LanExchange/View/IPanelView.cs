@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace LanExchange.View
 {
@@ -14,7 +13,7 @@ namespace LanExchange.View
         string FocusedItemText { get; }
         int FocusedItemIndex { get; }
         // methods
-        void SelectItem(int Index);
+        void SelectItem(int index);
         void SetVirtualListSize(int count);
         void RedrawFocusedItem();
     }

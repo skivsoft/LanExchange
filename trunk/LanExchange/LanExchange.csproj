@@ -201,12 +201,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\PagesModel.cs" />
     <Compile Include="Utils\SerializeUtils.cs" />
-    <Compile Include="View\IInfoView.cs" />
     <Compile Include="View\IMainView.cs" />
     <Compile Include="View\IPanelView.cs" />
     <Compile Include="View\IParamsView.cs" />
     <Compile Include="View\IPagesView.cs" />
-    <Compile Include="View\ITabParamsView.cs" />
     <Compile Include="View\IWMIView.cs" />
     <Compile Include="Windows\UnsafeNativeMethods.cs" />
     <EmbeddedResource Include="UI\AboutForm.resx">

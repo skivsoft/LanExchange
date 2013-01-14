@@ -137,9 +137,9 @@ namespace LanExchange.Utils
             public string shi1_remark;
             public SHARE_INFO_1(string sharename, uint sharetype, string remark)
             {
-                this.shi1_netname = sharename;
-                this.shi1_type = sharetype;
-                this.shi1_remark = remark;
+                shi1_netname = sharename;
+                shi1_type = sharetype;
+                shi1_remark = remark;
             }
             public override string ToString()
             {

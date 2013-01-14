@@ -1,40 +1,43 @@
 using System;
+using System.Globalization;
 using System.IO;
 using Microsoft.Win32;
 using NLog;
 
 namespace LanExchange.Utils
 {
-    public class AutorunUtils
+    public static class AutorunUtils
     {
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public static void ExplodeCmd(string CmdLine, out string FName, out string Params)
+        public static void ExplodeCmd(string cmdLine, out string fileName, out string cmdParams)
         {
-            FName = "";
-            Params = "";
+            fileName = "";
+            cmdParams = "";
             bool bQuote = false;
             bool bParam = false;
-            for (int i = 0; i < CmdLine.Length; i++)
+            for (int i = 0; i < cmdLine.Length; i++)
             {
-                if (!bParam && CmdLine[i].Equals('"'))
+                if (!bParam && cmdLine[i].Equals('"'))
                 {
                     bQuote = !bQuote;
                     continue;
                 }
-                if (!bParam && !bQuote && CmdLine[i].Equals(' '))
+                if (!bParam && !bQuote && cmdLine[i].Equals(' '))
                     bParam = true;
                 else
                     if (bParam)
-                        Params += CmdLine[i].ToString();
+                        cmdParams += cmdLine[i].ToString(CultureInfo.InvariantCulture);
                     else
-                        FName += CmdLine[i].ToString();
+                        fileName += cmdLine[i].ToString(CultureInfo.InvariantCulture);
             }
         }
 
-        public static bool Autorun_Exists(string FileName)
+        public static bool Autorun_Exists(string fileName)
         {
-            string ExeName = Path.GetFileName(FileName).ToUpper();
+            string ExeName = Path.GetFileName(fileName);
+            if (ExeName == null) return false;
+            ExeName = ExeName.ToUpper();
             RegistryKey Key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run\", false);
             if (Key == null)
                 return false;
@@ -48,12 +51,16 @@ namespace LanExchange.Utils
                     {
                         string FName;
                         string Params;
-                        AutorunUtils.ExplodeCmd(Key.GetValue(str).ToString(), out FName, out Params);
-                        string value = Path.GetFileName(FName).ToUpper();
-                        if (ExeName.Equals(value))
+                        ExplodeCmd(Key.GetValue(str).ToString(), out FName, out Params);
+                        var name = Path.GetFileName(FName);
+                        if (name != null)
                         {
-                            Result = true;
-                            break;
+                            string value = name.ToUpper();
+                            if (ExeName.Equals(value))
+                            {
+                                Result = true;
+                                break;
+                            }
                         }
                     }
                 }
@@ -65,38 +72,46 @@ namespace LanExchange.Utils
             return Result;
         }
 
-        public static void Autorun_Add(string FileName)
+        public static void Autorun_Add(string fileName)
         {
             RegistryKey Key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run\", true);
             if (Key == null)
                 return;
             try
             {
-                string ExeName = Path.GetFileName(FileName).ToUpper();
-                string FileNameQuoted = String.Format("\"{0}\"", FileName);
-
-                bool bFound = false;
-                Array.ForEach(Key.GetValueNames(), str =>
+                var name = Path.GetFileName(fileName);
+                if (name != null)
                 {
-                    RegistryValueKind Kind = Key.GetValueKind(str);
-                    if (Kind == RegistryValueKind.String || Kind == RegistryValueKind.ExpandString)
-                    {
-                        string FName;
-                        string Params;
-                        AutorunUtils.ExplodeCmd(Key.GetValue(str).ToString(), out FName, out Params);
-                        string value = Path.GetFileName(FName).ToUpper();
-                        if (ExeName.Equals(value))
-                            if (!bFound)
+                    string ExeName = name.ToUpper();
+                    string FileNameQuoted = String.Format("\"{0}\"", fileName);
+
+                    bool bFound = false;
+                    Array.ForEach(Key.GetValueNames(), str =>
+                        {
+                            RegistryValueKind Kind = Key.GetValueKind(str);
+                            if (Kind == RegistryValueKind.String || Kind == RegistryValueKind.ExpandString)
                             {
-                                bFound = true;
-                                Key.SetValue(str, FileNameQuoted);
+                                string FName;
+                                string Params;
+                                ExplodeCmd(Key.GetValue(str).ToString(), out FName, out Params);
+                                var s = Path.GetFileName(FName);
+                                if (s != null)
+                                {
+                                    string value = s.ToUpper();
+                                    if (ExeName.Equals(value))
+                                        if (!bFound)
+                                        {
+                                            bFound = true;
+                                            Key.SetValue(str, FileNameQuoted);
+                                        }
+                                        else
+                                            Key.DeleteValue(str, false);
+                                }
                             }
-                            else
-                                Key.DeleteValue(str, false);
-                    }
-                });
-                if (!bFound)
-                    Key.SetValue("LanExchange", FileNameQuoted);
+                        });
+                    if (!bFound)
+                        Key.SetValue("LanExchange", FileNameQuoted);
+                }
             }
             catch (Exception e)
             {
@@ -108,27 +123,35 @@ namespace LanExchange.Utils
             }
         }
 
-        public static void Autorun_Delete(string FileName)
+        public static void Autorun_Delete(string fileName)
         {
             RegistryKey Key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
             if (Key == null)
                 return;
             try
             {
-                string ExeName = Path.GetFileName(FileName).ToUpper();
-                Array.ForEach(Key.GetValueNames(), str =>
+                var name = Path.GetFileName(fileName);
+                if (name != null)
                 {
-                    RegistryValueKind Kind = Key.GetValueKind(str);
-                    if (Kind == RegistryValueKind.String || Kind == RegistryValueKind.ExpandString)
-                    {
-                        string FName;
-                        string Params;
-                        AutorunUtils.ExplodeCmd(Key.GetValue(str).ToString(), out FName, out Params);
-                        string value = Path.GetFileName(FName).ToUpper();
-                        if (ExeName.Equals(value))
-                            Key.DeleteValue(str, false);
-                    }
-                });
+                    string ExeName = name.ToUpper();
+                    Array.ForEach(Key.GetValueNames(), str =>
+                        {
+                            RegistryValueKind Kind = Key.GetValueKind(str);
+                            if (Kind == RegistryValueKind.String || Kind == RegistryValueKind.ExpandString)
+                            {
+                                string FName;
+                                string Params;
+                                ExplodeCmd(Key.GetValue(str).ToString(), out FName, out Params);
+                                var s = Path.GetFileName(FName);
+                                if (s != null)
+                                {
+                                    string value = s.ToUpper();
+                                    if (ExeName.Equals(value))
+                                        Key.DeleteValue(str, false);
+                                }
+                            }
+                        });
+                }
             }
             catch (Exception e)
             {

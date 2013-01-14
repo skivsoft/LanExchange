@@ -1,10 +1,8 @@
-﻿using System;
-using System.Windows.Forms;
-using LanExchange.View;
+﻿using System.Windows.Forms;
 
 namespace LanExchange.UI
 {
-    public partial class InfoView : UserControl, IInfoView
+    public partial class InfoView : UserControl
     {
         public InfoView()
         {

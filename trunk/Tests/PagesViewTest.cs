@@ -72,8 +72,8 @@ namespace Tests
                 var Items2 = new PanelItemList("test2");
                 View.NewTabFromItemList(Items1);
                 View.NewTabFromItemList(Items2);
-                View.SelectedIndex = 1;
-                Assert.AreEqual(1, View.SelectedIndex);
+                View.SetSelectedIndex(1);
+                Assert.AreEqual(1, View.GetSelectedIndex());
                 Assert.AreEqual(1, Model.SelectedIndex);
             }
         }
@@ -90,7 +90,7 @@ namespace Tests
                 View.NewTabFromItemList(Items1);
                 View.NewTabFromItemList(Items2);
                 Model.SelectedIndex = 1;
-                Assert.AreEqual(1, View.SelectedIndex);
+                Assert.AreEqual(1, View.GetSelectedIndex());
                 Assert.AreEqual(1, Model.SelectedIndex);
             }
         }

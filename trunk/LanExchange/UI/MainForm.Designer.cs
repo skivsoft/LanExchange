@@ -193,7 +193,6 @@
             this.Pages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Pages.Location = new System.Drawing.Point(0, 60);
             this.Pages.Name = "Pages";
-            this.Pages.SelectedIndex = -1;
             this.Pages.SelectedTabText = "";
             this.Pages.Size = new System.Drawing.Size(564, 460);
             this.Pages.TabIndex = 24;

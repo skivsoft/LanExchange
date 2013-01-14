@@ -112,10 +112,10 @@ namespace LanExchange.Model
                 IndexChanged(this, new IndexEventArgs(index));
         }
 
-        public bool Contains(PanelItemList info)
-        {
-            return m_List.Contains(info);
-        }
+        //public bool Contains(PanelItemList info)
+        //{
+        //    return m_List.Contains(info);
+        //}
         
         public void AddTab(PanelItemList info)
         {
@@ -152,7 +152,7 @@ namespace LanExchange.Model
             return i >= 0 && i <= Count - 1 ? m_List[i].TabName : null;
         }
 
-        public static string GetConfigFileName()
+        private static string GetConfigFileName()
         {
             var path = Path.GetDirectoryName(Settings.GetExecutableFileName());
             if (path == null)
