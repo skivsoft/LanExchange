@@ -29,7 +29,9 @@ namespace LanExchange.UI
 
         public void eFilter_TextChanged(object sender, EventArgs e)
         {
-            m_Presenter.FilterText = (sender as TextBox).Text;
+            var textbox = sender as TextBox;
+            if (textbox != null)
+                m_Presenter.FilterText = textbox.Text;
         }
 
         private void eFilter_KeyDown(object sender, KeyEventArgs e)

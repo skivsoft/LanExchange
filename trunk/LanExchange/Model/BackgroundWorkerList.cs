@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace LanExchange.Model
@@ -63,15 +62,15 @@ namespace LanExchange.Model
             }
         }
 
-        public void CancelAsync()
-        {
-            lock (m_Workers)
-            {
-                foreach (var Pair in m_Workers)
-                    if (Pair.Value.IsBusy)
-                        Pair.Value.CancelAsync();
-            }
-        }
+        //public void CancelAsync()
+        //{
+        //    lock (m_Workers)
+        //    {
+        //        foreach (var Pair in m_Workers)
+        //            if (Pair.Value.IsBusy)
+        //                Pair.Value.CancelAsync();
+        //    }
+        //}
 
         public int BusyCount
         {

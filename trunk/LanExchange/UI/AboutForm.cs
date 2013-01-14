@@ -12,7 +12,7 @@ namespace LanExchange.UI
     /// <summary>
     /// Concrete class for IAboutView.
     /// </summary>
-    partial class AboutForm : Form, IAboutView
+    sealed partial class AboutForm : Form, IAboutView
     {
         public static AboutForm Instance;
 

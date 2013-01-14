@@ -21,15 +21,15 @@ namespace LanExchange.Model
 
         public virtual string[] getStrings()
         {
-            return new string[2] { Name.ToUpper(), Comment.ToUpper() };
+            return new[] { Name.ToUpper(), Comment.ToUpper() };
         }
 
         public virtual string[] GetSubItems()
         {
-            return new string[1] { Comment };
+            return new[] { Comment };
         }
 
-        public virtual void CopyExtraFrom(PanelItem Comp)
+        public virtual void CopyExtraFrom(PanelItem pitem)
         {
             // empty for base class
         }
@@ -58,7 +58,7 @@ namespace LanExchange.Model
             if (String.IsNullOrEmpty(Name))
                 Result = String.IsNullOrEmpty(p2.Name) ? 0 : -1;
             else
-                Result = String.IsNullOrEmpty(p2.Name) ? +1 : Name.CompareTo(p2.Name);
+                Result = String.IsNullOrEmpty(p2.Name) ? +1 : String.Compare(Name, p2.Name, StringComparison.Ordinal);
             return Result;
         }
     }

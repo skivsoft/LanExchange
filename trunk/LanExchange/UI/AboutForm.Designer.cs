@@ -1,6 +1,6 @@
 ﻿namespace LanExchange.UI
 {
-    partial class AboutForm
+    sealed partial class AboutForm
     {
         /// <summary>
         /// Required designer variable.
@@ -180,7 +180,7 @@
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
         private System.Windows.Forms.Label labelProductName;
-        protected System.Windows.Forms.PictureBox logoPictureBox;
+        private System.Windows.Forms.PictureBox logoPictureBox;
         private System.Windows.Forms.LinkLabel labelWeb;
         private System.Windows.Forms.LinkLabel labelEmail;
         private System.Windows.Forms.Label labelVersion;

@@ -157,7 +157,7 @@ namespace LanExchange.UI
 
         private void popPages_Opening(object sender, CancelEventArgs e)
         {
-            mCloseTab.Enabled = m_Presenter.CanCloseTab(m_Presenter.GetModel().SelectedIndex);
+            mCloseTab.Enabled = m_Presenter.CanCloseTab();
             mSelectTab.Enabled = m_Presenter.GetModel().Count > 1;
             if (mSelectTab.Enabled)
             {

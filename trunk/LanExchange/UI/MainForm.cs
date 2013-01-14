@@ -164,16 +164,17 @@ namespace LanExchange.UI
             }
         }
 
-        private void lCompName_Click(object sender, EventArgs e)
-        {
-            // Open MyComputer
-            //Process.Start("explorer.exe", "/n, /e,::{20D04FE0-3AEA-1069-A2D8-08002B30309D}");
-            // Network
-            //Process.Start("explorer.exe", "/n, ::{208D2C60-3AEA-1069-A2D7-08002B30309D},FERMAK");
-            //PanelView PV = Pages.GetActivePanelView();
-            //if (PV != null)
-            //    PV.GotoFavoriteComp(SystemInformation.ComputerName);
-        }
+        // TODO uncomment MyComputer click
+        //private void lCompName_Click(object sender, EventArgs e)
+        //{
+        //    // Open MyComputer
+        //    //Process.Start("explorer.exe", "/n, /e,::{20D04FE0-3AEA-1069-A2D8-08002B30309D}");
+        //    // Network
+        //    //Process.Start("explorer.exe", "/n, ::{208D2C60-3AEA-1069-A2D7-08002B30309D},FERMAK");
+        //    //PanelView PV = Pages.GetActivePanelView();
+        //    //if (PV != null)
+        //    //    PV.GotoFavoriteComp(SystemInformation.ComputerName);
+        //}
 
         private void tipComps_Popup(object sender, PopupEventArgs e)
         {
@@ -266,7 +267,7 @@ namespace LanExchange.UI
             ComputerPanelItem Comp = null;
             if (pv != null) 
             {
-                PanelItem PItem = pv.GetPresenter().GetFocusedPanelItem(false, false);
+                PanelItem PItem = pv.GetPresenter().GetFocusedPanelItem(false);
                 if (PItem != null)
                     Comp = PItem as ComputerPanelItem;
             }

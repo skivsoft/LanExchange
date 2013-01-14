@@ -157,7 +157,6 @@
             this.lCompName.Size = new System.Drawing.Size(19, 17);
             this.lCompName.Text = "    ";
             this.lCompName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lCompName.Click += new System.EventHandler(this.lCompName_Click);
             // 
             // toolStripStatusLabel4
             // 

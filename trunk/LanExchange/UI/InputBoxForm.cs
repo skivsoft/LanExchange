@@ -5,18 +5,18 @@ namespace LanExchange.UI
 {
     public partial class InputBoxForm : Form
     {
-        bool bAllowEmpty = true;
+        bool m_AllowEmpty = true;
 
-        public static string ErrorMsgOnEmpty { get; set; }
+        //public static string ErrorMsgOnEmpty { get; set; }
 
         public InputBoxForm()
         {
             InitializeComponent();
         }
 
-        public void Prepare(string prompt, string errorMsgOnEmpty, string defText, bool bAllowEmpty)
+        public void Prepare(string prompt, string defText, bool bAllowEmpty)
         {
-            this.bAllowEmpty = bAllowEmpty;
+            m_AllowEmpty = bAllowEmpty;
             lblInputLabel.Text = prompt + ':';
             //ErrorMsgOnEmpty = errorMsgOnEmpty;
             txtInputText.Text = defText;
@@ -26,7 +26,7 @@ namespace LanExchange.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (!bAllowEmpty && String.IsNullOrEmpty(txtInputText.Text.Trim()))
+            if (!m_AllowEmpty && String.IsNullOrEmpty(txtInputText.Text.Trim()))
             {
                 errorProvider.SetError(txtInputText, "Строка не должна быть пустой.");
                 DialogResult = DialogResult.None;
@@ -34,7 +34,7 @@ namespace LanExchange.UI
                 DialogResult = DialogResult.OK;
         }
 
-        public static string Ask(string caption, string prompt, string defText, bool allow_empty)
+        public static string Ask(string caption, string prompt, string defText, bool allowEmpty)
         {
             using (var inputBox = new InputBoxForm())
             {
@@ -42,12 +42,11 @@ namespace LanExchange.UI
                     inputBox.Text = caption;
                 else
                     inputBox.Text = Application.ProductName;
-                inputBox.Prepare(prompt, ErrorMsgOnEmpty, defText, allow_empty);
+                inputBox.Prepare(prompt, defText, allowEmpty);
                 DialogResult res = inputBox.ShowDialog();
                 if (res != DialogResult.OK)
                     return null;
-                else
-                    return inputBox.txtInputText.Text.Trim();
+                return inputBox.txtInputText.Text.Trim();
             }
         }
 

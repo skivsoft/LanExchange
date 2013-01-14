@@ -54,40 +54,39 @@ namespace LanExchange.Model
                 case NetApi32.SV_101_PLATFORM.PLATFORM_ID_NT:
                     if ((m_Info.sv101_type & (uint)NetApi32.SV_101_TYPES.SV_TYPE_XENIX_SERVER) != 0)
                         return String.Format("Linux Server {0}.{1}", m_Info.sv101_version_major, m_Info.sv101_version_minor);
-                    else
-                        switch (m_Info.sv101_version_major)
-                        {
-                            case 3: return "Windows NT 3.51";
-                            case 4:
-                                switch (m_Info.sv101_version_minor)
-                                {
-                                    case 0: return "Windows 95";
-                                    case 10: return "Windows 98";
-                                    case 90: return "Windows ME";
-                                    default:
-                                        return String.Format("Windows NT {0}.{1}", m_Info.sv101_version_major, m_Info.sv101_version_minor);
-                                }
-                            case 5:
-                                switch (m_Info.sv101_version_minor)
-                                {
-                                    case 0: return bServer ? "Windows Server 2000" : "Windows 2000";
-                                    case 1: return "Windows XP";
-                                    case 2: return "Windows Server 2003 R2";
-                                    default:
-                                        return String.Format("Windows NT {0}.{1}", m_Info.sv101_version_major, m_Info.sv101_version_minor);
-                                }
-                            case 6:
-                                switch (m_Info.sv101_version_minor)
-                                {
-                                    case 0: return bServer ? "Windows Server 2008" : "Windows Vista";
-                                    case 1: return bServer ? "Windows Server 2008 R2" : "Windows 7";
-                                    case 2: return bServer ? "Windows 8 Server" : "Windows 8";
-                                    default:
-                                        return String.Format("Windows NT {0}.{1}", m_Info.sv101_version_major, m_Info.sv101_version_minor);
-                                }
-                            default:
-                                return String.Format("Windows NT {0}.{1}", m_Info.sv101_version_major, m_Info.sv101_version_minor);
-                        }
+                    switch (m_Info.sv101_version_major)
+                    {
+                        case 3: return "Windows NT 3.51";
+                        case 4:
+                            switch (m_Info.sv101_version_minor)
+                            {
+                                case 0: return "Windows 95";
+                                case 10: return "Windows 98";
+                                case 90: return "Windows ME";
+                                default:
+                                    return String.Format("Windows NT {0}.{1}", m_Info.sv101_version_major, m_Info.sv101_version_minor);
+                            }
+                        case 5:
+                            switch (m_Info.sv101_version_minor)
+                            {
+                                case 0: return bServer ? "Windows Server 2000" : "Windows 2000";
+                                case 1: return "Windows XP";
+                                case 2: return "Windows Server 2003 R2";
+                                default:
+                                    return String.Format("Windows NT {0}.{1}", m_Info.sv101_version_major, m_Info.sv101_version_minor);
+                            }
+                        case 6:
+                            switch (m_Info.sv101_version_minor)
+                            {
+                                case 0: return bServer ? "Windows Server 2008" : "Windows Vista";
+                                case 1: return bServer ? "Windows Server 2008 R2" : "Windows 7";
+                                case 2: return bServer ? "Windows 8 Server" : "Windows 8";
+                                default:
+                                    return String.Format("Windows NT {0}.{1}", m_Info.sv101_version_major, m_Info.sv101_version_minor);
+                            }
+                        default:
+                            return String.Format("Windows NT {0}.{1}", m_Info.sv101_version_major, m_Info.sv101_version_minor);
+                    }
                 case NetApi32.SV_101_PLATFORM.PLATFORM_ID_OSF:
                     return String.Format("OSF {0}.{1}", m_Info.sv101_version_major, m_Info.sv101_version_minor);
                 case NetApi32.SV_101_PLATFORM.PLATFORM_ID_VMS:
@@ -99,15 +98,15 @@ namespace LanExchange.Model
 
         public bool IsDomainController()
         {
-            uint ctrl = (uint)NetApi32.SV_101_TYPES.SV_TYPE_DOMAIN_CTRL | (uint)NetApi32.SV_101_TYPES.SV_TYPE_DOMAIN_BAKCTRL;
+            const uint ctrl = (uint)NetApi32.SV_101_TYPES.SV_TYPE_DOMAIN_CTRL | (uint)NetApi32.SV_101_TYPES.SV_TYPE_DOMAIN_BAKCTRL;
             return (m_Info.sv101_type & ctrl) != 0;
         }
 
         public bool IsServer()
         {
-            uint srv = (uint)NetApi32.SV_101_TYPES.SV_TYPE_SERVER;
-            uint ctrl = (uint)NetApi32.SV_101_TYPES.SV_TYPE_DOMAIN_CTRL | (uint)NetApi32.SV_101_TYPES.SV_TYPE_DOMAIN_BAKCTRL;
-            uint noctrl = (uint)NetApi32.SV_101_TYPES.SV_TYPE_SERVER_NT;
+            const uint srv = (uint)NetApi32.SV_101_TYPES.SV_TYPE_SERVER;
+            const uint ctrl = (uint)NetApi32.SV_101_TYPES.SV_TYPE_DOMAIN_CTRL | (uint)NetApi32.SV_101_TYPES.SV_TYPE_DOMAIN_BAKCTRL;
+            const uint noctrl = (uint)NetApi32.SV_101_TYPES.SV_TYPE_SERVER_NT;
             return (m_Info.sv101_type & srv) != 0 && (m_Info.sv101_type & (ctrl | noctrl)) != 0;
         }
 
@@ -154,35 +153,28 @@ namespace LanExchange.Model
         public int CompareVersionTo(object obj)
         {
             var comp = obj as ServerInfo;
+            if (comp == null) return 1;
             uint u1 = m_Info.sv101_platform_id;
             uint u2 = comp.m_Info.sv101_platform_id;
             if (u1 < u2) return -1;
-            else
-                if (u1 > u2) return 1;
+            if (u1 > u2) return 1;
             bool s1 = IsServer();
             bool c1 = IsDomainController();
             bool s2 = comp.IsServer();
             bool c2 = comp.IsDomainController();
             if (!s1 && s2) return -1;
-            else
-                if (s1 && !s2) return 1;
-                else
-                    if (!c1 && c2) return 1;
-                    else
-                        if (c1 && !c2) return -1;
+            if (s1 && !s2) return 1;
+            if (!c1 && c2) return 1;
+            if (c1 && !c2) return -1;
             u1 = m_Info.sv101_version_major;
             u2 = comp.m_Info.sv101_version_major;
             if (u1 < u2) return -1;
-            else
-                if (u1 > u2) return 1;
+            if (u1 > u2) return 1;
             u1 = m_Info.sv101_version_minor;
             u2 = comp.m_Info.sv101_version_minor;
             if (u1 < u2) return -1;
-            else
-            {
-                if (u1 > u2) return 1;
-                return 0;
-            }
+            if (u1 > u2) return 1;
+            return 0;
         }
 
         public NetApi32.SERVER_INFO_101 GetInfo()
@@ -195,7 +187,8 @@ namespace LanExchange.Model
         public int CompareTo(object obj)
         {
             var comp = obj as ServerInfo;
-            return String.Compare(Name, comp.Name, true);
+            if (comp == null) return 1;
+            return String.Compare(Name, comp.Name, StringComparison.OrdinalIgnoreCase);
         }
 
         #endregion

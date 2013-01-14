@@ -14,19 +14,19 @@ namespace LanExchange.Model
             IsPingable = true;
         }
 
-        public ComputerPanelItem(string computer_name, object data)
+        public ComputerPanelItem(string computerName, object data)
         {
-            m_Name = computer_name;
+            m_Name = computerName;
             IsPingable = true;
             m_SI = data as ServerInfo;
-            if (data != null)
+            if (data != null && m_SI != null)
                 m_Comment = m_SI.Comment;
         }
 
-        public static bool IsValidName(string name)
-        {
-            return true;
-        }
+        //public static bool IsValidName(string name)
+        //{
+        //    return true;
+        //}
 
         protected override string GetName()
         {
@@ -54,7 +54,7 @@ namespace LanExchange.Model
 
         public override string[] getStrings()
         {
-            return new string[3] { Comment.ToUpper(), Name.ToUpper(), m_SI.Version().ToUpper() };
+            return new[] { Comment.ToUpper(), Name.ToUpper(), m_SI.Version().ToUpper() };
         }
 
         protected override int GetImageIndex()
@@ -71,16 +71,19 @@ namespace LanExchange.Model
 
         public bool IsPingable { get; set; }
 
-        public bool IsLogged { get; set; }
+        private bool IsLogged { get; set; }
 
-        public IPEndPoint EndPoint { get; set; }
+        private IPEndPoint EndPoint { get; set; }
 
-        public override void CopyExtraFrom(PanelItem Comp)
+        public override void CopyExtraFrom(PanelItem pitem)
         {
-            if (Comp == null) return;
-            IsPingable = (Comp as ComputerPanelItem).IsPingable;
-            IsLogged = (Comp as ComputerPanelItem).IsLogged;
-            EndPoint = (Comp as ComputerPanelItem).EndPoint;
+            var comp = pitem as ComputerPanelItem;
+            if (comp != null)
+            {
+                IsPingable = comp.IsPingable;
+                IsLogged = comp.IsLogged;
+                EndPoint = comp.EndPoint;
+            }
         }
     }
 }
