@@ -14,13 +14,6 @@ namespace Tests
     [TestClass]
     public class PagesViewTest
     {
-        public PagesViewTest()
-        {
-            //
-            // TODO: Add constructor logic here
-            //
-        }
-
         private TestContext testContextInstance;
 
         /// <summary>

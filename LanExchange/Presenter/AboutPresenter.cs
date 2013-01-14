@@ -123,6 +123,10 @@ namespace LanExchange.Presenter
 
         private void DoUpdate_DoWork(object sender, DoWorkEventArgs e)
         {
+            e.Cancel = true;
+            string ExeName = Settings.GetExecutableFileName();
+            string ExePath = Path.GetDirectoryName(ExeName);
+            if (ExePath == null) return;
             try
             {
                 using (var client = new WebClient { Proxy = null })
@@ -131,8 +135,6 @@ namespace LanExchange.Presenter
                     {
                         StrReader.ReadLine();
                         string line;
-                        string ExeName = Settings.GetExecutableFileName();
-                        string ExePath = Path.GetDirectoryName(ExeName);
                         while (!String.IsNullOrEmpty(line = StrReader.ReadLine()))
                         {
                             string[] Arr = line.Split('|');
@@ -142,6 +144,7 @@ namespace LanExchange.Presenter
                             string MustChangeFName = Arr[3];
                             string LocalFName = Path.Combine(ExePath, MustChangeFName);
                             string LocalDirName = Path.GetDirectoryName(LocalFName);
+                            if (LocalDirName == null) continue;
                             bool bNeedDownload = false;
                             if (File.Exists(LocalFName))
                             {
@@ -174,10 +177,10 @@ namespace LanExchange.Presenter
                         }
                     }
                 }
+                e.Cancel = false;
             }
             catch (Exception ex)
             {
-                e.Cancel = true;
                 m_UpdateError = ex.Message;
                 logger.Info("Error: ", ex.Message);
             }

@@ -1,25 +1,21 @@
 ﻿using System;
 using System.Windows.Forms;
-using LanExchange.Presenter;
-using LanExchange.View;
-using LanExchange.Model;
 using System.Management;
-using LanExchange.Utils;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 
-namespace LanExchange.UI
+namespace LanExchange.WMI
 {
     public partial class WMIForm : Form, IWMIView
     {
         private readonly WMIPresenter m_Presenter;
         private string m_CurrentWMIClass;
         private readonly List<string> m_Classes;
-        private readonly ComputerPanelItem m_Comp;
+        private readonly IWMIComputer m_Comp;
         private ManagementObject m_WMIObject;
 
-        public WMIForm(ComputerPanelItem comp)
+        public WMIForm(IWMIComputer comp)
         {
             InitializeComponent();
             // Enable double buffer for ListView
@@ -78,6 +74,7 @@ namespace LanExchange.UI
         {
             if (m_Presenter.EnumDynamicClasses())
             {
+                lvInstances.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
                 UpdateClassesMenu();
                 CurrentWMIClass = "Win32_OperatingSystem";
             }
@@ -238,14 +235,22 @@ namespace LanExchange.UI
 
         public void UpdateClassesMenu()
         {
+            //m_Classes.Sort();
+            //menuClasses.Items.Clear();
+            //m_Classes.ForEach(str =>
+            //{
+            //    ToolStripMenuItem MI = new ToolStripMenuItem { Text = str };
+            //    MI.Click += menuClasses_Click;
+            //    menuClasses.Items.Add(MI);
+            //});
             m_Classes.Sort();
             menuClasses.Items.Clear();
-            m_Classes.ForEach(str =>
-            {
-                ToolStripMenuItem MI = new ToolStripMenuItem { Text = str };
-                MI.Click += menuClasses_Click;
-                menuClasses.Items.Add(MI);
-            });
+            foreach(string str in m_Classes)
+                using (var MI = new ToolStripMenuItem {Text = str})
+                {
+                    MI.Click += menuClasses_Click;
+                    menuClasses.Items.Add(MI);
+                }
         }
 
         private void menuClasses_Opening(object sender, CancelEventArgs e)

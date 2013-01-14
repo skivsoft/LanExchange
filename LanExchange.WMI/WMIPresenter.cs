@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Management;
-using LanExchange.Model;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using LanExchange.View;
 using System.Runtime.InteropServices;
 using NLog;
 
-namespace LanExchange.Presenter
+namespace LanExchange.WMI
 {
     public class WMIPresenter
     {
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
-        private readonly ComputerPanelItem m_Comp;
+        private readonly IWMIComputer m_Comp;
         private ConnectionOptions m_Connection;
         private ManagementScope m_Scope;
 
@@ -21,7 +19,7 @@ namespace LanExchange.Presenter
         private ManagementClass m_Class;
         private readonly List<string> m_ExcludeClasses;
 
-        public WMIPresenter(ComputerPanelItem comp, IWMIView view)
+        public WMIPresenter(IWMIComputer comp, IWMIView view)
         {
             m_Comp = comp;
             m_View = view;

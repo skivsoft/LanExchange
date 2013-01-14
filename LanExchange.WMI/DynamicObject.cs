@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 
-namespace LanExchange.Utils
+namespace LanExchange.WMI
 {
 	public class DynamicObject : ICustomTypeDescriptor
 	{
@@ -112,7 +112,7 @@ namespace LanExchange.Utils
 
             foreach (var descriptor in m_FullPropertyDescriptors)
                 if (((PropertyDescriptor)descriptor).Name.ToLower().IndexOf(filter, StringComparison.Ordinal) > -1)
-                    m_FilteredPropertyDescriptors.Add(value: ((PropertyDescriptor)descriptor));
+                    m_FilteredPropertyDescriptors.Add(((PropertyDescriptor)descriptor));
         }
 
 
@@ -126,7 +126,7 @@ namespace LanExchange.Utils
         {
             var descriptor = m_FullPropertyDescriptors.Find(propertyName, true);
             if (descriptor != null)
-                return descriptor.GetValue(null);
+                return descriptor.GetValue(new object());
             throw new Exception("Property is not found");
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Globalization;
 
-namespace LanExchange.Utils
+namespace LanExchange.WMI
 {
     public static class WMIUtils
     {
@@ -15,8 +16,7 @@ namespace LanExchange.Utils
             int second = initializer.Second;
             long ticks = 0;
             string dmtf = dmtfDate;
-            var datetime = DateTime.MinValue;
-            string tempString = string.Empty;
+            string tempString;
             if ((dmtf == null))
             {
                 throw new ArgumentOutOfRangeException();
@@ -32,39 +32,39 @@ namespace LanExchange.Utils
             try
             {
                 tempString = dmtf.Substring(0, 4);
-                if ((String.Compare("****", tempString, false) != 0))
+                if ((String.CompareOrdinal("****", tempString) != 0))
                 {
                     year = int.Parse(tempString);
                 }
                 tempString = dmtf.Substring(4, 2);
-                if ((String.Compare("**", tempString, false) != 0))
+                if ((String.CompareOrdinal("**", tempString) != 0))
                 {
                     month = int.Parse(tempString);
                 }
                 tempString = dmtf.Substring(6, 2);
-                if ((String.Compare("**", tempString, false) != 0))
+                if ((String.CompareOrdinal("**", tempString) != 0))
                 {
                     day = int.Parse(tempString);
                 }
                 tempString = dmtf.Substring(8, 2);
-                if ((String.Compare("**", tempString, false) != 0))
+                if ((String.CompareOrdinal("**", tempString) != 0))
                 {
                     hour = int.Parse(tempString);
                 }
                 tempString = dmtf.Substring(10, 2);
-                if ((String.Compare("**", tempString, false) != 0))
+                if ((String.CompareOrdinal("**", tempString) != 0))
                 {
                     minute = int.Parse(tempString);
                 }
                 tempString = dmtf.Substring(12, 2);
-                if ((String.Compare("**", tempString, false) != 0))
+                if ((String.CompareOrdinal("**", tempString) != 0))
                 {
                     second = int.Parse(tempString);
                 }
                 tempString = dmtf.Substring(15, 6);
-                if ((String.Compare("******", tempString, false) != 0))
+                if ((String.CompareOrdinal("******", tempString) != 0))
                 {
-                    ticks = (long.Parse(tempString) * ((long)((TimeSpan.TicksPerMillisecond / 1000))));
+                    ticks = (long.Parse(tempString) * (TimeSpan.TicksPerMillisecond / 1000));
                 }
                 if (((((((((year < 0)
                             || (month < 0))
@@ -82,35 +82,34 @@ namespace LanExchange.Utils
             {
                 throw new ArgumentOutOfRangeException(null, e.Message);
             }
-            datetime = new DateTime(year, month, day, hour, minute, second, 0);
+            DateTime datetime = new DateTime(year, month, day, hour, minute, second, 0);
             datetime = datetime.AddTicks(ticks);
             var tickOffset = TimeZone.CurrentTimeZone.GetUtcOffset(datetime);
-            int UTCOffset = 0;
-            int OffsetToBeAdjusted = 0;
-            long OffsetMins = ((long)((tickOffset.Ticks / TimeSpan.TicksPerMinute)));
+            int utcOffset;
+            long OffsetMins = tickOffset.Ticks / TimeSpan.TicksPerMinute;
             tempString = dmtf.Substring(22, 3);
-            if (String.Compare(tempString, "******", false) == 0)
+            if (String.CompareOrdinal(tempString, "******") == 0)
                 return datetime;
 
             tempString = dmtf.Substring(21, 4);
             try
             {
-                UTCOffset = int.Parse(tempString);
+                utcOffset = int.Parse(tempString);
             }
             catch (Exception e)
             {
                 throw new ArgumentOutOfRangeException(null, e.Message);
             }
-            OffsetToBeAdjusted = ((int)((OffsetMins - UTCOffset)));
-            datetime = datetime.AddMinutes(((double)(OffsetToBeAdjusted)));
+            int OffsetToBeAdjusted = ((int)((OffsetMins - utcOffset)));
+            datetime = datetime.AddMinutes(OffsetToBeAdjusted);
             return datetime;
         }
 
         public static string ToDmtfDateTime(DateTime date)
         {
-            string utcString = string.Empty;
+            string utcString;
             var tickOffset = TimeZone.CurrentTimeZone.GetUtcOffset(date);
-            long OffsetMins = ((long)((tickOffset.Ticks / TimeSpan.TicksPerMinute)));
+            long OffsetMins = tickOffset.Ticks / TimeSpan.TicksPerMinute;
             if ((Math.Abs(OffsetMins) > 999))
             {
                 date = date.ToUniversalTime();
@@ -120,26 +119,26 @@ namespace LanExchange.Utils
             {
                 if ((tickOffset.Ticks >= 0))
                 {
-                    utcString = string.Concat("+", ((Int64)((tickOffset.Ticks / TimeSpan.TicksPerMinute))).ToString().PadLeft(3, '0'));
+                    utcString = string.Concat("+", (tickOffset.Ticks / TimeSpan.TicksPerMinute).ToString(CultureInfo.InvariantCulture).PadLeft(3, '0'));
                 }
                 else
                 {
-                    string strTemp = ((Int64)(OffsetMins)).ToString();
+                    string strTemp = OffsetMins.ToString(CultureInfo.InvariantCulture);
                     utcString = string.Concat("-", strTemp.Substring(1, (strTemp.Length - 1)).PadLeft(3, '0'));
                 }
             }
-            string dmtfDateTime = ((Int32)(date.Year)).ToString().PadLeft(4, '0');
-            dmtfDateTime = string.Concat(dmtfDateTime, ((Int32)(date.Month)).ToString().PadLeft(2, '0'));
-            dmtfDateTime = string.Concat(dmtfDateTime, ((Int32)(date.Day)).ToString().PadLeft(2, '0'));
-            dmtfDateTime = string.Concat(dmtfDateTime, ((Int32)(date.Hour)).ToString().PadLeft(2, '0'));
-            dmtfDateTime = string.Concat(dmtfDateTime, ((Int32)(date.Minute)).ToString().PadLeft(2, '0'));
-            dmtfDateTime = string.Concat(dmtfDateTime, ((Int32)(date.Second)).ToString().PadLeft(2, '0'));
+            string dmtfDateTime = date.Year.ToString(CultureInfo.InvariantCulture).PadLeft(4, '0');
+            dmtfDateTime = string.Concat(dmtfDateTime, date.Month.ToString(CultureInfo.InvariantCulture).PadLeft(2, '0'));
+            dmtfDateTime = string.Concat(dmtfDateTime, date.Day.ToString(CultureInfo.InvariantCulture).PadLeft(2, '0'));
+            dmtfDateTime = string.Concat(dmtfDateTime, date.Hour.ToString(CultureInfo.InvariantCulture).PadLeft(2, '0'));
+            dmtfDateTime = string.Concat(dmtfDateTime, date.Minute.ToString(CultureInfo.InvariantCulture).PadLeft(2, '0'));
+            dmtfDateTime = string.Concat(dmtfDateTime, date.Second.ToString(CultureInfo.InvariantCulture).PadLeft(2, '0'));
             dmtfDateTime = string.Concat(dmtfDateTime, ".");
             var dtTemp = new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, 0);
-            long microsec = ((long)((((date.Ticks - dtTemp.Ticks)
-                        * 1000)
-                        / TimeSpan.TicksPerMillisecond)));
-            string strMicrosec = ((Int64)(microsec)).ToString();
+            long microsec = ((date.Ticks - dtTemp.Ticks)
+                             * 1000)
+                            / TimeSpan.TicksPerMillisecond;
+            string strMicrosec = microsec.ToString(CultureInfo.InvariantCulture);
             if ((strMicrosec.Length > 6))
             {
                 strMicrosec = strMicrosec.Substring(0, 6);
