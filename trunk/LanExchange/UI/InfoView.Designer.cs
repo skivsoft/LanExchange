@@ -38,7 +38,7 @@
             // lInfoOS
             // 
             this.lInfoOS.AutoSize = true;
-            this.lInfoOS.Location = new System.Drawing.Point(64, 42);
+            this.lInfoOS.Location = new System.Drawing.Point(48, 42);
             this.lInfoOS.Name = "lInfoOS";
             this.lInfoOS.Size = new System.Drawing.Size(19, 13);
             this.lInfoOS.TabIndex = 7;
@@ -48,14 +48,14 @@
             // 
             this.imgInfo.Location = new System.Drawing.Point(8, 8);
             this.imgInfo.Name = "imgInfo";
-            this.imgInfo.Size = new System.Drawing.Size(48, 48);
+            this.imgInfo.Size = new System.Drawing.Size(32, 32);
             this.imgInfo.TabIndex = 6;
             this.imgInfo.TabStop = false;
             // 
             // lInfoDesc
             // 
             this.lInfoDesc.AutoSize = true;
-            this.lInfoDesc.Location = new System.Drawing.Point(64, 25);
+            this.lInfoDesc.Location = new System.Drawing.Point(48, 25);
             this.lInfoDesc.Name = "lInfoDesc";
             this.lInfoDesc.Size = new System.Drawing.Size(19, 13);
             this.lInfoDesc.TabIndex = 5;
@@ -65,7 +65,7 @@
             // 
             this.lInfoComp.AutoSize = true;
             this.lInfoComp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lInfoComp.Location = new System.Drawing.Point(64, 8);
+            this.lInfoComp.Location = new System.Drawing.Point(48, 8);
             this.lInfoComp.Name = "lInfoComp";
             this.lInfoComp.Size = new System.Drawing.Size(23, 13);
             this.lInfoComp.TabIndex = 4;

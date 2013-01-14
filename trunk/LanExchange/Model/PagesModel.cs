@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using LanExchange.Utils;
 using System.IO;
+using NLog;
 
 namespace LanExchange.Model
 {
@@ -9,9 +10,9 @@ namespace LanExchange.Model
     {
         private readonly PanelItemList m_Info;
 
-        public PanelItemListEventArgs(PanelItemList Info)
+        public PanelItemListEventArgs(PanelItemList info)
         {
-            m_Info = Info;
+            m_Info = info;
         }
 
         public PanelItemList Info { get { return m_Info; } }
@@ -21,9 +22,9 @@ namespace LanExchange.Model
     {
         private readonly int m_Index;
 
-        public IndexEventArgs(int Index)
+        public IndexEventArgs(int index)
         {
-            m_Index = Index;
+            m_Index = index;
         }
 
         public int Index { get { return m_Index; } }
@@ -37,8 +38,8 @@ namespace LanExchange.Model
 
     public class PagesModel
     {
+        private readonly static Logger logger = LogManager.GetCurrentClassLogger();
         private readonly List<PanelItemList> m_List;
-        private readonly string m_Name;
         private int m_SelectedIndex;
 
         public event EventHandler<PanelItemListEventArgs> AfterAppendTab;
@@ -48,17 +49,16 @@ namespace LanExchange.Model
 
         private LanExchangeTabs m_PagesSettings;
 
-        public PagesModel(string name)
+        public PagesModel()
         {
             m_List = new List<PanelItemList>();
             m_PagesSettings = new LanExchangeTabs();
-            m_Name = name;
             m_SelectedIndex = -1;
         }
 
         public int Count { get { return m_List.Count; }  }
 
-        private int LockCount;
+        private int m_LockCount;
 
         public int SelectedIndex 
         {
@@ -69,79 +69,79 @@ namespace LanExchange.Model
             set
             {
                 m_SelectedIndex = value;
-                if (LockCount == 0)
+                if (m_LockCount == 0)
                 {
-                    LockCount++;
+                    m_LockCount++;
                     DoIndexChanged(value);
-                    LockCount--;
+                    m_LockCount--;
                 }
             }
         }
 
-        public PanelItemList GetItem(int Index)
+        public PanelItemList GetItem(int index)
         {
-            return Index < 0 || Index >= m_List.Count ? null : m_List[Index];
+            return index < 0 || index >= m_List.Count ? null : m_List[index];
         }
 
-        internal int GetItemIndex(PanelItemList Item)
+        internal int GetItemIndex(PanelItemList item)
         {
-            return m_List.IndexOf(Item);
+            return m_List.IndexOf(item);
         }
 
-        public void DoAfterAppendTab(PanelItemList Info)
+        private void DoAfterAppendTab(PanelItemList info)
         {
             if (AfterAppendTab != null)
-               AfterAppendTab(this, new PanelItemListEventArgs(Info));
+                AfterAppendTab(this, new PanelItemListEventArgs(info));
         }
 
-        public void DoAfterRemove(int Index)
+        private void DoAfterRemove(int index)
         {
             if (AfterRemove != null)
-                AfterRemove(this, new IndexEventArgs(Index));
+                AfterRemove(this, new IndexEventArgs(index));
         }
 
-        public void DoAfterRename(PanelItemList Info)
+        private void DoAfterRename(PanelItemList info)
         {
             if (AfterRename != null)
-                AfterRename(this, new PanelItemListEventArgs(Info));
+                AfterRename(this, new PanelItemListEventArgs(info));
         }
 
-        public void DoIndexChanged(int Index)
+        private void DoIndexChanged(int index)
         {
             if (IndexChanged != null)
-                IndexChanged(this, new IndexEventArgs(Index));
+                IndexChanged(this, new IndexEventArgs(index));
         }
 
-        public bool Contains(PanelItemList Info)
+        public bool Contains(PanelItemList info)
         {
-            return m_List.Contains(Info);
+            return m_List.Contains(info);
         }
         
-        public void AddTab(PanelItemList Info)
+        public void AddTab(PanelItemList info)
         {
             // ommit duplicates
-            if (!m_List.Contains(Info))
+            if (!m_List.Contains(info))
             {
-                m_List.Add(Info);
-                Info.UpdateSubsctiption();
-                DoAfterAppendTab(Info);
+                m_List.Add(info);
+                info.UpdateSubsctiption();
+                DoAfterAppendTab(info);
             }
         }
 
-        public void DelTab(int Index)
+        public void DelTab(int index)
         {
-            if (Index >= 0 && Index < m_List.Count)
+            if (index >= 0 && index < m_List.Count)
             {
-                ServerListSubscription.Instance.UnSubscribe(m_List[Index]);
-                m_List.RemoveAt(Index);
-                DoAfterRemove(Index);
+                ServerListSubscription.Instance.UnSubscribe(m_List[index]);
+                m_List.RemoveAt(index);
+                DoAfterRemove(index);
             }
         }
 
-        public void RenameTab(int Index, string NewTabName)
+        public void RenameTab(int index, string newTabName)
         {
-            var Info = m_List[Index];
-            Info.TabName = NewTabName;
+            var Info = m_List[index];
+            Info.TabName = newTabName;
             DoAfterRename(Info);
         }
 
@@ -150,46 +150,44 @@ namespace LanExchange.Model
             return i >= 0 && i <= Count - 1 ? m_List[i].TabName : null;
         }
 
-        internal void Clear()
-        {
-            m_List.Clear();
-        }
-
         public static string GetConfigFileName()
         {
-            return Path.Combine(Path.GetDirectoryName(Settings.GetExecutableFileName()), "Pages.cfg");
-        }
-
-        public void StoreSettings()
-        {
-            m_PagesSettings.SelectedIndex = SelectedIndex;
-            List<TabSettings> pages = new List<TabSettings>();
-            for (int i = 0; i < Count; i++)
-                pages.Add(GetItem(i).Settings);
-            pages.Sort();
-            m_PagesSettings.Items = pages.ToArray();
-            SerializeUtils.SerializeObjectToXMLFile(GetConfigFileName(), m_PagesSettings);
+            var path = Path.GetDirectoryName(Settings.GetExecutableFileName());
+            if (path == null)
+                throw new ArgumentNullException();
+            return Path.Combine(path, "Pages.cfg");
         }
 
         public void LoadSettings()
         {
-            Clear();
             try
             {
-                m_PagesSettings = (LanExchangeTabs)SerializeUtils.DeserializeObjectFromXMLFile(GetConfigFileName(), typeof(LanExchangeTabs));
+                var fileFName = GetConfigFileName();
+                logger.Info("PagesModel.LoadSettings(\"{0}\")", fileFName);
+                var temp = (LanExchangeTabs)SerializeUtils.DeserializeObjectFromXMLFile(fileFName, typeof (LanExchangeTabs));
+                if (temp != null)
+                {
+                    m_PagesSettings = null;
+                    m_PagesSettings = temp;
+                }
             }
-            catch {}
+            catch(Exception E)
+            {
+                logger.Error("PagesModel.LoadSettings: {0}", E.Message);
+            }
+            if (m_PagesSettings == null)
+                throw new ArgumentNullException();
             if (m_PagesSettings.Items.Length > 0)
             {
-                Array.ForEach(m_PagesSettings.Items, Page =>
+                Array.ForEach(m_PagesSettings.Items, page =>
                 {
-                    var Info = new PanelItemList(Page.Name) { Settings = Page };
+                    var Info = new PanelItemList(page.Name) { Settings = page };
                     AddTab(Info);
                 });
             }
             else
             {
-                string domain = NetApi32Utils.GetMachineNetBiosDomain(null);
+                var domain = NetApi32Utils.GetMachineNetBiosDomain(null);
                 var Info = new PanelItemList(domain)
                 {
                     ScanMode = true
@@ -199,6 +197,27 @@ namespace LanExchange.Model
             }
 
             SelectedIndex = m_PagesSettings.SelectedIndex;
+        }
+
+        public void SaveSettings()
+        {
+            m_PagesSettings.SelectedIndex = SelectedIndex;
+            var pages = new List<TabSettings>();
+            for (int i = 0; i < Count; i++)
+                pages.Add(GetItem(i).Settings);
+            //TODO: reorder tabs or sort tabs
+            //pages.Sort();
+            m_PagesSettings.Items = pages.ToArray();
+            var fileFName = GetConfigFileName();
+            try
+            {
+                logger.Info("PagesModel.SaveSettings(\"{0}\")", fileFName);
+                SerializeUtils.SerializeObjectToXMLFile(fileFName, m_PagesSettings);
+            }
+            catch (Exception E)
+            {
+                logger.Error("PagesModel.SaveSettings: {0}", E.Message);
+            }
         }
     }
 }

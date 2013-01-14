@@ -102,6 +102,9 @@
     <Compile Include="UI\PagesView.Designer.cs">
       <DependentUpon>PagesView.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\RunMinimizedForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Utils\DynamicObject.cs" />
     <Compile Include="Model\LanExchangeIcons.cs" />
     <Compile Include="Presenter\AboutPresenter.cs" />
@@ -296,6 +299,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="LanExchange.ico" />
+    <None Include="Resources\twitter24.png" />
     <None Include="Resources\clear_hover.png" />
     <None Include="Resources\clear_normal.png" />
     <Content Include="Presenter\Readme.txt" />

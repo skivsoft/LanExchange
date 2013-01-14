@@ -9,10 +9,11 @@ using System.Reflection;
 using System.ComponentModel;
 using System.Text;
 using System.Security.Cryptography;
+using LanExchange.Windows;
 
 namespace LanExchange.UI
 {
-    public partial class MainForm : Form, IMainView
+    public partial class MainForm : RunMinimizedForm, IMainView
     {
         /// <summary>
         /// Logger object.
@@ -30,10 +31,6 @@ namespace LanExchange.UI
         /// ManiForm single instance.
         /// </summary>
         public static MainForm Instance;
-        /// <summary>
-        /// Last window state for correct show/hide MainForm in IsFormVisible.
-        /// </summary>
-        FormWindowState  LastWindowState;
 
         public MainForm()
         {
@@ -41,9 +38,10 @@ namespace LanExchange.UI
             Instance = this;
             // load settings from cfg-file
             Settings.LoadSettings();
+            RunMinimized = Settings.Instance.RunMinimized;
+            SetupForm();
             // init MainForm presenter
             m_Presenter = new MainPresenter(this);
-            // load pages from cfg-file
             m_Presenter.Pages = Pages.GetPresenter();
             m_Presenter.Pages.PanelViewFocusedItemChanged += Pages_PanelViewFocusedItemChanged;
             m_Presenter.Pages.GetModel().LoadSettings();
@@ -51,54 +49,19 @@ namespace LanExchange.UI
             //Pages.UpdateSelectedTab();
             //mSendToNewTab.Click += new EventHandler(TabController.mSendToNewTab_Click);
             
-            // init main form
-            SetupForm();
-            SetupMenu();
             // setup images
             MainForm.Instance.tipComps.SetToolTip(Pages.Pages, " ");
             Pages.Pages.ImageList = LanExchangeIcons.SmallImageList;
             Status.ImageList = LanExchangeIcons.SmallImageList;
             // init network scanner
             ServerListSubscription.Instance.RefreshInterval = (int)Settings.Instance.RefreshTimeInSec * 1000;
-            // set admin mode
-            AdminMode = Settings.Instance.AdvancedMode;
-        }
-
-        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            logger.Info("MainForm is closed. Saving settings.");
-            Settings.Instance.MainFormPos = Location;
-            Settings.Instance.MainFormSize = Size;
-            Settings.StoreSettings();
-            m_Presenter.Pages.GetModel().StoreSettings();
         }
 
         private void SetupForm()
         {
-            // get save pos and size from config
-            var Rect = new Rectangle(Settings.Instance.MainFormPos, Settings.Instance.MainFormSize);
-            // correct width and height
-            ;
-            bool BoundsIsNotSet = Settings.Instance.MainFormSize.Width == 0;
-            Rectangle WorkingArea = BoundsIsNotSet ?  Screen.PrimaryScreen.WorkingArea : Screen.GetWorkingArea(Rect);
-            Rect.Width = Math.Min(Math.Max(MAINFORM_DEFAULTWIDTH, Rect.Width), WorkingArea.Width);
-            Rect.Height = WorkingArea.Height;
-            // shift rect into working area
-            if (Rect.Left < WorkingArea.Left) Rect.X = WorkingArea.Left;
-            if (Rect.Top < WorkingArea.Top) Rect.Y = WorkingArea.Top;
-            if (Rect.Right > WorkingArea.Right) Rect.X -= Rect.Right - WorkingArea.Right;
-            if (Rect.Bottom > WorkingArea.Bottom) Rect.Y -= Rect.Bottom - WorkingArea.Bottom;
-            // determination side to snap right or left
-            int CenterX = (Rect.Left + Rect.Right) >> 1;
-            int WorkingAreaCenterX = (WorkingArea.Left + WorkingArea.Right) >> 1;
-            if (BoundsIsNotSet || CenterX >= WorkingAreaCenterX)
-                // snap to right side
-                Rect.X = WorkingArea.Right - Rect.Width;
-            else
-                // snap to left side
-                Rect.X -= Rect.Left - WorkingArea.Left;
             // set mainform bounds
-            SetBounds(Rect.X, Rect.Y, Rect.Width, Rect.Height);
+            var Rect = Settings.Instance.GetBounds();
+            SetBounds(Rect.Left, Rect.Top, Rect.Width, Rect.Height);
             // set mainform title
             var Ver = Assembly.GetExecutingAssembly().GetName().Version;
             Text = String.Format("{0} {1}.{2}", Application.ProductName, Ver.Major, Ver.Minor);
@@ -108,7 +71,7 @@ namespace LanExchange.UI
             // show computer name
             lCompName.Text = SystemInformation.ComputerName;
             lCompName.ImageIndex = LanExchangeIcons.imgCompDefault;
-                // show current user
+            // show current user
             lUserName.Text = Settings.GetCurrentUserName();
         }
 
@@ -126,50 +89,6 @@ namespace LanExchange.UI
             //}
             //popTop.Items.Clear();
             //popTop.Items.AddRange(MyItems);
-        }
-
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            logger.Info("MainForm is closing with reason {0}", e.CloseReason.ToString());
-            if (e.CloseReason == CloseReason.None || e.CloseReason == CloseReason.UserClosing)
-            {
-                e.Cancel = true;
-                IsFormVisible = false;
-                logger.Info("Closing is canceled");
-            }
-        }
-
-        private void MainForm_Resize(object sender, EventArgs e)
-        {
-            if (WindowState != FormWindowState.Minimized)
-            {
-                if (LastWindowState != WindowState)
-                    logger.Info("WindowState is {0}", WindowState.ToString());
-                LastWindowState = WindowState;
-            }
-            else
-                logger.Info("WindowState is {0}", WindowState.ToString());
-        }
-
-        public bool IsFormVisible
-        {
-            get { return WindowState != FormWindowState.Minimized && Visible; }
-            set
-            {
-                bool bMinimized = WindowState == FormWindowState.Minimized;
-                Visible = value;
-                if (bMinimized)
-                {
-                    //TODO uncomment or del
-                    //ShowInTaskbar = true;
-                    WindowState = LastWindowState;
-                }
-                if (Visible)
-                {
-                    Activate();
-                    Pages.FocusPanelView();
-                }
-            }
         }
 
 #if DEBUG
@@ -328,23 +247,6 @@ namespace LanExchange.UI
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
         }
         
-
-        private bool m_AdminMode;
-
-        public bool AdminMode
-        {
-            get { return m_AdminMode; }
-            set
-            {
-                if (m_AdminMode != value)
-                {
-                    logger.Info("AdminMode is {0}", value ? "ON" : "OFF");
-                    m_AdminMode = value;
-                    //popComps_Opened(popComps, new EventArgs());
-                }
-            }
-        }
-
         public void Restart()
         {
             Application.Restart();
@@ -378,7 +280,7 @@ namespace LanExchange.UI
             // is focused item a computer?
             if (Comp == null)
             {
-                pInfo.Picture.Image = LanExchangeIcons.ExtraLargeImageList.Images[LanExchangeIcons.imgCompDefault];
+                pInfo.Picture.Image = LanExchangeIcons.LargeImageList.Images[LanExchangeIcons.imgCompDefault];
                 pInfo.InfoComp = "";
                 pInfo.InfoDesc = "";
                 pInfo.InfoOS = "";
@@ -388,7 +290,7 @@ namespace LanExchange.UI
             pInfo.InfoComp = Comp.Name;
             pInfo.InfoDesc = Comp.Comment;
             pInfo.InfoOS = Comp.SI.Version();
-            pInfo.Picture.Image = LanExchangeIcons.ExtraLargeImageList.Images[Comp.ImageIndex];
+            pInfo.Picture.Image = LanExchangeIcons.LargeImageList.Images[Comp.ImageIndex];
             switch (Comp.ImageIndex)
             {
                 case LanExchangeIcons.imgCompDefault:
@@ -413,37 +315,77 @@ namespace LanExchange.UI
             lItemsCount.Text = String.Format(format, args);
         }
 
-        private void TrayIcon_MouseUp(object sender, MouseEventArgs e)
-        {
-            //logger.Info("TrayIcon_MouseUp");
-            if (e.Button == MouseButtons.Left)
-                //Visible = !Visible;
-                IsFormVisible = !IsFormVisible;
-        }
-
         private void popTray_Opening(object sender, CancelEventArgs e)
         {
             mOpen.Text = IsFormVisible ? "Скрыть" : "Открыть";
         }
+
+        //private void MainForm_Shown(object sender, EventArgs e)
+        //{
+        //    m_RunMinimized.Form_Shown();
+        //}
+
+        //private void MainForm_Resize(object sender, EventArgs e)
+        //{
+        //    m_RunMinimized.Form_Resize();
+        //    logger.Info("MainForm_Resize: {0}", Width);
+        //}
+
+        //private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        //{
+        //    logger.Info("MainForm is closing with reason {0}", e.CloseReason.ToString());
+        //    if (e.CloseReason == CloseReason.None || e.CloseReason == CloseReason.UserClosing)
+        //    {
+        //        e.Cancel = true;
+        //        IsFormVisible = false;
+        //        logger.Info("Closing is canceled");
+        //    }
+        //}
 
         private void mOpen_Click(object sender, EventArgs e)
         {
             IsFormVisible = !IsFormVisible;
         }
 
-        private void MainForm_Shown(object sender, EventArgs e)
+        private void TrayIcon_MouseUp(object sender, MouseEventArgs e)
         {
-            if (Settings.Instance.RunMinimized)
-            {
-                logger.Info("Hiding MainForm cause RunMinimized is ON.");
-                WindowState = FormWindowState.Minimized;
-                Visible = false;
-            }
+            if (e.Button == MouseButtons.Left)
+                IsFormVisible = !IsFormVisible;
         }
 
         public void mExit_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            ApplicationExit();
         }
+
+        protected override void WndProc(ref Message m)
+        {
+            switch (m.Msg)
+            {
+                case NativeMethods.WM_QUERYENDSESSION:
+                    logger.Info("WM_QUERYENDSESSION: {0}", m.LParam.ToString("X"));
+                    m.Result = new IntPtr(1);
+                    break;
+                case NativeMethods.WM_ENDSESSION:
+                    logger.Info("WM_ENDSESSION: {0}", m.LParam.ToString("X"));
+                    break;
+                default:
+                    base.WndProc(ref m);
+                    break;
+            }
+        }
+
+        private void MainForm_ResizeEnd(object sender, EventArgs e)
+        {
+            Settings.Instance.SetBounds(Bounds);
+            Settings.SaveSettingsIfModified();
+        }
+
+        private void MainForm_Activated(object sender, EventArgs e)
+        {
+            Pages.FocusPanelView();
+        }
+
+
     }
 }

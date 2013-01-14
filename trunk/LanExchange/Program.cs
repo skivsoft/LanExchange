@@ -41,7 +41,7 @@ namespace LanExchange
         static void LogHeader()
         {
             logger.Info("----------------------------------------");
-            logger.Info("Executable: [{0}], Version: {1}", Application.ExecutablePath, Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            logger.Info("Version: [{0}], Executable: [{1}]", Assembly.GetExecutingAssembly().GetName().Version.ToString(), Application.ExecutablePath);
             logger.Info(@"MachineName: {0}, UserName: {1}\{2}, Interactive: {3}", Environment.MachineName, Environment.UserDomainName, Environment.UserName, Environment.UserInteractive);
             logger.Info("OSVersion: [{0}], Processors count: {1}", Environment.OSVersion, Environment.ProcessorCount);
         }

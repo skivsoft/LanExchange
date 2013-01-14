@@ -8,6 +8,8 @@ namespace LanExchange.Windows
         public static HandleRef NullHandleRef = new HandleRef(null, IntPtr.Zero);
 
         public const int
+            WM_QUERYENDSESSION = 0x0011,
+            WM_ENDSESSION = 0x0016,
             SW_HIDE = 0,
             SW_NORMAL = 1,
             SW_SHOWMINIMIZED = 2,
@@ -28,6 +30,12 @@ namespace LanExchange.Windows
             SWP_HIDEWINDOW = 0x0080,
             SWP_DRAWFRAME = 0x0020,
             SWP_NOOWNERZORDER = 0x0200;
+
+        public const uint
+            LP_ENDSESSION_CLOSEAPP = 0x00000001,
+            LP_ENDSESSION_CRITICAL = 0x40000000,
+            LP_ENDSESSION_LOGOFF   = 0x80000000;
+
 
     }
 }

@@ -47,7 +47,7 @@ namespace LanExchange.Presenter
 
         public void LoadFromModel()
         {
-            m_View.WebText += Settings.Instance.GetWebSiteURL();
+            m_View.WebText += Settings.Instance.GetWebSiteUrl();
             m_View.EmailText += Settings.Instance.GetEmailAddress();
         }
 
@@ -60,7 +60,7 @@ namespace LanExchange.Presenter
 
         public static void OpenWebLink()
         {
-            Process.Start("http://" + Settings.Instance.GetWebSiteURL());
+            Process.Start("http://" + Settings.Instance.GetWebSiteUrl());
         }
 
         public static void OpenEmailLink()
@@ -70,7 +70,7 @@ namespace LanExchange.Presenter
 
         public static string GetFileListURL()
         {
-            return Settings.Instance.GetUpdateURL() + "filelist.php";
+            return Settings.Instance.GetUpdateUrl() + "filelist.php";
         }
 
         private static void DoCheckVersion_DoWork(object sender, DoWorkEventArgs e)
@@ -160,7 +160,7 @@ namespace LanExchange.Presenter
                                     else
                                         if (!Directory.Exists(LocalDirName))
                                             Directory.CreateDirectory(LocalDirName);
-                                string URL = Settings.Instance.GetUpdateURL() + RemoteFName;
+                                string URL = Settings.Instance.GetUpdateUrl() + RemoteFName;
                                 logger.Info("Downloading file from url [{0}] and saving to [{1}]", URL, LocalFName);
                                 client.DownloadFile(URL, LocalFName);
                             }

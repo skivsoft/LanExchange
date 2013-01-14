@@ -1,5 +1,4 @@
-﻿using System;
-using LanExchange.View;
+﻿using LanExchange.View;
 using LanExchange.Model;
 
 namespace LanExchange.Presenter
@@ -30,7 +29,7 @@ namespace LanExchange.Presenter
             Settings.Instance.RunMinimized = m_View.RunMinimized;
             Settings.Instance.AdvancedMode = m_View.AdvancedMode;
             Settings.Instance.RefreshTimeInSec = m_View.RefreshTimeInMin * 60;
-            MainPresenter.Instance.MainView.AdminMode = Settings.Instance.AdvancedMode;
+            Settings.SaveSettingsIfModified();
             ServerListSubscription.Instance.RefreshInterval = (int)Settings.Instance.RefreshTimeInSec * 1000;
         }
     }

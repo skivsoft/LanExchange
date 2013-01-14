@@ -209,7 +209,7 @@ namespace LanExchange.UI
                 e.Handled = true;
             }
             // Ctrl+Enter - Run RAdmin for computer and FAR for folder
-            if (MainForm.Instance.AdminMode && e.Control && e.KeyCode == Keys.Enter)
+            if (Settings.Instance.AdvancedMode && e.Control && e.KeyCode == Keys.Enter)
             {
                 PanelItem PItem = m_Presenter.GetFocusedPanelItem(true, false);
                 if (PItem is ComputerPanelItem)
@@ -344,12 +344,12 @@ namespace LanExchange.UI
                 if (PItem is ComputerPanelItem)
                 {
                     mComp.Text = @"\\" + PItem.Name;
-                    bCompVisible = MainForm.Instance.AdminMode;
+                    bCompVisible = Settings.Instance.AdvancedMode;
                 }
                 if (PItem is SharePanelItem)
                 {
                     mComp.Text = @"\\" + (PItem as SharePanelItem).ComputerName;
-                    bCompVisible = MainForm.Instance.AdminMode;
+                    bCompVisible = Settings.Instance.AdvancedMode;
                     if (!String.IsNullOrEmpty(PItem.Name))
                     {
                         mFolder.Text = String.Format(@"\\{0}\{1}", (PItem as SharePanelItem).ComputerName, PItem.Name);
