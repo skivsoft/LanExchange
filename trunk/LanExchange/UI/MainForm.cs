@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows.Forms;
 using LanExchange.View;
 using LanExchange.Model;
@@ -32,6 +33,7 @@ namespace LanExchange.UI
         {
             InitializeComponent();
             Instance = this;
+            BackgroundWorkers.Instance.CountChanged += BackgroundWorkers_CountChanged;
             // load settings from cfg-file
             Settings.LoadSettings();
             SetRunMinimized(Settings.Instance.RunMinimized);
@@ -70,6 +72,11 @@ namespace LanExchange.UI
             lCompName.ImageIndex = LanExchangeIcons.CompDefault;
             // show current user
             lUserName.Text = Settings.GetCurrentUserName();
+        }
+
+        private void BackgroundWorkers_CountChanged(object sender, EventArgs e)
+        {
+            lWorkers.Text = BackgroundWorkers.Instance.Count.ToString(CultureInfo.InvariantCulture);
         }
 
         //private void SetupMenu()
@@ -246,12 +253,21 @@ namespace LanExchange.UI
             Application.Restart();
         }
 
-        private void lItemsCount_MouseDown(object sender, MouseEventArgs e)
+        private void lItemsCount_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
                 Point P = Status.PointToScreen(e.Location);
                 popTray.Show(P);
+            }
+        }
+
+        private void lWorkers_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                Point P = Status.PointToScreen(e.Location);
+                popWorkers.Show(P);
             }
         }
 
@@ -379,5 +395,11 @@ namespace LanExchange.UI
         {
             Pages.FocusPanelView();
         }
+
+        private void mStopWorkers_Click(object sender, EventArgs e)
+        {
+            BackgroundWorkers.Instance.StopAllWorkers();
+        }
+
     }
 }

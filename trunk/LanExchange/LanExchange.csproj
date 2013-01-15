@@ -80,14 +80,20 @@
       <HintPath>..\lib\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Strategy\BackgroundContext.cs" />
+    <Compile Include="Strategy\IBackgroundStrategy.cs" />
+    <Compile Include="Model\BackgroundWorkerEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Model\IFilterModel.cs" />
+    <Compile Include="Strategy\ConnectToWMIStrategy.cs" />
+    <Compile Include="Strategy\NetServerEnumStrategy.cs" />
+    <Compile Include="Strategy\SubscriptionAbstractStrategy.cs" />
     <Compile Include="Presenter\FilterPresenter.cs" />
     <Compile Include="UI\FilterView.cs">
       <SubType>UserControl</SubType>
@@ -165,7 +171,7 @@
     </Compile>
     <Compile Include="Model\LanExchangeTabs.cs" />
     <Compile Include="Utils\Kernel32.cs" />
-    <Compile Include="Model\BackgroundWorkerList.cs" />
+    <Compile Include="Model\BackgroundWorkers.cs" />
     <Compile Include="Model\ISubscriber.cs" />
     <Compile Include="Model\ISubscription.cs" />
     <Compile Include="Utils\NetApi32.cs" />
@@ -283,7 +289,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="LanExchange.ico" />
-    <None Include="Resources\twitter24.png" />
     <None Include="Resources\clear_hover.png" />
     <None Include="Resources\clear_normal.png" />
     <Content Include="Presenter\Readme.txt" />

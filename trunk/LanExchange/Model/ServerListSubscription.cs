@@ -1,5 +1,4 @@
-﻿#define __REMOVE_RANDOM_COMPS
-
+﻿
 using System;
 using System.Collections.Generic;
 
@@ -9,6 +8,7 @@ using NLog;
 using LanExchange.Utils;
 using System.IO;
 using System.Collections;
+using LanExchange.Strategy;
 
 namespace LanExchange.Model
 {
@@ -23,8 +23,8 @@ namespace LanExchange.Model
         {
             get
             {
-                if (m_Instance != null) return m_Instance;
-                m_Instance = new ServerListSubscription();
+                if (m_Instance == null) 
+                    m_Instance = new ServerListSubscription();
                 return m_Instance;
             }
         }
@@ -35,7 +35,6 @@ namespace LanExchange.Model
 
         private int m_RefreshInterval;
         private readonly Timer m_RefreshTimer;
-        private readonly BackgroundWorkerList m_Workers;
         private bool m_InstantUpdate = true;
 
         protected ServerListSubscription()
@@ -49,8 +48,6 @@ namespace LanExchange.Model
             m_RefreshTimer = new Timer();
             m_RefreshTimer.Tick += RefreshTimer_Tick;
             m_RefreshTimer.Enabled = false;
-            // worker list for scanning network
-            m_Workers = new BackgroundWorkerList();
         }
 
         //public bool IsInstantUpdate
@@ -60,7 +57,7 @@ namespace LanExchange.Model
 
         //public bool IsBusy
         //{
-        //    get { return m_Workers.IsBusy; }
+        //    get { return BackgroundWorkers.Instance.IsBusy; }
         //}
 
         public int RefreshInterval
@@ -76,49 +73,38 @@ namespace LanExchange.Model
         private void RefreshTimer_Tick(object sender, EventArgs e)
         {
             logger.Info("RefreshTimer.Tick() executed. Next tick in {0} sec.", m_RefreshInterval/1000);
-            if (!m_Workers.IsBusy)
+            if (!BackgroundWorkers.Instance.IsBusy)
             {
                 // prepare workers to launch
                 foreach (var Pair in m_Subjects)
                 {
-                    if (!m_Workers.Exists(Pair.Key))
-                        m_Workers.Add(Pair.Key, CreateOneWorker());
+                    bool subjectFound = false;
+                    foreach(BackgroundContext ctx in BackgroundWorkers.Instance.EnumContexts())
+                        if (ctx.Strategy is SubscriptionAbstractStrategy)
+                        {
+                            var sub = ctx.Strategy as SubscriptionAbstractStrategy;
+                            if (sub.Subject.Equals(Pair.Key))
+                            {
+                                subjectFound = true;
+                                break;
+                            }
+                        }
+                    if (!subjectFound)
+                        BackgroundWorkers.Instance.Add(new BackgroundContext(new NetServerEnumStrategy(Pair.Key)), CreateOneWorker());
                 }
                 // launch!
-                m_Workers.RunWorkerAsync();
+                BackgroundWorkers.Instance.RunWorkerAsync();
             }
             else
-                logger.Info("Tick: {0} of {1} worker(s) busy, no action", m_Workers.BusyCount, m_Workers.Count);
+                logger.Info("Tick: {0} of {1} worker(s) busy, no action", BackgroundWorkers.Instance.BusyCount, BackgroundWorkers.Instance.Count);
         }
 
-        private BackgroundWorker CreateOneWorker()
+        private BackgroundWorkerEx CreateOneWorker()
         {
-            var Result = new BackgroundWorker();
+            var Result = new BackgroundWorkerEx();
             Result.DoWork += OneWorker_DoWork;
             Result.RunWorkerCompleted += OneWorker_RunWorkerCompleted;
             return Result;
-        }
-
-        /// <summary>
-        /// This method must return server list instantly. Use cache is preferred.
-        /// </summary>
-        private bool PrepareResult(string domain, bool cachePref)
-        {
-            if (cachePref && m_Results.ContainsKey(domain))
-            {
-                logger.Info("GetFromCache(domain:{0})", domain);
-                return true;
-            }
-            // get server list via OS api
-            NetApi32.SERVER_INFO_101[] List;
-            if (String.IsNullOrEmpty(domain))
-                List = NetApi32Utils.GetDomainList();
-            else
-                List = NetApi32Utils.GetComputerList(domain);
-            // convert array to IList<ServerInfo>
-            var result = new List<ServerInfo>();
-            Array.ForEach(List, item => result.Add(new ServerInfo(item)));
-            return SetResult(domain, result);
         }
 
         private bool SetResult(string domain, IList<ServerInfo> list)
@@ -153,23 +139,22 @@ namespace LanExchange.Model
         /// <param name="e"></param>
         protected virtual void OneWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            var domain = (string)e.Argument;
-            #if REMOVE_RANDOM_COMPS
-            var List = m_Results[domain];
-            var R = new Random();
-            int Count = R.Next(List.Count * 2 / 3);
-            for (int i = 0; i < Count; i++)
+            var context = e.Argument as BackgroundContext;
+            if (context == null)
             {
-                int Index = R.Next(List.Count);
-                List.RemoveAt(Index);
+                e.Cancel = true;
+                return;
             }
-            m_Results[domain] = List;
-            logger.Info(String.Format("Random comps removed: {0}", List.Count));
-            #endif
-            if (PrepareResult(domain, false))
-                e.Result = domain;
-            else
-                e.Result = null;
+            context.ExecuteOperation();
+            e.Result = null;
+            if (context.Strategy is NetServerEnumStrategy)
+            {
+                var strategy = (context.Strategy as NetServerEnumStrategy);
+                if (SetResult(strategy.Subject, strategy.Result))
+                    e.Result = strategy.Subject;
+                else
+                    e.Cancel = true;
+            }
         }
 
         /// <summary>
@@ -179,10 +164,8 @@ namespace LanExchange.Model
         /// <param name="e"></param>
         protected virtual void OneWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            if (e.Cancelled) return;
             var Subject = (string)e.Result;
-            if (e.Cancelled || Subject == null)
-                return;
-            logger.Info("Completed(domain:{0})", Subject);
             // notify all subscribers for current subject
             lock (m_Subjects)
             {
@@ -321,8 +304,11 @@ namespace LanExchange.Model
             }
             if (Modified)
             {
-                PrepareResult(subject, true);
-                sender.DataChanged(this, subject);
+                if (m_Results.ContainsKey(subject))
+                {
+                    logger.Info("Subject \"{0}\" already exists in cache.", subject);
+                    sender.DataChanged(this, subject);
+                }
                 SubscribersChanged();
             }
         }
