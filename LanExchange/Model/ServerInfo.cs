@@ -4,7 +4,7 @@ using LanExchange.Utils;
 namespace LanExchange.Model
 {
     [Serializable]
-    public class ServerInfo : IComparable
+    public class ServerInfo : IComparable<ServerInfo>
     {
         private readonly NetApi32.SERVER_INFO_101 m_Info;
 
@@ -184,11 +184,9 @@ namespace LanExchange.Model
 
         #region IComparable Members
 
-        public int CompareTo(object obj)
+        public int CompareTo(ServerInfo other)
         {
-            var comp = obj as ServerInfo;
-            if (comp == null) return 1;
-            return String.Compare(Name, comp.Name, StringComparison.OrdinalIgnoreCase);
+            return String.Compare(Name, other.Name, StringComparison.OrdinalIgnoreCase);
         }
 
         #endregion

@@ -13,7 +13,8 @@ namespace LanExchange.WMI
         private string m_CurrentWMIClass;
         private readonly List<string> m_Classes;
         private readonly IWMIComputer m_Comp;
-        private ManagementObject m_WMIObject;
+
+        public event EventHandler FocusedItemChanged;
 
         public WMIForm(IWMIComputer comp)
         {
@@ -29,89 +30,23 @@ namespace LanExchange.WMI
                 Text = String.Format("{0} — {1}", comp.Name, comp.Comment);
                 m_Comp = comp;
             }
+            FocusedItemChanged += lvInstances_FocusedItemChanged;
         }
 
-        public override sealed string Text
-        {
-            get { return base.Text; }
-            set { base.Text = value; }
-        }
-
-        public ListView LV
-        {
-            get { return lvInstances; }
-        }
-
-        public ContextMenuStrip MENU
-        {
-            get { return menuCommands; }
-        }
-
-        public string CurrentWMIClass
-        {
-            get
-            {
-                return m_CurrentWMIClass;
-            }
-            set
-            {
-                m_CurrentWMIClass = value;
-                lDescription.Text = m_Presenter.GetClassDescription(value);
-                lClassName.Text = value;
-                m_Presenter.EnumObjects(value);
-                if (lvInstances.Items.Count == 0)
-                    PropGrid.SelectedObject = null;
-                else
-                {
-                    lvInstances.FocusedItem = lvInstances.Items[0];
-                    lvInstances.FocusedItem.Selected = true;
-                    lvInstances_ItemActivate(lvInstances, new EventArgs());
-                }
-            }
-        }
-
-        private void WMIForm_Load(object sender, EventArgs e)
-        {
-            if (m_Presenter.EnumDynamicClasses())
-            {
-                lvInstances.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-                UpdateClassesMenu();
-                CurrentWMIClass = "Win32_OperatingSystem";
-            }
-            else
-                Close();
-        }
-
-        public void ShowStat(int classCount, int propCount, int methodCount)
-        {
-            Status.Items[0].Text = String.Format("Классов: {0}, Свойств: {1}, Методов: {2}", classCount, propCount, methodCount);
-        }
-
-        public static void dynObj_AddProperty<T>(DynamicObject dynObj, PropertyData prop, string description, string category, bool isReadOnly)
-        {
-            if (prop.Value == null)
-                dynObj.AddPropertyNull<T>(prop.Name, description, category, isReadOnly);
-            else
-                if (prop.IsArray)
-                    dynObj.AddProperty(prop.Name, (T[])prop.Value, description, category, isReadOnly);
-                else
-                    dynObj.AddProperty(prop.Name, (T)prop.Value, description, category, isReadOnly);
-        }
-
-        private void lvInstances_ItemActivate(object sender, EventArgs e)
+        private void lvInstances_FocusedItemChanged(object sender, EventArgs e)
         {
             if (m_Presenter.WMIClass == null) return;
             if (lvInstances.FocusedItem == null) return;
-            m_WMIObject = (ManagementObject)lvInstances.FocusedItem.Tag;
-            if (m_WMIObject == null) return;
+            m_Presenter.WMIObject = (ManagementObject)lvInstances.FocusedItem.Tag;
+            if (m_Presenter.WMIObject == null) return;
 
             var dynObj = new DynamicObject();
-            foreach (PropertyData Prop in m_WMIObject.Properties)
+            foreach (PropertyData Prop in m_Presenter.WMIObject.Properties)
             {
                 // skip array of bytes
                 if (Prop.Type == CimType.UInt8 && Prop.IsArray)
                     continue;
-                
+
                 PropertyData ClassProp = m_Presenter.WMIClass.Properties[Prop.Name];
 
                 bool isCimKey = false;
@@ -215,6 +150,73 @@ namespace LanExchange.WMI
             PropGrid.SelectedObject = dynObj;
         }
 
+        public override sealed string Text
+        {
+            get { return base.Text; }
+            set { base.Text = value; }
+        }
+
+        public ListView LV
+        {
+            get { return lvInstances; }
+        }
+
+        public ContextMenuStrip MENU
+        {
+            get { return menuCommands; }
+        }
+
+        public string CurrentWMIClass
+        {
+            get
+            {
+                return m_CurrentWMIClass;
+            }
+            set
+            {
+                m_CurrentWMIClass = value;
+                lDescription.Text = m_Presenter.GetClassDescription(value);
+                lClassName.Text = value;
+                m_Presenter.EnumObjects(value);
+                m_Presenter.BuildContextMenu();
+                if (lvInstances.Items.Count == 0)
+                    PropGrid.SelectedObject = null;
+                else
+                {
+                    lvInstances.FocusedItem = lvInstances.Items[0];
+                    lvInstances.FocusedItem.Selected = true;
+                    lvInstances_FocusedItemChanged(lvInstances, new EventArgs());
+                }
+            }
+        }
+
+        private void WMIForm_Load(object sender, EventArgs e)
+        {
+            if (m_Presenter.EnumDynamicClasses())
+            {
+                lvInstances.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                UpdateClassesMenu();
+                CurrentWMIClass = "Win32_OperatingSystem";
+            }
+            else
+                Close();
+        }
+
+        public void ShowStat(int classCount, int propCount, int methodCount)
+        {
+            Status.Items[0].Text = String.Format("Классов: {0}, Свойств: {1}, Методов: {2}", classCount, propCount, methodCount);
+        }
+
+        public static void dynObj_AddProperty<T>(DynamicObject dynObj, PropertyData prop, string description, string category, bool isReadOnly)
+        {
+            if (prop.Value == null)
+                dynObj.AddPropertyNull<T>(prop.Name, description, category, isReadOnly);
+            else
+                if (prop.IsArray)
+                    dynObj.AddProperty(prop.Name, (T[])prop.Value, description, category, isReadOnly);
+                else
+                    dynObj.AddProperty(prop.Name, (T)prop.Value, description, category, isReadOnly);
+        }
 
         public void ClearClasses()
         {
@@ -235,22 +237,14 @@ namespace LanExchange.WMI
 
         public void UpdateClassesMenu()
         {
-            //m_Classes.Sort();
-            //menuClasses.Items.Clear();
-            //m_Classes.ForEach(str =>
-            //{
-            //    ToolStripMenuItem MI = new ToolStripMenuItem { Text = str };
-            //    MI.Click += menuClasses_Click;
-            //    menuClasses.Items.Add(MI);
-            //});
             m_Classes.Sort();
             menuClasses.Items.Clear();
-            foreach(string str in m_Classes)
-                using (var MI = new ToolStripMenuItem {Text = str})
-                {
-                    MI.Click += menuClasses_Click;
-                    menuClasses.Items.Add(MI);
-                }
+            m_Classes.ForEach(str =>
+            {
+                ToolStripMenuItem MI = new ToolStripMenuItem { Text = str };
+                MI.Click += menuClasses_Click;
+                menuClasses.Items.Add(MI);
+            });
         }
 
         private void menuClasses_Opening(object sender, CancelEventArgs e)
@@ -270,8 +264,8 @@ namespace LanExchange.WMI
             try
             {
                 // trying to change wmi property
-                m_WMIObject[PropName] = PropValue;
-                m_WMIObject.Put();
+                m_Presenter.WMIObject[PropName] = PropValue;
+                m_Presenter.WMIObject.Put();
 
                 // update computer comment if we changes Win32_OperatingSystme.Description
                 if (CurrentWMIClass.Equals("Win32_OperatingSystem") && PropName.Equals("Description"))
@@ -294,5 +288,24 @@ namespace LanExchange.WMI
             }
         }
 
+        private void DoFocusedItemChanged()
+        {
+            if (FocusedItemChanged != null)
+                FocusedItemChanged(this, new EventArgs());
+        }
+
+        public void lvComps_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            if (e.IsSelected)
+                DoFocusedItemChanged();
+        }
+
+        private void menuCommands_Opening(object sender, CancelEventArgs e)
+        {
+            if (LV.FocusedItem != null)
+                if (LV.FocusedItem.Selected)
+                    DoFocusedItemChanged();
+        }
     }
+
 }

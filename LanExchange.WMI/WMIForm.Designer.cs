@@ -33,9 +33,9 @@
             this.lStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.pLeft = new System.Windows.Forms.Panel();
             this.lvInstances = new System.Windows.Forms.ListView();
+            this.menuCommands = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.PropGrid = new System.Windows.Forms.PropertyGrid();
-            this.menuCommands = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.pTop = new System.Windows.Forms.Panel();
             this.menuClasses = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.lDescription = new System.Windows.Forms.Label();
@@ -76,6 +76,7 @@
             // 
             // lvInstances
             // 
+            this.lvInstances.ContextMenuStrip = this.menuCommands;
             this.lvInstances.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvInstances.FullRowSelect = true;
             this.lvInstances.GridLines = true;
@@ -86,7 +87,13 @@
             this.lvInstances.TabIndex = 8;
             this.lvInstances.UseCompatibleStateImageBehavior = false;
             this.lvInstances.View = System.Windows.Forms.View.Details;
-            this.lvInstances.ItemActivate += new System.EventHandler(this.lvInstances_ItemActivate);
+            this.lvInstances.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lvComps_ItemSelectionChanged);
+            // 
+            // menuCommands
+            // 
+            this.menuCommands.Name = "menuCommands";
+            this.menuCommands.Size = new System.Drawing.Size(61, 4);
+            this.menuCommands.Opening += new System.ComponentModel.CancelEventHandler(this.menuCommands_Opening);
             // 
             // splitter1
             // 
@@ -106,11 +113,6 @@
             this.PropGrid.Size = new System.Drawing.Size(300, 451);
             this.PropGrid.TabIndex = 5;
             this.PropGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.PropGrid_PropertyValueChanged);
-            // 
-            // menuCommands
-            // 
-            this.menuCommands.Name = "menuCommands";
-            this.menuCommands.Size = new System.Drawing.Size(61, 4);
             // 
             // pTop
             // 

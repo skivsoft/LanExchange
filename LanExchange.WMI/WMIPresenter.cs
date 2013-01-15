@@ -43,15 +43,15 @@ namespace LanExchange.WMI
             try
             {
                 string ConnectionString = MakeConnectionString();
-                logger.Info("WMI.Connect(\"{0}\")", ConnectionString);
+                logger.Info("WMI: connect to namespace \"{0}\"", ConnectionString);
                 m_Connection = new ConnectionOptions();
                 m_Scope = new ManagementScope(ConnectionString, m_Connection);
                 m_Scope.Options.EnablePrivileges = true;
                 m_Scope.Connect();
                 if (m_Scope.IsConnected)
-                    logger.Info("Connected to WMI.");
+                    logger.Info("WMI: Connected.");
                 else
-                    logger.Error("Not connected to WMI.");
+                    logger.Error("WMI: Not connected.");
             }
             catch (COMException ex)
             {
@@ -108,10 +108,10 @@ namespace LanExchange.WMI
             {
                 try
                 {
-                    foreach (var wmiClass in searcher.Get())
+                    foreach (ManagementClass wmiClass in searcher.Get())
                     {
                         // skip WMI events
-                        if (((ManagementClass)wmiClass).Derivation.Contains("__Event"))
+                        if (wmiClass.Derivation.Contains("__Event"))
                             continue;
                         // skip classes in exclude list
                         string ClassName = wmiClass["__CLASS"].ToString();
@@ -137,7 +137,14 @@ namespace LanExchange.WMI
                             m_View.AddClass(ClassName);
                             ClassCount++;
                             PropCount += wmiClass.Properties.Count;
-                            MethodCount += ((ManagementClass)wmiClass).Methods.Count;
+                            // count implemented methods
+                            foreach (MethodData md in wmiClass.Methods)
+                                foreach (var qd in md.Qualifiers)
+                                    if (qd.Name.Equals("Implemented"))
+                                    {
+                                        MethodCount++;
+                                        break;
+                                    }
                         }
                     }
                 }
@@ -154,6 +161,8 @@ namespace LanExchange.WMI
         {
             get { return m_Class; }
         }
+
+        public ManagementObject WMIObject { get; set; }
 
         public void EnumObjects(string className)
         {
@@ -207,6 +216,43 @@ namespace LanExchange.WMI
                     }
                 }
                 catch { }
+            }
+        }
+
+        public void Method_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
+            if (menuItem == null) return;
+            MethodData md = menuItem.Tag as MethodData;
+            if (md == null) return;
+            using (var form = new WMIMethodForm())
+            {
+                form.WMIClass = m_Class;
+                form.WMIObject = WMIObject;
+                form.WMIMethod = md;
+                form.PrepareForm();
+                form.ShowDialog();
+            }
+        }
+
+        public void BuildContextMenu()
+        {
+            m_View.MENU.Items.Clear();
+            foreach (MethodData md in m_Class.Methods)
+            {
+                bool IsImplemented = false;
+                foreach(var qd in md.Qualifiers)
+                    if (qd.Name.Equals("Implemented"))
+                    {
+                        IsImplemented = true;
+                        break;
+                    }
+                if (!IsImplemented) continue;
+                ToolStripMenuItem MI = new ToolStripMenuItem();
+                MI.Text = string.Format("{0}()", md.Name);
+                MI.Tag = md;
+                MI.Click += Method_Click;
+                m_View.MENU.Items.Add(MI);
             }
         }
     }
