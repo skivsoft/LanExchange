@@ -161,17 +161,6 @@ namespace LanExchange.Presenter
                                 bNeedDownload = true;
                             if (bNeedDownload)
                             {
-                                //if (LocalFName.Equals(ExeName))
-                                //{
-                                //    //TODO UNCOMMENT THIS!!!!
-                                //    //string FName = Path.ChangeExtension(LocalFName, ".old.exe");
-                                //    //if (File.Exists(FName))
-                                //    //    File.Delete(FName);
-                                //    //File.Move(LocalFName, FName);
-                                //    //m_NeedRestart = true;
-                                //    continue; // NEED DEL THIS!!!
-                                //}
-                                //else 
                                 if (File.Exists(LocalFName))
                                 {
                                     bool bNeedRename = false;

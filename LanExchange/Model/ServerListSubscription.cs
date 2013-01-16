@@ -82,6 +82,9 @@ namespace LanExchange.Model
             // prepare workers to launch
             foreach (var Pair in m_Subjects)
             {
+                // skip subjects without subscribers
+                if (Pair.Value.Count == 0) continue;
+                
                 bool subjectFound = false;
                 foreach(BackgroundContext ctx in BackgroundWorkers.Instance.EnumContexts())
                     if (ctx.Strategy is AbstractSubscriptionStrategy)

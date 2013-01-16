@@ -6,16 +6,16 @@
 //   DONE * Update counts in status list
 //   DONE * Filtering computer items
 //   TODO * ContextMenuStrip for top panel
+//   TODO * Manual creation of computer items
+//   TODO * WMI-commands execution with parameters
+//   TODO * Enum shares after ItemActivate
 //   TODO * MSI installer
 //   TODO * Publishing and autoupdate from v1.0
 //
 // RELEASE 1.1 MINOR TODO LIST
-//   TODO  Manual creation of computer items
-//   TODO  Enum shares after ItemActivate
 //   TODO  Multi-langual support (Russian, Engligh)
 //   TODO  Internal language editor
 //   TODO  Recently used items must appears when Tray.onMouseOver event fired
-//   TODO  WMI-commands execution with parameters
 //   TODO  Refactoring for strict Model-View-Presenter pattern
 //   TODO  Columns sort
 //   TODO  Save/restore sort order for each tab

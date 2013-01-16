@@ -57,19 +57,19 @@
             this.lDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lDescription.Location = new System.Drawing.Point(12, 33);
+            this.lDescription.Location = new System.Drawing.Point(16, 33);
             this.lDescription.Name = "lDescription";
-            this.lDescription.Size = new System.Drawing.Size(226, 387);
+            this.lDescription.Size = new System.Drawing.Size(222, 387);
             this.lDescription.TabIndex = 1;
             this.lDescription.Text = "    ";
             // 
             // lMethodName
             // 
             this.lMethodName.AutoSize = true;
-            this.lMethodName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lMethodName.Location = new System.Drawing.Point(12, 12);
+            this.lMethodName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lMethodName.Location = new System.Drawing.Point(8, 12);
             this.lMethodName.Name = "lMethodName";
-            this.lMethodName.Size = new System.Drawing.Size(23, 13);
+            this.lMethodName.Size = new System.Drawing.Size(24, 16);
             this.lMethodName.TabIndex = 0;
             this.lMethodName.Text = "    ";
             // 
