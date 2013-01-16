@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Globalization;
 using System.Windows.Forms;
 using LanExchange.View;
 using LanExchange.Presenter;
@@ -66,14 +67,14 @@ namespace LanExchange.UI
 
         public void SendKeysCorrect(string keys)
         {
-            const string Chars = "+^%~{}()[]";
+            const string chars = "+^%~{}()[]";
             string NewKeys = "";
             foreach (Char Ch in keys)
             {
-                if (Chars.Contains(Ch.ToString()))
+                if (chars.Contains(Ch.ToString(CultureInfo.InvariantCulture)))
                     NewKeys += String.Format("{{{0}}}", Ch);
                 else
-                    NewKeys = Ch.ToString();
+                    NewKeys = Ch.ToString(CultureInfo.InvariantCulture);
             }
             SendKeys.Send(NewKeys);
         }

@@ -189,39 +189,6 @@ namespace LanExchange.Model
             get { return m_Keys.Count; }
         }
 
-        // TODO: uncomment EnumNetShares
-        //public static List<PanelItem> EnumNetShares(string Server)
-        //{
-        //    List<PanelItem> Result = new List<PanelItem>();
-        //    Result.Add(new SharePanelItem("", "", 0, Server));
-        //    int entriesread = 0;
-        //    int totalentries = 0;
-        //    int resume_handle = 0;
-        //    int nStructSize = Marshal.SizeOf(typeof(NetApi32.SHARE_INFO_1));
-        //    IntPtr bufPtr = IntPtr.Zero;
-        //    StringBuilder server = new StringBuilder(Server);
-        //    logger.Info("WINAPI NetShareEnum");
-        //    int ret = NetApi32.NetShareEnum(server, 1, ref bufPtr, NetApi32.MAX_PREFERRED_LENGTH, ref entriesread, ref totalentries, ref resume_handle);
-        //    if (ret == NetApi32.NERR_Success)
-        //    {
-        //        logger.Info("WINAPI NetServerEnum result: entriesread={0}, totalentries={1}", entriesread, totalentries);
-        //        IntPtr currentPtr = bufPtr;
-        //        for (int i = 0; i < entriesread; i++)
-        //        {
-        //            NetApi32.SHARE_INFO_1 shi1 = (NetApi32.SHARE_INFO_1)Marshal.PtrToStructure(currentPtr, typeof(NetApi32.SHARE_INFO_1));
-        //            if ((shi1.shi1_type & (uint)NetApi32.SHARE_TYPE.STYPE_IPC) != (uint)NetApi32.SHARE_TYPE.STYPE_IPC)
-        //                Result.Add(new SharePanelItem(shi1.shi1_netname, shi1.shi1_remark, shi1.shi1_type, Server));
-        //            else
-        //                logger.Info("Skiping IPC$ share");
-        //            currentPtr = new IntPtr(currentPtr.ToInt32() + nStructSize);
-        //        }
-        //        NetApi32.NetApiBufferFree(bufPtr);
-        //    }
-        //    else
-        //    {
-        //        logger.Info("WINAPI NetServerEnum error: {0}", ret);
-        //    }
-
         //    PanelItemComparer comparer = new PanelItemComparer();
         //    Result.Sort(comparer);
         //    return Result;

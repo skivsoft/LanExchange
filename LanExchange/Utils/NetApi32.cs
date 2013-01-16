@@ -8,7 +8,7 @@ namespace LanExchange.Utils
     {
         internal const string NETAPI32 = "netapi32.dll";
 
-        #region NetServerEnum
+        #region WinApi: NetServerEnum
         [DllImport(NETAPI32, EntryPoint = "NetServerEnum")]
         [System.Security.SuppressUnmanagedCodeSecurity]
         public static extern NERR NetServerEnum(
@@ -40,12 +40,9 @@ namespace LanExchange.Utils
             public string sv101_comment;
         }
 
-        /// <summary>
-        /// список ошибок, возвращаемых NetServerEnum
-        /// </summary>
         public enum NERR
         {
-            NERR_Success = 0, // успех
+            NERR_SUCCESS = 0,
             ERROR_ACCESS_DENIED = 5,
             ERROR_NOT_ENOUGH_MEMORY = 8,
             ERROR_BAD_NETPATH = 53,
@@ -59,9 +56,6 @@ namespace LanExchange.Utils
             ERROR_NO_BROWSER_SERVERS_FOUND = 6118,
         }
 
-        /// <summary>
-        /// Типы серверов
-        /// </summary>
         [Flags]
         public enum SV_101_TYPES : uint
         {
@@ -110,13 +104,13 @@ namespace LanExchange.Utils
         }
         #endregion
 
-        #region NetApiBufferFree
+        #region WinApi: NetApiBufferFree
         [DllImport(NETAPI32, SetLastError = true)]
         [System.Security.SuppressUnmanagedCodeSecurity]
         public static extern int NetApiBufferFree(IntPtr Buffer);
         #endregion
 
-        #region NetShareEnum
+        #region WinApi: NetShareEnum
         [DllImport(NETAPI32, CharSet = CharSet.Unicode)]
         [System.Security.SuppressUnmanagedCodeSecurity]
         public static extern int NetShareEnum(
@@ -148,15 +142,15 @@ namespace LanExchange.Utils
         }
 
         public const uint MAX_PREFERRED_LENGTH = 0xFFFFFFFF;
-        public const int NERR_Success = 0;
-        private enum NetError : uint
-        {
-            NERR_Success = 0,
-            NERR_BASE = 2100,
-            NERR_UnknownDevDir = (NERR_BASE + 16),
-            NERR_DuplicateShare = (NERR_BASE + 18),
-            NERR_BufTooSmall = (NERR_BASE + 23),
-        }
+        //public const int NERR_Success = 0;
+        //private enum NetError : uint
+        //{
+        //    NERR_Success = 0,
+        //    NERR_BASE = 2100,
+        //    NERR_UnknownDevDir = (NERR_BASE + 16),
+        //    NERR_DuplicateShare = (NERR_BASE + 18),
+        //    NERR_BufTooSmall = (NERR_BASE + 23),
+        //}
         public enum SHARE_TYPE : uint
         {
             STYPE_DISKTREE = 0,
@@ -167,7 +161,7 @@ namespace LanExchange.Utils
         }
         #endregion
 
-        #region NetWkstaGetInfo
+        #region WinApi: NetWkstaGetInfo
         [DllImport(NETAPI32, CharSet = CharSet.Unicode)]
         [System.Security.SuppressUnmanagedCodeSecurity]
         public static extern int NetWkstaGetInfo(string server,
