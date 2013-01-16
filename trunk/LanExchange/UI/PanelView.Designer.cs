@@ -149,7 +149,7 @@
             // 
             this.mCompOpen.Name = "mCompOpen";
             this.mCompOpen.ShortcutKeyDisplayString = "Shift+Enter";
-            this.mCompOpen.Size = new System.Drawing.Size(323, 22);
+            this.mCompOpen.Size = new System.Drawing.Size(341, 22);
             this.mCompOpen.Tag = "\\\\{0}";
             this.mCompOpen.Text = "Открыть в Проводнике";
             this.mCompOpen.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -159,20 +159,20 @@
             this.mWMI.Name = "mWMI";
             this.mWMI.ShortcutKeyDisplayString = "";
             this.mWMI.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F1)));
-            this.mWMI.Size = new System.Drawing.Size(323, 22);
-            this.mWMI.Text = "Инструментарий управления";
+            this.mWMI.Size = new System.Drawing.Size(341, 22);
+            this.mWMI.Text = "Инструментарий управления Windows®";
             this.mWMI.Click += new System.EventHandler(this.mWMI_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(320, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(338, 6);
             // 
             // mCompService
             // 
             this.mCompService.Name = "mCompService";
             this.mCompService.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F1)));
-            this.mCompService.Size = new System.Drawing.Size(323, 22);
+            this.mCompService.Size = new System.Drawing.Size(341, 22);
             this.mCompService.Tag = "%systemroot%\\system32\\mmc.exe %systemroot%\\system32\\compmgmt.msc /computer:{0}";
             this.mCompService.Text = "Управление компьютером";
             this.mCompService.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -180,7 +180,7 @@
             // mCompMSTSC
             // 
             this.mCompMSTSC.Name = "mCompMSTSC";
-            this.mCompMSTSC.Size = new System.Drawing.Size(323, 22);
+            this.mCompMSTSC.Size = new System.Drawing.Size(341, 22);
             this.mCompMSTSC.Tag = "%systemroot%\\system32\\mstsc.exe /v:{0}";
             this.mCompMSTSC.Text = "Подключение к удаленному рабочему столу";
             this.mCompMSTSC.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -188,13 +188,13 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(320, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(338, 6);
             // 
             // mRadmin1
             // 
             this.mRadmin1.Name = "mRadmin1";
             this.mRadmin1.ShortcutKeyDisplayString = "Ctrl+Enter";
-            this.mRadmin1.Size = new System.Drawing.Size(323, 22);
+            this.mRadmin1.Size = new System.Drawing.Size(341, 22);
             this.mRadmin1.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0}";
             this.mRadmin1.Text = "Управление";
             this.mRadmin1.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -202,7 +202,7 @@
             // mRadmin2
             // 
             this.mRadmin2.Name = "mRadmin2";
-            this.mRadmin2.Size = new System.Drawing.Size(323, 22);
+            this.mRadmin2.Size = new System.Drawing.Size(341, 22);
             this.mRadmin2.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0} /noinput";
             this.mRadmin2.Text = "Просмотр";
             this.mRadmin2.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -210,7 +210,7 @@
             // mRadmin3
             // 
             this.mRadmin3.Name = "mRadmin3";
-            this.mRadmin3.Size = new System.Drawing.Size(323, 22);
+            this.mRadmin3.Size = new System.Drawing.Size(341, 22);
             this.mRadmin3.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0} /telnet";
             this.mRadmin3.Text = "Телнет";
             this.mRadmin3.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -218,7 +218,7 @@
             // mRadmin4
             // 
             this.mRadmin4.Name = "mRadmin4";
-            this.mRadmin4.Size = new System.Drawing.Size(323, 22);
+            this.mRadmin4.Size = new System.Drawing.Size(341, 22);
             this.mRadmin4.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0} /file";
             this.mRadmin4.Text = "Передача файлов";
             this.mRadmin4.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -226,7 +226,7 @@
             // mRadmin5
             // 
             this.mRadmin5.Name = "mRadmin5";
-            this.mRadmin5.Size = new System.Drawing.Size(323, 22);
+            this.mRadmin5.Size = new System.Drawing.Size(341, 22);
             this.mRadmin5.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0} /shutdown";
             this.mRadmin5.Text = "Выключение";
             this.mRadmin5.Click += new System.EventHandler(this.mCompOpen_Click);

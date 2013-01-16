@@ -46,7 +46,9 @@
     <Compile Include="DynamicObject.cs" />
     <Compile Include="IWMIComputer.cs" />
     <Compile Include="IWMIView.cs" />
+    <Compile Include="MethodDataEx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WMIClassList.cs" />
     <Compile Include="WMIForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,7 +62,7 @@
       <DependentUpon>WMIMethodForm.cs</DependentUpon>
     </Compile>
     <Compile Include="WMIPresenter.cs" />
-    <Compile Include="WMIPropertyData.cs" />
+    <Compile Include="PropertyDataEx.cs" />
     <Compile Include="WMIUtils.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -64,13 +64,13 @@ namespace LanExchange.WMI
             }
             LB.Items.Add(String.Empty);
             // prepare properties list and sort it by ID
-            var propList = new List<WMIPropertyData>();
+            var propList = new List<PropertyDataEx>();
             if (WMIMethod.InParameters != null)
                 foreach (PropertyData pd in WMIMethod.InParameters.Properties)
-                    propList.Add(new WMIPropertyData(pd));
+                    propList.Add(new PropertyDataEx(pd));
             if (WMIMethod.OutParameters != null)
                 foreach (PropertyData pd in WMIMethod.OutParameters.Properties)
-                    propList.Add(new WMIPropertyData(pd));
+                    propList.Add(new PropertyDataEx(pd));
             propList.Sort();
             // output properties
             var excludeList = new List<string>();
@@ -80,7 +80,7 @@ namespace LanExchange.WMI
             excludeList.Add("Out");
             excludeList.Add("in");
             excludeList.Add("out");
-            foreach (WMIPropertyData prop in propList)
+            foreach (PropertyDataEx prop in propList)
             {
                 // detect return value parameter name
                 if (prop.ParamType == WMIParamType.RETURN)
@@ -140,7 +140,7 @@ namespace LanExchange.WMI
                 LB.Items.Add(str);
                 logger.Info("WMI: {0}", str);
             }
-            WMIPropertyData resultProp = new WMIPropertyData(result.Properties[m_ReturnValueName]);
+            PropertyDataEx resultProp = new PropertyDataEx(result.Properties[m_ReturnValueName]);
             if (resultProp.Value != null)
             {
                 int value = (int) ((UInt32) resultProp.Value);

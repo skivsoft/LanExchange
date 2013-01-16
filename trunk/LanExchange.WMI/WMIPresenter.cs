@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Management;
+using System.Threading;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -12,8 +13,7 @@ namespace LanExchange.WMI
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
         private readonly IWMIComputer m_Comp;
-        private ConnectionOptions m_Connection;
-        private ManagementScope m_Scope;
+        private ManagementScope m_Namespace;
 
         private readonly IWMIView m_View;
         private ManagementClass m_Class;
@@ -36,37 +36,42 @@ namespace LanExchange.WMI
             return String.Format(@"\\{0}\root\cimv2", m_Comp.Name);
         }
 
-        private void ConnectToComputer()
+        public bool ConnectToComputer()
         {
-            if (m_Scope != null && m_Scope.IsConnected)
-                return;
+            if (m_Namespace != null && m_Namespace.IsConnected)
+                return true;
             try
             {
-                string ConnectionString = MakeConnectionString();
-                logger.Info("WMI: connect to namespace \"{0}\"", ConnectionString);
-                m_Connection = new ConnectionOptions();
-                m_Scope = new ManagementScope(ConnectionString, m_Connection);
-                m_Scope.Options.EnablePrivileges = true;
-                m_Scope.Connect();
-                if (m_Scope.IsConnected)
+                string connectionString = MakeConnectionString();
+                logger.Info("WMI: connect to namespace \"{0}\"", connectionString);
+                //var connectionOptions = new ConnectionOptions();
+                m_Namespace = new ManagementScope(connectionString, null);
+                //m_Scope.Options.EnablePrivileges = true;
+                m_Namespace.Connect();
+                if (m_Namespace.IsConnected)
+                {
                     logger.Info("WMI: Connected.");
-                else
-                    logger.Error("WMI: Not connected.");
+                    return true;
+                }
             }
             catch (COMException ex)
             {
                 if ((uint)ex.ErrorCode == 0x800706BA)
-                    MessageBox.Show(String.Format(
-                        "Не удалось поделючиться к компьютеру \\\\{0}.\n" +
-                        "Возможно удаленное подключение было заблокировано брэнмауэром.", m_Comp.Name), "Ошибка подключения",
+                    MessageBox.Show(
+                        String.Format("Не удалось подключиться к компьютеру \\\\{0}.\nВозможно удалённое подключение было заблокировано брэнмауэром.", m_Comp.Name), 
+                        "Ошибка подключения WMI",
                         MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка подключения",
+                MessageBox.Show(
+                    String.Format("Не удалось подключиться к компьютеру \\\\{0}.\n{1}", m_Comp.Name, ex.Message),
+                    "Ошибка подключения WMI",
                     MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
             }
-
+            logger.Error("WMI: Not connected.");
+            m_Namespace = null;
+            return false;
         }
 
         public string GetClassDescription(string className)
@@ -78,7 +83,7 @@ namespace LanExchange.WMI
                 var op = new ObjectGetOptions(null, TimeSpan.MaxValue, true);
 
                 var path = new ManagementPath(className);
-                using (var mc = new ManagementClass(m_Scope, path, op))
+                using (var mc = new ManagementClass(m_Namespace, path, op))
                 {
                     mc.Options.UseAmendedQualifiers = true;
                     foreach (var dataObject in mc.Qualifiers)
@@ -104,7 +109,7 @@ namespace LanExchange.WMI
             m_View.ClearClasses();
             bool Result = true;
             var query = new ObjectQuery("select * from meta_class");
-            using (var searcher = new ManagementObjectSearcher(m_Scope, query))
+            using (var searcher = new ManagementObjectSearcher(m_Namespace, query))
             {
                 try
                 {
@@ -132,12 +137,13 @@ namespace LanExchange.WMI
                             if (qd.Name.Equals("SupportsCreate")) IsSupportsCreate = true;
                             if (qd.Name.Equals("SupportsDelete")) IsSupportsDelete = true;
                         }
-                        if (!IsAssociation && IsDynamic && (IsSupportsUpdate || IsSupportsCreate || IsSupportsDelete))
+                        if (!IsAssociation && IsDynamic &&(IsSupportsUpdate || IsSupportsCreate || IsSupportsDelete))
                         {
                             m_View.AddClass(ClassName);
                             ClassCount++;
                             PropCount += wmiClass.Properties.Count;
                             // count implemented methods
+                            /*
                             foreach (MethodData md in wmiClass.Methods)
                                 foreach (var qd in md.Qualifiers)
                                     if (qd.Name.Equals("Implemented"))
@@ -145,6 +151,7 @@ namespace LanExchange.WMI
                                         MethodCount++;
                                         break;
                                     }
+                             */
                         }
                     }
                 }
@@ -172,7 +179,7 @@ namespace LanExchange.WMI
 
 
             var op = new ObjectGetOptions(null, TimeSpan.MaxValue, true);
-            var mc = new ManagementClass(m_Scope, new ManagementPath(className), op);
+            var mc = new ManagementClass(m_Namespace, new ManagementPath(className), op);
             mc.Options.UseAmendedQualifiers = true;
 
             m_Class = mc;
@@ -192,7 +199,7 @@ namespace LanExchange.WMI
             }
 
             var query = new ObjectQuery("select * from " + className);
-            using (var searcher = new ManagementObjectSearcher(m_Scope, query))
+            using (var searcher = new ManagementObjectSearcher(m_Namespace, query))
             {
                 try
                 {

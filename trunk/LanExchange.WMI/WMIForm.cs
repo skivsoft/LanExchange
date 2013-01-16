@@ -27,10 +27,18 @@ namespace LanExchange.WMI
             m_Classes = new List<string>();
             if (comp != null)
             {
-                Text = String.Format("{0} — {1}", comp.Name, comp.Comment);
+                if (String.IsNullOrEmpty(comp.Comment))
+                    Text = comp.Name;
+                else
+                    Text = String.Format("{0} — {1}", comp.Name, comp.Comment);
                 m_Comp = comp;
             }
             FocusedItemChanged += lvInstances_FocusedItemChanged;
+        }
+
+        public WMIPresenter GetPresenter()
+        {
+            return m_Presenter;
         }
 
         private void lvInstances_FocusedItemChanged(object sender, EventArgs e)
@@ -192,14 +200,10 @@ namespace LanExchange.WMI
 
         private void WMIForm_Load(object sender, EventArgs e)
         {
-            if (m_Presenter.EnumDynamicClasses())
-            {
-                lvInstances.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-                UpdateClassesMenu();
-                CurrentWMIClass = "Win32_OperatingSystem";
-            }
-            else
-                Close();
+            lvInstances.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            UpdateClassesMenu();
+            CurrentWMIClass = "Win32_OperatingSystem";
+            ActiveControl = lvInstances;
         }
 
         public void ShowStat(int classCount, int propCount, int methodCount)
@@ -306,6 +310,16 @@ namespace LanExchange.WMI
                 if (LV.FocusedItem.Selected)
                     DoFocusedItemChanged();
         }
+
+        private void lvInstances_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                DialogResult = DialogResult.Cancel;
+                e.Handled = true;
+            }
+        }
+
     }
 
 }
