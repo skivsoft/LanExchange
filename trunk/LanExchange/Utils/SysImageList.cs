@@ -10,7 +10,7 @@ namespace LanExchange.Utils
 	/// <summary>
 	/// Available system image list sizes
 	/// </summary>
-	public enum SysImageListSize : int
+	public enum SysImageListSize
 	{
 		/// <summary>
 		/// System Large Icon Size (typically 32x32)
@@ -33,7 +33,7 @@ namespace LanExchange.Utils
 	/// drawn
 	/// </summary>
 	[Flags]	
-	public enum ImageListDrawItemConstants : int
+	public enum ImageListDrawItemConstants
 	{
 		/// <summary>
 		/// Draw item normally.
@@ -83,7 +83,7 @@ namespace LanExchange.Utils
 	/// Enumeration containing XP ImageList Draw State options
 	/// </summary>
 	[Flags]	
-	public enum ImageListDrawStateConstants : int
+	public enum ImageListDrawStateConstants
 	{
 		/// <summary>
 		/// The image state is not modified. 
@@ -147,7 +147,7 @@ namespace LanExchange.Utils
 	/// <summary>
 	/// Summary description for SysImageList.
 	/// </summary>
-	public class SysImageList : IDisposable
+	public sealed class SysImageList : IDisposable
 	{
 		#region UnmanagedCode
 		private const int MAX_PATH = 260;
@@ -160,31 +160,31 @@ namespace LanExchange.Utils
 			uint cbFileInfo, 
 			uint uFlags);
 
-		[DllImport("user32.dll")]
-		private static extern int DestroyIcon(IntPtr hIcon);
+        //[DllImport("user32.dll")]
+        //private static extern int DestroyIcon(IntPtr hIcon);
 
-		private const int FILE_ATTRIBUTE_NORMAL = 0x80;
-		private const int FILE_ATTRIBUTE_DIRECTORY = 0x10;
+        private const int FILE_ATTRIBUTE_NORMAL = 0x80;
+        //private const int FILE_ATTRIBUTE_DIRECTORY = 0x10;
 
-		private const int FORMAT_MESSAGE_ALLOCATE_BUFFER = 0x100; 
-		private const int FORMAT_MESSAGE_ARGUMENT_ARRAY = 0x2000;
-		private const int FORMAT_MESSAGE_FROM_HMODULE = 0x800;
-		private const int FORMAT_MESSAGE_FROM_STRING = 0x400;
-		private const int FORMAT_MESSAGE_FROM_SYSTEM = 0x1000;
-		private const int FORMAT_MESSAGE_IGNORE_INSERTS = 0x200;
-		private const int FORMAT_MESSAGE_MAX_WIDTH_MASK = 0xFF;
-		[DllImport("kernel32")]
-		private extern static int FormatMessage (
-			int dwFlags, 
-			IntPtr lpSource, 
-			int dwMessageId, 
-			int dwLanguageId, 
-			string lpBuffer,
-			uint nSize, 
-			int argumentsLong);
+        //private const int FORMAT_MESSAGE_ALLOCATE_BUFFER = 0x100; 
+        //private const int FORMAT_MESSAGE_ARGUMENT_ARRAY = 0x2000;
+        //private const int FORMAT_MESSAGE_FROM_HMODULE = 0x800;
+        //private const int FORMAT_MESSAGE_FROM_STRING = 0x400;
+        //private const int FORMAT_MESSAGE_FROM_SYSTEM = 0x1000;
+        //private const int FORMAT_MESSAGE_IGNORE_INSERTS = 0x200;
+        //private const int FORMAT_MESSAGE_MAX_WIDTH_MASK = 0xFF;
+        //[DllImport("kernel32")]
+        //private extern static int FormatMessage (
+        //    int dwFlags, 
+        //    IntPtr lpSource, 
+        //    int dwMessageId, 
+        //    int dwLanguageId, 
+        //    string lpBuffer,
+        //    uint nSize, 
+        //    int argumentsLong);
 
-		[DllImport("kernel32")]
-		private extern static int GetLastError();
+        //[DllImport("kernel32")]
+        //private extern static int GetLastError();
 
 		[DllImport("comctl32")]
 		private extern static int ImageList_Draw(
@@ -234,26 +234,26 @@ namespace LanExchange.Utils
 		
 		#region Private Enumerations
 		[Flags]		
-			private enum SHGetFileInfoConstants : int
+		private enum SHGetFileInfoConstants
 		{
-			SHGFI_ICON = 0x100,                // get icon 
-			SHGFI_DISPLAYNAME = 0x200,         // get display name 
-			SHGFI_TYPENAME = 0x400,            // get type name 
-			SHGFI_ATTRIBUTES = 0x800,          // get attributes 
-			SHGFI_ICONLOCATION = 0x1000,       // get icon location 
-			SHGFI_EXETYPE = 0x2000,            // return exe type 
+            //SHGFI_ICON = 0x100,                // get icon 
+            //SHGFI_DISPLAYNAME = 0x200,         // get display name 
+            //SHGFI_TYPENAME = 0x400,            // get type name 
+            //SHGFI_ATTRIBUTES = 0x800,          // get attributes 
+            //SHGFI_ICONLOCATION = 0x1000,       // get icon location 
+            //SHGFI_EXETYPE = 0x2000,            // return exe type 
 			SHGFI_SYSICONINDEX = 0x4000,       // get system icon index 
-			SHGFI_LINKOVERLAY = 0x8000,        // put a link overlay on icon 
-			SHGFI_SELECTED = 0x10000,          // show icon in selected state 
-			SHGFI_ATTR_SPECIFIED = 0x20000,    // get only specified attributes 
-			SHGFI_LARGEICON = 0x0,             // get large icon 
+            //SHGFI_LINKOVERLAY = 0x8000,        // put a link overlay on icon 
+            //SHGFI_SELECTED = 0x10000,          // show icon in selected state 
+            //SHGFI_ATTR_SPECIFIED = 0x20000,    // get only specified attributes 
+            //SHGFI_LARGEICON = 0x0,             // get large icon 
 			SHGFI_SMALLICON = 0x1,             // get small icon 
-			SHGFI_OPENICON = 0x2,              // get open icon 
-			SHGFI_SHELLICONSIZE = 0x4,         // get shell size icon 
+            //SHGFI_OPENICON = 0x2,              // get open icon 
+            //SHGFI_SHELLICONSIZE = 0x4,         // get shell size icon 
 			//SHGFI_PIDL = 0x8,                  // pszPath is a pidl 
 			SHGFI_USEFILEATTRIBUTES = 0x10,     // use passed dwFileAttribute 
-			SHGFI_ADDOVERLAYS = 0x000000020,     // apply the appropriate overlays
-			SHGFI_OVERLAYINDEX = 0x000000040     // Get the index of the overlay
+            //SHGFI_ADDOVERLAYS = 0x000000020,     // apply the appropriate overlays
+            //SHGFI_OVERLAYINDEX = 0x000000040     // Get the index of the overlay
 		}
 		#endregion
 
@@ -693,13 +693,13 @@ namespace LanExchange.Utils
 		{
 			if (iImageList == null)
 			{
-				int ret = ImageList_Draw(
-					hIml, 
-					index, 
-					hdc, 
-					x, 
-					y, 
-					(int)flags);
+				ImageList_Draw(
+				    hIml, 
+				    index, 
+				    hdc, 
+				    x, 
+				    y, 
+				    (int)flags);
 			}
 			else
 			{
@@ -750,7 +750,7 @@ namespace LanExchange.Utils
 			if (iImageList == null)
 			{
 				pimldp.himl = hIml;
-				int ret = ImageList_DrawIndirect(ref pimldp);
+				ImageList_DrawIndirect(ref pimldp);
 			}
 			else
 			{
@@ -830,8 +830,8 @@ namespace LanExchange.Utils
 			pimldp.crEffect = glowOrShadowColor.ToArgb();
 			if (iImageList == null)
 			{
-				pimldp.himl = hIml;
-				int ret = ImageList_DrawIndirect(ref pimldp);
+			    pimldp.himl = hIml;
+			    ImageList_DrawIndirect(ref pimldp);
 			}
 			else
 			{
@@ -873,11 +873,11 @@ namespace LanExchange.Utils
 			{
 				// Get the System IImageList object from the Shell:
 				Guid iidImageList = new Guid("46EB5926-582E-4017-9FDF-E8998DAA0950");
-				int ret = SHGetImageList(
-					(int)size,
-					ref iidImageList,
-					ref iImageList
-					);
+				SHGetImageList(
+				    (int)size,
+				    ref iidImageList,
+				    ref iImageList
+				    );
 				// the image list handle is the IUnknown pointer, but 
 				// using Marshal.GetIUnknownForObject doesn't return
 				// the right value.  It really doesn't hurt to make
@@ -940,7 +940,7 @@ namespace LanExchange.Utils
 		/// when disposing is true.
 		/// </summary>
 		/// <param name="disposing">Whether the object is being disposed</param>
-		public virtual void Dispose(bool disposing)
+		public void Dispose(bool disposing)
 		{
 			if (!disposed)
 			{

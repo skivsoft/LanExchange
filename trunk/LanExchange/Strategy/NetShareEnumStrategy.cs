@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using LanExchange.Model;
-using LanExchange.Utils;
-
-namespace LanExchange.Strategy
+﻿namespace LanExchange.Strategy
 {
     public class NetShareEnumStrategy : AbstractSubscriptionStrategy
     {

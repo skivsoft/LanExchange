@@ -18,7 +18,6 @@
 //
 using System;
 using System.Runtime.InteropServices;
-using System.Text;
 
 #pragma warning disable 1591
 
@@ -311,7 +310,7 @@ namespace LanExchange.Utils
         public Guid ftidType;
     }
 
-    public struct SHChangeNotifyEntry
+    public struct SHCHANGENOTIFYENTRY
     {
         public IntPtr pidl;
         public bool fRecursive;
@@ -349,7 +348,7 @@ namespace LanExchange.Utils
         public IntPtr cStr;
     }
 
-    class Shell32
+    static class Shell32
     {
         [DllImport("shell32.dll", EntryPoint = "#660")]
         public static extern bool FileIconInit(bool bFullInit);

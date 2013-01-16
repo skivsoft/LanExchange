@@ -378,7 +378,6 @@
             // pFilter
             // 
             this.pFilter.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pFilter.FilterText = "";
             this.pFilter.LinkedControl = this.LV;
             this.pFilter.Location = new System.Drawing.Point(0, 457);
             this.pFilter.Name = "pFilter";

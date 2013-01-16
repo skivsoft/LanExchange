@@ -62,7 +62,7 @@ namespace LanExchange.UI
 
         private void imgClear_Click(object sender, EventArgs e)
         {
-            FilterText = "";
+            SetFilterText(String.Empty);
         }
 
         public void SendKeysCorrect(string keys)
@@ -79,16 +79,9 @@ namespace LanExchange.UI
             SendKeys.Send(NewKeys);
         }
 
-        public string FilterText
+        public void SetFilterText(string value)
         {
-            get
-            {
-                return eFilter.Text;
-            }
-            set
-            {
-                eFilter.Text = value;
-            }
+            eFilter.Text = value;
         }
 
         public void SetIsFound(bool value)

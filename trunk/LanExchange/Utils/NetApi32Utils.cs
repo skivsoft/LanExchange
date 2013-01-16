@@ -15,12 +15,11 @@ namespace LanExchange.Utils
         {
             IntPtr pBuffer;
 
-            NetApi32.WKSTA_INFO_100 info;
             int retval = NetApi32.NetWkstaGetInfo(server, 100, out pBuffer);
             if (retval != 0)
                 throw new Win32Exception(retval);
 
-            info = (NetApi32.WKSTA_INFO_100)Marshal.PtrToStructure(pBuffer, typeof(NetApi32.WKSTA_INFO_100));
+            NetApi32.WKSTA_INFO_100 info = (NetApi32.WKSTA_INFO_100)Marshal.PtrToStructure(pBuffer, typeof(NetApi32.WKSTA_INFO_100));
             string domainName = info.wki100_langroup;
             NetApi32.NetApiBufferFree(pBuffer);
             return domainName;

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 
@@ -14,10 +12,6 @@ namespace LanExchange.UI
         //private Rectangle m_RestoreBounds;
         private FormWindowState m_State;
         private bool m_Saved;
-
-        public FormPlacement()
-        {
-        }
 
         public void AttachToForm(Form form)
         {
