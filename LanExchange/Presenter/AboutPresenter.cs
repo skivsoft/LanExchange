@@ -87,7 +87,7 @@ namespace LanExchange.Presenter
                 {
                     client.Proxy = null;
                     string URL = GetFileListURL();
-                    logger.Info("Downloading text from url [{0}]", URL);
+                    logger.Info("Updater: downloading text from url [{0}]", URL);
                     e.Result = client.DownloadString(URL);
                 }
                 catch (Exception ex)
@@ -150,28 +150,56 @@ namespace LanExchange.Presenter
                             {
                                 bool verify = verifyMd5File(LocalFName, RemoteFSize, remoteMd5);
                                 if (!verify)
+                                {
+                                    logger.Info("Updater: {0}", LocalFName);
                                     bNeedDownload = true;
+                                }
                             }
                             else
                                 bNeedDownload = true;
                             if (bNeedDownload)
                             {
-                                if (LocalFName.Equals(ExeName))
+                                //if (LocalFName.Equals(ExeName))
+                                //{
+                                //    //TODO UNCOMMENT THIS!!!!
+                                //    //string FName = Path.ChangeExtension(LocalFName, ".old.exe");
+                                //    //if (File.Exists(FName))
+                                //    //    File.Delete(FName);
+                                //    //File.Move(LocalFName, FName);
+                                //    //m_NeedRestart = true;
+                                //    continue; // NEED DEL THIS!!!
+                                //}
+                                //else 
+                                if (File.Exists(LocalFName))
                                 {
-                                    string FName = Path.ChangeExtension(LocalFName, ".old.exe");
-                                    if (File.Exists(FName))
-                                        File.Delete(FName);
-                                    File.Move(LocalFName, FName);
-                                    m_NeedRestart = true;
-                                }
-                                else
-                                    if (File.Exists(LocalFName))
+                                    bool bNeedRename = false;
+                                    try
+                                    {
                                         File.Delete(LocalFName);
-                                    else
-                                        if (!Directory.Exists(LocalDirName))
-                                            Directory.CreateDirectory(LocalDirName);
+                                    }
+                                    catch (UnauthorizedAccessException)
+                                    {
+                                        logger.Error("Updater: unable to delete file {0}", LocalFName);
+                                        bNeedRename = true;
+                                    }
+                                    if (bNeedRename)
+                                    {
+                                        string FName = Path.ChangeExtension(LocalFName, Path.GetExtension(LocalFName) + ".tmp");
+                                        logger.Info("Updater: renaming file to {0}", FName);
+                                        if (File.Exists(FName))
+                                            File.Delete(FName);
+                                        File.Move(LocalFName, FName);
+                                        if (!m_NeedRestart)
+                                        {
+                                            m_NeedRestart = true;
+                                            logger.Info("Updater: Restart=true");
+                                        }
+                                    }
+                                }
+                                else if (!Directory.Exists(LocalDirName))
+                                    Directory.CreateDirectory(LocalDirName);
                                 string URL = Settings.Instance.GetUpdateUrl() + RemoteFName;
-                                logger.Info("Downloading file from url [{0}] and saving to [{1}]", URL, LocalFName);
+                                logger.Info("Updater: downloading from [{0}] to [{1}]", URL, LocalFName);
                                 client.DownloadFile(URL, LocalFName);
                             }
                         }
@@ -182,7 +210,7 @@ namespace LanExchange.Presenter
             catch (Exception ex)
             {
                 m_UpdateError = ex.Message;
-                logger.Info("Error: ", ex.Message);
+                logger.Info("Updater: ", ex.Message);
             }
         }
 
