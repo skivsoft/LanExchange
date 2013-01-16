@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.Strategy;
 using LanExchange.View;
@@ -192,7 +191,7 @@ namespace LanExchange.UI
             // Shift+Enter - Open current item
             if (e.Shift && e.KeyCode == Keys.Enter)
             {
-                PanelItem PItem = m_Presenter.GetFocusedPanelItem(false);
+                AbstractPanelItem PItem = m_Presenter.GetFocusedPanelItem(false);
                 if (PItem is ComputerPanelItem)
                     mCompOpen_Click(mCompOpen, new EventArgs());
                 if (PItem is SharePanelItem)
@@ -202,11 +201,11 @@ namespace LanExchange.UI
             // Ctrl+Enter - Run RAdmin for computer and FAR for folder
             if (Settings.Instance.AdvancedMode && e.Control && e.KeyCode == Keys.Enter)
             {
-                PanelItem PItem = m_Presenter.GetFocusedPanelItem(false);
+                AbstractPanelItem PItem = m_Presenter.GetFocusedPanelItem(false);
                 if (PItem is ComputerPanelItem)
                     mCompOpen_Click(mRadmin1, new EventArgs());
                 if (PItem is SharePanelItem)
-                    if (!(PItem as SharePanelItem).IsPrinter)
+                    if (!(PItem as SharePanelItem).SHI.IsPrinter)
                         mFolderOpen_Click(mFAROpen, new EventArgs());
                 e.Handled = true;
             }
@@ -347,7 +346,7 @@ namespace LanExchange.UI
                     DoFocusedItemChanged();
             UpdateViewTypeMenu();
 
-            PanelItem PItem = m_Presenter.GetFocusedPanelItem(false);
+            AbstractPanelItem PItem = m_Presenter.GetFocusedPanelItem(false);
             bool bCompVisible = false;
             bool bFolderVisible = false;
             if (PItem != null)
@@ -366,7 +365,7 @@ namespace LanExchange.UI
                         mFolder.Text = String.Format(@"\\{0}\{1}", (PItem as SharePanelItem).ComputerName, PItem.Name);
                         mFolder.Image = LanExchangeIcons.SmallImageList.Images[PItem.ImageIndex];
                         bFolderVisible = true;
-                        mFAROpen.Enabled = !(PItem as SharePanelItem).IsPrinter;
+                        mFAROpen.Enabled = !(PItem as SharePanelItem).SHI.IsPrinter;
                     }
                 }
             }

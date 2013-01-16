@@ -2,11 +2,11 @@
 
 namespace LanExchange.Strategy
 {
-    public abstract class SubscriptionAbstractStrategy : IBackgroundStrategy
+    public abstract class AbstractSubscriptionStrategy : IBackgroundStrategy
     {
         private readonly string m_Subject;
 
-        protected SubscriptionAbstractStrategy(string subject)
+        protected AbstractSubscriptionStrategy(string subject)
         {
             m_Subject = subject;
         }

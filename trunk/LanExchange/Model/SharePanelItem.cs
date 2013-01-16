@@ -3,88 +3,89 @@ using LanExchange.Utils;
 
 namespace LanExchange.Model
 {
-    public abstract class SharePanelItem : PanelItem
+    public abstract class SharePanelItem : AbstractPanelItem, IComparable<SharePanelItem>
     {
+        private readonly ShareInfo m_SHI;
         private string m_Name;
+        private string m_Comment;
 
-        public SharePanelItem(string shareName, string shareComment, uint shareType, string computerName)
+        /// <summary>
+        /// Panel item for network shared resource.
+        /// </summary>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <param name="shi"></param>
+        public SharePanelItem(ShareInfo shi)
         {
-            m_Name = shareName;
-            Comment = shareComment;
-            ShareType = shareType;
-            ComputerName = computerName;
+            if (shi == null)
+                throw new ArgumentNullException("shi");
+            m_SHI = shi;
+            m_Name = m_SHI.Name;
+            m_Comment = m_SHI.Comment;
         }
 
-        protected override string GetName()
+        public override string Name
         {
-            return m_Name;
+            get { return m_Name; }
+            set { m_Name = value; }
         }
 
-        protected override void SetName(string value)
+        public override string Comment
         {
-            m_Name = value;
+            get { return m_Comment; }
+            set { m_Comment = value; }
         }
-
-        public override sealed string Comment { get; set; }
 
         public uint ShareType { get; set; }
 
-        public string ComputerName { get; set; }
-
-        protected override int GetImageIndex()
-        {
-            if (String.IsNullOrEmpty(m_Name))
-                return LanExchangeIcons.FolderBack;
-            if (IsPrinter)
-                return LanExchangeIcons.FolderPrinter;
-            return IsHidden ? LanExchangeIcons.FolderHidden : LanExchangeIcons.FolderNormal;
-        }
-
-        public bool IsPrinter
+        public override int ImageIndex
         {
             get
             {
-                return (ShareType == (uint)NetApi32.SHARE_TYPE.STYPE_PRINTQ);
+                if (String.IsNullOrEmpty(m_Name))
+                    return LanExchangeIcons.FolderBack;
+                if (SHI.IsPrinter)
+                    return LanExchangeIcons.FolderPrinter;
+                return SHI.IsHidden ? LanExchangeIcons.FolderHidden : LanExchangeIcons.FolderNormal;
             }
         }
 
-        public bool IsHidden
+        public ShareInfo SHI
         {
-            get
-            {
-                if (!String.IsNullOrEmpty(m_Name))
-                    return m_Name[m_Name.Length - 1] == '$';
-                return false;
-            }
+            get { return m_SHI; }
         }
-
+        
         public override string[] GetSubItems()
         {
             return new[] { "", Comment };
         }
 
-        /// <summary>
-        /// Сортировка: сначала каталоги, затем принтеры.
-        /// </summary>
-        /// <param name="p2"></param>
-        /// <returns></returns>
-        public override int CompareTo(PanelItem p2)
+        public int CompareTo(SharePanelItem other)
         {
-            var shareItem = (p2 as SharePanelItem);
-            if (shareItem == null) return 1;
-            bool b2 = shareItem.IsPrinter;
+            if (other == null) return 1;
+            bool b2 = other.SHI.IsPrinter;
             int Result;
-            if (IsPrinter)
+            if (SHI.IsPrinter)
                 if (b2)
-                    Result = base.CompareTo(p2);
+                    Result = base.CompareTo(other);
                 else
                     Result = +1;
             else
                 if (b2)
                     Result = -1;
                 else
-                    Result = base.CompareTo(p2);
+                    Result = base.CompareTo(other);
             return Result;
         }
+
+        public ComputerPanelItem Computer { get; set; }
+
+        public string ComputerName
+        {
+            get
+            {
+                return Computer == null ? String.Empty : Computer.Name;
+            }
+        }
+
     }
 }

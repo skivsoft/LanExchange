@@ -30,7 +30,7 @@ namespace LanExchange.Presenter
             {
                 if (S.Length > 0)
                     S.AppendLine();
-                PanelItem PItem = m_Objects.GetAt(index);
+                AbstractPanelItem PItem = m_Objects.GetAt(index);
                 if (PItem != null)
                     S.Append(@"\\" + PItem.Name);
             }
@@ -46,7 +46,7 @@ namespace LanExchange.Presenter
             {
                 if (S.Length > 0)
                     S.AppendLine();
-                PanelItem PItem = m_Objects.GetAt(index);
+                AbstractPanelItem PItem = m_Objects.GetAt(index);
                 if (PItem != null)
                     S.Append(PItem.Comment);
             }
@@ -62,7 +62,7 @@ namespace LanExchange.Presenter
             {
                 if (S.Length > 0)
                     S.AppendLine();
-                PanelItem PItem = m_Objects.GetAt(index);
+                AbstractPanelItem PItem = m_Objects.GetAt(index);
                 if (PItem != null)
                 {
                     S.Append(@"\\" + PItem.Name);
@@ -130,10 +130,10 @@ namespace LanExchange.Presenter
         /// </summary>
         /// <param name="bPingAndAsk">Пинговать ли комп</param>
         /// <returns>Возвращает TComputer</returns>
-        public PanelItem GetFocusedPanelItem(bool bPingAndAsk)
+        public AbstractPanelItem GetFocusedPanelItem(bool bPingAndAsk)
         {
             //logger.Info("GetFocusedPanelItem. {0}", LV.FocusedItem);
-            PanelItem PItem = m_Objects.Get(m_View.FocusedItemText);
+            AbstractPanelItem PItem = m_Objects.Get(m_View.FocusedItemText);
             if (PItem == null)
                 return null;
             if (PItem is ComputerPanelItem)
@@ -170,7 +170,7 @@ namespace LanExchange.Presenter
         public void RunCmdOnFocusedItem(string tagCmd, string tagParent)
         {
             // получаем выбранный комп
-            PanelItem PItem = GetFocusedPanelItem(true);
+            AbstractPanelItem PItem = GetFocusedPanelItem(true);
             if (PItem == null) return;
 
             string CmdLine;
@@ -215,7 +215,7 @@ namespace LanExchange.Presenter
 
         public ComputerPanelItem GetFocusedComputer()
         {
-            PanelItem PItem = GetFocusedPanelItem(true);
+            AbstractPanelItem PItem = GetFocusedPanelItem(true);
             if (PItem == null)
                 return null;
             ComputerPanelItem Comp = null;
@@ -225,8 +225,7 @@ namespace LanExchange.Presenter
             }
             if (PItem is SharePanelItem)
             {
-                Comp = new ComputerPanelItem();
-                Comp.Name = (PItem as SharePanelItem).ComputerName;
+                Comp = (PItem as SharePanelItem).Computer;
             }
             return Comp;
         }

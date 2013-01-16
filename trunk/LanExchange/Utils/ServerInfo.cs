@@ -1,7 +1,6 @@
 ﻿using System;
-using LanExchange.Utils;
 
-namespace LanExchange.Model
+namespace LanExchange.Utils
 {
     [Serializable]
     public class ServerInfo : IComparable<ServerInfo>

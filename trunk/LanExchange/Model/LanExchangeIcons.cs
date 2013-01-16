@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Drawing;
-using GongSolutions.Shell.Interop;
 using LanExchange.Utils;
 
 namespace LanExchange.Model

@@ -94,7 +94,7 @@
     <Compile Include="Strategy\NetShareEnumStrategy.cs" />
     <Compile Include="Strategy\WMIClassesEnumStrategy.cs" />
     <Compile Include="Strategy\NetServerEnumStrategy.cs" />
-    <Compile Include="Strategy\SubscriptionAbstractStrategy.cs" />
+    <Compile Include="Strategy\AbstractSubscriptionStrategy.cs" />
     <Compile Include="Presenter\FilterPresenter.cs" />
     <Compile Include="UI\FilterView.cs">
       <SubType>UserControl</SubType>
@@ -136,21 +136,16 @@
       <DependentUpon>PanelView.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\ListViewItemCache.cs" />
-    <Compile Include="Utils\ComCtl32.cs" />
-    <Compile Include="Utils\HResult.cs" />
-    <Compile Include="Utils\IEnumIDList.cs" />
-    <Compile Include="Utils\IShellFolder.cs" />
-    <Compile Include="Utils\IShellItem.cs" />
     <Compile Include="Utils\ListViewUtils.cs" />
+    <Compile Include="Utils\ShareInfo.cs" />
+    <Compile Include="Utils\Shell32.cs" />
     <Compile Include="View\IFilterView.cs" />
     <Compile Include="Windows\ExternDll.cs" />
     <Compile Include="Windows\NativeMethods.cs" />
     <Compile Include="Windows\SafeNativeMethods.cs" />
-    <Compile Include="Utils\Shell32.cs" />
     <Compile Include="Utils\Shell32Utils.cs" />
     <Compile Include="Utils\SingleInstanceCheck.cs" />
     <Compile Include="Utils\SysImageList.cs" />
-    <Compile Include="Utils\User32.cs" />
     <Compile Include="View\IAboutView.cs" />
     <Compile Include="Utils\MenuUtils.cs" />
     <Compile Include="UI\AboutForm.cs">
@@ -178,7 +173,7 @@
     <Compile Include="Model\ISubscription.cs" />
     <Compile Include="Utils\NetApi32.cs" />
     <Compile Include="Model\ServerListSubscription.cs" />
-    <Compile Include="Model\ServerInfo.cs" />
+    <Compile Include="Utils\ServerInfo.cs" />
     <Compile Include="Model\TabSettings.cs" />
     <Compile Include="Utils\NetApi32Utils.cs" />
     <Compile Include="NLogFake.cs" />
@@ -192,7 +187,7 @@
     <Compile Include="Model\PanelItemComparer.cs" />
     <Compile Include="Model\SharePanelItem.cs" />
     <Compile Include="Model\PingThread.cs" />
-    <Compile Include="Model\PanelItem.cs" />
+    <Compile Include="Model\AbstractPanelItem.cs" />
     <Compile Include="Utils\User32Utils.cs" />
     <Compile Include="Utils\AutorunUtils.cs" />
     <Compile Include="Program.cs" />

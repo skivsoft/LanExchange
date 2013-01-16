@@ -78,9 +78,9 @@ namespace LanExchange.Model
             {
                 bool subjectFound = false;
                 foreach(BackgroundContext ctx in BackgroundWorkers.Instance.EnumContexts())
-                    if (ctx.Strategy is SubscriptionAbstractStrategy)
+                    if (ctx.Strategy is AbstractSubscriptionStrategy)
                     {
-                        var sub = ctx.Strategy as SubscriptionAbstractStrategy;
+                        var sub = ctx.Strategy as AbstractSubscriptionStrategy;
                         if (sub.Subject.Equals(Pair.Key))
                         {
                             subjectFound = true;

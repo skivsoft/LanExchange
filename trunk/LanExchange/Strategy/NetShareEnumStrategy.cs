@@ -6,7 +6,7 @@ using LanExchange.Utils;
 
 namespace LanExchange.Strategy
 {
-    public class NetShareEnumStrategy : SubscriptionAbstractStrategy
+    public class NetShareEnumStrategy : AbstractSubscriptionStrategy
     {
         //private List<ServerInfo> m_Result;
 
