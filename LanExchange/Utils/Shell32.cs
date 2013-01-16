@@ -22,7 +22,7 @@ using System.Text;
 
 #pragma warning disable 1591
 
-namespace GongSolutions.Shell.Interop
+namespace LanExchange.Utils
 {
 
     public enum CSIDL
@@ -349,96 +349,96 @@ namespace GongSolutions.Shell.Interop
         public IntPtr cStr;
     }
 
-    static class Shell32
+    class Shell32
     {
         [DllImport("shell32.dll", EntryPoint = "#660")]
         public static extern bool FileIconInit(bool bFullInit);
 
-        [DllImport("shell32.dll", EntryPoint = "#18")]
-        public static extern IntPtr ILClone(IntPtr pidl);
+        //[DllImport("shell32.dll", EntryPoint = "#18")]
+        //public static extern IntPtr ILClone(IntPtr pidl);
 
-        [DllImport("shell32.dll", EntryPoint = "#25")]
-        public static extern IntPtr ILCombine(IntPtr pidl1, IntPtr pidl2);
+        //[DllImport("shell32.dll", EntryPoint = "#25")]
+        //public static extern IntPtr ILCombine(IntPtr pidl1, IntPtr pidl2);
 
-        [DllImport("shell32.dll")]
-        public static extern IntPtr ILCreateFromPath(string pszPath);
+        //[DllImport("shell32.dll")]
+        //public static extern IntPtr ILCreateFromPath(string pszPath);
 
-        [DllImport("shell32.dll", EntryPoint = "#16")]
-        public static extern IntPtr ILFindLastID(IntPtr pidl);
+        //[DllImport("shell32.dll", EntryPoint = "#16")]
+        //public static extern IntPtr ILFindLastID(IntPtr pidl);
 
-        [DllImport("shell32.dll", EntryPoint = "#155")]
-        public static extern void ILFree(IntPtr pidl);
+        //[DllImport("shell32.dll", EntryPoint = "#155")]
+        //public static extern void ILFree(IntPtr pidl);
 
-        [DllImport("shell32.dll", EntryPoint = "#21")]
-        public static extern bool ILIsEqual(IntPtr pidl1, IntPtr pidl2);
+        //[DllImport("shell32.dll", EntryPoint = "#21")]
+        //public static extern bool ILIsEqual(IntPtr pidl1, IntPtr pidl2);
 
-        [DllImport("shell32.dll", EntryPoint = "#23")]
-        public static extern bool ILIsParent(IntPtr pidl1, IntPtr pidl2,
-            bool fImmediate);
+        //[DllImport("shell32.dll", EntryPoint = "#23")]
+        //public static extern bool ILIsParent(IntPtr pidl1, IntPtr pidl2,
+        //    bool fImmediate);
 
-        [DllImport("shell32.dll", EntryPoint = "#17")]
-        public static extern bool ILRemoveLastID(IntPtr pidl);
+        //[DllImport("shell32.dll", EntryPoint = "#17")]
+        //public static extern bool ILRemoveLastID(IntPtr pidl);
 
-        [DllImport("shell32.dll", EntryPoint = "#71")]
-        public static extern bool Shell_GetImageLists(out IntPtr lphimlLarge,
-            out IntPtr lphimlSmall);
+        //[DllImport("shell32.dll", EntryPoint = "#71")]
+        //public static extern bool Shell_GetImageLists(out IntPtr lphimlLarge,
+        //    out IntPtr lphimlSmall);
 
-        [DllImport("shell32.dll", EntryPoint = "#2")]
-        public static extern uint SHChangeNotifyRegister(IntPtr hWnd,
-            SHCNRF fSources, SHCNE fEvents, uint wMsg, int cEntries,
-            ref SHChangeNotifyEntry pFsne);
+        //[DllImport("shell32.dll", EntryPoint = "#2")]
+        //public static extern uint SHChangeNotifyRegister(IntPtr hWnd,
+        //    SHCNRF fSources, SHCNE fEvents, uint wMsg, int cEntries,
+        //    ref SHChangeNotifyEntry pFsne);
 
-        [DllImport("shell32.dll", EntryPoint = "#4")]
-        public static extern bool SHChangeNotifyUnregister(uint hNotify);
+        //[DllImport("shell32.dll", EntryPoint = "#4")]
+        //public static extern bool SHChangeNotifyUnregister(uint hNotify);
 
-        [DllImport("shell32.dll", EntryPoint = "#165", CharSet = CharSet.Unicode)]
-        public static extern ERROR SHCreateDirectory(IntPtr hwnd, string pszPath);
+        //[DllImport("shell32.dll", EntryPoint = "#165", CharSet = CharSet.Unicode)]
+        //public static extern ERROR SHCreateDirectory(IntPtr hwnd, string pszPath);
 
-        [DllImport("shell32.dll", PreserveSig = false)]
-        public static extern IShellItem SHCreateItemFromIDList(
-            [In] IntPtr pidl,
-            [In, MarshalAs(UnmanagedType.LPStruct)] Guid riid);
+        //[DllImport("shell32.dll", PreserveSig = false)]
+        //public static extern IShellItem SHCreateItemFromIDList(
+        //    [In] IntPtr pidl,
+        //    [In, MarshalAs(UnmanagedType.LPStruct)] Guid riid);
 
-        [DllImport("shell32.dll", CharSet = CharSet.Unicode, PreserveSig = false)]
-        public static extern IShellItem SHCreateItemFromParsingName(
-            [In] string pszPath,
-            [In] IntPtr pbc,
-            [In, MarshalAs(UnmanagedType.LPStruct)] Guid riid);
+        //[DllImport("shell32.dll", CharSet = CharSet.Unicode, PreserveSig = false)]
+        //public static extern IShellItem SHCreateItemFromParsingName(
+        //    [In] string pszPath,
+        //    [In] IntPtr pbc,
+        //    [In, MarshalAs(UnmanagedType.LPStruct)] Guid riid);
 
-        [DllImport("shell32.dll", CharSet = CharSet.Unicode, PreserveSig = false)]
-        public static extern IShellItem SHCreateItemWithParent(
-            [In] IntPtr pidlParent,
-            [In] IShellFolder psfParent,
-            [In] IntPtr pidl,
-            [In, MarshalAs(UnmanagedType.LPStruct)] Guid riid);
+        //[DllImport("shell32.dll", CharSet = CharSet.Unicode, PreserveSig = false)]
+        //public static extern IShellItem SHCreateItemWithParent(
+        //    [In] IntPtr pidlParent,
+        //    [In] IShellFolder psfParent,
+        //    [In] IntPtr pidl,
+        //    [In, MarshalAs(UnmanagedType.LPStruct)] Guid riid);
 
-        [DllImport("shell32.dll", PreserveSig = false)]
-        public static extern IShellFolder SHGetDesktopFolder();
+        //[DllImport("shell32.dll", PreserveSig = false)]
+        //public static extern IShellFolder SHGetDesktopFolder();
 
-        [DllImport("shell32.dll")]
-        public static extern IntPtr SHGetFileInfo(IntPtr pszPath,
-            int dwFileAttributes, out SHFILEINFO psfi, uint cbFileInfo,
-            SHGFI uFlags);
+        //[DllImport("shell32.dll")]
+        //public static extern IntPtr SHGetFileInfo(IntPtr pszPath,
+        //    int dwFileAttributes, out SHFILEINFO psfi, int cbFileInfo,
+        //    SHGFI uFlags);
 
-        [DllImport("shfolder.dll")]
-        public static extern HResult SHGetFolderPath(
-            [In] IntPtr hwndOwner,
-            [In] CSIDL nFolder,
-            [In] IntPtr hToken,
-            [In] uint dwFlags,
-            [Out] StringBuilder pszPath);
+        //[DllImport("shfolder.dll")]
+        //public static extern HResult SHGetFolderPath(
+        //    [In] IntPtr hwndOwner,
+        //    [In] CSIDL nFolder,
+        //    [In] IntPtr hToken,
+        //    [In] uint dwFlags,
+        //    [Out] StringBuilder pszPath);
 
-        [DllImport("shell32.dll", PreserveSig = false)]
-        public static extern IntPtr SHGetIDListFromObject(
-            [In, MarshalAs(UnmanagedType.IUnknown)] object punk);
+        //[DllImport("shell32.dll", PreserveSig = false)]
+        //public static extern IntPtr SHGetIDListFromObject(
+        //    [In, MarshalAs(UnmanagedType.IUnknown)] object punk);
 
-        [DllImport("shell32.dll")]
-        public static extern bool SHGetPathFromIDList(
-            [In] IntPtr pidl,
-            [Out] StringBuilder pszPath);
+        //[DllImport("shell32.dll")]
+        //public static extern bool SHGetPathFromIDList(
+        //    [In] IntPtr pidl,
+        //    [Out] StringBuilder pszPath);
 
-        [DllImport("shell32.dll")]
-        public static extern HResult SHGetSpecialFolderLocation(IntPtr hwndOwner,
-            CSIDL nFolder, out IntPtr ppidl);
+        //[DllImport("shell32.dll")]
+        //public static extern HResult SHGetSpecialFolderLocation(IntPtr hwndOwner,
+        //    CSIDL nFolder, out IntPtr ppidl);
     }
 }

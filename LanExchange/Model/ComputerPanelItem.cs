@@ -1,42 +1,35 @@
 ﻿using System;
+using LanExchange.Utils;
 using LanExchange.WMI;
 //using System.Net;
 
 namespace LanExchange.Model
 {
-    public class ComputerPanelItem : PanelItem, IWMIComputer
+    public class ComputerPanelItem : AbstractPanelItem, IWMIComputer
     {
+        private readonly ServerInfo m_SI;
         private string m_Name = String.Empty;
         private string m_Comment = String.Empty;
-        private readonly ServerInfo m_SI;
 
-        public ComputerPanelItem()
+        /// <summary>
+        /// Constructor creates ComputerPanelItem from <see cref="ServerInfo"/> object.
+        /// </summary>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <param name="si"></param>
+        public ComputerPanelItem(ServerInfo si)
         {
+            if (si == null)
+                throw new ArgumentNullException("si");
+            m_SI = si;
+            m_Name = m_SI.Name;
+            m_Comment = m_SI.Comment;
             IsPingable = true;
         }
 
-        public ComputerPanelItem(string computerName, object data)
+        public override string Name
         {
-            m_Name = computerName;
-            IsPingable = true;
-            m_SI = data as ServerInfo;
-            if (data != null && m_SI != null)
-                m_Comment = m_SI.Comment;
-        }
-
-        //public static bool IsValidName(string name)
-        //{
-        //    return true;
-        //}
-
-        protected override string GetName()
-        {
-            return m_Name;
-        }
-
-        protected override void SetName(string value)
-        {
-            m_Name = value;
+            get { return m_Name; }
+            set { m_Name = value; }
         }
 
         public override string Comment
@@ -47,10 +40,7 @@ namespace LanExchange.Model
 
         public ServerInfo SI
         {
-            get
-            {
-                return m_SI;
-            }
+            get { return m_SI; }
         }
 
         public override string[] getStrings()
@@ -58,16 +48,19 @@ namespace LanExchange.Model
             return new[] { Comment.ToUpper(), Name.ToUpper(), m_SI.Version().ToUpper() };
         }
 
-        protected override int GetImageIndex()
+        public override int ImageIndex
         {
-            if (IsLogged)
-                return LanExchangeIcons.CompGreen;
-            return IsPingable ? LanExchangeIcons.CompDefault : LanExchangeIcons.CompDisabled;
+            get
+            {
+                if (IsLogged)
+                    return LanExchangeIcons.CompGreen;
+                return IsPingable ? LanExchangeIcons.CompDefault : LanExchangeIcons.CompDisabled;
+            }
         }
 
-        protected override string GetToolTipText()
+        public override string ToolTipText
         {
-            return String.Format("{0}\n{1}", Comment, m_SI.Version());
+            get { return String.Format("{0}\n{1}", Comment, m_SI.Version()); }
         }
 
         public bool IsPingable { get; set; }

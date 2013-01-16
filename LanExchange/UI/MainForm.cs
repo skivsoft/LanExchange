@@ -283,7 +283,7 @@ namespace LanExchange.UI
             ComputerPanelItem Comp = null;
             if (pv != null) 
             {
-                PanelItem PItem = pv.GetPresenter().GetFocusedPanelItem(false);
+                AbstractPanelItem PItem = pv.GetPresenter().GetFocusedPanelItem(false);
                 if (PItem != null)
                     Comp = PItem as ComputerPanelItem;
             }

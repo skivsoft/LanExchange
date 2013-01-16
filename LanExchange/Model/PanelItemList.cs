@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using LanExchange.Utils;
+
 //using NLog;
 
 namespace LanExchange.Model
@@ -17,9 +19,9 @@ namespace LanExchange.Model
         //private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
         // items added by user
-        private readonly SortedDictionary<string, PanelItem> m_Items;
+        private readonly SortedDictionary<string, AbstractPanelItem> m_Items;
         // merged all results and user items
-        private readonly SortedDictionary<string, PanelItem> m_Data;
+        private readonly SortedDictionary<string, AbstractPanelItem> m_Data;
         // keys for filtering
         private readonly List<string> m_Keys;
 
@@ -32,8 +34,8 @@ namespace LanExchange.Model
 
         public PanelItemList(string name)
         {
-            m_Items = new SortedDictionary<string, PanelItem>();
-            m_Data = new SortedDictionary<string, PanelItem>();
+            m_Items = new SortedDictionary<string, AbstractPanelItem>();
+            m_Data = new SortedDictionary<string, AbstractPanelItem>();
             m_Keys = new List<string>();
             Groups = new List<string>();
             TabName = name;
@@ -102,7 +104,7 @@ namespace LanExchange.Model
         }
 
 
-        public void Add(PanelItem comp)
+        public void Add(AbstractPanelItem comp)
         {
             if (comp != null)
                 if (!m_Data.ContainsKey(comp.Name))
@@ -115,15 +117,15 @@ namespace LanExchange.Model
         //    m_Data.Remove(comp.Name);
         //}
 
-        public PanelItem GetAt(int index)
+        public AbstractPanelItem GetAt(int index)
         {
             return Get(m_Keys[index]);
         }
 
-        public PanelItem Get(string key)
+        public AbstractPanelItem Get(string key)
         {
             if (key == null) return null;
-            PanelItem Result;
+            AbstractPanelItem Result;
             if (m_Data.TryGetValue(key, out Result))
             {
                 Result.Name = key;
@@ -257,7 +259,7 @@ namespace LanExchange.Model
                     {
                         foreach (ServerInfo si in sender.GetListBySubject(group))
                             if (!m_Data.ContainsKey(si.Name))
-                                m_Data.Add(si.Name, new ComputerPanelItem(si.Name, si));
+                                m_Data.Add(si.Name, new ComputerPanelItem(si));
                     });
                 foreach (var Pair in m_Items)
                     m_Data.Add(Pair.Key, Pair.Value);
@@ -275,7 +277,7 @@ namespace LanExchange.Model
         /// В частности это будет список копьютеров, даже если мы находимся на уровне списка ресуров.
         /// </summary>
         /// <returns></returns>
-        public IList<PanelItem> GetTopItemList()
+        public IList<AbstractPanelItem> GetTopItemList()
         {
             return null;
             /*
