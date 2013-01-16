@@ -39,16 +39,36 @@ namespace LanExchange.WMI
             return String.Format(@"\\{0}\{1}", m_Comp.Name, WMISettings.DefaultNamespace);
         }
 
+        private void ShowBrandConnectionError(Exception ex)
+        {
+            MessageBox.Show(
+                String.Format("Не удалось подключиться к компьютеру \\\\{0}.\nВозможно удалённое подключение было заблокировано брэнмауэром.", m_Comp.Name),
+                "Ошибка подключения WMI",
+                MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
+        }
+
+        private void ShowCommonConnectionError(Exception ex)
+        {
+            MessageBox.Show(
+                String.Format("Не удалось подключиться к компьютеру \\\\{0}.\n{1}", m_Comp.Name, ex.Message),
+                "Ошибка подключения WMI",
+                MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
+        }
+
         public bool ConnectToComputer()
         {
             if (m_Namespace != null && m_Namespace.IsConnected)
                 return true;
+            string connectionString = MakeConnectionString();
+            ConnectionOptions options = null;
+            bool autoLogon = false;
+            bool failAfterAutoLogon = false;
+
+            TryAgainWithPassword:
             try
             {
-                string connectionString = MakeConnectionString();
                 logger.Info("WMI: connect to namespace \"{0}\"", connectionString);
-                //var connectionOptions = new ConnectionOptions();
-                m_Namespace = new ManagementScope(connectionString, null);
+                m_Namespace = new ManagementScope(connectionString, options);
                 //m_Scope.Options.EnablePrivileges = true;
                 m_Namespace.Connect();
                 if (m_Namespace.IsConnected)
@@ -57,20 +77,45 @@ namespace LanExchange.WMI
                     return true;
                 }
             }
+            catch (UnauthorizedAccessException ex)
+            {
+                if (options == null || (autoLogon && !failAfterAutoLogon))
+                    using (var form = new WMIAuthForm())
+                    {
+                        if (autoLogon)
+                            failAfterAutoLogon = true;
+
+                        form.SetComputerName(m_Comp.Name);
+                        autoLogon = form.AutoLogon();
+                        bool ok;
+                        if (autoLogon && !failAfterAutoLogon)
+                            ok = true;
+                        else
+                            ok = (form.ShowDialog() == DialogResult.OK);
+                        if (ok)
+                        {
+                            m_Namespace = null;
+                            options = new ConnectionOptions
+                                {
+                                    Username = form.UserName, 
+                                    Password = form.UserPassword
+                                };
+                            goto TryAgainWithPassword;
+                        }
+                    }
+                else
+                    ShowCommonConnectionError(ex);
+            }
             catch (COMException ex)
             {
                 if ((uint)ex.ErrorCode == 0x800706BA)
-                    MessageBox.Show(
-                        String.Format("Не удалось подключиться к компьютеру \\\\{0}.\nВозможно удалённое подключение было заблокировано брэнмауэром.", m_Comp.Name), 
-                        "Ошибка подключения WMI",
-                        MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
+                    ShowBrandConnectionError(ex);
+                else
+                    ShowCommonConnectionError(ex);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    String.Format("Не удалось подключиться к компьютеру \\\\{0}.\n{1}", m_Comp.Name, ex.Message),
-                    "Ошибка подключения WMI",
-                    MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
+                ShowCommonConnectionError(ex);
             }
             logger.Error("WMI: Not connected.");
             m_Namespace = null;
@@ -143,6 +188,12 @@ namespace LanExchange.WMI
                             PropertyData Prop = wmiObject.Properties[Header.Text];
 
                             string Value = Prop.Value == null ? "null" : Prop.Value.ToString();
+                            if (Prop.Name.Equals("Name"))
+                            {
+                                string[] A = Value.Split('|');
+                                if (A.Length > 0)
+                                    Value = A[0];
+                            }
                             if (Index == 0)
                                 LVI.Text = Value;
                             else
