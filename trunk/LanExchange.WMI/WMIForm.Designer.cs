@@ -38,9 +38,9 @@
             this.PropGrid = new System.Windows.Forms.PropertyGrid();
             this.pTop = new System.Windows.Forms.Panel();
             this.menuClasses = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.wMIItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lDescription = new System.Windows.Forms.Label();
             this.lClassName = new System.Windows.Forms.Label();
-            this.wMIItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Status.SuspendLayout();
             this.pLeft.SuspendLayout();
             this.pTop.SuspendLayout();
@@ -51,16 +51,16 @@
             // 
             this.Status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lStatus});
-            this.Status.Location = new System.Drawing.Point(0, 551);
+            this.Status.Location = new System.Drawing.Point(0, 540);
             this.Status.Name = "Status";
-            this.Status.Size = new System.Drawing.Size(792, 22);
+            this.Status.Size = new System.Drawing.Size(784, 22);
             this.Status.TabIndex = 3;
             this.Status.Text = "statusStrip1";
             // 
             // lStatus
             // 
             this.lStatus.Name = "lStatus";
-            this.lStatus.Size = new System.Drawing.Size(777, 17);
+            this.lStatus.Size = new System.Drawing.Size(769, 17);
             this.lStatus.Spring = true;
             this.lStatus.Text = "    ";
             this.lStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -73,7 +73,7 @@
             this.pLeft.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pLeft.Location = new System.Drawing.Point(0, 100);
             this.pLeft.Name = "pLeft";
-            this.pLeft.Size = new System.Drawing.Size(792, 451);
+            this.pLeft.Size = new System.Drawing.Size(784, 440);
             this.pLeft.TabIndex = 4;
             // 
             // lvInstances
@@ -85,7 +85,7 @@
             this.lvInstances.HideSelection = false;
             this.lvInstances.Location = new System.Drawing.Point(306, 0);
             this.lvInstances.Name = "lvInstances";
-            this.lvInstances.Size = new System.Drawing.Size(486, 451);
+            this.lvInstances.Size = new System.Drawing.Size(478, 440);
             this.lvInstances.TabIndex = 8;
             this.lvInstances.UseCompatibleStateImageBehavior = false;
             this.lvInstances.View = System.Windows.Forms.View.Details;
@@ -102,7 +102,7 @@
             // 
             this.splitter1.Location = new System.Drawing.Point(300, 0);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(6, 451);
+            this.splitter1.Size = new System.Drawing.Size(6, 440);
             this.splitter1.TabIndex = 9;
             this.splitter1.TabStop = false;
             // 
@@ -113,7 +113,7 @@
             this.PropGrid.Location = new System.Drawing.Point(0, 0);
             this.PropGrid.Name = "PropGrid";
             this.PropGrid.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
-            this.PropGrid.Size = new System.Drawing.Size(300, 451);
+            this.PropGrid.Size = new System.Drawing.Size(300, 440);
             this.PropGrid.TabIndex = 5;
             this.PropGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.PropGrid_PropertyValueChanged);
             // 
@@ -126,7 +126,7 @@
             this.pTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pTop.Location = new System.Drawing.Point(0, 0);
             this.pTop.Name = "pTop";
-            this.pTop.Size = new System.Drawing.Size(792, 100);
+            this.pTop.Size = new System.Drawing.Size(784, 100);
             this.pTop.TabIndex = 5;
             // 
             // menuClasses
@@ -137,6 +137,12 @@
             this.menuClasses.Size = new System.Drawing.Size(124, 26);
             this.menuClasses.Opening += new System.ComponentModel.CancelEventHandler(this.menuClasses_Opening);
             // 
+            // wMIItemToolStripMenuItem
+            // 
+            this.wMIItemToolStripMenuItem.Name = "wMIItemToolStripMenuItem";
+            this.wMIItemToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.wMIItemToolStripMenuItem.Text = "WMIItem";
+            // 
             // lDescription
             // 
             this.lDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -144,7 +150,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lDescription.Location = new System.Drawing.Point(12, 37);
             this.lDescription.Name = "lDescription";
-            this.lDescription.Size = new System.Drawing.Size(768, 49);
+            this.lDescription.Size = new System.Drawing.Size(760, 49);
             this.lDescription.TabIndex = 1;
             this.lDescription.Text = "    ";
             // 
@@ -158,17 +164,11 @@
             this.lClassName.TabIndex = 0;
             this.lClassName.Text = "    ";
             // 
-            // wMIItemToolStripMenuItem
-            // 
-            this.wMIItemToolStripMenuItem.Name = "wMIItemToolStripMenuItem";
-            this.wMIItemToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.wMIItemToolStripMenuItem.Text = "WMIItem";
-            // 
             // WMIForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(792, 573);
+            this.ClientSize = new System.Drawing.Size(784, 562);
             this.Controls.Add(this.pLeft);
             this.Controls.Add(this.Status);
             this.Controls.Add(this.pTop);
