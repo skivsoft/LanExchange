@@ -95,19 +95,6 @@ namespace LanExchange.WMI
 
         }
 
-        //public bool EnumDynamicClasses()
-        //{
-        //    ConnectToComputer();
-
-        //    int ClassCount = 0;
-        //    int PropCount = 0;
-        //    int MethodCount = 0;
-        //    m_View.ClearClasses();
-        //    bool Result = true;
-        //    m_View.ShowStat(ClassCount, PropCount, MethodCount);
-        //    return Result;
-        //}
-
         public ManagementClass WMIClass 
         {
             get { return m_Class; }
@@ -191,16 +178,10 @@ namespace LanExchange.WMI
             m_View.MENU.Items.Clear();
             foreach (MethodData md in m_Class.Methods)
             {
-                bool IsImplemented = false;
-                foreach(var qd in md.Qualifiers)
-                    if (qd.Name.Equals("Implemented"))
-                    {
-                        IsImplemented = true;
-                        break;
-                    }
-                if (!IsImplemented) continue;
+                var method = new MethodDataEx(md);
+                if (!method.HasQualifier("Implemented")) continue;
                 ToolStripMenuItem MI = new ToolStripMenuItem();
-                MI.Text = string.Format("{0}()", md.Name);
+                MI.Text = method.ToString();
                 MI.Tag = md;
                 MI.Click += Method_Click;
                 m_View.MENU.Items.Add(MI);

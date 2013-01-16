@@ -151,7 +151,7 @@
             this.mCompOpen.ShortcutKeyDisplayString = "Shift+Enter";
             this.mCompOpen.Size = new System.Drawing.Size(341, 22);
             this.mCompOpen.Tag = "\\\\{0}";
-            this.mCompOpen.Text = "Открыть в Проводнике";
+            this.mCompOpen.Text = "Открыть в проводнике";
             this.mCompOpen.Click += new System.EventHandler(this.mCompOpen_Click);
             // 
             // mWMI
@@ -196,7 +196,7 @@
             this.mRadmin1.ShortcutKeyDisplayString = "Ctrl+Enter";
             this.mRadmin1.Size = new System.Drawing.Size(341, 22);
             this.mRadmin1.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0}";
-            this.mRadmin1.Text = "Управление";
+            this.mRadmin1.Text = "Radmin® Управление";
             this.mRadmin1.Click += new System.EventHandler(this.mCompOpen_Click);
             // 
             // mRadmin2
@@ -204,7 +204,7 @@
             this.mRadmin2.Name = "mRadmin2";
             this.mRadmin2.Size = new System.Drawing.Size(341, 22);
             this.mRadmin2.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0} /noinput";
-            this.mRadmin2.Text = "Просмотр";
+            this.mRadmin2.Text = "Radmin® Просмотр";
             this.mRadmin2.Click += new System.EventHandler(this.mCompOpen_Click);
             // 
             // mRadmin3
@@ -212,7 +212,7 @@
             this.mRadmin3.Name = "mRadmin3";
             this.mRadmin3.Size = new System.Drawing.Size(341, 22);
             this.mRadmin3.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0} /telnet";
-            this.mRadmin3.Text = "Телнет";
+            this.mRadmin3.Text = "Radmin® Телнет";
             this.mRadmin3.Click += new System.EventHandler(this.mCompOpen_Click);
             // 
             // mRadmin4
@@ -220,7 +220,7 @@
             this.mRadmin4.Name = "mRadmin4";
             this.mRadmin4.Size = new System.Drawing.Size(341, 22);
             this.mRadmin4.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0} /file";
-            this.mRadmin4.Text = "Передача файлов";
+            this.mRadmin4.Text = "Radmin® Передача файлов";
             this.mRadmin4.Click += new System.EventHandler(this.mCompOpen_Click);
             // 
             // mRadmin5
@@ -228,7 +228,7 @@
             this.mRadmin5.Name = "mRadmin5";
             this.mRadmin5.Size = new System.Drawing.Size(341, 22);
             this.mRadmin5.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0} /shutdown";
-            this.mRadmin5.Text = "Выключение";
+            this.mRadmin5.Text = "Radmin® Выключение";
             this.mRadmin5.Click += new System.EventHandler(this.mCompOpen_Click);
             // 
             // mFolder
@@ -247,18 +247,18 @@
             // 
             this.mFolderOpen.Name = "mFolderOpen";
             this.mFolderOpen.ShortcutKeyDisplayString = "Shift+Enter";
-            this.mFolderOpen.Size = new System.Drawing.Size(267, 22);
+            this.mFolderOpen.Size = new System.Drawing.Size(280, 22);
             this.mFolderOpen.Tag = "{0}";
-            this.mFolderOpen.Text = "Открыть в Проводнике";
+            this.mFolderOpen.Text = "Открыть в проводнике";
             this.mFolderOpen.Click += new System.EventHandler(this.mFolderOpen_Click);
             // 
             // mFAROpen
             // 
             this.mFAROpen.Name = "mFAROpen";
             this.mFAROpen.ShortcutKeyDisplayString = "Ctrl+Enter";
-            this.mFAROpen.Size = new System.Drawing.Size(267, 22);
+            this.mFAROpen.Size = new System.Drawing.Size(280, 22);
             this.mFAROpen.Tag = "FAR.EXE {0}";
-            this.mFAROpen.Text = "Открыть в FAR";
+            this.mFAROpen.Text = "Открыть в менеджере FAR";
             this.mFAROpen.Click += new System.EventHandler(this.mFolderOpen_Click);
             // 
             // mSeparatorAdmin
