@@ -54,9 +54,11 @@ namespace LanExchange.WMI
                     sb.Append("out ");
                 //sb.Append(prop.Type);
                 //sb.Append(" ");
-                sb.Append(prop.Name);
+                string s = prop.Name; 
+                sb.Append(s.Substring(0, 1).ToLower());
+                sb.Append(s.Substring(1));
             }
-            return string.Format("{0} ({1})", m_Data.Name, sb);
+            return string.Format("{0}({1})", m_Data.Name, sb);
         }
     }
 }

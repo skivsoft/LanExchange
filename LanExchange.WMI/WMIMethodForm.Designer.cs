@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pTop = new System.Windows.Forms.Panel();
             this.lDescription = new System.Windows.Forms.Label();
             this.lMethodName = new System.Windows.Forms.Label();
@@ -37,6 +38,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.pResult = new System.Windows.Forms.Panel();
             this.lResult = new System.Windows.Forms.Label();
+            this.timerOK = new System.Windows.Forms.Timer(this.components);
             this.pTop.SuspendLayout();
             this.pResult.SuspendLayout();
             this.SuspendLayout();
@@ -137,6 +139,11 @@
             this.lResult.TabIndex = 0;
             this.lResult.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // timerOK
+            // 
+            this.timerOK.Interval = 1000;
+            this.timerOK.Tick += new System.EventHandler(this.timerOK_Tick);
+            // 
             // WMIMethodForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -174,5 +181,6 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.Panel pResult;
         private System.Windows.Forms.Label lResult;
+        private System.Windows.Forms.Timer timerOK;
     }
 }

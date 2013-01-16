@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Management;
-using System.Threading;
 using System.Windows.Forms;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using NLog;
 
 namespace LanExchange.WMI
 {
-    public class WMIPresenter
+    public class WMIPresenter : IDisposable
     {
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -24,12 +22,21 @@ namespace LanExchange.WMI
             m_View = view;
         }
 
+        public virtual void Dispose()
+        {
+            if (m_Class != null)
+            {
+                m_Class.Dispose();
+                m_Class = null;
+            }
+        }
+
         private string MakeConnectionString()
         {
             if (m_Comp == null || 
                 String.Compare(m_Comp.Name, SystemInformation.ComputerName, StringComparison.OrdinalIgnoreCase) == 0)
-                return @"root\cimv2";
-            return String.Format(@"\\{0}\root\cimv2", m_Comp.Name);
+                return WMISettings.DefaultNamespace;
+            return String.Format(@"\\{0}\{1}", m_Comp.Name, WMISettings.DefaultNamespace);
         }
 
         public bool ConnectToComputer()
@@ -70,31 +77,6 @@ namespace LanExchange.WMI
             return false;
         }
 
-        public string GetClassDescription(string className)
-        {
-            string Result = "";
-            try
-            {
-                // Gets the property qualifiers.
-                var op = new ObjectGetOptions(null, TimeSpan.MaxValue, true);
-
-                var path = new ManagementPath(className);
-                using (var mc = new ManagementClass(m_Namespace, path, op))
-                {
-                    mc.Options.UseAmendedQualifiers = true;
-                    foreach (var dataObject in mc.Qualifiers)
-                        if (dataObject.Name.Equals("Description"))
-                        {
-                            Result = dataObject.Value.ToString();
-                            break;
-                        }
-                }
-            }
-            catch {}
-            return Result;
-
-        }
-
         public ManagementClass WMIClass 
         {
             get { return m_Class; }
@@ -108,26 +90,43 @@ namespace LanExchange.WMI
 
             m_View.LV.Clear();
 
-
             var op = new ObjectGetOptions(null, TimeSpan.MaxValue, true);
             var mc = new ManagementClass(m_Namespace, new ManagementPath(className), op);
             mc.Options.UseAmendedQualifiers = true;
-
             m_Class = mc;
+            mc.Dispose();
 
-            foreach (var Prop in m_Class.Properties)
+            bool bCheckError = true;
+            try
             {
-                bool isCimKey = false;
-                foreach (var qd in Prop.Qualifiers)
-                    if (qd.Name.Equals("CIM_Key"))
-                    {
-                        isCimKey = true;
-                        break;
-                    }
-                if (isCimKey || Prop.IsArray || Prop.Type.Equals(CimType.Boolean) || Prop.Type.Equals(CimType.DateTime))
-                    continue;
-                m_View.LV.Columns.Add(Prop.Name);
+                m_View.LV.Columns.Add("Name");
+                m_View.LV.Columns.Add("Caption");
+                foreach (var Prop in m_Class.Properties)
+                {
+                    if (Prop.Name.Equals("Name")) continue;
+                    if (Prop.Name.Equals("Caption")) continue;
+                    if (Prop.Name.Equals("Description")) continue;
+                    if (Prop.IsLocal) continue;
+                    bool isCimKey = false;
+                    foreach (var qd in Prop.Qualifiers)
+                        if (qd.Name.Equals("CIM_Key"))
+                        {
+                            isCimKey = true;
+                            break;
+                        }
+                    if (isCimKey || Prop.IsArray || !Prop.Type.Equals(CimType.String)
+                        //|| Prop.Type.Equals(CimType.Boolean) || Prop.Type.Equals(CimType.DateTime)
+                        )
+                        continue;
+                    m_View.LV.Columns.Add(Prop.Name);
+                }
+                bCheckError = false;
             }
+            catch (Exception E)
+            {
+                logger.Error("WMI: {0}", E.Message);
+            }
+            if (bCheckError) return;
 
             var query = new ObjectQuery("select * from " + className);
             using (var searcher = new ManagementObjectSearcher(m_Namespace, query))
@@ -176,16 +175,29 @@ namespace LanExchange.WMI
         public void BuildContextMenu()
         {
             m_View.MENU.Items.Clear();
-            foreach (MethodData md in m_Class.Methods)
+            if (m_Class == null) return;
+            try
             {
-                var method = new MethodDataEx(md);
-                if (!method.HasQualifier("Implemented")) continue;
-                ToolStripMenuItem MI = new ToolStripMenuItem();
-                MI.Text = method.ToString();
-                MI.Tag = md;
-                MI.Click += Method_Click;
-                m_View.MENU.Items.Add(MI);
+                foreach (MethodData md in m_Class.Methods)
+                {
+                    var method = new MethodDataEx(md);
+                    if (!method.HasQualifier("Implemented")) continue;
+                    var MI = new ToolStripMenuItem();
+                    MI.Text = method.ToString();
+                    MI.Tag = md;
+                    MI.Click += Method_Click;
+                    m_View.MENU.Items.Add(MI);
+                }
             }
+            catch (Exception E)
+            {
+                logger.Error("WMI: {0}", E.Message);
+            }
+        }
+
+        public ManagementScope Namespace
+        {
+            get { return m_Namespace; }
         }
     }
 }

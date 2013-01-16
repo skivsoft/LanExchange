@@ -272,11 +272,14 @@ namespace LanExchange.UI
 
         private void mWMI_Click(object sender, EventArgs e)
         {
+            // check advanced mode
+            if (!Settings.Instance.AdvancedMode) return;
+            // get focused computer
             ComputerPanelItem comp = m_Presenter.GetFocusedComputer();
             if (comp == null) return;
             // create wmi form
             WMIForm form = new WMIForm(comp);
-            // try connect to computer
+            // try connect to computer via wmi
             if (!form.GetPresenter().ConnectToComputer())
             {
                 form.Dispose();
@@ -285,6 +288,9 @@ namespace LanExchange.UI
             // asynchronous load avaible wmi classes list, if needed
             if (!WMIClassList.Instance.Loaded)
             {
+                WMIClassList.Instance.IncludeClasses.Clear();
+                foreach(string str in Settings.Instance.WMIClassesInclude)
+                    WMIClassList.Instance.IncludeClasses.Add(str);
                 BackgroundWorkers.Instance.Add(new BackgroundContext(new WMIClassesEnumStrategy()));
             }
             // set MyComputer icon to form
@@ -369,7 +375,12 @@ namespace LanExchange.UI
                     }
                 }
             }
-            SetEnabledAndVisible(mComp, bCompVisible);
+            mComp.Enabled = bCompVisible;
+            mComp.Visible = Settings.Instance.AdvancedMode;
+            if (Settings.Instance.AdvancedMode && !bCompVisible)
+            {
+                mComp.Text = @"\\<ИмяКомпьютера>";
+            }
             SetEnabledAndVisible(mFolder, bFolderVisible);
 
             const bool bSenderIsComputer = true; // (Pages.SelectedIndex > 0) /*|| (CompBrowser.InternalStack.Count == 0)*/;
@@ -378,7 +389,7 @@ namespace LanExchange.UI
                 mSendSeparator, mSendToTab }, bSenderIsComputer);
             SetEnabledAndVisible(mCopyPath, !bSenderIsComputer);
 
-            mSeparatorAdmin.Visible = bCompVisible || bFolderVisible;
+            mSeparatorAdmin.Visible = bCompVisible || bFolderVisible || Settings.Instance.AdvancedMode;
 
             // resolve computer related and folder related shortcut conflict
             mCompOpen.ShowShortcutKeys = bCompVisible && !bFolderVisible;

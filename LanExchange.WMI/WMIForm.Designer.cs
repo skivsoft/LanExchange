@@ -83,7 +83,7 @@
             this.lvInstances.FullRowSelect = true;
             this.lvInstances.GridLines = true;
             this.lvInstances.HideSelection = false;
-            this.lvInstances.Location = new System.Drawing.Point(306, 0);
+            this.lvInstances.Location = new System.Drawing.Point(0, 0);
             this.lvInstances.Name = "lvInstances";
             this.lvInstances.Size = new System.Drawing.Size(478, 440);
             this.lvInstances.TabIndex = 8;
@@ -100,7 +100,8 @@
             // 
             // splitter1
             // 
-            this.splitter1.Location = new System.Drawing.Point(300, 0);
+            this.splitter1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.splitter1.Location = new System.Drawing.Point(478, 0);
             this.splitter1.Name = "splitter1";
             this.splitter1.Size = new System.Drawing.Size(6, 440);
             this.splitter1.TabIndex = 9;
@@ -109,8 +110,8 @@
             // PropGrid
             // 
             this.PropGrid.ContextMenuStrip = this.menuCommands;
-            this.PropGrid.Dock = System.Windows.Forms.DockStyle.Left;
-            this.PropGrid.Location = new System.Drawing.Point(0, 0);
+            this.PropGrid.Dock = System.Windows.Forms.DockStyle.Right;
+            this.PropGrid.Location = new System.Drawing.Point(484, 0);
             this.PropGrid.Name = "PropGrid";
             this.PropGrid.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
             this.PropGrid.Size = new System.Drawing.Size(300, 440);
@@ -140,7 +141,7 @@
             // wMIItemToolStripMenuItem
             // 
             this.wMIItemToolStripMenuItem.Name = "wMIItemToolStripMenuItem";
-            this.wMIItemToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.wMIItemToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.wMIItemToolStripMenuItem.Text = "WMIItem";
             // 
             // lDescription
@@ -157,10 +158,10 @@
             // lClassName
             // 
             this.lClassName.AutoSize = true;
-            this.lClassName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lClassName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lClassName.Location = new System.Drawing.Point(12, 12);
             this.lClassName.Name = "lClassName";
-            this.lClassName.Size = new System.Drawing.Size(23, 13);
+            this.lClassName.Size = new System.Drawing.Size(24, 16);
             this.lClassName.TabIndex = 0;
             this.lClassName.Text = "    ";
             // 
