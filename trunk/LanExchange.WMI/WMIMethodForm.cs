@@ -12,6 +12,8 @@ namespace LanExchange.WMI
     {
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
+        private bool m_OutParamPresent;
+
         public WMIMethodForm()
         {
             InitializeComponent();
@@ -85,6 +87,8 @@ namespace LanExchange.WMI
                 // detect return value parameter name
                 if (prop.ParamType == WMIParamType.RETURN)
                     m_ReturnValueName = prop.Name;
+                if (prop.ParamType == WMIParamType.OUT)
+                    m_OutParamPresent = true;
                 str = String.Format("{0} {1} {2} : {3}", prop.ID, prop.ParamType, prop.Name, prop.Type);
                 LB.Items.Add(str);
                 logger.Info("WMI: {0}", str);
@@ -123,16 +127,39 @@ namespace LanExchange.WMI
             RunTheMethod();
         }
 
+        private void ShowOK(string message)
+        {
+            lResult.BackColor = Color.Green;
+            lResult.Text = message;
+        }
+
+        private void ShowFAIL(string message)
+        {
+            lResult.BackColor = Color.Red;
+            lResult.Text = message;
+        }
+
         private void RunTheMethod()
         {
             if (WMIObject == null || WMIMethod == null) return;
             //var watcher = new ManagementOperationObserver();
             var inParams = WMIMethod.InParameters;
             var options = new InvokeMethodOptions();
-            logger.Info("WMI: {0}.{1}()", WMIClass.Path.ClassName, WMIMethod.Name);
-            ManagementBaseObject result = WMIObject.InvokeMethod(WMIMethod.Name, inParams, options);
-            LB.Items.Add(String.Empty);
+            ManagementBaseObject result = null;
+            bRun.Enabled = false;
+            try
+            {
+                logger.Info("WMI: {0}.{1}()", WMIClass.Path.ClassName, WMIMethod.Name);
+                result = WMIObject.InvokeMethod(WMIMethod.Name, inParams, options);
+            }
+            catch (Exception E)
+            {
+                logger.Error("WMI: {0}", E.Message);
+                ShowFAIL(E.Message);
+            }
+            bRun.Enabled = true;
             if (result == null) return;
+            LB.Items.Add(String.Empty);
             string str;
             foreach (PropertyData pd in result.Properties)
             {
@@ -150,15 +177,20 @@ namespace LanExchange.WMI
                 logger.Info("WMI: {0}", str);
                 if (value == 0)
                 {
-                    lResult.BackColor = Color.Green;
-                    lResult.Text = "[0] Success";
+                    ShowOK("[0] Success");
+                    if (!m_OutParamPresent)
+                        timerOK.Enabled = true;
                 }
                 else
                 {
-                    lResult.BackColor = Color.Red;
-                    lResult.Text = String.Format("[{0}] {1}", value, message);
+                    ShowFAIL(String.Format("[{0}] {1}", value, message));
                 }
             }
+        }
+
+        private void timerOK_Tick(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
         }
     }
 }

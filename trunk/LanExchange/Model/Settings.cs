@@ -5,6 +5,7 @@ using System.Security.Principal;
 using NLog;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace LanExchange.Model
 {
@@ -33,6 +34,13 @@ namespace LanExchange.Model
         {
             RunMinimized = true;
             RefreshTimeInSec = 5 * 60;
+            WMIClassesInclude = new List<string>();
+            WMIClassesInclude.Add("Win32_Desktop");
+            WMIClassesInclude.Add("Win32_DesktopMonitor");
+            WMIClassesInclude.Add("Win32_DiskDrive");
+            WMIClassesInclude.Add("Win32_BIOS");
+            WMIClassesInclude.Add("Win32_Processor");
+            WMIClassesInclude.Add("Win32_PhysicalMemory");
         }
 
         public static Settings Instance
@@ -235,6 +243,8 @@ namespace LanExchange.Model
 
         public int MainFormX { get; set; }
         public int MainFormWidth { get; set; }
+
+        public List<string> WMIClassesInclude { get; set; }
 
         // ReSharper disable UnusedAutoPropertyAccessor.Global
         public string UpdateURL { get; set; }

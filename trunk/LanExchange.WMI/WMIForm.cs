@@ -180,7 +180,7 @@ namespace LanExchange.WMI
             set
             {
                 m_CurrentWMIClass = value;
-                lDescription.Text = m_Presenter.GetClassDescription(value);
+                lDescription.Text = WMIClassList.Instance.GetClassDescription(m_Presenter.Namespace, value);
                 lClassName.Text = value;
                 m_Presenter.EnumObjects(value);
                 m_Presenter.BuildContextMenu();
@@ -191,13 +191,13 @@ namespace LanExchange.WMI
                     lvInstances.FocusedItem = lvInstances.Items[0];
                     lvInstances.FocusedItem.Selected = true;
                     lvInstances_FocusedItemChanged(lvInstances, new EventArgs());
+                    lvInstances.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
                 }
             }
         }
 
         private void WMIForm_Load(object sender, EventArgs e)
         {
-            lvInstances.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             CurrentWMIClass = "Win32_OperatingSystem";
             ActiveControl = lvInstances;
         }
@@ -225,22 +225,38 @@ namespace LanExchange.WMI
                 CurrentWMIClass = menuItem.Text;
         }
 
+        private void mSetup_Click(object sender, EventArgs e)
+        {
+            using (var form = new WMISetupForm())
+            {
+                form.ShowDialog();
+            }
+        }
+
         public void UpdateClassesMenu()
         {
             menuClasses.Items.Clear();
+            int Count1 = WMIClassList.Instance.Classes.Count;
+            int Count2 = WMIClassList.Instance.ReadOnlyClasses.Count;
             foreach(string str in WMIClassList.Instance.Classes)
             {
                 ToolStripMenuItem MI = new ToolStripMenuItem { Text = str };
                 MI.Click += menuClasses_Click;
                 menuClasses.Items.Add(MI);
             }
-            //menuClasses.Items.Add(new ToolStripSeparator());
-            //foreach (string str in WMIClassList.Instance.ReadOnlyClasses)
-            //{
-            //    ToolStripMenuItem MI = new ToolStripMenuItem { Text = str };
-            //    MI.Click += menuClasses_Click;
-            //    menuClasses.Items.Add(MI);
-            //}
+            if (Count1 > 0 && Count2 > 0)
+                menuClasses.Items.Add(new ToolStripSeparator());
+            foreach (string str in WMIClassList.Instance.ReadOnlyClasses)
+            {
+                ToolStripMenuItem MI = new ToolStripMenuItem { Text = str };
+                MI.Click += menuClasses_Click;
+                menuClasses.Items.Add(MI);
+            }
+            if (Count1 + Count2 > 0)
+                menuClasses.Items.Add(new ToolStripSeparator());
+            ToolStripMenuItem mSetup = new ToolStripMenuItem { Text = "Настроить..."};
+            mSetup.Click += mSetup_Click;
+            menuClasses.Items.Add(mSetup);
         }
 
         private bool m_MenuUpdated;

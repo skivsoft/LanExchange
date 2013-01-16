@@ -9,6 +9,7 @@
 //   TODO * Manual creation of computer items
 //   TODO * WMI-commands execution with parameters
 //   TODO * Enum shares after ItemActivate
+//   TODO * Classes with IDisposable interface must be a components
 //   TODO * MSI installer
 //   TODO * Publishing and autoupdate from v1.0
 //
