@@ -123,9 +123,7 @@ namespace LanExchange.Model
                 }
             }
             if (bModified)
-            {
                 SaveResultsToCache();
-            }
             return bModified;
         }
 
@@ -207,9 +205,9 @@ namespace LanExchange.Model
         {
             var fileName = GetCacheFileName();
             logger.Info("SaveResultsToCache(\"{0}\")", fileName);
-            var Temp = new Dictionary<string, NetApi32.SERVER_INFO_101[]>();
             lock (m_Results)
             {
+                var Temp = new Dictionary<string, NetApi32.SERVER_INFO_101[]>();
                 foreach (var Pair in m_Results)
                 {
                     var TempList = new NetApi32.SERVER_INFO_101[Pair.Value.Count];
@@ -217,14 +215,14 @@ namespace LanExchange.Model
                         TempList[i] = Pair.Value[i].GetInfo();
                     Temp.Add(Pair.Key, TempList);
                 }
-            }
-            try
-            {
-                SerializeUtils.SerializeObjectToBinaryFile(fileName, Temp);
-            }
-            catch (Exception E)
-            {
-                logger.Error("SaveResultsToCache: {0}", E.Message);
+                try
+                {
+                    SerializeUtils.SerializeObjectToBinaryFile(fileName, Temp);
+                }
+                catch (Exception E)
+                {
+                    logger.Error("SaveResultsToCache: {0}", E.Message);
+                }
             }
         }
 
@@ -233,25 +231,27 @@ namespace LanExchange.Model
             var fileName = GetCacheFileName();
             if (!File.Exists(fileName)) return;
             logger.Info("LoadResultsFromCache(\"{0}\")", fileName);
-            Dictionary<string, NetApi32.SERVER_INFO_101[]> Temp = null;
-            try
-            {
-                Temp = (Dictionary<string, NetApi32.SERVER_INFO_101[]>)SerializeUtils.DeserializeObjectFromBinaryFile(fileName);
-            }
-            catch (Exception E)
-            {
-                logger.Error("LoadResultsFromCache: {0}", E.Message);
-            }
-            if (Temp == null) return;
             lock (m_Results)
             {
-                m_Results.Clear();
-                foreach (var Pair in Temp)
+                Dictionary<string, NetApi32.SERVER_INFO_101[]> Temp = null;
+                try
                 {
-                    var TempList = new List<ServerInfo>();
-                    Array.ForEach(Pair.Value, info => TempList.Add(new ServerInfo(info)));
-                    m_Results.Add(Pair.Key, TempList);
-                    TempList.Sort();
+                    Temp = (Dictionary<string, NetApi32.SERVER_INFO_101[]>)SerializeUtils.DeserializeObjectFromBinaryFile(fileName);
+                }
+                catch (Exception E)
+                {
+                    logger.Error("LoadResultsFromCache: {0}", E.Message);
+                }
+                if (Temp != null)
+                {
+                    m_Results.Clear();
+                    foreach (var Pair in Temp)
+                    {
+                        var TempList = new List<ServerInfo>();
+                        Array.ForEach(Pair.Value, info => TempList.Add(new ServerInfo(info)));
+                        m_Results.Add(Pair.Key, TempList);
+                        TempList.Sort();
+                    }
                 }
             }
         }

@@ -91,6 +91,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Model\IFilterModel.cs" />
+    <Compile Include="Strategy\NetShareEnumStrategy.cs" />
     <Compile Include="Strategy\WMIClassesEnumStrategy.cs" />
     <Compile Include="Strategy\NetServerEnumStrategy.cs" />
     <Compile Include="Strategy\SubscriptionAbstractStrategy.cs" />

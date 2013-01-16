@@ -18,14 +18,14 @@ namespace LanExchange.Strategy
         public override void Algorithm()
         {
             // get server list via OS api
-            NetApi32.SERVER_INFO_101[] List;
+            NetApi32.SERVER_INFO_101[] list;
             if (String.IsNullOrEmpty(Subject))
-                List = NetApi32Utils.GetDomainList();
+                list = NetApi32Utils.GetDomainsArray();
             else
-                List = NetApi32Utils.GetComputerList(Subject);
+                list = NetApi32Utils.GetComputersOfDomainArray(Subject);
             // convert array to IList<ServerInfo>
             m_Result = new List<ServerInfo>();
-            Array.ForEach(List, item => m_Result.Add(new ServerInfo(item)));
+            Array.ForEach(list, item => m_Result.Add(new ServerInfo(item)));
         }
 
         public IList<ServerInfo> Result
