@@ -42,7 +42,6 @@ namespace LanExchange.Utils
             using (var file = new StreamWriter(FileName))
             {
                 writer.Serialize(file, obj);
-                file.Close();
             }
         }
 

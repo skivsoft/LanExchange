@@ -57,15 +57,15 @@ namespace Tests
         {
             var View = new FilterView();
             var Presenter = View.GetPresenter();
-            Assert.AreEqual("", View.FilterText);
+            Assert.AreEqual("", View.GetFilterText());
             Assert.AreEqual(false, View.Visible);
-            View.FilterText = "test";
+            View.SetFilterText("test");
             Assert.AreEqual(true, View.Visible);
-            Assert.AreEqual("test", View.FilterText);
+            Assert.AreEqual("test", View.GetFilterText());
             var Model = new FilterModelMock();
             Model.FilterText = "hello";
             Presenter.SetModel(Model);
-            Assert.AreEqual("hello", View.FilterText);
+            Assert.AreEqual("hello", View.GetFilterText());
         }
     }
 }

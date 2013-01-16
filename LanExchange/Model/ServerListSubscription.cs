@@ -12,7 +12,8 @@ using LanExchange.Strategy;
 
 namespace LanExchange.Model
 {
-    public class ServerListSubscription : ISubscription
+    // TODO need Designer code for this class
+    public class ServerListSubscription : ISubscription, IDisposable
     {
         #region Static fields and methods
 
@@ -48,6 +49,11 @@ namespace LanExchange.Model
             m_RefreshTimer = new Timer();
             m_RefreshTimer.Tick += RefreshTimer_Tick;
             m_RefreshTimer.Enabled = false;
+        }
+
+        public void Dispose()
+        {
+            m_RefreshTimer.Dispose();
         }
 
         //public bool IsInstantUpdate
@@ -89,20 +95,15 @@ namespace LanExchange.Model
                     }
                 if (!subjectFound)
                 {
-                    var worker = CreateOneWorker();
                     var context = new BackgroundContext(new NetServerEnumStrategy(Pair.Key));
+                    var worker = new BackgroundWorkerEx();
+                    worker.DoWork += OneWorker_DoWork;
+                    worker.RunWorkerCompleted += OneWorker_RunWorkerCompleted;
                     BackgroundWorkers.Instance.Add(context, worker);
                     worker.RunWorkerAsync(context);
+                    //GC.KeepAlive(worker);
                 }
             }
-        }
-
-        private BackgroundWorkerEx CreateOneWorker()
-        {
-            var Result = new BackgroundWorkerEx();
-            Result.DoWork += OneWorker_DoWork;
-            Result.RunWorkerCompleted += OneWorker_RunWorkerCompleted;
-            return Result;
         }
 
         private bool SetResult(string domain, IList<ServerInfo> list)

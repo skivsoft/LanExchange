@@ -6,7 +6,7 @@ using System.ComponentModel;
 
 namespace LanExchange.Model
 {
-    public class BackgroundWorkers
+    public sealed class BackgroundWorkers : IDisposable
     {
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -15,9 +15,14 @@ namespace LanExchange.Model
 
         public event EventHandler CountChanged;
 
-        protected BackgroundWorkers()
+        public BackgroundWorkers()
         {
             m_Workers = new Dictionary<BackgroundContext, BackgroundWorkerEx>();
+        }
+
+        public void Dispose()
+        {
+            StopAllWorkers();
         }
 
         public static BackgroundWorkers Instance

@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Threading;
 using LanExchange.Windows;
+using System.Security.Permissions;
 
 namespace LanExchange.Utils
 {
@@ -50,6 +51,7 @@ namespace LanExchange.Utils
             return true;
         }
 
+        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         static public void Check()
         {
             // http://snipplr.com/view/19272/ - C#, single-instance-check using mutex
@@ -63,7 +65,8 @@ namespace LanExchange.Utils
             if (isOwnedHere) return; 
 
             Process me = Process.GetCurrentProcess();
-            foreach (Process process in Process.GetProcessesByName(me.ProcessName)) // Debug note: Set Enable the Visual Studio Hosting Process = false.
+            Process[] procList = Process.GetProcessesByName(me.ProcessName);
+            foreach (Process process in procList) // Debug note: Set Enable the Visual Studio Hosting Process = false.
             {
                 if (process.Id != me.Id) // If the ProcessName matches but the Id doesn't, it's another instance of mine.
                 {

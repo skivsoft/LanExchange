@@ -152,7 +152,7 @@ namespace LanExchange.Utils
 		#region UnmanagedCode
 		private const int MAX_PATH = 260;
 		
-		[DllImport("shell32")]
+		[DllImport("shell32", CharSet = CharSet.Unicode)]
 		private static extern IntPtr SHGetFileInfo (
 			string pszPath, 
 			int dwFileAttributes,

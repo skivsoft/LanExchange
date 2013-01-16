@@ -10,17 +10,19 @@ using System.Diagnostics;
 using System.Net;
 using NLog;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace LanExchange.Presenter
 {
     /// <summary>
     /// Presenter for Settings (model) and AboutForm (view).
     /// </summary>
-    public class AboutPresenter : IDisposable
+    public sealed class AboutPresenter : IDisposable
     {
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
         private readonly IAboutView m_View;
+        // TODO need re-implement workers, must use BackgroundWorkers singleton
         private readonly BackgroundWorker m_DoCheckVersion;
         private readonly BackgroundWorker m_DoUpdate;
 
@@ -225,10 +227,8 @@ namespace LanExchange.Presenter
                 m_View.ShowMessage("Обвновление успешно завершено.", Color.Gray);
                 if (m_NeedRestart)
                 {
-                    // закрываем окно
                     m_View.CancelView();
-                    // перезапуск приложения
-                    MainPresenter.Instance.MainView.Restart();
+                    Application.Restart();
                 }
             }
         }
@@ -255,7 +255,6 @@ namespace LanExchange.Presenter
                 }
                 else
                     Result = false;
-                FS.Close();
             }
             return Result;
         }

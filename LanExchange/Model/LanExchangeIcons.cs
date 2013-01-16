@@ -9,7 +9,7 @@ namespace LanExchange.Model
     /// Icons collection for LanExchange program.
     /// Lazy load pattern used.
     /// </summary>
-    public class LanExchangeIcons : IDisposable
+    public sealed class LanExchangeIcons : IDisposable
     {
         public const int CompDefault   = 0; // MyComputer icon
         public const int CompDisabled  = 1; // Disabled MyComputer icon

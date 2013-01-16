@@ -1,6 +1,6 @@
 ﻿// *****************************************************************************
 // RELEASE 1.1 MAJOR TODO LIST
-//   TODO * Autoupdate computer lists
+//   DONE * Autoupdate computer lists
 //   TODO * Sending items to another tab
 //   TODO * Updating menu lists after changing tab list (add, remove)
 //   DONE * Update counts in status list
