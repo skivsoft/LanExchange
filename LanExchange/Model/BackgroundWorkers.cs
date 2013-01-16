@@ -124,15 +124,15 @@ namespace LanExchange.Model
         //    }
         //}
 
-        public void RunWorkerAsync()
-        {
-            lock (m_Workers)
-            {
-                foreach (var Pair in m_Workers)
-                    if (!Pair.Value.IsBusy)
-                        Pair.Value.RunWorkerAsync(Pair.Key);
-            }
-        }
+        //public void RunWorkerAsync()
+        //{
+        //    lock (m_Workers)
+        //    {
+        //        foreach (var Pair in m_Workers)
+        //            if (!Pair.Value.IsBusy)
+        //                Pair.Value.RunWorkerAsync(Pair.Key);
+        //    }
+        //}
 
         //public void CancelAsync()
         //{
