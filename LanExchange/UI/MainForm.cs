@@ -119,7 +119,7 @@ namespace LanExchange.UI
             {
                 PanelView pv = Pages.GetActivePanelView();
                 if (pv != null && pv.Filter.Visible)
-                    pv.Filter.FilterText = "";
+                    pv.Filter.SetFilterText(String.Empty);
                 else
                     Instance.Hide();
                 e.Handled = true;

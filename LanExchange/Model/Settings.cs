@@ -235,10 +235,18 @@ namespace LanExchange.Model
 
         public int MainFormX { get; set; }
         public int MainFormWidth { get; set; }
+
         // ReSharper disable UnusedAutoPropertyAccessor.Global
         public string UpdateURL { get; set; }
+        // ReSharper restore UnusedAutoPropertyAccessor.Global
+
+        // ReSharper disable UnusedAutoPropertyAccessor.Global
         public string WebSiteURL { get; set; }
+        // ReSharper restore UnusedAutoPropertyAccessor.Global
+
+        // ReSharper disable UnusedAutoPropertyAccessor.Global
         public string EmailAddress { get; set; }
         // ReSharper restore UnusedAutoPropertyAccessor.Global
+
     }
 }

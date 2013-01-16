@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using LanExchange.View;
 using System.Windows.Forms;
 using LanExchange.Model;
@@ -16,12 +17,9 @@ namespace LanExchange.Presenter
             m_View = view;
         }
 
-        public string FilterText 
+        public string FilterText
         {
-            get
-            {
-                return m_Filter;
-            }
+            get { return m_Filter; }
             set
             {
                 m_Filter = value;
@@ -54,7 +52,7 @@ namespace LanExchange.Presenter
             m_Model = null;
             if (value != null)
             {
-                m_View.FilterText = value.FilterText;
+                m_View.SetFilterText(value.FilterText);
                 m_Model = value;
                 m_Model.ApplyFilter();
                 m_View.SetIsFound(m_Model.FilterCount > 0);
@@ -70,7 +68,7 @@ namespace LanExchange.Presenter
             {
                 m_View.Visible = true;
                 m_View.FocusMe();
-                m_View.SendKeysCorrect(e.KeyChar.ToString());
+                m_View.SendKeysCorrect(e.KeyChar.ToString(CultureInfo.InvariantCulture));
                 e.Handled = true;
             }
         }

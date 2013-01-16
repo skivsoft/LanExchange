@@ -52,8 +52,8 @@ namespace LanExchange.Model
         {
             get
             {
-                if (IsLogged)
-                    return LanExchangeIcons.CompGreen;
+                //if (IsLogged)
+                //    return LanExchangeIcons.CompGreen;
                 return IsPingable ? LanExchangeIcons.CompDefault : LanExchangeIcons.CompDisabled;
             }
         }
@@ -65,7 +65,7 @@ namespace LanExchange.Model
 
         public bool IsPingable { get; set; }
 
-        private bool IsLogged { get; set; }
+        //private bool IsLogged { get; set; }
 
         //private IPEndPoint EndPoint { get; set; }
 

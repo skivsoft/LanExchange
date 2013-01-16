@@ -5,7 +5,6 @@ namespace LanExchange.View
     public interface IFilterView
     {
         // properties
-        string FilterText { get; set; }
         bool Visible { get; set; }
         // methods
         FilterPresenter GetPresenter();
@@ -13,5 +12,6 @@ namespace LanExchange.View
         void FocusMe();
         void SendKeysCorrect(string keys);
         void DoFilterCountChanged();
+        void SetFilterText(string value);
     }
 }
