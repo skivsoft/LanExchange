@@ -101,5 +101,15 @@ namespace LanExchange.Model
                 return m_Instance.m_LargeImageList;
             }
         }
+
+        public static Icon GetSmallIcon(int index)
+        {
+            Icon result;
+            using (Bitmap bitmap = new Bitmap(SmallImageList.Images[index]))
+            {
+                result = Icon.FromHandle(bitmap.GetHicon());
+            }
+            return result;
+        }
     }
 }

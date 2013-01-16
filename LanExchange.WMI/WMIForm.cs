@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Management;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 
@@ -11,7 +10,6 @@ namespace LanExchange.WMI
     {
         private readonly WMIPresenter m_Presenter;
         private string m_CurrentWMIClass;
-        private readonly List<string> m_Classes;
         private readonly IWMIComputer m_Comp;
 
         public event EventHandler FocusedItemChanged;
@@ -24,7 +22,6 @@ namespace LanExchange.WMI
             mi.Invoke(lvInstances, new object[] { ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true });
 
             m_Presenter = new WMIPresenter(comp, this);
-            m_Classes = new List<string>();
             if (comp != null)
             {
                 if (String.IsNullOrEmpty(comp.Comment))
@@ -201,7 +198,6 @@ namespace LanExchange.WMI
         private void WMIForm_Load(object sender, EventArgs e)
         {
             lvInstances.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-            UpdateClassesMenu();
             CurrentWMIClass = "Win32_OperatingSystem";
             ActiveControl = lvInstances;
         }
@@ -222,16 +218,6 @@ namespace LanExchange.WMI
                     dynObj.AddProperty(prop.Name, (T)prop.Value, description, category, isReadOnly);
         }
 
-        public void ClearClasses()
-        {
-            m_Classes.Clear();
-        }
-
-        public void AddClass(string className)
-        {
-            m_Classes.Add(className);
-        }
-
         public void menuClasses_Click(object sender, EventArgs e)
         {
             var menuItem = sender as ToolStripMenuItem;
@@ -241,20 +227,43 @@ namespace LanExchange.WMI
 
         public void UpdateClassesMenu()
         {
-            m_Classes.Sort();
             menuClasses.Items.Clear();
-            m_Classes.ForEach(str =>
+            foreach(string str in WMIClassList.Instance.Classes)
             {
                 ToolStripMenuItem MI = new ToolStripMenuItem { Text = str };
                 MI.Click += menuClasses_Click;
                 menuClasses.Items.Add(MI);
-            });
+            }
+            //menuClasses.Items.Add(new ToolStripSeparator());
+            //foreach (string str in WMIClassList.Instance.ReadOnlyClasses)
+            //{
+            //    ToolStripMenuItem MI = new ToolStripMenuItem { Text = str };
+            //    MI.Click += menuClasses_Click;
+            //    menuClasses.Items.Add(MI);
+            //}
         }
+
+        private bool m_MenuUpdated;
 
         private void menuClasses_Opening(object sender, CancelEventArgs e)
         {
-            foreach (ToolStripMenuItem MI in menuClasses.Items)
-                MI.Checked = MI.Text.Equals(CurrentWMIClass);
+            if (!WMIClassList.Instance.Loaded)
+            {
+                e.Cancel = true;
+                return;
+            }
+            if (!m_MenuUpdated)
+            {
+                UpdateClassesMenu();
+                ShowStat(WMIClassList.Instance.ClassCount, WMIClassList.Instance.PropCount, WMIClassList.Instance.MethodCount);
+                m_MenuUpdated = true;
+            }
+            foreach (var MI in menuClasses.Items)
+            {
+                var mi = MI as ToolStripMenuItem;
+                if (mi != null)
+                    mi.Checked = mi.Text.Equals(CurrentWMIClass);
+            }
         }
 
         private void PropGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
@@ -319,7 +328,6 @@ namespace LanExchange.WMI
                 e.Handled = true;
             }
         }
-
     }
 
 }

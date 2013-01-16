@@ -40,9 +40,11 @@
             this.menuClasses = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.lDescription = new System.Windows.Forms.Label();
             this.lClassName = new System.Windows.Forms.Label();
+            this.wMIItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Status.SuspendLayout();
             this.pLeft.SuspendLayout();
             this.pTop.SuspendLayout();
+            this.menuClasses.SuspendLayout();
             this.SuspendLayout();
             // 
             // Status
@@ -129,8 +131,10 @@
             // 
             // menuClasses
             // 
+            this.menuClasses.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.wMIItemToolStripMenuItem});
             this.menuClasses.Name = "menuClasses";
-            this.menuClasses.Size = new System.Drawing.Size(61, 4);
+            this.menuClasses.Size = new System.Drawing.Size(124, 26);
             this.menuClasses.Opening += new System.ComponentModel.CancelEventHandler(this.menuClasses_Opening);
             // 
             // lDescription
@@ -154,6 +158,12 @@
             this.lClassName.TabIndex = 0;
             this.lClassName.Text = "    ";
             // 
+            // wMIItemToolStripMenuItem
+            // 
+            this.wMIItemToolStripMenuItem.Name = "wMIItemToolStripMenuItem";
+            this.wMIItemToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.wMIItemToolStripMenuItem.Text = "WMIItem";
+            // 
             // WMIForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -166,13 +176,13 @@
             this.Name = "WMIForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Инструментарий управления";
             this.Load += new System.EventHandler(this.WMIForm_Load);
             this.Status.ResumeLayout(false);
             this.Status.PerformLayout();
             this.pLeft.ResumeLayout(false);
             this.pTop.ResumeLayout(false);
             this.pTop.PerformLayout();
+            this.menuClasses.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -191,6 +201,7 @@
         private System.Windows.Forms.Label lDescription;
         private System.Windows.Forms.Label lClassName;
         private System.Windows.Forms.ContextMenuStrip menuClasses;
+        private System.Windows.Forms.ToolStripMenuItem wMIItemToolStripMenuItem;
 
     }
 }

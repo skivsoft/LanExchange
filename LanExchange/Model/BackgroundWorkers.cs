@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NLog;
 using LanExchange.Strategy;
+using System.ComponentModel;
 
 namespace LanExchange.Model
 {
@@ -71,8 +72,12 @@ namespace LanExchange.Model
             
         }
 
-        public void Add(BackgroundContext context, BackgroundWorkerEx worker)
+        internal void Add(BackgroundContext context, BackgroundWorkerEx worker)
         {
+            if (context == null)
+                throw new ArgumentNullException("context");
+            if (worker == null)
+                throw new ArgumentNullException("worker");
             lock (m_Workers)
             {
                 logger.Info("Add worker for {0}", context.Strategy);
@@ -80,6 +85,24 @@ namespace LanExchange.Model
                 m_Workers.Add(context, worker);
                 DoCountChanged();
             }
+        }
+
+        private void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var context = e.Argument as BackgroundContext;
+            if (context == null)
+                e.Cancel = true;
+            else
+                context.ExecuteOperation();
+        }
+
+        internal void Add(BackgroundContext backgroundContext)
+        {
+            var worker = new BackgroundWorkerEx();
+            worker.DoWork += worker_DoWork;
+            //worker.RunWorkerCompleted += worker_RunWorkerCompleted;
+            Add(backgroundContext, worker);
+            worker.RunWorkerAsync(backgroundContext);
         }
 
         //public void ClearNotBusy()
