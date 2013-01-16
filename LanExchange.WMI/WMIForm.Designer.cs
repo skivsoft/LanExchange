@@ -88,6 +88,7 @@
             this.lvInstances.UseCompatibleStateImageBehavior = false;
             this.lvInstances.View = System.Windows.Forms.View.Details;
             this.lvInstances.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lvComps_ItemSelectionChanged);
+            this.lvInstances.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvInstances_KeyDown);
             // 
             // menuCommands
             // 
@@ -161,7 +162,9 @@
             this.Controls.Add(this.pLeft);
             this.Controls.Add(this.Status);
             this.Controls.Add(this.pTop);
+            this.MinimizeBox = false;
             this.Name = "WMIForm";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Инструментарий управления";
             this.Load += new System.EventHandler(this.WMIForm_Load);

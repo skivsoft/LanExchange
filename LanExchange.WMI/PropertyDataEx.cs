@@ -10,13 +10,13 @@ namespace LanExchange.WMI
         RETURN
     }
 
-    internal class WMIPropertyData : IComparable<WMIPropertyData>
+    internal class PropertyDataEx : IComparable<PropertyDataEx>
     {
         private readonly PropertyData m_Data;
         private readonly WMIParamType m_ParamType;
         private readonly int m_ID;
 
-        public WMIPropertyData(PropertyData data)
+        public PropertyDataEx(PropertyData data)
         {
             if (data == null)
                 throw new ArgumentNullException();
@@ -65,7 +65,7 @@ namespace LanExchange.WMI
             get { return m_Data.Value; }   
         }
 
-        public int CompareTo(WMIPropertyData other)
+        public int CompareTo(PropertyDataEx other)
         {
             return ID - other.ID;
         }

@@ -273,12 +273,25 @@ namespace LanExchange.UI
         {
             ComputerPanelItem comp = m_Presenter.GetFocusedComputer();
             if (comp == null) return;
+            // create wmi form
             WMIForm form = new WMIForm(comp);
+            // try connect to computer
+            if (!form.GetPresenter().ConnectToComputer())
+            {
+                form.Dispose();
+                return;
+            }
+            // load avaible wmi classes list if needed
+            if (!WMIClassList.Instance.Loaded)
+                WMIClassList.Instance.EnumClasses();
+            // set MyComputer icon to form
             using (Bitmap bitmap = new Bitmap(LanExchangeIcons.SmallImageList.Images[LanExchangeIcons.CompDefault]))
             {
                 form.Icon = Icon.FromHandle(bitmap.GetHicon());
             }
-            form.Show();
+            // display wmi form
+            form.ShowDialog();
+            form.Dispose();
         }
 
         public void mCompOpen_Click(object sender, EventArgs e)
