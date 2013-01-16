@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Forms;
-using LanExchange.View;
 using LanExchange.Model;
 using LanExchange.Presenter;
 using NLog;
@@ -10,10 +9,11 @@ using System.Reflection;
 using System.ComponentModel;
 using System.Text;
 using LanExchange.Windows;
+using System.Security.Permissions;
 
 namespace LanExchange.UI
 {
-    public partial class MainForm : RunMinimizedForm, IMainView
+    public partial class MainForm : RunMinimizedForm
     {
         /// <summary>
         /// Logger object.
@@ -21,13 +21,11 @@ namespace LanExchange.UI
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
-        /// Presenter for MainForm.
-        /// </summary>
-        private static MainPresenter m_Presenter;
-        /// <summary>
         /// ManiForm single instance.
         /// </summary>
         public static MainForm Instance;
+
+        public PagesPresenter MainPages { get; set; }
 
         public MainForm()
         {
@@ -37,11 +35,10 @@ namespace LanExchange.UI
             // load settings from cfg-file
             Settings.LoadSettings();
             SetRunMinimized(Settings.Instance.RunMinimized);
-            // init MainForm presenter
-            m_Presenter = new MainPresenter(this);
-            m_Presenter.Pages = Pages.GetPresenter();
-            m_Presenter.Pages.PanelViewFocusedItemChanged += Pages_PanelViewFocusedItemChanged;
-            m_Presenter.Pages.GetModel().LoadSettings();
+            // init Pages presenter
+            MainPages = Pages.GetPresenter();
+            MainPages.PanelViewFocusedItemChanged += Pages_PanelViewFocusedItemChanged;
+            MainPages.GetModel().LoadSettings();
             // here we call event for update items count in statusline
             //Pages.UpdateSelectedTab();
             //mSendToNewTab.Click += new EventHandler(TabController.mSendToNewTab_Click);
@@ -128,7 +125,7 @@ namespace LanExchange.UI
             // Ctrl+R - restart application
             if (e.Control && e.KeyCode == Keys.R)
             {
-                Restart();
+                Application.Restart();
                 e.Handled = true;
             }
             // Ctrl+Alt+S - show subscibers in debug mode
@@ -248,11 +245,6 @@ namespace LanExchange.UI
         //    string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
         //}
         
-        public void Restart()
-        {
-            Application.Restart();
-        }
-
         private void lItemsCount_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -368,6 +360,7 @@ namespace LanExchange.UI
             ApplicationExit();
         }
 
+        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         protected override void WndProc(ref Message m)
         {
             switch (m.Msg)

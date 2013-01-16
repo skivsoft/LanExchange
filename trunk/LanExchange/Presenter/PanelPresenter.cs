@@ -98,9 +98,8 @@ namespace LanExchange.Presenter
         public void UpdateItemsAndStatus()
         {
             if (m_Objects == null) return;
-            if (MainPresenter.Instance == null) return;
             // refresh only for current page
-            PagesModel Model = MainPresenter.Instance.Pages.GetModel();
+            PagesModel Model = MainForm.Instance.MainPages.GetModel();
             PanelItemList CurrentItemList = Model.GetItem(Model.SelectedIndex);
             if (CurrentItemList == null) return;
             if (!m_Objects.Equals(CurrentItemList)) return;

@@ -84,6 +84,11 @@ namespace LanExchange.UI
             eFilter.Text = value;
         }
 
+        public string GetFilterText()
+        {
+            return eFilter.Text;
+        }
+
         public void SetIsFound(bool value)
         {
             eFilter.BackColor = value ? Color.White : Color.FromArgb(255, 102, 102); // Firefox Color

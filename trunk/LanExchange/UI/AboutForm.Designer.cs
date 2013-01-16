@@ -12,6 +12,7 @@
         /// </summary>
         protected override void Dispose(bool disposing)
         {
+            m_Presenter.Dispose();
             if (disposing && (components != null))
             {
                 components.Dispose();

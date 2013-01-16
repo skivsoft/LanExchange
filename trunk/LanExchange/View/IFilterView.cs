@@ -13,5 +13,6 @@ namespace LanExchange.View
         void SendKeysCorrect(string keys);
         void DoFilterCountChanged();
         void SetFilterText(string value);
+        string GetFilterText();
     }
 }
