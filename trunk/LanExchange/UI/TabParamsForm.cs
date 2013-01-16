@@ -14,6 +14,8 @@ namespace LanExchange.UI
             InitializeComponent();
             // subscribe Form to domain list (subject = "")
             ServerListSubscription.Instance.SubscribeToSubject(this, string.Empty);
+            // unsubscribe Form from any subjects when Closed event will be fired
+            Closed += (sender, args) => ServerListSubscription.Instance.UnSubscribe(this);
         }
 
         public void DataChanged(ISubscription sender, string subject)
@@ -101,12 +103,6 @@ namespace LanExchange.UI
         private void rbDontScan_CheckedChanged(object sender, EventArgs e)
         {
             UpdateBackColor();
-        }
-
-        private void TabParamsForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            // unsubscribe Form from any subjects
-            ServerListSubscription.Instance.UnSubscribe(this);
         }
     }
 }

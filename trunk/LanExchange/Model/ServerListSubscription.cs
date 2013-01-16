@@ -43,7 +43,7 @@ namespace LanExchange.Model
             m_Subjects = new Dictionary<string, IList<ISubscriber>>();
             m_Results = new Dictionary<string, IList<ServerInfo>>();
             // load cached results
-            LoadResultFromCache();
+            LoadResultsFromCache();
             // timer
             m_RefreshTimer = new Timer();
             m_RefreshTimer.Tick += RefreshTimer_Tick;
@@ -73,30 +73,28 @@ namespace LanExchange.Model
         private void RefreshTimer_Tick(object sender, EventArgs e)
         {
             logger.Info("RefreshTimer.Tick() executed. Next tick in {0} sec.", m_RefreshInterval/1000);
-            if (!BackgroundWorkers.Instance.IsBusy)
+            // prepare workers to launch
+            foreach (var Pair in m_Subjects)
             {
-                // prepare workers to launch
-                foreach (var Pair in m_Subjects)
-                {
-                    bool subjectFound = false;
-                    foreach(BackgroundContext ctx in BackgroundWorkers.Instance.EnumContexts())
-                        if (ctx.Strategy is SubscriptionAbstractStrategy)
+                bool subjectFound = false;
+                foreach(BackgroundContext ctx in BackgroundWorkers.Instance.EnumContexts())
+                    if (ctx.Strategy is SubscriptionAbstractStrategy)
+                    {
+                        var sub = ctx.Strategy as SubscriptionAbstractStrategy;
+                        if (sub.Subject.Equals(Pair.Key))
                         {
-                            var sub = ctx.Strategy as SubscriptionAbstractStrategy;
-                            if (sub.Subject.Equals(Pair.Key))
-                            {
-                                subjectFound = true;
-                                break;
-                            }
+                            subjectFound = true;
+                            break;
                         }
-                    if (!subjectFound)
-                        BackgroundWorkers.Instance.Add(new BackgroundContext(new NetServerEnumStrategy(Pair.Key)), CreateOneWorker());
+                    }
+                if (!subjectFound)
+                {
+                    var worker = CreateOneWorker();
+                    var context = new BackgroundContext(new NetServerEnumStrategy(Pair.Key));
+                    BackgroundWorkers.Instance.Add(context, worker);
+                    worker.RunWorkerAsync(context);
                 }
-                // launch!
-                BackgroundWorkers.Instance.RunWorkerAsync();
             }
-            else
-                logger.Info("Tick: {0} of {1} worker(s) busy, no action", BackgroundWorkers.Instance.BusyCount, BackgroundWorkers.Instance.Count);
         }
 
         private BackgroundWorkerEx CreateOneWorker()
@@ -126,7 +124,7 @@ namespace LanExchange.Model
             }
             if (bModified)
             {
-                SaveResultToCache();
+                SaveResultsToCache();
             }
             return bModified;
         }
@@ -205,48 +203,56 @@ namespace LanExchange.Model
         }
 
 
-        private void SaveResultToCache()
+        private void SaveResultsToCache()
         {
-            logger.Info("SaveResultToCache()");
+            var fileName = GetCacheFileName();
+            logger.Info("SaveResultsToCache(\"{0}\")", fileName);
             var Temp = new Dictionary<string, NetApi32.SERVER_INFO_101[]>();
-            foreach (var Pair in m_Results)
+            lock (m_Results)
             {
-                var TempList = new NetApi32.SERVER_INFO_101[Pair.Value.Count];
-                for (int i = 0; i < Pair.Value.Count; i++)
-                    TempList[i] = Pair.Value[i].GetInfo();
-                Temp.Add(Pair.Key, TempList);
+                foreach (var Pair in m_Results)
+                {
+                    var TempList = new NetApi32.SERVER_INFO_101[Pair.Value.Count];
+                    for (int i = 0; i < Pair.Value.Count; i++)
+                        TempList[i] = Pair.Value[i].GetInfo();
+                    Temp.Add(Pair.Key, TempList);
+                }
             }
             try
             {
-                SerializeUtils.SerializeObjectToBinaryFile(GetCacheFileName(), Temp);
+                SerializeUtils.SerializeObjectToBinaryFile(fileName, Temp);
             }
             catch (Exception E)
             {
-                logger.Error("SaveResultToCache: {0}", E.Message);
+                logger.Error("SaveResultsToCache: {0}", E.Message);
             }
         }
 
-        private void LoadResultFromCache()
+        private void LoadResultsFromCache()
         {
-            logger.Info("LoadResultFromCache()");
+            var fileName = GetCacheFileName();
+            if (!File.Exists(fileName)) return;
+            logger.Info("LoadResultsFromCache(\"{0}\")", fileName);
+            Dictionary<string, NetApi32.SERVER_INFO_101[]> Temp = null;
             try
             {
-                var Temp = (Dictionary<string, NetApi32.SERVER_INFO_101[]>)SerializeUtils.DeserializeObjectFromBinaryFile(GetCacheFileName());
-                lock (m_Results)
-                {
-                    m_Results.Clear();
-                    foreach (var Pair in Temp)
-                    {
-                        var TempList = new List<ServerInfo>();
-                        Array.ForEach(Pair.Value, info => TempList.Add(new ServerInfo(info)));
-                        m_Results.Add(Pair.Key, TempList);
-                        TempList.Sort();
-                    }
-                }
+                Temp = (Dictionary<string, NetApi32.SERVER_INFO_101[]>)SerializeUtils.DeserializeObjectFromBinaryFile(fileName);
             }
             catch (Exception E)
             {
-                logger.Error("LoadResultFromCache: {0}", E.Message);
+                logger.Error("LoadResultsFromCache: {0}", E.Message);
+            }
+            if (Temp == null) return;
+            lock (m_Results)
+            {
+                m_Results.Clear();
+                foreach (var Pair in Temp)
+                {
+                    var TempList = new List<ServerInfo>();
+                    Array.ForEach(Pair.Value, info => TempList.Add(new ServerInfo(info)));
+                    m_Results.Add(Pair.Key, TempList);
+                    TempList.Sort();
+                }
             }
         }
 
@@ -284,7 +290,9 @@ namespace LanExchange.Model
         public void SubscribeToSubject(ISubscriber sender, string subject)
         {
             if (sender == null)
-                return;
+                throw new ArgumentNullException("sender");
+            if (subject == null)
+                throw new ArgumentNullException("subject");
             bool Modified = false;
             if (m_Subjects.ContainsKey(subject))
             {
@@ -300,6 +308,7 @@ namespace LanExchange.Model
                 var List = new List<ISubscriber>();
                 List.Add(sender);
                 m_Subjects.Add(subject, List);
+                m_InstantUpdate = true;
                 Modified = true;
             }
             if (Modified)
@@ -316,7 +325,7 @@ namespace LanExchange.Model
         public void UnSubscribe(ISubscriber sender)
         {
             if (sender == null)
-                return;
+                throw new ArgumentNullException("sender");
             bool Modified = false;
             foreach (var Pair in m_Subjects)
             {
