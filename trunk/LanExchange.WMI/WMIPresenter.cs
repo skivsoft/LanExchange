@@ -17,15 +17,11 @@ namespace LanExchange.WMI
 
         private readonly IWMIView m_View;
         private ManagementClass m_Class;
-        private readonly List<string> m_ExcludeClasses;
 
         public WMIPresenter(IWMIComputer comp, IWMIView view)
         {
             m_Comp = comp;
             m_View = view;
-            m_ExcludeClasses = new List<string>();
-            m_ExcludeClasses.Add("Win32_Registry");
-            m_ExcludeClasses.Add("Win32_NTEventlogFile");
         }
 
         private string MakeConnectionString()
@@ -99,70 +95,18 @@ namespace LanExchange.WMI
 
         }
 
-        public bool EnumDynamicClasses()
-        {
-            ConnectToComputer();
+        //public bool EnumDynamicClasses()
+        //{
+        //    ConnectToComputer();
 
-            int ClassCount = 0;
-            int PropCount = 0;
-            int MethodCount = 0;
-            m_View.ClearClasses();
-            bool Result = true;
-            var query = new ObjectQuery("select * from meta_class");
-            using (var searcher = new ManagementObjectSearcher(m_Namespace, query))
-            {
-                try
-                {
-                    foreach (ManagementClass wmiClass in searcher.Get())
-                    {
-                        // skip WMI events
-                        if (wmiClass.Derivation.Contains("__Event"))
-                            continue;
-                        // skip classes in exclude list
-                        string ClassName = wmiClass["__CLASS"].ToString();
-                        if (m_ExcludeClasses.Contains(ClassName))
-                            continue;
-                        bool IsDynamic = false;
-                        bool IsAssociation = false;
-                        //bool IsAggregation = false;
-                        bool IsSupportsUpdate = false;
-                        bool IsSupportsCreate = false;
-                        bool IsSupportsDelete = false;
-                        foreach (var qd in wmiClass.Qualifiers)
-                        {
-                            //if (qd.Name.Equals("Aggregation")) IsAggregation = true;
-                            if (qd.Name.Equals("Association")) IsAssociation = true;
-                            if (qd.Name.Equals("dynamic")) IsDynamic = true;
-                            if (qd.Name.Equals("SupportsUpdate")) IsSupportsUpdate = true;
-                            if (qd.Name.Equals("SupportsCreate")) IsSupportsCreate = true;
-                            if (qd.Name.Equals("SupportsDelete")) IsSupportsDelete = true;
-                        }
-                        if (!IsAssociation && IsDynamic &&(IsSupportsUpdate || IsSupportsCreate || IsSupportsDelete))
-                        {
-                            m_View.AddClass(ClassName);
-                            ClassCount++;
-                            PropCount += wmiClass.Properties.Count;
-                            // count implemented methods
-                            /*
-                            foreach (MethodData md in wmiClass.Methods)
-                                foreach (var qd in md.Qualifiers)
-                                    if (qd.Name.Equals("Implemented"))
-                                    {
-                                        MethodCount++;
-                                        break;
-                                    }
-                             */
-                        }
-                    }
-                }
-                catch
-                {
-                    Result = false;
-                }
-            }
-            m_View.ShowStat(ClassCount, PropCount, MethodCount);
-            return Result;
-        }
+        //    int ClassCount = 0;
+        //    int PropCount = 0;
+        //    int MethodCount = 0;
+        //    m_View.ClearClasses();
+        //    bool Result = true;
+        //    m_View.ShowStat(ClassCount, PropCount, MethodCount);
+        //    return Result;
+        //}
 
         public ManagementClass WMIClass 
         {

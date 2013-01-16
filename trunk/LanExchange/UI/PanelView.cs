@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using LanExchange.Strategy;
 using LanExchange.View;
 using LanExchange.Presenter;
 using NLog;
@@ -16,12 +17,13 @@ namespace LanExchange.UI
     {
         #region Class declarations and constructor
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
+        private readonly static FormPlacement m_WMIPlacement = new FormPlacement();
 
         private readonly PanelPresenter m_Presenter;
         private readonly ListViewItemCache m_Cache;
 
         public event EventHandler FocusedItemChanged;
-        
+
         public PanelView()
         {
             InitializeComponent();
@@ -281,17 +283,24 @@ namespace LanExchange.UI
                 form.Dispose();
                 return;
             }
-            // load avaible wmi classes list if needed
+            // asynchronous load avaible wmi classes list, if needed
             if (!WMIClassList.Instance.Loaded)
-                WMIClassList.Instance.EnumClasses();
-            // set MyComputer icon to form
-            using (Bitmap bitmap = new Bitmap(LanExchangeIcons.SmallImageList.Images[LanExchangeIcons.CompDefault]))
             {
-                form.Icon = Icon.FromHandle(bitmap.GetHicon());
+                BackgroundWorkers.Instance.Add(new BackgroundContext(new WMIClassesEnumStrategy()));
             }
+            // set MyComputer icon to form
+            form.Icon = LanExchangeIcons.GetSmallIcon(LanExchangeIcons.CompDefault);
             // display wmi form
-            form.ShowDialog();
-            form.Dispose();
+            m_WMIPlacement.AttachToForm(form);
+            try
+            {
+                form.ShowDialog();
+            }
+            finally
+            {
+                m_WMIPlacement.DetachFromForm(form);
+                form.Dispose();
+            }
         }
 
         public void mCompOpen_Click(object sender, EventArgs e)

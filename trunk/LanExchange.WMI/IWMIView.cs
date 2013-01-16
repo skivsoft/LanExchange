@@ -7,7 +7,5 @@ namespace LanExchange.WMI
         ListView LV { get; }
         ContextMenuStrip MENU { get; }
         void ShowStat(int classCount, int propCount, int methodCount);
-        void ClearClasses();
-        void AddClass(string className);
     }
 }
