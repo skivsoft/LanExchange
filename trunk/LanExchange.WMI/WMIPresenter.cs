@@ -39,7 +39,7 @@ namespace LanExchange.WMI
             return String.Format(@"\\{0}\{1}", m_Comp.Name, WMISettings.DefaultNamespace);
         }
 
-        private void ShowBrandConnectionError(Exception ex)
+        private void ShowFirewallConnectionError()
         {
             MessageBox.Show(
                 String.Format("Не удалось подключиться к компьютеру \\\\{0}.\nВозможно удалённое подключение было заблокировано брэнмауэром.", m_Comp.Name),
@@ -62,7 +62,6 @@ namespace LanExchange.WMI
             string connectionString = MakeConnectionString();
             ConnectionOptions options = null;
             bool autoLogon = false;
-            bool failAfterAutoLogon = false;
 
             TryAgainWithPassword:
             try
@@ -79,16 +78,16 @@ namespace LanExchange.WMI
             }
             catch (UnauthorizedAccessException ex)
             {
-                if (options == null || (autoLogon && !failAfterAutoLogon))
+                if (options == null || autoLogon)
                     using (var form = new WMIAuthForm())
                     {
                         if (autoLogon)
-                            failAfterAutoLogon = true;
+                            WMIAuthForm.ClearSavedPassword();
 
                         form.SetComputerName(m_Comp.Name);
                         autoLogon = form.AutoLogon();
                         bool ok;
-                        if (autoLogon && !failAfterAutoLogon)
+                        if (autoLogon)
                             ok = true;
                         else
                             ok = (form.ShowDialog() == DialogResult.OK);
@@ -109,7 +108,7 @@ namespace LanExchange.WMI
             catch (COMException ex)
             {
                 if ((uint)ex.ErrorCode == 0x800706BA)
-                    ShowBrandConnectionError(ex);
+                    ShowFirewallConnectionError();
                 else
                     ShowCommonConnectionError(ex);
             }
@@ -146,30 +145,30 @@ namespace LanExchange.WMI
             {
                 m_View.LV.Columns.Add("Name");
                 m_View.LV.Columns.Add("Caption");
-                foreach (var Prop in m_Class.Properties)
+                foreach (var prop in m_Class.Properties)
                 {
-                    if (Prop.Name.Equals("Name")) continue;
-                    if (Prop.Name.Equals("Caption")) continue;
-                    if (Prop.Name.Equals("Description")) continue;
-                    if (Prop.IsLocal) continue;
+                    if (prop.Name.Equals("Name")) continue;
+                    if (prop.Name.Equals("Caption")) continue;
+                    if (prop.Name.Equals("Description")) continue;
+                    if (prop.IsLocal) continue;
                     bool isCimKey = false;
-                    foreach (var qd in Prop.Qualifiers)
+                    foreach (var qd in prop.Qualifiers)
                         if (qd.Name.Equals("CIM_Key"))
                         {
                             isCimKey = true;
                             break;
                         }
-                    if (isCimKey || Prop.IsArray || !Prop.Type.Equals(CimType.String)
+                    if (isCimKey || prop.IsArray || !prop.Type.Equals(CimType.String)
                         //|| Prop.Type.Equals(CimType.Boolean) || Prop.Type.Equals(CimType.DateTime)
                         )
                         continue;
-                    m_View.LV.Columns.Add(Prop.Name);
+                    m_View.LV.Columns.Add(prop.Name);
                 }
                 bCheckError = false;
             }
-            catch (Exception E)
+            catch (Exception ex)
             {
-                logger.Error("WMI: {0}", E.Message);
+                logger.Error("WMI: {0}", ex.Message);
             }
             if (bCheckError) return;
 
@@ -181,37 +180,41 @@ namespace LanExchange.WMI
                     foreach (ManagementObject wmiObject in searcher.Get())
                     {
                         if (wmiObject == null) continue;
-                        ListViewItem LVI = new ListViewItem { Tag = wmiObject };
-                        int Index = 0;
-                        foreach (ColumnHeader Header in m_View.LV.Columns)
+                        var lvi = new ListViewItem {Tag = wmiObject};
+                        int index = 0;
+                        foreach (ColumnHeader header in m_View.LV.Columns)
                         {
-                            PropertyData Prop = wmiObject.Properties[Header.Text];
+                            PropertyData prop = wmiObject.Properties[header.Text];
 
-                            string Value = Prop.Value == null ? "null" : Prop.Value.ToString();
-                            if (Prop.Name.Equals("Name"))
+                            string value = prop.Value == null ? "null" : prop.Value.ToString();
+                            if (prop.Name.Equals("Name"))
                             {
-                                string[] A = Value.Split('|');
-                                if (A.Length > 0)
-                                    Value = A[0];
+                                string[] sList = value.Split('|');
+                                if (sList.Length > 0)
+                                    value = sList[0];
                             }
-                            if (Index == 0)
-                                LVI.Text = Value;
+                            if (index == 0)
+                                lvi.Text = value;
                             else
-                                LVI.SubItems.Add(Value);
-                            Index++;
+                                lvi.SubItems.Add(value);
+                            index++;
                         }
-                        m_View.LV.Items.Add(LVI);
+                        m_View.LV.Items.Add(lvi);
                     }
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    logger.Error("WMI: {0}", ex.Message);
+                }
+
             }
         }
 
         public void Method_Click(object sender, EventArgs e)
         {
-            ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
+            var menuItem = sender as ToolStripMenuItem;
             if (menuItem == null) return;
-            MethodData md = menuItem.Tag as MethodData;
+            var md = menuItem.Tag as MethodData;
             if (md == null) return;
             using (var form = new WMIMethodForm())
             {
@@ -233,16 +236,16 @@ namespace LanExchange.WMI
                 {
                     var method = new MethodDataEx(md);
                     if (!method.HasQualifier("Implemented")) continue;
-                    var MI = new ToolStripMenuItem();
-                    MI.Text = method.ToString();
-                    MI.Tag = md;
-                    MI.Click += Method_Click;
-                    m_View.MENU.Items.Add(MI);
+                    var menuItem = new ToolStripMenuItem();
+                    menuItem.Text = method.ToString();
+                    menuItem.Tag = md;
+                    menuItem.Click += Method_Click;
+                    m_View.MENU.Items.Add(menuItem);
                 }
             }
-            catch (Exception E)
+            catch (Exception ex)
             {
-                logger.Error("WMI: {0}", E.Message);
+                logger.Error("WMI: {0}", ex.Message);
             }
         }
 
