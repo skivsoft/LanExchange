@@ -73,6 +73,12 @@ namespace LanExchange.WMI
             }
         }
 
+        public static void ClearSavedPassword()
+        {
+            m_UserName = String.Empty;
+            m_UserPassword = String.Empty;
+        }
+
         private void WMIAuthForm_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
