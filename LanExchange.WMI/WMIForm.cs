@@ -193,6 +193,7 @@ namespace LanExchange.WMI
                     lvInstances_FocusedItemChanged(lvInstances, new EventArgs());
                     lvInstances.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
                 }
+                lStatus.Text = String.Format("Элементов: {0}", lvInstances.Items.Count);
             }
         }
 
@@ -204,7 +205,9 @@ namespace LanExchange.WMI
 
         public void ShowStat(int classCount, int propCount, int methodCount)
         {
-            Status.Items[0].Text = String.Format("Классов: {0}, Свойств: {1}, Методов: {2}", classCount, propCount, methodCount);
+            lClasses.Text = String.Format("Классов: {0}", classCount);
+            lProps.Text = String.Format("Свойств: {0}", propCount);
+            lMethods.Text = String.Format("Методов: {0}", methodCount);
         }
 
         public static void dynObj_AddProperty<T>(DynamicObject dynObj, PropertyData prop, string description, string category, bool isReadOnly)

@@ -41,6 +41,12 @@
             this.wMIItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lDescription = new System.Windows.Forms.Label();
             this.lClassName = new System.Windows.Forms.Label();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lClasses = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lProps = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lMethods = new System.Windows.Forms.ToolStripStatusLabel();
             this.Status.SuspendLayout();
             this.pLeft.SuspendLayout();
             this.pTop.SuspendLayout();
@@ -50,7 +56,13 @@
             // Status
             // 
             this.Status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lStatus});
+            this.lStatus,
+            this.toolStripStatusLabel1,
+            this.lClasses,
+            this.toolStripStatusLabel3,
+            this.lProps,
+            this.toolStripStatusLabel5,
+            this.lMethods});
             this.Status.Location = new System.Drawing.Point(0, 540);
             this.Status.Name = "Status";
             this.Status.Size = new System.Drawing.Size(784, 22);
@@ -60,7 +72,7 @@
             // lStatus
             // 
             this.lStatus.Name = "lStatus";
-            this.lStatus.Size = new System.Drawing.Size(769, 17);
+            this.lStatus.Size = new System.Drawing.Size(700, 17);
             this.lStatus.Spring = true;
             this.lStatus.Text = "    ";
             this.lStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -165,6 +177,51 @@
             this.lClassName.TabIndex = 0;
             this.lClassName.Text = "    ";
             // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.toolStripStatusLabel1.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            this.toolStripStatusLabel1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(4, 17);
+            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+            // 
+            // lClasses
+            // 
+            this.lClasses.Name = "lClasses";
+            this.lClasses.Size = new System.Drawing.Size(19, 17);
+            this.lClasses.Text = "    ";
+            // 
+            // toolStripStatusLabel3
+            // 
+            this.toolStripStatusLabel3.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.toolStripStatusLabel3.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            this.toolStripStatusLabel3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
+            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(4, 17);
+            this.toolStripStatusLabel3.Text = "toolStripStatusLabel3";
+            // 
+            // lProps
+            // 
+            this.lProps.Name = "lProps";
+            this.lProps.Size = new System.Drawing.Size(19, 17);
+            this.lProps.Text = "    ";
+            // 
+            // toolStripStatusLabel5
+            // 
+            this.toolStripStatusLabel5.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.toolStripStatusLabel5.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            this.toolStripStatusLabel5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
+            this.toolStripStatusLabel5.Name = "toolStripStatusLabel5";
+            this.toolStripStatusLabel5.Size = new System.Drawing.Size(4, 17);
+            this.toolStripStatusLabel5.Text = "toolStripStatusLabel5";
+            // 
+            // lMethods
+            // 
+            this.lMethods.Name = "lMethods";
+            this.lMethods.Size = new System.Drawing.Size(19, 17);
+            this.lMethods.Text = "    ";
+            // 
             // WMIForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -203,6 +260,12 @@
         private System.Windows.Forms.Label lClassName;
         private System.Windows.Forms.ContextMenuStrip menuClasses;
         private System.Windows.Forms.ToolStripMenuItem wMIItemToolStripMenuItem;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel lClasses;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
+        private System.Windows.Forms.ToolStripStatusLabel lProps;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel5;
+        private System.Windows.Forms.ToolStripStatusLabel lMethods;
 
     }
 }

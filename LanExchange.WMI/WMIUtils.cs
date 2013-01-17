@@ -15,17 +15,17 @@ namespace LanExchange.WMI
             int minute = initializer.Minute;
             int second = initializer.Second;
             long ticks = 0;
-            string dmtf = dmtfDate;
+            var dmtf = dmtfDate;
             string tempString;
-            if ((dmtf == null))
+            if (dmtf == null)
             {
                 throw new ArgumentOutOfRangeException();
             }
-            if ((dmtf.Length == 0))
+            if (dmtf.Length == 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
-            if ((dmtf.Length != 25))
+            if (dmtf.Length != 25)
             {
                 throw new ArgumentOutOfRangeException();
             }

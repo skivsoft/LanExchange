@@ -70,6 +70,23 @@ namespace LanExchange.Model
             }
         }
 
+        /// <summary>
+        /// Remove duplicates from list.
+        /// </summary>
+        /// <param name="list">a list of strings</param>
+        public static void List_Distinct(List<string> list)
+        {
+            list.Sort();
+            Int32 index = 0;
+            while (index < list.Count - 1)
+            {
+                if (list[index] == list[index + 1])
+                    list.RemoveAt(index);
+                else
+                    index++;
+            } 
+        }
+
         public static void Load()
         {
             var fileName = GetConfigFileName();
@@ -80,15 +97,7 @@ namespace LanExchange.Model
                 var temp = (Settings)SerializeUtils.DeserializeObjectFromXMLFile(fileName, typeof(Settings));
                 if (temp != null)
                 {
-                    temp.WMIClassesInclude.Sort();
-                    Int32 index = 0;
-                    while (index < temp.WMIClassesInclude.Count - 1)
-                    {
-                        if (temp.WMIClassesInclude[index] == temp.WMIClassesInclude[index + 1])
-                            temp.WMIClassesInclude.RemoveAt(index);
-                        else
-                            index++;
-                    } 
+                    List_Distinct(temp.WMIClassesInclude);
                     m_Instance = null;
                     m_Instance = temp;
                     Modified = false;

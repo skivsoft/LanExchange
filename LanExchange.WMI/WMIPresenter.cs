@@ -67,8 +67,11 @@ namespace LanExchange.WMI
             try
             {
                 logger.Info("WMI: connect to namespace \"{0}\"", connectionString);
+                options = new ConnectionOptions();
+                //options.Impersonation = true;
                 m_Namespace = new ManagementScope(connectionString, options);
-                //m_Scope.Options.EnablePrivileges = true;
+                m_Namespace.Options.EnablePrivileges = true;
+                m_Namespace.Options.Impersonation = ImpersonationLevel.Impersonate;
                 m_Namespace.Connect();
                 if (m_Namespace.IsConnected)
                 {
@@ -78,7 +81,7 @@ namespace LanExchange.WMI
             }
             catch (UnauthorizedAccessException ex)
             {
-                if (options == null || autoLogon)
+                if (options == null || String.IsNullOrEmpty(options.Username) || autoLogon)
                     using (var form = new WMIAuthForm())
                     {
                         if (autoLogon)
