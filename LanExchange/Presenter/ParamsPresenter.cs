@@ -29,7 +29,7 @@ namespace LanExchange.Presenter
             Settings.Instance.RunMinimized = m_View.RunMinimized;
             Settings.Instance.AdvancedMode = m_View.AdvancedMode;
             Settings.Instance.RefreshTimeInSec = m_View.RefreshTimeInMin * 60;
-            Settings.SaveSettingsIfModified();
+            Settings.SaveIfModified();
             ServerListSubscription.Instance.RefreshInterval = (int)Settings.Instance.RefreshTimeInSec * 1000;
         }
     }

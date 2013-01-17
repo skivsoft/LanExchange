@@ -11,6 +11,7 @@ using System.Net;
 using NLog;
 using System.Reflection;
 using System.Windows.Forms;
+using LanExchange.UI;
 
 namespace LanExchange.Presenter
 {
@@ -20,6 +21,7 @@ namespace LanExchange.Presenter
     public sealed class AboutPresenter : IDisposable
     {
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
+        public static bool m_NeedRestart;
 
         private readonly IAboutView m_View;
         // TODO need re-implement workers, must use BackgroundWorkers singleton
@@ -27,7 +29,6 @@ namespace LanExchange.Presenter
         private readonly BackgroundWorker m_DoUpdate;
 
         private string m_UpdateError;
-        private bool m_NeedRestart;
         private string m_FileListContent;
 
 
@@ -45,6 +46,19 @@ namespace LanExchange.Presenter
             m_View.ShowMessage("Проверка обновлений...", Color.Gray);
             if (!m_DoCheckVersion.IsBusy)
                 m_DoCheckVersion.RunWorkerAsync();
+        }
+
+        public static bool NeedRestart
+        {
+            get { return m_NeedRestart; }
+            set
+            {
+                if (m_NeedRestart != value)
+                {
+                    logger.Info("Updater: Restart={0}", value);
+                    m_NeedRestart = value;
+                }
+            }
         }
 
         public void Dispose()
@@ -129,6 +143,8 @@ namespace LanExchange.Presenter
             string ExeName = Settings.GetExecutableFileName();
             string ExePath = Path.GetDirectoryName(ExeName);
             if (ExePath == null) return;
+            string newSettingsContent = String.Empty;
+            string localConfigFName = Settings.GetConfigFileName();
             try
             {
                 using (var client = new WebClient { Proxy = null })
@@ -148,6 +164,7 @@ namespace LanExchange.Presenter
                             string LocalDirName = Path.GetDirectoryName(LocalFName);
                             if (LocalDirName == null) continue;
                             bool bNeedDownload = false;
+                            bool IsMainConfig = String.Compare(LocalFName, localConfigFName, StringComparison.OrdinalIgnoreCase) == 0;
                             if (File.Exists(LocalFName))
                             {
                                 bool verify = verifyMd5File(LocalFName, RemoteFSize, remoteMd5);
@@ -166,7 +183,9 @@ namespace LanExchange.Presenter
                                     bool bNeedRename = false;
                                     try
                                     {
-                                        File.Delete(LocalFName);
+                                        // delete local file unless it config-file
+                                        if (!IsMainConfig)
+                                            File.Delete(LocalFName);
                                     }
                                     catch (UnauthorizedAccessException)
                                     {
@@ -180,21 +199,30 @@ namespace LanExchange.Presenter
                                         if (File.Exists(FName))
                                             File.Delete(FName);
                                         File.Move(LocalFName, FName);
-                                        if (!m_NeedRestart)
-                                        {
-                                            m_NeedRestart = true;
-                                            logger.Info("Updater: Restart=true");
-                                        }
+                                        NeedRestart = true;
                                     }
                                 }
                                 else if (!Directory.Exists(LocalDirName))
                                     Directory.CreateDirectory(LocalDirName);
                                 string URL = Settings.Instance.GetUpdateUrl() + RemoteFName;
-                                logger.Info("Updater: downloading from [{0}] to [{1}]", URL, LocalFName);
-                                client.DownloadFile(URL, LocalFName);
+                                if (IsMainConfig)
+                                {
+                                    logger.Info("Updater: downloading new settings from [{0}]", URL);
+                                    newSettingsContent = client.DownloadString(URL);
+                                }
+                                else
+                                {
+                                    logger.Info("Updater: downloading from [{0}] to [{1}]", URL, LocalFName);
+                                    client.DownloadFile(URL, LocalFName);
+                                }
                             }
                         }
                     }
+                }
+                if (!String.IsNullOrEmpty(newSettingsContent))
+                {
+                    if (Settings.Merge(newSettingsContent))
+                        NeedRestart = true;
                 }
                 e.Cancel = false;
             }
@@ -214,10 +242,10 @@ namespace LanExchange.Presenter
             else
             {
                 m_View.ShowMessage("Обвновление успешно завершено.", Color.Gray);
-                if (m_NeedRestart)
+                if (NeedRestart)
                 {
                     m_View.CancelView();
-                    Application.Restart();
+                    MainForm.Instance.ApplicationExit();
                 }
             }
         }

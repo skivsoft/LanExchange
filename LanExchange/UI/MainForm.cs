@@ -5,7 +5,6 @@ using LanExchange.Model;
 using LanExchange.Presenter;
 using NLog;
 using System.Drawing;
-using System.Reflection;
 using System.ComponentModel;
 using System.Text;
 using LanExchange.Windows;
@@ -33,7 +32,7 @@ namespace LanExchange.UI
             Instance = this;
             BackgroundWorkers.Instance.CountChanged += BackgroundWorkers_CountChanged;
             // load settings from cfg-file
-            Settings.LoadSettings();
+            Settings.Load();
             SetRunMinimized(Settings.Instance.RunMinimized);
             // init Pages presenter
             MainPages = Pages.GetPresenter();
@@ -59,8 +58,7 @@ namespace LanExchange.UI
             var Rect = Settings.Instance.GetBounds();
             SetBounds(Rect.Left, Rect.Top, Rect.Width, Rect.Height);
             // set mainform title
-            var Ver = Assembly.GetExecutingAssembly().GetName().Version;
-            Text = String.Format("{0} {1}", Application.ProductName, Ver);
+            Text = String.Format("{0} {1}", Application.ProductName, AboutForm.AssemblyVersion);
             // show tray
             TrayIcon.Text = Text;
             TrayIcon.Visible = true;
@@ -381,7 +379,7 @@ namespace LanExchange.UI
         private void MainForm_ResizeEnd(object sender, EventArgs e)
         {
             Settings.Instance.SetBounds(Bounds);
-            Settings.SaveSettingsIfModified();
+            Settings.SaveIfModified();
         }
 
         private void MainForm_Activated(object sender, EventArgs e)
