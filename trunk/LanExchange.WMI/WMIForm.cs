@@ -229,6 +229,7 @@ namespace LanExchange.WMI
         {
             using (var form = new WMISetupForm())
             {
+                form.PrepareForm();
                 form.ShowDialog();
             }
         }
@@ -252,11 +253,12 @@ namespace LanExchange.WMI
                 MI.Click += menuClasses_Click;
                 menuClasses.Items.Add(MI);
             }
-            if (Count1 + Count2 > 0)
-                menuClasses.Items.Add(new ToolStripSeparator());
-            ToolStripMenuItem mSetup = new ToolStripMenuItem { Text = "Настроить..."};
-            mSetup.Click += mSetup_Click;
-            menuClasses.Items.Add(mSetup);
+            // TODO uncomment setup wmi-classes
+            //if (Count1 + Count2 > 0)
+            //    menuClasses.Items.Add(new ToolStripSeparator());
+            //ToolStripMenuItem mSetup = new ToolStripMenuItem { Text = "Настроить..."};
+            //mSetup.Click += mSetup_Click;
+            //menuClasses.Items.Add(mSetup);
         }
 
         private bool m_MenuUpdated;

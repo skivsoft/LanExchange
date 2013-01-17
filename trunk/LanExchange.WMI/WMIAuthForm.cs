@@ -16,7 +16,8 @@ namespace LanExchange.WMI
 
         private void WMIAuthForm_Load(object sender, EventArgs e)
         {
-            picShield.Image = SystemIcons.Shield.ToBitmap();
+
+            picShield.Image = SystemIcons.Error.ToBitmap();
             bOK.NotifyDefault(true);
             ActiveControl = eUserName;
             UserName = m_UserName;
