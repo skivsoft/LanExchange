@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Management;
 using NLog;
+using System.Text;
 
 namespace LanExchange.WMI
 {
@@ -16,8 +17,8 @@ namespace LanExchange.WMI
         private bool m_Loaded;
         private readonly List<string> m_Classes;
         private readonly List<string> m_ReadOnlyClasses;
-        //private readonly List<string> m_ExcludeClasses;
         private readonly List<string> m_IncludeClasses;
+        private readonly List<string> m_AllClasses;
         private int m_PropCount;
         private int m_MethodCount;
         private ManagementScope m_Namespace;
@@ -27,9 +28,7 @@ namespace LanExchange.WMI
             m_Classes = new List<string>();
             m_IncludeClasses = new List<string>();
             m_ReadOnlyClasses = new List<string>();
-            //m_ExcludeClasses = new List<string>();
-            //m_ExcludeClasses.Add("Win32_Registry");
-            //m_ExcludeClasses.Add("Win32_NTEventlogFile");
+            m_AllClasses = new List<string>();
         }
 
         public static WMIClassList Instance
@@ -55,6 +54,11 @@ namespace LanExchange.WMI
         public IList<string> IncludeClasses
         {
             get { return m_IncludeClasses; }
+        }
+
+        public IList<string> AllClasses
+        {
+            get { return m_AllClasses; }
         }
 
         public int ClassCount
@@ -101,6 +105,41 @@ namespace LanExchange.WMI
             return true;
         }
 
+        public string GetClassQualifiers(ManagementScope scope, string className)
+        {
+            if (scope == null)
+            {
+                if (!ConnectToLocalMachine()) return string.Empty;
+                scope = m_Namespace;
+            }
+            StringBuilder sb = new StringBuilder();
+            try
+            {
+                // Gets the property qualifiers.
+                var op = new ObjectGetOptions(null, TimeSpan.MaxValue, true);
+
+                if (className.Equals("Win32_UserProfile"))
+                    className = className;
+                var path = new ManagementPath(className);
+                using (var mc = new ManagementClass(scope, path, op))
+                {
+                    mc.Options.UseAmendedQualifiers = true;
+                    foreach (var qd in mc.Qualifiers)
+                    {
+                        if (qd.Name.Equals("Description"))
+                            continue;
+                        sb.Append(qd.Name);
+                        sb.Append("=");
+                        sb.Append(qd.Value);
+                        sb.Append(", ");
+                    }
+                }
+            }
+            catch { }
+
+            return sb.ToString();
+        }
+
         public string GetClassDescription(ManagementScope scope, string className)
         {
             if (scope == null)
@@ -140,14 +179,19 @@ namespace LanExchange.WMI
                 foreach (ManagementClass wmiClass in searcher.Get())
                 {
                     // skip WMI events
-                    if (wmiClass.Derivation.Contains("__Event"))
-                        continue;
+                    if (wmiClass.Derivation.Contains("__Event")) continue;
                     // skip classes in exclude list
-                    string ClassName = wmiClass["__CLASS"].ToString();
+                    string className = wmiClass["__CLASS"].ToString();
+                    if (!className.StartsWith("Win32_")) continue;
+                    if (className.Equals("Win32_UserProfile"))
+                        className = className;
+                    // skip classes without qualifiers (ex.: Win32_Perf*)
+                    if (wmiClass.Qualifiers.Count == 0) continue;
                     //if (m_ExcludeClasses.Contains(ClassName)) continue;
                     bool IsDynamic = false;
+                    //bool IsAbstract = false;
+                    bool IsPerf = false;
                     bool IsAssociation = false;
-                    //bool IsAggregation = false;
                     bool IsSupportsUpdate = false;
                     bool IsSupportsCreate = false;
                     bool IsSupportsDelete = false;
@@ -156,12 +200,15 @@ namespace LanExchange.WMI
                         //if (qd.Name.Equals("Aggregation")) IsAggregation = true;
                         if (qd.Name.Equals("Association")) IsAssociation = true;
                         if (qd.Name.Equals("dynamic")) IsDynamic = true;
+                        //if (qd.Name.Equals("abstract")) IsAbstract = true;
+                        if (qd.Name.ToLower().Equals("genericperfctr")) IsPerf = true;
                         if (qd.Name.Equals("SupportsUpdate")) IsSupportsUpdate = true;
                         if (qd.Name.Equals("SupportsCreate")) IsSupportsCreate = true;
                         if (qd.Name.Equals("SupportsDelete")) IsSupportsDelete = true;
                     }
-                    if (IsAssociation || !IsDynamic) continue;
-                    bool bInclude = m_IncludeClasses.Contains(ClassName);
+                    if (IsAssociation || !IsDynamic || IsPerf) continue;
+                    m_AllClasses.Add(className);
+                    bool bInclude = m_IncludeClasses.Contains(className);
                     if (bInclude || IsSupportsUpdate || IsSupportsCreate || IsSupportsDelete)
                     {
                         m_PropCount += wmiClass.Properties.Count;
@@ -178,12 +225,13 @@ namespace LanExchange.WMI
                         if (!bInclude && !foundMethod)
                             continue;
                         if (foundMethod)
-                            m_Classes.Add(ClassName);
+                            m_Classes.Add(className);
                         else
-                            m_ReadOnlyClasses.Add(ClassName);
+                            m_ReadOnlyClasses.Add(className);
                     }
                 }
             }
+            m_AllClasses.Sort();
             m_Classes.Sort();
             m_ReadOnlyClasses.Sort();
             m_Loaded = true;

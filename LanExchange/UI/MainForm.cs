@@ -60,7 +60,7 @@ namespace LanExchange.UI
             SetBounds(Rect.Left, Rect.Top, Rect.Width, Rect.Height);
             // set mainform title
             var Ver = Assembly.GetExecutingAssembly().GetName().Version;
-            Text = String.Format("{0} {1}.{2}", Application.ProductName, Ver.Major, Ver.Minor);
+            Text = String.Format("{0} {1}", Application.ProductName, Ver);
             // show tray
             TrayIcon.Text = Text;
             TrayIcon.Visible = true;
