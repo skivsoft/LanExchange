@@ -34,6 +34,8 @@ namespace LanExchange
     using NLog;
     using UI;
     using Utils;
+    using Presenter;
+    using System.Diagnostics;
 
     internal static class Program
     {
@@ -55,6 +57,12 @@ namespace LanExchange
         static void Application_ApplicationExit(object sender, EventArgs e)
         {
             logger.Info("ApplicationExit");
+            // restart after version update
+            if (AboutPresenter.NeedRestart)
+            {
+                logger.Info("Start: {0}", Application.ExecutablePath);
+                Process.Start(Application.ExecutablePath);
+            }
         }
 
         [STAThread]

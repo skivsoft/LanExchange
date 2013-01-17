@@ -117,9 +117,6 @@ namespace LanExchange.WMI
             {
                 // Gets the property qualifiers.
                 var op = new ObjectGetOptions(null, TimeSpan.MaxValue, true);
-
-                if (className.Equals("Win32_UserProfile"))
-                    className = className;
                 var path = new ManagementPath(className);
                 using (var mc = new ManagementClass(scope, path, op))
                 {
@@ -183,8 +180,6 @@ namespace LanExchange.WMI
                     // skip classes in exclude list
                     string className = wmiClass["__CLASS"].ToString();
                     if (!className.StartsWith("Win32_")) continue;
-                    if (className.Equals("Win32_UserProfile"))
-                        className = className;
                     // skip classes without qualifiers (ex.: Win32_Perf*)
                     if (wmiClass.Qualifiers.Count == 0) continue;
                     //if (m_ExcludeClasses.Contains(ClassName)) continue;

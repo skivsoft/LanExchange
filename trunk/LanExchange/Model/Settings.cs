@@ -25,15 +25,16 @@ namespace LanExchange.Model
         private const int MAINFORM_DEFAULTWIDTH = 450;
 
         private static Settings m_Instance;
-        private bool m_Modified;
+        private static bool m_Modified;
+
         private bool m_RunMinimized;
         private bool m_AdvancedMode;
         private decimal m_RefreshTimeInSec;
 
         private Settings()
         {
-            RunMinimized = true;
-            RefreshTimeInSec = 5 * 60;
+            m_RunMinimized = true;
+            m_RefreshTimeInSec = 5 * 60;
             WMIClassesInclude = new List<string>();
             WMIClassesInclude.Add("Win32_Desktop");
             WMIClassesInclude.Add("Win32_DesktopMonitor");
@@ -56,40 +57,86 @@ namespace LanExchange.Model
             }
         }
 
-        public static void LoadSettings()
+        private static bool Modified
+        {
+            get { return m_Modified; }
+            set
+            {
+                if (m_Modified != value)
+                {
+                    logger.Info("Settings.Modified = {0}", value);
+                    m_Modified = value;
+                }
+            }
+        }
+
+        public static void Load()
         {
             var fileName = GetConfigFileName();
             if (!File.Exists(fileName)) return;
             try
             {
-                logger.Info("LoadSettings(\"{0}\")", fileName);
+                logger.Info("Settings.Load(\"{0}\")", fileName);
                 var temp = (Settings)SerializeUtils.DeserializeObjectFromXMLFile(fileName, typeof(Settings));
                 if (temp != null)
                 {
+                    temp.WMIClassesInclude.Sort();
+                    Int32 index = 0;
+                    while (index < temp.WMIClassesInclude.Count - 1)
+                    {
+                        if (temp.WMIClassesInclude[index] == temp.WMIClassesInclude[index + 1])
+                            temp.WMIClassesInclude.RemoveAt(index);
+                        else
+                            index++;
+                    } 
                     m_Instance = null;
                     m_Instance = temp;
+                    Modified = false;
                 }
             }
             catch (Exception E)
             {
-                logger.Error("LoadSettings: {0}", E.Message);
+                logger.Error("Settings: {0}", E.Message);
             }
         }
 
-        public static void SaveSettingsIfModified()
+        public static void SaveIfModified()
         {
-            if (!Instance.m_Modified) return;
+            if (!Modified) return;
             var fileName = GetConfigFileName();
             try
             {
-                logger.Info("SaveSettings(\"{0}\")", fileName);
+                logger.Info("Settings.Save(\"{0}\")", fileName);
                 SerializeUtils.SerializeObjectToXMLFile(fileName, Instance);
             }
             catch (Exception E)
             {
-                logger.Error("SaveSettings: {0}", E.Message);
+                logger.Error("Settings: {0}", E.Message);
             }
-            Instance.m_Modified = false;
+            Modified = false;
+        }
+
+        internal static bool Merge(string newConfigContent)
+        {
+            bool result = false;
+            try
+            {
+                logger.Info("Settings.Merge()");
+                var temp = (Settings)SerializeUtils.DeserializeObjectFromXML(newConfigContent, typeof(Settings));
+                if (temp != null)
+                {
+                    Instance.SetEmailAddress(temp.EmailAddress);
+                    Instance.SetWebSiteURL(temp.WebSiteURL);
+                    Instance.SetUpdateURL(temp.UpdateURL);
+                    result = Modified;
+                    SaveIfModified();
+                }
+            }
+            catch (Exception E)
+            {
+                logger.Error("Settings: {0}", E.Message);
+            }
+            return result;
         }
 
         public static string GetExecutableFileName()
@@ -98,7 +145,7 @@ namespace LanExchange.Model
             return Params.Length > 0 ? Params[0] : String.Empty;
         }
 
-        private static string GetConfigFileName()
+        public static string GetConfigFileName()
         {
             return Path.ChangeExtension(GetExecutableFileName(), ".cfg");
         }
@@ -113,9 +160,15 @@ namespace LanExchange.Model
             {
                 var exeFName = GetExecutableFileName();
                 if (value)
+                {
+                    logger.Info("Settings.Autorun_Add()");
                     AutorunUtils.Autorun_Add(exeFName);
+                }
                 else
+                {
+                    logger.Info("Settings.Autorun_Delete()");
                     AutorunUtils.Autorun_Delete(exeFName);
+                }
             }
         }
 
@@ -127,7 +180,7 @@ namespace LanExchange.Model
                 if (m_RunMinimized != value)
                 {
                     m_RunMinimized = value;
-                    m_Modified = true;
+                    Modified = true;
                 }
             }
         }
@@ -140,7 +193,7 @@ namespace LanExchange.Model
                 if (m_AdvancedMode != value)
                 {
                     m_AdvancedMode = value;
-                    m_Modified = true;
+                    Modified = true;
                 }
             }
         }
@@ -153,14 +206,14 @@ namespace LanExchange.Model
                 if (m_RefreshTimeInSec != value)
                 {
                     m_RefreshTimeInSec = value;
-                    m_Modified = true;
+                    Modified = true;
                 }
             }
         }
 
         public Rectangle GetBounds()
         {
-            logger.Info("MainFormX: {0}, MainFormWidth: {1}", MainFormX, MainFormWidth);
+            logger.Info("Settings: MainFormX: {0}, MainFormWidth: {1}", MainFormX, MainFormWidth);
             // correct width and height
             bool BoundsIsNotSet = MainFormWidth == 0;
             Rectangle WorkingArea;
@@ -209,7 +262,6 @@ namespace LanExchange.Model
                 logger.Info("Settings.SetBounds(): {0}, {1}, {2}, {3}", rect.Left, rect.Top, rect.Width, rect.Height);
                 MainFormX = rect.Left;
                 MainFormWidth = rect.Width;
-                m_Modified = true;
             }
         }
 
@@ -218,14 +270,41 @@ namespace LanExchange.Model
             return String.IsNullOrEmpty(UpdateURL) ? UpdateUrlDefault : UpdateURL;
         }
 
+        public void SetUpdateURL(string value)
+        {
+            if (GetUpdateUrl() != value)
+            {
+                UpdateURL = value;
+                Modified = true;
+            }
+        }
+
         public string GetWebSiteUrl()
         {
             return String.IsNullOrEmpty(WebSiteURL) ? WebSiteUrlDefault : WebSiteURL;
         }
 
+        public void SetWebSiteURL(string value)
+        {
+            if (GetWebSiteUrl() != value)
+            {
+                WebSiteURL = value;
+                Modified = true;
+            }
+        }
+
         public string GetEmailAddress()
         {
             return String.IsNullOrEmpty(EmailAddress) ? EmailAddressDefault : EmailAddress;
+        }
+
+        public void SetEmailAddress(string value)
+        {
+            if (GetEmailAddress() != value)
+            {
+                EmailAddress = value;
+                Modified = true;
+            }
         }
 
         public static string GetCurrentUserName()

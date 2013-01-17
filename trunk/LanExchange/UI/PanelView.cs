@@ -289,7 +289,7 @@ namespace LanExchange.UI
             if (!WMIClassList.Instance.Loaded)
             {
                 WMIClassList.Instance.IncludeClasses.Clear();
-                foreach(string str in Settings.Instance.WMIClassesInclude)
+                foreach (string str in Settings.Instance.WMIClassesInclude)
                     WMIClassList.Instance.IncludeClasses.Add(str);
                 BackgroundWorkers.Instance.Add(new BackgroundContext(new WMIClassesEnumStrategy()));
             }
