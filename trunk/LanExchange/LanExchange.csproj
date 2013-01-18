@@ -82,10 +82,12 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Utils\Sorting\IColumnComparable.cs" />
     <Compile Include="Strategy\BackgroundContext.cs" />
     <Compile Include="Strategy\IBackgroundStrategy.cs" />
     <Compile Include="Model\BackgroundWorkerEx.cs">
@@ -184,7 +186,7 @@
       <DependentUpon>ParamsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\ComputerPanelItem.cs" />
-    <Compile Include="Model\PanelItemComparer.cs" />
+    <Compile Include="Utils\Sorting\ColumnComparer.cs" />
     <Compile Include="Model\SharePanelItem.cs" />
     <Compile Include="Model\PingThread.cs" />
     <Compile Include="Model\AbstractPanelItem.cs" />
@@ -198,6 +200,39 @@
     <Compile Include="View\IParamsView.cs" />
     <Compile Include="View\IPagesView.cs" />
     <Compile Include="Windows\UnsafeNativeMethods.cs" />
+    <Compile Include="WMI\DynamicObject.cs" />
+    <Compile Include="WMI\IWMIComputer.cs" />
+    <Compile Include="WMI\IWMIView.cs" />
+    <Compile Include="WMI\MethodDataEx.cs" />
+    <Compile Include="WMI\PropertyDataEx.cs" />
+    <Compile Include="WMI\WMIAuthForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WMI\WMIAuthForm.Designer.cs">
+      <DependentUpon>WMIAuthForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WMI\WMIClassList.cs" />
+    <Compile Include="WMI\WMIForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WMI\WMIForm.Designer.cs">
+      <DependentUpon>WMIForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WMI\WMIMethodForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WMI\WMIMethodForm.Designer.cs">
+      <DependentUpon>WMIMethodForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WMI\WMIPresenter.cs" />
+    <Compile Include="WMI\WMISettings.cs" />
+    <Compile Include="WMI\WMISetupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WMI\WMISetupForm.Designer.cs">
+      <DependentUpon>WMISetupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WMI\WMIUtils.cs" />
     <EmbeddedResource Include="UI\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -242,6 +277,19 @@
     <Compile Include="Model\PuntoSwitcher.cs" />
     <Compile Include="Model\Settings.cs" />
     <Compile Include="Presenter\PagesPresenter.cs" />
+    <EmbeddedResource Include="WMI\WMIAuthForm.resx">
+      <DependentUpon>WMIAuthForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WMI\WMIForm.resx">
+      <DependentUpon>WMIForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WMI\WMIMethodForm.resx">
+      <DependentUpon>WMIMethodForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WMI\WMISetupForm.resx">
+      <DependentUpon>WMISetupForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="NLog.config">
@@ -290,12 +338,6 @@
     <Content Include="Presenter\Readme.txt" />
     <Content Include="Resources\LanExchange_16x16.ico" />
     <None Include="Resources\LanExchange_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LanExchange.WMI\LanExchange.WMI.csproj">
-      <Project>{9334927C-8235-4533-83CA-57A819AD5E22}</Project>
-      <Name>LanExchange.WMI</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
