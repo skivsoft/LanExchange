@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows.Forms;
 using LanExchange.Strategy;
 using LanExchange.View;
@@ -34,7 +35,7 @@ namespace LanExchange.UI
             mi.Invoke(LV, new object[] { ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true });
             // setup items cache
             m_Cache = new ListViewItemCache(this);
-            LV.CacheVirtualItems += m_Cache.CacheVirtualItems;
+            //LV.CacheVirtualItems += m_Cache.CacheVirtualItems;
             LV.RetrieveVirtualItem += m_Cache.RetrieveVirtualItem;
             // set mycomputer image
             mComp.Image = LanExchangeIcons.SmallImageList.Images[LanExchangeIcons.CompDefault];
@@ -477,6 +478,13 @@ namespace LanExchange.UI
         private void pFilter_FilterCountChanged(object sender, EventArgs e)
         {
             m_Presenter.UpdateItemsAndStatus();
+        }
+
+        private void LV_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            //TODO column sort for panelitems
+            //var sorter = new PanelItemComparer(e.Column, PanelItemComparer.ColumnSortOrder.Ascending);
+            //m_Presenter.Objects.Sort(sorter);
         }
     }
 }
