@@ -40,7 +40,6 @@ namespace LanExchange.UI
             MainPages.GetModel().LoadSettings();
             // here we call event for update items count in statusline
             //Pages.UpdateSelectedTab();
-            //mSendToNewTab.Click += new EventHandler(TabController.mSendToNewTab_Click);
             // init main form
             SetupForm();
             
@@ -73,22 +72,6 @@ namespace LanExchange.UI
         {
             lWorkers.Text = BackgroundWorkers.Instance.Count.ToString(CultureInfo.InvariantCulture);
         }
-
-        //private void SetupMenu()
-        //{
-        //    ToolStripItem[] MyItems = new ToolStripItem[mComp.DropDownItems.Count];
-        //    for (int i = 0; i < MyItems.Length; i++)
-        //    {
-        //        var TI = mComp.DropDownItems[i];
-        //        if (TI is ToolStripSeparator)
-        //            MyItems[i] = new ToolStripSeparator();
-        //        else
-        //            if (TI is ToolStripMenuItem)
-        //                MyItems[i] = (ToolStripItem)MenuUtils.Clone(TI as ToolStripMenuItem);
-        //    }
-        //    popTop.Items.Clear();
-        //    popTop.Items.AddRange(MyItems);
-        //}
 
 #if DEBUG
         //public static void Debug_ShowProperties(object obj)
@@ -135,35 +118,31 @@ namespace LanExchange.UI
 #endif
         }
 
-        //public static string GetMd5FromString(string str)
-        //{
-        //    MD5 md5Hasher = MD5.Create();
-        //    byte[] data = md5Hasher.ComputeHash(Encoding.ASCII.GetBytes(str));
-        //    var sBuilder = new StringBuilder();
-        //    for (int i = 0; i < data.Length; i++)
-        //        sBuilder.Append(data[i].ToString("x2"));
-        //    return sBuilder.ToString();
-        //}
-
         private void popTop_Opened(object sender, EventArgs e)
         {
-            //for (int i = 0; i < Math.Min(mComp.DropDownItems.Count, popTop.Items.Count); i++)
-            //{
-            //    ToolStripItem Src = mComp.DropDownItems[i];
-            //    ToolStripItem Dest = popTop.Items[i];
-            //    if (Src is ToolStripMenuItem && Dest is ToolStripMenuItem)
-            //        (Dest as ToolStripMenuItem).ShowShortcutKeys = (Src as ToolStripMenuItem).ShowShortcutKeys;
-            //}
+            var pv = Pages.GetActivePanelView();
+            if (pv == null) return;
+            for (int i = 0; i < Math.Min(pv.mComp.DropDownItems.Count, popTop.Items.Count); i++)
+            {
+                ToolStripItem Src = pv.mComp.DropDownItems[i];
+                ToolStripItem Dest = popTop.Items[i];
+                if (Src is ToolStripMenuItem && Dest is ToolStripMenuItem)
+                    (Dest as ToolStripMenuItem).ShowShortcutKeys = (Src as ToolStripMenuItem).ShowShortcutKeys;
+            }
         }
 
         private void popTop_Opening(object sender, CancelEventArgs e)
         {
             var pv = Pages.GetActivePanelView();
-            if (pv != null)
+            if (pv == null)
             {
-                pv.popComps_Opening(sender, e);
-                e.Cancel = !pv.mComp.Enabled;
+                e.Cancel = true;
+                return;
             }
+            if (popTop.Items.Count == 1)
+                pv.SetupMenu(popTop);
+            pv.popComps_Opening(sender, e);
+            e.Cancel = !pv.mComp.Enabled;
         }
 
         // TODO uncomment MyComputer click

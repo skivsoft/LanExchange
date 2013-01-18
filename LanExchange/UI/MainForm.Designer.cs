@@ -49,11 +49,11 @@
             this.lUserName = new System.Windows.Forms.ToolStripStatusLabel();
             this.tipComps = new System.Windows.Forms.ToolTip(this.components);
             this.popTop = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.остановитьВсеПотокиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Pages = new LanExchange.UI.PagesView();
             this.pInfo = new LanExchange.UI.InfoView();
             this.popWorkers = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mStopWorkers = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.popTray.SuspendLayout();
             this.Status.SuspendLayout();
             this.popTop.SuspendLayout();
@@ -146,7 +146,7 @@
             // lItemsCount
             // 
             this.lItemsCount.Name = "lItemsCount";
-            this.lItemsCount.Size = new System.Drawing.Size(455, 17);
+            this.lItemsCount.Size = new System.Drawing.Size(509, 17);
             this.lItemsCount.Spring = true;
             this.lItemsCount.Text = "    ";
             this.lItemsCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -211,17 +211,11 @@
             // popTop
             // 
             this.popTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.остановитьВсеПотокиToolStripMenuItem});
+            this.menuItemToolStripMenuItem});
             this.popTop.Name = "popTop";
-            this.popTop.Size = new System.Drawing.Size(256, 26);
+            this.popTop.Size = new System.Drawing.Size(153, 48);
             this.popTop.Opening += new System.ComponentModel.CancelEventHandler(this.popTop_Opening);
             this.popTop.Opened += new System.EventHandler(this.popTop_Opened);
-            // 
-            // остановитьВсеПотокиToolStripMenuItem
-            // 
-            this.остановитьВсеПотокиToolStripMenuItem.Name = "остановитьВсеПотокиToolStripMenuItem";
-            this.остановитьВсеПотокиToolStripMenuItem.Size = new System.Drawing.Size(255, 22);
-            this.остановитьВсеПотокиToolStripMenuItem.Text = "Остановить все фоновые потоки";
             // 
             // Pages
             // 
@@ -235,6 +229,7 @@
             // pInfo
             // 
             this.pInfo.BackColor = System.Drawing.Color.White;
+            this.pInfo.ContextMenuStrip = this.popTop;
             this.pInfo.Dock = System.Windows.Forms.DockStyle.Top;
             this.pInfo.InfoComp = "    ";
             this.pInfo.InfoDesc = "    ";
@@ -257,6 +252,12 @@
             this.mStopWorkers.Size = new System.Drawing.Size(234, 22);
             this.mStopWorkers.Text = "Остановить фоновые потоки";
             this.mStopWorkers.Click += new System.EventHandler(this.mStopWorkers_Click);
+            // 
+            // menuItemToolStripMenuItem
+            // 
+            this.menuItemToolStripMenuItem.Name = "menuItemToolStripMenuItem";
+            this.menuItemToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.menuItemToolStripMenuItem.Text = "MenuItem";
             // 
             // MainForm
             // 
@@ -306,9 +307,9 @@
         private PagesView Pages;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
         private System.Windows.Forms.ToolStripStatusLabel lWorkers;
-        private System.Windows.Forms.ToolStripMenuItem остановитьВсеПотокиToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip popWorkers;
         private System.Windows.Forms.ToolStripMenuItem mStopWorkers;
+        private System.Windows.Forms.ToolStripMenuItem menuItemToolStripMenuItem;
     }
 }
 
