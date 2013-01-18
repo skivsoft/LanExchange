@@ -282,7 +282,7 @@ namespace LanExchange.Model
                 if (m_InstantUpdate)
                 {
                     m_RefreshTimer.Enabled = false;
-                    RefreshTimer_Tick(m_RefreshTimer, new EventArgs());
+                    RefreshTimer_Tick(m_RefreshTimer, EventArgs.Empty);
                     m_RefreshTimer.Enabled = true;
                     m_InstantUpdate = false;
                     logger.Info("RefreshTimer started. Next tick in {0} sec.", m_RefreshInterval/1000);

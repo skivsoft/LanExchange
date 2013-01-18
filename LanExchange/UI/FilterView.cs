@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Drawing;
 using System.Globalization;
+using System.Reflection;
 using System.Windows.Forms;
 using LanExchange.View;
 using LanExchange.Presenter;
 using LanExchange.Properties;
+using NLog;
+using LanExchange.Model;
 
 namespace LanExchange.UI
 {
@@ -17,8 +20,8 @@ namespace LanExchange.UI
         public FilterView()
         {
             InitializeComponent();
-            m_Presenter = new FilterPresenter(this);
             Visible = false;
+            m_Presenter = new FilterPresenter(this);
         }
 
         public FilterPresenter GetPresenter()
@@ -44,8 +47,8 @@ namespace LanExchange.UI
                 if (LinkedControl == null || !LinkedControl.Visible) return;
                 (Parent as ContainerControl).ActiveControl = LinkedControl;
                 LinkedControl.Focus();
-                if (!e.Control && e.KeyCode == Keys.Up) SendKeys.Send("{UP}");
-                if (e.KeyCode == Keys.Down) SendKeys.Send("{DOWN}");
+                if (!e.Control && e.KeyCode == Keys.Up) SendKeys.SendWait("{UP}");
+                if (e.KeyCode == Keys.Down) SendKeys.SendWait("{DOWN}");
                 e.Handled = true;
             }
         }
@@ -65,20 +68,6 @@ namespace LanExchange.UI
             SetFilterText(String.Empty);
         }
 
-        public void SendKeysCorrect(string keys)
-        {
-            const string chars = "+^%~{}()[]";
-            string NewKeys = "";
-            foreach (Char Ch in keys)
-            {
-                if (chars.Contains(Ch.ToString(CultureInfo.InvariantCulture)))
-                    NewKeys += String.Format("{{{0}}}", Ch);
-                else
-                    NewKeys = Ch.ToString(CultureInfo.InvariantCulture);
-            }
-            SendKeys.Send(NewKeys);
-        }
-
         public void SetFilterText(string value)
         {
             eFilter.Text = value;
@@ -89,23 +78,38 @@ namespace LanExchange.UI
             return eFilter.Text;
         }
 
-        public void SetIsFound(bool value)
+        public void UpdateFromModel(IFilterModel model)
         {
-            eFilter.BackColor = value ? Color.White : Color.FromArgb(255, 102, 102); // Firefox Color
+            Color notFoundColor = Color.FromArgb(255, 102, 102); // firefox color
+            eFilter.BackColor = String.IsNullOrEmpty(model.FilterText) || model.FilterCount > 0 ? Color.White : notFoundColor;
+            DoFilterCountChanged();
         }
 
+        
         public void FocusMe()
         {
-            if (Parent is ContainerControl)
-                (Parent as ContainerControl).ActiveControl = this;
-            ActiveControl = eFilter;
             eFilter.Focus();
+        }
+
+        public void FocusAndKeyPress(KeyPressEventArgs e)
+        {
+            if (!Visible)
+                Visible = true;
+            if (!eFilter.Focused)
+            {
+                if (Parent is ContainerControl)
+                    (Parent as ContainerControl).ActiveControl = this;
+                ActiveControl = eFilter;
+                eFilter.Focus();
+                eFilter.AppendText(e.KeyChar.ToString(CultureInfo.InvariantCulture));
+            }
+            
         }
 
         public void DoFilterCountChanged()
         {
             if (FilterCountChanged != null)
-                FilterCountChanged(this, new EventArgs());
+                FilterCountChanged(this, EventArgs.Empty);
         }
     }
 }

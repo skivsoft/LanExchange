@@ -1,4 +1,6 @@
-﻿namespace LanExchange.UI
+﻿using System.Windows.Forms;
+
+namespace LanExchange.UI
 {
     partial class FilterView
     {
@@ -28,22 +30,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.eFilter = new System.Windows.Forms.TextBox();
             this.imgClear = new System.Windows.Forms.PictureBox();
+            this.eFilter = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.imgClear)).BeginInit();
             this.SuspendLayout();
-            // 
-            // eFilter
-            // 
-            this.eFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.eFilter.BackColor = System.Drawing.Color.White;
-            this.eFilter.Location = new System.Drawing.Point(7, 5);
-            this.eFilter.Name = "eFilter";
-            this.eFilter.Size = new System.Drawing.Size(436, 20);
-            this.eFilter.TabIndex = 7;
-            this.eFilter.TextChanged += new System.EventHandler(this.eFilter_TextChanged);
-            this.eFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.eFilter_KeyDown);
             // 
             // imgClear
             // 
@@ -59,12 +49,23 @@
             this.imgClear.MouseLeave += new System.EventHandler(this.imgClear_MouseLeave);
             this.imgClear.MouseHover += new System.EventHandler(this.imgClear_MouseHover);
             // 
+            // eFilter
+            // 
+            this.eFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.eFilter.Location = new System.Drawing.Point(8, 5);
+            this.eFilter.Name = "eFilter";
+            this.eFilter.Size = new System.Drawing.Size(436, 20);
+            this.eFilter.TabIndex = 9;
+            this.eFilter.TextChanged += new System.EventHandler(this.eFilter_TextChanged);
+            this.eFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.eFilter_KeyDown);
+            // 
             // FilterView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.imgClear);
             this.Controls.Add(this.eFilter);
+            this.Controls.Add(this.imgClear);
             this.Name = "FilterView";
             this.Size = new System.Drawing.Size(470, 30);
             ((System.ComponentModel.ISupportInitialize)(this.imgClear)).EndInit();
@@ -76,6 +77,6 @@
         #endregion
 
         private System.Windows.Forms.PictureBox imgClear;
-        public System.Windows.Forms.TextBox eFilter;
+        private TextBox eFilter;
     }
 }

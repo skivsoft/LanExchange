@@ -1,4 +1,6 @@
-﻿using LanExchange.Presenter;
+﻿using System.Windows.Forms;
+using LanExchange.Presenter;
+using LanExchange.Model;
 
 namespace LanExchange.View
 {
@@ -8,11 +10,9 @@ namespace LanExchange.View
         bool Visible { get; set; }
         // methods
         FilterPresenter GetPresenter();
-        void SetIsFound(bool value);
+        void UpdateFromModel(IFilterModel model);
+        void FocusAndKeyPress(KeyPressEventArgs e);
         void FocusMe();
-        void SendKeysCorrect(string keys);
-        void DoFilterCountChanged();
         void SetFilterText(string value);
-        string GetFilterText();
     }
 }

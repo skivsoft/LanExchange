@@ -55,8 +55,8 @@ namespace LanExchange.Model
 
         private void DoCountChanged()
         {
-            if (CountChanged != null)    
-                CountChanged(this, new EventArgs());
+            if (CountChanged != null)
+                CountChanged(this, EventArgs.Empty);
         }
 
         private void worker_AfterRunWorkerCompleted(object sender, EventArgs e)

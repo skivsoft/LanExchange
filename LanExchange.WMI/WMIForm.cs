@@ -190,7 +190,7 @@ namespace LanExchange.WMI
                 {
                     lvInstances.FocusedItem = lvInstances.Items[0];
                     lvInstances.FocusedItem.Selected = true;
-                    lvInstances_FocusedItemChanged(lvInstances, new EventArgs());
+                    lvInstances_FocusedItemChanged(lvInstances, EventArgs.Empty);
                     lvInstances.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
                 }
                 lStatus.Text = String.Format("Элементов: {0}", lvInstances.Items.Count);
@@ -325,7 +325,7 @@ namespace LanExchange.WMI
         private void DoFocusedItemChanged()
         {
             if (FocusedItemChanged != null)
-                FocusedItemChanged(this, new EventArgs());
+                FocusedItemChanged(this, EventArgs.Empty);
         }
 
         public void lvComps_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
