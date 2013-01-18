@@ -33,7 +33,7 @@ namespace LanExchange.Model
         private void DoAfterRunWorkerCompleted()
         {
             if (AfterRunWorkerCompleted != null)
-                AfterRunWorkerCompleted(this, new EventArgs());
+                AfterRunWorkerCompleted(this, EventArgs.Empty);
         }
 
         public void Abort()

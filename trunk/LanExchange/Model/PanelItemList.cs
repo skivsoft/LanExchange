@@ -100,7 +100,7 @@ namespace LanExchange.Model
                     break;
             }
             if (SubscriptionChanged != null)
-                SubscriptionChanged(this, new EventArgs());
+                SubscriptionChanged(this, EventArgs.Empty);
         }
 
 
@@ -269,7 +269,7 @@ namespace LanExchange.Model
                 }
             }
             if (Changed != null)
-                Changed(this, new EventArgs());
+                Changed(this, EventArgs.Empty);
         }
  
         /// <summary>
@@ -330,7 +330,7 @@ namespace LanExchange.Model
                     ViewType = LVType.SHARES;
                     break;
                 case LVType.SHARES:
-                    MainForm.GetInstance().mFolderOpen_Click(MainForm.GetInstance().mFolderOpen, new EventArgs());
+                    MainForm.GetInstance().mFolderOpen_Click(MainForm.GetInstance().mFolderOpen, EventArgs.Empty);
                     break;
                 case LVType.FILES:
                     break;

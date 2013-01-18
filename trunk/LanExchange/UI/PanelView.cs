@@ -164,7 +164,7 @@ namespace LanExchange.UI
         private void DoFocusedItemChanged()
         {
             if (FocusedItemChanged != null)
-                FocusedItemChanged(this, new EventArgs());
+                FocusedItemChanged(this, EventArgs.Empty);
         }
 
         public void lvComps_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
@@ -193,9 +193,9 @@ namespace LanExchange.UI
             {
                 AbstractPanelItem PItem = m_Presenter.GetFocusedPanelItem(false);
                 if (PItem is ComputerPanelItem)
-                    mCompOpen_Click(mCompOpen, new EventArgs());
+                    mCompOpen_Click(mCompOpen, EventArgs.Empty);
                 if (PItem is SharePanelItem)
-                    mFolderOpen_Click(mFolderOpen, new EventArgs());
+                    mFolderOpen_Click(mFolderOpen, EventArgs.Empty);
                 e.Handled = true;
             }
             // Ctrl+Enter - Run RAdmin for computer and FAR for folder
@@ -203,10 +203,10 @@ namespace LanExchange.UI
             {
                 AbstractPanelItem PItem = m_Presenter.GetFocusedPanelItem(false);
                 if (PItem is ComputerPanelItem)
-                    mCompOpen_Click(mRadmin1, new EventArgs());
+                    mCompOpen_Click(mRadmin1, EventArgs.Empty);
                 if (PItem is SharePanelItem)
                     if (!(PItem as SharePanelItem).SHI.IsPrinter)
-                        mFolderOpen_Click(mFAROpen, new EventArgs());
+                        mFolderOpen_Click(mFAROpen, EventArgs.Empty);
                 e.Handled = true;
             }
             // Backspace - Go level up
@@ -229,7 +229,6 @@ namespace LanExchange.UI
                     MainForm.Instance.Hide();
                 e.Handled = true;
             }
-
 
             // TODO need delete only for user items
             //if (e.KeyCode == Keys.Delete)

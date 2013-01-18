@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using LanExchange.View;
 using System.Windows.Forms;
 using LanExchange.Model;
@@ -23,14 +22,13 @@ namespace LanExchange.Presenter
             set
             {
                 m_Filter = value;
-                m_View.Visible = IsFiltered;
                 if (m_Model != null)
                 {
                     m_Model.FilterText = value;
                     m_Model.ApplyFilter();
-                    m_View.SetIsFound(m_Model.FilterCount > 0);
-                    m_View.DoFilterCountChanged();
+                    m_View.UpdateFromModel(m_Model);
                 }
+                m_View.Visible = IsFiltered;
             }
         }
 
@@ -55,20 +53,15 @@ namespace LanExchange.Presenter
                 m_View.SetFilterText(value.FilterText);
                 m_Model = value;
                 m_Model.ApplyFilter();
-                m_View.SetIsFound(m_Model.FilterCount > 0);
-                m_View.DoFilterCountChanged();
+                m_View.UpdateFromModel(m_Model);
             }
         }
 
         public void LinkedControl_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (Char.IsLetterOrDigit(e.KeyChar) ||
-                Char.IsPunctuation(e.KeyChar) ||
-                PuntoSwitcher.IsValidChar(e.KeyChar))
+            if (Char.IsLetterOrDigit(e.KeyChar) || Char.IsPunctuation(e.KeyChar) || PuntoSwitcher.IsValidChar(e.KeyChar))
             {
-                m_View.Visible = true;
-                m_View.FocusMe();
-                m_View.SendKeysCorrect(e.KeyChar.ToString(CultureInfo.InvariantCulture));
+                m_View.FocusAndKeyPress(e);
                 e.Handled = true;
             }
         }
