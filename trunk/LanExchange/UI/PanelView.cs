@@ -44,8 +44,26 @@ namespace LanExchange.UI
             mComp.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
             mFolder.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
             mSendToTab.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
+
+            //mSendToNewTab.Click += new EventHandler(TabController.mSendToNewTab_Click);
         }
         #endregion
+
+        public void SetupMenu(ContextMenuStrip popTop)
+        {
+            ToolStripItem[] MyItems = new ToolStripItem[mComp.DropDownItems.Count];
+            for (int i = 0; i < MyItems.Length; i++)
+            {
+                var TI = mComp.DropDownItems[i];
+                if (TI is ToolStripSeparator)
+                    MyItems[i] = new ToolStripSeparator();
+                else
+                    if (TI is ToolStripMenuItem)
+                        MyItems[i] = MenuUtils.Clone(TI as ToolStripMenuItem);
+            }
+            popTop.Items.Clear();
+            popTop.Items.AddRange(MyItems);
+        }
 
         #region IListViewItemGetter interface implementation
         /// <summary>

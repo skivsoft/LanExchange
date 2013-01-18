@@ -5,7 +5,7 @@
 //   TODO * Updating menu lists after changing tab list (add, remove)
 //   DONE * Update counts in status list
 //   DONE * Filtering computer items
-//   TODO * ContextMenuStrip for top panel
+//   DONE * ContextMenuStrip for top panel
 //   TODO * Manual creation of computer items
 //   TODO * WMI-commands execution with parameters
 //   TODO * Enum shares after ItemActivate
