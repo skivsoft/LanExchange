@@ -121,18 +121,11 @@ namespace LanExchange.Presenter
             }
         }
 
-        /// <summary>
-        /// Возвращает имя выбранного компьютера, предварительно проверив пингом включен ли он.
-        /// </summary>
-        /// <param name="bPingAndAsk">Пинговать ли комп</param>
-        /// <returns>Возвращает TComputer</returns>
         public AbstractPanelItem GetFocusedPanelItem(bool bPingAndAsk)
         {
-            //logger.Info("GetFocusedPanelItem. {0}", LV.FocusedItem);
-            ComputerPanelItem comp = m_Objects.Get(m_View.FocusedItemText) as ComputerPanelItem;
-            if (comp == null) return null;
-            // пингуем
-            if (bPingAndAsk)
+            var item = m_Objects.Get(m_View.FocusedItemText);
+            var comp =  item as ComputerPanelItem;
+            if (comp != null && bPingAndAsk)
             {
                 bool bPingResult = PingThread.FastPing(comp.Name);
                 if (comp.IsPingable != bPingResult)
@@ -146,10 +139,10 @@ namespace LanExchange.Presenter
                         String.Format("Компьютер «{0}» не доступен посредством PING.\nПродолжить?", comp.Name), "Запрос",
                         MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
                     if (Result != DialogResult.Yes)
-                        comp = null;
+                        item = null;
                 }
             }
-            return comp;
+            return item;
         }
 
         /// <summary>
@@ -242,15 +235,28 @@ namespace LanExchange.Presenter
         //    }
         //}
 
-        internal void ItemActivate()
+        internal void LevelDown()
         {
             var PItem = GetFocusedPanelItem(false);
             if (PItem == null || Objects == null) return;
             if (PanelSubscription.Instance.HasStrategyForSubject(PItem))
             {
-                Objects.CurrentPath.Push(PItem);
-                PanelSubscription.Instance.UnSubscribe(Objects);
+                PanelSubscription.Instance.UnSubscribe(Objects, false);
                 PanelSubscription.Instance.SubscribeToSubject(Objects, PItem);
+                Objects.CurrentPath.Push(PItem);
+            }
+        }
+
+        internal void LevelUp()
+        {
+            if (Objects == null || Objects.CurrentPath.IsEmpty) return;
+            var PItem = Objects.CurrentPath.Peek() as AbstractPanelItem;
+            if (PItem == null) return;
+            if (PanelSubscription.Instance.HasStrategyForSubject(PItem.Parent))
+            {
+                PanelSubscription.Instance.UnSubscribe(Objects, false);
+                PanelSubscription.Instance.SubscribeToSubject(Objects, PItem.Parent);
+                Objects.CurrentPath.Pop();
             }
         }
     }

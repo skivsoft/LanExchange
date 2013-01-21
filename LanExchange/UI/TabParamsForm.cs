@@ -16,7 +16,7 @@ namespace LanExchange.UI
             // subscribe Form to ROOT subject (must return domain list)
             PanelSubscription.Instance.SubscribeToSubject(this, ConcreteSubject.Root);
             // unsubscribe Form from any subjects when Closed event will be fired
-            Closed += (sender, args) => PanelSubscription.Instance.UnSubscribe(this);
+            Closed += (sender, args) => PanelSubscription.Instance.UnSubscribe(this, false);
         }
 
         public void DataChanged(ISubscription sender, ISubject subject)

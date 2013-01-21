@@ -35,7 +35,14 @@ namespace LanExchange.Utils
 
         public object Pop()
         {
-            return m_Path.Pop();
+            var result = m_Path.Pop();
+            OnChanged();
+            return result;
+        }
+
+        public object Peek()
+        {
+            return m_Path.Peek();
         }
 
         public override string ToString()
@@ -43,11 +50,17 @@ namespace LanExchange.Utils
             var sb = new StringBuilder();
             foreach (var item in m_Path)
             {
-                sb.Insert(0, item);
                 if (sb.Length > 0)
                     sb.Insert(0, @"\");
+                sb.Insert(0, item);
             }
             return sb.ToString();
         }
+
+        public bool IsEmpty
+        {
+            get { return m_Path.Count == 0; }
+        }
+
     }
 }

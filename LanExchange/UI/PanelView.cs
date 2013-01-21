@@ -240,7 +240,7 @@ namespace LanExchange.UI
             // Backspace - Go level up
             if (e.KeyCode == Keys.Back)
             {
-                //CompBrowser.LevelUp();
+                m_Presenter.LevelUp();
                 e.Handled = true;
             }
             // Ctrl+Ins - Copy to clipboard (similar to Ctrl+C)
@@ -276,7 +276,7 @@ namespace LanExchange.UI
 
         private void lvComps_ItemActivate(object sender, EventArgs e)
         {
-            m_Presenter.ItemActivate();
+            m_Presenter.LevelDown();
         }
 
         private void mWMI_Click(object sender, EventArgs e)

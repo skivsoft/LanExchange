@@ -102,12 +102,12 @@ namespace LanExchange.Model
             switch (ScanMode)
             {
                 case true:
-                    PanelSubscription.Instance.UnSubscribe(this);
+                    PanelSubscription.Instance.UnSubscribe(this, false);
                     foreach(var group in Groups)
                         PanelSubscription.Instance.SubscribeToSubject(this, group);
                     break;
                 default:
-                    PanelSubscription.Instance.UnSubscribe(this);
+                    PanelSubscription.Instance.UnSubscribe(this, true);
                     break;
             }
             if (SubscriptionChanged != null)
@@ -245,6 +245,13 @@ namespace LanExchange.Model
         //}
 
 
+        private void ProcessGroup(ISubscription sender, ISubject group)
+        {
+            foreach (AbstractPanelItem PItem in sender.GetListBySubject(group))
+                if (!m_Data.ContainsKey(PItem[0]))
+                    m_Data.Add(PItem[0], PItem);
+        }
+
         //public List<string> ToList()
         //{
         //    List<string> Result = new List<string>();
@@ -265,18 +272,22 @@ namespace LanExchange.Model
                 m_Data.Clear();
                 if (subject != ConcreteSubject.Empty)
                 {
-                    if (ScanMode)
-                        foreach (var group in Groups)
-                        {
-                            foreach (AbstractPanelItem PItem in sender.GetListBySubject(group))
-                            {
-                                if (!m_Data.ContainsKey(PItem[0]))
-                                    m_Data.Add(PItem[0], PItem);
-                            }
-                        }
-                    ;
-                    foreach (var item in m_Items)
-                        Add(item);
+                    // for computers only we uses scan and user items
+                    if (subject is DomainPanelItem)
+                    {
+                        if (ScanMode)
+                            foreach (var group in Groups)
+                                ProcessGroup(sender, group);
+                        foreach (var item in m_Items)
+                            Add(item);
+                    }
+                    // for other subjects we will use last element of path
+                    else
+                    {
+                        ISubject group = (ISubject)m_CurrentPath.Peek();
+                        if (group != null)
+                            ProcessGroup(sender, group);
+                    }
                 }
                 //lock (m_Keys)
                 {
@@ -290,108 +301,6 @@ namespace LanExchange.Model
         {
             if (Changed != null)
                 Changed(this, EventArgs.Empty);
-        }
-
-        /// <summary>
-        /// Возвращает список элементов с верхнего уровня из стека переходов.
-        /// В частности это будет список копьютеров, даже если мы находимся на уровне списка ресуров.
-        /// </summary>
-        /// <returns></returns>
-        public IList<AbstractPanelItem> GetTopItemList()
-        {
-            return null;
-            /*
-            if (InternalStack.Count == 0)
-                return InternalItems;
-            else
-            {
-                IList<PanelItem>[] Arr = InternalStack.ToArray();
-                return Arr[0];
-            }
-             */
-        }
-
-        public void LevelDown()
-        {
-            /*
-            if (LV == null || LV.FocusedItem == null)
-                return;
-            string FocusedText = LV.FocusedItem.Text;
-            if (String.IsNullOrEmpty(FocusedText))
-            {
-                LevelUp();
-                return;
-            }
-
-            switch (ViewType)
-            {
-                case LVType.COMPUTERS:
-                    if (LV.FocusedItem == null)
-                        break;
-                    // останавливаем поток пингов
-                    MainForm.GetInstance().CancelCompRelatedThreads();
-                    // сбрасываем фильтр
-                    MainForm.GetInstance().UpdateFilter(MainForm.GetInstance().GetActiveListView(), "", false);
-                    // текущий список добавляем в стек
-                    //if (InternalItems == null)
-                    //    InternalItems = InternalItemList.ToList();
-                    InternalStack.Push(InternalItems);
-                    // получаем новый список объектов, в данном случае список ресурсов компа
-                    InternalItems = PanelItemList.EnumNetShares(FocusedText);
-                    // устанавливаем новый список для визуального компонента
-                    CurrentDataTable = InternalItems;
-                    if (LV.VirtualListSize > 0)
-                    {
-                        LV.FocusedItem = LV.Items[0];
-                        LV.SelectedIndices.Add(0);
-                    }
-                    // меняем колонки в ListView
-                    Path = @"\\" + FocusedText;
-                    ViewType = LVType.SHARES;
-                    break;
-                case LVType.SHARES:
-                    MainForm.GetInstance().mFolderOpen_Click(MainForm.GetInstance().mFolderOpen, EventArgs.Empty);
-                    break;
-                case LVType.FILES:
-                    break;
-            }
-             */
-        }
-
-        public void LevelUp()
-        {
-            /*
-            if (InternalStack.Count == 0)
-                return;
-
-            //TPanelItem PItem = null;
-            string CompName = null;
-            if (InternalItemList.Count > 0)
-            {
-                CompName = Path;
-                if (CompName.Length > 2 && CompName[0] == '\\' && CompName[1] == '\\')
-                    CompName = CompName.Remove(0, 2);
-            }
-
-            InternalItems = InternalStack.Pop();
-
-            
-            switch (CurrentType)
-            {
-                case LVType.COMPUTERS:
-                    break;
-                case LVType.SHARES:
-                    ViewType = LVType.COMPUTERS;
-                    break;
-                case LVType.FILES:
-                    ViewType = LVType.SHARES;
-                    break;
-            }
-            CurrentDataTable = InternalItems;
-            InternalItemList.ListView_SelectComputer(MainForm.GetInstance().lvComps, CompName);
-
-            MainForm.GetInstance().UpdateFilter(MainForm.GetInstance().GetActiveListView(), MainForm.GetInstance().eFilter.Text, true);
-             */
         }
 
         public bool Equals(PanelItemList other)
