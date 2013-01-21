@@ -1,4 +1,5 @@
 ﻿using System;
+using LanExchange.UI;
 using LanExchange.Utils;
 using LanExchange.WMI;
 //using System.Net;
@@ -8,44 +9,45 @@ namespace LanExchange.Model
     public class ComputerPanelItem : AbstractPanelItem, IWMIComputer
     {
         private readonly ServerInfo m_SI;
-        private string m_Name = String.Empty;
-        private string m_Comment = String.Empty;
 
         /// <summary>
         /// Constructor creates ComputerPanelItem from <see cref="ServerInfo"/> object.
         /// </summary>
         /// <exception cref="ArgumentNullException"></exception>
-        /// <param name="si"></param>
-        public ComputerPanelItem(ServerInfo si)
+        public ComputerPanelItem(AbstractPanelItem parent, ServerInfo si) : base(parent)
         {
             if (si == null)
                 throw new ArgumentNullException("si");
             m_SI = si;
-            m_Name = m_SI.Name;
-            m_Comment = m_SI.Comment;
+            Name = m_SI.Name;
+            Comment = m_SI.Comment;
             IsPingable = true;
         }
 
-        public override string Name
-        {
-            get { return m_Name; }
-            set { m_Name = value; }
-        }
-
-        public override string Comment
-        {
-            get { return m_Comment; }
-            set { m_Comment = value; }
-        }
+        public string Name { get; set; }
+        public string Comment { get; set; }
 
         public ServerInfo SI
         {
             get { return m_SI; }
         }
 
-        public override string[] getStrings()
+        public override IComparable this[int index]
         {
-            return new[] { Comment.ToUpper(), Name.ToUpper(), m_SI.Version().ToUpper() };
+            get
+            {
+                switch (index)
+                {
+                    case 0:
+                        return Name;
+                    case 1:
+                        return Comment;
+                    case 2:
+                        return m_SI.Version();
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
         }
 
         public override int ImageIndex
@@ -79,5 +81,33 @@ namespace LanExchange.Model
         //        EndPoint = comp.EndPoint;
         //    }
         //}
+
+        public override int CountColumns
+        {
+            get { return 3; }
+        }
+
+        public override IPanelColumnHeader CreateColumnHeader(int index)
+        {
+            IPanelColumnHeader result = new ColumnHeaderEx() { Visible = true };
+            switch (index)
+            {
+                case 0:
+                    result.Text = "Сетевое имя";
+                    break;
+                case 1:
+                    result.Text = "Описание";
+                    break;
+                case 2:
+                    result.Text = "Версия ОС";
+                    break;
+            }
+            return result;
+        }
+
+        public override string ToString()
+        {
+            return @"\\" + base.ToString();
+        }
     }
 }

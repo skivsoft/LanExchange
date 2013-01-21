@@ -6,42 +6,25 @@ namespace LanExchange.Model
     public abstract class SharePanelItem : AbstractPanelItem, IComparable<SharePanelItem>
     {
         private readonly ShareInfo m_SHI;
-        private string m_Name;
-        private string m_Comment;
 
         /// <summary>
         /// Panel item for network shared resource.
         /// </summary>
         /// <exception cref="ArgumentNullException"></exception>
-        /// <param name="shi"></param>
-        public SharePanelItem(ShareInfo shi)
+        protected SharePanelItem(AbstractPanelItem parent, ShareInfo shi) : base(parent)
         {
             if (shi == null)
                 throw new ArgumentNullException("shi");
             m_SHI = shi;
-            m_Name = m_SHI.Name;
-            m_Comment = m_SHI.Comment;
+            Name = m_SHI.Name;
+            Comment = m_SHI.Comment;
         }
-
-        public override string Name
-        {
-            get { return m_Name; }
-            set { m_Name = value; }
-        }
-
-        public override string Comment
-        {
-            get { return m_Comment; }
-            set { m_Comment = value; }
-        }
-
-        public uint ShareType { get; set; }
 
         public override int ImageIndex
         {
             get
             {
-                if (String.IsNullOrEmpty(m_Name))
+                if (String.IsNullOrEmpty(Name))
                     return LanExchangeIcons.FolderBack;
                 if (SHI.IsPrinter)
                     return LanExchangeIcons.FolderPrinter;
@@ -54,9 +37,20 @@ namespace LanExchange.Model
             get { return m_SHI; }
         }
         
-        public override string[] GetSubItems()
+        public override IComparable this[int index]
         {
-            return new[] { "", Comment };
+            get
+            {
+                switch (index)
+                {
+                    case 0: 
+                        return Name;
+                    case 1:
+                        return Comment;
+                    default:
+                        throw new ArgumentOutOfRangeException("index");
+                }
+            }
         }
 
         public int CompareTo(SharePanelItem other)
@@ -77,15 +71,17 @@ namespace LanExchange.Model
             return Result;
         }
 
-        public ComputerPanelItem Computer { get; set; }
-
         public string ComputerName
         {
             get
             {
-                return Computer == null ? String.Empty : Computer.Name;
+                var comp = Parent as ComputerPanelItem;
+                return comp != null ? comp.Name : String.Empty;
             }
         }
 
+        public String Name { get; set; }
+        public String Comment { get; set; }
+        public uint ShareType { get; set; }
     }
 }

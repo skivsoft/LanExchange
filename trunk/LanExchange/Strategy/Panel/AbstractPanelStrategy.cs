@@ -1,17 +1,19 @@
 ﻿using System;
+using LanExchange.Model;
 
-namespace LanExchange.Strategy
+namespace LanExchange.Strategy.Panel
 {
-    public abstract class AbstractSubscriptionStrategy : IBackgroundStrategy
+    public abstract class AbstractPanelStrategy : IBackgroundStrategy
     {
         private readonly string m_Subject;
 
-        protected AbstractSubscriptionStrategy(string subject)
+        protected AbstractPanelStrategy(string subject)
         {
             m_Subject = subject;
         }
 
         public abstract void Algorithm();
+        public abstract bool AcceptParent(AbstractPanelItem parent);
 
         public string Subject
         {

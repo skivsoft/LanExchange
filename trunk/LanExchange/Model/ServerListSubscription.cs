@@ -9,6 +9,7 @@ using LanExchange.Utils;
 using System.IO;
 using System.Collections;
 using LanExchange.Strategy;
+using LanExchange.Strategy.Panel;
 
 namespace LanExchange.Model
 {
@@ -87,9 +88,9 @@ namespace LanExchange.Model
                 
                 bool subjectFound = false;
                 foreach(BackgroundContext ctx in BackgroundWorkers.Instance.EnumContexts())
-                    if (ctx.Strategy is AbstractSubscriptionStrategy)
+                    if (ctx.Strategy is AbstractPanelStrategy)
                     {
-                        var sub = ctx.Strategy as AbstractSubscriptionStrategy;
+                        var sub = ctx.Strategy as AbstractPanelStrategy;
                         if (sub.Subject.Equals(Pair.Key))
                         {
                             subjectFound = true;

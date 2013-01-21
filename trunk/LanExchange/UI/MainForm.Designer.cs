@@ -49,11 +49,11 @@
             this.lUserName = new System.Windows.Forms.ToolStripStatusLabel();
             this.tipComps = new System.Windows.Forms.ToolTip(this.components);
             this.popTop = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Pages = new LanExchange.UI.PagesView();
             this.pInfo = new LanExchange.UI.InfoView();
             this.popWorkers = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mStopWorkers = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.popTray.SuspendLayout();
             this.Status.SuspendLayout();
             this.popTop.SuspendLayout();
@@ -217,6 +217,12 @@
             this.popTop.Opening += new System.ComponentModel.CancelEventHandler(this.popTop_Opening);
             this.popTop.Opened += new System.EventHandler(this.popTop_Opened);
             // 
+            // menuItemToolStripMenuItem
+            // 
+            this.menuItemToolStripMenuItem.Name = "menuItemToolStripMenuItem";
+            this.menuItemToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.menuItemToolStripMenuItem.Text = "MenuItem";
+            // 
             // Pages
             // 
             this.Pages.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -252,12 +258,6 @@
             this.mStopWorkers.Size = new System.Drawing.Size(234, 22);
             this.mStopWorkers.Text = "Остановить фоновые потоки";
             this.mStopWorkers.Click += new System.EventHandler(this.mStopWorkers_Click);
-            // 
-            // menuItemToolStripMenuItem
-            // 
-            this.menuItemToolStripMenuItem.Name = "menuItemToolStripMenuItem";
-            this.menuItemToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.menuItemToolStripMenuItem.Text = "MenuItem";
             // 
             // MainForm
             // 

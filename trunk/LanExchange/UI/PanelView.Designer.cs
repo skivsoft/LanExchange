@@ -64,6 +64,7 @@
             this.mAfterSendTo = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.mContextClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.ePath = new System.Windows.Forms.TextBox();
             this.pFilter = new LanExchange.UI.FilterView();
             this.popComps.SuspendLayout();
             this.SuspendLayout();
@@ -78,11 +79,11 @@
             this.LV.FullRowSelect = true;
             this.LV.GridLines = true;
             this.LV.HideSelection = false;
-            this.LV.Location = new System.Drawing.Point(0, 0);
+            this.LV.Location = new System.Drawing.Point(0, 20);
             this.LV.Name = "LV";
             this.LV.ShowItemToolTips = true;
-            this.LV.Size = new System.Drawing.Size(470, 457);
-            this.LV.TabIndex = 23;
+            this.LV.Size = new System.Drawing.Size(470, 437);
+            this.LV.TabIndex = 26;
             this.LV.UseCompatibleStateImageBehavior = false;
             this.LV.View = System.Windows.Forms.View.Details;
             this.LV.VirtualMode = true;
@@ -376,6 +377,16 @@
             this.mContextClose.Text = "Закрыть";
             this.mContextClose.Click += new System.EventHandler(this.mContextClose_Click);
             // 
+            // ePath
+            // 
+            this.ePath.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ePath.Location = new System.Drawing.Point(0, 0);
+            this.ePath.Name = "ePath";
+            this.ePath.ReadOnly = true;
+            this.ePath.Size = new System.Drawing.Size(470, 20);
+            this.ePath.TabIndex = 25;
+            this.ePath.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ePath_KeyDown);
+            // 
             // pFilter
             // 
             this.pFilter.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -383,7 +394,7 @@
             this.pFilter.Location = new System.Drawing.Point(0, 457);
             this.pFilter.Name = "pFilter";
             this.pFilter.Size = new System.Drawing.Size(470, 30);
-            this.pFilter.TabIndex = 24;
+            this.pFilter.TabIndex = 27;
             this.pFilter.Visible = false;
             this.pFilter.FilterCountChanged += new System.EventHandler(this.pFilter_FilterCountChanged);
             // 
@@ -393,10 +404,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.LV);
             this.Controls.Add(this.pFilter);
+            this.Controls.Add(this.ePath);
             this.Name = "PanelView";
             this.Size = new System.Drawing.Size(470, 487);
             this.popComps.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -438,5 +451,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ToolStripMenuItem mWMI;
         private FilterView pFilter;
+        private System.Windows.Forms.TextBox ePath;
     }
 }
