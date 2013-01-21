@@ -6,6 +6,7 @@ using LanExchange.Model;
 using LanExchange.UI;
 using LanExchange.Utils;
 using System.Diagnostics;
+using LanExchange.Model.Panel;
 
 namespace LanExchange.Presenter
 {

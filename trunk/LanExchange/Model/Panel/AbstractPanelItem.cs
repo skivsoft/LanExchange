@@ -1,7 +1,7 @@
 ﻿using System;
 using LanExchange.Utils.Sorting;
 
-namespace LanExchange.Model
+namespace LanExchange.Model.Panel
 {
     public abstract class AbstractPanelItem : IColumnComparable, IComparable<AbstractPanelItem>
     {

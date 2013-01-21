@@ -30,7 +30,7 @@ namespace LanExchange.Presenter
             Settings.Instance.AdvancedMode = m_View.AdvancedMode;
             Settings.Instance.RefreshTimeInSec = m_View.RefreshTimeInMin * 60;
             Settings.SaveIfModified();
-            ServerListSubscription.Instance.RefreshInterval = (int)Settings.Instance.RefreshTimeInSec * 1000;
+            PanelSubscription.Instance.RefreshInterval = (int)Settings.Instance.RefreshTimeInSec * 1000;
         }
     }
 }

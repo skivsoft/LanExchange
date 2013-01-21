@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LanExchange.Model
+namespace LanExchange.Model.Panel
 {
     public class FilePanelItem : AbstractPanelItem
     {

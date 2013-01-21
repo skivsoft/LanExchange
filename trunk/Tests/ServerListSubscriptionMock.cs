@@ -4,7 +4,7 @@ using LanExchange.Model;
 
 namespace Tests
 {
-    class ServerListSubscriptionMock : ServerListSubscription
+    class ServerListSubscriptionMock : PanelSubscription
     {
         public string args;
         public bool Cancelled;

@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using LanExchange.Utils;
-using LanExchange.Model;
+using LanExchange.Model.Panel;
 
 namespace LanExchange.Strategy.Panel
 {
-    public class NetServerEnumStrategy : AbstractPanelStrategy
+    public class DomainEnumStrategy : AbstractPanelStrategy
     {
         private List<ServerInfo> m_Result;
 
-        public NetServerEnumStrategy(string subject) : base(subject)
+        public DomainEnumStrategy(string subject)
+            : base(subject)
         {
 
         }
@@ -17,11 +18,7 @@ namespace LanExchange.Strategy.Panel
         public override void Algorithm()
         {
             // get server list via OS api
-            NetApi32.SERVER_INFO_101[] list;
-            if (String.IsNullOrEmpty(Subject))
-                list = NetApi32Utils.GetDomainsArray();
-            else
-                list = NetApi32Utils.GetComputersOfDomainArray(Subject);
+            NetApi32.SERVER_INFO_101[] list = NetApi32Utils.GetDomainsArray();
             // convert array to IList<ServerInfo>
             m_Result = new List<ServerInfo>();
             Array.ForEach(list, item => m_Result.Add(new ServerInfo(item)));

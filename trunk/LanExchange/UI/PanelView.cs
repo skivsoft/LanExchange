@@ -10,6 +10,7 @@ using System.Reflection;
 using LanExchange.Model;
 using System.Collections.Generic;
 using LanExchange.WMI;
+using LanExchange.Model.Panel;
 
 namespace LanExchange.UI
 {

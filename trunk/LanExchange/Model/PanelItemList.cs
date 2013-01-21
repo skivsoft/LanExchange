@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using LanExchange.Model.Panel;
 using LanExchange.Utils;
 
 //using NLog;
@@ -100,12 +101,12 @@ namespace LanExchange.Model
             switch (ScanMode)
             {
                 case true:
-                    ServerListSubscription.Instance.UnSubscribe(this);
+                    PanelSubscription.Instance.UnSubscribe(this);
                     foreach(var group in Groups)
-                        ServerListSubscription.Instance.SubscribeToSubject(this, group);
+                        PanelSubscription.Instance.SubscribeToSubject(this, group);
                     break;
                 default:
-                    ServerListSubscription.Instance.UnSubscribe(this);
+                    PanelSubscription.Instance.UnSubscribe(this);
                     break;
             }
             if (SubscriptionChanged != null)

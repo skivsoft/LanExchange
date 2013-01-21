@@ -134,7 +134,7 @@ namespace LanExchange.Model
         {
             if (index >= 0 && index < m_List.Count)
             {
-                ServerListSubscription.Instance.UnSubscribe(m_List[index]);
+                PanelSubscription.Instance.UnSubscribe(m_List[index]);
                 m_List.RemoveAt(index);
                 DoAfterRemove(index);
             }

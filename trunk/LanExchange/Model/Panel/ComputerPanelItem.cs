@@ -4,7 +4,7 @@ using LanExchange.Utils;
 using LanExchange.WMI;
 //using System.Net;
 
-namespace LanExchange.Model
+namespace LanExchange.Model.Panel
 {
     public class ComputerPanelItem : AbstractPanelItem, IWMIComputer
     {
