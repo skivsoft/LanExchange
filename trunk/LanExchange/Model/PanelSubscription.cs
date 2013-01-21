@@ -10,6 +10,8 @@ using System.IO;
 using System.Collections;
 using LanExchange.Strategy;
 using LanExchange.Strategy.Panel;
+using System.Reflection;
+using LanExchange.Model.Panel;
 
 namespace LanExchange.Model
 {
@@ -19,7 +21,7 @@ namespace LanExchange.Model
         #region Static fields and methods
 
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
-        private static PanelSubscription m_Instance;
+        private static ISubscription m_Instance;
 
         public static ISubscription Instance
         {
@@ -32,8 +34,9 @@ namespace LanExchange.Model
         }
         #endregion
 
-        private readonly IDictionary<string, IList<ISubscriber>> m_Subjects;
-        private readonly IDictionary<string, IList<ServerInfo>> m_Results;
+        private readonly IDictionary<ISubject, IList<ISubscriber>> m_Subjects;
+        private readonly IDictionary<ISubject, IList<AbstractPanelItem>> m_Results;
+        private readonly IList<AbstractPanelStrategy> m_Strategies;
 
         private int m_RefreshInterval;
         private readonly Timer m_RefreshTimer;
@@ -42,8 +45,10 @@ namespace LanExchange.Model
         protected PanelSubscription()
         {
             // lists
-            m_Subjects = new Dictionary<string, IList<ISubscriber>>();
-            m_Results = new Dictionary<string, IList<ServerInfo>>();
+            m_Subjects = new Dictionary<ISubject, IList<ISubscriber>>();
+            m_Results = new Dictionary<ISubject, IList<AbstractPanelItem>>();
+            m_Strategies = new List<AbstractPanelStrategy>();
+            InitStrategies();
             // load cached results
             LoadResultsFromCache();
             // timer
@@ -55,6 +60,16 @@ namespace LanExchange.Model
         public void Dispose()
         {
             m_RefreshTimer.Dispose();
+        }
+
+        private void InitStrategies()
+        {
+            foreach (var T in Assembly.GetExecutingAssembly().GetTypes())
+                if (T.IsClass && !T.IsAbstract && T.BaseType == typeof (AbstractPanelStrategy))
+                {
+                    var strategy = (AbstractPanelStrategy)Activator.CreateInstance(T);
+                    m_Strategies.Add(strategy);
+                }
         }
 
         //public bool IsInstantUpdate
@@ -76,6 +91,35 @@ namespace LanExchange.Model
                 m_RefreshTimer.Interval = value;
             }
         }
+        
+        public bool HasStrategyForSubject(ISubject subject)
+        {
+            foreach (var strategy in m_Strategies)
+            {
+                bool accepted;
+                strategy.AcceptSubject(subject, out accepted);
+                if (accepted)
+                    return true;
+            }
+            return false;
+        }
+
+        private AbstractPanelStrategy CreateConcretePanelStrategy(ISubject subject)
+        {
+            foreach (var strategy in m_Strategies)
+            {
+                bool accepted;
+                strategy.AcceptSubject(subject, out accepted);
+                if (accepted)
+                {
+                    // create another one instance of the strategy
+                    var newStrategy = (AbstractPanelStrategy)Activator.CreateInstance(strategy.GetType());
+                    newStrategy.Subject = subject;
+                    return newStrategy;
+                }
+            }
+            return null;
+        }
 
         private void RefreshTimer_Tick(object sender, EventArgs e)
         {
@@ -90,8 +134,8 @@ namespace LanExchange.Model
                 foreach(BackgroundContext ctx in BackgroundWorkers.Instance.EnumContexts())
                     if (ctx.Strategy is AbstractPanelStrategy)
                     {
-                        var sub = ctx.Strategy as AbstractPanelStrategy;
-                        if (sub.Subject.Equals(Pair.Key))
+                        var strategy = ctx.Strategy as AbstractPanelStrategy;
+                        if (strategy.Subject != null && strategy.Subject.Equals(Pair.Key))
                         {
                             subjectFound = true;
                             break;
@@ -99,32 +143,37 @@ namespace LanExchange.Model
                     }
                 if (!subjectFound)
                 {
-                    var context = new BackgroundContext(new ComputerEnumStrategy(Pair.Key));
+                    // select strategy for enum panel items by specified subject Pair.Key
+                    var strategy = CreateConcretePanelStrategy(Pair.Key);
+                    if (strategy == null) continue;
+                    // create background worker for enum via strategy
+                    var context = new BackgroundContext(strategy);
                     var worker = new BackgroundWorkerEx();
                     worker.DoWork += OneWorker_DoWork;
                     worker.RunWorkerCompleted += OneWorker_RunWorkerCompleted;
                     BackgroundWorkers.Instance.Add(context, worker);
+                    // Run background worker!
                     worker.RunWorkerAsync(context);
                     //GC.KeepAlive(worker);
                 }
             }
         }
 
-        private bool SetResult(string domain, IList<ServerInfo> list)
+        private bool SetResult(ISubject subject, IList<AbstractPanelItem> list)
         {
             bool bModified = false;
             lock (m_Results)
             {
-                if (!m_Results.ContainsKey(domain))
+                if (!m_Results.ContainsKey(subject))
                 {
                     bModified = true;
-                    m_Results.Add(domain, list);
+                    m_Results.Add(subject, list);
                 }
                 if (!bModified)
                 {
-                    bModified = SortedListIsModified(m_Results[domain], list);
+                    bModified = SortedListIsModified(m_Results[subject], list);
                     if (bModified)
-                        m_Results[domain] = list;
+                        m_Results[subject] = list;
                 }
             }
             if (bModified)
@@ -148,9 +197,10 @@ namespace LanExchange.Model
             }
             context.ExecuteOperation();
             e.Result = null;
-            if (context.Strategy is ComputerEnumStrategy)
+            // process panel strategies
+            if (context.Strategy is AbstractPanelStrategy)
             {
-                var strategy = (context.Strategy as ComputerEnumStrategy);
+                var strategy = (context.Strategy as AbstractPanelStrategy);
                 if (SetResult(strategy.Subject, strategy.Result))
                     e.Result = strategy.Subject;
                 else
@@ -166,7 +216,7 @@ namespace LanExchange.Model
         protected virtual void OneWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (e.Cancelled) return;
-            var Subject = (string)e.Result;
+            var Subject = (ISubject)e.Result;
             // notify all subscribers for current subject
             lock (m_Subjects)
             {
@@ -175,7 +225,7 @@ namespace LanExchange.Model
                     var List = m_Subjects[Subject];
                     if (List.Count > 0)
                     {
-                        logger.Info("Notify {0} subscriber(s) with subject \"{1}\"", List.Count, Subject);
+                        logger.Info("Notify {0} subscriber(s) with subject {1}", List.Count, Subject);
                         foreach (var Subscriber in List)
                             Subscriber.DataChanged(this, Subject);
                     }
@@ -183,7 +233,7 @@ namespace LanExchange.Model
             }
         }
 
-        private static bool SortedListIsModified(IList<ServerInfo> listA, IList<ServerInfo> listB)
+        private static bool SortedListIsModified(IList<AbstractPanelItem> listA, IList<AbstractPanelItem> listB)
         {
             if (listA == null || listB == null)
                 return false;
@@ -202,63 +252,65 @@ namespace LanExchange.Model
 
         private static string GetCacheFileName()
         {
-            return Path.ChangeExtension(Settings.GetExecutableFileName(), ".cache");
+            return Path.ChangeExtension(Settings.GetExecutableFileName(), ".cache.tmp");
         }
 
 
         private void SaveResultsToCache()
         {
-            var fileName = GetCacheFileName();
-            logger.Info("SaveResultsToCache(\"{0}\")", fileName);
-            lock (m_Results)
-            {
-                var Temp = new Dictionary<string, NetApi32.SERVER_INFO_101[]>();
-                foreach (var Pair in m_Results)
-                {
-                    var TempList = new NetApi32.SERVER_INFO_101[Pair.Value.Count];
-                    for (int i = 0; i < Pair.Value.Count; i++)
-                        TempList[i] = Pair.Value[i].GetInfo();
-                    Temp.Add(Pair.Key, TempList);
-                }
-                try
-                {
-                    SerializeUtils.SerializeObjectToBinaryFile(fileName, Temp);
-                }
-                catch (Exception E)
-                {
-                    logger.Error("SaveResultsToCache: {0}", E.Message);
-                }
-            }
+            // TODO: uncomment this!
+            //var fileName = GetCacheFileName();
+            //logger.Info("SaveResultsToCache(\"{0}\")", fileName);
+            //lock (m_Results)
+            //{
+            //    var Temp = new Dictionary<string, NetApi32.SERVER_INFO_101[]>();
+            //    foreach (var Pair in m_Results)
+            //    {
+            //        var TempList = new NetApi32.SERVER_INFO_101[Pair.Value.Count];
+            //        for (int i = 0; i < Pair.Value.Count; i++)
+            //            TempList[i] = Pair.Value[i].GetInfo();
+            //        Temp.Add(Pair.Key, TempList);
+            //    }
+            //    try
+            //    {
+            //        SerializeUtils.SerializeObjectToBinaryFile(fileName, Temp);
+            //    }
+            //    catch (Exception E)
+            //    {
+            //        logger.Error("SaveResultsToCache: {0}", E.Message);
+            //    }
+            //}
         }
 
         private void LoadResultsFromCache()
         {
-            var fileName = GetCacheFileName();
-            if (!File.Exists(fileName)) return;
-            logger.Info("LoadResultsFromCache(\"{0}\")", fileName);
-            lock (m_Results)
-            {
-                Dictionary<string, NetApi32.SERVER_INFO_101[]> Temp = null;
-                try
-                {
-                    Temp = (Dictionary<string, NetApi32.SERVER_INFO_101[]>)SerializeUtils.DeserializeObjectFromBinaryFile(fileName);
-                }
-                catch (Exception E)
-                {
-                    logger.Error("LoadResultsFromCache: {0}", E.Message);
-                }
-                if (Temp != null)
-                {
-                    m_Results.Clear();
-                    foreach (var Pair in Temp)
-                    {
-                        var TempList = new List<ServerInfo>();
-                        Array.ForEach(Pair.Value, info => TempList.Add(new ServerInfo(info)));
-                        m_Results.Add(Pair.Key, TempList);
-                        TempList.Sort();
-                    }
-                }
-            }
+            // TODO: uncomment this!
+            //var fileName = GetCacheFileName();
+            //if (!File.Exists(fileName)) return;
+            //logger.Info("LoadResultsFromCache(\"{0}\")", fileName);
+            //lock (m_Results)
+            //{
+            //    Dictionary<string, NetApi32.SERVER_INFO_101[]> Temp = null;
+            //    try
+            //    {
+            //        Temp = (Dictionary<string, NetApi32.SERVER_INFO_101[]>)SerializeUtils.DeserializeObjectFromBinaryFile(fileName);
+            //    }
+            //    catch (Exception E)
+            //    {
+            //        logger.Error("LoadResultsFromCache: {0}", E.Message);
+            //    }
+            //    if (Temp != null)
+            //    {
+            //        m_Results.Clear();
+            //        foreach (var Pair in Temp)
+            //        {
+            //            var TempList = new List<ServerInfo>();
+            //            Array.ForEach(Pair.Value, info => TempList.Add(new ServerInfo(info)));
+            //            m_Results.Add(Pair.Key, TempList);
+            //            TempList.Sort();
+            //        }
+            //    }
+            //}
         }
 
         public bool HasSubscribers()
@@ -292,7 +344,7 @@ namespace LanExchange.Model
         }
 
         #region ISubscription interface
-        public void SubscribeToSubject(ISubscriber sender, string subject)
+        public void SubscribeToSubject(ISubscriber sender, ISubject subject)
         {
             if (sender == null)
                 throw new ArgumentNullException("sender");
@@ -342,18 +394,19 @@ namespace LanExchange.Model
             }
             if (Modified)
             {
-                sender.DataChanged(this, null);
+                sender.DataChanged(this, ConcreteSubject.Empty);
                 SubscribersChanged();
             }
         }
         #endregion
-        public IEnumerable<KeyValuePair<string, IList<ISubscriber>>> GetSubjects()
+
+        public IEnumerable<KeyValuePair<ISubject, IList<ISubscriber>>> GetSubjects()
         {
             return m_Subjects;
         }
 
 
-        public IEnumerable GetListBySubject(string subject)
+        public IEnumerable GetListBySubject(ISubject subject)
         {
             if (subject == null)
                 yield break;

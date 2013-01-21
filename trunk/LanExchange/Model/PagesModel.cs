@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using LanExchange.Model.Panel;
 using LanExchange.Utils;
 using System.IO;
 using NLog;
@@ -194,7 +195,7 @@ namespace LanExchange.Model
                 {
                     ScanMode = true
                 };
-                Info.Groups.Add(domain);
+                Info.Groups.Add(new DomainPanelItem(domain));
                 AddTab(Info);
             }
             if (m_PagesSettings.SelectedIndex != -1)

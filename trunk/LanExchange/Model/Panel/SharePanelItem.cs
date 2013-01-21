@@ -1,17 +1,20 @@
 ﻿using System;
 using LanExchange.Utils;
+using LanExchange.UI;
 
 namespace LanExchange.Model.Panel
 {
-    public abstract class SharePanelItem : AbstractPanelItem, IComparable<SharePanelItem>
+    public class SharePanelItem : AbstractPanelItem, IComparable<SharePanelItem>
     {
         private readonly ShareInfo m_SHI;
+        private ISubject Subject_2;
+        private string p;
 
         /// <summary>
         /// Panel item for network shared resource.
         /// </summary>
         /// <exception cref="ArgumentNullException"></exception>
-        protected SharePanelItem(AbstractPanelItem parent, ShareInfo shi) : base(parent)
+        public SharePanelItem(AbstractPanelItem parent, ShareInfo shi) : base(parent)
         {
             if (shi == null)
                 throw new ArgumentNullException("shi");
@@ -83,5 +86,30 @@ namespace LanExchange.Model.Panel
         public String Name { get; set; }
         public String Comment { get; set; }
         public uint ShareType { get; set; }
+
+        public override int CountColumns
+        {
+            get { return 2; }
+        }
+
+        public override string ToolTipText
+        {
+            get { return String.Empty; }
+        }
+
+        public override IPanelColumnHeader CreateColumnHeader(int index)
+        {
+            IPanelColumnHeader result = new ColumnHeaderEx() { Visible = true };
+            switch (index)
+            {
+                case 0:
+                    result.Text = "Общий ресурс";
+                    break;
+                case 1:
+                    result.Text = "Описание";
+                    break;
+            }
+            return result;
+        }
     }
 }

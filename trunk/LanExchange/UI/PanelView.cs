@@ -276,9 +276,7 @@ namespace LanExchange.UI
 
         private void lvComps_ItemActivate(object sender, EventArgs e)
         {
-            var PItem = m_Presenter.GetFocusedPanelItem(false);
-            if (PItem == null || m_Presenter.Objects == null) return;
-            m_Presenter.Objects.CurrentPath.Push(PItem);
+            m_Presenter.ItemActivate();
         }
 
         private void mWMI_Click(object sender, EventArgs e)

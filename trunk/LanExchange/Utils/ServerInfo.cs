@@ -12,6 +12,13 @@ namespace LanExchange.Utils
             m_Info = info;
         }
 
+        public ServerInfo(string name, string comment)
+        {
+            m_Info = new NetApi32.SERVER_INFO_101();
+            m_Info.sv101_name = name;
+            m_Info.sv101_comment = comment;
+        }
+
         public string Name
         {
             get { return m_Info.sv101_name; }

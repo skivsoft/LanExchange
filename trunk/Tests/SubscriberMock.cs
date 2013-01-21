@@ -6,9 +6,9 @@ namespace Tests
     class SubscriberMock : ISubscriber
     {
         public bool IsEventFired;
-        public string Subject;
+        public ISubject Subject;
 
-        public void DataChanged(ISubscription sender, string subject)
+        public void DataChanged(ISubscription sender, ISubject subject)
         {
             IsEventFired = true;
             Subject = subject;
