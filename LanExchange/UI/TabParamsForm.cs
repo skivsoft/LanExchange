@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using LanExchange.Model;
 using LanExchange.Utils;
 using System.Drawing;
+using LanExchange.Model.Panel;
 
 namespace LanExchange.UI
 {
@@ -12,13 +13,13 @@ namespace LanExchange.UI
         public TabParamsForm()
         {
             InitializeComponent();
-            // subscribe Form to domain list (subject = "")
-            PanelSubscription.Instance.SubscribeToSubject(this, string.Empty);
+            // subscribe Form to ROOT subject (must return domain list)
+            PanelSubscription.Instance.SubscribeToSubject(this, ConcreteSubject.Root);
             // unsubscribe Form from any subjects when Closed event will be fired
             Closed += (sender, args) => PanelSubscription.Instance.UnSubscribe(this);
         }
 
-        public void DataChanged(ISubscription sender, string subject)
+        public void DataChanged(ISubscription sender, ISubject subject)
         {
             // do not update list after unsubscribe
             if (subject == null) return;
@@ -28,13 +29,15 @@ namespace LanExchange.UI
                 FocusedText = lvDomains.FocusedItem.Text;
             lvDomains.Items.Clear();
             int index = 0;
-            foreach (ServerInfo SI in sender.GetListBySubject(subject))
+            foreach (var PItem in sender.GetListBySubject(subject))
             {
-                var LVI = new ListViewItem(SI.Name);
-                if (Saved.Contains(SI.Name))
+                var domain = PItem as DomainPanelItem;
+                if (domain == null) continue;
+                var LVI = new ListViewItem(domain.Name);
+                if (Saved.Contains(domain.Name))
                     LVI.Checked = true;
                 lvDomains.Items.Add(LVI);
-                if (FocusedText != null && String.CompareOrdinal(SI.Name, FocusedText) == 0)
+                if (FocusedText != null && String.CompareOrdinal(domain.Name, FocusedText) == 0)
                 {
                     lvDomains.FocusedItem = lvDomains.Items[index];
                     lvDomains.FocusedItem.Selected = true;
@@ -58,21 +61,21 @@ namespace LanExchange.UI
             }
         }
 
-        public IList<string> Groups
+        public IList<ISubject> Groups
         {
             get
             {
-                List<string> Result = new List<string>();
+                var result = new List<ISubject>();
                 foreach (ListViewItem item in lvDomains.Items)
                     if (item.Checked)
-                        Result.Add(item.Text);
-                return Result;
+                        result.Add(new DomainPanelItem(item.Text));
+                return result;
             }
             set
             {
                 if (value != null)
-                    foreach(string str in value)
-                        ListViewUtils.SetChecked(lvDomains, str, true);
+                    foreach(var PItem in value)
+                        ListViewUtils.SetChecked(lvDomains, PItem.Subject, true);
             }
         }
 

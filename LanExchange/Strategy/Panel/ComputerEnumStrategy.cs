@@ -2,40 +2,27 @@
 using System.Collections.Generic;
 using LanExchange.Utils;
 using LanExchange.Model.Panel;
+using LanExchange.Model;
 
 namespace LanExchange.Strategy.Panel
 {
-    public class ComputerEnumStrategy : AbstractPanelStrategy
+    internal class ComputerEnumStrategy : AbstractPanelStrategy
     {
-        private List<ServerInfo> m_Result;
-
-        public ComputerEnumStrategy(string subject) : base(subject)
-        {
-
-        }
-
         public override void Algorithm()
         {
+            var domain = Subject as DomainPanelItem;
+            if (domain == null) return;
             // get server list via OS api
-            NetApi32.SERVER_INFO_101[] list;
-            if (String.IsNullOrEmpty(Subject))
-                list = NetApi32Utils.GetDomainsArray();
-            else
-                list = NetApi32Utils.GetComputersOfDomainArray(Subject);
+            NetApi32.SERVER_INFO_101[] list = NetApi32Utils.GetComputersOfDomainArray(domain.Name);
             // convert array to IList<ServerInfo>
-            m_Result = new List<ServerInfo>();
-            Array.ForEach(list, item => m_Result.Add(new ServerInfo(item)));
+            m_Result = new List<AbstractPanelItem>();
+            Array.ForEach(list, item => m_Result.Add(new ComputerPanelItem(domain, new ServerInfo(item))));
         }
 
-        public IList<ServerInfo> Result
+        public override void AcceptSubject(ISubject subject, out bool accepted)
         {
-            get { return m_Result; }
-        }
-
-        public override bool AcceptParent(AbstractPanelItem parent)
-        {
-            // computers can be only at root level
-            return parent == null;
+            // computers can be only into domains
+            accepted = (subject as DomainPanelItem) != null;
         }
     }
 }

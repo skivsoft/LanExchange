@@ -3,7 +3,7 @@ using LanExchange.Utils.Sorting;
 
 namespace LanExchange.Model.Panel
 {
-    public abstract class AbstractPanelItem : IColumnComparable, IComparable<AbstractPanelItem>
+    public abstract class AbstractPanelItem : IColumnComparable, IComparable<AbstractPanelItem>, ISubject
     {
         public abstract int CountColumns { get; }
         public abstract IComparable this[int index] { get; }
@@ -29,7 +29,6 @@ namespace LanExchange.Model.Panel
             return this[index];
         }
 
-
         public int CompareTo(object other, int column)
         {
             var otherItem = other as AbstractPanelItem;
@@ -44,6 +43,11 @@ namespace LanExchange.Model.Panel
             return CompareTo(other, 0);
         }
 
+        public string Subject
+        {
+            get { return this[0].ToString(); }
+        }
+
         public override string ToString()
         {
             return this[0].ToString();
@@ -56,5 +60,6 @@ namespace LanExchange.Model.Panel
                 result[i] = this[i].ToString().ToUpper();
             return result;
         }
+
     }
 }

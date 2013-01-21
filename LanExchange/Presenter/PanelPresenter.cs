@@ -241,5 +241,17 @@ namespace LanExchange.Presenter
         //        lv.EnsureVisible(index);
         //    }
         //}
+
+        internal void ItemActivate()
+        {
+            var PItem = GetFocusedPanelItem(false);
+            if (PItem == null || Objects == null) return;
+            if (PanelSubscription.Instance.HasStrategyForSubject(PItem))
+            {
+                Objects.CurrentPath.Push(PItem);
+                PanelSubscription.Instance.UnSubscribe(Objects);
+                PanelSubscription.Instance.SubscribeToSubject(Objects, PItem);
+            }
+        }
     }
 }

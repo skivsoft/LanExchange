@@ -6,9 +6,18 @@ namespace LanExchange.Model.Panel
 {
     public class DomainPanelItem : AbstractPanelItem
     {
+        private readonly ServerInfo m_SI;
+
         public DomainPanelItem(AbstractPanelItem parent, ServerInfo si) : base(parent)
         {
-            
+            m_SI = si;
+            Name = m_SI.Name;
+        }
+
+        public DomainPanelItem(string domain) : base(null)
+        {
+            m_SI = new ServerInfo(domain, String.Empty);
+            Name = domain;
         }
 
         public string Name { get; set; }

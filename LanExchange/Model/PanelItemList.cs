@@ -40,7 +40,7 @@ namespace LanExchange.Model
             m_Items = new List<AbstractPanelItem>();
             m_Data = new Dictionary<IComparable, AbstractPanelItem>();
             m_Keys = new List<IComparable>();
-            Groups = new List<string>();
+            Groups = new List<ISubject>();
             m_CurrentPath = new ObjectPath();
             TabName = name;
             CurrentView = System.Windows.Forms.View.Details;
@@ -54,6 +54,7 @@ namespace LanExchange.Model
 
         public TabSettings Settings
         {
+            // TODO: uncomment ScanGroups here!
             get
             {
                 var Page = new TabSettings { 
@@ -61,7 +62,7 @@ namespace LanExchange.Model
                     Filter = FilterText, 
                     CurrentView = CurrentView, 
                     ScanMode = ScanMode, 
-                    ScanGroups = Groups 
+                    //ScanGroups = Groups 
                 };
                 return Page;
             }
@@ -71,7 +72,7 @@ namespace LanExchange.Model
                 FilterText = value.Filter;
                 CurrentView = value.CurrentView;
                 ScanMode = value.ScanMode;
-                Groups = value.ScanGroups;
+                //Groups = value.ScanGroups;
             }
             
         }
@@ -87,7 +88,7 @@ namespace LanExchange.Model
 
         public bool ScanMode { get; set; }
 
-        public IList<string> Groups { get; set; }
+        public IList<ISubject> Groups { get; set; }
 
         //public IList<string> Keys
         //{
@@ -257,20 +258,26 @@ namespace LanExchange.Model
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="subject"></param>
-        public void DataChanged(ISubscription sender, string subject)
+        public void DataChanged(ISubscription sender, ISubject subject)
         {
             //lock (m_Data)
             {
                 m_Data.Clear();
-                if (ScanMode)
-                    foreach(var group in Groups)
-                    {
-                        foreach (ServerInfo si in sender.GetListBySubject(group))
-                            if (!m_Data.ContainsKey(si.Name))
-                                m_Data.Add(si.Name, new ComputerPanelItem(null, si));
-                    };
-                foreach(var item in m_Items)
-                    Add(item);
+                if (subject != ConcreteSubject.Empty)
+                {
+                    if (ScanMode)
+                        foreach (var group in Groups)
+                        {
+                            foreach (AbstractPanelItem PItem in sender.GetListBySubject(group))
+                            {
+                                if (!m_Data.ContainsKey(PItem[0]))
+                                    m_Data.Add(PItem[0], PItem);
+                            }
+                        }
+                    ;
+                    foreach (var item in m_Items)
+                        Add(item);
+                }
                 //lock (m_Keys)
                 {
                     ApplyFilter();

@@ -1,24 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
+using LanExchange.Model;
 using LanExchange.Model.Panel;
 
 namespace LanExchange.Strategy.Panel
 {
     public abstract class AbstractPanelStrategy : IBackgroundStrategy
     {
-        private readonly string m_Subject;
+        private ISubject m_Subject;
+        protected IList<AbstractPanelItem> m_Result;
 
-        protected AbstractPanelStrategy(string subject)
+        public virtual void AcceptSubject(ISubject subject, out bool accepted)
         {
-            m_Subject = subject;
+            // accepting nothing by default
+            accepted = false;
+        }
+
+        public ISubject Subject
+        {
+            get { return m_Subject; }
+            set { m_Subject = value; }
+        }
+
+        public IList<AbstractPanelItem> Result
+        {
+            get { return m_Result; }
         }
 
         public abstract void Algorithm();
-        public abstract bool AcceptParent(AbstractPanelItem parent);
-
-        public string Subject
-        {
-            get { return m_Subject; }
-        }
 
         public override string ToString()
         {

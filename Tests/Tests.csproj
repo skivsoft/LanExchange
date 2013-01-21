@@ -50,8 +50,8 @@
     <Compile Include="FilterModelMock.cs" />
     <Compile Include="FilterViewTest.cs" />
     <Compile Include="PagesViewTest.cs" />
-    <Compile Include="ServerListSubscriptionMock.cs" />
-    <Compile Include="ServerListSubscriptionTest.cs" />
+    <Compile Include="PanelSubscriptionMock.cs" />
+    <Compile Include="PanelSubscriptionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubscriberMock.cs" />
     <Compile Include="PagesModelTest.cs" />
