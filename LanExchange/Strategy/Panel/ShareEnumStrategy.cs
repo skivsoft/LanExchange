@@ -1,12 +1,12 @@
-﻿using LanExchange.Model;
+﻿using LanExchange.Model.Panel;
 
 namespace LanExchange.Strategy.Panel
 {
-    public class NetShareEnumStrategy : AbstractPanelStrategy
+    public class ShareEnumStrategy : AbstractPanelStrategy
     {
         //private List<ServerInfo> m_Result;
 
-        public NetShareEnumStrategy(string subject)
+        public ShareEnumStrategy(string subject)
             : base(subject)
         {
 

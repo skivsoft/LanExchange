@@ -13,9 +13,9 @@ namespace LanExchange.UI
         {
             InitializeComponent();
             // subscribe Form to domain list (subject = "")
-            ServerListSubscription.Instance.SubscribeToSubject(this, string.Empty);
+            PanelSubscription.Instance.SubscribeToSubject(this, string.Empty);
             // unsubscribe Form from any subjects when Closed event will be fired
-            Closed += (sender, args) => ServerListSubscription.Instance.UnSubscribe(this);
+            Closed += (sender, args) => PanelSubscription.Instance.UnSubscribe(this);
         }
 
         public void DataChanged(ISubscription sender, string subject)

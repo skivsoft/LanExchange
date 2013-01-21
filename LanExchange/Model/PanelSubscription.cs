@@ -14,19 +14,19 @@ using LanExchange.Strategy.Panel;
 namespace LanExchange.Model
 {
     // TODO need Designer code for this class
-    public class ServerListSubscription : ISubscription, IDisposable
+    public class PanelSubscription : ISubscription, IDisposable
     {
         #region Static fields and methods
 
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
-        private static ServerListSubscription m_Instance;
+        private static PanelSubscription m_Instance;
 
         public static ISubscription Instance
         {
             get
             {
                 if (m_Instance == null) 
-                    m_Instance = new ServerListSubscription();
+                    m_Instance = new PanelSubscription();
                 return m_Instance;
             }
         }
@@ -39,7 +39,7 @@ namespace LanExchange.Model
         private readonly Timer m_RefreshTimer;
         private bool m_InstantUpdate = true;
 
-        protected ServerListSubscription()
+        protected PanelSubscription()
         {
             // lists
             m_Subjects = new Dictionary<string, IList<ISubscriber>>();
@@ -99,7 +99,7 @@ namespace LanExchange.Model
                     }
                 if (!subjectFound)
                 {
-                    var context = new BackgroundContext(new NetServerEnumStrategy(Pair.Key));
+                    var context = new BackgroundContext(new ComputerEnumStrategy(Pair.Key));
                     var worker = new BackgroundWorkerEx();
                     worker.DoWork += OneWorker_DoWork;
                     worker.RunWorkerCompleted += OneWorker_RunWorkerCompleted;
@@ -148,9 +148,9 @@ namespace LanExchange.Model
             }
             context.ExecuteOperation();
             e.Result = null;
-            if (context.Strategy is NetServerEnumStrategy)
+            if (context.Strategy is ComputerEnumStrategy)
             {
-                var strategy = (context.Strategy as NetServerEnumStrategy);
+                var strategy = (context.Strategy as ComputerEnumStrategy);
                 if (SetResult(strategy.Subject, strategy.Result))
                     e.Result = strategy.Subject;
                 else

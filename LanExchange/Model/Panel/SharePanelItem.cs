@@ -1,7 +1,7 @@
 ﻿using System;
 using LanExchange.Utils;
 
-namespace LanExchange.Model
+namespace LanExchange.Model.Panel
 {
     public abstract class SharePanelItem : AbstractPanelItem, IComparable<SharePanelItem>
     {

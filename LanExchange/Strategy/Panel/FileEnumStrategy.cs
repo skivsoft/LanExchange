@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using LanExchange.Model;
+using LanExchange.Model.Panel;
 
 namespace LanExchange.Strategy.Panel
 {

@@ -1,5 +1,5 @@
 ﻿using System;
-using LanExchange.Model;
+using LanExchange.Model.Panel;
 
 namespace LanExchange.Strategy.Panel
 {

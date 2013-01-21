@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Text;
 using LanExchange.Windows;
 using System.Security.Permissions;
+using LanExchange.Model.Panel;
 
 namespace LanExchange.UI
 {
@@ -48,7 +49,7 @@ namespace LanExchange.UI
             Pages.Pages.ImageList = LanExchangeIcons.SmallImageList;
             Status.ImageList = LanExchangeIcons.SmallImageList;
             // init network scanner
-            ServerListSubscription.Instance.RefreshInterval = (int)Settings.Instance.RefreshTimeInSec * 1000;
+            PanelSubscription.Instance.RefreshInterval = (int)Settings.Instance.RefreshTimeInSec * 1000;
         }
 
         private void SetupForm()
@@ -85,7 +86,7 @@ namespace LanExchange.UI
         private static void Debug_ShowSubscribers()
         {
             var S = new StringBuilder();
-            foreach (var Pair in ServerListSubscription.Instance.GetSubjects())
+            foreach (var Pair in PanelSubscription.Instance.GetSubjects())
                 S.AppendLine(String.Format("{0} - {1}", Pair.Key, Pair.Value.Count));
             MessageBox.Show(S.ToString());
         }

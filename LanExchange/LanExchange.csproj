@@ -87,8 +87,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\FilePanelItem.cs" />
+    <Compile Include="Model\Panel\DomainPanelItem.cs" />
+    <Compile Include="Model\Panel\FilePanelItem.cs" />
     <Compile Include="Model\IPanelColumnHeader.cs" />
+    <Compile Include="Strategy\Panel\DomainEnumStrategy.cs" />
     <Compile Include="Strategy\Panel\FileEnumStrategy.cs" />
     <Compile Include="Utils\ObjectPath.cs" />
     <Compile Include="UI\ColumnHeaderEx.cs">
@@ -101,9 +103,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Model\IFilterModel.cs" />
-    <Compile Include="Strategy\Panel\NetShareEnumStrategy.cs" />
+    <Compile Include="Strategy\Panel\ShareEnumStrategy.cs" />
     <Compile Include="Strategy\WMIClassesInitStrategy.cs" />
-    <Compile Include="Strategy\Panel\NetServerEnumStrategy.cs" />
+    <Compile Include="Strategy\Panel\ComputerEnumStrategy.cs" />
     <Compile Include="Strategy\Panel\AbstractPanelStrategy.cs" />
     <Compile Include="Presenter\FilterPresenter.cs" />
     <Compile Include="UI\FilterView.cs">
@@ -181,7 +183,7 @@
     <Compile Include="Model\ISubscriber.cs" />
     <Compile Include="Model\ISubscription.cs" />
     <Compile Include="Utils\NetApi32.cs" />
-    <Compile Include="Model\ServerListSubscription.cs" />
+    <Compile Include="Model\PanelSubscription.cs" />
     <Compile Include="Utils\ServerInfo.cs" />
     <Compile Include="Model\TabSettings.cs" />
     <Compile Include="Utils\NetApi32Utils.cs" />
@@ -192,11 +194,11 @@
     <Compile Include="UI\ParamsForm.Designer.cs">
       <DependentUpon>ParamsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\ComputerPanelItem.cs" />
+    <Compile Include="Model\Panel\ComputerPanelItem.cs" />
     <Compile Include="Utils\Sorting\ColumnComparer.cs" />
-    <Compile Include="Model\SharePanelItem.cs" />
+    <Compile Include="Model\Panel\SharePanelItem.cs" />
     <Compile Include="Model\PingThread.cs" />
-    <Compile Include="Model\AbstractPanelItem.cs" />
+    <Compile Include="Model\Panel\AbstractPanelItem.cs" />
     <Compile Include="Utils\User32Utils.cs" />
     <Compile Include="Utils\AutorunUtils.cs" />
     <Compile Include="Program.cs" />
@@ -346,6 +348,7 @@
     <Content Include="Resources\LanExchange_16x16.ico" />
     <None Include="Resources\LanExchange_48x48.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
