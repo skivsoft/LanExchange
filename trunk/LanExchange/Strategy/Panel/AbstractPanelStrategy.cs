@@ -31,7 +31,7 @@ namespace LanExchange.Strategy.Panel
 
         public override string ToString()
         {
-            return String.Format("{0}(\"{1}\")", base.ToString(), m_Subject);
+            return String.Format("{0}({1})", base.ToString(), m_Subject);
         }
     }
 }

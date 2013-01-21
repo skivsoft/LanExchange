@@ -1,5 +1,6 @@
 ﻿using System;
 using LanExchange.Utils.Sorting;
+using System.Text;
 
 namespace LanExchange.Model.Panel
 {
@@ -51,6 +52,26 @@ namespace LanExchange.Model.Panel
         public override string ToString()
         {
             return this[0].ToString();
+        }
+
+
+        public string GetFullName()
+        {
+            var sb = new StringBuilder();
+            var item = this;
+            while (true)
+            {
+                var s = item.ToString();
+                if (s != string.Empty)
+                {
+                    if (sb.Length > 0)
+                        sb.Insert(0, @"\");
+                    sb.Insert(0, s);
+                }
+                if (item.Parent == null) break;
+                item = item.Parent;
+            }
+            return sb.ToString();
         }
 
         internal string[] GetStringsUpper()

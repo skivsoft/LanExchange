@@ -113,32 +113,25 @@ namespace LanExchange.Utils
         #region WinApi: NetShareEnum
         [DllImport(NETAPI32, CharSet = CharSet.Unicode)]
         [System.Security.SuppressUnmanagedCodeSecurity]
-        public static extern int NetShareEnum(
-             StringBuilder ServerName,
+        public static extern NERR NetShareEnum(
+             string ServerName,
              int level,
-             ref IntPtr bufPtr,
+             out IntPtr bufPtr,
              uint prefmaxlen,
              ref int entriesread,
              ref int totalentries,
-             ref int resume_handle
+             int resume_handle
              );
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         public struct SHARE_INFO_1
         {
+            [MarshalAs(UnmanagedType.LPWStr)]
             public string shi1_netname;
+            [MarshalAs(UnmanagedType.U4)]
             public uint shi1_type;
+            [MarshalAs(UnmanagedType.LPWStr)]
             public string shi1_remark;
-            public SHARE_INFO_1(string sharename, uint sharetype, string remark)
-            {
-                shi1_netname = sharename;
-                shi1_type = sharetype;
-                shi1_remark = remark;
-            }
-            public override string ToString()
-            {
-                return shi1_netname;
-            }
         }
 
         public const uint MAX_PREFERRED_LENGTH = 0xFFFFFFFF;

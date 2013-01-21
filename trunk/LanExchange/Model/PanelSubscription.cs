@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using NLog;
-using LanExchange.Utils;
 using System.IO;
 using System.Collections;
 using LanExchange.Strategy;
@@ -379,7 +378,7 @@ namespace LanExchange.Model
             }
         }
 
-        public void UnSubscribe(ISubscriber sender)
+        public void UnSubscribe(ISubscriber sender, bool updateTimer)
         {
             if (sender == null)
                 throw new ArgumentNullException("sender");
@@ -395,7 +394,8 @@ namespace LanExchange.Model
             if (Modified)
             {
                 sender.DataChanged(this, ConcreteSubject.Empty);
-                SubscribersChanged();
+                if (updateTimer)
+                    SubscribersChanged();
             }
         }
         #endregion

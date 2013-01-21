@@ -46,5 +46,10 @@ namespace LanExchange.Model.Panel
         {
             return new ColumnHeaderEx { Visible = true, Text = "Домен" };
         }
+
+        public override string ToString()
+        {
+            return string.Empty;
+        }
     }
 }
