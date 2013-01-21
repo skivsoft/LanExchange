@@ -2,7 +2,7 @@
 
 namespace LanExchange.Strategy
 {
-    public class WMIClassesEnumStrategy : IBackgroundStrategy
+    public class WMIClassesInitStrategy : IBackgroundStrategy
     {
         public void Algorithm()
         {

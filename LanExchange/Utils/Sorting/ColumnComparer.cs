@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace LanExchange.Utils.Sorting
 {
-    public class ColumnComparer<T> : IComparer<IColumnComparable<T>>
+    public class ColumnComparer : IComparer<IColumnComparable>
     {
         public enum ColumnSortOrder
         {
@@ -17,7 +17,7 @@ namespace LanExchange.Utils.Sorting
             SortOrder = sortOrder;
         }
 
-        public int Compare(IColumnComparable<T> item1, IColumnComparable<T> item2)
+        public int Compare(IColumnComparable item1, IColumnComparable item2)
         {
             int result = item1.CompareTo(item2, ColumnIndex);
             return SortOrder == ColumnSortOrder.Ascending ? result : -result;

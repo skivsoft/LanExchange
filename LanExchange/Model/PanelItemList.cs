@@ -19,11 +19,13 @@ namespace LanExchange.Model
         //private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
         // items added by user
-        private readonly SortedDictionary<string, AbstractPanelItem> m_Items;
+        private readonly IList<AbstractPanelItem> m_Items;
         // merged all results and user items
-        private readonly SortedDictionary<string, AbstractPanelItem> m_Data;
+        private readonly IDictionary<IComparable,AbstractPanelItem> m_Data;
         // keys for filtering
-        private readonly List<string> m_Keys;
+        private readonly IList<IComparable> m_Keys;
+        // current path for item list
+        private readonly ObjectPath m_CurrentPath;
 
         public event EventHandler Changed;
         public event EventHandler SubscriptionChanged;
@@ -34,13 +36,19 @@ namespace LanExchange.Model
 
         public PanelItemList(string name)
         {
-            m_Items = new SortedDictionary<string, AbstractPanelItem>();
-            m_Data = new SortedDictionary<string, AbstractPanelItem>();
-            m_Keys = new List<string>();
+            m_Items = new List<AbstractPanelItem>();
+            m_Data = new Dictionary<IComparable, AbstractPanelItem>();
+            m_Keys = new List<IComparable>();
             Groups = new List<string>();
+            m_CurrentPath = new ObjectPath();
             TabName = name;
             CurrentView = System.Windows.Forms.View.Details;
             ScanMode = false;
+        }
+
+        public ObjectPath CurrentPath
+        {
+            get { return m_CurrentPath; }
         }
 
         public TabSettings Settings
@@ -78,7 +86,7 @@ namespace LanExchange.Model
 
         public bool ScanMode { get; set; }
 
-        public List<string> Groups { get; set; }
+        public IList<string> Groups { get; set; }
 
         //public IList<string> Keys
         //{
@@ -93,7 +101,8 @@ namespace LanExchange.Model
             {
                 case true:
                     ServerListSubscription.Instance.UnSubscribe(this);
-                    Groups.ForEach(group => ServerListSubscription.Instance.SubscribeToSubject(this, group));
+                    foreach(var group in Groups)
+                        ServerListSubscription.Instance.SubscribeToSubject(this, group);
                     break;
                 default:
                     ServerListSubscription.Instance.UnSubscribe(this);
@@ -106,9 +115,10 @@ namespace LanExchange.Model
 
         public void Add(AbstractPanelItem comp)
         {
-            if (comp != null)
-                if (!m_Data.ContainsKey(comp.Name))
-                    m_Data.Add(comp.Name, comp);
+            if (comp == null)
+                throw new ArgumentNullException("comp");
+            if (!m_Data.ContainsKey(comp[0]))
+                m_Data.Add(comp[0], comp);
         }
 
         //TODO: add delete item
@@ -119,18 +129,15 @@ namespace LanExchange.Model
 
         public AbstractPanelItem GetAt(int index)
         {
-            return Get(m_Keys[index]);
+            return Get(m_Keys[index].ToString());
         }
 
         public AbstractPanelItem Get(string key)
         {
             if (key == null) return null;
-            AbstractPanelItem Result;
-            if (m_Data.TryGetValue(key, out Result))
-            {
-                Result.Name = key;
-                return Result;
-            }
+            AbstractPanelItem result;
+            if (m_Data.TryGetValue(key, out result))
+                return result;
             return null;
         }
 
@@ -173,9 +180,9 @@ namespace LanExchange.Model
             if (Filter2 != null) Filter2 = Filter2.ToUpper();
             foreach (var Pair in m_Data)
             {
-                string[] A = Pair.Value.getStrings();
-                if (!bFiltered || String.IsNullOrEmpty(Pair.Value.Name) || GoodForFilter(A, Filter1, Filter2))
-                    m_Keys.Add(Pair.Value.Name);
+                string[] A = Pair.Value.GetStringsUpper();
+                if (!bFiltered || String.IsNullOrEmpty(Pair.Value[0].ToString()) || GoodForFilter(A, Filter1, Filter2))
+                    m_Keys.Add(Pair.Value[0]);
             }
         }
 
@@ -236,13 +243,13 @@ namespace LanExchange.Model
         //}
 
 
-        public List<string> ToList()
-        {
-            List<string> Result = new List<string>();
-            foreach (var Pair in m_Data)
-                Result.Add(Pair.Value.Name);
-            return Result;
-        }
+        //public List<string> ToList()
+        //{
+        //    List<string> Result = new List<string>();
+        //    foreach (var Pair in m_Data)
+        //        Result.Add(Pair.Value.Name);
+        //    return Result;
+        //}
 
         /// <summary>
         /// ISubsctiber.DataChanged implementation.
@@ -255,23 +262,28 @@ namespace LanExchange.Model
             {
                 m_Data.Clear();
                 if (ScanMode)
-                    Groups.ForEach(group =>
+                    foreach(var group in Groups)
                     {
                         foreach (ServerInfo si in sender.GetListBySubject(group))
                             if (!m_Data.ContainsKey(si.Name))
-                                m_Data.Add(si.Name, new ComputerPanelItem(si));
-                    });
-                foreach (var Pair in m_Items)
-                    m_Data.Add(Pair.Key, Pair.Value);
+                                m_Data.Add(si.Name, new ComputerPanelItem(null, si));
+                    };
+                foreach(var item in m_Items)
+                    Add(item);
                 //lock (m_Keys)
                 {
                     ApplyFilter();
                 }
             }
+            OnChanged();
+        }
+ 
+        private void OnChanged()
+        {
             if (Changed != null)
                 Changed(this, EventArgs.Empty);
         }
- 
+
         /// <summary>
         /// Возвращает список элементов с верхнего уровня из стека переходов.
         /// В частности это будет список копьютеров, даже если мы находимся на уровне списка ресуров.

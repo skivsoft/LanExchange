@@ -58,7 +58,7 @@ namespace LanExchange.UI
             }
         }
 
-        public List<string> Groups
+        public IList<string> Groups
         {
             get
             {
@@ -71,7 +71,8 @@ namespace LanExchange.UI
             set
             {
                 if (value != null)
-                    value.ForEach(str => ListViewUtils.SetChecked(lvDomains, str, true));
+                    foreach(string str in value)
+                        ListViewUtils.SetChecked(lvDomains, str, true);
             }
         }
 

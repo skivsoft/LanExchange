@@ -1,7 +1,7 @@
 ﻿namespace LanExchange.Utils.Sorting
 {
-    public interface IColumnComparable<T>
+    public interface IColumnComparable
     {
-        int CompareTo(IColumnComparable<T> other, int column);     
+        int CompareTo(object other, int column);     
     }
 }

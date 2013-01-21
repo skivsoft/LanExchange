@@ -1,40 +1,60 @@
 ﻿using System;
+using LanExchange.Utils.Sorting;
 
 namespace LanExchange.Model
 {
-    public abstract class AbstractPanelItem : IComparable<AbstractPanelItem>
+    public abstract class AbstractPanelItem : IColumnComparable, IComparable<AbstractPanelItem>
     {
-        public abstract string Name { get; set; }
-        public abstract string Comment { get; set; }
+        public abstract int CountColumns { get; }
+        public abstract IComparable this[int index] { get; }
+        public abstract string ToolTipText { get; }
+        public abstract IPanelColumnHeader CreateColumnHeader(int index);
 
-        public virtual string[] getStrings()
+        protected AbstractPanelItem(AbstractPanelItem parent)
         {
-            return new[] { Name.ToUpper(), Comment.ToUpper() };
+            Parent = parent;
         }
 
-        public virtual string[] GetSubItems()
-        {
-            return new[] { Comment };
-        }
+        public AbstractPanelItem Parent { get; set; }
 
         public virtual int ImageIndex
         {
             get { return -1; }
         }
 
-        public virtual string ToolTipText
+        private IComparable GetColumnValue(int index)
         {
-            get { return Comment; }
+            if (index < 0 || index > CountColumns-1)
+                throw new ArgumentOutOfRangeException("index");
+            return this[index];
         }
 
-        public virtual int CompareTo(AbstractPanelItem p2)
+
+        public int CompareTo(object other, int column)
         {
-            int Result;
-            if (String.IsNullOrEmpty(Name))
-                Result = String.IsNullOrEmpty(p2.Name) ? 0 : -1;
-            else
-                Result = String.IsNullOrEmpty(p2.Name) ? +1 : String.Compare(Name, p2.Name, StringComparison.Ordinal);
-            return Result;
+            var otherItem = other as AbstractPanelItem;
+            if (otherItem == null) return 1;
+            var value1 = GetColumnValue(column);
+            var value2 = otherItem.GetColumnValue(column);
+            return value1.CompareTo(value2);
+        }
+
+        public int CompareTo(AbstractPanelItem other)
+        {
+            return CompareTo(other, 0);
+        }
+
+        public override string ToString()
+        {
+            return this[0].ToString();
+        }
+
+        internal string[] GetStringsUpper()
+        {
+            var result = new string[CountColumns];
+            for (int i = 0; i < result.Length; i++)
+                result[i] = this[i].ToString().ToUpper();
+            return result;
         }
     }
 }

@@ -87,6 +87,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\FilePanelItem.cs" />
+    <Compile Include="Model\IPanelColumnHeader.cs" />
+    <Compile Include="Strategy\Panel\FileEnumStrategy.cs" />
+    <Compile Include="Utils\ObjectPath.cs" />
+    <Compile Include="UI\ColumnHeaderEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Utils\Sorting\IColumnComparable.cs" />
     <Compile Include="Strategy\BackgroundContext.cs" />
     <Compile Include="Strategy\IBackgroundStrategy.cs" />
@@ -94,10 +101,10 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Model\IFilterModel.cs" />
-    <Compile Include="Strategy\NetShareEnumStrategy.cs" />
-    <Compile Include="Strategy\WMIClassesEnumStrategy.cs" />
-    <Compile Include="Strategy\NetServerEnumStrategy.cs" />
-    <Compile Include="Strategy\AbstractSubscriptionStrategy.cs" />
+    <Compile Include="Strategy\Panel\NetShareEnumStrategy.cs" />
+    <Compile Include="Strategy\WMIClassesInitStrategy.cs" />
+    <Compile Include="Strategy\Panel\NetServerEnumStrategy.cs" />
+    <Compile Include="Strategy\Panel\AbstractPanelStrategy.cs" />
     <Compile Include="Presenter\FilterPresenter.cs" />
     <Compile Include="UI\FilterView.cs">
       <SubType>UserControl</SubType>

@@ -1,6 +1,8 @@
-﻿namespace LanExchange.Strategy
+﻿using LanExchange.Model;
+
+namespace LanExchange.Strategy.Panel
 {
-    public class NetShareEnumStrategy : AbstractSubscriptionStrategy
+    public class NetShareEnumStrategy : AbstractPanelStrategy
     {
         //private List<ServerInfo> m_Result;
 
@@ -19,5 +21,11 @@
         //{
         //    get { return m_Result; }
         //}
+
+        public override bool AcceptParent(AbstractPanelItem parent)
+        {
+            // parent for share can be only computer
+            return (parent as ComputerPanelItem) != null;
+        }
     }
 }

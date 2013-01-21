@@ -17,38 +17,30 @@ namespace LanExchange.Presenter
         private PanelItemList m_Objects;
         private readonly IPanelView m_View;
 
+        public event EventHandler CurrentPathChanged;
+
         public PanelPresenter(IPanelView view)
         {
             m_View = view;
-
         }
-        public void CopyCompNameCommand()
+
+        private void CurrentPath_Changed(object sender, EventArgs e)
+        {
+            if (m_Objects != null && CurrentPathChanged != null)
+                CurrentPathChanged(sender, e);
+        }
+
+        public void CopyValueCommand(int index)
         {
             if (m_Objects == null) return;
             StringBuilder S = new StringBuilder();
-            foreach (int index in m_View.SelectedIndices)
+            foreach (int selIndex in m_View.SelectedIndices)
             {
                 if (S.Length > 0)
                     S.AppendLine();
-                AbstractPanelItem PItem = m_Objects.GetAt(index);
+                AbstractPanelItem PItem = m_Objects.GetAt(selIndex);
                 if (PItem != null)
-                    S.Append(@"\\" + PItem.Name);
-            }
-            if (S.Length > 0)
-                Clipboard.SetText(S.ToString());
-        }
-
-        public void CopyCommentCommand()
-        {
-            if (m_Objects == null) return;
-            StringBuilder S = new StringBuilder();
-            foreach (int index in m_View.SelectedIndices)
-            {
-                if (S.Length > 0)
-                    S.AppendLine();
-                AbstractPanelItem PItem = m_Objects.GetAt(index);
-                if (PItem != null)
-                    S.Append(PItem.Comment);
+                    S.Append(@"\\" + PItem[index]);
             }
             if (S.Length > 0)
                 Clipboard.SetText(S.ToString());
@@ -65,9 +57,9 @@ namespace LanExchange.Presenter
                 AbstractPanelItem PItem = m_Objects.GetAt(index);
                 if (PItem != null)
                 {
-                    S.Append(@"\\" + PItem.Name);
+                    S.Append(@"\\" + PItem[0]);
                     S.Append("\t");
-                    S.Append(PItem.Comment);
+                    S.Append(PItem[1]);
                 }
             }
             if (S.Length > 0)
@@ -118,7 +110,11 @@ namespace LanExchange.Presenter
             get { return m_Objects; }
             set
             {
+                if (m_Objects != null)
+                    m_Objects.CurrentPath.Changed -= CurrentPath_Changed;
                 m_Objects = value;
+                if (m_Objects != null)
+                    m_Objects.CurrentPath.Changed += CurrentPath_Changed;
                 m_View.Filter.GetPresenter().SetModel(value);
                 //m_View.SetVirtualListSize(m_Objects.Count);
             }
@@ -132,31 +128,27 @@ namespace LanExchange.Presenter
         public AbstractPanelItem GetFocusedPanelItem(bool bPingAndAsk)
         {
             //logger.Info("GetFocusedPanelItem. {0}", LV.FocusedItem);
-            AbstractPanelItem PItem = m_Objects.Get(m_View.FocusedItemText);
-            if (PItem == null)
-                return null;
-            if (PItem is ComputerPanelItem)
+            ComputerPanelItem comp = m_Objects.Get(m_View.FocusedItemText) as ComputerPanelItem;
+            if (comp == null) return null;
+            // пингуем
+            if (bPingAndAsk)
             {
-                // пингуем
-                if (bPingAndAsk)
+                bool bPingResult = PingThread.FastPing(comp.Name);
+                if (comp.IsPingable != bPingResult)
                 {
-                    bool bPingResult = PingThread.FastPing(PItem.Name);
-                    if ((PItem as ComputerPanelItem).IsPingable != bPingResult)
-                    {
-                        (PItem as ComputerPanelItem).IsPingable = bPingResult;
-                        m_View.RedrawFocusedItem();
-                    }
-                    if (!bPingResult)
-                    {
-                        DialogResult Result = MessageBox.Show(
-                            String.Format("Компьютер «{0}» не доступен посредством PING.\nПродолжить?", PItem.Name), "Запрос",
-                            MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-                        if (Result != DialogResult.Yes)
-                            PItem = null;
-                    }
+                    comp.IsPingable = bPingResult;
+                    m_View.RedrawFocusedItem();
+                }
+                if (!bPingResult)
+                {
+                    DialogResult Result = MessageBox.Show(
+                        String.Format("Компьютер «{0}» не доступен посредством PING.\nПродолжить?", comp.Name), "Запрос",
+                        MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                    if (Result != DialogResult.Yes)
+                        comp = null;
                 }
             }
-            return PItem;
+            return comp;
         }
 
         /// <summary>
@@ -179,7 +171,7 @@ namespace LanExchange.Presenter
             {
                 case COMPUTER_MENU:
                     if (PItem is ComputerPanelItem)
-                        FmtParam = PItem.Name;
+                        FmtParam = (PItem as ComputerPanelItem).Name;
                     else
                         if (PItem is SharePanelItem)
                             FmtParam = (PItem as SharePanelItem).ComputerName;
@@ -188,7 +180,7 @@ namespace LanExchange.Presenter
                     if (PItem is ComputerPanelItem)
                         return;
                     if (PItem is SharePanelItem)
-                        FmtParam = String.Format(@"\\{0}\{1}", (PItem as SharePanelItem).ComputerName, PItem.Name);
+                        FmtParam = String.Format(@"\\{0}\{1}", (PItem as SharePanelItem).ComputerName, (PItem as SharePanelItem).Name);
                     break;
             }
 
@@ -224,7 +216,7 @@ namespace LanExchange.Presenter
             }
             if (PItem is SharePanelItem)
             {
-                Comp = (PItem as SharePanelItem).Computer;
+                Comp = (PItem as SharePanelItem).Parent as ComputerPanelItem;
             }
             return Comp;
         }

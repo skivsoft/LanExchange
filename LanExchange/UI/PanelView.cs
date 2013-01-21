@@ -29,6 +29,7 @@ namespace LanExchange.UI
             InitializeComponent();
             // init presenters
             m_Presenter = new PanelPresenter(this);
+            m_Presenter.CurrentPathChanged += CurrentPath_Changed;
 
             // Enable double buffer for ListView
             var mi = typeof(Control).GetMethod("SetStyle", BindingFlags.Instance | BindingFlags.NonPublic);
@@ -48,6 +49,13 @@ namespace LanExchange.UI
             //mSendToNewTab.Click += new EventHandler(TabController.mSendToNewTab_Click);
         }
         #endregion
+
+        private void CurrentPath_Changed(object sender, EventArgs e)
+        {
+            var path = sender as ObjectPath;
+            if (path != null)
+                ePath.Text = path.ToString();
+        }
 
         public void SetupMenu(ContextMenuStrip popTop)
         {
@@ -82,9 +90,9 @@ namespace LanExchange.UI
             var PItem = m_Presenter.Objects.GetAt(index);
             if (PItem != null)
             {
-                Result.Text = PItem.Name;
-                string[] A = PItem.GetSubItems();
-                Array.ForEach(A, str => Result.SubItems.Add(str));
+                Result.Text = PItem[0].ToString();
+                for (int i = 1; i < PItem.CountColumns; i++)
+                    Result.SubItems.Add(PItem[i].ToString());
                 Result.ImageIndex = PItem.ImageIndex;
                 Result.ToolTipText = PItem.ToolTipText;
             }
@@ -240,7 +248,7 @@ namespace LanExchange.UI
                 e.Control && e.Alt && e.KeyCode == Keys.C)
             {
                 if (mCopyCompName.Enabled)
-                    m_Presenter.CopyCompNameCommand();
+                    m_Presenter.CopyValueCommand(0);
                 else
                     if (mCopyPath.Enabled)
                         m_Presenter.CopyPathCommand();
@@ -267,25 +275,9 @@ namespace LanExchange.UI
 
         private void lvComps_ItemActivate(object sender, EventArgs e)
         {
-            ListView lv = (sender as ListView);
-            if (lv == null) return;
-            if (lv.FocusedItem == null)
-            {
-                if (lv.VirtualListSize > 0)
-                    lv.FocusedItem = lv.Items[0];
-                else
-                    return;
-            }
-            logger.Info("LV_ItemActivate on {0}", lv.FocusedItem.ToString());
-            /*
-            if (CompBrowser.InternalStack.Count == 0)
-            {
-                PanelItem Comp = GetFocusedPanelItem(true, true);
-                if (Comp == null)
-                    return;
-            }
-            CompBrowser.LevelDown();
-             */
+            var PItem = m_Presenter.GetFocusedPanelItem(false);
+            if (PItem == null || m_Presenter.Objects == null) return;
+            m_Presenter.Objects.CurrentPath.Push(PItem);
         }
 
         private void mWMI_Click(object sender, EventArgs e)
@@ -309,7 +301,7 @@ namespace LanExchange.UI
                 WMIClassList.Instance.IncludeClasses.Clear();
                 foreach (string str in Settings.Instance.WMIClassesInclude)
                     WMIClassList.Instance.IncludeClasses.Add(str);
-                BackgroundWorkers.Instance.Add(new BackgroundContext(new WMIClassesEnumStrategy()));
+                BackgroundWorkers.Instance.Add(new BackgroundContext(new WMIClassesInitStrategy()));
             }
             // set MyComputer icon to form
             form.Icon = LanExchangeIcons.GetSmallIcon(LanExchangeIcons.CompDefault);
@@ -377,19 +369,21 @@ namespace LanExchange.UI
             {
                 if (PItem is ComputerPanelItem)
                 {
-                    mComp.Text = @"\\" + PItem.Name;
+                    var comp = PItem as ComputerPanelItem;
+                    mComp.Text = @"\\" + comp.Name;
                     bCompVisible = Settings.Instance.AdvancedMode;
                 }
                 if (PItem is SharePanelItem)
                 {
-                    mComp.Text = @"\\" + (PItem as SharePanelItem).ComputerName;
+                    var share = PItem as SharePanelItem;
+                    mComp.Text = @"\\" + share.ComputerName;
                     bCompVisible = Settings.Instance.AdvancedMode;
-                    if (!String.IsNullOrEmpty(PItem.Name))
+                    if (!String.IsNullOrEmpty(share.Name))
                     {
-                        mFolder.Text = String.Format(@"\\{0}\{1}", (PItem as SharePanelItem).ComputerName, PItem.Name);
-                        mFolder.Image = LanExchangeIcons.SmallImageList.Images[PItem.ImageIndex];
+                        mFolder.Text = String.Format(@"\\{0}\{1}", share.ComputerName, share.Name);
+                        mFolder.Image = LanExchangeIcons.SmallImageList.Images[share.ImageIndex];
                         bFolderVisible = true;
-                        mFAROpen.Enabled = !(PItem as SharePanelItem).SHI.IsPrinter;
+                        mFAROpen.Enabled = !share.SHI.IsPrinter;
                     }
                 }
             }
@@ -451,12 +445,12 @@ namespace LanExchange.UI
 
         private void mCopyCompName_Click(object sender, EventArgs e)
         {
-            m_Presenter.CopyCompNameCommand();
+            m_Presenter.CopyValueCommand(0);
         }
 
         private void mCopyComment_Click(object sender, EventArgs e)
         {
-            m_Presenter.CopyCommentCommand();
+            m_Presenter.CopyValueCommand(1);
         }
 
         private void mCopySelected_Click(object sender, EventArgs e)
@@ -503,6 +497,19 @@ namespace LanExchange.UI
             //TODO column sort for panelitems
             //var sorter = new PanelItemComparer(e.Column, PanelItemComparer.ColumnSortOrder.Ascending);
             //m_Presenter.Objects.Sort(sorter);
+        }
+
+        private void ePath_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.C || e.Control && e.KeyCode == Keys.Insert)
+            {
+                if (ePath.SelectionLength == 0)
+                {
+                    Clipboard.SetText(ePath.Text);
+                } else
+                    Clipboard.SetText(ePath.SelectedText);
+                e.Handled = true;
+            }
         }
     }
 }

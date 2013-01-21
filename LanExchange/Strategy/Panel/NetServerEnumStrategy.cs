@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using LanExchange.Utils;
+using LanExchange.Model;
 
-namespace LanExchange.Strategy
+namespace LanExchange.Strategy.Panel
 {
-    public class NetServerEnumStrategy : AbstractSubscriptionStrategy
+    public class NetServerEnumStrategy : AbstractPanelStrategy
     {
         private List<ServerInfo> m_Result;
 
@@ -29,6 +30,12 @@ namespace LanExchange.Strategy
         public IList<ServerInfo> Result
         {
             get { return m_Result; }
+        }
+
+        public override bool AcceptParent(AbstractPanelItem parent)
+        {
+            // computers can be only at root level
+            return parent == null;
         }
     }
 }
