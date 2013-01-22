@@ -51,5 +51,10 @@ namespace LanExchange.Model.Panel
         {
             return string.Empty;
         }
+
+        //public int CompareTo(DomainPanelItem other)
+        //{
+        //    return String.Compare(Name, other.Name, StringComparison.Ordinal);
+        //}
     }
 }

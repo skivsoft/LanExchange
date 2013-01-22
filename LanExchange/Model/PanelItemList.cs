@@ -110,7 +110,7 @@ namespace LanExchange.Model
         public AbstractPanelItem Get(string key)
         {
             if (key == null) return null;
-            var tempComp = new ComputerPanelItem(null, new ServerInfo(key));
+            var tempComp = new ComputerPanelItem(null, new ServerInfo { Name = key });
             int index = m_Data.BinarySearch(tempComp);
             if (index >= 0)
                 return m_Data[index];

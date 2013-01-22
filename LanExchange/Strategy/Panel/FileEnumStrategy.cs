@@ -23,10 +23,11 @@ namespace LanExchange.Strategy.Panel
         public override void AcceptSubject(ISubject subject, out bool accepted)
         {
             accepted = false;
-            if (subject is SharePanelItem)
-                accepted = true;
-            if (subject is FilePanelItem)
-                accepted = (subject as FilePanelItem).IsDirectory;
+            // TODO: add file navigator little bit later
+            //if (subject is SharePanelItem)
+            //    accepted = true;
+            //if (subject is FilePanelItem)
+            //    accepted = (subject as FilePanelItem).IsDirectory;
         }
     }
 }

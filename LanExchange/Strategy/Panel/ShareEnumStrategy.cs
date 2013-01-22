@@ -15,6 +15,7 @@ namespace LanExchange.Strategy.Panel
             IEnumerable<NetApi32.SHARE_INFO_1> list = NetApi32Utils.NetShareEnum(comp.Name);
             // convert array to IList<ServerInfo>
             m_Result = new List<AbstractPanelItem>();
+            m_Result.Add(ComputerPanelItem.GoBack);
             foreach(var item in list)
                 m_Result.Add(new SharePanelItem(comp, new ShareInfo(item)));
         }

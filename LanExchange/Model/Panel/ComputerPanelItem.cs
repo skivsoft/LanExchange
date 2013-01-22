@@ -8,6 +8,7 @@ namespace LanExchange.Model.Panel
 {
     public class ComputerPanelItem : AbstractPanelItem, IWMIComputer
     {
+        public static readonly ComputerPanelItem GoBack = new ComputerPanelItem();
         private readonly ServerInfo m_SI;
 
         /// <summary>
@@ -22,6 +23,11 @@ namespace LanExchange.Model.Panel
             Name = m_SI.Name;
             Comment = m_SI.Comment;
             IsPingable = true;
+        }
+
+        protected ComputerPanelItem() : base(null)
+        {
+            m_SI = new ServerInfo();
         }
 
         public string Name { get; set; }
@@ -62,7 +68,10 @@ namespace LanExchange.Model.Panel
 
         public override string ToolTipText
         {
-            get { return String.Format("{0}\n{1}", Comment, m_SI.Version()); }
+            get
+            {
+                return String.Format("{0}\n{1}\n{2}", Comment, m_SI.Version(), m_SI.GetTopicality());
+            }
         }
 
         public bool IsPingable { get; set; }

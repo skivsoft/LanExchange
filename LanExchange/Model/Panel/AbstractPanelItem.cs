@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LanExchange.Model.Panel
 {
-    public abstract class AbstractPanelItem : IColumnComparable, IComparable<AbstractPanelItem>, ISubject
+    public abstract class AbstractPanelItem : IComparable<AbstractPanelItem>, IEquatable<ISubject>, IColumnComparable, ISubject
     {
         public abstract int CountColumns { get; }
         public abstract IComparable this[int index] { get; }
@@ -80,6 +80,11 @@ namespace LanExchange.Model.Panel
             for (int i = 0; i < result.Length; i++)
                 result[i] = this[i].ToString().ToUpper();
             return result;
+        }
+
+        public bool Equals(ISubject other)
+        {
+            return String.Compare(Subject, other.Subject, StringComparison.Ordinal) == 0;
         }
     }
 }
