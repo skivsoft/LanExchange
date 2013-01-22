@@ -7,8 +7,6 @@ namespace LanExchange.Model.Panel
     public class SharePanelItem : AbstractPanelItem, IComparable<SharePanelItem>
     {
         private readonly ShareInfo m_SHI;
-        private ISubject Subject_2;
-        private string p;
 
         /// <summary>
         /// Panel item for network shared resource.

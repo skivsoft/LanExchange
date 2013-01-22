@@ -385,11 +385,13 @@
             this.ePath.ReadOnly = true;
             this.ePath.Size = new System.Drawing.Size(470, 20);
             this.ePath.TabIndex = 25;
+            this.ePath.DoubleClick += new System.EventHandler(this.ePath_DoubleClick);
             this.ePath.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ePath_KeyDown);
             // 
             // pFilter
             // 
             this.pFilter.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pFilter.IsVisible = true;
             this.pFilter.LinkedControl = this.LV;
             this.pFilter.Location = new System.Drawing.Point(0, 457);
             this.pFilter.Name = "pFilter";

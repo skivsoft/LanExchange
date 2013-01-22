@@ -4,6 +4,7 @@ using System.Text;
 using LanExchange.Model.Panel;
 using LanExchange.Utils;
 using LanExchange.Model.Settings;
+using LanExchange.Utils.Sorting;
 
 //using NLog;
 
@@ -23,7 +24,7 @@ namespace LanExchange.Model
         // items added by user
         private readonly IList<AbstractPanelItem> m_Items;
         // merged all results and user items
-        private readonly IDictionary<IComparable,AbstractPanelItem> m_Data;
+        private readonly List<AbstractPanelItem> m_Data;
         // keys for filtering
         private readonly IList<IComparable> m_Keys;
         // current path for item list
@@ -39,7 +40,7 @@ namespace LanExchange.Model
         public PanelItemList(string name)
         {
             m_Items = new List<AbstractPanelItem>();
-            m_Data = new Dictionary<IComparable, AbstractPanelItem>();
+            m_Data = new List<AbstractPanelItem>();
             m_Keys = new List<IComparable>();
             Groups = new List<ISubject>();
             m_CurrentPath = new ObjectPath();
@@ -95,14 +96,6 @@ namespace LanExchange.Model
         }
 
 
-        public void Add(AbstractPanelItem comp)
-        {
-            if (comp == null)
-                throw new ArgumentNullException("comp");
-            if (!m_Data.ContainsKey(comp[0]))
-                m_Data.Add(comp[0], comp);
-        }
-
         //TODO: add delete item
         //public void Delete(PanelItem comp)
         //{
@@ -117,9 +110,10 @@ namespace LanExchange.Model
         public AbstractPanelItem Get(string key)
         {
             if (key == null) return null;
-            AbstractPanelItem result;
-            if (m_Data.TryGetValue(key, out result))
-                return result;
+            var tempComp = new ComputerPanelItem(null, new ServerInfo(key));
+            int index = m_Data.BinarySearch(tempComp);
+            if (index >= 0)
+                return m_Data[index];
             return null;
         }
 
@@ -177,11 +171,11 @@ namespace LanExchange.Model
             string Filter1 = FilterText.ToUpper();
             string Filter2 = PuntoSwitcher.Change(FilterText);
             if (Filter2 != null) Filter2 = Filter2.ToUpper();
-            foreach (var Pair in m_Data)
+            foreach (var value in m_Data)
             {
-                string[] A = Pair.Value.GetStringsUpper();
-                if (!bFiltered || String.IsNullOrEmpty(Pair.Value[0].ToString()) || GoodForFilter(A, Filter1, Filter2))
-                    m_Keys.Add(Pair.Value[0]);
+                string[] A = value.GetStringsUpper();
+                if (!bFiltered || String.IsNullOrEmpty(value[0].ToString()) || GoodForFilter(A, Filter1, Filter2))
+                    m_Keys.Add(value[0]);
             }
         }
 
@@ -242,12 +236,13 @@ namespace LanExchange.Model
         //}
 
 
-        private void ProcessGroup(ISubscription sender, ISubject group)
-        {
-            foreach (AbstractPanelItem PItem in sender.GetListBySubject(group))
-                if (!m_Data.ContainsKey(PItem[0]))
-                    m_Data.Add(PItem[0], PItem);
-        }
+        //public void Add(AbstractPanelItem comp)
+        //{
+        //    if (comp == null)
+        //        throw new ArgumentNullException("comp");
+        //    if (!m_Data.Contains(comp))
+        //        m_Data.Add(comp);
+        //}
 
         //public List<string> ToList()
         //{
@@ -273,17 +268,20 @@ namespace LanExchange.Model
                     if (subject is DomainPanelItem)
                     {
                         foreach (var group in Groups)
-                            ProcessGroup(sender, group);
+                            foreach (AbstractPanelItem comp in sender.GetListBySubject(group))
+                                m_Data.Add(comp);
                         foreach (var item in m_Items)
-                            Add(item);
+                            m_Data.Add(item);
                     }
                     // for other subjects we will use last element of path
                     else
                     {
                         //ISubject group = (ISubject)m_CurrentPath.Peek();
                         if (subject != null && subject != ConcreteSubject.Empty)
-                            ProcessGroup(sender, subject);
+                            foreach (AbstractPanelItem comp in sender.GetListBySubject(subject))
+                                m_Data.Add(comp);
                     }
+                    m_Data.Sort();
                 }
                 //lock (m_Keys)
                 {

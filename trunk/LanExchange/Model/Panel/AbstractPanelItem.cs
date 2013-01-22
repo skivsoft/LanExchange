@@ -81,6 +81,5 @@ namespace LanExchange.Model.Panel
                 result[i] = this[i].ToString().ToUpper();
             return result;
         }
-
     }
 }

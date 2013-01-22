@@ -17,10 +17,7 @@ namespace LanExchange.Strategy.Panel
             var path = (Subject as AbstractPanelItem).GetFullName();
             var files = Directory.GetFileSystemEntries(path, "*.*");
             foreach (var fname in files)
-            {
-                var FI = new FilePanelItem(Subject as AbstractPanelItem, fname);
-                m_Result.Add(FI);
-            }
+                m_Result.Add(new FilePanelItem(Subject as AbstractPanelItem, fname));
         }
 
         public override void AcceptSubject(ISubject subject, out bool accepted)
@@ -29,7 +26,7 @@ namespace LanExchange.Strategy.Panel
             if (subject is SharePanelItem)
                 accepted = true;
             if (subject is FilePanelItem)
-                accepted = true;
+                accepted = (subject as FilePanelItem).IsDirectory;
         }
     }
 }

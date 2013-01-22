@@ -8,7 +8,7 @@ namespace LanExchange.Strategy.Panel
     public abstract class AbstractPanelStrategy : IBackgroundStrategy
     {
         private ISubject m_Subject;
-        protected IList<AbstractPanelItem> m_Result;
+        protected List<AbstractPanelItem> m_Result;
 
         public virtual void AcceptSubject(ISubject subject, out bool accepted)
         {
