@@ -550,5 +550,13 @@ namespace LanExchange.UI
                 e.Handled = true;
             }
         }
+
+        private void ePath_DoubleClick(object sender, EventArgs e)
+        {
+            // TODO: need change path on double click
+            //var P = ePath.PointToClient(MousePosition);
+            //int index = ePath.GetCharIndexFromPosition(P);
+            //MessageBox.Show(index.ToString());
+        }
     }
 }
