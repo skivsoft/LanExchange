@@ -11,6 +11,7 @@ using LanExchange.Model;
 using System.Collections.Generic;
 using LanExchange.WMI;
 using LanExchange.Model.Panel;
+using LanExchange.Model.Settings;
 
 namespace LanExchange.UI
 {
@@ -46,10 +47,17 @@ namespace LanExchange.UI
             mComp.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
             mFolder.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
             mSendToTab.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
-
+            // focus listview when panel got focus
+            GotFocus += (sender, args) => ActiveControl = LV;
             //mSendToNewTab.Click += new EventHandler(TabController.mSendToNewTab_Click);
         }
         #endregion
+
+
+        public void SetVirtualListSize(int count)
+        {
+            LV.VirtualListSize = count;
+        }
 
         private void CurrentPath_Changed(object sender, EventArgs e)
         {
@@ -134,19 +142,39 @@ namespace LanExchange.UI
             {
                 return LV.FocusedItem == null ? -1 : LV.FocusedItem.Index;
             }
+            set
+            {
+                int index = -1;
+                if (value != -1 && value < LV.VirtualListSize)
+                    index = value;
+                if (index == -1)
+                {
+                    if (LV.FocusedItem == null)
+                    {
+                        focusedLockCount++;
+                        LV.FocusedItem = LV.Items[0];
+                        focusedLockCount--;
+                    }
+
+                } else
+                {
+                    if (LV.FocusedItem != null)
+                    {
+                        LV.FocusedItem.Selected = false;
+                    }
+                    focusedLockCount++;
+                    LV.FocusedItem = LV.Items[index];
+                    focusedLockCount--;
+                    LV.EnsureVisible(index);
+                }
+                if (LV.FocusedItem != null)
+                    LV.FocusedItem.Selected = true;
+            }
         }
 
         public void SelectItem(int index)
         {
             LV.SelectedIndices.Add(index);
-        }
-
-
-        public void SetVirtualListSize(int count)
-        {
-            LV.VirtualListSize = count;
-            if (LV.FocusedItem != null)
-                LV.FocusedItem.Selected = true;
         }
 
         public void RedrawFocusedItem()
@@ -187,10 +215,20 @@ namespace LanExchange.UI
         //    }
         //}
 
+        private int focusedLockCount;
 
+
+        public event EventHandler FilterTextChanged
+        {
+            add { pFilter.eFilter.TextChanged += value; }
+            remove { pFilter.eFilter.TextChanged -= value; }
+        }
 
         private void DoFocusedItemChanged()
         {
+            //logger.Info("FocusedItemChanged: {0}", FocusedItemText);
+            if (focusedLockCount == 0 && LV.FocusedItem != null)
+                m_Presenter.Objects.FocusedItemText = LV.FocusedItem.Text;
             if (FocusedItemChanged != null)
                 FocusedItemChanged(this, EventArgs.Empty);
         }
@@ -440,6 +478,8 @@ namespace LanExchange.UI
                     LV.View = System.Windows.Forms.View.Details;
                     break;
             }
+            m_Presenter.Objects.CurrentView = LV.View;
+            MainForm.Instance.MainPages.GetModel().SaveSettings();
         }
 
         private void mCopyCompName_Click(object sender, EventArgs e)

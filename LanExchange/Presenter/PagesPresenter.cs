@@ -16,6 +16,7 @@ namespace LanExchange.Presenter
         private readonly PagesModel m_Model;
 
         public event EventHandler PanelViewFocusedItemChanged;
+        public event EventHandler PanelViewFilterTextChanged;
 
         public PagesPresenter(IPagesView pages)
         {
@@ -181,10 +182,12 @@ namespace LanExchange.Presenter
             {
                 LV.SmallImageList = LanExchangeIcons.SmallImageList;
                 LV.LargeImageList = LanExchangeIcons.LargeImageList;
+                LV.View = e.Info.CurrentView;
                 if (MainForm.Instance != null)
                     MainForm.Instance.tipComps.SetToolTip(LV, " ");
             }
             PV.FocusedItemChanged += PV_FocusedItemChanged;
+            PV.FilterTextChanged += PV_FilterTextChanged;
             // add new tab and insert panel into it
             m_View.NewTabFromItemList(e.Info);
             m_View.AddControl(m_View.TabPagesCount - 1, PV);
@@ -200,13 +203,19 @@ namespace LanExchange.Presenter
                 PanelViewFocusedItemChanged(sender, e);
         }
 
+        public void PV_FilterTextChanged(object sender, EventArgs e)
+        {
+            if (PanelViewFilterTextChanged != null)
+                PanelViewFilterTextChanged(sender, e);
+        }
+
         public void Item_SubscriptionChanged(object sender, EventArgs e)
         {
             PanelItemList Item = sender as PanelItemList;
             if (Item == null) return;
             int Index = m_Model.GetItemIndex(Item);
             if (Index != -1)
-                m_View.SetTabToolTip(Index, Item.GetTabToolTip());
+                m_View.SetTabToolTip(Index, Item.ToolTipText);
         }
 
         public void Model_AfterRemove(object sender, IndexEventArgs e)

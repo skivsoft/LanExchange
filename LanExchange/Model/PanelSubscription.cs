@@ -194,8 +194,16 @@ namespace LanExchange.Model
                 e.Cancel = true;
                 return;
             }
-            context.ExecuteOperation();
+            try
+            {
+                context.ExecuteOperation();
+            }
+            catch (Exception)
+            {
+                e.Cancel = true;
+            }
             e.Result = null;
+            if (e.Cancel) return;
             // process panel strategies
             if (context.Strategy is AbstractPanelStrategy)
             {
@@ -251,7 +259,7 @@ namespace LanExchange.Model
 
         private static string GetCacheFileName()
         {
-            return Path.ChangeExtension(Settings.GetExecutableFileName(), ".cache.tmp");
+            return Path.ChangeExtension(Settings.Settings.GetExecutableFileName(), ".cache.tmp");
         }
 
 

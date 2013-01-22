@@ -7,6 +7,7 @@ using LanExchange.UI;
 using LanExchange.Utils;
 using System.Diagnostics;
 using LanExchange.Model.Panel;
+using LanExchange.Model.Settings;
 
 namespace LanExchange.Presenter
 {
@@ -23,6 +24,30 @@ namespace LanExchange.Presenter
         public PanelPresenter(IPanelView view)
         {
             m_View = view;
+        }
+
+        public void UpdateItemsAndStatus()
+        {
+            if (m_Objects == null) return;
+            // refresh only for current page
+            PagesModel Model = MainForm.Instance.MainPages.GetModel();
+            PanelItemList CurrentItemList = Model.GetItem(Model.SelectedIndex);
+            if (CurrentItemList == null) return;
+            if (!m_Objects.Equals(CurrentItemList)) return;
+            // get number of visible items (filtered) and number of total items
+            int ShowCount = m_Objects.FilterCount;
+            int TotalCount = m_Objects.Count;
+            if (ShowCount != TotalCount)
+                MainForm.Instance.ShowStatusText("Элементов: {0} из {1}", ShowCount, TotalCount);
+            else
+                MainForm.Instance.ShowStatusText("Элементов: {0}", ShowCount);
+            m_View.SetVirtualListSize(ShowCount);
+            if (ShowCount > 0)
+            {
+                int index = Objects.IndexOf(CurrentItemList.FocusedItemText);
+                m_View.FocusedItemIndex = index;
+            }
+            m_View.Filter.UpdateFromModel(Objects);
         }
 
         private void CurrentPath_Changed(object sender, EventArgs e)
@@ -86,24 +111,6 @@ namespace LanExchange.Presenter
         public void Items_Changed(object sender, EventArgs e)
         {
             UpdateItemsAndStatus();
-        }
-
-        public void UpdateItemsAndStatus()
-        {
-            if (m_Objects == null) return;
-            // refresh only for current page
-            PagesModel Model = MainForm.Instance.MainPages.GetModel();
-            PanelItemList CurrentItemList = Model.GetItem(Model.SelectedIndex);
-            if (CurrentItemList == null) return;
-            if (!m_Objects.Equals(CurrentItemList)) return;
-            // get number of visible items (filtered) and number of total items
-            int ShowCount = m_Objects.FilterCount;
-            int TotalCount = m_Objects.Count;
-            if (ShowCount != TotalCount)
-                MainForm.Instance.ShowStatusText("Элементов: {0} из {1}", ShowCount, TotalCount);
-            else
-                MainForm.Instance.ShowStatusText("Элементов: {0}", ShowCount);
-            m_View.SetVirtualListSize(ShowCount);
         }
 
         public PanelItemList Objects
@@ -241,6 +248,7 @@ namespace LanExchange.Presenter
             if (PItem == null || Objects == null) return;
             if (PanelSubscription.Instance.HasStrategyForSubject(PItem))
             {
+                Settings.logger.Info("LevelDown()");
                 PanelSubscription.Instance.UnSubscribe(Objects, false);
                 PanelSubscription.Instance.SubscribeToSubject(Objects, PItem);
                 Objects.CurrentPath.Push(PItem);
@@ -254,6 +262,7 @@ namespace LanExchange.Presenter
             if (PItem == null) return;
             if (PanelSubscription.Instance.HasStrategyForSubject(PItem.Parent))
             {
+                Settings.logger.Info("LevelUp()");
                 PanelSubscription.Instance.UnSubscribe(Objects, false);
                 PanelSubscription.Instance.SubscribeToSubject(Objects, PItem.Parent);
                 Objects.CurrentPath.Pop();

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 
@@ -76,28 +77,22 @@ namespace LanExchange.Utils
             return NetServerEnumArray(domain, NetApi32.SV_101_TYPES.SV_TYPE_ALL);
         }
 
-        public static NetApi32.SHARE_INFO_1[] NetShareEnum(string computer)
+        public static IEnumerable<NetApi32.SHARE_INFO_1> NetShareEnum(string computer)
         {
-            var Result = new NetApi32.SHARE_INFO_1[0];
             IntPtr pInfo;
             int entriesread = 0;
             int totalentries = 0;
-            //int resume_handle = 0;
-            //int nStructSize = Marshal.SizeOf(typeof (NetApi32.SHARE_INFO_1));
-            //StringBuilder server = new StringBuilder(Server);
-            //logger.Info("WINAPI NetShareEnum");
             NetApi32.NERR err = NetApi32.NetShareEnum(computer, 1, out pInfo, NetApi32.MAX_PREFERRED_LENGTH, ref entriesread, ref totalentries, 0);
             if ((err == NetApi32.NERR.NERR_SUCCESS || err == NetApi32.NERR.ERROR_MORE_DATA) && pInfo != IntPtr.Zero)
                 try
                 {
                     int ptr = pInfo.ToInt32();
-                    Result = new NetApi32.SHARE_INFO_1[entriesread];
                     for (int i = 0; i < entriesread; i++)
                     {
-                        Result[i] = (NetApi32.SHARE_INFO_1)Marshal.PtrToStructure(new IntPtr(ptr), typeof (NetApi32.SHARE_INFO_1));
-                        //if ((shi1.shi1_type & (uint) NetApi32.SHARE_TYPE.STYPE_IPC) !=
-                        //    (uint) NetApi32.SHARE_TYPE.STYPE_IPC)
-                        //    Result.Add(new SharePanelItem(shi1.shi1_netname, shi1.shi1_remark, shi1.shi1_type, Server));
+                        var shi1 = (NetApi32.SHARE_INFO_1)Marshal.PtrToStructure(new IntPtr(ptr), typeof (NetApi32.SHARE_INFO_1));
+                        if ((shi1.shi1_type & (uint) NetApi32.SHARE_TYPE.STYPE_IPC) !=
+                            (uint) NetApi32.SHARE_TYPE.STYPE_IPC)
+                            yield return shi1;
                         ptr += Marshal.SizeOf(typeof (NetApi32.SHARE_INFO_1));
                     }
                 }
@@ -106,7 +101,6 @@ namespace LanExchange.Utils
                     if (pInfo != IntPtr.Zero)
                         NetApi32.NetApiBufferFree(pInfo);
                 }
-            return Result;
         }
     }
 }

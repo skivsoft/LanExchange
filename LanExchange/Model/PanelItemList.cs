@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using LanExchange.Model.Panel;
 using LanExchange.Utils;
+using LanExchange.Model.Settings;
 
 //using NLog;
 
@@ -44,7 +45,6 @@ namespace LanExchange.Model
             m_CurrentPath = new ObjectPath();
             TabName = name;
             CurrentView = System.Windows.Forms.View.Details;
-            ScanMode = false;
         }
 
         public ObjectPath CurrentPath
@@ -52,64 +52,44 @@ namespace LanExchange.Model
             get { return m_CurrentPath; }
         }
 
-        public TabSettings Settings
+        public Tab Settings
         {
-            // TODO: uncomment ScanGroups here!
             get
             {
-                var Page = new TabSettings { 
+                var Page = new Tab { 
                     Name = TabName, 
                     Filter = FilterText, 
-                    CurrentView = CurrentView, 
-                    ScanMode = ScanMode, 
-                    //ScanGroups = Groups 
+                    View = CurrentView,
+                    Focused = FocusedItemText
                 };
+                Page.SetScanGroups(Groups);
                 return Page;
             }
             set
             {
                 TabName = value.Name;
                 FilterText = value.Filter;
-                CurrentView = value.CurrentView;
-                ScanMode = value.ScanMode;
-                //Groups = value.ScanGroups;
+                CurrentView = value.View;
+                Groups = value.GetScanGroups();
+                FocusedItemText = value.Focused;
             }
             
         }
 
         public string TabName { get; set; }
-
         public System.Windows.Forms.View CurrentView { get; set; }
-
-        //public IDictionary<string, PanelItem> Items
-        //{
-        //    get { return m_Items; }
-        //}
-
-        public bool ScanMode { get; set; }
-
         public IList<ISubject> Groups { get; set; }
-
-        //public IList<string> Keys
-        //{
-        //    get { return m_Keys; }
-        //}
-
-        //public string FocusedItem { get; set; }
+        public string FocusedItemText { get; set; }
 
         public void UpdateSubsctiption()
         {
-            switch (ScanMode)
+            if (Groups.Count > 0)
             {
-                case true:
-                    PanelSubscription.Instance.UnSubscribe(this, false);
-                    foreach(var group in Groups)
-                        PanelSubscription.Instance.SubscribeToSubject(this, group);
-                    break;
-                default:
-                    PanelSubscription.Instance.UnSubscribe(this, true);
-                    break;
-            }
+                PanelSubscription.Instance.UnSubscribe(this, false);
+                foreach (var group in Groups)
+                    PanelSubscription.Instance.SubscribeToSubject(this, group);
+            } else
+                PanelSubscription.Instance.UnSubscribe(this, true);
             if (SubscriptionChanged != null)
                 SubscriptionChanged(this, EventArgs.Empty);
         }
@@ -143,6 +123,11 @@ namespace LanExchange.Model
             return null;
         }
 
+        public int IndexOf(string key)
+        {
+            return m_Keys.IndexOf(key);
+        }
+
         //public void Clear()
         //{
         //    m_Data.Clear();
@@ -174,7 +159,19 @@ namespace LanExchange.Model
         public void ApplyFilter()
         {
             bool bFiltered = !String.IsNullOrEmpty(FilterText);
-            if (!bFiltered)
+            if (bFiltered)
+            {
+                if (m_Data.Count == 0)
+                    bFiltered = false;
+                else
+                {
+                    var PItem = GetAt(0);
+                    // apply filter only for computers
+                    if (!(PItem is ComputerPanelItem))
+                        bFiltered = false;
+                }
+            }
+            else
                 FilterText = String.Empty;
             m_Keys.Clear();
             string Filter1 = FilterText.ToUpper();
@@ -275,22 +272,22 @@ namespace LanExchange.Model
                     // for computers only we uses scan and user items
                     if (subject is DomainPanelItem)
                     {
-                        if (ScanMode)
-                            foreach (var group in Groups)
-                                ProcessGroup(sender, group);
+                        foreach (var group in Groups)
+                            ProcessGroup(sender, group);
                         foreach (var item in m_Items)
                             Add(item);
                     }
                     // for other subjects we will use last element of path
                     else
                     {
-                        ISubject group = (ISubject)m_CurrentPath.Peek();
-                        if (group != null)
-                            ProcessGroup(sender, group);
+                        //ISubject group = (ISubject)m_CurrentPath.Peek();
+                        if (subject != null && subject != ConcreteSubject.Empty)
+                            ProcessGroup(sender, subject);
                     }
                 }
                 //lock (m_Keys)
                 {
+                    // filtering only computer items
                     ApplyFilter();
                 }
             }
@@ -308,23 +305,26 @@ namespace LanExchange.Model
             return String.Compare(TabName, other.TabName, StringComparison.OrdinalIgnoreCase) == 0;
         }
 
-        public string GetTabToolTip()
+        public string ToolTipText
         {
-            StringBuilder sb = new StringBuilder();
-            if (ScanMode)
+            get
             {
-                sb.Append("Обзор сети: ");
-                for (int i = 0; i < Groups.Count; i++)
+                StringBuilder sb = new StringBuilder();
+                if (Groups.Count > 0)
                 {
-                    if (i > 0)
-                        sb.Append(", ");
-                    sb.Append(Groups[i]);
+                    foreach (var group in Groups)
+                    {
+                        if (sb.Length > 0)
+                            sb.Append(", ");
+                        sb.Append(group.Subject);
+                    }
+                    sb.Insert(0, "Обзор сети: ");
+                    sb.Append(".");
                 }
-                sb.Append(".");
+                else
+                    sb.Append("Обзор сети отключен.");
+                return sb.ToString();
             }
-            else
-                sb.Append("Обзор сети отключен.");
-            return sb.ToString();
         }
     }
 }

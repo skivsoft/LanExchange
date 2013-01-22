@@ -1,5 +1,6 @@
 ﻿using LanExchange.View;
 using LanExchange.Model;
+using LanExchange.Model.Settings;
 
 namespace LanExchange.Presenter
 {

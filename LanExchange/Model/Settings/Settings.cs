@@ -7,14 +7,14 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
 
-namespace LanExchange.Model
+namespace LanExchange.Model.Settings
 {
     /// <summary>
     /// Program settings. Implemented as Singleton.
     /// </summary>
     public class Settings
     {
-        private readonly static Logger logger = LogManager.GetCurrentClassLogger();
+        public readonly static Logger logger = LogManager.GetCurrentClassLogger();
         private const string UpdateUrlDefault = "http://www.skivsoft.net/lanexchange/update/";
         private const string WebSiteUrlDefault = "www.skivsoft.net/lanexchange/";
         private const string EmailAddressDefault = "skivsoft@gmail.com";

@@ -12,10 +12,11 @@ namespace LanExchange.Strategy.Panel
         {
             var comp = Subject as ComputerPanelItem;
             if (comp == null) return;
-            NetApi32.SHARE_INFO_1[] list = NetApi32Utils.NetShareEnum(comp.Name);
+            IEnumerable<NetApi32.SHARE_INFO_1> list = NetApi32Utils.NetShareEnum(comp.Name);
             // convert array to IList<ServerInfo>
             m_Result = new List<AbstractPanelItem>();
-            Array.ForEach(list, item => m_Result.Add(new SharePanelItem(comp, new ShareInfo(item))));
+            foreach(var item in list)
+                m_Result.Add(new SharePanelItem(comp, new ShareInfo(item)));
         }
 
         public override void AcceptSubject(ISubject subject, out bool accepted)
