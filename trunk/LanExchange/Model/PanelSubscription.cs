@@ -11,6 +11,7 @@ using LanExchange.Strategy;
 using LanExchange.Strategy.Panel;
 using System.Reflection;
 using LanExchange.Model.Panel;
+using LanExchange.Utils;
 
 namespace LanExchange.Model
 {
@@ -34,7 +35,7 @@ namespace LanExchange.Model
         #endregion
 
         private readonly IDictionary<ISubject, IList<ISubscriber>> m_Subjects;
-        private readonly IDictionary<ISubject, IList<AbstractPanelItem>> m_Results;
+        private readonly Dictionary<ISubject, IList<AbstractPanelItem>> m_Results;
         private readonly IList<AbstractPanelStrategy> m_Strategies;
 
         private int m_RefreshInterval;
@@ -45,7 +46,7 @@ namespace LanExchange.Model
         {
             // lists
             m_Subjects = new Dictionary<ISubject, IList<ISubscriber>>();
-            m_Results = new Dictionary<ISubject, IList<AbstractPanelItem>>();
+            m_Results = new Dictionary<ISubject, IList<AbstractPanelItem>>(new ConcreteSubjectComparer());
             m_Strategies = new List<AbstractPanelStrategy>();
             InitStrategies();
             // load cached results
@@ -265,59 +266,65 @@ namespace LanExchange.Model
 
         private void SaveResultsToCache()
         {
-            // TODO: uncomment this!
-            //var fileName = GetCacheFileName();
-            //logger.Info("SaveResultsToCache(\"{0}\")", fileName);
-            //lock (m_Results)
-            //{
-            //    var Temp = new Dictionary<string, NetApi32.SERVER_INFO_101[]>();
-            //    foreach (var Pair in m_Results)
-            //    {
-            //        var TempList = new NetApi32.SERVER_INFO_101[Pair.Value.Count];
-            //        for (int i = 0; i < Pair.Value.Count; i++)
-            //            TempList[i] = Pair.Value[i].GetInfo();
-            //        Temp.Add(Pair.Key, TempList);
-            //    }
-            //    try
-            //    {
-            //        SerializeUtils.SerializeObjectToBinaryFile(fileName, Temp);
-            //    }
-            //    catch (Exception E)
-            //    {
-            //        logger.Error("SaveResultsToCache: {0}", E.Message);
-            //    }
-            //}
+            var fileName = GetCacheFileName();
+            logger.Info("SaveResultsToCache(\"{0}\")", fileName);
+            lock (m_Results)
+            {
+                var Temp = new Dictionary<string, ServerInfo[]>();
+                foreach (var Pair in m_Results)
+                {
+                    if ((Pair.Key != ConcreteSubject.Root) && !(Pair.Key is DomainPanelItem))
+                        continue;
+                    var TempList = new ServerInfo[Pair.Value.Count];
+                    for (int i = 0; i < Pair.Value.Count; i++)
+                    {
+                        var comp = Pair.Value[i] as ComputerPanelItem;
+                        if (comp != null)
+                            TempList[i] = comp.SI;
+                    }
+                    Temp.Add(Pair.Key.Subject, TempList);
+                }
+                try
+                {
+                    SerializeUtils.SerializeObjectToBinaryFile(fileName, Temp);
+                }
+                catch (Exception E)
+                {
+                    logger.Error("SaveResultsToCache: {0}", E.Message);
+                }
+            }
         }
 
         private void LoadResultsFromCache()
         {
-            // TODO: uncomment this!
-            //var fileName = GetCacheFileName();
-            //if (!File.Exists(fileName)) return;
-            //logger.Info("LoadResultsFromCache(\"{0}\")", fileName);
-            //lock (m_Results)
-            //{
-            //    Dictionary<string, NetApi32.SERVER_INFO_101[]> Temp = null;
-            //    try
-            //    {
-            //        Temp = (Dictionary<string, NetApi32.SERVER_INFO_101[]>)SerializeUtils.DeserializeObjectFromBinaryFile(fileName);
-            //    }
-            //    catch (Exception E)
-            //    {
-            //        logger.Error("LoadResultsFromCache: {0}", E.Message);
-            //    }
-            //    if (Temp != null)
-            //    {
-            //        m_Results.Clear();
-            //        foreach (var Pair in Temp)
-            //        {
-            //            var TempList = new List<ServerInfo>();
-            //            Array.ForEach(Pair.Value, info => TempList.Add(new ServerInfo(info)));
-            //            m_Results.Add(Pair.Key, TempList);
-            //            TempList.Sort();
-            //        }
-            //    }
-            //}
+            var fileName = GetCacheFileName();
+            if (!File.Exists(fileName)) return;
+            logger.Info("LoadResultsFromCache(\"{0}\")", fileName);
+            lock (m_Results)
+            {
+                Dictionary<string, ServerInfo[]> Temp = null;
+                try
+                {
+                    Temp = (Dictionary<string, ServerInfo[]>)SerializeUtils.DeserializeObjectFromBinaryFile(fileName);
+                }
+                catch (Exception E)
+                {
+                    logger.Error("LoadResultsFromCache: {0}", E.Message);
+                }
+                if (Temp != null)
+                {
+                    m_Results.Clear();
+                    foreach (var Pair in Temp)
+                    {
+                        var domain = new DomainPanelItem(Pair.Key);
+                        var TempList = new List<AbstractPanelItem>();
+                        foreach (var si in Pair.Value)
+                            TempList.Add(new ComputerPanelItem(domain, si));
+                        m_Results.Add(domain, TempList);
+                        //TempList.Sort();
+                    }
+                }
+            }
         }
 
         public bool HasSubscribers()

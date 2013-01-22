@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Text;
 
 namespace LanExchange.Utils
 {
     [Serializable]
     public class ServerInfo : IComparable<ServerInfo>
     {
-        private readonly NetApi32.SERVER_INFO_101 m_Info;
+        private NetApi32.SERVER_INFO_101 m_Info;
+
+        private DateTime m_UtcUpdated;
 
         public ServerInfo(NetApi32.SERVER_INFO_101 info)
         {
@@ -19,20 +22,31 @@ namespace LanExchange.Utils
             m_Info.sv101_comment = comment;
         }
 
-        public ServerInfo(string name)
+        public ServerInfo()
         {
             m_Info = new NetApi32.SERVER_INFO_101();
-            m_Info.sv101_name = name;
         }
 
         public string Name
         {
             get { return m_Info.sv101_name; }
+            set { m_Info.sv101_name = value; }
         }
 
         public string Comment
         {
             get { return m_Info.sv101_comment; }
+            set { m_Info.sv101_comment = value; }
+        }
+
+        public DateTime UtcUpdated
+        {
+            get { return m_UtcUpdated; }    
+        }
+
+        public void SetUtcUpdated()
+        {
+            m_UtcUpdated = DateTime.UtcNow;
         }
 
         /// <summary>
@@ -189,11 +203,6 @@ namespace LanExchange.Utils
             return 0;
         }
 
-        public NetApi32.SERVER_INFO_101 GetInfo()
-        {
-            return m_Info;
-        }
-
         #region IComparable Members
 
         public int CompareTo(ServerInfo other)
@@ -202,5 +211,38 @@ namespace LanExchange.Utils
         }
 
         #endregion
+
+        internal string GetTopicality()
+        {
+            TimeSpan diff = DateTime.UtcNow - UtcUpdated;
+            StringBuilder sb = new StringBuilder();
+            bool showSeconds = true;
+            if (diff.Days > 0)
+            {
+                sb.Append(diff.Days);
+                sb.Append("d");
+                showSeconds = false;
+            }
+            if (diff.Hours > 0)
+            {
+                if (sb.Length > 0) sb.Append(" ");
+                sb.Append(diff.Hours);
+                sb.Append("h");
+                showSeconds = false;
+            }
+            if (diff.Minutes > 0)
+            {
+                if (sb.Length > 0) sb.Append(" ");
+                sb.Append(diff.Minutes);
+                sb.Append("m");
+            }
+            if (showSeconds && diff.Seconds > 0)
+            {
+                if (sb.Length > 0) sb.Append(" ");
+                sb.Append(diff.Seconds);
+                sb.Append("s");
+            }
+            return sb.ToString();
+        }
     }
 }

@@ -32,9 +32,8 @@ namespace LanExchange.Utils
         /// <param name="domain"></param>
         /// <param name="types"></param>
         /// <returns></returns>
-        public static NetApi32.SERVER_INFO_101[] NetServerEnumArray(string domain, NetApi32.SV_101_TYPES types)
+        public static IEnumerable<NetApi32.SERVER_INFO_101> NetServerEnum(string domain, NetApi32.SV_101_TYPES types)
         {
-            NetApi32.SERVER_INFO_101[] Result = new NetApi32.SERVER_INFO_101[0];
             IntPtr pInfo;
             int entriesread = 0;
             int totalentries = 0;
@@ -43,10 +42,9 @@ namespace LanExchange.Utils
                 try
                 {
                     int ptr = pInfo.ToInt32();
-                    Result = new NetApi32.SERVER_INFO_101[entriesread];
                     for (int i = 0; i < entriesread; i++)
                     {
-                        Result[i] = (NetApi32.SERVER_INFO_101)Marshal.PtrToStructure(new IntPtr(ptr), typeof(NetApi32.SERVER_INFO_101));
+                        yield return (NetApi32.SERVER_INFO_101)Marshal.PtrToStructure(new IntPtr(ptr), typeof(NetApi32.SERVER_INFO_101));
                         ptr += Marshal.SizeOf(typeof (NetApi32.SERVER_INFO_101));
                     }
                 }
@@ -55,26 +53,6 @@ namespace LanExchange.Utils
                     if (pInfo != IntPtr.Zero)
                         NetApi32.NetApiBufferFree(pInfo);
                 }
-            return Result;
-        }
-
-        /// <summary>
-        /// Get domain list.
-        /// </summary>
-        /// <returns></returns>
-        public static NetApi32.SERVER_INFO_101[] GetDomainsArray()
-        {
-            return NetServerEnumArray(null, NetApi32.SV_101_TYPES.SV_TYPE_DOMAIN_ENUM);
-        }
-
-        /// <summary>
-        /// Get computer list of specified domain.
-        /// </summary>
-        /// <param name="domain"></param>
-        /// <returns></returns>
-        public static NetApi32.SERVER_INFO_101[] GetComputersOfDomainArray(string domain)
-        {
-            return NetServerEnumArray(domain, NetApi32.SV_101_TYPES.SV_TYPE_ALL);
         }
 
         public static IEnumerable<NetApi32.SHARE_INFO_1> NetShareEnum(string computer)
@@ -86,12 +64,12 @@ namespace LanExchange.Utils
             if ((err == NetApi32.NERR.NERR_SUCCESS || err == NetApi32.NERR.ERROR_MORE_DATA) && pInfo != IntPtr.Zero)
                 try
                 {
+                    const uint stypeIPC = (uint)NetApi32.SHARE_TYPE.STYPE_IPC;
                     int ptr = pInfo.ToInt32();
                     for (int i = 0; i < entriesread; i++)
                     {
                         var shi1 = (NetApi32.SHARE_INFO_1)Marshal.PtrToStructure(new IntPtr(ptr), typeof (NetApi32.SHARE_INFO_1));
-                        if ((shi1.shi1_type & (uint) NetApi32.SHARE_TYPE.STYPE_IPC) !=
-                            (uint) NetApi32.SHARE_TYPE.STYPE_IPC)
+                        if ((shi1.shi1_type & stypeIPC) != stypeIPC)
                             yield return shi1;
                         ptr += Marshal.SizeOf(typeof (NetApi32.SHARE_INFO_1));
                     }

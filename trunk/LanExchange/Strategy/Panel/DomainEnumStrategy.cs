@@ -10,11 +10,12 @@ namespace LanExchange.Strategy.Panel
     {
         public override void Algorithm()
         {
-            // get server list via OS api
-            NetApi32.SERVER_INFO_101[] list = NetApi32Utils.GetDomainsArray();
+            // get domain list via OS api
+            var list = NetApi32Utils.NetServerEnum(null, NetApi32.SV_101_TYPES.SV_TYPE_DOMAIN_ENUM);
             // convert array to IList<ServerInfo>
             m_Result = new List<AbstractPanelItem>();
-            Array.ForEach(list, item => m_Result.Add(new DomainPanelItem(null, new ServerInfo(item))));
+            foreach(var item in list)
+                m_Result.Add(new DomainPanelItem(null, new ServerInfo(item)));
         }
 
         public override void AcceptSubject(ISubject subject, out bool accepted)

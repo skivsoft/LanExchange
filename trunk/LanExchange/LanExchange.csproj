@@ -92,6 +92,7 @@
     <Compile Include="Model\Panel\FilePanelItem.cs" />
     <Compile Include="Model\IPanelColumnHeader.cs" />
     <Compile Include="Model\ISubject.cs" />
+    <Compile Include="Model\ConcreteSubjectComparer.cs" />
     <Compile Include="Strategy\Panel\ConcreteMultiStrategy.cs" />
     <Compile Include="Strategy\Panel\DomainEnumStrategy.cs" />
     <Compile Include="Strategy\Panel\FileEnumStrategy.cs" />
