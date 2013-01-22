@@ -4,6 +4,7 @@ using LanExchange.Model.Panel;
 using LanExchange.Utils;
 using System.IO;
 using NLog;
+using LanExchange.Model.Settings;
 
 namespace LanExchange.Model
 {
@@ -39,6 +40,7 @@ namespace LanExchange.Model
 
     public class PagesModel
     {
+        private const string CONFIG_FNAME = "LanExchange.Tabs.cfg";
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
         private readonly List<PanelItemList> m_List;
         private int m_SelectedIndex;
@@ -48,12 +50,12 @@ namespace LanExchange.Model
         public event EventHandler<PanelItemListEventArgs> AfterRename;
         public event EventHandler<IndexEventArgs> IndexChanged;
 
-        private LanExchangeTabs m_PagesSettings;
+        private Tabs m_PagesSettings;
 
         public PagesModel()
         {
             m_List = new List<PanelItemList>();
-            m_PagesSettings = new LanExchangeTabs();
+            m_PagesSettings = new Tabs();
             m_SelectedIndex = -1;
         }
 
@@ -155,10 +157,10 @@ namespace LanExchange.Model
 
         private static string GetConfigFileName()
         {
-            var path = Path.GetDirectoryName(Settings.GetExecutableFileName());
+            var path = Path.GetDirectoryName(Settings.Settings.GetExecutableFileName());
             if (path == null)
                 throw new ArgumentNullException();
-            return Path.Combine(path, "Pages.cfg");
+            return Path.Combine(path, CONFIG_FNAME);
         }
 
         public void LoadSettings()
@@ -167,7 +169,7 @@ namespace LanExchange.Model
             {
                 var fileFName = GetConfigFileName();
                 logger.Info("PagesModel.LoadSettings(\"{0}\")", fileFName);
-                var temp = (LanExchangeTabs)SerializeUtils.DeserializeObjectFromXMLFile(fileFName, typeof (LanExchangeTabs));
+                var temp = (Tabs)SerializeUtils.DeserializeObjectFromXMLFile(fileFName, typeof (Tabs));
                 if (temp != null)
                 {
                     m_PagesSettings = null;
@@ -191,10 +193,7 @@ namespace LanExchange.Model
             else
             {
                 var domain = NetApi32Utils.GetMachineNetBiosDomain(null);
-                var Info = new PanelItemList(domain)
-                {
-                    ScanMode = true
-                };
+                var Info = new PanelItemList(domain);
                 Info.Groups.Add(new DomainPanelItem(domain));
                 AddTab(Info);
             }
@@ -205,11 +204,9 @@ namespace LanExchange.Model
         public void SaveSettings()
         {
             m_PagesSettings.SelectedIndex = SelectedIndex;
-            var pages = new List<TabSettings>();
+            var pages = new List<Tab>();
             for (int i = 0; i < Count; i++)
                 pages.Add(GetItem(i).Settings);
-            //TODO: reorder tabs or sort tabs
-            //pages.Sort();
             m_PagesSettings.Items = pages.ToArray();
             var fileFName = GetConfigFileName();
             try

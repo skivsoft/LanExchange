@@ -27,8 +27,9 @@ namespace LanExchange.Presenter
                     m_Model.FilterText = value;
                     m_Model.ApplyFilter();
                     m_View.UpdateFromModel(m_Model);
+                    m_View.DoFilterCountChanged();
                 }
-                m_View.Visible = IsFiltered;
+                m_View.IsVisible = IsFiltered;
             }
         }
 
@@ -54,6 +55,7 @@ namespace LanExchange.Presenter
                 m_Model = value;
                 m_Model.ApplyFilter();
                 m_View.UpdateFromModel(m_Model);
+                m_View.DoFilterCountChanged();
             }
         }
 
@@ -70,7 +72,7 @@ namespace LanExchange.Presenter
         {
             if (e.Control && e.KeyCode == Keys.Down)
             {
-                if (m_View.Visible)
+                if (m_View.IsVisible)
                     m_View.FocusMe();
                 e.Handled = true;
             }

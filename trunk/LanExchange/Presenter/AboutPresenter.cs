@@ -12,6 +12,7 @@ using NLog;
 using System.Reflection;
 using System.Windows.Forms;
 using LanExchange.UI;
+using LanExchange.Model.Settings;
 
 namespace LanExchange.Presenter
 {

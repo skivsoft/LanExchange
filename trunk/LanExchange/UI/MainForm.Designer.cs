@@ -54,6 +54,7 @@
             this.pInfo = new LanExchange.UI.InfoView();
             this.popWorkers = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mStopWorkers = new System.Windows.Forms.ToolStripMenuItem();
+            this.timerTabSettingsSaver = new System.Windows.Forms.Timer(this.components);
             this.popTray.SuspendLayout();
             this.Status.SuspendLayout();
             this.popTop.SuspendLayout();
@@ -259,6 +260,11 @@
             this.mStopWorkers.Text = "Остановить фоновые потоки";
             this.mStopWorkers.Click += new System.EventHandler(this.mStopWorkers_Click);
             // 
+            // timerTabSettingsSaver
+            // 
+            this.timerTabSettingsSaver.Interval = 5000;
+            this.timerTabSettingsSaver.Tick += new System.EventHandler(this.timerTabSettingsSaver_Tick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -310,6 +316,7 @@
         private System.Windows.Forms.ContextMenuStrip popWorkers;
         private System.Windows.Forms.ToolStripMenuItem mStopWorkers;
         private System.Windows.Forms.ToolStripMenuItem menuItemToolStripMenuItem;
+        private System.Windows.Forms.Timer timerTabSettingsSaver;
     }
 }
 

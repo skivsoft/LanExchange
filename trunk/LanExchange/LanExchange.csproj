@@ -180,7 +180,7 @@
     <Compile Include="UI\TabParamsForm.Designer.cs">
       <DependentUpon>TabParamsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\LanExchangeTabs.cs" />
+    <Compile Include="Model\Settings\Tabs.cs" />
     <Compile Include="Utils\Kernel32.cs" />
     <Compile Include="Model\BackgroundWorkers.cs" />
     <Compile Include="Model\ISubscriber.cs" />
@@ -188,7 +188,7 @@
     <Compile Include="Utils\NetApi32.cs" />
     <Compile Include="Model\PanelSubscription.cs" />
     <Compile Include="Utils\ServerInfo.cs" />
-    <Compile Include="Model\TabSettings.cs" />
+    <Compile Include="Model\Settings\Tab.cs" />
     <Compile Include="Utils\NetApi32Utils.cs" />
     <Compile Include="NLogFake.cs" />
     <Compile Include="UI\ParamsForm.cs">
@@ -287,7 +287,7 @@
     </Compile>
     <Compile Include="Model\PanelItemList.cs" />
     <Compile Include="Model\PuntoSwitcher.cs" />
-    <Compile Include="Model\Settings.cs" />
+    <Compile Include="Model\Settings\Settings.cs" />
     <Compile Include="Presenter\PagesPresenter.cs" />
     <EmbeddedResource Include="WMI\WMIAuthForm.resx">
       <DependentUpon>WMIAuthForm.cs</DependentUpon>

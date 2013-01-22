@@ -82,13 +82,25 @@ namespace LanExchange.UI
         {
             Color notFoundColor = Color.FromArgb(255, 102, 102); // firefox color
             eFilter.BackColor = String.IsNullOrEmpty(model.FilterText) || model.FilterCount > 0 ? Color.White : notFoundColor;
-            DoFilterCountChanged();
         }
 
         
         public void FocusMe()
         {
             eFilter.Focus();
+        }
+
+        public bool IsVisible
+        {
+            get { return Visible; }
+            set 
+            { 
+                Visible = value;
+                if (!Visible)
+                    if (LinkedControl != null)
+                        if (LinkedControl.Parent is ContainerControl)
+                            (LinkedControl.Parent as ContainerControl).ActiveControl = LinkedControl;
+            }
         }
 
         public void FocusAndKeyPress(KeyPressEventArgs e)

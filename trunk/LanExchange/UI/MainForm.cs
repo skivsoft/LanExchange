@@ -10,6 +10,8 @@ using System.Text;
 using LanExchange.Windows;
 using System.Security.Permissions;
 using LanExchange.Model.Panel;
+using LanExchange.View;
+using LanExchange.Model.Settings;
 
 namespace LanExchange.UI
 {
@@ -38,6 +40,7 @@ namespace LanExchange.UI
             // init Pages presenter
             MainPages = Pages.GetPresenter();
             MainPages.PanelViewFocusedItemChanged += Pages_PanelViewFocusedItemChanged;
+            MainPages.PanelViewFilterTextChanged += Pages_FilterTextChanged;
             MainPages.GetModel().LoadSettings();
             // here we call event for update items count in statusline
             //Pages.UpdateSelectedTab();
@@ -97,7 +100,7 @@ namespace LanExchange.UI
             if (e.KeyCode == Keys.Escape)
             {
                 PanelView pv = Pages.GetActivePanelView();
-                if (pv != null && pv.Filter.Visible)
+                if (pv != null && pv.Filter.IsVisible)
                     pv.Filter.SetFilterText(String.Empty);
                 else
                     Instance.Hide();
@@ -146,17 +149,17 @@ namespace LanExchange.UI
             e.Cancel = !pv.mComp.Enabled;
         }
 
-        // TODO uncomment MyComputer click
-        //private void lCompName_Click(object sender, EventArgs e)
-        //{
-        //    // Open MyComputer
-        //    //Process.Start("explorer.exe", "/n, /e,::{20D04FE0-3AEA-1069-A2D8-08002B30309D}");
-        //    // Network
-        //    //Process.Start("explorer.exe", "/n, ::{208D2C60-3AEA-1069-A2D7-08002B30309D},FERMAK");
-        //    //PanelView PV = Pages.GetActivePanelView();
-        //    //if (PV != null)
-        //    //    PV.GotoFavoriteComp(SystemInformation.ComputerName);
-        //}
+        private void lCompName_Click(object sender, EventArgs e)
+        {
+            // TODO uncomment mycomputer click
+            // Open MyComputer
+            //Process.Start("explorer.exe", "/n, /e,::{20D04FE0-3AEA-1069-A2D8-08002B30309D}");
+            // Network
+            //Process.Start("explorer.exe", "/n, ::{208D2C60-3AEA-1069-A2D7-08002B30309D},FERMAK");
+            IPanelView PV = Pages.GetActivePanelView();
+            //if (PV != null)
+            //    PV.GotoFavoriteComp(SystemInformation.ComputerName);
+        }
 
         private void tipComps_Popup(object sender, PopupEventArgs e)
         {
@@ -255,7 +258,19 @@ namespace LanExchange.UI
             {
                 AbstractPanelItem PItem = pv.GetPresenter().GetFocusedPanelItem(false);
                 if (PItem != null)
+                {
+                    // if focused changed on top level 
+                    if (PItem is ComputerPanelItem)
+                    {
+                        // run/re-run timer for saving tab settings
+                        timerTabSettingsSaver.Stop();
+                        timerTabSettingsSaver.Start();
+                    }
+                    // get top level item
+                    while (!(PItem is ComputerPanelItem) && PItem.Parent != null)
+                        PItem = PItem.Parent;
                     Comp = PItem as ComputerPanelItem;
+                }
             }
             // is focused item a computer?
             if (Comp == null)
@@ -288,6 +303,12 @@ namespace LanExchange.UI
                     tipComps.SetToolTip(pInfo.Picture, "");
                     break;
             }
+        }
+
+        private void Pages_FilterTextChanged(object sender, EventArgs e)
+        {
+            timerTabSettingsSaver.Stop();
+            timerTabSettingsSaver.Start();
         }
 
         public void ShowStatusText(string format, params object[] args)
@@ -370,6 +391,14 @@ namespace LanExchange.UI
         private void mStopWorkers_Click(object sender, EventArgs e)
         {
             BackgroundWorkers.Instance.StopAllWorkers();
+        }
+
+        private void timerTabSettingsSaver_Tick(object sender, EventArgs e)
+        {
+            // save tab settings and switch off timer
+            MainPages.GetModel().SaveSettings();
+            if (sender is Timer)
+                (sender as Timer).Enabled = false;
         }
 
     }

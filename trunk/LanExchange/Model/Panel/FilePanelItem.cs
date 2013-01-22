@@ -52,9 +52,14 @@ namespace LanExchange.Model.Panel
                 if (index == 0)
                     return Name;
                 if (index == 1)
-                    return "QQQ";
+                    return IsDirectory ? "Папка с файлами" : "Файл";
                 throw new ArgumentOutOfRangeException();
             }
+        }
+
+        public override int ImageIndex
+        {
+            get { return IsDirectory ? LanExchangeIcons.FolderNormal : -1; }
         }
 
         public override string ToolTipText

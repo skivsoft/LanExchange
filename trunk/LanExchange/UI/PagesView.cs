@@ -62,7 +62,7 @@ namespace LanExchange.UI
             TabPage Tab = new TabPage();
             Tab.Text = Ellipsis(info.TabName, 20);
             Tab.ImageIndex = LanExchangeIcons.Workgroup;
-            Tab.ToolTipText = info.GetTabToolTip();
+            Tab.ToolTipText = info.ToolTipText;
             Pages.Controls.Add(Tab);
         }
 
@@ -164,11 +164,10 @@ namespace LanExchange.UI
                 {
                     TabPage Tab = Pages.TabPages[Index];
                     Form.Text = String.Format(Form.Text, Tab != null ? Tab.Text : "???");
-                    Form.ScanMode = Info.ScanMode;
                     Form.Groups = Info.Groups;
+                    Form.PrepareForm();
                     if (Form.ShowDialog() == DialogResult.OK)
                     {
-                        Info.ScanMode = Form.ScanMode;
                         Info.Groups = Form.Groups;
                         Info.UpdateSubsctiption();
                         m_Presenter.GetModel().SaveSettings();

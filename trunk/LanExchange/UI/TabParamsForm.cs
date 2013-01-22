@@ -10,9 +10,16 @@ namespace LanExchange.UI
 {
     public partial class TabParamsForm : Form, ISubscriber
     {
+        private readonly IList<string> m_Groups;
+
         public TabParamsForm()
         {
             InitializeComponent();
+            m_Groups = new List<string>();
+        }
+
+        public void PrepareForm()
+        {
             // subscribe Form to ROOT subject (must return domain list)
             PanelSubscription.Instance.SubscribeToSubject(this, ConcreteSubject.Root);
             // unsubscribe Form from any subjects when Closed event will be fired
@@ -22,8 +29,12 @@ namespace LanExchange.UI
         public void DataChanged(ISubscription sender, ISubject subject)
         {
             // do not update list after unsubscribe
-            if (subject == null) return;
-            var Saved = ListViewUtils.GetCheckedList(lvDomains);
+            if (subject == ConcreteSubject.Empty) return;
+            IList<string> Saved;
+            if (lvDomains.Items.Count == 0)
+                Saved = m_Groups;
+            else
+                Saved = ListViewUtils.GetCheckedList(lvDomains);
             string FocusedText = null;
             if (lvDomains.FocusedItem != null)
                 FocusedText = lvDomains.FocusedItem.Text;
@@ -46,36 +57,27 @@ namespace LanExchange.UI
             }
         }
 
-        public bool ScanMode
-        {
-            get
-            {
-                return rbSelected.Checked;
-            }
-            set
-            {
-                if (value)
-                    rbSelected.Checked = true;
-                else
-                    rbDontScan.Checked = true;
-            }
-        }
-
         public IList<ISubject> Groups
         {
             get
             {
                 var result = new List<ISubject>();
-                foreach (ListViewItem item in lvDomains.Items)
-                    if (item.Checked)
-                        result.Add(new DomainPanelItem(item.Text));
+                if (rbSelected.Checked)
+                    foreach (ListViewItem item in lvDomains.Items)
+                        if (item.Checked)
+                            result.Add(new DomainPanelItem(item.Text));
                 return result;
             }
             set
             {
+                m_Groups.Clear();
                 if (value != null)
-                    foreach(var PItem in value)
-                        ListViewUtils.SetChecked(lvDomains, PItem.Subject, true);
+                    foreach(var item in value)
+                        m_Groups.Add(item.Subject);
+                if (m_Groups.Count > 0)
+                    rbSelected.Checked = true;
+                else
+                    rbDontScan.Checked = true;
             }
         }
 
