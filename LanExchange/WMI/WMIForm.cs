@@ -228,14 +228,14 @@ namespace LanExchange.WMI
                 CurrentWMIClass = menuItem.Text;
         }
 
-        private void mSetup_Click(object sender, EventArgs e)
-        {
-            using (var form = new WMISetupForm())
-            {
-                form.PrepareForm();
-                form.ShowDialog();
-            }
-        }
+        //private void mSetup_Click(object sender, EventArgs e)
+        //{
+        //    using (var form = new WMISetupForm())
+        //    {
+        //        form.PrepareForm();
+        //        form.ShowDialog();
+        //    }
+        //}
 
         public void UpdateClassesMenu()
         {

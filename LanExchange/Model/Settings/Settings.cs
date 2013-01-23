@@ -14,7 +14,7 @@ namespace LanExchange.Model.Settings
     /// </summary>
     public class Settings
     {
-        public readonly static Logger logger = LogManager.GetCurrentClassLogger();
+        public readonly static Logger Logger = LogManager.GetCurrentClassLogger();
         private const string UpdateUrlDefault = "http://www.skivsoft.net/lanexchange/update/";
         private const string WebSiteUrlDefault = "www.skivsoft.net/lanexchange/";
         private const string EmailAddressDefault = "skivsoft@gmail.com";
@@ -66,7 +66,7 @@ namespace LanExchange.Model.Settings
             {
                 if (m_Modified != value)
                 {
-                    logger.Info("Settings.Modified = {0}", value);
+                    Logger.Info("Settings.Modified = {0}", value);
                     m_Modified = value;
                 }
             }
@@ -95,7 +95,7 @@ namespace LanExchange.Model.Settings
             if (!File.Exists(fileName)) return;
             try
             {
-                logger.Info("Settings.Load(\"{0}\")", fileName);
+                Logger.Info("Settings.Load(\"{0}\")", fileName);
                 var temp = (Settings)SerializeUtils.DeserializeObjectFromXMLFile(fileName, typeof(Settings));
                 if (temp != null)
                 {
@@ -107,7 +107,7 @@ namespace LanExchange.Model.Settings
             }
             catch (Exception E)
             {
-                logger.Error("Settings: {0}", E.Message);
+                Logger.Error("Settings: {0}", E.Message);
             }
         }
 
@@ -117,12 +117,12 @@ namespace LanExchange.Model.Settings
             var fileName = GetConfigFileName();
             try
             {
-                logger.Info("Settings.Save(\"{0}\")", fileName);
+                Logger.Info("Settings.Save(\"{0}\")", fileName);
                 SerializeUtils.SerializeObjectToXMLFile(fileName, Instance);
             }
             catch (Exception E)
             {
-                logger.Error("Settings: {0}", E.Message);
+                Logger.Error("Settings: {0}", E.Message);
             }
             Modified = false;
         }
@@ -132,7 +132,7 @@ namespace LanExchange.Model.Settings
             bool result = false;
             try
             {
-                logger.Info("Settings.Merge()");
+                Logger.Info("Settings.Merge()");
                 var temp = (Settings)SerializeUtils.DeserializeObjectFromXML(newConfigContent, typeof(Settings));
                 if (temp != null)
                 {
@@ -145,7 +145,7 @@ namespace LanExchange.Model.Settings
             }
             catch (Exception E)
             {
-                logger.Error("Settings: {0}", E.Message);
+                Logger.Error("Settings: {0}", E.Message);
             }
             return result;
         }
@@ -172,12 +172,12 @@ namespace LanExchange.Model.Settings
                 var exeFName = GetExecutableFileName();
                 if (value)
                 {
-                    logger.Info("Settings.Autorun_Add()");
+                    Logger.Info("Settings.Autorun_Add()");
                     AutorunUtils.Autorun_Add(exeFName);
                 }
                 else
                 {
-                    logger.Info("Settings.Autorun_Delete()");
+                    Logger.Info("Settings.Autorun_Delete()");
                     AutorunUtils.Autorun_Delete(exeFName);
                 }
             }
@@ -250,7 +250,7 @@ namespace LanExchange.Model.Settings
 
         public Rectangle GetBounds()
         {
-            logger.Info("Settings: MainFormX: {0}, MainFormWidth: {1}", MainFormX, MainFormWidth);
+            Logger.Info("Settings: MainFormX: {0}, MainFormWidth: {1}", MainFormX, MainFormWidth);
             // correct width and height
             bool BoundsIsNotSet = MainFormWidth == 0;
             Rectangle WorkingArea;
@@ -272,7 +272,7 @@ namespace LanExchange.Model.Settings
             else
                 // snap to left side
                 rect.X -= rect.Left - WorkingArea.Left;
-            logger.Info("Settings.GetBounds(): {0}, {1}, {2}, {3}", rect.Left, rect.Top, rect.Width, rect.Height);
+            Logger.Info("Settings.GetBounds(): {0}, {1}, {2}, {3}", rect.Left, rect.Top, rect.Width, rect.Height);
             return rect;
         }
 
@@ -296,7 +296,7 @@ namespace LanExchange.Model.Settings
             // set properties
             if (rect.Left != MainFormX || rect.Width != MainFormWidth)
             {
-                logger.Info("Settings.SetBounds(): {0}, {1}, {2}, {3}", rect.Left, rect.Top, rect.Width, rect.Height);
+                Logger.Info("Settings.SetBounds(): {0}, {1}, {2}, {3}", rect.Left, rect.Top, rect.Width, rect.Height);
                 MainFormX = rect.Left;
                 MainFormWidth = rect.Width;
             }

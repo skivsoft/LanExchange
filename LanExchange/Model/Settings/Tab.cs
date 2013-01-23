@@ -17,7 +17,7 @@ namespace LanExchange.Model.Settings
             Domains = new List<string>();
         }
 
-        public void SetScanGroups(IList<ISubject> value)
+        public void SetScanGroups(IEnumerable<ISubject> value)
         {
             Domains.Clear();
             foreach(var item in value)

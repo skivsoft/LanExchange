@@ -96,7 +96,8 @@ namespace LanExchange.Model.Panel
 
         public override IPanelColumnHeader CreateColumnHeader(int index)
         {
-            IPanelColumnHeader result = new ColumnHeaderEx() { Visible = true };
+            IPanelColumnHeader result = new ColumnHeaderEx();
+            result.SetVisible(true);
             switch (index)
             {
                 case 0:

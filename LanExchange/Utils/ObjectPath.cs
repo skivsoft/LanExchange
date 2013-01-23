@@ -33,11 +33,10 @@ namespace LanExchange.Utils
             OnChanged();
         }
 
-        public object Pop()
+        public void Pop()
         {
-            var result = m_Path.Pop();
+            m_Path.Pop();
             OnChanged();
-            return result;
         }
 
         public object Peek()

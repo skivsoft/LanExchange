@@ -51,7 +51,9 @@ namespace LanExchange.Model.Panel
 
         public override IPanelColumnHeader CreateColumnHeader(int index)
         {
-            return new ColumnHeaderEx { Visible = true, Text = "Домен" };
+            var result = new ColumnHeaderEx { Text = "Домен" };
+            result.SetVisible(true);
+            return result;
         }
 
         public override string ToString()
