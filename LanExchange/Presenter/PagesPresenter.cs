@@ -94,7 +94,7 @@ namespace LanExchange.Presenter
             if (menu != null && m_View != null)
             {
                 int Index = (int)menu.Tag;
-                if (!Equals(m_View.GetSelectedIndex(), Index))
+                if (m_View.GetSelectedIndex() != Index)
                     m_View.SetSelectedIndex(Index);
             }
         }

@@ -52,7 +52,7 @@
             this.toolStripSeparator11,
             this.mTabParams});
             this.popPages.Name = "popPages";
-            this.popPages.Size = new System.Drawing.Size(245, 126);
+            this.popPages.Size = new System.Drawing.Size(245, 148);
             this.popPages.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.popPages_Closed);
             this.popPages.Opening += new System.ComponentModel.CancelEventHandler(this.popPages_Opening);
             this.popPages.Opened += new System.EventHandler(this.popPages_Opened);
@@ -92,6 +92,7 @@
             this.mSelectTab.Name = "mSelectTab";
             this.mSelectTab.Size = new System.Drawing.Size(244, 22);
             this.mSelectTab.Text = "Выбрать вкладку";
+            this.mSelectTab.DropDownOpening += new System.EventHandler(this.mSelectTab_DropDownOpening);
             // 
             // toolStripSeparator11
             // 
