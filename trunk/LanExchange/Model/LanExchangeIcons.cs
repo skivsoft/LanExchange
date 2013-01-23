@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.Drawing;
 using LanExchange.Utils;
+using LanExchange.Properties;
 
 namespace LanExchange.Model
 {
@@ -17,7 +18,7 @@ namespace LanExchange.Model
         public const int FolderNormal  = 3; // Folder icon
         public const int FolderHidden  = 4; // Disabled Folder icon
         public const int FolderPrinter = 4;
-        public const int FolderBack    = 0;
+        public const int FolderBack    = 5; // Back icon
         public const int CompGreen     = 1;
 
         private const int SYSTEM_INDEX_MYCOMPUTER = 15;
@@ -60,6 +61,9 @@ namespace LanExchange.Model
             // Disabled Folder icon
             m_SmallImageList.Images.Add(MadeDisabledBitmap(icon1.ToBitmap()));
             m_LargeImageList.Images.Add(MadeDisabledBitmap(icon2.ToBitmap()));
+            // Back icon
+            m_SmallImageList.Images.Add(Resources.back_16);
+            m_LargeImageList.Images.Add(Resources.back_32);
             // release sys images list
             Small.Dispose();
             Large.Dispose();

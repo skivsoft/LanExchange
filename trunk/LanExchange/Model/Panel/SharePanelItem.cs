@@ -30,7 +30,7 @@ namespace LanExchange.Model.Panel
         {
             get
             {
-                if (String.IsNullOrEmpty(Name))
+                if (Name == BACK)
                     return LanExchangeIcons.FolderBack;
                 if (SHI.IsPrinter)
                     return LanExchangeIcons.FolderPrinter;

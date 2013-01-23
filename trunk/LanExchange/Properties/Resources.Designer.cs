@@ -60,6 +60,20 @@ namespace LanExchange.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap back_16 {
+            get {
+                object obj = ResourceManager.GetObject("back_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap back_32 {
+            get {
+                object obj = ResourceManager.GetObject("back_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap clear_hover {
             get {
                 object obj = ResourceManager.GetObject("clear_hover", resourceCulture);

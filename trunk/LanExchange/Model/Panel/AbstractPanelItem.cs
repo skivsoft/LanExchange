@@ -6,7 +6,7 @@ namespace LanExchange.Model.Panel
 {
     public abstract class AbstractPanelItem : IComparable<AbstractPanelItem>, IEquatable<ISubject>, IComparable, IColumnComparable, ISubject
     {
-        public const string BACK = "..";
+        public static string BACK = String.Empty;
         public abstract string Name { get; set; }
         public abstract int CountColumns { get; }
         public abstract IComparable this[int index] { get; }
@@ -22,7 +22,7 @@ namespace LanExchange.Model.Panel
 
         public virtual int ImageIndex
         {
-            get { return -1; }
+            get { return Name == BACK ? LanExchangeIcons.FolderBack : -1; }
         }
 
         private IComparable GetColumnValue(int index)

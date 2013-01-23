@@ -15,6 +15,7 @@ namespace LanExchange.Presenter
     {
         public const string COMPUTER_MENU = "computer";
         public const string FOLDER_MENU = "folder";
+        public const string FILE_MENU = "file";
 
         private PanelItemList m_Objects;
         private readonly IPanelView m_View;
@@ -258,6 +259,28 @@ namespace LanExchange.Presenter
                 Objects.CurrentPath.Pop();
             }
             return result;
+        }
+
+        public static string DetectMENU(AbstractPanelItem PItem)
+        {
+            while (PItem.Parent != null)
+            {
+                if (PItem.Name == AbstractPanelItem.BACK)
+                {
+                    PItem = PItem.Parent;
+                    continue;
+                }
+                if (PItem is ComputerPanelItem)
+                    return COMPUTER_MENU;
+                if (PItem is SharePanelItem)
+                    return FOLDER_MENU;
+                if (PItem is FilePanelItem)
+                    if ((PItem as FilePanelItem).IsDirectory)
+                        return FOLDER_MENU;
+                    else
+                        return FILE_MENU;
+            }
+            return String.Empty;
         }
     }
 }
