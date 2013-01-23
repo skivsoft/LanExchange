@@ -446,7 +446,8 @@ namespace LanExchange.UI
             SetEnabledAndVisible(mFolder, bFolderVisible);
 
             var menu = PanelPresenter.DetectMENU(PItem);
-            SetEnabledAndVisible(new ToolStripItem[] { mCopyCompName, mCopyComment, mCopySelected, mSendSeparator, mSendToTab }, menu == PanelPresenter.COMPUTER_MENU);
+            SetEnabledAndVisible(new ToolStripItem[] { mCopyCompName, mCopyComment, mCopySelected, mSendSeparator, mSendToTab }, 
+                menu == PanelPresenter.COMPUTER_MENU);
             SetEnabledAndVisible(mCopyPath, menu == PanelPresenter.FOLDER_MENU);
 
             mSeparatorAdmin.Visible = bCompVisible || bFolderVisible || Settings.Instance.AdvancedMode;
