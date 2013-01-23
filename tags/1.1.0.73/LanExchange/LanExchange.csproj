@@ -1,0 +1,364 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CC938630-E3FC-426E-A8A7-06EB22ABC703}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LanExchange</RootNamespace>
+    <AssemblyName>LanExchange</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <ApplicationIcon>LanExchange.ico</ApplicationIcon>
+    <TargetZone>LocalIntranet</TargetZone>
+    <GenerateManifests>false</GenerateManifests>
+    <ManifestCertificateThumbprint>0021C39F2A3AA9BFA2D88555B66C8BB3CDBA9446</ManifestCertificateThumbprint>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
+    <SignManifests>false</SignManifests>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>false</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>5</ApplicationRevision>
+    <ApplicationVersion>1.0.0.5</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>false</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>LanExchange.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NLog">
+      <HintPath>..\lib\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model\ConcreteSubject.cs" />
+    <Compile Include="Model\Panel\DomainPanelItem.cs" />
+    <Compile Include="Model\Panel\FilePanelItem.cs" />
+    <Compile Include="Model\IPanelColumnHeader.cs" />
+    <Compile Include="Model\ISubject.cs" />
+    <Compile Include="Model\ConcreteSubjectComparer.cs" />
+    <Compile Include="Strategy\Panel\ConcreteMultiStrategy.cs" />
+    <Compile Include="Strategy\Panel\DomainEnumStrategy.cs" />
+    <Compile Include="Strategy\Panel\FileEnumStrategy.cs" />
+    <Compile Include="Utils\ObjectPath.cs" />
+    <Compile Include="UI\ColumnHeaderEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Utils\Sorting\IColumnComparable.cs" />
+    <Compile Include="Strategy\BackgroundContext.cs" />
+    <Compile Include="Strategy\IBackgroundStrategy.cs" />
+    <Compile Include="Model\BackgroundWorkerEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Model\IFilterModel.cs" />
+    <Compile Include="Strategy\Panel\ShareEnumStrategy.cs" />
+    <Compile Include="Strategy\WMIClassesInitStrategy.cs" />
+    <Compile Include="Strategy\Panel\ComputerEnumStrategy.cs" />
+    <Compile Include="Strategy\Panel\AbstractPanelStrategy.cs" />
+    <Compile Include="Presenter\FilterPresenter.cs" />
+    <Compile Include="UI\FilterView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\FilterView.Designer.cs">
+      <DependentUpon>FilterView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\FormPlacement.cs" />
+    <Compile Include="UI\PagesView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\PagesView.Designer.cs">
+      <DependentUpon>PagesView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\RunMinimizedForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Model\LanExchangeIcons.cs" />
+    <Compile Include="Presenter\AboutPresenter.cs" />
+    <Compile Include="Presenter\PanelPresenter.cs" />
+    <Compile Include="Presenter\ParamsPresenter.cs" />
+    <Compile Include="UI\InfoView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\InfoView.Designer.cs">
+      <DependentUpon>InfoView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\InputBoxForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\InputBoxForm.Designer.cs">
+      <DependentUpon>InputBoxForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\PanelView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\PanelView.Designer.cs">
+      <DependentUpon>PanelView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ListViewItemCache.cs" />
+    <Compile Include="Utils\ListViewUtils.cs" />
+    <Compile Include="Utils\ShareInfo.cs" />
+    <Compile Include="Utils\Shell32.cs" />
+    <Compile Include="View\IFilterView.cs" />
+    <Compile Include="Windows\ExternDll.cs" />
+    <Compile Include="Windows\NativeMethods.cs" />
+    <Compile Include="Windows\SafeNativeMethods.cs" />
+    <Compile Include="Utils\Shell32Utils.cs" />
+    <Compile Include="Utils\SingleInstanceCheck.cs" />
+    <Compile Include="Utils\SysImageList.cs" />
+    <Compile Include="View\IAboutView.cs" />
+    <Compile Include="Utils\MenuUtils.cs" />
+    <Compile Include="UI\AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\TabParamsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\TabParamsForm.Designer.cs">
+      <DependentUpon>TabParamsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Settings\Tabs.cs" />
+    <Compile Include="Utils\Kernel32.cs" />
+    <Compile Include="Model\BackgroundWorkers.cs" />
+    <Compile Include="Model\ISubscriber.cs" />
+    <Compile Include="Model\ISubscription.cs" />
+    <Compile Include="Utils\NetApi32.cs" />
+    <Compile Include="Model\PanelSubscription.cs" />
+    <Compile Include="Utils\ServerInfo.cs" />
+    <Compile Include="Model\Settings\Tab.cs" />
+    <Compile Include="Utils\NetApi32Utils.cs" />
+    <Compile Include="NLogFake.cs" />
+    <Compile Include="UI\ParamsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ParamsForm.Designer.cs">
+      <DependentUpon>ParamsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Panel\ComputerPanelItem.cs" />
+    <Compile Include="Utils\Sorting\ColumnComparer.cs" />
+    <Compile Include="Model\Panel\SharePanelItem.cs" />
+    <Compile Include="Model\PingThread.cs" />
+    <Compile Include="Model\Panel\AbstractPanelItem.cs" />
+    <Compile Include="Utils\User32Utils.cs" />
+    <Compile Include="Utils\AutorunUtils.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Model\PagesModel.cs" />
+    <Compile Include="Utils\SerializeUtils.cs" />
+    <Compile Include="View\IPanelView.cs" />
+    <Compile Include="View\IParamsView.cs" />
+    <Compile Include="View\IPagesView.cs" />
+    <Compile Include="Windows\UnsafeNativeMethods.cs" />
+    <Compile Include="WMI\DynamicObject.cs" />
+    <Compile Include="WMI\IWMIComputer.cs" />
+    <Compile Include="WMI\IWMIView.cs" />
+    <Compile Include="WMI\MethodDataEx.cs" />
+    <Compile Include="WMI\PropertyDataEx.cs" />
+    <Compile Include="WMI\WMIAuthForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WMI\WMIAuthForm.Designer.cs">
+      <DependentUpon>WMIAuthForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WMI\WMIClassList.cs" />
+    <Compile Include="WMI\WMIForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WMI\WMIForm.Designer.cs">
+      <DependentUpon>WMIForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WMI\WMIMethodForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WMI\WMIMethodForm.Designer.cs">
+      <DependentUpon>WMIMethodForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WMI\WMIPresenter.cs" />
+    <Compile Include="WMI\WMISettings.cs" />
+    <Compile Include="WMI\WMISetupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WMI\WMISetupForm.Designer.cs">
+      <DependentUpon>WMISetupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WMI\WMIUtils.cs" />
+    <EmbeddedResource Include="UI\AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\FilterView.resx">
+      <DependentUpon>FilterView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\InfoView.resx">
+      <DependentUpon>InfoView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\InputBoxForm.resx">
+      <DependentUpon>InputBoxForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\PagesView.resx">
+      <DependentUpon>PagesView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\PanelView.resx">
+      <DependentUpon>PanelView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\TabParamsForm.resx">
+      <DependentUpon>TabParamsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ParamsForm.resx">
+      <DependentUpon>ParamsForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Model\PanelItemList.cs" />
+    <Compile Include="Model\PuntoSwitcher.cs" />
+    <Compile Include="Model\Settings\Settings.cs" />
+    <Compile Include="Presenter\PagesPresenter.cs" />
+    <EmbeddedResource Include="WMI\WMIAuthForm.resx">
+      <DependentUpon>WMIAuthForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WMI\WMIForm.resx">
+      <DependentUpon>WMIForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WMI\WMIMethodForm.resx">
+      <DependentUpon>WMIMethodForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WMI\WMISetupForm.resx">
+      <DependentUpon>WMISetupForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="NLog.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\app.manifest" />
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="LanExchange.ico" />
+    <None Include="Resources\clear_hover.png" />
+    <None Include="Resources\clear_normal.png" />
+    <Content Include="Presenter\Readme.txt" />
+    <Content Include="Resources\LanExchange_16x16.ico" />
+    <None Include="Resources\LanExchange_48x48.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
