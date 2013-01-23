@@ -147,10 +147,10 @@ namespace LanExchange.UI
         {
             mCloseTab.Enabled = m_Presenter.CanCloseTab();
             mSelectTab.Enabled = m_Presenter.GetModel().Count > 1;
-            if (mSelectTab.Enabled)
+            if (mSelectTab.Enabled && mSelectTab.DropDownItems.Count == 0)
             {
-                mSelectTab.DropDownItems.Clear();
-                m_Presenter.AddTabsToMenuItem(mSelectTab, m_Presenter.mSelectTab_Click, false);
+                var menuItem = new ToolStripSeparator();
+                mSelectTab.DropDownItems.Add(menuItem);
             }
         }
 
@@ -271,6 +271,15 @@ namespace LanExchange.UI
         public int GetSelectedIndex()
         {
             return Pages.SelectedIndex;
+        }
+
+        private void mSelectTab_DropDownOpening(object sender, EventArgs e)
+        {
+            if (mSelectTab.Enabled)
+            {
+                mSelectTab.DropDownItems.Clear();
+                m_Presenter.AddTabsToMenuItem(mSelectTab, m_Presenter.mSelectTab_Click, false);
+            }
         }
     }
 }
