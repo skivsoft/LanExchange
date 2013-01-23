@@ -11,6 +11,7 @@ using LanExchange.Windows;
 using System.Security.Permissions;
 using LanExchange.Model.Panel;
 using LanExchange.Model.Settings;
+using LanExchange.Utils;
 
 namespace LanExchange.UI
 {
@@ -28,7 +29,12 @@ namespace LanExchange.UI
         /// </summary>
         public static MainForm Instance;
 
+        /// <summary>
+        /// Pages presenter.
+        /// </summary>
         public PagesPresenter MainPages { get; set; }
+
+        private readonly GlobalHotkeys m_Hotkeys;
 
         public MainForm()
         {
@@ -47,13 +53,15 @@ namespace LanExchange.UI
             //Pages.UpdateSelectedTab();
             // init main form
             SetupForm();
-            
             // setup images
             Instance.tipComps.SetToolTip(Pages.Pages, " ");
             Pages.Pages.ImageList = LanExchangeIcons.SmallImageList;
             Status.ImageList = LanExchangeIcons.SmallImageList;
             // init network scanner
             PanelSubscription.Instance.RefreshInterval = (int)Settings.Instance.RefreshTimeInSec * 1000;
+            // init hotkey
+            m_Hotkeys = new GlobalHotkeys();
+            m_Hotkeys.RegisterGlobalHotKey((int)Keys.X, GlobalHotkeys.MOD_WIN, Handle);
         }
 
         private void SetupForm()
@@ -394,6 +402,13 @@ namespace LanExchange.UI
         {
             switch (m.Msg)
             {
+                case GlobalHotkeys.WM_HOTKEY:
+                    if ((short)m.WParam == m_Hotkeys.HotkeyID)
+                    {
+                        logger.Info("HOT KEY CLICKED()");
+                        ToggleVisible();
+                    }
+                    break;
                 case NativeMethods.WM_QUERYENDSESSION:
                     logger.Info("WM_QUERYENDSESSION: {0}", m.LParam.ToString("X"));
                     m.Result = new IntPtr(1);

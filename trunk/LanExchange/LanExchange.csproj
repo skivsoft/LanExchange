@@ -96,6 +96,7 @@
     <Compile Include="Strategy\Panel\ConcreteMultiStrategy.cs" />
     <Compile Include="Strategy\Panel\DomainEnumStrategy.cs" />
     <Compile Include="Strategy\Panel\FileEnumStrategy.cs" />
+    <Compile Include="Utils\GlobalHotkeys.cs" />
     <Compile Include="Utils\ObjectPath.cs" />
     <Compile Include="UI\ColumnHeaderEx.cs">
       <SubType>Component</SubType>
