@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LanExchange.Model.Panel
 {
-    public abstract class AbstractPanelItem : IComparable<AbstractPanelItem>, IEquatable<ISubject>, IColumnComparable, ISubject
+    public abstract class AbstractPanelItem : IComparable<AbstractPanelItem>, IEquatable<ISubject>, IComparable, IColumnComparable, ISubject
     {
         public const string BACK = "..";
         public abstract string Name { get; set; }
@@ -32,6 +32,12 @@ namespace LanExchange.Model.Panel
             return this[index];
         }
 
+        /// <summary>
+        /// IColumnsComparable.CompareTo implementation.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <param name="column"></param>
+        /// <returns></returns>
         public int CompareTo(object other, int column)
         {
             var otherItem = other as AbstractPanelItem;
@@ -41,9 +47,29 @@ namespace LanExchange.Model.Panel
             return value1.CompareTo(value2);
         }
 
+        /// <summary>
+        /// IComparable&lt;AbstractPanelItem&gt;.CompareTo implementation.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public int CompareTo(AbstractPanelItem other)
         {
-            return CompareTo(other, 0);
+            if ((Name == BACK) && (other.Name != BACK))
+                return -1;
+            if ((Name != BACK) && (other.Name == BACK))
+                return 1;
+            return String.Compare(Name, other.Name, StringComparison.Ordinal);
+            //return CompareTo(other, 0);
+        }
+
+        /// <summary>
+        /// IComparable.CompareTo implementation
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public int CompareTo(object obj)
+        {
+            return CompareTo(obj as AbstractPanelItem);
         }
 
         public string Subject

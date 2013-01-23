@@ -4,7 +4,7 @@ using LanExchange.UI;
 
 namespace LanExchange.Model.Panel
 {
-    public class SharePanelItem : AbstractPanelItem, IComparable<SharePanelItem>
+    public class SharePanelItem : AbstractPanelItem//, IComparable<SharePanelItem>
     {
         private readonly ShareInfo m_SHI;
 
@@ -59,23 +59,23 @@ namespace LanExchange.Model.Panel
             }
         }
 
-        public int CompareTo(SharePanelItem other)
-        {
-            if (other == null) return 1;
-            bool b2 = other.SHI.IsPrinter;
-            int Result;
-            if (SHI.IsPrinter)
-                if (b2)
-                    Result = base.CompareTo(other);
-                else
-                    Result = +1;
-            else
-                if (b2)
-                    Result = -1;
-                else
-                    Result = base.CompareTo(other);
-            return Result;
-        }
+        //public int CompareTo(SharePanelItem other)
+        //{
+        //    if (other == null) return 1;
+        //    bool b2 = other.SHI.IsPrinter;
+        //    int Result;
+        //    if (SHI.IsPrinter)
+        //        if (b2)
+        //            Result = base.CompareTo(other);
+        //        else
+        //            Result = +1;
+        //    else
+        //        if (b2)
+        //            Result = -1;
+        //        else
+        //            Result = base.CompareTo(other);
+        //    return Result;
+        //}
 
         public string ComputerName
         {

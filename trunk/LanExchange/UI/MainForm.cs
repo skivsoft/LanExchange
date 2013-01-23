@@ -21,6 +21,8 @@ namespace LanExchange.UI
         /// </summary>
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
+        public const int WAIT_FOR_KEYUP_MS = 500;
+
         /// <summary>
         /// ManiForm single instance.
         /// </summary>
@@ -94,24 +96,38 @@ namespace LanExchange.UI
         }
 #endif
 
+        private bool m_EscDown;
+        private DateTime m_EscTime;
+
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
             {
                 PanelView pv = Pages.GetActivePanelView();
-                if (pv != null && pv.Filter.IsVisible)
+                e.Handled = true;
+                if (pv == null) return;
+                if (pv.Filter.IsVisible)
                     pv.Filter.SetFilterText(String.Empty);
                 else
-                    Instance.Hide();
-                e.Handled = true;
+                    if (pv.GetPresenter().Objects.CurrentPath.IsEmpty)
+                        Instance.Hide();
+                    else
+                        if (!m_EscDown)
+                        {
+                            m_EscTime = DateTime.UtcNow;
+                            m_EscDown = true;
+                        }
+                        else
+                        {
+                            TimeSpan diff = DateTime.UtcNow - m_EscTime;
+                            if (diff.TotalMilliseconds >= WAIT_FOR_KEYUP_MS)
+                            {
+                                Instance.Hide();
+                                m_EscDown = false;
+                            }
+                        }
             }
 #if DEBUG
-            // Ctrl+R - restart application
-            if (e.Control && e.KeyCode == Keys.R)
-            {
-                Application.Restart();
-                e.Handled = true;
-            }
             // Ctrl+Alt+S - show subscibers in debug mode
             if (e.Control && e.Alt && e.KeyCode == Keys.S)
             {
@@ -119,6 +135,27 @@ namespace LanExchange.UI
                 e.Handled = true;
             }
 #endif
+        }
+
+        private void MainForm_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                if (m_EscDown)
+                {
+                    TimeSpan diff = DateTime.UtcNow - m_EscTime;
+                    PanelView pv = Pages.GetActivePanelView();
+                    if (pv != null && !pv.GetPresenter().Objects.CurrentPath.IsEmpty)
+                    {
+                        if (diff.TotalMilliseconds < WAIT_FOR_KEYUP_MS)
+                            pv.GetPresenter().LevelUp();
+                        else
+                            Instance.Hide();
+                    }
+                    m_EscDown = false;
+                }
+                e.Handled = true;
+            }
         }
 
         private void popTop_Opened(object sender, EventArgs e)

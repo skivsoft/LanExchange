@@ -71,6 +71,7 @@
             // 
             // LV
             // 
+            this.LV.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.LV.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2});
@@ -80,6 +81,7 @@
             this.LV.GridLines = true;
             this.LV.HideSelection = false;
             this.LV.Location = new System.Drawing.Point(0, 20);
+            this.LV.Margin = new System.Windows.Forms.Padding(0);
             this.LV.Name = "LV";
             this.LV.ShowItemToolTips = true;
             this.LV.Size = new System.Drawing.Size(470, 437);
@@ -379,14 +381,20 @@
             // 
             // ePath
             // 
+            this.ePath.BackColor = System.Drawing.SystemColors.Control;
+            this.ePath.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.ePath.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ePath.Enabled = false;
             this.ePath.Location = new System.Drawing.Point(0, 0);
+            this.ePath.Margin = new System.Windows.Forms.Padding(0);
             this.ePath.Name = "ePath";
             this.ePath.ReadOnly = true;
             this.ePath.Size = new System.Drawing.Size(470, 20);
             this.ePath.TabIndex = 25;
+            this.ePath.TabStop = false;
             this.ePath.DoubleClick += new System.EventHandler(this.ePath_DoubleClick);
             this.ePath.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ePath_KeyDown);
+            this.ePath.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lvComps_KeyPress);
             // 
             // pFilter
             // 
@@ -394,6 +402,7 @@
             this.pFilter.IsVisible = true;
             this.pFilter.LinkedControl = this.LV;
             this.pFilter.Location = new System.Drawing.Point(0, 457);
+            this.pFilter.Margin = new System.Windows.Forms.Padding(0);
             this.pFilter.Name = "pFilter";
             this.pFilter.Size = new System.Drawing.Size(470, 30);
             this.pFilter.TabIndex = 27;
@@ -405,8 +414,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.LV);
-            this.Controls.Add(this.pFilter);
             this.Controls.Add(this.ePath);
+            this.Controls.Add(this.pFilter);
+            this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "PanelView";
             this.Size = new System.Drawing.Size(470, 487);
             this.popComps.ResumeLayout(false);
