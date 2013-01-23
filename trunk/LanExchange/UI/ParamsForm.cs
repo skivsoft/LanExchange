@@ -37,50 +37,38 @@ namespace LanExchange.UI
 
         public bool IsAutorun
         {
-            get
-            {
-                return chAutorun.Checked;
-            }
-            set
-            {
-                chAutorun.Checked = value;
-            }
+            get { return chAutorun.Checked; }
+            set { chAutorun.Checked = value; }
         }
 
         public bool RunMinimized
         {
-            get
-            {
-                return chMinimized.Checked;
-            }
-            set
-            {
-                chMinimized.Checked = value;
-            }
+            get { return chMinimized.Checked; }
+            set { chMinimized.Checked = value; }
         }
 
         public bool AdvancedMode
         {
-            get
-            {
-                return chAdvanced.Checked;
-            }
-            set
-            {
-                chAdvanced.Checked = value;
-            }
+            get { return chAdvanced.Checked; }
+            set { chAdvanced.Checked = value; }
         }
 
         public decimal RefreshTimeInMin
         {
-            get
-            {
-                return eRefreshTime.Value;
-            }
-            set
-            {
-                eRefreshTime.Value = value;
-            }
+            get { return eRefreshTime.Value; }
+            set { eRefreshTime.Value = value; }
+        }
+
+        public bool ShowHiddenShares
+        {
+            get { return chShowHiddenShares.Checked; }
+            set { chShowHiddenShares.Checked = value; }
+        }
+        
+        public bool ShowPrinters 
+        {
+            get { return chShowPrinters.Checked; }
+            set { chShowPrinters.Checked = value; }
         }
     }
 }

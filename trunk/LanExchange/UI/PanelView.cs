@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Globalization;
 using System.Windows.Forms;
 using LanExchange.Strategy;
 using LanExchange.View;
 using LanExchange.Presenter;
-using NLog;
 using LanExchange.Utils;
 using System.Reflection;
 using LanExchange.Model;
@@ -18,7 +16,6 @@ namespace LanExchange.UI
     public partial class PanelView : UserControl, IPanelView, IListViewItemGetter
     {
         #region Class declarations and constructor
-        private readonly static Logger logger = LogManager.GetCurrentClassLogger();
         private readonly static FormPlacement m_WMIPlacement = new FormPlacement();
 
         private readonly PanelPresenter m_Presenter;
@@ -244,6 +241,31 @@ namespace LanExchange.UI
             pFilter.GetPresenter().LinkedControl_KeyPress(sender, e);
         }
 
+        /// <summary>
+        /// Shift+Enter - Open current item.
+        /// </summary>
+        private void OpenCurrentItem()
+        {
+            var PItem = m_Presenter.GetFocusedPanelItem(false, true);
+            if (PItem is ComputerPanelItem)
+                mCompOpen_Click(mCompOpen, EventArgs.Empty);
+            if (PItem is SharePanelItem)
+                mFolderOpen_Click(mFolderOpen, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Ctrl+Enter - Run RAdmin for computer and FAR for folder.
+        /// </summary>
+        private void RunCurrentItem()
+        {
+            var PItem = m_Presenter.GetFocusedPanelItem(false, true);
+            if (PItem is ComputerPanelItem)
+                mCompOpen_Click(mRadmin1, EventArgs.Empty);
+            if (PItem is SharePanelItem)
+                if (!(PItem as SharePanelItem).SHI.IsPrinter)
+                    mFolderOpen_Click(mFAROpen, EventArgs.Empty);
+        }
+
         public void lvComps_KeyDown(object sender, KeyEventArgs e)
         {
             pFilter.GetPresenter().LinkedControl_KeyDown(sender, e);
@@ -257,22 +279,13 @@ namespace LanExchange.UI
             // Shift+Enter - Open current item
             if (e.Shift && e.KeyCode == Keys.Enter)
             {
-                AbstractPanelItem PItem = m_Presenter.GetFocusedPanelItem(false);
-                if (PItem is ComputerPanelItem)
-                    mCompOpen_Click(mCompOpen, EventArgs.Empty);
-                if (PItem is SharePanelItem)
-                    mFolderOpen_Click(mFolderOpen, EventArgs.Empty);
+                OpenCurrentItem();
                 e.Handled = true;
             }
             // Ctrl+Enter - Run RAdmin for computer and FAR for folder
             if (Settings.Instance.AdvancedMode && e.Control && e.KeyCode == Keys.Enter)
             {
-                AbstractPanelItem PItem = m_Presenter.GetFocusedPanelItem(false);
-                if (PItem is ComputerPanelItem)
-                    mCompOpen_Click(mRadmin1, EventArgs.Empty);
-                if (PItem is SharePanelItem)
-                    if (!(PItem as SharePanelItem).SHI.IsPrinter)
-                        mFolderOpen_Click(mFAROpen, EventArgs.Empty);
+                RunCurrentItem();
                 e.Handled = true;
             }
             // Backspace - Go level up
@@ -283,8 +296,7 @@ namespace LanExchange.UI
             }
             // Ctrl+Ins - Copy to clipboard (similar to Ctrl+C)
             // Ctrl+Alt+C - Copy to clipboard and close window
-            if (e.Control && e.KeyCode == Keys.Insert || 
-                e.Control && e.Alt && e.KeyCode == Keys.C)
+            if (e.Control && e.KeyCode == Keys.Insert || e.Control && e.Alt && e.KeyCode == Keys.C)
             {
                 if (mCopyCompName.Enabled)
                     m_Presenter.CopyValueCommand(0);
@@ -314,7 +326,8 @@ namespace LanExchange.UI
 
         private void lvComps_ItemActivate(object sender, EventArgs e)
         {
-            m_Presenter.LevelDown();
+            if (!m_Presenter.LevelDown())
+                OpenCurrentItem();
         }
 
         private void mWMI_Click(object sender, EventArgs e)
@@ -322,7 +335,7 @@ namespace LanExchange.UI
             // check advanced mode
             if (!Settings.Instance.AdvancedMode) return;
             // get focused computer
-            ComputerPanelItem comp = m_Presenter.GetFocusedComputer();
+            ComputerPanelItem comp = m_Presenter.GetFocusedComputer(true);
             if (comp == null) return;
             // create wmi form
             WMIForm form = new WMIForm(comp);
@@ -357,14 +370,14 @@ namespace LanExchange.UI
 
         public void mCompOpen_Click(object sender, EventArgs e)
         {
-            ToolStripMenuItem MenuItem = sender as ToolStripMenuItem;
+            var MenuItem = sender as ToolStripMenuItem;
             if (MenuItem != null)
                 m_Presenter.RunCmdOnFocusedItem(MenuItem.Tag.ToString(), PanelPresenter.COMPUTER_MENU);
         }
 
         public void mFolderOpen_Click(object sender, EventArgs e)
         {
-            ToolStripMenuItem MenuItem = sender as ToolStripMenuItem;
+            var MenuItem = sender as ToolStripMenuItem;
             if (MenuItem != null)
                 m_Presenter.RunCmdOnFocusedItem(MenuItem.Tag.ToString(), PanelPresenter.FOLDER_MENU);
         }
@@ -399,7 +412,7 @@ namespace LanExchange.UI
                     DoFocusedItemChanged();
             UpdateViewTypeMenu();
 
-            AbstractPanelItem PItem = m_Presenter.GetFocusedPanelItem(false);
+            AbstractPanelItem PItem = m_Presenter.GetFocusedPanelItem(false, false);
             bool bCompVisible = false;
             bool bFolderVisible = false;
             if (PItem != null)
@@ -415,7 +428,7 @@ namespace LanExchange.UI
                     var share = PItem as SharePanelItem;
                     mComp.Text = @"\\" + share.ComputerName;
                     bCompVisible = Settings.Instance.AdvancedMode;
-                    if (!String.IsNullOrEmpty(share.Name))
+                    if (share.Name != AbstractPanelItem.BACK)
                     {
                         mFolder.Text = String.Format(@"\\{0}\{1}", share.ComputerName, share.Name);
                         mFolder.Image = LanExchangeIcons.SmallImageList.Images[share.ImageIndex];
@@ -449,11 +462,16 @@ namespace LanExchange.UI
         {
             item.Enabled = value;
             item.Visible = value;
+            if (item is ToolStripMenuItem)
+                foreach(var MI in (item as ToolStripMenuItem).DropDownItems)
+                    if (MI is ToolStripMenuItem)
+                        SetEnabledAndVisible((MI as ToolStripMenuItem), value);
         }
 
-        private static void SetEnabledAndVisible(ToolStripItem[] items, bool value)
+        private static void SetEnabledAndVisible(IEnumerable<ToolStripItem> items, bool value)
         {
-            Array.ForEach(items, item => SetEnabledAndVisible(item, value));
+            foreach(var item in items)
+                SetEnabledAndVisible(item, value);
         }
 
         private void mLargeIcons_Click(object sender, EventArgs e)

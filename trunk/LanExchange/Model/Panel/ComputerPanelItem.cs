@@ -8,7 +8,6 @@ namespace LanExchange.Model.Panel
 {
     public class ComputerPanelItem : AbstractPanelItem, IWMIComputer
     {
-        public static readonly ComputerPanelItem GoBack = new ComputerPanelItem();
         private readonly ServerInfo m_SI;
 
         /// <summary>
@@ -25,12 +24,13 @@ namespace LanExchange.Model.Panel
             IsPingable = true;
         }
 
-        protected ComputerPanelItem() : base(null)
+        protected ComputerPanelItem(AbstractPanelItem parent) : base(parent)
         {
             m_SI = new ServerInfo();
         }
 
-        public string Name { get; set; }
+        public override string Name { get; set; }
+
         public string Comment { get; set; }
 
         public ServerInfo SI

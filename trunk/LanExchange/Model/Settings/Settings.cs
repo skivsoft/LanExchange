@@ -30,6 +30,8 @@ namespace LanExchange.Model.Settings
         private bool m_RunMinimized;
         private bool m_AdvancedMode;
         private decimal m_RefreshTimeInSec;
+        private bool m_ShowHiddenShares;
+        private bool m_ShowPrinters;
 
         private Settings()
         {
@@ -189,6 +191,32 @@ namespace LanExchange.Model.Settings
                 if (m_RunMinimized != value)
                 {
                     m_RunMinimized = value;
+                    Modified = true;
+                }
+            }
+        }
+
+        public bool ShowHiddenShares
+        {
+            get { return m_ShowHiddenShares; }
+            set
+            {
+                if (m_ShowHiddenShares != value)
+                {
+                    m_ShowHiddenShares = value;
+                    Modified = true;
+                }
+            }
+        }
+
+        public bool ShowPrinters
+        {
+            get { return m_ShowPrinters; }
+            set
+            {
+                if (m_ShowPrinters != value)
+                {
+                    m_ShowPrinters = value;
                     Modified = true;
                 }
             }

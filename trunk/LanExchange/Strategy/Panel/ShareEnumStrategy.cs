@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using LanExchange.Model;
 using LanExchange.Model.Panel;
 using LanExchange.Utils;
+using LanExchange.Model.Settings;
 
 namespace LanExchange.Strategy.Panel
 {
@@ -15,9 +15,16 @@ namespace LanExchange.Strategy.Panel
             IEnumerable<NetApi32.SHARE_INFO_1> list = NetApi32Utils.NetShareEnum(comp.Name);
             // convert array to IList<ServerInfo>
             m_Result = new List<AbstractPanelItem>();
-            m_Result.Add(ComputerPanelItem.GoBack);
-            foreach(var item in list)
-                m_Result.Add(new SharePanelItem(comp, new ShareInfo(item)));
+            m_Result.Add(new SharePanelItem(comp, AbstractPanelItem.BACK));
+            foreach (var item in list)
+            {
+                var SI = new ShareInfo(item);
+                if (!Settings.Instance.ShowHiddenShares && SI.IsHidden)
+                    continue;
+                if (!Settings.Instance.ShowPrinters && SI.IsPrinter)
+                    continue;
+                m_Result.Add(new SharePanelItem(comp, SI));
+            }
         }
 
         public override void AcceptSubject(ISubject subject, out bool accepted)

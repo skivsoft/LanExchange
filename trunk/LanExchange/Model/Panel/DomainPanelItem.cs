@@ -11,16 +11,24 @@ namespace LanExchange.Model.Panel
         public DomainPanelItem(AbstractPanelItem parent, ServerInfo si) : base(parent)
         {
             m_SI = si;
-            Name = m_SI.Name;
         }
 
         public DomainPanelItem(string domain) : base(null)
         {
             m_SI = new ServerInfo(domain, String.Empty);
-            Name = domain;
         }
 
-        public string Name { get; set; }
+        public DomainPanelItem() : base(null)
+        {
+            m_SI = new ServerInfo();
+        }
+
+        public override bool IsCacheable
+        {
+            get { return true; }
+        }
+
+        public override string Name { get; set; }
 
         public override int CountColumns
         {

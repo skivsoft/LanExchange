@@ -10,5 +10,6 @@ namespace LanExchange.Model
     public interface ISubject
     {
         string Subject { get; }
+        bool IsCacheable { get; }
     }
 }

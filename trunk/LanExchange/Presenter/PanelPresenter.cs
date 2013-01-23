@@ -128,7 +128,7 @@ namespace LanExchange.Presenter
             }
         }
 
-        public AbstractPanelItem GetFocusedPanelItem(bool bPingAndAsk)
+        public AbstractPanelItem GetFocusedPanelItem(bool bPingAndAsk, bool bCanReturnParent)
         {
             var item = m_Objects.Get(m_View.FocusedItemText);
             var comp =  item as ComputerPanelItem;
@@ -149,6 +149,8 @@ namespace LanExchange.Presenter
                         item = null;
                 }
             }
+            if (bCanReturnParent && item != null && item.Name == AbstractPanelItem.BACK)
+                item = item.Parent;
             return item;
         }
 
@@ -161,8 +163,8 @@ namespace LanExchange.Presenter
         /// <param name="tagParent">Can be "computer" or "folder"</param>
         public void RunCmdOnFocusedItem(string tagCmd, string tagParent)
         {
-            // получаем выбранный комп
-            AbstractPanelItem PItem = GetFocusedPanelItem(true);
+            // TODO: CHECK THIS!
+            AbstractPanelItem PItem = GetFocusedPanelItem(true, false);
             if (PItem == null) return;
 
             string CmdLine;
@@ -205,68 +207,52 @@ namespace LanExchange.Presenter
             }
         }
 
-        public ComputerPanelItem GetFocusedComputer()
+        /// <summary>
+        /// Returns computer either focused item is computer or focused item is subitem of computer.
+        /// </summary>
+        /// <returns>a ComputerPanelItem or null</returns>
+        public ComputerPanelItem GetFocusedComputer(bool bPingAndAsk)
         {
-            AbstractPanelItem PItem = GetFocusedPanelItem(true);
+            var PItem = GetFocusedPanelItem(bPingAndAsk, false);
             if (PItem == null)
                 return null;
-            ComputerPanelItem Comp = null;
-            if (PItem is ComputerPanelItem)
-            {
-                Comp = PItem as ComputerPanelItem;
-            }
-            if (PItem is SharePanelItem)
-            {
-                Comp = (PItem as SharePanelItem).Parent as ComputerPanelItem;
-            }
-            return Comp;
+            while (!(PItem is ComputerPanelItem) && (PItem.Parent != null))
+                PItem = PItem.Parent;
+            return PItem as ComputerPanelItem;
         }
 
-        // TODO uncomment SelectComputer
-        //public void ListView_SelectComputer(ListView lv, string compName)
-        //{
-        //    int index = -1;
-        //    if (compName != null)
-        //    {
-
-        //        index = m_Keys.IndexOf(compName);
-        //        if (index == -1) index = 0;
-        //    }
-        //    else
-        //        index = 0;
-        //    if (lv.VirtualListSize > 0)
-        //    {
-        //        lv.SelectedIndices.Add(index);
-        //        lv.FocusedItem = lv.Items[index];
-        //        lv.EnsureVisible(index);
-        //    }
-        //}
-
-        internal void LevelDown()
+        internal bool LevelDown()
         {
-            var PItem = GetFocusedPanelItem(false);
-            if (PItem == null || Objects == null) return;
-            if (PanelSubscription.Instance.HasStrategyForSubject(PItem))
+            var PItem = GetFocusedPanelItem(false, false);
+            if (PItem == null || Objects == null) return false;
+            if (PItem.Name == AbstractPanelItem.BACK)
+                return LevelUp();
+            var result = PanelSubscription.Instance.HasStrategyForSubject(PItem);
+            if (result)
             {
                 Settings.logger.Info("LevelDown()");
                 PanelSubscription.Instance.UnSubscribe(Objects, false);
                 PanelSubscription.Instance.SubscribeToSubject(Objects, PItem);
                 Objects.CurrentPath.Push(PItem);
             }
+            return result;
         }
 
-        internal void LevelUp()
+        internal bool LevelUp()
         {
-            if (Objects == null || Objects.CurrentPath.IsEmpty) return;
+            if (Objects == null || Objects.CurrentPath.IsEmpty) return false;
             var PItem = Objects.CurrentPath.Peek() as AbstractPanelItem;
-            if (PItem == null) return;
-            if (PanelSubscription.Instance.HasStrategyForSubject(PItem.Parent))
+            if (PItem == null || PItem.Parent == null) return false;
+            var result = PanelSubscription.Instance.HasStrategyForSubject(PItem.Parent);
+            if (result)
             {
+                Objects.FocusedItemText = PItem.Name;
                 Settings.logger.Info("LevelUp()");
                 PanelSubscription.Instance.UnSubscribe(Objects, false);
                 PanelSubscription.Instance.SubscribeToSubject(Objects, PItem.Parent);
                 Objects.CurrentPath.Pop();
             }
+            return result;
         }
     }
 }

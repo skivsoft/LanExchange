@@ -171,13 +171,23 @@ namespace LanExchange.Model
                 }
                 if (!bModified)
                 {
-                    bModified = SortedListIsModified(m_Results[subject], list);
-                    if (bModified)
+                    // store computer and domains only
+                    if (!subject.IsCacheable)
+                    {
+                        bModified = true;
                         m_Results[subject] = list;
+                    }
+                    else
+                    {
+                        bModified = SortedListIsModified(m_Results[subject], list);
+                        if (bModified)
+                        {
+                            m_Results[subject] = list;
+                            SaveResultsToCache();
+                        }
+                    }
                 }
             }
-            if (bModified)
-                SaveResultsToCache();
             return bModified;
         }
 
@@ -319,7 +329,8 @@ namespace LanExchange.Model
                         var domain = new DomainPanelItem(Pair.Key);
                         var TempList = new List<AbstractPanelItem>();
                         foreach (var si in Pair.Value)
-                            TempList.Add(new ComputerPanelItem(domain, si));
+                            if (si != null)
+                                TempList.Add(new ComputerPanelItem(domain, si));
                         m_Results.Add(domain, TempList);
                         //TempList.Sort();
                     }
@@ -365,7 +376,7 @@ namespace LanExchange.Model
             if (subject == null)
                 throw new ArgumentNullException("subject");
             bool Modified = false;
-            if (m_Subjects.ContainsKey(subject))
+            if (subject.IsCacheable && m_Subjects.ContainsKey(subject))
             {
                 var List = m_Subjects[subject];
                 if (!List.Contains(sender))
@@ -376,9 +387,15 @@ namespace LanExchange.Model
             }
             else
             {
-                var List = new List<ISubscriber>();
+                IList<ISubscriber> List;
+                if (m_Subjects.ContainsKey(subject))
+                    List = m_Subjects[subject];
+                else
+                {
+                    List = new List<ISubscriber>();
+                    m_Subjects.Add(subject, List);
+                }
                 List.Add(sender);
-                m_Subjects.Add(subject, List);
                 m_InstantUpdate = true;
                 Modified = true;
             }

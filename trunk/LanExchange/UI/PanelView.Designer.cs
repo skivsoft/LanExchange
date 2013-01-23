@@ -123,7 +123,7 @@
             this.toolStripSeparator6,
             this.mContextClose});
             this.popComps.Name = "popComps";
-            this.popComps.Size = new System.Drawing.Size(279, 292);
+            this.popComps.Size = new System.Drawing.Size(279, 314);
             this.popComps.Opening += new System.ComponentModel.CancelEventHandler(this.popComps_Opening);
             // 
             // mComp
@@ -249,7 +249,7 @@
             // 
             this.mFolderOpen.Name = "mFolderOpen";
             this.mFolderOpen.ShortcutKeyDisplayString = "Shift+Enter";
-            this.mFolderOpen.Size = new System.Drawing.Size(280, 22);
+            this.mFolderOpen.Size = new System.Drawing.Size(265, 22);
             this.mFolderOpen.Tag = "{0}";
             this.mFolderOpen.Text = "Открыть в проводнике";
             this.mFolderOpen.Click += new System.EventHandler(this.mFolderOpen_Click);
@@ -258,9 +258,9 @@
             // 
             this.mFAROpen.Name = "mFAROpen";
             this.mFAROpen.ShortcutKeyDisplayString = "Ctrl+Enter";
-            this.mFAROpen.Size = new System.Drawing.Size(280, 22);
+            this.mFAROpen.Size = new System.Drawing.Size(265, 22);
             this.mFAROpen.Tag = "FAR.EXE {0}";
-            this.mFAROpen.Text = "Открыть в менеджере FAR";
+            this.mFAROpen.Text = "Открыть в Far Manager";
             this.mFAROpen.Click += new System.EventHandler(this.mFolderOpen_Click);
             // 
             // mSeparatorAdmin

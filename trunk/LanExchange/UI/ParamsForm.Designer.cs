@@ -39,6 +39,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.bCancel = new System.Windows.Forms.Button();
             this.bSave = new System.Windows.Forms.Button();
+            this.chShowHiddenShares = new System.Windows.Forms.CheckBox();
+            this.chShowPrinters = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eRefreshTime)).BeginInit();
@@ -57,6 +59,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.chShowPrinters);
+            this.tabPage1.Controls.Add(this.chShowHiddenShares);
             this.tabPage1.Controls.Add(this.chAdvanced);
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.eRefreshTime);
@@ -74,7 +78,7 @@
             // chAdvanced
             // 
             this.chAdvanced.AutoSize = true;
-            this.chAdvanced.Location = new System.Drawing.Point(18, 58);
+            this.chAdvanced.Location = new System.Drawing.Point(18, 98);
             this.chAdvanced.Name = "chAdvanced";
             this.chAdvanced.Size = new System.Drawing.Size(288, 17);
             this.chAdvanced.TabIndex = 1;
@@ -84,7 +88,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(295, 84);
+            this.label2.Location = new System.Drawing.Point(295, 124);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(30, 13);
             this.label2.TabIndex = 4;
@@ -92,7 +96,7 @@
             // 
             // eRefreshTime
             // 
-            this.eRefreshTime.Location = new System.Drawing.Point(251, 82);
+            this.eRefreshTime.Location = new System.Drawing.Point(251, 122);
             this.eRefreshTime.Name = "eRefreshTime";
             this.eRefreshTime.Size = new System.Drawing.Size(40, 20);
             this.eRefreshTime.TabIndex = 2;
@@ -105,7 +109,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 84);
+            this.label1.Location = new System.Drawing.Point(15, 124);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(230, 13);
             this.label1.TabIndex = 2;
@@ -164,6 +168,26 @@
             this.bSave.UseVisualStyleBackColor = true;
             this.bSave.Click += new System.EventHandler(this.bSave_Click);
             // 
+            // chShowHiddenShares
+            // 
+            this.chShowHiddenShares.AutoSize = true;
+            this.chShowHiddenShares.Location = new System.Drawing.Point(18, 58);
+            this.chShowHiddenShares.Name = "chShowHiddenShares";
+            this.chShowHiddenShares.Size = new System.Drawing.Size(219, 17);
+            this.chShowHiddenShares.TabIndex = 5;
+            this.chShowHiddenShares.Text = "Показывать скрытые общие ресурсы";
+            this.chShowHiddenShares.UseVisualStyleBackColor = true;
+            // 
+            // chShowPrinters
+            // 
+            this.chShowPrinters.AutoSize = true;
+            this.chShowPrinters.Location = new System.Drawing.Point(18, 78);
+            this.chShowPrinters.Name = "chShowPrinters";
+            this.chShowPrinters.Size = new System.Drawing.Size(141, 17);
+            this.chShowPrinters.TabIndex = 6;
+            this.chShowPrinters.Text = "Показывать принтеры";
+            this.chShowPrinters.UseVisualStyleBackColor = true;
+            // 
             // ParamsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -202,5 +226,7 @@
         private System.Windows.Forms.NumericUpDown eRefreshTime;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox chAdvanced;
+        private System.Windows.Forms.CheckBox chShowPrinters;
+        private System.Windows.Forms.CheckBox chShowHiddenShares;
     }
 }

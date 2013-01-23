@@ -25,6 +25,11 @@ namespace LanExchange.Model
             get { return String.Empty; }
         }
 
+        public bool IsCacheable
+        {
+            get { return true; }
+        }
+
         public override string ToString()
         {
             if (this == Root) return "<root>";
