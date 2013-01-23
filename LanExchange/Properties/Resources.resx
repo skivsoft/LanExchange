@@ -127,4 +127,11 @@
   <data name="LanExchange_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\LanExchange_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="back_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\back_16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="back_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\back_32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

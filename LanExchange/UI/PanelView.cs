@@ -445,11 +445,9 @@ namespace LanExchange.UI
             }
             SetEnabledAndVisible(mFolder, bFolderVisible);
 
-            const bool bSenderIsComputer = true; // (Pages.SelectedIndex > 0) /*|| (CompBrowser.InternalStack.Count == 0)*/;
-            SetEnabledAndVisible(new ToolStripItem[] { 
-                mCopyCompName, mCopyComment, mCopySelected, 
-                mSendSeparator, mSendToTab }, bSenderIsComputer);
-            SetEnabledAndVisible(mCopyPath, !bSenderIsComputer);
+            var menu = PanelPresenter.DetectMENU(PItem);
+            SetEnabledAndVisible(new ToolStripItem[] { mCopyCompName, mCopyComment, mCopySelected, mSendSeparator, mSendToTab }, menu == PanelPresenter.COMPUTER_MENU);
+            SetEnabledAndVisible(mCopyPath, menu == PanelPresenter.FOLDER_MENU);
 
             mSeparatorAdmin.Visible = bCompVisible || bFolderVisible || Settings.Instance.AdvancedMode;
 

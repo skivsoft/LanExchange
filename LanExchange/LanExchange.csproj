@@ -349,6 +349,8 @@
     <None Include="Resources\clear_hover.png" />
     <None Include="Resources\clear_normal.png" />
     <Content Include="Presenter\Readme.txt" />
+    <None Include="Resources\back_16.png" />
+    <None Include="Resources\back_32.png" />
     <Content Include="Resources\LanExchange_16x16.ico" />
     <None Include="Resources\LanExchange_48x48.png" />
   </ItemGroup>

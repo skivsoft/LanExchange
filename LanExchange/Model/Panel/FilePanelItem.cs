@@ -57,7 +57,12 @@ namespace LanExchange.Model.Panel
 
         public override int ImageIndex
         {
-            get { return IsDirectory ? LanExchangeIcons.FolderNormal : -1; }
+            get
+            {
+                if (Name == BACK)
+                    return LanExchangeIcons.FolderBack;
+                return IsDirectory ? LanExchangeIcons.FolderNormal : -1;
+            }
         }
 
         public override string ToolTipText
