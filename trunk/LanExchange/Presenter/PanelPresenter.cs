@@ -37,12 +37,17 @@ namespace LanExchange.Presenter
             // get number of visible items (filtered) and number of total items
             int ShowCount = m_Objects.FilterCount;
             int TotalCount = m_Objects.Count;
+            if (m_Objects.HasBackItem())
+            {
+                ShowCount--;
+                TotalCount--;
+            }
             if (ShowCount != TotalCount)
                 MainForm.Instance.ShowStatusText("Элементов: {0} из {1}", ShowCount, TotalCount);
             else
                 MainForm.Instance.ShowStatusText("Элементов: {0}", ShowCount);
-            m_View.SetVirtualListSize(ShowCount);
-            if (ShowCount > 0)
+            m_View.SetVirtualListSize(m_Objects.FilterCount);
+            if (m_Objects.FilterCount > 0)
             {
                 int index = Objects.IndexOf(CurrentItemList.FocusedItemText);
                 m_View.FocusedItemIndex = index;

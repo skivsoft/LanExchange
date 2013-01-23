@@ -4,7 +4,7 @@ namespace LanExchange.Utils
 {
     public class ShareInfo : IComparable<ShareInfo>
     {
-        private readonly NetApi32.SHARE_INFO_1 m_Info;
+        private NetApi32.SHARE_INFO_1 m_Info;
 
         public ShareInfo(NetApi32.SHARE_INFO_1 info)
         {
@@ -14,6 +14,7 @@ namespace LanExchange.Utils
         public string Name
         {
             get { return m_Info.shi1_netname; }
+            set { m_Info.shi1_netname = value; }
         }
 
         public string Comment

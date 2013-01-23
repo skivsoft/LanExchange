@@ -123,7 +123,7 @@
             this.toolStripSeparator6,
             this.mContextClose});
             this.popComps.Name = "popComps";
-            this.popComps.Size = new System.Drawing.Size(279, 314);
+            this.popComps.Size = new System.Drawing.Size(279, 292);
             this.popComps.Opening += new System.ComponentModel.CancelEventHandler(this.popComps_Opening);
             // 
             // mComp

@@ -48,7 +48,7 @@ namespace LanExchange.Model.Panel
 
         public string Subject
         {
-            get { return this[0].ToString(); }
+            get { return Name; }
         }
 
         public virtual bool IsCacheable
@@ -58,7 +58,7 @@ namespace LanExchange.Model.Panel
 
         public override string ToString()
         {
-            return this[0].ToString();
+            return Name;
         }
 
 
