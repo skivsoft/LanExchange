@@ -23,7 +23,7 @@ namespace LanExchange.Model.Panel
                 m_Exists = File.Exists(m_FileName);
         }
 
-        public override string Name { get; set; }
+        public override sealed string Name { get; set; }
 
         public string FileName
         {

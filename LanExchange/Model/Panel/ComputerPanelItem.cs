@@ -19,17 +19,15 @@ namespace LanExchange.Model.Panel
             if (si == null)
                 throw new ArgumentNullException("si");
             m_SI = si;
-            Name = m_SI.Name;
             Comment = m_SI.Comment;
             IsPingable = true;
         }
 
-        protected ComputerPanelItem(AbstractPanelItem parent) : base(parent)
+        public override string Name
         {
-            m_SI = new ServerInfo();
+            get { return m_SI.Name; }
+            set { m_SI.Name = value; }
         }
-
-        public override string Name { get; set; }
 
         public string Comment { get; set; }
 

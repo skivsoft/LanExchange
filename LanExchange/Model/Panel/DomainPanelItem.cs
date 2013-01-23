@@ -18,17 +18,16 @@ namespace LanExchange.Model.Panel
             m_SI = new ServerInfo(domain, String.Empty);
         }
 
-        public DomainPanelItem() : base(null)
-        {
-            m_SI = new ServerInfo();
-        }
-
         public override bool IsCacheable
         {
             get { return true; }
         }
 
-        public override string Name { get; set; }
+        public override string Name
+        {
+            get { return m_SI.Name; }
+            set { m_SI.Name = value; }
+        }
 
         public override int CountColumns
         {

@@ -179,16 +179,22 @@ namespace LanExchange.Model
             }
         }
 
-        // Возвращает количество компов в списке
         public int Count
         {
             get { return m_Data.Count; }
         }
 
-        // Возвращает число записей в фильтре
         public int FilterCount
         {
             get { return m_Keys.Count; }
+        }
+
+        public bool HasBackItem()
+        {
+            if (m_Data.Count > 0)
+                if (m_Data[0].Name == AbstractPanelItem.BACK)
+                    return true;
+            return false;
         }
 
         //    PanelItemComparer comparer = new PanelItemComparer();
