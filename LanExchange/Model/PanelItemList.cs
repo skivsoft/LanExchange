@@ -4,7 +4,6 @@ using System.Text;
 using LanExchange.Model.Panel;
 using LanExchange.Utils;
 using LanExchange.Model.Settings;
-using LanExchange.Utils.Sorting;
 
 //using NLog;
 
@@ -158,6 +157,7 @@ namespace LanExchange.Model
                 if (m_Data.Count == 0)
                     bFiltered = false;
                 else
+                if (m_Keys.Count > 0)
                 {
                     var PItem = GetAt(0);
                     // apply filter only for computers

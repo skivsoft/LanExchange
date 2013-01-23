@@ -16,9 +16,9 @@ namespace LanExchange.Model
         public const int Workgroup     = 2; // Workgroup icon
         public const int FolderNormal  = 3; // Folder icon
         public const int FolderHidden  = 4; // Disabled Folder icon
-        public const int FolderPrinter = 5;
-        public const int FolderBack    = 6;
-        public const int CompGreen = 0;
+        public const int FolderPrinter = 4;
+        public const int FolderBack    = 0;
+        public const int CompGreen     = 1;
 
         private const int SYSTEM_INDEX_MYCOMPUTER = 15;
         private const int SYSTEM_INDEX_WORKGROUP  = 18;

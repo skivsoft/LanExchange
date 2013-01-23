@@ -6,6 +6,8 @@ namespace LanExchange.Model.Panel
 {
     public abstract class AbstractPanelItem : IComparable<AbstractPanelItem>, IEquatable<ISubject>, IColumnComparable, ISubject
     {
+        public const string BACK = "..";
+        public abstract string Name { get; set; }
         public abstract int CountColumns { get; }
         public abstract IComparable this[int index] { get; }
         public abstract string ToolTipText { get; }
@@ -49,6 +51,11 @@ namespace LanExchange.Model.Panel
             get { return this[0].ToString(); }
         }
 
+        public virtual bool IsCacheable
+        {
+            get { return false; }
+        }
+
         public override string ToString()
         {
             return this[0].ToString();
@@ -86,5 +93,6 @@ namespace LanExchange.Model.Panel
         {
             return String.Compare(Subject, other.Subject, StringComparison.Ordinal) == 0;
         }
+
     }
 }

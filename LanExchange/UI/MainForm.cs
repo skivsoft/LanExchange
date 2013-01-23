@@ -10,7 +10,6 @@ using System.Text;
 using LanExchange.Windows;
 using System.Security.Permissions;
 using LanExchange.Model.Panel;
-using LanExchange.View;
 using LanExchange.Model.Settings;
 
 namespace LanExchange.UI
@@ -90,7 +89,7 @@ namespace LanExchange.UI
         {
             var S = new StringBuilder();
             foreach (var Pair in PanelSubscription.Instance.GetSubjects())
-                S.AppendLine(String.Format("{0} - {1}", Pair.Key, Pair.Value.Count));
+                S.AppendLine(String.Format("{0} - {1}", Pair.Key.Subject, Pair.Value.Count));
             MessageBox.Show(S.ToString());
         }
 #endif
@@ -156,7 +155,7 @@ namespace LanExchange.UI
             //Process.Start("explorer.exe", "/n, /e,::{20D04FE0-3AEA-1069-A2D8-08002B30309D}");
             // Network
             //Process.Start("explorer.exe", "/n, ::{208D2C60-3AEA-1069-A2D7-08002B30309D},FERMAK");
-            IPanelView PV = Pages.GetActivePanelView();
+            //IPanelView PV = Pages.GetActivePanelView();
             //if (PV != null)
             //    PV.GotoFavoriteComp(SystemInformation.ComputerName);
         }
@@ -256,21 +255,15 @@ namespace LanExchange.UI
             ComputerPanelItem Comp = null;
             if (pv != null) 
             {
-                AbstractPanelItem PItem = pv.GetPresenter().GetFocusedPanelItem(false);
-                if (PItem != null)
+                var PItem = pv.GetPresenter().GetFocusedPanelItem(false, false);
+                // is focused changed on top level?
+                if (PItem is ComputerPanelItem)
                 {
-                    // if focused changed on top level 
-                    if (PItem is ComputerPanelItem)
-                    {
-                        // run/re-run timer for saving tab settings
-                        timerTabSettingsSaver.Stop();
-                        timerTabSettingsSaver.Start();
-                    }
-                    // get top level item
-                    while (!(PItem is ComputerPanelItem) && PItem.Parent != null)
-                        PItem = PItem.Parent;
-                    Comp = PItem as ComputerPanelItem;
+                    // run/re-run timer for saving tab settings
+                    timerTabSettingsSaver.Stop();
+                    timerTabSettingsSaver.Start();
                 }
+                Comp = pv.GetPresenter().GetFocusedComputer(false);
             }
             // is focused item a computer?
             if (Comp == null)

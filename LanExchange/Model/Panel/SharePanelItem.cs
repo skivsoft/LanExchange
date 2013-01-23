@@ -7,6 +7,7 @@ namespace LanExchange.Model.Panel
     public class SharePanelItem : AbstractPanelItem, IComparable<SharePanelItem>
     {
         private readonly ShareInfo m_SHI;
+        private string m_Name;
 
         /// <summary>
         /// Panel item for network shared resource.
@@ -17,8 +18,15 @@ namespace LanExchange.Model.Panel
             if (shi == null)
                 throw new ArgumentNullException("shi");
             m_SHI = shi;
-            Name = m_SHI.Name;
+            m_Name = m_SHI.Name;
             Comment = m_SHI.Comment;
+        }
+
+        public SharePanelItem(AbstractPanelItem parent, string name) : base(parent)
+        {
+            m_SHI = new ShareInfo(new NetApi32.SHARE_INFO_1 {shi1_netname = name});
+            m_Name = name;
+            Comment = string.Empty;
         }
 
         public override int ImageIndex
@@ -81,8 +89,13 @@ namespace LanExchange.Model.Panel
             }
         }
 
-        public String Name { get; set; }
-        public String Comment { get; set; }
+        public override string Name 
+        { 
+            get { return m_Name; }
+            set { m_Name = value; }
+        }
+
+        public string Comment { get; set; }
         public uint ShareType { get; set; }
 
         public override int CountColumns
@@ -97,7 +110,7 @@ namespace LanExchange.Model.Panel
 
         public override IPanelColumnHeader CreateColumnHeader(int index)
         {
-            IPanelColumnHeader result = new ColumnHeaderEx() { Visible = true };
+            IPanelColumnHeader result = new ColumnHeaderEx { Visible = true };
             switch (index)
             {
                 case 0:

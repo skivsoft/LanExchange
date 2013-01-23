@@ -6,5 +6,7 @@
         bool RunMinimized { get; set; }
         bool AdvancedMode { get; set; }
         decimal RefreshTimeInMin { get; set; }
+        bool ShowHiddenShares { get; set; }
+        bool ShowPrinters { get; set; }
     }
 }
