@@ -60,6 +60,7 @@ namespace LanExchange.UI
         public void NewTabFromItemList(PanelItemList info)
         {
             TabPage Tab = new TabPage();
+            Tab.Padding = new Padding(0);
             Tab.Text = Ellipsis(info.TabName, 20);
             Tab.ImageIndex = LanExchangeIcons.Workgroup;
             Tab.ToolTipText = info.ToolTipText;

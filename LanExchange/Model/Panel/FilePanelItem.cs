@@ -3,7 +3,7 @@ using System.IO;
 
 namespace LanExchange.Model.Panel
 {
-    public class FilePanelItem : AbstractPanelItem, IComparable<FilePanelItem>, IComparable
+    public class FilePanelItem : AbstractPanelItem//, IComparable<FilePanelItem>, IComparable
     {
 
         private readonly string m_FileName;
@@ -70,21 +70,21 @@ namespace LanExchange.Model.Panel
             throw new NotImplementedException();
         }
 
-        public int CompareTo(FilePanelItem other)
-        {
-            if (IsDirectory)
-            {
-                if (!other.IsDirectory)
-                    return 1;
-            }
-            else if (other.IsDirectory)
-                return -1;
-            return String.Compare(Name, other.Name, StringComparison.Ordinal);
-        }
+        //public int CompareTo(FilePanelItem other)
+        //{
+        //    if (IsDirectory)
+        //    {
+        //        if (!other.IsDirectory)
+        //            return 1;
+        //    }
+        //    else if (other.IsDirectory)
+        //        return -1;
+        //    return String.Compare(Name, other.Name, StringComparison.Ordinal);
+        //}
 
-        public int CompareTo(object other)
-        {
-            return CompareTo(other as FilePanelItem);
-        }
+        //public int CompareTo(object other)
+        //{
+        //    return CompareTo(other as FilePanelItem);
+        //}
     }
 }

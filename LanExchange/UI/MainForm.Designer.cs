@@ -228,6 +228,7 @@
             // 
             this.Pages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Pages.Location = new System.Drawing.Point(0, 60);
+            this.Pages.Margin = new System.Windows.Forms.Padding(0);
             this.Pages.Name = "Pages";
             this.Pages.SelectedTabText = "";
             this.Pages.Size = new System.Drawing.Size(564, 460);
@@ -280,6 +281,7 @@
             this.Activated += new System.EventHandler(this.MainForm_Activated);
             this.ResizeEnd += new System.EventHandler(this.MainForm_ResizeEnd);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyUp);
             this.popTray.ResumeLayout(false);
             this.Status.ResumeLayout(false);
             this.Status.PerformLayout();

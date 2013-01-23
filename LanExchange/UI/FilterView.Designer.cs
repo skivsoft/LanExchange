@@ -66,6 +66,7 @@ namespace LanExchange.UI
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.eFilter);
             this.Controls.Add(this.imgClear);
+            this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "FilterView";
             this.Size = new System.Drawing.Size(470, 30);
             ((System.ComponentModel.ISupportInitialize)(this.imgClear)).EndInit();
