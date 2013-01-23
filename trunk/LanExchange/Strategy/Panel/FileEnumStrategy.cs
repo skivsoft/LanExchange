@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using LanExchange.Model.Panel;
 using LanExchange.Model;
 using System.IO;
@@ -11,8 +10,6 @@ namespace LanExchange.Strategy.Panel
         public override void Algorithm()
         {
             if ((Subject as AbstractPanelItem) == null) return;
-            //if (!(Subject is SharePanelItem)) return;
-            /// if (!(Subject is FilePanelItem)) return;
             m_Result = new List<AbstractPanelItem>();
             var path = (Subject as AbstractPanelItem).GetFullName();
             var files = Directory.GetFileSystemEntries(path, "*.*");

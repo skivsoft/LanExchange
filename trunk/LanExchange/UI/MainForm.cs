@@ -148,17 +148,17 @@ namespace LanExchange.UI
             e.Cancel = !pv.mComp.Enabled;
         }
 
-        private void lCompName_Click(object sender, EventArgs e)
-        {
-            // TODO uncomment mycomputer click
-            // Open MyComputer
-            //Process.Start("explorer.exe", "/n, /e,::{20D04FE0-3AEA-1069-A2D8-08002B30309D}");
-            // Network
-            //Process.Start("explorer.exe", "/n, ::{208D2C60-3AEA-1069-A2D7-08002B30309D},FERMAK");
-            //IPanelView PV = Pages.GetActivePanelView();
-            //if (PV != null)
-            //    PV.GotoFavoriteComp(SystemInformation.ComputerName);
-        }
+        //private void lCompName_Click(object sender, EventArgs e)
+        //{
+        //    // TODO uncomment mycomputer click
+        //    // Open MyComputer
+        //    //Process.Start("explorer.exe", "/n, /e,::{20D04FE0-3AEA-1069-A2D8-08002B30309D}");
+        //    // Network
+        //    //Process.Start("explorer.exe", "/n, ::{208D2C60-3AEA-1069-A2D7-08002B30309D},FERMAK");
+        //    //IPanelView PV = Pages.GetActivePanelView();
+        //    //if (PV != null)
+        //    //    PV.GotoFavoriteComp(SystemInformation.ComputerName);
+        //}
 
         private void tipComps_Popup(object sender, PopupEventArgs e)
         {

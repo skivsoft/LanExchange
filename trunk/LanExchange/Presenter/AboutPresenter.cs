@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Text;
 using LanExchange.View;
-using LanExchange.Model;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
@@ -10,7 +9,6 @@ using System.Diagnostics;
 using System.Net;
 using NLog;
 using System.Reflection;
-using System.Windows.Forms;
 using LanExchange.UI;
 using LanExchange.Model.Settings;
 

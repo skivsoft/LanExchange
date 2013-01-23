@@ -16,7 +16,6 @@
 // Software Foundation, Inc., 51 Franklin Street, Fifth Floor,  
 // Boston, MA 2110-1301, USA.
 //
-using System;
 using System.Runtime.InteropServices;
 
 #pragma warning disable 1591

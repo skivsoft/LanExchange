@@ -6,7 +6,7 @@ using NLog;
 
 namespace LanExchange.WMI
 {
-    public class WMIPresenter : IDisposable
+    public sealed class WMIPresenter : IDisposable
     {
         private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -22,7 +22,7 @@ namespace LanExchange.WMI
             m_View = view;
         }
 
-        public virtual void Dispose()
+        public void Dispose()
         {
             if (m_Class != null)
             {

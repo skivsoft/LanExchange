@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Collections;
 
 namespace LanExchange.Utils.Sorting
 {

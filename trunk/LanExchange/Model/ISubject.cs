@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LanExchange.Model
+﻿namespace LanExchange.Model
 {
     /// <summary>
     /// ISubject interface declaration in Subscription-Subscriber-Subject model.

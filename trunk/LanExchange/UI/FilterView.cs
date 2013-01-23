@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Drawing;
 using System.Globalization;
-using System.Reflection;
 using System.Windows.Forms;
 using LanExchange.View;
 using LanExchange.Presenter;
 using LanExchange.Properties;
-using NLog;
 using LanExchange.Model;
 
 namespace LanExchange.UI

@@ -27,14 +27,14 @@ namespace LanExchange.WMI
         public void PrepareForm()
         {
             LB1.Items.Clear();
-            var index = 0;
+            //var index = 0;
             foreach (string str in WMIClassList.Instance.AllClasses)
             {
                 if (WMIClassList.Instance.Classes.Contains(str) || WMIClassList.Instance.ReadOnlyClasses.Contains(str))
                     LB2.Items.Add(str);
                 else
                     LB1.Items.Add(str);
-                index++;
+                //index++;
             }
         }
 

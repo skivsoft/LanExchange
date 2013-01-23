@@ -56,7 +56,7 @@ namespace LanExchange.WMI
             get { return m_IncludeClasses; }
         }
 
-        public IList<string> AllClasses
+        public IEnumerable<string> AllClasses
         {
             get { return m_AllClasses; }
         }
