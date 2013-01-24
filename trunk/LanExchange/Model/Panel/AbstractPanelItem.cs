@@ -7,6 +7,9 @@ namespace LanExchange.Model.Panel
     public abstract class AbstractPanelItem : IComparable<AbstractPanelItem>, IEquatable<ISubject>, IComparable, IColumnComparable, ISubject
     {
         public static string BACK = String.Empty;
+
+        private ISubject m_ParentSubject;
+
         public abstract string Name { get; set; }
         public abstract int CountColumns { get; }
         public abstract IComparable this[int index] { get; }
@@ -19,6 +22,16 @@ namespace LanExchange.Model.Panel
         }
 
         public AbstractPanelItem Parent { get; set; }
+        
+        public ISubject ParentSubject
+        {
+            get { return Parent ?? m_ParentSubject; }
+            set
+            {
+                if (Parent == null)
+                    m_ParentSubject = value;
+            }
+        }
 
         public virtual int ImageIndex
         {
@@ -111,7 +124,11 @@ namespace LanExchange.Model.Panel
         {
             var result = new string[CountColumns];
             for (int i = 0; i < result.Length; i++)
-                result[i] = this[i].ToString().ToUpper();
+            {
+                object item = this[i];
+                if (item != null)
+                    result[i] = item.ToString().ToUpper();
+            }
             return result;
         }
 
@@ -119,6 +136,5 @@ namespace LanExchange.Model.Panel
         {
             return String.Compare(Subject, other.Subject, StringComparison.Ordinal) == 0;
         }
-
     }
 }

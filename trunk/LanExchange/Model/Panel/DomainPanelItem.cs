@@ -15,7 +15,7 @@ namespace LanExchange.Model.Panel
 
         public DomainPanelItem(string domain) : base(null)
         {
-            m_SI = new ServerInfo(domain, String.Empty);
+            m_SI = new ServerInfo {Name = domain, Comment = String.Empty};
         }
 
         public override bool IsCacheable

@@ -104,7 +104,7 @@ namespace Tests
         }
 
         /// <summary>
-        ///A test for RenameTab
+        ///A test for CommandRenameTab
         ///</summary>
         [TestMethod()]
         public void RenameTabTest()

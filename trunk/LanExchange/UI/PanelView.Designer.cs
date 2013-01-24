@@ -53,15 +53,13 @@
             this.mCompSmallIcons = new System.Windows.Forms.ToolStripMenuItem();
             this.mCompList = new System.Windows.Forms.ToolStripMenuItem();
             this.mCompDetails = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.mCopySeparator = new System.Windows.Forms.ToolStripSeparator();
             this.mCopyPath = new System.Windows.Forms.ToolStripMenuItem();
             this.mCopyCompName = new System.Windows.Forms.ToolStripMenuItem();
             this.mCopyComment = new System.Windows.Forms.ToolStripMenuItem();
             this.mCopySelected = new System.Windows.Forms.ToolStripMenuItem();
             this.mSendSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.mSendToTab = new System.Windows.Forms.ToolStripMenuItem();
             this.mSendToNewTab = new System.Windows.Forms.ToolStripMenuItem();
-            this.mAfterSendTo = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.mContextClose = new System.Windows.Forms.ToolStripMenuItem();
             this.ePath = new System.Windows.Forms.TextBox();
@@ -115,17 +113,17 @@
             this.mCompSmallIcons,
             this.mCompList,
             this.mCompDetails,
-            this.toolStripSeparator5,
+            this.mCopySeparator,
             this.mCopyPath,
             this.mCopyCompName,
             this.mCopyComment,
             this.mCopySelected,
             this.mSendSeparator,
-            this.mSendToTab,
+            this.mSendToNewTab,
             this.toolStripSeparator6,
             this.mContextClose});
             this.popComps.Name = "popComps";
-            this.popComps.Size = new System.Drawing.Size(279, 292);
+            this.popComps.Size = new System.Drawing.Size(279, 314);
             this.popComps.Opening += new System.ComponentModel.CancelEventHandler(this.popComps_Opening);
             // 
             // mComp
@@ -305,10 +303,10 @@
             this.mCompDetails.Text = "Таблица";
             this.mCompDetails.Click += new System.EventHandler(this.mLargeIcons_Click);
             // 
-            // toolStripSeparator5
+            // mCopySeparator
             // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(275, 6);
+            this.mCopySeparator.Name = "mCopySeparator";
+            this.mCopySeparator.Size = new System.Drawing.Size(275, 6);
             // 
             // mCopyPath
             // 
@@ -347,25 +345,12 @@
             this.mSendSeparator.Name = "mSendSeparator";
             this.mSendSeparator.Size = new System.Drawing.Size(275, 6);
             // 
-            // mSendToTab
-            // 
-            this.mSendToTab.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mSendToNewTab,
-            this.mAfterSendTo});
-            this.mSendToTab.Name = "mSendToTab";
-            this.mSendToTab.Size = new System.Drawing.Size(278, 22);
-            this.mSendToTab.Text = "Отправить в другую вкладку";
-            // 
             // mSendToNewTab
             // 
             this.mSendToNewTab.Name = "mSendToNewTab";
-            this.mSendToNewTab.Size = new System.Drawing.Size(166, 22);
-            this.mSendToNewTab.Text = "В новую вкладку";
-            // 
-            // mAfterSendTo
-            // 
-            this.mAfterSendTo.Name = "mAfterSendTo";
-            this.mAfterSendTo.Size = new System.Drawing.Size(163, 6);
+            this.mSendToNewTab.Size = new System.Drawing.Size(278, 22);
+            this.mSendToNewTab.Text = "Отправить в новую вкладку...";
+            this.mSendToNewTab.Click += new System.EventHandler(this.mSendToNewTab_Click);
             // 
             // toolStripSeparator6
             // 
@@ -448,15 +433,13 @@
         private System.Windows.Forms.ToolStripMenuItem mCompSmallIcons;
         private System.Windows.Forms.ToolStripMenuItem mCompList;
         private System.Windows.Forms.ToolStripMenuItem mCompDetails;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripSeparator mCopySeparator;
         private System.Windows.Forms.ToolStripMenuItem mCopyPath;
         private System.Windows.Forms.ToolStripMenuItem mCopyCompName;
         private System.Windows.Forms.ToolStripMenuItem mCopyComment;
         private System.Windows.Forms.ToolStripMenuItem mCopySelected;
         private System.Windows.Forms.ToolStripSeparator mSendSeparator;
-        private System.Windows.Forms.ToolStripMenuItem mSendToTab;
         private System.Windows.Forms.ToolStripMenuItem mSendToNewTab;
-        private System.Windows.Forms.ToolStripSeparator mAfterSendTo;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem mContextClose;
         private System.Windows.Forms.ColumnHeader columnHeader1;

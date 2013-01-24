@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using LanExchange.Presenter;
 
 namespace LanExchange.View
 {
@@ -16,5 +17,7 @@ namespace LanExchange.View
         void SelectItem(int index);
         void SetVirtualListSize(int count);
         void RedrawFocusedItem();
+        void FocusListView();
+        PanelPresenter GetPresenter();
     }
 }

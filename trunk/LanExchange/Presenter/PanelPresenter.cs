@@ -169,7 +169,6 @@ namespace LanExchange.Presenter
         /// <param name="tagParent">Can be "computer" or "folder"</param>
         public void RunCmdOnFocusedItem(string tagCmd, string tagParent)
         {
-            // TODO: CHECK THIS!
             AbstractPanelItem PItem = GetFocusedPanelItem(true, false);
             if (PItem == null) return;
 
@@ -248,14 +247,16 @@ namespace LanExchange.Presenter
         {
             if (Objects == null || Objects.CurrentPath.IsEmpty) return false;
             var PItem = Objects.CurrentPath.Peek() as AbstractPanelItem;
-            if (PItem == null || PItem.Parent == null) return false;
-            var result = PanelSubscription.Instance.HasStrategyForSubject(PItem.Parent);
+            if (PItem == null) return false;
+            ISubject subject = PItem.Parent ?? PItem.ParentSubject;
+            if (subject == null) return false;
+            var result = PanelSubscription.Instance.HasStrategyForSubject(subject);
             if (result)
             {
                 Objects.FocusedItemText = PItem.Name;
                 Settings.Logger.Info("LevelUp()");
                 PanelSubscription.Instance.UnSubscribe(Objects, false);
-                PanelSubscription.Instance.SubscribeToSubject(Objects, PItem.Parent);
+                PanelSubscription.Instance.SubscribeToSubject(Objects, subject);
                 Objects.CurrentPath.Pop();
             }
             return result;
@@ -263,17 +264,17 @@ namespace LanExchange.Presenter
 
         public static string DetectMENU(AbstractPanelItem PItem)
         {
-            while (PItem.Parent != null)
+            while (PItem != null)
             {
                 if (PItem.Name == AbstractPanelItem.BACK)
                 {
                     PItem = PItem.Parent;
                     continue;
                 }
-                if (PItem is ComputerPanelItem)
-                    return COMPUTER_MENU;
                 if (PItem is SharePanelItem)
                     return FOLDER_MENU;
+                if (PItem is ComputerPanelItem)
+                    return COMPUTER_MENU;
                 if (PItem is FilePanelItem)
                     if ((PItem as FilePanelItem).IsDirectory)
                         return FOLDER_MENU;

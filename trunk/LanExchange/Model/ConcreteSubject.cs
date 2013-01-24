@@ -12,7 +12,11 @@ namespace LanExchange.Model
         /// <summary>
         /// Subject for unsubscription.
         /// </summary>
-        public static readonly ConcreteSubject Empty = new ConcreteSubject();
+        public static readonly ConcreteSubject NotSubscribed = new ConcreteSubject();
+        /// <summary>
+        /// Subject for showing user added items.
+        /// </summary>
+        public static readonly ConcreteSubject UserItems = new ConcreteSubject();
 
         protected ConcreteSubject()
         {
@@ -31,7 +35,7 @@ namespace LanExchange.Model
         public override string ToString()
         {
             if (this == Root) return "<root>";
-            if (this == Empty) return "<empty>";
+            if (this == NotSubscribed) return "<empty>";
             return base.ToString();
         }
     }

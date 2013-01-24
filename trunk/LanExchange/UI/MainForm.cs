@@ -49,8 +49,6 @@ namespace LanExchange.UI
             MainPages.PanelViewFocusedItemChanged += Pages_PanelViewFocusedItemChanged;
             MainPages.PanelViewFilterTextChanged += Pages_FilterTextChanged;
             MainPages.GetModel().LoadSettings();
-            // here we call event for update items count in statusline
-            //Pages.UpdateSelectedTab();
             // init main form
             SetupForm();
             // setup images
@@ -111,7 +109,7 @@ namespace LanExchange.UI
         {
             if (e.KeyCode == Keys.Escape)
             {
-                PanelView pv = Pages.GetActivePanelView();
+                var pv = Pages.GetActivePanelView();
                 e.Handled = true;
                 if (pv == null) return;
                 if (pv.Filter.IsVisible)
@@ -152,7 +150,7 @@ namespace LanExchange.UI
                 if (m_EscDown)
                 {
                     TimeSpan diff = DateTime.UtcNow - m_EscTime;
-                    PanelView pv = Pages.GetActivePanelView();
+                    var pv = Pages.GetActivePanelView();
                     if (pv != null && !pv.GetPresenter().Objects.CurrentPath.IsEmpty)
                     {
                         if (diff.TotalMilliseconds < WAIT_FOR_KEYUP_MS)
@@ -168,7 +166,7 @@ namespace LanExchange.UI
 
         private void popTop_Opened(object sender, EventArgs e)
         {
-            var pv = Pages.GetActivePanelView();
+            var pv = Pages.GetActivePanelView() as PanelView;
             if (pv == null) return;
             for (int i = 0; i < Math.Min(pv.mComp.DropDownItems.Count, popTop.Items.Count); i++)
             {
@@ -181,7 +179,7 @@ namespace LanExchange.UI
 
         private void popTop_Opening(object sender, CancelEventArgs e)
         {
-            var pv = Pages.GetActivePanelView();
+            var pv = Pages.GetActivePanelView() as PanelView;
             if (pv == null)
             {
                 e.Cancel = true;

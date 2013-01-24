@@ -425,7 +425,7 @@ namespace LanExchange.Model
             }
             if (Modified)
             {
-                sender.DataChanged(this, ConcreteSubject.Empty);
+                sender.DataChanged(this, ConcreteSubject.NotSubscribed);
                 if (updateTimer)
                     SubscribersChanged();
             }

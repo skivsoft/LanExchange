@@ -29,7 +29,7 @@ namespace LanExchange.UI
         public void DataChanged(ISubscription sender, ISubject subject)
         {
             // do not update list after unsubscribe
-            if (subject == ConcreteSubject.Empty) return;
+            if (subject == ConcreteSubject.NotSubscribed) return;
             IList<string> Saved;
             if (lvDomains.Items.Count == 0)
                 Saved = m_Groups;
