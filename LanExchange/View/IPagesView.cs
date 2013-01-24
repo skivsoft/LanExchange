@@ -18,5 +18,6 @@ namespace LanExchange.View
         string Ellipsis(string text, int length);
         void SetTabToolTip(int index, string value);
         void FocusPanelView();
+        IPanelView GetActivePanelView();
     }
 }

@@ -2,7 +2,6 @@
 // RELEASE 1.1 MAJOR TODO LIST
 //   DONE * Autoupdate computer lists
 //   TODO * Sending items to another tab
-//   TODO * Updating menu lists after changing tab list (add, remove)
 //   DONE * Update counts in status list
 //   DONE * Filtering computer items
 //   DONE * ContextMenuStrip for top panel

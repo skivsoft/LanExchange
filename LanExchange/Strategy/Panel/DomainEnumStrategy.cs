@@ -14,7 +14,7 @@ namespace LanExchange.Strategy.Panel
             // convert array to IList<ServerInfo>
             m_Result = new List<AbstractPanelItem>();
             foreach(var item in list)
-                m_Result.Add(new DomainPanelItem(null, new ServerInfo(item)));
+                m_Result.Add(new DomainPanelItem(null, ServerInfo.FromNetApi32(item)));
         }
 
         public override void AcceptSubject(ISubject subject, out bool accepted)

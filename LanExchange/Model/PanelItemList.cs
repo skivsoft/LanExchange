@@ -52,6 +52,11 @@ namespace LanExchange.Model
             get { return m_CurrentPath; }
         }
 
+        public IList<AbstractPanelItem> Items
+        {
+            get { return m_Items; }
+        }
+
         public Tab Settings
         {
             get
@@ -63,6 +68,10 @@ namespace LanExchange.Model
                     Focused = FocusedItemText
                 };
                 Page.SetScanGroups(Groups);
+                var TempList = new List<ServerInfo>();
+                foreach (ComputerPanelItem PItem in m_Items)
+                    TempList.Add(PItem.SI);
+                Page.Items = TempList.ToArray();
                 return Page;
             }
             set
@@ -72,6 +81,13 @@ namespace LanExchange.Model
                 CurrentView = value.View;
                 Groups = value.GetScanGroups();
                 FocusedItemText = value.Focused;
+                Items.Clear();
+                foreach (var si in value.Items)
+                {
+                    var comp = new ComputerPanelItem(null, si);
+                    comp.ParentSubject = ConcreteSubject.UserItems;
+                    Items.Add(comp);
+                }
             }
             
         }
@@ -103,13 +119,14 @@ namespace LanExchange.Model
 
         public AbstractPanelItem GetAt(int index)
         {
-            return Get(m_Keys[index].ToString());
+            var item = m_Keys[index];
+            return item != null ? Get(item.ToString()) : null;
         }
 
         public AbstractPanelItem Get(string key)
         {
             if (key == null) return null;
-            var tempComp = new ComputerPanelItem(null, new ServerInfo { Name = key });
+            var tempComp = new ComputerPanelItem(null, new ServerInfo { Name = key, Comment = String.Empty });
             int index = m_Data.BinarySearch(tempComp);
             if (index >= 0)
                 return m_Data[index];
@@ -268,27 +285,29 @@ namespace LanExchange.Model
             //lock (m_Data)
             {
                 m_Data.Clear();
-                if (subject != ConcreteSubject.Empty)
+                // add user items if asked
+                if (subject == ConcreteSubject.UserItems)
                 {
-                    // for computers only we uses scan and user items
+                    foreach (var comp in m_Items)
+                        m_Data.Add(comp);
+                }
+                else
+                    // add computers of domains which we subscribed
                     if (subject is DomainPanelItem)
                     {
                         foreach (var group in Groups)
                             foreach (AbstractPanelItem comp in sender.GetListBySubject(group))
                                 m_Data.Add(comp);
-                        foreach (var item in m_Items)
-                            m_Data.Add(item);
                     }
-                    // for other subjects we will use last element of path
+                    // add shares, files etc.
                     else
                     {
                         //ISubject group = (ISubject)m_CurrentPath.Peek();
-                        if (subject != null && subject != ConcreteSubject.Empty)
+                        if (subject != null && subject != ConcreteSubject.NotSubscribed)
                             foreach (AbstractPanelItem comp in sender.GetListBySubject(subject))
                                 m_Data.Add(comp);
                     }
-                    m_Data.Sort();
-                }
+                m_Data.Sort();
                 //lock (m_Keys)
                 {
                     // filtering only computer items
@@ -329,6 +348,16 @@ namespace LanExchange.Model
                     sb.Append("Обзор сети отключен.");
                 return sb.ToString();
             }
+        }
+
+        public string Subject
+        {
+            get { return String.Format("Items_{0}", TabName); }
+        }
+
+        public bool IsCacheable
+        {
+            get { return false; }
         }
     }
 }

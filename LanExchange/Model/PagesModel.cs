@@ -8,30 +8,6 @@ using LanExchange.Model.Settings;
 
 namespace LanExchange.Model
 {
-    public class PanelItemListEventArgs : EventArgs
-    {
-        private readonly PanelItemList m_Info;
-
-        public PanelItemListEventArgs(PanelItemList info)
-        {
-            m_Info = info;
-        }
-
-        public PanelItemList Info { get { return m_Info; } }
-    }
-
-    public class IndexEventArgs : EventArgs
-    {
-        private readonly int m_Index;
-
-        public IndexEventArgs(int index)
-        {
-            m_Index = index;
-        }
-
-        public int Index { get { return m_Index; } }
-    }
-
     // 
     // Модель предоставляет знания: данные и методы работы с этими данными, 
     // реагирует на запросы, изменяя своё состояние. 
@@ -46,9 +22,9 @@ namespace LanExchange.Model
         private int m_SelectedIndex;
 
         public event EventHandler<PanelItemListEventArgs> AfterAppendTab;
-        public event EventHandler<IndexEventArgs> AfterRemove;
+        public event EventHandler<PanelIndexEventArgs> AfterRemove;
         public event EventHandler<PanelItemListEventArgs> AfterRename;
-        public event EventHandler<IndexEventArgs> IndexChanged;
+        public event EventHandler<PanelIndexEventArgs> IndexChanged;
 
         private Tabs m_PagesSettings;
 
@@ -57,6 +33,14 @@ namespace LanExchange.Model
             m_List = new List<PanelItemList>();
             m_PagesSettings = new Tabs();
             m_SelectedIndex = -1;
+        }
+
+        private static string GetConfigFileName()
+        {
+            var path = Path.GetDirectoryName(Settings.Settings.GetExecutableFileName());
+            if (path == null)
+                throw new ArgumentNullException();
+            return Path.Combine(path, CONFIG_FNAME);
         }
 
         public int Count { get { return m_List.Count; }  }
@@ -100,7 +84,7 @@ namespace LanExchange.Model
         private void DoAfterRemove(int index)
         {
             if (AfterRemove != null)
-                AfterRemove(this, new IndexEventArgs(index));
+                AfterRemove(this, new PanelIndexEventArgs(index));
         }
 
         private void DoAfterRename(PanelItemList info)
@@ -112,7 +96,7 @@ namespace LanExchange.Model
         private void DoIndexChanged(int index)
         {
             if (IndexChanged != null)
-                IndexChanged(this, new IndexEventArgs(index));
+                IndexChanged(this, new PanelIndexEventArgs(index));
         }
 
         //public bool Contains(PanelItemList info)
@@ -155,30 +139,25 @@ namespace LanExchange.Model
             return i >= 0 && i <= Count - 1 ? m_List[i].TabName : null;
         }
 
-        private static string GetConfigFileName()
-        {
-            var path = Path.GetDirectoryName(Settings.Settings.GetExecutableFileName());
-            if (path == null)
-                throw new ArgumentNullException();
-            return Path.Combine(path, CONFIG_FNAME);
-        }
-
         public void LoadSettings()
         {
-            try
+            var fileFName = GetConfigFileName();
+            if (File.Exists(fileFName))
             {
-                var fileFName = GetConfigFileName();
-                logger.Info("PagesModel.LoadSettings(\"{0}\")", fileFName);
-                var temp = (Tabs)SerializeUtils.DeserializeObjectFromXMLFile(fileFName, typeof (Tabs));
-                if (temp != null)
+                try
                 {
-                    m_PagesSettings = null;
-                    m_PagesSettings = temp;
+                    logger.Info("PagesModel.LoadSettings(\"{0}\")", fileFName);
+                    var temp = (Tabs) SerializeUtils.DeserializeObjectFromXMLFile(fileFName, typeof (Tabs));
+                    if (temp != null)
+                    {
+                        m_PagesSettings = null;
+                        m_PagesSettings = temp;
+                    }
                 }
-            }
-            catch(Exception E)
-            {
-                logger.Error("PagesModel.LoadSettings: {0}", E.Message);
+                catch (Exception E)
+                {
+                    logger.Error("PagesModel.LoadSettings: {0}", E.Message);
+                }
             }
             if (m_PagesSettings == null)
                 throw new ArgumentNullException();

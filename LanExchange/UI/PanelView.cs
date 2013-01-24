@@ -43,10 +43,9 @@ namespace LanExchange.UI
             // set dropdown direction for sub-menus (actual for dual-monitor system)
             mComp.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
             mFolder.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
-            mSendToTab.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
+            mSendToNewTab.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
             // focus listview when panel got focus
             GotFocus += (sender, args) => ActiveControl = LV;
-            //mSendToNewTab.Click += new EventHandler(TabController.mSendToNewTab_Click);
         }
         #endregion
 
@@ -96,9 +95,15 @@ namespace LanExchange.UI
             var PItem = m_Presenter.Objects.GetAt(index);
             if (PItem != null)
             {
-                Result.Text = PItem[0].ToString();
-                for (int i = 1; i < PItem.CountColumns; i++)
-                    Result.SubItems.Add(PItem[i].ToString());
+                Result.Text = PItem.Name;
+                for (int i = 0; i < PItem.CountColumns; i++)
+                {
+                    var value = PItem[i] != null ? PItem[i].ToString() : String.Empty;
+                    if (i == 0)
+                        Result.Text = value;
+                    else
+                        Result.SubItems.Add(value);
+                }
                 Result.ImageIndex = PItem.ImageIndex;
                 Result.ToolTipText = PItem.ToolTipText;
             }
@@ -446,9 +451,14 @@ namespace LanExchange.UI
             SetEnabledAndVisible(mFolder, bFolderVisible);
 
             var menu = PanelPresenter.DetectMENU(PItem);
-            SetEnabledAndVisible(new ToolStripItem[] { mCopyCompName, mCopyComment, mCopySelected, mSendSeparator, mSendToTab }, 
-                menu == PanelPresenter.COMPUTER_MENU);
+            SetEnabledAndVisible(new ToolStripItem[] { mCopyCompName, mCopyComment, mCopySelected }, menu == PanelPresenter.COMPUTER_MENU);
+            bool bSend = false;
+            if (menu == PanelPresenter.COMPUTER_MENU)
+                bSend = (PItem != null) && (PItem.Name != AbstractPanelItem.BACK);
+            SetEnabledAndVisible(new ToolStripItem[] {mSendSeparator, mSendToNewTab}, bSend);
+
             SetEnabledAndVisible(mCopyPath, menu == PanelPresenter.FOLDER_MENU);
+            mCopySeparator.Visible = menu != String.Empty;
 
             mSeparatorAdmin.Visible = bCompVisible || bFolderVisible || Settings.Instance.AdvancedMode;
 
@@ -574,6 +584,11 @@ namespace LanExchange.UI
             //var P = ePath.PointToClient(MousePosition);
             //int index = ePath.GetCharIndexFromPosition(P);
             //MessageBox.Show(index.ToString());
+        }
+
+        private void mSendToNewTab_Click(object sender, EventArgs e)
+        {
+            MainForm.Instance.MainPages.CommandSendToNewTab();
         }
     }
 }

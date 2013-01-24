@@ -130,17 +130,17 @@ namespace LanExchange.UI
 
         private void mNewTab_Click(object sender, EventArgs e)
         {
-            m_Presenter.NewTab();
+            m_Presenter.CommandNewTab();
         }
 
         private void mCloseTab_Click(object sender, EventArgs e)
         {
-            m_Presenter.CloseTab();
+            m_Presenter.CommandCloseTab();
         }
 
         private void mRenameTab_Click(object sender, EventArgs e)
         {
-            m_Presenter.RenameTab();
+            m_Presenter.CommandRenameTab();
         }
 
         private void popPages_Opening(object sender, CancelEventArgs e)
@@ -151,6 +151,15 @@ namespace LanExchange.UI
             {
                 var menuItem = new ToolStripSeparator();
                 mSelectTab.DropDownItems.Add(menuItem);
+            }
+        }
+
+        private void mSelectTab_DropDownOpening(object sender, EventArgs e)
+        {
+            if (mSelectTab.Enabled)
+            {
+                mSelectTab.DropDownItems.Clear();
+                m_Presenter.AddTabsToMenuItem(mSelectTab, m_Presenter.mSelectTab_Click, false);
             }
         }
 
@@ -183,12 +192,12 @@ namespace LanExchange.UI
             m_Presenter.GetModel().SaveSettings();
         }
 
-        public PanelView GetActivePanelView()
+        public IPanelView GetActivePanelView()
         {
             if (Pages.TabCount == 0 || Pages.SelectedTab == null)
                 return null;
             ControlCollection ctrls = Pages.SelectedTab.Controls;
-            return ctrls.Count > 0 ? ctrls[0] as PanelView : null;
+            return ctrls.Count > 0 ? ctrls[0] as IPanelView : null;
         }
 
         public void SetTabToolTip(int index, string value)
@@ -199,10 +208,10 @@ namespace LanExchange.UI
 
         public void FocusPanelView()
         {
-            PanelView pv = GetActivePanelView();
+            var pv = GetActivePanelView();
             if (pv != null && ActiveControl != pv)
             {
-                ActiveControl = pv;
+                ActiveControl = pv as Control;
                 pv.GetPresenter().UpdateItemsAndStatus();
                 pv.FocusListView();
             }
@@ -271,15 +280,6 @@ namespace LanExchange.UI
         public int GetSelectedIndex()
         {
             return Pages.SelectedIndex;
-        }
-
-        private void mSelectTab_DropDownOpening(object sender, EventArgs e)
-        {
-            if (mSelectTab.Enabled)
-            {
-                mSelectTab.DropDownItems.Clear();
-                m_Presenter.AddTabsToMenuItem(mSelectTab, m_Presenter.mSelectTab_Click, false);
-            }
         }
     }
 }
