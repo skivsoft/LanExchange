@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using LanExchange.Model.Panel;
 using LanExchange.Utils;
-using System;
 
 namespace LanExchange.Model.Settings
 {
@@ -18,7 +17,6 @@ namespace LanExchange.Model.Settings
         {
             View = System.Windows.Forms.View.Details;
             Domains = new List<string>();
-            //Items = new ServerInfo[1] {new ServerInfo(new NetApi32.SERVER_INFO_101 {sv101_name = "QQQ", sv101_comment = "WWW"})};
             Items = new ServerInfo[0];
         }
 

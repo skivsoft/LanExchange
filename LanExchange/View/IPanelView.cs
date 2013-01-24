@@ -18,6 +18,7 @@ namespace LanExchange.View
         void SetVirtualListSize(int count);
         void RedrawFocusedItem();
         void FocusListView();
+        void ClearSelected();
         PanelPresenter GetPresenter();
     }
 }

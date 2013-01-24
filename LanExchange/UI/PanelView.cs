@@ -49,7 +49,6 @@ namespace LanExchange.UI
         }
         #endregion
 
-
         public void SetVirtualListSize(int count)
         {
             LV.VirtualListSize = count;
@@ -59,10 +58,12 @@ namespace LanExchange.UI
         {
             var path = sender as ObjectPath;
             if (path != null)
+            {
                 ePath.Text = path.ToString();
+            }
         }
 
-        public void SetupMenu(ContextMenuStrip popTop)
+        internal void SetupMenu(ContextMenuStrip popTop)
         {
             ToolStripItem[] MyItems = new ToolStripItem[mComp.DropDownItems.Count];
             for (int i = 0; i < MyItems.Length; i++)
@@ -128,6 +129,11 @@ namespace LanExchange.UI
                 foreach (int index in LV.SelectedIndices)
                     yield return index;
             }
+        }
+
+        public void ClearSelected()
+        {
+            LV.SelectedIndices.Clear();
         }
 
         public string FocusedItemText
@@ -235,15 +241,16 @@ namespace LanExchange.UI
                 FocusedItemChanged(this, EventArgs.Empty);
         }
 
-        public void lvComps_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        private void lvComps_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             if (e.IsSelected)
                 DoFocusedItemChanged();
         }
 
-        public void lvComps_KeyPress(object sender, KeyPressEventArgs e)
+        private void lvComps_KeyPress(object sender, KeyPressEventArgs e)
         {
-            pFilter.GetPresenter().LinkedControl_KeyPress(sender, e);
+            if (GetPresenter().Objects.CurrentPath.IsEmpty)
+                pFilter.GetPresenter().LinkedControl_KeyPress(sender, e);
         }
 
         /// <summary>
@@ -271,7 +278,7 @@ namespace LanExchange.UI
                     mFolderOpen_Click(mFAROpen, EventArgs.Empty);
         }
 
-        public void lvComps_KeyDown(object sender, KeyEventArgs e)
+        private void lvComps_KeyDown(object sender, KeyEventArgs e)
         {
             pFilter.GetPresenter().LinkedControl_KeyDown(sender, e);
             ListView lv = (sender as ListView);
@@ -296,7 +303,7 @@ namespace LanExchange.UI
             // Backspace - Go level up
             if (e.KeyCode == Keys.Back)
             {
-                m_Presenter.LevelUp();
+                m_Presenter.CommandLevelUp();
                 e.Handled = true;
             }
             // Ctrl+Ins - Copy to clipboard (similar to Ctrl+C)
@@ -304,34 +311,25 @@ namespace LanExchange.UI
             if (e.Control && e.KeyCode == Keys.Insert || e.Control && e.Alt && e.KeyCode == Keys.C)
             {
                 if (mCopyCompName.Enabled)
-                    m_Presenter.CopyValueCommand(0);
+                    m_Presenter.CommandCopyValue(0);
                 else
                     if (mCopyPath.Enabled)
-                        m_Presenter.CopyPathCommand();
+                        m_Presenter.CommandCopyPath();
                 if (e.KeyCode == Keys.C)
                     MainForm.Instance.Hide();
                 e.Handled = true;
             }
-
-            // TODO need delete only for user items
-            //if (e.KeyCode == Keys.Delete)
-            //{
-            //    for (int i = LV.SelectedIndices.Count - 1; i >= 0; i--)
-            //    {
-            //        int Index = LV.SelectedIndices[i];
-            //        PanelItem Comp = m_Objects.Get(m_Objects.Keys[Index]);
-            //        if (Comp != null)
-            //            m_Objects.Delete(Comp);
-            //    }
-            //    LV.SelectedIndices.Clear();
-            //    m_Objects.ApplyFilter();
-            //    LV.VirtualListSize = m_Objects.FilterCount;
-            //}
+            // Del - Delete selected items
+            if (e.KeyCode == Keys.Delete)
+            {
+                m_Presenter.CommandDeleteItems();
+                e.Handled = true;
+            }
         }
 
         private void lvComps_ItemActivate(object sender, EventArgs e)
         {
-            if (!m_Presenter.LevelDown())
+            if (!m_Presenter.CommandLevelDown())
                 OpenCurrentItem();
         }
 
@@ -373,14 +371,14 @@ namespace LanExchange.UI
             }
         }
 
-        public void mCompOpen_Click(object sender, EventArgs e)
+        private void mCompOpen_Click(object sender, EventArgs e)
         {
             var MenuItem = sender as ToolStripMenuItem;
             if (MenuItem != null)
                 m_Presenter.RunCmdOnFocusedItem(MenuItem.Tag.ToString(), PanelPresenter.COMPUTER_MENU);
         }
 
-        public void mFolderOpen_Click(object sender, EventArgs e)
+        private void mFolderOpen_Click(object sender, EventArgs e)
         {
             var MenuItem = sender as ToolStripMenuItem;
             if (MenuItem != null)
@@ -410,7 +408,7 @@ namespace LanExchange.UI
             }
         }
 
-        public void popComps_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        internal bool PrepareContextMenu()
         {
             if (LV.FocusedItem != null)
                 if (LV.FocusedItem.Selected)
@@ -455,7 +453,7 @@ namespace LanExchange.UI
             bool bSend = false;
             if (menu == PanelPresenter.COMPUTER_MENU)
                 bSend = (PItem != null) && (PItem.Name != AbstractPanelItem.BACK);
-            SetEnabledAndVisible(new ToolStripItem[] {mSendSeparator, mSendToNewTab}, bSend);
+            SetEnabledAndVisible(new ToolStripItem[] { mSendSeparator, mSendToNewTab }, bSend);
 
             SetEnabledAndVisible(mCopyPath, menu == PanelPresenter.FOLDER_MENU);
             mCopySeparator.Visible = menu != String.Empty;
@@ -465,6 +463,13 @@ namespace LanExchange.UI
             // resolve computer related and folder related shortcut conflict
             mCompOpen.ShowShortcutKeys = bCompVisible && !bFolderVisible;
             mRadmin1.ShowShortcutKeys = bCompVisible && !bFolderVisible;
+
+            return mComp.Enabled;
+        }
+
+        private void popComps_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            PrepareContextMenu();
         }
 
         private static void SetEnabledAndVisible(ToolStripItem item, bool value)
@@ -511,22 +516,22 @@ namespace LanExchange.UI
 
         private void mCopyCompName_Click(object sender, EventArgs e)
         {
-            m_Presenter.CopyValueCommand(0);
+            m_Presenter.CommandCopyValue(0);
         }
 
         private void mCopyComment_Click(object sender, EventArgs e)
         {
-            m_Presenter.CopyValueCommand(1);
+            m_Presenter.CommandCopyValue(1);
         }
 
         private void mCopySelected_Click(object sender, EventArgs e)
         {
-            m_Presenter.CopySelectedCommand();
+            m_Presenter.CommandCopySelected();
         }
 
         private void mCopyPath_Click(object sender, EventArgs e)
         {
-            m_Presenter.CopyPathCommand();
+            m_Presenter.CommandCopyPath();
         }
 
         private void mContextClose_Click(object sender, EventArgs e)

@@ -154,7 +154,7 @@ namespace LanExchange.UI
                     if (pv != null && !pv.GetPresenter().Objects.CurrentPath.IsEmpty)
                     {
                         if (diff.TotalMilliseconds < WAIT_FOR_KEYUP_MS)
-                            pv.GetPresenter().LevelUp();
+                            pv.GetPresenter().CommandLevelUp();
                         else
                             Instance.Hide();
                     }
@@ -187,8 +187,7 @@ namespace LanExchange.UI
             }
             if (popTop.Items.Count == 1)
                 pv.SetupMenu(popTop);
-            pv.popComps_Opening(sender, e);
-            e.Cancel = !pv.mComp.Enabled;
+            e.Cancel = !pv.PrepareContextMenu();
         }
 
         //private void lCompName_Click(object sender, EventArgs e)

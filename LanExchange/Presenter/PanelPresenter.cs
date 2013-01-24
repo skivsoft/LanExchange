@@ -27,7 +27,7 @@ namespace LanExchange.Presenter
             m_View = view;
         }
 
-        public void UpdateItemsAndStatus()
+        internal void UpdateItemsAndStatus()
         {
             if (m_Objects == null) return;
             // refresh only for current page
@@ -62,7 +62,7 @@ namespace LanExchange.Presenter
                 CurrentPathChanged(sender, e);
         }
 
-        public void CopyValueCommand(int index)
+        internal void CommandCopyValue(int index)
         {
             if (m_Objects == null) return;
             StringBuilder S = new StringBuilder();
@@ -78,7 +78,7 @@ namespace LanExchange.Presenter
                 Clipboard.SetText(S.ToString());
         }
 
-        public void CopySelectedCommand()
+        internal void CommandCopySelected()
         {
             if (m_Objects == null) return;
             StringBuilder S = new StringBuilder();
@@ -98,7 +98,7 @@ namespace LanExchange.Presenter
                 Clipboard.SetText(S.ToString());
         }
 
-        public void CopyPathCommand()
+        internal void CommandCopyPath()
         {
             if (m_Objects == null) return;
             StringBuilder S = new StringBuilder();
@@ -114,7 +114,7 @@ namespace LanExchange.Presenter
                 Clipboard.SetText(S.ToString());
         }
 
-        public void Items_Changed(object sender, EventArgs e)
+        internal void Items_Changed(object sender, EventArgs e)
         {
             UpdateItemsAndStatus();
         }
@@ -134,7 +134,7 @@ namespace LanExchange.Presenter
             }
         }
 
-        public AbstractPanelItem GetFocusedPanelItem(bool bPingAndAsk, bool bCanReturnParent)
+        internal AbstractPanelItem GetFocusedPanelItem(bool bPingAndAsk, bool bCanReturnParent)
         {
             var item = m_Objects.Get(m_View.FocusedItemText);
             var comp =  item as ComputerPanelItem;
@@ -167,7 +167,7 @@ namespace LanExchange.Presenter
         /// </summary>
         /// <param name="tagCmd">cmdline from Tag of menu item</param>
         /// <param name="tagParent">Can be "computer" or "folder"</param>
-        public void RunCmdOnFocusedItem(string tagCmd, string tagParent)
+        internal void RunCmdOnFocusedItem(string tagCmd, string tagParent)
         {
             AbstractPanelItem PItem = GetFocusedPanelItem(true, false);
             if (PItem == null) return;
@@ -216,7 +216,7 @@ namespace LanExchange.Presenter
         /// Returns computer either focused item is computer or focused item is subitem of computer.
         /// </summary>
         /// <returns>a ComputerPanelItem or null</returns>
-        public ComputerPanelItem GetFocusedComputer(bool bPingAndAsk)
+        internal ComputerPanelItem GetFocusedComputer(bool bPingAndAsk)
         {
             var PItem = GetFocusedPanelItem(bPingAndAsk, false);
             if (PItem == null)
@@ -226,12 +226,12 @@ namespace LanExchange.Presenter
             return PItem as ComputerPanelItem;
         }
 
-        internal bool LevelDown()
+        internal bool CommandLevelDown()
         {
             var PItem = GetFocusedPanelItem(false, false);
             if (PItem == null || Objects == null) return false;
             if (PItem.Name == AbstractPanelItem.BACK)
-                return LevelUp();
+                return CommandLevelUp();
             var result = PanelSubscription.Instance.HasStrategyForSubject(PItem);
             if (result)
             {
@@ -243,7 +243,7 @@ namespace LanExchange.Presenter
             return result;
         }
 
-        internal bool LevelUp()
+        internal bool CommandLevelUp()
         {
             if (Objects == null || Objects.CurrentPath.IsEmpty) return false;
             var PItem = Objects.CurrentPath.Peek() as AbstractPanelItem;
@@ -255,14 +255,14 @@ namespace LanExchange.Presenter
             {
                 Objects.FocusedItemText = PItem.Name;
                 Settings.Logger.Info("LevelUp()");
+                Objects.CurrentPath.Pop();
                 PanelSubscription.Instance.UnSubscribe(Objects, false);
                 PanelSubscription.Instance.SubscribeToSubject(Objects, subject);
-                Objects.CurrentPath.Pop();
             }
             return result;
         }
 
-        public static string DetectMENU(AbstractPanelItem PItem)
+        internal static string DetectMENU(AbstractPanelItem PItem)
         {
             while (PItem != null)
             {
@@ -282,6 +282,25 @@ namespace LanExchange.Presenter
                         return FILE_MENU;
             }
             return String.Empty;
+        }
+
+        internal void CommandDeleteItems()
+        {
+            bool Modified = false;
+            foreach (int index in m_View.SelectedIndices)
+            {
+                var comp = m_Objects.GetAt(index);
+                if (comp != null && comp.ParentSubject == ConcreteSubject.UserItems)
+                {
+                    m_Objects.Items.Remove(comp);
+                    Modified = true;
+                }
+            }
+            m_View.ClearSelected();
+            if (Modified)
+            {
+                m_Objects.DataChanged(null, ConcreteSubject.UserItems);
+            }
         }
     }
 }
