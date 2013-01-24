@@ -80,7 +80,6 @@
       <HintPath>..\lib\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
@@ -309,6 +308,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Model.Panel.cd" />
     <None Include="Pages.cd" />
     <None Include="Panel.cd" />
     <None Include="NLog.config">
@@ -317,6 +317,7 @@
     </None>
     <None Include="Properties\app.manifest" />
     <None Include="app.config" />
+    <None Include="Strategy.cd" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

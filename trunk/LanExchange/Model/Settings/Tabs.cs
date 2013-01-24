@@ -1,4 +1,3 @@
-using LanExchange.Utils;
 namespace LanExchange.Model.Settings
 {
     public class Tabs

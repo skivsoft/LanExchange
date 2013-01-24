@@ -6,7 +6,7 @@ namespace LanExchange.Model.Panel
 {
     public abstract class AbstractPanelItem : IComparable<AbstractPanelItem>, IEquatable<ISubject>, IComparable, IColumnComparable, ISubject
     {
-        public static string BACK = String.Empty;
+        public static readonly string BACK = String.Empty;
 
         private ISubject m_ParentSubject;
 

@@ -349,7 +349,7 @@
             // 
             this.mSendToNewTab.Name = "mSendToNewTab";
             this.mSendToNewTab.Size = new System.Drawing.Size(278, 22);
-            this.mSendToNewTab.Text = "Отправить в новую вкладку...";
+            this.mSendToNewTab.Text = "Отправить в другую вкладку...";
             this.mSendToNewTab.Click += new System.EventHandler(this.mSendToNewTab_Click);
             // 
             // toolStripSeparator6
@@ -377,6 +377,7 @@
             this.ePath.Size = new System.Drawing.Size(470, 20);
             this.ePath.TabIndex = 25;
             this.ePath.TabStop = false;
+            this.ePath.Visible = false;
             this.ePath.DoubleClick += new System.EventHandler(this.ePath_DoubleClick);
             this.ePath.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ePath_KeyDown);
             this.ePath.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lvComps_KeyPress);

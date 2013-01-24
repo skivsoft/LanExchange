@@ -169,21 +169,10 @@ namespace LanExchange.Model
         public void ApplyFilter()
         {
             bool bFiltered = !String.IsNullOrEmpty(FilterText);
-            if (bFiltered)
+            if (bFiltered && !CurrentPath.IsEmpty)
             {
-                if (m_Data.Count == 0)
-                    bFiltered = false;
-                else
-                if (m_Keys.Count > 0)
-                {
-                    var PItem = GetAt(0);
-                    // apply filter only for computers
-                    if (!(PItem is ComputerPanelItem))
-                        bFiltered = false;
-                }
+                bFiltered = false;
             }
-            else
-                FilterText = String.Empty;
             m_Keys.Clear();
             string Filter1 = FilterText.ToUpper();
             string Filter2 = PuntoSwitcher.Change(FilterText);
@@ -284,10 +273,10 @@ namespace LanExchange.Model
         {
             //lock (m_Data)
             {
-                m_Data.Clear();
                 // add user items if asked
                 if (subject == ConcreteSubject.UserItems)
                 {
+                    m_Data.Clear();
                     foreach (var comp in m_Items)
                         m_Data.Add(comp);
                 }
@@ -295,14 +284,21 @@ namespace LanExchange.Model
                     // add computers of domains which we subscribed
                     if (subject is DomainPanelItem)
                     {
-                        foreach (var group in Groups)
-                            foreach (AbstractPanelItem comp in sender.GetListBySubject(group))
-                                m_Data.Add(comp);
+                        if (CurrentPath.IsEmpty)
+                        {
+                            m_Data.Clear();
+                            foreach (var group in Groups)
+                                foreach (AbstractPanelItem comp in sender.GetListBySubject(group))
+                                    m_Data.Add(comp);
+                        }
+                        else 
+                            return;
                     }
                     // add shares, files etc.
                     else
                     {
                         //ISubject group = (ISubject)m_CurrentPath.Peek();
+                        m_Data.Clear();
                         if (subject != null && subject != ConcreteSubject.NotSubscribed)
                             foreach (AbstractPanelItem comp in sender.GetListBySubject(subject))
                                 m_Data.Add(comp);

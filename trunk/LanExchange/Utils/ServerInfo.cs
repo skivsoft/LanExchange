@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Text;
-using System.Xml.Serialization;
+//using System.Xml.Serialization;
 
 namespace LanExchange.Utils
 {
@@ -20,9 +20,9 @@ namespace LanExchange.Utils
         /// <summary>
         /// Constructor without params is required for XML-serialization.
         /// </summary>
-        public ServerInfo()
-        {
-        }
+        //public ServerInfo()
+        //{
+        //}
 
         public static ServerInfo FromNetApi32(NetApi32.SERVER_INFO_101 info)
         {
