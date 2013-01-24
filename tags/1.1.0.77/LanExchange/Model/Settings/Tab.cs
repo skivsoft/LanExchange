@@ -1,0 +1,40 @@
+using System.Collections.Generic;
+using LanExchange.Model.Panel;
+using LanExchange.Utils;
+using System;
+
+namespace LanExchange.Model.Settings
+{
+    public class Tab
+    {
+        public string Name { get; set; }
+        public System.Windows.Forms.View View { get; set; }
+        public List<string> Domains { get; set; }
+        public ServerInfo[] Items { get; set; }
+        public string Focused { get; set; }
+        public string Filter { get; set; }
+
+        public Tab()
+        {
+            View = System.Windows.Forms.View.Details;
+            Domains = new List<string>();
+            //Items = new ServerInfo[1] {new ServerInfo(new NetApi32.SERVER_INFO_101 {sv101_name = "QQQ", sv101_comment = "WWW"})};
+            Items = new ServerInfo[0];
+        }
+
+        public void SetScanGroups(IEnumerable<ISubject> value)
+        {
+            Domains.Clear();
+            foreach(var item in value)
+                Domains.Add(item.Subject);
+        }
+
+        public IList<ISubject> GetScanGroups()
+        {
+            var result = new List<ISubject>();
+            foreach(var domain in Domains)
+                result.Add(new DomainPanelItem(domain));
+            return result;
+        }
+    }
+}
