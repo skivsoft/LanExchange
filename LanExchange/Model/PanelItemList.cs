@@ -168,7 +168,9 @@ namespace LanExchange.Model
         /// </summary>
         public void ApplyFilter()
         {
-            bool bFiltered = !String.IsNullOrEmpty(FilterText);
+            if (FilterText == null) 
+                FilterText = String.Empty;
+            bool bFiltered = FilterText != String.Empty;
             if (bFiltered && !CurrentPath.IsEmpty)
             {
                 bFiltered = false;
