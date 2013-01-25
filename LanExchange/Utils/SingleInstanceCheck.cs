@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
 using System.Diagnostics;
 using System.Threading;
-using LanExchange.Windows;
 using System.Security.Permissions;
 
 namespace LanExchange.Utils
@@ -59,7 +57,9 @@ namespace LanExchange.Utils
             bool isOwnedHere;
             m_AppStartMutex = new Mutex(
                 true,
-                Application.ProductName,
+                // TODO Application using 
+                "LanExchange",
+                //Application.ProductName,
                 out isOwnedHere
             );
             if (isOwnedHere) return; 

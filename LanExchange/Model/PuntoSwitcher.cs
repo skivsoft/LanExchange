@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace LanExchange.Model
 {
-    static class PuntoSwitcher
+    public static class PuntoSwitcher
     {
         private static readonly string[] ABC = 
         {"АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя", 

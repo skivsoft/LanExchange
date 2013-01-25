@@ -1,4 +1,4 @@
-﻿using LanExchange.View;
+﻿using LanExchange.Interface;
 using LanExchange.Model;
 using LanExchange.Model.Settings;
 
@@ -7,7 +7,7 @@ namespace LanExchange.Presenter
     /// <summary>
     /// Presenter for Settings (model) and ParamsForm (view).
     /// </summary>
-    public class ParamsPresenter
+    public class ParamsPresenter : IPresenter
     {
         private readonly IParamsView m_View;
 

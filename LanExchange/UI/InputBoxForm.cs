@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
+using LanExchange.Interface;
+using LanExchange.Presenter;
 
 namespace LanExchange.UI
 {
-    public partial class InputBoxForm : Form
+    public partial class InputBoxForm : Form, IInputBoxView
     {
         bool m_AllowEmpty = true;
 
@@ -33,23 +35,5 @@ namespace LanExchange.UI
             } else
                 DialogResult = DialogResult.OK;
         }
-
-        public static string Ask(string caption, string prompt, string defText, bool allowEmpty)
-        {
-            string result = null;
-            using (var inputBox = new InputBoxForm())
-            {
-                if (!String.IsNullOrEmpty(caption))
-                    inputBox.Text = caption;
-                else
-                    inputBox.Text = Application.ProductName;
-                inputBox.Prepare(prompt, defText, allowEmpty);
-                DialogResult res = inputBox.ShowDialog();
-                if (res == DialogResult.OK)
-                    result = inputBox.txtInputText.Text.Trim();
-            }
-            return result;
-        }
-
    }
 }

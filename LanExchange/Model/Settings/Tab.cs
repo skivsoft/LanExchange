@@ -7,7 +7,7 @@ namespace LanExchange.Model.Settings
     public class Tab
     {
         public string Name { get; set; }
-        public System.Windows.Forms.View View { get; set; }
+        public PanelItemList.View View { get; set; }
         public List<string> Domains { get; set; }
         public ServerInfo[] Items { get; set; }
         public string Focused { get; set; }
@@ -15,7 +15,7 @@ namespace LanExchange.Model.Settings
 
         public Tab()
         {
-            View = System.Windows.Forms.View.Details;
+            View = PanelItemList.View.Details;
             Domains = new List<string>();
             Items = new ServerInfo[0];
         }

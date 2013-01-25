@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.Management;
 using System.ComponentModel;
 using System.Reflection;
+using LanExchange.Model;
 
 namespace LanExchange.WMI
 {

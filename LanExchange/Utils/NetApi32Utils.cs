@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace LanExchange.Utils
 {
-    static class NetApi32Utils
+    public static class NetApi32Utils
     {
         /// <summary>
         /// Get domain name for specified machine.

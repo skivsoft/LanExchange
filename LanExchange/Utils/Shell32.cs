@@ -347,7 +347,7 @@ namespace LanExchange.Utils
     //    public IntPtr cStr;
     //}
 
-    static class Shell32
+    public static class Shell32
     {
         [DllImport("shell32.dll", EntryPoint = "#660")]
         public static extern bool FileIconInit(bool bFullInit);

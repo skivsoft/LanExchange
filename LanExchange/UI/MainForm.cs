@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Windows.Forms;
 using LanExchange.Model;
@@ -6,7 +7,6 @@ using LanExchange.Presenter;
 using System.Drawing;
 using System.ComponentModel;
 using System.Text;
-using LanExchange.Windows;
 using System.Security.Permissions;
 using LanExchange.Model.Panel;
 using LanExchange.Model.Settings;
@@ -23,11 +23,6 @@ namespace LanExchange.UI
         /// </summary>
         public static MainForm Instance;
 
-        /// <summary>
-        /// Pages presenter.
-        /// </summary>
-        public PagesPresenter MainPages { get; set; }
-
         private readonly GlobalHotkeys m_Hotkeys;
 
         public MainForm()
@@ -39,10 +34,10 @@ namespace LanExchange.UI
             Settings.Load();
             SetRunMinimized(Settings.Instance.RunMinimized);
             // init Pages presenter
-            MainPages = Pages.GetPresenter();
-            MainPages.PanelViewFocusedItemChanged += Pages_PanelViewFocusedItemChanged;
-            MainPages.PanelViewFilterTextChanged += Pages_FilterTextChanged;
-            MainPages.GetModel().LoadSettings();
+            AppPresenter.MainPages = Pages.GetPresenter();
+            AppPresenter.MainPages.PanelViewFocusedItemChanged += Pages_PanelViewFocusedItemChanged;
+            AppPresenter.MainPages.PanelViewFilterTextChanged += Pages_FilterTextChanged;
+            AppPresenter.MainPages.GetModel().LoadSettings();
             // init main form
             SetupForm();
             // setup images
@@ -56,10 +51,64 @@ namespace LanExchange.UI
             m_Hotkeys.RegisterGlobalHotKey((int)Keys.X, GlobalHotkeys.MOD_WIN, Handle);
         }
 
+        public Rectangle SettingsGetBounds()
+        {
+            LogUtils.Info("Settings: MainFormX: {0}, MainFormWidth: {1}", Settings.Instance.MainFormX, Settings.Instance.MainFormWidth);
+            // correct width and height
+            bool BoundsIsNotSet = Settings.Instance.MainFormWidth == 0;
+            Rectangle WorkingArea;
+            if (BoundsIsNotSet)
+                WorkingArea = Screen.PrimaryScreen.WorkingArea;
+            else
+                WorkingArea = Screen.GetWorkingArea(new Point(Settings.Instance.MainFormX + Settings.Instance.MainFormWidth/2, 0));
+            var rect = new Rectangle();
+            rect.X = Settings.Instance.MainFormX;
+            rect.Y = WorkingArea.Top;
+            rect.Width = Math.Min(Math.Max(Settings.MAINFORM_DEFAULTWIDTH, Settings.Instance.MainFormWidth), WorkingArea.Width);
+            rect.Height = WorkingArea.Height;
+            // determination side to snap right or left
+            int CenterX = (rect.Left + rect.Right) >> 1;
+            int WorkingAreaCenterX = (WorkingArea.Left + WorkingArea.Right) >> 1;
+            if (BoundsIsNotSet || CenterX >= WorkingAreaCenterX)
+                // snap to right side
+                rect.X = WorkingArea.Right - rect.Width;
+            else
+                // snap to left side
+                rect.X -= rect.Left - WorkingArea.Left;
+            LogUtils.Info("Settings.GetBounds(): {0}, {1}, {2}, {3}", rect.Left, rect.Top, rect.Width, rect.Height);
+            return rect;
+        }
+
+        public void SettingsSetBounds(Rectangle rect)
+        {
+            Rectangle WorkingArea = Screen.GetWorkingArea(rect);
+            // shift rect into working area
+            if (rect.Left < WorkingArea.Left) rect.X = WorkingArea.Left;
+            if (rect.Top < WorkingArea.Top) rect.Y = WorkingArea.Top;
+            if (rect.Right > WorkingArea.Right) rect.X -= rect.Right - WorkingArea.Right;
+            if (rect.Bottom > WorkingArea.Bottom) rect.Y -= rect.Bottom - WorkingArea.Bottom;
+            // determination side to snap right or left
+            int CenterX = (rect.Left + rect.Right) >> 1;
+            int WorkingAreaCenterX = (WorkingArea.Left + WorkingArea.Right) >> 1;
+            if (CenterX >= WorkingAreaCenterX)
+                // snap to right side
+                rect.X = WorkingArea.Right - rect.Width;
+            else
+                // snap to left side
+                rect.X -= rect.Left - WorkingArea.Left;
+            // set properties
+            if (rect.Left != Settings.Instance.MainFormX || rect.Width != Settings.Instance.MainFormWidth)
+            {
+                LogUtils.Info("Settings.SetBounds(): {0}, {1}, {2}, {3}", rect.Left, rect.Top, rect.Width, rect.Height);
+                Settings.Instance.MainFormX = rect.Left;
+                Settings.Instance.MainFormWidth = rect.Width;
+            }
+        }
+
         private void SetupForm()
         {
             // set mainform bounds
-            var Rect = Settings.Instance.GetBounds();
+            var Rect = SettingsGetBounds();
             SetBounds(Rect.Left, Rect.Top, Rect.Width, Rect.Height);
             // set mainform title
             Text = String.Format("{0} {1}", Application.ProductName, AboutForm.AssemblyVersion);
@@ -109,7 +158,7 @@ namespace LanExchange.UI
                 if (pv.Filter.IsVisible)
                     pv.Filter.SetFilterText(String.Empty);
                 else
-                    if (pv.GetPresenter().Objects.CurrentPath.IsEmpty)
+                    if ((pv.GetPresenter() as PanelPresenter).Objects.CurrentPath.IsEmpty)
                         Instance.Hide();
                     else
                         if (!m_EscDown)
@@ -145,10 +194,11 @@ namespace LanExchange.UI
                 {
                     TimeSpan diff = DateTime.UtcNow - m_EscTime;
                     var pv = Pages.GetActivePanelView();
-                    if (pv != null && !pv.GetPresenter().Objects.CurrentPath.IsEmpty)
+                    var presenter = pv.GetPresenter() as PanelPresenter;
+                    if (pv != null && !presenter.Objects.CurrentPath.IsEmpty)
                     {
                         if (diff.TotalMilliseconds < WAIT_FOR_KEYUP_MS)
-                            pv.GetPresenter().CommandLevelUp();
+                            presenter.CommandLevelUp();
                         else
                             Instance.Hide();
                     }
@@ -291,7 +341,7 @@ namespace LanExchange.UI
             ComputerPanelItem Comp = null;
             if (pv != null) 
             {
-                var PItem = pv.GetPresenter().GetFocusedPanelItem(false, false);
+                var PItem = (pv.GetPresenter() as PanelPresenter).GetFocusedPanelItem(false, false);
                 // is focused changed on top level?
                 if (PItem is ComputerPanelItem)
                 {
@@ -299,7 +349,7 @@ namespace LanExchange.UI
                     timerTabSettingsSaver.Stop();
                     timerTabSettingsSaver.Start();
                 }
-                Comp = pv.GetPresenter().GetFocusedComputer(false);
+                Comp = (pv.GetPresenter() as PanelPresenter).GetFocusedComputer(false);
             }
             // is focused item a computer?
             if (Comp == null)
@@ -414,7 +464,7 @@ namespace LanExchange.UI
 
         private void MainForm_ResizeEnd(object sender, EventArgs e)
         {
-            Settings.Instance.SetBounds(Bounds);
+            SettingsSetBounds(Bounds);
             Settings.SaveIfModified();
         }
 
@@ -431,10 +481,9 @@ namespace LanExchange.UI
         private void timerTabSettingsSaver_Tick(object sender, EventArgs e)
         {
             // save tab settings and switch off timer
-            MainPages.GetModel().SaveSettings();
+            AppPresenter.MainPages.GetModel().SaveSettings();
             if (sender is Timer)
                 (sender as Timer).Enabled = false;
         }
-
     }
 }

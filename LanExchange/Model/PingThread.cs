@@ -3,7 +3,7 @@ using System.Net.NetworkInformation;
 
 namespace LanExchange.Model
 {
-    class PingThread
+    public class PingThread
     {
         private bool m_PingOk;
         

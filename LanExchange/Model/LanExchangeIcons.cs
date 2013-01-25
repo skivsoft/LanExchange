@@ -1,26 +1,25 @@
 ﻿using System;
-using System.Windows.Forms;
+using System.Collections.Generic;
 using System.Drawing;
-using LanExchange.Utils;
+using System.Text;
+using System.Windows.Forms;
 using LanExchange.Properties;
+using LanExchange.UI;
+using LanExchange.Utils;
 
 namespace LanExchange.Model
 {
-    /// <summary>
-    /// Icons collection for LanExchange program.
-    /// Lazy load pattern used.
-    /// </summary>
-    public sealed class LanExchangeIcons : IDisposable
+    public class LanExchangeIcons
     {
-        public const int CompDefault   = 0; // MyComputer icon
-        public const int CompDisabled  = 1; // Disabled MyComputer icon
-        public const int Workgroup     = 2; // Workgroup icon
-        public const int FolderNormal  = 3; // Folder icon
-        public const int FolderHidden  = 4; // Disabled Folder icon
+        public const int CompDefault = 0; // MyComputer icon
+        public const int CompDisabled = 1; // Disabled MyComputer icon
+        public const int Workgroup = 2; // Workgroup icon
+        public const int FolderNormal = 3; // Folder icon
+        public const int FolderHidden = 4; // Disabled Folder icon
         public const int FolderPrinter = 4;
-        public const int FolderBack    = 5; // Back icon
-        public const int CompGreen     = 1;
-
+        public const int FolderBack = 5; // Back icon
+        public const int CompGreen = 1;
+    
         private const int SYSTEM_INDEX_MYCOMPUTER = 15;
         private const int SYSTEM_INDEX_WORKGROUP  = 18;
         private const int SYSTEM_INDEX_FOLDER     = 4;
@@ -114,5 +113,6 @@ namespace LanExchange.Model
             }
             return result;
         }
+    
     }
 }

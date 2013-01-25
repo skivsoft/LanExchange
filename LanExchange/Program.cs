@@ -25,16 +25,15 @@
 //   TODO  Ask username/password if needed when connect to share
 // 
 // *****************************************************************************
+
+using System;
+using System.Reflection;
+using System.Windows.Forms;
+using LanExchange.UI;
+using LanExchange.Utils;
+
 namespace LanExchange
 {
-    using System;
-    using System.Windows.Forms;
-    using System.Reflection;
-    using UI;
-    using Utils;
-    using Presenter;
-    using System.Diagnostics;
-
     internal static class Program
     {
         static void LogHeader()
@@ -45,32 +44,12 @@ namespace LanExchange
             LogUtils.Info("OSVersion: [{0}], Processors count: {1}", Environment.OSVersion, Environment.ProcessorCount);
         }
 
-        static void Application_ThreadExit(object sender, EventArgs e)
-        {
-            LogUtils.Info("ThreadExit");
-        }
-
-        static void Application_ApplicationExit(object sender, EventArgs e)
-        {
-            LogUtils.Info("ApplicationExit");
-            // restart after version update
-            if (AboutPresenter.NeedRestart)
-            {
-                LogUtils.Info("Start: {0}", Application.ExecutablePath);
-                Process.Start(Application.ExecutablePath);
-            }
-        }
-
         [STAThread]
         static void Main()
         {
             SingleInstanceCheck.Check();
             LogHeader();
-            Application.ThreadExit += Application_ThreadExit;
-            Application.ApplicationExit += Application_ApplicationExit;
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false); // must be called before first form created
-            Application.Run(new MainForm());
+            AppView.ApplicationRun();
             LogUtils.Stop();
         }
     }

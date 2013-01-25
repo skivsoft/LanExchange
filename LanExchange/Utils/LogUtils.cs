@@ -116,12 +116,12 @@ namespace LanExchange.Utils
             #endif
         }
 
-        internal static void Info(string message, params object[] args)
+        public static void Info(string message, params object[] args)
         {
             Log(false, message, args);
         }
 
-        internal static void Error(string message, params object[] args)
+        public static void Error(string message, params object[] args)
         {
             Log(true, message, args);
         }
@@ -129,7 +129,7 @@ namespace LanExchange.Utils
         /// <summary>
         /// Clear configuration. For Mono.
         /// </summary>
-        internal static void Stop()
+        public static void Stop()
         {
             #if LOG
             LogManager.Configuration = null;

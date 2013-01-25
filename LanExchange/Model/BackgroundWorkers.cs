@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using LanExchange.Strategy;
+using LanExchange.Model.Strategy;
 using System.ComponentModel;
 using LanExchange.Utils;
 
@@ -75,7 +75,7 @@ namespace LanExchange.Model
             
         }
 
-        internal void Add(BackgroundContext context, BackgroundWorkerEx worker)
+        public void Add(BackgroundContext context, BackgroundWorkerEx worker)
         {
             if (context == null)
                 throw new ArgumentNullException("context");
@@ -99,7 +99,7 @@ namespace LanExchange.Model
                 context.ExecuteOperation();
         }
 
-        internal void Add(BackgroundContext backgroundContext)
+        public void Add(BackgroundContext backgroundContext)
         {
             var worker = new BackgroundWorkerEx();
             worker.DoWork += worker_DoWork;
@@ -107,45 +107,6 @@ namespace LanExchange.Model
             Add(backgroundContext, worker);
             worker.RunWorkerAsync(backgroundContext);
         }
-
-        //public void ClearNotBusy()
-        //{
-        //    lock (m_Workers)
-        //    {
-        //        bool Found;
-        //        do
-        //        {
-        //            Found = false;
-        //            foreach(var Pair in m_Workers)
-        //                if (!Pair.Value.IsBusy)
-        //                {
-        //                    Found = true;
-        //                    m_Workers.Remove(Pair.Value);
-        //                    break;
-        //                }
-        //        } while (Found);
-        //    }
-        //}
-
-        //public void RunWorkerAsync()
-        //{
-        //    lock (m_Workers)
-        //    {
-        //        foreach (var Pair in m_Workers)
-        //            if (!Pair.Value.IsBusy)
-        //                Pair.Value.RunWorkerAsync(Pair.Key);
-        //    }
-        //}
-
-        //public void CancelAsync()
-        //{
-        //    lock (m_Workers)
-        //    {
-        //        foreach (var Pair in m_Workers)
-        //            if (Pair.Value.IsBusy)
-        //                Pair.Value.CancelAsync();
-        //    }
-        //}
 
         public int BusyCount
         {
