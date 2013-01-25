@@ -165,25 +165,7 @@ namespace LanExchange.UI
 
         private void mTabParams_Click(object sender, EventArgs e)
         {
-            using (var Form = new TabParamsForm())
-            {
-                int Index = PopupSelectedIndex;
-                PagesModel M = m_Presenter.GetModel();
-                PanelItemList Info = M.GetItem(Index);
-                if (Info != null)
-                {
-                    TabPage Tab = Pages.TabPages[Index];
-                    Form.Text = String.Format(Form.Text, Tab != null ? Tab.Text : "???");
-                    Form.Groups = Info.Groups;
-                    Form.PrepareForm();
-                    if (Form.ShowDialog() == DialogResult.OK)
-                    {
-                        Info.Groups = Form.Groups;
-                        Info.UpdateSubsctiption();
-                        m_Presenter.GetModel().SaveSettings();
-                    }
-                }
-            }
+            m_Presenter.EditTabParams();
         }
 
         private void Pages_Selected(object sender, TabControlEventArgs e)

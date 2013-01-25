@@ -5,16 +5,20 @@ using LanExchange.Model;
 using LanExchange.Utils;
 using System.Drawing;
 using LanExchange.Model.Panel;
+using LanExchange.View;
+using LanExchange.Presenter;
 
 namespace LanExchange.UI
 {
-    public partial class TabParamsForm : Form, ISubscriber
+    public partial class TabParamsForm : Form, ITabParamsView, ISubscriber
     {
         private readonly IList<string> m_Groups;
+        private readonly TabParamsPresenter m_Presenter;
 
         public TabParamsForm()
         {
             InitializeComponent();
+            m_Presenter = new TabParamsPresenter(this);
             m_Groups = new List<string>();
         }
 

@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="LanExchange.UI.TabParamsForm">
+    <Position X="4.25" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAGAAAiAAAAAAAAGAAAACAwQaAIAAACAAIAAAgQA=</HashCode>
+      <FileName>UI\TabParamsForm.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.1" />
+  </Class>
+  <Class Name="LanExchange.Presenter.TabParamsPresenter">
+    <Position X="0.5" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Presenter\TabParamsPresenter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LanExchange.Utils.LogUtils">
+    <Position X="9" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAQAAAAAAAEAACAgEAAAAIAAAAkAAAAA=</HashCode>
+      <FileName>Utils\LogUtils.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="LanExchange.Model.ISubscriber">
+    <Position X="6.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\ISubscriber.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="LanExchange.View.ITabParamsView">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>View\ITabParamsView.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

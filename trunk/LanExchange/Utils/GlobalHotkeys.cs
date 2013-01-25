@@ -72,7 +72,7 @@ namespace LanExchange.Utils
             {
                 // clean up if hotkey registration failed
                 Dispose();
-                Settings.Logger.Error(ex.Message);
+                LogUtils.Error(ex.Message);
             }
         }
 

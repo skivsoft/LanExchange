@@ -3,7 +3,6 @@ using System.Globalization;
 using System.Windows.Forms;
 using LanExchange.Model;
 using LanExchange.Presenter;
-using NLog;
 using System.Drawing;
 using System.ComponentModel;
 using System.Text;
@@ -17,11 +16,6 @@ namespace LanExchange.UI
 {
     public partial class MainForm : RunMinimizedForm
     {
-        /// <summary>
-        /// Logger object.
-        /// </summary>
-        private readonly static Logger logger = LogManager.GetCurrentClassLogger();
-
         public const int WAIT_FOR_KEYUP_MS = 500;
 
         /// <summary>
@@ -402,16 +396,15 @@ namespace LanExchange.UI
                 case GlobalHotkeys.WM_HOTKEY:
                     if ((short)m.WParam == m_Hotkeys.HotkeyID)
                     {
-                        logger.Info("HOT KEY CLICKED()");
                         ToggleVisible();
                     }
                     break;
                 case NativeMethods.WM_QUERYENDSESSION:
-                    logger.Info("WM_QUERYENDSESSION: {0}", m.LParam.ToString("X"));
+                    LogUtils.Info("WM_QUERYENDSESSION: {0}", m.LParam.ToString("X"));
                     m.Result = new IntPtr(1);
                     break;
                 case NativeMethods.WM_ENDSESSION:
-                    logger.Info("WM_ENDSESSION: {0}", m.LParam.ToString("X"));
+                    LogUtils.Info("WM_ENDSESSION: {0}", m.LParam.ToString("X"));
                     break;
                 default:
                     base.WndProc(ref m);

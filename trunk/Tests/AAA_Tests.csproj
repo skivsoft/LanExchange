@@ -48,15 +48,15 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FilterModelMock.cs" />
-    <Compile Include="FilterViewTest.cs" />
-    <Compile Include="PagesViewTest.cs" />
-    <Compile Include="PanelSubscriptionMock.cs" />
-    <Compile Include="PanelSubscriptionTest.cs" />
+    <Compile Include="Model\FilterModelMock.cs" />
+    <Compile Include="View\FilterViewTest.cs" />
+    <Compile Include="View\PagesViewTest.cs" />
+    <Compile Include="Model\PanelSubscriptionMock.cs" />
+    <Compile Include="Model\PanelSubscriptionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServerInfoTest.cs" />
-    <Compile Include="SubscriberMock.cs" />
-    <Compile Include="PagesModelTest.cs" />
+    <Compile Include="Utils\ServerInfoTest.cs" />
+    <Compile Include="Model\SubscriberMock.cs" />
+    <Compile Include="Model\PagesModelTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Shadow Include="Test References\LanExchange.accessor" />

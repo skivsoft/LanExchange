@@ -2,14 +2,11 @@ using System;
 using System.Globalization;
 using System.IO;
 using Microsoft.Win32;
-using NLog;
 
 namespace LanExchange.Utils
 {
     public static class AutorunUtils
     {
-        private readonly static Logger logger = LogManager.GetCurrentClassLogger();
-
         public static void ExplodeCmd(string cmdLine, out string fileName, out string cmdParams)
         {
             fileName = "";
@@ -115,7 +112,7 @@ namespace LanExchange.Utils
             }
             catch (Exception e)
             {
-                logger.Error("AutoRun_Add() {0}", e.Message);
+                LogUtils.Error("AutoRun_Add() {0}", e.Message);
             }
             finally
             {
@@ -155,7 +152,7 @@ namespace LanExchange.Utils
             }
             catch (Exception e)
             {
-                logger.Error("Autorun_Delete() {0}", e.Message);
+                LogUtils.Error("Autorun_Delete() {0}", e.Message);
             }
             finally
             {

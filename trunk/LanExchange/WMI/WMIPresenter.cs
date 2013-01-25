@@ -2,14 +2,12 @@
 using System.Management;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using NLog;
+using LanExchange.Utils;
 
 namespace LanExchange.WMI
 {
     public sealed class WMIPresenter : IDisposable
     {
-        private readonly static Logger logger = LogManager.GetCurrentClassLogger();
-
         private readonly IWMIComputer m_Comp;
         private ManagementScope m_Namespace;
 
@@ -66,7 +64,7 @@ namespace LanExchange.WMI
             TryAgainWithPassword:
             try
             {
-                logger.Info("WMI: connect to namespace \"{0}\"", connectionString);
+                LogUtils.Info("WMI: connect to namespace \"{0}\"", connectionString);
                 options = new ConnectionOptions();
                 //options.Impersonation = true;
                 m_Namespace = new ManagementScope(connectionString, options);
@@ -75,7 +73,7 @@ namespace LanExchange.WMI
                 m_Namespace.Connect();
                 if (m_Namespace.IsConnected)
                 {
-                    logger.Info("WMI: Connected.");
+                    LogUtils.Info("WMI: Connected.");
                     return true;
                 }
             }
@@ -119,7 +117,7 @@ namespace LanExchange.WMI
             {
                 ShowCommonConnectionError(ex);
             }
-            logger.Error("WMI: Not connected.");
+            LogUtils.Error("WMI: Not connected.");
             m_Namespace = null;
             return false;
         }
@@ -171,7 +169,7 @@ namespace LanExchange.WMI
             }
             catch (Exception ex)
             {
-                logger.Error("WMI: {0}", ex.Message);
+                LogUtils.Error("WMI: {0}", ex.Message);
             }
             if (bCheckError) return;
 
@@ -207,7 +205,7 @@ namespace LanExchange.WMI
                 }
                 catch (Exception ex)
                 {
-                    logger.Error("WMI: {0}", ex.Message);
+                    LogUtils.Error("WMI: {0}", ex.Message);
                 }
 
             }
@@ -248,7 +246,7 @@ namespace LanExchange.WMI
             }
             catch (Exception ex)
             {
-                logger.Error("WMI: {0}", ex.Message);
+                LogUtils.Error("WMI: {0}", ex.Message);
             }
         }
 
