@@ -1,15 +1,13 @@
 ﻿
 using System;
-using System.Collections.Generic;
-
-using System.ComponentModel;
-using System.Windows.Forms;
-using System.IO;
 using System.Collections;
-using LanExchange.Strategy;
-using LanExchange.Strategy.Panel;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Reflection;
+using System.Timers;
 using LanExchange.Model.Panel;
+using LanExchange.Model.Strategy;
 using LanExchange.Utils;
 
 namespace LanExchange.Model
@@ -50,8 +48,9 @@ namespace LanExchange.Model
             // load cached results
             LoadResultsFromCache();
             // timer
+            // TODO !!! CHECK TIMER DISPOSE
             m_RefreshTimer = new Timer();
-            m_RefreshTimer.Tick += RefreshTimer_Tick;
+            m_RefreshTimer.Elapsed += RefreshTimer_Tick;
             m_RefreshTimer.Enabled = false;
         }
 
@@ -62,7 +61,8 @@ namespace LanExchange.Model
 
         private void InitStrategies()
         {
-            foreach (var T in Assembly.GetExecutingAssembly().GetTypes())
+            Assembly asm = Assembly.GetExecutingAssembly();
+            foreach (var T in asm.GetTypes())
                 if (T.IsClass && !T.IsAbstract && T.BaseType == typeof (AbstractPanelStrategy))
                 {
                     var strategy = (AbstractPanelStrategy)Activator.CreateInstance(T);

@@ -1,11 +1,10 @@
 ﻿using System;
-using LanExchange.View;
-using System.Windows.Forms;
+using LanExchange.Interface;
 using LanExchange.Model;
 
 namespace LanExchange.Presenter
 {
-    public class FilterPresenter
+    public class FilterPresenter : IPresenter
     {
         private readonly IFilterView m_View;
         private IFilterModel m_Model;
@@ -58,25 +57,5 @@ namespace LanExchange.Presenter
                 m_View.DoFilterCountChanged();
             }
         }
-
-        public void LinkedControl_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (Char.IsLetterOrDigit(e.KeyChar) || Char.IsPunctuation(e.KeyChar) || PuntoSwitcher.IsValidChar(e.KeyChar))
-            {
-                m_View.FocusAndKeyPress(e);
-                e.Handled = true;
-            }
-        }
-
-        public void LinkedControl_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Control && e.KeyCode == Keys.Down)
-            {
-                if (m_View.IsVisible)
-                    m_View.FocusMe();
-                e.Handled = true;
-            }
-        }
-
     }
 }

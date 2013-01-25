@@ -68,7 +68,7 @@ namespace LanExchange.Model
             return index < 0 || index >= m_List.Count ? null : m_List[index];
         }
 
-        internal int GetItemIndex(PanelItemList item)
+        public int GetItemIndex(PanelItemList item)
         {
             return m_List.IndexOf(item);
         }

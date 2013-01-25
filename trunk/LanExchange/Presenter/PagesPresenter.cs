@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Windows.Forms;
+using LanExchange.Interface;
 using LanExchange.Model;
-using LanExchange.View;
-using LanExchange.UI;
 using LanExchange.Model.Panel;
 using LanExchange.Utils;
 
 namespace LanExchange.Presenter
 {
-    public class PagesPresenter
+    public class PagesPresenter : IPresenter
     {
         private readonly IPagesView m_View;
         private readonly PagesModel m_Model;
@@ -34,7 +32,7 @@ namespace LanExchange.Presenter
         // TODO: Need check duplicates on new tab
         public void CommandNewTab()
         {
-            var newTabName = InputBoxForm.Ask("Новая вкладка", "Введите имя", "", false);
+            var newTabName = InputBoxPresenter.Ask("Новая вкладка", "Введите имя", "", false);
             if (newTabName != null)
             {
                 m_Model.AddTab(new PanelItemList(newTabName));
@@ -44,11 +42,11 @@ namespace LanExchange.Presenter
 
         public void CommandSendToNewTab()
         {
-            var newTabName = InputBoxForm.Ask("Новая вкладка", "Введите имя", "", false);
+            var newTabName = InputBoxPresenter.Ask("Новая вкладка", "Введите имя", "", false);
             if (newTabName == null) return;
-            var sourcePV = m_View.GetActivePanelView() as PanelView;
+            var sourcePV = m_View.GetActivePanelView();
             if (sourcePV == null) return;
-            var sourceObjects = sourcePV.GetPresenter().Objects;
+            var sourceObjects = (sourcePV.GetPresenter() as PanelPresenter).Objects;
             var destObjects = new PanelItemList(newTabName);
             foreach (int index in sourcePV.SelectedIndices)
             {
@@ -85,7 +83,7 @@ namespace LanExchange.Presenter
             int Index = m_View.PopupSelectedIndex;
             PanelItemList ItemList = GetModel().GetItem(Index);
             if (ItemList == null) return;
-            string NewTabName = InputBoxForm.Ask("Переименование", "Введите имя", ItemList.TabName, false);
+            string NewTabName = InputBoxPresenter.Ask("Переименование", "Введите имя", ItemList.TabName, false);
             if (NewTabName != null)
             {
                 m_Model.RenameTab(Index, NewTabName);
@@ -93,38 +91,7 @@ namespace LanExchange.Presenter
             }
         }
 
-
-        internal void AddTabsToMenuItem(ToolStripMenuItem menuitem, EventHandler handler, bool bHideActive)
-        {
-            for (int i = 0; i < m_Model.Count; i++)
-            {
-                if (bHideActive && (!CanCloseTab() || (i == m_View.GetSelectedIndex())))
-                    continue;
-                string S = m_Model.GetTabName(i);
-                var Item = new ToolStripMenuItem
-                {
-                    Checked = (i == m_View.GetSelectedIndex()),
-                    Text = m_View.Ellipsis(S, 20),
-                    ToolTipText = S,
-                    Tag = i
-                };
-                Item.Click += handler;
-                menuitem.DropDownItems.Add(Item);
-            }
-        }
-
-        public void mSelectTab_Click(object sender, EventArgs e)
-        {
-            var menu = sender as ToolStripMenuItem;
-            if (menu != null && m_View != null)
-            {
-                int Index = (int)menu.Tag;
-                if (m_View.GetSelectedIndex() != Index)
-                    m_View.SetSelectedIndex(Index);
-            }
-        }
-
-        internal bool CanCloseTab()
+        public bool CanCloseTab()
         {
             return m_View.TabPagesCount > 1;
         }
@@ -133,24 +100,10 @@ namespace LanExchange.Presenter
         {
             LogUtils.Info("AfterAppendTab(\"{0}\")", e.Info.TabName);
             // create panel
-            var PV = new PanelView { Dock = DockStyle.Fill };
-            PV.GetPresenter().Objects = e.Info;
-            ListView LV = PV.Controls[0] as ListView;
-            if (LV != null)
-            {
-                LV.SmallImageList = LanExchangeIcons.SmallImageList;
-                LV.LargeImageList = LanExchangeIcons.LargeImageList;
-                LV.View = e.Info.CurrentView;
-                if (MainForm.Instance != null)
-                    MainForm.Instance.tipComps.SetToolTip(LV, " ");
-            }
-            PV.FocusedItemChanged += PV_FocusedItemChanged;
-            PV.FilterTextChanged += PV_FilterTextChanged;
-            // add new tab and insert panel into it
-            m_View.NewTabFromItemList(e.Info);
-            m_View.AddControl(m_View.TabPagesCount - 1, PV);
+            var PV = m_View.CreatePanelView(e.Info);
             // set update event
-            PanelPresenter presenter = PV.GetPresenter();
+            PanelPresenter presenter = PV.GetPresenter() as PanelPresenter;
+            presenter.Objects = e.Info;
             e.Info.Changed += presenter.Items_Changed;
             e.Info.SubscriptionChanged += Item_SubscriptionChanged;
             // update items
@@ -195,20 +148,21 @@ namespace LanExchange.Presenter
             m_View.FocusPanelView();
         }
 
-        internal void EditTabParams()
+        public void EditTabParams()
         {
             int Index = m_View.PopupSelectedIndex;
             PanelItemList Info = m_Model.GetItem(Index);
             if (Info == null) return;
 
-            using (var Form = new TabParamsForm())
+            using (var Form = m_View.CreateTabParamsView())
             {
+                TabParamsPresenter presenter = Form.GetPresenter() as TabParamsPresenter;
                 Form.Text = String.Format(Form.Text, Info.TabName);
-                Form.Groups = Info.Groups;
-                Form.PrepareForm();
-                if (Form.ShowDialog() == DialogResult.OK)
+                presenter.Groups = Info.Groups;
+                //Form.PrepareForm();
+                if (Form.ShowModal())
                 {
-                    Info.Groups = Form.Groups;
+                    Info.Groups = presenter.Groups;
                     Info.UpdateSubsctiption();
                     m_Model.SaveSettings();
                 }

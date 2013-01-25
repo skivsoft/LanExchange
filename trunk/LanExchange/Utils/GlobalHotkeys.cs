@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Threading;
-using LanExchange.Model.Settings;
 
 namespace LanExchange.Utils
 {

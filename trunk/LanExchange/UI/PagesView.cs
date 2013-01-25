@@ -2,9 +2,9 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using LanExchange.Interface;
 using LanExchange.Presenter;
 using LanExchange.Model;
-using LanExchange.View;
 
 namespace LanExchange.UI
 {
@@ -159,10 +159,9 @@ namespace LanExchange.UI
             if (mSelectTab.Enabled)
             {
                 mSelectTab.DropDownItems.Clear();
-                m_Presenter.AddTabsToMenuItem(mSelectTab, m_Presenter.mSelectTab_Click, false);
+                AddTabsToMenuItem(mSelectTab, mSelectTab_Click, false);
             }
         }
-
         private void mTabParams_Click(object sender, EventArgs e)
         {
             m_Presenter.EditTabParams();
@@ -194,7 +193,7 @@ namespace LanExchange.UI
             if (pv != null && ActiveControl != pv)
             {
                 ActiveControl = pv as Control;
-                pv.GetPresenter().UpdateItemsAndStatus();
+                (pv.GetPresenter() as PanelPresenter).UpdateItemsAndStatus();
                 pv.FocusListView();
             }
         }
@@ -263,5 +262,62 @@ namespace LanExchange.UI
         {
             return Pages.SelectedIndex;
         }
+
+        internal void AddTabsToMenuItem(ToolStripMenuItem menuitem, EventHandler handler, bool bHideActive)
+        {
+            var M = m_Presenter.GetModel();
+            for (int i = 0; i < M.Count; i++)
+            {
+                if (bHideActive && (!m_Presenter.CanCloseTab() || (i == GetSelectedIndex())))
+                    continue;
+                string S = M.GetTabName(i);
+                var Item = new ToolStripMenuItem
+                {
+                    Checked = (i == GetSelectedIndex()),
+                    Text = Ellipsis(S, 20),
+                    ToolTipText = S,
+                    Tag = i
+                };
+                Item.Click += handler;
+                menuitem.DropDownItems.Add(Item);
+            }
+        }
+
+        public ITabParamsView CreateTabParamsView()
+        {
+            return new TabParamsForm();
+        }
+
+        public IPanelView CreatePanelView(PanelItemList info)
+        {
+            var PV = new PanelView();
+            ListView LV = PV.Controls[0] as ListView;
+            if (LV != null)
+            {
+                LV.SmallImageList = LanExchangeIcons.SmallImageList;
+                LV.LargeImageList = LanExchangeIcons.LargeImageList;
+                LV.View = (System.Windows.Forms.View) info.CurrentView;
+                if (MainForm.Instance != null)
+                    MainForm.Instance.tipComps.SetToolTip(LV, " ");
+            }
+            PV.FocusedItemChanged += m_Presenter.PV_FocusedItemChanged;
+            PV.FilterTextChanged += m_Presenter.PV_FilterTextChanged;
+            // add new tab and insert panel into it
+            NewTabFromItemList(info);
+            AddControl(TabPagesCount - 1, PV);
+            return PV;
+        }
+
+        public void mSelectTab_Click(object sender, EventArgs e)
+        {
+            var menu = sender as ToolStripMenuItem;
+            if (menu != null)
+            {
+                int Index = (int)menu.Tag;
+                if (GetSelectedIndex() != Index)
+                    SetSelectedIndex(Index);
+            }
+        }
+
     }
 }

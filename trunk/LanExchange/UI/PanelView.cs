@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
-using LanExchange.Strategy;
-using LanExchange.View;
+using LanExchange.Interface;
+using LanExchange.Model.Strategy;
 using LanExchange.Presenter;
 using LanExchange.Utils;
 using System.Reflection;
@@ -198,7 +198,7 @@ namespace LanExchange.UI
 
         #region PanelView class implementation
 
-        public PanelPresenter GetPresenter()
+        public IPresenter GetPresenter()
         {
             return m_Presenter;
         }
@@ -249,8 +249,14 @@ namespace LanExchange.UI
 
         private void lvComps_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (GetPresenter().Objects.CurrentPath.IsEmpty)
-                pFilter.GetPresenter().LinkedControl_KeyPress(sender, e);
+            if (m_Presenter.Objects.CurrentPath.IsEmpty)
+            {
+                if (Char.IsLetterOrDigit(e.KeyChar) || Char.IsPunctuation(e.KeyChar) || PuntoSwitcher.IsValidChar(e.KeyChar))
+                {
+                    pFilter.FocusAndKeyPress(e);
+                    e.Handled = true;
+                }
+            }
         }
 
         /// <summary>
@@ -280,8 +286,14 @@ namespace LanExchange.UI
 
         private void lvComps_KeyDown(object sender, KeyEventArgs e)
         {
-            pFilter.GetPresenter().LinkedControl_KeyDown(sender, e);
             ListView lv = (sender as ListView);
+            // Ctrl+Down - Set focus to filter panel
+            if (e.Control && e.KeyCode == Keys.Down)
+            {
+                if (pFilter.IsVisible)
+                    pFilter.FocusMe();
+                e.Handled = true;
+            }
             // Ctrl+A - Select all items
             if (e.Control && e.KeyCode == Keys.A)
             {
@@ -510,8 +522,8 @@ namespace LanExchange.UI
                     LV.View = System.Windows.Forms.View.Details;
                     break;
             }
-            m_Presenter.Objects.CurrentView = LV.View;
-            MainForm.Instance.MainPages.GetModel().SaveSettings();
+            m_Presenter.Objects.CurrentView = (PanelItemList.View)LV.View;
+            AppPresenter.MainPages.GetModel().SaveSettings();
         }
 
         private void mCopyCompName_Click(object sender, EventArgs e)
@@ -593,7 +605,18 @@ namespace LanExchange.UI
 
         private void mSendToNewTab_Click(object sender, EventArgs e)
         {
-            MainForm.Instance.MainPages.CommandSendToNewTab();
+            AppPresenter.MainPages.CommandSendToNewTab();
+        }
+
+        public void SetClipboardText(string value)
+        {
+          Clipboard.SetText(value);
+        }
+
+        public void ShowRunCmdError(string CmdLine)
+        {
+                MessageBox.Show(String.Format("Не удалось выполнить команду:\n{0}", CmdLine), "Ошибка при запуске",
+                    MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
         }
     }
 }

@@ -261,7 +261,7 @@ namespace LanExchange.Utils
 
         #endregion
 
-        internal string GetTopicality()
+        public string GetTopicality()
         {
             TimeSpan diff = DateTime.UtcNow - UtcUpdated;
             StringBuilder sb = new StringBuilder();

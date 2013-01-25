@@ -1,5 +1,4 @@
 ﻿using System;
-using LanExchange.Utils.Sorting;
 using System.Text;
 
 namespace LanExchange.Model.Panel

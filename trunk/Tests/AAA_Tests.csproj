@@ -62,6 +62,18 @@
     <Shadow Include="Test References\LanExchange.accessor" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LanExchange.Model\LanExchange.Model.csproj">
+      <Project>{59B08D09-73EC-40FB-809B-2C4D49BCAC10}</Project>
+      <Name>LanExchange.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LanExchange.Presenter\LanExchange.Presenter.csproj">
+      <Project>{AAC4F0D9-ACDE-4BA1-80A8-8EE60891BA92}</Project>
+      <Name>LanExchange.Presenter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LanExchange.Utils\LanExchange.Utils.csproj">
+      <Project>{5244AA8F-0EA9-4AAF-90A1-43241119B31C}</Project>
+      <Name>LanExchange.Utils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LanExchange\LanExchange.csproj">
       <Project>{CC938630-E3FC-426E-A8A7-06EB22ABC703}</Project>
       <Name>LanExchange</Name>

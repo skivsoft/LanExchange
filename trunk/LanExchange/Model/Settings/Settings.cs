@@ -2,8 +2,6 @@
 using System.IO;
 using LanExchange.Utils;
 using System.Security.Principal;
-using System.Drawing;
-using System.Windows.Forms;
 using System.Collections.Generic;
 
 namespace LanExchange.Model.Settings
@@ -20,7 +18,7 @@ namespace LanExchange.Model.Settings
         /// <summary>
         /// Default width of MainForm.
         /// </summary>
-        private const int MAINFORM_DEFAULTWIDTH = 450;
+        public const int MAINFORM_DEFAULTWIDTH = 450;
 
         private static Settings m_Instance;
         private static bool m_Modified;
@@ -125,7 +123,7 @@ namespace LanExchange.Model.Settings
             Modified = false;
         }
 
-        internal static bool Merge(string newConfigContent)
+        public static bool Merge(string newConfigContent)
         {
             bool result = false;
             try
@@ -243,60 +241,6 @@ namespace LanExchange.Model.Settings
                     m_RefreshTimeInSec = value;
                     Modified = true;
                 }
-            }
-        }
-
-        public Rectangle GetBounds()
-        {
-            LogUtils.Info("Settings: MainFormX: {0}, MainFormWidth: {1}", MainFormX, MainFormWidth);
-            // correct width and height
-            bool BoundsIsNotSet = MainFormWidth == 0;
-            Rectangle WorkingArea;
-            if (BoundsIsNotSet)
-                WorkingArea = Screen.PrimaryScreen.WorkingArea;
-            else
-                WorkingArea = Screen.GetWorkingArea(new Point(MainFormX + MainFormWidth/2, 0));
-            var rect = new Rectangle();
-            rect.X = MainFormX;
-            rect.Y = WorkingArea.Top;
-            rect.Width = Math.Min(Math.Max(MAINFORM_DEFAULTWIDTH, MainFormWidth), WorkingArea.Width);
-            rect.Height = WorkingArea.Height;
-            // determination side to snap right or left
-            int CenterX = (rect.Left + rect.Right) >> 1;
-            int WorkingAreaCenterX = (WorkingArea.Left + WorkingArea.Right) >> 1;
-            if (BoundsIsNotSet || CenterX >= WorkingAreaCenterX)
-                // snap to right side
-                rect.X = WorkingArea.Right - rect.Width;
-            else
-                // snap to left side
-                rect.X -= rect.Left - WorkingArea.Left;
-            LogUtils.Info("Settings.GetBounds(): {0}, {1}, {2}, {3}", rect.Left, rect.Top, rect.Width, rect.Height);
-            return rect;
-        }
-
-        public void SetBounds(Rectangle rect)
-        {
-            Rectangle WorkingArea = Screen.GetWorkingArea(rect);
-            // shift rect into working area
-            if (rect.Left < WorkingArea.Left) rect.X = WorkingArea.Left;
-            if (rect.Top < WorkingArea.Top) rect.Y = WorkingArea.Top;
-            if (rect.Right > WorkingArea.Right) rect.X -= rect.Right - WorkingArea.Right;
-            if (rect.Bottom > WorkingArea.Bottom) rect.Y -= rect.Bottom - WorkingArea.Bottom;
-            // determination side to snap right or left
-            int CenterX = (rect.Left + rect.Right) >> 1;
-            int WorkingAreaCenterX = (WorkingArea.Left + WorkingArea.Right) >> 1;
-            if (CenterX >= WorkingAreaCenterX)
-                // snap to right side
-                rect.X = WorkingArea.Right - rect.Width;
-            else
-                // snap to left side
-                rect.X -= rect.Left - WorkingArea.Left;
-            // set properties
-            if (rect.Left != MainFormX || rect.Width != MainFormWidth)
-            {
-                LogUtils.Info("Settings.SetBounds(): {0}, {1}, {2}, {3}", rect.Left, rect.Top, rect.Width, rect.Height);
-                MainFormX = rect.Left;
-                MainFormWidth = rect.Width;
             }
         }
 

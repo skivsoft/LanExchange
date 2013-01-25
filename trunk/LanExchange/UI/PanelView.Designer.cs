@@ -403,6 +403,7 @@
             this.Controls.Add(this.pFilter);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "PanelView";
+            this.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Size = new System.Drawing.Size(470, 487);
             this.popComps.ResumeLayout(false);
             this.ResumeLayout(false);

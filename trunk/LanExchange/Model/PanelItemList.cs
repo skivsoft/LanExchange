@@ -18,6 +18,14 @@ namespace LanExchange.Model
 
     public class PanelItemList : ISubscriber, IEquatable<PanelItemList>, IFilterModel
     {
+        public enum View
+        {
+            LargeIcon,
+            Details,
+            SmallIcon,
+            List
+        }
+        
         //private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
         // items added by user
@@ -44,7 +52,7 @@ namespace LanExchange.Model
             Groups = new List<ISubject>();
             m_CurrentPath = new ObjectPath();
             TabName = name;
-            CurrentView = System.Windows.Forms.View.Details;
+            CurrentView = PanelItemList.View.Details;
         }
 
         public ObjectPath CurrentPath
@@ -93,7 +101,7 @@ namespace LanExchange.Model
         }
 
         public string TabName { get; set; }
-        public System.Windows.Forms.View CurrentView { get; set; }
+        public PanelItemList.View CurrentView { get; set; }
         public IList<ISubject> Groups { get; set; }
         public string FocusedItemText { get; set; }
 

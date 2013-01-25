@@ -1,6 +1,5 @@
 ﻿using System;
 using LanExchange.Utils;
-using LanExchange.UI;
 
 namespace LanExchange.Model.Panel
 {
@@ -51,9 +50,9 @@ namespace LanExchange.Model.Panel
 
         public override IPanelColumnHeader CreateColumnHeader(int index)
         {
-            var result = new ColumnHeaderEx { Text = "Домен" };
-            result.SetVisible(true);
-            return result;
+            //var result = new ColumnHeaderEx { Text = "Домен" };
+            //result.SetVisible(true);
+            return null;
         }
 
         public override string ToString()

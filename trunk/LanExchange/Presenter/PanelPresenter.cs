@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Text;
-using LanExchange.View;
 using System.Windows.Forms;
+using LanExchange.Interface;
 using LanExchange.Model;
-using LanExchange.UI;
-using LanExchange.Utils;
 using System.Diagnostics;
 using LanExchange.Model.Panel;
-using LanExchange.Model.Settings;
+using LanExchange.Utils;
+using LanExchange.UI;
 
 namespace LanExchange.Presenter
 {
-    public class PanelPresenter
+    public class PanelPresenter : IPresenter
     {
         public const string COMPUTER_MENU = "computer";
         public const string FOLDER_MENU = "folder";
@@ -27,11 +26,11 @@ namespace LanExchange.Presenter
             m_View = view;
         }
 
-        internal void UpdateItemsAndStatus()
+        public void UpdateItemsAndStatus()
         {
             if (m_Objects == null) return;
             // refresh only for current page
-            PagesModel Model = MainForm.Instance.MainPages.GetModel();
+            PagesModel Model = AppPresenter.MainPages.GetModel();
             PanelItemList CurrentItemList = Model.GetItem(Model.SelectedIndex);
             if (CurrentItemList == null) return;
             if (!m_Objects.Equals(CurrentItemList)) return;
@@ -62,7 +61,7 @@ namespace LanExchange.Presenter
                 CurrentPathChanged(sender, e);
         }
 
-        internal void CommandCopyValue(int index)
+        public void CommandCopyValue(int index)
         {
             if (m_Objects == null) return;
             StringBuilder S = new StringBuilder();
@@ -75,10 +74,10 @@ namespace LanExchange.Presenter
                     S.Append(@"\\" + PItem[index]);
             }
             if (S.Length > 0)
-                Clipboard.SetText(S.ToString());
+                m_View.SetClipboardText(S.ToString());
         }
 
-        internal void CommandCopySelected()
+        public void CommandCopySelected()
         {
             if (m_Objects == null) return;
             StringBuilder S = new StringBuilder();
@@ -95,10 +94,10 @@ namespace LanExchange.Presenter
                 }
             }
             if (S.Length > 0)
-                Clipboard.SetText(S.ToString());
+                m_View.SetClipboardText(S.ToString());
         }
 
-        internal void CommandCopyPath()
+        public void CommandCopyPath()
         {
             if (m_Objects == null) return;
             StringBuilder S = new StringBuilder();
@@ -111,7 +110,7 @@ namespace LanExchange.Presenter
                     S.Append(String.Format(@"\\{0}\{1}", PItem.ComputerName, PItem.Name));
             }
             if (S.Length > 0)
-                Clipboard.SetText(S.ToString());
+                m_View.SetClipboardText(S.ToString());
         }
 
         internal void Items_Changed(object sender, EventArgs e)
@@ -129,12 +128,12 @@ namespace LanExchange.Presenter
                 m_Objects = value;
                 if (m_Objects != null)
                     m_Objects.CurrentPath.Changed += CurrentPath_Changed;
-                m_View.Filter.GetPresenter().SetModel(value);
+                (m_View.Filter.GetPresenter() as FilterPresenter).SetModel(value);
                 //m_View.SetVirtualListSize(m_Objects.Count);
             }
         }
 
-        internal AbstractPanelItem GetFocusedPanelItem(bool bPingAndAsk, bool bCanReturnParent)
+        public AbstractPanelItem GetFocusedPanelItem(bool bPingAndAsk, bool bCanReturnParent)
         {
             var item = m_Objects.Get(m_View.FocusedItemText);
             var comp =  item as ComputerPanelItem;
@@ -167,7 +166,7 @@ namespace LanExchange.Presenter
         /// </summary>
         /// <param name="tagCmd">cmdline from Tag of menu item</param>
         /// <param name="tagParent">Can be "computer" or "folder"</param>
-        internal void RunCmdOnFocusedItem(string tagCmd, string tagParent)
+        public void RunCmdOnFocusedItem(string tagCmd, string tagParent)
         {
             AbstractPanelItem PItem = GetFocusedPanelItem(true, false);
             if (PItem == null) return;
@@ -207,8 +206,7 @@ namespace LanExchange.Presenter
             }
             catch
             {
-                MessageBox.Show(String.Format("Не удалось выполнить команду:\n{0}", CmdLine), "Ошибка при запуске",
-                    MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
+                m_View.ShowRunCmdError(CmdLine);
             }
         }
 
@@ -216,7 +214,7 @@ namespace LanExchange.Presenter
         /// Returns computer either focused item is computer or focused item is subitem of computer.
         /// </summary>
         /// <returns>a ComputerPanelItem or null</returns>
-        internal ComputerPanelItem GetFocusedComputer(bool bPingAndAsk)
+        public ComputerPanelItem GetFocusedComputer(bool bPingAndAsk)
         {
             var PItem = GetFocusedPanelItem(bPingAndAsk, false);
             if (PItem == null)
@@ -226,7 +224,7 @@ namespace LanExchange.Presenter
             return PItem as ComputerPanelItem;
         }
 
-        internal bool CommandLevelDown()
+        public bool CommandLevelDown()
         {
             var PItem = GetFocusedPanelItem(false, false);
             if (PItem == null || Objects == null) return false;
@@ -243,7 +241,7 @@ namespace LanExchange.Presenter
             return result;
         }
 
-        internal bool CommandLevelUp()
+        public bool CommandLevelUp()
         {
             if (Objects == null || Objects.CurrentPath.IsEmpty) return false;
             var PItem = Objects.CurrentPath.Peek() as AbstractPanelItem;
@@ -262,7 +260,7 @@ namespace LanExchange.Presenter
             return result;
         }
 
-        internal static string DetectMENU(AbstractPanelItem PItem)
+        public static string DetectMENU(AbstractPanelItem PItem)
         {
             while (PItem != null)
             {
@@ -284,7 +282,7 @@ namespace LanExchange.Presenter
             return String.Empty;
         }
 
-        internal void CommandDeleteItems()
+        public void CommandDeleteItems()
         {
             bool Modified = false;
             foreach (int index in m_View.SelectedIndices)

@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Text;
-using LanExchange.View;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Security.Cryptography;
-using System.Diagnostics;
 using System.Net;
 using System.Reflection;
-using LanExchange.UI;
+using System.Security.Cryptography;
+using System.Text;
+using System.Windows.Forms;
+using LanExchange.Interface;
 using LanExchange.Model.Settings;
 using LanExchange.Utils;
 
@@ -17,7 +17,7 @@ namespace LanExchange.Presenter
     /// <summary>
     /// Presenter for Settings (model) and AboutForm (view).
     /// </summary>
-    public sealed class AboutPresenter : IDisposable
+    public sealed class AboutPresenter : IPresenter, IDisposable
     {
         public static bool m_NeedRestart;
 
@@ -126,7 +126,7 @@ namespace LanExchange.Presenter
                 if (line != null)
                 {
                     var siteVersion = new Version(line);
-                    var assembly = Assembly.GetExecutingAssembly();
+                    var assembly = Assembly.GetEntryAssembly();
                     if (assembly.GetName().Version.CompareTo(siteVersion) < 0)
                         m_View.ShowUpdateButton(siteVersion);
                     else
@@ -243,7 +243,7 @@ namespace LanExchange.Presenter
                 if (NeedRestart)
                 {
                     m_View.CancelView();
-                    MainForm.Instance.ApplicationExit();
+                    Application.Exit();
                 }
             }
         }

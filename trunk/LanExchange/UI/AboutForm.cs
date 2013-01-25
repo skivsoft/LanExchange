@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
-using System.IO;
-using LanExchange.View;
+using LanExchange.Interface;
 using LanExchange.Presenter;
 
 // This module must use only View-layer and Presentation-layer.
@@ -56,14 +56,17 @@ namespace LanExchange.UI
             m_MsgControl = label;
         }
 
+        private static Assembly GetAssembly()
+        {
+            return Assembly.GetEntryAssembly();
+        }
 
-        #region Assembly Attribute Accessors
 
         public static string AssemblyTitle
         {
             get
             {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
+                object[] attributes = GetAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
                 if (attributes.Length > 0)
                 {
                     AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
@@ -72,7 +75,7 @@ namespace LanExchange.UI
                         return titleAttribute.Title;
                     }
                 }
-                return Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
+                return Path.GetFileNameWithoutExtension(GetAssembly().CodeBase);
             }
         }
 
@@ -80,7 +83,7 @@ namespace LanExchange.UI
         {
             get
             {
-                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                return GetAssembly().GetName().Version.ToString();
             }
         }
 
@@ -88,7 +91,7 @@ namespace LanExchange.UI
         {
             get
             {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
+                object[] attributes = GetAssembly().GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
                 if (attributes.Length == 0)
                 {
                     return "";
@@ -101,7 +104,7 @@ namespace LanExchange.UI
         {
             get
             {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
+                object[] attributes = GetAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
                 if (attributes.Length == 0)
                 {
                     return "";
@@ -114,7 +117,7 @@ namespace LanExchange.UI
         {
             get
             {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
+                object[] attributes = GetAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
                 if (attributes.Length == 0)
                 {
                     return "";
@@ -127,7 +130,7 @@ namespace LanExchange.UI
         {
             get
             {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
+                object[] attributes = GetAssembly().GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
                 if (attributes.Length == 0)
                 {
                     return "";
@@ -135,7 +138,6 @@ namespace LanExchange.UI
                 return ((AssemblyCompanyAttribute)attributes[0]).Company;
             }
         }
-        #endregion
 
         private void AboutForm_KeyDown(object sender, KeyEventArgs e)
         {

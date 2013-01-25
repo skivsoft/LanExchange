@@ -1,6 +1,5 @@
 ﻿using System;
 using LanExchange.Utils;
-using LanExchange.UI;
 
 namespace LanExchange.Model.Panel
 {
@@ -107,18 +106,19 @@ namespace LanExchange.Model.Panel
 
         public override IPanelColumnHeader CreateColumnHeader(int index)
         {
-            IPanelColumnHeader result = new ColumnHeaderEx();
-            result.SetVisible(true);
-            switch (index)
-            {
-                case 0:
-                    result.Text = "Общий ресурс";
-                    break;
-                case 1:
-                    result.Text = "Описание";
-                    break;
-            }
-            return result;
+            //IPanelColumnHeader result = new ColumnHeaderEx();
+            //result.SetVisible(true);
+            //switch (index)
+            //{
+            //    case 0:
+            //        result.Text = "Общий ресурс";
+            //        break;
+            //    case 1:
+            //        result.Text = "Описание";
+            //        break;
+            //}
+            //return result;
+            return null;
         }
     }
 }
