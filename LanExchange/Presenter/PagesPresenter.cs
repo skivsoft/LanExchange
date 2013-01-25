@@ -3,16 +3,13 @@ using System.Windows.Forms;
 using LanExchange.Model;
 using LanExchange.View;
 using LanExchange.UI;
-using NLog;
 using LanExchange.Model.Panel;
+using LanExchange.Utils;
 
 namespace LanExchange.Presenter
 {
     public class PagesPresenter
     {
-        // logger object 
-        private readonly static Logger logger = LogManager.GetCurrentClassLogger();
-
         private readonly IPagesView m_View;
         private readonly PagesModel m_Model;
 
@@ -134,7 +131,7 @@ namespace LanExchange.Presenter
 
         public void Model_AfterAppendTab(object sender, PanelItemListEventArgs e)
         {
-            logger.Info("AfterAppendTab(\"{0}\")", e.Info.TabName);
+            LogUtils.Info("AfterAppendTab(\"{0}\")", e.Info.TabName);
             // create panel
             var PV = new PanelView { Dock = DockStyle.Fill };
             PV.GetPresenter().Objects = e.Info;
@@ -193,9 +190,29 @@ namespace LanExchange.Presenter
 
         public void Model_IndexChanged(object sender, PanelIndexEventArgs e)
         {
-            logger.Info("PagesModel_IndexChanged({0})", e.Index);
+            LogUtils.Info("PagesModel_IndexChanged({0})", e.Index);
             m_View.SetSelectedIndex(e.Index);
             m_View.FocusPanelView();
+        }
+
+        internal void EditTabParams()
+        {
+            int Index = m_View.PopupSelectedIndex;
+            PanelItemList Info = m_Model.GetItem(Index);
+            if (Info == null) return;
+
+            using (var Form = new TabParamsForm())
+            {
+                Form.Text = String.Format(Form.Text, Info.TabName);
+                Form.Groups = Info.Groups;
+                Form.PrepareForm();
+                if (Form.ShowDialog() == DialogResult.OK)
+                {
+                    Info.Groups = Form.Groups;
+                    Info.UpdateSubsctiption();
+                    m_Model.SaveSettings();
+                }
+            }
         }
     }
 

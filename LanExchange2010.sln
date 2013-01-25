@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange", "LanExchange\LanExchange.csproj", "{CC938630-E3FC-426E-A8A7-06EB22ABC703}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{2335FA6E-FECB-4A3E-A22F-A2A26BFE26CB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AAA_Tests", "Tests\AAA_Tests.csproj", "{2335FA6E-FECB-4A3E-A22F-A2A26BFE26CB}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution

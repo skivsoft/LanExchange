@@ -30,7 +30,6 @@ namespace LanExchange
     using System;
     using System.Windows.Forms;
     using System.Reflection;
-    using NLog;
     using UI;
     using Utils;
     using Presenter;
@@ -38,28 +37,26 @@ namespace LanExchange
 
     internal static class Program
     {
-        private readonly static Logger logger = LogManager.GetCurrentClassLogger();
-
         static void LogHeader()
         {
-            logger.Info("----------------------------------------");
-            logger.Info("Version: [{0}], Executable: [{1}]", Assembly.GetExecutingAssembly().GetName().Version.ToString(), Application.ExecutablePath);
-            logger.Info(@"MachineName: {0}, UserName: {1}\{2}, Interactive: {3}", Environment.MachineName, Environment.UserDomainName, Environment.UserName, Environment.UserInteractive);
-            logger.Info("OSVersion: [{0}], Processors count: {1}", Environment.OSVersion, Environment.ProcessorCount);
+            LogUtils.Info("----------------------------------------");
+            LogUtils.Info("Version: [{0}], Executable: [{1}]", Assembly.GetExecutingAssembly().GetName().Version.ToString(), Application.ExecutablePath);
+            LogUtils.Info(@"MachineName: {0}, UserName: {1}\{2}, Interactive: {3}", Environment.MachineName, Environment.UserDomainName, Environment.UserName, Environment.UserInteractive);
+            LogUtils.Info("OSVersion: [{0}], Processors count: {1}", Environment.OSVersion, Environment.ProcessorCount);
         }
 
         static void Application_ThreadExit(object sender, EventArgs e)
         {
-            logger.Info("ThreadExit");
+            LogUtils.Info("ThreadExit");
         }
 
         static void Application_ApplicationExit(object sender, EventArgs e)
         {
-            logger.Info("ApplicationExit");
+            LogUtils.Info("ApplicationExit");
             // restart after version update
             if (AboutPresenter.NeedRestart)
             {
-                logger.Info("Start: {0}", Application.ExecutablePath);
+                LogUtils.Info("Start: {0}", Application.ExecutablePath);
                 Process.Start(Application.ExecutablePath);
             }
         }
@@ -74,8 +71,7 @@ namespace LanExchange
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false); // must be called before first form created
             Application.Run(new MainForm());
-            // workaround for NLog's bug under Mono (hanging after app exit) 
-            LogManager.Configuration = null;
+            LogUtils.Stop();
         }
     }
 }

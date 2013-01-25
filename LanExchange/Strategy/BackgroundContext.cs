@@ -1,4 +1,4 @@
-﻿using NLog;
+﻿using LanExchange.Utils;
 namespace LanExchange.Strategy
 {
     /// <summary>
@@ -7,8 +7,6 @@ namespace LanExchange.Strategy
     /// <seealso cref="IBackgroundStrategy"/>
     public class BackgroundContext
     {
-        private readonly static Logger logger = LogManager.GetCurrentClassLogger();
-
         public BackgroundContext(IBackgroundStrategy strategy)
         {
             Strategy = strategy;
@@ -18,7 +16,7 @@ namespace LanExchange.Strategy
         {
             if (Strategy != null)
             {
-                logger.Info("Run algorithm of {0}", Strategy);
+                LogUtils.Info("Run algorithm of {0}", Strategy);
                 Strategy.Algorithm();
             }
         }

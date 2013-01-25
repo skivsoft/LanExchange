@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Management;
-using NLog;
 using System.Text;
+using LanExchange.Utils;
 
 namespace LanExchange.WMI
 {
@@ -11,8 +11,6 @@ namespace LanExchange.WMI
     /// </summary>
     public class WMIClassList
     {
-        private readonly static Logger logger = LogManager.GetCurrentClassLogger();
-
         private static WMIClassList m_Instance;
         private bool m_Loaded;
         private readonly List<string> m_Classes;
@@ -86,7 +84,7 @@ namespace LanExchange.WMI
             if (m_Namespace != null && m_Namespace.IsConnected)
                 return true;
             const string connectionString = WMISettings.DefaultNamespace;
-            logger.Info("WMI: connect to namespace \"{0}\"", connectionString);
+            LogUtils.Info("WMI: connect to namespace \"{0}\"", connectionString);
             m_Namespace = new ManagementScope(connectionString, null);
             try
             {
@@ -94,14 +92,14 @@ namespace LanExchange.WMI
             }
             catch (Exception E)
             {
-                logger.Error("WMI: {0}", E.Message);
+                LogUtils.Error("WMI: {0}", E.Message);
             }
             if (!m_Namespace.IsConnected)
             {
-                logger.Info("WMI: Not connected.");
+                LogUtils.Info("WMI: Not connected.");
                 return false;
             }
-            logger.Info("WMI: Connected.");
+            LogUtils.Info("WMI: Connected.");
             return true;
         }
 

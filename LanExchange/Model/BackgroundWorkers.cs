@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using NLog;
 using LanExchange.Strategy;
 using System.ComponentModel;
+using LanExchange.Utils;
 
 namespace LanExchange.Model
 {
     public sealed class BackgroundWorkers : IDisposable
     {
-        private readonly static Logger logger = LogManager.GetCurrentClassLogger();
-
         private static BackgroundWorkers m_Instance;
         private readonly IDictionary<BackgroundContext, BackgroundWorkerEx> m_Workers;
 
@@ -85,7 +83,7 @@ namespace LanExchange.Model
                 throw new ArgumentNullException("worker");
             lock (m_Workers)
             {
-                logger.Info("Add worker for {0}", context.Strategy);
+                LogUtils.Info("Add worker for {0}", context.Strategy);
                 worker.AfterRunWorkerCompleted += worker_AfterRunWorkerCompleted;
                 m_Workers.Add(context, worker);
                 DoCountChanged();
@@ -189,7 +187,7 @@ namespace LanExchange.Model
             {
                 foreach (var pair in m_Workers)
                 {
-                    logger.Info("Stop worker for {0}", pair.Key.Strategy);
+                    LogUtils.Info("Stop worker for {0}", pair.Key.Strategy);
                     if (pair.Value.IsBusy)
                         pair.Value.Abort();
                     pair.Value.Dispose();

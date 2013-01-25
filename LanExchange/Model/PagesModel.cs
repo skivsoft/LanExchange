@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using LanExchange.Model.Panel;
 using LanExchange.Utils;
 using System.IO;
-using NLog;
 using LanExchange.Model.Settings;
 
 namespace LanExchange.Model
@@ -17,7 +16,6 @@ namespace LanExchange.Model
     public class PagesModel
     {
         private const string CONFIG_FNAME = "LanExchange.Tabs.cfg";
-        private readonly static Logger logger = LogManager.GetCurrentClassLogger();
         private readonly List<PanelItemList> m_List;
         private int m_SelectedIndex;
 
@@ -146,7 +144,7 @@ namespace LanExchange.Model
             {
                 try
                 {
-                    logger.Info("PagesModel.LoadSettings(\"{0}\")", fileFName);
+                    LogUtils.Info("PagesModel.LoadSettings(\"{0}\")", fileFName);
                     var temp = (Tabs) SerializeUtils.DeserializeObjectFromXMLFile(fileFName, typeof (Tabs));
                     if (temp != null)
                     {
@@ -156,7 +154,7 @@ namespace LanExchange.Model
                 }
                 catch (Exception E)
                 {
-                    logger.Error("PagesModel.LoadSettings: {0}", E.Message);
+                    LogUtils.Error("PagesModel.LoadSettings: {0}", E.Message);
                 }
             }
             if (m_PagesSettings == null)
@@ -190,12 +188,12 @@ namespace LanExchange.Model
             var fileFName = GetConfigFileName();
             try
             {
-                logger.Info("PagesModel.SaveSettings(\"{0}\")", fileFName);
+                LogUtils.Info("PagesModel.SaveSettings(\"{0}\")", fileFName);
                 SerializeUtils.SerializeObjectToXMLFile(fileFName, m_PagesSettings);
             }
             catch (Exception E)
             {
-                logger.Error("PagesModel.SaveSettings: {0}", E.Message);
+                LogUtils.Error("PagesModel.SaveSettings: {0}", E.Message);
             }
         }
     }

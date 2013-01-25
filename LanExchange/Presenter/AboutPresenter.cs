@@ -7,10 +7,10 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Diagnostics;
 using System.Net;
-using NLog;
 using System.Reflection;
 using LanExchange.UI;
 using LanExchange.Model.Settings;
+using LanExchange.Utils;
 
 namespace LanExchange.Presenter
 {
@@ -19,7 +19,6 @@ namespace LanExchange.Presenter
     /// </summary>
     public sealed class AboutPresenter : IDisposable
     {
-        private readonly static Logger logger = LogManager.GetCurrentClassLogger();
         public static bool m_NeedRestart;
 
         private readonly IAboutView m_View;
@@ -54,7 +53,7 @@ namespace LanExchange.Presenter
             {
                 if (m_NeedRestart != value)
                 {
-                    logger.Info("Updater: Restart={0}", value);
+                    LogUtils.Info("Updater: Restart={0}", value);
                     m_NeedRestart = value;
                 }
             }
@@ -102,12 +101,12 @@ namespace LanExchange.Presenter
                 {
                     client.Proxy = null;
                     string URL = GetFileListURL();
-                    logger.Info("Updater: downloading text from url [{0}]", URL);
+                    LogUtils.Info("Updater: downloading text from url [{0}]", URL);
                     e.Result = client.DownloadString(URL);
                 }
                 catch (Exception ex)
                 {
-                    logger.Error("DoCheckVersion_DoWork() {0}", ex.Message);
+                    LogUtils.Error("DoCheckVersion_DoWork() {0}", ex.Message);
                     e.Cancel = true;
                 }
             }
@@ -169,7 +168,7 @@ namespace LanExchange.Presenter
                                 bool verify = verifyMd5File(LocalFName, RemoteFSize, remoteMd5);
                                 if (!verify)
                                 {
-                                    logger.Info("Updater: {0}", LocalFName);
+                                    LogUtils.Info("Updater: {0}", LocalFName);
                                     bNeedDownload = true;
                                 }
                             }
@@ -188,13 +187,13 @@ namespace LanExchange.Presenter
                                     }
                                     catch (UnauthorizedAccessException)
                                     {
-                                        logger.Error("Updater: unable to delete file {0}", LocalFName);
+                                        LogUtils.Error("Updater: unable to delete file {0}", LocalFName);
                                         bNeedRename = true;
                                     }
                                     if (bNeedRename)
                                     {
                                         string FName = Path.ChangeExtension(LocalFName, Path.GetExtension(LocalFName) + ".tmp");
-                                        logger.Info("Updater: renaming file to {0}", FName);
+                                        LogUtils.Info("Updater: renaming file to {0}", FName);
                                         if (File.Exists(FName))
                                             File.Delete(FName);
                                         File.Move(LocalFName, FName);
@@ -206,12 +205,12 @@ namespace LanExchange.Presenter
                                 string URL = Settings.Instance.GetUpdateUrl() + RemoteFName;
                                 if (IsMainConfig)
                                 {
-                                    logger.Info("Updater: downloading new settings from [{0}]", URL);
+                                    LogUtils.Info("Updater: downloading new settings from [{0}]", URL);
                                     newSettingsContent = client.DownloadString(URL);
                                 }
                                 else
                                 {
-                                    logger.Info("Updater: downloading from [{0}] to [{1}]", URL, LocalFName);
+                                    LogUtils.Info("Updater: downloading from [{0}] to [{1}]", URL, LocalFName);
                                     client.DownloadFile(URL, LocalFName);
                                 }
                             }
@@ -228,7 +227,7 @@ namespace LanExchange.Presenter
             catch (Exception ex)
             {
                 m_UpdateError = ex.Message;
-                logger.Info("Updater: ", ex.Message);
+                LogUtils.Info("Updater: ", ex.Message);
             }
         }
 

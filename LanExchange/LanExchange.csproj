@@ -76,9 +76,6 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NLog">
-      <HintPath>..\lib\NLog.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
@@ -94,11 +91,13 @@
     <Compile Include="Model\IPanelColumnHeader.cs" />
     <Compile Include="Model\ISubject.cs" />
     <Compile Include="Model\ConcreteSubjectComparer.cs" />
+    <Compile Include="Presenter\TabParamsPresenter.cs" />
     <Compile Include="Strategy\Panel\ComputerItemsStrategy.cs" />
     <Compile Include="Strategy\Panel\ConcreteMultiStrategy.cs" />
     <Compile Include="Strategy\Panel\DomainEnumStrategy.cs" />
     <Compile Include="Strategy\Panel\FileEnumStrategy.cs" />
     <Compile Include="Utils\GlobalHotkeys.cs" />
+    <Compile Include="Utils\LogUtils.cs" />
     <Compile Include="Utils\ObjectPath.cs" />
     <Compile Include="UI\ColumnHeaderEx.cs">
       <SubType>Component</SubType>
@@ -158,6 +157,7 @@
     <Compile Include="Utils\ShareInfo.cs" />
     <Compile Include="Utils\Shell32.cs" />
     <Compile Include="View\IFilterView.cs" />
+    <Compile Include="View\ITabParamsView.cs" />
     <Compile Include="Windows\ExternDll.cs" />
     <Compile Include="Windows\NativeMethods.cs" />
     <Compile Include="Windows\SafeNativeMethods.cs" />
@@ -194,7 +194,6 @@
     <Compile Include="Utils\ServerInfo.cs" />
     <Compile Include="Model\Settings\Tab.cs" />
     <Compile Include="Utils\NetApi32Utils.cs" />
-    <Compile Include="NLogFake.cs" />
     <Compile Include="UI\ParamsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -308,16 +307,17 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Model.Panel.cd" />
-    <None Include="Pages.cd" />
-    <None Include="Panel.cd" />
+    <None Include="Diagrams\Model.Panel.cd" />
+    <None Include="Diagrams\Pages.cd" />
+    <None Include="Diagrams\Panel.cd" />
+    <None Include="Diagrams\TabParam.cd" />
     <None Include="NLog.config">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Properties\app.manifest" />
     <None Include="app.config" />
-    <None Include="Strategy.cd" />
+    <None Include="Diagrams\Strategy.cd" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -355,7 +355,10 @@
     <Content Include="LanExchange.ico" />
     <None Include="Resources\clear_hover.png" />
     <None Include="Resources\clear_normal.png" />
-    <Content Include="Presenter\Readme.txt" />
+    <Content Include="NLog.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Presenter\!Readme.txt" />
     <None Include="Resources\back_16.png" />
     <None Include="Resources\back_32.png" />
     <Content Include="Resources\LanExchange_16x16.ico" />

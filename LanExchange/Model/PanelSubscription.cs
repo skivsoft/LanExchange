@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 using System.ComponentModel;
 using System.Windows.Forms;
-using NLog;
 using System.IO;
 using System.Collections;
 using LanExchange.Strategy;
@@ -20,7 +19,6 @@ namespace LanExchange.Model
     {
         #region Static fields and methods
 
-        private readonly static Logger logger = LogManager.GetCurrentClassLogger();
         private static ISubscription m_Instance;
 
         public static ISubscription Instance
@@ -123,7 +121,7 @@ namespace LanExchange.Model
 
         private void RefreshTimer_Tick(object sender, EventArgs e)
         {
-            logger.Info("RefreshTimer.Tick() executed. Next tick in {0} sec.", m_RefreshInterval/1000);
+            LogUtils.Info("RefreshTimer.Tick() executed. Next tick in {0} sec.", m_RefreshInterval / 1000);
             // prepare workers to launch
             foreach (var Pair in m_Subjects)
             {
@@ -243,7 +241,7 @@ namespace LanExchange.Model
                     var List = m_Subjects[Subject];
                     if (List.Count > 0)
                     {
-                        logger.Info("Notify {0} subscriber(s) with subject {1}", List.Count, Subject);
+                        LogUtils.Info("Notify {0} subscriber(s) with subject {1}", List.Count, Subject);
                         foreach (var Subscriber in List)
                             Subscriber.DataChanged(this, Subject);
                     }
@@ -277,7 +275,7 @@ namespace LanExchange.Model
         private void SaveResultsToCache()
         {
             var fileName = GetCacheFileName();
-            logger.Info("SaveResultsToCache(\"{0}\")", fileName);
+            LogUtils.Info("SaveResultsToCache(\"{0}\")", fileName);
             lock (m_Results)
             {
                 var Temp = new Dictionary<string, ServerInfo[]>();
@@ -300,7 +298,7 @@ namespace LanExchange.Model
                 }
                 catch (Exception E)
                 {
-                    logger.Error("SaveResultsToCache: {0}", E.Message);
+                    LogUtils.Error("SaveResultsToCache: {0}", E.Message);
                 }
             }
         }
@@ -309,7 +307,7 @@ namespace LanExchange.Model
         {
             var fileName = GetCacheFileName();
             if (!File.Exists(fileName)) return;
-            logger.Info("LoadResultsFromCache(\"{0}\")", fileName);
+            LogUtils.Info("LoadResultsFromCache(\"{0}\")", fileName);
             lock (m_Results)
             {
                 Dictionary<string, ServerInfo[]> Temp = null;
@@ -319,7 +317,7 @@ namespace LanExchange.Model
                 }
                 catch (Exception E)
                 {
-                    logger.Error("LoadResultsFromCache: {0}", E.Message);
+                    LogUtils.Error("LoadResultsFromCache: {0}", E.Message);
                 }
                 if (Temp != null)
                 {
@@ -351,7 +349,7 @@ namespace LanExchange.Model
             bool Found = HasSubscribers();
             if (!Found)
             {
-                logger.Info("RefreshTimer stopped.");
+                LogUtils.Info("RefreshTimer stopped.");
                 m_RefreshTimer.Enabled = false;
                 m_InstantUpdate = true;
             }
@@ -363,7 +361,7 @@ namespace LanExchange.Model
                     RefreshTimer_Tick(m_RefreshTimer, EventArgs.Empty);
                     m_RefreshTimer.Enabled = true;
                     m_InstantUpdate = false;
-                    logger.Info("RefreshTimer started. Next tick in {0} sec.", m_RefreshInterval/1000);
+                    LogUtils.Info("RefreshTimer started. Next tick in {0} sec.", m_RefreshInterval / 1000);
                 }
             }
         }
@@ -403,7 +401,7 @@ namespace LanExchange.Model
             {
                 if (m_Results.ContainsKey(subject))
                 {
-                    logger.Info("Subject \"{0}\" already exists in cache.", subject);
+                    LogUtils.Info("Subject \"{0}\" already exists in cache.", subject);
                     sender.DataChanged(this, subject);
                 }
                 SubscribersChanged();
