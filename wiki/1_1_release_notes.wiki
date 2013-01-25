@@ -1,0 +1,46 @@
+#summary LanExchange 1.1.x.x release notes
+#labels Featured
+
+==Features==
+  * Browse computers of local area network
+  * Browse shared resources of selected computer (normal, hidden and printers)
+  * Quick filtering by Name, Description, OS version
+  * Tray icon with context menu (Options and About in menu present)
+  * Tray context menu also accessible by right-click on status pane at left-bottom corner
+  * Add/Close/Rename tabs
+  * Selecting domains for scan in options dialog of tab
+  * Context sub-menu for selected computer in Advanced mode
+  * Context sub-menu actions for selected resource in Advanced mode
+  * Several WMI-actions available for local and remote computer in Advanced mode
+  * Checking new version and update program in About form
+
+==Program options=
+  * Autorun On/Off
+  * Run program minimized to tray On/Off (default is On)
+  * Display hidden shares On/Off (default is Off)
+  * Display printers in shares On/Off (default is Off)
+  * Advanced mode for admins On/Off (default is Off)
+  * Update interval in minutes
+
+==Shortcuts==
+|| *Action* || *Keys* || *Context*||
+||Show/Hide main form||Win+X||||
+||New tab||Ctrl+T||||
+||Close tab||Ctrl+F4||||
+||Rename tab||Alt+R||||
+||Tab options dialog||Ctrl+P||||
+||Select all items||Ctrl+A||||
+||Filtering computers||Any char||||
+||Clear filter||Esc||Filter is not empty||
+||Hide main form||Esc||Filter is empty||
+||Browse shared resources||Enter||Computer selected||
+||Browse computers||Backspace or Esc||Shared resource selected||
+||Hide main form||Esc and hold for 0.5sec||Shared resource selected||
+||Copy computer name to clipboard||Ctrl+C or Ctrl+Ins||Computer selected||
+||Connect to computer via WMI||Alt+F1||Computer selected||
+||Connect to computer via MMC||Ctrl+F1||Computer selected||
+||Open computer in Windows® Explorer||Shift+Enter||Computer selected||
+||Connect to computer via Radmin® Viewer in Full Control mode||Ctrl+Enter||Computer selected||
+||Copy path to shared resource||Ctrl+C or Ctrl+Ins||Shared resource selected||
+||Open shared resource in Windows® Explorer||Shift+Enter or Enter||Shared resource selected||
+||Open shared resource in Far Manager||Ctrl+Enter||Shared resource selected||
