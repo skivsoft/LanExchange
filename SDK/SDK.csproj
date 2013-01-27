@@ -21,8 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>
-    </DocumentationFile>
+    <DocumentationFile>bin\Debug\SDK.XML</DocumentationFile>
     <CodeAnalysisRuleSet>BasicCorrectnessRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -41,21 +40,35 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IPanelImageManager.cs" />
+    <Compile Include="IPlugin.cs" />
+    <Compile Include="PanelItemBase.cs" />
+    <Compile Include="PanelStrategyBase.cs" />
+    <Compile Include="BackgroundContext.cs" />
+    <Compile Include="IBackgroundStrategy.cs" />
+    <Compile Include="IColumnComparable.cs" />
+    <Compile Include="IFilterPresenter.cs" />
+    <Compile Include="ILogger.cs" />
+    <Compile Include="IPanelColumnHeader.cs" />
+    <Compile Include="IPanelPresenter.cs" />
     <Compile Include="ISubject.cs" />
     <Compile Include="ISubscriber.cs" />
     <Compile Include="ISubscription.cs" />
-    <Compile Include="Model\IFilterModel.cs" />
-    <Compile Include="Model\IPanelModel.cs" />
+    <Compile Include="IFilterModel.cs" />
+    <Compile Include="IPanelModel.cs" />
+    <Compile Include="IWMIComputer.cs" />
+    <Compile Include="ObjectPath.cs" />
+    <Compile Include="PanelImageNames.cs" />
+    <Compile Include="PanelViewMode.cs" />
     <Compile Include="SDK.cs" />
-    <Compile Include="View\IAboutView.cs" />
-    <Compile Include="View\IFilterView.cs" />
-    <Compile Include="View\IInputBoxView.cs" />
-    <Compile Include="View\IPagesView.cs" />
-    <Compile Include="View\IPanelView.cs" />
-    <Compile Include="View\IParamsView.cs" />
-    <Compile Include="View\IPresenter.cs" />
-    <Compile Include="View\ITabParamsPresenter.cs" />
-    <Compile Include="View\ITabParamsView.cs" />
+    <Compile Include="IAboutView.cs" />
+    <Compile Include="IFilterView.cs" />
+    <Compile Include="IInputBoxView.cs" />
+    <Compile Include="IPagesView.cs" />
+    <Compile Include="IPanelView.cs" />
+    <Compile Include="IParamsView.cs" />
+    <Compile Include="ITabParamsPresenter.cs" />
+    <Compile Include="ITabParamsView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

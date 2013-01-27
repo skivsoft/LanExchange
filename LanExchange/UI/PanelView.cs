@@ -7,7 +7,7 @@ using LanExchange.Model.Panel;
 using LanExchange.Model.Settings;
 using LanExchange.Model.Strategy;
 using LanExchange.Presenter;
-using LanExchange.Sdk.View;
+using LanExchange.Sdk;
 using LanExchange.Utils;
 using LanExchange.WMI;
 
@@ -38,8 +38,8 @@ namespace LanExchange.UI
             //LV.CacheVirtualItems += m_Cache.CacheVirtualItems;
             LV.RetrieveVirtualItem += m_Cache.RetrieveVirtualItem;
             // set mycomputer image
-            mComp.Image = LanExchangeIcons.SmallImageList.Images[LanExchangeIcons.CompDefault];
-            mFolder.Image = LanExchangeIcons.SmallImageList.Images[LanExchangeIcons.FolderNormal];
+            mComp.Image = LanExchangeIcons.Instance.GetSmallImage(PanelImageNames.ComputerNormal);
+            mFolder.Image = LanExchangeIcons.Instance.GetSmallImage(PanelImageNames.ShareNormal);
             // set dropdown direction for sub-menus (actual for dual-monitor system)
             mComp.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
             mFolder.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
@@ -105,7 +105,7 @@ namespace LanExchange.UI
                     else
                         Result.SubItems.Add(value);
                 }
-                Result.ImageIndex = PItem.ImageIndex;
+                Result.ImageIndex = LanExchangeIcons.Instance.IndexOf(PItem.ImageName);
                 Result.ToolTipText = PItem.ToolTipText;
             }
             return Result;
@@ -198,7 +198,7 @@ namespace LanExchange.UI
 
         #region PanelView class implementation
 
-        public IPresenter Presenter
+        public IPanelPresenter Presenter
         {
             get { return m_Presenter; }
         }
@@ -350,7 +350,7 @@ namespace LanExchange.UI
             // check advanced mode
             if (!Settings.Instance.AdvancedMode) return;
             // get focused computer
-            ComputerPanelItem comp = m_Presenter.GetFocusedComputer(true);
+            ComputerPanelItem comp = m_Presenter.GetFocusedComputer(true) as ComputerPanelItem;
             if (comp == null) return;
             // create wmi form
             WMIForm form = new WMIForm(comp);
@@ -369,7 +369,7 @@ namespace LanExchange.UI
                 BackgroundWorkers.Instance.Add(new BackgroundContext(new WMIClassesInitStrategy()));
             }
             // set MyComputer icon to form
-            form.Icon = LanExchangeIcons.GetSmallIcon(LanExchangeIcons.CompDefault);
+            form.Icon = LanExchangeIcons.Instance.GetSmallIcon(PanelImageNames.ComputerNormal);
             // display wmi form
             m_WMIPlacement.AttachToForm(form);
             try
@@ -427,7 +427,7 @@ namespace LanExchange.UI
                     DoFocusedItemChanged();
             UpdateViewTypeMenu();
 
-            AbstractPanelItem PItem = m_Presenter.GetFocusedPanelItem(false, false);
+            PanelItemBase PItem = m_Presenter.GetFocusedPanelItem(false, false);
             bool bCompVisible = false;
             bool bFolderVisible = false;
             if (PItem != null)
@@ -443,10 +443,10 @@ namespace LanExchange.UI
                     var share = PItem as SharePanelItem;
                     mComp.Text = @"\\" + share.ComputerName;
                     bCompVisible = Settings.Instance.AdvancedMode;
-                    if (share.Name != AbstractPanelItem.BACK)
+                    if (share.Name != PanelItemBase.BACK)
                     {
                         mFolder.Text = String.Format(@"\\{0}\{1}", share.ComputerName, share.Name);
-                        mFolder.Image = LanExchangeIcons.SmallImageList.Images[share.ImageIndex];
+                        mFolder.Image = LanExchangeIcons.Instance.GetSmallImage(share.ImageName);
                         bFolderVisible = true;
                         mFAROpen.Enabled = !share.SHI.IsPrinter;
                     }
@@ -464,7 +464,7 @@ namespace LanExchange.UI
             SetEnabledAndVisible(new ToolStripItem[] { mCopyCompName, mCopyComment, mCopySelected }, menu == PanelPresenter.COMPUTER_MENU);
             bool bSend = false;
             if (menu == PanelPresenter.COMPUTER_MENU)
-                bSend = (PItem != null) && (PItem.Name != AbstractPanelItem.BACK);
+                bSend = (PItem != null) && (PItem.Name != PanelItemBase.BACK);
             SetEnabledAndVisible(new ToolStripItem[] { mSendSeparator, mSendToNewTab }, bSend);
 
             SetEnabledAndVisible(mCopyPath, menu == PanelPresenter.FOLDER_MENU);
@@ -522,7 +522,7 @@ namespace LanExchange.UI
                     LV.View = System.Windows.Forms.View.Details;
                     break;
             }
-            m_Presenter.Objects.CurrentView = (PanelItemList.View)LV.View;
+            m_Presenter.Objects.CurrentView = (PanelViewMode)LV.View;
             AppPresenter.MainPages.GetModel().SaveSettings();
         }
 

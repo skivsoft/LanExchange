@@ -5,6 +5,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange", "LanExchange\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDK", "SDK\SDK.csproj", "{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Users", "Plugin.Users\Plugin.Users.csproj", "{064D3413-8F0B-4511-85F3-4919AC1D5A98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Images", "Plugin.Images\Plugin.Images.csproj", "{BF05AA16-2838-4510-98FD-CB568C07A365}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = LanExchange2010.vsmdi
@@ -22,6 +26,14 @@ Global
 		{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{064D3413-8F0B-4511-85F3-4919AC1D5A98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{064D3413-8F0B-4511-85F3-4919AC1D5A98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{064D3413-8F0B-4511-85F3-4919AC1D5A98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{064D3413-8F0B-4511-85F3-4919AC1D5A98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF05AA16-2838-4510-98FD-CB568C07A365}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF05AA16-2838-4510-98FD-CB568C07A365}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF05AA16-2838-4510-98FD-CB568C07A365}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF05AA16-2838-4510-98FD-CB568C07A365}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

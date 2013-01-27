@@ -4,19 +4,19 @@ using System.Text;
 using System.Windows.Forms;
 using LanExchange.Model;
 using LanExchange.Model.Panel;
-using LanExchange.Sdk.View;
+using LanExchange.Sdk;
 using LanExchange.UI;
 using LanExchange.Utils;
 
 namespace LanExchange.Presenter
 {
-    public class PanelPresenter : IPresenter
+    public class PanelPresenter : IPanelPresenter
     {
         public const string COMPUTER_MENU = "computer";
         public const string FOLDER_MENU = "folder";
         public const string FILE_MENU = "file";
 
-        private PanelItemList m_Objects;
+        private IPanelModel m_Objects;
         private readonly IPanelView m_View;
 
         public event EventHandler CurrentPathChanged;
@@ -37,7 +37,7 @@ namespace LanExchange.Presenter
             // get number of visible items (filtered) and number of total items
             int ShowCount = m_Objects.FilterCount;
             int TotalCount = m_Objects.Count;
-            if (m_Objects.HasBackItem())
+            if (m_Objects.HasBackItem)
             {
                 ShowCount--;
                 TotalCount--;
@@ -65,11 +65,11 @@ namespace LanExchange.Presenter
         {
             if (m_Objects == null) return;
             StringBuilder S = new StringBuilder();
-            foreach (int selIndex in m_View.SelectedIndices)
+            foreach (int selIndex in m_View.SelectedIndexes)
             {
                 if (S.Length > 0)
                     S.AppendLine();
-                AbstractPanelItem PItem = m_Objects.GetAt(selIndex);
+                PanelItemBase PItem = m_Objects.GetAt(selIndex);
                 if (PItem != null)
                     S.Append(@"\\" + PItem[index]);
             }
@@ -81,11 +81,11 @@ namespace LanExchange.Presenter
         {
             if (m_Objects == null) return;
             StringBuilder S = new StringBuilder();
-            foreach (int index in m_View.SelectedIndices)
+            foreach (int index in m_View.SelectedIndexes)
             {
                 if (S.Length > 0)
                     S.AppendLine();
-                AbstractPanelItem PItem = m_Objects.GetAt(index);
+                PanelItemBase PItem = m_Objects.GetAt(index);
                 if (PItem != null)
                 {
                     S.Append(@"\\" + PItem[0]);
@@ -101,7 +101,7 @@ namespace LanExchange.Presenter
         {
             if (m_Objects == null) return;
             StringBuilder S = new StringBuilder();
-            foreach (int index in m_View.SelectedIndices)
+            foreach (int index in m_View.SelectedIndexes)
             {
                 if (S.Length > 0)
                     S.AppendLine();
@@ -118,7 +118,7 @@ namespace LanExchange.Presenter
             UpdateItemsAndStatus();
         }
 
-        public PanelItemList Objects
+        public IPanelModel Objects
         {
             get { return m_Objects; }
             set
@@ -128,12 +128,12 @@ namespace LanExchange.Presenter
                 m_Objects = value;
                 if (m_Objects != null)
                     m_Objects.CurrentPath.Changed += CurrentPath_Changed;
-                (m_View.Filter.GetPresenter() as FilterPresenter).SetModel(value);
+                m_View.Filter.Presenter.SetModel(value);
                 //m_View.SetVirtualListSize(m_Objects.Count);
             }
         }
 
-        public AbstractPanelItem GetFocusedPanelItem(bool bPingAndAsk, bool bCanReturnParent)
+        public PanelItemBase GetFocusedPanelItem(bool bPingAndAsk, bool bCanReturnParent)
         {
             var item = m_Objects.Get(m_View.FocusedItemText);
             var comp =  item as ComputerPanelItem;
@@ -154,7 +154,7 @@ namespace LanExchange.Presenter
                         item = null;
                 }
             }
-            if (bCanReturnParent && item != null && item.Name == AbstractPanelItem.BACK)
+            if (bCanReturnParent && item != null && item.Name == PanelItemBase.BACK)
                 item = item.Parent;
             return item;
         }
@@ -168,7 +168,7 @@ namespace LanExchange.Presenter
         /// <param name="tagParent">Can be "computer" or "folder"</param>
         public void RunCmdOnFocusedItem(string tagCmd, string tagParent)
         {
-            AbstractPanelItem PItem = GetFocusedPanelItem(true, false);
+            PanelItemBase PItem = GetFocusedPanelItem(true, false);
             if (PItem == null) return;
 
             string CmdLine;
@@ -214,21 +214,21 @@ namespace LanExchange.Presenter
         /// Returns computer either focused item is computer or focused item is subitem of computer.
         /// </summary>
         /// <returns>a ComputerPanelItem or null</returns>
-        public ComputerPanelItem GetFocusedComputer(bool bPingAndAsk)
+        public PanelItemBase GetFocusedComputer(bool bPingAndAsk)
         {
             var PItem = GetFocusedPanelItem(bPingAndAsk, false);
             if (PItem == null)
                 return null;
             while (!(PItem is ComputerPanelItem) && (PItem.Parent != null))
                 PItem = PItem.Parent;
-            return PItem as ComputerPanelItem;
+            return PItem;
         }
 
         public bool CommandLevelDown()
         {
             var PItem = GetFocusedPanelItem(false, false);
             if (PItem == null || Objects == null) return false;
-            if (PItem.Name == AbstractPanelItem.BACK)
+            if (PItem.Name == PanelItemBase.BACK)
                 return CommandLevelUp();
             var result = PanelSubscription.Instance.HasStrategyForSubject(PItem);
             if (result)
@@ -244,7 +244,7 @@ namespace LanExchange.Presenter
         public bool CommandLevelUp()
         {
             if (Objects == null || Objects.CurrentPath.IsEmpty) return false;
-            var PItem = Objects.CurrentPath.Peek() as AbstractPanelItem;
+            var PItem = Objects.CurrentPath.Peek() as PanelItemBase;
             if (PItem == null) return false;
             ISubject subject = PItem.Parent ?? PItem.ParentSubject;
             if (subject == null) return false;
@@ -260,11 +260,11 @@ namespace LanExchange.Presenter
             return result;
         }
 
-        public static string DetectMENU(AbstractPanelItem PItem)
+        public static string DetectMENU(PanelItemBase PItem)
         {
             while (PItem != null)
             {
-                if (PItem.Name == AbstractPanelItem.BACK)
+                if (PItem.Name == PanelItemBase.BACK)
                 {
                     PItem = PItem.Parent;
                     continue;
@@ -285,7 +285,7 @@ namespace LanExchange.Presenter
         public void CommandDeleteItems()
         {
             bool Modified = false;
-            foreach (int index in m_View.SelectedIndices)
+            foreach (int index in m_View.SelectedIndexes)
             {
                 var comp = m_Objects.GetAt(index);
                 if (comp != null && comp.ParentSubject == ConcreteSubject.UserItems)

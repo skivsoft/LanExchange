@@ -1,9 +1,10 @@
 ﻿using System;
+using LanExchange.Sdk;
 using LanExchange.Utils;
 
 namespace LanExchange.Model.Panel
 {
-    public class SharePanelItem : AbstractPanelItem//, IComparable<SharePanelItem>
+    public class SharePanelItem : PanelItemBase//, IComparable<SharePanelItem>
     {
         private readonly ShareInfo m_SHI;
 
@@ -11,7 +12,7 @@ namespace LanExchange.Model.Panel
         /// Panel item for network shared resource.
         /// </summary>
         /// <exception cref="ArgumentNullException"></exception>
-        public SharePanelItem(AbstractPanelItem parent, ShareInfo shi) : base(parent)
+        public SharePanelItem(PanelItemBase parent, ShareInfo shi) : base(parent)
         {
             if (shi == null)
                 throw new ArgumentNullException("shi");
@@ -19,21 +20,21 @@ namespace LanExchange.Model.Panel
             Comment = m_SHI.Comment;
         }
 
-        public SharePanelItem(AbstractPanelItem parent, string name) : base(parent)
+        public SharePanelItem(PanelItemBase parent, string name) : base(parent)
         {
             m_SHI = new ShareInfo(new NetApi32.SHARE_INFO_1 {shi1_netname = name});
             Comment = string.Empty;
         }
 
-        public override int ImageIndex
+        public override string ImageName
         {
             get
             {
                 if (Name == BACK)
-                    return LanExchangeIcons.FolderBack;
+                    return PanelImageNames.DoubleDot;
                 if (SHI.IsPrinter)
-                    return LanExchangeIcons.FolderPrinter;
-                return SHI.IsHidden ? LanExchangeIcons.FolderHidden : LanExchangeIcons.FolderNormal;
+                    return PanelImageNames.SharePrinter;
+                return SHI.IsHidden ? PanelImageNames.ShareHidden : PanelImageNames.ShareNormal;
             }
         }
 

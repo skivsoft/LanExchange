@@ -5,16 +5,16 @@ using LanExchange.Sdk;
 
 namespace LanExchange.Model.Strategy
 {
-    public class FileEnumStrategy : AbstractPanelStrategy
+    public class FileEnumStrategy : PanelStrategyBase
     {
         public override void Algorithm()
         {
-            if ((Subject as AbstractPanelItem) == null) return;
-            m_Result = new List<AbstractPanelItem>();
-            var path = (Subject as AbstractPanelItem).GetFullName();
+            if ((Subject as PanelItemBase) == null) return;
+            Result = new List<PanelItemBase>();
+            var path = (Subject as PanelItemBase).GetFullName();
             var files = Directory.GetFileSystemEntries(path, "*.*");
             foreach (var fname in files)
-                m_Result.Add(new FilePanelItem(Subject as AbstractPanelItem, fname));
+                Result.Add(new FilePanelItem(Subject as PanelItemBase, fname));
         }
 
         public override void AcceptSubject(ISubject subject, out bool accepted)

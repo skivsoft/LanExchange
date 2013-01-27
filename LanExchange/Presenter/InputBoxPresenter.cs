@@ -1,27 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using LanExchange.Sdk.View;
+using LanExchange.Sdk;
+using LanExchange.UI;
+using System.Windows.Forms;
 
 namespace LanExchange.Presenter
 {
-    public class InputBoxPresenter : IPresenter
+    public class InputBoxPresenter
     {
         public static string Ask(string caption, string prompt, string defText, bool allowEmpty)
         {
             string result = null;
-            // TODO UNCOMMENT THIS!!!
-            //using (var inputBox = new InputBoxForm())
-            //{
-            //    if (!String.IsNullOrEmpty(caption))
-            //        inputBox.Text = caption;
-            //    else
-            //        inputBox.Text = Application.ProductName;
-            //    inputBox.Prepare(prompt, defText, allowEmpty);
-            //    DialogResult res = inputBox.ShowDialog();
-            //    if (res == DialogResult.OK)
-            //        result = inputBox.txtInputText.Text.Trim();
-            //}
+            using (var inputBox = new InputBoxForm())
+            {
+                if (!String.IsNullOrEmpty(caption))
+                    inputBox.Text = caption;
+                else
+                    inputBox.Text = Application.ProductName;
+                inputBox.Prepare(prompt, defText, allowEmpty);
+                DialogResult res = inputBox.ShowDialog();
+                if (res == DialogResult.OK)
+                    result = inputBox.txtInputText.Text.Trim();
+            }
             return result;
         }
     }

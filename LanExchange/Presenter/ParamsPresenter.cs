@@ -1,13 +1,13 @@
 ﻿using LanExchange.Model;
 using LanExchange.Model.Settings;
-using LanExchange.Sdk.View;
+using LanExchange.Sdk;
 
 namespace LanExchange.Presenter
 {
     /// <summary>
     /// Presenter for Settings (model) and ParamsForm (view).
     /// </summary>
-    public class ParamsPresenter : IPresenter
+    public class ParamsPresenter
     {
         private readonly IParamsView m_View;
 

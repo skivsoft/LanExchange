@@ -32,8 +32,8 @@ namespace LanExchange.Model
         #endregion
 
         private readonly IDictionary<ISubject, IList<ISubscriber>> m_Subjects;
-        private readonly Dictionary<ISubject, IList<AbstractPanelItem>> m_Results;
-        private readonly IList<AbstractPanelStrategy> m_Strategies;
+        private readonly Dictionary<ISubject, IList<PanelItemBase>> m_Results;
+        private readonly IList<PanelStrategyBase> m_Strategies;
 
         private int m_RefreshInterval;
         private readonly Timer m_RefreshTimer;
@@ -43,8 +43,8 @@ namespace LanExchange.Model
         {
             // lists
             m_Subjects = new Dictionary<ISubject, IList<ISubscriber>>();
-            m_Results = new Dictionary<ISubject, IList<AbstractPanelItem>>(new ConcreteSubjectComparer());
-            m_Strategies = new List<AbstractPanelStrategy>();
+            m_Results = new Dictionary<ISubject, IList<PanelItemBase>>(new ConcreteSubjectComparer());
+            m_Strategies = new List<PanelStrategyBase>();
             InitStrategies();
             // load cached results
             LoadResultsFromCache();
@@ -64,9 +64,9 @@ namespace LanExchange.Model
         {
             Assembly asm = Assembly.GetExecutingAssembly();
             foreach (var T in asm.GetTypes())
-                if (T.IsClass && !T.IsAbstract && T.BaseType == typeof (AbstractPanelStrategy))
+                if (T.IsClass && !T.IsAbstract && T.BaseType == typeof (PanelStrategyBase))
                 {
-                    var strategy = (AbstractPanelStrategy)Activator.CreateInstance(T);
+                    var strategy = (PanelStrategyBase)Activator.CreateInstance(T);
                     m_Strategies.Add(strategy);
                 }
         }
@@ -103,7 +103,7 @@ namespace LanExchange.Model
             return false;
         }
 
-        private AbstractPanelStrategy CreateConcretePanelStrategy(ISubject subject)
+        private PanelStrategyBase CreateConcretePanelStrategy(ISubject subject)
         {
             foreach (var strategy in m_Strategies)
             {
@@ -112,7 +112,7 @@ namespace LanExchange.Model
                 if (accepted)
                 {
                     // create another one instance of the strategy
-                    var newStrategy = (AbstractPanelStrategy)Activator.CreateInstance(strategy.GetType());
+                    var newStrategy = (PanelStrategyBase)Activator.CreateInstance(strategy.GetType());
                     newStrategy.Subject = subject;
                     return newStrategy;
                 }
@@ -131,9 +131,9 @@ namespace LanExchange.Model
                 
                 bool subjectFound = false;
                 foreach(BackgroundContext ctx in BackgroundWorkers.Instance.EnumContexts())
-                    if (ctx.Strategy is AbstractPanelStrategy)
+                    if (ctx.Strategy is PanelStrategyBase)
                     {
-                        var strategy = ctx.Strategy as AbstractPanelStrategy;
+                        var strategy = ctx.Strategy as PanelStrategyBase;
                         if (strategy.Subject != null && strategy.Subject.Equals(Pair.Key))
                         {
                             subjectFound = true;
@@ -158,7 +158,7 @@ namespace LanExchange.Model
             }
         }
 
-        private bool SetResult(ISubject subject, IList<AbstractPanelItem> list)
+        private bool SetResult(ISubject subject, IList<PanelItemBase> list)
         {
             bool bModified = false;
             lock (m_Results)
@@ -215,9 +215,9 @@ namespace LanExchange.Model
             e.Result = null;
             if (e.Cancel) return;
             // process panel strategies
-            if (context.Strategy is AbstractPanelStrategy)
+            if (context.Strategy is PanelStrategyBase)
             {
-                var strategy = (context.Strategy as AbstractPanelStrategy);
+                var strategy = (context.Strategy as PanelStrategyBase);
                 if (SetResult(strategy.Subject, strategy.Result))
                     e.Result = strategy.Subject;
                 else
@@ -250,7 +250,7 @@ namespace LanExchange.Model
             }
         }
 
-        private static bool SortedListIsModified(IList<AbstractPanelItem> listA, IList<AbstractPanelItem> listB)
+        private static bool SortedListIsModified(IList<PanelItemBase> listA, IList<PanelItemBase> listB)
         {
             if (listA == null || listB == null)
                 return false;
@@ -326,7 +326,7 @@ namespace LanExchange.Model
                     foreach (var Pair in Temp)
                     {
                         var domain = new DomainPanelItem(Pair.Key);
-                        var TempList = new List<AbstractPanelItem>();
+                        var TempList = new List<PanelItemBase>();
                         foreach (var si in Pair.Value)
                             if (si != null)
                                 TempList.Add(new ComputerPanelItem(domain, si));

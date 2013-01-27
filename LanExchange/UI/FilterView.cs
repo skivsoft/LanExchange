@@ -4,8 +4,7 @@ using System.Globalization;
 using System.Windows.Forms;
 using LanExchange.Presenter;
 using LanExchange.Properties;
-using LanExchange.Sdk.Model;
-using LanExchange.Sdk.View;
+using LanExchange.Sdk;
 
 namespace LanExchange.UI
 {
@@ -22,7 +21,7 @@ namespace LanExchange.UI
             m_Presenter = new FilterPresenter(this);
         }
 
-        public IPresenter Presenter
+        public IFilterPresenter Presenter
         {
             get { return m_Presenter;
         }

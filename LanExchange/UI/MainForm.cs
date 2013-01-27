@@ -10,6 +10,7 @@ using System.Text;
 using System.Security.Permissions;
 using LanExchange.Model.Panel;
 using LanExchange.Model.Settings;
+using LanExchange.Sdk;
 using LanExchange.Utils;
 
 namespace LanExchange.UI
@@ -42,8 +43,8 @@ namespace LanExchange.UI
             SetupForm();
             // setup images
             Instance.tipComps.SetToolTip(Pages.Pages, " ");
-            Pages.Pages.ImageList = LanExchangeIcons.SmallImageList;
-            Status.ImageList = LanExchangeIcons.SmallImageList;
+            Pages.Pages.ImageList = LanExchangeIcons.Instance.SmallImageList;
+            Status.ImageList = LanExchangeIcons.Instance.SmallImageList;
             // init network scanner
             PanelSubscription.Instance.RefreshInterval = (int)Settings.Instance.RefreshTimeInSec * 1000;
             // init hotkey
@@ -117,7 +118,7 @@ namespace LanExchange.UI
             TrayIcon.Visible = true;
             // show computer name
             lCompName.Text = SystemInformation.ComputerName;
-            lCompName.ImageIndex = LanExchangeIcons.CompDefault;
+            lCompName.ImageIndex = LanExchangeIcons.Instance.IndexOf(PanelImageNames.ComputerNormal);
             // show current user
             lUserName.Text = Settings.GetCurrentUserName();
         }
@@ -138,10 +139,10 @@ namespace LanExchange.UI
 
         private static void Debug_ShowSubscribers()
         {
-            var S = new StringBuilder();
-            foreach (var Pair in PanelSubscription.Instance.GetSubjects())
-                S.AppendLine(String.Format("{0} - {1}", Pair.Key.Subject, Pair.Value.Count));
-            MessageBox.Show(S.ToString());
+            //var S = new StringBuilder();
+            //foreach (var Pair in PanelSubscription.Instance.GetSubjects())
+            //    S.AppendLine(String.Format("{0} - {1}", Pair.Key.Subject, Pair.Value.Count));
+            //MessageBox.Show(S.ToString());
         }
 #endif
 
@@ -152,13 +153,13 @@ namespace LanExchange.UI
         {
             if (e.KeyCode == Keys.Escape)
             {
-                var pv = Pages.GetActivePanelView();
+                var pv = Pages.ActivePanelView;
                 e.Handled = true;
                 if (pv == null) return;
                 if (pv.Filter.IsVisible)
                     pv.Filter.SetFilterText(String.Empty);
                 else
-                    if ((pv.GetPresenter() as PanelPresenter).Objects.CurrentPath.IsEmpty)
+                    if (pv.Presenter.Objects.CurrentPath.IsEmpty)
                         Instance.Hide();
                     else
                         if (!m_EscDown)
@@ -193,8 +194,8 @@ namespace LanExchange.UI
                 if (m_EscDown)
                 {
                     TimeSpan diff = DateTime.UtcNow - m_EscTime;
-                    var pv = Pages.GetActivePanelView();
-                    var presenter = pv.GetPresenter() as PanelPresenter;
+                    var pv = Pages.ActivePanelView;
+                    var presenter = pv.Presenter;
                     if (pv != null && !presenter.Objects.CurrentPath.IsEmpty)
                     {
                         if (diff.TotalMilliseconds < WAIT_FOR_KEYUP_MS)
@@ -210,7 +211,7 @@ namespace LanExchange.UI
 
         private void popTop_Opened(object sender, EventArgs e)
         {
-            var pv = Pages.GetActivePanelView() as PanelView;
+            var pv = Pages.ActivePanelView as PanelView;
             if (pv == null) return;
             for (int i = 0; i < Math.Min(pv.mComp.DropDownItems.Count, popTop.Items.Count); i++)
             {
@@ -223,7 +224,7 @@ namespace LanExchange.UI
 
         private void popTop_Opening(object sender, CancelEventArgs e)
         {
-            var pv = Pages.GetActivePanelView() as PanelView;
+            var pv = Pages.ActivePanelView as PanelView;
             if (pv == null)
             {
                 e.Cancel = true;
@@ -341,7 +342,7 @@ namespace LanExchange.UI
             ComputerPanelItem Comp = null;
             if (pv != null) 
             {
-                var PItem = (pv.GetPresenter() as PanelPresenter).GetFocusedPanelItem(false, false);
+                var PItem = pv.Presenter.GetFocusedPanelItem(false, false);
                 // is focused changed on top level?
                 if (PItem is ComputerPanelItem)
                 {
@@ -349,12 +350,12 @@ namespace LanExchange.UI
                     timerTabSettingsSaver.Stop();
                     timerTabSettingsSaver.Start();
                 }
-                Comp = (pv.GetPresenter() as PanelPresenter).GetFocusedComputer(false);
+                Comp = pv.Presenter.GetFocusedComputer(false) as ComputerPanelItem;
             }
             // is focused item a computer?
             if (Comp == null)
             {
-                pInfo.Picture.Image = LanExchangeIcons.LargeImageList.Images[LanExchangeIcons.CompDefault];
+                pInfo.Picture.Image = LanExchangeIcons.Instance.GetLargeImage(PanelImageNames.ComputerNormal);
                 pInfo.InfoComp = "";
                 pInfo.InfoDesc = "";
                 pInfo.InfoOS = "";
@@ -364,13 +365,13 @@ namespace LanExchange.UI
             pInfo.InfoComp = Comp.Name;
             pInfo.InfoDesc = Comp.Comment;
             pInfo.InfoOS = Comp.SI.Version();
-            pInfo.Picture.Image = LanExchangeIcons.LargeImageList.Images[Comp.ImageIndex];
-            switch (Comp.ImageIndex)
+            pInfo.Picture.Image = LanExchangeIcons.Instance.GetLargeImage(Comp.ImageName);
+            switch (Comp.ImageName)
             {
-                case LanExchangeIcons.CompDefault:
+                case PanelImageNames.ComputerNormal:
                     tipComps.SetToolTip(pInfo.Picture, "Компьютер найден в результате обзора сети.");
                     break;
-                case LanExchangeIcons.CompDisabled:
+                case PanelImageNames.ComputerDisabled:
                     tipComps.SetToolTip(pInfo.Picture, "Компьютер не доступен посредством PING.");
                     break;
                 /*

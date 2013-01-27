@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using LanExchange.Model;
 using LanExchange.Model.Panel;
 using LanExchange.Sdk;
-using LanExchange.Sdk.View;
 
 namespace LanExchange.Presenter
 {
     public class TabParamsPresenter : ITabParamsPresenter
     {
         private ITabParamsView m_View;
+        private IPanelModel m_Info;
         private readonly IList<string> m_Groups;
-        private PanelItemList m_Info;
 
         public TabParamsPresenter()
         {
@@ -23,10 +22,10 @@ namespace LanExchange.Presenter
             if (view == null)
                 throw new ArgumentNullException("view");
             m_View = view;
-            m_View.OKClicked += View_OKClicked;
+            m_View.OkClicked += View_OKClicked;
         }
 
-        public void SetInfo(PanelItemList info)
+        public void SetInfo(IPanelModel info)
         {
             if (info == null)
                 throw new ArgumentNullException("info");
@@ -67,7 +66,7 @@ namespace LanExchange.Presenter
         private void View_OKClicked(object sender, EventArgs e)
         {
             m_Info.Groups = Groups;
-            m_Info.UpdateSubsctiption();
+            m_Info.UpdateSubscription();
         }
 
         public void DataChanged(ISubscription sender, ISubject subject)

@@ -1,4 +1,5 @@
 ﻿using LanExchange.Model.Strategy;
+using LanExchange.Sdk;
 
 namespace LanExchange.WMI
 {

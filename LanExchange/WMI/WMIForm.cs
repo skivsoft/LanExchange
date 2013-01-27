@@ -4,6 +4,7 @@ using System.Management;
 using System.ComponentModel;
 using System.Reflection;
 using LanExchange.Model;
+using LanExchange.Sdk;
 
 namespace LanExchange.WMI
 {
