@@ -10,6 +10,7 @@ using System.Text;
 using System.Windows.Forms;
 using LanExchange.Interface;
 using LanExchange.Model.Settings;
+using LanExchange.UI;
 using LanExchange.Utils;
 
 namespace LanExchange.Presenter
@@ -243,7 +244,7 @@ namespace LanExchange.Presenter
                 if (NeedRestart)
                 {
                     m_View.CancelView();
-                    Application.Exit();
+                    MainForm.Instance.ApplicationExit();
                 }
             }
         }
