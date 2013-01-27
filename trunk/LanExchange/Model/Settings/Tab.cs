@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using LanExchange.Model.Panel;
+using LanExchange.Sdk;
 using LanExchange.Utils;
 
 namespace LanExchange.Model.Settings

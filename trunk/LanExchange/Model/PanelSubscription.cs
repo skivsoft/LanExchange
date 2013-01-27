@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Timers;
 using LanExchange.Model.Panel;
 using LanExchange.Model.Strategy;
+using LanExchange.Sdk;
 using LanExchange.Utils;
 
 namespace LanExchange.Model

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace LanExchange.Interface
+namespace LanExchange.Sdk.View
 {
     /// <summary>
     /// Interface for Panel component.
@@ -9,9 +9,10 @@ namespace LanExchange.Interface
     {
         // properties
         IFilterView Filter { get; }
-        IEnumerable<int> SelectedIndices { get; }
+        IEnumerable<int> SelectedIndexes { get; }
         string FocusedItemText { get; }
         int FocusedItemIndex { get; set; }
+        IPresenter Presenter { get; }
         // methods
         void SelectItem(int index);
         void SetVirtualListSize(int count);
@@ -19,7 +20,6 @@ namespace LanExchange.Interface
         void FocusListView();
         void ClearSelected();
         void SetClipboardText(string value);
-        IPresenter GetPresenter();
         void ShowRunCmdError(string cmdLine);
     }
 }

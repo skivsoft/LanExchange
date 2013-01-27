@@ -55,6 +55,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>bin\Debug\LanExchange.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -85,19 +86,13 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interface\IPresenter.cs" />
-    <Compile Include="Interface\ITabParamsPresenter.cs" />
     <Compile Include="Model\BackgroundWorkerEx.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Model\BackgroundWorkers.cs" />
     <Compile Include="Model\ConcreteSubject.cs" />
     <Compile Include="Model\ConcreteSubjectComparer.cs" />
-    <Compile Include="Model\IFilterModel.cs" />
     <Compile Include="Model\IPanelColumnHeader.cs" />
-    <Compile Include="Model\ISubject.cs" />
-    <Compile Include="Model\ISubscriber.cs" />
-    <Compile Include="Model\ISubscription.cs" />
     <Compile Include="Model\IWMIComputer.cs" />
     <Compile Include="Model\LanExchangeIcons.cs" />
     <Compile Include="Model\PagesModel.cs" />
@@ -129,14 +124,7 @@
     <Compile Include="Presenter\AboutPresenter.cs" />
     <Compile Include="Presenter\AppPresenter.cs" />
     <Compile Include="Presenter\FilterPresenter.cs" />
-    <Compile Include="Interface\IAboutView.cs" />
-    <Compile Include="Interface\IFilterView.cs" />
-    <Compile Include="Interface\IInputBoxView.cs" />
     <Compile Include="Presenter\InputBoxPresenter.cs" />
-    <Compile Include="Interface\IPagesView.cs" />
-    <Compile Include="Interface\IPanelView.cs" />
-    <Compile Include="Interface\IParamsView.cs" />
-    <Compile Include="Interface\ITabParamsView.cs" />
     <Compile Include="Presenter\PagesPresenter.cs" />
     <Compile Include="Presenter\PanelPresenter.cs" />
     <Compile Include="Presenter\ParamsPresenter.cs" />
@@ -367,7 +355,15 @@
     <Content Include="Resources\LanExchange_16x16.ico" />
     <None Include="Resources\LanExchange_48x48.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Interface\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SDK\SDK.csproj">
+      <Project>{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}</Project>
+      <Name>SDK</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

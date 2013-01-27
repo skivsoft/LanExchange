@@ -2,9 +2,9 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using LanExchange.Interface;
 using LanExchange.Presenter;
 using LanExchange.Model;
+using LanExchange.Sdk.View;
 
 namespace LanExchange.UI
 {

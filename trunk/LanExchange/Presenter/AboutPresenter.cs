@@ -7,9 +7,8 @@ using System.Net;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
-using System.Windows.Forms;
-using LanExchange.Interface;
 using LanExchange.Model.Settings;
+using LanExchange.Sdk.View;
 using LanExchange.UI;
 using LanExchange.Utils;
 

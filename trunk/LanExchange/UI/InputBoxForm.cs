@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using LanExchange.Interface;
-using LanExchange.Presenter;
+using LanExchange.Sdk.View;
 
 namespace LanExchange.UI
 {

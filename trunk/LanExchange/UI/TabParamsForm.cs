@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using LanExchange.Interface;
 using System.Drawing;
+using LanExchange.Sdk.View;
 
 namespace LanExchange.UI
 {
     public partial class TabParamsForm : Form, ITabParamsView
     {
-        public event EventHandler OKClicked;
+        public event EventHandler OkClicked;
 
         public TabParamsForm()
         {
@@ -62,9 +62,9 @@ namespace LanExchange.UI
             }
         }
 
-        public IList<string> GetCheckedList()
+        public IList<string> CheckedList
         {
-            return ListViewUtils.GetCheckedList(lvDomains);
+            get { return ListViewUtils.GetCheckedList(lvDomains); }
         }
 
         public bool ShowModal()

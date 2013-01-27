@@ -1,4 +1,4 @@
-﻿namespace LanExchange.Interface
+﻿namespace LanExchange.Sdk.View
 {
     public interface IParamsView
     {

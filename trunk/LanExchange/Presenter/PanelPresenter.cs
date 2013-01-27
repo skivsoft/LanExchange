@@ -1,12 +1,12 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Text;
 using System.Windows.Forms;
-using LanExchange.Interface;
 using LanExchange.Model;
-using System.Diagnostics;
 using LanExchange.Model.Panel;
-using LanExchange.Utils;
+using LanExchange.Sdk.View;
 using LanExchange.UI;
+using LanExchange.Utils;
 
 namespace LanExchange.Presenter
 {

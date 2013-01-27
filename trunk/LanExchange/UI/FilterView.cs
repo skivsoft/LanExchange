@@ -2,10 +2,10 @@
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
-using LanExchange.Interface;
 using LanExchange.Presenter;
-using LanExchange.Model;
 using LanExchange.Properties;
+using LanExchange.Sdk.Model;
+using LanExchange.Sdk.View;
 
 namespace LanExchange.UI
 {
@@ -22,10 +22,11 @@ namespace LanExchange.UI
             m_Presenter = new FilterPresenter(this);
         }
 
-        public IPresenter GetPresenter()
+        public IPresenter Presenter
         {
-            return m_Presenter;
+            get { return m_Presenter;
         }
+    }
 
         public Control LinkedControl { get; set; }
 

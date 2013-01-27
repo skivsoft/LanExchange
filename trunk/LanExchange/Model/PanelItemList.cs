@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using LanExchange.Model.Panel;
+using LanExchange.Sdk;
+using LanExchange.Sdk.Model;
 using LanExchange.Utils;
 using LanExchange.Model.Settings;
 
@@ -16,7 +18,7 @@ namespace LanExchange.Model
     //    FILES = 2
     //}
 
-    public class PanelItemList : ISubscriber, IEquatable<PanelItemList>, IFilterModel
+    public class PanelItemList : ISubscriber, IEquatable<PanelItemList>, IFilterModel, IPanelModel
     {
         public enum View
         {

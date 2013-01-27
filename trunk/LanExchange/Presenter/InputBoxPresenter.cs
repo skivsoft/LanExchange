@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using LanExchange.Interface;
+using LanExchange.Sdk.View;
 
 namespace LanExchange.Presenter
 {
@@ -10,6 +10,7 @@ namespace LanExchange.Presenter
         public static string Ask(string caption, string prompt, string defText, bool allowEmpty)
         {
             string result = null;
+            // TODO UNCOMMENT THIS!!!
             //using (var inputBox = new InputBoxForm())
             //{
             //    if (!String.IsNullOrEmpty(caption))

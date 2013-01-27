@@ -1,13 +1,13 @@
-﻿using LanExchange.Model;
+﻿using LanExchange.Sdk.Model;
 
-namespace LanExchange.Interface
+namespace LanExchange.Sdk.View
 {
     public interface IFilterView
     {
         // properties
         bool IsVisible { get; set; }
         // methods
-        IPresenter GetPresenter();
+        IPresenter Presenter { get; }
         void UpdateFromModel(IFilterModel model);
         void DoFilterCountChanged();
         //void FocusAndKeyPress(KeyPressEventArgs e);
