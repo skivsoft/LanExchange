@@ -52,7 +52,7 @@ namespace LanExchange.UI
             LogUtils.Info(value ? "RunMinimized is ON" : "RunMinimized is OFF");
         }
 
-        protected void ApplicationExit()
+        public void ApplicationExit()
         {
             m_AllowClose = true;
             Application.Exit();
