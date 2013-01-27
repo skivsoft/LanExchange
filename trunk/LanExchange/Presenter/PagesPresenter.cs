@@ -153,19 +153,13 @@ namespace LanExchange.Presenter
             int Index = m_View.PopupSelectedIndex;
             PanelItemList Info = m_Model.GetItem(Index);
             if (Info == null) return;
-
             using (var Form = m_View.CreateTabParamsView())
             {
-                TabParamsPresenter presenter = Form.GetPresenter() as TabParamsPresenter;
-                Form.Text = String.Format(Form.Text, Info.TabName);
-                presenter.Groups = Info.Groups;
-                //Form.PrepareForm();
+                ITabParamsPresenter presenter = new TabParamsPresenter();
+                presenter.SetView(Form);
+                presenter.SetInfo(Info);
                 if (Form.ShowModal())
-                {
-                    Info.Groups = presenter.Groups;
-                    Info.UpdateSubsctiption();
                     m_Model.SaveSettings();
-                }
             }
         }
     }

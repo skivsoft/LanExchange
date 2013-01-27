@@ -107,6 +107,8 @@ namespace LanExchange.Model
 
         public void UpdateSubsctiption()
         {
+            // do not update if we not in root directory
+            if (!CurrentPath.IsEmpty) return;
             if (Groups.Count > 0)
             {
                 PanelSubscription.Instance.UnSubscribe(this, false);

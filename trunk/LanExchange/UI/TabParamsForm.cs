@@ -2,26 +2,17 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using LanExchange.Interface;
-using LanExchange.Model;
-using LanExchange.Utils;
 using System.Drawing;
-using LanExchange.Presenter;
 
 namespace LanExchange.UI
 {
     public partial class TabParamsForm : Form, ITabParamsView
     {
-        private readonly TabParamsPresenter m_Presenter;
+        public event EventHandler OKClicked;
 
         public TabParamsForm()
         {
             InitializeComponent();
-            m_Presenter = new TabParamsPresenter(this);
-        }
-
-        public IPresenter GetPresenter()
-        {
-            return m_Presenter;
         }
 
         public bool SelectedChecked
@@ -46,12 +37,34 @@ namespace LanExchange.UI
             }
         }
 
-        public void PrepareForm()
+        public int DomainsCount
         {
-            // subscribe Form to ROOT subject (must return domain list)
-            PanelSubscription.Instance.SubscribeToSubject(m_Presenter, ConcreteSubject.Root);
-            // unsubscribe Form from any subjects when Closed event will be fired
-            Closed += (sender, args) => PanelSubscription.Instance.UnSubscribe(m_Presenter, false);
+            get { return lvDomains.Items.Count; }
+        }
+
+        public string DomainsFocusedText
+        {
+            get
+            {
+                if (lvDomains.FocusedItem == null)
+                    return null;
+                return lvDomains.FocusedItem.Text;
+            }
+            set
+            {
+                if (value == null) return;
+                for (int index = 0; index < lvDomains.Items.Count; index++ )
+                    if (String.CompareOrdinal(lvDomains.Items[index].Text, value) == 0)
+                    {
+                        lvDomains.FocusedItem = lvDomains.Items[index];
+                        lvDomains.FocusedItem.Selected = true;
+                    }
+            }
+        }
+
+        public IList<string> GetCheckedList()
+        {
+            return ListViewUtils.GetCheckedList(lvDomains);
         }
 
         public bool ShowModal()
@@ -59,14 +72,16 @@ namespace LanExchange.UI
             return ShowDialog() == DialogResult.OK;
         }
 
-        public void ClearGroups()
+        public void DomainsClear()
         {
-            lvDomains.Clear();
+            lvDomains.Items.Clear();
         }
 
-        public void AddGroup(string value)
+        public void DomainsAdd(string value, bool checkedItem)
         {
-            lvDomains.Items.Add(value);
+            var LVI = new ListViewItem(value);
+            LVI.Checked = checkedItem;
+            lvDomains.Items.Add(LVI);
         }
 
         private void TabParamsForm_KeyDown(object sender, KeyEventArgs e)
@@ -97,6 +112,12 @@ namespace LanExchange.UI
         private void rbDontScan_CheckedChanged(object sender, EventArgs e)
         {
             UpdateBackColor();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (OKClicked != null)
+                OKClicked(this, EventArgs.Empty);
         }
 
     }

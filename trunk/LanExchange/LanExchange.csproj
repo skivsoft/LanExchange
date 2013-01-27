@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interface\IPresenter.cs" />
+    <Compile Include="Interface\ITabParamsPresenter.cs" />
     <Compile Include="Model\BackgroundWorkerEx.cs">
       <SubType>Component</SubType>
     </Compile>
