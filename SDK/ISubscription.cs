@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections;
 
-namespace LanExchange.Model
+namespace LanExchange.Sdk
 {
     /// <summary>
     /// ISubscription interface declaration in Subscription-Subscriber-Subject model.
@@ -15,6 +15,6 @@ namespace LanExchange.Model
         void UnSubscribe(ISubscriber sender, bool updateTimer);
         bool HasStrategyForSubject(ISubject subject); // used for check subitems (level down/level up)
         IEnumerable GetListBySubject(ISubject subject); // used for update items
-        IEnumerable<KeyValuePair<ISubject, IList<ISubscriber>>> GetSubjects(); // used for debug subjects
+        //IEnumerable<KeyValuePair<ISubject, IList<ISubscriber>>> GetSubjects(); // used for debug subjects
     }
 }

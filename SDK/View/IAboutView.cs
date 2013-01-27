@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace LanExchange.Interface
+namespace LanExchange.Sdk.View
 {
     public interface IAboutView
     {

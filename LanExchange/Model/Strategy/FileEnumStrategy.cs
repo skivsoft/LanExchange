@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using LanExchange.Model.Panel;
 using System.IO;
+using LanExchange.Sdk;
 
 namespace LanExchange.Model.Strategy
 {

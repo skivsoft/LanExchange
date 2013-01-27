@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LanExchange.Interface
+namespace LanExchange.Sdk.View
 {
     public interface ITabParamsView : IDisposable
     {
         // events
-        event EventHandler OKClicked;
+        event EventHandler OkClicked;
         event EventHandler Closed;
         // properties
         bool SelectedChecked { get; set; }
@@ -15,8 +15,8 @@ namespace LanExchange.Interface
         IEnumerable<string> Groups { get; }
         int DomainsCount { get; }
         string DomainsFocusedText { get; set; }
+        IList<string> CheckedList { get; }
         // methods
-        IList<string> GetCheckedList();
         bool ShowModal();
         void DomainsClear();
         void DomainsAdd(string value, bool checkedItem);

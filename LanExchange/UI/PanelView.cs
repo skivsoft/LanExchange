@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Windows.Forms;
-using LanExchange.Interface;
-using LanExchange.Model.Strategy;
-using LanExchange.Presenter;
-using LanExchange.Utils;
-using System.Reflection;
-using LanExchange.Model;
 using System.Collections.Generic;
-using LanExchange.WMI;
+using System.Reflection;
+using System.Windows.Forms;
+using LanExchange.Model;
 using LanExchange.Model.Panel;
 using LanExchange.Model.Settings;
+using LanExchange.Model.Strategy;
+using LanExchange.Presenter;
+using LanExchange.Sdk.View;
+using LanExchange.Utils;
+using LanExchange.WMI;
 
 namespace LanExchange.UI
 {
@@ -122,7 +122,7 @@ namespace LanExchange.UI
             }
         }
 
-        public IEnumerable<int> SelectedIndices
+        public IEnumerable<int> SelectedIndexes
         {
             get
             {
@@ -198,9 +198,9 @@ namespace LanExchange.UI
 
         #region PanelView class implementation
 
-        public IPresenter GetPresenter()
+        public IPresenter Presenter
         {
-            return m_Presenter;
+            get { return m_Presenter; }
         }
 
         //public ImageList SmallImageList

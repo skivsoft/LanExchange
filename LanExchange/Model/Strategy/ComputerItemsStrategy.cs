@@ -1,4 +1,6 @@
 ﻿
+using LanExchange.Sdk;
+
 namespace LanExchange.Model.Strategy
 {
     internal class ComputerItemsStrategy : AbstractPanelStrategy

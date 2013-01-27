@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using LanExchange.Sdk;
 
 namespace LanExchange.Model.Panel
 {
@@ -37,6 +38,12 @@ namespace LanExchange.Model.Panel
             get { return Name == BACK ? LanExchangeIcons.FolderBack : -1; }
         }
 
+        /// <summary>
+        /// Gets the column value.
+        /// </summary>
+        /// <param name="index">The index.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentOutOfRangeException">index</exception>
         private IComparable GetColumnValue(int index)
         {
             if (index < 0 || index > CountColumns-1)

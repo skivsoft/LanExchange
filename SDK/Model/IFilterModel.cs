@@ -1,4 +1,4 @@
-﻿namespace LanExchange.Model
+﻿namespace LanExchange.Sdk.Model
 {
     public interface IFilterModel
     {

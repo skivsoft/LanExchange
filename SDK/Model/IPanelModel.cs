@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LanExchange.Interface
+namespace LanExchange.Sdk.Model
 {
-    public interface IPresenter
+    public interface IPanelModel
     {
     }
 }

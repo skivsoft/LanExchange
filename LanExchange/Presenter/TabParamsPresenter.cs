@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using LanExchange.Interface;
 using LanExchange.Model;
 using LanExchange.Model.Panel;
+using LanExchange.Sdk;
+using LanExchange.Sdk.View;
 
 namespace LanExchange.Presenter
 {
@@ -79,7 +80,7 @@ namespace LanExchange.Presenter
             if (m_View.DomainsCount == 0)
                 Saved = m_Groups;
             else
-                Saved = m_View.GetCheckedList();
+                Saved = m_View.CheckedList;
             string FocusedText = m_View.DomainsFocusedText;
             m_View.DomainsClear();
             foreach (var PItem in sender.GetListBySubject(subject))

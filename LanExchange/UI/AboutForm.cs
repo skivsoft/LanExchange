@@ -3,8 +3,8 @@ using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
-using LanExchange.Interface;
 using LanExchange.Presenter;
+using LanExchange.Sdk.View;
 
 // This module must use only View-layer and Presentation-layer.
 namespace LanExchange.UI
