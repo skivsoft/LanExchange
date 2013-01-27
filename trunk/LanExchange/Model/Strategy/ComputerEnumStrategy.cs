@@ -5,7 +5,7 @@ using LanExchange.Model.Panel;
 
 namespace LanExchange.Model.Strategy
 {
-    internal class ComputerEnumStrategy : AbstractPanelStrategy
+    internal class ComputerEnumStrategy : PanelStrategyBase
     {
         public override void Algorithm()
         {
@@ -14,12 +14,12 @@ namespace LanExchange.Model.Strategy
             // get server list via OS api
             var list = NetApi32Utils.NetServerEnum(domain.Name, NetApi32.SV_101_TYPES.SV_TYPE_ALL);
             // convert array to IList<ServerInfo>
-            m_Result = new List<AbstractPanelItem>();
+            Result = new List<PanelItemBase>();
             foreach (var item in list)
             {
                 var SI = ServerInfo.FromNetApi32(item);
                 SI.SetUtcUpdated();
-                m_Result.Add(new ComputerPanelItem(domain, SI));
+                Result.Add(new ComputerPanelItem(domain, SI));
             }
         }
 

@@ -55,7 +55,8 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>bin\Debug\LanExchange.XML</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -92,35 +93,29 @@
     <Compile Include="Model\BackgroundWorkers.cs" />
     <Compile Include="Model\ConcreteSubject.cs" />
     <Compile Include="Model\ConcreteSubjectComparer.cs" />
-    <Compile Include="Model\IPanelColumnHeader.cs" />
-    <Compile Include="Model\IWMIComputer.cs" />
     <Compile Include="Model\LanExchangeIcons.cs" />
     <Compile Include="Model\PagesModel.cs" />
     <Compile Include="Model\PanelIndexEventArgs.cs" />
     <Compile Include="Model\PanelItemList.cs" />
     <Compile Include="Model\PanelItemListEventArgs.cs" />
     <Compile Include="Model\PanelSubscription.cs" />
-    <Compile Include="Model\Panel\AbstractPanelItem.cs" />
     <Compile Include="Model\Panel\ColumnComparer.cs" />
     <Compile Include="Model\Panel\ComputerPanelItem.cs" />
     <Compile Include="Model\Panel\DomainPanelItem.cs" />
     <Compile Include="Model\Panel\FilePanelItem.cs" />
-    <Compile Include="Model\Panel\IColumnComparable.cs" />
     <Compile Include="Model\Panel\SharePanelItem.cs" />
     <Compile Include="Model\PingThread.cs" />
     <Compile Include="Model\PuntoSwitcher.cs" />
     <Compile Include="Model\Settings\Settings.cs" />
     <Compile Include="Model\Settings\Tab.cs" />
     <Compile Include="Model\Settings\Tabs.cs" />
-    <Compile Include="Model\Strategy\AbstractPanelStrategy.cs" />
-    <Compile Include="Model\Strategy\BackgroundContext.cs" />
     <Compile Include="Model\Strategy\ComputerEnumStrategy.cs" />
     <Compile Include="Model\Strategy\ComputerItemsStrategy.cs" />
     <Compile Include="Model\Strategy\ConcreteMultiStrategy.cs" />
     <Compile Include="Model\Strategy\DomainEnumStrategy.cs" />
     <Compile Include="Model\Strategy\FileEnumStrategy.cs" />
-    <Compile Include="Model\Strategy\IBackgroundStrategy.cs" />
     <Compile Include="Model\Strategy\ShareEnumStrategy.cs" />
+    <Compile Include="PluginLoader.cs" />
     <Compile Include="Presenter\AboutPresenter.cs" />
     <Compile Include="Presenter\AppPresenter.cs" />
     <Compile Include="Presenter\FilterPresenter.cs" />
@@ -131,6 +126,7 @@
     <Compile Include="Presenter\TabParamsPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceProvider.cs" />
     <Compile Include="UI\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -206,7 +202,6 @@
     <Compile Include="Utils\NativeMethods.cs" />
     <Compile Include="Utils\NetApi32.cs" />
     <Compile Include="Utils\NetApi32Utils.cs" />
-    <Compile Include="Utils\ObjectPath.cs" />
     <Compile Include="Utils\SafeNativeMethods.cs" />
     <Compile Include="Utils\SerializeUtils.cs" />
     <Compile Include="Utils\ServerInfo.cs" />

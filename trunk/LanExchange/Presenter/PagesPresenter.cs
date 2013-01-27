@@ -1,12 +1,12 @@
 ﻿using System;
 using LanExchange.Model;
 using LanExchange.Model.Panel;
-using LanExchange.Sdk.View;
+using LanExchange.Sdk;
 using LanExchange.Utils;
 
 namespace LanExchange.Presenter
 {
-    public class PagesPresenter : IPresenter
+    public class PagesPresenter
     {
         private readonly IPagesView m_View;
         private readonly PagesModel m_Model;
@@ -44,14 +44,14 @@ namespace LanExchange.Presenter
         {
             var newTabName = InputBoxPresenter.Ask("Новая вкладка", "Введите имя", "", false);
             if (newTabName == null) return;
-            var sourcePV = m_View.GetActivePanelView();
+            var sourcePV = m_View.ActivePanelView;
             if (sourcePV == null) return;
-            var sourceObjects = (sourcePV.GetPresenter() as PanelPresenter).Objects;
+            var sourceObjects = sourcePV.Presenter.Objects;
             var destObjects = new PanelItemList(newTabName);
-            foreach (int index in sourcePV.SelectedIndices)
+            foreach (int index in sourcePV.SelectedIndexes)
             {
                 var PItem = sourceObjects.GetAt(index);
-                if (PItem == null || PItem.Name == AbstractPanelItem.BACK) 
+                if (PItem == null || PItem.Name == PanelItemBase.BACK) 
                     continue;
                 if (!(PItem is ComputerPanelItem))
                     continue;
@@ -63,7 +63,7 @@ namespace LanExchange.Presenter
             }
             // add tab
             m_Model.AddTab(destObjects);
-            m_View.SetSelectedIndex(m_Model.Count-1);
+            m_View.SelectedIndex = m_Model.Count-1;
             m_Model.SaveSettings();
         }
 
@@ -102,9 +102,9 @@ namespace LanExchange.Presenter
             // create panel
             var PV = m_View.CreatePanelView(e.Info);
             // set update event
-            PanelPresenter presenter = PV.GetPresenter() as PanelPresenter;
+            IPanelPresenter presenter = PV.Presenter;
             presenter.Objects = e.Info;
-            e.Info.Changed += presenter.Items_Changed;
+            e.Info.Changed += (o, args) => presenter.UpdateItemsAndStatus();
             e.Info.SubscriptionChanged += Item_SubscriptionChanged;
             // update items
             e.Info.DataChanged(null, ConcreteSubject.UserItems);
@@ -144,7 +144,7 @@ namespace LanExchange.Presenter
         public void Model_IndexChanged(object sender, PanelIndexEventArgs e)
         {
             LogUtils.Info("PagesModel_IndexChanged({0})", e.Index);
-            m_View.SetSelectedIndex(e.Index);
+            m_View.SelectedIndex = e.Index;
             m_View.FocusPanelView();
         }
 

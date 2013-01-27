@@ -1,13 +1,14 @@
 ﻿using System;
+using LanExchange.Sdk;
 using LanExchange.Utils;
 
 namespace LanExchange.Model.Panel
 {
-    public class DomainPanelItem : AbstractPanelItem
+    public class DomainPanelItem : PanelItemBase
     {
         private readonly ServerInfo m_SI;
 
-        public DomainPanelItem(AbstractPanelItem parent, ServerInfo si) : base(parent)
+        public DomainPanelItem(PanelItemBase parent, ServerInfo si) : base(parent)
         {
             m_SI = si;
         }
@@ -64,5 +65,10 @@ namespace LanExchange.Model.Panel
         //{
         //    return String.Compare(Name, other.Name, StringComparison.Ordinal);
         //}
+
+        public override string ImageName
+        {
+            get { return PanelImageNames.Workgroup; }
+        }
     }
 }

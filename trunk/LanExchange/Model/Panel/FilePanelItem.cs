@@ -1,16 +1,17 @@
 ﻿using System;
 using System.IO;
+using LanExchange.Sdk;
 
 namespace LanExchange.Model.Panel
 {
-    public class FilePanelItem : AbstractPanelItem//, IComparable<FilePanelItem>, IComparable
+    public class FilePanelItem : PanelItemBase//, IComparable<FilePanelItem>, IComparable
     {
 
         private readonly string m_FileName;
         private bool m_Directory;
         private bool m_Exists;
 
-        public FilePanelItem(AbstractPanelItem parent, string fileName) : base(parent)
+        public FilePanelItem(PanelItemBase parent, string fileName) : base(parent)
         {
             m_FileName = fileName;
             Name = Path.GetFileName(m_FileName);
@@ -55,13 +56,13 @@ namespace LanExchange.Model.Panel
             }
         }
 
-        public override int ImageIndex
+        public override string ImageName
         {
             get
             {
                 if (Name == BACK)
-                    return LanExchangeIcons.FolderBack;
-                return IsDirectory ? LanExchangeIcons.FolderNormal : -1;
+                    return PanelImageNames.DoubleDot;
+                return IsDirectory ? PanelImageNames.ShareNormal : String.Empty;
             }
         }
 

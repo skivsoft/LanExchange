@@ -111,7 +111,7 @@ namespace LanExchange.Model
                 if (m_SelectedIndex == -1 && m_List.Count == 1)
                     m_SelectedIndex = 0;
                 DoAfterAppendTab(info);
-                info.UpdateSubsctiption();
+                info.UpdateSubscription();
             }
         }
 

@@ -1,10 +1,9 @@
 ﻿using System;
-using LanExchange.Sdk.Model;
-using LanExchange.Sdk.View;
+using LanExchange.Sdk;
 
 namespace LanExchange.Presenter
 {
-    public class FilterPresenter : IPresenter
+    public class FilterPresenter : IFilterPresenter
     {
         private readonly IFilterView m_View;
         private IFilterModel m_Model;

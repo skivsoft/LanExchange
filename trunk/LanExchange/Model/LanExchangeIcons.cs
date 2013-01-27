@@ -4,22 +4,14 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using LanExchange.Properties;
+using LanExchange.Sdk;
 using LanExchange.UI;
 using LanExchange.Utils;
 
 namespace LanExchange.Model
 {
-    public class LanExchangeIcons
+    public class LanExchangeIcons : IPanelImageManager
     {
-        public const int CompDefault = 0; // MyComputer icon
-        public const int CompDisabled = 1; // Disabled MyComputer icon
-        public const int Workgroup = 2; // Workgroup icon
-        public const int FolderNormal = 3; // Folder icon
-        public const int FolderHidden = 4; // Disabled Folder icon
-        public const int FolderPrinter = 4;
-        public const int FolderBack = 5; // Back icon
-        public const int CompGreen = 1;
-    
         private const int SYSTEM_INDEX_MYCOMPUTER = 15;
         private const int SYSTEM_INDEX_WORKGROUP  = 18;
         private const int SYSTEM_INDEX_FOLDER     = 4;
@@ -27,9 +19,15 @@ namespace LanExchange.Model
         private static LanExchangeIcons m_Instance;
         private readonly ImageList m_SmallImageList;
         private readonly ImageList m_LargeImageList;
+        private readonly Dictionary<string, int> m_NamesMap;
+        private int m_LastIndex;
+
+        private static Bitmap SmallEmpty = new Bitmap(16, 16);
+        private static Bitmap LargeEmpty = new Bitmap(32, 32);
 
         private LanExchangeIcons()
         {
+            m_NamesMap = new Dictionary<string, int>();
             // init system images
             Shell32.FileIconInit(true);
             var Small = new SysImageList(SysImageListSize.smallIcons);
@@ -41,28 +39,22 @@ namespace LanExchange.Model
             m_LargeImageList = new ImageList();
             m_LargeImageList.ColorDepth = ColorDepth.Depth32Bit;
             m_LargeImageList.ImageSize = Large.Size;
-            // MyComputer icon
-            Icon icon1 = Small.Icon(SYSTEM_INDEX_MYCOMPUTER);
-            Icon icon2 = Large.Icon(SYSTEM_INDEX_MYCOMPUTER);
-            m_SmallImageList.Images.Add(icon1);
-            m_LargeImageList.Images.Add(icon2);
-            // Disabled MyComputer icon
-            m_SmallImageList.Images.Add(MadeDisabledBitmap(icon1.ToBitmap()));
-            m_LargeImageList.Images.Add(MadeDisabledBitmap(icon2.ToBitmap()));
             // Workgroup icon
-            m_SmallImageList.Images.Add(Small.Icon(SYSTEM_INDEX_WORKGROUP));
-            m_LargeImageList.Images.Add(Large.Icon(SYSTEM_INDEX_WORKGROUP));
+            Bitmap icon1 = Small.Icon(SYSTEM_INDEX_WORKGROUP).ToBitmap();
+            Bitmap icon2 = Large.Icon(SYSTEM_INDEX_WORKGROUP).ToBitmap();
+            RegisterImage(PanelImageNames.Workgroup, icon1, icon2);
+            // MyComputer icon
+            icon1 = Small.Icon(SYSTEM_INDEX_MYCOMPUTER).ToBitmap();
+            icon2 = Large.Icon(SYSTEM_INDEX_MYCOMPUTER).ToBitmap();
+            RegisterImage(PanelImageNames.ComputerNormal, icon1, icon2);
+            RegisterImage(PanelImageNames.ComputerDisabled, MadeDisabledBitmap(icon1), MadeDisabledBitmap(icon2));
             // Folder icon
-            icon1 = Small.Icon(SYSTEM_INDEX_FOLDER);
-            icon2 = Large.Icon(SYSTEM_INDEX_FOLDER);
-            m_SmallImageList.Images.Add(icon1);
-            m_LargeImageList.Images.Add(icon2);
-            // Disabled Folder icon
-            m_SmallImageList.Images.Add(MadeDisabledBitmap(icon1.ToBitmap()));
-            m_LargeImageList.Images.Add(MadeDisabledBitmap(icon2.ToBitmap()));
-            // Back icon
-            m_SmallImageList.Images.Add(Resources.back_16);
-            m_LargeImageList.Images.Add(Resources.back_32);
+            icon1 = Small.Icon(SYSTEM_INDEX_FOLDER).ToBitmap();
+            icon2 = Large.Icon(SYSTEM_INDEX_FOLDER).ToBitmap();
+            RegisterImage(PanelImageNames.ShareNormal, icon1, icon2);
+            RegisterImage(PanelImageNames.ShareHidden, MadeDisabledBitmap(icon1), MadeDisabledBitmap(icon2));
+            // ".." icon
+            RegisterImage(PanelImageNames.DoubleDot, Resources.back_16, Resources.back_32);
             // release sys images list
             Small.Dispose();
             Large.Dispose();
@@ -84,28 +76,84 @@ namespace LanExchange.Model
             return Result;
         }
 
-        public static ImageList SmallImageList
+        public static LanExchangeIcons Instance
         {
             get
             {
                 if (m_Instance == null)
                     m_Instance = new LanExchangeIcons();
-                return m_Instance.m_SmallImageList;
+                return m_Instance;
             }
         }
 
-        public static ImageList LargeImageList
+        public ImageList SmallImageList
         {
-            get
+            get { return m_SmallImageList; }
+        }
+
+        public ImageList LargeImageList
+        {
+            get { return m_LargeImageList; }
+        }
+
+        public int IndexOf(string name)
+        {
+            int index;
+            if (m_Instance.m_NamesMap.TryGetValue(name, out index))
+                return index;
+            return -1;
+        }
+
+        public void RegisterImage(string name, Image imageSmall, Image imageLarge)
+        {
+            int index;
+            if (imageSmall == null)
+                imageSmall = SmallEmpty;
+            if (imageLarge == null)
+                imageLarge = LargeEmpty;
+            if (m_NamesMap.TryGetValue(name, out index))
             {
-                if (m_Instance == null)
-                    m_Instance = new LanExchangeIcons();
-                return m_Instance.m_LargeImageList;
+                m_SmallImageList.Images[index] = imageSmall;
+                m_LargeImageList.Images[index] = imageLarge;
+            }
+            else
+            {
+                m_NamesMap.Add(name, m_LastIndex);
+                m_SmallImageList.Images.Add(imageSmall);
+                m_LargeImageList.Images.Add(imageLarge);
+                m_LastIndex++;
             }
         }
 
-        public static Icon GetSmallIcon(int index)
+        public void UnRegisterImage(string name)
         {
+            int index;
+            if (m_NamesMap.TryGetValue(name, out index))
+            {
+                m_NamesMap.Remove(name);
+                SmallImageList.Images[index] = SmallEmpty;
+                LargeImageList.Images[index] = LargeEmpty;
+            }
+        }
+
+        public Image GetSmallImage(string key)
+        {
+            var index = IndexOf(key);
+            if (index == -1) return null;
+            return SmallImageList.Images[index];
+        }
+
+        public Image GetLargeImage(string key)
+        {
+            var index = IndexOf(key);
+            if (index == -1) return null;
+            return LargeImageList.Images[index];
+        }
+
+        public Icon GetSmallIcon(string key)
+        {
+            var index = IndexOf(key);
+            if (index == -1) return null;
             Icon result;
             using (Bitmap bitmap = new Bitmap(SmallImageList.Images[index]))
             {
@@ -113,6 +161,17 @@ namespace LanExchange.Model
             }
             return result;
         }
-    
+
+        public Icon GetLargeIcon(string key)
+        {
+            var index = IndexOf(key);
+            if (index == -1) return null;
+            Icon result;
+            using (Bitmap bitmap = new Bitmap(LargeImageList.Images[index]))
+            {
+                result = Icon.FromHandle(bitmap.GetHicon());
+            }
+            return result;
+        }
     }
 }

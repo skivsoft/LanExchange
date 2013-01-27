@@ -3,37 +3,19 @@ using System.Collections.Generic;
 using System.Text;
 using LanExchange.Model.Panel;
 using LanExchange.Sdk;
-using LanExchange.Sdk.Model;
 using LanExchange.Utils;
 using LanExchange.Model.Settings;
 
-//using NLog;
-
 namespace LanExchange.Model
 {
-    //public enum PanelItemType
-    //{
-    //    COMPUTERS = 0,
-    //    SHARES = 1,
-    //    FILES = 2
-    //}
-
     public class PanelItemList : ISubscriber, IEquatable<PanelItemList>, IFilterModel, IPanelModel
-    {
-        public enum View
-        {
-            LargeIcon,
-            Details,
-            SmallIcon,
-            List
-        }
-        
+    {       
         //private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
         // items added by user
-        private readonly IList<AbstractPanelItem> m_Items;
+        private readonly IList<PanelItemBase> m_Items;
         // merged all results and user items
-        private readonly List<AbstractPanelItem> m_Data;
+        private readonly List<PanelItemBase> m_Data;
         // keys for filtering
         private readonly IList<IComparable> m_Keys;
         // current path for item list
@@ -48,13 +30,13 @@ namespace LanExchange.Model
 
         public PanelItemList(string name)
         {
-            m_Items = new List<AbstractPanelItem>();
-            m_Data = new List<AbstractPanelItem>();
+            m_Items = new List<PanelItemBase>();
+            m_Data = new List<PanelItemBase>();
             m_Keys = new List<IComparable>();
             Groups = new List<ISubject>();
             m_CurrentPath = new ObjectPath();
             TabName = name;
-            CurrentView = PanelItemList.View.Details;
+            CurrentView = PanelViewMode.Details;
         }
 
         public ObjectPath CurrentPath
@@ -62,7 +44,7 @@ namespace LanExchange.Model
             get { return m_CurrentPath; }
         }
 
-        public IList<AbstractPanelItem> Items
+        public IList<PanelItemBase> Items
         {
             get { return m_Items; }
         }
@@ -103,11 +85,12 @@ namespace LanExchange.Model
         }
 
         public string TabName { get; set; }
-        public PanelItemList.View CurrentView { get; set; }
+        public PanelViewMode CurrentView { get; set; }
+
         public IList<ISubject> Groups { get; set; }
         public string FocusedItemText { get; set; }
 
-        public void UpdateSubsctiption()
+        public void UpdateSubscription()
         {
             // do not update if we not in root directory
             if (!CurrentPath.IsEmpty) return;
@@ -129,13 +112,13 @@ namespace LanExchange.Model
         //    m_Data.Remove(comp.Name);
         //}
 
-        public AbstractPanelItem GetAt(int index)
+        public PanelItemBase GetAt(int index)
         {
             var item = m_Keys[index];
             return item != null ? Get(item.ToString()) : null;
         }
 
-        public AbstractPanelItem Get(string key)
+        public PanelItemBase Get(string key)
         {
             if (key == null) return null;
             var tempComp = new ComputerPanelItem(null, new ServerInfo { Name = key, Comment = String.Empty });
@@ -209,12 +192,15 @@ namespace LanExchange.Model
             get { return m_Keys.Count; }
         }
 
-        public bool HasBackItem()
+        public bool HasBackItem
         {
-            if (m_Data.Count > 0)
-                if (m_Data[0].Name == AbstractPanelItem.BACK)
-                    return true;
-            return false;
+            get
+            {
+                if (m_Data.Count > 0)
+                    if (m_Data[0].Name == PanelItemBase.BACK)
+                        return true;
+                return false;
+            }
         }
 
         //    PanelItemComparer comparer = new PanelItemComparer();
@@ -302,7 +288,7 @@ namespace LanExchange.Model
                         {
                             m_Data.Clear();
                             foreach (var group in Groups)
-                                foreach (AbstractPanelItem comp in sender.GetListBySubject(group))
+                                foreach (PanelItemBase comp in sender.GetListBySubject(group))
                                     m_Data.Add(comp);
                         }
                         else 
@@ -314,7 +300,7 @@ namespace LanExchange.Model
                         //ISubject group = (ISubject)m_CurrentPath.Peek();
                         m_Data.Clear();
                         if (subject != null && subject != ConcreteSubject.NotSubscribed)
-                            foreach (AbstractPanelItem comp in sender.GetListBySubject(subject))
+                            foreach (PanelItemBase comp in sender.GetListBySubject(subject))
                                 m_Data.Add(comp);
                     }
                 m_Data.Sort();

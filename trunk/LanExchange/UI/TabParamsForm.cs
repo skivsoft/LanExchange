@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
-using LanExchange.Sdk.View;
+using LanExchange.Sdk;
 
 namespace LanExchange.UI
 {
@@ -116,8 +116,8 @@ namespace LanExchange.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (OKClicked != null)
-                OKClicked(this, EventArgs.Empty);
+            if (OkClicked != null)
+                OkClicked(this, EventArgs.Empty);
         }
 
     }

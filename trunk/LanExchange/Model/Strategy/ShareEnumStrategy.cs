@@ -6,7 +6,7 @@ using LanExchange.Model;
 
 namespace LanExchange.Model.Strategy
 {
-    public class ShareEnumStrategy : AbstractPanelStrategy
+    public class ShareEnumStrategy : PanelStrategyBase
     {
         public override void Algorithm()
         {
@@ -14,8 +14,8 @@ namespace LanExchange.Model.Strategy
             if (comp == null) return;
             IEnumerable<NetApi32.SHARE_INFO_1> list = NetApi32Utils.NetShareEnum(comp.Name);
             // convert array to IList<ServerInfo>
-            m_Result = new List<AbstractPanelItem>();
-            m_Result.Add(new SharePanelItem(comp, AbstractPanelItem.BACK));
+            Result = new List<PanelItemBase>();
+            Result.Add(new SharePanelItem(comp, PanelItemBase.BACK));
             foreach (var item in list)
             {
                 var SI = new ShareInfo(item);
@@ -23,7 +23,7 @@ namespace LanExchange.Model.Strategy
                     continue;
                 if (!Settings.Settings.Instance.ShowPrinters && SI.IsPrinter)
                     continue;
-                m_Result.Add(new SharePanelItem(comp, SI));
+                Result.Add(new SharePanelItem(comp, SI));
             }
         }
 

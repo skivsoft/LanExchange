@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using LanExchange.Model.Settings;
-using LanExchange.Sdk.View;
+using LanExchange.Sdk;
 using LanExchange.UI;
 using LanExchange.Utils;
 
@@ -17,7 +17,7 @@ namespace LanExchange.Presenter
     /// <summary>
     /// Presenter for Settings (model) and AboutForm (view).
     /// </summary>
-    public sealed class AboutPresenter : IPresenter, IDisposable
+    public sealed class AboutPresenter : IDisposable
     {
         public static bool m_NeedRestart;
 

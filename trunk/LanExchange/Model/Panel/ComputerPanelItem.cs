@@ -1,11 +1,12 @@
 ﻿using System;
+using LanExchange.Sdk;
 using LanExchange.Utils;
 
 //using System.Net;
 
 namespace LanExchange.Model.Panel
 {
-    public class ComputerPanelItem : AbstractPanelItem, IWMIComputer
+    public class ComputerPanelItem : PanelItemBase, IWMIComputer
     {
         private readonly ServerInfo m_SI;
 
@@ -13,7 +14,7 @@ namespace LanExchange.Model.Panel
         /// Constructor creates ComputerPanelItem from <see cref="ServerInfo"/> object.
         /// </summary>
         /// <exception cref="ArgumentNullException"></exception>
-        public ComputerPanelItem(AbstractPanelItem parent, ServerInfo si) : base(parent)
+        public ComputerPanelItem(PanelItemBase parent, ServerInfo si) : base(parent)
         {
             if (si == null)
                 throw new ArgumentNullException("si");
@@ -53,13 +54,13 @@ namespace LanExchange.Model.Panel
             }
         }
 
-        public override int ImageIndex
+        public override string ImageName
         {
             get
             {
                 //if (IsLogged)
                 //    return LanExchangeIcons.CompGreen;
-                return IsPingable ? LanExchangeIcons.CompDefault : LanExchangeIcons.CompDisabled;
+                return IsPingable ? PanelImageNames.ComputerNormal : PanelImageNames.ComputerDisabled;
             }
         }
 

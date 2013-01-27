@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.Presenter;
 using LanExchange.Model;
-using LanExchange.Sdk.View;
+using LanExchange.Sdk;
 
 namespace LanExchange.UI
 {
@@ -57,12 +57,12 @@ namespace LanExchange.UI
             return text;
         }
 
-        public void NewTabFromItemList(PanelItemList info)
+        public void NewTabFromItemList(IPanelModel info)
         {
             TabPage Tab = new TabPage();
             Tab.Padding = new Padding(0);
             Tab.Text = Ellipsis(info.TabName, 20);
-            Tab.ImageIndex = LanExchangeIcons.Workgroup;
+            Tab.ImageIndex = LanExchangeIcons.Instance.IndexOf(PanelImageNames.Workgroup);
             Tab.ToolTipText = info.ToolTipText;
             Pages.Controls.Add(Tab);
         }
@@ -173,12 +173,15 @@ namespace LanExchange.UI
             m_Presenter.GetModel().SaveSettings();
         }
 
-        public IPanelView GetActivePanelView()
+        public IPanelView ActivePanelView
         {
-            if (Pages.TabCount == 0 || Pages.SelectedTab == null)
-                return null;
-            ControlCollection ctrls = Pages.SelectedTab.Controls;
-            return ctrls.Count > 0 ? ctrls[0] as IPanelView : null;
+            get
+            {
+                if (Pages.TabCount == 0 || Pages.SelectedTab == null)
+                    return null;
+                ControlCollection ctrls = Pages.SelectedTab.Controls;
+                return ctrls.Count > 0 ? ctrls[0] as IPanelView : null;
+            }
         }
 
         public void SetTabToolTip(int index, string value)
@@ -189,11 +192,11 @@ namespace LanExchange.UI
 
         public void FocusPanelView()
         {
-            var pv = GetActivePanelView();
+            var pv = ActivePanelView;
             if (pv != null && ActiveControl != pv)
             {
                 ActiveControl = pv as Control;
-                (pv.GetPresenter() as PanelPresenter).UpdateItemsAndStatus();
+                pv.Presenter.UpdateItemsAndStatus();
                 pv.FocusListView();
             }
         }
@@ -252,15 +255,14 @@ namespace LanExchange.UI
             }
         }
 
-        public void SetSelectedIndex(int value)
+        public int SelectedIndex
         {
-            Pages.SelectedIndex = value;
-            m_Presenter.GetModel().SelectedIndex = value;
-        }
-
-        public int GetSelectedIndex()
-        {
-            return Pages.SelectedIndex;
+            get { return Pages.SelectedIndex; }
+            set
+            {
+                Pages.SelectedIndex = value;
+                m_Presenter.GetModel().SelectedIndex = value;
+            }
         }
 
         internal void AddTabsToMenuItem(ToolStripMenuItem menuitem, EventHandler handler, bool bHideActive)
@@ -268,12 +270,12 @@ namespace LanExchange.UI
             var M = m_Presenter.GetModel();
             for (int i = 0; i < M.Count; i++)
             {
-                if (bHideActive && (!m_Presenter.CanCloseTab() || (i == GetSelectedIndex())))
+                if (bHideActive && (!m_Presenter.CanCloseTab() || (i == SelectedIndex)))
                     continue;
                 string S = M.GetTabName(i);
                 var Item = new ToolStripMenuItem
                 {
-                    Checked = (i == GetSelectedIndex()),
+                    Checked = (i == SelectedIndex),
                     Text = Ellipsis(S, 20),
                     ToolTipText = S,
                     Tag = i
@@ -288,14 +290,14 @@ namespace LanExchange.UI
             return new TabParamsForm();
         }
 
-        public IPanelView CreatePanelView(PanelItemList info)
+        public IPanelView CreatePanelView(IPanelModel info)
         {
             var PV = new PanelView();
             ListView LV = PV.Controls[0] as ListView;
             if (LV != null)
             {
-                LV.SmallImageList = LanExchangeIcons.SmallImageList;
-                LV.LargeImageList = LanExchangeIcons.LargeImageList;
+                LV.SmallImageList = LanExchangeIcons.Instance.SmallImageList;
+                LV.LargeImageList = LanExchangeIcons.Instance.LargeImageList;
                 LV.View = (System.Windows.Forms.View) info.CurrentView;
                 if (MainForm.Instance != null)
                     MainForm.Instance.tipComps.SetToolTip(LV, " ");
@@ -314,8 +316,8 @@ namespace LanExchange.UI
             if (menu != null)
             {
                 int Index = (int)menu.Tag;
-                if (GetSelectedIndex() != Index)
-                    SetSelectedIndex(Index);
+                if (SelectedIndex != Index)
+                    SelectedIndex = Index;
             }
         }
 

@@ -1,28 +1,87 @@
 ﻿using System;
 using System.Text;
-using LanExchange.Sdk;
 
-namespace LanExchange.Model.Panel
+namespace LanExchange.Sdk
 {
-    public abstract class AbstractPanelItem : IComparable<AbstractPanelItem>, IEquatable<ISubject>, IComparable, IColumnComparable, ISubject
+    /// <summary>
+    /// Base class for any LanExchange panel item.
+    /// </summary>
+    public abstract class PanelItemBase : IComparable<PanelItemBase>, IEquatable<ISubject>, IComparable, IColumnComparable, ISubject
     {
+        /// <summary>
+        /// The BACK
+        /// </summary>
         public static readonly string BACK = String.Empty;
 
         private ISubject m_ParentSubject;
 
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        /// <value>
+        /// The name.
+        /// </value>
         public abstract string Name { get; set; }
+        /// <summary>
+        /// Gets the count columns.
+        /// </summary>
+        /// <value>
+        /// The count columns.
+        /// </value>
         public abstract int CountColumns { get; }
+        /// <summary>
+        /// Gets or sets the <see cref="IComparable"/> at the specified index.
+        /// </summary>
+        /// <value>
+        /// The <see cref="IComparable"/>.
+        /// </value>
+        /// <param name="index">The index.</param>
+        /// <returns></returns>
         public abstract IComparable this[int index] { get; }
+        /// <summary>
+        /// Gets the name of the image.
+        /// </summary>
+        /// <value>
+        /// The name of the image.
+        /// </value>
+        public abstract string ImageName { get; }
+        /// <summary>
+        /// Gets the tool tip text.
+        /// </summary>
+        /// <value>
+        /// The tool tip text.
+        /// </value>
         public abstract string ToolTipText { get; }
+        /// <summary>
+        /// Creates the column header.
+        /// </summary>
+        /// <param name="index">The index.</param>
+        /// <returns></returns>
         public abstract IPanelColumnHeader CreateColumnHeader(int index);
 
-        protected AbstractPanelItem(AbstractPanelItem parent)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PanelItemBase"/> class.
+        /// </summary>
+        /// <param name="parent">The parent.</param>
+        protected PanelItemBase(PanelItemBase parent)
         {
             Parent = parent;
         }
 
-        public AbstractPanelItem Parent { get; set; }
-        
+        /// <summary>
+        /// Gets or sets the parent.
+        /// </summary>
+        /// <value>
+        /// The parent.
+        /// </value>
+        public PanelItemBase Parent { get; set; }
+
+        /// <summary>
+        /// Gets or sets the parent subject. This value is meanfull when <cref>Parent</cref> is null.
+        /// </summary>
+        /// <value>
+        /// The parent subject.
+        /// </value>
         public ISubject ParentSubject
         {
             get { return Parent ?? m_ParentSubject; }
@@ -31,11 +90,6 @@ namespace LanExchange.Model.Panel
                 if (Parent == null)
                     m_ParentSubject = value;
             }
-        }
-
-        public virtual int ImageIndex
-        {
-            get { return Name == BACK ? LanExchangeIcons.FolderBack : -1; }
         }
 
         /// <summary>
@@ -59,19 +113,20 @@ namespace LanExchange.Model.Panel
         /// <returns></returns>
         public int CompareTo(object other, int column)
         {
-            var otherItem = other as AbstractPanelItem;
+            var otherItem = other as PanelItemBase;
             if (otherItem == null) return 1;
             var value1 = GetColumnValue(column);
             var value2 = otherItem.GetColumnValue(column);
             return value1.CompareTo(value2);
         }
 
+
         /// <summary>
-        /// IComparable&lt;AbstractPanelItem&gt;.CompareTo implementation.
+        /// Compares to.
         /// </summary>
-        /// <param name="other"></param>
+        /// <param name="other">The other.</param>
         /// <returns></returns>
-        public int CompareTo(AbstractPanelItem other)
+        public int CompareTo(PanelItemBase other)
         {
             if ((Name == BACK) && (other.Name != BACK))
                 return -1;
@@ -88,25 +143,46 @@ namespace LanExchange.Model.Panel
         /// <returns></returns>
         public int CompareTo(object obj)
         {
-            return CompareTo(obj as AbstractPanelItem);
+            return CompareTo(obj as PanelItemBase);
         }
 
+        /// <summary>
+        /// Gets the subject.
+        /// </summary>
+        /// <value>
+        /// The subject.
+        /// </value>
         public string Subject
         {
             get { return Name; }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether this instance is cacheable.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is cacheable; otherwise, <c>false</c>.
+        /// </value>
         public virtual bool IsCacheable
         {
             get { return false; }
         }
 
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
         public override string ToString()
         {
             return Name;
         }
 
-
+        /// <summary>
+        /// Gets the full name.
+        /// </summary>
+        /// <returns></returns>
         public string GetFullName()
         {
             var sb = new StringBuilder();
@@ -126,7 +202,11 @@ namespace LanExchange.Model.Panel
             return sb.ToString();
         }
 
-        internal string[] GetStringsUpper()
+        /// <summary>
+        /// Gets the strings upper.
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetStringsUpper()
         {
             var result = new string[CountColumns];
             for (int i = 0; i < result.Length; i++)
@@ -138,6 +218,11 @@ namespace LanExchange.Model.Panel
             return result;
         }
 
+        /// <summary>
+        /// Equalses the specified other.
+        /// </summary>
+        /// <param name="other">The other.</param>
+        /// <returns></returns>
         public bool Equals(ISubject other)
         {
             return String.Compare(Subject, other.Subject, StringComparison.Ordinal) == 0;

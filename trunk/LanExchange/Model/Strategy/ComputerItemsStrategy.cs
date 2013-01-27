@@ -3,7 +3,7 @@ using LanExchange.Sdk;
 
 namespace LanExchange.Model.Strategy
 {
-    internal class ComputerItemsStrategy : AbstractPanelStrategy
+    internal class ComputerItemsStrategy : PanelStrategyBase
     {
         public override void Algorithm()
         {
