@@ -12,11 +12,11 @@ namespace LanExchange.WMI
     {
         private readonly WMIPresenter m_Presenter;
         private string m_CurrentWMIClass;
-        private readonly IWMIComputer m_Comp;
+        private readonly IWmiComputer m_Comp;
 
         public event EventHandler FocusedItemChanged;
 
-        public WMIForm(IWMIComputer comp)
+        public WMIForm(IWmiComputer comp)
         {
             InitializeComponent();
             // Enable double buffer for ListView

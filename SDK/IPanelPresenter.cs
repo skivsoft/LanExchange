@@ -24,16 +24,16 @@
         /// <summary>
         /// Gets the focused panel item.
         /// </summary>
-        /// <param name="bPingAndAsk">if set to <c>true</c> [b ping and ask].</param>
-        /// <param name="bCanReturnParent">if set to <c>true</c> [b can return parent].</param>
+        /// <param name="pingAndAsk">if set to <c>true</c> [b ping and ask].</param>
+        /// <param name="canReturnParent">if set to <c>true</c> [b can return parent].</param>
         /// <returns></returns>
-        PanelItemBase GetFocusedPanelItem(bool bPingAndAsk, bool bCanReturnParent);
+        PanelItemBase GetFocusedPanelItem(bool pingAndAsk, bool canReturnParent);
         // TODO must be undepended from AbstractPanelItem's descendant
         /// <summary>
         /// Gets the focused computer.
         /// </summary>
-        /// <param name="p">if set to <c>true</c> [p].</param>
+        /// <param name="pingAndAsk">if set to <c>true</c> [p].</param>
         /// <returns></returns>
-        PanelItemBase GetFocusedComputer(bool p);
+        PanelItemBase GetFocusedComputer(bool pingAndAsk);
     }
 }

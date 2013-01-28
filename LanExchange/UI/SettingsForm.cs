@@ -5,16 +5,16 @@ using LanExchange.Sdk;
 
 namespace LanExchange.UI
 {
-    public partial class ParamsForm : Form, IParamsView
+    public partial class SettingsForm : Form, ISettingsView
     {
         /// <summary>
         /// This field for external use.
         /// </summary>
-        public static ParamsForm Instance;
+        public static SettingsForm Instance;
 
         private readonly ParamsPresenter m_Presenter;
 
-        public ParamsForm()
+        public SettingsForm()
         {
             InitializeComponent();
             m_Presenter = new ParamsPresenter(this);
@@ -35,7 +35,7 @@ namespace LanExchange.UI
             }
         }
 
-        public bool IsAutorun
+        public bool IsAutoRun
         {
             get { return chAutorun.Checked; }
             set { chAutorun.Checked = value; }

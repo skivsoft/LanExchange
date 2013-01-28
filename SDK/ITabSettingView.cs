@@ -6,7 +6,7 @@ namespace LanExchange.Sdk
     /// <summary>
     /// View of LanExchange TabParams form.
     /// </summary>
-    public interface ITabParamsView : IDisposable
+    public interface ITabSettingView : IDisposable
     {
         /// <summary>
         /// Occurs when [ok clicked].
@@ -29,7 +29,7 @@ namespace LanExchange.Sdk
         /// <value>
         ///   <c>true</c> if [dont scan checked]; otherwise, <c>false</c>.
         /// </value>
-        bool DontScanChecked { get; set; }
+        bool DoNotScanChecked { get; set; }
         /// <summary>
         /// Gets or sets the text.
         /// </summary>

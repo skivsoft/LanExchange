@@ -10,12 +10,12 @@
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="args">The args.</param>
-        void Info(string message, params object[] args);
+        void LogInfo(string message, params object[] args);
         /// <summary>
         /// Errors the specified message.
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="args">The args.</param>
-        void Error(string message, params object[] args);
+        void LogError(string message, params object[] args);
     }
 }

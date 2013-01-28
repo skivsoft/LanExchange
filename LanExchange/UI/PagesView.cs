@@ -87,6 +87,7 @@ namespace LanExchange.UI
         {
             if (index < 0 || index > Pages.TabPages.Count - 1)
                 throw new ArgumentOutOfRangeException("index");
+            control.Dock = DockStyle.Fill;
             Pages.TabPages[index].Controls.Add(control);
         }
 
@@ -285,9 +286,9 @@ namespace LanExchange.UI
             }
         }
 
-        public ITabParamsView CreateTabParamsView()
+        public ITabSettingView CreateTabSettingsView()
         {
-            return new TabParamsForm();
+            return new TabSettingForm();
         }
 
         public IPanelView CreatePanelView(IPanelModel info)

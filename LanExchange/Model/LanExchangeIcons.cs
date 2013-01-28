@@ -125,7 +125,7 @@ namespace LanExchange.Model
             }
         }
 
-        public void UnRegisterImage(string name)
+        public void UnregisterImage(string name)
         {
             int index;
             if (m_NamesMap.TryGetValue(name, out index))

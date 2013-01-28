@@ -2,7 +2,6 @@
 using LanExchange.Model.Panel;
 using LanExchange.Sdk;
 using LanExchange.Utils;
-using LanExchange.Model;
 
 namespace LanExchange.Model.Strategy
 {
@@ -14,8 +13,7 @@ namespace LanExchange.Model.Strategy
             if (comp == null) return;
             IEnumerable<NetApi32.SHARE_INFO_1> list = NetApi32Utils.NetShareEnum(comp.Name);
             // convert array to IList<ServerInfo>
-            Result = new List<PanelItemBase>();
-            Result.Add(new SharePanelItem(comp, PanelItemBase.BACK));
+            Result.Add(new SharePanelItem(comp, PanelItemBase.DoubleDot));
             foreach (var item in list)
             {
                 var SI = new ShareInfo(item);
@@ -27,10 +25,10 @@ namespace LanExchange.Model.Strategy
             }
         }
 
-        public override void AcceptSubject(ISubject subject, out bool accepted)
+        public override bool IsSubjectAccepted(ISubject subject)
         {
             // parent for share can be only computer
-            accepted = (subject as ComputerPanelItem) != null;
+            return (subject as ComputerPanelItem) != null;
         }
     }
 }

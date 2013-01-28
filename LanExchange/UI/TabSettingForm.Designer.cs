@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
 namespace LanExchange.UI
 {
-    partial class TabParamsForm
+    partial class TabSettingForm
     {
         /// <summary>
         /// Required designer variable.
@@ -127,7 +127,7 @@ namespace LanExchange.UI
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "TabParamsForm";
+            this.Name = "TabSettingForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Настройка вкладки «{0}»";

@@ -82,7 +82,7 @@
             this.LV.Margin = new System.Windows.Forms.Padding(0);
             this.LV.Name = "LV";
             this.LV.ShowItemToolTips = true;
-            this.LV.Size = new System.Drawing.Size(470, 437);
+            this.LV.Size = new System.Drawing.Size(423, 348);
             this.LV.TabIndex = 26;
             this.LV.UseCompatibleStateImageBehavior = false;
             this.LV.View = System.Windows.Forms.View.Details;
@@ -374,7 +374,7 @@
             this.ePath.Margin = new System.Windows.Forms.Padding(0);
             this.ePath.Name = "ePath";
             this.ePath.ReadOnly = true;
-            this.ePath.Size = new System.Drawing.Size(470, 20);
+            this.ePath.Size = new System.Drawing.Size(423, 20);
             this.ePath.TabIndex = 25;
             this.ePath.TabStop = false;
             this.ePath.DoubleClick += new System.EventHandler(this.ePath_DoubleClick);
@@ -386,10 +386,10 @@
             this.pFilter.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pFilter.IsVisible = true;
             this.pFilter.LinkedControl = this.LV;
-            this.pFilter.Location = new System.Drawing.Point(0, 457);
+            this.pFilter.Location = new System.Drawing.Point(0, 368);
             this.pFilter.Margin = new System.Windows.Forms.Padding(0);
             this.pFilter.Name = "pFilter";
-            this.pFilter.Size = new System.Drawing.Size(470, 30);
+            this.pFilter.Size = new System.Drawing.Size(423, 30);
             this.pFilter.TabIndex = 27;
             this.pFilter.Visible = false;
             this.pFilter.FilterCountChanged += new System.EventHandler(this.pFilter_FilterCountChanged);
@@ -403,8 +403,7 @@
             this.Controls.Add(this.pFilter);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "PanelView";
-            this.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Size = new System.Drawing.Size(470, 487);
+            this.Size = new System.Drawing.Size(423, 398);
             this.popComps.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

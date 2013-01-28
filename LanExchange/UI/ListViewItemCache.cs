@@ -1,13 +1,9 @@
 ﻿using System.Windows.Forms;
+using System;
 //using NLog;
 
 namespace LanExchange.UI
 {
-    public interface IListViewItemGetter
-    {
-        ListViewItem GetListViewItemAt(int index);
-    }
-    
     // TODO need use cache
     public class ListViewItemCache
     {
@@ -40,18 +36,24 @@ namespace LanExchange.UI
         public void RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
         {
             //int TableCacheEndIndex = TableCacheStartIndex + TableCache.Length - 1;
-            //if (e.ItemIndex >= TableCacheStartIndex && e.ItemIndex <= TableCacheEndIndex)
+            var lv = sender as ListView;
+            if (lv == null) return;
+            if (e.ItemIndex >=  0 && e.ItemIndex <= lv.VirtualListSize-1)
             {
                 if (m_Getter != null)
+                {
                     e.Item = m_Getter.GetListViewItemAt(e.ItemIndex);
+                    for (int i = e.Item.SubItems.Count+1; i < lv.Columns.Count; i++)
+                        e.Item.SubItems.Add(String.Empty);                
+                }
                 //e.Item = TableCache[e.ItemIndex - TableCacheStartIndex];
             }
-            //else
-            //{
-            //    e.Item = new ListViewItem();
-            //    for (int i = 0; i < (sender as ListView).Columns.Count - 1; i++)
-            //        e.Item.SubItems.Add(String.Empty);
-            //}
+            else
+            {
+                e.Item = new ListViewItem();
+                for (int i = 0; i < (sender as ListView).Columns.Count - 1; i++)
+                    e.Item.SubItems.Add(String.Empty);
+            }
         }
     }
 }

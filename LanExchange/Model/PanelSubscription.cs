@@ -91,33 +91,27 @@ namespace LanExchange.Model
             }
         }
         
-        public bool HasStrategyForSubject(ISubject subject)
+        public PanelStrategyBase FindFirstAcceptedStrategy(ISubject subject)
         {
             foreach (var strategy in m_Strategies)
-            {
-                bool accepted;
-                strategy.AcceptSubject(subject, out accepted);
-                if (accepted)
-                    return true;
-            }
-            return false;
+                if (strategy.IsSubjectAccepted(subject))
+                    return strategy;
+            return null;
+        }
+
+        public bool HasStrategyForSubject(ISubject subject)
+        {
+            return FindFirstAcceptedStrategy(subject) != null;
         }
 
         private PanelStrategyBase CreateConcretePanelStrategy(ISubject subject)
         {
-            foreach (var strategy in m_Strategies)
-            {
-                bool accepted;
-                strategy.AcceptSubject(subject, out accepted);
-                if (accepted)
-                {
-                    // create another one instance of the strategy
-                    var newStrategy = (PanelStrategyBase)Activator.CreateInstance(strategy.GetType());
-                    newStrategy.Subject = subject;
-                    return newStrategy;
-                }
-            }
-            return null;
+            var strategy = FindFirstAcceptedStrategy(subject);
+            if (strategy == null) return null;
+            // create another one instance of the strategy
+            var newStrategy = (PanelStrategyBase)Activator.CreateInstance(strategy.GetType());
+            newStrategy.Subject = subject;
+            return newStrategy;
         }
 
         private void RefreshTimer_Tick(object sender, EventArgs e)
@@ -409,7 +403,7 @@ namespace LanExchange.Model
             }
         }
 
-        public void UnSubscribe(ISubscriber sender, bool updateTimer)
+        public void Unsubscribe(ISubscriber sender, bool updateTimer)
         {
             if (sender == null)
                 throw new ArgumentNullException("sender");

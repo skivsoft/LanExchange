@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange", "LanExchange\LanExchange.csproj", "{CC938630-E3FC-426E-A8A7-06EB22ABC703}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDK", "SDK\SDK.csproj", "{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sdk", "SDK\Sdk.csproj", "{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Users", "Plugin.Users\Plugin.Users.csproj", "{064D3413-8F0B-4511-85F3-4919AC1D5A98}"
 EndProject

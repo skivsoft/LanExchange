@@ -3,7 +3,7 @@
     /// <summary>
     /// View of LanExchange Params form.
     /// </summary>
-    public interface IParamsView
+    public interface ISettingsView
     {
         /// <summary>
         /// Gets or sets a value indicating whether this instance is autorun.
@@ -11,7 +11,7 @@
         /// <value>
         /// <c>true</c> if this instance is autorun; otherwise, <c>false</c>.
         /// </value>
-        bool IsAutorun { get; set; }
+        bool IsAutoRun { get; set; }
         /// <summary>
         /// Gets or sets a value indicating whether [run minimized].
         /// </summary>

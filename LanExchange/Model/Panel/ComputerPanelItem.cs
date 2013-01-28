@@ -6,7 +6,7 @@ using LanExchange.Utils;
 
 namespace LanExchange.Model.Panel
 {
-    public class ComputerPanelItem : PanelItemBase, IWMIComputer
+    public class ComputerPanelItem : PanelItemBase, IWmiComputer
     {
         private readonly ServerInfo m_SI;
 

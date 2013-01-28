@@ -3,12 +3,11 @@ using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
 using LanExchange.Presenter;
-using LanExchange.UI;
 using LanExchange.Utils;
 
 namespace LanExchange.UI
 {
-    public class AppView
+    public static class AppView
     {
         static void Application_ThreadExit(object sender, EventArgs e)
         {
@@ -34,7 +33,8 @@ namespace LanExchange.UI
 
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            LogUtils.Error("UI Exception: {0}", e.ExceptionObject);
+            var E = e.ExceptionObject as Exception;
+            LogUtils.Error("UI Exception: {0}\n{1}\n{2}", E.Source, E.Message, E.StackTrace);
             MainForm.Instance.ApplicationExit();
         }
 

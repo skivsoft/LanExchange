@@ -25,7 +25,7 @@ namespace LanExchange.Sdk
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="updateTimer">if set to <c>true</c> [update timer].</param>
-        void UnSubscribe(ISubscriber sender, bool updateTimer);
+        void Unsubscribe(ISubscriber sender, bool updateTimer);
         /// <summary>
         /// Determines whether [has strategy for subject] [the specified subject].
         /// </summary>

@@ -6,18 +6,18 @@ using LanExchange.Sdk;
 
 namespace LanExchange.Presenter
 {
-    public class TabParamsPresenter : ITabParamsPresenter
+    public class TabSettingsPresenter : ITabSettingsPresenter
     {
-        private ITabParamsView m_View;
+        private ITabSettingView m_View;
         private IPanelModel m_Info;
         private readonly IList<string> m_Groups;
 
-        public TabParamsPresenter()
+        public TabSettingsPresenter()
         {
             m_Groups = new List<string>();
         }
 
-        public void SetView(ITabParamsView view)
+        public void SetView(ITabSettingView view)
         {
             if (view == null)
                 throw new ArgumentNullException("view");
@@ -37,7 +37,7 @@ namespace LanExchange.Presenter
             // subscribe Form to ROOT subject (must return domain list)
             PanelSubscription.Instance.SubscribeToSubject(this, ConcreteSubject.Root);
             // unsubscribe Form from any subjects when Closed event will be fired
-            m_View.Closed += (sender, args) => PanelSubscription.Instance.UnSubscribe(this, false);
+            m_View.Closed += (sender, args) => PanelSubscription.Instance.Unsubscribe(this, false);
         }
 
         public IList<ISubject> Groups
@@ -59,7 +59,7 @@ namespace LanExchange.Presenter
                 if (m_Groups.Count > 0)
                     m_View.SelectedChecked = true;
                 else
-                    m_View.DontScanChecked = true;
+                    m_View.DoNotScanChecked = true;
             }
         }
 

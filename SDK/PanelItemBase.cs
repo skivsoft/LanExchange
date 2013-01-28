@@ -1,17 +1,19 @@
 ﻿using System;
+using System.Globalization;
 using System.Text;
 
 namespace LanExchange.Sdk
 {
+    // TODO refactor this! what we compare Name or Subject?
     /// <summary>
     /// Base class for any LanExchange panel item.
     /// </summary>
     public abstract class PanelItemBase : IComparable<PanelItemBase>, IEquatable<ISubject>, IComparable, IColumnComparable, ISubject
     {
         /// <summary>
-        /// The BACK
+        /// The ".." item
         /// </summary>
-        public static readonly string BACK = String.Empty;
+        public static readonly string DoubleDot = String.Empty;
 
         private ISubject m_ParentSubject;
 
@@ -128,9 +130,10 @@ namespace LanExchange.Sdk
         /// <returns></returns>
         public int CompareTo(PanelItemBase other)
         {
-            if ((Name == BACK) && (other.Name != BACK))
+            if (other == null) return 1;
+            if ((Name == DoubleDot) && (other.Name != DoubleDot))
                 return -1;
-            if ((Name != BACK) && (other.Name == BACK))
+            if ((Name != DoubleDot) && (other.Name == DoubleDot))
                 return 1;
             return String.Compare(Name, other.Name, StringComparison.Ordinal);
             //return CompareTo(other, 0);
@@ -180,26 +183,29 @@ namespace LanExchange.Sdk
         }
 
         /// <summary>
-        /// Gets the full name.
+        /// Gets the full name of panel item.
         /// </summary>
         /// <returns></returns>
-        public string GetFullName()
+        public string FullItemName
         {
-            var sb = new StringBuilder();
-            var item = this;
-            while (true)
+            get
             {
-                var s = item.ToString();
-                if (s != string.Empty)
+                var sb = new StringBuilder();
+                var item = this;
+                while (true)
                 {
-                    if (sb.Length > 0)
-                        sb.Insert(0, @"\");
-                    sb.Insert(0, s);
+                    var s = item.ToString();
+                    if (!String.IsNullOrEmpty(s))
+                    {
+                        if (sb.Length > 0)
+                            sb.Insert(0, @"\");
+                        sb.Insert(0, s);
+                    }
+                    if (item.Parent == null) break;
+                    item = item.Parent;
                 }
-                if (item.Parent == null) break;
-                item = item.Parent;
+                return sb.ToString();
             }
-            return sb.ToString();
         }
 
         /// <summary>
@@ -213,7 +219,7 @@ namespace LanExchange.Sdk
             {
                 object item = this[i];
                 if (item != null)
-                    result[i] = item.ToString().ToUpper();
+                    result[i] = item.ToString().ToUpper(CultureInfo.InvariantCulture);
             }
             return result;
         }
@@ -225,7 +231,86 @@ namespace LanExchange.Sdk
         /// <returns></returns>
         public bool Equals(ISubject other)
         {
+            if (other == null) return false;
             return String.Compare(Subject, other.Subject, StringComparison.Ordinal) == 0;
         }
+        /*
+        /// <summary>
+        /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
+        /// </summary>
+        /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
+        /// </returns>
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            var other = obj as ISubject;
+            if (other == null) return false;
+            return String.Compare(Subject, other.Subject, StringComparison.Ordinal) == 0;
+        }
+
+        /// <summary>
+        /// Returns a hash code for this instance.
+        /// </summary>
+        /// <returns>
+        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+        /// </returns>
+        public override int GetHashCode()
+        {
+            return Subject.GetHashCode();
+        }
+
+        /// <summary>
+        /// The '==' operator.
+        /// </summary>
+        /// <param name="item1">The item1.</param>
+        /// <param name="item2">The item2.</param>
+        /// <returns></returns>
+        public static bool operator ==(PanelItemBase item1, PanelItemBase item2)
+        {
+            if ((object)item1 == null) return (object)item2 == null;
+            if ((object)item2 == null) return false;
+            if (ReferenceEquals(item1, item2)) return true;
+            return item1.Subject == item2.Subject;
+        }
+
+        /// <summary>
+        /// The '!=' operator.
+        /// </summary>
+        /// <param name="item1">The item1.</param>
+        /// <param name="item2">The item2.</param>
+        /// <returns></returns>
+        public static bool operator !=(PanelItemBase item1, PanelItemBase item2)
+        {
+            return !(item1 == item2);
+        }
+
+        /// <summary>
+        /// The '&lt;' operator.
+        /// </summary>
+        /// <param name="item1">The item1.</param>
+        /// <param name="item2">The item2.</param>
+        /// <returns></returns>
+        public static bool operator <(PanelItemBase item1, PanelItemBase item2)
+        {
+            if ((object)item1 == null) return (object)item2 != null;
+            if ((object)item2 == null) return false;
+            return item1.CompareTo(item2) < 0;
+        }
+
+        /// <summary>
+        /// The ">" operator.
+        /// </summary>
+        /// <param name="item1">The item1.</param>
+        /// <param name="item2">The item2.</param>
+        /// <returns></returns>
+        public static bool operator >(PanelItemBase item1, PanelItemBase item2)
+        {
+            if ((object)item1 == null) return false;
+            if ((object)item2 == null) return true;
+            return item1.CompareTo(item2) > 0;
+        }
+         */
     }
 }

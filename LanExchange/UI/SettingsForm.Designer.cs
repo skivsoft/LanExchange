@@ -1,6 +1,6 @@
 ﻿namespace LanExchange.UI
 {
-    partial class ParamsForm
+    partial class SettingsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -199,7 +199,7 @@
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "ParamsForm";
+            this.Name = "SettingsForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Настройки программы";

@@ -5,10 +5,8 @@ using System.Windows.Forms;
 using LanExchange.Model;
 using LanExchange.Model.Panel;
 using LanExchange.Model.Settings;
-using LanExchange.Model.Strategy;
 using LanExchange.Presenter;
 using LanExchange.Sdk;
-using LanExchange.Utils;
 using LanExchange.WMI;
 
 namespace LanExchange.UI
@@ -93,10 +91,9 @@ namespace LanExchange.UI
             if (index < 0 || index > Math.Min(m_Presenter.Objects.FilterCount, LV.VirtualListSize) - 1)
                 return null;
             ListViewItem Result = new ListViewItem();
-            var PItem = m_Presenter.Objects.GetAt(index);
+            var PItem = m_Presenter.Objects.GetItemAt(index);
             if (PItem != null)
             {
-                Result.Text = PItem.Name;
                 for (int i = 0; i < PItem.CountColumns; i++)
                 {
                     var value = PItem[i] != null ? PItem[i].ToString() : String.Empty;
@@ -443,7 +440,7 @@ namespace LanExchange.UI
                     var share = PItem as SharePanelItem;
                     mComp.Text = @"\\" + share.ComputerName;
                     bCompVisible = Settings.Instance.AdvancedMode;
-                    if (share.Name != PanelItemBase.BACK)
+                    if (share.Name != PanelItemBase.DoubleDot)
                     {
                         mFolder.Text = String.Format(@"\\{0}\{1}", share.ComputerName, share.Name);
                         mFolder.Image = LanExchangeIcons.Instance.GetSmallImage(share.ImageName);
@@ -464,7 +461,7 @@ namespace LanExchange.UI
             SetEnabledAndVisible(new ToolStripItem[] { mCopyCompName, mCopyComment, mCopySelected }, menu == PanelPresenter.COMPUTER_MENU);
             bool bSend = false;
             if (menu == PanelPresenter.COMPUTER_MENU)
-                bSend = (PItem != null) && (PItem.Name != PanelItemBase.BACK);
+                bSend = (PItem != null) && (PItem.Name != PanelItemBase.DoubleDot);
             SetEnabledAndVisible(new ToolStripItem[] { mSendSeparator, mSendToNewTab }, bSend);
 
             SetEnabledAndVisible(mCopyPath, menu == PanelPresenter.FOLDER_MENU);

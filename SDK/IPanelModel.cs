@@ -79,13 +79,13 @@ namespace LanExchange.Sdk
         /// </summary>
         /// <param name="index">The index.</param>
         /// <returns></returns>
-        PanelItemBase GetAt(int index);
+        PanelItemBase GetItemAt(int index);
         /// <summary>
         /// Gets the specified key.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <returns></returns>
-        PanelItemBase Get(string key);
+        PanelItemBase GetItem(string key);
         /// <summary>
         /// Indexes the of.
         /// </summary>

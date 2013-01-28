@@ -9,16 +9,16 @@ namespace LanExchange.Presenter
     /// </summary>
     public class ParamsPresenter
     {
-        private readonly IParamsView m_View;
+        private readonly ISettingsView m_View;
 
-        public ParamsPresenter(IParamsView view)
+        public ParamsPresenter(ISettingsView view)
         {
             m_View = view;
         }
 
         public void LoadFromModel()
         {
-            m_View.IsAutorun = Settings.IsAutorun;
+            m_View.IsAutoRun = Settings.IsAutorun;
             m_View.RunMinimized = Settings.Instance.RunMinimized;
             m_View.AdvancedMode = Settings.Instance.AdvancedMode;
             m_View.RefreshTimeInMin = Settings.Instance.RefreshTimeInSec / 60;
@@ -28,7 +28,7 @@ namespace LanExchange.Presenter
 
         public void SaveToModel()
         {
-            Settings.IsAutorun = m_View.IsAutorun;
+            Settings.IsAutorun = m_View.IsAutoRun;
             Settings.Instance.RunMinimized = m_View.RunMinimized;
             Settings.Instance.AdvancedMode = m_View.AdvancedMode;
             Settings.Instance.RefreshTimeInSec = m_View.RefreshTimeInMin * 60;

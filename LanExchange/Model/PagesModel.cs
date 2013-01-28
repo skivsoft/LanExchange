@@ -119,7 +119,7 @@ namespace LanExchange.Model
         {
             if (index >= 0 && index < m_List.Count)
             {
-                PanelSubscription.Instance.UnSubscribe(m_List[index], true);
+                PanelSubscription.Instance.Unsubscribe(m_List[index], true);
                 m_List.RemoveAt(index);
                 DoAfterRemove(index);
             }
