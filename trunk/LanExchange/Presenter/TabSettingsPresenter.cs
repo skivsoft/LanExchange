@@ -65,7 +65,9 @@ namespace LanExchange.Presenter
 
         private void View_OKClicked(object sender, EventArgs e)
         {
-            m_Info.Groups = Groups;
+            m_Info.Groups.Clear();
+            foreach(var item in Groups)
+                m_Info.Groups.Add(item);
             m_Info.UpdateSubscription();
         }
 
@@ -74,7 +76,7 @@ namespace LanExchange.Presenter
             if (m_View == null)
                 throw new Exception("View is null");
             // do not update list after unsubscribe
-            if (subject == ConcreteSubject.NotSubscribed) return;
+            if (Equals(subject, ConcreteSubject.NotSubscribed)) return;
             IList<string> Saved;
             if (m_View.DomainsCount == 0)
                 Saved = m_Groups;

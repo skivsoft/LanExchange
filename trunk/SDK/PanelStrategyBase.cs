@@ -11,14 +11,14 @@ namespace LanExchange.Sdk
     public abstract class PanelStrategyBase : IBackgroundStrategy
     {
         private ISubject m_Subject;
-        private readonly List<PanelItemBase> m_Result;
+        private readonly Collection<PanelItemBase> m_Result;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelStrategyBase"/> class.
         /// </summary>
         protected PanelStrategyBase()
         {
-            m_Result = new List<PanelItemBase>();
+            m_Result = new Collection<PanelItemBase>();
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace LanExchange.Sdk
         /// <value>
         /// The result.
         /// </value>
-        public List<PanelItemBase> Result
+        public Collection<PanelItemBase> Result
         {
             get { return m_Result; }
         }

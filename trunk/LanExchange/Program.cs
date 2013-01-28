@@ -29,6 +29,7 @@
 using System;
 using System.Reflection;
 using System.Windows.Forms;
+using LanExchange.Presenter;
 using LanExchange.UI;
 using LanExchange.Utils;
 
@@ -49,8 +50,8 @@ namespace LanExchange
         {
             SingleInstanceCheck.Check();
             LogHeader();
-            //var plugins = new PluginLoader();
-            //plugins.LoadPlugins();
+            AppPresenter.Plugins = new PluginLoader();
+            AppPresenter.Plugins.LoadPlugins();
             AppView.ApplicationRun();
             LogUtils.Stop();
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 using LanExchange.Model;
@@ -614,6 +615,18 @@ namespace LanExchange.UI
         {
                 MessageBox.Show(String.Format("Не удалось выполнить команду:\n{0}", CmdLine), "Ошибка при запуске",
                     MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
+        }
+
+        private void LV_MouseDown(object sender, MouseEventArgs e)
+        {
+            var pt = new Point(e.X, e.Y);
+            var hit = LV.HitTest(pt);
+            if (hit.Item != null)
+            {
+                if (hit.Item.Selected)
+                MainForm.Instance.Text = hit.Item.Text;
+                //LV.DoDragDrop(LV.FocusedItem.Text, DragDropEffects.Copy);
+            }
         }
     }
 }

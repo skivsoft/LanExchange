@@ -312,8 +312,8 @@
         private System.Windows.Forms.ContextMenuStrip popTop;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
         private System.Windows.Forms.ToolStripStatusLabel lUserName;
-        private InfoView pInfo;
-        private PagesView Pages;
+        internal InfoView pInfo;
+        internal PagesView Pages;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
         private System.Windows.Forms.ToolStripStatusLabel lWorkers;
         private System.Windows.Forms.ContextMenuStrip popWorkers;
