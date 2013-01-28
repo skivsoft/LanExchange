@@ -50,8 +50,8 @@ namespace LanExchange.Presenter
             var destObjects = new PanelItemList(newTabName);
             foreach (int index in sourcePV.SelectedIndexes)
             {
-                var PItem = sourceObjects.GetAt(index);
-                if (PItem == null || PItem.Name == PanelItemBase.BACK) 
+                var PItem = sourceObjects.GetItemAt(index);
+                if (PItem == null || PItem.Name == PanelItemBase.DoubleDot) 
                     continue;
                 if (!(PItem is ComputerPanelItem))
                     continue;
@@ -153,9 +153,9 @@ namespace LanExchange.Presenter
             int Index = m_View.PopupSelectedIndex;
             PanelItemList Info = m_Model.GetItem(Index);
             if (Info == null) return;
-            using (var Form = m_View.CreateTabParamsView())
+            using (var Form = m_View.CreateTabSettingsView())
             {
-                ITabParamsPresenter presenter = new TabParamsPresenter();
+                ITabSettingsPresenter presenter = new TabSettingsPresenter();
                 presenter.SetView(Form);
                 presenter.SetInfo(Info);
                 if (Form.ShowModal())

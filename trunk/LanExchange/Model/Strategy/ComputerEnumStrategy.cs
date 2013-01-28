@@ -14,7 +14,6 @@ namespace LanExchange.Model.Strategy
             // get server list via OS api
             var list = NetApi32Utils.NetServerEnum(domain.Name, NetApi32.SV_101_TYPES.SV_TYPE_ALL);
             // convert array to IList<ServerInfo>
-            Result = new List<PanelItemBase>();
             foreach (var item in list)
             {
                 var SI = ServerInfo.FromNetApi32(item);
@@ -23,10 +22,10 @@ namespace LanExchange.Model.Strategy
             }
         }
 
-        public override void AcceptSubject(ISubject subject, out bool accepted)
+        public override bool IsSubjectAccepted(ISubject subject)
         {
             // computers can be only into domains
-            accepted = (subject as DomainPanelItem) != null;
+            return (subject as DomainPanelItem) != null;
         }
     }
 }

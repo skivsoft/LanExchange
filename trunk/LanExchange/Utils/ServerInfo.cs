@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Globalization;
 using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 //using System.Xml.Serialization;
 
 namespace LanExchange.Utils
 {
     [Serializable]
-    public class ServerInfo : IComparable<ServerInfo>//, IXmlSerializable
+    public class ServerInfo : IComparable<ServerInfo>, IXmlSerializable
     {
         private string sv101_name;
         private uint sv101_platform_id;
@@ -299,43 +301,7 @@ namespace LanExchange.Utils
             return null;
         }
 
-        /// <summary>
-        /// not worked
-        /// </summary>
-        public void ReadXml(System.Xml.XmlReader reader)
-        {
-            uint uValue;
-            reader.MoveToContent();
-            Name = reader.GetAttribute("Name");
-            if (uint.TryParse(reader.GetAttribute("PlatformID"), out uValue))
-                PlatformID = uValue;
-            var sValue = reader.GetAttribute("Version");
-            if (sValue != null)
-            {
-                var aValue = sValue.Split('.');
-                if (aValue.Length == 2)
-                {
-                    uint uValue1;
-                    uint uValue2;
-                    if (uint.TryParse(aValue[0], out uValue1) && uint.TryParse(aValue[1], out uValue2))
-                    {
-                        VersionMajor = uValue1;
-                        VersionMinor = uValue2;
-                    }
-                }
-            }
-            sValue = reader.GetAttribute("Type");
-            if (uint.TryParse(sValue, NumberStyles.HexNumber, null, out uValue))
-                Type = uValue;
-            Comment = reader.GetAttribute("Comment");
-            if (Name == null) Name = String.Empty;
-            if (Comment == null) Comment = String.Empty;
-            reader.ReadStartElement();
-            if (!reader.IsEmptyElement)
-                throw new Exception("ServerInfo element must be empty.");
-        }
-
-        public void WriteXml(System.Xml.XmlWriter writer)
+        public void WriteXml(XmlWriter writer)
         {
             writer.WriteAttributeString("Name", Name);
             writer.WriteAttributeString("PlatformID", PlatformID.ToString(CultureInfo.InvariantCulture));
@@ -343,6 +309,43 @@ namespace LanExchange.Utils
             writer.WriteAttributeString("Type", Type.ToString("X"));
             if (!String.IsNullOrEmpty(Comment))
                 writer.WriteAttributeString("Comment", Comment);
+        }
+
+        /// <summary>
+        /// not worked
+        /// </summary>
+        public void ReadXml(XmlReader reader)
+        {
+            if (reader.MoveToContent() == XmlNodeType.Element && reader.LocalName == "ServerInfo")
+            {
+                uint uValue;
+                Name = reader["Name"];
+                if (uint.TryParse(reader["PlatformID"], out uValue))
+                    PlatformID = uValue;
+                var sValue = reader["Version"];
+                if (sValue != null)
+                {
+                    var aValue = sValue.Split('.');
+                    if (aValue.Length == 2)
+                    {
+                        uint uValue1;
+                        uint uValue2;
+                        if (uint.TryParse(aValue[0], out uValue1) && uint.TryParse(aValue[1], out uValue2))
+                        {
+                            VersionMajor = uValue1;
+                            VersionMinor = uValue2;
+                        }
+                    }
+                }
+                sValue = reader["Type"];
+                if (uint.TryParse(sValue, NumberStyles.HexNumber, null, out uValue))
+                    Type = uValue;
+                Comment = reader["Comment"];
+                if (Name == null) Name = String.Empty;
+                if (Comment == null) Comment = String.Empty;
+
+                reader.Read();
+            }
         }
     }
 }

@@ -49,8 +49,8 @@ namespace LanExchange
         {
             SingleInstanceCheck.Check();
             LogHeader();
-            var plugins = new PluginLoader();
-            plugins.LoadPlugins();
+            //var plugins = new PluginLoader();
+            //plugins.LoadPlugins();
             AppView.ApplicationRun();
             LogUtils.Stop();
         }

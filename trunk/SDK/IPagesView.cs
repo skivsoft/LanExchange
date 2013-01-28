@@ -59,7 +59,7 @@
         /// Creates the tab params view.
         /// </summary>
         /// <returns></returns>
-        ITabParamsView CreateTabParamsView();
+        ITabSettingView CreateTabSettingsView();
         /// <summary>
         /// Creates the panel view.
         /// </summary>

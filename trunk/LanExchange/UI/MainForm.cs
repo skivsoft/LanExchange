@@ -281,13 +281,13 @@ namespace LanExchange.UI
 
         private void mSettings_Click(object sender, EventArgs e)
         {
-            if (ParamsForm.Instance != null)
+            if (SettingsForm.Instance != null)
                 return;
-            using (ParamsForm.Instance = new ParamsForm())
+            using (SettingsForm.Instance = new SettingsForm())
             {
-                ParamsForm.Instance.ShowDialog();
+                SettingsForm.Instance.ShowDialog();
             }
-            ParamsForm.Instance = null;
+            SettingsForm.Instance = null;
         }
 
         private void mAbout_Click(object sender, EventArgs e)

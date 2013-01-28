@@ -10,10 +10,10 @@ namespace LanExchange.Model.Strategy
             // do nothing here
         }
 
-        public override void AcceptSubject(ISubject subject, out bool accepted)
+        public override bool IsSubjectAccepted(ISubject subject)
         {
             // computers can be only into domains
-            accepted = subject == ConcreteSubject.UserItems;
+            return subject == ConcreteSubject.UserItems;
         }
     }
 }

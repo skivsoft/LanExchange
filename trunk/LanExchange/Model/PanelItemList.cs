@@ -8,7 +8,7 @@ using LanExchange.Model.Settings;
 
 namespace LanExchange.Model
 {
-    public class PanelItemList : ISubscriber, IEquatable<PanelItemList>, IFilterModel, IPanelModel
+    public class PanelItemList : IEquatable<PanelItemList>, IPanelModel
     {       
         //private readonly static Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -96,11 +96,11 @@ namespace LanExchange.Model
             if (!CurrentPath.IsEmpty) return;
             if (Groups.Count > 0)
             {
-                PanelSubscription.Instance.UnSubscribe(this, false);
+                PanelSubscription.Instance.Unsubscribe(this, false);
                 foreach (var group in Groups)
                     PanelSubscription.Instance.SubscribeToSubject(this, group);
             } else
-                PanelSubscription.Instance.UnSubscribe(this, true);
+                PanelSubscription.Instance.Unsubscribe(this, true);
             if (SubscriptionChanged != null)
                 SubscriptionChanged(this, EventArgs.Empty);
         }
@@ -112,13 +112,13 @@ namespace LanExchange.Model
         //    m_Data.Remove(comp.Name);
         //}
 
-        public PanelItemBase GetAt(int index)
+        public PanelItemBase GetItemAt(int index)
         {
             var item = m_Keys[index];
-            return item != null ? Get(item.ToString()) : null;
+            return item != null ? GetItem(item.ToString()) : null;
         }
 
-        public PanelItemBase Get(string key)
+        public PanelItemBase GetItem(string key)
         {
             if (key == null) return null;
             var tempComp = new ComputerPanelItem(null, new ServerInfo { Name = key, Comment = String.Empty });
@@ -197,7 +197,7 @@ namespace LanExchange.Model
             get
             {
                 if (m_Data.Count > 0)
-                    if (m_Data[0].Name == PanelItemBase.BACK)
+                    if (m_Data[0].Name == PanelItemBase.DoubleDot)
                         return true;
                 return false;
             }

@@ -4,7 +4,7 @@ using System.IO;
 using LanExchange.Sdk;
 using System.Drawing;
 
-namespace LanExchange.Plugin
+namespace LanExchange.PlugIn
 {
     public class Images : IPlugin
     {
@@ -43,7 +43,7 @@ namespace LanExchange.Plugin
             var files = Directory.GetFiles(folder, ImagesMask, SearchOption.TopDirectoryOnly);
             foreach (var fname in files)
             {
-                if (fname.EndsWith(ImageEnd16))
+                if (fname.EndsWith(ImageEnd16, StringComparison.Ordinal))
                 {
                     var s = Path.GetFileName(fname.Substring(0, fname.Length - ImageEnd16.Length));
                     if (!String.IsNullOrEmpty(s))
@@ -55,7 +55,7 @@ namespace LanExchange.Plugin
                     }
                     continue;
                 }
-                if (fname.EndsWith(ImageEnd32))
+                if (fname.EndsWith(ImageEnd32, StringComparison.Ordinal))
                 {
                     var s = Path.GetFileName(fname.Substring(0, fname.Length - ImageEnd32.Length));
                     if (!String.IsNullOrEmpty(s))

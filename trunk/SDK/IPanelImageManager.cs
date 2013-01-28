@@ -18,7 +18,7 @@ namespace LanExchange.Sdk
         /// Unregister image.
         /// </summary>
         /// <param name="name">The name.</param>
-        void UnRegisterImage(string name);
+        void UnregisterImage(string name);
         /// <summary>
         /// Gets index by image name.
         /// </summary>

@@ -3,7 +3,7 @@
     /// <summary>
     /// Simple description of remote computer for WMI plugin.
     /// </summary>
-    public interface IWMIComputer
+    public interface IWmiComputer
     {
         /// <summary>
         /// Gets or sets the name.

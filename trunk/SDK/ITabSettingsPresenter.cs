@@ -3,13 +3,13 @@
     /// <summary>
     /// Presenter of LanExchange TabParams form.
     /// </summary>
-    public interface ITabParamsPresenter : ISubscriber
+    public interface ITabSettingsPresenter : ISubscriber
     {
         /// <summary>
         /// Sets the view.
         /// </summary>
         /// <param name="view">The view.</param>
-        void SetView(ITabParamsView view);
+        void SetView(ITabSettingView view);
         /// <summary>
         /// Sets the info.
         /// </summary>

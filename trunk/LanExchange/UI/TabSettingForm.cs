@@ -6,11 +6,11 @@ using LanExchange.Sdk;
 
 namespace LanExchange.UI
 {
-    public partial class TabParamsForm : Form, ITabParamsView
+    public partial class TabSettingForm : Form, ITabSettingView
     {
         public event EventHandler OkClicked;
 
-        public TabParamsForm()
+        public TabSettingForm()
         {
             InitializeComponent();
         }
@@ -21,7 +21,7 @@ namespace LanExchange.UI
             set { rbSelected.Checked = value; }
         }
 
-        public bool DontScanChecked 
+        public bool DoNotScanChecked 
         {
             get { return rbDontScan.Checked; }
             set { rbDontScan.Checked = value; }

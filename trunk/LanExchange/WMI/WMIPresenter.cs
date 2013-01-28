@@ -10,13 +10,13 @@ namespace LanExchange.WMI
 {
     public sealed class WMIPresenter : IDisposable
     {
-        private readonly IWMIComputer m_Comp;
+        private readonly IWmiComputer m_Comp;
         private ManagementScope m_Namespace;
 
         private readonly IWMIView m_View;
         private ManagementClass m_Class;
 
-        public WMIPresenter(IWMIComputer comp, IWMIView view)
+        public WMIPresenter(IWmiComputer comp, IWMIView view)
         {
             m_Comp = comp;
             m_View = view;

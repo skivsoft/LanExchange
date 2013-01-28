@@ -12,15 +12,14 @@ namespace LanExchange.Model.Strategy
             // get domain list via OS api
             var list = NetApi32Utils.NetServerEnum(null, NetApi32.SV_101_TYPES.SV_TYPE_DOMAIN_ENUM);
             // convert array to IList<ServerInfo>
-            Result = new List<PanelItemBase>();
             foreach(var item in list)
                 Result.Add(new DomainPanelItem(null, ServerInfo.FromNetApi32(item)));
         }
 
-        public override void AcceptSubject(ISubject subject, out bool accepted)
+        public override bool IsSubjectAccepted(ISubject subject)
         {
             // domains can be only at root level
-            accepted = subject == ConcreteSubject.Root;
+            return subject == ConcreteSubject.Root;
         }
     }
 }

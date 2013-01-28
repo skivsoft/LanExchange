@@ -69,7 +69,7 @@ namespace LanExchange.Presenter
             {
                 if (S.Length > 0)
                     S.AppendLine();
-                PanelItemBase PItem = m_Objects.GetAt(selIndex);
+                PanelItemBase PItem = m_Objects.GetItemAt(selIndex);
                 if (PItem != null)
                     S.Append(@"\\" + PItem[index]);
             }
@@ -85,7 +85,7 @@ namespace LanExchange.Presenter
             {
                 if (S.Length > 0)
                     S.AppendLine();
-                PanelItemBase PItem = m_Objects.GetAt(index);
+                PanelItemBase PItem = m_Objects.GetItemAt(index);
                 if (PItem != null)
                 {
                     S.Append(@"\\" + PItem[0]);
@@ -105,7 +105,7 @@ namespace LanExchange.Presenter
             {
                 if (S.Length > 0)
                     S.AppendLine();
-                SharePanelItem PItem = m_Objects.GetAt(index) as SharePanelItem;
+                SharePanelItem PItem = m_Objects.GetItemAt(index) as SharePanelItem;
                 if (PItem != null)
                     S.Append(String.Format(@"\\{0}\{1}", PItem.ComputerName, PItem.Name));
             }
@@ -133,11 +133,11 @@ namespace LanExchange.Presenter
             }
         }
 
-        public PanelItemBase GetFocusedPanelItem(bool bPingAndAsk, bool bCanReturnParent)
+        public PanelItemBase GetFocusedPanelItem(bool pingAndAsk, bool canReturnParent)
         {
-            var item = m_Objects.Get(m_View.FocusedItemText);
+            var item = m_Objects.GetItem(m_View.FocusedItemText);
             var comp =  item as ComputerPanelItem;
-            if (comp != null && bPingAndAsk)
+            if (comp != null && pingAndAsk)
             {
                 bool bPingResult = PingThread.FastPing(comp.Name);
                 if (comp.IsPingable != bPingResult)
@@ -154,7 +154,7 @@ namespace LanExchange.Presenter
                         item = null;
                 }
             }
-            if (bCanReturnParent && item != null && item.Name == PanelItemBase.BACK)
+            if (canReturnParent && item != null && item.Name == PanelItemBase.DoubleDot)
                 item = item.Parent;
             return item;
         }
@@ -214,9 +214,9 @@ namespace LanExchange.Presenter
         /// Returns computer either focused item is computer or focused item is subitem of computer.
         /// </summary>
         /// <returns>a ComputerPanelItem or null</returns>
-        public PanelItemBase GetFocusedComputer(bool bPingAndAsk)
+        public PanelItemBase GetFocusedComputer(bool pingAndAsk)
         {
-            var PItem = GetFocusedPanelItem(bPingAndAsk, false);
+            var PItem = GetFocusedPanelItem(pingAndAsk, false);
             if (PItem == null)
                 return null;
             while (!(PItem is ComputerPanelItem) && (PItem.Parent != null))
@@ -228,13 +228,13 @@ namespace LanExchange.Presenter
         {
             var PItem = GetFocusedPanelItem(false, false);
             if (PItem == null || Objects == null) return false;
-            if (PItem.Name == PanelItemBase.BACK)
+            if (PItem.Name == PanelItemBase.DoubleDot)
                 return CommandLevelUp();
             var result = PanelSubscription.Instance.HasStrategyForSubject(PItem);
             if (result)
             {
                 LogUtils.Info("LevelDown()");
-                PanelSubscription.Instance.UnSubscribe(Objects, false);
+                PanelSubscription.Instance.Unsubscribe(Objects, false);
                 PanelSubscription.Instance.SubscribeToSubject(Objects, PItem);
                 Objects.CurrentPath.Push(PItem);
             }
@@ -254,7 +254,7 @@ namespace LanExchange.Presenter
                 Objects.FocusedItemText = PItem.Name;
                 LogUtils.Info("LevelUp()");
                 Objects.CurrentPath.Pop();
-                PanelSubscription.Instance.UnSubscribe(Objects, false);
+                PanelSubscription.Instance.Unsubscribe(Objects, false);
                 PanelSubscription.Instance.SubscribeToSubject(Objects, subject);
             }
             return result;
@@ -264,7 +264,7 @@ namespace LanExchange.Presenter
         {
             while (PItem != null)
             {
-                if (PItem.Name == PanelItemBase.BACK)
+                if (PItem.Name == PanelItemBase.DoubleDot)
                 {
                     PItem = PItem.Parent;
                     continue;
@@ -287,7 +287,7 @@ namespace LanExchange.Presenter
             bool Modified = false;
             foreach (int index in m_View.SelectedIndexes)
             {
-                var comp = m_Objects.GetAt(index);
+                var comp = m_Objects.GetItemAt(index);
                 if (comp != null && comp.ParentSubject == ConcreteSubject.UserItems)
                 {
                     m_Objects.Items.Remove(comp);

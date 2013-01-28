@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace LanExchange.Presenter
 {
-    public class InputBoxPresenter
+    public static class InputBoxPresenter
     {
         public static string Ask(string caption, string prompt, string defText, bool allowEmpty)
         {

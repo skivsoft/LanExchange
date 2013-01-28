@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Collections.Generic;
 
 namespace LanExchange.Sdk
@@ -9,7 +11,15 @@ namespace LanExchange.Sdk
     public abstract class PanelStrategyBase : IBackgroundStrategy
     {
         private ISubject m_Subject;
-        private List<PanelItemBase> m_Result;
+        private readonly List<PanelItemBase> m_Result;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PanelStrategyBase"/> class.
+        /// </summary>
+        protected PanelStrategyBase()
+        {
+            m_Result = new List<PanelItemBase>();
+        }
 
         /// <summary>
         /// Gets or sets the result.
@@ -20,18 +30,19 @@ namespace LanExchange.Sdk
         public List<PanelItemBase> Result
         {
             get { return m_Result; }
-            set { m_Result = value; }
         }
 
         /// <summary>
-        /// Accepts the subject.
+        /// Determines whether [is subject accepted] [the specified subject].
         /// </summary>
         /// <param name="subject">The subject.</param>
-        /// <param name="accepted">if set to <c>true</c> [accepted].</param>
-        public virtual void AcceptSubject(ISubject subject, out bool accepted)
+        /// <returns>
+        ///   <c>true</c> if [is subject accepted] [the specified subject]; otherwise, <c>false</c>.
+        /// </returns>
+        public virtual bool IsSubjectAccepted(ISubject subject)
         {
             // accepting nothing by default
-            accepted = false;
+            return false;
         }
 
         /// <summary>
@@ -59,7 +70,7 @@ namespace LanExchange.Sdk
         /// </returns>
         public override string ToString()
         {
-            return String.Format("{0}({1})", base.ToString(), m_Subject);
+            return String.Format(CultureInfo.InvariantCulture, "{0}({1})", base.ToString(), m_Subject);
         }
     }
 }
