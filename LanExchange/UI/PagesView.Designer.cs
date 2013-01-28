@@ -109,6 +109,7 @@
             // 
             // Pages
             // 
+            this.Pages.AllowDrop = true;
             this.Pages.ContextMenuStrip = this.popPages;
             this.Pages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Pages.Location = new System.Drawing.Point(0, 0);
@@ -119,6 +120,9 @@
             this.Pages.Size = new System.Drawing.Size(335, 296);
             this.Pages.TabIndex = 1;
             this.Pages.Selected += new System.Windows.Forms.TabControlEventHandler(this.Pages_Selected);
+            this.Pages.DragDrop += new System.Windows.Forms.DragEventHandler(this.Pages_DragDrop);
+            this.Pages.DragEnter += new System.Windows.Forms.DragEventHandler(this.Pages_DragEnter);
+            this.Pages.DragOver += new System.Windows.Forms.DragEventHandler(this.Pages_DragOver);
             this.Pages.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Pages_MouseDown);
             // 
             // PagesView

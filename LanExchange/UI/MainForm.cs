@@ -50,6 +50,8 @@ namespace LanExchange.UI
             // init hotkey
             m_Hotkeys = new GlobalHotkeys();
             m_Hotkeys.RegisterGlobalHotKey((int)Keys.X, GlobalHotkeys.MOD_WIN, Handle);
+            // Run AfterMainFormCreated in plugins
+            AppPresenter.Plugins.OnMainFormCreated();
         }
 
         public Rectangle SettingsGetBounds()

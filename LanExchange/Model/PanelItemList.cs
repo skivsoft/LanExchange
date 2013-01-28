@@ -23,7 +23,8 @@ namespace LanExchange.Model
 
         public event EventHandler Changed;
         public event EventHandler SubscriptionChanged;
-
+        private readonly IList<ISubject> m_Groups;
+        
         //private ListView m_LV = null;
         //private PanelItemType m_CurrentType = PanelItemType.COMPUTERS;
         //private string m_Path = null;
@@ -33,7 +34,7 @@ namespace LanExchange.Model
             m_Items = new List<PanelItemBase>();
             m_Data = new List<PanelItemBase>();
             m_Keys = new List<IComparable>();
-            Groups = new List<ISubject>();
+            m_Groups = new List<ISubject>();
             m_CurrentPath = new ObjectPath();
             TabName = name;
             CurrentView = PanelViewMode.Details;
@@ -71,7 +72,9 @@ namespace LanExchange.Model
                 TabName = value.Name;
                 FilterText = value.Filter;
                 CurrentView = value.View;
-                Groups = value.GetScanGroups();
+                Groups.Clear();
+                foreach(var item in value.GetScanGroups())
+                    Groups.Add(item);
                 FocusedItemText = value.Focused;
                 Items.Clear();
                 foreach (var si in value.Items)
@@ -87,7 +90,10 @@ namespace LanExchange.Model
         public string TabName { get; set; }
         public PanelViewMode CurrentView { get; set; }
 
-        public IList<ISubject> Groups { get; set; }
+        public IList<ISubject> Groups
+        {
+            get { return m_Groups; }
+        }
         public string FocusedItemText { get; set; }
 
         public void UpdateSubscription()

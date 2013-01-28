@@ -1,8 +1,9 @@
 ﻿using System.Windows.Forms;
+using LanExchange.Sdk;
 
 namespace LanExchange.UI
 {
-    public partial class InfoView : UserControl
+    public partial class InfoView : UserControl, IInfoView
     {
         public InfoView()
         {

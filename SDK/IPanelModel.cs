@@ -27,7 +27,7 @@ namespace LanExchange.Sdk
         /// <value>
         /// The groups.
         /// </value>
-        IList<ISubject> Groups { get; set; }
+        IList<ISubject> Groups { get; }
         /// <summary>
         /// Gets the count.
         /// </summary>

@@ -14,7 +14,7 @@ using LanExchange.Utils;
 namespace LanExchange.Model
 {
     // TODO need Designer code for this class
-    public class PanelSubscription : ISubscription, IDisposable
+    public sealed class PanelSubscription : ISubscription, IDisposable
     {
         #region Static fields and methods
 
@@ -39,7 +39,7 @@ namespace LanExchange.Model
         private readonly Timer m_RefreshTimer;
         private bool m_InstantUpdate = true;
 
-        protected PanelSubscription()
+        private PanelSubscription()
         {
             // lists
             m_Subjects = new Dictionary<ISubject, IList<ISubscriber>>();
@@ -190,7 +190,7 @@ namespace LanExchange.Model
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected virtual void OneWorker_DoWork(object sender, DoWorkEventArgs e)
+        private void OneWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             var context = e.Argument as BackgroundContext;
             if (context == null)
@@ -224,7 +224,7 @@ namespace LanExchange.Model
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected virtual void OneWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void OneWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (e.Cancelled) return;
             var Subject = (ISubject)e.Result;

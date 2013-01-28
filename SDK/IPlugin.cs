@@ -10,7 +10,12 @@ namespace LanExchange.Sdk
         /// <summary>
         /// Initializes the specified service provider.
         /// </summary>
+        /// <remarks>This method calls befor main form created.</remarks>
         /// <param name="serviceProvider">The service provider.</param>
         void Initialize(IServiceProvider serviceProvider);
+        /// <summary>
+        /// Afters the main form create.
+        /// </summary>
+        void MainFormCreated();
     }
 }

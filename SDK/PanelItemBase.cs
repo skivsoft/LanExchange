@@ -234,7 +234,7 @@ namespace LanExchange.Sdk
             if (other == null) return false;
             return String.Compare(Subject, other.Subject, StringComparison.Ordinal) == 0;
         }
-        /*
+
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
@@ -311,6 +311,5 @@ namespace LanExchange.Sdk
             if ((object)item2 == null) return true;
             return item1.CompareTo(item2) > 0;
         }
-         */
     }
 }

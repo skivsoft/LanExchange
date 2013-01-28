@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Permissions;
 using LanExchange.Sdk;
 using System.Drawing;
 
-namespace LanExchange.PlugIn
+namespace LanExchange.Plugin
 {
     public class Images : IPlugin
     {
@@ -38,6 +39,8 @@ namespace LanExchange.PlugIn
 
         public void ScanFolderForImages()
         {
+            //var args = Environment.GetCommandLineArgs();
+            //var folder = Path.GetDirectoryName(args[0]);
             var folder = AppDomain.CurrentDomain.BaseDirectory;
             folder = Path.Combine(folder, ImagesFolder);
             var files = Directory.GetFiles(folder, ImagesMask, SearchOption.TopDirectoryOnly);
@@ -82,6 +85,12 @@ namespace LanExchange.PlugIn
                     image2 = Image.FromFile(fname);
                 m_ImageManager.RegisterImage(pair.Key, image1, image2);
             }
+        }
+
+
+        public void MainFormCreated()
+        {
+            
         }
     }
 }
