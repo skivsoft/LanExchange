@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LanExchange.Sdk</RootNamespace>
+    <AssemblyName>Sdk</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Sdk.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>lanexchange.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="IInfoView.cs" />
+    <Compile Include="IPanelImageManager.cs" />
+    <Compile Include="IPlugin.cs" />
+    <Compile Include="PanelItemBase.cs" />
+    <Compile Include="PanelStrategyBase.cs" />
+    <Compile Include="BackgroundContext.cs" />
+    <Compile Include="IBackgroundStrategy.cs" />
+    <Compile Include="IColumnComparable.cs" />
+    <Compile Include="IFilterPresenter.cs" />
+    <Compile Include="ILogger.cs" />
+    <Compile Include="IPanelColumnHeader.cs" />
+    <Compile Include="IPanelPresenter.cs" />
+    <Compile Include="ISubject.cs" />
+    <Compile Include="ISubscriber.cs" />
+    <Compile Include="ISubscription.cs" />
+    <Compile Include="IFilterModel.cs" />
+    <Compile Include="IPanelModel.cs" />
+    <Compile Include="IWmiComputer.cs" />
+    <Compile Include="ObjectPath.cs" />
+    <Compile Include="PanelImageNames.cs" />
+    <Compile Include="PanelViewMode.cs" />
+    <Compile Include="IAboutView.cs" />
+    <Compile Include="IFilterView.cs" />
+    <Compile Include="IInputBoxView.cs" />
+    <Compile Include="IPagesView.cs" />
+    <Compile Include="IPanelView.cs" />
+    <Compile Include="ISettingsView.cs" />
+    <Compile Include="ITabSettingsPresenter.cs" />
+    <Compile Include="ITabSettingView.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="lanexchange.pfx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
