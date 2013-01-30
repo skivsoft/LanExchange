@@ -5,18 +5,22 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange", "LanExchange\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sdk", "SDK\Sdk.csproj", "{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Users", "Plugin.Users\Plugin.Users.csproj", "{064D3413-8F0B-4511-85F3-4919AC1D5A98}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Images", "Plugin.Images\Plugin.Images.csproj", "{BF05AA16-2838-4510-98FD-CB568C07A365}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Users.Tests", "Plugin.Users.Tests\Plugin.Users.Tests.csproj", "{00435C0A-B4E8-4A7F-8579-53CC3A318FB5}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C767CD2D-5E26-4390-A4B9-57A41E4DCA6E}"
 	ProjectSection(SolutionItems) = preProject
 		LanExchange2010.vsmdi = LanExchange2010.vsmdi
 		Local.testsettings = Local.testsettings
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sdk.Tests", "SDK.Tests\Sdk.Tests.csproj", "{5613490F-371F-42C9-B4C9-4CFAD58753B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Tests", "LanExchange.Tests\LanExchange.Tests.csproj", "{93884E64-67DB-4010-B306-3F47B5FAF656}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Images", "Plugins\Plugin.Images\Plugin.Images.csproj", "{BF05AA16-2838-4510-98FD-CB568C07A365}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Users", "Plugins\Plugin.Users\Plugin.Users.csproj", "{064D3413-8F0B-4511-85F3-4919AC1D5A98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Users.Tests", "Plugins\Plugin.Users.Tests\Plugin.Users.Tests.csproj", "{00435C0A-B4E8-4A7F-8579-53CC3A318FB5}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -35,14 +39,22 @@ Global
 		{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{064D3413-8F0B-4511-85F3-4919AC1D5A98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{064D3413-8F0B-4511-85F3-4919AC1D5A98}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{064D3413-8F0B-4511-85F3-4919AC1D5A98}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{064D3413-8F0B-4511-85F3-4919AC1D5A98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5613490F-371F-42C9-B4C9-4CFAD58753B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5613490F-371F-42C9-B4C9-4CFAD58753B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5613490F-371F-42C9-B4C9-4CFAD58753B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5613490F-371F-42C9-B4C9-4CFAD58753B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93884E64-67DB-4010-B306-3F47B5FAF656}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93884E64-67DB-4010-B306-3F47B5FAF656}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93884E64-67DB-4010-B306-3F47B5FAF656}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93884E64-67DB-4010-B306-3F47B5FAF656}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BF05AA16-2838-4510-98FD-CB568C07A365}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BF05AA16-2838-4510-98FD-CB568C07A365}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF05AA16-2838-4510-98FD-CB568C07A365}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF05AA16-2838-4510-98FD-CB568C07A365}.Release|Any CPU.Build.0 = Release|Any CPU
+		{064D3413-8F0B-4511-85F3-4919AC1D5A98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{064D3413-8F0B-4511-85F3-4919AC1D5A98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{064D3413-8F0B-4511-85F3-4919AC1D5A98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{064D3413-8F0B-4511-85F3-4919AC1D5A98}.Release|Any CPU.Build.0 = Release|Any CPU
 		{00435C0A-B4E8-4A7F-8579-53CC3A318FB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{00435C0A-B4E8-4A7F-8579-53CC3A318FB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00435C0A-B4E8-4A7F-8579-53CC3A318FB5}.Release|Any CPU.ActiveCfg = Release|Any CPU

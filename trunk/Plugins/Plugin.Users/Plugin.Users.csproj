@@ -56,22 +56,19 @@
     <Compile Include="Users.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SDK\Sdk.csproj">
-      <Project>{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}</Project>
-      <Name>Sdk</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\user_16.png" />
+    <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\user_32.png" />
+    <ProjectReference Include="..\..\SDK\Sdk.csproj">
+      <Project>{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}</Project>
+      <Name>Sdk</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

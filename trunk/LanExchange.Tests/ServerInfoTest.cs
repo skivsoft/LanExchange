@@ -1,12 +1,8 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Xml.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using LanExchange.Utils;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Xml.Serialization;
 
 namespace Tests
 {
