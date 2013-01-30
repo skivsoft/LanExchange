@@ -40,6 +40,6 @@
         /// <summary>
         /// The user disabled
         /// </summary>
-        public static string UserDisabled    = "user_disabled";
+        public const string UserDisabled     = "user_disabled";
     }
 }

@@ -1,4 +1,5 @@
-﻿
+﻿#define __USE_INTERNAL_STRATEGIES
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -45,7 +46,9 @@ namespace LanExchange.Model
             m_Results = new Dictionary<ISubject, IList<PanelItemBase>>(new ConcreteSubjectComparer());
             // looking strategies in our assembly
             m_StrategySelector = new ConcreteStrategySelector();
+            #if USE_INTERNAL_STRATEGIES
             m_StrategySelector.SearchStrategiesInAssembly(Assembly.GetExecutingAssembly(), typeof(PanelStrategyBase));
+            #endif
             // load cached results
             LoadResultsFromCache();
             // timer

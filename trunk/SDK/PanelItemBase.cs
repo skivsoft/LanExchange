@@ -149,8 +149,8 @@ namespace LanExchange.Sdk
                 return -1;
             if ((Name != DoubleDot) && (other.Name == DoubleDot))
                 return 1;
-            int result = String.Compare(Name, other.Name, StringComparison.InvariantCultureIgnoreCase);
-
+            int result = String.Compare(Name, other.Name, StringComparison.OrdinalIgnoreCase);
+            // TODO !!! CHEC ITEM SORT
             return result;
             //return CompareTo(other, 0);
         }
