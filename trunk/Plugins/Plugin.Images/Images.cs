@@ -4,9 +4,9 @@ using System.IO;
 using LanExchange.Sdk;
 using System.Drawing;
 
-namespace LanExchange.Plugin
+namespace Plugins.Plugin
 {
-    public class Images : IPlugin
+    internal sealed class Images : IPlugin
     {
         private const string ImagesFolder = "images";
         private const string ImagesMask = "*.png";
@@ -36,7 +36,7 @@ namespace LanExchange.Plugin
             RegisterFoundImages();
         }
 
-        public void ScanFolderForImages()
+        private void ScanFolderForImages()
         {
             //var args = Environment.GetCommandLineArgs();
             //var folder = Path.GetDirectoryName(args[0]);
@@ -71,7 +71,7 @@ namespace LanExchange.Plugin
             }
         }
 
-        public void RegisterFoundImages()
+        private void RegisterFoundImages()
         {
             foreach (var pair in m_Names)
             {

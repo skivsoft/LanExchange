@@ -441,7 +441,7 @@ namespace LanExchange.UI
                     var share = PItem as SharePanelItem;
                     mComp.Text = @"\\" + share.ComputerName;
                     bCompVisible = Settings.Instance.AdvancedMode;
-                    if (share.Name != PanelItemBase.DoubleDot)
+                    if (share.Name != PanelItemBase.s_DoubleDot)
                     {
                         mFolder.Text = String.Format(@"\\{0}\{1}", share.ComputerName, share.Name);
                         mFolder.Image = LanExchangeIcons.Instance.GetSmallImage(share.ImageName);
@@ -462,7 +462,7 @@ namespace LanExchange.UI
             SetEnabledAndVisible(new ToolStripItem[] { mCopyCompName, mCopyComment, mCopySelected }, menu == PanelPresenter.COMPUTER_MENU);
             bool bSend = false;
             if (menu == PanelPresenter.COMPUTER_MENU)
-                bSend = (PItem != null) && (PItem.Name != PanelItemBase.DoubleDot);
+                bSend = (PItem != null) && (PItem.Name != PanelItemBase.s_DoubleDot);
             SetEnabledAndVisible(new ToolStripItem[] { mSendSeparator, mSendToNewTab }, bSend);
 
             SetEnabledAndVisible(mCopyPath, menu == PanelPresenter.FOLDER_MENU);

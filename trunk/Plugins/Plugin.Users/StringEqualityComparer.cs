@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 
-namespace LanExchange.Plugin
+namespace Plugins.Plugin
 {
-    public class StringEqualityComparer : IEqualityComparer<string>
+    internal class StringEqualityComparer : IEqualityComparer<string>
     {
         public bool Equals(string x, string y)
         {

@@ -72,10 +72,10 @@ namespace Sdk.Tests
         {
             ConcreteSubjectComparer target = new ConcreteSubjectComparer();
             Assert.AreEqual(true, target.Equals(null, null));
-            Assert.AreEqual(false, target.Equals(ConcreteSubject.Root, null));
-            Assert.AreEqual(false, target.Equals(null, ConcreteSubject.Root));
-            Assert.AreEqual(true, target.Equals(ConcreteSubject.Root, ConcreteSubject.Root));
-            Assert.AreEqual(false, target.Equals(ConcreteSubject.NotSubscribed, ConcreteSubject.Root));
+            Assert.AreEqual(false, target.Equals(ConcreteSubject.s_Root, null));
+            Assert.AreEqual(false, target.Equals(null, ConcreteSubject.s_Root));
+            Assert.AreEqual(true, target.Equals(ConcreteSubject.s_Root, ConcreteSubject.s_Root));
+            Assert.AreEqual(false, target.Equals(ConcreteSubject.s_NotSubscribed, ConcreteSubject.s_Root));
         }
 
         /// <summary>

@@ -35,7 +35,7 @@ namespace LanExchange.Presenter
             m_View.Text = String.Format(m_View.Text, m_Info.TabName);
             Groups = m_Info.Groups;
             // subscribe Form to ROOT subject (must return domain list)
-            PanelSubscription.Instance.SubscribeToSubject(this, ConcreteSubject.Root);
+            PanelSubscription.Instance.SubscribeToSubject(this, ConcreteSubject.s_Root);
             // unsubscribe Form from any subjects when Closed event will be fired
             m_View.Closed += (sender, args) => PanelSubscription.Instance.Unsubscribe(this, false);
         }
@@ -76,7 +76,7 @@ namespace LanExchange.Presenter
             if (m_View == null)
                 throw new Exception("View is null");
             // do not update list after unsubscribe
-            if (Equals(subject, ConcreteSubject.NotSubscribed)) return;
+            if (Equals(subject, ConcreteSubject.s_NotSubscribed)) return;
             IList<string> Saved;
             if (m_View.DomainsCount == 0)
                 Saved = m_Groups;

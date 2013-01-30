@@ -51,13 +51,13 @@ namespace LanExchange.Presenter
             foreach (int index in sourcePV.SelectedIndexes)
             {
                 var PItem = sourceObjects.GetItemAt(index);
-                if (PItem == null || PItem.Name == PanelItemBase.DoubleDot) 
+                if (PItem == null || PItem.Name == PanelItemBase.s_DoubleDot) 
                     continue;
                 if (!(PItem is ComputerPanelItem))
                     continue;
                 // copy computer and set partent to null
                 var newItem = new ComputerPanelItem(null, (PItem as ComputerPanelItem).SI);
-                newItem.ParentSubject = ConcreteSubject.UserItems;
+                newItem.ParentSubject = ConcreteSubject.s_UserItems;
                 // add item to new panel
                 destObjects.Items.Add(newItem);
             }
@@ -107,7 +107,7 @@ namespace LanExchange.Presenter
             e.Info.Changed += (o, args) => presenter.UpdateItemsAndStatus();
             e.Info.SubscriptionChanged += Item_SubscriptionChanged;
             // update items
-            e.Info.DataChanged(null, ConcreteSubject.UserItems);
+            e.Info.DataChanged(null, ConcreteSubject.s_UserItems);
         }
 
         public void PV_FocusedItemChanged(object sender, EventArgs e)

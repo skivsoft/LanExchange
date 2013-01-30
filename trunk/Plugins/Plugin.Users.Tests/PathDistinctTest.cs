@@ -1,5 +1,5 @@
-﻿using LanExchange.Plugin;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Plugins.Plugin;
 
 namespace Plugin.Users.Tests
 {

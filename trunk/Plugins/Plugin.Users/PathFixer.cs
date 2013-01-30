@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace LanExchange.Plugin
+namespace Plugins.Plugin
 {
     public class PathFixer
     {
-        public const char PathDelimiter = '\\';
+        private const char PathDelimiter = '\\';
 
         public string FixLdapPath(string path)
         {

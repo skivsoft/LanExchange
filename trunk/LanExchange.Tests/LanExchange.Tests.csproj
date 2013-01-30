@@ -46,6 +46,8 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConcreteSubjectComparerTest.cs" />
+    <Compile Include="FilterModelMock.cs" />
     <Compile Include="IPagesViewMock.cs" />
     <Compile Include="PagesModelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -56,9 +58,9 @@
       <Project>{CC938630-E3FC-426E-A8A7-06EB22ABC703}</Project>
       <Name>LanExchange</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SDK\Sdk.csproj">
+    <ProjectReference Include="..\LanExchange.Sdk\LanExchange.Sdk.csproj">
       <Project>{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}</Project>
-      <Name>Sdk</Name>
+      <Name>LanExchange.Sdk</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

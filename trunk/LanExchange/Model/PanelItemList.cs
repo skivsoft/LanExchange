@@ -80,7 +80,7 @@ namespace LanExchange.Model
                 foreach (var si in value.Items)
                 {
                     var comp = new ComputerPanelItem(null, si);
-                    comp.ParentSubject = ConcreteSubject.UserItems;
+                    comp.ParentSubject = ConcreteSubject.s_UserItems;
                     Items.Add(comp);
                 }
             }
@@ -203,7 +203,7 @@ namespace LanExchange.Model
             get
             {
                 if (m_Data.Count > 0)
-                    if (m_Data[0].Name == PanelItemBase.DoubleDot)
+                    if (m_Data[0].Name == PanelItemBase.s_DoubleDot)
                         return true;
                 return false;
             }
@@ -280,7 +280,7 @@ namespace LanExchange.Model
             //lock (m_Data)
             {
                 // add user items if asked
-                if (subject == ConcreteSubject.UserItems)
+                if (subject == ConcreteSubject.s_UserItems)
                 {
                     m_Data.Clear();
                     foreach (var comp in m_Items)
@@ -305,7 +305,7 @@ namespace LanExchange.Model
                     {
                         //ISubject group = (ISubject)m_CurrentPath.Peek();
                         m_Data.Clear();
-                        if (subject != null && subject != ConcreteSubject.NotSubscribed)
+                        if (subject != null && subject != ConcreteSubject.s_NotSubscribed)
                             foreach (PanelItemBase comp in sender.GetListBySubject(subject))
                                 m_Data.Add(comp);
                     }

@@ -13,7 +13,7 @@ namespace LanExchange.Sdk
         /// <summary>
         /// The ".." item
         /// </summary>
-        public static readonly string DoubleDot = String.Empty;
+        public static readonly string s_DoubleDot = String.Empty;
 
         private ISubject m_ParentSubject;
 
@@ -145,9 +145,9 @@ namespace LanExchange.Sdk
         public int CompareTo(PanelItemBase other)
         {
             if (other == null) return 1;
-            if ((Name == DoubleDot) && (other.Name != DoubleDot))
+            if ((Name == s_DoubleDot) && (other.Name != s_DoubleDot))
                 return -1;
-            if ((Name != DoubleDot) && (other.Name == DoubleDot))
+            if ((Name != s_DoubleDot) && (other.Name == s_DoubleDot))
                 return 1;
             int result = String.Compare(Name, other.Name, StringComparison.OrdinalIgnoreCase);
             // TODO !!! CHEC ITEM SORT

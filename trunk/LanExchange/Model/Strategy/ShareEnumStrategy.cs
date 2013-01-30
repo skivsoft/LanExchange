@@ -13,7 +13,7 @@ namespace LanExchange.Model.Strategy
             if (comp == null) return;
             IEnumerable<NetApi32.SHARE_INFO_1> list = NetApi32Utils.NetShareEnum(comp.Name);
             // convert array to IList<ServerInfo>
-            Result.Add(new SharePanelItem(comp, PanelItemBase.DoubleDot));
+            Result.Add(new SharePanelItem(comp, PanelItemBase.s_DoubleDot));
             foreach (var item in list)
             {
                 var SI = new ShareInfo(item);

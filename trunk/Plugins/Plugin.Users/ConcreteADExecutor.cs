@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.DirectoryServices;
-using LanExchange.Sdk;
 
-namespace LanExchange.Model
+namespace Plugins.Plugin
 {
-    public class ConcreteADExecutor// : IADExecutor
+    internal class ConcreteADExecutor// : IADExecutor
     {
         private DirectoryEntry m_Root;
 
@@ -36,7 +34,7 @@ namespace LanExchange.Model
 
             var result = new DataTable();
 
-            using (DirectorySearcher searcher = new DirectorySearcher(m_Root))
+            using (var searcher = new DirectorySearcher(m_Root))
             {
                 searcher.Filter = filter;
 
@@ -50,6 +48,7 @@ namespace LanExchange.Model
                 {
                     // if no properties, leave this loop
                     if (sr.Properties == null) break;
+                    if (sr.Properties.PropertyNames == null) break;
 
                     if (index == 0)
                     {

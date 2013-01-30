@@ -12,7 +12,7 @@ namespace LanExchange.Model.Strategy
         public override bool IsSubjectAccepted(ISubject subject)
         {
             // computers can be only into domains
-            return subject == ConcreteSubject.UserItems;
+            return subject == ConcreteSubject.s_UserItems;
         }
     }
 }

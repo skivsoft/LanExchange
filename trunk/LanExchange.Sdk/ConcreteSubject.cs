@@ -3,23 +3,23 @@
 namespace LanExchange.Sdk
 {
     /// <summary>
-    /// LanExchange common subjects: Root, NotSubscribed, UserItems.
+    /// LanExchange common subjects: s_Root, s_NotSubscribed, s_UserItems.
     /// </summary>
     public class ConcreteSubject : ISubject
     {
         /// <summary>
-        /// Root subject need to enumerate very first level.
-        /// Ex.: domain list can be returned for Root subject.
+        /// s_Root subject need to enumerate very first level.
+        /// Ex.: domain list can be returned for s_Root subject.
         /// </summary>
-        public static readonly ConcreteSubject Root = new ConcreteSubject();
+        public static readonly ConcreteSubject s_Root = new ConcreteSubject();
         /// <summary>
         /// Subject for unsubscription.
         /// </summary>
-        public static readonly ConcreteSubject NotSubscribed = new ConcreteSubject();
+        public static readonly ConcreteSubject s_NotSubscribed = new ConcreteSubject();
         /// <summary>
         /// Subject for showing user added items.
         /// </summary>
-        public static readonly ConcreteSubject UserItems = new ConcreteSubject();
+        public static readonly ConcreteSubject s_UserItems = new ConcreteSubject();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConcreteSubject"/> class.
@@ -38,9 +38,9 @@ namespace LanExchange.Sdk
         {
             get
             {
-                if (this == Root) return "<Root>";
-                if (this == NotSubscribed) return "<NotSubscribed>";
-                if (this == UserItems) return "<UserItems>";
+                if (this == s_Root) return "<Root>";
+                if (this == s_NotSubscribed) return "<NotSubscribed>";
+                if (this == s_UserItems) return "<UserItems>";
                 return String.Empty;
             }
         }
