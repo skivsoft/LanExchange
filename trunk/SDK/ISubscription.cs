@@ -41,5 +41,12 @@ namespace LanExchange.Sdk
         /// <returns></returns>
         IEnumerable GetListBySubject(ISubject subject); // used for update items
         //IEnumerable<KeyValuePair<ISubject, IList<ISubscriber>>> GetSubjects(); // used for debug subjects
+        /// <summary>
+        /// Gets the strategy selector.
+        /// </summary>
+        /// <value>
+        /// The strategy selector.
+        /// </value>
+        IBackgroundStrategySelector StrategySelector { get; }
     }
 }

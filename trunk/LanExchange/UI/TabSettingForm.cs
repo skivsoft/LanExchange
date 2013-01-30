@@ -54,7 +54,7 @@ namespace LanExchange.UI
             {
                 if (value == null) return;
                 for (int index = 0; index < lvDomains.Items.Count; index++ )
-                    if (String.CompareOrdinal(lvDomains.Items[index].Text, value) == 0)
+                    if (String.Compare(lvDomains.Items[index].Text, value, StringComparison.InvariantCultureIgnoreCase) == 0)
                     {
                         lvDomains.FocusedItem = lvDomains.Items[index];
                         lvDomains.FocusedItem.Selected = true;

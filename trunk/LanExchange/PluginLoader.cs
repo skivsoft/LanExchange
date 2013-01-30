@@ -29,6 +29,7 @@ namespace LanExchange
             {
                 LogUtils.Info("Plugins: Loading {0}", file);
                 var assembly = Assembly.LoadFile(file);
+                //PanelSubscription.Instance.StrategySelector.SearchStrategiesInAssembly(assembly, typeof(PanelStrategyBase));
                 foreach (Type type in assembly.GetTypes())
                 {
                     Type iface = type.GetInterface("LanExchange.Sdk.IPlugin");

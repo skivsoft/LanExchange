@@ -9,6 +9,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Users", "Plugin.User
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Images", "Plugin.Images\Plugin.Images.csproj", "{BF05AA16-2838-4510-98FD-CB568C07A365}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Users.Tests", "Plugin.Users.Tests\Plugin.Users.Tests.csproj", "{00435C0A-B4E8-4A7F-8579-53CC3A318FB5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C767CD2D-5E26-4390-A4B9-57A41E4DCA6E}"
+	ProjectSection(SolutionItems) = preProject
+		LanExchange2010.vsmdi = LanExchange2010.vsmdi
+		Local.testsettings = Local.testsettings
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = LanExchange2010.vsmdi
@@ -34,6 +43,10 @@ Global
 		{BF05AA16-2838-4510-98FD-CB568C07A365}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF05AA16-2838-4510-98FD-CB568C07A365}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF05AA16-2838-4510-98FD-CB568C07A365}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00435C0A-B4E8-4A7F-8579-53CC3A318FB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00435C0A-B4E8-4A7F-8579-53CC3A318FB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00435C0A-B4E8-4A7F-8579-53CC3A318FB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00435C0A-B4E8-4A7F-8579-53CC3A318FB5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using LanExchange.Sdk;
+﻿using LanExchange.Sdk;
 using LanExchange.Utils;
 using LanExchange.Model.Panel;
 

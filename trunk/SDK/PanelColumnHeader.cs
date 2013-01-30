@@ -3,7 +3,7 @@
     /// <summary>
     /// Column header interface returns by <cref>PanelItemBase</cref>.
     /// </summary>
-    public interface IPanelColumnHeader
+    public class PanelColumnHeader
     {
         /// <summary>
         /// Gets or sets the text.
@@ -11,11 +11,11 @@
         /// <value>
         /// The text.
         /// </value>
-        string Text { get; set; }
+        public string Text { get; set; }
         /// <summary>
         /// Sets the visible.
         /// </summary>
         /// <param name="value">if set to <c>true</c> [value].</param>
-        void SetVisible(bool value);
+        public bool Visible { get; set; }
     }
 }

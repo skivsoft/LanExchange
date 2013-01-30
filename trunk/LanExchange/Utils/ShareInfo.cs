@@ -41,7 +41,7 @@ namespace LanExchange.Utils
 
         public int CompareTo(ShareInfo other)
         {
-            return String.CompareOrdinal(Name, other.Name);
+            return String.Compare(Name, other.Name, StringComparison.InvariantCultureIgnoreCase);
         }
 
         #endregion

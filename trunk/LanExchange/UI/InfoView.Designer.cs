@@ -80,6 +80,7 @@
             this.Controls.Add(this.imgInfo);
             this.Controls.Add(this.lInfoDesc);
             this.Controls.Add(this.lInfoComp);
+            this.MinimumSize = new System.Drawing.Size(0, 60);
             this.Name = "InfoView";
             this.Size = new System.Drawing.Size(486, 60);
             ((System.ComponentModel.ISupportInitialize)(this.imgInfo)).EndInit();

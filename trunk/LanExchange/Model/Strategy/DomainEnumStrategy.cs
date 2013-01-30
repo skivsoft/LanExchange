@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using LanExchange.Sdk;
+﻿using LanExchange.Sdk;
 using LanExchange.Utils;
 using LanExchange.Model.Panel;
 
@@ -12,7 +11,7 @@ namespace LanExchange.Model.Strategy
             // get domain list via OS api
             var list = NetApi32Utils.NetServerEnum(null, NetApi32.SV_101_TYPES.SV_TYPE_DOMAIN_ENUM);
             // convert array to IList<ServerInfo>
-            foreach(var item in list)
+            foreach (var item in list)
                 Result.Add(new DomainPanelItem(null, ServerInfo.FromNetApi32(item)));
         }
 

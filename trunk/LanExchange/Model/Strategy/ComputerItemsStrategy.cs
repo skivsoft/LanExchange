@@ -1,5 +1,4 @@
-﻿
-using LanExchange.Sdk;
+﻿using LanExchange.Sdk;
 
 namespace LanExchange.Model.Strategy
 {
