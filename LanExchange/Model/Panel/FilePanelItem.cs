@@ -60,7 +60,7 @@ namespace LanExchange.Model.Panel
         {
             get
             {
-                if (Name == DoubleDot)
+                if (Name == s_DoubleDot)
                     return PanelImageNames.DoubleDot;
                 return IsDirectory ? PanelImageNames.ShareNormal : String.Empty;
             }

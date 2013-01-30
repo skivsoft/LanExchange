@@ -154,7 +154,7 @@ namespace LanExchange.Presenter
                         item = null;
                 }
             }
-            if (canReturnParent && item != null && item.Name == PanelItemBase.DoubleDot)
+            if (canReturnParent && item != null && item.Name == PanelItemBase.s_DoubleDot)
                 item = item.Parent;
             return item;
         }
@@ -228,7 +228,7 @@ namespace LanExchange.Presenter
         {
             var PItem = GetFocusedPanelItem(false, false);
             if (PItem == null || Objects == null) return false;
-            if (PItem.Name == PanelItemBase.DoubleDot)
+            if (PItem.Name == PanelItemBase.s_DoubleDot)
                 return CommandLevelUp();
             var result = PanelSubscription.Instance.HasStrategyForSubject(PItem);
             if (result)
@@ -264,7 +264,7 @@ namespace LanExchange.Presenter
         {
             while (PItem != null)
             {
-                if (PItem.Name == PanelItemBase.DoubleDot)
+                if (PItem.Name == PanelItemBase.s_DoubleDot)
                 {
                     PItem = PItem.Parent;
                     continue;
@@ -290,7 +290,7 @@ namespace LanExchange.Presenter
             foreach (int index in m_View.SelectedIndexes)
             {
                 var comp = m_Objects.GetItemAt(index);
-                if (comp != null && comp.ParentSubject == ConcreteSubject.UserItems)
+                if (comp != null && comp.ParentSubject == ConcreteSubject.s_UserItems)
                 {
                     m_Objects.Items.Remove(comp);
                     Modified = true;
@@ -299,7 +299,7 @@ namespace LanExchange.Presenter
             m_View.ClearSelected();
             if (Modified)
             {
-                m_Objects.DataChanged(null, ConcreteSubject.UserItems);
+                m_Objects.DataChanged(null, ConcreteSubject.s_UserItems);
             }
         }
     }

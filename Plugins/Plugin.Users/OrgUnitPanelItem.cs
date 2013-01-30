@@ -1,9 +1,9 @@
 ﻿using System;
 using LanExchange.Sdk;
 
-namespace LanExchange.Plugin
+namespace Plugins.Plugin
 {
-    public class OrgUnitPanelItem : PanelItemBase
+    internal class OrgUnitPanelItem : PanelItemBase
     {
         private string m_Name;
 
@@ -43,7 +43,7 @@ namespace LanExchange.Plugin
         {
             get
             {
-                if (m_Name == DoubleDot)
+                if (m_Name == s_DoubleDot)
                     return PanelImageNames.DoubleDot;
                 return PanelImageNames.ShareNormal;
             }

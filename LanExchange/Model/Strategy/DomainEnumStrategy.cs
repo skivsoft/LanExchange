@@ -18,7 +18,7 @@ namespace LanExchange.Model.Strategy
         public override bool IsSubjectAccepted(ISubject subject)
         {
             // domains can be only at root level
-            return subject == ConcreteSubject.Root;
+            return subject == ConcreteSubject.s_Root;
         }
     }
 }

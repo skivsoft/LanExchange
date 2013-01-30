@@ -256,7 +256,7 @@ namespace LanExchange.Model
                 var Temp = new Dictionary<string, ServerInfo[]>();
                 foreach (var Pair in m_Results)
                 {
-                    if ((Pair.Key != ConcreteSubject.Root) && !(Pair.Key is DomainPanelItem))
+                    if ((Pair.Key != ConcreteSubject.s_Root) && !(Pair.Key is DomainPanelItem))
                         continue;
                     var TempList = new ServerInfo[Pair.Value.Count];
                     for (int i = 0; i < Pair.Value.Count; i++)
@@ -398,7 +398,7 @@ namespace LanExchange.Model
             }
             if (Modified)
             {
-                sender.DataChanged(this, ConcreteSubject.NotSubscribed);
+                sender.DataChanged(this, ConcreteSubject.s_NotSubscribed);
                 if (updateTimer)
                     SubscribersChanged();
             }

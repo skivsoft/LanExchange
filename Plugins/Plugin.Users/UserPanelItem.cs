@@ -1,9 +1,9 @@
 ﻿using System;
 using LanExchange.Sdk;
 
-namespace LanExchange.Plugin
+namespace Plugins.Plugin
 {
-    public class UserPanelItem : PanelItemBase
+    internal class UserPanelItem : PanelItemBase
     {
         private string m_Name;
         private string m_Description;
@@ -17,12 +17,13 @@ namespace LanExchange.Plugin
             m_Name = name;
         }
 
-        public uint UserAccountControl { get; set; }
+        public uint UserAccControl { get; set; }
+
         public string LockoutTime { get; set; }
 
         public bool IsAccountDisabled
         {
-            get { return (UserAccountControl & 2) != 0; }
+            get { return (UserAccControl & 2) != 0; }
         }
 
         public override string Name
@@ -62,7 +63,7 @@ namespace LanExchange.Plugin
         {
             get
             {
-                if (m_Name == DoubleDot)
+                if (m_Name == s_DoubleDot)
                     return PanelImageNames.DoubleDot;
                 return IsAccountDisabled ? PanelImageNames.UserDisabled : PanelImageNames.UserNormal;
             }

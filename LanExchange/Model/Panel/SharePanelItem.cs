@@ -30,7 +30,7 @@ namespace LanExchange.Model.Panel
         {
             get
             {
-                if (Name == DoubleDot)
+                if (Name == s_DoubleDot)
                     return PanelImageNames.DoubleDot;
                 if (SHI.IsPrinter)
                     return PanelImageNames.SharePrinter;

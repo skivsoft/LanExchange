@@ -1,12 +1,11 @@
 ﻿using System;
-using LanExchange.Plugin.Properties;
 using LanExchange.Sdk;
 
-namespace LanExchange.Plugin
+namespace Plugins.Plugin
 {
-    public class Users : IPlugin
+    internal class Users : IPlugin
     {
-        private static IServiceProvider m_Provider;
+        private IServiceProvider m_Provider;
         private IBackgroundStrategySelector m_StrategySelector;
 
         public void Initialize(IServiceProvider serviceProvider)
@@ -29,7 +28,7 @@ namespace LanExchange.Plugin
 
         public void MainFormCreated()
         {
-            if (m_Provider == null) return;
+            //if (m_Provider == null) return;
             // test hiding top panel
             //var Info = m_Provider.GetService(typeof(IInfoView)) as IInfoView;
             //if (Info == null) return;

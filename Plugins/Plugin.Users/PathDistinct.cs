@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 
-namespace LanExchange.Plugin
+namespace Plugins.Plugin
 {
     public class PathDistinct
     {
-        private Dictionary<string, int> m_Dict;
+        private readonly Dictionary<string, int> m_Dict;
 
         public PathDistinct()
         {
@@ -40,14 +38,13 @@ namespace LanExchange.Plugin
             var result = new List<string>();
 
             int index = 0;
-            string current;
             while (true)
             {
                 var enumDict = m_Dict.GetEnumerator();
                 enumDict.MoveNext();
                 var str = enumDict.Current.Key.Split('\\');
                 if (index + 1 > str.Length) break;
-                current = str[index];
+                string current = str[index];
 
                 bool allEqual = true;
                 while(enumDict.MoveNext())
