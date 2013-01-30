@@ -18,6 +18,7 @@ namespace LanExchange.Plugin
             if (m_StrategySelector == null) return;
 
             // create and register our enum strategy in it
+            //m_StrategySelector.RegisterBackgroundStrategy(new OrgUnitEnumStrategy());
             m_StrategySelector.RegisterBackgroundStrategy(new UserEnumStrategy());
         }
 

@@ -36,7 +36,13 @@ namespace LanExchange.Sdk
         /// </value>
         public string Subject
         {
-            get { return String.Empty; }
+            get
+            {
+                if (this == Root) return "<Root>";
+                if (this == NotSubscribed) return "<NotSubscribed>";
+                if (this == UserItems) return "<UserItems>";
+                return String.Empty;
+            }
         }
 
         /// <summary>
@@ -48,19 +54,6 @@ namespace LanExchange.Sdk
         public bool IsCacheable
         {
             get { return true; }
-        }
-
-        /// <summary>
-        /// Returns a <see cref="System.String" /> that represents this instance.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="System.String" /> that represents this instance.
-        /// </returns>
-        public override string ToString()
-        {
-            if (this == Root) return "<root>";
-            if (this == NotSubscribed) return "<empty>";
-            return base.ToString();
         }
     }
 }
