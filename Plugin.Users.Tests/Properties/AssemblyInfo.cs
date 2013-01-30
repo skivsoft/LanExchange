@@ -1,17 +1,16 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SDK")]
+[assembly: AssemblyTitle("Plugin.Users.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("SkivSoft")]
-[assembly: AssemblyProduct("SDK")]
-[assembly: AssemblyCopyright("Copyright © SkivSoft 2013")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("Plugin.Users.Tests")]
+[assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -21,7 +20,7 @@ using System.Security.Permissions;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("28983de3-881a-40fb-91e5-c79566a1ff26")]
+[assembly: Guid("548a605b-eec5-4005-a3af-7de23cec04b1")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -32,9 +31,5 @@ using System.Security.Permissions;
 //
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-//[assembly: CLSCompliant(true)]
-//[assembly: SecurityPermission(SecurityAction.RequestMinimum, Execution = true)]
-//[assembly: PermissionSet(SecurityAction.RequestOptional, Name = "Nothing")]

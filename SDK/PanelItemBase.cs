@@ -18,6 +18,15 @@ namespace LanExchange.Sdk
         private ISubject m_ParentSubject;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="PanelItemBase"/> class.
+        /// </summary>
+        /// <param name="parent">The parent.</param>
+        protected PanelItemBase(PanelItemBase parent)
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
         /// Gets or sets the name.
         /// </summary>
         /// <value>
@@ -48,27 +57,11 @@ namespace LanExchange.Sdk
         /// </value>
         public abstract string ImageName { get; }
         /// <summary>
-        /// Gets the tool tip text.
-        /// </summary>
-        /// <value>
-        /// The tool tip text.
-        /// </value>
-        public abstract string ToolTipText { get; }
-        /// <summary>
         /// Creates the column header.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <returns></returns>
-        public abstract IPanelColumnHeader CreateColumnHeader(int index);
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PanelItemBase"/> class.
-        /// </summary>
-        /// <param name="parent">The parent.</param>
-        protected PanelItemBase(PanelItemBase parent)
-        {
-            Parent = parent;
-        }
+        public abstract PanelColumnHeader CreateColumnHeader(int index);
 
         /// <summary>
         /// Gets or sets the parent.
@@ -108,6 +101,27 @@ namespace LanExchange.Sdk
         }
 
         /// <summary>
+        /// Gets the tool tip text.
+        /// </summary>
+        /// <value>
+        /// The tool tip text.
+        /// </value>
+        public virtual string ToolTipText
+        {
+            get 
+            { 
+                var sb = new StringBuilder();
+                for (int i = 1; i < CountColumns; i++)
+                {
+                    if (sb.Length > 0)
+                        sb.AppendLine();
+                    sb.Append(GetColumnValue(i));
+                }
+                return sb.ToString();
+            }
+        }
+
+        /// <summary>
         /// IColumnsComparable.CompareTo implementation.
         /// </summary>
         /// <param name="other"></param>
@@ -135,7 +149,9 @@ namespace LanExchange.Sdk
                 return -1;
             if ((Name != DoubleDot) && (other.Name == DoubleDot))
                 return 1;
-            return String.Compare(Name, other.Name, StringComparison.Ordinal);
+            int result = String.Compare(Name, other.Name, StringComparison.InvariantCultureIgnoreCase);
+
+            return result;
             //return CompareTo(other, 0);
         }
 

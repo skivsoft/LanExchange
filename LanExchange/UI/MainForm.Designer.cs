@@ -148,7 +148,7 @@
             // lItemsCount
             // 
             this.lItemsCount.Name = "lItemsCount";
-            this.lItemsCount.Size = new System.Drawing.Size(509, 17);
+            this.lItemsCount.Size = new System.Drawing.Size(486, 17);
             this.lItemsCount.Spring = true;
             this.lItemsCount.Text = "    ";
             this.lItemsCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -195,14 +195,12 @@
             this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
             this.toolStripStatusLabel4.Size = new System.Drawing.Size(4, 17);
             this.toolStripStatusLabel4.Text = "toolStripStatusLabel4";
-            this.toolStripStatusLabel4.Visible = false;
             // 
             // lUserName
             // 
             this.lUserName.Name = "lUserName";
             this.lUserName.Size = new System.Drawing.Size(19, 17);
             this.lUserName.Text = "    ";
-            this.lUserName.Visible = false;
             // 
             // tipComps
             // 
@@ -231,6 +229,7 @@
             this.Pages.Location = new System.Drawing.Point(0, 60);
             this.Pages.Margin = new System.Windows.Forms.Padding(0);
             this.Pages.Name = "Pages";
+            this.Pages.SelectedIndex = -1;
             this.Pages.SelectedTabText = "";
             this.Pages.Size = new System.Drawing.Size(564, 460);
             this.Pages.TabIndex = 24;

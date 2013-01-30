@@ -123,6 +123,7 @@ namespace LanExchange.UI
             lCompName.ImageIndex = LanExchangeIcons.Instance.IndexOf(PanelImageNames.ComputerNormal);
             // show current user
             lUserName.Text = Settings.GetCurrentUserName();
+            lUserName.ImageIndex = LanExchangeIcons.Instance.IndexOf(PanelImageNames.UserNormal);
         }
 
         private void BackgroundWorkers_CountChanged(object sender, EventArgs e)

@@ -7,7 +7,6 @@ using System.IO;
 using System.Reflection;
 using System.Timers;
 using LanExchange.Model.Panel;
-using LanExchange.Model.Strategy;
 using LanExchange.Sdk;
 using LanExchange.Utils;
 
@@ -33,7 +32,7 @@ namespace LanExchange.Model
 
         private readonly IDictionary<ISubject, IList<ISubscriber>> m_Subjects;
         private readonly Dictionary<ISubject, IList<PanelItemBase>> m_Results;
-        private readonly IList<PanelStrategyBase> m_Strategies;
+        private readonly IBackgroundStrategySelector m_StrategySelector;
 
         private int m_RefreshInterval;
         private readonly Timer m_RefreshTimer;
@@ -41,11 +40,12 @@ namespace LanExchange.Model
 
         private PanelSubscription()
         {
-            // lists
+            // lists and other
             m_Subjects = new Dictionary<ISubject, IList<ISubscriber>>();
             m_Results = new Dictionary<ISubject, IList<PanelItemBase>>(new ConcreteSubjectComparer());
-            m_Strategies = new List<PanelStrategyBase>();
-            InitStrategies();
+            // looking strategies in our assembly
+            m_StrategySelector = new ConcreteStrategySelector();
+            m_StrategySelector.SearchStrategiesInAssembly(Assembly.GetExecutingAssembly(), typeof(PanelStrategyBase));
             // load cached results
             LoadResultsFromCache();
             // timer
@@ -60,26 +60,10 @@ namespace LanExchange.Model
             m_RefreshTimer.Dispose();
         }
 
-        private void InitStrategies()
+        public IBackgroundStrategySelector StrategySelector
         {
-            Assembly asm = Assembly.GetExecutingAssembly();
-            foreach (var T in asm.GetTypes())
-                if (T.IsClass && !T.IsAbstract && T.BaseType == typeof (PanelStrategyBase))
-                {
-                    var strategy = (PanelStrategyBase)Activator.CreateInstance(T);
-                    m_Strategies.Add(strategy);
-                }
+            get { return m_StrategySelector; }
         }
-
-        //public bool IsInstantUpdate
-        //{
-        //    get { return m_InstantUpdate; }
-        //}
-
-        //public bool IsBusy
-        //{
-        //    get { return BackgroundWorkers.Instance.IsBusy; }
-        //}
 
         public int RefreshInterval
         {
@@ -91,22 +75,14 @@ namespace LanExchange.Model
             }
         }
         
-        public PanelStrategyBase FindFirstAcceptedStrategy(ISubject subject)
-        {
-            foreach (var strategy in m_Strategies)
-                if (strategy.IsSubjectAccepted(subject))
-                    return strategy;
-            return null;
-        }
-
         public bool HasStrategyForSubject(ISubject subject)
         {
-            return FindFirstAcceptedStrategy(subject) != null;
+            return m_StrategySelector.FindFirstAcceptedStrategy(subject, typeof(PanelStrategyBase)) != null;
         }
 
         private PanelStrategyBase CreateConcretePanelStrategy(ISubject subject)
         {
-            var strategy = FindFirstAcceptedStrategy(subject);
+            var strategy = m_StrategySelector.FindFirstAcceptedStrategy(subject, typeof(PanelStrategyBase));
             if (strategy == null) return null;
             // create another one instance of the strategy
             var newStrategy = (PanelStrategyBase)Activator.CreateInstance(strategy.GetType());
@@ -202,9 +178,10 @@ namespace LanExchange.Model
             {
                 context.ExecuteOperation();
             }
-            catch (Exception)
+            catch (Exception E)
             {
                 e.Cancel = true;
+                LogUtils.Error("OneWorker_DoWork: {0} {1}\n{2}", context.Strategy, E.Message, E.StackTrace);
             }
             e.Result = null;
             if (e.Cancel) return;

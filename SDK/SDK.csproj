@@ -33,6 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Sdk.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -46,11 +47,16 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConcreteSubject.cs" />
+    <Compile Include="ConcreteSubjectComparer.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="IADExecutor.cs" />
     <Compile Include="IInfoView.cs" />
     <Compile Include="IPanelImageManager.cs" />
+    <Compile Include="IBackgroundStrategySelector.cs" />
     <Compile Include="IPlugin.cs" />
     <Compile Include="PanelItemBase.cs" />
     <Compile Include="PanelStrategyBase.cs" />
@@ -59,7 +65,7 @@
     <Compile Include="IColumnComparable.cs" />
     <Compile Include="IFilterPresenter.cs" />
     <Compile Include="ILogger.cs" />
-    <Compile Include="IPanelColumnHeader.cs" />
+    <Compile Include="PanelColumnHeader.cs" />
     <Compile Include="IPanelPresenter.cs" />
     <Compile Include="ISubject.cs" />
     <Compile Include="ISubscriber.cs" />

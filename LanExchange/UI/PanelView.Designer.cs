@@ -378,6 +378,7 @@
             this.ePath.Size = new System.Drawing.Size(423, 20);
             this.ePath.TabIndex = 25;
             this.ePath.TabStop = false;
+            this.ePath.Visible = false;
             this.ePath.DoubleClick += new System.EventHandler(this.ePath_DoubleClick);
             this.ePath.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ePath_KeyDown);
             this.ePath.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lvComps_KeyPress);

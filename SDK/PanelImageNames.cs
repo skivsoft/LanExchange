@@ -33,5 +33,13 @@
         /// The double dot
         /// </summary>
         public const string DoubleDot        = "double_dot";
+        /// <summary>
+        /// The user normal
+        /// </summary>
+        public const string UserNormal       = "user_normal";
+        /// <summary>
+        /// The user disabled
+        /// </summary>
+        public static string UserDisabled    = "user_disabled";
     }
 }

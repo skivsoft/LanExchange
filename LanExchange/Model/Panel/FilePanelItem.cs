@@ -66,12 +66,7 @@ namespace LanExchange.Model.Panel
             }
         }
 
-        public override string ToolTipText
-        {
-            get { return String.Empty; }
-        }
-
-        public override IPanelColumnHeader CreateColumnHeader(int index)
+        public override PanelColumnHeader CreateColumnHeader(int index)
         {
             throw new NotImplementedException();
         }

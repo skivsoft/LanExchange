@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LanExchange.Properties {
+namespace LanExchange.Plugin.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace LanExchange.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LanExchange.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LanExchange.Plugin.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,55 +57,6 @@ namespace LanExchange.Properties {
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        internal static System.Drawing.Bitmap back_16 {
-            get {
-                object obj = ResourceManager.GetObject("back_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap back_32 {
-            get {
-                object obj = ResourceManager.GetObject("back_32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap clear_hover {
-            get {
-                object obj = ResourceManager.GetObject("clear_hover", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap clear_normal {
-            get {
-                object obj = ResourceManager.GetObject("clear_normal", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap LanExchange_48x48 {
-            get {
-                object obj = ResourceManager.GetObject("LanExchange_48x48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap user_16 {
-            get {
-                object obj = ResourceManager.GetObject("user_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap user_32 {
-            get {
-                object obj = ResourceManager.GetObject("user_32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

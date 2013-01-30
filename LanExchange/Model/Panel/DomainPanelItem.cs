@@ -44,12 +44,7 @@ namespace LanExchange.Model.Panel
             }
         }
 
-        public override string ToolTipText
-        {
-            get { return String.Empty; }
-        }
-
-        public override IPanelColumnHeader CreateColumnHeader(int index)
+        public override PanelColumnHeader CreateColumnHeader(int index)
         {
             //var result = new ColumnHeaderEx { Text = "Домен" };
             //result.SetVisible(true);

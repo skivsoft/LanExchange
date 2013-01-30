@@ -91,8 +91,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Model\BackgroundWorkers.cs" />
-    <Compile Include="Model\ConcreteSubject.cs" />
-    <Compile Include="Model\ConcreteSubjectComparer.cs" />
     <Compile Include="Model\LanExchangeIcons.cs" />
     <Compile Include="Model\PagesModel.cs" />
     <Compile Include="Model\PanelIndexEventArgs.cs" />
@@ -127,6 +125,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceProvider.cs" />
+    <Compile Include="Model\ConcreteStrategySelector.cs" />
     <Compile Include="UI\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,9 +133,6 @@
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\AppView.cs" />
-    <Compile Include="UI\ColumnHeaderEx.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="UI\FilterView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -343,6 +339,8 @@
     <Content Include="NLog.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\user_32.png" />
+    <None Include="Resources\user_16.png" />
     <None Include="Resources\back_16.png" />
     <None Include="Resources\back_32.png" />
     <None Include="Resources\clear_hover.png" />

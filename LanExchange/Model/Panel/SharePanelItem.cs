@@ -100,12 +100,7 @@ namespace LanExchange.Model.Panel
             get { return 2; }
         }
 
-        public override string ToolTipText
-        {
-            get { return String.Empty; }
-        }
-
-        public override IPanelColumnHeader CreateColumnHeader(int index)
+        public override PanelColumnHeader CreateColumnHeader(int index)
         {
             //IPanelColumnHeader result = new ColumnHeaderEx();
             //result.SetVisible(true);

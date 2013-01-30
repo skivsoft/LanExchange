@@ -15,6 +15,13 @@ namespace LanExchange.Sdk
         /// <param name="imageLarge">The image large.</param>
         void RegisterImage(string name, Image imageSmall, Image imageLarge);
         /// <summary>
+        /// Registers the disabled image.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="imageSmall">The image small.</param>
+        /// <param name="imageLarge">The image large.</param>
+        void RegisterDisabledImage(string name, Image imageSmall, Image imageLarge);
+        /// <summary>
         /// Unregister image.
         /// </summary>
         /// <param name="name">The name.</param>

@@ -94,7 +94,7 @@ namespace LanExchange.Model.Panel
             get { return 3; }
         }
 
-        public override IPanelColumnHeader CreateColumnHeader(int index)
+        public override PanelColumnHeader CreateColumnHeader(int index)
         {
             //IPanelColumnHeader result = new ColumnHeaderEx();
             //result.SetVisible(true);

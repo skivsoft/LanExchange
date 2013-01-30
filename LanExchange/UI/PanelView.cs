@@ -403,16 +403,16 @@ namespace LanExchange.UI
             mCompDetails.Checked = false;
             switch (LV.View)
             {
-                case System.Windows.Forms.View.LargeIcon:
+                case View.LargeIcon:
                     mCompLargeIcons.Checked = true;
                     break;
-                case System.Windows.Forms.View.SmallIcon:
+                case View.SmallIcon:
                     mCompSmallIcons.Checked = true;
                     break;
-                case System.Windows.Forms.View.List:
+                case View.List:
                     mCompList.Checked = true;
                     break;
-                case System.Windows.Forms.View.Details:
+                case View.Details:
                     mCompDetails.Checked = true;
                     break;
             }
@@ -619,14 +619,15 @@ namespace LanExchange.UI
 
         private void LV_MouseDown(object sender, MouseEventArgs e)
         {
-            var pt = new Point(e.X, e.Y);
-            var hit = LV.HitTest(pt);
-            if (hit.Item != null)
-            {
-                if (hit.Item.Selected)
-                MainForm.Instance.Text = hit.Item.Text;
-                //LV.DoDragDrop(LV.FocusedItem.Text, DragDropEffects.Copy);
-            }
+            // TODO UNCOMMENT DRAG N DROP
+            //var pt = new Point(e.X, e.Y);
+            //var hit = LV.HitTest(pt);
+            //if (hit.Item != null)
+            //{
+            //    if (hit.Item.Selected)
+            //    MainForm.Instance.Text = hit.Item.Text;
+            //    //LV.DoDragDrop(LV.FocusedItem.Text, DragDropEffects.Copy);
+            //}
         }
     }
 }
