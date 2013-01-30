@@ -16,6 +16,10 @@ namespace LanExchange.Sdk
         /// <returns></returns>
         public bool Equals(ISubject x, ISubject y)
         {
+            if ((object)x == null)
+                return (object)y == null;
+            else if ((object) y == null)
+                return false;
             return String.Compare(x.Subject, y.Subject, StringComparison.Ordinal) == 0;
         }
 
@@ -28,6 +32,7 @@ namespace LanExchange.Sdk
         /// </returns>
         public int GetHashCode(ISubject obj)
         {
+            if ((object) obj == null) return 0;
             return obj.Subject.GetHashCode();
         }
     }
