@@ -7,9 +7,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("LanExchange")]
 [assembly: AssemblyDescription("User-friendly browser of computers and shared folders in local area network for regular users and administrators of workstations.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("SkivSoft")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("LanExchange")]
-[assembly: AssemblyCopyright("© 2013 SkivSoft")]
+[assembly: AssemblyCopyright("© 2012-2013 Konstantin Mikhailyuk")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -31,5 +31,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.1.0.82")]
-[assembly: AssemblyFileVersion("1.1.0.82")]
+[assembly: AssemblyVersion("1.2.0.0")]
+[assembly: AssemblyFileVersion("1.2.0.0")]

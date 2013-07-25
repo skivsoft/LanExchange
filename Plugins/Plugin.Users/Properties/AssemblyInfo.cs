@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Plugin.Users")]
-[assembly: AssemblyCopyright("Copyright ©  2013")]
+[assembly: AssemblyCopyright("© 2012-2013 Konstantin Mikhailyuk")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

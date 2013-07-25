@@ -11,7 +11,7 @@ using System.Security.Permissions;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Plugin.Images")]
-[assembly: AssemblyCopyright("Copyright ©  2013")]
+[assembly: AssemblyCopyright("© 2012-2013 Konstantin Mikhailyuk")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -1,15 +1,15 @@
 ﻿using System.Xml.Serialization;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using LanExchange.Utils;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using NUnit.Framework;
 
 namespace Tests
 {
-    [TestClass]
+    [TestFixture]
     public class ServerInfoTest
     {
-        [TestMethod]
+        [Test]
         public void TestConstructor()
         {
             var SI = new ServerInfo();
@@ -21,14 +21,14 @@ namespace Tests
             SI.VersionMinor = 4;
             Assert.AreEqual("QQQ", SI.Name);
             Assert.AreEqual("WWW", SI.Comment);
-            Assert.AreEqual<uint>(1, SI.PlatformID);
-            Assert.AreEqual<uint>(2, SI.Type);
-            Assert.AreEqual<uint>(3, SI.VersionMajor);
-            Assert.AreEqual<uint>(4, SI.VersionMinor);
+            Assert.AreEqual(1, SI.PlatformID);
+            Assert.AreEqual(2, SI.Type);
+            Assert.AreEqual(3, SI.VersionMajor);
+            Assert.AreEqual(4, SI.VersionMinor);
         }
 
         
-        [TestMethod]
+        [Test]
         public void TestSerializeBinary()
         {
             var SI = ServerInfo.FromNetApi32(new NetApi32.SERVER_INFO_101 {sv101_name = "QQQ", sv101_comment = "WWW"});
@@ -40,15 +40,15 @@ namespace Tests
             bformatter.Serialize(stream, SI);
             // try deserialize
             stream.Position = 0;
-            var Result = bformatter.Deserialize(stream);
-            Assert.IsNotNull(Result, "Deserialize returns null");
-            Assert.IsInstanceOfType(Result, typeof(ServerInfo), "Deserialize wrong type");
+            var result = bformatter.Deserialize(stream);
+            Assert.IsNotNull(result, "Deserialize returns null");
+            Assert.IsInstanceOf(typeof(ServerInfo), result, "Deserialize wrong type");
             Assert.AreEqual("QQQ", SI.Name);
             Assert.AreEqual("WWW", SI.Comment);
             stream.Close();
         }
 
-        [TestMethod]
+        [Test]
         public void TestSerializeXML()
         {
             var SI = new ServerInfo();
@@ -72,7 +72,7 @@ namespace Tests
             tr.Close();
             // check deserialize result
             Assert.IsNotNull(Result, "Deserialize returns null");
-            Assert.IsInstanceOfType(Result, typeof(ServerInfo), "Deserialize wrong type");
+            Assert.IsInstanceOf(typeof(ServerInfo), Result, "Deserialize wrong type");
             Assert.AreEqual("QQQ", SI.Name);
             Assert.AreEqual("WWW", SI.Comment);
         }
