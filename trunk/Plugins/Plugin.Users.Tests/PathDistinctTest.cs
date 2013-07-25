@@ -1,19 +1,19 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using Plugins.Plugin;
 
 namespace Plugin.Users.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class PathDistinctTest
     {
-        [TestMethod]
+        [Test]
         public void ConstructorAndCountIsZero()
         {
             var instance = new PathDistinct();
             Assert.AreEqual(0, instance.Count);
         }
 
-        [TestMethod]
+        [Test]
         public void AddTwoItemsDifferent()
         {
             var instance = new PathDistinct();
@@ -22,7 +22,7 @@ namespace Plugin.Users.Tests
             Assert.AreEqual(2, instance.Count);
         }
 
-        [TestMethod]
+        [Test]
         public void AddTwoItemsEqual()
         {
             var instance = new PathDistinct();
@@ -31,7 +31,7 @@ namespace Plugin.Users.Tests
             Assert.AreEqual(1, instance.Count);
         }
 
-        [TestMethod]
+        [Test]
         public void IsPrefixWorks()
         {
             var instance = new PathDistinct();

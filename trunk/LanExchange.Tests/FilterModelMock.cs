@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using LanExchange.Sdk;
+﻿using LanExchange.Sdk;
 
 namespace Tests
 {

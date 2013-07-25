@@ -1,6 +1,5 @@
 ﻿using LanExchange.Sdk;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+using NUnit.Framework;
 
 namespace Sdk.Tests
 {
@@ -10,7 +9,7 @@ namespace Sdk.Tests
     ///This is a test class for ConcreteSubjectComparerTest and is intended
     ///to contain all ConcreteSubjectComparerTest Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class ConcreteSubjectComparerTest
     {
 
@@ -67,7 +66,7 @@ namespace Sdk.Tests
         /// <summary>
         ///A test for Equals
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void EqualsTest()
         {
             ConcreteSubjectComparer target = new ConcreteSubjectComparer();
@@ -81,7 +80,7 @@ namespace Sdk.Tests
         /// <summary>
         ///A test for GetHashCode
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void GetHashCodeTest()
         {
             ConcreteSubjectComparer target = new ConcreteSubjectComparer(); // TODO: Initialize to an appropriate value

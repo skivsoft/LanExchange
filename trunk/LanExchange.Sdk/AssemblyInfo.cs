@@ -7,11 +7,11 @@ using System.Security.Permissions;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SDK")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("LanExchange SDK")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("SkivSoft")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("SDK")]
-[assembly: AssemblyCopyright("Copyright © SkivSoft 2013")]
+[assembly: AssemblyCopyright("© 2012-2013 Konstantin Mikhailyuk")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

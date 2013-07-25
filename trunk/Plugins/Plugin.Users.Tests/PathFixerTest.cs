@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Plugins.Plugin;
 
 namespace Plugin.Users.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class PathFixerTest
     {
-        [TestMethod]
+        [Test]
         public void FixLdapPath_Null()
         {
             var path = new PathFixer();
@@ -19,7 +16,7 @@ namespace Plugin.Users.Tests
             Assert.AreEqual(String.Empty, s);
         }
 
-        [TestMethod]
+        [Test]
         public void FixLdapPath_Init()
         {
             var path = new PathFixer();
@@ -27,7 +24,7 @@ namespace Plugin.Users.Tests
             Assert.AreEqual(@"www\qqq", s);
         }
 
-        [TestMethod]
+        [Test]
         public void FixLdapPath_LdapUpper()
         {
             var path = new PathFixer();
@@ -35,7 +32,7 @@ namespace Plugin.Users.Tests
             Assert.AreEqual(@"aaa\WWW\qqq", s);
         }
 
-        [TestMethod]
+        [Test]
         public void FixLdapPath_LdapError()
         {
             var path = new PathFixer();
@@ -43,7 +40,7 @@ namespace Plugin.Users.Tests
             Assert.AreEqual(String.Empty, s);
         }
 
-        [TestMethod]
+        [Test]
         public void FixLdapPath_DC_OU()
         {
             var path = new PathFixer();

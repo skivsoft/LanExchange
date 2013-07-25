@@ -1,9 +1,5 @@
-﻿using System;
-using LanExchange;
-using LanExchange.Model;
-using LanExchange.Presenter;
-using LanExchange.Sdk;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using LanExchange.Model;
+using NUnit.Framework;
 
 namespace Tests
 {
@@ -13,7 +9,7 @@ namespace Tests
     ///This is a test class for TabModelTest and is intended
     ///to contain all TabModelTest Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class PagesModelTest
     {
 
@@ -70,7 +66,7 @@ namespace Tests
         /// <summary>
         ///A test for TabModel Constructor
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void TabModelConstructorTest()
         {
             PagesModel Model = new PagesModel();
@@ -80,7 +76,7 @@ namespace Tests
         /// <summary>
         ///A test for DelTab
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void DelTabTest()
         {
             PagesModel Model = new PagesModel();
@@ -92,7 +88,7 @@ namespace Tests
         /// <summary>
         ///A test for AddTab
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void AddTabTest()
         {
             PagesModel Model = new PagesModel();
@@ -105,7 +101,7 @@ namespace Tests
         /// <summary>
         ///A test for CommandRenameTab
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void RenameTabTest()
         {
             PagesModel Model = new PagesModel();
