@@ -80,12 +80,7 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NLog, Version=2.0.1.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NLog.2.0.1.2\lib\net20\NLog.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
@@ -209,7 +204,6 @@
     <Compile Include="Utils\ExternDll.cs" />
     <Compile Include="Utils\GlobalHotkeys.cs" />
     <Compile Include="Utils\Kernel32.cs" />
-    <Compile Include="Utils\LogUtils.cs" />
     <Compile Include="Utils\NativeMethods.cs" />
     <Compile Include="Utils\NetApi32.cs" />
     <Compile Include="Utils\NetApi32Utils.cs" />
@@ -312,11 +306,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="NLog.config">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="app.config" />
   </ItemGroup>

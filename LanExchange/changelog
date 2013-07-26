@@ -2,7 +2,9 @@
 ---------------------
 
 1.2.0
-[Remove] Autoupdate removed from about box.
-[Change] All forms not modal now.
-[Change] Default language is English.
 [Add] License information in about box added.
+[Change] Almost all forms (except InputBox) are not modal now.
+[Change] Default language is English.
+[Remove] All logging code was removed.
+[Remove] Autoupdate removed from about box.
+

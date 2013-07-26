@@ -2,7 +2,6 @@
 using System.Reflection;
 using System.Collections.Generic;
 using LanExchange.SDK;
-using LanExchange.Utils;
 
 namespace LanExchange
 {
@@ -38,9 +37,8 @@ namespace LanExchange
                     var strategy = (PanelStrategyBase)Activator.CreateInstance(T);
                     m_Strategies.Add(strategy);
                 }
-                catch (Exception E)
+                catch (Exception)
                 {
-                    LogUtils.Error("SearchStrategies: {0} {1}\n{2}", T, E.Message, E.StackTrace);
                 }
         }
 

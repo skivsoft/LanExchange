@@ -37,23 +37,13 @@ namespace LanExchange
 {
     internal static class Program
     {
-        static void LogHeader()
-        {
-            LogUtils.Info("----------------------------------------");
-            LogUtils.Info("Version: [{0}], Executable: [{1}]", Assembly.GetExecutingAssembly().GetName().Version.ToString(), Application.ExecutablePath);
-            LogUtils.Info(@"MachineName: {0}, UserName: {1}\{2}, Interactive: {3}", Environment.MachineName, Environment.UserDomainName, Environment.UserName, Environment.UserInteractive);
-            LogUtils.Info("OSVersion: [{0}], Processors count: {1}", Environment.OSVersion, Environment.ProcessorCount);
-        }
-
         [STAThread]
         static void Main()
         {
             SingleInstanceCheck.Check();
-            LogHeader();
             AppPresenter.Plugins = new PluginLoader();
             AppPresenter.Plugins.LoadPlugins();
             AppView.ApplicationRun();
-            LogUtils.Stop();
         }
     }
 }

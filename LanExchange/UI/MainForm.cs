@@ -63,7 +63,6 @@ namespace LanExchange.UI
 
         public Rectangle SettingsGetBounds()
         {
-            LogUtils.Info("Settings: MainFormX: {0}, MainFormWidth: {1}", Settings.Instance.MainFormX, Settings.Instance.MainFormWidth);
             // correct width and height
             bool BoundsIsNotSet = Settings.Instance.MainFormWidth == 0;
             Rectangle WorkingArea;
@@ -85,7 +84,6 @@ namespace LanExchange.UI
             else
                 // snap to left side
                 rect.X -= rect.Left - WorkingArea.Left;
-            LogUtils.Info("Settings.GetBounds(): {0}, {1}, {2}, {3}", rect.Left, rect.Top, rect.Width, rect.Height);
             return rect;
         }
 
@@ -109,7 +107,6 @@ namespace LanExchange.UI
             // set properties
             if (rect.Left != Settings.Instance.MainFormX || rect.Width != Settings.Instance.MainFormWidth)
             {
-                LogUtils.Info("Settings.SetBounds(): {0}, {1}, {2}, {3}", rect.Left, rect.Top, rect.Width, rect.Height);
                 Settings.Instance.MainFormX = rect.Left;
                 Settings.Instance.MainFormWidth = rect.Width;
             }
@@ -444,11 +441,9 @@ namespace LanExchange.UI
                     }
                     break;
                 case NativeMethods.WM_QUERYENDSESSION:
-                    LogUtils.Info("WM_QUERYENDSESSION: {0}", m.LParam.ToString("X"));
                     m.Result = new IntPtr(1);
                     break;
                 case NativeMethods.WM_ENDSESSION:
-                    LogUtils.Info("WM_ENDSESSION: {0}", m.LParam.ToString("X"));
                     break;
                 default:
                     base.WndProc(ref m);

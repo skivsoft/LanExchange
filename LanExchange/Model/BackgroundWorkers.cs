@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using LanExchange.SDK;
-using LanExchange.Utils;
 
 namespace LanExchange.Model
 {
@@ -83,7 +82,6 @@ namespace LanExchange.Model
                 throw new ArgumentNullException("worker");
             lock (m_Workers)
             {
-                LogUtils.Info("Add worker for {0}", context.Strategy);
                 worker.AfterRunWorkerCompleted += worker_AfterRunWorkerCompleted;
                 m_Workers.Add(context, worker);
                 DoCountChanged();
@@ -148,7 +146,6 @@ namespace LanExchange.Model
             {
                 foreach (var pair in m_Workers)
                 {
-                    LogUtils.Info("Stop worker for {0}", pair.Key.Strategy);
                     if (pair.Value.IsBusy)
                         pair.Value.Abort();
                     pair.Value.Dispose();

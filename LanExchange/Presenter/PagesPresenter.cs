@@ -2,7 +2,6 @@
 using LanExchange.Model;
 using LanExchange.Model.Panel;
 using LanExchange.SDK;
-using LanExchange.Utils;
 
 namespace LanExchange.Presenter
 {
@@ -98,7 +97,6 @@ namespace LanExchange.Presenter
 
         public void Model_AfterAppendTab(object sender, PanelItemListEventArgs e)
         {
-            LogUtils.Info("AfterAppendTab(\"{0}\")", e.Info.TabName);
             // create panel
             var PV = m_View.CreatePanelView(e.Info);
             // set update event
@@ -143,7 +141,6 @@ namespace LanExchange.Presenter
 
         public void Model_IndexChanged(object sender, PanelIndexEventArgs e)
         {
-            LogUtils.Info("PagesModel_IndexChanged({0})", e.Index);
             m_View.SelectedIndex = e.Index;
             m_View.FocusPanelView();
         }

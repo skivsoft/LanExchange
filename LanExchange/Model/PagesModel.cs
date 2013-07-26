@@ -144,7 +144,6 @@ namespace LanExchange.Model
             {
                 try
                 {
-                    LogUtils.Info("PagesModel.LoadSettings(\"{0}\")", fileFName);
                     var temp = (Tabs) SerializeUtils.DeserializeObjectFromXMLFile(fileFName, typeof (Tabs));
                     if (temp != null)
                     {
@@ -152,9 +151,8 @@ namespace LanExchange.Model
                         m_PagesSettings = temp;
                     }
                 }
-                catch (Exception E)
+                catch (Exception)
                 {
-                    LogUtils.Error("PagesModel.LoadSettings: {0}", E.Message);
                 }
             }
             if (m_PagesSettings == null)
@@ -188,12 +186,10 @@ namespace LanExchange.Model
             var fileFName = GetConfigFileName();
             try
             {
-                LogUtils.Info("PagesModel.SaveSettings(\"{0}\")", fileFName);
                 SerializeUtils.SerializeObjectToXMLFile(fileFName, m_PagesSettings);
             }
-            catch (Exception E)
+            catch (Exception)
             {
-                LogUtils.Error("PagesModel.SaveSettings: {0}", E.Message);
             }
         }
     }
