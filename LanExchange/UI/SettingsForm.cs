@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
 using LanExchange.Presenter;
-using LanExchange.Sdk;
+using LanExchange.SDK;
 
 namespace LanExchange.UI
 {
-    public partial class SettingsForm : Form, ISettingsView
+    public partial class SettingsForm : EscapeForm, ISettingsView
     {
         /// <summary>
         /// This field for external use.
@@ -24,15 +24,7 @@ namespace LanExchange.UI
         private void bSave_Click(object sender, EventArgs e)
         {
             m_Presenter.SaveToModel();
-        }
-
-        private void ParamsForm_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Escape)
-            {
-                DialogResult = DialogResult.Cancel;
-                e.Handled = true;
-            }
+            Close();
         }
 
         public bool IsAutoRun
@@ -69,6 +61,16 @@ namespace LanExchange.UI
         {
             get { return chShowPrinters.Checked; }
             set { chShowPrinters.Checked = value; }
+        }
+
+        private void SettingsForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Instance = null;
+        }
+
+        private void bCancel_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

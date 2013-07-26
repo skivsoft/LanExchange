@@ -4,7 +4,7 @@ using System.Text;
 using System.Windows.Forms;
 using LanExchange.Model;
 using LanExchange.Model.Panel;
-using LanExchange.Sdk;
+using LanExchange.SDK;
 using LanExchange.UI;
 using LanExchange.Utils;
 

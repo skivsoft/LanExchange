@@ -1,4 +1,4 @@
-﻿namespace LanExchange.Sdk
+﻿namespace LanExchange.SDK
 {
     /// <summary>
     /// ISubscriber interface declaration in Subscription-Subscriber-Subject model.

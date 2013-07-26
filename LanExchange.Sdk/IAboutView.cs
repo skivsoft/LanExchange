@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace LanExchange.Sdk
+namespace LanExchange.SDK
 {
     /// <summary>
     /// View for AboutForm.
@@ -22,25 +22,5 @@ namespace LanExchange.Sdk
         /// The email text.
         /// </value>
         string EmailText { get; set; }
-
-        /// <summary>
-        /// Shows the message.
-        /// </summary>
-        /// <param name="text">The text.</param>
-        /// <param name="color">The color.</param>
-        void ShowMessage(string text, Color color);
-        /// <summary>
-        /// Shows the progress bar.
-        /// </summary>
-        void ShowProgressBar();
-        /// <summary>
-        /// Cancels the view.
-        /// </summary>
-        void CancelView();
-        /// <summary>
-        /// Shows the update button.
-        /// </summary>
-        /// <param name="version">The version.</param>
-        void ShowUpdateButton(Version version);
     }
 }

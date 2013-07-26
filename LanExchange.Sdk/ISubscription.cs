@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace LanExchange.Sdk
+namespace LanExchange.SDK
 {
     /// <summary>
     /// ISubscription interface declaration in Subscription-Subscriber-Subject model.

@@ -1,6 +1,6 @@
 ﻿using LanExchange.Model;
 using LanExchange.Model.Settings;
-using LanExchange.Sdk;
+using LanExchange.SDK;
 
 namespace LanExchange.Presenter
 {

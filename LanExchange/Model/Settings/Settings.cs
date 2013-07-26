@@ -11,8 +11,7 @@ namespace LanExchange.Model.Settings
     /// </summary>
     public class Settings
     {
-        private const string UpdateUrlDefault = "http://www.skivsoft.net/lanexchange/update/";
-        private const string WebSiteUrlDefault = "www.skivsoft.net/lanexchange/";
+        private const string WebSiteUrlDefault   = "lanexchange.codeplex.com";
         private const string EmailAddressDefault = "skivsoft@gmail.com";
 
         /// <summary>
@@ -123,29 +122,6 @@ namespace LanExchange.Model.Settings
             Modified = false;
         }
 
-        public static bool Merge(string newConfigContent)
-        {
-            bool result = false;
-            try
-            {
-                LogUtils.Info("Settings.Merge()");
-                var temp = (Settings)SerializeUtils.DeserializeObjectFromXML(newConfigContent, typeof(Settings));
-                if (temp != null)
-                {
-                    Instance.SetEmailAddress(temp.EmailAddress);
-                    Instance.SetWebSiteURL(temp.WebSiteURL);
-                    Instance.SetUpdateURL(temp.UpdateURL);
-                    result = Modified;
-                    SaveIfModified();
-                }
-            }
-            catch (Exception E)
-            {
-                LogUtils.Error("Settings: {0}", E.Message);
-            }
-            return result;
-        }
-
         public static string GetExecutableFileName()
         {
             var Params = Environment.GetCommandLineArgs();
@@ -244,46 +220,14 @@ namespace LanExchange.Model.Settings
             }
         }
 
-        public string GetUpdateUrl()
-        {
-            return String.IsNullOrEmpty(UpdateURL) ? UpdateUrlDefault : UpdateURL;
-        }
-
-        public void SetUpdateURL(string value)
-        {
-            if (GetUpdateUrl() != value)
-            {
-                UpdateURL = value;
-                Modified = true;
-            }
-        }
-
         public string GetWebSiteUrl()
         {
-            return String.IsNullOrEmpty(WebSiteURL) ? WebSiteUrlDefault : WebSiteURL;
-        }
-
-        public void SetWebSiteURL(string value)
-        {
-            if (GetWebSiteUrl() != value)
-            {
-                WebSiteURL = value;
-                Modified = true;
-            }
+            return WebSiteUrlDefault;
         }
 
         public string GetEmailAddress()
         {
-            return String.IsNullOrEmpty(EmailAddress) ? EmailAddressDefault : EmailAddress;
-        }
-
-        public void SetEmailAddress(string value)
-        {
-            if (GetEmailAddress() != value)
-            {
-                EmailAddress = value;
-                Modified = true;
-            }
+            return EmailAddressDefault;
         }
 
         public static string GetCurrentUserName()

@@ -59,9 +59,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\LanExchange.Sdk\LanExchange.Sdk.csproj">
+    <ProjectReference Include="..\..\LanExchange.Sdk\LanExchange.SDK.csproj">
       <Project>{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}</Project>
-      <Name>LanExchange.Sdk</Name>
+      <Name>LanExchange.SDK</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using LanExchange.Sdk;
+using LanExchange.SDK;
 using System.Drawing;
 
 namespace Plugins.Plugin

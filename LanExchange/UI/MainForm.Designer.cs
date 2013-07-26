@@ -42,8 +42,6 @@
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.Status = new System.Windows.Forms.StatusStrip();
             this.lItemsCount = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lWorkers = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lCompName = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -132,8 +130,6 @@
             // 
             this.Status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lItemsCount,
-            this.toolStripStatusLabel3,
-            this.lWorkers,
             this.toolStripStatusLabel1,
             this.lCompName,
             this.toolStripStatusLabel4,
@@ -148,28 +144,11 @@
             // lItemsCount
             // 
             this.lItemsCount.Name = "lItemsCount";
-            this.lItemsCount.Size = new System.Drawing.Size(486, 17);
+            this.lItemsCount.Size = new System.Drawing.Size(503, 17);
             this.lItemsCount.Spring = true;
             this.lItemsCount.Text = "    ";
             this.lItemsCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lItemsCount.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lItemsCount_MouseUp);
-            // 
-            // toolStripStatusLabel3
-            // 
-            this.toolStripStatusLabel3.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-            this.toolStripStatusLabel3.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
-            this.toolStripStatusLabel3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
-            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(4, 17);
-            this.toolStripStatusLabel3.Text = "toolStripStatusLabel3";
-            // 
-            // lWorkers
-            // 
-            this.lWorkers.Name = "lWorkers";
-            this.lWorkers.Size = new System.Drawing.Size(13, 17);
-            this.lWorkers.Text = "0";
-            this.lWorkers.ToolTipText = "Количество фоновых потоков";
-            this.lWorkers.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lWorkers_MouseUp);
             // 
             // toolStripStatusLabel1
             // 
@@ -243,6 +222,7 @@
             this.pInfo.InfoDesc = "    ";
             this.pInfo.InfoOS = "    ";
             this.pInfo.Location = new System.Drawing.Point(0, 0);
+            this.pInfo.MinimumSize = new System.Drawing.Size(0, 60);
             this.pInfo.Name = "pInfo";
             this.pInfo.Size = new System.Drawing.Size(564, 60);
             this.pInfo.TabIndex = 23;
@@ -313,8 +293,6 @@
         private System.Windows.Forms.ToolStripStatusLabel lUserName;
         internal InfoView pInfo;
         internal PagesView Pages;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
-        private System.Windows.Forms.ToolStripStatusLabel lWorkers;
         private System.Windows.Forms.ContextMenuStrip popWorkers;
         private System.Windows.Forms.ToolStripMenuItem mStopWorkers;
         private System.Windows.Forms.ToolStripMenuItem menuItemToolStripMenuItem;

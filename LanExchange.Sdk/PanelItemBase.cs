@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Text;
 
-namespace LanExchange.Sdk
+namespace LanExchange.SDK
 {
     // TODO refactor this! what we compare Name or Subject?
     /// <summary>

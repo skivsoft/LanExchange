@@ -1,0 +1,8 @@
+﻿LanExchange changelog
+---------------------
+
+1.2.0
+[Remove] Autoupdate removed from about box.
+[Change] All forms not modal now.
+[Change] Default language is English.
+[Add] License information in about box added.

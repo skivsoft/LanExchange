@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Plugin.Users")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Plugin.Users")]
-[assembly: AssemblyCopyright("© 2012-2013 Konstantin Mikhailyuk")]
+[assembly: AssemblyCompany("skivsoft@gmail.com")]
+[assembly: AssemblyProduct("LanExchange")]
+[assembly: AssemblyCopyright("© 2012—2013 Konstantin Mikhailyuk")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

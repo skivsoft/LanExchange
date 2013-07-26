@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.Presenter;
 using LanExchange.Model;
-using LanExchange.Sdk;
+using LanExchange.SDK;
 
 namespace LanExchange.UI
 {
@@ -337,6 +337,5 @@ namespace LanExchange.UI
         {
             e.Effect = DragDropEffects.Copy;
         }
-
     }
 }

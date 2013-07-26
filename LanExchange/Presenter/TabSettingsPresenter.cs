@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using LanExchange.Model;
 using LanExchange.Model.Panel;
-using LanExchange.Sdk;
+using LanExchange.SDK;
 
 namespace LanExchange.Presenter
 {

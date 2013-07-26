@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LanExchange.Sdk
+namespace LanExchange.SDK
 {
     /// <summary>
     /// IEqualityComparer for ISubject for searching it in Dictionary&lt;ISubject,...&gt;

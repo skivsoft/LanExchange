@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using LanExchange.Model.Panel;
-using LanExchange.Sdk;
+using LanExchange.SDK;
 using LanExchange.Utils;
 using LanExchange.Model.Settings;
 

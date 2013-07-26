@@ -3,8 +3,7 @@ using System.Windows.Forms;
 using System.Management;
 using System.ComponentModel;
 using System.Reflection;
-using LanExchange.Model;
-using LanExchange.Sdk;
+using LanExchange.SDK;
 
 namespace LanExchange.WMI
 {
