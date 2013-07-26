@@ -67,11 +67,10 @@ namespace LanExchange.Utils
                 if (!RegisterHotKey(Handle, HotkeyID, (uint) modifiers, (uint) hotkey))
                     throw new Win32Exception(Marshal.GetLastWin32Error());
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // clean up if hotkey registration failed
                 Dispose();
-                LogUtils.Error(ex.Message);
             }
         }
 

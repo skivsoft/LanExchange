@@ -11,7 +11,7 @@ namespace LanExchange.Model.Settings
     /// </summary>
     public class Settings
     {
-        private const string WebSiteUrlDefault   = "lanexchange.codeplex.com";
+        private const string WebSiteUrlDefault = "code.google.com/p/lanexchange/";
         private const string EmailAddressDefault = "skivsoft@gmail.com";
 
         /// <summary>
@@ -59,11 +59,7 @@ namespace LanExchange.Model.Settings
             get { return m_Modified; }
             set
             {
-                if (m_Modified != value)
-                {
-                    LogUtils.Info("Settings.Modified = {0}", value);
-                    m_Modified = value;
-                }
+                m_Modified = value;
             }
         }
 
@@ -90,7 +86,6 @@ namespace LanExchange.Model.Settings
             if (!File.Exists(fileName)) return;
             try
             {
-                LogUtils.Info("Settings.Load(\"{0}\")", fileName);
                 var temp = (Settings)SerializeUtils.DeserializeObjectFromXMLFile(fileName, typeof(Settings));
                 if (temp != null)
                 {
@@ -100,9 +95,8 @@ namespace LanExchange.Model.Settings
                     Modified = false;
                 }
             }
-            catch (Exception E)
+            catch (Exception)
             {
-                LogUtils.Error("Settings: {0}", E.Message);
             }
         }
 
@@ -112,12 +106,10 @@ namespace LanExchange.Model.Settings
             var fileName = GetConfigFileName();
             try
             {
-                LogUtils.Info("Settings.Save(\"{0}\")", fileName);
                 SerializeUtils.SerializeObjectToXMLFile(fileName, Instance);
             }
-            catch (Exception E)
+            catch (Exception)
             {
-                LogUtils.Error("Settings: {0}", E.Message);
             }
             Modified = false;
         }
@@ -144,12 +136,10 @@ namespace LanExchange.Model.Settings
                 var exeFName = GetExecutableFileName();
                 if (value)
                 {
-                    LogUtils.Info("Settings.Autorun_Add()");
                     AutorunUtils.Autorun_Add(exeFName);
                 }
                 else
                 {
-                    LogUtils.Info("Settings.Autorun_Delete()");
                     AutorunUtils.Autorun_Delete(exeFName);
                 }
             }

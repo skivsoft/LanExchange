@@ -233,7 +233,6 @@ namespace LanExchange.Presenter
             var result = PanelSubscription.Instance.HasStrategyForSubject(PItem);
             if (result)
             {
-                LogUtils.Info("LevelDown()");
                 PanelSubscription.Instance.Unsubscribe(Objects, false);
                 PanelSubscription.Instance.SubscribeToSubject(Objects, PItem);
                 Objects.CurrentPath.Push(PItem);
@@ -252,7 +251,6 @@ namespace LanExchange.Presenter
             if (result)
             {
                 Objects.FocusedItemText = PItem.Name;
-                LogUtils.Info("LevelUp()");
                 Objects.CurrentPath.Pop();
                 PanelSubscription.Instance.Unsubscribe(Objects, false);
                 PanelSubscription.Instance.SubscribeToSubject(Objects, subject);

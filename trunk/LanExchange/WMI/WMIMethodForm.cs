@@ -4,7 +4,6 @@ using System.Management;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.ComponentModel;
-using LanExchange.Utils;
 
 namespace LanExchange.WMI
 {
@@ -53,14 +52,12 @@ namespace LanExchange.WMI
             // output method qualifiers
             string str = String.Format("Class={0}, Method={1}", WMIClass.Path.ClassName, WMIMethod.Name);
             LB.Items.Add(str);
-            LogUtils.Info("WMI: {0}", str);
             foreach (var qd in WMIMethod.Qualifiers)
             {
                 if (qd.Name.Equals("Description") || qd.Name.Equals("Implemented"))
                     continue;
                 str = String.Format("{0}={1}", qd.Name, FormatQualifierValue(qd.Value));
                 LB.Items.Add(str);
-                LogUtils.Info("WMI: {0}", str);
             }
             LB.Items.Add(String.Empty);
             // prepare properties list and sort it by ID
@@ -89,14 +86,11 @@ namespace LanExchange.WMI
                     m_OutParamPresent = true;
                 str = String.Format("{0} {1} {2} : {3}", prop.ID, prop.ParamType, prop.Name, prop.Type);
                 LB.Items.Add(str);
-                LogUtils.Info("WMI: {0}", str);
                 foreach (var qd in prop.Qualifiers)
                     if (!excludeList.Contains(qd.Name))
                     {
                         str = String.Format("    {0}={1}", qd.Name, FormatQualifierValue(qd.Value));
                         LB.Items.Add(str);
-                        if (!qd.Name.Equals("Description"))
-                            LogUtils.Info("WMI: {0}", str);
                     }
             }
         }
@@ -147,12 +141,10 @@ namespace LanExchange.WMI
             bRun.Enabled = false;
             try
             {
-                LogUtils.Info("WMI: {0}.{1}()", WMIClass.Path.ClassName, WMIMethod.Name);
                 result = WMIObject.InvokeMethod(WMIMethod.Name, inParams, options);
             }
             catch (Exception E)
             {
-                LogUtils.Error("WMI: {0}", E.Message);
                 ShowFAIL(E.Message);
             }
             bRun.Enabled = true;
@@ -163,7 +155,6 @@ namespace LanExchange.WMI
             {
                 str = String.Format("{0} = {1}", pd.Name, pd.Value);
                 LB.Items.Add(str);
-                LogUtils.Info("WMI: {0}", str);
             }
             PropertyDataEx resultProp = new PropertyDataEx(result.Properties[m_ReturnValueName]);
             if (resultProp.Value != null)
@@ -172,7 +163,6 @@ namespace LanExchange.WMI
                 var message = new Win32Exception(value).Message;
                 str = String.Format("[{0}] {1}", value, message);
                 LB.Items.Add(str);
-                LogUtils.Info("WMI: {0}", str);
                 if (value == 0)
                 {
                     ShowOK("[0] Success");

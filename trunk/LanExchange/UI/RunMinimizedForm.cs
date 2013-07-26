@@ -1,6 +1,5 @@
 ﻿using System.Windows.Forms;
 using System;
-using LanExchange.Utils;
 
 namespace LanExchange.UI
 {
@@ -37,7 +36,6 @@ namespace LanExchange.UI
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            LogUtils.Info("OnFormClosing({0})", e.CloseReason);
             if (!m_AllowClose)
             {
                 Visible = false;
@@ -49,7 +47,6 @@ namespace LanExchange.UI
         protected void SetRunMinimized(bool value)
         {
             m_RunMinimized = value;
-            LogUtils.Info(value ? "RunMinimized is ON" : "RunMinimized is OFF");
         }
 
         public void ApplicationExit()
@@ -65,13 +62,10 @@ namespace LanExchange.UI
 
             if (WindowState != FormWindowState.Minimized)
             {
-                if (m_LastWindowState != WindowState)
-                    LogUtils.Info("WindowState is {0}", WindowState.ToString());
                 m_LastWindowState = WindowState;
             }
             else
             {
-                LogUtils.Info("WindowState is {0}", WindowState.ToString());
                 Visible = false;
             }
         }

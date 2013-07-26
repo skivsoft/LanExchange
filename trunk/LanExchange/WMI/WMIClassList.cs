@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Management;
 using System.Text;
-using LanExchange.Utils;
 
 namespace LanExchange.WMI
 {
@@ -84,22 +83,18 @@ namespace LanExchange.WMI
             if (m_Namespace != null && m_Namespace.IsConnected)
                 return true;
             const string connectionString = WMISettings.DefaultNamespace;
-            LogUtils.Info("WMI: connect to namespace \"{0}\"", connectionString);
             m_Namespace = new ManagementScope(connectionString, null);
             try
             {
                 m_Namespace.Connect();
             }
-            catch (Exception E)
+            catch (Exception)
             {
-                LogUtils.Error("WMI: {0}", E.Message);
             }
             if (!m_Namespace.IsConnected)
             {
-                LogUtils.Info("WMI: Not connected.");
                 return false;
             }
-            LogUtils.Info("WMI: Connected.");
             return true;
         }
 

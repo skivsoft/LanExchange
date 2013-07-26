@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing;
-
-namespace LanExchange.SDK
+﻿namespace LanExchange.SDK
 {
     /// <summary>
     /// View for AboutForm.

@@ -94,7 +94,6 @@ namespace LanExchange.Model
 
         private void RefreshTimer_Tick(object sender, EventArgs e)
         {
-            LogUtils.Info("RefreshTimer.Tick() executed. Next tick in {0} sec.", m_RefreshInterval / 1000);
             // prepare workers to launch
             foreach (var Pair in m_Subjects)
             {
@@ -180,10 +179,9 @@ namespace LanExchange.Model
             {
                 context.ExecuteOperation();
             }
-            catch (Exception E)
+            catch (Exception)
             {
                 e.Cancel = true;
-                LogUtils.Error("OneWorker_DoWork: {0} {1}\n{2}", context.Strategy, E.Message, E.StackTrace);
             }
             e.Result = null;
             if (e.Cancel) return;
@@ -215,7 +213,6 @@ namespace LanExchange.Model
                     var List = m_Subjects[Subject];
                     if (List.Count > 0)
                     {
-                        LogUtils.Info("Notify {0} subscriber(s) with subject {1}", List.Count, Subject);
                         foreach (var Subscriber in List)
                             Subscriber.DataChanged(this, Subject);
                     }
@@ -249,7 +246,6 @@ namespace LanExchange.Model
         private void SaveResultsToCache()
         {
             var fileName = GetCacheFileName();
-            LogUtils.Info("SaveResultsToCache(\"{0}\")", fileName);
             lock (m_Results)
             {
                 var Temp = new Dictionary<string, ServerInfo[]>();
@@ -270,9 +266,8 @@ namespace LanExchange.Model
                 {
                     SerializeUtils.SerializeObjectToBinaryFile(fileName, Temp);
                 }
-                catch (Exception E)
+                catch (Exception)
                 {
-                    LogUtils.Error("SaveResultsToCache: {0}", E.Message);
                 }
             }
         }
@@ -281,7 +276,6 @@ namespace LanExchange.Model
         {
             var fileName = GetCacheFileName();
             if (!File.Exists(fileName)) return;
-            LogUtils.Info("LoadResultsFromCache(\"{0}\")", fileName);
             lock (m_Results)
             {
                 Dictionary<string, ServerInfo[]> Temp = null;
@@ -289,9 +283,8 @@ namespace LanExchange.Model
                 {
                     Temp = (Dictionary<string, ServerInfo[]>)SerializeUtils.DeserializeObjectFromBinaryFile(fileName);
                 }
-                catch (Exception E)
+                catch (Exception)
                 {
-                    LogUtils.Error("LoadResultsFromCache: {0}", E.Message);
                 }
                 if (Temp != null)
                 {
@@ -323,7 +316,6 @@ namespace LanExchange.Model
             bool Found = HasSubscribers();
             if (!Found)
             {
-                LogUtils.Info("RefreshTimer stopped.");
                 m_RefreshTimer.Enabled = false;
                 m_InstantUpdate = true;
             }
@@ -335,7 +327,6 @@ namespace LanExchange.Model
                     RefreshTimer_Tick(m_RefreshTimer, EventArgs.Empty);
                     m_RefreshTimer.Enabled = true;
                     m_InstantUpdate = false;
-                    LogUtils.Info("RefreshTimer started. Next tick in {0} sec.", m_RefreshInterval / 1000);
                 }
             }
         }
@@ -375,7 +366,6 @@ namespace LanExchange.Model
             {
                 if (m_Results.ContainsKey(subject))
                 {
-                    LogUtils.Info("Subject \"{0}\" already exists in cache.", subject);
                     sender.DataChanged(this, subject);
                 }
                 SubscribersChanged();

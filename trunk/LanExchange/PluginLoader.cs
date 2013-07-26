@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using LanExchange.SDK;
-using LanExchange.Utils;
 
 namespace LanExchange
 {
@@ -25,7 +24,6 @@ namespace LanExchange
             foreach (string file in files)
             try
             {
-                LogUtils.Info("Plugins: Loading {0}", file);
                 var assembly = Assembly.LoadFile(file);
                 //PanelSubscription.Instance.StrategySelector.SearchStrategiesInAssembly(assembly, typeof(PanelStrategyBase));
                 foreach (Type type in assembly.GetTypes())
@@ -38,18 +36,16 @@ namespace LanExchange
                         plugin = (IPlugin)Activator.CreateInstance(type);
                         plugin.Initialize(new ServiceProvider());
                     }
-                    catch (Exception E)
+                    catch (Exception)
                     {
-                        LogUtils.Error("Plugins: OnInitPlugin {0}", E.Message);
                     }
                     if (plugin == null) continue;
                     // save plugin's interface
                     m_Plugins.Add(plugin);
                 }
             }
-            catch (Exception E)
+            catch (Exception)
             {
-                LogUtils.Error("Plugins: OnLoadAssembly {0}", E.Message);
             }
         }
 
@@ -62,9 +58,8 @@ namespace LanExchange
                     {
                         plugin.MainFormCreated();
                     }
-                    catch (Exception E)
+                    catch (Exception)
                     {
-                        LogUtils.Error("Plugin: OnMainFormCreated({0}) {1}", plugin, E.Message);
                     }
             }
         }

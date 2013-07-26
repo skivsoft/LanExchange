@@ -3,7 +3,6 @@ using System.Management;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using LanExchange.SDK;
-using LanExchange.Utils;
 
 namespace LanExchange.WMI
 {
@@ -65,7 +64,6 @@ namespace LanExchange.WMI
             TryAgainWithPassword:
             try
             {
-                LogUtils.Info("WMI: connect to namespace \"{0}\"", connectionString);
                 options = new ConnectionOptions();
                 //options.Impersonation = true;
                 m_Namespace = new ManagementScope(connectionString, options);
@@ -74,7 +72,6 @@ namespace LanExchange.WMI
                 m_Namespace.Connect();
                 if (m_Namespace.IsConnected)
                 {
-                    LogUtils.Info("WMI: Connected.");
                     return true;
                 }
             }
@@ -118,7 +115,6 @@ namespace LanExchange.WMI
             {
                 ShowCommonConnectionError(ex);
             }
-            LogUtils.Error("WMI: Not connected.");
             m_Namespace = null;
             return false;
         }
@@ -168,9 +164,8 @@ namespace LanExchange.WMI
                 }
                 bCheckError = false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                LogUtils.Error("WMI: {0}", ex.Message);
             }
             if (bCheckError) return;
 
@@ -204,9 +199,8 @@ namespace LanExchange.WMI
                         m_View.LV.Items.Add(lvi);
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    LogUtils.Error("WMI: {0}", ex.Message);
                 }
 
             }
@@ -245,9 +239,8 @@ namespace LanExchange.WMI
                     m_View.MENU.Items.Add(menuItem);
                 }
             }
-            catch (Exception ex)
+            catch (Exception )
             {
-                LogUtils.Error("WMI: {0}", ex.Message);
             }
         }
 

@@ -110,9 +110,8 @@ namespace LanExchange.Utils
                         Key.SetValue("LanExchange", FileNameQuoted);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                LogUtils.Error("AutoRun_Add() {0}", e.Message);
             }
             finally
             {
@@ -150,9 +149,8 @@ namespace LanExchange.Utils
                         });
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                LogUtils.Error("Autorun_Delete() {0}", e.Message);
             }
             finally
             {
