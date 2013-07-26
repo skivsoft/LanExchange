@@ -1,7 +1,7 @@
 ﻿using LanExchange.Model;
 using NUnit.Framework;
 
-namespace Tests
+namespace LanExchange.Tests
 {
     
     

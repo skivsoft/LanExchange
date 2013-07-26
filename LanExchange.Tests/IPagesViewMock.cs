@@ -1,7 +1,7 @@
 ﻿using System;
 using LanExchange.SDK;
 
-namespace Tests
+namespace LanExchange.Tests
 {
     class IPagesViewMock : IPagesView
     {

@@ -1,7 +1,7 @@
 ﻿using LanExchange.SDK;
 using NUnit.Framework;
 
-namespace Sdk.Tests
+namespace LanExchange.SDK.Tests
 {
     
     
@@ -85,6 +85,7 @@ namespace Sdk.Tests
         {
             ConcreteSubjectComparer target = new ConcreteSubjectComparer(); // TODO: Initialize to an appropriate value
             Assert.AreEqual(0, target.GetHashCode(null));
+            Assert.AreEqual(ConcreteSubject.s_Root.Subject.GetHashCode(), target.GetHashCode(ConcreteSubject.s_Root));
         }
     }
 }
