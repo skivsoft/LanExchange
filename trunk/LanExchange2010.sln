@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Tests", "LanExc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Users.Tests", "Plugins\Plugin.Users.Tests\Plugin.Users.Tests.csproj", "{FCB3D63D-543E-486A-81D6-2683E13A68BF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.SDK.Tests", "LanExchange.SDK.Tests\LanExchange.SDK.Tests.csproj", "{64E1AD51-B7F3-4398-9606-EB2FD81E0B63}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = LanExchange2010.vsmdi
@@ -46,6 +48,10 @@ Global
 		{FCB3D63D-543E-486A-81D6-2683E13A68BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCB3D63D-543E-486A-81D6-2683E13A68BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCB3D63D-543E-486A-81D6-2683E13A68BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64E1AD51-B7F3-4398-9606-EB2FD81E0B63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64E1AD51-B7F3-4398-9606-EB2FD81E0B63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64E1AD51-B7F3-4398-9606-EB2FD81E0B63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64E1AD51-B7F3-4398-9606-EB2FD81E0B63}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,7 +4,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using NUnit.Framework;
 
-namespace Tests
+namespace LanExchange.Tests.Utils
 {
     [TestFixture]
     public class ServerInfoTest

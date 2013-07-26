@@ -1,6 +1,6 @@
 ﻿using LanExchange.SDK;
 
-namespace Tests
+namespace LanExchange.Tests
 {
     internal class FilterModelMock : IFilterModel
     {
