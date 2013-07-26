@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 using LanExchange.Model;
 using LanExchange.Model.Panel;
 using LanExchange.Model.Settings;
 using LanExchange.Presenter;
-using LanExchange.Sdk;
+using LanExchange.SDK;
 using LanExchange.WMI;
 
 namespace LanExchange.UI

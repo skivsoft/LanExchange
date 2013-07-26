@@ -9,9 +9,9 @@ using System.Security.Permissions;
 [assembly: AssemblyTitle("Plugin.Images")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Plugin.Images")]
-[assembly: AssemblyCopyright("© 2012-2013 Konstantin Mikhailyuk")]
+[assembly: AssemblyCompany("skivsoft@gmail.com")]
+[assembly: AssemblyProduct("LanExchange")]
+[assembly: AssemblyCopyright("© 2012—2013 Konstantin Mikhailyuk")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

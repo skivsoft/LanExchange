@@ -1,4 +1,4 @@
-﻿namespace LanExchange.Sdk
+﻿namespace LanExchange.SDK
 {
     /// <summary>
     /// View for filter panel.

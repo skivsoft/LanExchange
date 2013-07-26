@@ -1,5 +1,5 @@
 ﻿using System;
-using LanExchange.Sdk;
+using LanExchange.SDK;
 using LanExchange.Utils;
 
 namespace LanExchange.Model.Panel

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LanExchange.Sdk
+namespace LanExchange.SDK
 {
     /// <summary>
     /// LanExchange common subjects: s_Root, s_NotSubscribed, s_UserItems.

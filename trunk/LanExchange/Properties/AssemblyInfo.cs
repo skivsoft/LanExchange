@@ -7,9 +7,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("LanExchange")]
 [assembly: AssemblyDescription("User-friendly browser of computers and shared folders in local area network for regular users and administrators of workstations.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("skivsoft@gmail.com")]
 [assembly: AssemblyProduct("LanExchange")]
-[assembly: AssemblyCopyright("© 2012-2013 Konstantin Mikhailyuk")]
+[assembly: AssemblyCopyright("© 2012—2013 Konstantin Mikhailyuk")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

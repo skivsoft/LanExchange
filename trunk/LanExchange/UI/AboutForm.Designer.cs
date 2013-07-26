@@ -12,7 +12,6 @@
         /// </summary>
         protected override void Dispose(bool disposing)
         {
-            m_Presenter.Dispose();
             if (disposing && (components != null))
             {
                 components.Dispose();
@@ -28,164 +27,159 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.labelVersion = new System.Windows.Forms.Label();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutForm));
+            this.boxLicense = new System.Windows.Forms.RichTextBox();
+            this.eEmail = new System.Windows.Forms.LinkLabel();
+            this.lEmail = new System.Windows.Forms.Label();
+            this.eWeb = new System.Windows.Forms.LinkLabel();
+            this.lWeb = new System.Windows.Forms.Label();
+            this.eVersion = new System.Windows.Forms.Label();
+            this.bClose = new System.Windows.Forms.Button();
+            this.bShowLicense = new System.Windows.Forms.Button();
+            this.lCopyright = new System.Windows.Forms.Label();
+            this.eLicense = new System.Windows.Forms.Label();
+            this.lLicense = new System.Windows.Forms.Label();
+            this.lVersion = new System.Windows.Forms.Label();
+            this.eCopyright = new System.Windows.Forms.Label();
             this.logoPictureBox = new System.Windows.Forms.PictureBox();
-            this.labelProductName = new System.Windows.Forms.Label();
-            this.okButton = new System.Windows.Forms.Button();
-            this.labelWeb = new System.Windows.Forms.LinkLabel();
-            this.labelEmail = new System.Windows.Forms.LinkLabel();
-            this.labelCopyright = new System.Windows.Forms.Label();
-            this.tableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
-            // tableLayoutPanel
+            // boxLicense
             // 
-            this.tableLayoutPanel.ColumnCount = 3;
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 54F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 93F));
-            this.tableLayoutPanel.Controls.Add(this.labelVersion, 0, 1);
-            this.tableLayoutPanel.Controls.Add(this.logoPictureBox, 0, 0);
-            this.tableLayoutPanel.Controls.Add(this.labelProductName, 1, 0);
-            this.tableLayoutPanel.Controls.Add(this.okButton, 2, 6);
-            this.tableLayoutPanel.Controls.Add(this.labelWeb, 1, 4);
-            this.tableLayoutPanel.Controls.Add(this.labelEmail, 1, 5);
-            this.tableLayoutPanel.Controls.Add(this.labelCopyright, 1, 6);
-            this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel.Location = new System.Drawing.Point(9, 9);
-            this.tableLayoutPanel.Name = "tableLayoutPanel";
-            this.tableLayoutPanel.RowCount = 7;
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel.Size = new System.Drawing.Size(416, 174);
-            this.tableLayoutPanel.TabIndex = 0;
+            resources.ApplyResources(this.boxLicense, "boxLicense");
+            this.boxLicense.BackColor = System.Drawing.SystemColors.Window;
+            this.boxLicense.Name = "boxLicense";
+            this.boxLicense.ReadOnly = true;
             // 
-            // labelVersion
+            // eEmail
             // 
-            this.tableLayoutPanel.SetColumnSpan(this.labelVersion, 2);
-            this.labelVersion.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelVersion.Location = new System.Drawing.Point(60, 17);
-            this.labelVersion.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
-            this.labelVersion.MaximumSize = new System.Drawing.Size(0, 17);
-            this.labelVersion.Name = "labelVersion";
-            this.labelVersion.Size = new System.Drawing.Size(353, 17);
-            this.labelVersion.TabIndex = 30;
-            this.labelVersion.Text = "Version";
-            this.labelVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            resources.ApplyResources(this.eEmail, "eEmail");
+            this.eEmail.Name = "eEmail";
+            this.eEmail.TabStop = true;
+            this.eEmail.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.eEmail_LinkClicked);
+            // 
+            // lEmail
+            // 
+            resources.ApplyResources(this.lEmail, "lEmail");
+            this.lEmail.BackColor = System.Drawing.SystemColors.Control;
+            this.lEmail.Name = "lEmail";
+            // 
+            // eWeb
+            // 
+            resources.ApplyResources(this.eWeb, "eWeb");
+            this.eWeb.Name = "eWeb";
+            this.eWeb.TabStop = true;
+            this.eWeb.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.eWeb_LinkClicked);
+            // 
+            // lWeb
+            // 
+            resources.ApplyResources(this.lWeb, "lWeb");
+            this.lWeb.BackColor = System.Drawing.SystemColors.Control;
+            this.lWeb.Name = "lWeb";
+            // 
+            // eVersion
+            // 
+            resources.ApplyResources(this.eVersion, "eVersion");
+            this.eVersion.Name = "eVersion";
+            // 
+            // bClose
+            // 
+            resources.ApplyResources(this.bClose, "bClose");
+            this.bClose.Name = "bClose";
+            this.bClose.UseVisualStyleBackColor = true;
+            this.bClose.Click += new System.EventHandler(this.bClose_Click);
+            // 
+            // bShowLicense
+            // 
+            resources.ApplyResources(this.bShowLicense, "bShowLicense");
+            this.bShowLicense.Name = "bShowLicense";
+            this.bShowLicense.UseVisualStyleBackColor = true;
+            this.bShowLicense.Click += new System.EventHandler(this.bShowLicense_Click);
+            // 
+            // lCopyright
+            // 
+            resources.ApplyResources(this.lCopyright, "lCopyright");
+            this.lCopyright.BackColor = System.Drawing.SystemColors.Control;
+            this.lCopyright.Name = "lCopyright";
+            // 
+            // eLicense
+            // 
+            resources.ApplyResources(this.eLicense, "eLicense");
+            this.eLicense.Name = "eLicense";
+            this.eLicense.TabStop = true;
+            this.eLicense.UseCompatibleTextRendering = true;
+            // 
+            // lLicense
+            // 
+            resources.ApplyResources(this.lLicense, "lLicense");
+            this.lLicense.BackColor = System.Drawing.SystemColors.Control;
+            this.lLicense.Name = "lLicense";
+            // 
+            // lVersion
+            // 
+            resources.ApplyResources(this.lVersion, "lVersion");
+            this.lVersion.BackColor = System.Drawing.SystemColors.Control;
+            this.lVersion.Name = "lVersion";
+            // 
+            // eCopyright
+            // 
+            resources.ApplyResources(this.eCopyright, "eCopyright");
+            this.eCopyright.Name = "eCopyright";
             // 
             // logoPictureBox
             // 
             this.logoPictureBox.Image = global::LanExchange.Properties.Resources.LanExchange_48x48;
-            this.logoPictureBox.Location = new System.Drawing.Point(3, 3);
+            resources.ApplyResources(this.logoPictureBox, "logoPictureBox");
             this.logoPictureBox.Name = "logoPictureBox";
-            this.tableLayoutPanel.SetRowSpan(this.logoPictureBox, 7);
-            this.logoPictureBox.Size = new System.Drawing.Size(48, 48);
-            this.logoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.logoPictureBox.TabIndex = 12;
             this.logoPictureBox.TabStop = false;
-            // 
-            // labelProductName
-            // 
-            this.labelProductName.BackColor = System.Drawing.SystemColors.Control;
-            this.tableLayoutPanel.SetColumnSpan(this.labelProductName, 2);
-            this.labelProductName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelProductName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelProductName.Location = new System.Drawing.Point(60, 0);
-            this.labelProductName.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
-            this.labelProductName.MaximumSize = new System.Drawing.Size(0, 17);
-            this.labelProductName.Name = "labelProductName";
-            this.labelProductName.Size = new System.Drawing.Size(353, 17);
-            this.labelProductName.TabIndex = 19;
-            this.labelProductName.Text = "Product Name";
-            this.labelProductName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // okButton
-            // 
-            this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.okButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.okButton.Location = new System.Drawing.Point(338, 150);
-            this.okButton.Name = "okButton";
-            this.okButton.Size = new System.Drawing.Size(75, 21);
-            this.okButton.TabIndex = 26;
-            this.okButton.Text = "&OK";
-            // 
-            // labelWeb
-            // 
-            this.labelWeb.AutoSize = true;
-            this.tableLayoutPanel.SetColumnSpan(this.labelWeb, 2);
-            this.labelWeb.LinkArea = new System.Windows.Forms.LinkArea(10, 47);
-            this.labelWeb.Location = new System.Drawing.Point(57, 113);
-            this.labelWeb.Name = "labelWeb";
-            this.labelWeb.Size = new System.Drawing.Size(57, 17);
-            this.labelWeb.TabIndex = 27;
-            this.labelWeb.Text = "Веб сайт: ";
-            this.labelWeb.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.labelWeb.UseCompatibleTextRendering = true;
-            this.labelWeb.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.labelWeb_LinkClicked);
-            // 
-            // labelEmail
-            // 
-            this.labelEmail.AutoSize = true;
-            this.labelEmail.LinkArea = new System.Windows.Forms.LinkArea(10, 47);
-            this.labelEmail.Location = new System.Drawing.Point(57, 130);
-            this.labelEmail.Name = "labelEmail";
-            this.labelEmail.Size = new System.Drawing.Size(42, 17);
-            this.labelEmail.TabIndex = 29;
-            this.labelEmail.Text = "Почта: ";
-            this.labelEmail.UseCompatibleTextRendering = true;
-            this.labelEmail.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.labelEmail_LinkClicked);
-            // 
-            // labelCopyright
-            // 
-            this.labelCopyright.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.labelCopyright.AutoSize = true;
-            this.labelCopyright.Location = new System.Drawing.Point(57, 154);
-            this.labelCopyright.Name = "labelCopyright";
-            this.labelCopyright.Size = new System.Drawing.Size(51, 13);
-            this.labelCopyright.TabIndex = 28;
-            this.labelCopyright.Text = "Copyright";
-            this.labelCopyright.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // AboutForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(434, 192);
-            this.Controls.Add(this.tableLayoutPanel);
+            this.Controls.Add(this.boxLicense);
+            this.Controls.Add(this.eEmail);
+            this.Controls.Add(this.lEmail);
+            this.Controls.Add(this.eWeb);
+            this.Controls.Add(this.lWeb);
+            this.Controls.Add(this.eVersion);
+            this.Controls.Add(this.bClose);
+            this.Controls.Add(this.bShowLicense);
+            this.Controls.Add(this.lCopyright);
+            this.Controls.Add(this.eLicense);
+            this.Controls.Add(this.lLicense);
+            this.Controls.Add(this.lVersion);
+            this.Controls.Add(this.eCopyright);
+            this.Controls.Add(this.logoPictureBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AboutForm";
-            this.Padding = new System.Windows.Forms.Padding(9);
             this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "AboutForm";
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AboutForm_KeyDown);
-            this.tableLayoutPanel.ResumeLayout(false);
-            this.tableLayoutPanel.PerformLayout();
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AboutForm_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
-        private System.Windows.Forms.Label labelProductName;
+        private System.Windows.Forms.Label lVersion;
+        private System.Windows.Forms.Label eCopyright;
         private System.Windows.Forms.PictureBox logoPictureBox;
-        private System.Windows.Forms.LinkLabel labelWeb;
-        private System.Windows.Forms.LinkLabel labelEmail;
-        private System.Windows.Forms.Label labelVersion;
-        private System.Windows.Forms.Button okButton;
-        private System.Windows.Forms.Label labelCopyright;
+        private System.Windows.Forms.Label lLicense;
+        private System.Windows.Forms.Label lCopyright;
+        private System.Windows.Forms.Button bShowLicense;
+        private System.Windows.Forms.Button bClose;
+        private System.Windows.Forms.RichTextBox boxLicense;
+        private System.Windows.Forms.Label eLicense;
+        private System.Windows.Forms.Label eVersion;
+        private System.Windows.Forms.Label lWeb;
+        private System.Windows.Forms.LinkLabel eWeb;
+        private System.Windows.Forms.Label lEmail;
+        private System.Windows.Forms.LinkLabel eEmail;
     }
 }

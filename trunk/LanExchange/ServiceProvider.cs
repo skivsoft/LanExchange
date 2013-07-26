@@ -1,6 +1,6 @@
 ﻿using System;
 using LanExchange.Model;
-using LanExchange.Sdk;
+using LanExchange.SDK;
 using LanExchange.UI;
 
 namespace LanExchange

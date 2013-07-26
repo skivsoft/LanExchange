@@ -1,4 +1,4 @@
-﻿namespace LanExchange.Sdk
+﻿namespace LanExchange.SDK
 {
     /// <summary>
     /// Column header interface returns by <cref>PanelItemBase</cref>.

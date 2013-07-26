@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LanExchange.Sdk
+namespace LanExchange.SDK
 {
     /// <summary>
     /// Path to nested object.

@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Text;
-using LanExchange.Model;
-using LanExchange.Sdk;
+using LanExchange.SDK;
 using LanExchange.Utils;
 
 namespace LanExchange

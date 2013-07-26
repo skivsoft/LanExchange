@@ -1,4 +1,4 @@
-﻿namespace LanExchange.Sdk
+﻿namespace LanExchange.SDK
 {
     /// <summary>
     /// Stub for View of InputBox Form.

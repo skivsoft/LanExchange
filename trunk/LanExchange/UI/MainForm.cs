@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Globalization;
 using System.Windows.Forms;
+using LanExchange.Action;
 using LanExchange.Model;
 using LanExchange.Presenter;
 using System.Drawing;
 using System.ComponentModel;
-using System.Text;
 using System.Security.Permissions;
 using LanExchange.Model.Panel;
 using LanExchange.Model.Settings;
-using LanExchange.Sdk;
+using LanExchange.SDK;
 using LanExchange.Utils;
 
 namespace LanExchange.UI
@@ -30,7 +28,6 @@ namespace LanExchange.UI
         {
             InitializeComponent();
             Instance = this;
-            BackgroundWorkers.Instance.CountChanged += BackgroundWorkers_CountChanged;
             // load settings from cfg-file
             Settings.Load();
             SetRunMinimized(Settings.Instance.RunMinimized);
@@ -40,6 +37,7 @@ namespace LanExchange.UI
             AppPresenter.MainPages.PanelViewFilterTextChanged += Pages_FilterTextChanged;
             AppPresenter.MainPages.GetModel().LoadSettings();
             // init main form
+            SetupActions();
             SetupForm();
             // setup images
             Instance.tipComps.SetToolTip(Pages.Pages, " ");
@@ -52,6 +50,15 @@ namespace LanExchange.UI
             m_Hotkeys.RegisterGlobalHotKey((int)Keys.X, GlobalHotkeys.MOD_WIN, Handle);
             // Run AfterMainFormCreated in plugins
             AppPresenter.Plugins.OnMainFormCreated();
+        }
+
+        private IAction m_AboutAction;
+        private IAction m_SettingsAction;
+
+        public void SetupActions()
+        {
+            m_AboutAction = new AboutAction();
+            m_SettingsAction = new SettingsAction();
         }
 
         public Rectangle SettingsGetBounds()
@@ -114,7 +121,7 @@ namespace LanExchange.UI
             var Rect = SettingsGetBounds();
             SetBounds(Rect.Left, Rect.Top, Rect.Width, Rect.Height);
             // set mainform title
-            Text = String.Format("{0} {1}", Application.ProductName, AboutForm.AssemblyVersion);
+            Text = String.Format("{0} {1}", AboutInfo.Product, AboutInfo.Version);
             // show tray
             TrayIcon.Text = Text;
             TrayIcon.Visible = true;
@@ -124,11 +131,6 @@ namespace LanExchange.UI
             // show current user
             lUserName.Text = Settings.GetCurrentUserName();
             lUserName.ImageIndex = LanExchangeIcons.Instance.IndexOf(PanelImageNames.UserNormal);
-        }
-
-        private void BackgroundWorkers_CountChanged(object sender, EventArgs e)
-        {
-            lWorkers.Text = BackgroundWorkers.Instance.Count.ToString(CultureInfo.InvariantCulture);
         }
 
 #if DEBUG
@@ -284,24 +286,12 @@ namespace LanExchange.UI
 
         private void mSettings_Click(object sender, EventArgs e)
         {
-            if (SettingsForm.Instance != null)
-                return;
-            using (SettingsForm.Instance = new SettingsForm())
-            {
-                SettingsForm.Instance.ShowDialog();
-            }
-            SettingsForm.Instance = null;
+            m_SettingsAction.Execute();
         }
 
         private void mAbout_Click(object sender, EventArgs e)
         {
-            if (AboutForm.Instance != null)
-                return;
-            using (AboutForm.Instance = new AboutForm())
-            {
-                AboutForm.Instance.ShowDialog();
-            }
-            AboutForm.Instance = null;
+            m_AboutAction.Execute();
         }
 
         //private void panel1_DragEnter(object sender, DragEventArgs e)

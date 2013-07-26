@@ -1,7 +1,7 @@
 ﻿using System;
 using LanExchange.Model;
 using LanExchange.Model.Panel;
-using LanExchange.Sdk;
+using LanExchange.SDK;
 using LanExchange.Utils;
 
 namespace LanExchange.Presenter

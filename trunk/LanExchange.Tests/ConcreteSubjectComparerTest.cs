@@ -1,4 +1,4 @@
-﻿using LanExchange.Sdk;
+﻿using LanExchange.SDK;
 using NUnit.Framework;
 
 namespace Sdk.Tests

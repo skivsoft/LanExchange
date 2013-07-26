@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LanExchange.Sdk
+namespace LanExchange.SDK
 {
     /// <summary>
     /// Every LanExchange plugin must implement this interface.

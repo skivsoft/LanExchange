@@ -30,6 +30,8 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.chShowPrinters = new System.Windows.Forms.CheckBox();
+            this.chShowHiddenShares = new System.Windows.Forms.CheckBox();
             this.chAdvanced = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.eRefreshTime = new System.Windows.Forms.NumericUpDown();
@@ -39,8 +41,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.bCancel = new System.Windows.Forms.Button();
             this.bSave = new System.Windows.Forms.Button();
-            this.chShowHiddenShares = new System.Windows.Forms.CheckBox();
-            this.chShowPrinters = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eRefreshTime)).BeginInit();
@@ -74,6 +74,26 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Общие";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // chShowPrinters
+            // 
+            this.chShowPrinters.AutoSize = true;
+            this.chShowPrinters.Location = new System.Drawing.Point(18, 78);
+            this.chShowPrinters.Name = "chShowPrinters";
+            this.chShowPrinters.Size = new System.Drawing.Size(141, 17);
+            this.chShowPrinters.TabIndex = 6;
+            this.chShowPrinters.Text = "Показывать принтеры";
+            this.chShowPrinters.UseVisualStyleBackColor = true;
+            // 
+            // chShowHiddenShares
+            // 
+            this.chShowHiddenShares.AutoSize = true;
+            this.chShowHiddenShares.Location = new System.Drawing.Point(18, 58);
+            this.chShowHiddenShares.Name = "chShowHiddenShares";
+            this.chShowHiddenShares.Size = new System.Drawing.Size(219, 17);
+            this.chShowHiddenShares.TabIndex = 5;
+            this.chShowHiddenShares.Text = "Показывать скрытые общие ресурсы";
+            this.chShowHiddenShares.UseVisualStyleBackColor = true;
             // 
             // chAdvanced
             // 
@@ -155,6 +175,7 @@
             this.bCancel.TabIndex = 1;
             this.bCancel.Text = "Отмена";
             this.bCancel.UseVisualStyleBackColor = true;
+            this.bCancel.Click += new System.EventHandler(this.bCancel_Click);
             // 
             // bSave
             // 
@@ -168,27 +189,7 @@
             this.bSave.UseVisualStyleBackColor = true;
             this.bSave.Click += new System.EventHandler(this.bSave_Click);
             // 
-            // chShowHiddenShares
-            // 
-            this.chShowHiddenShares.AutoSize = true;
-            this.chShowHiddenShares.Location = new System.Drawing.Point(18, 58);
-            this.chShowHiddenShares.Name = "chShowHiddenShares";
-            this.chShowHiddenShares.Size = new System.Drawing.Size(219, 17);
-            this.chShowHiddenShares.TabIndex = 5;
-            this.chShowHiddenShares.Text = "Показывать скрытые общие ресурсы";
-            this.chShowHiddenShares.UseVisualStyleBackColor = true;
-            // 
-            // chShowPrinters
-            // 
-            this.chShowPrinters.AutoSize = true;
-            this.chShowPrinters.Location = new System.Drawing.Point(18, 78);
-            this.chShowPrinters.Name = "chShowPrinters";
-            this.chShowPrinters.Size = new System.Drawing.Size(141, 17);
-            this.chShowPrinters.TabIndex = 6;
-            this.chShowPrinters.Text = "Показывать принтеры";
-            this.chShowPrinters.UseVisualStyleBackColor = true;
-            // 
-            // ParamsForm
+            // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -200,10 +201,9 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SettingsForm";
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Настройки программы";
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ParamsForm_KeyDown);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SettingsForm_FormClosed);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();

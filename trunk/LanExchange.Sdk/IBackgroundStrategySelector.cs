@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace LanExchange.Sdk
+namespace LanExchange.SDK
 {
     /// <summary>
     /// Selector for suitable background strategy.

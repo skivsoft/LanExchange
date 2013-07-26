@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
-using LanExchange.Sdk;
+using LanExchange.SDK;
 
 namespace LanExchange.UI
 {

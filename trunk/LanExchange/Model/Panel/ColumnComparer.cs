@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using LanExchange.Sdk;
+using LanExchange.SDK;
 
 namespace LanExchange.Model.Panel
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using LanExchange.Sdk;
+using LanExchange.SDK;
 
 namespace LanExchange.Model.Panel
 {

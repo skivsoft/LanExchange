@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Windows.Forms;
 using LanExchange.Presenter;
 using LanExchange.Properties;
-using LanExchange.Sdk;
+using LanExchange.SDK;
 
 namespace LanExchange.UI
 {

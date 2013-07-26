@@ -1,5 +1,5 @@
 ﻿using System.Data;
-using LanExchange.Sdk;
+using LanExchange.SDK;
 
 namespace Plugins.Plugin
 {

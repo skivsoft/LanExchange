@@ -1,4 +1,4 @@
-﻿using LanExchange.Sdk;
+﻿using LanExchange.SDK;
 
 namespace Tests
 {

@@ -5,10 +5,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Reflection;
 using System.Timers;
 using LanExchange.Model.Panel;
-using LanExchange.Sdk;
+using LanExchange.SDK;
 using LanExchange.Utils;
 
 namespace LanExchange.Model

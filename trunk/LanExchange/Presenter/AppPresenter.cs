@@ -1,7 +1,4 @@
-﻿using System;
-using LanExchange.UI;
-
-namespace LanExchange.Presenter
+﻿namespace LanExchange.Presenter
 {
     public static class AppPresenter
     {
