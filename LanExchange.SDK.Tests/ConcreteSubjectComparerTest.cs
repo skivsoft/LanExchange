@@ -1,5 +1,4 @@
-﻿using LanExchange.SDK;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace LanExchange.SDK.Tests
 {

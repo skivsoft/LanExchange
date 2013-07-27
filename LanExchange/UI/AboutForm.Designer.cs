@@ -1,6 +1,6 @@
 ﻿namespace LanExchange.UI
 {
-    sealed partial class AboutForm
+    public sealed partial class AboutForm
     {
         /// <summary>
         /// Required designer variable.
@@ -138,7 +138,6 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.boxLicense);
             this.Controls.Add(this.eEmail);
             this.Controls.Add(this.lEmail);
             this.Controls.Add(this.eWeb);
@@ -152,6 +151,7 @@
             this.Controls.Add(this.lVersion);
             this.Controls.Add(this.eCopyright);
             this.Controls.Add(this.logoPictureBox);
+            this.Controls.Add(this.boxLicense);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.KeyPreview = true;
             this.MaximizeBox = false;
@@ -159,6 +159,7 @@
             this.Name = "AboutForm";
             this.ShowIcon = false;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AboutForm_FormClosed);
+            this.Load += new System.EventHandler(this.AboutForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

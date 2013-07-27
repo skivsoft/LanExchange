@@ -16,7 +16,7 @@ namespace LanExchange.Model.Strategy
             foreach (var item in list)
             {
                 var SI = ServerInfo.FromNetApi32(item);
-                SI.SetUtcUpdated();
+                SI.ResetUtcUpdated();
                 Result.Add(new ComputerPanelItem(domain, SI));
             }
         }

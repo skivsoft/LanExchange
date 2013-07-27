@@ -24,7 +24,7 @@
 
         public static void OpenWebLink()
         {
-            Process.Start("http://" + Settings.Instance.GetWebSiteUrl());
+            Process.Start("https://" + Settings.Instance.GetWebSiteUrl());
         }
 
         public static void OpenEmailLink()

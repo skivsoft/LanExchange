@@ -77,9 +77,10 @@ namespace LanExchange.Utils
         public DateTime UtcUpdated
         {
             get { return m_UtcUpdated; }
+            set { m_UtcUpdated = value; }
         }
 
-        public void SetUtcUpdated()
+        public void ResetUtcUpdated()
         {
             m_UtcUpdated = DateTime.UtcNow;
         }
@@ -92,30 +93,14 @@ namespace LanExchange.Utils
         {
             //return String.Format("{0}.{1}.{2}.{3}", platform_id, ver_major, ver_minor, type);
             bool bServer = IsServer();
-            switch ((NetApi32.SV_101_PLATFORM)sv101_platform_id)
+            NetApi32.SV_101_PLATFORM platform = (NetApi32.SV_101_PLATFORM) sv101_platform_id;
+            // OS2 same as NT
+            if (platform == NetApi32.SV_101_PLATFORM.PLATFORM_ID_OS2)
+                platform = NetApi32.SV_101_PLATFORM.PLATFORM_ID_NT;
+            switch (platform)
             {
                 case NetApi32.SV_101_PLATFORM.PLATFORM_ID_DOS:
                     return String.Format("MS-DOS {0}.{1}", sv101_version_major, sv101_version_minor);
-                case NetApi32.SV_101_PLATFORM.PLATFORM_ID_OS2:
-                    switch (sv101_version_major)
-                    {
-                        case 3:
-                            return "Windows NT 3.51";
-                        case 4:
-                            switch (sv101_version_minor)
-                            {
-                                case 0:
-                                    return "Windows 95";
-                                case 10:
-                                    return "Windows 98";
-                                case 90:
-                                    return "Windows ME";
-                                default:
-                                    return "Windows 9x";
-                            }
-                        default:
-                            return String.Format("Windows NT {0}.{1}", sv101_version_major, sv101_version_minor);
-                    }
                 case NetApi32.SV_101_PLATFORM.PLATFORM_ID_NT:
                     if ((sv101_type & (uint)NetApi32.SV_101_TYPES.SV_TYPE_XENIX_SERVER) != 0)
                         return String.Format("Linux Server {0}.{1}", sv101_version_major, sv101_version_minor);
@@ -227,28 +212,27 @@ namespace LanExchange.Utils
             return (sv101_type & (uint)NetApi32.SV_101_TYPES.SV_TYPE_DFS) != 0;
         }
 
-        public int CompareVersionTo(object obj)
+        public int CompareVersionTo(ServerInfo other)
         {
-            var comp = obj as ServerInfo;
-            if (comp == null) return 1;
+            if (other == null) return 1;
             uint u1 = sv101_platform_id;
-            uint u2 = comp.sv101_platform_id;
+            uint u2 = other.sv101_platform_id;
             if (u1 < u2) return -1;
             if (u1 > u2) return 1;
             bool s1 = IsServer();
             bool c1 = IsDomainController();
-            bool s2 = comp.IsServer();
-            bool c2 = comp.IsDomainController();
+            bool s2 = other.IsServer();
+            bool c2 = other.IsDomainController();
             if (!s1 && s2) return -1;
             if (s1 && !s2) return 1;
             if (!c1 && c2) return 1;
             if (c1 && !c2) return -1;
             u1 = sv101_version_major;
-            u2 = comp.sv101_version_major;
+            u2 = other.sv101_version_major;
             if (u1 < u2) return -1;
             if (u1 > u2) return 1;
             u1 = sv101_version_minor;
-            u2 = comp.sv101_version_minor;
+            u2 = other.sv101_version_minor;
             if (u1 < u2) return -1;
             if (u1 > u2) return 1;
             return 0;
@@ -263,9 +247,18 @@ namespace LanExchange.Utils
 
         #endregion
 
-        public string GetTopicality()
+        /// <summary>
+        /// This method is virtual for unit-tests only.
+        /// </summary>
+        /// <returns></returns>
+        public virtual TimeSpan GetTopicality()
         {
-            TimeSpan diff = DateTime.UtcNow - UtcUpdated;
+            return DateTime.UtcNow - UtcUpdated;
+        }
+
+        public string GetTopicalityText()
+        {
+            TimeSpan diff = GetTopicality();
             StringBuilder sb = new StringBuilder();
             bool showSeconds = true;
             if (diff.Days > 0)

@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using LanExchange.Model;
 using LanExchange.Presenter;
+using LanExchange.Properties;
 using LanExchange.SDK;
 
 namespace LanExchange.UI
@@ -9,7 +10,7 @@ namespace LanExchange.UI
     /// <summary>
     /// Concrete class for IAboutView.
     /// </summary>
-    sealed partial class AboutForm : EscapeForm, IAboutView
+    public sealed partial class AboutForm : EscapeForm, IAboutView
     {
         public static AboutForm Instance;
 
@@ -23,6 +24,7 @@ namespace LanExchange.UI
             eCopyright.Text = AboutInfo.Copyright;
             m_Presenter = new AboutPresenter(this);
             m_Presenter.LoadFromModel();
+            boxLicense.BringToFront();
         }
        
         private void eWeb_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -69,14 +71,19 @@ namespace LanExchange.UI
         {
             boxLicense.Visible = !boxLicense.Visible;
             if (boxLicense.Visible)
-                bShowLicense.Text = "Hide License";
+                bShowLicense.Text = Resources.HideLicense;
             else
-                bShowLicense.Text = "Show License";
+                bShowLicense.Text = Resources.ShowLicense;
         }
 
         private void bClose_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void AboutForm_Load(object sender, EventArgs e)
+        {
+            bShowLicense.Text = Resources.ShowLicense;
         }
     }
 }

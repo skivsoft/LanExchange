@@ -155,7 +155,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;boxLicense.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>13</value>
   </data>
   <data name="eEmail.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -185,7 +185,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;eEmail.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>0</value>
   </data>
   <data name="lEmail.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -203,13 +203,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>6, 0, 3, 0</value>
   </data>
   <data name="lEmail.Size" type="System.Drawing.Size, System.Drawing">
-    <value>84, 13</value>
+    <value>37, 13</value>
   </data>
   <data name="lEmail.TabIndex" type="System.Int32, mscorlib">
     <value>44</value>
   </data>
   <data name="lEmail.Text" xml:space="preserve">
-    <value>Contact email</value>
+    <value>Email</value>
   </data>
   <data name="lEmail.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>
@@ -224,7 +224,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lEmail.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="eWeb.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -254,7 +254,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;eWeb.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="lWeb.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -293,7 +293,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lWeb.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>3</value>
   </data>
   <data name="eVersion.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -323,7 +323,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;eVersion.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>4</value>
   </data>
   <data name="bClose.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -353,7 +353,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;bClose.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>5</value>
   </data>
   <data name="bShowLicense.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -370,9 +370,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   <data name="bShowLicense.TabIndex" type="System.Int32, mscorlib">
     <value>35</value>
   </data>
-  <data name="bShowLicense.Text" xml:space="preserve">
-    <value>Show License</value>
-  </data>
   <data name="&gt;&gt;bShowLicense.Name" xml:space="preserve">
     <value>bShowLicense</value>
   </data>
@@ -383,7 +380,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;bShowLicense.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>6</value>
   </data>
   <data name="lCopyright.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -422,7 +419,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lCopyright.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>7</value>
   </data>
   <data name="eLicense.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -452,7 +449,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;eLicense.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>8</value>
   </data>
   <data name="lLicense.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -491,7 +488,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lLicense.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>9</value>
   </data>
   <data name="lVersion.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -530,7 +527,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lVersion.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>10</value>
   </data>
   <data name="eCopyright.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -560,7 +557,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;eCopyright.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>11</value>
   </data>
   <data name="logoPictureBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -587,7 +584,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;logoPictureBox.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>12</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -597,9 +594,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>394, 373</value>
-  </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="$this.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>9, 9, 9, 9</value>

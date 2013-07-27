@@ -68,7 +68,7 @@ namespace LanExchange.Model.Panel
         {
             get
             {
-                return String.Format("{0}\n{1}\n{2}", Comment, m_SI.Version(), m_SI.GetTopicality());
+                return String.Format("{0}\n{1}\n{2}", Comment, m_SI.Version(), m_SI.GetTopicalityText());
             }
         }
 
