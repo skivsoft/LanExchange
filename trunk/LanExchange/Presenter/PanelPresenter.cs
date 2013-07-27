@@ -276,8 +276,6 @@ namespace LanExchange.Presenter
                         return FOLDER_MENU;
                     else
                         return FILE_MENU;
-                else
-                    break;
             }
             return String.Empty;
         }
