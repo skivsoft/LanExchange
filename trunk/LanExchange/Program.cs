@@ -30,8 +30,6 @@
 // *****************************************************************************
 
 using System;
-using System.Globalization;
-using System.Threading;
 using LanExchange.Presenter;
 using LanExchange.UI;
 using LanExchange.Utils;
@@ -43,8 +41,8 @@ namespace LanExchange
         [STAThread]
         static void Main()
         {
-            //Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
             SingleInstanceCheck.Check();
+            CmdLineProcessor.Processing();
             AppPresenter.Plugins = new PluginLoader();
             AppPresenter.Plugins.LoadPlugins();
             AppView.ApplicationRun();

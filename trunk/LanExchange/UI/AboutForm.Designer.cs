@@ -27,6 +27,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutForm));
             this.boxLicense = new System.Windows.Forms.RichTextBox();
             this.eEmail = new System.Windows.Forms.LinkLabel();
@@ -42,6 +43,9 @@
             this.lVersion = new System.Windows.Forms.Label();
             this.eCopyright = new System.Windows.Forms.Label();
             this.logoPictureBox = new System.Windows.Forms.PictureBox();
+            this.lTwitter = new System.Windows.Forms.Label();
+            this.eTwitter = new System.Windows.Forms.LinkLabel();
+            this.tipAbout = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -70,6 +74,7 @@
             resources.ApplyResources(this.eWeb, "eWeb");
             this.eWeb.Name = "eWeb";
             this.eWeb.TabStop = true;
+            this.tipAbout.SetToolTip(this.eWeb, resources.GetString("eWeb.ToolTip"));
             this.eWeb.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.eWeb_LinkClicked);
             // 
             // lWeb
@@ -134,10 +139,25 @@
             this.logoPictureBox.Name = "logoPictureBox";
             this.logoPictureBox.TabStop = false;
             // 
+            // lTwitter
+            // 
+            resources.ApplyResources(this.lTwitter, "lTwitter");
+            this.lTwitter.BackColor = System.Drawing.SystemColors.Control;
+            this.lTwitter.Name = "lTwitter";
+            // 
+            // eTwitter
+            // 
+            resources.ApplyResources(this.eTwitter, "eTwitter");
+            this.eTwitter.Name = "eTwitter";
+            this.eTwitter.TabStop = true;
+            this.eTwitter.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.eTwitter_LinkClicked);
+            // 
             // AboutForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.eTwitter);
+            this.Controls.Add(this.lTwitter);
             this.Controls.Add(this.eEmail);
             this.Controls.Add(this.lEmail);
             this.Controls.Add(this.eWeb);
@@ -182,5 +202,8 @@
         private System.Windows.Forms.LinkLabel eWeb;
         private System.Windows.Forms.Label lEmail;
         private System.Windows.Forms.LinkLabel eEmail;
+        private System.Windows.Forms.Label lTwitter;
+        private System.Windows.Forms.LinkLabel eTwitter;
+        private System.Windows.Forms.ToolTip tipAbout;
     }
 }

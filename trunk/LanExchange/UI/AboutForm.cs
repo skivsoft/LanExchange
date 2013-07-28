@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 using LanExchange.Model;
 using LanExchange.Presenter;
@@ -29,36 +30,53 @@ namespace LanExchange.UI
        
         private void eWeb_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            AboutPresenter.OpenWebLink();
+            m_Presenter.OpenWebLink();
+        }
+
+        private void eTwitter_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            m_Presenter.OpenTwitterLink();
         }
 
         private void eEmail_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            AboutPresenter.OpenEmailLink();
+            m_Presenter.OpenEmailLink();
         }
 
         public string WebText
         {
-            get
-            {
-                return eWeb.Text;
-            }
-            set
-            {
-                eWeb.Text = value;
-            }
+            get { return eWeb.Text; }
+            set { eWeb.Text = value; }
+        }
+
+        public string TwitterText
+        {
+            get { return eTwitter.Text; }
+            set { eTwitter.Text = value; }
         }
 
         public string EmailText
         {
-            get
-            {
-                return eEmail.Text;
-            }
-            set
-            {
-                eEmail.Text = value;
-            }
+            get { return eEmail.Text; }
+            set { eEmail.Text = value; }
+        }
+
+        public string WebToolTip
+        {
+            get { return tipAbout.GetToolTip(eWeb); }
+            set { tipAbout.SetToolTip(eWeb, value); }
+        }
+
+        public string TwitterToolTip
+        {
+            get { return tipAbout.GetToolTip(eTwitter); }
+            set { tipAbout.SetToolTip(eTwitter, value); }
+        }
+
+        public string EmailToolTip
+        {
+            get { return tipAbout.GetToolTip(eEmail); }
+            set { tipAbout.SetToolTip(eEmail, value); }
         }
 
         private void AboutForm_FormClosed(object sender, FormClosedEventArgs e)

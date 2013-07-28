@@ -89,6 +89,7 @@
   <ItemGroup>
     <Compile Include="Action\AboutAction.cs" />
     <Compile Include="Action\SettingsAction.cs" />
+    <Compile Include="CmdLineProcessor.cs" />
     <Compile Include="Model\AboutInfo.cs" />
     <Compile Include="Model\BackgroundWorkerEx.cs">
       <SubType>Component</SubType>
@@ -346,9 +347,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="changelog">
+    <Content Include="ChangeLog.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
     <Content Include="LanExchange.ico" />
     <None Include="Resources\user_32.png" />
     <None Include="Resources\user_16.png" />

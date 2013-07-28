@@ -177,17 +177,17 @@ namespace LanExchange.Tests.Utils
         {
             m_Info.ResetUtcUpdated();
             Assert.IsEmpty(m_Info.GetTopicalityText());
-            var current = DateTime.UtcNow;
             var info1 = MockRepository.GenerateStub<ServerInfo>();
             var info2 = MockRepository.GenerateStub<ServerInfo>();
-            var past1 = new DateTime(current.Year, current.Month, current.Day - 1, current.Hour - 2, current.Minute - 3, current.Second-4);
-            var past2 = new DateTime(current.Year, current.Month, current.Day, current.Hour, current.Minute-1, current.Second-2);
+            var current = new DateTime(2012, 01, 22, 18, 30, 40);
+            var past1 = new DateTime(current.Year, current.Month, current.Day-1, current.Hour - 10, current.Minute - 20, current.Second);
+            var past2 = new DateTime(current.Year, current.Month, current.Day, current.Hour, current.Minute-20, current.Second-30);
             info1.Stub(x => x.GetTopicality()).Return(current - past1);
             info2.Stub(x => x.GetTopicality()).Return(current - past2);
             // checks day, hour, min
-            Assert.AreEqual("1d 2h 3m", info1.GetTopicalityText());
+            Assert.AreEqual("1d 10h 20m", info1.GetTopicalityText());
             // checks min, sec
-            Assert.AreEqual("1m 2s", info2.GetTopicalityText());
+            Assert.AreEqual("20m 30s", info2.GetTopicalityText());
         }
 
         [Test]
