@@ -53,11 +53,23 @@
             this.pInfo = new LanExchange.UI.InfoView();
             this.popWorkers = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mStopWorkers = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuMain = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.langEN_US = new System.Windows.Forms.ToolStripMenuItem();
+            this.langRU_RU = new System.Windows.Forms.ToolStripMenuItem();
+            this.langKK_KZ = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timerTabSettingsSaver = new System.Windows.Forms.Timer(this.components);
             this.popTray.SuspendLayout();
             this.Status.SuspendLayout();
             this.popTop.SuspendLayout();
             this.popWorkers.SuspendLayout();
+            this.menuMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // TrayIcon
@@ -78,7 +90,7 @@
             this.mAbout,
             this.mExit});
             this.popTray.Name = "popTray";
-            this.popTray.Size = new System.Drawing.Size(213, 126);
+            this.popTray.Size = new System.Drawing.Size(213, 104);
             this.popTray.Opening += new System.ComponentModel.CancelEventHandler(this.popTray_Opening);
             // 
             // mOpen
@@ -206,12 +218,12 @@
             // Pages
             // 
             this.Pages.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Pages.Location = new System.Drawing.Point(0, 60);
+            this.Pages.Location = new System.Drawing.Point(0, 84);
             this.Pages.Margin = new System.Windows.Forms.Padding(0);
             this.Pages.Name = "Pages";
             this.Pages.SelectedIndex = -1;
             this.Pages.SelectedTabText = "";
-            this.Pages.Size = new System.Drawing.Size(564, 460);
+            this.Pages.Size = new System.Drawing.Size(564, 436);
             this.Pages.TabIndex = 24;
             // 
             // pInfo
@@ -222,7 +234,7 @@
             this.pInfo.InfoComp = "    ";
             this.pInfo.InfoDesc = "    ";
             this.pInfo.InfoOS = "    ";
-            this.pInfo.Location = new System.Drawing.Point(0, 0);
+            this.pInfo.Location = new System.Drawing.Point(0, 24);
             this.pInfo.MinimumSize = new System.Drawing.Size(0, 60);
             this.pInfo.Name = "pInfo";
             this.pInfo.Size = new System.Drawing.Size(564, 60);
@@ -242,6 +254,95 @@
             this.mStopWorkers.Text = "Остановить фоновые потоки";
             this.mStopWorkers.Click += new System.EventHandler(this.mStopWorkers_Click);
             // 
+            // menuMain
+            // 
+            this.menuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.toolStripMenuItem4,
+            this.toolStripMenuItem2});
+            this.menuMain.Location = new System.Drawing.Point(0, 0);
+            this.menuMain.Name = "menuMain";
+            this.menuMain.Size = new System.Drawing.Size(564, 24);
+            this.menuMain.TabIndex = 25;
+            this.menuMain.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem3,
+            this.toolStripSeparator2,
+            this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "&File";
+            this.fileToolStripMenuItem.Click += new System.EventHandler(this.fileToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(144, 22);
+            this.toolStripMenuItem3.Text = "Preferences...";
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(141, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.langEN_US,
+            this.langRU_RU,
+            this.langKK_KZ});
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(71, 20);
+            this.toolStripMenuItem4.Text = "&Language";
+            // 
+            // langEN_US
+            // 
+            this.langEN_US.Checked = true;
+            this.langEN_US.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.langEN_US.Name = "langEN_US";
+            this.langEN_US.Size = new System.Drawing.Size(180, 22);
+            this.langEN_US.Text = "English";
+            // 
+            // langRU_RU
+            // 
+            this.langRU_RU.Name = "langRU_RU";
+            this.langRU_RU.Size = new System.Drawing.Size(180, 22);
+            this.langRU_RU.Text = "Russian — Русский";
+            // 
+            // langKK_KZ
+            // 
+            this.langKK_KZ.Name = "langKK_KZ";
+            this.langKK_KZ.Size = new System.Drawing.Size(180, 22);
+            this.langKK_KZ.Text = "Kazakh — Қазақ тілі";
+            this.langKK_KZ.Click += new System.EventHandler(this.langKZ_KZ_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem});
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(44, 20);
+            this.toolStripMenuItem2.Text = "&Help";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
             // timerTabSettingsSaver
             // 
             this.timerTabSettingsSaver.Interval = 5000;
@@ -255,8 +356,10 @@
             this.Controls.Add(this.Pages);
             this.Controls.Add(this.Status);
             this.Controls.Add(this.pInfo);
+            this.Controls.Add(this.menuMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
+            this.MainMenuStrip = this.menuMain;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Activated += new System.EventHandler(this.MainForm_Activated);
@@ -268,6 +371,8 @@
             this.Status.PerformLayout();
             this.popTop.ResumeLayout(false);
             this.popWorkers.ResumeLayout(false);
+            this.menuMain.ResumeLayout(false);
+            this.menuMain.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -298,6 +403,17 @@
         private System.Windows.Forms.ToolStripMenuItem mStopWorkers;
         private System.Windows.Forms.ToolStripMenuItem menuItemToolStripMenuItem;
         private System.Windows.Forms.Timer timerTabSettingsSaver;
+        private System.Windows.Forms.MenuStrip menuMain;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripMenuItem langEN_US;
+        private System.Windows.Forms.ToolStripMenuItem langRU_RU;
+        private System.Windows.Forms.ToolStripMenuItem langKK_KZ;
     }
 }
 

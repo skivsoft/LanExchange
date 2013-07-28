@@ -51,111 +51,208 @@
             // 
             // boxLicense
             // 
-            resources.ApplyResources(this.boxLicense, "boxLicense");
+            this.boxLicense.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.boxLicense.BackColor = System.Drawing.SystemColors.Window;
+            this.boxLicense.Location = new System.Drawing.Point(16, 16);
             this.boxLicense.Name = "boxLicense";
             this.boxLicense.ReadOnly = true;
+            this.boxLicense.Size = new System.Drawing.Size(360, 309);
+            this.boxLicense.TabIndex = 38;
+            this.boxLicense.Text = resources.GetString("boxLicense.Text");
+            this.boxLicense.Visible = false;
             // 
             // eEmail
             // 
-            resources.ApplyResources(this.eEmail, "eEmail");
+            this.eEmail.AutoSize = true;
+            this.eEmail.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.eEmail.Location = new System.Drawing.Point(93, 229);
             this.eEmail.Name = "eEmail";
+            this.eEmail.Size = new System.Drawing.Size(31, 13);
+            this.eEmail.TabIndex = 45;
             this.eEmail.TabStop = true;
+            this.eEmail.Text = "email";
             this.eEmail.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.eEmail_LinkClicked);
             // 
             // lEmail
             // 
-            resources.ApplyResources(this.lEmail, "lEmail");
+            this.lEmail.AutoSize = true;
             this.lEmail.BackColor = System.Drawing.SystemColors.Control;
+            this.lEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.lEmail.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lEmail.Location = new System.Drawing.Point(80, 216);
+            this.lEmail.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
             this.lEmail.Name = "lEmail";
+            this.lEmail.Size = new System.Drawing.Size(37, 13);
+            this.lEmail.TabIndex = 44;
+            this.lEmail.Text = "Email";
+            this.lEmail.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // eWeb
             // 
-            resources.ApplyResources(this.eWeb, "eWeb");
+            this.eWeb.AutoSize = true;
+            this.eWeb.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.eWeb.Location = new System.Drawing.Point(93, 152);
             this.eWeb.Name = "eWeb";
+            this.eWeb.Size = new System.Drawing.Size(27, 13);
+            this.eWeb.TabIndex = 43;
             this.eWeb.TabStop = true;
-            this.tipAbout.SetToolTip(this.eWeb, resources.GetString("eWeb.ToolTip"));
+            this.eWeb.Text = "web";
             this.eWeb.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.eWeb_LinkClicked);
             // 
             // lWeb
             // 
-            resources.ApplyResources(this.lWeb, "lWeb");
+            this.lWeb.AutoSize = true;
             this.lWeb.BackColor = System.Drawing.SystemColors.Control;
+            this.lWeb.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.lWeb.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lWeb.Location = new System.Drawing.Point(80, 136);
+            this.lWeb.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
             this.lWeb.Name = "lWeb";
+            this.lWeb.Size = new System.Drawing.Size(57, 13);
+            this.lWeb.TabIndex = 42;
+            this.lWeb.Text = "Web site";
+            this.lWeb.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // eVersion
             // 
-            resources.ApplyResources(this.eVersion, "eVersion");
+            this.eVersion.AutoSize = true;
+            this.eVersion.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.eVersion.Location = new System.Drawing.Point(93, 32);
             this.eVersion.Name = "eVersion";
+            this.eVersion.Size = new System.Drawing.Size(31, 13);
+            this.eVersion.TabIndex = 41;
+            this.eVersion.Text = "1.0.0";
             // 
             // bClose
             // 
-            resources.ApplyResources(this.bClose, "bClose");
+            this.bClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.bClose.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.bClose.Location = new System.Drawing.Point(276, 340);
             this.bClose.Name = "bClose";
+            this.bClose.Size = new System.Drawing.Size(100, 23);
+            this.bClose.TabIndex = 36;
+            this.bClose.Text = "Close";
             this.bClose.UseVisualStyleBackColor = true;
             this.bClose.Click += new System.EventHandler(this.bClose_Click);
             // 
             // bShowLicense
             // 
-            resources.ApplyResources(this.bShowLicense, "bShowLicense");
+            this.bShowLicense.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.bShowLicense.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.bShowLicense.Location = new System.Drawing.Point(166, 340);
             this.bShowLicense.Name = "bShowLicense";
+            this.bShowLicense.Size = new System.Drawing.Size(100, 23);
+            this.bShowLicense.TabIndex = 35;
             this.bShowLicense.UseVisualStyleBackColor = true;
             this.bShowLicense.Click += new System.EventHandler(this.bShowLicense_Click);
             // 
             // lCopyright
             // 
-            resources.ApplyResources(this.lCopyright, "lCopyright");
+            this.lCopyright.AutoSize = true;
             this.lCopyright.BackColor = System.Drawing.SystemColors.Control;
+            this.lCopyright.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.lCopyright.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lCopyright.Location = new System.Drawing.Point(80, 96);
+            this.lCopyright.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
             this.lCopyright.Name = "lCopyright";
+            this.lCopyright.Size = new System.Drawing.Size(60, 13);
+            this.lCopyright.TabIndex = 34;
+            this.lCopyright.Text = "Copyright";
+            this.lCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // eLicense
             // 
-            resources.ApplyResources(this.eLicense, "eLicense");
+            this.eLicense.AutoSize = true;
+            this.eLicense.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.eLicense.Location = new System.Drawing.Point(93, 72);
             this.eLicense.Name = "eLicense";
+            this.eLicense.Size = new System.Drawing.Size(167, 17);
+            this.eLicense.TabIndex = 33;
             this.eLicense.TabStop = true;
+            this.eLicense.Text = "Released under the MIT license.";
             this.eLicense.UseCompatibleTextRendering = true;
             // 
             // lLicense
             // 
-            resources.ApplyResources(this.lLicense, "lLicense");
+            this.lLicense.AutoSize = true;
             this.lLicense.BackColor = System.Drawing.SystemColors.Control;
+            this.lLicense.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.lLicense.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lLicense.Location = new System.Drawing.Point(80, 56);
+            this.lLicense.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
             this.lLicense.Name = "lLicense";
+            this.lLicense.Size = new System.Drawing.Size(51, 13);
+            this.lLicense.TabIndex = 31;
+            this.lLicense.Text = "License";
+            this.lLicense.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lVersion
             // 
-            resources.ApplyResources(this.lVersion, "lVersion");
+            this.lVersion.AutoSize = true;
             this.lVersion.BackColor = System.Drawing.SystemColors.Control;
+            this.lVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.lVersion.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lVersion.Location = new System.Drawing.Point(80, 16);
+            this.lVersion.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
             this.lVersion.Name = "lVersion";
+            this.lVersion.Size = new System.Drawing.Size(49, 13);
+            this.lVersion.TabIndex = 19;
+            this.lVersion.Text = "Version";
+            this.lVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // eCopyright
             // 
-            resources.ApplyResources(this.eCopyright, "eCopyright");
+            this.eCopyright.AutoSize = true;
+            this.eCopyright.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.eCopyright.Location = new System.Drawing.Point(93, 112);
             this.eCopyright.Name = "eCopyright";
+            this.eCopyright.Size = new System.Drawing.Size(51, 13);
+            this.eCopyright.TabIndex = 28;
+            this.eCopyright.Text = "Copyright";
             // 
             // logoPictureBox
             // 
             this.logoPictureBox.Image = global::LanExchange.Properties.Resources.LanExchange_48x48;
-            resources.ApplyResources(this.logoPictureBox, "logoPictureBox");
+            this.logoPictureBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.logoPictureBox.Location = new System.Drawing.Point(16, 16);
             this.logoPictureBox.Name = "logoPictureBox";
+            this.logoPictureBox.Size = new System.Drawing.Size(48, 48);
+            this.logoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.logoPictureBox.TabIndex = 13;
             this.logoPictureBox.TabStop = false;
             // 
             // lTwitter
             // 
-            resources.ApplyResources(this.lTwitter, "lTwitter");
+            this.lTwitter.AutoSize = true;
             this.lTwitter.BackColor = System.Drawing.SystemColors.Control;
+            this.lTwitter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.lTwitter.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lTwitter.Location = new System.Drawing.Point(80, 175);
+            this.lTwitter.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
             this.lTwitter.Name = "lTwitter";
+            this.lTwitter.Size = new System.Drawing.Size(46, 13);
+            this.lTwitter.TabIndex = 47;
+            this.lTwitter.Text = "Twitter";
+            this.lTwitter.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // eTwitter
             // 
-            resources.ApplyResources(this.eTwitter, "eTwitter");
+            this.eTwitter.AutoSize = true;
+            this.eTwitter.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.eTwitter.Location = new System.Drawing.Point(93, 191);
             this.eTwitter.Name = "eTwitter";
+            this.eTwitter.Size = new System.Drawing.Size(35, 13);
+            this.eTwitter.TabIndex = 48;
             this.eTwitter.TabStop = true;
+            this.eTwitter.Text = "twitter";
             this.eTwitter.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.eTwitter_LinkClicked);
             // 
             // AboutForm
             // 
-            resources.ApplyResources(this, "$this");
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(394, 373);
             this.Controls.Add(this.eTwitter);
             this.Controls.Add(this.lTwitter);
             this.Controls.Add(this.eEmail);
@@ -177,7 +274,10 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AboutForm";
+            this.Padding = new System.Windows.Forms.Padding(9);
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "About {0}";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AboutForm_FormClosed);
             this.Load += new System.EventHandler(this.AboutForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();

@@ -474,5 +474,35 @@ namespace LanExchange.UI
             if (sender is Timer)
                 (sender as Timer).Enabled = false;
         }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            m_AboutAction.Execute();
+        }
+
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            m_SettingsAction.Execute();
+        }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void fileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void langKZ_KZ_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApplicationExit();
+        }
     }
 }

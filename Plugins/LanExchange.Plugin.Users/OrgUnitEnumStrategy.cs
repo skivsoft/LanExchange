@@ -2,7 +2,7 @@
 using System.IO;
 using LanExchange.SDK;
 
-namespace Plugins.Plugin
+namespace LanExchange.Plugin.Users
 {
     internal class OrgUnitEnumStrategy : PanelStrategyBase
     {

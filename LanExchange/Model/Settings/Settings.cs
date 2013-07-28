@@ -40,6 +40,7 @@ namespace LanExchange.Model.Settings
             WMIClassesInclude.Add("Win32_BIOS");
             WMIClassesInclude.Add("Win32_Processor");
             WMIClassesInclude.Add("Win32_PhysicalMemory");
+            Language = "en-US";
         }
 
         public static Settings Instance
@@ -243,5 +244,7 @@ namespace LanExchange.Model.Settings
         public int MainFormWidth { get; set; }
 
         public List<string> WMIClassesInclude { get; set; }
+
+        public string Language { get; set; }
     }
 }

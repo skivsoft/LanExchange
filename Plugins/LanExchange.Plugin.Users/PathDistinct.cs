@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Plugins.Plugin
+namespace LanExchange.Plugin.Users
 {
     public class PathDistinct
     {

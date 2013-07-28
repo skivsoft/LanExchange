@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Text;
 
-namespace Plugins.Plugin
+namespace LanExchange.Plugin.Users
 {
     public class PathFixer
     {

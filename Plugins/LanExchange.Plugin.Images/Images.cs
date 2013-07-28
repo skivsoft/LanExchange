@@ -4,7 +4,7 @@ using System.IO;
 using LanExchange.SDK;
 using System.Drawing;
 
-namespace Plugins.Plugin
+namespace LanExchange.Plugin.Images
 {
     internal sealed class Images : IPlugin
     {
