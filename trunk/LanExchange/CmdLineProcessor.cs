@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Threading;
+using LanExchange.Model.Settings;
 
 namespace LanExchange
 {
@@ -23,14 +24,15 @@ namespace LanExchange
         {
             s_Args = Environment.GetCommandLineArgs();
             var lang = GetIfPresent("/LANG:");
-            if (lang != null)
-                try
-                {
-                    Thread.CurrentThread.CurrentUICulture = new CultureInfo(lang);
-                }
-                catch
-                {
-                }
+            if (lang == null)
+                lang = Settings.Instance.Language;
+            try
+            {
+                Thread.CurrentThread.CurrentUICulture = new CultureInfo(lang);
+            }
+            catch
+            {
+            }
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace Plugins.Plugin
+namespace LanExchange.Plugin.Users
 {
     internal class StringEqualityComparer : IEqualityComparer<string>
     {

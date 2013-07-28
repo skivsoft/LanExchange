@@ -2,7 +2,7 @@
 using System.Data;
 using System.DirectoryServices;
 
-namespace Plugins.Plugin
+namespace LanExchange.Plugin.Users
 {
     internal class ConcreteADExecutor// : IADExecutor
     {

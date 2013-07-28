@@ -8,8 +8,8 @@
     <ProjectGuid>{064D3413-8F0B-4511-85F3-4919AC1D5A98}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Plugins.Plugin</RootNamespace>
-    <AssemblyName>Plugin.Users</AssemblyName>
+    <RootNamespace>LanExchange.Plugin.Users</RootNamespace>
+    <AssemblyName>LanExchange.Plugin.Users</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

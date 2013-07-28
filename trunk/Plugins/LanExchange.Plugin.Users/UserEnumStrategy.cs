@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using LanExchange.SDK;
 
-namespace Plugins.Plugin
+namespace LanExchange.Plugin.Users
 {
     internal class UserEnumStrategy : PanelStrategyBase
     {

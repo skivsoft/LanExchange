@@ -1,6 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
-using Plugins.Plugin;
+using LanExchange.Plugin.Users;
 
 namespace Plugin.Users.Tests
 {

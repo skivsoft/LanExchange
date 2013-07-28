@@ -1,0 +1,9 @@
+﻿LanExchange 1.2.0
+=================
+- Optional command line parameter added for setting language /LANG:ll-cc
+- Show/Hide hot key changed from 'Win+X' to 'Ctrl+Win+X' cause 'Win+X' used by Windows 8.
+- License information in about box added.
+- Almost all forms (except InputBox) are not modal now.
+- Default language is English.
+- All logging code was removed.
+- Autoupdater removed from about box.
