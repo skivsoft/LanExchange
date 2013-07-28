@@ -12,6 +12,7 @@ namespace LanExchange.Model.Settings
     public class Settings
     {
         private const string WebSiteUrlDefault = "code.google.com/p/lanexchange/";
+        private const string TwitterDefault = "@LanExchangeHere";
         private const string EmailAddressDefault = "skivsoft@gmail.com";
 
         /// <summary>
@@ -215,6 +216,11 @@ namespace LanExchange.Model.Settings
             return WebSiteUrlDefault;
         }
 
+        public string GetTwitter()
+        {
+            return TwitterDefault;
+        }
+
         public string GetEmailAddress()
         {
             return EmailAddressDefault;
@@ -237,18 +243,5 @@ namespace LanExchange.Model.Settings
         public int MainFormWidth { get; set; }
 
         public List<string> WMIClassesInclude { get; set; }
-
-        // ReSharper disable UnusedAutoPropertyAccessor.Global
-        public string UpdateURL { get; set; }
-        // ReSharper restore UnusedAutoPropertyAccessor.Global
-
-        // ReSharper disable UnusedAutoPropertyAccessor.Global
-        public string WebSiteURL { get; set; }
-        // ReSharper restore UnusedAutoPropertyAccessor.Global
-
-        // ReSharper disable UnusedAutoPropertyAccessor.Global
-        public string EmailAddress { get; set; }
-        // ReSharper restore UnusedAutoPropertyAccessor.Global
-
     }
 }

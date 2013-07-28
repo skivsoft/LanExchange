@@ -45,9 +45,9 @@ namespace LanExchange.UI
             Status.ImageList = LanExchangeIcons.Instance.SmallImageList;
             // init network scanner
             PanelSubscription.Instance.RefreshInterval = (int)Settings.Instance.RefreshTimeInSec * 1000;
-            // init hotkey
+            // set hotkey for activate: Ctrl+Win+X
             m_Hotkeys = new GlobalHotkeys();
-            m_Hotkeys.RegisterGlobalHotKey((int)Keys.X, GlobalHotkeys.MOD_WIN, Handle);
+            m_Hotkeys.RegisterGlobalHotKey((int)Keys.X, GlobalHotkeys.MOD_CONTROL + GlobalHotkeys.MOD_WIN, Handle);
             // Run AfterMainFormCreated in plugins
             AppPresenter.Plugins.OnMainFormCreated();
         }

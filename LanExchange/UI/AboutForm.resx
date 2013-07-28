@@ -155,7 +155,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;boxLicense.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>15</value>
   </data>
   <data name="eEmail.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -164,7 +164,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>NoControl</value>
   </data>
   <data name="eEmail.Location" type="System.Drawing.Point, System.Drawing">
-    <value>97, 192</value>
+    <value>93, 229</value>
   </data>
   <data name="eEmail.Size" type="System.Drawing.Size, System.Drawing">
     <value>31, 13</value>
@@ -185,7 +185,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;eEmail.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="lEmail.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -197,7 +197,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>NoControl</value>
   </data>
   <data name="lEmail.Location" type="System.Drawing.Point, System.Drawing">
-    <value>80, 176</value>
+    <value>80, 216</value>
   </data>
   <data name="lEmail.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>6, 0, 3, 0</value>
@@ -224,8 +224,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lEmail.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
+  <metadata name="tipAbout.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <data name="eWeb.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -244,6 +247,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   <data name="eWeb.Text" xml:space="preserve">
     <value>web</value>
   </data>
+  <data name="eWeb.ToolTip" xml:space="preserve">
+    <value>qqqwww</value>
+  </data>
   <data name="&gt;&gt;eWeb.Name" xml:space="preserve">
     <value>eWeb</value>
   </data>
@@ -254,7 +260,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;eWeb.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="lWeb.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -293,7 +299,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lWeb.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="eVersion.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -323,7 +329,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;eVersion.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="bClose.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -353,7 +359,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;bClose.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="bShowLicense.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -380,7 +386,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;bShowLicense.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="lCopyright.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -419,7 +425,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lCopyright.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="eLicense.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -449,7 +455,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;eLicense.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>10</value>
   </data>
   <data name="lLicense.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -488,7 +494,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lLicense.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>11</value>
   </data>
   <data name="lVersion.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -527,7 +533,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lVersion.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>12</value>
   </data>
   <data name="eCopyright.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -557,7 +563,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;eCopyright.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>13</value>
   </data>
   <data name="logoPictureBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -584,8 +590,80 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>$this</value>
   </data>
   <data name="&gt;&gt;logoPictureBox.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>14</value>
   </data>
+  <data name="lTwitter.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lTwitter.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
+  </data>
+  <data name="lTwitter.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lTwitter.Location" type="System.Drawing.Point, System.Drawing">
+    <value>80, 175</value>
+  </data>
+  <data name="lTwitter.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 0, 3, 0</value>
+  </data>
+  <data name="lTwitter.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 13</value>
+  </data>
+  <data name="lTwitter.TabIndex" type="System.Int32, mscorlib">
+    <value>47</value>
+  </data>
+  <data name="lTwitter.Text" xml:space="preserve">
+    <value>Twitter</value>
+  </data>
+  <data name="lTwitter.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;lTwitter.Name" xml:space="preserve">
+    <value>lTwitter</value>
+  </data>
+  <data name="&gt;&gt;lTwitter.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lTwitter.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lTwitter.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="eTwitter.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="eTwitter.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="eTwitter.Location" type="System.Drawing.Point, System.Drawing">
+    <value>93, 191</value>
+  </data>
+  <data name="eTwitter.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 13</value>
+  </data>
+  <data name="eTwitter.TabIndex" type="System.Int32, mscorlib">
+    <value>48</value>
+  </data>
+  <data name="eTwitter.Text" xml:space="preserve">
+    <value>twitter</value>
+  </data>
+  <data name="&gt;&gt;eTwitter.Name" xml:space="preserve">
+    <value>eTwitter</value>
+  </data>
+  <data name="&gt;&gt;eTwitter.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;eTwitter.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;eTwitter.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="tipAbout.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -603,6 +681,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>About {0}</value>
+  </data>
+  <data name="&gt;&gt;tipAbout.Name" xml:space="preserve">
+    <value>tipAbout</value>
+  </data>
+  <data name="&gt;&gt;tipAbout.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>AboutForm</value>

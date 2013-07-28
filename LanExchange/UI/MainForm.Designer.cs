@@ -85,6 +85,7 @@
             // 
             this.mOpen.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.mOpen.Name = "mOpen";
+            this.mOpen.ShortcutKeyDisplayString = "Ctrl+Win+X";
             this.mOpen.Size = new System.Drawing.Size(212, 22);
             this.mOpen.Text = "Открыть";
             this.mOpen.Click += new System.EventHandler(this.mOpen_Click);
@@ -192,14 +193,14 @@
             this.popTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItemToolStripMenuItem});
             this.popTop.Name = "popTop";
-            this.popTop.Size = new System.Drawing.Size(153, 48);
+            this.popTop.Size = new System.Drawing.Size(130, 26);
             this.popTop.Opening += new System.ComponentModel.CancelEventHandler(this.popTop_Opening);
             this.popTop.Opened += new System.EventHandler(this.popTop_Opened);
             // 
             // menuItemToolStripMenuItem
             // 
             this.menuItemToolStripMenuItem.Name = "menuItemToolStripMenuItem";
-            this.menuItemToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.menuItemToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.menuItemToolStripMenuItem.Text = "MenuItem";
             // 
             // Pages

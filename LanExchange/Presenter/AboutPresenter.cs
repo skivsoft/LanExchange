@@ -19,17 +19,44 @@
         public void LoadFromModel()
         {
             m_View.WebText = Settings.Instance.GetWebSiteUrl();
+            m_View.WebToolTip = GetFullWebLink();
+            m_View.TwitterText = Settings.Instance.GetTwitter();
+            m_View.TwitterToolTip = GetFullTwitterLink();
             m_View.EmailText = Settings.Instance.GetEmailAddress();
+            m_View.EmailToolTip = GetFullEmailLink();
         }
 
-        public static void OpenWebLink()
+        private string GetFullWebLink()
         {
-            Process.Start("https://" + Settings.Instance.GetWebSiteUrl());
+            return "https://" + Settings.Instance.GetWebSiteUrl();
         }
 
-        public static void OpenEmailLink()
+        private string GetFullTwitterLink()
         {
-            Process.Start("mailto:" + Settings.Instance.GetEmailAddress());
+            var name = Settings.Instance.GetTwitter();
+            if (name.Substring(0, 1).Equals("@"))
+                name = name.Remove(0, 1);
+            return "https://twitter.com/" + name;
+        }
+
+        private string GetFullEmailLink()
+        {
+            return "mailto:" + Settings.Instance.GetEmailAddress();
+        }
+
+        public void OpenWebLink()
+        {
+            Process.Start(GetFullWebLink());
+        }
+
+        public void OpenTwitterLink()
+        {
+            Process.Start(GetFullTwitterLink());
+        }
+
+        public void OpenEmailLink()
+        {
+            Process.Start(GetFullEmailLink());
         }
     }
 }
