@@ -30,6 +30,7 @@
 // *****************************************************************************
 
 using System;
+using System.Windows.Forms;
 using LanExchange.Presenter;
 using LanExchange.UI;
 using LanExchange.Utils;
@@ -42,10 +43,17 @@ namespace LanExchange
         static void Main()
         {
             SingleInstanceCheck.Check();
-            CmdLineProcessor.Processing();
-            AppPresenter.Plugins = new PluginLoader();
-            AppPresenter.Plugins.LoadPlugins();
-            AppView.ApplicationRun();
+            try
+            {
+                CmdLineProcessor.Processing();
+                AppPresenter.Plugins = new PluginLoader();
+                AppPresenter.Plugins.LoadPlugins();
+                AppView.ApplicationRun();
+            }
+            catch(Exception E)
+            {
+                MessageBox.Show(null, E.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

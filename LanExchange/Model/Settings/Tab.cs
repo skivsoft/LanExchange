@@ -10,7 +10,8 @@ namespace LanExchange.Model.Settings
         public string Name { get; set; }
         public PanelViewMode View { get; set; }
         public List<string> Domains { get; set; }
-        public ServerInfo[] Items { get; set; }
+        // TODO NEED UNCOMMENT THIS!
+        //public ServerInfo[] Items { get; set; }
         public string Focused { get; set; }
         public string Filter { get; set; }
 
@@ -18,21 +19,23 @@ namespace LanExchange.Model.Settings
         {
             View = PanelViewMode.Details;
             Domains = new List<string>();
-            Items = new ServerInfo[0];
+            // TODO NEED UNCOMMENT THIS!
+            //Items = new ServerInfo[0];
         }
 
         public void SetScanGroups(IEnumerable<ISubject> value)
         {
             Domains.Clear();
-            foreach(var item in value)
+            foreach (var item in value)
                 Domains.Add(item.Subject);
         }
 
         public IList<ISubject> GetScanGroups()
         {
             var result = new List<ISubject>();
-            foreach(var domain in Domains)
-                result.Add(new DomainPanelItem(domain));
+            // TODO NEED UNCOMMENT THIS!
+            //foreach (var domain in Domains)
+            //    result.Add(new DomainPanelItem(domain));
             return result;
         }
     }

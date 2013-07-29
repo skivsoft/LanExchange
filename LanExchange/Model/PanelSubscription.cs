@@ -245,62 +245,64 @@ namespace LanExchange.Model
 
         private void SaveResultsToCache()
         {
-            var fileName = GetCacheFileName();
-            lock (m_Results)
-            {
-                var Temp = new Dictionary<string, ServerInfo[]>();
-                foreach (var Pair in m_Results)
-                {
-                    if ((Pair.Key != ConcreteSubject.s_Root) && !(Pair.Key is DomainPanelItem))
-                        continue;
-                    var TempList = new ServerInfo[Pair.Value.Count];
-                    for (int i = 0; i < Pair.Value.Count; i++)
-                    {
-                        var comp = Pair.Value[i] as ComputerPanelItem;
-                        if (comp != null)
-                            TempList[i] = comp.SI;
-                    }
-                    Temp.Add(Pair.Key.Subject, TempList);
-                }
-                try
-                {
-                    SerializeUtils.SerializeObjectToBinaryFile(fileName, Temp);
-                }
-                catch (Exception)
-                {
-                }
-            }
+            // TODO UNCOMMENT THIS!
+            //var fileName = GetCacheFileName();
+            //lock (m_Results)
+            //{
+            //    var Temp = new Dictionary<string, ServerInfo[]>();
+            //    foreach (var Pair in m_Results)
+            //    {
+            //        if ((Pair.Key != ConcreteSubject.s_Root) && !(Pair.Key is DomainPanelItem))
+            //            continue;
+            //        var TempList = new ServerInfo[Pair.Value.Count];
+            //        for (int i = 0; i < Pair.Value.Count; i++)
+            //        {
+            //            var comp = Pair.Value[i] as ComputerPanelItem;
+            //            if (comp != null)
+            //                TempList[i] = comp.SI;
+            //        }
+            //        Temp.Add(Pair.Key.Subject, TempList);
+            //    }
+            //    try
+            //    {
+            //        SerializeUtils.SerializeObjectToBinaryFile(fileName, Temp);
+            //    }
+            //    catch (Exception)
+            //    {
+            //    }
+            //}
         }
 
         private void LoadResultsFromCache()
         {
-            var fileName = GetCacheFileName();
-            if (!File.Exists(fileName)) return;
-            lock (m_Results)
-            {
-                Dictionary<string, ServerInfo[]> Temp = null;
-                try
-                {
-                    Temp = (Dictionary<string, ServerInfo[]>)SerializeUtils.DeserializeObjectFromBinaryFile(fileName);
-                }
-                catch (Exception)
-                {
-                }
-                if (Temp != null)
-                {
-                    m_Results.Clear();
-                    foreach (var Pair in Temp)
-                    {
-                        var domain = new DomainPanelItem(Pair.Key);
-                        var TempList = new List<PanelItemBase>();
-                        foreach (var si in Pair.Value)
-                            if (si != null)
-                                TempList.Add(new ComputerPanelItem(domain, si));
-                        m_Results.Add(domain, TempList);
-                        //TempList.Sort();
-                    }
-                }
-            }
+            // TODO UNCOMMENT THIS!
+            //var fileName = GetCacheFileName();
+            //if (!File.Exists(fileName)) return;
+            //lock (m_Results)
+            //{
+            //    Dictionary<string, ServerInfo[]> Temp = null;
+            //    try
+            //    {
+            //        Temp = (Dictionary<string, ServerInfo[]>)SerializeUtils.DeserializeObjectFromBinaryFile(fileName);
+            //    }
+            //    catch (Exception)
+            //    {
+            //    }
+            //    if (Temp != null)
+            //    {
+            //        m_Results.Clear();
+            //        foreach (var Pair in Temp)
+            //        {
+            //            var domain = new DomainPanelItem(Pair.Key);
+            //            var TempList = new List<PanelItemBase>();
+            //            foreach (var si in Pair.Value)
+            //                if (si != null)
+            //                    TempList.Add(new ComputerPanelItem(domain, si));
+            //            m_Results.Add(domain, TempList);
+            //            //TempList.Sort();
+            //        }
+            //    }
+            //}
         }
 
         public bool HasSubscribers()

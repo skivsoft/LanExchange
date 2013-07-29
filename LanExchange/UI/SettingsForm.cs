@@ -19,6 +19,7 @@ namespace LanExchange.UI
             InitializeComponent();
             m_Presenter = new ParamsPresenter(this);
             m_Presenter.LoadFromModel();
+            tvSettings.ExpandAll();
         }
 
         private void bSave_Click(object sender, EventArgs e)
@@ -27,41 +28,42 @@ namespace LanExchange.UI
             Close();
         }
 
-        public bool IsAutoRun
-        {
-            get { return chAutorun.Checked; }
-            set { chAutorun.Checked = value; }
-        }
+        // TODO NEED UNCOMMENT!
+        //public bool IsAutoRun
+        //{
+        //    get { return chAutorun.Checked; }
+        //    set { chAutorun.Checked = value; }
+        //}
 
-        public bool RunMinimized
-        {
-            get { return chMinimized.Checked; }
-            set { chMinimized.Checked = value; }
-        }
+        //public bool RunMinimized
+        //{
+        //    get { return chMinimized.Checked; }
+        //    set { chMinimized.Checked = value; }
+        //}
 
-        public bool AdvancedMode
-        {
-            get { return chAdvanced.Checked; }
-            set { chAdvanced.Checked = value; }
-        }
+        //public bool AdvancedMode
+        //{
+        //    get { return chAdvanced.Checked; }
+        //    set { chAdvanced.Checked = value; }
+        //}
 
-        public decimal RefreshTimeInMin
-        {
-            get { return eRefreshTime.Value; }
-            set { eRefreshTime.Value = value; }
-        }
+        //public decimal RefreshTimeInMin
+        //{
+        //    get { return eRefreshTime.Value; }
+        //    set { eRefreshTime.Value = value; }
+        //}
 
-        public bool ShowHiddenShares
-        {
-            get { return chShowHiddenShares.Checked; }
-            set { chShowHiddenShares.Checked = value; }
-        }
+        //public bool ShowHiddenShares
+        //{
+        //    get { return chShowHiddenShares.Checked; }
+        //    set { chShowHiddenShares.Checked = value; }
+        //}
         
-        public bool ShowPrinters 
-        {
-            get { return chShowPrinters.Checked; }
-            set { chShowPrinters.Checked = value; }
-        }
+        //public bool ShowPrinters 
+        //{
+        //    get { return chShowPrinters.Checked; }
+        //    set { chShowPrinters.Checked = value; }
+        //}
 
         private void SettingsForm_FormClosed(object sender, FormClosedEventArgs e)
         {

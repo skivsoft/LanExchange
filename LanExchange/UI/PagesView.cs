@@ -163,10 +163,6 @@ namespace LanExchange.UI
                 AddTabsToMenuItem(mSelectTab, mSelectTab_Click, false);
             }
         }
-        private void mTabParams_Click(object sender, EventArgs e)
-        {
-            m_Presenter.EditTabParams();
-        }
 
         private void Pages_Selected(object sender, TabControlEventArgs e)
         {
@@ -284,11 +280,6 @@ namespace LanExchange.UI
                 Item.Click += handler;
                 menuitem.DropDownItems.Add(Item);
             }
-        }
-
-        public ITabSettingView CreateTabSettingsView()
-        {
-            return new TabSettingForm();
         }
 
         public IPanelView CreatePanelView(IPanelModel info)

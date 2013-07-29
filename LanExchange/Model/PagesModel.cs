@@ -167,10 +167,11 @@ namespace LanExchange.Model
             }
             else
             {
-                var domain = NetApi32Utils.GetMachineNetBiosDomain(null);
-                var Info = new PanelItemList(domain);
-                Info.Groups.Add(new DomainPanelItem(domain));
-                AddTab(Info);
+                // TODO UNCOMMENT THIS!
+                //var domain = NetApi32Utils.Instance.GetMachineNetBiosDomain(null);
+                //var Info = new PanelItemList(domain);
+                //Info.Groups.Add(new DomainPanelItem(domain));
+                //AddTab(Info);
             }
             if (m_PagesSettings.SelectedIndex != -1)
                 SelectedIndex = m_PagesSettings.SelectedIndex;

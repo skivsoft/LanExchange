@@ -66,10 +66,6 @@ namespace LanExchange.Model.Panel
             }
         }
 
-        public override PanelColumnHeader CreateColumnHeader(int index)
-        {
-            throw new NotImplementedException();
-        }
 
         //public int CompareTo(FilePanelItem other)
         //{

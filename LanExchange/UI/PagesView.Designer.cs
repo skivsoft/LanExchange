@@ -52,7 +52,7 @@
             this.toolStripSeparator11,
             this.mTabParams});
             this.popPages.Name = "popPages";
-            this.popPages.Size = new System.Drawing.Size(245, 148);
+            this.popPages.Size = new System.Drawing.Size(185, 148);
             this.popPages.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.popPages_Closed);
             this.popPages.Opening += new System.ComponentModel.CancelEventHandler(this.popPages_Opening);
             this.popPages.Opened += new System.EventHandler(this.popPages_Opened);
@@ -62,50 +62,49 @@
             // 
             this.mNewTab.Name = "mNewTab";
             this.mNewTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.mNewTab.Size = new System.Drawing.Size(244, 22);
-            this.mNewTab.Text = "Новая вкладка";
+            this.mNewTab.Size = new System.Drawing.Size(184, 22);
+            this.mNewTab.Text = "New tab";
             this.mNewTab.Click += new System.EventHandler(this.mNewTab_Click);
             // 
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(241, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(181, 6);
             // 
             // mCloseTab
             // 
             this.mCloseTab.Name = "mCloseTab";
             this.mCloseTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F4)));
-            this.mCloseTab.Size = new System.Drawing.Size(244, 22);
-            this.mCloseTab.Text = "Закрыть вкладку";
+            this.mCloseTab.Size = new System.Drawing.Size(184, 22);
+            this.mCloseTab.Text = "Close tab";
             this.mCloseTab.Click += new System.EventHandler(this.mCloseTab_Click);
             // 
             // mRenameTab
             // 
             this.mRenameTab.Name = "mRenameTab";
             this.mRenameTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.R)));
-            this.mRenameTab.Size = new System.Drawing.Size(244, 22);
-            this.mRenameTab.Text = "Переименовать вкладку";
+            this.mRenameTab.Size = new System.Drawing.Size(184, 22);
+            this.mRenameTab.Text = "Rename tab";
             this.mRenameTab.Click += new System.EventHandler(this.mRenameTab_Click);
             // 
             // mSelectTab
             // 
             this.mSelectTab.Name = "mSelectTab";
-            this.mSelectTab.Size = new System.Drawing.Size(244, 22);
-            this.mSelectTab.Text = "Выбрать вкладку";
+            this.mSelectTab.Size = new System.Drawing.Size(184, 22);
+            this.mSelectTab.Text = "Select tab";
             this.mSelectTab.DropDownOpening += new System.EventHandler(this.mSelectTab_DropDownOpening);
             // 
             // toolStripSeparator11
             // 
             this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(241, 6);
+            this.toolStripSeparator11.Size = new System.Drawing.Size(181, 6);
             // 
             // mTabParams
             // 
             this.mTabParams.Name = "mTabParams";
             this.mTabParams.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.mTabParams.Size = new System.Drawing.Size(244, 22);
-            this.mTabParams.Text = "Настройка вкладки...";
-            this.mTabParams.Click += new System.EventHandler(this.mTabParams_Click);
+            this.mTabParams.Size = new System.Drawing.Size(184, 22);
+            this.mTabParams.Text = "Properties...";
             // 
             // Pages
             // 

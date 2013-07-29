@@ -26,13 +26,7 @@ namespace LanExchange
             var lang = GetIfPresent("/LANG:");
             if (lang == null)
                 lang = Settings.Instance.Language;
-            try
-            {
-                Thread.CurrentThread.CurrentUICulture = new CultureInfo(lang);
-            }
-            catch
-            {
-            }
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(lang);
         }
     }
 }

@@ -10,8 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LanExchange.Tests</RootNamespace>
     <AssemblyName>LanExchange.Tests</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,10 +46,9 @@
   <ItemGroup>
     <Compile Include="FilterModelMock.cs" />
     <Compile Include="IPagesViewMock.cs" />
+    <Compile Include="Model\ComputerItemsStrategyTest.cs" />
     <Compile Include="Model\PagesModelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils\NetApi32UtilsTest.cs" />
-    <Compile Include="Utils\ServerInfoTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LanExchange.Sdk\LanExchange.SDK.csproj">
@@ -63,6 +63,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

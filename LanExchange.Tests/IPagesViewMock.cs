@@ -48,11 +48,6 @@ namespace LanExchange.Tests
         {
         }
 
-        public ITabSettingView CreateTabSettingsView()
-        {
-            return null;
-        }
-
         public IPanelView CreatePanelView(IPanelModel info)
         {
             return null;

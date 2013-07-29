@@ -56,11 +56,6 @@
         /// </summary>
         void FocusPanelView();
         /// <summary>
-        /// Creates the tab params view.
-        /// </summary>
-        /// <returns></returns>
-        ITabSettingView CreateTabSettingsView();
-        /// <summary>
         /// Creates the panel view.
         /// </summary>
         /// <param name="info">The info.</param>

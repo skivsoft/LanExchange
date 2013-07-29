@@ -68,21 +68,5 @@ namespace LanExchange.Plugin.Users
                 return IsAccountDisabled ? PanelImageNames.UserDisabled : PanelImageNames.UserNormal;
             }
         }
-
-        public override PanelColumnHeader CreateColumnHeader(int index)
-        {
-            var result = new PanelColumnHeader();
-            result.Visible = true;
-            switch (index)
-            {
-                case 0:
-                    result.Text = "Имя пользователя";
-                    break;
-                case 1:
-                    result.Text = "Описание";
-                    break;
-            }
-            return result;
-        }
     }
 }

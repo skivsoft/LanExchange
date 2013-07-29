@@ -99,18 +99,19 @@ namespace LanExchange.Presenter
 
         public void CommandCopyPath()
         {
-            if (m_Objects == null) return;
-            StringBuilder S = new StringBuilder();
-            foreach (int index in m_View.SelectedIndexes)
-            {
-                if (S.Length > 0)
-                    S.AppendLine();
-                SharePanelItem PItem = m_Objects.GetItemAt(index) as SharePanelItem;
-                if (PItem != null)
-                    S.Append(String.Format(@"\\{0}\{1}", PItem.ComputerName, PItem.Name));
-            }
-            if (S.Length > 0)
-                m_View.SetClipboardText(S.ToString());
+            // TODO UNCOMMENT THIS
+            //if (m_Objects == null) return;
+            //StringBuilder S = new StringBuilder();
+            //foreach (int index in m_View.SelectedIndexes)
+            //{
+            //    if (S.Length > 0)
+            //        S.AppendLine();
+            //    SharePanelItem PItem = m_Objects.GetItemAt(index) as SharePanelItem;
+            //    if (PItem != null)
+            //        S.Append(String.Format(@"\\{0}\{1}", PItem.ComputerName, PItem.Name));
+            //}
+            //if (S.Length > 0)
+            //    m_View.SetClipboardText(S.ToString());
         }
 
         internal void Items_Changed(object sender, EventArgs e)
@@ -135,28 +136,30 @@ namespace LanExchange.Presenter
 
         public PanelItemBase GetFocusedPanelItem(bool pingAndAsk, bool canReturnParent)
         {
-            var item = m_Objects.GetItem(m_View.FocusedItemText);
-            var comp =  item as ComputerPanelItem;
-            if (comp != null && pingAndAsk)
-            {
-                bool bPingResult = PingThread.FastPing(comp.Name);
-                if (comp.IsPingable != bPingResult)
-                {
-                    comp.IsPingable = bPingResult;
-                    m_View.RedrawFocusedItem();
-                }
-                if (!bPingResult)
-                {
-                    DialogResult Result = MessageBox.Show(
-                        String.Format("Компьютер «{0}» не доступен посредством PING.\nПродолжить?", comp.Name), "Запрос",
-                        MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-                    if (Result != DialogResult.Yes)
-                        item = null;
-                }
-            }
-            if (canReturnParent && item != null && item.Name == PanelItemBase.s_DoubleDot)
-                item = item.Parent;
-            return item;
+            return null;
+            // TODO UNCOMMENT THIS!
+            //var item = m_Objects.GetItem(m_View.FocusedItemText);
+            //var comp =  item as ComputerPanelItem;
+            //if (comp != null && pingAndAsk)
+            //{
+            //    bool bPingResult = PingThread.FastPing(comp.Name);
+            //    if (comp.IsPingable != bPingResult)
+            //    {
+            //        comp.IsPingable = bPingResult;
+            //        m_View.RedrawFocusedItem();
+            //    }
+            //    if (!bPingResult)
+            //    {
+            //        DialogResult Result = MessageBox.Show(
+            //            String.Format("Компьютер «{0}» не доступен посредством PING.\nПродолжить?", comp.Name), "Запрос",
+            //            MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+            //        if (Result != DialogResult.Yes)
+            //            item = null;
+            //    }
+            //}
+            //if (canReturnParent && item != null && item.Name == PanelItemBase.s_DoubleDot)
+            //    item = item.Parent;
+            //return item;
         }
 
         /// <summary>
@@ -168,46 +171,47 @@ namespace LanExchange.Presenter
         /// <param name="tagParent">Can be "computer" or "folder"</param>
         public void RunCmdOnFocusedItem(string tagCmd, string tagParent)
         {
-            PanelItemBase PItem = GetFocusedPanelItem(true, false);
-            if (PItem == null) return;
+            // TODO UNCOMMENT THIS!
+            //PanelItemBase PItem = GetFocusedPanelItem(true, false);
+            //if (PItem == null) return;
 
-            string CmdLine;
-            string FmtParam = null;
+            //string CmdLine;
+            //string FmtParam = null;
 
-            switch (tagParent)
-            {
-                case COMPUTER_MENU:
-                    if (PItem is ComputerPanelItem)
-                        FmtParam = (PItem as ComputerPanelItem).Name;
-                    else
-                        if (PItem is SharePanelItem)
-                            FmtParam = (PItem as SharePanelItem).ComputerName;
-                    break;
-                case FOLDER_MENU:
-                    if (PItem is ComputerPanelItem)
-                        return;
-                    if (PItem is SharePanelItem)
-                        FmtParam = String.Format(@"\\{0}\{1}", (PItem as SharePanelItem).ComputerName, (PItem as SharePanelItem).Name);
-                    break;
-            }
+            //switch (tagParent)
+            //{
+            //    case COMPUTER_MENU:
+            //        if (PItem is ComputerPanelItem)
+            //            FmtParam = (PItem as ComputerPanelItem).Name;
+            //        else
+            //            if (PItem is SharePanelItem)
+            //                FmtParam = (PItem as SharePanelItem).ComputerName;
+            //        break;
+            //    case FOLDER_MENU:
+            //        if (PItem is ComputerPanelItem)
+            //            return;
+            //        if (PItem is SharePanelItem)
+            //            FmtParam = String.Format(@"\\{0}\{1}", (PItem as SharePanelItem).ComputerName, (PItem as SharePanelItem).Name);
+            //        break;
+            //}
 
-            if (!Kernel32.Is64BitOperatingSystem())
-                CmdLine = tagCmd.Replace("%ProgramFiles(x86)%", "%ProgramFiles%");
-            else
-                CmdLine = tagCmd;
+            //if (!Kernel32.Is64BitOperatingSystem())
+            //    CmdLine = tagCmd.Replace("%ProgramFiles(x86)%", "%ProgramFiles%");
+            //else
+            //    CmdLine = tagCmd;
 
-            CmdLine = String.Format(Environment.ExpandEnvironmentVariables(CmdLine), FmtParam);
-            string FName;
-            string Params;
-            AutorunUtils.ExplodeCmd(CmdLine, out FName, out Params);
-            try
-            {
-                Process.Start(FName, Params);
-            }
-            catch
-            {
-                m_View.ShowRunCmdError(CmdLine);
-            }
+            //CmdLine = String.Format(Environment.ExpandEnvironmentVariables(CmdLine), FmtParam);
+            //string FName;
+            //string Params;
+            //AutorunUtils.ExplodeCmd(CmdLine, out FName, out Params);
+            //try
+            //{
+            //    Process.Start(FName, Params);
+            //}
+            //catch
+            //{
+            //    m_View.ShowRunCmdError(CmdLine);
+            //}
         }
 
         /// <summary>
@@ -219,8 +223,9 @@ namespace LanExchange.Presenter
             var PItem = GetFocusedPanelItem(pingAndAsk, false);
             if (PItem == null)
                 return null;
-            while (!(PItem is ComputerPanelItem) && (PItem.Parent != null))
-                PItem = PItem.Parent;
+            // TODO UNCOMMENT THIS!
+            //while (!(PItem is ComputerPanelItem) && (PItem.Parent != null))
+            //    PItem = PItem.Parent;
             return PItem;
         }
 
@@ -267,10 +272,11 @@ namespace LanExchange.Presenter
                     PItem = PItem.Parent;
                     continue;
                 }
-                if (PItem is SharePanelItem)
-                    return FOLDER_MENU;
-                if (PItem is ComputerPanelItem)
-                    return COMPUTER_MENU;
+                // TODO UNCOMMENT THIS!
+                //if (PItem is SharePanelItem)
+                //    return FOLDER_MENU;
+                //if (PItem is ComputerPanelItem)
+                //    return COMPUTER_MENU;
                 if (PItem is FilePanelItem)
                     if ((PItem as FilePanelItem).IsDirectory)
                         return FOLDER_MENU;

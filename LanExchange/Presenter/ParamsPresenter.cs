@@ -18,24 +18,26 @@ namespace LanExchange.Presenter
 
         public void LoadFromModel()
         {
-            m_View.IsAutoRun = Settings.IsAutorun;
-            m_View.RunMinimized = Settings.Instance.RunMinimized;
-            m_View.AdvancedMode = Settings.Instance.AdvancedMode;
-            m_View.RefreshTimeInMin = Settings.Instance.RefreshTimeInSec / 60;
-            m_View.ShowHiddenShares = Settings.Instance.ShowHiddenShares;
-            m_View.ShowPrinters = Settings.Instance.ShowPrinters;
+            // TODO UNCOMMENT THIS!
+            //m_View.IsAutoRun = Settings.IsAutorun;
+            //m_View.RunMinimized = Settings.Instance.RunMinimized;
+            //m_View.AdvancedMode = Settings.Instance.AdvancedMode;
+            //m_View.RefreshTimeInMin = Settings.Instance.RefreshTimeInSec / 60;
+            //m_View.ShowHiddenShares = Settings.Instance.ShowHiddenShares;
+            //m_View.ShowPrinters = Settings.Instance.ShowPrinters;
         }
 
         public void SaveToModel()
         {
-            Settings.IsAutorun = m_View.IsAutoRun;
-            Settings.Instance.RunMinimized = m_View.RunMinimized;
-            Settings.Instance.AdvancedMode = m_View.AdvancedMode;
-            Settings.Instance.RefreshTimeInSec = m_View.RefreshTimeInMin * 60;
-            Settings.Instance.ShowHiddenShares = m_View.ShowHiddenShares;
-            Settings.Instance.ShowPrinters = m_View.ShowPrinters;
-            Settings.SaveIfModified();
-            PanelSubscription.Instance.RefreshInterval = (int)Settings.Instance.RefreshTimeInSec * 1000;
+            // TODO UNCOMMENT THIS!
+            //Settings.IsAutorun = m_View.IsAutoRun;
+            //Settings.Instance.RunMinimized = m_View.RunMinimized;
+            //Settings.Instance.AdvancedMode = m_View.AdvancedMode;
+            //Settings.Instance.RefreshTimeInSec = m_View.RefreshTimeInMin * 60;
+            //Settings.Instance.ShowHiddenShares = m_View.ShowHiddenShares;
+            //Settings.Instance.ShowPrinters = m_View.ShowPrinters;
+            //Settings.SaveIfModified();
+            //PanelSubscription.Instance.RefreshInterval = (int)Settings.Instance.RefreshTimeInSec * 1000;
         }
     }
 }
