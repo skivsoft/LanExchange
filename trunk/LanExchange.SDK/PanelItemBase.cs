@@ -56,12 +56,6 @@ namespace LanExchange.SDK
         /// The name of the image.
         /// </value>
         public abstract string ImageName { get; }
-        /// <summary>
-        /// Creates the column header.
-        /// </summary>
-        /// <param name="index">The index.</param>
-        /// <returns></returns>
-        public abstract PanelColumnHeader CreateColumnHeader(int index);
 
         /// <summary>
         /// Gets or sets the parent.

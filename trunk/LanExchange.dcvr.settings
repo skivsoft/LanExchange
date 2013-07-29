@@ -12,7 +12,11 @@
     </ExcludeFilterState>
     <ExcludeFilterState>
       <ExceptThisPath>false</ExceptThisPath>
-      <FullPath>Plugin.Users.Tests</FullPath>
+      <FullPath>LanExchange.Plugin.Users.Tests</FullPath>
+    </ExcludeFilterState>
+    <ExcludeFilterState>
+      <ExceptThisPath>false</ExceptThisPath>
+      <FullPath>LanExchange.Plugin.Network.Tests</FullPath>
     </ExcludeFilterState>
   </myExcludeFiltersStates>
   <myGroupingFilter xmlns:d2p1="http://schemas.datacontract.org/2004/07/JetBrains.dotCover.ViewingServices.Impl">
@@ -21,25 +25,19 @@
   </myGroupingFilter>
   <myPerTestStatisticsEnabled>false</myPerTestStatisticsEnabled>
   <myProjectStructureMatchingEnabled>true</myProjectStructureMatchingEnabled>
-  <mySelectedTest>LanExchange.Tests.Utils.ServerInfoTest.TestGetTopicallity</mySelectedTest>
+  <mySelectedTest>LanExchange.Plugin.Network.Tests.ComputerPanelItemTest</mySelectedTest>
   <mySortOrders xmlns:d2p1="http://schemas.datacontract.org/2004/07/System.Windows.Forms">
-    <d2p1:SortOrder>Ascending</d2p1:SortOrder>
     <d2p1:SortOrder>None</d2p1:SortOrder>
+    <d2p1:SortOrder>Ascending</d2p1:SortOrder>
     <d2p1:SortOrder>None</d2p1:SortOrder>
     <d2p1:SortOrder>None</d2p1:SortOrder>
   </mySortOrders>
   <myStatefulNodeDescriptors xmlns:d2p1="http://schemas.datacontract.org/2004/07/JetBrains.dotCover.ViewingServices.Impl">
     <d2p1:NodeDescriptor>
       <d2p1:myChildren />
-      <d2p1:myExpanded>false</d2p1:myExpanded>
-      <d2p1:myId>LanExchange.SDK</d2p1:myId>
-      <d2p1:mySelected>true</d2p1:mySelected>
-    </d2p1:NodeDescriptor>
-    <d2p1:NodeDescriptor>
-      <d2p1:myChildren />
       <d2p1:myExpanded>true</d2p1:myExpanded>
-      <d2p1:myId>LanExchange.Utils</d2p1:myId>
-      <d2p1:mySelected>false</d2p1:mySelected>
+      <d2p1:myId>LanExchange.Plugin.Network</d2p1:myId>
+      <d2p1:mySelected>true</d2p1:mySelected>
     </d2p1:NodeDescriptor>
   </myStatefulNodeDescriptors>
 </CoverageResultsState>

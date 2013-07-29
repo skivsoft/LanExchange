@@ -28,152 +28,38 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.chShowPrinters = new System.Windows.Forms.CheckBox();
-            this.chShowHiddenShares = new System.Windows.Forms.CheckBox();
-            this.chAdvanced = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.eRefreshTime = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
-            this.chMinimized = new System.Windows.Forms.CheckBox();
-            this.chAutorun = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.bCancel = new System.Windows.Forms.Button();
             this.bSave = new System.Windows.Forms.Button();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.eRefreshTime)).BeginInit();
+            this.tvSettings = new System.Windows.Forms.TreeView();
+            this.pTop = new System.Windows.Forms.Panel();
+            this.lTop = new System.Windows.Forms.Label();
+            this.pContent = new System.Windows.Forms.Panel();
+            this.settingsTabGeneral1 = new LanExchange.UI.SettingsTabGeneral();
             this.panel1.SuspendLayout();
+            this.pTop.SuspendLayout();
+            this.pContent.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(437, 267);
-            this.tabControl1.TabIndex = 0;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.chShowPrinters);
-            this.tabPage1.Controls.Add(this.chShowHiddenShares);
-            this.tabPage1.Controls.Add(this.chAdvanced);
-            this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Controls.Add(this.eRefreshTime);
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.chMinimized);
-            this.tabPage1.Controls.Add(this.chAutorun);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(429, 241);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Общие";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // chShowPrinters
-            // 
-            this.chShowPrinters.AutoSize = true;
-            this.chShowPrinters.Location = new System.Drawing.Point(18, 78);
-            this.chShowPrinters.Name = "chShowPrinters";
-            this.chShowPrinters.Size = new System.Drawing.Size(141, 17);
-            this.chShowPrinters.TabIndex = 6;
-            this.chShowPrinters.Text = "Показывать принтеры";
-            this.chShowPrinters.UseVisualStyleBackColor = true;
-            // 
-            // chShowHiddenShares
-            // 
-            this.chShowHiddenShares.AutoSize = true;
-            this.chShowHiddenShares.Location = new System.Drawing.Point(18, 58);
-            this.chShowHiddenShares.Name = "chShowHiddenShares";
-            this.chShowHiddenShares.Size = new System.Drawing.Size(219, 17);
-            this.chShowHiddenShares.TabIndex = 5;
-            this.chShowHiddenShares.Text = "Показывать скрытые общие ресурсы";
-            this.chShowHiddenShares.UseVisualStyleBackColor = true;
-            // 
-            // chAdvanced
-            // 
-            this.chAdvanced.AutoSize = true;
-            this.chAdvanced.Location = new System.Drawing.Point(18, 98);
-            this.chAdvanced.Name = "chAdvanced";
-            this.chAdvanced.Size = new System.Drawing.Size(288, 17);
-            this.chAdvanced.TabIndex = 1;
-            this.chAdvanced.Text = "Расширенный функционал для администрирования";
-            this.chAdvanced.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(295, 124);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(30, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "мин.";
-            // 
-            // eRefreshTime
-            // 
-            this.eRefreshTime.Location = new System.Drawing.Point(251, 122);
-            this.eRefreshTime.Name = "eRefreshTime";
-            this.eRefreshTime.Size = new System.Drawing.Size(40, 20);
-            this.eRefreshTime.TabIndex = 2;
-            this.eRefreshTime.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 124);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(230, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Интервал обновления списка компьютеров";
-            // 
-            // chMinimized
-            // 
-            this.chMinimized.AutoSize = true;
-            this.chMinimized.Location = new System.Drawing.Point(18, 38);
-            this.chMinimized.Name = "chMinimized";
-            this.chMinimized.Size = new System.Drawing.Size(231, 17);
-            this.chMinimized.TabIndex = 1;
-            this.chMinimized.Text = "Запускать программу в свёрнутом виде";
-            this.chMinimized.UseVisualStyleBackColor = true;
-            // 
-            // chAutorun
-            // 
-            this.chAutorun.AutoSize = true;
-            this.chAutorun.Location = new System.Drawing.Point(18, 18);
-            this.chAutorun.Name = "chAutorun";
-            this.chAutorun.Size = new System.Drawing.Size(319, 17);
-            this.chAutorun.TabIndex = 0;
-            this.chAutorun.Text = "Запускать программу при входе пользователя в систему";
-            this.chAutorun.UseVisualStyleBackColor = true;
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.bCancel);
             this.panel1.Controls.Add(this.bSave);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 267);
+            this.panel1.Location = new System.Drawing.Point(0, 413);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(437, 40);
+            this.panel1.Size = new System.Drawing.Size(634, 40);
             this.panel1.TabIndex = 1;
             // 
             // bCancel
             // 
             this.bCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.bCancel.Location = new System.Drawing.Point(349, 5);
+            this.bCancel.Location = new System.Drawing.Point(546, 9);
             this.bCancel.Name = "bCancel";
-            this.bCancel.Size = new System.Drawing.Size(75, 23);
+            this.bCancel.Size = new System.Drawing.Size(80, 23);
             this.bCancel.TabIndex = 1;
-            this.bCancel.Text = "Отмена";
+            this.bCancel.Text = "Cancel";
             this.bCancel.UseVisualStyleBackColor = true;
             this.bCancel.Click += new System.EventHandler(this.bCancel_Click);
             // 
@@ -181,20 +67,73 @@
             // 
             this.bSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bSave.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.bSave.Location = new System.Drawing.Point(259, 5);
+            this.bSave.Location = new System.Drawing.Point(452, 9);
             this.bSave.Name = "bSave";
-            this.bSave.Size = new System.Drawing.Size(75, 23);
+            this.bSave.Size = new System.Drawing.Size(80, 23);
             this.bSave.TabIndex = 0;
-            this.bSave.Text = "Сохранить";
+            this.bSave.Text = "Save";
             this.bSave.UseVisualStyleBackColor = true;
             this.bSave.Click += new System.EventHandler(this.bSave_Click);
+            // 
+            // tvSettings
+            // 
+            this.tvSettings.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tvSettings.Dock = System.Windows.Forms.DockStyle.Left;
+            this.tvSettings.Location = new System.Drawing.Point(0, 0);
+            this.tvSettings.Name = "tvSettings";
+            this.tvSettings.Size = new System.Drawing.Size(200, 413);
+            this.tvSettings.TabIndex = 2;
+            // 
+            // pTop
+            // 
+            this.pTop.BackColor = System.Drawing.Color.Silver;
+            this.pTop.Controls.Add(this.lTop);
+            this.pTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pTop.Location = new System.Drawing.Point(200, 0);
+            this.pTop.Name = "pTop";
+            this.pTop.Size = new System.Drawing.Size(434, 32);
+            this.pTop.TabIndex = 3;
+            // 
+            // lTop
+            // 
+            this.lTop.BackColor = System.Drawing.Color.DarkGray;
+            this.lTop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lTop.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lTop.ForeColor = System.Drawing.Color.White;
+            this.lTop.Location = new System.Drawing.Point(0, 0);
+            this.lTop.Name = "lTop";
+            this.lTop.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.lTop.Size = new System.Drawing.Size(434, 32);
+            this.lTop.TabIndex = 0;
+            this.lTop.Text = "General";
+            this.lTop.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pContent
+            // 
+            this.pContent.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pContent.Controls.Add(this.settingsTabGeneral1);
+            this.pContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pContent.Location = new System.Drawing.Point(200, 32);
+            this.pContent.Name = "pContent";
+            this.pContent.Size = new System.Drawing.Size(434, 381);
+            this.pContent.TabIndex = 4;
+            // 
+            // settingsTabGeneral1
+            // 
+            this.settingsTabGeneral1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.settingsTabGeneral1.Location = new System.Drawing.Point(0, 0);
+            this.settingsTabGeneral1.Name = "settingsTabGeneral1";
+            this.settingsTabGeneral1.Size = new System.Drawing.Size(430, 377);
+            this.settingsTabGeneral1.TabIndex = 0;
             // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(437, 307);
-            this.Controls.Add(this.tabControl1);
+            this.ClientSize = new System.Drawing.Size(634, 453);
+            this.Controls.Add(this.pContent);
+            this.Controls.Add(this.pTop);
+            this.Controls.Add(this.tvSettings);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.KeyPreview = true;
@@ -202,31 +141,24 @@
             this.MinimizeBox = false;
             this.Name = "SettingsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Настройки программы";
+            this.Text = "Preferences";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SettingsForm_FormClosed);
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.eRefreshTime)).EndInit();
             this.panel1.ResumeLayout(false);
+            this.pTop.ResumeLayout(false);
+            this.pContent.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button bCancel;
         private System.Windows.Forms.Button bSave;
-        private System.Windows.Forms.CheckBox chAutorun;
-        private System.Windows.Forms.CheckBox chMinimized;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown eRefreshTime;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox chAdvanced;
-        private System.Windows.Forms.CheckBox chShowPrinters;
-        private System.Windows.Forms.CheckBox chShowHiddenShares;
+        private System.Windows.Forms.TreeView tvSettings;
+        private System.Windows.Forms.Panel pTop;
+        private System.Windows.Forms.Label lTop;
+        private System.Windows.Forms.Panel pContent;
+        private SettingsTabGeneral settingsTabGeneral1;
     }
 }

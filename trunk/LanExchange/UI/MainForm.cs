@@ -157,11 +157,10 @@ namespace LanExchange.UI
             {
                 var pv = Pages.ActivePanelView;
                 e.Handled = true;
-                if (pv == null) return;
-                if (pv.Filter.IsVisible)
+                if (pv != null && pv.Filter.IsVisible)
                     pv.Filter.SetFilterText(String.Empty);
                 else
-                    if (pv.Presenter.Objects.CurrentPath.IsEmpty)
+                    if (pv == null || pv.Presenter.Objects.CurrentPath.IsEmpty)
                         Instance.Hide();
                     else
                         if (!m_EscDown)
@@ -311,15 +310,6 @@ namespace LanExchange.UI
             }
         }
 
-        private void lWorkers_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                Point P = Status.PointToScreen(e.Location);
-                popWorkers.Show(P);
-            }
-        }
-
         /// <summary>
         /// This event fires when focused item of PanelView has been changed.
         /// </summary>
@@ -327,52 +317,53 @@ namespace LanExchange.UI
         /// <param name="e"></param>
         private void Pages_PanelViewFocusedItemChanged(object sender, EventArgs e)
         {
-            // get focused item from current PanelView
-            var pv = sender as PanelView;
-            ComputerPanelItem Comp = null;
-            if (pv != null) 
-            {
-                var PItem = pv.Presenter.GetFocusedPanelItem(false, false);
-                // is focused changed on top level?
-                if (PItem is ComputerPanelItem)
-                {
-                    // run/re-run timer for saving tab settings
-                    timerTabSettingsSaver.Stop();
-                    timerTabSettingsSaver.Start();
-                }
-                Comp = pv.Presenter.GetFocusedComputer(false) as ComputerPanelItem;
-            }
-            // is focused item a computer?
-            if (Comp == null)
-            {
-                pInfo.Picture.Image = LanExchangeIcons.Instance.GetLargeImage(PanelImageNames.ComputerNormal);
-                pInfo.InfoComp = "";
-                pInfo.InfoDesc = "";
-                pInfo.InfoOS = "";
-                return;
-            }
-            // update info panel at top of the form
-            pInfo.InfoComp = Comp.Name;
-            pInfo.InfoDesc = Comp.Comment;
-            pInfo.InfoOS = Comp.SI.Version();
-            pInfo.Picture.Image = LanExchangeIcons.Instance.GetLargeImage(Comp.ImageName);
-            switch (Comp.ImageName)
-            {
-                case PanelImageNames.ComputerNormal:
-                    tipComps.SetToolTip(pInfo.Picture, "Компьютер найден в результате обзора сети.");
-                    break;
-                case PanelImageNames.ComputerDisabled:
-                    tipComps.SetToolTip(pInfo.Picture, "Компьютер не доступен посредством PING.");
-                    break;
-                /*
-                case LanExchangeIcons.imgCompGreen:
-                    tipComps.SetToolTip(pInfo.Picture, "Компьютер с запущенной программой LanExchange.");
-                    break;
-                 */
-                default:
-                    tipComps.SetToolTip(pInfo.Picture, "");
-                    break;
-            }
+            // TODO UNCOMMENT THIS!
+            //// get focused item from current PanelView
+            //var pv = sender as PanelView;
+            //ComputerPanelItem Comp = null;
+            //if (pv != null) 
+            //{
+            //    var PItem = pv.Presenter.GetFocusedPanelItem(false, false);
+            //    // is focused changed on top level?
+            //    if (PItem is ComputerPanelItem)
+            //    {
+            //        // run/re-run timer for saving tab settings
+            //        timerTabSettingsSaver.Stop();
+            //        timerTabSettingsSaver.Start();
+            //    }
+            //    Comp = pv.Presenter.GetFocusedComputer(false) as ComputerPanelItem;
+            //}
+            //// is focused item a computer?
+            //if (Comp == null)
+            //{
+            //    pInfo.Picture.Image = LanExchangeIcons.Instance.GetLargeImage(PanelImageNames.ComputerNormal);
+            //    pInfo.InfoComp = "";
+            //    pInfo.InfoDesc = "";
+            //    pInfo.InfoOS = "";
+            //    return;
+            //}
+            //// update info panel at top of the form
+            //pInfo.InfoComp = Comp.Name;
+            //pInfo.InfoDesc = Comp.Comment;
+            //pInfo.InfoOS = Comp.SI.Version();
+            //pInfo.Picture.Image = LanExchangeIcons.Instance.GetLargeImage(Comp.ImageName);
+            //switch (Comp.ImageName)
+            //{
+            //    case PanelImageNames.ComputerNormal:
+            //        tipComps.SetToolTip(pInfo.Picture, "Компьютер найден в результате обзора сети.");
+            //        break;
+            //    case PanelImageNames.ComputerDisabled:
+            //        tipComps.SetToolTip(pInfo.Picture, "Компьютер не доступен посредством PING.");
+            //        break;
+            //    /*
+            //    case LanExchangeIcons.imgCompGreen:
+            //        tipComps.SetToolTip(pInfo.Picture, "Компьютер с запущенной программой LanExchange.");
+            //        break;
+            //     */
+            //    default:
+            //        tipComps.SetToolTip(pInfo.Picture, "");
+            //        break;
+            //}
         }
 
         private void Pages_FilterTextChanged(object sender, EventArgs e)
@@ -388,7 +379,7 @@ namespace LanExchange.UI
 
         private void popTray_Opening(object sender, CancelEventArgs e)
         {
-            mOpen.Text = Visible ? "Скрыть" : "Открыть";
+            mOpen.Text = Visible ? "Close" : "Open";
         }
 
         //private void MainForm_Shown(object sender, EventArgs e)
@@ -462,11 +453,6 @@ namespace LanExchange.UI
             Pages.FocusPanelView();
         }
 
-        private void mStopWorkers_Click(object sender, EventArgs e)
-        {
-            BackgroundWorkers.Instance.StopAllWorkers();
-        }
-
         private void timerTabSettingsSaver_Tick(object sender, EventArgs e)
         {
             // save tab settings and switch off timer
@@ -485,24 +471,21 @@ namespace LanExchange.UI
             m_SettingsAction.Execute();
         }
 
-        private void toolStripMenuItem2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void fileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void langKZ_KZ_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ApplicationExit();
+        }
+
+        private void infoPanelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var menuItem = (sender as ToolStripMenuItem);
+            menuItem.Checked = !menuItem.Checked;
+            pInfo.Visible = menuItem.Checked;
+        }
+
+        private void toolStripMenuItem5_Click(object sender, EventArgs e)
+        {
+            m_AboutAction.Execute();
         }
     }
 }

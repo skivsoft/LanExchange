@@ -48,18 +48,5 @@ namespace LanExchange.Plugin.Users
                 return PanelImageNames.ShareNormal;
             }
         }
-
-        public override PanelColumnHeader CreateColumnHeader(int index)
-        {
-            var result = new PanelColumnHeader();
-            result.Visible = true;
-            switch (index)
-            {
-                case 0:
-                    result.Text = "Организационная единица";
-                    break;
-            }
-            return result;
-        }
     }
 }

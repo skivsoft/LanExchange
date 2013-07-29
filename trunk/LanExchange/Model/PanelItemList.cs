@@ -61,10 +61,11 @@ namespace LanExchange.Model
                     Focused = FocusedItemText
                 };
                 Page.SetScanGroups(Groups);
-                var TempList = new List<ServerInfo>();
-                foreach (ComputerPanelItem PItem in m_Items)
-                    TempList.Add(PItem.SI);
-                Page.Items = TempList.ToArray();
+                // TODO UNCOMMENT THIS!
+                //var TempList = new List<ServerInfo>();
+                //foreach (ComputerPanelItem PItem in m_Items)
+                //    TempList.Add(PItem.SI);
+                //Page.Items = TempList.ToArray();
                 return Page;
             }
             set
@@ -77,12 +78,13 @@ namespace LanExchange.Model
                     Groups.Add(item);
                 FocusedItemText = value.Focused;
                 Items.Clear();
-                foreach (var si in value.Items)
-                {
-                    var comp = new ComputerPanelItem(null, si);
-                    comp.ParentSubject = ConcreteSubject.s_UserItems;
-                    Items.Add(comp);
-                }
+                // TODO UNCOMMENT THIS!
+                //foreach (var si in value.Items)
+                //{
+                //    var comp = new ComputerPanelItem(null, si);
+                //    comp.ParentSubject = ConcreteSubject.s_UserItems;
+                //    Items.Add(comp);
+                //}
             }
             
         }
@@ -126,11 +128,12 @@ namespace LanExchange.Model
 
         public PanelItemBase GetItem(string key)
         {
-            if (key == null) return null;
-            var tempComp = new ComputerPanelItem(null, new ServerInfo { Name = key, Comment = String.Empty });
-            int index = m_Data.BinarySearch(tempComp);
-            if (index >= 0)
-                return m_Data[index];
+            // TODO UNCOMMENT THIS!
+            //if (key == null) return null;
+            //var tempComp = new ComputerPanelItem(null, new ServerInfo { Name = key, Comment = String.Empty });
+            //int index = m_Data.BinarySearch(tempComp);
+            //if (index >= 0)
+            //    return m_Data[index];
             return null;
         }
 
@@ -288,20 +291,21 @@ namespace LanExchange.Model
                 }
                 else
                     // add computers of domains which we subscribed
-                    if (subject is DomainPanelItem)
-                    {
-                        if (CurrentPath.IsEmpty)
-                        {
-                            m_Data.Clear();
-                            foreach (var group in Groups)
-                                foreach (PanelItemBase comp in sender.GetListBySubject(group))
-                                    m_Data.Add(comp);
-                        }
-                        else 
-                            return;
-                    }
-                    // add shares, files etc.
-                    else
+                    // TODO UNCOMMENT THIS!
+                    //if (subject is DomainPanelItem)
+                    //{
+                    //    if (CurrentPath.IsEmpty)
+                    //    {
+                    //        m_Data.Clear();
+                    //        foreach (var group in Groups)
+                    //            foreach (PanelItemBase comp in sender.GetListBySubject(group))
+                    //                m_Data.Add(comp);
+                    //    }
+                    //    else 
+                    //        return;
+                    //}
+                    //// add shares, files etc.
+                    //else
                     {
                         //ISubject group = (ISubject)m_CurrentPath.Peek();
                         m_Data.Clear();

@@ -61,6 +61,8 @@
     <Compile Include="IPanelImageManager.cs" />
     <Compile Include="IBackgroundStrategySelector.cs" />
     <Compile Include="IPlugin.cs" />
+    <Compile Include="ISettingsTabModel.cs" />
+    <Compile Include="ISettingsTabView.cs" />
     <Compile Include="PanelItemBase.cs" />
     <Compile Include="PanelStrategyBase.cs" />
     <Compile Include="BackgroundContext.cs" />
@@ -84,8 +86,6 @@
     <Compile Include="IPagesView.cs" />
     <Compile Include="IPanelView.cs" />
     <Compile Include="ISettingsView.cs" />
-    <Compile Include="ITabSettingsPresenter.cs" />
-    <Compile Include="ITabSettingView.cs" />
     <Compile Include="AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

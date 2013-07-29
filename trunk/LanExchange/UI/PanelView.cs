@@ -261,11 +261,12 @@ namespace LanExchange.UI
         /// </summary>
         private void OpenCurrentItem()
         {
-            var PItem = m_Presenter.GetFocusedPanelItem(false, true);
-            if (PItem is ComputerPanelItem)
-                mCompOpen_Click(mCompOpen, EventArgs.Empty);
-            if (PItem is SharePanelItem)
-                mFolderOpen_Click(mFolderOpen, EventArgs.Empty);
+            // TODO UNCOMMENT THIS!
+            //var PItem = m_Presenter.GetFocusedPanelItem(false, true);
+            //if (PItem is ComputerPanelItem)
+            //    mCompOpen_Click(mCompOpen, EventArgs.Empty);
+            //if (PItem is SharePanelItem)
+            //    mFolderOpen_Click(mFolderOpen, EventArgs.Empty);
         }
 
         /// <summary>
@@ -273,12 +274,13 @@ namespace LanExchange.UI
         /// </summary>
         private void RunCurrentItem()
         {
-            var PItem = m_Presenter.GetFocusedPanelItem(false, true);
-            if (PItem is ComputerPanelItem)
-                mCompOpen_Click(mRadmin1, EventArgs.Empty);
-            if (PItem is SharePanelItem)
-                if (!(PItem as SharePanelItem).SHI.IsPrinter)
-                    mFolderOpen_Click(mFAROpen, EventArgs.Empty);
+            // TODO UNCOMMENT THIS!
+            //var PItem = m_Presenter.GetFocusedPanelItem(false, true);
+            //if (PItem is ComputerPanelItem)
+            //    mCompOpen_Click(mRadmin1, EventArgs.Empty);
+            //if (PItem is SharePanelItem)
+            //    if (!(PItem as SharePanelItem).SHI.IsPrinter)
+            //        mFolderOpen_Click(mFAROpen, EventArgs.Empty);
         }
 
         private void lvComps_KeyDown(object sender, KeyEventArgs e)
@@ -344,40 +346,41 @@ namespace LanExchange.UI
 
         private void mWMI_Click(object sender, EventArgs e)
         {
-            // check advanced mode
-            if (!Settings.Instance.AdvancedMode) return;
-            // get focused computer
-            ComputerPanelItem comp = m_Presenter.GetFocusedComputer(true) as ComputerPanelItem;
-            if (comp == null) return;
-            // create wmi form
-            WMIForm form = new WMIForm(comp);
-            // try connect to computer via wmi
-            if (!form.GetPresenter().ConnectToComputer())
-            {
-                form.Dispose();
-                return;
-            }
-            // asynchronous load avaible wmi classes list, if needed
-            if (!WMIClassList.Instance.Loaded)
-            {
-                WMIClassList.Instance.IncludeClasses.Clear();
-                foreach (string str in Settings.Instance.WMIClassesInclude)
-                    WMIClassList.Instance.IncludeClasses.Add(str);
-                BackgroundWorkers.Instance.Add(new BackgroundContext(new WMIClassesInitStrategy()));
-            }
-            // set MyComputer icon to form
-            form.Icon = LanExchangeIcons.Instance.GetSmallIcon(PanelImageNames.ComputerNormal);
-            // display wmi form
-            m_WMIPlacement.AttachToForm(form);
-            try
-            {
-                form.ShowDialog();
-            }
-            finally
-            {
-                m_WMIPlacement.DetachFromForm(form);
-                form.Dispose();
-            }
+            // TODO UNCOMMENT THIS!
+            //// check advanced mode
+            //if (!Settings.Instance.AdvancedMode) return;
+            //// get focused computer
+            //ComputerPanelItem comp = m_Presenter.GetFocusedComputer(true) as ComputerPanelItem;
+            //if (comp == null) return;
+            //// create wmi form
+            //WMIForm form = new WMIForm(comp);
+            //// try connect to computer via wmi
+            //if (!form.GetPresenter().ConnectToComputer())
+            //{
+            //    form.Dispose();
+            //    return;
+            //}
+            //// asynchronous load avaible wmi classes list, if needed
+            //if (!WMIClassList.Instance.Loaded)
+            //{
+            //    WMIClassList.Instance.IncludeClasses.Clear();
+            //    foreach (string str in Settings.Instance.WMIClassesInclude)
+            //        WMIClassList.Instance.IncludeClasses.Add(str);
+            //    BackgroundWorkers.Instance.Add(new BackgroundContext(new WMIClassesInitStrategy()));
+            //}
+            //// set MyComputer icon to form
+            //form.Icon = LanExchangeIcons.Instance.GetSmallIcon(PanelImageNames.ComputerNormal);
+            //// display wmi form
+            //m_WMIPlacement.AttachToForm(form);
+            //try
+            //{
+            //    form.ShowDialog();
+            //}
+            //finally
+            //{
+            //    m_WMIPlacement.DetachFromForm(form);
+            //    form.Dispose();
+            //}
         }
 
         private void mCompOpen_Click(object sender, EventArgs e)
@@ -429,25 +432,26 @@ namespace LanExchange.UI
             bool bFolderVisible = false;
             if (PItem != null)
             {
-                if (PItem is ComputerPanelItem)
-                {
-                    var comp = PItem as ComputerPanelItem;
-                    mComp.Text = @"\\" + comp.Name;
-                    bCompVisible = Settings.Instance.AdvancedMode;
-                }
-                if (PItem is SharePanelItem)
-                {
-                    var share = PItem as SharePanelItem;
-                    mComp.Text = @"\\" + share.ComputerName;
-                    bCompVisible = Settings.Instance.AdvancedMode;
-                    if (share.Name != PanelItemBase.s_DoubleDot)
-                    {
-                        mFolder.Text = String.Format(@"\\{0}\{1}", share.ComputerName, share.Name);
-                        mFolder.Image = LanExchangeIcons.Instance.GetSmallImage(share.ImageName);
-                        bFolderVisible = true;
-                        mFAROpen.Enabled = !share.SHI.IsPrinter;
-                    }
-                }
+                // TODO UNCOMMENT THIS!
+                //if (PItem is ComputerPanelItem)
+                //{
+                //    var comp = PItem as ComputerPanelItem;
+                //    mComp.Text = @"\\" + comp.Name;
+                //    bCompVisible = Settings.Instance.AdvancedMode;
+                //}
+                //if (PItem is SharePanelItem)
+                //{
+                //    var share = PItem as SharePanelItem;
+                //    mComp.Text = @"\\" + share.ComputerName;
+                //    bCompVisible = Settings.Instance.AdvancedMode;
+                //    if (share.Name != PanelItemBase.s_DoubleDot)
+                //    {
+                //        mFolder.Text = String.Format(@"\\{0}\{1}", share.ComputerName, share.Name);
+                //        mFolder.Image = LanExchangeIcons.Instance.GetSmallImage(share.ImageName);
+                //        bFolderVisible = true;
+                //        mFAROpen.Enabled = !share.SHI.IsPrinter;
+                //    }
+                //}
             }
             mComp.Enabled = bCompVisible;
             mComp.Visible = Settings.Instance.AdvancedMode;

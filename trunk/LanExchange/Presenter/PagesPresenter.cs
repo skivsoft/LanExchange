@@ -41,29 +41,30 @@ namespace LanExchange.Presenter
 
         public void CommandSendToNewTab()
         {
-            var newTabName = InputBoxPresenter.Ask("Новая вкладка", "Введите имя", "", false);
-            if (newTabName == null) return;
-            var sourcePV = m_View.ActivePanelView;
-            if (sourcePV == null) return;
-            var sourceObjects = sourcePV.Presenter.Objects;
-            var destObjects = new PanelItemList(newTabName);
-            foreach (int index in sourcePV.SelectedIndexes)
-            {
-                var PItem = sourceObjects.GetItemAt(index);
-                if (PItem == null || PItem.Name == PanelItemBase.s_DoubleDot) 
-                    continue;
-                if (!(PItem is ComputerPanelItem))
-                    continue;
-                // copy computer and set partent to null
-                var newItem = new ComputerPanelItem(null, (PItem as ComputerPanelItem).SI);
-                newItem.ParentSubject = ConcreteSubject.s_UserItems;
-                // add item to new panel
-                destObjects.Items.Add(newItem);
-            }
-            // add tab
-            m_Model.AddTab(destObjects);
-            m_View.SelectedIndex = m_Model.Count-1;
-            m_Model.SaveSettings();
+            // TODO UNCOMMENT THIS!
+            //var newTabName = InputBoxPresenter.Ask("Новая вкладка", "Введите имя", "", false);
+            //if (newTabName == null) return;
+            //var sourcePV = m_View.ActivePanelView;
+            //if (sourcePV == null) return;
+            //var sourceObjects = sourcePV.Presenter.Objects;
+            //var destObjects = new PanelItemList(newTabName);
+            //foreach (int index in sourcePV.SelectedIndexes)
+            //{
+            //    var PItem = sourceObjects.GetItemAt(index);
+            //    if (PItem == null || PItem.Name == PanelItemBase.s_DoubleDot) 
+            //        continue;
+            //    if (!(PItem is ComputerPanelItem))
+            //        continue;
+            //    // copy computer and set partent to null
+            //    var newItem = new ComputerPanelItem(null, (PItem as ComputerPanelItem).SI);
+            //    newItem.ParentSubject = ConcreteSubject.s_UserItems;
+            //    // add item to new panel
+            //    destObjects.Items.Add(newItem);
+            //}
+            //// add tab
+            //m_Model.AddTab(destObjects);
+            //m_View.SelectedIndex = m_Model.Count-1;
+            //m_Model.SaveSettings();
         }
 
         public void CommandCloseTab()
@@ -143,21 +144,6 @@ namespace LanExchange.Presenter
         {
             m_View.SelectedIndex = e.Index;
             m_View.FocusPanelView();
-        }
-
-        public void EditTabParams()
-        {
-            int Index = m_View.PopupSelectedIndex;
-            PanelItemList Info = m_Model.GetItem(Index);
-            if (Info == null) return;
-            using (var Form = m_View.CreateTabSettingsView())
-            {
-                ITabSettingsPresenter presenter = new TabSettingsPresenter();
-                presenter.SetView(Form);
-                presenter.SetInfo(Info);
-                if (Form.ShowModal())
-                    m_Model.SaveSettings();
-            }
         }
     }
 
