@@ -12,14 +12,14 @@ namespace LanExchange.Utils
         [System.Security.SuppressUnmanagedCodeSecurity]
         public static extern NERR NetServerEnum(
              [MarshalAs(UnmanagedType.LPWStr)]string ServerName,
-             int Level,
+             uint Level,
              out IntPtr BufPtr,
-             int PrefMaxLen,
-             ref int EntriesRead,
-             ref int TotalEntries,
+             uint PrefMaxLen,
+             ref uint EntriesRead,
+             ref uint TotalEntries,
              SV_101_TYPES ServerType,
              [MarshalAs(UnmanagedType.LPWStr)] string Domain,
-             int ResumeHandle);
+             uint ResumeHandle);
 
         [Serializable]
         [StructLayout(LayoutKind.Sequential)]
@@ -163,13 +163,13 @@ namespace LanExchange.Utils
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         public struct WKSTA_INFO_100
         {
-            public int wki100_platform_id;
+            public uint wki100_platform_id;
             [MarshalAs(UnmanagedType.LPWStr)]
             public string wki100_computername;
             [MarshalAs(UnmanagedType.LPWStr)]
             public string wki100_langroup;
-            public int wki100_ver_major;
-            public int wki100_ver_minor;
+            public uint wki100_ver_major;
+            public uint wki100_ver_minor;
         }
         #endregion
 
