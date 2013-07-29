@@ -16,13 +16,19 @@ namespace LanExchange.Utils
         {
             IntPtr pBuffer;
 
-            int retval = NetApi32.NetWkstaGetInfo(server, 100, out pBuffer);
+            var retval = NetApi32.NetWkstaGetInfo(server, 100, out pBuffer);
             if (retval != 0)
                 throw new Win32Exception(retval);
-
-            NetApi32.WKSTA_INFO_100 info = (NetApi32.WKSTA_INFO_100)Marshal.PtrToStructure(pBuffer, typeof(NetApi32.WKSTA_INFO_100));
-            string domainName = info.wki100_langroup;
-            NetApi32.NetApiBufferFree(pBuffer);
+            string domainName = null;
+            try
+            {
+                var info = (NetApi32.WKSTA_INFO_100)Marshal.PtrToStructure(pBuffer, typeof(NetApi32.WKSTA_INFO_100));
+                domainName = info.wki100_langroup;
+            }
+            finally
+            {
+                NetApi32.NetApiBufferFree(pBuffer);
+            }
             return domainName;
         }
 
@@ -35,9 +41,13 @@ namespace LanExchange.Utils
         public static IEnumerable<NetApi32.SERVER_INFO_101> NetServerEnum(string domain, NetApi32.SV_101_TYPES types)
         {
             IntPtr pInfo;
-            int entriesread = 0;
-            int totalentries = 0;
-            NetApi32.NERR err = NetApi32.NetServerEnum(null, 101, out pInfo, -1, ref entriesread, ref totalentries, types, domain, 0);
+            uint entriesread = 0;
+            uint totalentries = 0;
+            NetApi32.NERR err;
+            unchecked
+            {
+                err = NetApi32.NetServerEnum(null, 101, out pInfo, (uint)-1, ref entriesread, ref totalentries, types, domain, 0);
+            }
             if ((err == NetApi32.NERR.NERR_SUCCESS || err == NetApi32.NERR.ERROR_MORE_DATA) && pInfo != IntPtr.Zero)
                 try
                 {
