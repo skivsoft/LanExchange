@@ -1,7 +1,7 @@
 ﻿using System;
 using LanExchange.SDK;
 
-namespace LanExchange.Plugin.Network
+namespace LanExchange.Plugin.Network.Panel
 {
     public class SharePanelItem : PanelItemBase//, IComparable<SharePanelItem>
     {

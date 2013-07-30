@@ -14,9 +14,9 @@ namespace LanExchange
             if (serviceType == typeof (IPanelImageManager))
                 return LanExchangeIcons.Instance;
 
-            if (PanelSubscription.Instance != null)
-                if (serviceType == typeof (IBackgroundStrategySelector))
-                    return PanelSubscription.Instance.StrategySelector;
+            //if (PanelSubscription.Instance != null)
+            //    if (serviceType == typeof (IBackgroundStrategySelector))
+            //        return PanelSubscription.Instance.StrategySelector;
 
             if (MainForm.Instance != null)
             {

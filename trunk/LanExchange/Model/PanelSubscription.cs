@@ -32,7 +32,6 @@ namespace LanExchange.Model
 
         private readonly IDictionary<ISubject, IList<ISubscriber>> m_Subjects;
         private readonly Dictionary<ISubject, IList<PanelItemBase>> m_Results;
-        private readonly IBackgroundStrategySelector m_StrategySelector;
 
         private int m_RefreshInterval;
         private readonly Timer m_RefreshTimer;
@@ -44,7 +43,7 @@ namespace LanExchange.Model
             m_Subjects = new Dictionary<ISubject, IList<ISubscriber>>();
             m_Results = new Dictionary<ISubject, IList<PanelItemBase>>(new ConcreteSubjectComparer());
             // looking strategies in our assembly
-            m_StrategySelector = new ConcreteStrategySelector();
+            //m_StrategySelector = new ConcreteStrategySelector();
             #if USE_INTERNAL_STRATEGIES
             m_StrategySelector.SearchStrategiesInAssembly(Assembly.GetExecutingAssembly(), typeof(PanelStrategyBase));
             #endif
@@ -62,11 +61,6 @@ namespace LanExchange.Model
             m_RefreshTimer.Dispose();
         }
 
-        public IBackgroundStrategySelector StrategySelector
-        {
-            get { return m_StrategySelector; }
-        }
-
         public int RefreshInterval
         {
             get { return m_RefreshInterval; }
@@ -79,54 +73,56 @@ namespace LanExchange.Model
         
         public bool HasStrategyForSubject(ISubject subject)
         {
-            return m_StrategySelector.FindFirstAcceptedStrategy(subject, typeof(PanelStrategyBase)) != null;
+            //return m_StrategySelector.FindFirstAcceptedStrategy(subject, typeof(IPanelFillerStrategy)) != null;
+            return false;
         }
 
-        private PanelStrategyBase CreateConcretePanelStrategy(ISubject subject)
+        private IPanelFillerStrategy CreateConcretePanelStrategy(ISubject subject)
         {
-            var strategy = m_StrategySelector.FindFirstAcceptedStrategy(subject, typeof(PanelStrategyBase));
-            if (strategy == null) return null;
-            // create another one instance of the strategy
-            var newStrategy = (PanelStrategyBase)Activator.CreateInstance(strategy.GetType());
-            newStrategy.Subject = subject;
-            return newStrategy;
+            //var strategy = m_StrategySelector.FindFirstAcceptedStrategy(subject, typeof(IPanelFillerStrategy));
+            //if (strategy == null) return null;
+            //// create another one instance of the strategy
+            //var newStrategy = (IPanelFillerStrategy)Activator.CreateInstance(strategy.GetType());
+            //newStrategy.Subject = subject;
+            //return newStrategy;
+            return null;
         }
 
         private void RefreshTimer_Tick(object sender, EventArgs e)
         {
-            // prepare workers to launch
-            foreach (var Pair in m_Subjects)
-            {
-                // skip subjects without subscribers
-                if (Pair.Value.Count == 0) continue;
+            //// prepare workers to launch
+            //foreach (var Pair in m_Subjects)
+            //{
+            //    // skip subjects without subscribers
+            //    if (Pair.Value.Count == 0) continue;
                 
-                bool subjectFound = false;
-                foreach(BackgroundContext ctx in BackgroundWorkers.Instance.EnumContexts())
-                    if (ctx.Strategy is PanelStrategyBase)
-                    {
-                        var strategy = ctx.Strategy as PanelStrategyBase;
-                        if (strategy.Subject != null && strategy.Subject.Equals(Pair.Key))
-                        {
-                            subjectFound = true;
-                            break;
-                        }
-                    }
-                if (!subjectFound)
-                {
-                    // select strategy for enum panel items by specified subject Pair.Key
-                    var strategy = CreateConcretePanelStrategy(Pair.Key);
-                    if (strategy == null) continue;
-                    // create background worker for enum via strategy
-                    var context = new BackgroundContext(strategy);
-                    var worker = new BackgroundWorkerEx();
-                    worker.DoWork += OneWorker_DoWork;
-                    worker.RunWorkerCompleted += OneWorker_RunWorkerCompleted;
-                    BackgroundWorkers.Instance.Add(context, worker);
-                    // Run background worker!
-                    worker.RunWorkerAsync(context);
-                    //GC.KeepAlive(worker);
-                }
-            }
+            //    bool subjectFound = false;
+            //    foreach(BackgroundContext ctx in BackgroundWorkers.Instance.EnumContexts())
+            //        if (ctx.Strategy is IPanelFillerStrategy)
+            //        {
+            //            var strategy = ctx.Strategy as IPanelFillerStrategy;
+            //            if (strategy.Subject != null && strategy.Subject.Equals(Pair.Key))
+            //            {
+            //                subjectFound = true;
+            //                break;
+            //            }
+            //        }
+            //    if (!subjectFound)
+            //    {
+            //        // select strategy for enum panel items by specified subject Pair.Key
+            //        var strategy = CreateConcretePanelStrategy(Pair.Key);
+            //        if (strategy == null) continue;
+            //        // create background worker for enum via strategy
+            //        var context = new BackgroundContext(strategy);
+            //        var worker = new BackgroundWorkerEx();
+            //        worker.DoWork += OneWorker_DoWork;
+            //        worker.RunWorkerCompleted += OneWorker_RunWorkerCompleted;
+            //        BackgroundWorkers.Instance.Add(context, worker);
+            //        // Run background worker!
+            //        worker.RunWorkerAsync(context);
+            //        //GC.KeepAlive(worker);
+            //    }
+            //}
         }
 
         private bool SetResult(ISubject subject, IList<PanelItemBase> list)
@@ -169,31 +165,31 @@ namespace LanExchange.Model
         /// <param name="e"></param>
         private void OneWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            var context = e.Argument as BackgroundContext;
-            if (context == null)
-            {
-                e.Cancel = true;
-                return;
-            }
-            try
-            {
-                context.ExecuteOperation();
-            }
-            catch (Exception)
-            {
-                e.Cancel = true;
-            }
-            e.Result = null;
-            if (e.Cancel) return;
-            // process panel strategies
-            if (context.Strategy is PanelStrategyBase)
-            {
-                var strategy = (context.Strategy as PanelStrategyBase);
-                if (SetResult(strategy.Subject, strategy.Result))
-                    e.Result = strategy.Subject;
-                else
-                    e.Cancel = true;
-            }
+            //var context = e.Argument as BackgroundContext;
+            //if (context == null)
+            //{
+            //    e.Cancel = true;
+            //    return;
+            //}
+            //try
+            //{
+            //    context.ExecuteOperation();
+            //}
+            //catch (Exception)
+            //{
+            //    e.Cancel = true;
+            //}
+            //e.Result = null;
+            //if (e.Cancel) return;
+            //// process panel strategies
+            //if (context.Strategy is IPanelFillerStrategy)
+            //{
+            //    var strategy = (context.Strategy as IPanelFillerStrategy);
+            //    if (SetResult(strategy.Subject, strategy.Result))
+            //        e.Result = strategy.Subject;
+            //    else
+            //        e.Cancel = true;
+            //}
         }
 
         /// <summary>

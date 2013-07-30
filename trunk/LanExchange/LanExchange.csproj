@@ -95,7 +95,6 @@
     <Compile Include="Model\BackgroundWorkerEx.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Model\BackgroundWorkers.cs" />
     <Compile Include="Model\LanExchangeIcons.cs" />
     <Compile Include="Model\PagesModel.cs" />
     <Compile Include="Model\PanelIndexEventArgs.cs" />
@@ -109,7 +108,6 @@
     <Compile Include="Model\Settings\Settings.cs" />
     <Compile Include="Model\Settings\Tab.cs" />
     <Compile Include="Model\Settings\Tabs.cs" />
-    <Compile Include="Model\ComputerItemsStrategy.cs" />
     <Compile Include="PluginLoader.cs" />
     <Compile Include="Presenter\AboutPresenter.cs" />
     <Compile Include="Presenter\AppPresenter.cs" />
@@ -121,7 +119,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceProvider.cs" />
-    <Compile Include="Model\ConcreteStrategySelector.cs" />
     <Compile Include="UI\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -214,7 +211,6 @@
     <Compile Include="WMI\WMIAuthForm.Designer.cs">
       <DependentUpon>WMIAuthForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="WMI\WMIClassesInitStrategy.cs" />
     <Compile Include="WMI\WMIClassList.cs" />
     <Compile Include="WMI\WMIForm.cs">
       <SubType>Form</SubType>

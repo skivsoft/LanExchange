@@ -59,14 +59,11 @@
     <Compile Include="IADExecutor.cs" />
     <Compile Include="IInfoView.cs" />
     <Compile Include="IPanelImageManager.cs" />
-    <Compile Include="IBackgroundStrategySelector.cs" />
     <Compile Include="IPlugin.cs" />
     <Compile Include="ISettingsTabModel.cs" />
     <Compile Include="ISettingsTabView.cs" />
     <Compile Include="PanelItemBase.cs" />
-    <Compile Include="PanelStrategyBase.cs" />
-    <Compile Include="BackgroundContext.cs" />
-    <Compile Include="IBackgroundStrategy.cs" />
+    <Compile Include="IPanelFillerStrategy.cs" />
     <Compile Include="IColumnComparable.cs" />
     <Compile Include="IFilterPresenter.cs" />
     <Compile Include="ILogger.cs" />

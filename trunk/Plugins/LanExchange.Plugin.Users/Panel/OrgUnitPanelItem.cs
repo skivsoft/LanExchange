@@ -1,7 +1,7 @@
 ﻿using System;
 using LanExchange.SDK;
 
-namespace LanExchange.Plugin.Users
+namespace LanExchange.Plugin.Users.Panel
 {
     internal class OrgUnitPanelItem : PanelItemBase
     {

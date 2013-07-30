@@ -51,16 +51,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ComputerEnumStrategyTest.cs" />
-    <Compile Include="ComputerPanelItemTest.cs" />
-    <Compile Include="DomainEnumStrategyTest.cs" />
-    <Compile Include="DomainPanelItemTest.cs" />
+    <Compile Include="Panel\ComputerEnumStrategyTest.cs" />
+    <Compile Include="Panel\ComputerPanelItemTest.cs" />
+    <Compile Include="Panel\DomainFillerStrategyTest.cs" />
+    <Compile Include="Panel\DomainPanelItemTest.cs" />
     <Compile Include="NetApi32UtilsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerInfoTest.cs" />
-    <Compile Include="ShareEnumStrategyTest.cs" />
+    <Compile Include="Panel\ShareEnumStrategyTest.cs" />
     <Compile Include="ShareInfoTest.cs" />
-    <Compile Include="SharePanelItemTest.cs" />
+    <Compile Include="Panel\SharePanelItemTest.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

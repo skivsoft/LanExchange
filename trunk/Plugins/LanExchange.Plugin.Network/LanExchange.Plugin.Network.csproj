@@ -41,17 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ComputerEnumStrategy.cs" />
-    <Compile Include="ComputerPanelItem.cs" />
-    <Compile Include="DomainEnumStrategy.cs" />
-    <Compile Include="DomainPanelItem.cs" />
+    <Compile Include="Panel\ComputerFillerStrategy.cs" />
+    <Compile Include="Panel\ComputerPanelItem.cs" />
+    <Compile Include="Panel\DomainFillerStrategy.cs" />
+    <Compile Include="Panel\DomainPanelItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NetApi32.cs" />
     <Compile Include="NetApi32Utils.cs" />
     <Compile Include="ServerInfo.cs" />
-    <Compile Include="ShareEnumStrategy.cs" />
+    <Compile Include="Panel\ShareFillerStrategy.cs" />
     <Compile Include="ShareInfo.cs" />
-    <Compile Include="SharePanelItem.cs" />
+    <Compile Include="Panel\SharePanelItem.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

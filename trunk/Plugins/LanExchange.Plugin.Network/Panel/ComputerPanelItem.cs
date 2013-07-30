@@ -1,7 +1,7 @@
 ﻿using System;
 using LanExchange.SDK;
 
-namespace LanExchange.Plugin.Network
+namespace LanExchange.Plugin.Network.Panel
 {
     public class ComputerPanelItem : PanelItemBase, IWmiComputer
     {
@@ -17,6 +17,13 @@ namespace LanExchange.Plugin.Network
                 throw new ArgumentNullException("si");
             m_SI = si;
             Comment = m_SI.Comment;
+            IsPingable = true;
+        }
+
+        public ComputerPanelItem(PanelItemBase parent, string name) : base(parent)
+        {
+            m_SI = new ServerInfo { Name = name };
+            Comment = String.Empty;
             IsPingable = true;
         }
 

@@ -40,13 +40,13 @@
   <ItemGroup>
     <Compile Include="ConcreteADExecutor.cs" />
     <Compile Include="StringEqualityComparer.cs" />
-    <Compile Include="OrgUnitEnumStrategy.cs" />
-    <Compile Include="OrgUnitPanelItem.cs" />
+    <Compile Include="Panel\OrgUnitFillerStrategy.cs" />
+    <Compile Include="Panel\OrgUnitPanelItem.cs" />
     <Compile Include="PathDistinct.cs" />
     <Compile Include="PathFixer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserEnumStrategy.cs" />
-    <Compile Include="UserPanelItem.cs" />
+    <Compile Include="Panel\UserFillerStrategy.cs" />
+    <Compile Include="Panel\UserPanelItem.cs" />
     <Compile Include="Users.cs" />
   </ItemGroup>
   <ItemGroup />

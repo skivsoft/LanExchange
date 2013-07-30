@@ -1,4 +1,5 @@
 ﻿using System;
+using LanExchange.Plugin.Users.Panel;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Users
@@ -6,19 +7,19 @@ namespace LanExchange.Plugin.Users
     internal class Users : IPlugin
     {
         private IServiceProvider m_Provider;
-        private IBackgroundStrategySelector m_StrategySelector;
+        //private IBackgroundStrategySelector m_StrategySelector;
 
         public void Initialize(IServiceProvider serviceProvider)
         {
             m_Provider = serviceProvider;
 
             // get strategy selector
-            m_StrategySelector = m_Provider.GetService(typeof(IBackgroundStrategySelector)) as IBackgroundStrategySelector;
-            if (m_StrategySelector == null) return;
+            //m_StrategySelector = m_Provider.GetService(typeof(IBackgroundStrategySelector)) as IBackgroundStrategySelector;
+            //if (m_StrategySelector == null) return;
 
             // create and register our enum strategy in it
             //m_StrategySelector.RegisterBackgroundStrategy(new OrgUnitEnumStrategy());
-            m_StrategySelector.RegisterBackgroundStrategy(new UserEnumStrategy());
+            //m_StrategySelector.RegisterBackgroundStrategy(new UserFillerStrategy());
         }
 
         //public static IServiceProvider Provider
