@@ -1,14 +1,20 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using LanExchange.SDK;
 
-namespace LanExchange.Plugin.Users
+namespace LanExchange.Plugin.Users.Panel
 {
-    internal class OrgUnitEnumStrategy : PanelStrategyBase
+    internal class OrgUnitFillerStrategy : IPanelFillerStrategy
     {
-        private const string LdapStartPath = "LDAP://OU=AZF,OU=Users,OU=Aksu,OU=KazChrome,DC=KZ,DC=ENRC,DC=COM";
+        private const string LdapStartPath = "";
 
-        public override void Algorithm()
+        public bool IsParentAccepted(PanelItemBase parent)
+        {
+            return parent == null;
+        }
+
+        public void Algorithm(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
             //if (Users.Provider == null) return;
             // get Active Directory executor from main program
@@ -21,16 +27,16 @@ namespace LanExchange.Plugin.Users
 
             // execute filter query to Active Directory
             const string filter = "(&(objectCategory=person)(objectClass=user))";
-            DataTable result = rootEntry.Query(filter, new[] { "description", "title", "mail" });
-            if (result == null) return;
+            DataTable resultTable = rootEntry.Query(filter, new[] { "description", "title", "mail" });
+            if (resultTable == null) return;
 
             //Result.Add(new UserPanelItem(PanelItemBase.s_DoubleDot));
-            Result.Add(new OrgUnitPanelItem(PanelItemBase.s_DoubleDot));
+            result.Add(new OrgUnitPanelItem(PanelItemBase.s_DoubleDot));
 
             var fixer = new PathFixer();
             var distinct = new PathDistinct();
 
-            foreach (DataRow row in result.Rows)
+            foreach (DataRow row in resultTable.Rows)
                 distinct.Add(Path.GetDirectoryName(fixer.FixLdapPath(row["adspath"].ToString())));
             rootEntry.Dispose();
 
@@ -41,15 +47,8 @@ namespace LanExchange.Plugin.Users
             {
                 string sUnit = string.IsNullOrEmpty(prefix) ? str : string.Format("..{0}", str.Substring(prefix.Length));
                 var unit = new OrgUnitPanelItem(sUnit);
-                Result.Add(unit);
+                result.Add(unit);
             }
-        }
-
-        public override bool IsSubjectAccepted(ISubject subject)
-        {
-            if (subject is UserPanelItem)
-                return false;
-            return !Equals(Subject, ConcreteSubject.s_Root);
         }
     }
 }
