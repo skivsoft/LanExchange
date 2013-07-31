@@ -68,7 +68,6 @@
     <Compile Include="IPanelFillerStrategy.cs" />
     <Compile Include="IColumnComparable.cs" />
     <Compile Include="IFilterPresenter.cs" />
-    <Compile Include="ILogger.cs" />
     <Compile Include="PanelColumnHeader.cs" />
     <Compile Include="IPanelPresenter.cs" />
     <Compile Include="IFilterModel.cs" />

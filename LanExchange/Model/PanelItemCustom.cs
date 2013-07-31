@@ -23,12 +23,20 @@ namespace LanExchange.Model
 
         public override IComparable this[int index]
         {
-            get { return "Name"; }
+            get { return Name; }
         }
 
         public override string ImageName
         {
             get { return String.Empty; }
+        }
+
+        public override PanelColumnHeader CreateColumnHeader(int index)
+        {
+            var header = new PanelColumnHeader();
+            header.Text = "Name";
+            header.Visible = true;
+            return header;
         }
     }
 }

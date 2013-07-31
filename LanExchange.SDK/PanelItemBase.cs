@@ -39,6 +39,12 @@ namespace LanExchange.SDK
         /// </value>
         public abstract int CountColumns { get; }
         /// <summary>
+        /// Creates the column header.
+        /// </summary>
+        /// <param name="index">The index.</param>
+        /// <returns></returns>
+        public abstract PanelColumnHeader CreateColumnHeader(int index);
+        /// <summary>
         /// Gets or sets the <see cref="IComparable"/> at the specified index.
         /// </summary>
         /// <value>

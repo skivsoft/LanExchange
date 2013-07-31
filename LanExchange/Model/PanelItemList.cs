@@ -264,7 +264,6 @@ namespace LanExchange.Model
             OnChanged();
         }
 
- 
         private void OnChanged()
         {
             if (Changed != null)
