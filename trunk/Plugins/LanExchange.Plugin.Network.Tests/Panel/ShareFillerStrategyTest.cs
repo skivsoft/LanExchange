@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace LanExchange.Plugin.Network.Tests.Panel
 {
-    class ShareEnumStrategyTest
+    class ShareFillerStrategyTest
     {
         [Test]
         public void TestIsSubjectAccepted()

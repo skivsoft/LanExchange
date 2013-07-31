@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace LanExchange.Plugin.Network.Tests.Panel
 {
     [TestFixture]
-    internal class ComputerEnumStrategyTest
+    internal class ComputerFillerStrategyTest
     {
         [Test]
         public void TestIsSubjectAccepted()

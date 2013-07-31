@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Action\AboutAction.cs" />
+    <Compile Include="Action\ReReadAction.cs" />
     <Compile Include="Action\SettingsAction.cs" />
     <Compile Include="CmdLineProcessor.cs" />
     <Compile Include="Model\AboutInfo.cs" />

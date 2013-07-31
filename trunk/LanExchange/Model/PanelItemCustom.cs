@@ -3,12 +3,8 @@ using LanExchange.SDK;
 
 namespace LanExchange.Model
 {
-    class PanelItemCustom : PanelItemBase
+    public class PanelItemCustom : PanelItemBase
     {
-        public PanelItemCustom(PanelItemBase parent) : base(parent)
-        {
-        }
-
         public PanelItemCustom(PanelItemBase parent, string name) : base(parent)
         {
             Name = name;
@@ -33,7 +29,7 @@ namespace LanExchange.Model
 
         public override PanelColumnHeader CreateColumnHeader(int index)
         {
-            return new PanelColumnHeader("Name");
+            return index == 0 ? new PanelColumnHeader("Name") : null;
         }
     }
 }

@@ -47,6 +47,7 @@
     <Compile Include="FilterModelMock.cs" />
     <Compile Include="IPagesViewMock.cs" />
     <Compile Include="Model\PagesModelTest.cs" />
+    <Compile Include="Model\PanelItemCustomTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

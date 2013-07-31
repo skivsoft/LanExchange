@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ObjectPathTest.cs" />
+    <Compile Include="PanelItemBaseTest.cs" />
     <Compile Include="PanelStrategyBaseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

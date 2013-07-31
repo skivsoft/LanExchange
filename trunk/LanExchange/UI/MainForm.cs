@@ -52,11 +52,13 @@ namespace LanExchange.UI
 
         private IAction m_AboutAction;
         private IAction m_SettingsAction;
+        private IAction m_ReReadAction;
 
         public void SetupActions()
         {
             m_AboutAction = new AboutAction();
             m_SettingsAction = new SettingsAction();
+            m_ReReadAction = new ReReadAction();
         }
 
         public Rectangle SettingsGetBounds()
@@ -484,6 +486,11 @@ namespace LanExchange.UI
         private void toolStripMenuItem5_Click(object sender, EventArgs e)
         {
             m_AboutAction.Execute();
+        }
+
+        private void rereadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            m_ReReadAction.Execute();
         }
     }
 }
