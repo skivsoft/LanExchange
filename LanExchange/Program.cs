@@ -46,13 +46,15 @@ namespace LanExchange
             try
             {
                 CmdLineProcessor.Processing();
-                AppPresenter.Plugins = new PluginLoader();
+                AppPresenter.PanelItemTypes = new PanelItemFactoryManager();
+                AppPresenter.PanelFillers = new PanelFillerStrategyManager();
+                AppPresenter.Plugins = new PluginManager();
                 AppPresenter.Plugins.LoadPlugins();
                 AppView.ApplicationRun();
             }
-            catch(Exception E)
+            catch(Exception e)
             {
-                MessageBox.Show(null, E.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(null, e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

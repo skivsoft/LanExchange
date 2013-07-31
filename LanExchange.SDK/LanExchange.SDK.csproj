@@ -49,19 +49,21 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConcreteSubject.cs" />
-    <Compile Include="ConcreteSubjectComparer.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IAboutView.cs" />
     <Compile Include="IAction.cs" />
     <Compile Include="IADExecutor.cs" />
     <Compile Include="IInfoView.cs" />
+    <Compile Include="IPanelFillerStrategyManager.cs" />
     <Compile Include="IPanelImageManager.cs" />
+    <Compile Include="IPanelItemFactoryManager.cs" />
     <Compile Include="IPlugin.cs" />
     <Compile Include="ISettingsTabModel.cs" />
     <Compile Include="ISettingsTabView.cs" />
+    <Compile Include="ISettingsTabViewFactory.cs" />
     <Compile Include="PanelItemBase.cs" />
     <Compile Include="IPanelFillerStrategy.cs" />
     <Compile Include="IColumnComparable.cs" />
@@ -69,14 +71,12 @@
     <Compile Include="ILogger.cs" />
     <Compile Include="PanelColumnHeader.cs" />
     <Compile Include="IPanelPresenter.cs" />
-    <Compile Include="ISubject.cs" />
-    <Compile Include="ISubscriber.cs" />
-    <Compile Include="ISubscription.cs" />
     <Compile Include="IFilterModel.cs" />
     <Compile Include="IPanelModel.cs" />
     <Compile Include="IWmiComputer.cs" />
     <Compile Include="ObjectPath.cs" />
     <Compile Include="PanelImageNames.cs" />
+    <Compile Include="PanelItemBaseFactory.cs" />
     <Compile Include="PanelViewMode.cs" />
     <Compile Include="IFilterView.cs" />
     <Compile Include="IInputBoxView.cs" />

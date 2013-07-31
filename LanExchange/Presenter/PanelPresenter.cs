@@ -43,9 +43,9 @@ namespace LanExchange.Presenter
                 TotalCount--;
             }
             if (ShowCount != TotalCount)
-                MainForm.Instance.ShowStatusText("Элементов: {0} из {1}", ShowCount, TotalCount);
+                MainForm.Instance.ShowStatusText("Items: {0} of {1}", ShowCount, TotalCount);
             else
-                MainForm.Instance.ShowStatusText("Элементов: {0}", ShowCount);
+                MainForm.Instance.ShowStatusText("Items: {0}", ShowCount);
             m_View.SetVirtualListSize(m_Objects.FilterCount);
             if (m_Objects.FilterCount > 0)
             {
@@ -136,10 +136,9 @@ namespace LanExchange.Presenter
 
         public PanelItemBase GetFocusedPanelItem(bool pingAndAsk, bool canReturnParent)
         {
-            return null;
-            // TODO UNCOMMENT THIS!
-            //var item = m_Objects.GetItem(m_View.FocusedItemText);
-            //var comp =  item as ComputerPanelItem;
+            var item = m_Objects.GetItem(m_View.FocusedItemText);
+            // TODO UNCOMMENT THIS! MOVE TO PLUGIN
+            //var comp = item as ComputerPanelItem;
             //if (comp != null && pingAndAsk)
             //{
             //    bool bPingResult = PingThread.FastPing(comp.Name);
@@ -157,9 +156,9 @@ namespace LanExchange.Presenter
             //            item = null;
             //    }
             //}
-            //if (canReturnParent && item != null && item.Name == PanelItemBase.s_DoubleDot)
-            //    item = item.Parent;
-            //return item;
+            if (canReturnParent && item != null && item.Name == PanelItemBase.s_DoubleDot)
+                item = item.Parent;
+            return item;
         }
 
         /// <summary>
@@ -231,36 +230,36 @@ namespace LanExchange.Presenter
 
         public bool CommandLevelDown()
         {
-            var PItem = GetFocusedPanelItem(false, false);
-            if (PItem == null || Objects == null) return false;
-            if (PItem.Name == PanelItemBase.s_DoubleDot)
+            var panelItem = GetFocusedPanelItem(false, false);
+            if (panelItem == null || Objects == null) return false;
+            if (panelItem.Name == PanelItemBase.s_DoubleDot)
                 return CommandLevelUp();
-            var result = PanelSubscription.Instance.HasStrategyForSubject(PItem);
-            if (result)
-            {
-                PanelSubscription.Instance.Unsubscribe(Objects, false);
-                PanelSubscription.Instance.SubscribeToSubject(Objects, PItem);
-                Objects.CurrentPath.Push(PItem);
-            }
-            return result;
+            //var result = AppPresenter.PanelFillers.HasStrategyForParent(panelItem);
+            //if (result)
+            //{
+            //    Objects.CurrentPath.Push(panelItem);
+            //    Objects.SyncRetrieveData();
+            //}
+            //return result;
+            return false;
         }
 
         public bool CommandLevelUp()
         {
-            if (Objects == null || Objects.CurrentPath.IsEmpty) return false;
-            var PItem = Objects.CurrentPath.Peek() as PanelItemBase;
-            if (PItem == null) return false;
-            ISubject subject = PItem.Parent ?? PItem.ParentSubject;
-            if (subject == null) return false;
-            var result = PanelSubscription.Instance.HasStrategyForSubject(subject);
+            if (Objects == null || Objects.CurrentPath.IsEmpty) 
+                return false;
+            var panelItem = Objects.CurrentPath.Peek() as PanelItemBase;
+            if (panelItem == null) 
+                return false;
+            var result = AppPresenter.PanelFillers.HasStrategyForParent(panelItem);
             if (result)
             {
-                Objects.FocusedItemText = PItem.Name;
+                Objects.FocusedItemText = panelItem.Name;
                 Objects.CurrentPath.Pop();
-                PanelSubscription.Instance.Unsubscribe(Objects, false);
-                PanelSubscription.Instance.SubscribeToSubject(Objects, subject);
+                Objects.SyncRetrieveData();
             }
             return result;
+            //return false;
         }
 
         public static string DetectMENU(PanelItemBase PItem)
@@ -277,32 +276,32 @@ namespace LanExchange.Presenter
                 //    return FOLDER_MENU;
                 //if (PItem is ComputerPanelItem)
                 //    return COMPUTER_MENU;
-                if (PItem is FilePanelItem)
-                    if ((PItem as FilePanelItem).IsDirectory)
-                        return FOLDER_MENU;
-                    else
-                        return FILE_MENU;
+                //if (PItem is FilePanelItem)
+                //    if ((PItem as FilePanelItem).IsDirectory)
+                //        return FOLDER_MENU;
+                //    else
+                //        return FILE_MENU;
             }
             return String.Empty;
         }
 
         public void CommandDeleteItems()
         {
-            bool Modified = false;
-            foreach (int index in m_View.SelectedIndexes)
-            {
-                var comp = m_Objects.GetItemAt(index);
-                if (comp != null && comp.ParentSubject == ConcreteSubject.s_UserItems)
-                {
-                    m_Objects.Items.Remove(comp);
-                    Modified = true;
-                }
-            }
-            m_View.ClearSelected();
-            if (Modified)
-            {
-                m_Objects.DataChanged(null, ConcreteSubject.s_UserItems);
-            }
+            //bool Modified = false;
+            //foreach (int index in m_View.SelectedIndexes)
+            //{
+            //    var comp = m_Objects.GetItemAt(index);
+            //    if (comp != null && comp.ParentSubject == ConcreteSubject.s_UserItems)
+            //    {
+            //        m_Objects.Items.Remove(comp);
+            //        Modified = true;
+            //    }
+            //}
+            //m_View.ClearSelected();
+            //if (Modified)
+            //{
+            //    m_Objects.DataChanged(null, ConcreteSubject.s_UserItems);
+            //}
         }
     }
 }

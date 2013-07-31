@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network.Panel
@@ -13,14 +14,15 @@ namespace LanExchange.Plugin.Network.Panel
 
         public void Algorithm(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
+            if (parent == null)
+                throw new ArgumentNullException("parent");
+            result.Add(new ComputerPanelItem(parent, PanelItemBase.s_DoubleDot));
             // get server list via OS api
-            var list = NetApi32Utils.Instance.NetServerEnum(parent.Name, NetApi32.SV_101_TYPES.SV_TYPE_ALL);
-            // convert array to IList<ServerInfo>
-            foreach (var item in list)
+            foreach (var item in NetApi32Utils.Instance.NetServerEnum(parent.Name, NetApi32.SV_101_TYPES.SV_TYPE_ALL))
             {
-                var SI = ServerInfo.FromNetApi32(item);
-                SI.ResetUtcUpdated();
-                result.Add(new ComputerPanelItem(parent, SI));
+                var si = ServerInfo.FromNetApi32(item);
+                si.ResetUtcUpdated();
+                result.Add(new ComputerPanelItem(parent, si));
             }
         }
     }

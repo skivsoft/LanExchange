@@ -44,12 +44,10 @@ namespace LanExchange.UI
             Pages.Pages.ImageList = LanExchangeIcons.Instance.SmallImageList;
             Status.ImageList = LanExchangeIcons.Instance.SmallImageList;
             // init network scanner
-            PanelSubscription.Instance.RefreshInterval = (int)Settings.Instance.RefreshTimeInSec * 1000;
+            //PanelSubscription.Instance.RefreshInterval = (int)Settings.Instance.RefreshTimeInSec * 1000;
             // set hotkey for activate: Ctrl+Win+X
             m_Hotkeys = new GlobalHotkeys();
             m_Hotkeys.RegisterGlobalHotKey((int)Keys.X, GlobalHotkeys.MOD_CONTROL + GlobalHotkeys.MOD_WIN, Handle);
-            // Run AfterMainFormCreated in plugins
-            AppPresenter.Plugins.OnMainFormCreated();
         }
 
         private IAction m_AboutAction;

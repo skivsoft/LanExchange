@@ -145,4 +145,10 @@
   <data name="ShowLicense" xml:space="preserve">
     <value>Show License</value>
   </data>
+  <data name="Settings_General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="Settings_Plugins" xml:space="preserve">
+    <value>Plugins</value>
+  </data>
 </root>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network.Panel
@@ -16,17 +17,19 @@ namespace LanExchange.Plugin.Network.Panel
 
         public void Algorithm(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
+            if (parent == null)
+                throw new ArgumentNullException("parent");
             result.Add(new SharePanelItem(parent, PanelItemBase.s_DoubleDot));
             foreach (var item in NetApi32Utils.Instance.NetShareEnum(parent.Name))
             {
-                var SI = new ShareInfo(item);
+                var si = new ShareInfo(item);
                 //if (!Settings.Settings.Instance.ShowHiddenShares && SI.IsHidden)
                 //    continue;
                 //if (!Settings.Settings.Instance.ShowPrinters && SI.IsPrinter)
                 //    continue;
-                if (!ShowHiddenShares && SI.IsHidden || !ShowPrinters && SI.IsPrinter)
+                if (!ShowHiddenShares && si.IsHidden || !ShowPrinters && si.IsPrinter)
                     continue;
-                result.Add(new SharePanelItem(parent, SI));
+                result.Add(new SharePanelItem(parent, si));
             }
         }
     }

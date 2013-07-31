@@ -4,11 +4,11 @@
   <myExcludeFiltersStates>
     <ExcludeFilterState>
       <ExceptThisPath>false</ExceptThisPath>
-      <FullPath>LanExchange.Tests</FullPath>
+      <FullPath>LanExchange.Plugin.Network.Tests.Properties</FullPath>
     </ExcludeFilterState>
     <ExcludeFilterState>
       <ExceptThisPath>false</ExceptThisPath>
-      <FullPath>LanExchange.SDK.Tests</FullPath>
+      <FullPath>LanExchange.Plugin.Network.Tests.Panel</FullPath>
     </ExcludeFilterState>
     <ExcludeFilterState>
       <ExceptThisPath>false</ExceptThisPath>
@@ -18,16 +18,28 @@
       <ExceptThisPath>false</ExceptThisPath>
       <FullPath>LanExchange.Plugin.Users.Tests</FullPath>
     </ExcludeFilterState>
+    <ExcludeFilterState>
+      <ExceptThisPath>false</ExceptThisPath>
+      <FullPath>Plugin.Users.Tests</FullPath>
+    </ExcludeFilterState>
+    <ExcludeFilterState>
+      <ExceptThisPath>false</ExceptThisPath>
+      <FullPath>LanExchange.SDK.Tests</FullPath>
+    </ExcludeFilterState>
+    <ExcludeFilterState>
+      <ExceptThisPath>false</ExceptThisPath>
+      <FullPath>LanExchange.Tests</FullPath>
+    </ExcludeFilterState>
   </myExcludeFiltersStates>
   <myGroupingFilter xmlns:d2p1="http://schemas.datacontract.org/2004/07/JetBrains.dotCover.ViewingServices.Impl">
-    <d2p1:myDisplayName>Assembly, Namespace, Type and Member</d2p1:myDisplayName>
-    <d2p1:myVisibleNodeKinds>SolutionFolder Project Assembly Namespace Type OwnCoverage Property Indexer Event AnonymousMethod Constructor Method ExtensionMethod</d2p1:myVisibleNodeKinds>
+    <d2p1:myDisplayName>Namespace, Type and Member</d2p1:myDisplayName>
+    <d2p1:myVisibleNodeKinds>Namespace Type OwnCoverage Property Indexer Event AnonymousMethod Constructor Method ExtensionMethod</d2p1:myVisibleNodeKinds>
   </myGroupingFilter>
   <myPerTestStatisticsEnabled>false</myPerTestStatisticsEnabled>
   <myProjectStructureMatchingEnabled>true</myProjectStructureMatchingEnabled>
-  <mySelectedTest>LanExchange.Plugin.Network.Tests.ComputerEnumStrategyTest</mySelectedTest>
+  <mySelectedTest>LanExchange.Plugin.Network.Tests.Panel.ComputerPanelItemTest.TestImageName</mySelectedTest>
   <mySortOrders xmlns:d2p1="http://schemas.datacontract.org/2004/07/System.Windows.Forms">
-    <d2p1:SortOrder>None</d2p1:SortOrder>
+    <d2p1:SortOrder>Ascending</d2p1:SortOrder>
     <d2p1:SortOrder>None</d2p1:SortOrder>
     <d2p1:SortOrder>None</d2p1:SortOrder>
     <d2p1:SortOrder>None</d2p1:SortOrder>
@@ -35,8 +47,14 @@
   <myStatefulNodeDescriptors xmlns:d2p1="http://schemas.datacontract.org/2004/07/JetBrains.dotCover.ViewingServices.Impl">
     <d2p1:NodeDescriptor>
       <d2p1:myChildren />
+      <d2p1:myExpanded>true</d2p1:myExpanded>
+      <d2p1:myId>LanExchange.Plugin.Network.Panel</d2p1:myId>
+      <d2p1:mySelected>false</d2p1:mySelected>
+    </d2p1:NodeDescriptor>
+    <d2p1:NodeDescriptor>
+      <d2p1:myChildren />
       <d2p1:myExpanded>false</d2p1:myExpanded>
-      <d2p1:myId>LanExchange.Plugin.Network</d2p1:myId>
+      <d2p1:myId>LanExchange.Utils</d2p1:myId>
       <d2p1:mySelected>true</d2p1:mySelected>
     </d2p1:NodeDescriptor>
   </myStatefulNodeDescriptors>

@@ -7,14 +7,14 @@ namespace LanExchange.Plugin.Users.Tests
     public class PathDistinctTest
     {
         [Test]
-        public void ConstructorAndCountIsZero()
+        public void TestConstructorAndCountIsZero()
         {
             var instance = new PathDistinct();
             Assert.AreEqual(0, instance.Count);
         }
 
         [Test]
-        public void AddTwoItemsDifferent()
+        public void TestAddTwoItemsDifferent()
         {
             var instance = new PathDistinct();
             instance.Add("a");
@@ -23,7 +23,7 @@ namespace LanExchange.Plugin.Users.Tests
         }
 
         [Test]
-        public void AddTwoItemsEqual()
+        public void TestAddTwoItemsEqual()
         {
             var instance = new PathDistinct();
             instance.Add("b");
@@ -32,12 +32,26 @@ namespace LanExchange.Plugin.Users.Tests
         }
 
         [Test]
-        public void IsPrefixWorks()
+        public void TestIsPrefixWorks()
         {
             var instance = new PathDistinct();
             instance.Add(@"HELLO\every\body");
             instance.Add(@"HelLo\ev.....");
             Assert.AreEqual(@"HELLO", instance.Prefix);
+        }
+
+        [Test]
+        public void TestItems()
+        {
+            var instance = new PathDistinct();
+            instance.Add(@"a\b");
+            instance.Add(@"c\d");
+            var enumerator = instance.Items.GetEnumerator();
+            Assert.IsTrue(enumerator.MoveNext());
+            Assert.AreEqual(@"a\b", enumerator.Current);
+            Assert.IsTrue(enumerator.MoveNext());
+            Assert.AreEqual(@"c\d", enumerator.Current);
+            Assert.IsFalse(enumerator.MoveNext());
         }
     }
 }

@@ -7,33 +7,37 @@ namespace LanExchange.Plugin.Users
     internal class Users : IPlugin
     {
         private IServiceProvider m_Provider;
-        //private IBackgroundStrategySelector m_StrategySelector;
 
         public void Initialize(IServiceProvider serviceProvider)
         {
             m_Provider = serviceProvider;
 
-            // get strategy selector
-            //m_StrategySelector = m_Provider.GetService(typeof(IBackgroundStrategySelector)) as IBackgroundStrategySelector;
-            //if (m_StrategySelector == null) return;
+            // Register new panel item types
+            var typesManager = (IPanelItemFactoryManager)m_Provider.GetService(typeof(IPanelItemFactoryManager));
+            if (typesManager != null)
+            {
+                typesManager.RegisterPanelItemFactory(new Guid(OrgUnitPanelItem.ID), new OrgUnitPanelItemFactory());
+                typesManager.RegisterPanelItemFactory(new Guid(UserPanelItem.ID), new UserPanelItemFactory());
+            }
 
-            // create and register our enum strategy in it
-            //m_StrategySelector.RegisterBackgroundStrategy(new OrgUnitEnumStrategy());
-            //m_StrategySelector.RegisterBackgroundStrategy(new UserFillerStrategy());
+            // Register new panel fillers
+            var fillerManager = (IPanelFillerStrategyManager)m_Provider.GetService(typeof(IPanelFillerStrategyManager));
+            if (fillerManager != null)
+            {
+                fillerManager.RegisterPanelFillerStrategy(new OrgUnitFillerStrategy());
+                fillerManager.RegisterPanelFillerStrategy(new UserFillerStrategy());
+            }
         }
 
-        //public static IServiceProvider Provider
-        //{
-        //    get { return m_Provider; }
-        //}
 
-        public void MainFormCreated()
+        public ISettingsTabViewFactory GetSettingsTabViewFactory()
         {
-            //if (m_Provider == null) return;
-            // test hiding top panel
-            //var Info = m_Provider.GetService(typeof(IInfoView)) as IInfoView;
-            //if (Info == null) return;
-            //Info.Visible = false;
+            return new SettingsTabUsersFactory();
+        }
+
+
+        public void OpenDefaultTab()
+        {
         }
     }
 }

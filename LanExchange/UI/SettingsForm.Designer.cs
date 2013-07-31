@@ -35,10 +35,8 @@
             this.pTop = new System.Windows.Forms.Panel();
             this.lTop = new System.Windows.Forms.Label();
             this.pContent = new System.Windows.Forms.Panel();
-            this.settingsTabGeneral1 = new LanExchange.UI.SettingsTabGeneral();
             this.panel1.SuspendLayout();
             this.pTop.SuspendLayout();
-            this.pContent.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -46,16 +44,16 @@
             this.panel1.Controls.Add(this.bCancel);
             this.panel1.Controls.Add(this.bSave);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 413);
+            this.panel1.Location = new System.Drawing.Point(0, 333);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(634, 40);
+            this.panel1.Size = new System.Drawing.Size(594, 40);
             this.panel1.TabIndex = 1;
             // 
             // bCancel
             // 
             this.bCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.bCancel.Location = new System.Drawing.Point(546, 9);
+            this.bCancel.Location = new System.Drawing.Point(506, 9);
             this.bCancel.Name = "bCancel";
             this.bCancel.Size = new System.Drawing.Size(80, 23);
             this.bCancel.TabIndex = 1;
@@ -67,7 +65,7 @@
             // 
             this.bSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bSave.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.bSave.Location = new System.Drawing.Point(452, 9);
+            this.bSave.Location = new System.Drawing.Point(412, 9);
             this.bSave.Name = "bSave";
             this.bSave.Size = new System.Drawing.Size(80, 23);
             this.bSave.TabIndex = 0;
@@ -81,17 +79,18 @@
             this.tvSettings.Dock = System.Windows.Forms.DockStyle.Left;
             this.tvSettings.Location = new System.Drawing.Point(0, 0);
             this.tvSettings.Name = "tvSettings";
-            this.tvSettings.Size = new System.Drawing.Size(200, 413);
+            this.tvSettings.Size = new System.Drawing.Size(150, 333);
             this.tvSettings.TabIndex = 2;
+            this.tvSettings.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvSettings_AfterSelect);
             // 
             // pTop
             // 
             this.pTop.BackColor = System.Drawing.Color.Silver;
             this.pTop.Controls.Add(this.lTop);
             this.pTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pTop.Location = new System.Drawing.Point(200, 0);
+            this.pTop.Location = new System.Drawing.Point(150, 0);
             this.pTop.Name = "pTop";
-            this.pTop.Size = new System.Drawing.Size(434, 32);
+            this.pTop.Size = new System.Drawing.Size(444, 32);
             this.pTop.TabIndex = 3;
             // 
             // lTop
@@ -103,34 +102,24 @@
             this.lTop.Location = new System.Drawing.Point(0, 0);
             this.lTop.Name = "lTop";
             this.lTop.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.lTop.Size = new System.Drawing.Size(434, 32);
+            this.lTop.Size = new System.Drawing.Size(444, 32);
             this.lTop.TabIndex = 0;
-            this.lTop.Text = "General";
             this.lTop.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // pContent
             // 
             this.pContent.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pContent.Controls.Add(this.settingsTabGeneral1);
             this.pContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pContent.Location = new System.Drawing.Point(200, 32);
+            this.pContent.Location = new System.Drawing.Point(150, 32);
             this.pContent.Name = "pContent";
-            this.pContent.Size = new System.Drawing.Size(434, 381);
+            this.pContent.Size = new System.Drawing.Size(444, 301);
             this.pContent.TabIndex = 4;
-            // 
-            // settingsTabGeneral1
-            // 
-            this.settingsTabGeneral1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.settingsTabGeneral1.Location = new System.Drawing.Point(0, 0);
-            this.settingsTabGeneral1.Name = "settingsTabGeneral1";
-            this.settingsTabGeneral1.Size = new System.Drawing.Size(430, 377);
-            this.settingsTabGeneral1.TabIndex = 0;
             // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(634, 453);
+            this.ClientSize = new System.Drawing.Size(594, 373);
             this.Controls.Add(this.pContent);
             this.Controls.Add(this.pTop);
             this.Controls.Add(this.tvSettings);
@@ -145,7 +134,6 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SettingsForm_FormClosed);
             this.panel1.ResumeLayout(false);
             this.pTop.ResumeLayout(false);
-            this.pContent.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -159,6 +147,5 @@
         private System.Windows.Forms.Panel pTop;
         private System.Windows.Forms.Label lTop;
         private System.Windows.Forms.Panel pContent;
-        private SettingsTabGeneral settingsTabGeneral1;
     }
 }

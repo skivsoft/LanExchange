@@ -64,6 +64,8 @@ namespace LanExchange.Plugin.Network.Tests.Panel
             Assert.AreEqual(PanelImageNames.ComputerNormal, m_Comp.ImageName);
             m_Comp.IsPingable = false;
             Assert.AreEqual(PanelImageNames.ComputerDisabled, m_Comp.ImageName);
+            m_Comp.Name = PanelItemBase.s_DoubleDot;
+            Assert.AreEqual(PanelImageNames.DoubleDot, m_Comp.ImageName);
         }
 
         [Test]

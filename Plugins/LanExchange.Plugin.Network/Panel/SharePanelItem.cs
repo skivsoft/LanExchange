@@ -5,6 +5,8 @@ namespace LanExchange.Plugin.Network.Panel
 {
     public class SharePanelItem : PanelItemBase//, IComparable<SharePanelItem>
     {
+        public const string ID = "{B61F496F-3BED-4D28-A4A7-BFC81DC9C7FC}";
+        
         private readonly ShareInfo m_SHI;
 
         /// <summary>
@@ -40,6 +42,11 @@ namespace LanExchange.Plugin.Network.Panel
         public ShareInfo SHI
         {
             get { return m_SHI; }
+        }
+
+        public override int CountColumns
+        {
+            get { return 2; }
         }
         
         public override IComparable this[int index]
@@ -83,11 +90,6 @@ namespace LanExchange.Plugin.Network.Panel
         {
             get { return m_SHI.ShareType; }
             set { m_SHI.ShareType = value; }
-        }
-
-        public override int CountColumns
-        {
-            get { return 2; }
         }
     }
 }

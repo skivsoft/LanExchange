@@ -35,10 +35,21 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConcreteADExecutor.cs" />
+    <Compile Include="Panel\OrgUnitPanelItemFactory.cs" />
+    <Compile Include="Panel\UserPanelItemFactory.cs" />
+    <Compile Include="SettingsTabUsers.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SettingsTabUsers.Designer.cs">
+      <DependentUpon>SettingsTabUsers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsTabUsersFactory.cs" />
     <Compile Include="StringEqualityComparer.cs" />
     <Compile Include="Panel\OrgUnitFillerStrategy.cs" />
     <Compile Include="Panel\OrgUnitPanelItem.cs" />
@@ -49,7 +60,11 @@
     <Compile Include="Panel\UserPanelItem.cs" />
     <Compile Include="Users.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="SettingsTabUsers.resx">
+      <DependentUpon>SettingsTabUsers.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\LanExchange.Sdk\LanExchange.SDK.csproj">
       <Project>{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}</Project>

@@ -12,12 +12,12 @@ namespace LanExchange.UI
         /// </summary>
         public static SettingsForm Instance;
 
-        private readonly ParamsPresenter m_Presenter;
+        private readonly SettingsPresenter m_Presenter;
 
         public SettingsForm()
         {
             InitializeComponent();
-            m_Presenter = new ParamsPresenter(this);
+            m_Presenter = new SettingsPresenter(this);
             m_Presenter.LoadFromModel();
             tvSettings.ExpandAll();
         }
@@ -73,6 +73,30 @@ namespace LanExchange.UI
         private void bCancel_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        public TreeNode AddTab(TreeNode parentNode, string title, ISettingsTabViewFactory tabFactory)
+        {
+            var node = parentNode == null ? tvSettings.Nodes.Add(title) : parentNode.Nodes.Add(title);
+            node.Tag = new SettingsTabInstance { Factory = tabFactory };
+            return node;
+        }
+
+        private void tvSettings_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            var tabInstance = (SettingsTabInstance) e.Node.Tag;
+            if (tabInstance.Instance == null)
+                tabInstance.Instance = tabInstance.Factory.Create();
+            lTop.Text = e.Node.Text;
+            pContent.Controls.Clear();
+            pContent.Controls.Add((Control)tabInstance.Instance);
+        }
+
+
+        public void SelectFirstNode()
+        {
+            if (tvSettings.Nodes.Count > 0)
+                tvSettings.SelectedNode = tvSettings.Nodes[0];
         }
     }
 }

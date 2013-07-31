@@ -1,4 +1,7 @@
-﻿namespace LanExchange.SDK
+﻿using System;
+using System.Windows.Forms;
+
+namespace LanExchange.SDK
 {
     /// <summary>
     /// View of LanExchange Params form.
@@ -48,5 +51,7 @@
         /////   <c>true</c> if [show printers]; otherwise, <c>false</c>.
         ///// </value>
         //bool ShowPrinters { get; set; }
+        TreeNode AddTab(TreeNode parentNode, string title, ISettingsTabViewFactory tabFactory);
+        void SelectFirstNode();
     }
 }
