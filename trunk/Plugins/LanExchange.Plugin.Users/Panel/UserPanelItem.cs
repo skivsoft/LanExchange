@@ -45,6 +45,22 @@ namespace LanExchange.Plugin.Users.Panel
             get { return 2; }
         }
 
+        public override PanelColumnHeader CreateColumnHeader(int index)
+        {
+            var result = new PanelColumnHeader();
+            result.Visible = true;
+            switch (index)
+            {
+                case 0:
+                    result.Text = "User";
+                    break;
+                case 1:
+                    result.Text = "Description";
+                    break;
+            }
+            return result;
+        }
+
         public override IComparable this[int index]
         {
             get

@@ -74,5 +74,8 @@ namespace LanExchange.SDK
         /// </summary>
         /// <param name="cmdLine">The CMD line.</param>
         void ShowRunCmdError(string cmdLine);
+
+        void ColumnsClear();
+        void AddColumn(PanelColumnHeader createColumnHeader);
     }
 }

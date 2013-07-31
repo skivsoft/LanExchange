@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network.Panel
@@ -48,7 +49,23 @@ namespace LanExchange.Plugin.Network.Panel
         {
             get { return 2; }
         }
-        
+
+        public override PanelColumnHeader CreateColumnHeader(int index)
+        {
+            var result = new PanelColumnHeader();
+            result.Visible = true;
+            switch (index)
+            {
+                case 0:
+                    result.Text = "Resource name";
+                    break;
+                case 1:
+                    result.Text = "Description";
+                    break;
+            }
+            return result;
+        }
+
         public override IComparable this[int index]
         {
             get

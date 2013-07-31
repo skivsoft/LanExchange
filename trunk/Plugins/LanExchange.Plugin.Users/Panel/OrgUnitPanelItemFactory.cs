@@ -11,8 +11,7 @@ namespace LanExchange.Plugin.Users.Panel
 
         public override PanelItemBase CreateDefaultRoot()
         {
-            //return new OrgUnitPanelItem(null, "TEST");
-            return null;
+            return new OrgUnitPanelItem(null, "TEST");
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network.Panel
@@ -33,6 +34,13 @@ namespace LanExchange.Plugin.Network.Panel
         public override int CountColumns
         {
             get { return 1; }
+        }
+
+        public override PanelColumnHeader CreateColumnHeader(int index)
+        {
+            var result = new PanelColumnHeader { Text = "Workgroup/domain" };
+            result.Visible = true;
+            return result;
         }
 
         public override IComparable this[int index]

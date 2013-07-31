@@ -17,5 +17,7 @@
         /// </summary>
         /// <param name="value">if set to <c>true</c> [value].</param>
         public bool Visible { get; set; }
+
+        public int Width { get; set; }
     }
 }

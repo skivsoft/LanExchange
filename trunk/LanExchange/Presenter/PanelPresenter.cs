@@ -26,30 +26,45 @@ namespace LanExchange.Presenter
             m_View = view;
         }
 
+        public void SetupColumns()
+        {
+            if (m_Objects.Count > 0)
+            {
+                var panelItem = m_Objects.GetItemAt(0);
+                if (panelItem != null)
+                {
+                    m_View.ColumnsClear();
+                    for (int i = 0; i < panelItem.CountColumns; i++)
+                        m_View.AddColumn(panelItem.CreateColumnHeader(i));
+                }
+            }
+        }
+
         public void UpdateItemsAndStatus()
         {
             if (m_Objects == null) return;
             // refresh only for current page
-            PagesModel Model = AppPresenter.MainPages.GetModel();
-            PanelItemList CurrentItemList = Model.GetItem(Model.SelectedIndex);
-            if (CurrentItemList == null) return;
-            if (!m_Objects.Equals(CurrentItemList)) return;
+            var model = AppPresenter.MainPages.GetModel();
+            var currentItemList = model.GetItem(model.SelectedIndex);
+            if (currentItemList == null || !m_Objects.Equals(currentItemList)) 
+                return;
             // get number of visible items (filtered) and number of total items
-            int ShowCount = m_Objects.FilterCount;
-            int TotalCount = m_Objects.Count;
+            var showCount = m_Objects.FilterCount;
+            var totalCount = m_Objects.Count;
             if (m_Objects.HasBackItem)
             {
-                ShowCount--;
-                TotalCount--;
+                showCount--;
+                totalCount--;
             }
-            if (ShowCount != TotalCount)
-                MainForm.Instance.ShowStatusText("Items: {0} of {1}", ShowCount, TotalCount);
+            if (showCount != totalCount)
+                MainForm.Instance.ShowStatusText("Items: {0} of {1}", showCount, totalCount);
             else
-                MainForm.Instance.ShowStatusText("Items: {0}", ShowCount);
+                MainForm.Instance.ShowStatusText("Items: {0}", showCount);
+            SetupColumns();
             m_View.SetVirtualListSize(m_Objects.FilterCount);
             if (m_Objects.FilterCount > 0)
             {
-                int index = Objects.IndexOf(CurrentItemList.FocusedItemText);
+                var index = Objects.IndexOf(currentItemList.FocusedItemText);
                 m_View.FocusedItemIndex = index;
             }
             m_View.Filter.UpdateFromModel(Objects);

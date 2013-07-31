@@ -42,6 +42,33 @@ namespace LanExchange.Plugin.Network.Panel
             get { return m_SI; }
         }
 
+        public override int CountColumns
+        {
+            get { return 3; }
+        }
+
+        public override PanelColumnHeader CreateColumnHeader(int index)
+        {
+            var result = new PanelColumnHeader();
+            result.Visible = true;
+            result.Width = 130;
+            switch (index)
+            {
+                case 0:
+                    result.Text = "Network name";
+                    break;
+                case 1:
+                    result.Text = "Description";
+                    result.Width = 250;
+                    break;
+                case 2:
+                    result.Text = "OS version";
+                    result.Visible = false;
+                    break;
+            }
+            return result;
+        }
+
         public override IComparable this[int index]
         {
             get
@@ -79,11 +106,6 @@ namespace LanExchange.Plugin.Network.Panel
         }
 
         public bool IsPingable { get; set; }
-
-        public override int CountColumns
-        {
-            get { return 3; }
-        }
 
         public override string ToString()
         {

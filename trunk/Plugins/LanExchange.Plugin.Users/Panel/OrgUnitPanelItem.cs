@@ -26,7 +26,20 @@ namespace LanExchange.Plugin.Users.Panel
 
         public override int CountColumns
         {
-            get { return 2; }
+            get { return 1; }
+        }
+
+        public override PanelColumnHeader CreateColumnHeader(int index)
+        {
+            var result = new PanelColumnHeader();
+            result.Visible = true;
+            switch (index)
+            {
+                case 0:
+                    result.Text = "Organization unit";
+                    break;
+            }
+            return result;
         }
 
         public override IComparable this[int index]

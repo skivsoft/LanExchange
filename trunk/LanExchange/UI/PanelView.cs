@@ -50,6 +50,7 @@ namespace LanExchange.UI
         public void SetVirtualListSize(int count)
         {
             LV.VirtualListSize = count;
+
         }
 
         private void CurrentPath_Changed(object sender, EventArgs e)
@@ -631,6 +632,18 @@ namespace LanExchange.UI
             //    MainForm.Instance.Text = hit.Item.Text;
             //    //LV.DoDragDrop(LV.FocusedItem.Text, DragDropEffects.Copy);
             //}
+        }
+
+
+        public void ColumnsClear()
+        {
+            LV.Columns.Clear();
+        }
+
+        public void AddColumn(PanelColumnHeader column)
+        {
+            if (column.Visible)
+                LV.Columns.Add(column.Text, column.Width);
         }
     }
 }
