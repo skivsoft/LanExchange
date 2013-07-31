@@ -54,5 +54,14 @@ namespace LanExchange.Plugin.Network.Tests.Panel
             Assert.AreEqual(PanelImageNames.Workgroup, m_Domain.ImageName);
         }
 
+        [Test]
+        public void TestCreateColumnHeader()
+        {
+            for (int i = 0; i < m_Domain.CountColumns; i++)
+            {
+                var header = m_Domain.CreateColumnHeader(i);
+                Assert.IsNotNull(header);
+            }
+        }
     }
 }

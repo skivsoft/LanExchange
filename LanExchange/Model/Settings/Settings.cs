@@ -25,14 +25,10 @@ namespace LanExchange.Model.Settings
 
         private bool m_RunMinimized;
         private bool m_AdvancedMode;
-        private decimal m_RefreshTimeInSec;
-        private bool m_ShowHiddenShares;
-        private bool m_ShowPrinters;
 
         private Settings()
         {
             m_RunMinimized = true;
-            m_RefreshTimeInSec = 5 * 60;
             WMIClassesInclude = new List<string>();
             WMIClassesInclude.Add("Win32_Desktop");
             WMIClassesInclude.Add("Win32_DesktopMonitor");
@@ -160,32 +156,6 @@ namespace LanExchange.Model.Settings
             }
         }
 
-        public bool ShowHiddenShares
-        {
-            get { return m_ShowHiddenShares; }
-            set
-            {
-                if (m_ShowHiddenShares != value)
-                {
-                    m_ShowHiddenShares = value;
-                    Modified = true;
-                }
-            }
-        }
-
-        public bool ShowPrinters
-        {
-            get { return m_ShowPrinters; }
-            set
-            {
-                if (m_ShowPrinters != value)
-                {
-                    m_ShowPrinters = value;
-                    Modified = true;
-                }
-            }
-        }
-
         public bool AdvancedMode
         {
             get { return m_AdvancedMode; }
@@ -194,19 +164,6 @@ namespace LanExchange.Model.Settings
                 if (m_AdvancedMode != value)
                 {
                     m_AdvancedMode = value;
-                    Modified = true;
-                }
-            }
-        }
-
-        public decimal RefreshTimeInSec 
-        {
-            get { return m_RefreshTimeInSec; }
-            set
-            {
-                if (m_RefreshTimeInSec != value)
-                {
-                    m_RefreshTimeInSec = value;
                     Modified = true;
                 }
             }

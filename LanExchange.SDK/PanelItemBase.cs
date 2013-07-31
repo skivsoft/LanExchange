@@ -70,19 +70,6 @@ namespace LanExchange.SDK
         public PanelItemBase Parent { get; set; }
 
         /// <summary>
-        /// Gets the column value.
-        /// </summary>
-        /// <param name="index">The index.</param>
-        /// <returns></returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">index</exception>
-        private IComparable GetColumnValue(int index)
-        {
-            if (index < 0 || index > CountColumns-1)
-                throw new ArgumentOutOfRangeException("index");
-            return this[index];
-        }
-
-        /// <summary>
         /// Gets the tool tip text.
         /// </summary>
         /// <value>
@@ -97,7 +84,7 @@ namespace LanExchange.SDK
                 {
                     if (sb.Length > 0)
                         sb.AppendLine();
-                    sb.Append(GetColumnValue(i));
+                    sb.Append(this[i]);
                 }
                 return sb.ToString();
             }
@@ -113,8 +100,8 @@ namespace LanExchange.SDK
         {
             var otherItem = other as PanelItemBase;
             if (otherItem == null) return 1;
-            var value1 = GetColumnValue(column);
-            var value2 = otherItem.GetColumnValue(column);
+            var value1 = this[column];
+            var value2 = otherItem[column];
             return value1.CompareTo(value2);
         }
 

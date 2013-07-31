@@ -31,12 +31,11 @@ namespace LanExchange.Plugin.Users.Panel
 
         public override PanelColumnHeader CreateColumnHeader(int index)
         {
-            var result = new PanelColumnHeader();
-            result.Visible = true;
+            PanelColumnHeader result = null;
             switch (index)
             {
                 case 0:
-                    result.Text = "Organization unit";
+                    result = new PanelColumnHeader("Organization unit");
                     break;
             }
             return result;

@@ -65,6 +65,8 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timerTabSettingsSaver = new System.Windows.Forms.Timer(this.components);
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.rereadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.popTray.SuspendLayout();
             this.Status.SuspendLayout();
             this.popTop.SuspendLayout();
@@ -239,7 +241,6 @@
             this.pInfo.Name = "pInfo";
             this.pInfo.Size = new System.Drawing.Size(564, 60);
             this.pInfo.TabIndex = 23;
-            this.pInfo.Visible = false;
             // 
             // menuMain
             // 
@@ -287,16 +288,20 @@
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.infoPanelToolStripMenuItem});
+            this.infoPanelToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.rereadToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(41, 20);
-            this.toolStripMenuItem1.Text = "&View";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(45, 20);
+            this.toolStripMenuItem1.Text = "&Panel";
             // 
             // infoPanelToolStripMenuItem
             // 
+            this.infoPanelToolStripMenuItem.Checked = true;
+            this.infoPanelToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.infoPanelToolStripMenuItem.Name = "infoPanelToolStripMenuItem";
-            this.infoPanelToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
-            this.infoPanelToolStripMenuItem.Text = "Info panel";
+            this.infoPanelToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.infoPanelToolStripMenuItem.Text = "Show info";
             this.infoPanelToolStripMenuItem.Click += new System.EventHandler(this.infoPanelToolStripMenuItem_Click);
             // 
             // toolStripMenuItem4
@@ -348,6 +353,19 @@
             // 
             this.timerTabSettingsSaver.Interval = 5000;
             this.timerTabSettingsSaver.Tick += new System.EventHandler(this.timerTabSettingsSaver_Tick);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(160, 6);
+            // 
+            // rereadToolStripMenuItem
+            // 
+            this.rereadToolStripMenuItem.Name = "rereadToolStripMenuItem";
+            this.rereadToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.rereadToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.rereadToolStripMenuItem.Text = "Re-read";
+            this.rereadToolStripMenuItem.Click += new System.EventHandler(this.rereadToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -414,6 +432,8 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem infoPanelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem rereadToolStripMenuItem;
     }
 }
 

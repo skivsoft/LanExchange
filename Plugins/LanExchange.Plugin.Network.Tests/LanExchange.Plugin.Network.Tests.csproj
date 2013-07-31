@@ -65,14 +65,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Panel\ComputerEnumStrategyTest.cs" />
+    <Compile Include="Panel\ComputerFillerStrategyTest.cs" />
+    <Compile Include="Panel\ComputerPanelItemFactoryTest.cs" />
     <Compile Include="Panel\ComputerPanelItemTest.cs" />
     <Compile Include="Panel\DomainFillerStrategyTest.cs" />
+    <Compile Include="Panel\DomainPanelItemFactoryTest.cs" />
     <Compile Include="Panel\DomainPanelItemTest.cs" />
     <Compile Include="NetApi32UtilsTest.cs" />
+    <Compile Include="Panel\SharePanelItemFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerInfoTest.cs" />
-    <Compile Include="Panel\ShareEnumStrategyTest.cs" />
+    <Compile Include="Panel\ShareFillerStrategyTest.cs" />
     <Compile Include="ShareInfoTest.cs" />
     <Compile Include="Panel\SharePanelItemTest.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
