@@ -50,7 +50,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LanExchange.Sdk\LanExchange.SDK.csproj">
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LanExchange.SDK\LanExchange.SDK.csproj">
       <Project>{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}</Project>
       <Name>LanExchange.SDK</Name>
     </ProjectReference>
@@ -59,10 +62,6 @@
       <Name>LanExchange</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

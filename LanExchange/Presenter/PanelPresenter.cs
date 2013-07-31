@@ -35,7 +35,11 @@ namespace LanExchange.Presenter
                 {
                     m_View.ColumnsClear();
                     for (int i = 0; i < panelItem.CountColumns; i++)
-                        m_View.AddColumn(panelItem.CreateColumnHeader(i));
+                    {
+                        var header = panelItem.CreateColumnHeader(i);
+                        if (header.Visible)
+                            m_View.AddColumn(header.Text, header.Width);
+                    }
                 }
             }
         }
@@ -249,14 +253,14 @@ namespace LanExchange.Presenter
             if (panelItem == null || Objects == null) return false;
             if (panelItem.Name == PanelItemBase.s_DoubleDot)
                 return CommandLevelUp();
-            //var result = AppPresenter.PanelFillers.HasStrategyForParent(panelItem);
-            //if (result)
-            //{
-            //    Objects.CurrentPath.Push(panelItem);
-            //    Objects.SyncRetrieveData();
-            //}
-            //return result;
-            return false;
+            var result = AppPresenter.PanelFillers.HasStrategyForParent(panelItem);
+            if (result)
+            {
+                Objects.FocusedItemText = String.Empty;
+                Objects.CurrentPath.Push(panelItem);
+                Objects.SyncRetrieveData();
+            }
+            return result;
         }
 
         public bool CommandLevelUp()

@@ -49,20 +49,17 @@ namespace LanExchange.Plugin.Network.Panel
 
         public override PanelColumnHeader CreateColumnHeader(int index)
         {
-            var result = new PanelColumnHeader();
-            result.Visible = true;
-            result.Width = 130;
+            PanelColumnHeader result = null;
             switch (index)
             {
                 case 0:
-                    result.Text = "Network name";
+                    result = new PanelColumnHeader("Network name");
                     break;
                 case 1:
-                    result.Text = "Description";
-                    result.Width = 250;
+                    result = new PanelColumnHeader("Description", 250);
                     break;
                 case 2:
-                    result.Text = "OS version";
+                    result = new PanelColumnHeader("OS version");
                     result.Visible = false;
                     break;
             }

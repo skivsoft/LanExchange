@@ -252,8 +252,12 @@ namespace LanExchange.Model
         /// </summary>
         public void SyncRetrieveData()
         {
-            // update data
             var items = AppPresenter.PanelFillers.RetrievePanelItems(m_CurrentPath.Peek() as PanelItemBase);
+            InternalSetData(items);
+        }
+
+        private void InternalSetData(IEnumerable<PanelItemBase> items)
+        {
             lock (m_Data)
             {
                 m_Data.Clear();

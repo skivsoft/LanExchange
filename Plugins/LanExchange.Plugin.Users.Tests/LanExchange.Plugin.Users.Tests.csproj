@@ -51,12 +51,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LanExchange.Plugin.Users\LanExchange.Plugin.Users.csproj">
-      <Project>{064D3413-8F0B-4511-85F3-4919AC1D5A98}</Project>
-      <Name>LanExchange.Plugin.Users</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Panel\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

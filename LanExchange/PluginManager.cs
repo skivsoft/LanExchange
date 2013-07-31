@@ -53,13 +53,10 @@ namespace LanExchange
             get { return m_Plugins; }
         }
 
-        internal void OpenDefaultTab()
-        {
-            lock (m_Plugins)
-            {
-                foreach (var plugin in m_Plugins)
-                    plugin.OpenDefaultTab();
-            }
-        }
+        //internal void OpenDefaultTab()
+        //{
+        //    foreach (var plugin in m_Plugins)
+        //        plugin.OpenDefaultTab();
+        //}
     }
 }

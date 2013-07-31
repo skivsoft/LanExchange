@@ -19,5 +19,12 @@
         public bool Visible { get; set; }
 
         public int Width { get; set; }
+
+        public PanelColumnHeader(string text, int width = 0)
+        {
+            Text = text;
+            Width = width == 0 ? 130 : width;
+            Visible = true;
+        }
     }
 }

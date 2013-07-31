@@ -55,7 +55,6 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IAboutView.cs" />
     <Compile Include="IAction.cs" />
-    <Compile Include="IADExecutor.cs" />
     <Compile Include="IInfoView.cs" />
     <Compile Include="IPanelFillerStrategyManager.cs" />
     <Compile Include="IPanelImageManager.cs" />
