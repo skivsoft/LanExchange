@@ -86,10 +86,14 @@ namespace LanExchange.Plugin.Images
             }
         }
 
-
-        public void MainFormCreated()
+        public ISettingsTabViewFactory GetSettingsTabViewFactory()
         {
-            
+            return null;
+        }
+
+
+        public void OpenDefaultTab()
+        {
         }
     }
 }

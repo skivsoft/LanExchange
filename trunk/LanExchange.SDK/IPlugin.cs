@@ -13,9 +13,9 @@ namespace LanExchange.SDK
         /// <remarks>This method calls befor main form created.</remarks>
         /// <param name="serviceProvider">The service provider.</param>
         void Initialize(IServiceProvider serviceProvider);
-        /// <summary>
-        /// Afters the main form create.
-        /// </summary>
-        void MainFormCreated();
+
+        ISettingsTabViewFactory GetSettingsTabViewFactory();
+
+        void OpenDefaultTab();
     }
 }

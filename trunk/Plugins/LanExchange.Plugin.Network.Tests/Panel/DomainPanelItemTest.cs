@@ -13,7 +13,7 @@ namespace LanExchange.Plugin.Network.Tests.Panel
         [SetUp]
         public void SetUp()
         {
-            m_Domain = new DomainPanelItem("DOMAIN");
+            m_Domain = new DomainPanelItem(null, "DOMAIN");
         }
 
         [TearDown]

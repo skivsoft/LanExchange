@@ -31,7 +31,7 @@ namespace LanExchange.Plugin.Users.Panel
             if (resultTable == null) return;
 
             //Result.Add(new UserPanelItem(PanelItemBase.s_DoubleDot));
-            result.Add(new OrgUnitPanelItem(PanelItemBase.s_DoubleDot));
+            result.Add(new OrgUnitPanelItem(null, PanelItemBase.s_DoubleDot));
 
             var fixer = new PathFixer();
             var distinct = new PathDistinct();
@@ -46,7 +46,7 @@ namespace LanExchange.Plugin.Users.Panel
             foreach (var str in distinct.Items)
             {
                 string sUnit = string.IsNullOrEmpty(prefix) ? str : string.Format("..{0}", str.Substring(prefix.Length));
-                var unit = new OrgUnitPanelItem(sUnit);
+                var unit = new OrgUnitPanelItem(null, sUnit);
                 result.Add(unit);
             }
         }

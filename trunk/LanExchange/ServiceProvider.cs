@@ -1,5 +1,6 @@
 ﻿using System;
 using LanExchange.Model;
+using LanExchange.Presenter;
 using LanExchange.SDK;
 using LanExchange.UI;
 
@@ -9,10 +10,14 @@ namespace LanExchange
     {
         public object GetService(Type serviceType)
         {
-            // return existing instances
-
             if (serviceType == typeof (IPanelImageManager))
                 return LanExchangeIcons.Instance;
+
+            if (serviceType == typeof(IPanelItemFactoryManager))
+                return AppPresenter.PanelItemTypes;
+
+            if (serviceType == typeof(IPanelFillerStrategyManager))
+                return AppPresenter.PanelFillers;
 
             //if (PanelSubscription.Instance != null)
             //    if (serviceType == typeof (IBackgroundStrategySelector))
@@ -25,10 +30,6 @@ namespace LanExchange
                 if (serviceType == typeof (IInfoView))
                     return MainForm.Instance.pInfo;
             }
-
-            // create new instances
-            //if (serviceType == typeof(IADExecutor))
-            //    return new ConcreteADExecutor();
 
             return null;
         }

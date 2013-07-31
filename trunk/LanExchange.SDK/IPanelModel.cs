@@ -5,7 +5,7 @@ namespace LanExchange.SDK
     /// <summary>
     /// LanExchange panel model.
     /// </summary>
-    public interface IPanelModel : ISubscriber, IFilterModel
+    public interface IPanelModel : IFilterModel
     {
         /// <summary>
         /// Gets or sets the name of the tab.
@@ -21,13 +21,6 @@ namespace LanExchange.SDK
         /// The current view.
         /// </value>
         PanelViewMode CurrentView { get; set; }
-        /// <summary>
-        /// Gets or sets the groups.
-        /// </summary>
-        /// <value>
-        /// The groups.
-        /// </value>
-        IList<ISubject> Groups { get; }
         /// <summary>
         /// Gets the count.
         /// </summary>
@@ -71,10 +64,6 @@ namespace LanExchange.SDK
         /// </value>
         string ToolTipText { get; }
         /// <summary>
-        /// Updates the subscription.
-        /// </summary>
-        void UpdateSubscription();
-        /// <summary>
         /// Gets at.
         /// </summary>
         /// <param name="index">The index.</param>
@@ -92,5 +81,8 @@ namespace LanExchange.SDK
         /// <param name="key">The key.</param>
         /// <returns></returns>
         int IndexOf(string key);
+
+        PanelItemBaseFactory ItemFactory { get; set; }
+        void SyncRetrieveData();
     }
 }

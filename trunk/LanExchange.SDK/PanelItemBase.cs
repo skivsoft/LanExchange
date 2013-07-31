@@ -8,14 +8,12 @@ namespace LanExchange.SDK
     /// <summary>
     /// Base class for any LanExchange panel item.
     /// </summary>
-    public abstract class PanelItemBase : IComparable<PanelItemBase>, IEquatable<ISubject>, IComparable, IColumnComparable, ISubject
+    public abstract class PanelItemBase : IComparable<PanelItemBase>, IComparable, IColumnComparable
     {
         /// <summary>
         /// The ".." item
         /// </summary>
         public static readonly string s_DoubleDot = String.Empty;
-
-        private ISubject m_ParentSubject;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelItemBase"/> class.
@@ -64,22 +62,6 @@ namespace LanExchange.SDK
         /// The parent.
         /// </value>
         public PanelItemBase Parent { get; set; }
-
-        /// <summary>
-        /// Gets or sets the parent subject. This value is meanfull when <cref>Parent</cref> is null.
-        /// </summary>
-        /// <value>
-        /// The parent subject.
-        /// </value>
-        public ISubject ParentSubject
-        {
-            get { return Parent ?? m_ParentSubject; }
-            set
-            {
-                if (Parent == null)
-                    m_ParentSubject = value;
-            }
-        }
 
         /// <summary>
         /// Gets the column value.
@@ -160,17 +142,6 @@ namespace LanExchange.SDK
         }
 
         /// <summary>
-        /// Gets the subject.
-        /// </summary>
-        /// <value>
-        /// The subject.
-        /// </value>
-        public string Subject
-        {
-            get { return Name; }
-        }
-
-        /// <summary>
         /// Gets a value indicating whether this instance is cacheable.
         /// </summary>
         /// <value>
@@ -232,94 +203,6 @@ namespace LanExchange.SDK
                     result[i] = item.ToString().ToUpper(CultureInfo.InvariantCulture);
             }
             return result;
-        }
-
-        /// <summary>
-        /// Equalses the specified other.
-        /// </summary>
-        /// <param name="other">The other.</param>
-        /// <returns></returns>
-        public bool Equals(ISubject other)
-        {
-            if (other == null) return false;
-            return String.Compare(Subject, other.Subject, StringComparison.Ordinal) == 0;
-        }
-
-        /// <summary>
-        /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
-        /// </summary>
-        /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
-        /// <returns>
-        ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
-        /// </returns>
-        public override bool Equals(object obj)
-        {
-            if (obj == null) return false;
-            var other = obj as ISubject;
-            if (other == null) return false;
-            return String.Compare(Subject, other.Subject, StringComparison.Ordinal) == 0;
-        }
-
-        /// <summary>
-        /// Returns a hash code for this instance.
-        /// </summary>
-        /// <returns>
-        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
-        /// </returns>
-        public override int GetHashCode()
-        {
-            return Subject.GetHashCode();
-        }
-
-        /// <summary>
-        /// The '==' operator.
-        /// </summary>
-        /// <param name="item1">The item1.</param>
-        /// <param name="item2">The item2.</param>
-        /// <returns></returns>
-        public static bool operator ==(PanelItemBase item1, PanelItemBase item2)
-        {
-            if ((object)item1 == null) return (object)item2 == null;
-            if ((object)item2 == null) return false;
-            if (ReferenceEquals(item1, item2)) return true;
-            return item1.Subject == item2.Subject;
-        }
-
-        /// <summary>
-        /// The '!=' operator.
-        /// </summary>
-        /// <param name="item1">The item1.</param>
-        /// <param name="item2">The item2.</param>
-        /// <returns></returns>
-        public static bool operator !=(PanelItemBase item1, PanelItemBase item2)
-        {
-            return !(item1 == item2);
-        }
-
-        /// <summary>
-        /// The '&lt;' operator.
-        /// </summary>
-        /// <param name="item1">The item1.</param>
-        /// <param name="item2">The item2.</param>
-        /// <returns></returns>
-        public static bool operator <(PanelItemBase item1, PanelItemBase item2)
-        {
-            if ((object)item1 == null) return (object)item2 != null;
-            if ((object)item2 == null) return false;
-            return item1.CompareTo(item2) < 0;
-        }
-
-        /// <summary>
-        /// The ">" operator.
-        /// </summary>
-        /// <param name="item1">The item1.</param>
-        /// <param name="item2">The item2.</param>
-        /// <returns></returns>
-        public static bool operator >(PanelItemBase item1, PanelItemBase item2)
-        {
-            if ((object)item1 == null) return false;
-            if ((object)item2 == null) return true;
-            return item1.CompareTo(item2) > 0;
         }
     }
 }

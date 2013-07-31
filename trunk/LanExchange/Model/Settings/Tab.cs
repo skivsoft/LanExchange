@@ -22,21 +22,5 @@ namespace LanExchange.Model.Settings
             // TODO NEED UNCOMMENT THIS!
             //Items = new ServerInfo[0];
         }
-
-        public void SetScanGroups(IEnumerable<ISubject> value)
-        {
-            Domains.Clear();
-            foreach (var item in value)
-                Domains.Add(item.Subject);
-        }
-
-        public IList<ISubject> GetScanGroups()
-        {
-            var result = new List<ISubject>();
-            // TODO NEED UNCOMMENT THIS!
-            //foreach (var domain in Domains)
-            //    result.Add(new DomainPanelItem(domain));
-            return result;
-        }
     }
 }

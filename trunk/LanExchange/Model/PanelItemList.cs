@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using LanExchange.Model.Panel;
+using LanExchange.Presenter;
 using LanExchange.SDK;
 using LanExchange.Utils;
 using LanExchange.Model.Settings;
@@ -22,8 +23,6 @@ namespace LanExchange.Model
         private readonly ObjectPath m_CurrentPath;
 
         public event EventHandler Changed;
-        public event EventHandler SubscriptionChanged;
-        private readonly IList<ISubject> m_Groups;
         
         //private ListView m_LV = null;
         //private PanelItemType m_CurrentType = PanelItemType.COMPUTERS;
@@ -34,7 +33,6 @@ namespace LanExchange.Model
             m_Items = new List<PanelItemBase>();
             m_Data = new List<PanelItemBase>();
             m_Keys = new List<IComparable>();
-            m_Groups = new List<ISubject>();
             m_CurrentPath = new ObjectPath();
             TabName = name;
             CurrentView = PanelViewMode.Details;
@@ -60,7 +58,6 @@ namespace LanExchange.Model
                     View = CurrentView,
                     Focused = FocusedItemText
                 };
-                Page.SetScanGroups(Groups);
                 // TODO UNCOMMENT THIS!
                 //var TempList = new List<ServerInfo>();
                 //foreach (ComputerPanelItem PItem in m_Items)
@@ -73,9 +70,6 @@ namespace LanExchange.Model
                 TabName = value.Name;
                 FilterText = value.Filter;
                 CurrentView = value.View;
-                Groups.Clear();
-                foreach(var item in value.GetScanGroups())
-                    Groups.Add(item);
                 FocusedItemText = value.Focused;
                 Items.Clear();
                 // TODO UNCOMMENT THIS!
@@ -92,27 +86,7 @@ namespace LanExchange.Model
         public string TabName { get; set; }
         public PanelViewMode CurrentView { get; set; }
 
-        public IList<ISubject> Groups
-        {
-            get { return m_Groups; }
-        }
         public string FocusedItemText { get; set; }
-
-        public void UpdateSubscription()
-        {
-            // do not update if we not in root directory
-            if (!CurrentPath.IsEmpty) return;
-            if (Groups.Count > 0)
-            {
-                PanelSubscription.Instance.Unsubscribe(this, false);
-                foreach (var group in Groups)
-                    PanelSubscription.Instance.SubscribeToSubject(this, group);
-            } else
-                PanelSubscription.Instance.Unsubscribe(this, true);
-            if (SubscriptionChanged != null)
-                SubscriptionChanged(this, EventArgs.Empty);
-        }
-
 
         //TODO: add delete item
         //public void Delete(PanelItem comp)
@@ -129,11 +103,11 @@ namespace LanExchange.Model
         public PanelItemBase GetItem(string key)
         {
             // TODO UNCOMMENT THIS!
-            //if (key == null) return null;
-            //var tempComp = new ComputerPanelItem(null, new ServerInfo { Name = key, Comment = String.Empty });
-            //int index = m_Data.BinarySearch(tempComp);
-            //if (index >= 0)
-            //    return m_Data[index];
+            if (key == null) return null;
+            var tempComp = new PanelItemCustom(null, key);
+            int index = m_Data.BinarySearch(tempComp);
+            if (index >= 0)
+                return m_Data[index];
             return null;
         }
 
@@ -274,54 +248,22 @@ namespace LanExchange.Model
         //}
 
         /// <summary>
-        /// ISubsctiber.DataChanged implementation.
+        /// Sync retrieving panel items using appropriate filler strategy.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="subject"></param>
-        public void DataChanged(ISubscription sender, ISubject subject)
+        public void SyncRetrieveData()
         {
-            //lock (m_Data)
+            // update data
+            var items = AppPresenter.PanelFillers.RetrievePanelItems(m_CurrentPath.Peek() as PanelItemBase);
+            lock (m_Data)
             {
-                // add user items if asked
-                if (subject == ConcreteSubject.s_UserItems)
-                {
-                    m_Data.Clear();
-                    foreach (var comp in m_Items)
-                        m_Data.Add(comp);
-                }
-                else
-                    // add computers of domains which we subscribed
-                    // TODO UNCOMMENT THIS!
-                    //if (subject is DomainPanelItem)
-                    //{
-                    //    if (CurrentPath.IsEmpty)
-                    //    {
-                    //        m_Data.Clear();
-                    //        foreach (var group in Groups)
-                    //            foreach (PanelItemBase comp in sender.GetListBySubject(group))
-                    //                m_Data.Add(comp);
-                    //    }
-                    //    else 
-                    //        return;
-                    //}
-                    //// add shares, files etc.
-                    //else
-                    {
-                        //ISubject group = (ISubject)m_CurrentPath.Peek();
-                        m_Data.Clear();
-                        if (subject != null && subject != ConcreteSubject.s_NotSubscribed)
-                            foreach (PanelItemBase comp in sender.GetListBySubject(subject))
-                                m_Data.Add(comp);
-                    }
+                m_Data.Clear();
+                m_Data.AddRange(items);
                 m_Data.Sort();
-                //lock (m_Keys)
-                {
-                    // filtering only computer items
-                    ApplyFilter();
-                }
+                ApplyFilter();
             }
             OnChanged();
         }
+
  
         private void OnChanged()
         {
@@ -336,24 +278,7 @@ namespace LanExchange.Model
 
         public string ToolTipText
         {
-            get
-            {
-                StringBuilder sb = new StringBuilder();
-                if (Groups.Count > 0)
-                {
-                    foreach (var group in Groups)
-                    {
-                        if (sb.Length > 0)
-                            sb.Append(", ");
-                        sb.Append(group.Subject);
-                    }
-                    sb.Insert(0, "Обзор сети: ");
-                    sb.Append(".");
-                }
-                else
-                    sb.Append("Обзор сети отключен.");
-                return sb.ToString();
-            }
+            get { return String.Empty; }
         }
 
         public string Subject
@@ -365,5 +290,7 @@ namespace LanExchange.Model
         {
             get { return false; }
         }
+
+        public PanelItemBaseFactory ItemFactory { get; set; }
     }
 }

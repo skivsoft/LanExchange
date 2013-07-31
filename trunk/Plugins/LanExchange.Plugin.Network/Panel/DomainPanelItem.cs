@@ -5,6 +5,8 @@ namespace LanExchange.Plugin.Network.Panel
 {
     public class DomainPanelItem : PanelItemBase
     {
+        public const string ID = "{6000DD5C-848F-40FA-A48E-E30C986F365A}";
+
         private readonly ServerInfo m_SI;
 
         public DomainPanelItem(PanelItemBase parent, ServerInfo si) : base(parent)
@@ -12,7 +14,7 @@ namespace LanExchange.Plugin.Network.Panel
             m_SI = si;
         }
 
-        public DomainPanelItem(string domain) : base(null)
+        public DomainPanelItem(PanelItemBase parent, string domain) : base(parent)
         {
             m_SI = new ServerInfo {Name = domain, Comment = String.Empty};
         }

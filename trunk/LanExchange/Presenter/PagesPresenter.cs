@@ -104,9 +104,10 @@ namespace LanExchange.Presenter
             IPanelPresenter presenter = PV.Presenter;
             presenter.Objects = e.Info;
             e.Info.Changed += (o, args) => presenter.UpdateItemsAndStatus();
-            e.Info.SubscriptionChanged += Item_SubscriptionChanged;
+            //e.Info.SubscriptionChanged += Item_SubscriptionChanged;
             // update items
-            e.Info.DataChanged(null, ConcreteSubject.s_UserItems);
+            //e.Info.DataChanged(null, ConcreteSubject.s_UserItems);
+            e.Info.SyncRetrieveData();
         }
 
         public void PV_FocusedItemChanged(object sender, EventArgs e)

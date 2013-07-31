@@ -30,12 +30,12 @@ namespace LanExchange.Plugin.Users.Panel
             DataTable resultTable = rootEntry.Query(filter, new[] { "description", "title", "useraccountcontrol" });
             if (resultTable == null) return;
 
-            result.Add(new UserPanelItem(PanelItemBase.s_DoubleDot));
+            result.Add(new UserPanelItem(null, PanelItemBase.s_DoubleDot));
 
             foreach (DataRow row in resultTable.Rows)
             {
                 var name = row["description"].ToString();
-                var user = new UserPanelItem(name);
+                var user = new UserPanelItem(null, name);
                 user.UserAccControl = uint.Parse(row["useraccountcontrol"].ToString());
                 user.Description = user.UserAccControl.ToString("X");
                 //user.Description = row["lockoutTime"].ToString();

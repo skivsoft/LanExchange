@@ -5,6 +5,8 @@ namespace LanExchange.Plugin.Users.Panel
 {
     internal class UserPanelItem : PanelItemBase
     {
+        public const string ID = "{092A4099-309F-4CE8-BCCF-4F950FC06E54}";
+
         private string m_Name;
         private string m_Description;
 
@@ -12,7 +14,7 @@ namespace LanExchange.Plugin.Users.Panel
         {
         }
 
-        public UserPanelItem(string name) : base(null)
+        public UserPanelItem(PanelItemBase parent, string name) : base(parent)
         {
             m_Name = name;
         }

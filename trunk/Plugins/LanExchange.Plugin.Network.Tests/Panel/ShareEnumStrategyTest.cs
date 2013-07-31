@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Windows.Forms;
 using LanExchange.Plugin.Network.Panel;
 using LanExchange.SDK;
 using NUnit.Framework;
@@ -12,28 +14,30 @@ namespace LanExchange.Plugin.Network.Tests.Panel
         {
             var strategy = new ShareFillerStrategy();
             Assert.IsFalse(strategy.IsParentAccepted(null));
-            var info = new ServerInfo();
-            info.Name = SystemInformation.ComputerName;
-            Assert.IsTrue(strategy.IsParentAccepted(new ComputerPanelItem(null, info)));
+            Assert.IsTrue(strategy.IsParentAccepted(new ComputerPanelItem(null, SystemInformation.ComputerName)));
+        }
+
+        [Test, ExpectedException(typeof(ArgumentNullException))]
+        public void ExceptionAlgorithm()
+        {
+            var strategy = new ShareFillerStrategy();
+            var result = new Collection<PanelItemBase>();
+            strategy.Algorithm(null, result);
         }
 
         [Test]
         public void TestAlgorithm()
         {
-            Assert.IsTrue(false);
-            //var strategy = new ShareFillerStrategy();
-            //strategy.Algorithm();
-            //Assert.AreEqual(strategy.Result.Count, 0);
-            //var domain = NetApi32Utils.Instance.GetMachineNetBiosDomain(null);
-            //var info = new ServerInfo();
-            //info.Name = SystemInformation.ComputerName;
-            //strategy.Subject = new ComputerPanelItem(new DomainPanelItem(domain), info);
-            //ShareFillerStrategy.ShowHiddenShares = true;
-            //strategy.Algorithm();
-            //Assert.AreSame(strategy.Result[0].Name, PanelItemBase.s_DoubleDot);
-            //Assert.Greater(strategy.Result.Count, 1);
-            //ShareFillerStrategy.ShowHiddenShares = false;
-            //strategy.Algorithm();
+            var strategy = new ShareFillerStrategy();
+            var domain = NetApi32Utils.Instance.GetMachineNetBiosDomain(null);
+            var computer = new ComputerPanelItem(new DomainPanelItem(null, domain), SystemInformation.ComputerName);
+            ShareFillerStrategy.ShowHiddenShares = true;
+            var result = new Collection<PanelItemBase>();
+            strategy.Algorithm(computer, result);
+            Assert.AreSame(result[0].Name, PanelItemBase.s_DoubleDot);
+            Assert.Greater(result.Count, 1);
+            ShareFillerStrategy.ShowHiddenShares = false;
+            strategy.Algorithm(computer, result);
         }
     }
 }

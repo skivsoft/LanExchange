@@ -6,12 +6,12 @@ using LanExchange.SDK;
 
 namespace LanExchange
 {
-    public class PluginLoader
+    public class PluginManager
     {
-        private const string PluginMask = "Plugin.*.dll";
+        private const string PluginMask = "LanExchange.Plugin.*.dll";
         private readonly IList<IPlugin> m_Plugins;
 
-        public PluginLoader()
+        public PluginManager()
         {
             m_Plugins = new List<IPlugin>();
         }
@@ -19,7 +19,6 @@ namespace LanExchange
         public void LoadPlugins()
         {
             var folder = AppDomain.CurrentDomain.BaseDirectory;
-            if (!Directory.Exists(folder)) return;
             var files = Directory.GetFiles(folder, PluginMask, SearchOption.TopDirectoryOnly);
             foreach (string file in files)
             try
@@ -28,7 +27,7 @@ namespace LanExchange
                 //PanelSubscription.Instance.StrategySelector.SearchStrategiesInAssembly(assembly, typeof(PanelStrategyBase));
                 foreach (Type type in assembly.GetTypes())
                 {
-                    Type iface = type.GetInterface("LanExchange.Sdk.IPlugin");
+                    Type iface = type.GetInterface("LanExchange.SDK.IPlugin");
                     if (iface == null) continue;
                     IPlugin plugin = null;
                     try
@@ -49,18 +48,17 @@ namespace LanExchange
             }
         }
 
-        internal void OnMainFormCreated()
+        public IList<IPlugin> Items
+        {
+            get { return m_Plugins; }
+        }
+
+        internal void OpenDefaultTab()
         {
             lock (m_Plugins)
             {
                 foreach (var plugin in m_Plugins)
-                    try
-                    {
-                        plugin.MainFormCreated();
-                    }
-                    catch (Exception)
-                    {
-                    }
+                    plugin.OpenDefaultTab();
             }
         }
     }

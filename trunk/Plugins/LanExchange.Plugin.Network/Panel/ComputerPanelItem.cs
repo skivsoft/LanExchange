@@ -5,6 +5,8 @@ namespace LanExchange.Plugin.Network.Panel
 {
     public class ComputerPanelItem : PanelItemBase, IWmiComputer
     {
+        public const string ID = "{F842AE25-A56E-41D5-BF37-0AD1C207F79B}";
+        
         private readonly ServerInfo m_SI;
 
         /// <summary>
@@ -62,6 +64,8 @@ namespace LanExchange.Plugin.Network.Panel
         {
             get
             {
+                if (Name == s_DoubleDot)
+                    return PanelImageNames.DoubleDot;
                 return IsPingable ? PanelImageNames.ComputerNormal : PanelImageNames.ComputerDisabled;
             }
         }

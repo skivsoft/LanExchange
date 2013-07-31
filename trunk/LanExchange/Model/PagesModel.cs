@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using LanExchange.Model.Panel;
+using LanExchange.Presenter;
 using LanExchange.Utils;
 using System.IO;
 using LanExchange.Model.Settings;
@@ -111,7 +112,7 @@ namespace LanExchange.Model
                 if (m_SelectedIndex == -1 && m_List.Count == 1)
                     m_SelectedIndex = 0;
                 DoAfterAppendTab(info);
-                info.UpdateSubscription();
+                //info.UpdateSubscription();
             }
         }
 
@@ -119,7 +120,6 @@ namespace LanExchange.Model
         {
             if (index >= 0 && index < m_List.Count)
             {
-                PanelSubscription.Instance.Unsubscribe(m_List[index], true);
                 m_List.RemoveAt(index);
                 DoAfterRemove(index);
             }
@@ -157,21 +157,22 @@ namespace LanExchange.Model
             }
             if (m_PagesSettings == null)
                 throw new ArgumentNullException();
-            if (m_PagesSettings.Items.Length > 0)
+            //if (m_PagesSettings.Items.Length > 0)
+            //{
+            //    Array.ForEach(m_PagesSettings.Items, page =>
+            //    {
+            //        var Info = new PanelItemList(page.Name) { Settings = page };
+            //        AddTab(Info);
+            //    });
+            //}
+            //else
             {
-                Array.ForEach(m_PagesSettings.Items, page =>
+                foreach (var root in AppPresenter.PanelItemTypes.CreateDefaultRoots())
                 {
-                    var Info = new PanelItemList(page.Name) { Settings = page };
-                    AddTab(Info);
-                });
-            }
-            else
-            {
-                // TODO UNCOMMENT THIS!
-                //var domain = NetApi32Utils.Instance.GetMachineNetBiosDomain(null);
-                //var Info = new PanelItemList(domain);
-                //Info.Groups.Add(new DomainPanelItem(domain));
-                //AddTab(Info);
+                    var info = new PanelItemList(root.Name);
+                    info.CurrentPath.Push(root);
+                    AddTab(info);
+                }
             }
             if (m_PagesSettings.SelectedIndex != -1)
                 SelectedIndex = m_PagesSettings.SelectedIndex;

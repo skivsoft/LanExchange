@@ -64,7 +64,7 @@ namespace LanExchange.SDK
         /// <returns></returns>
         public object Peek()
         {
-            return m_Path.Peek();
+            return m_Path.Count == 0 ? null : m_Path.Peek();
         }
 
         /// <summary>
