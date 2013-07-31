@@ -76,6 +76,6 @@ namespace LanExchange.SDK
         void ShowRunCmdError(string cmdLine);
 
         void ColumnsClear();
-        void AddColumn(PanelColumnHeader createColumnHeader);
+        void AddColumn(string text, int width);
     }
 }

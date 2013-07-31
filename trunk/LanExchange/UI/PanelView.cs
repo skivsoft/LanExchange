@@ -640,10 +640,9 @@ namespace LanExchange.UI
             LV.Columns.Clear();
         }
 
-        public void AddColumn(PanelColumnHeader column)
+        public void AddColumn(string text, int width)
         {
-            if (column.Visible)
-                LV.Columns.Add(column.Text, column.Width);
+            LV.Columns.Add(text, width);
         }
     }
 }

@@ -38,9 +38,7 @@ namespace LanExchange.Plugin.Network.Panel
 
         public override PanelColumnHeader CreateColumnHeader(int index)
         {
-            var result = new PanelColumnHeader { Text = "Workgroup/domain" };
-            result.Visible = true;
-            return result;
+            return new PanelColumnHeader("Workgroup/Domain");
         }
 
         public override IComparable this[int index]
