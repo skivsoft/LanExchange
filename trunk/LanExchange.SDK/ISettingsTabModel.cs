@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LanExchange.SDK
+﻿namespace LanExchange.SDK
 {
     interface ISettingsTabModel
     {

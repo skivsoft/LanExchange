@@ -110,6 +110,22 @@ namespace LanExchange.Presenter
             e.Info.SyncRetrieveData();
         }
 
+        public void Model_AfterRemove(object sender, PanelIndexEventArgs e)
+        {
+            m_View.RemoveTabAt(e.Index);
+        }
+
+        public void Model_AfterRename(object sender, PanelItemListEventArgs e)
+        {
+            m_View.SelectedTabText = e.Info.TabName;
+        }
+
+        public void Model_IndexChanged(object sender, PanelIndexEventArgs e)
+        {
+            m_View.SelectedIndex = e.Index;
+            m_View.FocusPanelView();
+        }
+
         public void PV_FocusedItemChanged(object sender, EventArgs e)
         {
             if (PanelViewFocusedItemChanged != null)
@@ -129,22 +145,6 @@ namespace LanExchange.Presenter
             int Index = m_Model.GetItemIndex(Item);
             if (Index != -1)
                 m_View.SetTabToolTip(Index, Item.ToolTipText);
-        }
-
-        public void Model_AfterRemove(object sender, PanelIndexEventArgs e)
-        {
-            m_View.RemoveTabAt(e.Index);
-        }
-
-        public void Model_AfterRename(object sender, PanelItemListEventArgs e)
-        {
-            m_View.SelectedTabText = e.Info.TabName;
-        }
-
-        public void Model_IndexChanged(object sender, PanelIndexEventArgs e)
-        {
-            m_View.SelectedIndex = e.Index;
-            m_View.FocusPanelView();
         }
     }
 

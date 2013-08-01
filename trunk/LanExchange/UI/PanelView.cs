@@ -95,6 +95,7 @@ namespace LanExchange.UI
             var PItem = m_Presenter.Objects.GetItemAt(index);
             if (PItem != null)
             {
+                // TODO !!! USE ONLY VISIBLE COLUMNS (IP SLOWDOWN NOW)
                 for (int i = 0; i < PItem.CountColumns; i++)
                 {
                     var value = PItem[i] != null ? PItem[i].ToString() : String.Empty;
@@ -460,19 +461,19 @@ namespace LanExchange.UI
             {
                 mComp.Text = @"\\<ИмяКомпьютера>";
             }
-            SetEnabledAndVisible(mFolder, bFolderVisible);
+            //SetEnabledAndVisible(mFolder, bFolderVisible);
 
-            var menu = PanelPresenter.DetectMENU(PItem);
-            SetEnabledAndVisible(new ToolStripItem[] { mCopyCompName, mCopyComment, mCopySelected }, menu == PanelPresenter.COMPUTER_MENU);
-            bool bSend = false;
-            if (menu == PanelPresenter.COMPUTER_MENU)
-                bSend = (PItem != null) && (PItem.Name != PanelItemBase.s_DoubleDot);
-            SetEnabledAndVisible(new ToolStripItem[] { mSendSeparator, mSendToNewTab }, bSend);
+            //var menu = PanelPresenter.DetectMENU(PItem);
+            //SetEnabledAndVisible(new ToolStripItem[] { mCopyCompName, mCopyComment, mCopySelected }, menu == PanelPresenter.COMPUTER_MENU);
+            //bool bSend = false;
+            //if (menu == PanelPresenter.COMPUTER_MENU)
+            //    bSend = (PItem != null) && (PItem.Name != PanelItemBase.s_DoubleDot);
+            //SetEnabledAndVisible(new ToolStripItem[] { mSendSeparator, mSendToNewTab }, bSend);
 
-            SetEnabledAndVisible(mCopyPath, menu == PanelPresenter.FOLDER_MENU);
-            mCopySeparator.Visible = menu != String.Empty;
+            //SetEnabledAndVisible(mCopyPath, menu == PanelPresenter.FOLDER_MENU);
+            //mCopySeparator.Visible = menu != String.Empty;
 
-            mSeparatorAdmin.Visible = bCompVisible || bFolderVisible || Settings.Instance.AdvancedMode;
+            //mSeparatorAdmin.Visible = bCompVisible || bFolderVisible || Settings.Instance.AdvancedMode;
 
             // resolve computer related and folder related shortcut conflict
             mCompOpen.ShowShortcutKeys = bCompVisible && !bFolderVisible;

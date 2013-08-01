@@ -16,8 +16,8 @@ namespace LanExchange.Plugin.Users
             var typesManager = (IPanelItemFactoryManager)m_Provider.GetService(typeof(IPanelItemFactoryManager));
             if (typesManager != null)
             {
-                typesManager.RegisterPanelItemFactory(new Guid(OrgUnitPanelItem.ID), new OrgUnitPanelItemFactory());
-                typesManager.RegisterPanelItemFactory(new Guid(UserPanelItem.ID), new UserPanelItemFactory());
+                typesManager.RegisterPanelItemFactory(typeof(OrgUnitPanelItem), new OrgUnitPanelItemFactory());
+                typesManager.RegisterPanelItemFactory(typeof(UserPanelItem), new UserPanelItemFactory());
             }
 
             // Register new panel fillers

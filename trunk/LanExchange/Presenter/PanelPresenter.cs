@@ -238,13 +238,12 @@ namespace LanExchange.Presenter
         /// <returns>a ComputerPanelItem or null</returns>
         public PanelItemBase GetFocusedComputer(bool pingAndAsk)
         {
-            var PItem = GetFocusedPanelItem(pingAndAsk, false);
-            if (PItem == null)
+            var panelItem = GetFocusedPanelItem(pingAndAsk, false);
+            if (panelItem == null)
                 return null;
-            // TODO UNCOMMENT THIS!
-            //while (!(PItem is ComputerPanelItem) && (PItem.Parent != null))
-            //    PItem = PItem.Parent;
-            return PItem;
+            while (!(panelItem is IWmiComputer) && (panelItem.Parent != null))
+                panelItem = panelItem.Parent;
+            return panelItem;
         }
 
         public bool CommandLevelDown()
@@ -279,29 +278,6 @@ namespace LanExchange.Presenter
             }
             return result;
             //return false;
-        }
-
-        public static string DetectMENU(PanelItemBase PItem)
-        {
-            while (PItem != null)
-            {
-                if (PItem.Name == PanelItemBase.s_DoubleDot)
-                {
-                    PItem = PItem.Parent;
-                    continue;
-                }
-                // TODO UNCOMMENT THIS!
-                //if (PItem is SharePanelItem)
-                //    return FOLDER_MENU;
-                //if (PItem is ComputerPanelItem)
-                //    return COMPUTER_MENU;
-                //if (PItem is FilePanelItem)
-                //    if ((PItem as FilePanelItem).IsDirectory)
-                //        return FOLDER_MENU;
-                //    else
-                //        return FILE_MENU;
-            }
-            return String.Empty;
         }
 
         public void CommandDeleteItems()

@@ -4,7 +4,6 @@ using System.Text;
 
 namespace LanExchange.SDK
 {
-    // TODO refactor this! what we compare Name or Subject?
     /// <summary>
     /// Base class for any LanExchange panel item.
     /// </summary>
@@ -38,12 +37,14 @@ namespace LanExchange.SDK
         /// The count columns.
         /// </value>
         public abstract int CountColumns { get; }
+
         /// <summary>
         /// Creates the column header.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <returns></returns>
         public abstract PanelColumnHeader CreateColumnHeader(int index);
+
         /// <summary>
         /// Gets or sets the <see cref="IComparable"/> at the specified index.
         /// </summary>
@@ -60,6 +61,11 @@ namespace LanExchange.SDK
         /// The name of the image.
         /// </value>
         public abstract string ImageName { get; }
+
+        public virtual string ImageLegendText
+        {
+            get { return string.Empty; }
+        }
 
         /// <summary>
         /// Gets or sets the parent.
@@ -119,7 +125,7 @@ namespace LanExchange.SDK
             if ((Name != s_DoubleDot) && (other.Name == s_DoubleDot))
                 return 1;
             int result = String.Compare(Name, other.Name, StringComparison.OrdinalIgnoreCase);
-            // TODO !!! CHEC ITEM SORT
+            // TODO !!! CHECK ITEM SORT
             return result;
             //return CompareTo(other, 0);
         }

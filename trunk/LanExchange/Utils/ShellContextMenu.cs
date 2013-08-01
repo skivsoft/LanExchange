@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Security.Permissions;
 using System.Threading;
+using ShellDll;
 
 namespace AndreasJohansson.Win32.Shell
 {
@@ -421,7 +422,82 @@ namespace AndreasJohansson.Win32.Shell
             }
         }
         #endregion
-        
+
+        #region ShowContextMenuForCSIDL
+        /// <summary>
+        /// Shows the context menu
+        /// </summary>
+        /// <param name="handleOwner">Window that will get messages</param>
+        /// <param name="csidl">CSIDL value for special folder.</param>
+        /// <param name="pointScreen">Where to show the menu</param>
+        public void ShowContextMenuForCSIDL(IntPtr handleOwner, ShellAPI.CSIDL csidl, Point pointScreen)
+        {
+            // Release all resources first.
+            ReleaseAll();
+
+            IntPtr pMenu = IntPtr.Zero;
+            LocalWindowsHook hook = new LocalWindowsHook(HookType.WH_CALLWNDPROC);
+            hook.HookInvoked += new LocalWindowsHook.HookEventHandler(WindowsHookInvoked);
+
+            try
+            {
+                IntPtr tempPidl;
+                ShellAPI.SHGetSpecialFolderLocation(IntPtr.Zero, csidl, out tempPidl);
+                _arrPIDLs = new IntPtr[1] { tempPidl };
+                _oParentFolder = GetDesktopFolder();
+
+                if (false == GetContextMenuInterfaces(_oParentFolder, _arrPIDLs))
+                {
+                    ReleaseAll();
+                    return;
+                }
+
+                pMenu = CreatePopupMenu();
+
+                int nResult = _oContextMenu.QueryContextMenu(
+                    pMenu,
+                    0,
+                    CMD_FIRST,
+                    CMD_LAST,
+                    CMF.EXPLORE |
+                    CMF.NORMAL |
+                    ((Control.ModifierKeys & Keys.Shift) != 0 ? CMF.EXTENDEDVERBS : 0));
+
+                hook.Install();
+
+                uint nSelected = TrackPopupMenuEx(
+                    pMenu,
+                    TPM.RETURNCMD,
+                    pointScreen.X,
+                    pointScreen.Y,
+                    handleOwner,
+                    IntPtr.Zero);
+
+                DestroyMenu(pMenu);
+                pMenu = IntPtr.Zero;
+
+                if (nSelected != 0)
+                {
+                    InvokeCommand(_oContextMenu, nSelected, _strParentFolder, pointScreen);
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                hook.Uninstall();
+                if (pMenu != IntPtr.Zero)
+                {
+                    DestroyMenu(pMenu);
+                }
+                ReleaseAll();
+            }
+        }
+        #endregion
+
+
         #region WindowsHookInvoked()
         /// <summary>
         /// Handle messages for context menu
@@ -1288,6 +1364,7 @@ namespace AndreasJohansson.Win32.Shell
                 IntPtr plResult);
         }
         #endregion
+
     }
 
     #region ShellContextMenuException

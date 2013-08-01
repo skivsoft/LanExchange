@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network.Panel
@@ -62,6 +63,10 @@ namespace LanExchange.Plugin.Network.Panel
                     result = new PanelColumnHeader("OS version");
                     result.Visible = false;
                     break;
+                //case 3:
+                //    result = new PanelColumnHeader("IP address");
+                //    result.Visible = false;
+                //    break;
             }
             return result;
         }
@@ -78,6 +83,9 @@ namespace LanExchange.Plugin.Network.Panel
                         return Comment;
                     case 2:
                         return m_SI.Version();
+                    //case 3:
+                    //    var iph = Dns.GetHostEntry(Name);
+                    //    return iph.AddressList[0].ToString();
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
@@ -91,6 +99,22 @@ namespace LanExchange.Plugin.Network.Panel
                 if (Name == s_DoubleDot)
                     return PanelImageNames.DoubleDot;
                 return IsPingable ? PanelImageNames.ComputerNormal : PanelImageNames.ComputerDisabled;
+            }
+        }
+
+        public override string ImageLegendText
+        {
+            get
+            {
+                switch (ImageName)
+                {
+                    case PanelImageNames.ComputerNormal:
+                        return "Computer was found in local area network.";
+                    case PanelImageNames.ComputerDisabled:
+                        return "Computer does not reachable via PING.";
+                    default:
+                        return string.Empty;
+                }
             }
         }
 

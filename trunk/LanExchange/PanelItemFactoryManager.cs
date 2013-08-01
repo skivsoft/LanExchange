@@ -6,19 +6,20 @@ namespace LanExchange
 {
     public class PanelItemFactoryManager : IPanelItemFactoryManager
     {
-        private readonly Dictionary<Guid, PanelItemBaseFactory> m_Types;
+        private readonly Dictionary<Type, PanelItemBaseFactory> m_Types;
 
         public PanelItemFactoryManager()
         {
-            m_Types = new Dictionary<Guid, PanelItemBaseFactory>();
+            m_Types = new Dictionary<Type, PanelItemBaseFactory>();
         }
 
-        public void RegisterPanelItemFactory(Guid guid, PanelItemBaseFactory factory)
+        public void RegisterPanelItemFactory(Type type, PanelItemBaseFactory factory)
         {
-            m_Types.Add(guid, factory);
+            if (PanelItemBaseFactoryValidator.ValidateFactory(factory))
+                m_Types.Add(type, factory);
         }
 
-        public IDictionary<Guid, PanelItemBaseFactory> Types
+        public IDictionary<Type, PanelItemBaseFactory> Types
         {
             get { return m_Types; }
         }
@@ -31,6 +32,12 @@ namespace LanExchange
                 if (root != null)
                     yield return root;
             }
+        }
+
+        public bool Exists(Type type)
+        {
+            PanelItemBaseFactory factory;
+            return m_Types.TryGetValue(type, out factory);
         }
     }
 }
