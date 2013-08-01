@@ -12,5 +12,9 @@
         ///   <c>true</c> if visible; otherwise, <c>false</c>.
         /// </value>
         bool Visible { get; set; }
+
+        int CountLines { get; set; }
+        string GetLine(int index);
+        void SetLine(int index, string text);
     }
 }

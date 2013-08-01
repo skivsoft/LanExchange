@@ -5,6 +5,7 @@ using LanExchange.Properties;
 using LanExchange.SDK;
 using LanExchange.UI;
 using LanExchange.Utils;
+using ShellDll;
 
 namespace LanExchange.Model
 {
@@ -27,7 +28,7 @@ namespace LanExchange.Model
         {
             m_NamesMap = new Dictionary<string, int>();
             // init system images
-            Shell32.FileIconInit(true);
+            ShellAPI.FileIconInit(true);
             var Small = new SysImageList(SysImageListSize.smallIcons);
             var Large = new SysImageList(SysImageListSize.largeIcons);
             // init image lists

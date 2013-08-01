@@ -16,9 +16,9 @@ namespace LanExchange.Plugin.Network
             var typeManager = (IPanelItemFactoryManager)m_Provider.GetService(typeof (IPanelItemFactoryManager));
             if (typeManager != null)
             {
-                typeManager.RegisterPanelItemFactory(new Guid(DomainPanelItem.ID), new DomainPanelItemFactory());
-                typeManager.RegisterPanelItemFactory(new Guid(ComputerPanelItem.ID), new ComputerPanelItemFactory());
-                typeManager.RegisterPanelItemFactory(new Guid(SharePanelItem.ID), new SharePanelItemFactory());
+                typeManager.RegisterPanelItemFactory(typeof(DomainPanelItem), new DomainPanelItemFactory());
+                typeManager.RegisterPanelItemFactory(typeof(ComputerPanelItem), new ComputerPanelItemFactory());
+                typeManager.RegisterPanelItemFactory(typeof(SharePanelItem), new SharePanelItemFactory());
             }
 
             // Register new panel fillers

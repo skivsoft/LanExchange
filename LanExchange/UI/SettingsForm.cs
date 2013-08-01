@@ -28,41 +28,23 @@ namespace LanExchange.UI
             Close();
         }
 
-        // TODO NEED UNCOMMENT!
-        //public bool IsAutoRun
+        // TODO UNCOMMENT THIS
+        public bool IsAutoRun { get; set; }
         //{
         //    get { return chAutorun.Checked; }
         //    set { chAutorun.Checked = value; }
         //}
 
-        //public bool RunMinimized
+        public bool RunMinimized { get; set; }
         //{
         //    get { return chMinimized.Checked; }
         //    set { chMinimized.Checked = value; }
         //}
 
-        //public bool AdvancedMode
+        public bool AdvancedMode { get; set; }
         //{
         //    get { return chAdvanced.Checked; }
         //    set { chAdvanced.Checked = value; }
-        //}
-
-        //public decimal RefreshTimeInMin
-        //{
-        //    get { return eRefreshTime.Value; }
-        //    set { eRefreshTime.Value = value; }
-        //}
-
-        //public bool ShowHiddenShares
-        //{
-        //    get { return chShowHiddenShares.Checked; }
-        //    set { chShowHiddenShares.Checked = value; }
-        //}
-        
-        //public bool ShowPrinters 
-        //{
-        //    get { return chShowPrinters.Checked; }
-        //    set { chShowPrinters.Checked = value; }
         //}
 
         private void SettingsForm_FormClosed(object sender, FormClosedEventArgs e)

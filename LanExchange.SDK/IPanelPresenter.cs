@@ -1,4 +1,6 @@
-﻿namespace LanExchange.SDK
+﻿using System;
+
+namespace LanExchange.SDK
 {
     /// <summary>
     /// Presenter of LanExchange panel.
@@ -21,6 +23,8 @@
         /// </summary>
         /// <returns></returns>
         bool CommandLevelUp();
+
+        bool CommandLevelDown();
         /// <summary>
         /// Gets the focused panel item.
         /// </summary>
@@ -28,12 +32,12 @@
         /// <param name="canReturnParent">if set to <c>true</c> [b can return parent].</param>
         /// <returns></returns>
         PanelItemBase GetFocusedPanelItem(bool pingAndAsk, bool canReturnParent);
-        // TODO must be undepended from AbstractPanelItem's descendant
         /// <summary>
         /// Gets the focused computer.
         /// </summary>
         /// <param name="pingAndAsk">if set to <c>true</c> [p].</param>
         /// <returns></returns>
+        [Obsolete("Bad idea to use this computer-specific method.")]
         PanelItemBase GetFocusedComputer(bool pingAndAsk);
     }
 }

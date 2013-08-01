@@ -14,12 +14,24 @@ namespace LanExchange.Model
 
         public override int CountColumns
         {
-            get { return 1; }
+            get { return 3; }
         }
 
         public override IComparable this[int index]
         {
-            get { return Name; }
+            get
+            {
+                switch(index)
+                {
+                    case 0:
+                        return Name;
+                    case 1:
+                    case 2:
+                        return " ";
+                    default:
+                        throw new ArgumentOutOfRangeException("index");
+                }
+            }
         }
 
         public override string ImageName
@@ -29,7 +41,20 @@ namespace LanExchange.Model
 
         public override PanelColumnHeader CreateColumnHeader(int index)
         {
-            return index == 0 ? new PanelColumnHeader("Name") : null;
+            PanelColumnHeader result = null;
+            switch(index)
+            {
+                case 0:
+                    result = new PanelColumnHeader("Column0");
+                    break;
+                case 1:
+                    result = new PanelColumnHeader("Column1");
+                    break;
+                case 2:
+                    result = new PanelColumnHeader("Column2");
+                    break;
+            }
+            return result;
         }
     }
 }

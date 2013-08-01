@@ -1,125 +1,125 @@
-﻿using LanExchange.Model;
+﻿using System;
+using System.IO;
+using LanExchange.Model;
 using NUnit.Framework;
 
-namespace LanExchange.Tests
+namespace LanExchange.Tests.Model
 {
-    
-    
-    /// <summary>
-    ///This is a test class for TabModelTest and is intended
-    ///to contain all TabModelTest Unit Tests
-    ///</summary>
     [TestFixture]
     public class PagesModelTest
     {
+        private PagesModel m_Model;
+        private bool m_EventFired;
 
-
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
+        [SetUp]
+        public void SetUp()
         {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
+            m_Model = new PagesModel();
+            m_EventFired = false;
         }
 
-        #region Additional test attributes
-        // 
-        //You can use the following additional attributes as you write your tests:
-        //
-        //Use ClassInitialize to run code before running the first test in the class
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        //Use ClassCleanup to run code after all tests in a class have run
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
-        #endregion
+        [TearDown]
+        public void TearDown()
+        {
+            m_Model = null;
+        }
 
-
-        /// <summary>
-        ///A test for TabModel Constructor
-        ///</summary>
         [Test]
-        public void TabModelConstructorTest()
+        public void TestPagesModel()
         {
-            PagesModel Model = new PagesModel();
-            Assert.AreEqual(0, Model.Count);
+            Assert.AreEqual(0, m_Model.Count);
         }
 
-        /// <summary>
-        ///A test for DelTab
-        ///</summary>
+        public void Model_AfterAppend_AfterRename(object sender, PanelItemListEventArgs e)
+        {
+            m_EventFired = true;
+        }
+
+        public void Model_AfterRemove_IndexChanged(object sender, PanelIndexEventArgs e)
+        {
+            m_EventFired = true;
+        }
+
         [Test]
-        public void DelTabTest()
+        public void TestDelTab()
         {
-            PagesModel Model = new PagesModel();
-            Model.AddTab(new PanelItemList("MyTab"));
-            Model.DelTab(0);
-            Assert.AreEqual(0, Model.Count, "Count != 0");
+            m_Model.AddTab(new PanelItemList("MyTab"));
+            m_Model.DelTab(0);
+            Assert.AreEqual(0, m_Model.Count);
+            Assert.IsFalse(m_EventFired);
+            m_Model.AddTab(new PanelItemList("MyTab"));
+            m_Model.AfterRemove += Model_AfterRemove_IndexChanged;
+            m_Model.DelTab(0);
+            Assert.IsTrue(m_EventFired);
         }
 
-        /// <summary>
-        ///A test for AddTab
-        ///</summary>
         [Test]
-        public void AddTabTest()
+        public void TestAddTab()
         {
-            PagesModel Model = new PagesModel();
-            Model.AddTab(new PanelItemList("MyTab"));
-            Assert.AreEqual("MyTab", Model.GetTabName(0));
-            Assert.AreEqual(null, Model.GetTabName(-1));
-            Assert.AreEqual(null, Model.GetTabName(1));
+            m_Model.AddTab(new PanelItemList("MyTab"));
+            Assert.IsFalse(m_EventFired);
+            Assert.AreEqual("MyTab", m_Model.GetTabName(0));
+            Assert.AreEqual(null, m_Model.GetTabName(-1));
+            Assert.AreEqual(null, m_Model.GetTabName(1));
+            m_Model.AfterAppendTab += Model_AfterAppend_AfterRename;
+            m_Model.AddTab(new PanelItemList("YourTab"));
+            Assert.IsTrue(m_EventFired);
         }
 
-        /// <summary>
-        ///A test for CommandRenameTab
-        ///</summary>
         [Test]
-        public void RenameTabTest()
+        public void TestRenameTab()
         {
-            PagesModel Model = new PagesModel();
-            Model.AddTab(new PanelItemList("MyTab"));
-            Model.RenameTab(0, "YourTab");
-            Assert.AreEqual("YourTab", Model.GetTabName(0));
+            m_Model.AddTab(new PanelItemList("MyTab"));
+            Assert.IsFalse(m_EventFired);
+            m_Model.RenameTab(0, "YourTab");
+            Assert.AreEqual("YourTab", m_Model.GetTabName(0));
+            m_Model.AfterRename += Model_AfterAppend_AfterRename;
+            m_Model.RenameTab(0, "MyTab");
+            Assert.IsTrue(m_EventFired);
         }
 
-        //[TestMethod()]
-        //public void CreateFromEmpyTabControl()
-        //{
-        //    // TODO USE NUnit.Mock HERE
-        //    IPagesView view;
-        //    PagesPresenter Controller = new PagesPresenter(view);
-        //    PagesModel Model = Controller.GetModel();
-        //    Assert.IsNotNull(Model);
-        //    Assert.AreEqual(0, Model.Count, "Empty TabControl");
-        //}
+        [Test]
+        public void TestIndexChanged()
+        {
+            m_Model.AddTab(new PanelItemList("MyTab"));
+            m_Model.AddTab(new PanelItemList("YourTab"));
+            m_Model.SelectedIndex = 1;
+            Assert.IsFalse(m_EventFired);
+            Assert.AreEqual(1, m_Model.SelectedIndex);
+            m_Model.IndexChanged += Model_AfterRemove_IndexChanged;
+            m_Model.SelectedIndex = 0;
+            Assert.IsTrue(m_EventFired);
+        }
 
+        [Test, ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void ExceptionGetItem()
+        {
+            var item = m_Model.GetItem(0);
+        }
+
+        [Test]
+        public void TestGetItem()
+        {
+            m_Model.AddTab(new PanelItemList("MyTab"));
+            var item = m_Model.GetItem(0);
+            Assert.NotNull(item);
+            Assert.AreEqual("MyTab", item.TabName);
+        }
+
+        [Test]
+        public void TestGetItemIndex()
+        {
+            var info = new PanelItemList("MyTab");
+            m_Model.AddTab(info);
+            Assert.AreEqual(-1, m_Model.GetItemIndex(null));
+            Assert.AreEqual(0, m_Model.GetItemIndex(info));
+        }
+
+        [Test]
+        public void TestGetConfigFileName()
+        {
+            var fileName = PagesModel.GetConfigFileName();
+            Assert.AreEqual(PagesModel.CONFIG_FNAME, Path.GetFileName(fileName));
+        }
     }
 }

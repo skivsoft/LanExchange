@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
+using AndreasJohansson.Win32.Shell;
 using LanExchange.Action;
 using LanExchange.Model;
 using LanExchange.Presenter;
@@ -10,6 +13,7 @@ using LanExchange.Model.Panel;
 using LanExchange.Model.Settings;
 using LanExchange.SDK;
 using LanExchange.Utils;
+using ShellDll;
 
 namespace LanExchange.UI
 {
@@ -236,18 +240,6 @@ namespace LanExchange.UI
             e.Cancel = !pv.PrepareContextMenu();
         }
 
-        //private void lCompName_Click(object sender, EventArgs e)
-        //{
-        //    // TODO uncomment mycomputer click
-        //    // Open MyComputer
-        //    //Process.Start("explorer.exe", "/n, /e,::{20D04FE0-3AEA-1069-A2D8-08002B30309D}");
-        //    // Network
-        //    //Process.Start("explorer.exe", "/n, ::{208D2C60-3AEA-1069-A2D7-08002B30309D},FERMAK");
-        //    //IPanelView PV = Pages.GetActivePanelView();
-        //    //if (PV != null)
-        //    //    PV.GotoFavoriteComp(SystemInformation.ComputerName);
-        //}
-
         private void tipComps_Popup(object sender, PopupEventArgs e)
         {
             //logger.Info("tipComps_Popup: {0}", e.AssociatedControl.GetType().Name);
@@ -256,7 +248,7 @@ namespace LanExchange.UI
             if (e.AssociatedControl == pInfo.Picture)
             {
                 tooltip.ToolTipIcon = ToolTipIcon.Info;
-                tooltip.ToolTipTitle = "Легенда";
+                tooltip.ToolTipTitle = "Legend";
                 return;
             }
             if (e.AssociatedControl is ListView)
@@ -264,7 +256,7 @@ namespace LanExchange.UI
                 var listview = e.AssociatedControl as ListView;
                 Point P = listview.PointToClient(MousePosition);
                 ListViewHitTestInfo Info = listview.HitTest(P);
-                tooltip.ToolTipTitle = Info.Item != null ? Info.Item.Text : "Информация";
+                tooltip.ToolTipTitle = Info.Item != null ? Info.Item.Text : "Information";
                 return;
             }
             if (e.AssociatedControl is TabControl && e.AssociatedControl == Pages.Pages)
@@ -317,53 +309,17 @@ namespace LanExchange.UI
         /// <param name="e"></param>
         private void Pages_PanelViewFocusedItemChanged(object sender, EventArgs e)
         {
-            // TODO UNCOMMENT THIS!
-            //// get focused item from current PanelView
-            //var pv = sender as PanelView;
-            //ComputerPanelItem Comp = null;
-            //if (pv != null) 
-            //{
-            //    var PItem = pv.Presenter.GetFocusedPanelItem(false, false);
-            //    // is focused changed on top level?
-            //    if (PItem is ComputerPanelItem)
-            //    {
-            //        // run/re-run timer for saving tab settings
-            //        timerTabSettingsSaver.Stop();
-            //        timerTabSettingsSaver.Start();
-            //    }
-            //    Comp = pv.Presenter.GetFocusedComputer(false) as ComputerPanelItem;
-            //}
-            //// is focused item a computer?
-            //if (Comp == null)
-            //{
-            //    pInfo.Picture.Image = LanExchangeIcons.Instance.GetLargeImage(PanelImageNames.ComputerNormal);
-            //    pInfo.InfoComp = "";
-            //    pInfo.InfoDesc = "";
-            //    pInfo.InfoOS = "";
-            //    return;
-            //}
-            //// update info panel at top of the form
-            //pInfo.InfoComp = Comp.Name;
-            //pInfo.InfoDesc = Comp.Comment;
-            //pInfo.InfoOS = Comp.SI.Version();
-            //pInfo.Picture.Image = LanExchangeIcons.Instance.GetLargeImage(Comp.ImageName);
-            //switch (Comp.ImageName)
-            //{
-            //    case PanelImageNames.ComputerNormal:
-            //        tipComps.SetToolTip(pInfo.Picture, "Компьютер найден в результате обзора сети.");
-            //        break;
-            //    case PanelImageNames.ComputerDisabled:
-            //        tipComps.SetToolTip(pInfo.Picture, "Компьютер не доступен посредством PING.");
-            //        break;
-            //    /*
-            //    case LanExchangeIcons.imgCompGreen:
-            //        tipComps.SetToolTip(pInfo.Picture, "Компьютер с запущенной программой LanExchange.");
-            //        break;
-            //     */
-            //    default:
-            //        tipComps.SetToolTip(pInfo.Picture, "");
-            //        break;
-            //}
+            // get focused item from current PanelView
+            var pv = sender as PanelView;
+            if (pv == null) return;
+            var panelItem = pv.Presenter.GetFocusedPanelItem(false, true);
+            if (panelItem == null) return;
+            // update info panel at top of the form
+            pInfo.Picture.Image = LanExchangeIcons.Instance.GetLargeImage(panelItem.ImageName);
+            tipComps.SetToolTip(pInfo.Picture, panelItem.ImageLegendText);
+            pInfo.CountLines = panelItem.CountColumns;
+            for (int index = 0; index < panelItem.CountColumns; index++)
+                pInfo.SetLine(index, panelItem[index].ToString());
         }
 
         private void Pages_FilterTextChanged(object sender, EventArgs e)
@@ -491,6 +447,22 @@ namespace LanExchange.UI
         private void rereadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             m_ReReadAction.Execute();
+        }
+
+        private void lCompName_MouseUp(object sender, MouseEventArgs e)
+        {
+            switch (e.Button)
+            {
+                case MouseButtons.Right:
+                    var scm = new ShellContextMenu();
+                    scm.ShowContextMenuForCSIDL(Handle, ShellAPI.CSIDL.DRIVES, Cursor.Position);
+                    break;
+            }
+        }
+
+        private void Status_DoubleClick(object sender, EventArgs e)
+        {
+            Process.Start("explorer.exe", "/n,::{20D04FE0-3AEA-1069-A2D8-08002B30309D}");
         }
     }
 }

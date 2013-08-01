@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using LanExchange.Presenter;
 using LanExchange.SDK;
 using System.Collections.ObjectModel;
 
@@ -27,6 +28,13 @@ namespace LanExchange
             {
                 if (strategy.IsParentAccepted(parent))
                     strategy.Algorithm(parent, result);
+            }
+            // check first element in result
+            if (result.Count > 0)
+            {
+                // if first element is forbidden type, just clear results for ommit display errors
+                if (!AppPresenter.PanelItemTypes.Exists(result[0].GetType()))
+                    result.Clear();
             }
             return result;
         }

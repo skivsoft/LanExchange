@@ -108,6 +108,7 @@
     <Compile Include="Model\Settings\Tab.cs" />
     <Compile Include="Model\Settings\Tabs.cs" />
     <Compile Include="PanelFillerStrategyManager.cs" />
+    <Compile Include="PanelItemBaseFactoryValidator.cs" />
     <Compile Include="PluginManager.cs" />
     <Compile Include="Presenter\AboutPresenter.cs" />
     <Compile Include="Presenter\AppPresenter.cs" />
@@ -207,8 +208,8 @@
     <Compile Include="Utils\NativeMethods.cs" />
     <Compile Include="Utils\SafeNativeMethods.cs" />
     <Compile Include="Utils\SerializeUtils.cs" />
-    <Compile Include="Utils\Shell32.cs" />
-    <Compile Include="Utils\Shell32Utils.cs" />
+    <Compile Include="Utils\ShellAPI.cs" />
+    <Compile Include="Utils\ShellContextMenu.cs" />
     <Compile Include="Utils\SingleInstanceCheck.cs" />
     <Compile Include="Utils\UnsafeNativeMethods.cs" />
     <Compile Include="WMI\DynamicObject.cs" />
@@ -255,6 +256,9 @@
     </Compile>
     <EmbeddedResource Include="UI\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\InfoView.resx">
+      <DependentUpon>InfoView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

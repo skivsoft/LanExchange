@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Windows.Forms;
 using LanExchange.Model.Panel;
 using LanExchange.Presenter;
 using LanExchange.Utils;
@@ -16,7 +18,7 @@ namespace LanExchange.Model
 
     public class PagesModel
     {
-        private const string CONFIG_FNAME = "LanExchange.Tabs.cfg";
+        public const string CONFIG_FNAME = "LanExchange.Tabs.cfg";
         private readonly List<PanelItemList> m_List;
         private int m_SelectedIndex;
 
@@ -34,12 +36,10 @@ namespace LanExchange.Model
             m_SelectedIndex = -1;
         }
 
-        private static string GetConfigFileName()
+        public static string GetConfigFileName()
         {
             var path = Path.GetDirectoryName(Settings.Settings.GetExecutableFileName());
-            if (path == null)
-                throw new ArgumentNullException();
-            return Path.Combine(path, CONFIG_FNAME);
+            return path == null ? string.Empty : Path.Combine(path, CONFIG_FNAME);
         }
 
         public int Count { get { return m_List.Count; }  }
@@ -66,7 +66,9 @@ namespace LanExchange.Model
 
         public PanelItemList GetItem(int index)
         {
-            return index < 0 || index >= m_List.Count ? null : m_List[index];
+            if (index < 0 || index >= m_List.Count)
+                throw new ArgumentOutOfRangeException("index");
+            return m_List[index];
         }
 
         public int GetItemIndex(PanelItemList item)
@@ -171,6 +173,7 @@ namespace LanExchange.Model
                 {
                     var info = new PanelItemList(root.Name);
                     info.CurrentPath.Push(root);
+                    info.FocusedItemText = SystemInformation.ComputerName;
                     AddTab(info);
                 }
             }

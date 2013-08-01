@@ -4,7 +4,6 @@ using System;
 
 namespace LanExchange.UI
 {
-    // TODO need use cache
     public class ListViewItemCache
     {
         //private readonly static Logger logger = LogManager.GetCurrentClassLogger();
