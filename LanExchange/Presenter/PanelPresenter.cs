@@ -155,29 +155,27 @@ namespace LanExchange.Presenter
 
         public PanelItemBase GetFocusedPanelItem(bool pingAndAsk, bool canReturnParent)
         {
-            var item = m_Objects.GetItem(m_View.FocusedItemText);
-            // TODO UNCOMMENT THIS! MOVE TO PLUGIN
-            //var comp = item as ComputerPanelItem;
-            //if (comp != null && pingAndAsk)
-            //{
-            //    bool bPingResult = PingThread.FastPing(comp.Name);
-            //    if (comp.IsPingable != bPingResult)
-            //    {
-            //        comp.IsPingable = bPingResult;
-            //        m_View.RedrawFocusedItem();
-            //    }
-            //    if (!bPingResult)
-            //    {
-            //        DialogResult Result = MessageBox.Show(
-            //            String.Format("Компьютер «{0}» не доступен посредством PING.\nПродолжить?", comp.Name), "Запрос",
-            //            MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-            //        if (Result != DialogResult.Yes)
-            //            item = null;
-            //    }
-            //}
-            if (canReturnParent && item != null && item.Name == PanelItemBase.s_DoubleDot)
-                item = item.Parent;
-            return item;
+            var panelItem = m_Objects.GetItem(m_View.FocusedItemText);
+            if (panelItem != null && pingAndAsk)
+            {
+                var bReachable = PingThread.FastPing(panelItem.Name);
+                if (panelItem.IsReachable != bReachable)
+                {
+                    panelItem.IsReachable = bReachable;
+                    m_View.RedrawFocusedItem();
+                }
+                if (!bReachable)
+                {
+                    var result = MessageBox.Show(
+                        String.Format("Resource «{0}» does not reachable.\nContinue anyway?", panelItem.Name), "Query",
+                        MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                    if (result != DialogResult.Yes)
+                        panelItem = null;
+                }
+            }
+            if (canReturnParent && panelItem != null && panelItem.Name == PanelItemBase.s_DoubleDot)
+                panelItem = panelItem.Parent;
+            return panelItem;
         }
 
         /// <summary>

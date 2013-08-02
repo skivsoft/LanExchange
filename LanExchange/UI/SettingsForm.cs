@@ -28,25 +28,6 @@ namespace LanExchange.UI
             Close();
         }
 
-        // TODO UNCOMMENT THIS
-        public bool IsAutoRun { get; set; }
-        //{
-        //    get { return chAutorun.Checked; }
-        //    set { chAutorun.Checked = value; }
-        //}
-
-        public bool RunMinimized { get; set; }
-        //{
-        //    get { return chMinimized.Checked; }
-        //    set { chMinimized.Checked = value; }
-        //}
-
-        public bool AdvancedMode { get; set; }
-        //{
-        //    get { return chAdvanced.Checked; }
-        //    set { chAdvanced.Checked = value; }
-        //}
-
         private void SettingsForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Instance = null;

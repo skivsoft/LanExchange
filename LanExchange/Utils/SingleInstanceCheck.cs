@@ -55,13 +55,7 @@ namespace LanExchange.Utils
             // http://snipplr.com/view/19272/ - C#, single-instance-check using mutex
             // http://iridescence.no/post/CreatingaSingleInstanceApplicationinC.aspx
             bool isOwnedHere;
-            m_AppStartMutex = new Mutex(
-                true,
-                // TODO Application using 
-                "LanExchange",
-                //Application.ProductName,
-                out isOwnedHere
-            );
+            m_AppStartMutex = new Mutex(true, "LanExchange", out isOwnedHere);
             if (isOwnedHere) return; 
 
             Process me = Process.GetCurrentProcess();

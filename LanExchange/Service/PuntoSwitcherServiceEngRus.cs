@@ -1,40 +1,46 @@
 ﻿using System;
 using System.Globalization;
 
-namespace LanExchange.Model
+namespace LanExchange.Service
 {
-    public static class PuntoSwitcher
+    public class PuntoSwitcherServiceEngRus : IPuntoSwitcherService
     {
-        private static readonly string[] ABC = 
+        private readonly string[] m_ABC = 
         {"АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя", 
          "F<DULT~:PBQRKVYJGHCNEA{WXIO}SM\">Zf,dult`;pbqrkvyjghcnea[wxio]sm'.z"};
 
-        public static bool IsValidChar(char ch)
+        public bool IsValidChar(char ch)
         {
-            return ABC[0].Contains(ch.ToString(CultureInfo.InvariantCulture)) || ABC[1].Contains(ch.ToString(CultureInfo.InvariantCulture));
+            return m_ABC[0].Contains(ch.ToString(CultureInfo.InvariantCulture)) || m_ABC[1].Contains(ch.ToString(CultureInfo.InvariantCulture));
         }
 
-        public static string Change(string str)
+        public string Change(string str)
         {
-            string Result = "";
+            var result = string.Empty;
             foreach (char Ch in str)
             {
-                int index = ABC[1].IndexOf(Ch);
+                int index = m_ABC[1].IndexOf(Ch);
                 if (index != -1)
-                    Result += ABC[0][index];
+                    result += m_ABC[0][index];
                 else
                 {
-                    index = ABC[0].IndexOf(Ch);
+                    index = m_ABC[0].IndexOf(Ch);
                     if (index != -1)
-                        Result += ABC[1][index];
+                        result += m_ABC[1][index];
                     else
-                        Result += Ch;
+                        result += Ch;
                 }
             }
-            return Result;
+            return result;
         }
 
-        public static bool RussianContains(string s, string what)
+        /// <summary>
+        /// Regular function Contains but with special letter 'Ё' processing.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="what"></param>
+        /// <returns></returns>
+        public bool RussianContains(string s, string what)
         {
             if (String.IsNullOrEmpty(what))
                 return false;
@@ -44,7 +50,7 @@ namespace LanExchange.Model
                 for (int j = 0; j < what.Length; j++)
                 {
                     char Ch = s[i + j];
-                    if (what[j] == 'Е')
+                    if (what[j] == 'Е' || what[j] == 'Ё')
                     {
                         if (Ch != 'Е' && Ch != 'Ё')
                         {

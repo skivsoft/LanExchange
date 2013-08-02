@@ -31,7 +31,7 @@ namespace LanExchange.Presenter
         // TODO: Need check duplicates on new tab
         public void CommandNewTab()
         {
-            var newTabName = InputBoxPresenter.Ask("Новая вкладка", "Введите имя", "", false);
+            var newTabName = InputBoxPresenter.Ask("New tab", "Enter tab name", "", false);
             if (newTabName != null)
             {
                 m_Model.AddTab(new PanelItemList(newTabName));
@@ -83,7 +83,7 @@ namespace LanExchange.Presenter
             int Index = m_View.PopupSelectedIndex;
             PanelItemList ItemList = GetModel().GetItem(Index);
             if (ItemList == null) return;
-            string NewTabName = InputBoxPresenter.Ask("Переименование", "Введите имя", ItemList.TabName, false);
+            string NewTabName = InputBoxPresenter.Ask("Rename tab", "Enter tab name", ItemList.TabName, false);
             if (NewTabName != null)
             {
                 m_Model.RenameTab(Index, NewTabName);

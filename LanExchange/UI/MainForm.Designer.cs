@@ -70,7 +70,7 @@
             this.langRU_RU = new System.Windows.Forms.ToolStripMenuItem();
             this.langKK_KZ = new System.Windows.Forms.ToolStripMenuItem();
             this.mHelp = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.timerTabSettingsSaver = new System.Windows.Forms.Timer(this.components);
             this.popTray.SuspendLayout();
             this.Status.SuspendLayout();
@@ -131,7 +131,7 @@
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
             this.toolStripMenuItem5.Size = new System.Drawing.Size(190, 22);
             this.toolStripMenuItem5.Text = "About";
-            this.toolStripMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
+            this.toolStripMenuItem5.Click += new System.EventHandler(this.mAbout_Click);
             // 
             // mExit
             // 
@@ -165,7 +165,7 @@
             // lItemsCount
             // 
             this.lItemsCount.Name = "lItemsCount";
-            this.lItemsCount.Size = new System.Drawing.Size(472, 17);
+            this.lItemsCount.Size = new System.Drawing.Size(503, 17);
             this.lItemsCount.Spring = true;
             this.lItemsCount.Text = "    ";
             this.lItemsCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -376,6 +376,7 @@
             this.mLanguage.Name = "mLanguage";
             this.mLanguage.Size = new System.Drawing.Size(66, 20);
             this.mLanguage.Text = "&Language";
+            this.mLanguage.Visible = false;
             // 
             // langEN_US
             // 
@@ -400,17 +401,17 @@
             // mHelp
             // 
             this.mHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem});
+            this.mAbout});
             this.mHelp.Name = "mHelp";
             this.mHelp.Size = new System.Drawing.Size(40, 20);
             this.mHelp.Text = "&Help";
             // 
-            // aboutToolStripMenuItem
+            // mAbout
             // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
-            this.aboutToolStripMenuItem.Text = "About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            this.mAbout.Name = "mAbout";
+            this.mAbout.Size = new System.Drawing.Size(114, 22);
+            this.mAbout.Text = "About";
+            this.mAbout.Click += new System.EventHandler(this.mAbout_Click);
             // 
             // timerTabSettingsSaver
             // 
@@ -472,7 +473,7 @@
         private System.Windows.Forms.ToolStripMenuItem mFile;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mHelp;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mAbout;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem mLanguage;

@@ -8,8 +8,8 @@
 //   DONE  ContextMenuStrip for top panel
 //   DONE  Enum shares after ItemActivate
 //
-// RELEASE 1.2.0
-//   TODO  Unit-tests coverage 10%
+// RELEASE 2.0
+//   DONE  Unit-tests coverage 10%
 //   TODO  Sending items to another tab
 //   TODO  Manual creation of computer items
 //   DONE  Classes with IDisposable interface must be a components
@@ -18,7 +18,7 @@
 //   TODO  Columns sort (name, comment, version)
 //   TODO  Platform detection based on Platforms.xml refer
 //
-// RELEASE 1.3.0
+// RELEASE 3.0
 //   TODO  WMI-commands execution with parameters
 //   TODO  Internal language editor
 //   TODO  Recently used items must appears when Tray.onMouseOver event fired
