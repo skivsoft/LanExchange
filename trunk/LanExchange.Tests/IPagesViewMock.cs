@@ -7,7 +7,7 @@ namespace LanExchange.Tests
     {
         public string SelectedTabText
         {
-            get { return String.Empty; }
+            get { return string.Empty; }
             set
             {
             }

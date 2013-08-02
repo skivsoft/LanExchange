@@ -1,14 +1,20 @@
 ﻿using System;
+using System.Globalization;
 using System.Net;
+using System.Xml;
+using System.Xml.Serialization;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network.Panel
 {
     public class ComputerPanelItem : PanelItemBase, IWmiComputer
     {
-        public const string ID = "{F842AE25-A56E-41D5-BF37-0AD1C207F79B}";
-        
-        private readonly ServerInfo m_SI;
+        private ServerInfo m_SI;
+
+        public ComputerPanelItem()
+        {
+            m_SI = new ServerInfo();
+        }
 
         /// <summary>
         /// Constructor creates ComputerPanelItem from <see cref="ServerInfo"/> object.
@@ -16,18 +22,17 @@ namespace LanExchange.Plugin.Network.Panel
         /// <exception cref="ArgumentNullException"></exception>
         public ComputerPanelItem(PanelItemBase parent, ServerInfo si) : base(parent)
         {
-            if (si == null)
-                throw new ArgumentNullException("si");
-            m_SI = si;
-            Comment = m_SI.Comment;
-            IsPingable = true;
+            m_SI = si ?? new ServerInfo();
         }
 
         public ComputerPanelItem(PanelItemBase parent, string name) : base(parent)
         {
             m_SI = new ServerInfo { Name = name };
-            Comment = String.Empty;
-            IsPingable = true;
+        }
+
+        public ServerInfo SI
+        {
+            get { return m_SI; }
         }
 
         public override string Name
@@ -36,11 +41,46 @@ namespace LanExchange.Plugin.Network.Panel
             set { m_SI.Name = value; }
         }
 
-        public string Comment { get; set; }
-
-        public ServerInfo SI
+        public uint Platform
         {
-            get { return m_SI; }
+            get { return m_SI.PlatformID; }
+            set { m_SI.PlatformID = value; }
+        }
+
+        public string Ver
+        {
+            get { return string.Format("{0}.{1}", m_SI.VersionMajor, m_SI.VersionMinor); }
+            set
+            {
+                var aValue = value.Split('.');
+                if (aValue.Length == 2)
+                {
+                    uint uValue1;
+                    uint uValue2;
+                    if (uint.TryParse(aValue[0], out uValue1) && uint.TryParse(aValue[1], out uValue2))
+                    {
+                        m_SI.VersionMajor = uValue1;
+                        m_SI.VersionMinor = uValue2;
+                    }
+                }
+            }
+        }
+
+        public string Type
+        {
+            get { return m_SI.Type.ToString("X"); }
+            set
+            {
+                uint uValue;
+                if (uint.TryParse(value, NumberStyles.HexNumber, null, out uValue))
+                    m_SI.Type = uValue;
+            }
+        }
+
+        public string Comment
+        {
+            get { return m_SI.Comment; }
+            set { m_SI.Comment = value; }
         }
 
         public override int CountColumns
@@ -98,7 +138,7 @@ namespace LanExchange.Plugin.Network.Panel
             {
                 if (Name == s_DoubleDot)
                     return PanelImageNames.DoubleDot;
-                return IsPingable ? PanelImageNames.ComputerNormal : PanelImageNames.ComputerDisabled;
+                return IsReachable ? PanelImageNames.ComputerNormal : PanelImageNames.ComputerDisabled;
             }
         }
 
@@ -125,8 +165,6 @@ namespace LanExchange.Plugin.Network.Panel
                 return String.Format("{0}\n{1}\n{2}", Comment, m_SI.Version(), m_SI.GetTopicalityText());
             }
         }
-
-        public bool IsPingable { get; set; }
 
         public override string ToString()
         {

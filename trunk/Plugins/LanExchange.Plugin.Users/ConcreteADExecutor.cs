@@ -63,7 +63,7 @@ namespace LanExchange.Plugin.Users
                         var prop = sr.Properties[propName];
 
                         if (prop.Count == 0)
-                            row[propName] = String.Empty;
+                            row[propName] = string.Empty;
                         else
                             row[propName] = prop[0];
                     }

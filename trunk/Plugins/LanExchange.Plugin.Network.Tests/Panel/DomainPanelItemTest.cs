@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Xml.Serialization;
 using LanExchange.Plugin.Network.Panel;
 using LanExchange.SDK;
 using NUnit.Framework;
@@ -61,6 +63,19 @@ namespace LanExchange.Plugin.Network.Tests.Panel
             {
                 var header = m_Domain.CreateColumnHeader(i);
                 Assert.IsNotNull(header);
+            }
+        }
+
+        [Test]
+        public void TestSerialization()
+        {
+            Type[] extraTypes = new Type[1] { typeof(DomainPanelItem) };
+            var ser = new XmlSerializer(typeof(PanelItemBase), extraTypes);
+            using (var sw = new StringWriter())
+            {
+                ser.Serialize(sw, m_Domain);
+                var result = sw.ToString();
+                Assert.IsNotEmpty(result);
             }
         }
     }

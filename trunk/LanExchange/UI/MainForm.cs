@@ -134,24 +134,6 @@ namespace LanExchange.UI
             lUserName.ImageIndex = LanExchangeIcons.Instance.IndexOf(PanelImageNames.UserNormal);
         }
 
-#if DEBUG
-        //public static void Debug_ShowProperties(object obj)
-        //{
-        //    var F = new Form {Text = obj.ToString()};
-        //    var Grid = new PropertyGrid {Dock = DockStyle.Fill, SelectedObject = obj};
-        //    F.Controls.Add(Grid);
-        //    F.Show();
-        //}
-
-        private static void Debug_ShowSubscribers()
-        {
-            //var S = new StringBuilder();
-            //foreach (var Pair in PanelSubscription.Instance.GetSubjects())
-            //    S.AppendLine(String.Format("{0} - {1}", Pair.Key.Subject, Pair.Value.Count));
-            //MessageBox.Show(S.ToString());
-        }
-#endif
-
         private bool m_EscDown;
         private DateTime m_EscTime;
 
@@ -162,7 +144,7 @@ namespace LanExchange.UI
                 var pv = Pages.ActivePanelView;
                 e.Handled = true;
                 if (pv != null && pv.Filter.IsVisible)
-                    pv.Filter.SetFilterText(String.Empty);
+                    pv.Filter.SetFilterText(string.Empty);
                 else
                     if (pv == null || pv.Presenter.Objects.CurrentPath.IsEmpty)
                         Instance.Hide();
@@ -182,14 +164,6 @@ namespace LanExchange.UI
                             }
                         }
             }
-#if DEBUG
-            // Ctrl+Alt+S - show subscibers in debug mode
-            if (e.Control && e.Alt && e.KeyCode == Keys.S)
-            {
-                Debug_ShowSubscribers();
-                e.Handled = true;
-            }
-#endif
         }
 
         private void MainForm_KeyUp(object sender, KeyEventArgs e)
@@ -451,18 +425,63 @@ namespace LanExchange.UI
 
         private void lCompName_MouseUp(object sender, MouseEventArgs e)
         {
-            switch (e.Button)
+            if (e.Button == MouseButtons.Right)
             {
-                case MouseButtons.Right:
-                    var scm = new ShellContextMenu();
-                    scm.ShowContextMenuForCSIDL(Handle, ShellAPI.CSIDL.DRIVES, Cursor.Position);
-                    break;
+                var scm = new ShellContextMenu();
+                scm.ShowContextMenuForCSIDL(Handle, ShellAPI.CSIDL.DRIVES, Cursor.Position);
             }
         }
 
-        private void Status_DoubleClick(object sender, EventArgs e)
+        private void Status_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            Process.Start("explorer.exe", "/n,::{20D04FE0-3AEA-1069-A2D8-08002B30309D}");
+            if (e.Button == MouseButtons.Left)
+                Process.Start("explorer.exe", "/n,::{20D04FE0-3AEA-1069-A2D8-08002B30309D}");
+        }
+
+        private void UpdateViewTypeMenu()
+        {
+            mPanelLarge.Checked = false;
+            mPanelSmall.Checked = false;
+            mPanelList.Checked = false;
+            mPanelDetails.Checked = false;
+            var pv = Pages.ActivePanelView;
+            var bEnabled = pv != null;
+            mPanelLarge.Enabled = bEnabled;
+            mPanelSmall.Enabled = bEnabled;
+            mPanelList.Enabled = bEnabled;
+            mPanelDetails.Enabled = bEnabled;
+            if (pv != null)
+                switch (pv.ViewMode)
+                {
+                    case PanelViewMode.LargeIcon:
+                        mPanelLarge.Checked = true;
+                        break;
+                    case PanelViewMode.SmallIcon:
+                        mPanelSmall.Checked = true;
+                        break;
+                    case PanelViewMode.List:
+                        mPanelList.Checked = true;
+                        break;
+                    case PanelViewMode.Details:
+                        mPanelDetails.Checked = true;
+                        break;
+                }
+        }
+
+        private void mPanel_DropDownOpening(object sender, EventArgs e)
+        {
+            UpdateViewTypeMenu();
+        }
+
+        private void mPanelLarge_Click(object sender, EventArgs e)
+        {
+            var pv = Pages.ActivePanelView;
+            if (pv == null) return;
+            var menuItem = sender as ToolStripMenuItem;
+            if (menuItem == null) return;
+            int tag;
+            if (int.TryParse(menuItem.Tag.ToString(), out tag))
+                pv.ViewMode = (PanelViewMode)tag;
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Xml.Serialization;
 using LanExchange.Plugin.Network.Panel;
 using LanExchange.SDK;
 using NUnit.Framework;
@@ -28,10 +30,11 @@ namespace LanExchange.Plugin.Network.Tests.Panel
             m_Comp = null;
         }
 
-        [Test, ExpectedException(typeof (ArgumentNullException))]
-        public void ExceptionComputerPanelItem()
+        [Test]
+        public void TestComputerPanelItem()
         {
-            new ComputerPanelItem(null, (ServerInfo)null);
+            m_Comp = new ComputerPanelItem(null, (ServerInfo)null);
+            Assert.IsNotNull(m_Comp.SI);
         }
 
         [Test]
@@ -60,9 +63,8 @@ namespace LanExchange.Plugin.Network.Tests.Panel
         [Test]
         public void TestImageName()
         {
-            m_Comp.IsPingable = true;
             Assert.AreEqual(PanelImageNames.ComputerNormal, m_Comp.ImageName);
-            m_Comp.IsPingable = false;
+            m_Comp.IsReachable = false;
             Assert.AreEqual(PanelImageNames.ComputerDisabled, m_Comp.ImageName);
             m_Comp.Name = PanelItemBase.s_DoubleDot;
             Assert.AreEqual(PanelImageNames.DoubleDot, m_Comp.ImageName);
@@ -89,6 +91,77 @@ namespace LanExchange.Plugin.Network.Tests.Panel
                 Assert.IsNotNull(header);
             }
             Assert.IsNull(m_Comp.CreateColumnHeader(m_Comp.CountColumns));
+        }
+
+        //[Test]
+        public void TestGetSchema()
+        {
+            Assert.IsNull(m_Comp.GetSchema());
+        }
+
+        //[Test]
+        public void TestWriteXML()
+        {
+            m_Comp.SI.Name = "QQQ";
+            m_Comp.SI.Comment = "WWW";
+            m_Comp.SI.PlatformID = 1;
+            m_Comp.SI.Type = 2;
+            m_Comp.SI.VersionMajor = 3;
+            m_Comp.SI.VersionMinor = 4;
+            // try serialize
+            var ser = new XmlSerializer(m_Comp.GetType());
+            string content;
+            using (var sw = new StringWriter())
+            {
+                ser.Serialize(sw, m_Comp);
+                content = sw.ToString();
+            }
+            const string contentCheck = "<ComputerPanelItem Name=\"QQQ\" PlatformID=\"1\" Version=\"3.4\" Type=\"2\" Comment=\"WWW\" />";
+            Assert.IsTrue(content.EndsWith(contentCheck));
+        }
+
+        //[Test]
+        public void TestReadXML1()
+        {
+            m_Comp.SI.Name = "QQQ";
+            m_Comp.SI.Comment = null;
+            m_Comp.SI.PlatformID = 1;
+            m_Comp.SI.Type = 2;
+            m_Comp.SI.VersionMajor = 3;
+            m_Comp.SI.VersionMinor = 4;
+            // try serialize
+            var ser = new XmlSerializer(m_Comp.GetType());
+            string content;
+            using (var sw = new StringWriter())
+            {
+                ser.Serialize(sw, m_Comp);
+                content = sw.ToString();
+            }
+            // try deserialize
+            TextReader tr = new StringReader(content);
+            var result = ser.Deserialize(tr);
+            tr.Close();
+            // check deserialize result
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOf(typeof(ComputerPanelItem), result);
+            Assert.AreEqual("QQQ", ((ComputerPanelItem)result).Name);
+            Assert.AreEqual(string.Empty, ((ComputerPanelItem)result).Comment);
+        }
+
+        [Test]
+        public void TestReadXML2()
+        {
+            var content = "<ComputerPanelItem PlatformID=\"500\" Comment=\"WWW\" Version=\"5.1\" Type=\"11407\" />";
+            var ser = new XmlSerializer(typeof(ComputerPanelItem));
+            // try deserialize
+            TextReader tr = new StringReader(content);
+            var result = ser.Deserialize(tr);
+            tr.Close();
+            // check deserialize result
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOf(typeof(ComputerPanelItem), result);
+            Assert.AreEqual(string.Empty, ((ComputerPanelItem)result).Name);
+            Assert.AreEqual("WWW", ((ComputerPanelItem)result).Comment);
         }
 
     }

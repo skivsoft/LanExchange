@@ -36,7 +36,7 @@ namespace LanExchange.Model
 
         public override string ImageName
         {
-            get { return String.Empty; }
+            get { return string.Empty; }
         }
 
         public override PanelColumnHeader CreateColumnHeader(int index)

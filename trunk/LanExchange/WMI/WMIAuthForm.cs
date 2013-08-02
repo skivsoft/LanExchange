@@ -76,8 +76,8 @@ namespace LanExchange.WMI
 
         public static void ClearSavedPassword()
         {
-            m_UserName = String.Empty;
-            m_UserPassword = String.Empty;
+            m_UserName = string.Empty;
+            m_UserPassword = string.Empty;
         }
 
         private void WMIAuthForm_KeyDown(object sender, KeyEventArgs e)

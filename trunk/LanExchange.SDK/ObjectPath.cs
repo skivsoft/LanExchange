@@ -7,9 +7,9 @@ namespace LanExchange.SDK
     /// <summary>
     /// Path to nested object.
     /// </summary>
-    public class ObjectPath
+    public class ObjectPath<T>
     {
-        private readonly Stack<object> m_Path;
+        private Stack<T> m_Path;
 
         /// <summary>
         /// Occurs when [changed].
@@ -21,11 +21,17 @@ namespace LanExchange.SDK
         /// </summary>
         public ObjectPath()
         {
-            m_Path = new Stack<object>();
+            m_Path = new Stack<T>();
         }
+
+        /// <summary>
+        /// Array for xml-serialization.
+        /// </summary>
+        public T[] Item { get; set; }
 
         private void OnChanged()
         {
+            Item = m_Path.ToArray();
             if (Changed != null)
                 Changed(this, EventArgs.Empty);
         }
@@ -43,7 +49,7 @@ namespace LanExchange.SDK
         /// Pushes the specified item.
         /// </summary>
         /// <param name="item">The item.</param>
-        public void Push(object item)
+        public void Push(T item)
         {
             m_Path.Push(item);
             OnChanged();
@@ -62,9 +68,9 @@ namespace LanExchange.SDK
         /// Peeks this instance.
         /// </summary>
         /// <returns></returns>
-        public object Peek()
+        public T Peek()
         {
-            return m_Path.Count == 0 ? null : m_Path.Peek();
+            return m_Path.Peek();
         }
 
         /// <summary>
@@ -95,6 +101,5 @@ namespace LanExchange.SDK
         {
             get { return m_Path.Count == 0; }
         }
-
     }
 }

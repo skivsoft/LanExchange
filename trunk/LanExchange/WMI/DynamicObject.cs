@@ -6,7 +6,7 @@ namespace LanExchange.WMI
 {
 	public class DynamicObject : ICustomTypeDescriptor
 	{
-        private string m_Filter = String.Empty;
+        private string m_Filter = string.Empty;
         private readonly PropertyDescriptorCollection m_FilteredPropertyDescriptors = new PropertyDescriptorCollection(null);
         private readonly PropertyDescriptorCollection m_FullPropertyDescriptors = new PropertyDescriptorCollection(null);
 

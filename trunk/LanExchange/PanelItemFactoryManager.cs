@@ -39,5 +39,14 @@ namespace LanExchange
             PanelItemBaseFactory factory;
             return m_Types.TryGetValue(type, out factory);
         }
+
+        internal Type[] ToArray()
+        {
+            var result = new Type[m_Types.Count];
+            int i = 0;
+            foreach (var key in m_Types.Keys)
+                result[i++] = key;
+            return result;
+        }
     }
 }

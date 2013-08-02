@@ -13,7 +13,7 @@ namespace Plugin.Users.Tests
             var path = new PathFixer();
             var s = path.FixLdapPath(null);
             Assert.IsNotNull(s);
-            Assert.AreEqual(String.Empty, s);
+            Assert.AreEqual(string.Empty, s);
         }
 
         [Test]
@@ -37,7 +37,7 @@ namespace Plugin.Users.Tests
         {
             var path = new PathFixer();
             var s = path.FixLdapPath("ldap:/qqq,www");
-            Assert.AreEqual(String.Empty, s);
+            Assert.AreEqual(string.Empty, s);
         }
 
         [Test]

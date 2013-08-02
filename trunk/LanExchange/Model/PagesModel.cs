@@ -191,10 +191,12 @@ namespace LanExchange.Model
             var fileFName = GetConfigFileName();
             try
             {
-                SerializeUtils.SerializeObjectToXMLFile(fileFName, m_PagesSettings);
+                Type[] extraTypes = AppPresenter.PanelItemTypes.ToArray();
+                SerializeUtils.SerializeObjectToXMLFile(fileFName, m_PagesSettings, extraTypes);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Debug.Fail(e.Message);
             }
         }
     }

@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
 using LanExchange.Model;
-using LanExchange.Model.Panel;
 using LanExchange.Model.Settings;
 using LanExchange.Presenter;
 using LanExchange.SDK;
-using LanExchange.WMI;
 
 namespace LanExchange.UI
 {
@@ -55,11 +53,9 @@ namespace LanExchange.UI
 
         private void CurrentPath_Changed(object sender, EventArgs e)
         {
-            var path = sender as ObjectPath;
+            var path = sender as ObjectPath<PanelItemBase>;
             if (path != null)
-            {
                 ePath.Text = path.ToString();
-            }
         }
 
         internal void SetupMenu(ContextMenuStrip popTop)
@@ -98,7 +94,7 @@ namespace LanExchange.UI
                 // TODO !!! USE ONLY VISIBLE COLUMNS (IP SLOWDOWN NOW)
                 for (int i = 0; i < PItem.CountColumns; i++)
                 {
-                    var value = PItem[i] != null ? PItem[i].ToString() : String.Empty;
+                    var value = PItem[i] != null ? PItem[i].ToString() : string.Empty;
                     if (i == 0)
                         Result.Text = value;
                     else
@@ -399,35 +395,12 @@ namespace LanExchange.UI
                 m_Presenter.RunCmdOnFocusedItem(MenuItem.Tag.ToString(), PanelPresenter.FOLDER_MENU);
         }
 
-        private void UpdateViewTypeMenu()
-        {
-            mCompLargeIcons.Checked = false;
-            mCompSmallIcons.Checked = false;
-            mCompList.Checked = false;
-            mCompDetails.Checked = false;
-            switch (LV.View)
-            {
-                case View.LargeIcon:
-                    mCompLargeIcons.Checked = true;
-                    break;
-                case View.SmallIcon:
-                    mCompSmallIcons.Checked = true;
-                    break;
-                case View.List:
-                    mCompList.Checked = true;
-                    break;
-                case View.Details:
-                    mCompDetails.Checked = true;
-                    break;
-            }
-        }
-
         internal bool PrepareContextMenu()
         {
             if (LV.FocusedItem != null)
                 if (LV.FocusedItem.Selected)
                     DoFocusedItemChanged();
-            UpdateViewTypeMenu();
+            //UpdateViewTypeMenu();
 
             PanelItemBase PItem = m_Presenter.GetFocusedPanelItem(false, false);
             bool bCompVisible = false;
@@ -471,7 +444,7 @@ namespace LanExchange.UI
             //SetEnabledAndVisible(new ToolStripItem[] { mSendSeparator, mSendToNewTab }, bSend);
 
             //SetEnabledAndVisible(mCopyPath, menu == PanelPresenter.FOLDER_MENU);
-            //mCopySeparator.Visible = menu != String.Empty;
+            //mCopySeparator.Visible = menu != string.Empty;
 
             //mSeparatorAdmin.Visible = bCompVisible || bFolderVisible || Settings.Instance.AdvancedMode;
 
@@ -501,32 +474,6 @@ namespace LanExchange.UI
         {
             foreach(var item in items)
                 SetEnabledAndVisible(item, value);
-        }
-
-        private void mLargeIcons_Click(object sender, EventArgs e)
-        {
-            var menuItem = sender as ToolStripMenuItem;
-            if (menuItem == null) return;
-            int tag;
-            if (!int.TryParse(menuItem.Tag.ToString(), out tag))
-                tag = 0;
-            switch (tag)
-            {
-                case 1:
-                    LV.View = System.Windows.Forms.View.LargeIcon;
-                    break;
-                case 2:
-                    LV.View = System.Windows.Forms.View.SmallIcon;
-                    break;
-                case 3:
-                    LV.View = System.Windows.Forms.View.List;
-                    break;
-                case 4:
-                    LV.View = System.Windows.Forms.View.Details;
-                    break;
-            }
-            m_Presenter.Objects.CurrentView = (PanelViewMode)LV.View;
-            AppPresenter.MainPages.GetModel().SaveSettings();
         }
 
         private void mCopyCompName_Click(object sender, EventArgs e)
@@ -644,6 +591,17 @@ namespace LanExchange.UI
         public void AddColumn(string text, int width)
         {
             LV.Columns.Add(text, width);
+        }
+
+        public PanelViewMode ViewMode
+        {
+            get { return (PanelViewMode) LV.View; }
+            set
+            {
+                LV.View = (View) value;
+                m_Presenter.Objects.CurrentView = value;
+                AppPresenter.MainPages.GetModel().SaveSettings();
+            }
         }
     }
 }

@@ -59,7 +59,7 @@ namespace LanExchange.WMI
                 str = String.Format("{0}={1}", qd.Name, FormatQualifierValue(qd.Value));
                 LB.Items.Add(str);
             }
-            LB.Items.Add(String.Empty);
+            LB.Items.Add(string.Empty);
             // prepare properties list and sort it by ID
             var propList = new List<PropertyDataEx>();
             if (WMIMethod.InParameters != null)
@@ -149,7 +149,7 @@ namespace LanExchange.WMI
             }
             bRun.Enabled = true;
             if (result == null) return;
-            LB.Items.Add(String.Empty);
+            LB.Items.Add(string.Empty);
             string str;
             foreach (PropertyData pd in result.Properties)
             {
