@@ -115,7 +115,7 @@ namespace LanExchange.Model.Settings
         public static string GetExecutableFileName()
         {
             var Params = Environment.GetCommandLineArgs();
-            return Params.Length > 0 ? Params[0] : String.Empty;
+            return Params.Length > 0 ? Params[0] : string.Empty;
         }
 
         public static string GetConfigFileName()
@@ -192,7 +192,7 @@ namespace LanExchange.Model.Settings
                 string[] A = user.Name.Split('\\');
                 return A.Length > 1 ? A[1] : A[0];
             }
-            return String.Empty;
+            return string.Empty;
         }
 
         // properties below must not be modified instantly

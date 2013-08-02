@@ -255,7 +255,7 @@ namespace LanExchange.Presenter
             var result = AppPresenter.PanelFillers.HasStrategyForParent(panelItem);
             if (result)
             {
-                Objects.FocusedItemText = String.Empty;
+                Objects.FocusedItemText = string.Empty;
                 Objects.CurrentPath.Push(panelItem);
                 Objects.SyncRetrieveData();
             }

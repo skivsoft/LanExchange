@@ -5,8 +5,6 @@ namespace LanExchange.Plugin.Users.Panel
 {
     internal class OrgUnitPanelItem : PanelItemBase
     {
-        public const string ID = "{3D00882A-C21F-4920-A8CE-B1F220D4E539}";
-        
         private string m_Name;
 
         public OrgUnitPanelItem(PanelItemBase parent) : base(parent)
@@ -47,7 +45,7 @@ namespace LanExchange.Plugin.Users.Panel
             {
                 if (index == 0)
                     return m_Name;
-                return String.Empty;
+                return string.Empty;
             }
         }
 

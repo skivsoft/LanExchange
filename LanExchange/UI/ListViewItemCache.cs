@@ -43,7 +43,7 @@ namespace LanExchange.UI
                 {
                     e.Item = m_Getter.GetListViewItemAt(e.ItemIndex);
                     for (int i = e.Item.SubItems.Count+1; i < lv.Columns.Count; i++)
-                        e.Item.SubItems.Add(String.Empty);                
+                        e.Item.SubItems.Add(string.Empty);                
                 }
                 //e.Item = TableCache[e.ItemIndex - TableCacheStartIndex];
             }
@@ -51,7 +51,7 @@ namespace LanExchange.UI
             {
                 e.Item = new ListViewItem();
                 for (int i = 0; i < (sender as ListView).Columns.Count - 1; i++)
-                    e.Item.SubItems.Add(String.Empty);
+                    e.Item.SubItems.Add(string.Empty);
             }
         }
     }

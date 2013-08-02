@@ -63,7 +63,7 @@ namespace LanExchange.UI
 
         private void imgClear_Click(object sender, EventArgs e)
         {
-            SetFilterText(String.Empty);
+            SetFilterText(string.Empty);
         }
 
         public void SetFilterText(string value)

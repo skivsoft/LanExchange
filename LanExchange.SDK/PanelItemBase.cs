@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace LanExchange.SDK
 {
@@ -12,13 +13,20 @@ namespace LanExchange.SDK
         /// <summary>
         /// The ".." item
         /// </summary>
-        public static readonly string s_DoubleDot = String.Empty;
+        public static readonly string s_DoubleDot = string.Empty;
+
+        protected bool m_IsReachable = true;
+
+        protected PanelItemBase()
+        {
+            m_IsReachable = true;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelItemBase"/> class.
         /// </summary>
         /// <param name="parent">The parent.</param>
-        protected PanelItemBase(PanelItemBase parent)
+        protected PanelItemBase(PanelItemBase parent) : this()
         {
             Parent = parent;
         }
@@ -73,7 +81,15 @@ namespace LanExchange.SDK
         /// <value>
         /// The parent.
         /// </value>
+        [XmlIgnore]
         public PanelItemBase Parent { get; set; }
+
+        [XmlIgnore]
+        public bool IsReachable
+        {
+            get { return m_IsReachable; }
+            set { m_IsReachable = value; }
+        }
 
         /// <summary>
         /// Gets the tool tip text.

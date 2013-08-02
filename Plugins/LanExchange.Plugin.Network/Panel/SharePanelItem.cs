@@ -6,9 +6,13 @@ namespace LanExchange.Plugin.Network.Panel
 {
     public class SharePanelItem : PanelItemBase//, IComparable<SharePanelItem>
     {
-        public const string ID = "{B61F496F-3BED-4D28-A4A7-BFC81DC9C7FC}";
-        
         private readonly ShareInfo m_SHI;
+
+
+        public SharePanelItem()
+        {
+            m_SHI = new ShareInfo();
+        }
 
         /// <summary>
         /// Panel item for network shared resource.
@@ -86,7 +90,7 @@ namespace LanExchange.Plugin.Network.Panel
             get
             {
                 var comp = Parent as ComputerPanelItem;
-                return comp != null ? comp.Name : String.Empty;
+                return comp != null ? comp.Name : string.Empty;
             }
         }
 

@@ -41,7 +41,7 @@ namespace LanExchange.SDK
         /// <value>
         /// The current path.
         /// </value>
-        ObjectPath CurrentPath { get; }
+        ObjectPath<PanelItemBase> CurrentPath { get; }
         /// <summary>
         /// Gets or sets the focused item text.
         /// </summary>

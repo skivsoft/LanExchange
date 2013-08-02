@@ -7,21 +7,21 @@ namespace LanExchange.Utils
 {
     public static class SerializeUtils
     {
-        public static void SerializeObjectToBinaryFile(string FileName, object obj)
+        public static void SerializeObjectToBinaryFile(string fileName, object obj)
         {
-            var stream = File.Open(FileName, FileMode.Create);
+            var stream = File.Open(fileName, FileMode.Create);
             var bformatter = new BinaryFormatter();
             bformatter.Serialize(stream, obj);
             stream.Close();
         }
 
-        public static object DeserializeObjectFromBinaryFile(string FileName)
+        public static object DeserializeObjectFromBinaryFile(string fileName)
         {
-            var stream = File.Open(FileName, FileMode.Open);
+            var stream = File.Open(fileName, FileMode.Open);
             var bformatter = new BinaryFormatter();
-            var Result = bformatter.Deserialize(stream);
+            var result = bformatter.Deserialize(stream);
             stream.Close();
-            return Result;
+            return result;
         }
 
         public static string SerializeObjectToXML(object obj)
@@ -35,11 +35,21 @@ namespace LanExchange.Utils
             }
         }
 
-        public static void SerializeObjectToXMLFile(string FileName, object obj)
+        public static void SerializeObjectToXMLFile(string fileName, object obj)
         {
             if (obj == null) return;
             var writer = new XmlSerializer(obj.GetType());
-            using (var file = new StreamWriter(FileName))
+            using (var file = new StreamWriter(fileName))
+            {
+                writer.Serialize(file, obj);
+            }
+        }
+
+        public static void SerializeObjectToXMLFile(string fileName, object obj, Type[] extraTypes)
+        {
+            if (obj == null) return;
+            var writer = new XmlSerializer(obj.GetType(), extraTypes);
+            using (var file = new StreamWriter(fileName))
             {
                 writer.Serialize(file, obj);
             }
@@ -55,10 +65,10 @@ namespace LanExchange.Utils
             }
         }
 
-        public static object DeserializeObjectFromXMLFile(string FileName, Type tp)
+        public static object DeserializeObjectFromXMLFile(string fileName, Type tp)
         {
             var ser = new XmlSerializer(tp);
-            using (var tr = new StreamReader(FileName))
+            using (var tr = new StreamReader(fileName))
             {
                 object obj = ser.Deserialize(tr);
                 return obj;

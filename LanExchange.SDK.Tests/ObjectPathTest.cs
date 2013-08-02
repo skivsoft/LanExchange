@@ -10,12 +10,12 @@ namespace LanExchange.SDK.Tests
     [TestFixture]
     class ObjectPathTest
     {
-        private ObjectPath m_Path;
+        private ObjectPath<int> m_Path;
 
         [SetUp]
         public void SetUp()
         {
-            m_Path = new ObjectPath();    
+            m_Path = new ObjectPath<int>();    
         }
 
         [TearDown]

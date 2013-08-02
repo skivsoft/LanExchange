@@ -11,8 +11,6 @@ namespace LanExchange.Model
 {
     public class PanelItemList : IEquatable<PanelItemList>, IPanelModel
     {       
-        //private readonly static Logger logger = LogManager.GetCurrentClassLogger();
-
         // items added by user
         private readonly IList<PanelItemBase> m_Items;
         // merged all results and user items
@@ -20,25 +18,21 @@ namespace LanExchange.Model
         // keys for filtering
         private readonly IList<IComparable> m_Keys;
         // current path for item list
-        private readonly ObjectPath m_CurrentPath;
+        private readonly ObjectPath<PanelItemBase> m_CurrentPath;
 
         public event EventHandler Changed;
         
-        //private ListView m_LV = null;
-        //private PanelItemType m_CurrentType = PanelItemType.COMPUTERS;
-        //private string m_Path = null;
-
         public PanelItemList(string name)
         {
             m_Items = new List<PanelItemBase>();
             m_Data = new List<PanelItemBase>();
             m_Keys = new List<IComparable>();
-            m_CurrentPath = new ObjectPath();
+            m_CurrentPath = new ObjectPath<PanelItemBase>();
             TabName = name;
             CurrentView = PanelViewMode.Details;
         }
 
-        public ObjectPath CurrentPath
+        public ObjectPath<PanelItemBase> CurrentPath
         {
             get { return m_CurrentPath; }
         }
@@ -52,18 +46,18 @@ namespace LanExchange.Model
         {
             get
             {
-                var Page = new Tab { 
+                var page = new Tab { 
                     Name = TabName, 
+                    Path = m_CurrentPath,
                     Filter = FilterText, 
                     View = CurrentView,
                     Focused = FocusedItemText
                 };
-                // TODO UNCOMMENT THIS!
-                //var TempList = new List<ServerInfo>();
-                //foreach (ComputerPanelItem PItem in m_Items)
-                //    TempList.Add(PItem.SI);
-                //Page.Items = TempList.ToArray();
-                return Page;
+                page.Items = new PanelItemBase[m_Items.Count];
+                int i = 0;
+                foreach (var panelItem in m_Items)
+                    page.Items[i++] = panelItem;
+                return page;
             }
             set
             {
@@ -71,14 +65,9 @@ namespace LanExchange.Model
                 FilterText = value.Filter;
                 CurrentView = value.View;
                 FocusedItemText = value.Focused;
-                Items.Clear();
-                // TODO UNCOMMENT THIS!
-                //foreach (var si in value.Items)
-                //{
-                //    var comp = new ComputerPanelItem(null, si);
-                //    comp.ParentSubject = ConcreteSubject.s_UserItems;
-                //    Items.Add(comp);
-                //}
+                m_Items.Clear();
+                foreach (var panelItem in value.Items)
+                    Items.Add(panelItem);
             }
             
         }
@@ -147,8 +136,8 @@ namespace LanExchange.Model
         public void ApplyFilter()
         {
             if (FilterText == null) 
-                FilterText = String.Empty;
-            bool bFiltered = FilterText != String.Empty;
+                FilterText = string.Empty;
+            bool bFiltered = FilterText != string.Empty;
             if (bFiltered && !CurrentPath.IsEmpty)
             {
                 bFiltered = false;
@@ -252,7 +241,8 @@ namespace LanExchange.Model
         /// </summary>
         public void SyncRetrieveData()
         {
-            var items = AppPresenter.PanelFillers.RetrievePanelItems(m_CurrentPath.Peek() as PanelItemBase);
+            var parent = m_CurrentPath.IsEmpty ? null : m_CurrentPath.Peek();
+            var items = AppPresenter.PanelFillers.RetrievePanelItems(parent);
             InternalSetData(items);
         }
 
@@ -281,7 +271,7 @@ namespace LanExchange.Model
 
         public string ToolTipText
         {
-            get { return String.Empty; }
+            get { return string.Empty; }
         }
 
         public string Subject

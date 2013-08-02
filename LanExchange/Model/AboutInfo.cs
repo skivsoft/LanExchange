@@ -31,7 +31,10 @@ namespace LanExchange.Model
             get
             {
                 var ver = GetAssembly().GetName().Version;
-                return String.Format("{0}.{1}.{2}", ver.Major, ver.Minor, ver.MajorRevision);
+                var result = string.Format("{0}.{1}", ver.Major, ver.Minor);
+                if (ver.MajorRevision > 0)
+                    result += string.Format(".{0}", ver.MajorRevision);
+                return result;
             }
         }
 

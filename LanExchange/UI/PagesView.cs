@@ -73,7 +73,7 @@ namespace LanExchange.UI
             {
                 if (Pages.TabPages.Count > 0 && Pages.SelectedTab != null)
                     return Pages.SelectedTab.Text;
-                return String.Empty;
+                return string.Empty;
             }
             set
             {

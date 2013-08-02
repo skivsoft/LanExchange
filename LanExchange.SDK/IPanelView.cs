@@ -77,5 +77,6 @@ namespace LanExchange.SDK
 
         void ColumnsClear();
         void AddColumn(string text, int width);
+        PanelViewMode ViewMode { get; set; }
     }
 }

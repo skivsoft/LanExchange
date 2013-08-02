@@ -6,11 +6,15 @@ namespace LanExchange.Plugin.Network
     {
         private NetApi32.SHARE_INFO_1 m_Info;
 
+        public ShareInfo()
+        {
+        }
+
         public ShareInfo(NetApi32.SHARE_INFO_1 info)
         {
             m_Info = info;
         }
-        
+
         public string Name
         {
             get { return m_Info.shi1_netname; }

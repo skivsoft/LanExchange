@@ -10,10 +10,10 @@ namespace LanExchange.Plugin.Users
 
         public string FixLdapPath(string path)
         {
-            if (path == null) return String.Empty;
+            if (path == null) return string.Empty;
 
             if (!path.ToUpper(CultureInfo.InvariantCulture).StartsWith("LDAP://"))
-                return String.Empty;
+                return string.Empty;
 
             var list = path.Remove(0, 7).Split(',');
             var result = new StringBuilder();

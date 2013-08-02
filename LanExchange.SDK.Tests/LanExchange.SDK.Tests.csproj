@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="XmlSerializeTest.cs" />
     <Compile Include="ObjectPathTest.cs" />
     <Compile Include="PanelStrategyBaseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
