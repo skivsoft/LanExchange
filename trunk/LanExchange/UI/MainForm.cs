@@ -47,8 +47,6 @@ namespace LanExchange.UI
             Instance.tipComps.SetToolTip(Pages.Pages, " ");
             Pages.Pages.ImageList = LanExchangeIcons.Instance.SmallImageList;
             Status.ImageList = LanExchangeIcons.Instance.SmallImageList;
-            // init network scanner
-            //PanelSubscription.Instance.RefreshInterval = (int)Settings.Instance.RefreshTimeInSec * 1000;
             // set hotkey for activate: Ctrl+Win+X
             m_Hotkeys = new GlobalHotkeys();
             m_Hotkeys.RegisterGlobalHotKey((int)Keys.X, GlobalHotkeys.MOD_CONTROL + GlobalHotkeys.MOD_WIN, Handle);
@@ -255,17 +253,6 @@ namespace LanExchange.UI
         {
             m_AboutAction.Execute();
         }
-
-        //private void panel1_DragEnter(object sender, DragEventArgs e)
-        //{
-        //    if (e.Data.GetDataPresent(DataFormats.FileDrop))
-        //        e.Effect = DragDropEffects.Copy;
-        //}
-
-        //private void panel1_DragDrop(object sender, DragEventArgs e)
-        //{
-        //    string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-        //}
         
         private void lItemsCount_MouseUp(object sender, MouseEventArgs e)
         {
@@ -391,11 +378,6 @@ namespace LanExchange.UI
                 (sender as Timer).Enabled = false;
         }
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            m_AboutAction.Execute();
-        }
-
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
             m_SettingsAction.Execute();
@@ -411,11 +393,6 @@ namespace LanExchange.UI
             var menuItem = (sender as ToolStripMenuItem);
             menuItem.Checked = !menuItem.Checked;
             pInfo.Visible = menuItem.Checked;
-        }
-
-        private void toolStripMenuItem5_Click(object sender, EventArgs e)
-        {
-            m_AboutAction.Execute();
         }
 
         private void rereadToolStripMenuItem_Click(object sender, EventArgs e)

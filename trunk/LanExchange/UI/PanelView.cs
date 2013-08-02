@@ -6,6 +6,7 @@ using LanExchange.Model;
 using LanExchange.Model.Settings;
 using LanExchange.Presenter;
 using LanExchange.SDK;
+using LanExchange.Service;
 
 namespace LanExchange.UI
 {
@@ -246,7 +247,8 @@ namespace LanExchange.UI
         {
             if (m_Presenter.Objects.CurrentPath.IsEmpty)
             {
-                if (Char.IsLetterOrDigit(e.KeyChar) || Char.IsPunctuation(e.KeyChar) || PuntoSwitcher.IsValidChar(e.KeyChar))
+                var punto = PuntoSwitcherServiceFactory.GetPuntoSwitcherService();
+                if (Char.IsLetterOrDigit(e.KeyChar) || Char.IsPunctuation(e.KeyChar) || punto.IsValidChar(e.KeyChar))
                 {
                     pFilter.FocusAndKeyPress(e);
                     e.Handled = true;
@@ -259,12 +261,14 @@ namespace LanExchange.UI
         /// </summary>
         private void OpenCurrentItem()
         {
-            // TODO UNCOMMENT THIS!
-            //var PItem = m_Presenter.GetFocusedPanelItem(false, true);
-            //if (PItem is ComputerPanelItem)
-            //    mCompOpen_Click(mCompOpen, EventArgs.Empty);
-            //if (PItem is SharePanelItem)
-            //    mFolderOpen_Click(mFolderOpen, EventArgs.Empty);
+            var panelItem = m_Presenter.GetFocusedPanelItem(false, true);
+            if (panelItem != null)
+            {
+                if (panelItem.GetType().Name.Equals("ComputerPanelItem"))
+                    mCompOpen_Click(mCompOpen, EventArgs.Empty);
+                if (panelItem.GetType().Name.Equals("SharePanelItem"))
+                    mFolderOpen_Click(mFolderOpen, EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -272,13 +276,15 @@ namespace LanExchange.UI
         /// </summary>
         private void RunCurrentItem()
         {
-            // TODO UNCOMMENT THIS!
-            //var PItem = m_Presenter.GetFocusedPanelItem(false, true);
-            //if (PItem is ComputerPanelItem)
-            //    mCompOpen_Click(mRadmin1, EventArgs.Empty);
-            //if (PItem is SharePanelItem)
-            //    if (!(PItem as SharePanelItem).SHI.IsPrinter)
-            //        mFolderOpen_Click(mFAROpen, EventArgs.Empty);
+            var panelItem = m_Presenter.GetFocusedPanelItem(false, true);
+            if (panelItem != null)
+            {
+                if (panelItem.GetType().Name.Equals("ComputerPanelItem"))
+                    mCompOpen_Click(mRadmin1, EventArgs.Empty);
+                if (panelItem.GetType().Name.Equals("SharePanelItem"))
+                    //if (!(panelItem as SharePanelItem).SHI.IsPrinter)
+                        mFolderOpen_Click(mFAROpen, EventArgs.Empty);
+            }
         }
 
         private void lvComps_KeyDown(object sender, KeyEventArgs e)
@@ -568,20 +574,6 @@ namespace LanExchange.UI
                 MessageBox.Show(String.Format("Не удалось выполнить команду:\n{0}", CmdLine), "Ошибка при запуске",
                     MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
         }
-
-        private void LV_MouseDown(object sender, MouseEventArgs e)
-        {
-            // TODO UNCOMMENT DRAG N DROP
-            //var pt = new Point(e.X, e.Y);
-            //var hit = LV.HitTest(pt);
-            //if (hit.Item != null)
-            //{
-            //    if (hit.Item.Selected)
-            //    MainForm.Instance.Text = hit.Item.Text;
-            //    //LV.DoDragDrop(LV.FocusedItem.Text, DragDropEffects.Copy);
-            //}
-        }
-
 
         public void ColumnsClear()
         {

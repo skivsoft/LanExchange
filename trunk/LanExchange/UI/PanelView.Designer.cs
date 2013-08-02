@@ -84,7 +84,6 @@
             this.LV.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lvComps_ItemSelectionChanged);
             this.LV.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvComps_KeyDown);
             this.LV.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lvComps_KeyPress);
-            this.LV.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LV_MouseDown);
             // 
             // popComps
             // 

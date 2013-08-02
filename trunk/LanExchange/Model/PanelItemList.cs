@@ -4,6 +4,7 @@ using System.Text;
 using LanExchange.Model.Panel;
 using LanExchange.Presenter;
 using LanExchange.SDK;
+using LanExchange.Service;
 using LanExchange.Utils;
 using LanExchange.Model.Settings;
 
@@ -105,18 +106,15 @@ namespace LanExchange.Model
             return m_Keys.IndexOf(key);
         }
 
-        //public void Clear()
-        //{
-        //    m_Data.Clear();
-        //}
-
         private static bool GoodForFilter(string[] strList, string filter1, string filter2)
         {
+            var puntoService = PuntoSwitcherServiceFactory.GetPuntoSwitcherService();
             for (int i = 0; i < strList.Length; i++)
             {
                 if (i == 0)
                 {
-                    if (PuntoSwitcher.RussianContains(strList[i], filter1) || (PuntoSwitcher.RussianContains(strList[i], filter2)))
+                    if (puntoService.RussianContains(strList[i], filter1) ||
+                        puntoService.RussianContains(strList[i], filter2))
                         return true;
                 } else
                 if (filter1 != null && strList[i].Contains(filter1) || filter2 != null && strList[i].Contains(filter2))
@@ -135,21 +133,20 @@ namespace LanExchange.Model
         /// </summary>
         public void ApplyFilter()
         {
+            var punto = PuntoSwitcherServiceFactory.GetPuntoSwitcherService();
             if (FilterText == null) 
                 FilterText = string.Empty;
-            bool bFiltered = FilterText != string.Empty;
+            var bFiltered = FilterText != string.Empty;
             if (bFiltered && !CurrentPath.IsEmpty)
-            {
                 bFiltered = false;
-            }
             m_Keys.Clear();
-            string Filter1 = FilterText.ToUpper();
-            string Filter2 = PuntoSwitcher.Change(FilterText);
-            if (Filter2 != null) Filter2 = Filter2.ToUpper();
+            var filter1 = FilterText.ToUpper();
+            var filter2 = punto.Change(FilterText);
+            if (filter2 != null) filter2 = filter2.ToUpper();
             foreach (var value in m_Data)
             {
                 string[] A = value.GetStringsUpper();
-                if (!bFiltered || String.IsNullOrEmpty(value[0].ToString()) || GoodForFilter(A, Filter1, Filter2))
+                if (!bFiltered || String.IsNullOrEmpty(value[0].ToString()) || GoodForFilter(A, filter1, filter2))
                     m_Keys.Add(value[0]);
             }
         }

@@ -9,5 +9,23 @@ namespace LanExchange.UI
         {
             InitializeComponent();
         }
+
+        public bool IsAutoRun 
+        {
+            get { return chAutorun.Checked; }
+            set { chAutorun.Checked = value; }
+        }
+
+        public bool RunMinimized
+        {
+            get { return chMinimized.Checked; }
+            set { chMinimized.Checked = value; }
+        }
+
+        public bool AdvancedMode
+        {
+            get { return chAdvanced.Checked; }
+            set { chAdvanced.Checked = value; }
+        }
     }
 }

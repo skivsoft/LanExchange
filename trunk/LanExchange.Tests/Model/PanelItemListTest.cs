@@ -32,5 +32,11 @@ namespace LanExchange.Tests.Model
             m_Objects.ApplyFilter();
             Assert.IsEmpty(m_Objects.FilterText);
         }
+
+        [Test]
+        public void TestCurrentPath()
+        {
+            Assert.IsNotNull(m_Objects.CurrentPath);
+        }
     }
 }

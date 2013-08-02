@@ -29,7 +29,7 @@ namespace LanExchange.UI
         {
             if (!m_AllowEmpty && String.IsNullOrEmpty(txtInputText.Text.Trim()))
             {
-                errorProvider.SetError(txtInputText, "Строка не должна быть пустой.");
+                errorProvider.SetError(txtInputText, "Input text must not be empty.");
                 DialogResult = DialogResult.None;
             } else
                 DialogResult = DialogResult.OK;
