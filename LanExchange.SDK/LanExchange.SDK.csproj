@@ -61,8 +61,7 @@
     <Compile Include="IPanelImageManager.cs" />
     <Compile Include="IPanelItemFactoryManager.cs" />
     <Compile Include="IPlugin.cs" />
-    <Compile Include="ISettingsTabModel.cs" />
-    <Compile Include="ISettingsTabView.cs" />
+    <Compile Include="SettingsBase.cs" />
     <Compile Include="ISettingsTabViewFactory.cs" />
     <Compile Include="PanelItemBase.cs" />
     <Compile Include="IPanelFillerStrategy.cs" />

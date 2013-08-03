@@ -4,8 +4,12 @@ using System.Reflection;
 
 namespace LanExchange.Model
 {
-    internal class AboutInfo
+    internal static class AboutInfo
     {
+        public const string WebSite = "code.google.com/p/lanexchange/";
+        public const string Twitter = "LanExchangeHere";
+        public const string Email   = "skivsoft@gmail.com";
+
         private static Assembly GetAssembly()
         {
             return Assembly.GetEntryAssembly();
@@ -31,9 +35,9 @@ namespace LanExchange.Model
             get
             {
                 var ver = GetAssembly().GetName().Version;
-                var result = string.Format("{0}.{1}", ver.Major, ver.Minor);
+                var result = String.Format("{0}.{1}", ver.Major, ver.Minor);
                 if (ver.MajorRevision > 0)
-                    result += string.Format(".{0}", ver.MajorRevision);
+                    result += String.Format(".{0}", ver.MajorRevision);
                 return result;
             }
         }

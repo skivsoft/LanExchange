@@ -3,7 +3,7 @@ using LanExchange.SDK;
 
 namespace LanExchange.UI
 {
-    public partial class SettingsTabGeneral : UserControl, ISettingsTabView
+    public partial class SettingsTabGeneral : UserControl
     {
         public SettingsTabGeneral()
         {

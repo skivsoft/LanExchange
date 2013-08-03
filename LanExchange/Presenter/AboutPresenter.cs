@@ -1,9 +1,9 @@
-﻿namespace LanExchange.Presenter
-{
-    using System.Diagnostics;
-    using Model.Settings;
-    using SDK;
+﻿using LanExchange.Model;
+using System.Diagnostics;
+using LanExchange.SDK;
 
+namespace LanExchange.Presenter
+{
     /// <summary>
     /// Presenter for Settings (model) and AboutForm (view).
     /// </summary>
@@ -18,30 +18,27 @@
 
         public void LoadFromModel()
         {
-            m_View.WebText = Settings.Instance.GetWebSiteUrl();
+            m_View.WebText = AboutInfo.WebSite;
             m_View.WebToolTip = GetFullWebLink();
-            m_View.TwitterText = Settings.Instance.GetTwitter();
+            m_View.TwitterText = '@' + AboutInfo.Twitter;
             m_View.TwitterToolTip = GetFullTwitterLink();
-            m_View.EmailText = Settings.Instance.GetEmailAddress();
+            m_View.EmailText = AboutInfo.Email;
             m_View.EmailToolTip = GetFullEmailLink();
         }
 
         private string GetFullWebLink()
         {
-            return "https://" + Settings.Instance.GetWebSiteUrl();
+            return "https://" + AboutInfo.WebSite;
         }
 
         private string GetFullTwitterLink()
         {
-            var name = Settings.Instance.GetTwitter();
-            if (name.Substring(0, 1).Equals("@"))
-                name = name.Remove(0, 1);
-            return "https://twitter.com/" + name;
+            return "https://twitter.com/" + AboutInfo.Twitter;
         }
 
         private string GetFullEmailLink()
         {
-            return "mailto:" + Settings.Instance.GetEmailAddress();
+            return "mailto:" + AboutInfo.Email;
         }
 
         public void OpenWebLink()

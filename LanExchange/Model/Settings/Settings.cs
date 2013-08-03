@@ -11,10 +11,6 @@ namespace LanExchange.Model.Settings
     /// </summary>
     public class Settings
     {
-        private const string WebSiteUrlDefault = "code.google.com/p/lanexchange/";
-        private const string TwitterDefault = "@LanExchangeHere";
-        private const string EmailAddressDefault = "skivsoft@gmail.com";
-
         /// <summary>
         /// Default width of MainForm.
         /// </summary>
@@ -23,12 +19,10 @@ namespace LanExchange.Model.Settings
         private static Settings m_Instance;
         private static bool m_Modified;
 
-        private bool m_RunMinimized;
-        private bool m_AdvancedMode;
+        private SettingsGeneral m_General;
 
         private Settings()
         {
-            m_RunMinimized = true;
             WMIClassesInclude = new List<string>();
             WMIClassesInclude.Add("Win32_Desktop");
             WMIClassesInclude.Add("Win32_DesktopMonitor");
@@ -37,6 +31,7 @@ namespace LanExchange.Model.Settings
             WMIClassesInclude.Add("Win32_Processor");
             WMIClassesInclude.Add("Win32_PhysicalMemory");
             Language = "en-US";
+            m_General = new SettingsGeneral();
         }
 
         public static Settings Instance
@@ -50,6 +45,11 @@ namespace LanExchange.Model.Settings
                 }
                 return m_Instance;
             }
+        }
+
+        public SettingsGeneral General
+        {
+            get { return m_General; }
         }
 
         private static bool Modified
@@ -121,67 +121,6 @@ namespace LanExchange.Model.Settings
         public static string GetConfigFileName()
         {
             return Path.ChangeExtension(GetExecutableFileName(), ".cfg");
-        }
-
-        public static bool IsAutorun
-        {
-            get
-            {
-                return AutorunUtils.Autorun_Exists(GetExecutableFileName());
-            }
-            set
-            {
-                var exeFName = GetExecutableFileName();
-                if (value)
-                {
-                    AutorunUtils.Autorun_Add(exeFName);
-                }
-                else
-                {
-                    AutorunUtils.Autorun_Delete(exeFName);
-                }
-            }
-        }
-
-        public bool RunMinimized
-        {
-            get { return m_RunMinimized; }
-            set
-            {
-                if (m_RunMinimized != value)
-                {
-                    m_RunMinimized = value;
-                    Modified = true;
-                }
-            }
-        }
-
-        public bool AdvancedMode
-        {
-            get { return m_AdvancedMode; }
-            set
-            {
-                if (m_AdvancedMode != value)
-                {
-                    m_AdvancedMode = value;
-                    Modified = true;
-                }
-            }
-        }
-
-        public string GetWebSiteUrl()
-        {
-            return WebSiteUrlDefault;
-        }
-
-        public string GetTwitter()
-        {
-            return TwitterDefault;
-        }
-
-        public string GetEmailAddress()
-        {
-            return EmailAddressDefault;
         }
 
         public static string GetCurrentUserName()

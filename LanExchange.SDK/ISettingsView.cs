@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using System;
 
 namespace LanExchange.SDK
 {
@@ -7,7 +8,7 @@ namespace LanExchange.SDK
     /// </summary>
     public interface ISettingsView
     {
-        TreeNode AddTab(TreeNode parentNode, string title, ISettingsTabViewFactory tabFactory);
+        TreeNode AddTab(TreeNode parentNode, string title, Type tabView);
         void SelectFirstNode();
     }
 }
