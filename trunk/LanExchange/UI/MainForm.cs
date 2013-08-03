@@ -34,7 +34,7 @@ namespace LanExchange.UI
             Instance = this;
             // load settings from cfg-file
             Settings.Load();
-            SetRunMinimized(Settings.Instance.RunMinimized);
+            SetRunMinimized(Settings.Instance.General.RunMinimized);
             // init Pages presenter
             AppPresenter.MainPages = Pages.GetPresenter();
             AppPresenter.MainPages.PanelViewFocusedItemChanged += Pages_PanelViewFocusedItemChanged;

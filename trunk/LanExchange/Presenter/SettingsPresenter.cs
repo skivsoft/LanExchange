@@ -20,7 +20,7 @@ namespace LanExchange.Presenter
 
         public void LoadFromModel()
         {
-            m_View.AddTab(null, Resources.Settings_General, new SettingsTabGeneralFactory());
+            m_View.AddTab(null, Resources.Settings_General, typeof(SettingsTabGeneral));
             var pluginsHandle = m_View.AddTab(null, Resources.Settings_Plugins, new SettingsTabPluginsFactory());
             foreach(var item in AppPresenter.Plugins.Items)
             {
@@ -30,18 +30,11 @@ namespace LanExchange.Presenter
                 m_View.AddTab(pluginsHandle, item.GetType().Name, factory);
             }
             m_View.SelectFirstNode();
-            // TODO UNCOMMENT THIS!
-            //m_View.IsAutoRun = Settings.IsAutorun;
-            //m_View.RunMinimized = Settings.Instance.RunMinimized;
-            //m_View.AdvancedMode = Settings.Instance.AdvancedMode;
         }
 
         public void SaveToModel()
         {
             // TODO UNCOMMENT THIS!
-            //Settings.IsAutorun = m_View.IsAutoRun;
-            //Settings.Instance.RunMinimized = m_View.RunMinimized;
-            //Settings.Instance.AdvancedMode = m_View.AdvancedMode;
             //Settings.SaveIfModified();
         }
     }

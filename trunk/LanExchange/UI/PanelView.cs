@@ -310,7 +310,7 @@ namespace LanExchange.UI
                 e.Handled = true;
             }
             // Ctrl+Enter - Run RAdmin for computer and FAR for folder
-            if (Settings.Instance.AdvancedMode && e.Control && e.KeyCode == Keys.Enter)
+            if (Settings.Instance.General.AdvancedMode && e.Control && e.KeyCode == Keys.Enter)
             {
                 RunCurrentItem();
                 e.Handled = true;
@@ -435,8 +435,8 @@ namespace LanExchange.UI
                 //}
             }
             mComp.Enabled = bCompVisible;
-            mComp.Visible = Settings.Instance.AdvancedMode;
-            if (Settings.Instance.AdvancedMode && !bCompVisible)
+            mComp.Visible = Settings.Instance.General.AdvancedMode;
+            if (Settings.Instance.General.AdvancedMode && !bCompVisible)
             {
                 mComp.Text = @"\\<ИмяКомпьютера>";
             }

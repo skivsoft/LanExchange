@@ -103,6 +103,7 @@
     <Compile Include="Model\PanelItemListEventArgs.cs" />
     <Compile Include="Model\ColumnComparer.cs" />
     <Compile Include="Model\PingThread.cs" />
+    <Compile Include="Model\Settings\SettingsGeneral.cs" />
     <Compile Include="Service\IPuntoSwitcherService.cs" />
     <Compile Include="Service\PuntoSwitcherServiceEngRus.cs" />
     <Compile Include="Model\Settings\Settings.cs" />
@@ -192,7 +193,6 @@
     <Compile Include="UI\SettingsTabGeneral.Designer.cs">
       <DependentUpon>SettingsTabGeneral.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\SettingsTabGeneralFactory.cs" />
     <Compile Include="UI\SettingsTabInstance.cs" />
     <Compile Include="UI\SettingsTabPlugins.cs">
       <SubType>UserControl</SubType>
