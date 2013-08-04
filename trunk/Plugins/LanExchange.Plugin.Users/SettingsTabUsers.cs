@@ -3,7 +3,7 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Users
 {
-    public partial class SettingsTabUsers : UserControl, ISettingsTabView
+    public partial class SettingsTabUsers : UserControl
     {
         public SettingsTabUsers()
         {

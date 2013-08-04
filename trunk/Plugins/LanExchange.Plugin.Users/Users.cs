@@ -30,10 +30,10 @@ namespace LanExchange.Plugin.Users
         }
 
 
-        public ISettingsTabViewFactory GetSettingsTabViewFactory()
-        {
-            return new SettingsTabUsersFactory();
-        }
+        //public ISettingsTabViewFactory GetSettingsTabViewFactory()
+        //{
+        //    return new SettingsTabUsersFactory();
+        //}
 
 
         public void OpenDefaultTab()

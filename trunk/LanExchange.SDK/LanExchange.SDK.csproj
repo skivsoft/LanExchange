@@ -62,7 +62,6 @@
     <Compile Include="IPanelItemFactoryManager.cs" />
     <Compile Include="IPlugin.cs" />
     <Compile Include="SettingsBase.cs" />
-    <Compile Include="ISettingsTabViewFactory.cs" />
     <Compile Include="PanelItemBase.cs" />
     <Compile Include="IPanelFillerStrategy.cs" />
     <Compile Include="IColumnComparable.cs" />
@@ -81,11 +80,9 @@
     <Compile Include="IPagesView.cs" />
     <Compile Include="IPanelView.cs" />
     <Compile Include="ISettingsView.cs" />
-    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

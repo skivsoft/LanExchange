@@ -460,5 +460,11 @@ namespace LanExchange.UI
             if (int.TryParse(menuItem.Tag.ToString(), out tag))
                 pv.ViewMode = (PanelViewMode)tag;
         }
+
+        private void mWebPage_Click(object sender, EventArgs e)
+        {
+            var presenter = new AboutPresenter(null);
+            presenter.OpenWebLink();
+        }
     }
 }

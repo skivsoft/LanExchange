@@ -20,14 +20,14 @@ namespace LanExchange.Presenter
 
         public void LoadFromModel()
         {
-            m_View.AddTab(null, Resources.Settings_General, typeof(SettingsTabGeneral));
-            var pluginsHandle = m_View.AddTab(null, Resources.Settings_Plugins, new SettingsTabPluginsFactory());
+            m_View.AddTab(null, Resources.Settings_General, typeof(SettingsTabUI));
+            var pluginsHandle = m_View.AddTab(null, Resources.Settings_Plugins, typeof(SettingsTabUI));
             foreach(var item in AppPresenter.Plugins.Items)
             {
-                var factory = item.GetSettingsTabViewFactory();
-                if (factory == null)
-                    continue;
-                m_View.AddTab(pluginsHandle, item.GetType().Name, factory);
+                //var factory = item.GetSettingsTabViewFactory();
+                //if (factory == null)
+                //    continue;
+                //m_View.AddTab(pluginsHandle, item.GetType().Name, factory);
             }
             m_View.SelectFirstNode();
         }

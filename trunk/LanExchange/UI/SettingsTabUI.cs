@@ -3,9 +3,9 @@ using LanExchange.SDK;
 
 namespace LanExchange.UI
 {
-    public partial class SettingsTabPlugins : UserControl, ISettingsTabView
+    public partial class SettingsTabUI : UserControl
     {
-        public SettingsTabPlugins()
+        public SettingsTabUI()
         {
             InitializeComponent();
         }

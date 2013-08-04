@@ -109,9 +109,9 @@
             this.lWeb.Location = new System.Drawing.Point(80, 136);
             this.lWeb.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
             this.lWeb.Name = "lWeb";
-            this.lWeb.Size = new System.Drawing.Size(57, 13);
+            this.lWeb.Size = new System.Drawing.Size(61, 13);
             this.lWeb.TabIndex = 42;
-            this.lWeb.Text = "Web site";
+            this.lWeb.Text = "Webpage";
             this.lWeb.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // eVersion

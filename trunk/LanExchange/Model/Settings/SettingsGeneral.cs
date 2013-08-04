@@ -1,13 +1,12 @@
-﻿using LanExchange.SDK;
+﻿using System.ComponentModel;
+using LanExchange.SDK;
 using LanExchange.Utils;
 
 namespace LanExchange.Model.Settings
 {
     public class SettingsGeneral : SettingsBase
     {
-        private bool m_RunMinimized;
-        private bool m_AdvancedMode;
-
+        [Description("Start program when user logon")]
         public bool IsAutorun
         {
             get
@@ -28,30 +27,10 @@ namespace LanExchange.Model.Settings
             }
         }
 
-        public bool RunMinimized
-        {
-            get { return m_RunMinimized; }
-            set
-            {
-                if (m_RunMinimized != value)
-                {
-                    m_RunMinimized = value;
-                    Modified = true;
-                }
-            }
-        }
+        [Description("Minimize program on start")]
+        public bool RunMinimized;
 
-        public bool AdvancedMode
-        {
-            get { return m_AdvancedMode; }
-            set
-            {
-                if (m_AdvancedMode != value)
-                {
-                    m_AdvancedMode = value;
-                    Modified = true;
-                }
-            }
-        }
+        [Description("Advanced features for administration")]
+        public bool AdvancedMode;
     }
 }

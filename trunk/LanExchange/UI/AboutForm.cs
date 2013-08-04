@@ -20,9 +20,6 @@ namespace LanExchange.UI
         public AboutForm()
         {
             InitializeComponent();
-            Text = String.Format(Text, AboutInfo.Product);
-            eVersion.Text = AboutInfo.Version;
-            eCopyright.Text = AboutInfo.Copyright;
             m_Presenter = new AboutPresenter(this);
             m_Presenter.LoadFromModel();
             boxLicense.BringToFront();
@@ -41,6 +38,18 @@ namespace LanExchange.UI
         private void eEmail_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             m_Presenter.OpenEmailLink();
+        }
+
+        public string VersionText
+        {
+            get { return eVersion.Text; }
+            set { eVersion.Text = value; }
+        }
+
+        public string CopyrightText
+        {
+            get { return eCopyright.Text; }
+            set { eCopyright.Text = value; }
         }
 
         public string WebText
