@@ -1,14 +1,14 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("LanExchange SDK")]
-[assembly: AssemblyDescription("LanExchange SDK")]
+[assembly: AssemblyTitle("LanExchange.Plugin.Win7")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("skivsoft@gmail.com")]
+[assembly: AssemblyCompany("https://code.google.com/p/lanexchange/")]
 [assembly: AssemblyProduct("LanExchange")]
 [assembly: AssemblyCopyright("© 2012—2013 Konstantin Mikhailyuk")]
 [assembly: AssemblyTrademark("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("28983de3-881a-40fb-91e5-c79566a1ff26")]
+[assembly: Guid("668b8b85-5038-4969-8cd5-32866e4ce779")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -34,6 +34,3 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: CLSCompliant(true)]
-//[assembly: SecurityPermission(SecurityAction.RequestMinimum, Execution = true)]
-//[assembly: PermissionSet(SecurityAction.RequestOptional, Name = "Nothing")]

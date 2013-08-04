@@ -187,20 +187,12 @@
     <Compile Include="UI\RunMinimizedForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\SettingsTabGeneral.cs">
+    <Compile Include="UI\SettingsTabUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UI\SettingsTabGeneral.Designer.cs">
-      <DependentUpon>SettingsTabGeneral.cs</DependentUpon>
+    <Compile Include="UI\SettingsTabUI.Designer.cs">
+      <DependentUpon>SettingsTabUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\SettingsTabInstance.cs" />
-    <Compile Include="UI\SettingsTabPlugins.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\SettingsTabPlugins.Designer.cs">
-      <DependentUpon>SettingsTabPlugins.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\SettingsTabPluginsFactory.cs" />
     <Compile Include="UI\SysImageList.cs" />
     <Compile Include="UI\User32Utils.cs" />
     <Compile Include="Utils\AutorunUtils.cs" />
@@ -274,11 +266,8 @@
     <EmbeddedResource Include="UI\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\SettingsTabGeneral.resx">
-      <DependentUpon>SettingsTabGeneral.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\SettingsTabPlugins.resx">
-      <DependentUpon>SettingsTabPlugins.cs</DependentUpon>
+    <EmbeddedResource Include="UI\SettingsTabUI.resx">
+      <DependentUpon>SettingsTabUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WMI\WMIAuthForm.resx">
       <DependentUpon>WMIAuthForm.cs</DependentUpon>

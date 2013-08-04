@@ -31,10 +31,10 @@ namespace LanExchange.Plugin.Network
             }
         }
 
-        public ISettingsTabViewFactory GetSettingsTabViewFactory()
-        {
-            return new SettingsTabNetworkFactory();
-        }
+        //public ISettingsTabViewFactory GetSettingsTabViewFactory()
+        //{
+        //    return new SettingsTabNetworkFactory();
+        //}
 
         public void OpenDefaultTab()
         {

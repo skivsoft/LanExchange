@@ -1,6 +1,6 @@
 ﻿namespace LanExchange.UI
 {
-    partial class SettingsTabPlugins
+    partial class SettingsTabUI
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,19 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.PropGrid = new System.Windows.Forms.PropertyGrid();
             this.SuspendLayout();
             // 
-            // SettingsTabPlugins
+            // PropGrid
+            // 
+            this.PropGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PropGrid.Location = new System.Drawing.Point(0, 0);
+            this.PropGrid.Name = "PropGrid";
+            this.PropGrid.Size = new System.Drawing.Size(352, 292);
+            this.PropGrid.TabIndex = 0;
+            // 
+            // SettingsTabUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "SettingsTabPlugins";
-            this.Size = new System.Drawing.Size(292, 140);
+            this.Controls.Add(this.PropGrid);
+            this.Name = "SettingsTabUI";
+            this.Size = new System.Drawing.Size(352, 292);
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.PropertyGrid PropGrid;
 
     }
 }

@@ -38,21 +38,22 @@ namespace LanExchange.UI
             Close();
         }
 
-        public TreeNode AddTab(TreeNode parentNode, string title, ISettingsTabViewFactory tabFactory)
+        public TreeNode AddTab(TreeNode parentNode, string title, Type tabView)
         {
-            var node = parentNode == null ? tvSettings.Nodes.Add(title) : parentNode.Nodes.Add(title);
-            node.Tag = new SettingsTabInstance { Factory = tabFactory };
-            return node;
+            //var node = parentNode == null ? tvSettings.Nodes.Add(title) : parentNode.Nodes.Add(title);
+            //node.Tag = new SettingsTabInstance { Factory = tabFactory };
+            //return node;
+            return null;
         }
 
         private void tvSettings_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            var tabInstance = (SettingsTabInstance) e.Node.Tag;
-            if (tabInstance.Instance == null)
-                tabInstance.Instance = tabInstance.Factory.Create();
-            lTop.Text = e.Node.Text;
-            pContent.Controls.Clear();
-            pContent.Controls.Add((Control)tabInstance.Instance);
+            //var tabInstance = (SettingsTabInstance) e.Node.Tag;
+            //if (tabInstance.Instance == null)
+            //    tabInstance.Instance = tabInstance.Factory.Create();
+            //lTop.Text = e.Node.Text;
+            //pContent.Controls.Clear();
+            //pContent.Controls.Add((Control)tabInstance.Instance);
         }
 
 

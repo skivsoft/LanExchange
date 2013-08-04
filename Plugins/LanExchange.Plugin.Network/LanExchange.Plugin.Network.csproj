@@ -77,7 +77,6 @@
     <Compile Include="SettingsTabNetwork.Designer.cs">
       <DependentUpon>SettingsTabNetwork.cs</DependentUpon>
     </Compile>
-    <Compile Include="SettingsTabNetworkFactory.cs" />
     <Compile Include="ShareInfo.cs" />
     <Compile Include="Panel\SharePanelItem.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

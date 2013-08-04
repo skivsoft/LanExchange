@@ -14,7 +14,7 @@ namespace LanExchange.SDK
         /// <param name="serviceProvider">The service provider.</param>
         void Initialize(IServiceProvider serviceProvider);
 
-        ISettingsTabViewFactory GetSettingsTabViewFactory();
+        //ISettingsTabViewFactory GetSettingsTabViewFactory();
 
         void OpenDefaultTab();
     }

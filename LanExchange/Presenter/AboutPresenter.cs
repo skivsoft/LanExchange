@@ -1,5 +1,5 @@
-﻿using LanExchange.Model;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using LanExchange.Model;
 using LanExchange.SDK;
 
 namespace LanExchange.Presenter
@@ -18,9 +18,11 @@ namespace LanExchange.Presenter
 
         public void LoadFromModel()
         {
+            m_View.VersionText = AboutInfo.Version;
+            m_View.CopyrightText = AboutInfo.Copyright;
             m_View.WebText = AboutInfo.WebSite;
             m_View.WebToolTip = GetFullWebLink();
-            m_View.TwitterText = '@' + AboutInfo.Twitter;
+            m_View.TwitterText = "@" + AboutInfo.Twitter;
             m_View.TwitterToolTip = GetFullTwitterLink();
             m_View.EmailText = AboutInfo.Email;
             m_View.EmailToolTip = GetFullEmailLink();
