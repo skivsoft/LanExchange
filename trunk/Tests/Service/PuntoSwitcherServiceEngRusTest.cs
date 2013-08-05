@@ -1,7 +1,6 @@
-﻿using LanExchange.Service;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
-namespace LanExchange.Tests.Service
+namespace LanExchange.Service
 {
     [TestFixture]
     class PuntoSwitcherServiceEngRusTest

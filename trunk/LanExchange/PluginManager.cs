@@ -33,14 +33,19 @@ namespace LanExchange
                     try
                     {
                         plugin = (IPlugin)Activator.CreateInstance(type);
-                        plugin.Initialize(new ServiceProvider());
                     }
                     catch (Exception)
                     {
                     }
                     if (plugin == null) continue;
-                    // save plugin's interface
-                    m_Plugins.Add(plugin);
+                    try
+                    {
+                        m_Plugins.Add(plugin);
+                        plugin.Initialize(new ServiceProvider());
+                    }
+                    catch (Exception)
+                    {
+                    }
                 }
             }
             catch (Exception)
