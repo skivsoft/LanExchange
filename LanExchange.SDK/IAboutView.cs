@@ -31,5 +31,6 @@
         string VersionText { get; set; }
 
         string CopyrightText { get; set; }
+        string Text { get; set; }
     }
 }

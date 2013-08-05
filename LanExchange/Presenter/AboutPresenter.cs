@@ -18,6 +18,7 @@ namespace LanExchange.Presenter
 
         public void LoadFromModel()
         {
+            m_View.Text = string.Format(m_View.Text, AboutInfo.Product);
             m_View.VersionText = AboutInfo.Version;
             m_View.CopyrightText = AboutInfo.Copyright;
             m_View.WebText = AboutInfo.WebSite;

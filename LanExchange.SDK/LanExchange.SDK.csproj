@@ -79,7 +79,6 @@
     <Compile Include="IInputBoxView.cs" />
     <Compile Include="IPagesView.cs" />
     <Compile Include="IPanelView.cs" />
-    <Compile Include="ISettingsView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
