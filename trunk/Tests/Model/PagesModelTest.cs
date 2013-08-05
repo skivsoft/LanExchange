@@ -1,9 +1,8 @@
 ﻿using System;
 using System.IO;
-using LanExchange.Model;
 using NUnit.Framework;
 
-namespace LanExchange.Tests.Model
+namespace LanExchange.Model
 {
     [TestFixture]
     public class PagesModelTest

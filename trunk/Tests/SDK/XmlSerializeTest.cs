@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Xml.Serialization;
 using NUnit.Framework;
 
-namespace LanExchange.SDK.Tests
+namespace LanExchange.SDK
 {
     public class SomeBase
     {
@@ -25,7 +22,7 @@ namespace LanExchange.SDK.Tests
 
     public class SomeDescendant : SomeAbstractBase
     {
-        private ServerInfo m_SI;
+        private readonly ServerInfo m_SI;
 
         public SomeDescendant()
         {
@@ -47,7 +44,7 @@ namespace LanExchange.SDK.Tests
         {
             SomeAbstractBase obj = new SomeDescendant();
             obj.Hello = "World";
-            Type[] extraTypes = new Type[1] {typeof (SomeDescendant) };
+            var extraTypes = new Type[] {typeof (SomeDescendant) };
             var ser = new XmlSerializer(typeof(SomeAbstractBase), extraTypes);
             string result;
             using (var sw = new StringWriter())

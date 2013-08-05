@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows.Forms;
-using LanExchange.Plugin.Network.Panel;
 using LanExchange.SDK;
 using NUnit.Framework;
 
-namespace LanExchange.Plugin.Network.Tests.Panel
+namespace LanExchange.Plugin.Network.Panel
 {
     class ShareFillerStrategyTest
     {

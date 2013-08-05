@@ -1,8 +1,6 @@
-﻿using System;
-using NUnit.Framework;
-using LanExchange.Plugin.Users;
+﻿using NUnit.Framework;
 
-namespace Plugin.Users.Tests
+namespace LanExchange.Plugin.Users
 {
     [TestFixture]
     public class PathFixerTest

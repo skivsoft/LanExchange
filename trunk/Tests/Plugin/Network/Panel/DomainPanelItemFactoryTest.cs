@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
-using LanExchange.Plugin.Network.Panel;
 
-namespace LanExchange.Plugin.Network.Tests.Panel
+namespace LanExchange.Plugin.Network.Panel
 {
     [TestFixture]
     class DomainPanelItemFactoryTest

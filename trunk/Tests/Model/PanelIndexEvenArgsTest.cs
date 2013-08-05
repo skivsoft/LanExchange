@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
-using LanExchange.Model;
 
-namespace LanExchange.Tests.Model
+namespace LanExchange.Model
 {
     [TestFixture]
     class PanelIndexEvenArgsTest

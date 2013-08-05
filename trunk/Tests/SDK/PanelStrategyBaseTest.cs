@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace LanExchange.SDK.Tests
+namespace LanExchange.SDK
 {
     [TestFixture]
     class PanelStrategyBaseTest

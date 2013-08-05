@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NUnit.Framework;
-using Rhino.Mocks;
 
-namespace LanExchange.SDK.Tests
+namespace LanExchange.SDK
 {
     [TestFixture]
     class ObjectPathTest
@@ -36,7 +32,7 @@ namespace LanExchange.SDK.Tests
         {
             m_Path.Push(Int32.Parse("1"));
             Assert.IsFalse(m_Path.IsEmpty);
-            var value = (Int32)m_Path.Peek();
+            var value = m_Path.Peek();
             Assert.AreEqual(value, Int32.Parse("1"));
             m_Path.Pop();
             Assert.IsTrue(m_Path.IsEmpty);

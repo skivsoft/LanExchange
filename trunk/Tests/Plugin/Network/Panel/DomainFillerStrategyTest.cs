@@ -1,9 +1,8 @@
 ﻿using System.Collections.ObjectModel;
-using LanExchange.Plugin.Network.Panel;
 using LanExchange.SDK;
 using NUnit.Framework;
 
-namespace LanExchange.Plugin.Network.Tests.Panel
+namespace LanExchange.Plugin.Network.Panel
 {
     class DomainFillerStrategyTest
     {
