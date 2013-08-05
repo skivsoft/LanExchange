@@ -35,10 +35,8 @@
             this.popTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.mSettings = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
-            this.mExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.mExitTray = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.Status = new System.Windows.Forms.StatusStrip();
             this.lItemsCount = new System.Windows.Forms.ToolStripStatusLabel();
@@ -52,28 +50,26 @@
             this.Pages = new LanExchange.UI.PagesView();
             this.pInfo = new LanExchange.UI.InfoView();
             this.MainMenu = new System.Windows.Forms.MenuStrip();
-            this.mFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mPanel = new System.Windows.Forms.ToolStripMenuItem();
-            this.mShowInfo = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.mPanelLarge = new System.Windows.Forms.ToolStripMenuItem();
             this.mPanelSmall = new System.Windows.Forms.ToolStripMenuItem();
             this.mPanelList = new System.Windows.Forms.ToolStripMenuItem();
             this.mPanelDetails = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.mReRead = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.mPanelExit = new System.Windows.Forms.ToolStripMenuItem();
             this.mLanguage = new System.Windows.Forms.ToolStripMenuItem();
             this.langEN_US = new System.Windows.Forms.ToolStripMenuItem();
             this.langRU_RU = new System.Windows.Forms.ToolStripMenuItem();
             this.langKK_KZ = new System.Windows.Forms.ToolStripMenuItem();
             this.mHelp = new System.Windows.Forms.ToolStripMenuItem();
-            this.mAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.timerTabSettingsSaver = new System.Windows.Forms.Timer(this.components);
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.mWebPage = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.mHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.timerTabSettingsSaver = new System.Windows.Forms.Timer(this.components);
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.popTray.SuspendLayout();
             this.Status.SuspendLayout();
             this.popTop.SuspendLayout();
@@ -93,12 +89,10 @@
             this.popTray.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mOpen,
             this.toolStripSeparator3,
-            this.mSettings,
-            this.toolStripSeparator4,
             this.toolStripMenuItem5,
-            this.mExit});
+            this.mExitTray});
             this.popTray.Name = "popTray";
-            this.popTray.Size = new System.Drawing.Size(178, 104);
+            this.popTray.Size = new System.Drawing.Size(178, 76);
             this.popTray.Opening += new System.ComponentModel.CancelEventHandler(this.popTray_Opening);
             // 
             // mOpen
@@ -115,19 +109,6 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(174, 6);
             // 
-            // mSettings
-            // 
-            this.mSettings.Name = "mSettings";
-            this.mSettings.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.mSettings.Size = new System.Drawing.Size(177, 22);
-            this.mSettings.Text = "Preferences";
-            this.mSettings.Click += new System.EventHandler(this.mSettings_Click);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(174, 6);
-            // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
@@ -135,12 +116,12 @@
             this.toolStripMenuItem5.Text = "About";
             this.toolStripMenuItem5.Click += new System.EventHandler(this.mAbout_Click);
             // 
-            // mExit
+            // mExitTray
             // 
-            this.mExit.Name = "mExit";
-            this.mExit.Size = new System.Drawing.Size(177, 22);
-            this.mExit.Text = "Exit";
-            this.mExit.Click += new System.EventHandler(this.mExit_Click);
+            this.mExitTray.Name = "mExitTray";
+            this.mExitTray.Size = new System.Drawing.Size(177, 22);
+            this.mExitTray.Text = "Exit";
+            this.mExitTray.Click += new System.EventHandler(this.mExit_Click);
             // 
             // toolStripStatusLabel2
             // 
@@ -252,7 +233,6 @@
             // MainMenu
             // 
             this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mFile,
             this.mPanel,
             this.mLanguage,
             this.mHelp});
@@ -262,65 +242,21 @@
             this.MainMenu.TabIndex = 25;
             this.MainMenu.Text = "menuStrip1";
             // 
-            // mFile
-            // 
-            this.mFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem3,
-            this.toolStripSeparator2,
-            this.exitToolStripMenuItem});
-            this.mFile.Name = "mFile";
-            this.mFile.Size = new System.Drawing.Size(37, 20);
-            this.mFile.Text = "&File";
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(176, 22);
-            this.toolStripMenuItem3.Text = "Preferences";
-            this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(173, 6);
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
             // mPanel
             // 
             this.mPanel.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mShowInfo,
-            this.toolStripSeparator5,
             this.mPanelLarge,
             this.mPanelSmall,
             this.mPanelList,
             this.mPanelDetails,
             this.toolStripSeparator1,
-            this.mReRead});
+            this.mReRead,
+            this.toolStripSeparator8,
+            this.mPanelExit});
             this.mPanel.Name = "mPanel";
             this.mPanel.Size = new System.Drawing.Size(48, 20);
             this.mPanel.Text = "&Panel";
             this.mPanel.DropDownOpening += new System.EventHandler(this.mPanel_DropDownOpening);
-            // 
-            // mShowInfo
-            // 
-            this.mShowInfo.Checked = true;
-            this.mShowInfo.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.mShowInfo.Name = "mShowInfo";
-            this.mShowInfo.Size = new System.Drawing.Size(156, 22);
-            this.mShowInfo.Text = "Show info";
-            this.mShowInfo.Click += new System.EventHandler(this.infoPanelToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(153, 6);
             // 
             // mPanelLarge
             // 
@@ -369,6 +305,19 @@
             this.mReRead.Text = "Re-read";
             this.mReRead.Click += new System.EventHandler(this.rereadToolStripMenuItem_Click);
             // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(153, 6);
+            // 
+            // mPanelExit
+            // 
+            this.mPanelExit.Name = "mPanelExit";
+            this.mPanelExit.ShortcutKeys = System.Windows.Forms.Keys.F10;
+            this.mPanelExit.Size = new System.Drawing.Size(156, 22);
+            this.mPanelExit.Text = "Exit";
+            this.mPanelExit.Click += new System.EventHandler(this.mExit_Click);
+            // 
             // mLanguage
             // 
             this.mLanguage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -403,29 +352,14 @@
             // mHelp
             // 
             this.mHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1,
+            this.toolStripSeparator2,
             this.mWebPage,
             this.toolStripSeparator6,
-            this.mAbout});
+            this.mHelpAbout});
             this.mHelp.Name = "mHelp";
             this.mHelp.Size = new System.Drawing.Size(44, 20);
             this.mHelp.Text = "&Help";
-            // 
-            // mAbout
-            // 
-            this.mAbout.Name = "mAbout";
-            this.mAbout.Size = new System.Drawing.Size(196, 22);
-            this.mAbout.Text = "About";
-            this.mAbout.Click += new System.EventHandler(this.mAbout_Click);
-            // 
-            // timerTabSettingsSaver
-            // 
-            this.timerTabSettingsSaver.Interval = 5000;
-            this.timerTabSettingsSaver.Tick += new System.EventHandler(this.timerTabSettingsSaver_Tick);
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(193, 6);
             // 
             // mWebPage
             // 
@@ -433,6 +367,35 @@
             this.mWebPage.Size = new System.Drawing.Size(196, 22);
             this.mWebPage.Text = "LanExchange Webpage";
             this.mWebPage.Click += new System.EventHandler(this.mWebPage_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(193, 6);
+            // 
+            // mHelpAbout
+            // 
+            this.mHelpAbout.Name = "mHelpAbout";
+            this.mHelpAbout.Size = new System.Drawing.Size(196, 22);
+            this.mHelpAbout.Text = "About";
+            this.mHelpAbout.Click += new System.EventHandler(this.mAbout_Click);
+            // 
+            // timerTabSettingsSaver
+            // 
+            this.timerTabSettingsSaver.Interval = 5000;
+            this.timerTabSettingsSaver.Tick += new System.EventHandler(this.timerTabSettingsSaver_Tick);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(193, 6);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(196, 22);
+            this.toolStripMenuItem1.Text = "Shortcut keys";
             // 
             // MainForm
             // 
@@ -467,17 +430,15 @@
 
         private System.Windows.Forms.NotifyIcon TrayIcon;
         private System.Windows.Forms.ContextMenuStrip popTray;
-        private System.Windows.Forms.ToolStripMenuItem mExit;
+        private System.Windows.Forms.ToolStripMenuItem mExitTray;
         private System.Windows.Forms.ToolStripMenuItem mOpen;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripMenuItem mSettings;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         private System.Windows.Forms.StatusStrip Status;
         public System.Windows.Forms.ToolStripStatusLabel lItemsCount;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel lCompName;
         public System.Windows.Forms.ToolTip tipComps;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ContextMenuStrip popTop;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
         private System.Windows.Forms.ToolStripStatusLabel lUserName;
@@ -486,28 +447,26 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemToolStripMenuItem;
         private System.Windows.Forms.Timer timerTabSettingsSaver;
         private System.Windows.Forms.MenuStrip MainMenu;
-        private System.Windows.Forms.ToolStripMenuItem mFile;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mHelp;
-        private System.Windows.Forms.ToolStripMenuItem mAbout;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem mLanguage;
-        private System.Windows.Forms.ToolStripMenuItem langEN_US;
-        private System.Windows.Forms.ToolStripMenuItem langRU_RU;
-        private System.Windows.Forms.ToolStripMenuItem langKK_KZ;
+        private System.Windows.Forms.ToolStripMenuItem mHelpAbout;
         private System.Windows.Forms.ToolStripMenuItem mPanel;
-        private System.Windows.Forms.ToolStripMenuItem mShowInfo;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem mReRead;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem mPanelLarge;
         private System.Windows.Forms.ToolStripMenuItem mPanelSmall;
         private System.Windows.Forms.ToolStripMenuItem mPanelList;
         private System.Windows.Forms.ToolStripMenuItem mPanelDetails;
         private System.Windows.Forms.ToolStripMenuItem mWebPage;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripMenuItem mPanelExit;
+        private System.Windows.Forms.ToolStripMenuItem mLanguage;
+        private System.Windows.Forms.ToolStripMenuItem langEN_US;
+        private System.Windows.Forms.ToolStripMenuItem langRU_RU;
+        private System.Windows.Forms.ToolStripMenuItem langKK_KZ;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }
 

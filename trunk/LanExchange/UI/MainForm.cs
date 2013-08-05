@@ -53,13 +53,11 @@ namespace LanExchange.UI
         }
 
         private IAction m_AboutAction;
-        private IAction m_SettingsAction;
         private IAction m_ReReadAction;
 
         public void SetupActions()
         {
             m_AboutAction = new AboutAction();
-            m_SettingsAction = new SettingsAction();
             m_ReReadAction = new ReReadAction();
         }
 
@@ -162,6 +160,14 @@ namespace LanExchange.UI
                             }
                         }
             }
+            // F9 - Show/Hide main menu
+            if (e.KeyCode == Keys.F9)
+            {
+                MainMenu.Visible = !MainMenu.Visible;
+                if (MainMenu.Visible)
+                    MainMenu.Select();
+                e.Handled = true;
+            }
         }
 
         private void MainForm_KeyUp(object sender, KeyEventArgs e)
@@ -242,11 +248,6 @@ namespace LanExchange.UI
                 return;
             }
             tooltip.ToolTipTitle = "";
-        }
-
-        private void mSettings_Click(object sender, EventArgs e)
-        {
-            m_SettingsAction.Execute();
         }
 
         private void mAbout_Click(object sender, EventArgs e)
@@ -378,21 +379,9 @@ namespace LanExchange.UI
                 (sender as Timer).Enabled = false;
         }
 
-        private void toolStripMenuItem3_Click(object sender, EventArgs e)
-        {
-            m_SettingsAction.Execute();
-        }
-
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ApplicationExit();
-        }
-
-        private void infoPanelToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var menuItem = (sender as ToolStripMenuItem);
-            menuItem.Checked = !menuItem.Checked;
-            pInfo.Visible = menuItem.Checked;
         }
 
         private void rereadToolStripMenuItem_Click(object sender, EventArgs e)
