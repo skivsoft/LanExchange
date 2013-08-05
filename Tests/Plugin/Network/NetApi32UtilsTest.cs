@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using NUnit.Framework;
 
-namespace LanExchange.Plugin.Network.Tests
+namespace LanExchange.Plugin.Network
 {
     [TestFixture]
     class NetApi32UtilsTest

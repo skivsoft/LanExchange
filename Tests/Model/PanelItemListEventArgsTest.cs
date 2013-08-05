@@ -1,7 +1,6 @@
-﻿using LanExchange.Model;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
-namespace LanExchange.Tests.Model
+namespace LanExchange.Model
 {
     [TestFixture]
     class PanelItemListEventArgsTest

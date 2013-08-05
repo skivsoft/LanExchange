@@ -1,11 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Xml.Serialization;
-using LanExchange.Plugin.Network.Panel;
 using LanExchange.SDK;
 using NUnit.Framework;
 
-namespace LanExchange.Plugin.Network.Tests.Panel
+namespace LanExchange.Plugin.Network.Panel
 {
     [TestFixture]
     class DomainPanelItemTest
@@ -69,7 +68,7 @@ namespace LanExchange.Plugin.Network.Tests.Panel
         [Test]
         public void TestSerialization()
         {
-            Type[] extraTypes = new Type[1] { typeof(DomainPanelItem) };
+            var extraTypes = new Type[] { typeof(DomainPanelItem) };
             var ser = new XmlSerializer(typeof(PanelItemBase), extraTypes);
             using (var sw = new StringWriter())
             {

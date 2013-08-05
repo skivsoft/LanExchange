@@ -1,11 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Xml.Serialization;
-using LanExchange.Plugin.Network.Panel;
 using LanExchange.SDK;
 using NUnit.Framework;
 
-namespace LanExchange.Plugin.Network.Tests.Panel
+namespace LanExchange.Plugin.Network.Panel
 {
     [TestFixture]
     internal class ComputerPanelItemTest
@@ -151,7 +150,7 @@ namespace LanExchange.Plugin.Network.Tests.Panel
         //[Test]
         public void TestReadXML2()
         {
-            var content = "<ComputerPanelItem PlatformID=\"500\" Comment=\"WWW\" Version=\"5.1\" Type=\"11407\" />";
+            const string content = "<ComputerPanelItem PlatformID=\"500\" Comment=\"WWW\" Version=\"5.1\" Type=\"11407\" />";
             var ser = new XmlSerializer(typeof(ComputerPanelItem));
             // try deserialize
             TextReader tr = new StringReader(content);

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using LanExchange.Model;
-using LanExchange.SDK;
+﻿using LanExchange.SDK;
 using NUnit.Framework;
 
-namespace LanExchange.Tests.Model
+namespace LanExchange.Model
 {
     [TestFixture]
     class PanelItemListTest

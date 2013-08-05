@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Xml.Serialization;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace LanExchange.Plugin.Network.Tests
+namespace LanExchange.Plugin.Network
 {
     [TestFixture]
     public class ServerInfoTest

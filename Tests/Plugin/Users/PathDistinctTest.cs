@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
-using LanExchange.Plugin.Users;
 
-namespace LanExchange.Plugin.Users.Tests
+namespace LanExchange.Plugin.Users
 {
     [TestFixture]
     public class PathDistinctTest

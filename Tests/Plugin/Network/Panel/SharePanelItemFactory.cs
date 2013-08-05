@@ -1,7 +1,6 @@
-﻿using LanExchange.Plugin.Network.Panel;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
-namespace LanExchange.Plugin.Network.Tests.Panel
+namespace LanExchange.Plugin.Network.Panel
 {
     [TestFixture]
     class SharePanelItemFactoryTest
