@@ -61,6 +61,8 @@
     <Compile Include="IPanelImageManager.cs" />
     <Compile Include="IPanelItemFactoryManager.cs" />
     <Compile Include="IPlugin.cs" />
+    <Compile Include="PanelItemDoubleDot.cs" />
+    <Compile Include="PanelItemRoot.cs" />
     <Compile Include="SettingsBase.cs" />
     <Compile Include="PanelItemBase.cs" />
     <Compile Include="IPanelFillerStrategy.cs" />
@@ -81,7 +83,6 @@
     <Compile Include="IPanelView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

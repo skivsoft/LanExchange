@@ -32,8 +32,6 @@ namespace LanExchange.Plugin.Network.Panel
         [Test]
         public void TestImageName()
         {
-            m_Share.Name = PanelItemBase.s_DoubleDot;
-            Assert.AreEqual(PanelImageNames.DoubleDot, m_Share.ImageName);
             m_Share.ShareType = (uint) NetApi32.SHARE_TYPE.STYPE_PRINTQ;
             m_Share.Name = "HP";
             Assert.AreEqual(PanelImageNames.SharePrinter, m_Share.ImageName);

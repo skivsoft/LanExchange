@@ -10,7 +10,7 @@ namespace LanExchange.Plugin.Users.Panel
 
         public bool IsParentAccepted(PanelItemBase parent)
         {
-            return (parent != null) && (parent.GetType() == typeof (OrgUnitPanelItem));
+            return (parent != null) && (parent != Users.ROOT_OF_ORGUNITS) && (parent is OrgUnitPanelItem);
         }
 
         public void Algorithm(PanelItemBase parent, ICollection<PanelItemBase> result)
@@ -30,7 +30,7 @@ namespace LanExchange.Plugin.Users.Panel
             DataTable resultTable = rootEntry.Query(filter, new[] { "description", "title", "useraccountcontrol" });
             if (resultTable == null) return;
 
-            result.Add(new UserPanelItem(null, PanelItemBase.s_DoubleDot));
+            result.Add(new PanelItemDoubleDot(parent));
 
             foreach (DataRow row in resultTable.Rows)
             {

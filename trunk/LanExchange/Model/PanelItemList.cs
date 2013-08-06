@@ -94,7 +94,7 @@ namespace LanExchange.Model
         {
             // TODO UNCOMMENT THIS!
             if (key == null) return null;
-            var tempComp = new PanelItemCustom(null, key);
+            var tempComp = new CustomPanelItem(null, key);
             int index = m_Data.BinarySearch(tempComp);
             if (index >= 0)
                 return m_Data[index];
@@ -166,7 +166,7 @@ namespace LanExchange.Model
             get
             {
                 if (m_Data.Count > 0)
-                    if (m_Data[0].Name == PanelItemBase.s_DoubleDot)
+                    if (m_Data[0] is PanelItemDoubleDot)
                         return true;
                 return false;
             }

@@ -6,6 +6,7 @@ namespace LanExchange.Plugin.Network
 {
     class Network : IPlugin
     {
+        public static PanelItemBase ROOT_OF_DOMAINS = new PanelItemRoot();
         private IServiceProvider m_Provider;
 
         public void Initialize(IServiceProvider serviceProvider)

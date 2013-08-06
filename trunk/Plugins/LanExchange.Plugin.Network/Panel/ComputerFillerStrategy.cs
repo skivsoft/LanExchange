@@ -9,14 +9,14 @@ namespace LanExchange.Plugin.Network.Panel
         public bool IsParentAccepted(PanelItemBase parent)
         {
             // computers can be only into domains
-            return (parent != null) && (parent.GetType() == typeof (DomainPanelItem));
+            return (parent != null) && (parent != Network.ROOT_OF_DOMAINS) && (parent is DomainPanelItem);
         }
 
         public void Algorithm(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
             if (parent == null)
                 throw new ArgumentNullException("parent");
-            result.Add(new ComputerPanelItem(parent, PanelItemBase.s_DoubleDot));
+            result.Add(new PanelItemDoubleDot(parent));
             // get server list via OS api
             foreach (var item in NetApi32Utils.Instance.NetServerEnum(parent.Name, NetApi32.SV_101_TYPES.SV_TYPE_ALL))
             {

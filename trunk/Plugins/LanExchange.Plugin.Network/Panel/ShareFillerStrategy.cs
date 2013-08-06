@@ -12,14 +12,14 @@ namespace LanExchange.Plugin.Network.Panel
         public bool IsParentAccepted(PanelItemBase parent)
         {
             // parent for share can be only computer
-            return (parent != null) && (parent.GetType() == typeof (ComputerPanelItem));
+            return (parent != null) && (parent != Network.ROOT_OF_DOMAINS) && (parent is ComputerPanelItem);
         }
 
         public void Algorithm(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
             if (parent == null)
                 throw new ArgumentNullException("parent");
-            result.Add(new SharePanelItem(parent, PanelItemBase.s_DoubleDot));
+            result.Add(new PanelItemDoubleDot(parent));
             foreach (var item in NetApi32Utils.Instance.NetShareEnum(parent.Name))
             {
                 var si = new ShareInfo(item);

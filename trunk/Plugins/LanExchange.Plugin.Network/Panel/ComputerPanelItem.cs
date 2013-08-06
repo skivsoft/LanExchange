@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Net;
-using System.Xml;
-using System.Xml.Serialization;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network.Panel
@@ -111,24 +108,18 @@ namespace LanExchange.Plugin.Network.Panel
             return result;
         }
 
-        public override IComparable this[int index]
+        protected override IComparable GetValue(int index)
         {
-            get
+            switch (index)
             {
-                switch (index)
-                {
-                    case 0:
-                        return Name;
-                    case 1:
-                        return Comment;
-                    case 2:
-                        return m_SI.Version();
-                    //case 3:
-                    //    var iph = Dns.GetHostEntry(Name);
-                    //    return iph.AddressList[0].ToString();
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+                case 0: return Name;
+                case 1: return Comment;
+                case 2: return m_SI.Version();
+                //case 3:
+                //    var iph = Dns.GetHostEntry(Name);
+                //    return iph.AddressList[0].ToString();
+                default:
+                    return null;
             }
         }
 
@@ -136,8 +127,6 @@ namespace LanExchange.Plugin.Network.Panel
         {
             get
             {
-                if (Name == s_DoubleDot)
-                    return PanelImageNames.DoubleDot;
                 return IsReachable ? PanelImageNames.ComputerNormal : PanelImageNames.ComputerDisabled;
             }
         }

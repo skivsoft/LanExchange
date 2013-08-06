@@ -39,22 +39,15 @@ namespace LanExchange.Plugin.Users.Panel
             return result;
         }
 
-        public override IComparable this[int index]
+        protected override IComparable GetValue(int index)
         {
-            get
-            {
-                if (index == 0)
-                    return m_Name;
-                return string.Empty;
-            }
+            return m_Name;
         }
 
         public override string ImageName
         {
             get
             {
-                if (m_Name == s_DoubleDot)
-                    return PanelImageNames.DoubleDot;
                 return PanelImageNames.ShareNormal;
             }
         }

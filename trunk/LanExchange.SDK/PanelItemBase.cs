@@ -8,13 +8,8 @@ namespace LanExchange.SDK
     /// <summary>
     /// Base class for any LanExchange panel item.
     /// </summary>
-    public abstract class PanelItemBase : IComparable<PanelItemBase>, IComparable, IColumnComparable
+    public class PanelItemBase : IComparable<PanelItemBase>, IComparable, IColumnComparable
     {
-        /// <summary>
-        /// The ".." item
-        /// </summary>
-        public static readonly string s_DoubleDot = string.Empty;
-
         protected bool m_IsReachable = true;
 
         protected PanelItemBase()
@@ -37,21 +32,37 @@ namespace LanExchange.SDK
         /// <value>
         /// The name.
         /// </value>
-        public abstract string Name { get; set; }
+        public virtual string Name { get; set; }
         /// <summary>
         /// Gets the count columns.
         /// </summary>
         /// <value>
         /// The count columns.
         /// </value>
-        public abstract int CountColumns { get; }
+        public virtual int CountColumns 
+        {
+            get { return 1; }
+        }
 
         /// <summary>
         /// Creates the column header.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <returns></returns>
-        public abstract PanelColumnHeader CreateColumnHeader(int index);
+        public virtual PanelColumnHeader CreateColumnHeader(int index)
+        {
+            return new PanelColumnHeader("Name");
+        }
+
+        protected virtual void SetValue(int index, IComparable value)
+        {
+            
+        }
+
+        protected virtual IComparable GetValue(int index)
+        {
+            return Name;
+        }
 
         /// <summary>
         /// Gets or sets the <see cref="IComparable"/> at the specified index.
@@ -61,14 +72,29 @@ namespace LanExchange.SDK
         /// </value>
         /// <param name="index">The index.</param>
         /// <returns></returns>
-        public abstract IComparable this[int index] { get; }
+        public IComparable this[int index]
+        {
+            get
+            {
+                if (index < 0 || index >= CountColumns)    
+                    throw new ArgumentOutOfRangeException("index");
+                return GetValue(index);
+            }
+            set
+            {
+                SetValue(index, value);
+            }
+        }
         /// <summary>
         /// Gets the name of the image.
         /// </summary>
         /// <value>
         /// The name of the image.
         /// </value>
-        public abstract string ImageName { get; }
+        public virtual string ImageName
+        {
+            get { return string.Empty; }
+        }
 
         public virtual string ImageLegendText
         {
@@ -136,9 +162,9 @@ namespace LanExchange.SDK
         public int CompareTo(PanelItemBase other)
         {
             if (other == null) return 1;
-            if ((Name == s_DoubleDot) && (other.Name != s_DoubleDot))
+            if ((this is PanelItemDoubleDot) && !(other is PanelItemDoubleDot))
                 return -1;
-            if ((Name != s_DoubleDot) && (other.Name == s_DoubleDot))
+            if (!(this is PanelItemDoubleDot) && (other is PanelItemDoubleDot))
                 return 1;
             int result = String.Compare(Name, other.Name, StringComparison.OrdinalIgnoreCase);
             // TODO !!! CHECK ITEM SORT

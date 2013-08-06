@@ -11,7 +11,7 @@ namespace LanExchange.Plugin.Users.Panel
 
         public bool IsParentAccepted(PanelItemBase parent)
         {
-            return parent == null;
+            return parent == Users.ROOT_OF_ORGUNITS;
         }
 
         public void Algorithm(PanelItemBase parent, ICollection<PanelItemBase> result)
@@ -31,7 +31,7 @@ namespace LanExchange.Plugin.Users.Panel
             if (resultTable == null) return;
 
             //Result.Add(new UserPanelItem(PanelItemBase.s_DoubleDot));
-            result.Add(new OrgUnitPanelItem(null, PanelItemBase.s_DoubleDot));
+            result.Add(new PanelItemDoubleDot(parent));
 
             var fixer = new PathFixer();
             var distinct = new PathDistinct();
