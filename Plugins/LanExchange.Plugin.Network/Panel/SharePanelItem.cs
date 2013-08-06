@@ -36,8 +36,6 @@ namespace LanExchange.Plugin.Network.Panel
         {
             get
             {
-                if (Name == s_DoubleDot)
-                    return PanelImageNames.DoubleDot;
                 if (SHI.IsPrinter)
                     return PanelImageNames.SharePrinter;
                 return SHI.IsHidden ? PanelImageNames.ShareHidden : PanelImageNames.ShareNormal;
@@ -69,19 +67,14 @@ namespace LanExchange.Plugin.Network.Panel
             return result;
         }
 
-        public override IComparable this[int index]
+        protected override IComparable GetValue(int index)
         {
-            get
+            switch (index)
             {
-                switch (index)
-                {
-                    case 0: 
-                        return Name;
-                    case 1:
-                        return Comment;
-                    default:
-                        throw new ArgumentOutOfRangeException("index");
-                }
+                case 0: return Name;
+                case 1: return Comment;
+                default:
+                    return null;
             }
         }
 

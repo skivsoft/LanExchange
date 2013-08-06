@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Forms;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network.Panel
@@ -44,14 +43,9 @@ namespace LanExchange.Plugin.Network.Panel
             return new PanelColumnHeader("Workgroup/Domain");
         }
 
-        public override IComparable this[int index]
+        protected override IComparable GetValue(int index)
         {
-            get
-            {
-                if (index == 0)
-                    return Name;
-                throw new ArgumentOutOfRangeException("index");
-            }
+            return m_SI.Name;
         }
 
         public override string ToString()

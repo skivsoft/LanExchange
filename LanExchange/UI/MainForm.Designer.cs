@@ -64,12 +64,12 @@
             this.langRU_RU = new System.Windows.Forms.ToolStripMenuItem();
             this.langKK_KZ = new System.Windows.Forms.ToolStripMenuItem();
             this.mHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.mHelpKeys = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.mWebPage = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.mHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.timerTabSettingsSaver = new System.Windows.Forms.Timer(this.components);
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.popTray.SuspendLayout();
             this.Status.SuspendLayout();
             this.popTop.SuspendLayout();
@@ -254,14 +254,14 @@
             this.toolStripSeparator8,
             this.mPanelExit});
             this.mPanel.Name = "mPanel";
-            this.mPanel.Size = new System.Drawing.Size(48, 20);
+            this.mPanel.Size = new System.Drawing.Size(45, 20);
             this.mPanel.Text = "&Panel";
             this.mPanel.DropDownOpening += new System.EventHandler(this.mPanel_DropDownOpening);
             // 
             // mPanelLarge
             // 
             this.mPanelLarge.Name = "mPanelLarge";
-            this.mPanelLarge.Size = new System.Drawing.Size(156, 22);
+            this.mPanelLarge.Size = new System.Drawing.Size(163, 22);
             this.mPanelLarge.Tag = "0";
             this.mPanelLarge.Text = "Large icons";
             this.mPanelLarge.Click += new System.EventHandler(this.mPanelLarge_Click);
@@ -269,7 +269,7 @@
             // mPanelSmall
             // 
             this.mPanelSmall.Name = "mPanelSmall";
-            this.mPanelSmall.Size = new System.Drawing.Size(156, 22);
+            this.mPanelSmall.Size = new System.Drawing.Size(163, 22);
             this.mPanelSmall.Tag = "2";
             this.mPanelSmall.Text = "Small icons";
             this.mPanelSmall.Click += new System.EventHandler(this.mPanelLarge_Click);
@@ -277,7 +277,7 @@
             // mPanelList
             // 
             this.mPanelList.Name = "mPanelList";
-            this.mPanelList.Size = new System.Drawing.Size(156, 22);
+            this.mPanelList.Size = new System.Drawing.Size(163, 22);
             this.mPanelList.Tag = "3";
             this.mPanelList.Text = "List";
             this.mPanelList.Click += new System.EventHandler(this.mPanelLarge_Click);
@@ -287,7 +287,7 @@
             this.mPanelDetails.Checked = true;
             this.mPanelDetails.CheckState = System.Windows.Forms.CheckState.Checked;
             this.mPanelDetails.Name = "mPanelDetails";
-            this.mPanelDetails.Size = new System.Drawing.Size(156, 22);
+            this.mPanelDetails.Size = new System.Drawing.Size(163, 22);
             this.mPanelDetails.Tag = "1";
             this.mPanelDetails.Text = "Details";
             this.mPanelDetails.Click += new System.EventHandler(this.mPanelLarge_Click);
@@ -295,26 +295,26 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(153, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(160, 6);
             // 
             // mReRead
             // 
             this.mReRead.Name = "mReRead";
             this.mReRead.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.mReRead.Size = new System.Drawing.Size(156, 22);
+            this.mReRead.Size = new System.Drawing.Size(163, 22);
             this.mReRead.Text = "Re-read";
             this.mReRead.Click += new System.EventHandler(this.rereadToolStripMenuItem_Click);
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(153, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(160, 6);
             // 
             // mPanelExit
             // 
             this.mPanelExit.Name = "mPanelExit";
             this.mPanelExit.ShortcutKeys = System.Windows.Forms.Keys.F10;
-            this.mPanelExit.Size = new System.Drawing.Size(156, 22);
+            this.mPanelExit.Size = new System.Drawing.Size(163, 22);
             this.mPanelExit.Text = "Exit";
             this.mPanelExit.Click += new System.EventHandler(this.mExit_Click);
             // 
@@ -325,7 +325,7 @@
             this.langRU_RU,
             this.langKK_KZ});
             this.mLanguage.Name = "mLanguage";
-            this.mLanguage.Size = new System.Drawing.Size(71, 20);
+            this.mLanguage.Size = new System.Drawing.Size(66, 20);
             this.mLanguage.Text = "&Language";
             this.mLanguage.Visible = false;
             // 
@@ -334,49 +334,62 @@
             this.langEN_US.Checked = true;
             this.langEN_US.CheckState = System.Windows.Forms.CheckState.Checked;
             this.langEN_US.Name = "langEN_US";
-            this.langEN_US.Size = new System.Drawing.Size(180, 22);
+            this.langEN_US.Size = new System.Drawing.Size(184, 22);
             this.langEN_US.Text = "English";
             // 
             // langRU_RU
             // 
             this.langRU_RU.Name = "langRU_RU";
-            this.langRU_RU.Size = new System.Drawing.Size(180, 22);
+            this.langRU_RU.Size = new System.Drawing.Size(184, 22);
             this.langRU_RU.Text = "Russian — Русский";
             // 
             // langKK_KZ
             // 
             this.langKK_KZ.Name = "langKK_KZ";
-            this.langKK_KZ.Size = new System.Drawing.Size(180, 22);
+            this.langKK_KZ.Size = new System.Drawing.Size(184, 22);
             this.langKK_KZ.Text = "Kazakh — Қазақ тілі";
             // 
             // mHelp
             // 
             this.mHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1,
+            this.mHelpKeys,
             this.toolStripSeparator2,
             this.mWebPage,
             this.toolStripSeparator6,
             this.mHelpAbout});
             this.mHelp.Name = "mHelp";
-            this.mHelp.Size = new System.Drawing.Size(44, 20);
+            this.mHelp.Size = new System.Drawing.Size(40, 20);
             this.mHelp.Text = "&Help";
+            // 
+            // mHelpKeys
+            // 
+            this.mHelpKeys.Name = "mHelpKeys";
+            this.mHelpKeys.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.mHelpKeys.Size = new System.Drawing.Size(198, 22);
+            this.mHelpKeys.Text = "Shortcut keys";
+            this.mHelpKeys.Click += new System.EventHandler(this.mHelpKeys_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(195, 6);
             // 
             // mWebPage
             // 
             this.mWebPage.Name = "mWebPage";
-            this.mWebPage.Size = new System.Drawing.Size(196, 22);
+            this.mWebPage.Size = new System.Drawing.Size(198, 22);
             this.mWebPage.Text = "LanExchange Webpage";
             this.mWebPage.Click += new System.EventHandler(this.mWebPage_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(193, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(195, 6);
             // 
             // mHelpAbout
             // 
             this.mHelpAbout.Name = "mHelpAbout";
-            this.mHelpAbout.Size = new System.Drawing.Size(196, 22);
+            this.mHelpAbout.Size = new System.Drawing.Size(198, 22);
             this.mHelpAbout.Text = "About";
             this.mHelpAbout.Click += new System.EventHandler(this.mAbout_Click);
             // 
@@ -384,18 +397,6 @@
             // 
             this.timerTabSettingsSaver.Interval = 5000;
             this.timerTabSettingsSaver.Tick += new System.EventHandler(this.timerTabSettingsSaver_Tick);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(193, 6);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(196, 22);
-            this.toolStripMenuItem1.Text = "Shortcut keys";
             // 
             // MainForm
             // 
@@ -465,7 +466,7 @@
         private System.Windows.Forms.ToolStripMenuItem langEN_US;
         private System.Windows.Forms.ToolStripMenuItem langRU_RU;
         private System.Windows.Forms.ToolStripMenuItem langKK_KZ;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem mHelpKeys;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }

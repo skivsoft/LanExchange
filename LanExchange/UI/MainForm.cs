@@ -52,14 +52,18 @@ namespace LanExchange.UI
             m_Hotkeys.RegisterGlobalHotKey((int)Keys.X, GlobalHotkeys.MOD_CONTROL + GlobalHotkeys.MOD_WIN, Handle);
         }
 
+        #region Global actions
         private IAction m_AboutAction;
         private IAction m_ReReadAction;
+        private IAction m_ShortcutKeysAction;
 
         public void SetupActions()
         {
             m_AboutAction = new AboutAction();
             m_ReReadAction = new ReReadAction();
+            m_ShortcutKeysAction = new ShortcutKeysAction();
         }
+        #endregion
 
         public Rectangle SettingsGetBounds()
         {
@@ -454,6 +458,11 @@ namespace LanExchange.UI
         {
             var presenter = new AboutPresenter(null);
             presenter.OpenWebLink();
+        }
+
+        private void mHelpKeys_Click(object sender, EventArgs e)
+        {
+            m_ShortcutKeysAction.Execute();
         }
     }
 }

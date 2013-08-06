@@ -58,19 +58,14 @@ namespace LanExchange.Plugin.Users.Panel
             return result;
         }
 
-        public override IComparable this[int index]
+        protected override IComparable GetValue(int index)
         {
-            get
+            switch (index)
             {
-                switch (index)
-                {
-                    case 0:
-                        return m_Name;
-                    case 1:
-                        return m_Description;
-                    default:
-                        throw new ArgumentOutOfRangeException("index");
-                }
+                case 0: return m_Name;
+                case 1: return m_Description;
+                default:
+                    return null;
             }
         }
 
@@ -78,8 +73,6 @@ namespace LanExchange.Plugin.Users.Panel
         {
             get
             {
-                if (m_Name == s_DoubleDot)
-                    return PanelImageNames.DoubleDot;
                 return IsAccountDisabled ? PanelImageNames.UserDisabled : PanelImageNames.UserNormal;
             }
         }

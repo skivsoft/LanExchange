@@ -7,12 +7,12 @@ namespace LanExchange.Model
     [TestFixture]
     class PanelItemCustomTest
     {
-        private PanelItemCustom m_Custom;
+        private CustomPanelItem m_Custom;
 
         [SetUp]
         public void SetUp()
         {
-            m_Custom = new PanelItemCustom(null, "test");
+            m_Custom = new CustomPanelItem(null, "test");
         }
 
         [TearDown]
@@ -58,7 +58,7 @@ namespace LanExchange.Model
         public void TestFullItemName()
         {
             Assert.AreEqual("test", m_Custom.FullItemName);
-            var subItem = new PanelItemCustom(m_Custom, "hello");
+            var subItem = new CustomPanelItem(m_Custom, "hello");
             Assert.AreEqual(@"test\hello", subItem.FullItemName);
         }
 

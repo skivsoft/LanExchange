@@ -89,6 +89,7 @@
   <ItemGroup>
     <Compile Include="Action\AboutAction.cs" />
     <Compile Include="Action\ReReadAction.cs" />
+    <Compile Include="Action\ShortcutKeysAction.cs" />
     <Compile Include="CmdLineProcessor.cs" />
     <Compile Include="Model\AboutInfo.cs" />
     <Compile Include="Model\BackgroundWorkerEx.cs">
@@ -97,7 +98,7 @@
     <Compile Include="Model\LanExchangeIcons.cs" />
     <Compile Include="Model\PagesModel.cs" />
     <Compile Include="Model\PanelIndexEventArgs.cs" />
-    <Compile Include="Model\PanelItemCustom.cs" />
+    <Compile Include="Model\CustomPanelItem.cs" />
     <Compile Include="Model\PanelItemList.cs" />
     <Compile Include="Model\PanelItemListEventArgs.cs" />
     <Compile Include="Model\ColumnComparer.cs" />

@@ -28,9 +28,16 @@ namespace LanExchange.Presenter
 
         public void SetupColumns()
         {
-            if (m_Objects.Count > 0)
+            if (m_Objects.Count == 0)
+                return;
+            var panelItem = m_Objects.GetItemAt(0);
+            if (panelItem == null)
+                return;
+            if (panelItem is PanelItemDoubleDot)
             {
-                var panelItem = m_Objects.GetItemAt(0);
+                if (m_Objects.Count == 1)
+                    return;
+                panelItem = m_Objects.GetItemAt(1);
                 if (panelItem != null)
                 {
                     m_View.ColumnsClear();
@@ -173,7 +180,7 @@ namespace LanExchange.Presenter
                         panelItem = null;
                 }
             }
-            if (canReturnParent && panelItem != null && panelItem.Name == PanelItemBase.s_DoubleDot)
+            if (canReturnParent && panelItem is PanelItemDoubleDot)
                 panelItem = panelItem.Parent;
             return panelItem;
         }
@@ -247,8 +254,9 @@ namespace LanExchange.Presenter
         public bool CommandLevelDown()
         {
             var panelItem = GetFocusedPanelItem(false, false);
-            if (panelItem == null || Objects == null) return false;
-            if (panelItem.Name == PanelItemBase.s_DoubleDot)
+            if (panelItem == null || Objects == null) 
+                return false;
+            if (panelItem is PanelItemDoubleDot)
                 return CommandLevelUp();
             var result = AppPresenter.PanelFillers.HasStrategyForParent(panelItem);
             if (result)
@@ -264,8 +272,8 @@ namespace LanExchange.Presenter
         {
             if (Objects == null || Objects.CurrentPath.IsEmpty) 
                 return false;
-            var panelItem = Objects.CurrentPath.Peek() as PanelItemBase;
-            if (panelItem == null) 
+            var panelItem = Objects.CurrentPath.Peek();
+            if (panelItem == null || panelItem is PanelItemRoot) 
                 return false;
             var result = AppPresenter.PanelFillers.HasStrategyForParent(panelItem);
             if (result)

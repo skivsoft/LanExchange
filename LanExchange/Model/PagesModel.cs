@@ -172,6 +172,7 @@ namespace LanExchange.Model
                 foreach (var root in AppPresenter.PanelItemTypes.CreateDefaultRoots())
                 {
                     var info = new PanelItemList(root.Name);
+                    info.CurrentPath.Push(root.Parent);
                     info.CurrentPath.Push(root);
                     info.FocusedItemText = SystemInformation.ComputerName;
                     AddTab(info);

@@ -6,6 +6,7 @@ namespace LanExchange.Plugin.Users
 {
     internal class Users : IPlugin
     {
+        public static PanelItemBase ROOT_OF_ORGUNITS = new PanelItemRoot();
         private IServiceProvider m_Provider;
 
         public void Initialize(IServiceProvider serviceProvider)
