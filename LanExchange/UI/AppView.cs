@@ -8,6 +8,11 @@ namespace LanExchange.UI
     {
         static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
         {
+            #if DEBUG
+            MessageBox.Show(e.Exception.Message+"\n"+e.Exception.StackTrace,
+              "Error in "+e.Exception.Source, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+            #endif
             MainForm.Instance.ApplicationExit();
         }
 

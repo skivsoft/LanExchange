@@ -37,16 +37,5 @@ namespace LanExchange.Plugin.Users
                 fillerManager.RegisterPanelFiller(new UserFiller());
             }
         }
-
-
-        //public ISettingsTabViewFactory GetSettingsTabViewFactory()
-        //{
-        //    return new SettingsTabUsersFactory();
-        //}
-
-
-        public void OpenDefaultTab()
-        {
-        }
     }
 }

@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using LanExchange.Properties;
 using LanExchange.SDK;
 using LanExchange.UI;
-using ShellDll;
+using LanExchange.Utils;
 
 namespace LanExchange.Model.Impl
 {

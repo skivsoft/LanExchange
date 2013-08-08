@@ -2,9 +2,8 @@ using System;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Drawing;
-using System.Windows.Forms;
 
-namespace ShellDll
+namespace LanExchange.Utils
 {
     /// <summary>
     /// This class contains every method, enumeration, struct and constants from the Windows API, which are

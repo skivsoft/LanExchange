@@ -71,12 +71,6 @@
     <Compile Include="NetApi32Utils.cs" />
     <Compile Include="ServerInfo.cs" />
     <Compile Include="Panel\ShareFiller.cs" />
-    <Compile Include="SettingsTabNetwork.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SettingsTabNetwork.Designer.cs">
-      <DependentUpon>SettingsTabNetwork.cs</DependentUpon>
-    </Compile>
     <Compile Include="ShareInfo.cs" />
     <Compile Include="Panel\SharePanelItem.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -89,9 +83,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="SettingsTabNetwork.resx">
-      <DependentUpon>SettingsTabNetwork.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -85,15 +85,5 @@ namespace LanExchange.Plugin.Images
                 m_ImageManagerManager.RegisterImage(pair.Key, image1, image2);
             }
         }
-
-        //public ISettingsTabViewFactory GetSettingsTabViewFactory()
-        //{
-        //    return null;
-        //}
-
-
-        public void OpenDefaultTab()
-        {
-        }
     }
 }

@@ -5,28 +5,28 @@ using NUnit.Framework;
 
 namespace LanExchange.SDK
 {
-    public class SomeBase
+    public class TestSomeBase
     {
         public string Hello;
     }
 
-    public abstract class SomeAbstractBase
+    public abstract class TestSomeAbstractBase
     {
         public abstract string Hello { get; set; }
     }
 
-    public class ServerInfo
+    public class TestServerInfo
     {
         public string Name;
     }
 
-    public class SomeDescendant : SomeAbstractBase
+    public class TestSomeDescendant : TestSomeAbstractBase
     {
-        private readonly ServerInfo m_SI;
+        private readonly TestServerInfo m_SI;
 
-        public SomeDescendant()
+        public TestSomeDescendant()
         {
-            m_SI = new ServerInfo();
+            m_SI = new TestServerInfo();
         }
 
         public override string Hello
@@ -42,10 +42,10 @@ namespace LanExchange.SDK
         [Test]
         public void TestSerializeAbstract()
         {
-            SomeAbstractBase obj = new SomeDescendant();
+            TestSomeAbstractBase obj = new TestSomeDescendant();
             obj.Hello = "World";
-            var extraTypes = new Type[] {typeof (SomeDescendant) };
-            var ser = new XmlSerializer(typeof(SomeAbstractBase), extraTypes);
+            var extraTypes = new Type[] {typeof (TestSomeDescendant) };
+            var ser = new XmlSerializer(typeof(TestSomeAbstractBase), extraTypes);
             string result;
             using (var sw = new StringWriter())
             {
@@ -55,15 +55,15 @@ namespace LanExchange.SDK
             Assert.IsNotEmpty(result);
             using (var sr = new StringReader(result))
             {
-                obj = (SomeAbstractBase)ser.Deserialize(sr);
-                Assert.AreEqual(typeof(SomeDescendant), obj.GetType());
+                obj = (TestSomeAbstractBase)ser.Deserialize(sr);
+                Assert.AreEqual(typeof(TestSomeDescendant), obj.GetType());
             }
         }
 
         [Test]
         public void TestSerializeNonAbstract()
         {
-            var obj = new SomeBase();
+            var obj = new TestSomeBase();
             obj.Hello = "World";
             var ser = new XmlSerializer(obj.GetType());
             string result;

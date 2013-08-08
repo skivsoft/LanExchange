@@ -43,12 +43,6 @@
     <Compile Include="ConcreteADExecutor.cs" />
     <Compile Include="Panel\OrgUnitPanelItemFactory.cs" />
     <Compile Include="Panel\UserPanelItemFactory.cs" />
-    <Compile Include="SettingsTabUsers.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SettingsTabUsers.Designer.cs">
-      <DependentUpon>SettingsTabUsers.cs</DependentUpon>
-    </Compile>
     <Compile Include="StringEqualityComparer.cs" />
     <Compile Include="Panel\OrgUnitFiller.cs" />
     <Compile Include="Panel\OrgUnitPanelItem.cs" />
@@ -58,11 +52,6 @@
     <Compile Include="Panel\UserFiller.cs" />
     <Compile Include="Panel\UserPanelItem.cs" />
     <Compile Include="Users.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="SettingsTabUsers.resx">
-      <DependentUpon>SettingsTabUsers.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\LanExchange.Sdk\LanExchange.SDK.csproj">

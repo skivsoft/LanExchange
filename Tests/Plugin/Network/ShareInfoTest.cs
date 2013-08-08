@@ -20,6 +20,13 @@ namespace LanExchange.Plugin.Network
         }
 
         [Test]
+        public void TestCtor()
+        {
+            m_Share = new ShareInfo();
+            Assert.IsNull(m_Share.Name);
+        }
+
+        [Test]
         public void TestName()
         {
             m_Share.Name = "C$";

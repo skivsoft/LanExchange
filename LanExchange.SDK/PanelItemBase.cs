@@ -12,7 +12,7 @@ namespace LanExchange.SDK
     {
         protected bool m_IsReachable = true;
 
-        protected PanelItemBase()
+        public PanelItemBase()
         {
             m_IsReachable = true;
         }
@@ -21,7 +21,7 @@ namespace LanExchange.SDK
         /// Initializes a new instance of the <see cref="PanelItemBase"/> class.
         /// </summary>
         /// <param name="parent">The parent.</param>
-        protected PanelItemBase(PanelItemBase parent) : this()
+        public PanelItemBase(PanelItemBase parent) : this()
         {
             Parent = parent;
         }
@@ -170,17 +170,6 @@ namespace LanExchange.SDK
         public int CompareTo(object obj)
         {
             return CompareTo(obj as PanelItemBase);
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether this instance is cacheable.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if this instance is cacheable; otherwise, <c>false</c>.
-        /// </value>
-        public virtual bool IsCacheable
-        {
-            get { return false; }
         }
 
         /// <summary>
