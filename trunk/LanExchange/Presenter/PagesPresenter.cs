@@ -1,6 +1,5 @@
 ﻿using System;
 using LanExchange.Model;
-using LanExchange.Model.Panel;
 using LanExchange.SDK;
 
 namespace LanExchange.Presenter
@@ -109,6 +108,7 @@ namespace LanExchange.Presenter
             //e.Info.DataChanged(null, ConcreteSubject.s_UserItems);
             e.Info.SyncRetrieveData();
         }
+
 
         public void Model_AfterRemove(object sender, PanelIndexEventArgs e)
         {

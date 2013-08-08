@@ -7,6 +7,11 @@ namespace LanExchange.Plugin.Network.Panel
     {
         private readonly ServerInfo m_SI;
 
+        public static void RegisterColumns(IPanelColumnManager columnManager)
+        {
+            columnManager.RegisterColumn(typeof(DomainPanelItem), new PanelColumnHeader("Workgroup/Domain"));
+        }
+
         public DomainPanelItem()
         {
             m_SI = new ServerInfo();
@@ -36,11 +41,6 @@ namespace LanExchange.Plugin.Network.Panel
         public override int CountColumns
         {
             get { return 1; }
-        }
-
-        public override PanelColumnHeader CreateColumnHeader(int index)
-        {
-            return new PanelColumnHeader("Workgroup/Domain");
         }
 
         protected override IComparable GetValue(int index)

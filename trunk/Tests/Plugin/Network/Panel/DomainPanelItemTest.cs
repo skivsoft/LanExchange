@@ -56,16 +56,6 @@ namespace LanExchange.Plugin.Network.Panel
         }
 
         [Test]
-        public void TestCreateColumnHeader()
-        {
-            for (int i = 0; i < m_Domain.CountColumns; i++)
-            {
-                var header = m_Domain.CreateColumnHeader(i);
-                Assert.IsNotNull(header);
-            }
-        }
-
-        [Test]
         public void TestSerialization()
         {
             var extraTypes = new Type[] { typeof(DomainPanelItem) };

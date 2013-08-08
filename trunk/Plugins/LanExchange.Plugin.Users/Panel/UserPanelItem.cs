@@ -8,7 +8,14 @@ namespace LanExchange.Plugin.Users.Panel
         private string m_Name;
         private string m_Description;
 
-        public UserPanelItem(PanelItemBase parent) : base(parent)
+        public static void RegisterColumns(IPanelColumnManager columnManager)
+        {
+            columnManager.RegisterColumn(typeof(UserPanelItem), new PanelColumnHeader("User"));
+            columnManager.RegisterColumn(typeof(UserPanelItem), new PanelColumnHeader("Description"));
+        }
+
+        public UserPanelItem(PanelItemBase parent)
+            : base(parent)
         {
         }
 
@@ -41,21 +48,6 @@ namespace LanExchange.Plugin.Users.Panel
         public override int CountColumns
         {
             get { return 2; }
-        }
-
-        public override PanelColumnHeader CreateColumnHeader(int index)
-        {
-            PanelColumnHeader result = null;
-            switch (index)
-            {
-                case 0:
-                    result = new PanelColumnHeader("User");
-                    break;
-                case 1:
-                    result = new PanelColumnHeader("Description");
-                    break;
-            }
-            return result;
         }
 
         protected override IComparable GetValue(int index)

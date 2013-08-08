@@ -35,8 +35,8 @@ namespace LanExchange.UI
             //LV.CacheVirtualItems += m_Cache.CacheVirtualItems;
             LV.RetrieveVirtualItem += m_Cache.RetrieveVirtualItem;
             // set mycomputer image
-            mComp.Image = LanExchangeIcons.Instance.GetSmallImage(PanelImageNames.ComputerNormal);
-            mFolder.Image = LanExchangeIcons.Instance.GetSmallImage(PanelImageNames.ShareNormal);
+            mComp.Image = AppPresenter.Images.GetSmallImage(PanelImageNames.ComputerNormal);
+            mFolder.Image = AppPresenter.Images.GetSmallImage(PanelImageNames.ShareNormal);
             // set dropdown direction for sub-menus (actual for dual-monitor system)
             mComp.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
             mFolder.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
@@ -101,7 +101,7 @@ namespace LanExchange.UI
                     else
                         Result.SubItems.Add(value);
                 }
-                Result.ImageIndex = LanExchangeIcons.Instance.IndexOf(PItem.ImageName);
+                Result.ImageIndex = AppPresenter.Images.IndexOf(PItem.ImageName);
                 Result.ToolTipText = PItem.ToolTipText;
             }
             return Result;
@@ -528,7 +528,8 @@ namespace LanExchange.UI
 
         private void pFilter_FilterCountChanged(object sender, EventArgs e)
         {
-            m_Presenter.UpdateItemsAndStatus();
+            //TODO !!!NEED UPDATE ITEMS
+            //m_Presenter.UpdateItemsAndStatus();
         }
 
         private void LV_ColumnClick(object sender, ColumnClickEventArgs e)

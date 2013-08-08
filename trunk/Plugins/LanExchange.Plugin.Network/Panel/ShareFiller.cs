@@ -4,7 +4,7 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network.Panel
 {
-    public class ShareFillerStrategy : IPanelFillerStrategy
+    public class ShareFiller : IPanelFiller
     {
         public static bool ShowHiddenShares;
         public static bool ShowPrinters;
@@ -15,7 +15,7 @@ namespace LanExchange.Plugin.Network.Panel
             return (parent != null) && (parent != Network.ROOT_OF_DOMAINS) && (parent is ComputerPanelItem);
         }
 
-        public void Algorithm(PanelItemBase parent, ICollection<PanelItemBase> result)
+        public void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
             if (parent == null)
                 throw new ArgumentNullException("parent");
@@ -31,6 +31,12 @@ namespace LanExchange.Plugin.Network.Panel
                     continue;
                 result.Add(new SharePanelItem(parent, si));
             }
+        }
+
+
+        public Type GetFillType()
+        {
+            return typeof (SharePanelItem);
         }
     }
 }

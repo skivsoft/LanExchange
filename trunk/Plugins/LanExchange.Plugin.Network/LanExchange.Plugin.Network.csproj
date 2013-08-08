@@ -59,10 +59,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Network.cs" />
-    <Compile Include="Panel\ComputerFillerStrategy.cs" />
+    <Compile Include="Panel\ComputerFiller.cs" />
     <Compile Include="Panel\ComputerPanelItem.cs" />
     <Compile Include="Panel\ComputerPanelItemFactory.cs" />
-    <Compile Include="Panel\DomainFillerStrategy.cs" />
+    <Compile Include="Panel\DomainFiller.cs" />
     <Compile Include="Panel\DomainPanelItem.cs" />
     <Compile Include="Panel\DomainPanelItemFactory.cs" />
     <Compile Include="Panel\SharePanelItemFactory.cs" />
@@ -70,7 +70,7 @@
     <Compile Include="NetApi32.cs" />
     <Compile Include="NetApi32Utils.cs" />
     <Compile Include="ServerInfo.cs" />
-    <Compile Include="Panel\ShareFillerStrategy.cs" />
+    <Compile Include="Panel\ShareFiller.cs" />
     <Compile Include="SettingsTabNetwork.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -9,17 +9,17 @@ namespace LanExchange.Plugin.Network.Panel
         [Test]
         public void TestIsSubjectAccepted()
         {
-            var strategy = new DomainFillerStrategy();
-            Assert.IsTrue(strategy.IsParentAccepted(null));
+            var strategy = new DomainFiller();
+            Assert.IsTrue(strategy.IsParentAccepted(Network.ROOT_OF_DOMAINS));
             Assert.IsFalse(strategy.IsParentAccepted(new ComputerPanelItem(null, "COMP01")));
         }
 
         [Test]
         public void TestAlgorithm()
         {
-            var strategy = new DomainFillerStrategy();
+            var strategy = new DomainFiller();
             var result = new Collection<PanelItemBase>();
-            strategy.Algorithm(null, result);
+            strategy.Fill(null, result);
             Assert.Greater(result.Count, 0);
         }
     }

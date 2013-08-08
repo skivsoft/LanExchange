@@ -31,6 +31,7 @@
 
 using System;
 using System.Windows.Forms;
+using LanExchange.Model;
 using LanExchange.Presenter;
 using LanExchange.UI;
 using LanExchange.Utils;
@@ -46,9 +47,7 @@ namespace LanExchange
             try
             {
                 CmdLineProcessor.Processing();
-                AppPresenter.PanelItemTypes = new PanelItemFactoryManager();
-                AppPresenter.PanelFillers = new PanelFillerStrategyManager();
-                AppPresenter.Plugins = new PluginManager();
+                AppPresenter.Setup();
                 AppPresenter.Plugins.LoadPlugins();
                 AppView.ApplicationRun();
             }

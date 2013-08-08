@@ -4,7 +4,7 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Users.Panel
 {
-    internal class UserFillerStrategy : IPanelFillerStrategy
+    internal class UserFiller : IPanelFiller
     {
         private const string LdapStartPath = "";
 
@@ -13,7 +13,7 @@ namespace LanExchange.Plugin.Users.Panel
             return (parent != null) && (parent != Users.ROOT_OF_ORGUNITS) && (parent is OrgUnitPanelItem);
         }
 
-        public void Algorithm(PanelItemBase parent, ICollection<PanelItemBase> result)
+        public void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
             //if (Users.Provider == null) return;
             var rootEntry = new ConcreteADExecutor();
@@ -42,6 +42,12 @@ namespace LanExchange.Plugin.Users.Panel
                 result.Add(user);
             }
             rootEntry.Dispose();
+        }
+
+
+        public System.Type GetFillType()
+        {
+            return typeof (UserPanelItem);
         }
     }
 }

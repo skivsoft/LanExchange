@@ -4,7 +4,7 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
 {
-    class Network : IPlugin
+    public class Network : IPlugin
     {
         public static PanelItemBase ROOT_OF_DOMAINS = new PanelItemRoot();
         private IServiceProvider m_Provider;
@@ -22,13 +22,22 @@ namespace LanExchange.Plugin.Network
                 typeManager.RegisterPanelItemFactory(typeof(SharePanelItem), new SharePanelItemFactory());
             }
 
+            // Register columns for panel item types
+            var columnManager = (IPanelColumnManager) m_Provider.GetService(typeof(IPanelColumnManager));
+            if (columnManager != null)
+            {
+                DomainPanelItem.RegisterColumns(columnManager);
+                ComputerPanelItem.RegisterColumns(columnManager);
+                SharePanelItem.RegisterColumns(columnManager);
+            }
+
             // Register new panel fillers
-            var fillerManager = (IPanelFillerStrategyManager) m_Provider.GetService(typeof (IPanelFillerStrategyManager));
+            var fillerManager = (IPanelFillerManager) m_Provider.GetService(typeof (IPanelFillerManager));
             if (fillerManager != null)
             {
-                fillerManager.RegisterPanelFillerStrategy(new DomainFillerStrategy());
-                fillerManager.RegisterPanelFillerStrategy(new ComputerFillerStrategy());
-                fillerManager.RegisterPanelFillerStrategy(new ShareFillerStrategy());
+                fillerManager.RegisterPanelFiller(new DomainFiller());
+                fillerManager.RegisterPanelFiller(new ComputerFiller());
+                fillerManager.RegisterPanelFiller(new ShareFiller());
             }
         }
 

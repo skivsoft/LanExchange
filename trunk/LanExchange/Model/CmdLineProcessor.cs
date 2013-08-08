@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Globalization;
 using System.Threading;
-using LanExchange.Model.Settings;
 
-namespace LanExchange
+namespace LanExchange.Model
 {
     class CmdLineProcessor
     {
@@ -25,7 +24,7 @@ namespace LanExchange
             s_Args = Environment.GetCommandLineArgs();
             var lang = GetIfPresent("/LANG:");
             if (lang == null)
-                lang = Settings.Instance.Language;
+                lang = Settings.Settings.Instance.Language;
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(lang);
         }
     }

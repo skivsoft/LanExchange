@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using LanExchange.SDK;
 
-namespace LanExchange
+namespace LanExchange.Model.Impl
 {
-    public class PanelItemFactoryManager : IPanelItemFactoryManager
+    public class PanelItemFactoryManagerImpl : IPanelItemFactoryManager
     {
-        private readonly Dictionary<Type, PanelItemBaseFactory> m_Types;
+        private readonly IDictionary<Type, PanelItemBaseFactory> m_Types;
 
-        public PanelItemFactoryManager()
+        public PanelItemFactoryManagerImpl()
         {
             m_Types = new Dictionary<Type, PanelItemBaseFactory>();
         }
@@ -40,7 +40,7 @@ namespace LanExchange
             return m_Types.TryGetValue(type, out factory);
         }
 
-        internal Type[] ToArray()
+        public Type[] ToArray()
         {
             var result = new Type[m_Types.Count];
             int i = 0;

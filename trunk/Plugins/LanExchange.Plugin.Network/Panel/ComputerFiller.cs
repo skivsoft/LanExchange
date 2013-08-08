@@ -4,7 +4,7 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network.Panel
 {
-    public class ComputerFillerStrategy : IPanelFillerStrategy
+    public class ComputerFiller : IPanelFiller
     {
         public bool IsParentAccepted(PanelItemBase parent)
         {
@@ -12,7 +12,12 @@ namespace LanExchange.Plugin.Network.Panel
             return (parent != null) && (parent != Network.ROOT_OF_DOMAINS) && (parent is DomainPanelItem);
         }
 
-        public void Algorithm(PanelItemBase parent, ICollection<PanelItemBase> result)
+        public Type GetFillType()
+        {
+            return typeof (ComputerPanelItem);
+        }
+
+        public void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
             if (parent == null)
                 throw new ArgumentNullException("parent");

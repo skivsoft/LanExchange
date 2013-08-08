@@ -5,7 +5,7 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Users.Panel
 {
-    internal class OrgUnitFillerStrategy : IPanelFillerStrategy
+    internal class OrgUnitFiller : IPanelFiller
     {
         private const string LdapStartPath = "";
 
@@ -14,7 +14,7 @@ namespace LanExchange.Plugin.Users.Panel
             return parent == Users.ROOT_OF_ORGUNITS;
         }
 
-        public void Algorithm(PanelItemBase parent, ICollection<PanelItemBase> result)
+        public void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
             //if (Users.Provider == null) return;
             // get Active Directory executor from main program
@@ -49,6 +49,12 @@ namespace LanExchange.Plugin.Users.Panel
                 var unit = new OrgUnitPanelItem(null, sUnit);
                 result.Add(unit);
             }
+        }
+
+
+        public System.Type GetFillType()
+        {
+            return typeof (OrgUnitPanelItem);
         }
     }
 }

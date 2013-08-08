@@ -19,6 +19,7 @@
         /// The presenter.
         /// </value>
         IFilterPresenter Presenter { get; }
+
         /// <summary>
         /// Updates from model.
         /// </summary>

@@ -44,16 +44,6 @@ namespace LanExchange.SDK
             get { return 1; }
         }
 
-        /// <summary>
-        /// Creates the column header.
-        /// </summary>
-        /// <param name="index">The index.</param>
-        /// <returns></returns>
-        public virtual PanelColumnHeader CreateColumnHeader(int index)
-        {
-            return new PanelColumnHeader("Name");
-        }
-
         protected virtual void SetValue(int index, IComparable value)
         {
             

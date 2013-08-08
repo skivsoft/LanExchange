@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using LanExchange.SDK;
 
@@ -47,24 +46,6 @@ namespace LanExchange.Model
         {
             m_Data.Remove(index);
             m_Data.Add(index, value);
-        }
-
-        public override PanelColumnHeader CreateColumnHeader(int index)
-        {
-            PanelColumnHeader result = null;
-            switch(index)
-            {
-                case 0:
-                    result = new PanelColumnHeader("Column0");
-                    break;
-                case 1:
-                    result = new PanelColumnHeader("Column1");
-                    break;
-                case 2:
-                    result = new PanelColumnHeader("Column2");
-                    break;
-            }
-            return result;
         }
     }
 }

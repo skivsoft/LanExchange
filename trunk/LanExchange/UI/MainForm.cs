@@ -9,7 +9,6 @@ using LanExchange.Presenter;
 using System.Drawing;
 using System.ComponentModel;
 using System.Security.Permissions;
-using LanExchange.Model.Panel;
 using LanExchange.Model.Settings;
 using LanExchange.SDK;
 using LanExchange.Utils;
@@ -45,8 +44,8 @@ namespace LanExchange.UI
             SetupForm();
             // setup images
             Instance.tipComps.SetToolTip(Pages.Pages, " ");
-            Pages.Pages.ImageList = LanExchangeIcons.Instance.SmallImageList;
-            Status.ImageList = LanExchangeIcons.Instance.SmallImageList;
+            Pages.Pages.ImageList = AppPresenter.Images.SmallImageList;
+            Status.ImageList = AppPresenter.Images.SmallImageList;
             // set hotkey for activate: Ctrl+Win+X
             m_Hotkeys = new GlobalHotkeys();
             m_Hotkeys.RegisterGlobalHotKey((int)Keys.X, GlobalHotkeys.MOD_CONTROL + GlobalHotkeys.MOD_WIN, Handle);
@@ -128,10 +127,10 @@ namespace LanExchange.UI
             TrayIcon.Visible = true;
             // show computer name
             lCompName.Text = SystemInformation.ComputerName;
-            lCompName.ImageIndex = LanExchangeIcons.Instance.IndexOf(PanelImageNames.ComputerNormal);
+            lCompName.ImageIndex = AppPresenter.Images.IndexOf(PanelImageNames.ComputerNormal);
             // show current user
             lUserName.Text = Settings.GetCurrentUserName();
-            lUserName.ImageIndex = LanExchangeIcons.Instance.IndexOf(PanelImageNames.UserNormal);
+            lUserName.ImageIndex = AppPresenter.Images.IndexOf(PanelImageNames.UserNormal);
         }
 
         private bool m_EscDown;
@@ -281,7 +280,7 @@ namespace LanExchange.UI
             var panelItem = pv.Presenter.GetFocusedPanelItem(false, true);
             if (panelItem == null) return;
             // update info panel at top of the form
-            pInfo.Picture.Image = LanExchangeIcons.Instance.GetLargeImage(panelItem.ImageName);
+            pInfo.Picture.Image = AppPresenter.Images.GetLargeImage(panelItem.ImageName);
             tipComps.SetToolTip(pInfo.Picture, panelItem.ImageLegendText);
             pInfo.CountLines = panelItem.CountColumns;
             for (int index = 0; index < panelItem.CountColumns; index++)

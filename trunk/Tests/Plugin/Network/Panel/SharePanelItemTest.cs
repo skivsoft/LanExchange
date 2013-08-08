@@ -67,16 +67,5 @@ namespace LanExchange.Plugin.Network.Panel
             m_Share.SHI.ShareType = 100;
             Assert.AreEqual(100, m_Share.ShareType);
         }
-
-        [Test]
-        public void TestCreateColumnHeader()
-        {
-            for(int i = 0; i < m_Share.CountColumns; i++)
-            {
-                var header = m_Share.CreateColumnHeader(i);
-                Assert.IsNotNull(header);
-            }
-            Assert.IsNull(m_Share.CreateColumnHeader(m_Share.CountColumns));
-        }
     }
 }

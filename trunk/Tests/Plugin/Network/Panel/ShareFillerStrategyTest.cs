@@ -11,7 +11,7 @@ namespace LanExchange.Plugin.Network.Panel
         [Test]
         public void TestIsSubjectAccepted()
         {
-            var strategy = new ShareFillerStrategy();
+            var strategy = new ShareFiller();
             Assert.IsFalse(strategy.IsParentAccepted(null));
             Assert.IsTrue(strategy.IsParentAccepted(new ComputerPanelItem(null, SystemInformation.ComputerName)));
         }
@@ -19,24 +19,24 @@ namespace LanExchange.Plugin.Network.Panel
         [Test, ExpectedException(typeof(ArgumentNullException))]
         public void ExceptionAlgorithm()
         {
-            var strategy = new ShareFillerStrategy();
+            var strategy = new ShareFiller();
             var result = new Collection<PanelItemBase>();
-            strategy.Algorithm(null, result);
+            strategy.Fill(null, result);
         }
 
         [Test]
         public void TestAlgorithm()
         {
-            var strategy = new ShareFillerStrategy();
+            var strategy = new ShareFiller();
             var domain = NetApi32Utils.Instance.GetMachineNetBiosDomain(null);
             var computer = new ComputerPanelItem(new DomainPanelItem(null, domain), SystemInformation.ComputerName);
-            ShareFillerStrategy.ShowHiddenShares = true;
+            ShareFiller.ShowHiddenShares = true;
             var result = new Collection<PanelItemBase>();
-            strategy.Algorithm(computer, result);
+            strategy.Fill(computer, result);
             Assert.Greater(result.Count, 1);
             Assert.IsInstanceOf<PanelItemDoubleDot>(result[0]);
-            ShareFillerStrategy.ShowHiddenShares = false;
-            strategy.Algorithm(computer, result);
+            ShareFiller.ShowHiddenShares = false;
+            strategy.Fill(computer, result);
         }
     }
 }
