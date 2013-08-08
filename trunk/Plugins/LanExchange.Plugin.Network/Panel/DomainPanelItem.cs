@@ -27,11 +27,6 @@ namespace LanExchange.Plugin.Network.Panel
             m_SI = new ServerInfo {Name = domain, Comment = string.Empty};
         }
 
-        public override bool IsCacheable
-        {
-            get { return true; }
-        }
-
         public override string Name
         {
             get { return m_SI.Name; }

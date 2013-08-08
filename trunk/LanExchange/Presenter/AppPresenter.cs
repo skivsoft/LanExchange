@@ -1,4 +1,5 @@
-﻿using LanExchange.Model;
+﻿using System;
+using LanExchange.Model;
 using LanExchange.Model.Impl;
 using LanExchange.SDK;
 
@@ -16,6 +17,7 @@ namespace LanExchange.Presenter
         public static IPanelFillerManager PanelFillers;
         public static IPanelColumnManager PanelColumns;
         public static PluginManager Plugins;
+        public static IServiceProvider ServiceProvider;
 
         public static void Setup()
         {
@@ -23,6 +25,7 @@ namespace LanExchange.Presenter
             PanelItemTypes = new PanelItemFactoryManagerImpl();
             PanelFillers = new PanelFillerManagerImpl();
             PanelColumns = new PanelColumnManagerImpl();
+            ServiceProvider = new ServiceProviderImpl();
             Plugins = new PluginManager();
         }
     }

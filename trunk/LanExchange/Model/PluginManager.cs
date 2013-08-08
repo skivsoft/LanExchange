@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using LanExchange.SDK;
+using LanExchange.Presenter;
 
 namespace LanExchange.Model
 {
@@ -41,7 +42,7 @@ namespace LanExchange.Model
                     try
                     {
                         m_Plugins.Add(plugin);
-                        plugin.Initialize(new ServiceProvider());
+                        plugin.Initialize(AppPresenter.ServiceProvider);
                     }
                     catch (Exception)
                     {

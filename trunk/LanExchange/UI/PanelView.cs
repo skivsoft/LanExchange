@@ -88,23 +88,23 @@ namespace LanExchange.UI
                 return null;
             if (index < 0 || index > Math.Min(m_Presenter.Objects.FilterCount, LV.VirtualListSize) - 1)
                 return null;
-            ListViewItem Result = new ListViewItem();
-            var PItem = m_Presenter.Objects.GetItemAt(index);
-            if (PItem != null)
+            var result = new ListViewItem();
+            var panelItem = m_Presenter.Objects.GetItemAt(index);
+            if (panelItem != null)
             {
                 // TODO !!! USE ONLY VISIBLE COLUMNS (IP SLOWDOWN NOW)
-                for (int i = 0; i < PItem.CountColumns; i++)
+                for (int i = 0; i < panelItem.CountColumns; i++)
                 {
-                    var value = PItem[i] != null ? PItem[i].ToString() : string.Empty;
+                    var value = panelItem[i] != null ? panelItem[i].ToString() : string.Empty;
                     if (i == 0)
-                        Result.Text = value;
+                        result.Text = value;
                     else
-                        Result.SubItems.Add(value);
+                        result.SubItems.Add(value);
                 }
-                Result.ImageIndex = AppPresenter.Images.IndexOf(PItem.ImageName);
-                Result.ToolTipText = PItem.ToolTipText;
+                result.ImageIndex = AppPresenter.Images.IndexOf(panelItem.ImageName);
+                result.ToolTipText = panelItem.ToolTipText;
             }
-            return Result;
+            return result;
         }
         #endregion
 

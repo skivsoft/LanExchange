@@ -5,7 +5,7 @@ using LanExchange.UI;
 
 namespace LanExchange.Model
 {
-    internal class ServiceProvider : IServiceProvider
+    internal class ServiceProviderImpl : IServiceProvider
     {
         public object GetService(Type serviceType)
         {

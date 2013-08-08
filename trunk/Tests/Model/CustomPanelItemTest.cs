@@ -5,14 +5,14 @@ using NUnit.Framework;
 namespace LanExchange.Model
 {
     [TestFixture]
-    class PanelItemCustomTest
+    class CustomPanelItemTest
     {
         private CustomPanelItem m_Custom;
 
         [SetUp]
         public void SetUp()
         {
-            m_Custom = new CustomPanelItem(null, "test");
+            m_Custom = new CustomPanelItem(null, "TEST");
         }
 
         [TearDown]

@@ -26,7 +26,7 @@ namespace LanExchange.Plugin.Network.Panel
         [Test]
         public void TestName()
         {
-            Assert.IsTrue(m_Domain.IsCacheable);
+            //Assert.IsTrue(m_Domain.IsCacheable);
             m_Domain.Name = "DOMAIN1";
             Assert.AreEqual("DOMAIN1", m_Domain.Name);
         }

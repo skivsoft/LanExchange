@@ -40,18 +40,5 @@ namespace LanExchange.Plugin.Network
                 fillerManager.RegisterPanelFiller(new ShareFiller());
             }
         }
-
-        //public ISettingsTabViewFactory GetSettingsTabViewFactory()
-        //{
-        //    return new SettingsTabNetworkFactory();
-        //}
-
-        public void OpenDefaultTab()
-        {
-            //var domain = NetApi32Utils.Instance.GetMachineNetBiosDomain(null);
-            //var Info = new PanelItemList(domain);
-            //Info.Groups.Add(new DomainPanelItem(domain));
-            //AddTab(Info);
-        }
     }
 }

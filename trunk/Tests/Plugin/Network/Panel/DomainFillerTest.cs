@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace LanExchange.Plugin.Network.Panel
 {
-    class DomainFillerStrategyTest
+    class DomainFillerTest
     {
         [Test]
         public void TestIsSubjectAccepted()

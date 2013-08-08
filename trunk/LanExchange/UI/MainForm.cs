@@ -12,7 +12,6 @@ using System.Security.Permissions;
 using LanExchange.Model.Settings;
 using LanExchange.SDK;
 using LanExchange.Utils;
-using ShellDll;
 
 namespace LanExchange.UI
 {

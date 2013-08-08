@@ -37,22 +37,19 @@ namespace LanExchange.UI
             //int TableCacheEndIndex = TableCacheStartIndex + TableCache.Length - 1;
             var lv = sender as ListView;
             if (lv == null) return;
+            if (e.ItemIndex == 0)
+                e.Item = null;
             if (e.ItemIndex >=  0 && e.ItemIndex <= lv.VirtualListSize-1)
             {
                 if (m_Getter != null)
-                {
                     e.Item = m_Getter.GetListViewItemAt(e.ItemIndex);
-                    for (int i = e.Item.SubItems.Count+1; i < lv.Columns.Count; i++)
-                        e.Item.SubItems.Add(string.Empty);                
-                }
                 //e.Item = TableCache[e.ItemIndex - TableCacheStartIndex];
             }
-            else
-            {
+            if (e.Item == null)
                 e.Item = new ListViewItem();
-                for (int i = 0; i < (sender as ListView).Columns.Count - 1; i++)
-                    e.Item.SubItems.Add(string.Empty);
-            }
+            // TODO !STRANGE SUBITEM COUNT
+            for (int i = e.Item.SubItems.Count; i < lv.Columns.Count; i++)
+                e.Item.SubItems.Add(string.Empty);
         }
     }
 }

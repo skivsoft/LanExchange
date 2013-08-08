@@ -15,7 +15,5 @@ namespace LanExchange.SDK
         void Initialize(IServiceProvider serviceProvider);
 
         //ISettingsTabViewFactory GetSettingsTabViewFactory();
-
-        void OpenDefaultTab();
     }
 }
