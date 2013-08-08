@@ -49,7 +49,7 @@ namespace LanExchange.SDK
             
         }
 
-        protected virtual IComparable GetValue(int index)
+        public virtual IComparable GetValue(int index)
         {
             return Name;
         }

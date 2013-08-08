@@ -11,9 +11,9 @@ namespace LanExchange.UI
             #if DEBUG
             MessageBox.Show(e.Exception.Message+"\n"+e.Exception.StackTrace,
               "Error in "+e.Exception.Source, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
-            #endif
+            #else
             MainForm.Instance.ApplicationExit();
+            #endif
         }
 
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

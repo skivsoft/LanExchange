@@ -33,7 +33,7 @@ namespace LanExchange.Plugin.Users.Panel
             get { return 1; }
         }
 
-        protected override IComparable GetValue(int index)
+        public override IComparable GetValue(int index)
         {
             return m_Name;
         }

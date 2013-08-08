@@ -34,7 +34,7 @@ namespace LanExchange.Model
             m_CountColumns = value;
         }
 
-        protected override IComparable GetValue(int index)
+        public override IComparable GetValue(int index)
         {
             IComparable result;
             if (m_Data.TryGetValue(index, out result))

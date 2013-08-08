@@ -56,7 +56,7 @@ namespace LanExchange.Plugin.Network.Panel
             get { return 2; }
         }
 
-        protected override IComparable GetValue(int index)
+        public override IComparable GetValue(int index)
         {
             switch (index)
             {
