@@ -50,7 +50,7 @@ namespace LanExchange.Plugin.Users.Panel
             get { return 2; }
         }
 
-        protected override IComparable GetValue(int index)
+        public override IComparable GetValue(int index)
         {
             switch (index)
             {
