@@ -14,7 +14,7 @@ namespace LanExchange.Plugin.Images
         private const string ImageEnd32 = "_32.png";
 
         private IServiceProvider m_Provider;
-        private IPanelImageManager m_ImageManager;
+        private IImageManager m_ImageManagerManager;
 
         private IDictionary<string, int> m_Names;
         private IDictionary<string, string> m_Names16;
@@ -25,8 +25,8 @@ namespace LanExchange.Plugin.Images
             m_Provider = serviceProvider;
             if (m_Provider == null) return;
 
-            m_ImageManager = m_Provider.GetService(typeof (IPanelImageManager)) as IPanelImageManager;
-            if (m_ImageManager == null) return;
+            m_ImageManagerManager = m_Provider.GetService(typeof (IImageManager)) as IImageManager;
+            if (m_ImageManagerManager == null) return;
 
             m_Names = new Dictionary<string, int>();
             m_Names16 = new Dictionary<string, string>();
@@ -82,7 +82,7 @@ namespace LanExchange.Plugin.Images
                     image1 = Image.FromFile(fname);
                 if (m_Names32.TryGetValue(pair.Key, out fname))
                     image2 = Image.FromFile(fname);
-                m_ImageManager.RegisterImage(pair.Key, image1, image2);
+                m_ImageManagerManager.RegisterImage(pair.Key, image1, image2);
             }
         }
 

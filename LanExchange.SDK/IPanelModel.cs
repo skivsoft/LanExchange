@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace LanExchange.SDK
 {
@@ -84,5 +85,6 @@ namespace LanExchange.SDK
 
         PanelItemBaseFactory ItemFactory { get; set; }
         void SyncRetrieveData();
+        Type DataType { get; }
     }
 }

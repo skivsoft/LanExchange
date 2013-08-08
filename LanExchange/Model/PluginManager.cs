@@ -4,7 +4,7 @@ using System.IO;
 using System.Reflection;
 using LanExchange.SDK;
 
-namespace LanExchange
+namespace LanExchange.Model
 {
     public class PluginManager
     {

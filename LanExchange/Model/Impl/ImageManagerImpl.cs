@@ -4,18 +4,16 @@ using System.Windows.Forms;
 using LanExchange.Properties;
 using LanExchange.SDK;
 using LanExchange.UI;
-using LanExchange.Utils;
 using ShellDll;
 
-namespace LanExchange.Model
+namespace LanExchange.Model.Impl
 {
-    public class LanExchangeIcons : IPanelImageManager
+    public class ImageManagerImpl : IImageManager
     {
         private const int SYSTEM_INDEX_MYCOMPUTER = 15;
         private const int SYSTEM_INDEX_WORKGROUP  = 18;
         private const int SYSTEM_INDEX_FOLDER     = 4;
 
-        private static LanExchangeIcons m_Instance;
         private readonly ImageList m_SmallImageList;
         private readonly ImageList m_LargeImageList;
         private readonly Dictionary<string, int> m_NamesMap;
@@ -24,7 +22,7 @@ namespace LanExchange.Model
         private static Bitmap SmallEmpty = new Bitmap(16, 16);
         private static Bitmap LargeEmpty = new Bitmap(32, 32);
 
-        private LanExchangeIcons()
+        public ImageManagerImpl()
         {
             m_NamesMap = new Dictionary<string, int>();
             // init system images
@@ -80,16 +78,6 @@ namespace LanExchange.Model
             return Result;
         }
 
-        public static LanExchangeIcons Instance
-        {
-            get
-            {
-                if (m_Instance == null)
-                    m_Instance = new LanExchangeIcons();
-                return m_Instance;
-            }
-        }
-
         public ImageList SmallImageList
         {
             get { return m_SmallImageList; }
@@ -103,7 +91,7 @@ namespace LanExchange.Model
         public int IndexOf(string name)
         {
             int index;
-            if (m_Instance.m_NamesMap.TryGetValue(name, out index))
+            if (m_NamesMap.TryGetValue(name, out index))
                 return index;
             return -1;
         }

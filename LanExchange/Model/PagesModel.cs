@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
-using LanExchange.Model.Panel;
 using LanExchange.Presenter;
 using LanExchange.Utils;
 using System.IO;

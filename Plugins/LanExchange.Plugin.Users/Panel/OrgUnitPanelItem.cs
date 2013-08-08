@@ -7,7 +7,13 @@ namespace LanExchange.Plugin.Users.Panel
     {
         private string m_Name;
 
-        public OrgUnitPanelItem(PanelItemBase parent) : base(parent)
+        public static void RegisterColumns(IPanelColumnManager columnManager)
+        {
+            columnManager.RegisterColumn(typeof(OrgUnitPanelItem), new PanelColumnHeader("Organization unit"));
+        }
+
+        public OrgUnitPanelItem(PanelItemBase parent)
+            : base(parent)
         {
         }
 
@@ -25,18 +31,6 @@ namespace LanExchange.Plugin.Users.Panel
         public override int CountColumns
         {
             get { return 1; }
-        }
-
-        public override PanelColumnHeader CreateColumnHeader(int index)
-        {
-            PanelColumnHeader result = null;
-            switch (index)
-            {
-                case 0:
-                    result = new PanelColumnHeader("Organization unit");
-                    break;
-            }
-            return result;
         }
 
         protected override IComparable GetValue(int index)

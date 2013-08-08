@@ -9,7 +9,7 @@ namespace LanExchange.SDK
         [Test]
         public void TestIsSubjectAccepted()
         {
-            var mock = MockRepository.GenerateMock<IPanelFillerStrategy>();
+            var mock = MockRepository.GenerateMock<IPanelFiller>();
             Assert.IsFalse(mock.IsParentAccepted(null));
         }
     }

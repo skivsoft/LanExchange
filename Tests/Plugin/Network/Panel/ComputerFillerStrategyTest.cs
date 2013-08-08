@@ -11,7 +11,7 @@ namespace LanExchange.Plugin.Network.Panel
         [Test]
         public void TestIsSubjectAccepted()
         {
-            var strategy = new ComputerFillerStrategy();
+            var strategy = new ComputerFiller();
             Assert.IsFalse(strategy.IsParentAccepted(null));
             Assert.IsTrue(strategy.IsParentAccepted(new DomainPanelItem(null, "DOMAIN")));
         }
@@ -19,18 +19,18 @@ namespace LanExchange.Plugin.Network.Panel
         [Test, ExpectedException(typeof(ArgumentNullException))]
         public void ExceptionAlgorithm()
         {
-            var strategy = new ComputerFillerStrategy();
+            var strategy = new ComputerFiller();
             var result = new Collection<PanelItemBase>();
-            strategy.Algorithm(null, result);
+            strategy.Fill(null, result);
         }
 
         [Test]
         public void TestAlgorithm()
         {
-            var strategy = new ComputerFillerStrategy();
+            var strategy = new ComputerFiller();
             var result = new Collection<PanelItemBase>();
             var domain = NetApi32Utils.Instance.GetMachineNetBiosDomain(null);
-            strategy.Algorithm(new DomainPanelItem(null, domain), result);
+            strategy.Fill(new DomainPanelItem(null, domain), result);
             Assert.Greater(result.Count, 0);
         }
     }

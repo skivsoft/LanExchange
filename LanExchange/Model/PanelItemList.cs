@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using LanExchange.Model.Panel;
 using LanExchange.Presenter;
 using LanExchange.SDK;
 using LanExchange.Service;
-using LanExchange.Utils;
 using LanExchange.Model.Settings;
 
 namespace LanExchange.Model
@@ -20,6 +17,8 @@ namespace LanExchange.Model
         private readonly IList<IComparable> m_Keys;
         // current path for item list
         private readonly ObjectPath<PanelItemBase> m_CurrentPath;
+
+        private Type m_DataType;
 
         public event EventHandler Changed;
         
@@ -121,6 +120,11 @@ namespace LanExchange.Model
                     return true;
             }
             return false;
+        }
+
+        public Type DataType
+        {
+            get { return m_DataType; }
         }
 
         /// <summary>
@@ -243,13 +247,14 @@ namespace LanExchange.Model
             InternalSetData(items);
         }
 
-        private void InternalSetData(IEnumerable<PanelItemBase> items)
+        private void InternalSetData(PanelFillerResult fillerResult)
         {
             lock (m_Data)
             {
                 m_Data.Clear();
-                m_Data.AddRange(items);
+                m_Data.AddRange(fillerResult.Items);
                 m_Data.Sort();
+                m_DataType = fillerResult.ItemsType;
                 ApplyFilter();
             }
             OnChanged();

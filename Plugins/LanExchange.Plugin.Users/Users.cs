@@ -21,12 +21,20 @@ namespace LanExchange.Plugin.Users
                 typesManager.RegisterPanelItemFactory(typeof(UserPanelItem), new UserPanelItemFactory());
             }
 
+            // Register columns for panel item types
+            var columnManager = (IPanelColumnManager)m_Provider.GetService(typeof(IPanelColumnManager));
+            if (columnManager != null)
+            {
+                OrgUnitPanelItem.RegisterColumns(columnManager);
+                UserPanelItem.RegisterColumns(columnManager);
+            }
+
             // Register new panel fillers
-            var fillerManager = (IPanelFillerStrategyManager)m_Provider.GetService(typeof(IPanelFillerStrategyManager));
+            var fillerManager = (IPanelFillerManager)m_Provider.GetService(typeof(IPanelFillerManager));
             if (fillerManager != null)
             {
-                fillerManager.RegisterPanelFillerStrategy(new OrgUnitFillerStrategy());
-                fillerManager.RegisterPanelFillerStrategy(new UserFillerStrategy());
+                fillerManager.RegisterPanelFiller(new OrgUnitFiller());
+                fillerManager.RegisterPanelFiller(new UserFiller());
             }
         }
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Forms;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network.Panel
@@ -8,6 +7,11 @@ namespace LanExchange.Plugin.Network.Panel
     {
         private readonly ShareInfo m_SHI;
 
+        public static void RegisterColumns(IPanelColumnManager columnManager)
+        {
+            columnManager.RegisterColumn(typeof(SharePanelItem), new PanelColumnHeader("Resource name"));
+            columnManager.RegisterColumn(typeof(SharePanelItem), new PanelColumnHeader("Description"));
+        }
 
         public SharePanelItem()
         {
@@ -50,21 +54,6 @@ namespace LanExchange.Plugin.Network.Panel
         public override int CountColumns
         {
             get { return 2; }
-        }
-
-        public override PanelColumnHeader CreateColumnHeader(int index)
-        {
-            PanelColumnHeader result = null;
-            switch (index)
-            {
-                case 0:
-                    result = new PanelColumnHeader("Resource name");
-                    break;
-                case 1:
-                    result = new PanelColumnHeader("Description");
-                    break;
-            }
-            return result;
         }
 
         protected override IComparable GetValue(int index)

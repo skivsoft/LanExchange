@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using LanExchange.SDK;
 
-namespace LanExchange.Model.Panel
+namespace LanExchange.Model
 {
     public class ColumnComparer : IComparer<IColumnComparable>
     {

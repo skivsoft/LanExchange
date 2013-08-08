@@ -79,17 +79,6 @@ namespace LanExchange.Plugin.Network.Panel
             Assert.AreEqual(@"\\COMP01", m_Comp.ToString());
         }
 
-        [Test]
-        public void TestCreateColumnHeader()
-        {
-            for (int i = 0; i < m_Comp.CountColumns; i++)
-            {
-                var header = m_Comp.CreateColumnHeader(i);
-                Assert.IsNotNull(header);
-            }
-            Assert.IsNull(m_Comp.CreateColumnHeader(m_Comp.CountColumns));
-        }
-
         //[Test]
         public void TestGetSchema()
         {

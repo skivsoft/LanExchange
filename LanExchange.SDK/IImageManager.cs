@@ -1,11 +1,12 @@
 ﻿using System.Drawing;
+using System.Windows.Forms;
 
 namespace LanExchange.SDK
 {
     /// <summary>
     /// LanExchange panel image manager.
     /// </summary>
-    public interface IPanelImageManager
+    public interface IImageManager
     {
         /// <summary>
         /// Registers the image.
@@ -56,5 +57,7 @@ namespace LanExchange.SDK
         /// <param name="key">The key.</param>
         /// <returns></returns>
         Icon GetLargeIcon(string key);
+        ImageList SmallImageList { get; }
+        ImageList LargeImageList { get; }
     }
 }

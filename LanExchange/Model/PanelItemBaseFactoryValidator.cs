@@ -1,7 +1,7 @@
 ﻿using System;
 using LanExchange.SDK;
 
-namespace LanExchange
+namespace LanExchange.Model
 {
     static class PanelItemBaseFactoryValidator
     {

@@ -8,6 +8,13 @@ namespace LanExchange.Plugin.Network.Panel
     {
         private ServerInfo m_SI;
 
+        public static void RegisterColumns(IPanelColumnManager columnManager)
+        {
+            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("Network name"));
+            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("Description", 250));
+            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("OS version"));
+        }
+
         public ComputerPanelItem()
         {
             m_SI = new ServerInfo();
@@ -83,29 +90,6 @@ namespace LanExchange.Plugin.Network.Panel
         public override int CountColumns
         {
             get { return 3; }
-        }
-
-        public override PanelColumnHeader CreateColumnHeader(int index)
-        {
-            PanelColumnHeader result = null;
-            switch (index)
-            {
-                case 0:
-                    result = new PanelColumnHeader("Network name");
-                    break;
-                case 1:
-                    result = new PanelColumnHeader("Description", 250);
-                    break;
-                case 2:
-                    result = new PanelColumnHeader("OS version");
-                    result.Visible = false;
-                    break;
-                //case 3:
-                //    result = new PanelColumnHeader("IP address");
-                //    result.Visible = false;
-                //    break;
-            }
-            return result;
         }
 
         protected override IComparable GetValue(int index)

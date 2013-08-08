@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Text;
 using System.Windows.Forms;
 using LanExchange.Model;
-using LanExchange.Model.Panel;
 using LanExchange.SDK;
 using LanExchange.UI;
-using LanExchange.Utils;
 
 namespace LanExchange.Presenter
 {
@@ -28,27 +25,12 @@ namespace LanExchange.Presenter
 
         public void SetupColumns()
         {
-            if (m_Objects.Count == 0)
+            if (m_Objects.DataType == null)
                 return;
-            var panelItem = m_Objects.GetItemAt(0);
-            if (panelItem == null)
-                return;
-            if (panelItem is PanelItemDoubleDot)
-            {
-                if (m_Objects.Count == 1)
-                    return;
-                panelItem = m_Objects.GetItemAt(1);
-                if (panelItem != null)
-                {
-                    m_View.ColumnsClear();
-                    for (int i = 0; i < panelItem.CountColumns; i++)
-                    {
-                        var header = panelItem.CreateColumnHeader(i);
-                        if (header.Visible)
-                            m_View.AddColumn(header.Text, header.Width);
-                    }
-                }
-            }
+            m_View.ColumnsClear();
+            foreach (var header in AppPresenter.PanelColumns.GetColumns(m_Objects.DataType))
+                if (header.Visible)
+                    m_View.AddColumn(header.Text, header.Width);
         }
 
         public void UpdateItemsAndStatus()
@@ -138,11 +120,6 @@ namespace LanExchange.Presenter
             //}
             //if (S.Length > 0)
             //    m_View.SetClipboardText(S.ToString());
-        }
-
-        internal void Items_Changed(object sender, EventArgs e)
-        {
-            UpdateItemsAndStatus();
         }
 
         public IPanelModel Objects
@@ -258,7 +235,7 @@ namespace LanExchange.Presenter
                 return false;
             if (panelItem is PanelItemDoubleDot)
                 return CommandLevelUp();
-            var result = AppPresenter.PanelFillers.HasStrategyForParent(panelItem);
+            var result = AppPresenter.PanelFillers.FillerExists(panelItem);
             if (result)
             {
                 Objects.FocusedItemText = string.Empty;
@@ -275,7 +252,7 @@ namespace LanExchange.Presenter
             var panelItem = Objects.CurrentPath.Peek();
             if (panelItem == null || panelItem is PanelItemRoot) 
                 return false;
-            var result = AppPresenter.PanelFillers.HasStrategyForParent(panelItem);
+            var result = AppPresenter.PanelFillers.FillerExists(panelItem);
             if (result)
             {
                 Objects.FocusedItemText = panelItem.Name;

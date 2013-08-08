@@ -62,7 +62,7 @@ namespace LanExchange.UI
             TabPage Tab = new TabPage();
             Tab.Padding = new Padding(0);
             Tab.Text = Ellipsis(info.TabName, 20);
-            Tab.ImageIndex = LanExchangeIcons.Instance.IndexOf(PanelImageNames.Workgroup);
+            Tab.ImageIndex = AppPresenter.Images.IndexOf(PanelImageNames.Workgroup);
             Tab.ToolTipText = info.ToolTipText;
             Pages.Controls.Add(Tab);
         }
@@ -193,7 +193,8 @@ namespace LanExchange.UI
             if (pv != null && ActiveControl != pv)
             {
                 ActiveControl = pv as Control;
-                pv.Presenter.UpdateItemsAndStatus();
+                //TODO !!!NEED UPDATE ITEMS
+                //pv.Presenter.UpdateItemsAndStatus();
                 pv.FocusListView();
             }
         }
@@ -288,8 +289,8 @@ namespace LanExchange.UI
             ListView LV = PV.Controls[0] as ListView;
             if (LV != null)
             {
-                LV.SmallImageList = LanExchangeIcons.Instance.SmallImageList;
-                LV.LargeImageList = LanExchangeIcons.Instance.LargeImageList;
+                LV.SmallImageList = AppPresenter.Images.SmallImageList;
+                LV.LargeImageList = AppPresenter.Images.LargeImageList;
                 LV.View = (System.Windows.Forms.View) info.CurrentView;
                 if (MainForm.Instance != null)
                     MainForm.Instance.tipComps.SetToolTip(LV, " ");

@@ -30,6 +30,10 @@ namespace LanExchange.Model
         [Test]
         public void TestGetStringsUpper()
         {
+            m_Custom.SetCountColumns(3);
+            m_Custom[0] = "TEST";
+            m_Custom[1] = " ";
+            m_Custom[2] = " ";
             var lines = m_Custom.GetStringsUpper();
             Assert.AreEqual(3, lines.Length);
             Assert.AreEqual("TEST", lines[0]);
@@ -44,17 +48,6 @@ namespace LanExchange.Model
         }
 
         [Test]
-        public void TestCreateColumnHeader()
-        {
-            for (int i = 0; i < m_Custom.CountColumns; i++)
-            {
-                var header = m_Custom.CreateColumnHeader(i);
-                Assert.IsNotNull(header);
-            }
-            Assert.IsNull(m_Custom.CreateColumnHeader(m_Custom.CountColumns));
-        }
-
-        [Test]
         public void TestFullItemName()
         {
             Assert.AreEqual("test", m_Custom.FullItemName);
@@ -65,6 +58,10 @@ namespace LanExchange.Model
         [Test]
         public void TestTooltipText()
         {
+            m_Custom.SetCountColumns(3);
+            m_Custom[0] = "TEST";
+            m_Custom[1] = " ";
+            m_Custom[2] = " ";
             var sb = new StringBuilder();
             sb.Append(" ");
             sb.AppendLine();
