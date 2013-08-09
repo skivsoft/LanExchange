@@ -19,7 +19,7 @@ namespace LanExchange.Plugin.Network.Panel
         {
             if (parent == null)
                 throw new ArgumentNullException("parent");
-            result.Add(new PanelItemDoubleDot(parent));
+            //result.Add(new PanelItemDoubleDot(parent));
             foreach (var item in NetApi32Utils.Instance.NetShareEnum(parent.Name))
             {
                 var si = new ShareInfo(item);

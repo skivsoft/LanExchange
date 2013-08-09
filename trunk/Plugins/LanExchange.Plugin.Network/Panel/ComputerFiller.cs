@@ -21,7 +21,7 @@ namespace LanExchange.Plugin.Network.Panel
         {
             if (parent == null)
                 throw new ArgumentNullException("parent");
-            result.Add(new PanelItemDoubleDot(parent));
+            //result.Add(new PanelItemDoubleDot(parent));
             // get server list via OS api
             foreach (var item in NetApi32Utils.Instance.NetServerEnum(parent.Name, NetApi32.SV_101_TYPES.SV_TYPE_ALL))
             {
