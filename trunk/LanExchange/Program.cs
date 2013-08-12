@@ -9,7 +9,7 @@
 //   DONE  Enum shares after ItemActivate
 //
 // RELEASE 2.0
-//   DONE  Unit-tests coverage 10%
+//   TODO  Unit-tests coverage 30%
 //   TODO  Sending items to another tab
 //   TODO  Manual creation of computer items
 //   DONE  Classes with IDisposable interface must be a components
@@ -17,15 +17,18 @@
 //   TODO  Multi-langual support (Russian, Engligh)
 //   TODO  Columns sort (name, comment, version)
 //   TODO  Platform detection based on Platforms.xml refer
-//
-// RELEASE 3.0
-//   TODO  WMI-commands execution with parameters
+//   TODO  Ctrl+Left/Ctrl+Right - change form size with phi based step
+//   TODO  Help on shortcut keys
 //   TODO  Internal language editor
 //   TODO  Recently used items must appears when Tray.onMouseOver event fired
+//   TODO  Move all WMI features to wmi panel plugin
+//   TODO  WMI-commands execution with parameters
 //   TODO  Refactoring for strict Model-View-Presenter pattern
 //   TODO  Save/restore sort order for each tab
-//   TODO  Map disk to share
-//   TODO  Ask username/password if needed when connect to share
+//   TODO  Acceptance level 1: all function Far.Network plugin must be added
+//   TODO    Map disk to share
+//   TODO    Ask username/password if needed when connect to share
+//   TODO  Acceptance level 2: Code Analisys and R# issues must be fixed
 // 
 // *****************************************************************************
 

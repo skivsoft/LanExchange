@@ -173,7 +173,7 @@ namespace LanExchange.Model
                     var info = new PanelItemList(root.Name);
                     info.CurrentPath.Push(root.Parent);
                     info.CurrentPath.Push(root);
-                    info.FocusedItemText = SystemInformation.ComputerName;
+                    //info.FocusedItem = SystemInformation.ComputerName;
                     AddTab(info);
                 }
             }

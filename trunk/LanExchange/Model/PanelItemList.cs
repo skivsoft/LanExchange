@@ -14,7 +14,7 @@ namespace LanExchange.Model
         // merged all results and user items
         private readonly List<PanelItemBase> m_Data;
         // keys for filtering
-        private readonly IList<IComparable> m_Keys;
+        private readonly IList<PanelItemBase> m_Keys;
         // current path for item list
         private readonly ObjectPath<PanelItemBase> m_CurrentPath;
 
@@ -26,7 +26,7 @@ namespace LanExchange.Model
         {
             m_Items = new List<PanelItemBase>();
             m_Data = new List<PanelItemBase>();
-            m_Keys = new List<IComparable>();
+            m_Keys = new List<PanelItemBase>();
             m_CurrentPath = new ObjectPath<PanelItemBase>();
             TabName = name;
             CurrentView = PanelViewMode.Details;
@@ -51,7 +51,7 @@ namespace LanExchange.Model
                     Path = m_CurrentPath,
                     Filter = FilterText, 
                     View = CurrentView,
-                    Focused = FocusedItemText
+                    Focused = FocusedItem
                 };
                 page.Items = new PanelItemBase[m_Items.Count];
                 int i = 0;
@@ -64,7 +64,7 @@ namespace LanExchange.Model
                 TabName = value.Name;
                 FilterText = value.Filter;
                 CurrentView = value.View;
-                FocusedItemText = value.Focused;
+                FocusedItem = value.Focused;
                 m_Items.Clear();
                 foreach (var panelItem in value.Items)
                     Items.Add(panelItem);
@@ -74,8 +74,7 @@ namespace LanExchange.Model
 
         public string TabName { get; set; }
         public PanelViewMode CurrentView { get; set; }
-
-        public string FocusedItemText { get; set; }
+        public PanelItemBase FocusedItem { get; set; }
 
         //TODO: add delete item
         //public void Delete(PanelItem comp)
@@ -85,22 +84,20 @@ namespace LanExchange.Model
 
         public PanelItemBase GetItemAt(int index)
         {
-            var item = m_Keys[index];
-            return item != null ? GetItem(item.ToString()) : null;
+            return m_Keys[index];
         }
 
-        public PanelItemBase GetItem(string key)
-        {
-            // TODO UNCOMMENT THIS!
-            if (key == null) return null;
-            var tempComp = new CustomPanelItem(null, key);
-            int index = m_Data.BinarySearch(tempComp);
-            if (index >= 0)
-                return m_Data[index];
-            return null;
-        }
+        //public PanelItemBase GetItem(string key)
+        //{
+        //    if (key == null) return null;
+        //    var tempComp = new CustomPanelItem(null, key);
+        //    int index = m_Data.BinarySearch(tempComp);
+        //    if (index >= 0)
+        //        return m_Data[index];
+        //    return null;
+        //}
 
-        public int IndexOf(string key)
+        public int IndexOf(PanelItemBase key)
         {
             return m_Keys.IndexOf(key);
         }
@@ -151,7 +148,7 @@ namespace LanExchange.Model
             {
                 string[] A = value.GetStringsUpper();
                 if (!bFiltered || String.IsNullOrEmpty(value[0].ToString()) || GoodForFilter(A, filter1, filter2))
-                    m_Keys.Add(value[0]);
+                    m_Keys.Add(value);
             }
         }
 
@@ -252,6 +249,9 @@ namespace LanExchange.Model
             lock (m_Data)
             {
                 m_Data.Clear();
+                var parent = m_CurrentPath.IsEmpty ? null : m_CurrentPath.Peek();
+                if (!(parent is PanelItemRoot))
+                    m_Data.Add(new PanelItemDoubleDot(parent));
                 m_Data.AddRange(fillerResult.Items);
                 m_Data.Sort();
                 m_DataType = fillerResult.ItemsType;

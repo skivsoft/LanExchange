@@ -12,6 +12,8 @@ namespace LanExchange.Model
     class PanelItemListTest
     {
         private IPanelModel m_Objects;
+        private ComputerPanelItem m_Comp01;
+        private ComputerPanelItem m_Comp02;
 
         [SetUp]
         public void SetUp()
@@ -46,8 +48,10 @@ namespace LanExchange.Model
             m_Objects.CurrentPath.Push(domain);
             var filler = new Mock<IPanelFillerManager>();
             var result = new PanelFillerResult();
-            result.Items.Add(new ComputerPanelItem(domain, "COMP01"));
-            result.Items.Add(new ComputerPanelItem(domain, "COMP02"));
+            m_Comp01 = new ComputerPanelItem(domain, "COMP01");
+            m_Comp02 = new ComputerPanelItem(domain, "COMP02");
+            result.Items.Add(m_Comp01);
+            result.Items.Add(m_Comp02);
             result.ItemsType = typeof(ComputerPanelItem);
             filler.Setup(f => f.RetrievePanelItems(domain)).Returns(result);
             AppPresenter.PanelFillers = filler.Object;
@@ -61,13 +65,14 @@ namespace LanExchange.Model
             m_Objects.CurrentPath.Push(Network.ROOT_OF_DOMAINS);
             var filler = new Mock<IPanelFillerManager>();
             var result = new PanelFillerResult();
-            result.Items.Add(new DomainPanelItem(Network.ROOT_OF_DOMAINS, "TEST"));
+            var domain = new DomainPanelItem(Network.ROOT_OF_DOMAINS, "TEST");
+            result.Items.Add(domain);
             result.ItemsType = typeof (DomainPanelItem);
             filler.Setup(f => f.RetrievePanelItems(Network.ROOT_OF_DOMAINS)).Returns(result);
             AppPresenter.PanelFillers = filler.Object;
             m_Objects.SyncRetrieveData();
             Assert.AreEqual(1, m_Objects.Count);
-            Assert.AreEqual(0, m_Objects.IndexOf("TEST"));
+            Assert.AreEqual(0, m_Objects.IndexOf(domain));
         }
 
 
@@ -75,20 +80,9 @@ namespace LanExchange.Model
         public void TestIndexOfDots()
         {
             RetrieveTwoComps();
-            Assert.AreEqual(0, m_Objects.IndexOf(string.Empty));
-            Assert.AreEqual(1, m_Objects.IndexOf("COMP01"));
-            Assert.AreEqual(2, m_Objects.IndexOf("COMP02"));
+            Assert.AreEqual(0, m_Objects.IndexOf(new PanelItemDoubleDot(null)));
+            Assert.AreEqual(1, m_Objects.IndexOf(m_Comp01));
+            Assert.AreEqual(2, m_Objects.IndexOf(m_Comp02));
         }
-
-        [Test]
-        public void TestGetItem()
-        {
-            RetrieveTwoComps();
-            Assert.IsNull(m_Objects.GetItem(null));
-            var item = m_Objects.GetItem("");
-            Assert.IsNotNull(item);
-            Assert.IsInstanceOf<PanelItemDoubleDot>(item);
-        }
-
     }
 }

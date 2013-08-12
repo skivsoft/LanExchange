@@ -11,11 +11,6 @@ namespace LanExchange.Model.Settings
     /// </summary>
     public class Settings
     {
-        /// <summary>
-        /// Default width of MainForm.
-        /// </summary>
-        public const int MAINFORM_DEFAULTWIDTH = 450;
-
         private static Settings m_Instance;
         private static bool m_Modified;
 

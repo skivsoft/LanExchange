@@ -103,6 +103,7 @@ namespace LanExchange.UI
                 }
                 result.ImageIndex = AppPresenter.Images.IndexOf(panelItem.ImageName);
                 result.ToolTipText = panelItem.ToolTipText;
+                result.Tag = panelItem;
             }
             return result;
         }
@@ -134,10 +135,12 @@ namespace LanExchange.UI
 
         public string FocusedItemText
         {
-            get
-            {
-                return LV.FocusedItem == null ? null : LV.FocusedItem.Text;
-            }
+            get { return LV.FocusedItem == null ? null : LV.FocusedItem.Text; }
+        }
+
+        public PanelItemBase FocusedItem
+        {
+            get { return LV.FocusedItem == null ? null : LV.FocusedItem.Tag as PanelItemBase;  }
         }
 
         public int FocusedItemIndex
@@ -230,9 +233,9 @@ namespace LanExchange.UI
 
         private void DoFocusedItemChanged()
         {
-            //logger.Info("FocusedItemChanged: {0}", FocusedItemText);
+            //logger.Info("FocusedItemChanged: {0}", FocusedItem);
             if (focusedLockCount == 0 && LV.FocusedItem != null)
-                m_Presenter.Objects.FocusedItemText = LV.FocusedItem.Text;
+                m_Presenter.Objects.FocusedItem = LV.FocusedItem.Tag as PanelItemBase;
             if (FocusedItemChanged != null)
                 FocusedItemChanged(this, EventArgs.Empty);
         }
