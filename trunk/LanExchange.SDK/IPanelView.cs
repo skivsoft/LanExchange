@@ -79,5 +79,7 @@ namespace LanExchange.SDK
         void AddColumn(string text, int width);
         PanelViewMode ViewMode { get; set; }
         PanelItemBase FocusedItem { get; }
+
+        void RedrawItem(int index);
     }
 }

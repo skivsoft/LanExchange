@@ -29,7 +29,7 @@ namespace LanExchange.Presenter
                 return;
             m_View.ColumnsClear();
             foreach (var header in AppPresenter.PanelColumns.GetColumns(m_Objects.DataType))
-                //if (header.Visible)
+                if (header.Visible)
                     m_View.AddColumn(header.Text, header.Width);
         }
 

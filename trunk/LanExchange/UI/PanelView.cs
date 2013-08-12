@@ -92,15 +92,22 @@ namespace LanExchange.UI
             var panelItem = m_Presenter.Objects.GetItemAt(index);
             if (panelItem != null)
             {
-                // TODO !!! USE ONLY VISIBLE COLUMNS (IP SLOWDOWN NOW)
+                var columns = AppPresenter.PanelColumns.GetColumns(m_Presenter.Objects.DataType);
                 for (int i = 0; i < panelItem.CountColumns; i++)
-                {
-                    var value = panelItem[i] != null ? panelItem[i].ToString() : string.Empty;
-                    if (i == 0)
-                        result.Text = value;
-                    else
-                        result.SubItems.Add(value);
-                }
+                    if (columns[i].Visible)
+                    {
+                        IComparable value;
+                        if ((i > 0) && (columns[i] is LazyPanelColumn))
+                            value = AppPresenter.LazyThreadPool.AsyncGetData(columns[i] as LazyPanelColumn, panelItem);
+                        else
+                            value = panelItem[i];
+
+                        var text = value != null ? value.ToString() : string.Empty;
+                        if (i == 0)
+                            result.Text = text;
+                        else
+                            result.SubItems.Add(text);
+                    }
                 result.ImageIndex = AppPresenter.Images.IndexOf(panelItem.ImageName);
                 result.ToolTipText = panelItem.ToolTipText;
                 result.Tag = panelItem;
@@ -141,6 +148,11 @@ namespace LanExchange.UI
         public PanelItemBase FocusedItem
         {
             get { return LV.FocusedItem == null ? null : LV.FocusedItem.Tag as PanelItemBase;  }
+        }
+
+        public void RedrawItem(int index)
+        {
+            LV.RedrawItems(index, index, true);
         }
 
         public int FocusedItemIndex

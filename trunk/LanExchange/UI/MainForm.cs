@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using AndreasJohansson.Win32.Shell;
 using LanExchange.Action;
@@ -12,6 +14,7 @@ using System.Security.Permissions;
 using LanExchange.Model.Settings;
 using LanExchange.SDK;
 using LanExchange.Utils;
+using Timer = System.Windows.Forms.Timer;
 
 namespace LanExchange.UI
 {
@@ -48,6 +51,9 @@ namespace LanExchange.UI
             // set hotkey for activate: Ctrl+Win+X
             m_Hotkeys = new GlobalHotkeys();
             m_Hotkeys.RegisterGlobalHotKey((int)Keys.X, GlobalHotkeys.MOD_CONTROL + GlobalHotkeys.MOD_WIN, Handle);
+            // set lazy events
+            AppPresenter.LazyThreadPool.DataReady += OnDataReady;
+            AppPresenter.LazyThreadPool.NumThreadsChanged += OnNumThreadsChanged;
         }
 
         #region Global actions
@@ -289,8 +295,8 @@ namespace LanExchange.UI
             // update info panel at top of the form
             pInfo.Picture.Image = AppPresenter.Images.GetLargeImage(panelItem.ImageName);
             tipComps.SetToolTip(pInfo.Picture, panelItem.ImageLegendText);
-            pInfo.CountLines = panelItem.CountColumns;
-            for (int index = 0; index < panelItem.CountColumns; index++)
+            pInfo.CountLines = 4;
+            for (int index = 0; index < Math.Min(4, panelItem.CountColumns); index++)
                 pInfo.SetLine(index, panelItem[index].ToString());
         }
 
@@ -470,5 +476,37 @@ namespace LanExchange.UI
         {
             m_ShortcutKeysAction.Execute();
         }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            AppPresenter.LazyThreadPool.Dispose();
+        }
+
+        public void OnDataReady(object sender, DataReadyArgs args)
+        {
+            BeginInvoke(new WaitCallback(MainForm_RefreshItem), new object[1] { args.Item });
+        }
+
+        public void OnNumThreadsChanged(object sender, EventArgs eventArgs)
+        {
+            BeginInvoke(new WaitCallback(MainForm_RefreshNumThreads), new object[1] { sender });
+        }
+
+        private void MainForm_RefreshItem(object item)
+        {
+            var pv = Pages.ActivePanelView;
+            if (pv != null)
+            {
+                var index = pv.Presenter.Objects.IndexOf(item as PanelItemBase);
+                if (index >= 0)
+                    pv.RedrawItem(index);
+            }
+        }
+
+        private void MainForm_RefreshNumThreads(object sender)
+        {
+            Text = String.Format("{0} {1} [Threads: {2}]", AboutInfo.Product, AboutInfo.Version, AppPresenter.LazyThreadPool.NumThreads);
+        }
+
     }
 }

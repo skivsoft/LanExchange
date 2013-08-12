@@ -34,7 +34,8 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\LanExchange.SDK.xml</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
@@ -53,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataReadyArgs.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IAboutView.cs" />
     <Compile Include="IAction.cs" />
@@ -62,6 +64,8 @@
     <Compile Include="IImageManager.cs" />
     <Compile Include="IPanelItemFactoryManager.cs" />
     <Compile Include="IPlugin.cs" />
+    <Compile Include="LazyPanelColumn.cs" />
+    <Compile Include="LazyThreadPool.cs" />
     <Compile Include="PanelFillerResult.cs" />
     <Compile Include="PanelItemDoubleDot.cs" />
     <Compile Include="PanelItemRoot.cs" />

@@ -6,7 +6,7 @@ namespace LanExchange.SDK
     public interface IPanelColumnManager
     {
         void RegisterColumn(Type type, PanelColumnHeader header);
-
-        IEnumerable<PanelColumnHeader> GetColumns(Type type);
+        IList<PanelColumnHeader> GetColumns(Type type);
+        IEnumerable<PanelColumnHeader> EnumAllColumns();
     }
 }
