@@ -8,7 +8,7 @@ namespace LanExchange.Model.Settings
         public string Name { get; set; }
         public PanelViewMode View { get; set; }
         public ObjectPath<PanelItemBase> Path { get; set; }
-        public string Focused { get; set; }
+        public PanelItemBase Focused { get; set; }
         public string Filter { get; set; }
         public PanelItemBase[] Items;
 

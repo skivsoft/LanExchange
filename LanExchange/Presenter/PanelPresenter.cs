@@ -57,7 +57,7 @@ namespace LanExchange.Presenter
             m_View.SetVirtualListSize(m_Objects.FilterCount);
             if (m_Objects.FilterCount > 0)
             {
-                var index = Objects.IndexOf(currentItemList.FocusedItemText);
+                var index = Objects.IndexOf(currentItemList.FocusedItem);
                 m_View.FocusedItemIndex = index;
             }
             m_View.Filter.UpdateFromModel(Objects);
@@ -139,7 +139,7 @@ namespace LanExchange.Presenter
 
         public PanelItemBase GetFocusedPanelItem(bool pingAndAsk, bool canReturnParent)
         {
-            var panelItem = m_Objects.GetItem(m_View.FocusedItemText);
+            var panelItem = m_View.FocusedItem;
             if (panelItem != null && pingAndAsk)
             {
                 var bReachable = PingThread.FastPing(panelItem.Name);
@@ -238,7 +238,7 @@ namespace LanExchange.Presenter
             var result = AppPresenter.PanelFillers.FillerExists(panelItem);
             if (result)
             {
-                Objects.FocusedItemText = string.Empty;
+                Objects.FocusedItem = new PanelItemDoubleDot(panelItem);
                 Objects.CurrentPath.Push(panelItem);
                 Objects.SyncRetrieveData();
             }
@@ -255,7 +255,7 @@ namespace LanExchange.Presenter
             var result = AppPresenter.PanelFillers.FillerExists(panelItem);
             if (result)
             {
-                Objects.FocusedItemText = panelItem.Name;
+                Objects.FocusedItem = panelItem;
                 Objects.CurrentPath.Pop();
                 Objects.SyncRetrieveData();
             }

@@ -63,6 +63,14 @@ namespace LanExchange.UI
         }
         #endregion
 
+        private int GetDefaultWidth()
+        {
+            //const double phi2 = 0.6180339887498949;
+            //return (int) (Screen.PrimaryScreen.WorkingArea.Width*phi2*phi2);
+            var rect = Screen.PrimaryScreen.WorkingArea;
+            return rect.Height*rect.Height/rect.Width;
+        }
+
         public Rectangle SettingsGetBounds()
         {
             // correct width and height
@@ -75,7 +83,7 @@ namespace LanExchange.UI
             var rect = new Rectangle();
             rect.X = Settings.Instance.MainFormX;
             rect.Y = WorkingArea.Top;
-            rect.Width = Math.Min(Math.Max(Settings.MAINFORM_DEFAULTWIDTH, Settings.Instance.MainFormWidth), WorkingArea.Width);
+            rect.Width = Math.Min(Math.Max(GetDefaultWidth(), Settings.Instance.MainFormWidth), WorkingArea.Width);
             rect.Height = WorkingArea.Height;
             // determination side to snap right or left
             int CenterX = (rect.Left + rect.Right) >> 1;

@@ -49,7 +49,7 @@ namespace LanExchange.SDK
         /// <value>
         /// The focused item text.
         /// </value>
-        string FocusedItemText { get; set; }
+        PanelItemBase FocusedItem { get; set; }
         /// <summary>
         /// Gets the items.
         /// </summary>
@@ -75,13 +75,13 @@ namespace LanExchange.SDK
         /// </summary>
         /// <param name="key">The key.</param>
         /// <returns></returns>
-        PanelItemBase GetItem(string key);
+        //PanelItemBase GetItem(string key);
         /// <summary>
         /// Indexes the of.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <returns></returns>
-        int IndexOf(string key);
+        int IndexOf(PanelItemBase key);
 
         PanelItemBaseFactory ItemFactory { get; set; }
         void SyncRetrieveData();
