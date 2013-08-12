@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Net;
-using System.Text;
+using System.Net.NetworkInformation;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network.Panel
@@ -15,8 +15,67 @@ namespace LanExchange.Plugin.Network.Panel
             columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("Network name"));
             columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("Description", 250));
             columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("OS version") { Visible = false });
-            columnManager.RegisterColumn(typeof(ComputerPanelItem), new LazyIPAddressColumn("IP address") { Visible = true } );
-            columnManager.RegisterColumn(typeof(ComputerPanelItem), new LazyMACAddressColumn("MAC address"));
+            // lazy columns
+            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("Ping") { Callback = GetReachable, Width=80, Visible = true, Refreshable = true });
+            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("IP address") { Callback = GetIPAddress, Visible = true, Width = 80 });
+            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("MAC address") { Callback = GetMACAddress, Width = 110 });
+        }
+
+        private static IPAddress InternalGetIPAddress(string computerName)
+        {
+            return Dns.GetHostEntry(computerName).AddressList[0];
+        }
+
+        public static IComparable GetReachable(PanelItemBase item)
+        {
+            var ipAddr = InternalGetIPAddress(item.Name);
+            string result = string.Empty;
+            using (var ping = new Ping())
+            {
+                var pingReply = ping.Send(ipAddr);
+                if (pingReply == null)
+                    item.IsReachable = false;
+                else if (pingReply.Status == IPStatus.Success)
+                {
+                    if (pingReply.RoundtripTime == 0)
+                        result = "OK";
+                    else
+                        result = string.Format("OK {0}ms", pingReply.RoundtripTime);
+                    item.IsReachable = true;
+                }
+                else
+                {
+                    result = pingReply.Status.ToString();
+                    item.IsReachable = false;
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Returns ip addres for specified computer "item".
+        /// </summary>
+        /// <param name="item">ComputerPanelItem object.</param>
+        /// <returns>IPAddressComparable object.</returns>
+        public static IComparable GetIPAddress(PanelItemBase item)
+        {
+            return new IPAddressComparable(InternalGetIPAddress(item.Name));
+        }
+
+        /// <summary>
+        /// Returns MAC address for specified computer "item".
+        /// Sends ARP request to computer's ip address.
+        /// URL: http://www.codeproject.com/KB/IP/host_info_within_network.aspx
+        /// </summary>
+        /// <param name="item">ComputerPanelItem object.</param>
+        /// <returns>MAC-address string.</returns>
+        public static IComparable GetMACAddress(PanelItemBase item)
+        {
+            var ipAddr = InternalGetIPAddress(item.Name);
+            var ab = new byte[6];
+            int len = ab.Length;
+            int r = IPHLPApi.SendARP(ipAddr.GetHashCode(), 0, ab, ref len);
+            return BitConverter.ToString(ab, 0, 6);
         }
 
         public ComputerPanelItem()
@@ -26,7 +85,7 @@ namespace LanExchange.Plugin.Network.Panel
 
         public override int CountColumns
         {
-            get { return 5; }
+            get { return 6; }
         }
 
         /// <summary>

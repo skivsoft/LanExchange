@@ -8,5 +8,6 @@ namespace LanExchange.SDK
         void RegisterColumn(Type type, PanelColumnHeader header);
         IList<PanelColumnHeader> GetColumns(Type type);
         IEnumerable<PanelColumnHeader> EnumAllColumns();
+        int MaxColumns { get; }
     }
 }

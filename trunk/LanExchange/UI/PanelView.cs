@@ -97,8 +97,8 @@ namespace LanExchange.UI
                     if (columns[i].Visible)
                     {
                         IComparable value;
-                        if ((i > 0) && (columns[i] is LazyPanelColumn))
-                            value = AppPresenter.LazyThreadPool.AsyncGetData(columns[i] as LazyPanelColumn, panelItem);
+                        if ((i > 0) && (columns[i].Callback != null))
+                            value = AppPresenter.LazyThreadPool.AsyncGetData(columns[i], panelItem);
                         else
                             value = panelItem[i];
 

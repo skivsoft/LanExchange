@@ -11,6 +11,7 @@ namespace LanExchange.Model.Impl
     class PanelColumnManagerImpl : IPanelColumnManager
     {
         private readonly IDictionary<Type, IList<PanelColumnHeader>> m_Types;
+        private int m_MaxColumns;
 
         public PanelColumnManagerImpl()
         {
@@ -26,6 +27,8 @@ namespace LanExchange.Model.Impl
                 m_Types.Add(type, found);
             }
             found.Add(header);
+            if (found.Count > m_MaxColumns)
+                m_MaxColumns = found.Count;
         }
 
         public IList<PanelColumnHeader> GetColumns(Type type)
@@ -41,6 +44,11 @@ namespace LanExchange.Model.Impl
             foreach (var pair in m_Types)
                 foreach (var column in pair.Value)
                     yield return column;
+        }
+
+        public int MaxColumns
+        {
+            get { return m_MaxColumns; }
         }
     }
 }

@@ -97,6 +97,7 @@
     </Compile>
     <Compile Include="Model\Impl\PanelColumnManagerImpl.cs" />
     <Compile Include="Model\Impl\ImageManagerImpl.cs" />
+    <Compile Include="Model\LazyThreadPool.cs" />
     <Compile Include="Model\PagesModel.cs" />
     <Compile Include="Model\PanelIndexEventArgs.cs" />
     <Compile Include="Model\CustomPanelItem.cs" />

@@ -53,7 +53,9 @@ namespace LanExchange.UI
             m_Hotkeys.RegisterGlobalHotKey((int)Keys.X, GlobalHotkeys.MOD_CONTROL + GlobalHotkeys.MOD_WIN, Handle);
             // set lazy events
             AppPresenter.LazyThreadPool.DataReady += OnDataReady;
+#if DEBUG
             AppPresenter.LazyThreadPool.NumThreadsChanged += OnNumThreadsChanged;
+#endif
         }
 
         #region Global actions
@@ -184,6 +186,16 @@ namespace LanExchange.UI
                     MainMenu.Select();
                 e.Handled = true;
             }
+            // Ctrl+Up/Ctrl+Down - change number of info lines
+            if (e.Control && (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down))
+            {
+                if (e.KeyCode == Keys.Down)
+                    Settings.Instance.NumInfoLines++;
+                else
+                    Settings.Instance.NumInfoLines--;
+                pInfo.CountLines = Settings.Instance.NumInfoLines;
+                e.Handled = true;
+            }
         }
 
         private void MainForm_KeyUp(object sender, KeyEventArgs e)
@@ -295,9 +307,12 @@ namespace LanExchange.UI
             // update info panel at top of the form
             pInfo.Picture.Image = AppPresenter.Images.GetLargeImage(panelItem.ImageName);
             tipComps.SetToolTip(pInfo.Picture, panelItem.ImageLegendText);
-            pInfo.CountLines = 4;
-            for (int index = 0; index < Math.Min(4, panelItem.CountColumns); index++)
-                pInfo.SetLine(index, panelItem[index].ToString());
+            pInfo.CountLines = Settings.Instance.NumInfoLines;
+            for (int index = 0; index < pInfo.CountLines; index++)
+                if (index <= panelItem.CountColumns-1)
+                    pInfo.SetLine(index, panelItem[index].ToString());
+                else
+                    pInfo.SetLine(index, string.Empty);
         }
 
         private void Pages_FilterTextChanged(object sender, EventArgs e)
@@ -487,10 +502,12 @@ namespace LanExchange.UI
             BeginInvoke(new WaitCallback(MainForm_RefreshItem), new object[1] { args.Item });
         }
 
+#if DEBUG
         public void OnNumThreadsChanged(object sender, EventArgs eventArgs)
         {
             BeginInvoke(new WaitCallback(MainForm_RefreshNumThreads), new object[1] { sender });
         }
+#endif
 
         private void MainForm_RefreshItem(object item)
         {
@@ -503,10 +520,16 @@ namespace LanExchange.UI
             }
         }
 
+ #if DEBUG
         private void MainForm_RefreshNumThreads(object sender)
         {
-            Text = String.Format("{0} {1} [Threads: {2}]", AboutInfo.Product, AboutInfo.Version, AppPresenter.LazyThreadPool.NumThreads);
+            int count = 0;
+            foreach (var column in AppPresenter.PanelColumns.EnumAllColumns())
+                if (column.Callback != null)
+                    count += column.LazyDict.Count;
+            Text = String.Format("{0} {1} [Threads: {2}, Dict: {3}]", AboutInfo.Product, AboutInfo.Version, AppPresenter.LazyThreadPool.NumThreads, count);
         }
+ #endif
 
     }
 }

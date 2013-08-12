@@ -15,7 +15,7 @@ namespace LanExchange.Model.Impl
 
         public void RegisterPanelItemFactory(Type type, PanelItemBaseFactory factory)
         {
-            if (PanelItemBaseFactoryValidator.ValidateFactory(factory))
+            //if (PanelItemBaseFactoryValidator.ValidateFactory(factory))
                 m_Types.Add(type, factory);
         }
 

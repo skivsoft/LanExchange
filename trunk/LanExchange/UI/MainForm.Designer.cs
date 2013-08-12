@@ -222,7 +222,7 @@
             // 
             this.pInfo.BackColor = System.Drawing.SystemColors.Window;
             this.pInfo.ContextMenuStrip = this.popTop;
-            this.pInfo.CountLines = 0;
+            this.pInfo.CountLines = 3;
             this.pInfo.Dock = System.Windows.Forms.DockStyle.Top;
             this.pInfo.Location = new System.Drawing.Point(0, 24);
             this.pInfo.MinimumSize = new System.Drawing.Size(0, 64);

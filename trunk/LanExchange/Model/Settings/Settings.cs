@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using LanExchange.Presenter;
 using LanExchange.Utils;
 using System.Security.Principal;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ namespace LanExchange.Model.Settings
             WMIClassesInclude.Add("Win32_PhysicalMemory");
             Language = "en-US";
             m_General = new SettingsGeneral();
+            NumInfoLines = 3;
         }
 
         public static Settings Instance
@@ -137,5 +139,21 @@ namespace LanExchange.Model.Settings
         public List<string> WMIClassesInclude { get; set; }
 
         public string Language { get; set; }
+        
+        private int m_NumInfoLines;
+
+        public int NumInfoLines
+        {
+            get { return m_NumInfoLines; }
+            set
+            {
+                if (value < 2)
+                    value = 2;
+                if (AppPresenter.PanelColumns != null)
+                    if (value > AppPresenter.PanelColumns.MaxColumns)
+                        value = AppPresenter.PanelColumns.MaxColumns;
+                m_NumInfoLines = value;
+            }
+        }
     }
 }

@@ -24,12 +24,11 @@ namespace LanExchange.UI
         public int CountLines
         {
             get { return m_CountLines; }
-            set 
+            set
             {
-                for (int index = value; index < m_CountLines; index++ )
-                    SetLine(index, string.Empty);
                 m_CountLines = value;
                 Height = GetLocationY(m_CountLines) + 8;
+                Visible = m_CountLines >= 3;
             }
         }
 
