@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Globalization;
+using System.Net;
+using System.Text;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network.Panel
@@ -12,12 +14,19 @@ namespace LanExchange.Plugin.Network.Panel
         {
             columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("Network name"));
             columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("Description", 250));
-            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("OS version"));
+            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("OS version") { Visible = false });
+            columnManager.RegisterColumn(typeof(ComputerPanelItem), new LazyIPAddressColumn("IP address") { Visible = true } );
+            columnManager.RegisterColumn(typeof(ComputerPanelItem), new LazyMACAddressColumn("MAC address"));
         }
 
         public ComputerPanelItem()
         {
             m_SI = new ServerInfo();
+        }
+
+        public override int CountColumns
+        {
+            get { return 5; }
         }
 
         /// <summary>
@@ -87,11 +96,6 @@ namespace LanExchange.Plugin.Network.Panel
             set { m_SI.Comment = value; }
         }
 
-        public override int CountColumns
-        {
-            get { return 3; }
-        }
-
         public override IComparable GetValue(int index)
         {
             switch (index)
@@ -99,9 +103,8 @@ namespace LanExchange.Plugin.Network.Panel
                 case 0: return Name;
                 case 1: return Comment;
                 case 2: return m_SI.Version();
-                //case 3:
-                //    var iph = Dns.GetHostEntry(Name);
-                //    return iph.AddressList[0].ToString();
+                case 3: return string.Empty;
+                case 4: return string.Empty;
                 default:
                     return null;
             }

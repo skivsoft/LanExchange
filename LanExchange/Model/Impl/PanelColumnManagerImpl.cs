@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
+using LanExchange.Presenter;
 using LanExchange.SDK;
+using LanExchange.UI;
+using System.Threading;
 
 namespace LanExchange.Model.Impl
 {
@@ -24,11 +28,19 @@ namespace LanExchange.Model.Impl
             found.Add(header);
         }
 
-        public IEnumerable<PanelColumnHeader> GetColumns(Type type)
+        public IList<PanelColumnHeader> GetColumns(Type type)
         {
             IList<PanelColumnHeader> result;
             m_Types.TryGetValue(type, out result);
             return result;
+        }
+
+
+        public IEnumerable<PanelColumnHeader> EnumAllColumns()
+        {
+            foreach (var pair in m_Types)
+                foreach (var column in pair.Value)
+                    yield return column;
         }
     }
 }

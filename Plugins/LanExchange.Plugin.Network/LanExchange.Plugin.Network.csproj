@@ -58,13 +58,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IPAddressComparable.cs" />
+    <Compile Include="IPAddressArray.cs" />
     <Compile Include="Network.cs" />
     <Compile Include="Panel\ComputerFiller.cs" />
     <Compile Include="Panel\ComputerPanelItem.cs" />
     <Compile Include="Panel\ComputerPanelItemFactory.cs" />
+    <Compile Include="Panel\LazyMACAddressColumn.cs" />
     <Compile Include="Panel\DomainFiller.cs" />
     <Compile Include="Panel\DomainPanelItem.cs" />
     <Compile Include="Panel\DomainPanelItemFactory.cs" />
+    <Compile Include="Panel\LazyIPAddressColumn.cs" />
     <Compile Include="Panel\SharePanelItemFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NetApi32.cs" />
