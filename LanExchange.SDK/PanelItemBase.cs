@@ -8,7 +8,7 @@ namespace LanExchange.SDK
     /// <summary>
     /// Base class for any LanExchange panel item.
     /// </summary>
-    public class PanelItemBase : IComparable<PanelItemBase>, IComparable, IColumnComparable
+    public class PanelItemBase : IEquatable<PanelItemBase>, IComparable<PanelItemBase>, IComparable, IColumnComparable
     {
         protected bool m_IsReachable = true;
 
@@ -223,6 +223,16 @@ namespace LanExchange.SDK
                     result[i] = item.ToString().ToUpper(CultureInfo.InvariantCulture);
             }
             return result;
+        }
+
+        public bool Equals(PanelItemBase other)
+        {
+            return CompareTo(other) == 0;
+        }
+
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode();
         }
     }
 }

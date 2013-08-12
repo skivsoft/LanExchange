@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
+using LanExchange.SDK;
 
-namespace LanExchange.SDK
+namespace LanExchange.Model
 {
     public class LazyThreadPool : IDisposable
     {
@@ -39,13 +39,13 @@ namespace LanExchange.SDK
                 NumThreadsChanged(this, EventArgs.Empty);
         }
 
-        public IComparable AsyncGetData(LazyPanelColumn column, PanelItemBase panelItem)
+        public IComparable AsyncGetData(PanelColumnHeader column, PanelItemBase panelItem)
         {
             IComparable result;
             bool found;
             lock (column)
             {
-                found = column.Dict.TryGetValue(panelItem, out result);
+                found = column.LazyDict.TryGetValue(panelItem, out result);
             }
             if (found)
                 return result;
@@ -61,8 +61,8 @@ namespace LanExchange.SDK
 
         private void AsyncEnum(object state)
         {
-            var column = state as LazyPanelColumn;
-            if (column == null)
+            var column = state as PanelColumnHeader;
+            if (column == null || column.Callback == null)
                 return;
             Interlocked.Increment(ref m_NumThreads);
             DoNumThreadsChanged();
@@ -77,17 +77,19 @@ namespace LanExchange.SDK
                         item = m_AsyncQueue.First.Value;
                         m_AsyncQueue.RemoveFirst();
                     }
-                    var result = column.SyncGetData(item);
-                    bool bFound = false;
-                    IComparable found;
-                    lock (column)
-                    {
-                        bFound = column.Dict.TryGetValue(item, out found);
-                        if (!bFound)
-                            column.Dict.Add(item, result);
-                    }
-                    if (!bFound)
-                        DoDataReady(item);
+                    var result = column.Callback(item);
+                    //bool bFound = false;
+                    //IComparable found;
+                    //lock (column)
+                    //{
+                    //    bFound = column.Dict.TryGetValue(item, out found);
+                    //    if (!bFound)
+                    //        column.Dict.Add(item, result);
+                    //}
+                    //if (!bFound)
+                    //    DoDataReady(item);
+                    column.LazyDict.Add(item, result);
+                    DoDataReady(item);
                 }
                 catch
                 {
@@ -98,7 +100,7 @@ namespace LanExchange.SDK
             DoNumThreadsChanged();
         }
 
-        private void UpdateThreads(LazyPanelColumn column)
+        private void UpdateThreads(PanelColumnHeader column)
         {
             if (NumThreads * NUM_CYCLES_IN_THREAD < m_AsyncQueue.Count)
                 lock (m_Threads)
@@ -130,7 +132,6 @@ namespace LanExchange.SDK
                 }
             }
         }
-
 
         private bool m_Disposed;
     }

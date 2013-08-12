@@ -66,6 +66,7 @@
             this.LV.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.LV.ContextMenuStrip = this.popComps;
             this.LV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LV.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.LV.ForeColor = System.Drawing.SystemColors.WindowText;
             this.LV.FullRowSelect = true;
             this.LV.GridLines = true;
@@ -100,7 +101,7 @@
             this.toolStripSeparator6,
             this.mContextClose});
             this.popComps.Name = "popComps";
-            this.popComps.Size = new System.Drawing.Size(239, 220);
+            this.popComps.Size = new System.Drawing.Size(239, 198);
             this.popComps.Opening += new System.ComponentModel.CancelEventHandler(this.popComps_Opening);
             // 
             // mComp

@@ -64,8 +64,7 @@
     <Compile Include="IImageManager.cs" />
     <Compile Include="IPanelItemFactoryManager.cs" />
     <Compile Include="IPlugin.cs" />
-    <Compile Include="LazyPanelColumn.cs" />
-    <Compile Include="LazyThreadPool.cs" />
+    <Compile Include="LazyCallback.cs" />
     <Compile Include="PanelFillerResult.cs" />
     <Compile Include="PanelItemDoubleDot.cs" />
     <Compile Include="PanelItemRoot.cs" />
