@@ -46,6 +46,7 @@
             this.mFolderOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.mFAROpen = new System.Windows.Forms.ToolStripMenuItem();
             this.mSeparatorAdmin = new System.Windows.Forms.ToolStripSeparator();
+            this.mCopyMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.mCopySelected = new System.Windows.Forms.ToolStripMenuItem();
             this.mSeparatorSend = new System.Windows.Forms.ToolStripSeparator();
             this.mSendToNewTab = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,13 +64,13 @@
             this.mComp,
             this.mFolder,
             this.mSeparatorAdmin,
-            this.mCopySelected,
+            this.mCopyMenu,
             this.mSeparatorSend,
             this.mSendToNewTab,
             this.toolStripSeparator6,
             this.mContextClose});
             this.popComps.Name = "popComps";
-            this.popComps.Size = new System.Drawing.Size(221, 154);
+            this.popComps.Size = new System.Drawing.Size(195, 132);
             this.popComps.Opening += new System.ComponentModel.CancelEventHandler(this.popComps_Opening);
             // 
             // mComp
@@ -88,7 +89,7 @@
             this.mRadmin5});
             this.mComp.Enabled = false;
             this.mComp.Name = "mComp";
-            this.mComp.Size = new System.Drawing.Size(220, 22);
+            this.mComp.Size = new System.Drawing.Size(194, 22);
             this.mComp.Tag = "";
             this.mComp.Text = "\\\\COMPUTER";
             this.mComp.Visible = false;
@@ -97,7 +98,7 @@
             // 
             this.mCompOpen.Name = "mCompOpen";
             this.mCompOpen.ShortcutKeyDisplayString = "Shift+Enter";
-            this.mCompOpen.Size = new System.Drawing.Size(328, 22);
+            this.mCompOpen.Size = new System.Drawing.Size(341, 22);
             this.mCompOpen.Tag = "\\\\{0}";
             this.mCompOpen.Text = "Открыть в проводнике";
             this.mCompOpen.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -107,20 +108,20 @@
             this.mWMI.Name = "mWMI";
             this.mWMI.ShortcutKeyDisplayString = "";
             this.mWMI.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F1)));
-            this.mWMI.Size = new System.Drawing.Size(328, 22);
+            this.mWMI.Size = new System.Drawing.Size(341, 22);
             this.mWMI.Text = "Инструментарий управления Windows®";
             this.mWMI.Click += new System.EventHandler(this.mWMI_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(325, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(338, 6);
             // 
             // mCompService
             // 
             this.mCompService.Name = "mCompService";
             this.mCompService.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F1)));
-            this.mCompService.Size = new System.Drawing.Size(328, 22);
+            this.mCompService.Size = new System.Drawing.Size(341, 22);
             this.mCompService.Tag = "%systemroot%\\system32\\mmc.exe %systemroot%\\system32\\compmgmt.msc /computer:{0}";
             this.mCompService.Text = "Управление компьютером";
             this.mCompService.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -128,7 +129,7 @@
             // mCompMSTSC
             // 
             this.mCompMSTSC.Name = "mCompMSTSC";
-            this.mCompMSTSC.Size = new System.Drawing.Size(328, 22);
+            this.mCompMSTSC.Size = new System.Drawing.Size(341, 22);
             this.mCompMSTSC.Tag = "%systemroot%\\system32\\mstsc.exe /v:{0}";
             this.mCompMSTSC.Text = "Подключение к удаленному рабочему столу";
             this.mCompMSTSC.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -136,13 +137,13 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(325, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(338, 6);
             // 
             // mRadmin1
             // 
             this.mRadmin1.Name = "mRadmin1";
             this.mRadmin1.ShortcutKeyDisplayString = "Ctrl+Enter";
-            this.mRadmin1.Size = new System.Drawing.Size(328, 22);
+            this.mRadmin1.Size = new System.Drawing.Size(341, 22);
             this.mRadmin1.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0}";
             this.mRadmin1.Text = "Radmin® Управление";
             this.mRadmin1.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -150,7 +151,7 @@
             // mRadmin2
             // 
             this.mRadmin2.Name = "mRadmin2";
-            this.mRadmin2.Size = new System.Drawing.Size(328, 22);
+            this.mRadmin2.Size = new System.Drawing.Size(341, 22);
             this.mRadmin2.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0} /noinput";
             this.mRadmin2.Text = "Radmin® Просмотр";
             this.mRadmin2.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -158,7 +159,7 @@
             // mRadmin3
             // 
             this.mRadmin3.Name = "mRadmin3";
-            this.mRadmin3.Size = new System.Drawing.Size(328, 22);
+            this.mRadmin3.Size = new System.Drawing.Size(341, 22);
             this.mRadmin3.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0} /telnet";
             this.mRadmin3.Text = "Radmin® Телнет";
             this.mRadmin3.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -166,7 +167,7 @@
             // mRadmin4
             // 
             this.mRadmin4.Name = "mRadmin4";
-            this.mRadmin4.Size = new System.Drawing.Size(328, 22);
+            this.mRadmin4.Size = new System.Drawing.Size(341, 22);
             this.mRadmin4.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0} /file";
             this.mRadmin4.Text = "Radmin® Передача файлов";
             this.mRadmin4.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -174,7 +175,7 @@
             // mRadmin5
             // 
             this.mRadmin5.Name = "mRadmin5";
-            this.mRadmin5.Size = new System.Drawing.Size(328, 22);
+            this.mRadmin5.Size = new System.Drawing.Size(341, 22);
             this.mRadmin5.Tag = "\"%ProgramFiles(x86)%\\Radmin Viewer 3\\Radmin.exe\" /connect:{0} /shutdown";
             this.mRadmin5.Text = "Radmin® Выключение";
             this.mRadmin5.Click += new System.EventHandler(this.mCompOpen_Click);
@@ -186,7 +187,7 @@
             this.mFAROpen});
             this.mFolder.Enabled = false;
             this.mFolder.Name = "mFolder";
-            this.mFolder.Size = new System.Drawing.Size(220, 22);
+            this.mFolder.Size = new System.Drawing.Size(194, 22);
             this.mFolder.Tag = "";
             this.mFolder.Text = "\\\\COMPUTER\\FOLDER";
             this.mFolder.Visible = false;
@@ -195,7 +196,7 @@
             // 
             this.mFolderOpen.Name = "mFolderOpen";
             this.mFolderOpen.ShortcutKeyDisplayString = "Shift+Enter";
-            this.mFolderOpen.Size = new System.Drawing.Size(267, 22);
+            this.mFolderOpen.Size = new System.Drawing.Size(265, 22);
             this.mFolderOpen.Tag = "{0}";
             this.mFolderOpen.Text = "Открыть в проводнике";
             this.mFolderOpen.Click += new System.EventHandler(this.mFolderOpen_Click);
@@ -204,7 +205,7 @@
             // 
             this.mFAROpen.Name = "mFAROpen";
             this.mFAROpen.ShortcutKeyDisplayString = "Ctrl+Enter";
-            this.mFAROpen.Size = new System.Drawing.Size(267, 22);
+            this.mFAROpen.Size = new System.Drawing.Size(265, 22);
             this.mFAROpen.Tag = "FAR.EXE {0}";
             this.mFAROpen.Text = "Открыть в Far Manager";
             this.mFAROpen.Click += new System.EventHandler(this.mFolderOpen_Click);
@@ -212,38 +213,49 @@
             // mSeparatorAdmin
             // 
             this.mSeparatorAdmin.Name = "mSeparatorAdmin";
-            this.mSeparatorAdmin.Size = new System.Drawing.Size(217, 6);
+            this.mSeparatorAdmin.Size = new System.Drawing.Size(191, 6);
             this.mSeparatorAdmin.Visible = false;
+            // 
+            // mCopyMenu
+            // 
+            this.mCopyMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mCopySelected});
+            this.mCopyMenu.Name = "mCopyMenu";
+            this.mCopyMenu.Size = new System.Drawing.Size(194, 22);
+            this.mCopyMenu.Text = "Copy";
+            this.mCopyMenu.DropDownOpening += new System.EventHandler(this.mCopyMenu_DropDownOpening);
             // 
             // mCopySelected
             // 
             this.mCopySelected.Name = "mCopySelected";
             this.mCopySelected.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.mCopySelected.Size = new System.Drawing.Size(220, 22);
+            this.mCopySelected.Size = new System.Drawing.Size(222, 22);
             this.mCopySelected.Text = "Copy selected items";
-            this.mCopySelected.Click += new System.EventHandler(this.mCopySelected_Click);
+            this.mCopySelected.Click += new System.EventHandler(this.CopySelectedOnClick);
             // 
             // mSeparatorSend
             // 
             this.mSeparatorSend.Name = "mSeparatorSend";
-            this.mSeparatorSend.Size = new System.Drawing.Size(217, 6);
+            this.mSeparatorSend.Size = new System.Drawing.Size(191, 6);
+            this.mSeparatorSend.Visible = false;
             // 
             // mSendToNewTab
             // 
             this.mSendToNewTab.Name = "mSendToNewTab";
-            this.mSendToNewTab.Size = new System.Drawing.Size(220, 22);
+            this.mSendToNewTab.Size = new System.Drawing.Size(194, 22);
             this.mSendToNewTab.Text = "Send to another tab...";
+            this.mSendToNewTab.Visible = false;
             this.mSendToNewTab.Click += new System.EventHandler(this.mSendToNewTab_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(217, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(191, 6);
             // 
             // mContextClose
             // 
             this.mContextClose.Name = "mContextClose";
-            this.mContextClose.Size = new System.Drawing.Size(220, 22);
+            this.mContextClose.Size = new System.Drawing.Size(194, 22);
             this.mContextClose.Text = "Close";
             this.mContextClose.Click += new System.EventHandler(this.mContextClose_Click);
             // 
@@ -293,6 +305,7 @@
             this.LV.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lvComps_ItemSelectionChanged);
             this.LV.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvComps_KeyDown);
             this.LV.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lvComps_KeyPress);
+            this.LV.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LV_MouseDown);
             this.LV.MouseUp += new System.Windows.Forms.MouseEventHandler(this.LV_MouseUp);
             // 
             // pFilter
@@ -343,7 +356,6 @@
         public System.Windows.Forms.ToolStripMenuItem mFolderOpen;
         private System.Windows.Forms.ToolStripMenuItem mFAROpen;
         private System.Windows.Forms.ToolStripSeparator mSeparatorAdmin;
-        private System.Windows.Forms.ToolStripMenuItem mCopySelected;
         private System.Windows.Forms.ToolStripSeparator mSeparatorSend;
         private System.Windows.Forms.ToolStripMenuItem mSendToNewTab;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
@@ -351,5 +363,7 @@
         private System.Windows.Forms.ToolStripMenuItem mWMI;
         private FilterView pFilter;
         private System.Windows.Forms.TextBox ePath;
+        private System.Windows.Forms.ToolStripMenuItem mCopyMenu;
+        private System.Windows.Forms.ToolStripMenuItem mCopySelected;
     }
 }

@@ -66,11 +66,6 @@ namespace LanExchange.SDK
         /// </summary>
         void ClearSelected();
         /// <summary>
-        /// Sets the clipboard text.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        void SetClipboardText(string value);
-        /// <summary>
         /// Shows the run CMD error.
         /// </summary>
         /// <param name="cmdLine">The CMD line.</param>

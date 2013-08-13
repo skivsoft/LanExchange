@@ -18,6 +18,7 @@ namespace LanExchange.UI
 
         private readonly PanelPresenter m_Presenter;
         private readonly ListViewItemCache m_Cache;
+        private PanelItemsCopyHelper m_CopyHelper;
 
         public event EventHandler FocusedItemChanged;
 
@@ -27,10 +28,6 @@ namespace LanExchange.UI
             // init presenters
             m_Presenter = new PanelPresenter(this);
             m_Presenter.CurrentPathChanged += CurrentPath_Changed;
-
-            // Enable double buffer for ListView
-            //var mi = typeof(Control).GetMethod("SetStyle", BindingFlags.Instance | BindingFlags.NonPublic);
-            //mi.Invoke(LV, new object[] { ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true });
             // setup items cache
             m_Cache = new ListViewItemCache(this);
             //LV.CacheVirtualItems += m_Cache.CacheVirtualItems;
@@ -487,51 +484,6 @@ namespace LanExchange.UI
             return mComp.Enabled;
         }
 
-        private void popComps_Opening(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            PrepareContextMenu();
-            MergeCopyMenu();
-        }
-
-        private ToolStripItem[] GetCopyMenuItems()
-        {
-            var columns = AppPresenter.PanelColumns.GetColumns(m_Presenter.Objects.DataType);
-            var result = new List<ToolStripItem>();
-            foreach (var column in columns)
-                if (column.Visible)
-                {
-                    if (column.Index == 0)
-                    {
-                        var menuPath = new ToolStripMenuItem(string.Format("Copy path to «{0}»", column.Text));
-                        menuPath.ShortcutKeys = Keys.Control | Keys.Alt | Keys.Insert;
-                        result.Add(menuPath);
-                        result.Add(new ToolStripSeparator());
-                    }
-                    var menuItem = new ToolStripMenuItem(string.Format("Copy «{0}»", column.Text));
-                    if (column.Index == 0)
-                        menuItem.ShortcutKeys = Keys.Control | Keys.Insert;
-                    result.Add(menuItem);
-                }
-            return result.ToArray();
-        }
-
-        private void MergeCopyMenu()
-        {
-            const int INSERT_INDEX = 4;
-
-            // remove old items
-            while (popComps.Items[INSERT_INDEX] != mSeparatorSend)
-            {
-                var menuItem = popComps.Items[INSERT_INDEX];
-                popComps.Items.Remove(menuItem);
-                menuItem.Dispose();
-            }
-            // add new items
-            var items = GetCopyMenuItems();
-            for (int i = 0; i < items.Length; i++ )
-                popComps.Items.Insert(INSERT_INDEX + i, items[i]);
-        }
-
         private static void SetEnabledAndVisible(ToolStripItem item, bool value)
         {
             item.Enabled = value;
@@ -546,26 +498,6 @@ namespace LanExchange.UI
         {
             foreach(var item in items)
                 SetEnabledAndVisible(item, value);
-        }
-
-        private void mCopyCompName_Click(object sender, EventArgs e)
-        {
-            m_Presenter.CommandCopyValue(0);
-        }
-
-        private void mCopyComment_Click(object sender, EventArgs e)
-        {
-            m_Presenter.CommandCopyValue(1);
-        }
-
-        private void mCopySelected_Click(object sender, EventArgs e)
-        {
-            m_Presenter.CommandCopySelected();
-        }
-
-        private void mCopyPath_Click(object sender, EventArgs e)
-        {
-            m_Presenter.CommandCopyPath();
         }
 
         private void mContextClose_Click(object sender, EventArgs e)
@@ -658,11 +590,6 @@ namespace LanExchange.UI
             AppPresenter.MainPages.CommandSendToNewTab();
         }
 
-        public void SetClipboardText(string value)
-        {
-          Clipboard.SetText(value);
-        }
-
         public void ShowRunCmdError(string CmdLine)
         {
                 MessageBox.Show(String.Format("Не удалось выполнить команду:\n{0}", CmdLine), "Ошибка при запуске",
@@ -706,6 +633,124 @@ namespace LanExchange.UI
         private void LV_ColumnRightClick(object sender, ColumnClickEventArgs e)
         {
             m_Presenter.ColumnRightClick(e.Column);
+        }
+
+        private void LV_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                SetupCopyHelper();
+                if (m_CopyHelper.Count > 0)
+                {
+                    var obj = new DataObject(DataFormats.Text, m_CopyHelper.GetSelectedText());
+                    LV.DoDragDrop(obj, DragDropEffects.Copy);
+                }
+            }
+        }
+
+        private void CopySelectedOnClick(object sender, EventArgs e)
+        {
+            Clipboard.SetText(m_CopyHelper.GetSelectedText(), TextDataFormat.UnicodeText);
+        }
+
+        private void CopyColumnOnClick(object sender, EventArgs e)
+        {
+            var menuItem = sender as ToolStripMenuItem;
+            if (menuItem != null)
+            {
+                var colIndex = (int) menuItem.Tag;
+                Clipboard.SetText(m_CopyHelper.GetColumnText(colIndex), TextDataFormat.UnicodeText);
+            }
+        }
+
+        /// <summary>
+        /// Creates menu items depends on visible columns.
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerable<ToolStripItem> CreateCopyMenuItems(PanelItemsCopyHelper helper)
+        {
+            if (helper.Count == 1)
+                helper.MoveTo(0);
+            var columns = AppPresenter.PanelColumns.GetColumns(helper.Count == 1 ? helper.CurrentItem.GetType() : m_Presenter.Objects.DataType);
+            foreach (var column in columns)
+                if (column.Visible)
+                {
+                    if (column.Index == 0)
+                    {
+                        var valuePath = helper.GetColumnValue(-1);
+                        if (helper.Count > 1 || !string.IsNullOrEmpty(valuePath))
+                        {
+                            var menuPath = new ToolStripMenuItem();
+                            if (helper.Count == 1)
+                                menuPath.Text = string.Format("Copy «{0}»", valuePath);
+                            else
+                                menuPath.Text = string.Format("Copy path to «{0}»", column.Text);
+                            menuPath.ShortcutKeyDisplayString = "Ctrl+Alt+Ins";
+                            menuPath.Tag = -1;
+                            menuPath.Click += CopyColumnOnClick;
+                            yield return menuPath;
+                        }
+                        yield return new ToolStripSeparator();
+                    }
+                    string value;
+                    if (helper.Count == 1)
+                        value = helper.GetColumnValue(column.Index);
+                    else
+                        value = column.Text;
+                    if (!string.IsNullOrEmpty(value))
+                    {
+                        var menuItem = new ToolStripMenuItem(string.Format("Copy «{0}»", value));
+                        if (column.Index == 0)
+                            menuItem.ShortcutKeyDisplayString = "Ctrl+Ins";
+                        menuItem.Tag = column.Index;
+                        menuItem.Click += CopyColumnOnClick;
+                        yield return menuItem;
+                    }
+                }
+        }
+
+        private void SetupCopyHelper()
+        {
+            m_CopyHelper = new PanelItemsCopyHelper(m_Presenter.Objects);
+            foreach (int index in LV.SelectedIndices)
+                m_CopyHelper.Indexes.Add(index);
+            m_CopyHelper.Prepare();
+        }
+
+        private void popComps_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            //PrepareContextMenu();
+            // if no selected items just exit
+            SetupCopyHelper();
+            mCopyMenu.Enabled = m_CopyHelper.Count > 0;
+        }
+
+        /// <summary>
+        /// Add copy-related menu items in "Copy" submenu.
+        /// </summary>
+        private void PrepareCopyMenu()
+        {
+            const int INSERT_INDEX = 1;
+            // remove old items
+            for (int index = mCopyMenu.DropDownItems.Count - 1; index >= INSERT_INDEX; index-- )
+                {
+                    var menuItem = mCopyMenu.DropDownItems[index];
+                    mCopyMenu.DropDownItems.RemoveAt(index);
+                    menuItem.Dispose();
+                }
+            // choose single or plural form for text
+            if (m_CopyHelper.Count == 1)
+                mCopySelected.Text = "Copy selected item";
+            else
+                mCopySelected.Text = string.Format("Copy {0} selected items", m_CopyHelper.Count);
+            // add new items
+            foreach (var item in CreateCopyMenuItems(m_CopyHelper))
+                mCopyMenu.DropDownItems.Add(item);
+        }
+
+        private void mCopyMenu_DropDownOpening(object sender, EventArgs e)
+        {
+            PrepareCopyMenu();
         }
     }
 }

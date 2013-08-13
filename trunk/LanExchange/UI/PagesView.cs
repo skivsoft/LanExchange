@@ -313,21 +313,5 @@ namespace LanExchange.UI
                     SelectedIndex = Index;
             }
         }
-
-        private void Pages_DragEnter(object sender, DragEventArgs e)
-        {
-            e.Effect = DragDropEffects.Copy;
-        }
-
-        private void Pages_DragDrop(object sender, DragEventArgs e)
-        {
-            //MessageBox.Show(e.Data.GetData("Text").ToString());
-            MainForm.Instance.Text = e.Data.GetData("Text").ToString();
-        }
-
-        private void Pages_DragOver(object sender, DragEventArgs e)
-        {
-            e.Effect = DragDropEffects.Copy;
-        }
     }
 }
