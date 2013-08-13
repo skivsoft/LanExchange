@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace LanExchange.SDK
 {
@@ -76,10 +77,12 @@ namespace LanExchange.SDK
         void ShowRunCmdError(string cmdLine);
 
         void ColumnsClear();
-        void AddColumn(string text, int width);
+        void AddColumn(PanelColumnHeader header);
         PanelViewMode ViewMode { get; set; }
         PanelItemBase FocusedItem { get; }
 
         void RedrawItem(int index);
+
+        void SetColumnMarker(int columnIndex, SortOrder sortOrder);
     }
 }

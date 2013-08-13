@@ -8,7 +8,7 @@ namespace LanExchange.SDK
     /// <summary>
     /// Base class for any LanExchange panel item.
     /// </summary>
-    public class PanelItemBase : IEquatable<PanelItemBase>, IComparable<PanelItemBase>, IComparable, IColumnComparable
+    public class PanelItemBase : IEquatable<PanelItemBase>, IComparable<PanelItemBase>, IComparable
     {
         protected bool m_IsReachable = true;
 
@@ -138,6 +138,12 @@ namespace LanExchange.SDK
         {
             var otherItem = other as PanelItemBase;
             if (otherItem == null) return 1;
+            if ((this is PanelItemDoubleDot) && !(other is PanelItemDoubleDot))
+                return -1;
+            if (!(this is PanelItemDoubleDot) && (other is PanelItemDoubleDot))
+                return 1;
+            if ((this is PanelItemDoubleDot) && (other is PanelItemDoubleDot))
+                return 0;
             var value1 = this[column];
             var value2 = otherItem[column];
             return value1.CompareTo(value2);
@@ -156,6 +162,8 @@ namespace LanExchange.SDK
                 return -1;
             if (!(this is PanelItemDoubleDot) && (other is PanelItemDoubleDot))
                 return 1;
+            if ((this is PanelItemDoubleDot) && (other is PanelItemDoubleDot))
+                return 0;
             int result = String.Compare(Name, other.Name, StringComparison.OrdinalIgnoreCase);
             // TODO !!! CHECK ITEM SORT
             return result;

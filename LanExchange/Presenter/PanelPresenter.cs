@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using LanExchange.Model;
 using LanExchange.SDK;
 using LanExchange.UI;
+using LanExchange.Utils;
 
 namespace LanExchange.Presenter
 {
@@ -30,7 +31,14 @@ namespace LanExchange.Presenter
             m_View.ColumnsClear();
             foreach (var header in AppPresenter.PanelColumns.GetColumns(m_Objects.DataType))
                 if (header.Visible)
-                    m_View.AddColumn(header.Text, header.Width);
+                    m_View.AddColumn(header);
+        }
+
+        public void ResetSortOrder()
+        {
+            m_View.SetColumnMarker(m_Objects.Comparer.ColumnIndex, SortOrder.None);
+            m_Objects.Comparer.ColumnIndex = 0;
+            m_Objects.Comparer.SortOrder = SortOrder.Ascending;
         }
 
         public void UpdateItemsAndStatus()
@@ -240,7 +248,9 @@ namespace LanExchange.Presenter
             {
                 Objects.FocusedItem = new PanelItemDoubleDot(panelItem);
                 Objects.CurrentPath.Push(panelItem);
+                ResetSortOrder();
                 Objects.SyncRetrieveData();
+                m_View.SetColumnMarker(0, SortOrder.Ascending);
             }
             return result;
         }
@@ -257,7 +267,9 @@ namespace LanExchange.Presenter
             {
                 Objects.FocusedItem = panelItem;
                 Objects.CurrentPath.Pop();
+                ResetSortOrder();
                 Objects.SyncRetrieveData();
+                m_View.SetColumnMarker(0, SortOrder.Ascending);
             }
             return result;
             //return false;
@@ -280,6 +292,29 @@ namespace LanExchange.Presenter
             //{
             //    m_Objects.DataChanged(null, ConcreteSubject.s_UserItems);
             //}
+        }
+
+        internal void ColumnClick(int index)
+        {
+            var order = SortOrder.None;
+            if (index == Objects.Comparer.ColumnIndex)
+                switch (Objects.Comparer.SortOrder)
+                {
+                    case SortOrder.None:
+                    case SortOrder.Descending:
+                        order = SortOrder.Ascending;
+                        break;
+                    case SortOrder.Ascending:
+                        order = SortOrder.Descending;
+                        break;
+                }
+            else
+                order = SortOrder.Ascending;
+            m_View.SetColumnMarker(Objects.Comparer.ColumnIndex, SortOrder.None);
+            Objects.Comparer.ColumnIndex = index;
+            Objects.Comparer.SortOrder = order;
+            Objects.Sort(Objects.Comparer);
+            m_View.SetColumnMarker(index, order);
         }
     }
 }

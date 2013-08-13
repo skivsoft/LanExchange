@@ -9,7 +9,7 @@ namespace LanExchange.Plugin.Network.Panel
 
         public static void RegisterColumns(IPanelColumnManager columnManager)
         {
-            columnManager.RegisterColumn(typeof(DomainPanelItem), new PanelColumnHeader("Workgroup/Domain"));
+            columnManager.RegisterColumn(typeof(DomainPanelItem), new PanelColumnHeader("Domain name"));
         }
 
         public DomainPanelItem()

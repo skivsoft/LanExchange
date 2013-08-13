@@ -7,6 +7,7 @@ using LanExchange.Model.Settings;
 using LanExchange.Presenter;
 using LanExchange.SDK;
 using LanExchange.Service;
+using LanExchange.Utils;
 
 namespace LanExchange.UI
 {
@@ -153,6 +154,11 @@ namespace LanExchange.UI
         public void RedrawItem(int index)
         {
             LV.RedrawItems(index, index, true);
+        }
+
+        public void SetColumnMarker(int columnIndex, SortOrder sortOrder)
+        {
+            NativeMethods.SetColumnImage(LV, columnIndex, sortOrder, -1);
         }
 
         public int FocusedItemIndex
@@ -549,9 +555,7 @@ namespace LanExchange.UI
 
         private void LV_ColumnClick(object sender, ColumnClickEventArgs e)
         {
-            //TODO column sort for panelitems
-            //var sorter = new PanelItemComparer(e.Column, PanelItemComparer.ColumnSortOrder.Ascending);
-            //m_Presenter.Objects.Sort(sorter);
+            m_Presenter.ColumnClick(e.Column);
         }
 
         private void ePath_KeyDown(object sender, KeyEventArgs e)
@@ -596,10 +600,12 @@ namespace LanExchange.UI
             LV.Columns.Clear();
         }
 
-        public void AddColumn(string text, int width)
+        public void AddColumn(PanelColumnHeader header)
         {
-            LV.Columns.Add(text, width);
+            var column = LV.Columns.Add(header.Text, header.Width);
+            column.Tag = header;
         }
+
 
         public PanelViewMode ViewMode
         {
