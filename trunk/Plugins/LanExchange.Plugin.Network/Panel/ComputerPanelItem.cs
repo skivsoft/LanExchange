@@ -14,11 +14,11 @@ namespace LanExchange.Plugin.Network.Panel
         {
             columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("Network name"));
             columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("Description", 250));
-            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("OS version") { Visible = false });
+            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("OS version") { Visible = true, Width=140 });
             // lazy columns
-            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("Ping") { Callback = GetReachable, Width=80, Visible = true, Refreshable = true });
-            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("IP address") { Callback = GetIPAddress, Visible = true, Width = 80 });
-            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("MAC address") { Callback = GetMACAddress, Width = 110 });
+            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("IP address") { Callback = GetIPAddress, Visible = false, Width = 80 });
+            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("MAC address") { Callback = GetMACAddress, Visible = false, Width = 110 });
+            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("Ping") { Callback = GetReachable, Width = 80, Visible = true, Refreshable = true });
         }
 
         private static IPAddress InternalGetIPAddress(string computerName)
@@ -115,13 +115,13 @@ namespace LanExchange.Plugin.Network.Panel
 
         public uint Platform
         {
-            get { return m_SI.PlatformID; }
-            set { m_SI.PlatformID = value; }
+            get { return m_SI.Version.PlatformID; }
+            set { m_SI.Version.PlatformID = value; }
         }
 
         public string Ver
         {
-            get { return string.Format("{0}.{1}", m_SI.VersionMajor, m_SI.VersionMinor); }
+            get { return string.Format("{0}.{1}", m_SI.Version.Major, m_SI.Version.Minor); }
             set
             {
                 var aValue = value.Split('.');
@@ -131,8 +131,8 @@ namespace LanExchange.Plugin.Network.Panel
                     uint uValue2;
                     if (uint.TryParse(aValue[0], out uValue1) && uint.TryParse(aValue[1], out uValue2))
                     {
-                        m_SI.VersionMajor = uValue1;
-                        m_SI.VersionMinor = uValue2;
+                        m_SI.Version.Major = uValue1;
+                        m_SI.Version.Minor = uValue2;
                     }
                 }
             }
@@ -140,12 +140,12 @@ namespace LanExchange.Plugin.Network.Panel
 
         public string Type
         {
-            get { return m_SI.Type.ToString("X"); }
+            get { return m_SI.Version.Type.ToString("X"); }
             set
             {
                 uint uValue;
                 if (uint.TryParse(value, NumberStyles.HexNumber, null, out uValue))
-                    m_SI.Type = uValue;
+                    m_SI.Version.Type = uValue;
             }
         }
 
@@ -161,7 +161,7 @@ namespace LanExchange.Plugin.Network.Panel
             {
                 case 0: return Name;
                 case 1: return Comment;
-                case 2: return m_SI.Version();
+                case 2: return m_SI.Version;
                 case 3: return string.Empty;
                 case 4: return string.Empty;
                 default:
@@ -197,7 +197,7 @@ namespace LanExchange.Plugin.Network.Panel
         {
             get
             {
-                return String.Format("{0}\n{1}\n{2}", Comment, m_SI.Version(), m_SI.GetTopicalityText());
+                return String.Format("{0}\n{1}\n{2}", Comment, m_SI.Version, m_SI.GetTopicalityText());
             }
         }
 

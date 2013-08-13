@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace LanExchange.SDK
@@ -86,5 +87,7 @@ namespace LanExchange.SDK
         PanelItemBaseFactory ItemFactory { get; set; }
         void SyncRetrieveData();
         Type DataType { get; }
+        ColumnComparer Comparer { get; }
+        void Sort(IComparer<PanelItemBase> sorter);
     }
 }

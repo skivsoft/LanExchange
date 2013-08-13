@@ -17,9 +17,9 @@ namespace LanExchange.Plugin.Network.Panel
             var info = new ServerInfo();
             info.Name = "COMP01";
             info.Comment = "Hello world";
-            info.PlatformID = (uint) NetApi32.SV_101_PLATFORM.PLATFORM_ID_NT;
-            info.VersionMajor = 6;
-            info.VersionMinor = 2;
+            info.Version.PlatformID = (uint)NetApi32.SV_101_PLATFORM.PLATFORM_ID_NT;
+            info.Version.Major = 6;
+            info.Version.Minor = 2;
             m_Comp = new ComputerPanelItem(null, info);
         }
 
@@ -56,7 +56,7 @@ namespace LanExchange.Plugin.Network.Panel
         {
             Assert.AreEqual(m_Comp.Name, m_Comp[0]);
             Assert.AreEqual(m_Comp.Comment, m_Comp[1]);
-            Assert.AreEqual(m_Comp.SI.Version(), m_Comp[2]);
+            Assert.AreEqual(m_Comp.SI.Version, m_Comp[2]);
         }
 
         [Test]
@@ -90,10 +90,10 @@ namespace LanExchange.Plugin.Network.Panel
         {
             m_Comp.SI.Name = "QQQ";
             m_Comp.SI.Comment = "WWW";
-            m_Comp.SI.PlatformID = 1;
-            m_Comp.SI.Type = 2;
-            m_Comp.SI.VersionMajor = 3;
-            m_Comp.SI.VersionMinor = 4;
+            m_Comp.SI.Version.PlatformID = 1;
+            m_Comp.SI.Version.Type = 2;
+            m_Comp.SI.Version.Major = 3;
+            m_Comp.SI.Version.Minor = 4;
             // try serialize
             var ser = new XmlSerializer(m_Comp.GetType());
             string content;
@@ -111,10 +111,10 @@ namespace LanExchange.Plugin.Network.Panel
         {
             m_Comp.SI.Name = "QQQ";
             m_Comp.SI.Comment = null;
-            m_Comp.SI.PlatformID = 1;
-            m_Comp.SI.Type = 2;
-            m_Comp.SI.VersionMajor = 3;
-            m_Comp.SI.VersionMinor = 4;
+            m_Comp.SI.Version.PlatformID = 1;
+            m_Comp.SI.Version.Type = 2;
+            m_Comp.SI.Version.Major = 3;
+            m_Comp.SI.Version.Minor = 4;
             // try serialize
             var ser = new XmlSerializer(m_Comp.GetType());
             string content;

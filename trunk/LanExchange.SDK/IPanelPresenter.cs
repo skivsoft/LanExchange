@@ -39,5 +39,7 @@ namespace LanExchange.SDK
         /// <returns></returns>
         [Obsolete("Bad idea to use this computer-specific method.")]
         PanelItemBase GetFocusedComputer(bool pingAndAsk);
+
+        void ResetSortOrder();
     }
 }

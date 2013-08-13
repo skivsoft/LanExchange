@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using LanExchange.Presenter;
 using LanExchange.SDK;
 using LanExchange.Service;
@@ -17,6 +19,8 @@ namespace LanExchange.Model
         private readonly IList<PanelItemBase> m_Keys;
         // current path for item list
         private readonly ObjectPath<PanelItemBase> m_CurrentPath;
+        // column sorter
+        private readonly ColumnComparer m_Comparer;
 
         private Type m_DataType;
 
@@ -28,6 +32,7 @@ namespace LanExchange.Model
             m_Data = new List<PanelItemBase>();
             m_Keys = new List<PanelItemBase>();
             m_CurrentPath = new ObjectPath<PanelItemBase>();
+            m_Comparer = new ColumnComparer(0, SortOrder.Ascending);
             TabName = name;
             CurrentView = PanelViewMode.Details;
         }
@@ -122,6 +127,18 @@ namespace LanExchange.Model
         public Type DataType
         {
             get { return m_DataType; }
+        }
+
+        public ColumnComparer Comparer
+        {
+            get { return m_Comparer; }
+        }
+
+        public void Sort(IComparer<PanelItemBase> sorter)
+        {
+            m_Data.Sort(sorter);
+            ApplyFilter();
+            OnChanged();
         }
 
         /// <summary>
@@ -261,7 +278,7 @@ namespace LanExchange.Model
                 if (!(parent is PanelItemRoot))
                     m_Data.Add(new PanelItemDoubleDot(parent));
                 m_Data.AddRange(fillerResult.Items);
-                m_Data.Sort();
+                m_Data.Sort(m_Comparer);
                 m_DataType = fillerResult.ItemsType;
                 ApplyFilter();
             }

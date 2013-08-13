@@ -49,6 +49,7 @@
     <Compile Include="Model\PagesModelTest.cs" />
     <Compile Include="Model\PanelIndexEvenArgsTest.cs" />
     <Compile Include="Model\CustomPanelItemTest.cs" />
+    <Compile Include="Plugin\Network\OSVersionTest.cs" />
     <Compile Include="SDK\PanelFillerResultTest.cs" />
     <Compile Include="SDK\PanelItemBaseTest.cs" />
     <Compile Include="Model\PanelItemListEventArgsTest.cs" />

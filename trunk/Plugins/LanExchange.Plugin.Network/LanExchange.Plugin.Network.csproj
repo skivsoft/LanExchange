@@ -62,6 +62,7 @@
     <Compile Include="IPAddressArray.cs" />
     <Compile Include="IPHLPApi.cs" />
     <Compile Include="Network.cs" />
+    <Compile Include="OSVersion.cs" />
     <Compile Include="Panel\ComputerFiller.cs" />
     <Compile Include="Panel\ComputerPanelItem.cs" />
     <Compile Include="Panel\ComputerPanelItemFactory.cs" />

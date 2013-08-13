@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using LanExchange.Model;
 using LanExchange.SDK;
 
@@ -98,15 +99,17 @@ namespace LanExchange.Presenter
         public void Model_AfterAppendTab(object sender, PanelItemListEventArgs e)
         {
             // create panel
-            var PV = m_View.CreatePanelView(e.Info);
+            var panelView = m_View.CreatePanelView(e.Info);
             // set update event
-            IPanelPresenter presenter = PV.Presenter;
+            IPanelPresenter presenter = panelView.Presenter;
             presenter.Objects = e.Info;
             e.Info.Changed += (o, args) => presenter.UpdateItemsAndStatus();
             //e.Info.SubscriptionChanged += Item_SubscriptionChanged;
             // update items
             //e.Info.DataChanged(null, ConcreteSubject.s_UserItems);
+            presenter.ResetSortOrder();
             e.Info.SyncRetrieveData();
+            panelView.SetColumnMarker(0, SortOrder.Ascending);
         }
 
 

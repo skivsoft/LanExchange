@@ -103,7 +103,6 @@
     <Compile Include="Model\CustomPanelItem.cs" />
     <Compile Include="Model\PanelItemList.cs" />
     <Compile Include="Model\PanelItemListEventArgs.cs" />
-    <Compile Include="Model\ColumnComparer.cs" />
     <Compile Include="Model\PingThread.cs" />
     <Compile Include="Model\Settings\SettingsGeneral.cs" />
     <Compile Include="Service\IPuntoSwitcherService.cs" />
