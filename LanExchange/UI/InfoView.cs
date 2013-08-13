@@ -47,6 +47,32 @@ namespace LanExchange.UI
             return string.Empty;
         }
 
+        private Label CreateLabelControl(int index)
+        {
+            var control = new Label();
+            control.AutoSize = true;
+            control.Location = new Point(50, GetLocationY(index));
+            if (index == 0)
+                control.Font = new Font(control.Font, FontStyle.Bold);
+            control.MouseDown += ControlOnMouseDown;
+            return control;
+        }
+
+        /// <summary>
+        /// Drag label text from InfoView and drop into external application.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ControlOnMouseDown(object sender, MouseEventArgs e)
+        {
+            var label = sender as Label;
+            if (label != null && e.Button == MouseButtons.Left)
+            {
+                var obj = new DataObject(DataFormats.UnicodeText, label.Text);
+                DoDragDrop(obj, DragDropEffects.Copy);
+            }
+        }
+
         public void SetLine(int index, string text)
         {
             if (index < 0 || index > m_CountLines - 1)
@@ -54,11 +80,7 @@ namespace LanExchange.UI
             Label control;
             if (!m_Lines.TryGetValue(index, out control))
             {
-                control = new Label();
-                control.AutoSize = true;
-                control.Location = new Point(50, GetLocationY(index));
-                if (index == 0)
-                    control.Font = new Font(control.Font, FontStyle.Bold);
+                control = CreateLabelControl(index);
                 Controls.Add(control);
                 m_Lines.Add(index, control);
             }

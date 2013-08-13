@@ -85,38 +85,38 @@ namespace LanExchange.Presenter
 
         public void CommandCopyValue(int index)
         {
-            if (m_Objects == null) return;
-            StringBuilder S = new StringBuilder();
-            foreach (int selIndex in m_View.SelectedIndexes)
-            {
-                if (S.Length > 0)
-                    S.AppendLine();
-                PanelItemBase PItem = m_Objects.GetItemAt(selIndex);
-                if (PItem != null)
-                    S.Append(@"\\" + PItem[index]);
-            }
-            if (S.Length > 0)
-                m_View.SetClipboardText(S.ToString());
+            //if (m_Objects == null) return;
+            //StringBuilder S = new StringBuilder();
+            //foreach (int selIndex in m_View.SelectedIndexes)
+            //{
+            //    if (S.Length > 0)
+            //        S.AppendLine();
+            //    PanelItemBase PItem = m_Objects.GetItemAt(selIndex);
+            //    if (PItem != null)
+            //        S.Append(@"\\" + PItem[index]);
+            //}
+            //if (S.Length > 0)
+            //    m_View.SetClipboardText(S.ToString());
         }
 
         public void CommandCopySelected()
         {
-            if (m_Objects == null) return;
-            StringBuilder S = new StringBuilder();
-            foreach (int index in m_View.SelectedIndexes)
-            {
-                if (S.Length > 0)
-                    S.AppendLine();
-                PanelItemBase PItem = m_Objects.GetItemAt(index);
-                if (PItem != null)
-                {
-                    S.Append(@"\\" + PItem[0]);
-                    S.Append("\t");
-                    S.Append(PItem[1]);
-                }
-            }
-            if (S.Length > 0)
-                m_View.SetClipboardText(S.ToString());
+            //if (m_Objects == null) return;
+            //StringBuilder S = new StringBuilder();
+            //foreach (int index in m_View.SelectedIndexes)
+            //{
+            //    if (S.Length > 0)
+            //        S.AppendLine();
+            //    PanelItemBase PItem = m_Objects.GetItemAt(index);
+            //    if (PItem != null)
+            //    {
+            //        S.Append(@"\\" + PItem[0]);
+            //        S.Append("\t");
+            //        S.Append(PItem[1]);
+            //    }
+            //}
+            //if (S.Length > 0)
+            //    m_View.SetClipboardText(S.ToString());
         }
 
         public void CommandCopyPath()
@@ -359,6 +359,11 @@ namespace LanExchange.Presenter
             var columns = AppPresenter.PanelColumns.GetColumns(m_Objects.DataType);
             columns[columnIndex].Visible = !columns[columnIndex].Visible;
             SetupColumns();
+        }
+
+        internal void CommandCopyColumn(int p)
+        {
+            throw new NotImplementedException();
         }
     }
 }
