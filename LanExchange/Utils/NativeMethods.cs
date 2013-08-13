@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -123,6 +124,18 @@ namespace LanExchange.Utils
         private const int HDF_IMAGE = 0x0800;
         private const int HDF_SORTUP = 0x0400;
         private const int HDF_SORTDOWN = 0x0200;
+
+        private const int SB_HORZ = 0;
+        private const int SB_VERT = 1;
+        private const int SB_CTL = 2;
+        private const int SB_BOTH = 3;
+
+        private const int SIF_RANGE = 0x0001;
+        private const int SIF_PAGE = 0x0002;
+        private const int SIF_POS = 0x0004;
+        private const int SIF_DISABLENOSCROLL = 0x0008;
+        private const int SIF_TRACKPOS = 0x0010;
+        private const int SIF_ALL = (SIF_RANGE | SIF_PAGE | SIF_POS | SIF_TRACKPOS);
         
         #endregion
 
@@ -144,14 +157,40 @@ namespace LanExchange.Utils
             public int type;
             public IntPtr pvFilter;
         }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public class HDHITTESTINFO
+        {
+            public int pt_x;
+            public int pt_y;
+            public int flags;
+            public int iItem;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public class SCROLLINFO
+        {
+            public int cbSize = Marshal.SizeOf(typeof(NativeMethods.SCROLLINFO));
+            public int fMask;
+            public int nMin;
+            public int nMax;
+            public int nPage;
+            public int nPos;
+            public int nTrackPos;
+        }
         #endregion
 
 
         #region Entry points
+
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
         [DllImport("user32.dll", EntryPoint = "SendMessage", CharSet = CharSet.Auto)]
         private static extern IntPtr SendMessageHDItem(IntPtr hWnd, int msg, int wParam, ref HDITEM hdi);
+        [DllImport("user32.dll", EntryPoint = "SendMessage", CharSet = CharSet.Auto)]
+        public static extern IntPtr SendMessageHDHITTESTINFO(IntPtr hWnd, int Msg, IntPtr wParam, [In, Out] HDHITTESTINFO lParam);
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+        public static extern bool GetScrollInfo(IntPtr hWnd, int fnBar, SCROLLINFO scrollInfo);
 
         #endregion
 
@@ -200,6 +239,50 @@ namespace LanExchange.Utils
             //}
 
             result = SendMessageHDItem(hdrCntl, HDM_SETITEM, columnIndex, ref item);
+        }
+
+        /// <summary>
+        /// Get the scroll position of the given scroll bar
+        /// </summary>
+        /// <param name="lv"></param>
+        /// <param name="horizontalBar"></param>
+        /// <returns></returns>
+        public static int GetScrollPosition(ListView lv, bool horizontalBar)
+        {
+            int fnBar = (horizontalBar ? SB_HORZ : SB_VERT);
+
+            SCROLLINFO scrollInfo = new SCROLLINFO();
+            scrollInfo.fMask = SIF_POS;
+            if (GetScrollInfo(lv.Handle, fnBar, scrollInfo))
+                return scrollInfo.nPos;
+            else
+                return -1;
+        }
+
+        /// <summary>
+        /// Return the index of the column of the header that is under the given point.
+        /// Return -1 if no column is under the pt
+        /// </summary>
+        /// <param name="handle">The list we are interested in</param>
+        /// <param name="pt">The client co-ords</param>
+        /// <returns>The index of the column under the point, or -1 if no column header is under that point</returns>
+        public static int GetColumnUnderPoint(IntPtr handle, Point pt)
+        {
+            const int HHT_ONHEADER = 2;
+            const int HHT_ONDIVIDER = 4;
+            return NativeMethods.HeaderControlHitTest(handle, pt, HHT_ONHEADER | HHT_ONDIVIDER);
+        }
+
+        private static int HeaderControlHitTest(IntPtr handle, Point pt, int flag)
+        {
+            HDHITTESTINFO testInfo = new HDHITTESTINFO();
+            testInfo.pt_x = pt.X;
+            testInfo.pt_y = pt.Y;
+            IntPtr result = NativeMethods.SendMessageHDHITTESTINFO(handle, HDM_HITTEST, IntPtr.Zero, testInfo);
+            if ((testInfo.flags & flag) != 0)
+                return testInfo.iItem;
+            else
+                return -1;
         }
 
     }

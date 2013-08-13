@@ -84,5 +84,7 @@ namespace LanExchange.SDK
         void RedrawItem(int index);
 
         void SetColumnMarker(int columnIndex, SortOrder sortOrder);
+
+        void ShowHeaderMenu(IList<PanelColumnHeader> columns);
     }
 }

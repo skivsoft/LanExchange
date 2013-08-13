@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using LanExchange.Presenter;
 using LanExchange.SDK;
-using LanExchange.UI;
-using System.Threading;
 
 namespace LanExchange.Model.Impl
 {
@@ -26,6 +22,7 @@ namespace LanExchange.Model.Impl
                 found = new List<PanelColumnHeader>();
                 m_Types.Add(type, found);
             }
+            header.Index = found.Count;
             found.Add(header);
             if (found.Count > m_MaxColumns)
                 m_MaxColumns = found.Count;
@@ -49,6 +46,25 @@ namespace LanExchange.Model.Impl
         public int MaxColumns
         {
             get { return m_MaxColumns; }
+        }
+
+        // TODO Column reorder
+        public bool ReorderColumns(Type type, int oldIndex, int newIndex)
+        {
+            //// lock reorder for 0-column
+            //if (oldIndex == 0 || newIndex == 0)
+            //    return false;
+            //IList<PanelColumnHeader> result;
+            //if (m_Types.TryGetValue(type, out result))
+            //{
+            //    var temp = result[oldIndex];
+            //    result[oldIndex] = result[newIndex];
+            //    result[newIndex] = temp;
+            //    //m_Types.Remove(type);
+            //    //m_Types.Add(type, result);
+            //    return true;
+            //}
+            return false;
         }
     }
 }

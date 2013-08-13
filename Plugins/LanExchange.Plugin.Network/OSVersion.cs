@@ -5,7 +5,7 @@ namespace LanExchange.Plugin.Network
     [Serializable]
     public class OSVersion : IComparable<OSVersion>, IComparable
     {
-        private uint m_PlatformId;
+        private uint m_PlatformID;
         private uint m_Major;
         private uint m_Minor;
         private uint m_Type;
@@ -18,8 +18,8 @@ namespace LanExchange.Plugin.Network
 
         public uint PlatformID
         {
-            get { return m_PlatformId; }
-            set { m_PlatformId = value; }
+            get { return m_PlatformID; }
+            set { m_PlatformID = value; }
         }
 
         public uint Major
@@ -93,8 +93,8 @@ namespace LanExchange.Plugin.Network
         public int CompareTo(OSVersion other)
         {
             if (other == null) return 1;
-            uint u1 = m_PlatformId;
-            uint u2 = other.m_PlatformId;
+            uint u1 = m_PlatformID;
+            uint u2 = other.m_PlatformID;
             if (u1 < u2) return -1;
             if (u1 > u2) return 1;
             bool s1 = IsServer();
@@ -129,7 +129,7 @@ namespace LanExchange.Plugin.Network
         {
             //return String.Format("{0}.{1}.{2}.{3}", platform_id, ver_major, ver_minor, type);
             bool bServer = IsServer();
-            NetApi32.SV_101_PLATFORM platform = (NetApi32.SV_101_PLATFORM) m_PlatformId;
+            NetApi32.SV_101_PLATFORM platform = (NetApi32.SV_101_PLATFORM) m_PlatformID;
             // OS2 same as NT
             if (platform == NetApi32.SV_101_PLATFORM.PLATFORM_ID_OS2)
                 platform = NetApi32.SV_101_PLATFORM.PLATFORM_ID_NT;
@@ -188,9 +188,13 @@ namespace LanExchange.Plugin.Network
                 case NetApi32.SV_101_PLATFORM.PLATFORM_ID_VMS:
                     return String.Format("VMS {0}.{1}", m_Major, m_Minor);
                 default:
-                    return String.Format("{0} {1}.{2}", m_PlatformId, m_Major, m_Minor);
+                    return String.Format("{0} {1}.{2}", m_PlatformID, m_Major, m_Minor);
             }
         }
 
+        public override int GetHashCode()
+        {
+           return (int)(m_PlatformID ^ m_Major ^ m_Minor ^ m_Type);
+        }
     }
 }

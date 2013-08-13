@@ -109,7 +109,6 @@ namespace LanExchange.Presenter
             //e.Info.DataChanged(null, ConcreteSubject.s_UserItems);
             presenter.ResetSortOrder();
             e.Info.SyncRetrieveData();
-            panelView.SetColumnMarker(0, SortOrder.Ascending);
         }
 
 

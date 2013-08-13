@@ -29,8 +29,8 @@ namespace LanExchange.UI
             m_Presenter.CurrentPathChanged += CurrentPath_Changed;
 
             // Enable double buffer for ListView
-            var mi = typeof(Control).GetMethod("SetStyle", BindingFlags.Instance | BindingFlags.NonPublic);
-            mi.Invoke(LV, new object[] { ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true });
+            //var mi = typeof(Control).GetMethod("SetStyle", BindingFlags.Instance | BindingFlags.NonPublic);
+            //mi.Invoke(LV, new object[] { ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true });
             // setup items cache
             m_Cache = new ListViewItemCache(this);
             //LV.CacheVirtualItems += m_Cache.CacheVirtualItems;
@@ -89,9 +89,11 @@ namespace LanExchange.UI
                 return null;
             if (index < 0 || index > Math.Min(m_Presenter.Objects.FilterCount, LV.VirtualListSize) - 1)
                 return null;
-            var result = new ListViewItem();
             var panelItem = m_Presenter.Objects.GetItemAt(index);
-            if (panelItem != null)
+            if (panelItem == null)
+                return null;
+            var result = new ListViewItem();
+            if (!(panelItem is PanelItemDoubleDot))
             {
                 var columns = AppPresenter.PanelColumns.GetColumns(m_Presenter.Objects.DataType);
                 for (int i = 0; i < panelItem.CountColumns; i++)
@@ -101,7 +103,7 @@ namespace LanExchange.UI
                         if ((i > 0) && (columns[i].Callback != null))
                             value = AppPresenter.LazyThreadPool.AsyncGetData(columns[i], panelItem);
                         else
-                            value = panelItem[i];
+                            value = panelItem[columns[i].Index];
 
                         var text = value != null ? value.ToString() : string.Empty;
                         if (i == 0)
@@ -109,10 +111,10 @@ namespace LanExchange.UI
                         else
                             result.SubItems.Add(text);
                     }
-                result.ImageIndex = AppPresenter.Images.IndexOf(panelItem.ImageName);
-                result.ToolTipText = panelItem.ToolTipText;
-                result.Tag = panelItem;
             }
+            result.ImageIndex = AppPresenter.Images.IndexOf(panelItem.ImageName);
+            result.ToolTipText = panelItem.ToolTipText;
+            result.Tag = panelItem;
             return result;
         }
         #endregion
@@ -154,11 +156,6 @@ namespace LanExchange.UI
         public void RedrawItem(int index)
         {
             LV.RedrawItems(index, index, true);
-        }
-
-        public void SetColumnMarker(int columnIndex, SortOrder sortOrder)
-        {
-            NativeMethods.SetColumnImage(LV, columnIndex, sortOrder, -1);
         }
 
         public int FocusedItemIndex
@@ -344,17 +341,18 @@ namespace LanExchange.UI
             }
             // Ctrl+Ins - Copy to clipboard (similar to Ctrl+C)
             // Ctrl+Alt+C - Copy to clipboard and close window
-            if (e.Control && e.KeyCode == Keys.Insert || e.Control && e.Alt && e.KeyCode == Keys.C)
-            {
-                if (mCopyCompName.Enabled)
-                    m_Presenter.CommandCopyValue(0);
-                else
-                    if (mCopyPath.Enabled)
-                        m_Presenter.CommandCopyPath();
-                if (e.KeyCode == Keys.C)
-                    MainForm.Instance.Hide();
-                e.Handled = true;
-            }
+            // TODO !!!Copy items using keys
+            //if (e.Control && e.KeyCode == Keys.Insert || e.Control && e.Alt && e.KeyCode == Keys.C)
+            //{
+            //    if (mCopyCompName.Enabled)
+            //        m_Presenter.CommandCopyValue(0);
+            //    else
+            //        if (mCopyPath.Enabled)
+            //            m_Presenter.CommandCopyPath();
+            //    if (e.KeyCode == Keys.C)
+            //        MainForm.Instance.Hide();
+            //    e.Handled = true;
+            //}
             // Del - Delete selected items
             if (e.KeyCode == Keys.Delete)
             {
@@ -367,6 +365,13 @@ namespace LanExchange.UI
         {
             if (!m_Presenter.CommandLevelDown())
                 OpenCurrentItem();
+        }
+
+        private void LV_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Middle)
+                if (!m_Presenter.CommandLevelDown())
+                    OpenCurrentItem();
         }
 
         private void mWMI_Click(object sender, EventArgs e)
@@ -485,6 +490,46 @@ namespace LanExchange.UI
         private void popComps_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
             PrepareContextMenu();
+            MergeCopyMenu();
+        }
+
+        private ToolStripItem[] GetCopyMenuItems()
+        {
+            var columns = AppPresenter.PanelColumns.GetColumns(m_Presenter.Objects.DataType);
+            var result = new List<ToolStripItem>();
+            foreach (var column in columns)
+                if (column.Visible)
+                {
+                    if (column.Index == 0)
+                    {
+                        var menuPath = new ToolStripMenuItem(string.Format("Copy path to «{0}»", column.Text));
+                        menuPath.ShortcutKeys = Keys.Control | Keys.Alt | Keys.Insert;
+                        result.Add(menuPath);
+                        result.Add(new ToolStripSeparator());
+                    }
+                    var menuItem = new ToolStripMenuItem(string.Format("Copy «{0}»", column.Text));
+                    if (column.Index == 0)
+                        menuItem.ShortcutKeys = Keys.Control | Keys.Insert;
+                    result.Add(menuItem);
+                }
+            return result.ToArray();
+        }
+
+        private void MergeCopyMenu()
+        {
+            const int INSERT_INDEX = 4;
+
+            // remove old items
+            while (popComps.Items[INSERT_INDEX] != mSeparatorSend)
+            {
+                var menuItem = popComps.Items[INSERT_INDEX];
+                popComps.Items.Remove(menuItem);
+                menuItem.Dispose();
+            }
+            // add new items
+            var items = GetCopyMenuItems();
+            for (int i = 0; i < items.Length; i++ )
+                popComps.Items.Insert(INSERT_INDEX + i, items[i]);
         }
 
         private static void SetEnabledAndVisible(ToolStripItem item, bool value)
@@ -553,9 +598,38 @@ namespace LanExchange.UI
             //m_Presenter.UpdateItemsAndStatus();
         }
 
+        public void SetColumnMarker(int columnIndex, SortOrder sortOrder)
+        {
+            NativeMethods.SetColumnImage(LV, columnIndex, sortOrder, -1);
+        }
+
+        private void ShowHideColumn_Click(object sender, EventArgs e)
+        {
+            var menuItem = sender as ToolStripMenuItem;
+            if (menuItem != null)
+                m_Presenter.ShowHideColumnClick((int)menuItem.Tag);
+        }
+
+        public void ShowHeaderMenu(IList<PanelColumnHeader> columns)
+        {
+            var strip = new ContextMenuStrip();
+            for (int i = 0; i < columns.Count; i++)
+            {
+                var menuItem = new ToolStripMenuItem(columns[i].Text);
+                menuItem.Checked = columns[i].Visible;
+                menuItem.Enabled = i > 0;
+                menuItem.Click += ShowHideColumn_Click;
+                menuItem.Tag = i;
+                strip.Items.Add(menuItem);
+            }
+            strip.Show(Cursor.Position);
+        }
+
         private void LV_ColumnClick(object sender, ColumnClickEventArgs e)
         {
-            m_Presenter.ColumnClick(e.Column);
+            var header = LV.Columns[e.Column].Tag as PanelColumnHeader;
+            if (header != null)
+                m_Presenter.ColumnClick(header.Index);
         }
 
         private void ePath_KeyDown(object sender, KeyEventArgs e)
@@ -616,6 +690,22 @@ namespace LanExchange.UI
                 m_Presenter.Objects.CurrentView = value;
                 AppPresenter.MainPages.GetModel().SaveSettings();
             }
+        }
+
+        private void LV_ColumnReordered(object sender, ColumnReorderedEventArgs e)
+        {
+            e.Cancel = !m_Presenter.ReorderColumns(e.OldDisplayIndex, e.NewDisplayIndex);
+        }
+
+
+        private void LV_ColumnWidthChanged(object sender, ColumnWidthChangedEventArgs e)
+        {
+            m_Presenter.ColumnWidthChanged(e.ColumnIndex, LV.Columns[e.ColumnIndex].Width);
+        }
+
+        private void LV_ColumnRightClick(object sender, ColumnClickEventArgs e)
+        {
+            m_Presenter.ColumnRightClick(e.Column);
         }
     }
 }

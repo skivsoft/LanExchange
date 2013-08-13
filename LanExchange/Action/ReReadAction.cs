@@ -12,6 +12,13 @@ namespace LanExchange.Action
             if (model.SelectedIndex != -1)
             {
                 var pageModel = model.GetItem(model.SelectedIndex);
+
+                // clear refreshable columns
+                if (AppPresenter.PanelColumns != null && pageModel.DataType != null)
+                    foreach (var column in AppPresenter.PanelColumns.GetColumns(pageModel.DataType))
+                        if (column.Callback != null && column.Refreshable)
+                            column.LazyDict.Clear();
+                
                 pageModel.SyncRetrieveData();
             }
         }

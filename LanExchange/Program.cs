@@ -15,7 +15,7 @@
 //   DONE  Classes with IDisposable interface must be a components
 //   TODO  MSI installer
 //   TODO  Multi-langual support (Russian, Engligh)
-//   TODO  Columns sort (name, comment, version)
+//   DONE  Columns sort (name, comment, version)
 //   TODO  Platform detection based on Platforms.xml refer
 //   TODO  Ctrl+Left/Ctrl+Right - change form size with phi based step
 //   TODO  Help on shortcut keys
