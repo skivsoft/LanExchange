@@ -6,8 +6,8 @@ namespace LanExchange.Plugin.Network.Panel
 {
     public class ShareFiller : IPanelFiller
     {
-        public static bool ShowHiddenShares;
-        public static bool ShowPrinters;
+        public static bool ShowHiddenShares = true;
+        public static bool ShowPrinters = true;
 
         public bool IsParentAccepted(PanelItemBase parent)
         {

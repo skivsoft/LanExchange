@@ -9,5 +9,7 @@ namespace LanExchange.SDK
         IList<PanelColumnHeader> GetColumns(Type type);
         IEnumerable<PanelColumnHeader> EnumAllColumns();
         int MaxColumns { get; }
+
+        bool ReorderColumns(Type type, int oldIndex, int newIndex);
     }
 }

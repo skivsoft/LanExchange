@@ -258,11 +258,6 @@ namespace LanExchange.Model
         {
             // get parent
             var parent = m_CurrentPath.IsEmpty ? null : m_CurrentPath.Peek();
-            // clear refreshable columns
-            if (AppPresenter.PanelColumns != null && DataType != null)
-                foreach (var column in AppPresenter.PanelColumns.GetColumns(DataType))
-                    if (column.Callback != null && column.Refreshable)
-                        column.LazyDict.Clear();
             // retrieve items
             var items = AppPresenter.PanelFillers.RetrievePanelItems(parent);
             // set items

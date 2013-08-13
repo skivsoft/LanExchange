@@ -29,14 +29,20 @@ namespace LanExchange.Presenter
             if (m_Objects.DataType == null)
                 return;
             m_View.ColumnsClear();
-            foreach (var header in AppPresenter.PanelColumns.GetColumns(m_Objects.DataType))
-                if (header.Visible)
-                    m_View.AddColumn(header);
+            var columns = AppPresenter.PanelColumns.GetColumns(m_Objects.DataType);
+            int j = 0;
+            for (int i = 0; i < columns.Count; i++ )
+                if (columns[i].Visible)
+                {
+                    m_View.AddColumn(columns[i]);
+                    if (i == m_Objects.Comparer.ColumnIndex)
+                        m_View.SetColumnMarker(j, m_Objects.Comparer.SortOrder);
+                    ++j;
+                }
         }
 
         public void ResetSortOrder()
         {
-            m_View.SetColumnMarker(m_Objects.Comparer.ColumnIndex, SortOrder.None);
             m_Objects.Comparer.ColumnIndex = 0;
             m_Objects.Comparer.SortOrder = SortOrder.Ascending;
         }
@@ -250,7 +256,6 @@ namespace LanExchange.Presenter
                 Objects.CurrentPath.Push(panelItem);
                 ResetSortOrder();
                 Objects.SyncRetrieveData();
-                m_View.SetColumnMarker(0, SortOrder.Ascending);
             }
             return result;
         }
@@ -269,7 +274,6 @@ namespace LanExchange.Presenter
                 Objects.CurrentPath.Pop();
                 ResetSortOrder();
                 Objects.SyncRetrieveData();
-                m_View.SetColumnMarker(0, SortOrder.Ascending);
             }
             return result;
             //return false;
@@ -296,6 +300,11 @@ namespace LanExchange.Presenter
 
         internal void ColumnClick(int index)
         {
+            // skip lazy columns
+            var columns = AppPresenter.PanelColumns.GetColumns(m_Objects.DataType);
+            if (columns[index].Callback != null)
+                return;
+
             var order = SortOrder.None;
             if (index == Objects.Comparer.ColumnIndex)
                 switch (Objects.Comparer.SortOrder)
@@ -310,11 +319,46 @@ namespace LanExchange.Presenter
                 }
             else
                 order = SortOrder.Ascending;
-            m_View.SetColumnMarker(Objects.Comparer.ColumnIndex, SortOrder.None);
             Objects.Comparer.ColumnIndex = index;
             Objects.Comparer.SortOrder = order;
             Objects.Sort(Objects.Comparer);
-            m_View.SetColumnMarker(index, order);
+        }
+
+        // TODO Column reorder
+        internal bool ReorderColumns(int oldIndex, int newIndex)
+        {
+            //var result = AppPresenter.PanelColumns.ReorderColumns(m_Objects.DataType, oldIndex, newIndex);
+            //if (result)
+            //{
+            //    if (m_Objects.Comparer.ColumnIndex == oldIndex)
+            //        m_Objects.Comparer.ColumnIndex = newIndex;
+            //    else if (m_Objects.Comparer.ColumnIndex == newIndex)
+            //        m_Objects.Comparer.ColumnIndex = newIndex + 1;
+            //    m_View.Refresh();
+            //}
+            //return result;
+            return false;
+        }
+
+        internal void ColumnWidthChanged(int index, int newWidth)
+        {
+            // TODO need change internal column width but not always
+            //var columns = AppPresenter.PanelColumns.GetColumns(m_Objects.DataType);
+            //columns[index].Width = newWidth;
+        }
+
+        internal void ColumnRightClick(int columnIndex)
+        {
+            var columns = AppPresenter.PanelColumns.GetColumns(m_Objects.DataType);
+            m_View.ShowHeaderMenu(columns);
+        }
+
+        internal void ShowHideColumnClick(int columnIndex)
+        {
+            if (columnIndex == 0) return;
+            var columns = AppPresenter.PanelColumns.GetColumns(m_Objects.DataType);
+            columns[columnIndex].Visible = !columns[columnIndex].Visible;
+            SetupColumns();
         }
     }
 }

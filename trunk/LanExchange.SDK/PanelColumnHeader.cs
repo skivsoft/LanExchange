@@ -28,6 +28,8 @@ namespace LanExchange.SDK
 
         public LazyCallback Callback;
 
+        public int Index;
+
         private readonly IDictionary<PanelItemBase, IComparable> m_LazyDict;
         
         public PanelColumnHeader(string text, int width = 0)

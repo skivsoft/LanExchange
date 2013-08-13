@@ -81,6 +81,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
@@ -144,6 +145,7 @@
       <DependentUpon>FilterView.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\FormPlacement.cs" />
+    <Compile Include="UI\HeaderControl.cs" />
     <Compile Include="UI\IListViewItemGetter.cs" />
     <Compile Include="UI\InfoView.cs">
       <SubType>UserControl</SubType>
@@ -156,6 +158,9 @@
     </Compile>
     <Compile Include="UI\InputBoxForm.Designer.cs">
       <DependentUpon>InputBoxForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ListViewer.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\ListViewItemCache.cs" />
     <Compile Include="UI\ListViewUtils.cs" />
