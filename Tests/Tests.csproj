@@ -56,15 +56,15 @@
     <Compile Include="Model\PanelItemListTest.cs" />
     <Compile Include="Plugin\Network\NetApi32UtilsTest.cs" />
     <Compile Include="Plugin\Network\NetworkTest.cs" />
-    <Compile Include="Plugin\Network\Panel\ComputerFillerTest.cs" />
-    <Compile Include="Plugin\Network\Panel\ComputerPanelItemFactoryTest.cs" />
-    <Compile Include="Plugin\Network\Panel\ComputerPanelItemTest.cs" />
-    <Compile Include="Plugin\Network\Panel\DomainFillerTest.cs" />
-    <Compile Include="Plugin\Network\Panel\DomainPanelItemFactoryTest.cs" />
-    <Compile Include="Plugin\Network\Panel\DomainPanelItemTest.cs" />
-    <Compile Include="Plugin\Network\Panel\ShareFillerTest.cs" />
-    <Compile Include="Plugin\Network\Panel\SharePanelItemFactory.cs" />
-    <Compile Include="Plugin\Network\Panel\SharePanelItemTest.cs" />
+    <Compile Include="Plugin\Network\ComputerFillerTest.cs" />
+    <Compile Include="Plugin\Network\ComputerPanelItemFactoryTest.cs" />
+    <Compile Include="Plugin\Network\ComputerPanelItemTest.cs" />
+    <Compile Include="Plugin\Network\DomainFillerTest.cs" />
+    <Compile Include="Plugin\Network\DomainPanelItemFactoryTest.cs" />
+    <Compile Include="Plugin\Network\DomainPanelItemTest.cs" />
+    <Compile Include="Plugin\Network\ShareFillerTest.cs" />
+    <Compile Include="Plugin\Network\SharePanelItemFactory.cs" />
+    <Compile Include="Plugin\Network\SharePanelItemTest.cs" />
     <Compile Include="Plugin\Network\ServerInfoTest.cs" />
     <Compile Include="Plugin\Network\ShareInfoTest.cs" />
     <Compile Include="Plugin\Users\PathDistinctTest.cs" />
@@ -74,7 +74,6 @@
     <Compile Include="SDK\PanelStrategyBaseTest.cs" />
     <Compile Include="SDK\XmlSerializeTest.cs" />
     <Compile Include="Service\PuntoSwitcherServiceEngRusTest.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\PuntoSwitcherServiceFactoryTest.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +96,9 @@
       <Project>{064D3413-8F0B-4511-85F3-4919AC1D5A98}</Project>
       <Name>LanExchange.Plugin.Users</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -70,7 +70,7 @@
             this.toolStripSeparator6,
             this.mContextClose});
             this.popComps.Name = "popComps";
-            this.popComps.Size = new System.Drawing.Size(195, 132);
+            this.popComps.Size = new System.Drawing.Size(195, 154);
             this.popComps.Opening += new System.ComponentModel.CancelEventHandler(this.popComps_Opening);
             // 
             // mComp
@@ -228,7 +228,7 @@
             // mCopySelected
             // 
             this.mCopySelected.Name = "mCopySelected";
-            this.mCopySelected.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.mCopySelected.ShortcutKeyDisplayString = "Ctrl+C";
             this.mCopySelected.Size = new System.Drawing.Size(220, 22);
             this.mCopySelected.Text = "Copy selected items";
             this.mCopySelected.Click += new System.EventHandler(this.CopySelectedOnClick);

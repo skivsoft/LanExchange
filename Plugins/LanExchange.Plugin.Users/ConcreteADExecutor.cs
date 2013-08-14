@@ -4,7 +4,7 @@ using System.DirectoryServices;
 
 namespace LanExchange.Plugin.Users
 {
-    internal class ConcreteADExecutor// : IADExecutor
+    internal class ConcreteADExecutor : IDisposable
     {
         private DirectoryEntry m_Root;
 
@@ -33,43 +33,48 @@ namespace LanExchange.Plugin.Users
             //return result;
 
             var result = new DataTable();
-
-            using (var searcher = new DirectorySearcher(m_Root))
+            try
             {
-                searcher.Filter = filter;
-
-                // add requested field to searcher
-                foreach(var str in fields)
-                    searcher.PropertiesToLoad.Add(str);
-
-                SearchResultCollection src = searcher.FindAll();
-                int index = 0;
-                foreach (SearchResult sr in src)
+                using (var searcher = new DirectorySearcher(m_Root))
                 {
-                    // if no properties, leave this loop
-                    if (sr.Properties == null) break;
-                    if (sr.Properties.PropertyNames == null) break;
+                    searcher.Filter = filter;
 
-                    if (index == 0)
+                    // add requested field to searcher
+                    foreach (var str in fields)
+                        searcher.PropertiesToLoad.Add(str);
+
+                    SearchResultCollection src = searcher.FindAll();
+                    int index = 0;
+                    foreach (SearchResult sr in src)
                     {
+                        // if no properties, leave this loop
+                        if (sr.Properties == null) break;
+                        if (sr.Properties.PropertyNames == null) break;
+
+                        if (index == 0)
+                        {
+                            foreach (string propName in sr.Properties.PropertyNames)
+                                result.Columns.Add(propName);
+                        }
+
+                        DataRow row = result.NewRow();
+                        // add column to result DataTable
                         foreach (string propName in sr.Properties.PropertyNames)
-                            result.Columns.Add(propName);
-                    }
+                        {
+                            var prop = sr.Properties[propName];
 
-                    DataRow row = result.NewRow();
-                    // add column to result DataTable
-                    foreach (string propName in sr.Properties.PropertyNames)
-                    {
-                        var prop = sr.Properties[propName];
-
-                        if (prop.Count == 0)
-                            row[propName] = string.Empty;
-                        else
-                            row[propName] = prop[0];
+                            if (prop.Count == 0)
+                                row[propName] = string.Empty;
+                            else
+                                row[propName] = prop[0];
+                        }
+                        result.Rows.Add(row);
+                        index++;
                     }
-                    result.Rows.Add(row);
-                    index++;
                 }
+            }
+            catch
+            {
             }
             return result;
         }

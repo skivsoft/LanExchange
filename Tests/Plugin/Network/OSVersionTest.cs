@@ -19,20 +19,20 @@ namespace LanExchange.Plugin.Network
             m_Info = null;
         }
 
-        private void СheckVer(NetApi32.SV_101_PLATFORM platform, uint major, uint minor, string compVer, string serverVer, uint type)
+        private void СheckVer(NativeMethods.SV_101_PLATFORM platform, uint major, uint minor, string compVer, string serverVer, uint type)
         {
             m_Info.PlatformID = (uint)platform;
             m_Info.Major = major;
             m_Info.Minor = minor;
             // computer check
-            m_Info.Type = type | (uint)NetApi32.SV_101_TYPES.SV_TYPE_SERVER_NT;
+            m_Info.Type = type | (uint)NativeMethods.SV_101_TYPES.SV_TYPE_SERVER_NT;
             Assert.AreEqual(compVer, m_Info.ToString());
             // server check
-            m_Info.Type = type | (uint)NetApi32.SV_101_TYPES.SV_TYPE_SERVER | (uint)NetApi32.SV_101_TYPES.SV_TYPE_SERVER_NT;
+            m_Info.Type = type | (uint)NativeMethods.SV_101_TYPES.SV_TYPE_SERVER | (uint)NativeMethods.SV_101_TYPES.SV_TYPE_SERVER_NT;
             Assert.AreEqual(serverVer, m_Info.ToString());
         }
 
-        private void СheckVer(NetApi32.SV_101_PLATFORM platform, uint major, uint minor, string compVer, uint type)
+        private void СheckVer(NativeMethods.SV_101_PLATFORM platform, uint major, uint minor, string compVer, uint type)
         {
             СheckVer(platform, major, minor, compVer, compVer, type);
         }
@@ -40,26 +40,26 @@ namespace LanExchange.Plugin.Network
         [Test]
         public void TestVersion()
         {
-            СheckVer(NetApi32.SV_101_PLATFORM.PLATFORM_ID_DOS, 4, 1, "MS-DOS 4.1", 0);
-            СheckVer(NetApi32.SV_101_PLATFORM.PLATFORM_ID_NT, 3, 0, "Windows NT 3.51", 0);
-            СheckVer(NetApi32.SV_101_PLATFORM.PLATFORM_ID_OS2, 4, 0, "Windows 95", 0);
-            СheckVer(NetApi32.SV_101_PLATFORM.PLATFORM_ID_NT, 4, 0, "Windows 95", 0);
-            СheckVer(NetApi32.SV_101_PLATFORM.PLATFORM_ID_NT, 4, 10, "Windows 98", 0);
-            СheckVer(NetApi32.SV_101_PLATFORM.PLATFORM_ID_NT, 4, 90, "Windows ME", 0);
-            СheckVer(NetApi32.SV_101_PLATFORM.PLATFORM_ID_NT, 4, 9000, "Windows NT 4.9000", 0);
-            СheckVer(NetApi32.SV_101_PLATFORM.PLATFORM_ID_NT, 5, 0, "Windows 2000", "Windows Server 2000", 0);
-            СheckVer(NetApi32.SV_101_PLATFORM.PLATFORM_ID_NT, 5, 1, "Windows XP", 0);
-            СheckVer(NetApi32.SV_101_PLATFORM.PLATFORM_ID_NT, 5, 2, "Windows Server 2003 R2", 0);
-            СheckVer(NetApi32.SV_101_PLATFORM.PLATFORM_ID_NT, 5, 9000, "Windows NT 5.9000", 0);
-            СheckVer(NetApi32.SV_101_PLATFORM.PLATFORM_ID_NT, 8000, 9000, "Linux Server 8000.9000", (uint)NetApi32.SV_101_TYPES.SV_TYPE_XENIX_SERVER);
-            СheckVer(NetApi32.SV_101_PLATFORM.PLATFORM_ID_NT, 6, 0, "Windows Vista", "Windows Server 2008", 0);
-            СheckVer(NetApi32.SV_101_PLATFORM.PLATFORM_ID_NT, 6, 1, "Windows 7", "Windows Server 2008 R2", 0);
-            СheckVer(NetApi32.SV_101_PLATFORM.PLATFORM_ID_NT, 6, 2, "Windows 8", "Windows 8 Server", 0);
-            СheckVer(NetApi32.SV_101_PLATFORM.PLATFORM_ID_NT, 6, 9000, "Windows NT 6.9000", 0);
-            СheckVer(NetApi32.SV_101_PLATFORM.PLATFORM_ID_NT, 8000, 9000, "Windows NT 8000.9000", 0);
-            СheckVer(NetApi32.SV_101_PLATFORM.PLATFORM_ID_OSF, 8000, 9000, "OSF 8000.9000", 0);
-            СheckVer(NetApi32.SV_101_PLATFORM.PLATFORM_ID_VMS, 8000, 9000, "VMS 8000.9000", 0);
-            СheckVer((NetApi32.SV_101_PLATFORM)7000, 8000, 9000, "7000 8000.9000", 0);
+            СheckVer(NativeMethods.SV_101_PLATFORM.PLATFORM_ID_DOS, 4, 1, "MS-DOS 4.1", 0);
+            СheckVer(NativeMethods.SV_101_PLATFORM.PLATFORM_ID_NT, 3, 0, "Windows NT 3.51", 0);
+            СheckVer(NativeMethods.SV_101_PLATFORM.PLATFORM_ID_OS2, 4, 0, "Windows 95", 0);
+            СheckVer(NativeMethods.SV_101_PLATFORM.PLATFORM_ID_NT, 4, 0, "Windows 95", 0);
+            СheckVer(NativeMethods.SV_101_PLATFORM.PLATFORM_ID_NT, 4, 10, "Windows 98", 0);
+            СheckVer(NativeMethods.SV_101_PLATFORM.PLATFORM_ID_NT, 4, 90, "Windows ME", 0);
+            СheckVer(NativeMethods.SV_101_PLATFORM.PLATFORM_ID_NT, 4, 9000, "Windows NT 4.9000", 0);
+            СheckVer(NativeMethods.SV_101_PLATFORM.PLATFORM_ID_NT, 5, 0, "Windows 2000", "Windows Server 2000", 0);
+            СheckVer(NativeMethods.SV_101_PLATFORM.PLATFORM_ID_NT, 5, 1, "Windows XP", 0);
+            СheckVer(NativeMethods.SV_101_PLATFORM.PLATFORM_ID_NT, 5, 2, "Windows Server 2003 R2", 0);
+            СheckVer(NativeMethods.SV_101_PLATFORM.PLATFORM_ID_NT, 5, 9000, "Windows NT 5.9000", 0);
+            СheckVer(NativeMethods.SV_101_PLATFORM.PLATFORM_ID_NT, 8000, 9000, "Linux Server 8000.9000", (uint)NativeMethods.SV_101_TYPES.SV_TYPE_XENIX_SERVER);
+            СheckVer(NativeMethods.SV_101_PLATFORM.PLATFORM_ID_NT, 6, 0, "Windows Vista", "Windows Server 2008", 0);
+            СheckVer(NativeMethods.SV_101_PLATFORM.PLATFORM_ID_NT, 6, 1, "Windows 7", "Windows Server 2008 R2", 0);
+            СheckVer(NativeMethods.SV_101_PLATFORM.PLATFORM_ID_NT, 6, 2, "Windows 8", "Windows 8 Server", 0);
+            СheckVer(NativeMethods.SV_101_PLATFORM.PLATFORM_ID_NT, 6, 9000, "Windows NT 6.9000", 0);
+            СheckVer(NativeMethods.SV_101_PLATFORM.PLATFORM_ID_NT, 8000, 9000, "Windows NT 8000.9000", 0);
+            СheckVer(NativeMethods.SV_101_PLATFORM.PLATFORM_ID_OSF, 8000, 9000, "OSF 8000.9000", 0);
+            СheckVer(NativeMethods.SV_101_PLATFORM.PLATFORM_ID_VMS, 8000, 9000, "VMS 8000.9000", 0);
+            СheckVer((NativeMethods.SV_101_PLATFORM)7000, 8000, 9000, "7000 8000.9000", 0);
         }
 
         private OSVersion NewInfo(uint platform, bool server = false, bool ctrl = false, uint major = 0, uint minor = 0)
@@ -68,15 +68,15 @@ namespace LanExchange.Plugin.Network
             result.PlatformID = platform;
             result.Major = major;
             result.Minor = minor;
-            result.Type = (uint)NetApi32.SV_101_TYPES.SV_TYPE_SERVER_NT;
+            result.Type = (uint)NativeMethods.SV_101_TYPES.SV_TYPE_SERVER_NT;
             if (server)
             {
-                result.Type |= (uint)NetApi32.SV_101_TYPES.SV_TYPE_SERVER;
+                result.Type |= (uint)NativeMethods.SV_101_TYPES.SV_TYPE_SERVER;
                 Assert.IsTrue(result.IsServer());
             }
             if (ctrl)
             {
-                result.Type |= (uint)NetApi32.SV_101_TYPES.SV_TYPE_DOMAIN_CTRL;
+                result.Type |= (uint)NativeMethods.SV_101_TYPES.SV_TYPE_DOMAIN_CTRL;
                 Assert.IsTrue(result.IsDomainController());
             }
             return result;
@@ -102,48 +102,48 @@ namespace LanExchange.Plugin.Network
         [Test]
         public void TestIsDomainController()
         {
-            m_Info.Type = (uint)NetApi32.SV_101_TYPES.SV_TYPE_DOMAIN_CTRL;
+            m_Info.Type = (uint)NativeMethods.SV_101_TYPES.SV_TYPE_DOMAIN_CTRL;
             Assert.IsTrue(m_Info.IsDomainController());
-            m_Info.Type = (uint)NetApi32.SV_101_TYPES.SV_TYPE_DOMAIN_BAKCTRL;
+            m_Info.Type = (uint)NativeMethods.SV_101_TYPES.SV_TYPE_DOMAIN_BAKCTRL;
             Assert.IsTrue(m_Info.IsDomainController());
         }
 
         [Test]
         public void TestIsServer()
         {
-            m_Info.Type = (uint)NetApi32.SV_101_TYPES.SV_TYPE_SERVER | (uint)NetApi32.SV_101_TYPES.SV_TYPE_DOMAIN_CTRL;
+            m_Info.Type = (uint)NativeMethods.SV_101_TYPES.SV_TYPE_SERVER | (uint)NativeMethods.SV_101_TYPES.SV_TYPE_DOMAIN_CTRL;
             Assert.IsTrue(m_Info.IsServer());
-            m_Info.Type = (uint)NetApi32.SV_101_TYPES.SV_TYPE_SERVER | (uint)NetApi32.SV_101_TYPES.SV_TYPE_SERVER_NT;
+            m_Info.Type = (uint)NativeMethods.SV_101_TYPES.SV_TYPE_SERVER | (uint)NativeMethods.SV_101_TYPES.SV_TYPE_SERVER_NT;
             Assert.IsTrue(m_Info.IsServer());
-            m_Info.Type = (uint)NetApi32.SV_101_TYPES.SV_TYPE_SERVER_NT;
+            m_Info.Type = (uint)NativeMethods.SV_101_TYPES.SV_TYPE_SERVER_NT;
             Assert.IsFalse(m_Info.IsServer());
         }
 
         [Test]
         public void TestIsSQLServer()
         {
-            m_Info.Type = (uint)NetApi32.SV_101_TYPES.SV_TYPE_SQLSERVER;
+            m_Info.Type = (uint)NativeMethods.SV_101_TYPES.SV_TYPE_SQLSERVER;
             Assert.IsTrue(m_Info.IsSQLServer());
         }
 
         [Test]
         public void TestIsTimeSource()
         {
-            m_Info.Type = (uint)NetApi32.SV_101_TYPES.SV_TYPE_TIME_SOURCE;
+            m_Info.Type = (uint)NativeMethods.SV_101_TYPES.SV_TYPE_TIME_SOURCE;
             Assert.IsTrue(m_Info.IsTimeSource());
         }
 
         [Test]
         public void TestIsPrintServer()
         {
-            m_Info.Type = (uint)NetApi32.SV_101_TYPES.SV_TYPE_PRINTQ_SERVER;
+            m_Info.Type = (uint)NativeMethods.SV_101_TYPES.SV_TYPE_PRINTQ_SERVER;
             Assert.IsTrue(m_Info.IsPrintServer());
         }
 
         [Test]
         public void TestIsDialInServer()
         {
-            m_Info.Type = (uint)NetApi32.SV_101_TYPES.SV_TYPE_DIALIN_SERVER;
+            m_Info.Type = (uint)NativeMethods.SV_101_TYPES.SV_TYPE_DIALIN_SERVER;
             Assert.IsTrue(m_Info.IsDialInServer());
         }
 
@@ -151,28 +151,28 @@ namespace LanExchange.Plugin.Network
         public void TestIsPotentialBrowser()
         {
 
-            m_Info.Type = (uint)NetApi32.SV_101_TYPES.SV_TYPE_POTENTIAL_BROWSER;
+            m_Info.Type = (uint)NativeMethods.SV_101_TYPES.SV_TYPE_POTENTIAL_BROWSER;
             Assert.IsTrue(m_Info.IsPotentialBrowser());
         }
 
         [Test]
         public void TestIsBackupBrowser()
         {
-            m_Info.Type = (uint)NetApi32.SV_101_TYPES.SV_TYPE_BACKUP_BROWSER;
+            m_Info.Type = (uint)NativeMethods.SV_101_TYPES.SV_TYPE_BACKUP_BROWSER;
             Assert.IsTrue(m_Info.IsBackupBrowser());
         }
 
         [Test]
         public void TestIsMasterBrowser()
         {
-            m_Info.Type = (uint)NetApi32.SV_101_TYPES.SV_TYPE_MASTER_BROWSER;
+            m_Info.Type = (uint)NativeMethods.SV_101_TYPES.SV_TYPE_MASTER_BROWSER;
             Assert.IsTrue(m_Info.IsMasterBrowser());
         }
 
         [Test]
         public void TestIsDFSRoot()
         {
-            m_Info.Type = (uint)NetApi32.SV_101_TYPES.SV_TYPE_DFS;
+            m_Info.Type = (uint)NativeMethods.SV_101_TYPES.SV_TYPE_DFS;
             Assert.IsTrue(m_Info.IsDFSRoot());
         }
     }

@@ -1,9 +1,13 @@
-﻿LanExchange 1.2.0
-=================
+﻿LanExchange 2.0
+===============
+- Drag&Drop labels from info panel to external application
+- Drag&Drop selected items to external application
+- Copy column values of selected items to clipboard from context menu
 - Optional command line parameter added for setting language /LANG:ll-cc
-- Show/Hide hot key changed from 'Win+X' to 'Ctrl+Win+X' cause 'Win+X' used by Windows 8.
+- Hot key for showing/hiding main form changed from 'Win+X' to 'Ctrl+Win+X' cause 'Win+X' used by Windows 8.
+- Settings form removed
 - License information in about box added.
-- Almost all forms (except InputBox) are not modal now.
+- About form not modal now
 - Default language is English.
 - All logging code was removed.
 - Autoupdater removed from about box.

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
-using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using AndreasJohansson.Win32.Shell;
@@ -14,7 +12,6 @@ using System.Security.Permissions;
 using LanExchange.Model.Settings;
 using LanExchange.SDK;
 using LanExchange.Utils;
-using Timer = System.Windows.Forms.Timer;
 
 namespace LanExchange.UI
 {
@@ -34,8 +31,9 @@ namespace LanExchange.UI
             InitializeComponent();
             Instance = this;
             // load settings from cfg-file
-            Settings.Load();
-            SetRunMinimized(Settings.Instance.General.RunMinimized);
+            Settings.Instance.Changed += SettingsOnChanged;
+            //Settings.Instance.Load();
+            SetRunMinimized(Settings.Instance.RunMinimized);
             // init Pages presenter
             AppPresenter.MainPages = Pages.GetPresenter();
             AppPresenter.MainPages.PanelViewFocusedItemChanged += Pages_PanelViewFocusedItemChanged;
@@ -56,6 +54,28 @@ namespace LanExchange.UI
 #if DEBUG
             AppPresenter.LazyThreadPool.NumThreadsChanged += OnNumThreadsChanged;
 #endif
+        }
+
+        private void SettingsOnChanged(object sender, SettingsChangedArgs e)
+        {
+            if (e.Name.Equals("ShowMainMenu"))
+            {
+                MainMenu.Visible = (bool) e.Value;
+                return;
+            }
+            if (e.Name.Equals("NumInfoLines"))
+            {
+                var value = (int) e.Value;
+                if (value < 2)
+                    value = 2;
+                if (AppPresenter.PanelColumns != null)
+                    if (value > AppPresenter.PanelColumns.MaxColumns)
+                        value = AppPresenter.PanelColumns.MaxColumns;
+                e.NewValue = value;
+                pInfo.CountLines = value;
+                AppPresenter.MainPages.PV_FocusedItemChanged(Pages.ActivePanelView, EventArgs.Empty);
+                return;
+            }
         }
 
         #region Global actions
@@ -160,40 +180,42 @@ namespace LanExchange.UI
                 if (pv != null && pv.Filter.IsVisible)
                     pv.Filter.SetFilterText(string.Empty);
                 else
-                    if (pv == null || pv.Presenter.Objects.CurrentPath.IsEmpty)
+                {
+                    var parent = pv == null || pv.Presenter.Objects.CurrentPath.IsEmpty
+                                     ? null
+                                     : pv.Presenter.Objects.CurrentPath.Peek();
+                    if (parent is PanelItemRoot)
                         Instance.Hide();
+                    else if (!m_EscDown)
+                    {
+                        m_EscTime = DateTime.UtcNow;
+                        m_EscDown = true;
+                    }
                     else
-                        if (!m_EscDown)
+                    {
+                        TimeSpan diff = DateTime.UtcNow - m_EscTime;
+                        if (diff.TotalMilliseconds >= WAIT_FOR_KEYUP_MS)
                         {
-                            m_EscTime = DateTime.UtcNow;
-                            m_EscDown = true;
+                            Instance.Hide();
+                            m_EscDown = false;
                         }
-                        else
-                        {
-                            TimeSpan diff = DateTime.UtcNow - m_EscTime;
-                            if (diff.TotalMilliseconds >= WAIT_FOR_KEYUP_MS)
-                            {
-                                Instance.Hide();
-                                m_EscDown = false;
-                            }
-                        }
+                    }
+                }
             }
             // F9 - Show/Hide main menu
             if (e.KeyCode == Keys.F9)
             {
-                MainMenu.Visible = !MainMenu.Visible;
-                if (MainMenu.Visible)
-                    MainMenu.Select();
+                Settings.Instance.SetBoolValue("ShowMainMenu", !Settings.Instance.GetBoolValue("ShowMainMenu"));
                 e.Handled = true;
             }
             // Ctrl+Up/Ctrl+Down - change number of info lines
             if (e.Control && (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down))
             {
+                int value = Settings.Instance.GetIntValue("NumInfoLines");
                 if (e.KeyCode == Keys.Down)
-                    Settings.Instance.NumInfoLines++;
+                    Settings.Instance.SetIntValue("NumInfoLines", value + 1);
                 else
-                    Settings.Instance.NumInfoLines--;
-                pInfo.CountLines = Settings.Instance.NumInfoLines;
+                    Settings.Instance.SetIntValue("NumInfoLines", value - 1);
                 e.Handled = true;
             }
         }
@@ -307,12 +329,17 @@ namespace LanExchange.UI
             // update info panel at top of the form
             pInfo.Picture.Image = AppPresenter.Images.GetLargeImage(panelItem.ImageName);
             tipComps.SetToolTip(pInfo.Picture, panelItem.ImageLegendText);
-            pInfo.CountLines = Settings.Instance.NumInfoLines;
-            for (int index = 0; index < pInfo.CountLines; index++)
-                if (index <= panelItem.CountColumns-1)
-                    pInfo.SetLine(index, panelItem[index].ToString());
-                else
-                    pInfo.SetLine(index, string.Empty);
+            var helper = new PanelItemsCopyHelper(null);
+            helper.CurrentItem = panelItem;
+            int index = 0;
+            foreach (var column in helper.Columns)
+                {
+                    pInfo.SetLine(index, helper.GetColumnValue(column.Index));
+                    ++index;
+                    if (index >= pInfo.CountLines) break;
+                }
+            for (int i = index; i < pInfo.CountLines; i++)
+                pInfo.SetLine(i, string.Empty);
         }
 
         private void Pages_FilterTextChanged(object sender, EventArgs e)
@@ -394,7 +421,7 @@ namespace LanExchange.UI
         private void MainForm_ResizeEnd(object sender, EventArgs e)
         {
             SettingsSetBounds(Bounds);
-            Settings.SaveIfModified();
+            //Settings.SaveIfModified();
         }
 
         private void MainForm_Activated(object sender, EventArgs e)
@@ -406,13 +433,8 @@ namespace LanExchange.UI
         {
             // save tab settings and switch off timer
             AppPresenter.MainPages.GetModel().SaveSettings();
-            if (sender is Timer)
-                (sender as Timer).Enabled = false;
-        }
-
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ApplicationExit();
+            if (sender is System.Windows.Forms.Timer)
+                (sender as System.Windows.Forms.Timer).Enabled = false;
         }
 
         private void rereadToolStripMenuItem_Click(object sender, EventArgs e)

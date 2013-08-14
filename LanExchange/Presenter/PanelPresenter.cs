@@ -240,7 +240,7 @@ namespace LanExchange.Presenter
 
         internal void ColumnClick(int index)
         {
-            // skip lazy columns
+            // TODO Need sort lazy column
             var columns = AppPresenter.PanelColumns.GetColumns(m_Objects.DataType);
             if (columns[index].Callback != null)
                 return;
@@ -299,6 +299,7 @@ namespace LanExchange.Presenter
             var columns = AppPresenter.PanelColumns.GetColumns(m_Objects.DataType);
             columns[columnIndex].Visible = !columns[columnIndex].Visible;
             SetupColumns();
+            //AppPresenter.MainPages.PV_FocusedItemChanged(m_View, EventArgs.Empty);
         }
     }
 }

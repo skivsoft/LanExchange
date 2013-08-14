@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.ComponentModel;
 using System.IO;
 using LanExchange.Presenter;
 using LanExchange.Utils;
@@ -15,10 +17,21 @@ namespace LanExchange.Model.Settings
         private static Settings m_Instance;
         private static bool m_Modified;
 
-        private SettingsGeneral m_General;
+        private HashtableSerializable m_Config;
+        private Hashtable m_Default;
+
+        public event EventHandler<SettingsChangedArgs> Changed;
 
         private Settings()
         {
+            m_Config = new HashtableSerializable();
+            m_Default = new Hashtable();
+            m_Default.Add("ShowMainMenu", true);
+            m_Default.Add("RunMinimized", true);
+            m_Default.Add("AdvancedMode", false);
+            m_Default.Add("NumInfoLines", 3);
+            m_Default.Add("Language", "en-US");
+            
             WMIClassesInclude = new List<string>();
             WMIClassesInclude.Add("Win32_Desktop");
             WMIClassesInclude.Add("Win32_DesktopMonitor");
@@ -26,9 +39,6 @@ namespace LanExchange.Model.Settings
             WMIClassesInclude.Add("Win32_BIOS");
             WMIClassesInclude.Add("Win32_Processor");
             WMIClassesInclude.Add("Win32_PhysicalMemory");
-            Language = "en-US";
-            m_General = new SettingsGeneral();
-            NumInfoLines = 3;
         }
 
         public static Settings Instance
@@ -44,19 +54,17 @@ namespace LanExchange.Model.Settings
             }
         }
 
-        public SettingsGeneral General
-        {
-            get { return m_General; }
-        }
-
         private static bool Modified
         {
             get { return m_Modified; }
-            set
+            set 
             {
                 m_Modified = value;
+                SaveIfModified();
             }
+
         }
+
 
         /// <summary>
         /// Remove duplicates from list.
@@ -75,7 +83,7 @@ namespace LanExchange.Model.Settings
             } 
         }
 
-        public static void Load()
+        public void Load()
         {
             var fileName = GetConfigFileName();
             if (!File.Exists(fileName)) return;
@@ -84,9 +92,11 @@ namespace LanExchange.Model.Settings
                 var temp = (Settings)SerializeUtils.DeserializeObjectFromXMLFile(fileName, typeof(Settings));
                 if (temp != null)
                 {
-                    List_Distinct(temp.WMIClassesInclude);
-                    m_Instance = null;
-                    m_Instance = temp;
+                    //List_Distinct(temp.WMIClassesInclude);
+                    //m_Instance = null;
+                    //m_Instance = temp;
+                    foreach (var key in temp.General)
+                        SetValue(key.ToString(), temp.General[key]);
                     Modified = false;
                 }
             }
@@ -94,6 +104,7 @@ namespace LanExchange.Model.Settings
             {
             }
         }
+
 
         public static void SaveIfModified()
         {
@@ -103,10 +114,10 @@ namespace LanExchange.Model.Settings
             {
                 SerializeUtils.SerializeObjectToXMLFile(fileName, Instance);
             }
-            catch (Exception)
+            catch (Exception e)
             {
             }
-            Modified = false;
+            m_Modified = false;
         }
 
         public static string GetExecutableFileName()
@@ -131,6 +142,82 @@ namespace LanExchange.Model.Settings
             return string.Empty;
         }
 
+        public bool GetBoolValue(string name)
+        {
+            var value = m_Config[name] ?? m_Default[name];
+            return value != null && (bool)value;
+        }
+
+        public void SetBoolValue(string name, bool value)
+        {
+            var oldValue = GetBoolValue(name);
+            if (oldValue != value)
+            {
+                m_Config[name] = value;
+                OnChanged(name, value);
+            }
+        }
+
+        public string GetStringValue(string name)
+        {
+            var value = m_Config[name] ?? m_Default[name];
+            return value == null ? string.Empty : (string)value;
+        }
+
+        public void SetStringValue(string name, string value)
+        {
+            var oldValue = GetStringValue(name);
+            if (string.Compare(oldValue, value, StringComparison.CurrentCultureIgnoreCase) != 0)
+            {
+                m_Config[name] = value;
+                OnChanged(name, value);
+            }
+        }
+
+        public int GetIntValue(string name)
+        {
+            var value = m_Config[name] ?? m_Default[name];
+            return value == null ? 0 : (int)value;
+        }
+
+        public void SetIntValue(string name, int value)
+        {
+            var oldValue = GetIntValue(name);
+            if (oldValue != value)
+            {
+                m_Config[name] = value;
+                OnChanged(name, value);
+            }
+        }
+
+        private void SetValue(string name, object value)
+        {
+            var oldValue = (IComparable)(m_Config[name] ?? m_Default[name]);
+            if (oldValue.CompareTo(value as IComparable) != 0)
+            {
+                m_Config[name] = value;
+                OnChanged(name, value);
+            }
+        }
+
+        private void OnChanged(string name, object value)
+        {
+            if (Changed != null)
+            {
+                var args = new SettingsChangedArgs(name, value);
+                Changed(this, args);
+                m_Config[name] = args.NewValue;
+            }
+            m_Modified = true;
+            SaveIfModified();
+        }
+
+        public HashtableSerializable General
+        {
+            get { return m_Config; }
+            set { m_Config = value; }
+        }
+
         // properties below must not be modified instantly
 
         public int MainFormX { get; set; }
@@ -138,22 +225,32 @@ namespace LanExchange.Model.Settings
 
         public List<string> WMIClassesInclude { get; set; }
 
-        public string Language { get; set; }
-        
-        private int m_NumInfoLines;
-
-        public int NumInfoLines
+        public bool IsAutorun
         {
-            get { return m_NumInfoLines; }
+            get
+            {
+                return AutorunUtils.Autorun_Exists(GetExecutableFileName());
+            }
             set
             {
-                if (value < 2)
-                    value = 2;
-                if (AppPresenter.PanelColumns != null)
-                    if (value > AppPresenter.PanelColumns.MaxColumns)
-                        value = AppPresenter.PanelColumns.MaxColumns;
-                m_NumInfoLines = value;
+                var exeFName = GetExecutableFileName();
+                if (value)
+                {
+                    AutorunUtils.Autorun_Add(exeFName);
+                }
+                else
+                {
+                    AutorunUtils.Autorun_Delete(exeFName);
+                }
             }
         }
+
+        [DefaultValue(true)]
+        public bool RunMinimized { get; set; }
+
+        [DefaultValue(false)]
+        public bool AdvancedMode { get; set; }
+
+
     }
 }

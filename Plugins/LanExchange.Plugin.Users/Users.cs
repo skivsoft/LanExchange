@@ -1,5 +1,4 @@
 ﻿using System;
-using LanExchange.Plugin.Users.Panel;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Users

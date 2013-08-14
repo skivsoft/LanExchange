@@ -260,14 +260,11 @@ namespace LanExchange.UI
 
         private void lvComps_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (m_Presenter.Objects.CurrentPath.IsEmpty)
+            var punto = PuntoSwitcherServiceFactory.GetPuntoSwitcherService();
+            if (Char.IsLetterOrDigit(e.KeyChar) || Char.IsPunctuation(e.KeyChar) || punto.IsValidChar(e.KeyChar))
             {
-                var punto = PuntoSwitcherServiceFactory.GetPuntoSwitcherService();
-                if (Char.IsLetterOrDigit(e.KeyChar) || Char.IsPunctuation(e.KeyChar) || punto.IsValidChar(e.KeyChar))
-                {
-                    pFilter.FocusAndKeyPress(e);
-                    e.Handled = true;
-                }
+                pFilter.FocusAndKeyPress(e);
+                e.Handled = true;
             }
         }
 
@@ -325,7 +322,7 @@ namespace LanExchange.UI
                 e.Handled = true;
             }
             // Ctrl+Enter - Run RAdmin for computer and FAR for folder
-            if (Settings.Instance.General.AdvancedMode && e.Control && e.KeyCode == Keys.Enter)
+            if (Settings.Instance.AdvancedMode && e.Control && e.KeyCode == Keys.Enter)
             {
                 RunCurrentItem();
                 e.Handled = true;
@@ -336,20 +333,19 @@ namespace LanExchange.UI
                 m_Presenter.CommandLevelUp();
                 e.Handled = true;
             }
-            // Ctrl+Ins - Copy to clipboard (similar to Ctrl+C)
-            // Ctrl+Alt+C - Copy to clipboard and close window
-            // TODO !!!Copy items using keys
-            //if (e.Control && e.KeyCode == Keys.Insert || e.Control && e.Alt && e.KeyCode == Keys.C)
-            //{
-            //    if (mCopyCompName.Enabled)
-            //        m_Presenter.CommandCopyValue(0);
-            //    else
-            //        if (mCopyPath.Enabled)
-            //            m_Presenter.CommandCopyPath();
-            //    if (e.KeyCode == Keys.C)
-            //        MainForm.Instance.Hide();
-            //    e.Handled = true;
-            //}
+            // Ctrl+C - copy selected items
+            if (e.Control && e.KeyCode == Keys.C)
+            {
+                CopySelectedToClipboard(true);
+                e.Handled = true;
+            }
+            // Ctrl+Ins - copy item name
+            // Ctrl+Alt+Ins - copy full path to item name
+            if (e.Control && e.KeyCode == Keys.Insert)
+            {
+                CopyColumnToClipboard(true, e.Alt ? -1 : 0);
+                e.Handled = true;
+            }
             // Del - Delete selected items
             if (e.KeyCode == Keys.Delete)
             {
@@ -360,6 +356,7 @@ namespace LanExchange.UI
 
         private void lvComps_ItemActivate(object sender, EventArgs e)
         {
+            bCanDrag = false;
             OpenCurrentItem(true);
         }
 
@@ -488,8 +485,8 @@ namespace LanExchange.UI
                 //}
             }
             mComp.Enabled = bCompVisible;
-            mComp.Visible = Settings.Instance.General.AdvancedMode;
-            if (Settings.Instance.General.AdvancedMode && !bCompVisible)
+            mComp.Visible = Settings.Instance.AdvancedMode;
+            if (Settings.Instance.AdvancedMode && !bCompVisible)
             {
                 mComp.Text = @"\\<ИмяКомпьютера>";
             }
@@ -665,19 +662,30 @@ namespace LanExchange.UI
             m_Presenter.ColumnRightClick(e.Column);
         }
 
+        private void CopySelectedToClipboard(bool needSetup)
+        {
+            if (needSetup)
+                SetupCopyHelper();
+            Clipboard.SetText(m_CopyHelper.GetSelectedText(), TextDataFormat.UnicodeText);
+        }
+
+        private void CopyColumnToClipboard(bool needSetup, int colIndex)
+        {
+            if (needSetup)
+                SetupCopyHelper();
+            Clipboard.SetText(m_CopyHelper.GetColumnText(colIndex), TextDataFormat.UnicodeText);
+        }
+
         private void CopySelectedOnClick(object sender, EventArgs e)
         {
-            Clipboard.SetText(m_CopyHelper.GetSelectedText(), TextDataFormat.UnicodeText);
+            CopySelectedToClipboard(false);
         }
 
         private void CopyColumnOnClick(object sender, EventArgs e)
         {
             var menuItem = sender as ToolStripMenuItem;
             if (menuItem != null)
-            {
-                var colIndex = (int) menuItem.Tag;
-                Clipboard.SetText(m_CopyHelper.GetColumnText(colIndex), TextDataFormat.UnicodeText);
-            }
+                CopyColumnToClipboard(false, (int) menuItem.Tag);
         }
 
         /// <summary>

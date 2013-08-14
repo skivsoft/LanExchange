@@ -24,7 +24,7 @@ namespace LanExchange.Model
             s_Args = Environment.GetCommandLineArgs();
             var lang = GetIfPresent("/LANG:");
             if (lang == null)
-                lang = Settings.Settings.Instance.Language;
+                lang = Settings.Settings.Instance.GetStringValue("Language");
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(lang);
         }
     }

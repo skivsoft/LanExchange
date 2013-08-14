@@ -54,6 +54,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AnyAssemblyInfo.cs">
+      <Link>AnyAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="ColumnComparer.cs" />
     <Compile Include="DataReadyArgs.cs" />
     <Compile Include="GlobalSuppressions.cs" />
@@ -87,7 +90,10 @@
     <Compile Include="IInputBoxView.cs" />
     <Compile Include="IPagesView.cs" />
     <Compile Include="IPanelView.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

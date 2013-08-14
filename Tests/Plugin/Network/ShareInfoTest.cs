@@ -9,7 +9,7 @@ namespace LanExchange.Plugin.Network
         [SetUp]
         protected void SetUp()
         {
-            var info = new NetApi32.SHARE_INFO_1();
+            var info = new NativeMethods.SHARE_INFO_1();
             m_Share = new ShareInfo(info);
         }
 
@@ -54,7 +54,7 @@ namespace LanExchange.Plugin.Network
         [Test]
         public void TestCompareTo()
         {
-            var other = new ShareInfo(new NetApi32.SHARE_INFO_1());
+            var other = new ShareInfo(new NativeMethods.SHARE_INFO_1());
             m_Share.Name = "CCC";
             other.Name = "ccc";
             Assert.AreEqual(0, m_Share.CompareTo(other));
