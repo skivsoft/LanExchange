@@ -271,11 +271,11 @@ namespace LanExchange.UI
             }
         }
 
-        /// <summary>
-        /// Shift+Enter - Open current item.
-        /// </summary>
-        private void OpenCurrentItem()
+        private void OpenCurrentItem(bool canLevelDown)
         {
+            if (canLevelDown)
+                if (m_Presenter.CommandLevelDown())
+                    return;
             var panelItem = m_Presenter.GetFocusedPanelItem(false, true);
             if (panelItem != null)
             {
@@ -321,7 +321,7 @@ namespace LanExchange.UI
             // Shift+Enter - Open current item
             if (e.Shift && e.KeyCode == Keys.Enter)
             {
-                OpenCurrentItem();
+                OpenCurrentItem(false);
                 e.Handled = true;
             }
             // Ctrl+Enter - Run RAdmin for computer and FAR for folder
@@ -360,15 +360,45 @@ namespace LanExchange.UI
 
         private void lvComps_ItemActivate(object sender, EventArgs e)
         {
-            if (!m_Presenter.CommandLevelDown())
-                OpenCurrentItem();
+            OpenCurrentItem(true);
         }
 
         private void LV_MouseUp(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Middle)
-                if (!m_Presenter.CommandLevelDown())
-                    OpenCurrentItem();
+            switch (e.Button)
+            {
+                case MouseButtons.Middle:
+                    OpenCurrentItem(true);
+                    break;
+            }
+        }
+
+        private bool bCanDrag = false;
+
+        private void LV_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && e.Clicks == 1)
+            {
+                var hitInfo = LV.HitTest(e.Location);
+                if (hitInfo.Item != null && hitInfo.Item.Selected)
+                {
+                    SetupCopyHelper();
+                    if (m_CopyHelper.Count > 0)
+                    {
+                        bCanDrag = true;
+                    }
+                }
+            }
+        }
+
+        private void LV_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && bCanDrag)
+            {
+                bCanDrag = false;
+                var obj = new DataObject(DataFormats.Text, m_CopyHelper.GetSelectedText());
+                LV.DoDragDrop(obj, DragDropEffects.Copy);
+            }
         }
 
         private void mWMI_Click(object sender, EventArgs e)
@@ -412,16 +442,16 @@ namespace LanExchange.UI
 
         private void mCompOpen_Click(object sender, EventArgs e)
         {
-            var MenuItem = sender as ToolStripMenuItem;
-            if (MenuItem != null)
-                m_Presenter.RunCmdOnFocusedItem(MenuItem.Tag.ToString(), PanelPresenter.COMPUTER_MENU);
+            //var MenuItem = sender as ToolStripMenuItem;
+            //if (MenuItem != null)
+            //    m_Presenter.RunCmdOnFocusedItem(MenuItem.Tag.ToString(), PanelPresenter.COMPUTER_MENU);
         }
 
         private void mFolderOpen_Click(object sender, EventArgs e)
         {
-            var MenuItem = sender as ToolStripMenuItem;
-            if (MenuItem != null)
-                m_Presenter.RunCmdOnFocusedItem(MenuItem.Tag.ToString(), PanelPresenter.FOLDER_MENU);
+            //var MenuItem = sender as ToolStripMenuItem;
+            //if (MenuItem != null)
+            //    m_Presenter.RunCmdOnFocusedItem(MenuItem.Tag.ToString(), PanelPresenter.FOLDER_MENU);
         }
 
         internal bool PrepareContextMenu()
@@ -592,7 +622,7 @@ namespace LanExchange.UI
 
         public void ShowRunCmdError(string CmdLine)
         {
-                MessageBox.Show(String.Format("Не удалось выполнить команду:\n{0}", CmdLine), "Ошибка при запуске",
+                MessageBox.Show(String.Format("Unable to execute command line:\n{0}", CmdLine), "Execution error",
                     MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
         }
 
@@ -633,19 +663,6 @@ namespace LanExchange.UI
         private void LV_ColumnRightClick(object sender, ColumnClickEventArgs e)
         {
             m_Presenter.ColumnRightClick(e.Column);
-        }
-
-        private void LV_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                SetupCopyHelper();
-                if (m_CopyHelper.Count > 0)
-                {
-                    var obj = new DataObject(DataFormats.Text, m_CopyHelper.GetSelectedText());
-                    LV.DoDragDrop(obj, DragDropEffects.Copy);
-                }
-            }
         }
 
         private void CopySelectedOnClick(object sender, EventArgs e)
@@ -752,5 +769,7 @@ namespace LanExchange.UI
         {
             PrepareCopyMenu();
         }
+
+
     }
 }

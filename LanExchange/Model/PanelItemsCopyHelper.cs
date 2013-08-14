@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using LanExchange.Presenter;
 using LanExchange.SDK;
 
@@ -66,12 +67,36 @@ namespace LanExchange.Model
 
         internal string GetSelectedText()
         {
-            return "Hello\tSelected\tText\nHi\tText";
+            var sb = new StringBuilder();
+            for (int index = 0; index < Count; index++)
+            {
+                MoveTo(index);
+                if (index > 0)
+                    sb.AppendLine();
+                var bFirst = true;
+                foreach(var column in m_Columns)
+                    if (column.Visible)
+                    {
+                        if (!bFirst)
+                            sb.Append("\t");
+                        sb.Append(GetColumnValue(column.Index));
+                        bFirst = false;
+                    }
+            }
+            return sb.ToString();
         }
 
         internal string GetColumnText(int colIndex)
         {
-            return "Hello\nColumn\nText";
+            var sb = new StringBuilder();
+            for (int index = 0; index < Count; index++)
+            {
+                MoveTo(index);
+                if (index > 0)
+                    sb.AppendLine();
+                sb.Append(GetColumnValue(colIndex));
+            }
+            return sb.ToString();
         }
     }
 }

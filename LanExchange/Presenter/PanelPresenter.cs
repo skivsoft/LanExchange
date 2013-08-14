@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Text;
 using System.Windows.Forms;
 using LanExchange.Model;
 using LanExchange.SDK;
 using LanExchange.UI;
-using LanExchange.Utils;
 
 namespace LanExchange.Presenter
 {
     public class PanelPresenter : IPanelPresenter
     {
-        public const string COMPUTER_MENU = "computer";
-        public const string FOLDER_MENU = "folder";
-        public const string FILE_MENU = "file";
-
         private IPanelModel m_Objects;
         private readonly IPanelView m_View;
 
@@ -81,59 +75,6 @@ namespace LanExchange.Presenter
         {
             if (m_Objects != null && CurrentPathChanged != null)
                 CurrentPathChanged(sender, e);
-        }
-
-        public void CommandCopyValue(int index)
-        {
-            //if (m_Objects == null) return;
-            //StringBuilder S = new StringBuilder();
-            //foreach (int selIndex in m_View.SelectedIndexes)
-            //{
-            //    if (S.Length > 0)
-            //        S.AppendLine();
-            //    PanelItemBase PItem = m_Objects.GetItemAt(selIndex);
-            //    if (PItem != null)
-            //        S.Append(@"\\" + PItem[index]);
-            //}
-            //if (S.Length > 0)
-            //    m_View.SetClipboardText(S.ToString());
-        }
-
-        public void CommandCopySelected()
-        {
-            //if (m_Objects == null) return;
-            //StringBuilder S = new StringBuilder();
-            //foreach (int index in m_View.SelectedIndexes)
-            //{
-            //    if (S.Length > 0)
-            //        S.AppendLine();
-            //    PanelItemBase PItem = m_Objects.GetItemAt(index);
-            //    if (PItem != null)
-            //    {
-            //        S.Append(@"\\" + PItem[0]);
-            //        S.Append("\t");
-            //        S.Append(PItem[1]);
-            //    }
-            //}
-            //if (S.Length > 0)
-            //    m_View.SetClipboardText(S.ToString());
-        }
-
-        public void CommandCopyPath()
-        {
-            // TODO UNCOMMENT THIS
-            //if (m_Objects == null) return;
-            //StringBuilder S = new StringBuilder();
-            //foreach (int index in m_View.SelectedIndexes)
-            //{
-            //    if (S.Length > 0)
-            //        S.AppendLine();
-            //    SharePanelItem PItem = m_Objects.GetItemAt(index) as SharePanelItem;
-            //    if (PItem != null)
-            //        S.Append(String.Format(@"\\{0}\{1}", PItem.ComputerName, PItem.Name));
-            //}
-            //if (S.Length > 0)
-            //    m_View.SetClipboardText(S.ToString());
         }
 
         public IPanelModel Objects
@@ -276,7 +217,6 @@ namespace LanExchange.Presenter
                 Objects.SyncRetrieveData();
             }
             return result;
-            //return false;
         }
 
         public void CommandDeleteItems()
@@ -359,11 +299,6 @@ namespace LanExchange.Presenter
             var columns = AppPresenter.PanelColumns.GetColumns(m_Objects.DataType);
             columns[columnIndex].Visible = !columns[columnIndex].Visible;
             SetupColumns();
-        }
-
-        internal void CommandCopyColumn(int p)
-        {
-            throw new NotImplementedException();
         }
     }
 }
