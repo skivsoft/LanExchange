@@ -148,10 +148,11 @@
             // lItemsCount
             // 
             this.lItemsCount.Name = "lItemsCount";
-            this.lItemsCount.Size = new System.Drawing.Size(503, 17);
+            this.lItemsCount.Size = new System.Drawing.Size(472, 17);
             this.lItemsCount.Spring = true;
             this.lItemsCount.Text = "    ";
             this.lItemsCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lItemsCount.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lCompName_MouseDown);
             this.lItemsCount.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lItemsCount_MouseUp);
             // 
             // toolStripStatusLabel1
@@ -169,6 +170,7 @@
             this.lCompName.Size = new System.Drawing.Size(19, 17);
             this.lCompName.Text = "    ";
             this.lCompName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lCompName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lCompName_MouseDown);
             this.lCompName.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lCompName_MouseUp);
             // 
             // toolStripStatusLabel4
@@ -185,6 +187,7 @@
             this.lUserName.Name = "lUserName";
             this.lUserName.Size = new System.Drawing.Size(19, 17);
             this.lUserName.Text = "    ";
+            this.lUserName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lCompName_MouseDown);
             // 
             // tipComps
             // 

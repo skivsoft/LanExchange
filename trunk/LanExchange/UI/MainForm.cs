@@ -531,5 +531,18 @@ namespace LanExchange.UI
         }
  #endif
 
+        private void lCompName_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && e.Clicks == 1)
+            {
+                var label = (sender as ToolStripStatusLabel);
+                if (label != null)
+                {
+                    var obj = new DataObject(DataFormats.UnicodeText, label.Text);
+                    Status.DoDragDrop(obj, DragDropEffects.Copy);
+                }
+            }
+        }
+
     }
 }
