@@ -1,6 +1,5 @@
 ﻿using System;
 using LanExchange.Plugin.Network;
-using LanExchange.Plugin.Network.Panel;
 using LanExchange.Presenter;
 using LanExchange.SDK;
 using Moq;

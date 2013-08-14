@@ -23,7 +23,7 @@ namespace LanExchange.Plugin.Network
         [Test]
         public void TestNetServerEnumDomains()
         {
-            var list = NetApi32Utils.Instance.NetServerEnum(null, NetApi32.SV_101_TYPES.SV_TYPE_DOMAIN_ENUM);
+            var list = NetApi32Utils.Instance.NetServerEnum(null, NativeMethods.SV_101_TYPES.SV_TYPE_DOMAIN_ENUM);
             var enumerator = list.GetEnumerator();
             Assert.IsTrue(enumerator.MoveNext());
             Assert.IsNotEmpty(enumerator.Current.sv101_name);
@@ -33,7 +33,7 @@ namespace LanExchange.Plugin.Network
         public void TestNetServerEnumComps()
         {
             var domain = NetApi32Utils.Instance.GetMachineNetBiosDomain(null);
-            var list = NetApi32Utils.Instance.NetServerEnum(domain, NetApi32.SV_101_TYPES.SV_TYPE_DOMAIN_ENUM);
+            var list = NetApi32Utils.Instance.NetServerEnum(domain, NativeMethods.SV_101_TYPES.SV_TYPE_DOMAIN_ENUM);
             int count = 0;
             foreach(var item in list)
                 count++;

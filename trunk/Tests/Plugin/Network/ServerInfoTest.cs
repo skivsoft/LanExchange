@@ -44,7 +44,7 @@ namespace LanExchange.Plugin.Network
         [Test]
         public void TestSerializeBinary()
         {
-            var info = ServerInfo.FromNetApi32(new NetApi32.SERVER_INFO_101 {sv101_name = "QQQ", sv101_comment = "WWW"});
+            var info = ServerInfo.FromNetApi32(new NativeMethods.SERVER_INFO_101 {sv101_name = "QQQ", sv101_comment = "WWW"});
             //SI.Name = "QQQ";
             //SI.Comment = "WWW";
             var stream = new MemoryStream();

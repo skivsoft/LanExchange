@@ -6,7 +6,7 @@ using LanExchange.SDK;
 
 namespace LanExchange.Model
 {
-    internal class PanelItemsCopyHelper
+    public class PanelItemsCopyHelper
     {
         private readonly IPanelModel m_Model;
         private readonly List<int> m_Indexes;
@@ -29,12 +29,24 @@ namespace LanExchange.Model
             get { return m_Indexes.Count; }
         }
 
+        public IEnumerable<PanelColumnHeader> Columns
+        {
+            get { return m_Columns; }
+        }
+
         public PanelItemBase CurrentItem
         {
             get { return m_CurrentItem; }
+            set
+            {
+                m_CurrentItem = value;
+                if (m_CurrentItem is PanelItemDoubleDot)
+                    m_CurrentItem = m_CurrentItem.Parent;
+                m_Columns = AppPresenter.PanelColumns.GetColumns(m_CurrentItem.GetType());
+            }
         }
 
-        internal void Prepare()
+        public void Prepare()
         {
             m_Indexes.Sort();
             if (m_Indexes.Count > 1)
@@ -44,15 +56,12 @@ namespace LanExchange.Model
             }
         }
 
-        internal void MoveTo(int index)
+        public void MoveTo(int index)
         {
             m_CurrentItem = m_Model.GetItemAt(m_Indexes[index]);
-            if (m_CurrentItem is PanelItemDoubleDot)
-                m_CurrentItem = m_CurrentItem.Parent;
-            m_Columns = AppPresenter.PanelColumns.GetColumns(m_CurrentItem.GetType());
         }
 
-        internal string GetColumnValue(int colIndex)
+        public string GetColumnValue(int colIndex)
         {
             if (colIndex == -1)
                 return m_CurrentItem != null ? m_CurrentItem.FullItemName : string.Empty;
@@ -65,20 +74,18 @@ namespace LanExchange.Model
             return comparable != null ? comparable.ToString() : string.Empty;
         }
 
-        internal string GetSelectedText()
+        public string GetSelectedText()
         {
             var sb = new StringBuilder();
             for (int index = 0; index < Count; index++)
             {
                 MoveTo(index);
-                if (index > 0)
-                    sb.AppendLine();
+                if (index > 0) sb.AppendLine();
                 var bFirst = true;
                 foreach(var column in m_Columns)
                     if (column.Visible)
                     {
-                        if (!bFirst)
-                            sb.Append("\t");
+                        if (!bFirst) sb.Append("\t");
                         sb.Append(GetColumnValue(column.Index));
                         bFirst = false;
                     }
@@ -86,17 +93,17 @@ namespace LanExchange.Model
             return sb.ToString();
         }
 
-        internal string GetColumnText(int colIndex)
+        public string GetColumnText(int colIndex)
         {
             var sb = new StringBuilder();
             for (int index = 0; index < Count; index++)
             {
                 MoveTo(index);
-                if (index > 0)
-                    sb.AppendLine();
+                if (index > 0) sb.AppendLine();
                 sb.Append(GetColumnValue(colIndex));
             }
             return sb.ToString();
         }
+
     }
 }

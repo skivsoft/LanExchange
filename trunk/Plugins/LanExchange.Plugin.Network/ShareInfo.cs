@@ -4,13 +4,13 @@ namespace LanExchange.Plugin.Network
 {
     public class ShareInfo : IComparable<ShareInfo>
     {
-        private NetApi32.SHARE_INFO_1 m_Info;
+        private NativeMethods.SHARE_INFO_1 m_Info;
 
         public ShareInfo()
         {
         }
 
-        public ShareInfo(NetApi32.SHARE_INFO_1 info)
+        public ShareInfo(NativeMethods.SHARE_INFO_1 info)
         {
             m_Info = info;
         }
@@ -35,7 +35,7 @@ namespace LanExchange.Plugin.Network
 
         public bool IsPrinter
         {
-            get { return (m_Info.shi1_type == (uint)NetApi32.SHARE_TYPE.STYPE_PRINTQ); }
+            get { return (m_Info.shi1_type == (uint)NativeMethods.SHARE_TYPE.STYPE_PRINTQ); }
         }
 
         public bool IsHidden

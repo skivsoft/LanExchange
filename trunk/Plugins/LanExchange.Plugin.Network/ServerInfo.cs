@@ -21,7 +21,7 @@ namespace LanExchange.Plugin.Network
         //{
         //}
 
-        public static ServerInfo FromNetApi32(NetApi32.SERVER_INFO_101 info)
+        public static ServerInfo FromNetApi32(NativeMethods.SERVER_INFO_101 info)
         {
             var result = new ServerInfo();
             result.m_Name = info.sv101_name;
@@ -75,7 +75,7 @@ namespace LanExchange.Plugin.Network
         public string GetTopicalityText()
         {
             TimeSpan diff = GetTopicality();
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             bool showSeconds = true;
             if (diff.Days > 0)
             {

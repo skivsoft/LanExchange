@@ -14,11 +14,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Users", "Plugins\LanExchange.Plugin.Users\LanExchange.Plugin.Users.csproj", "{064D3413-8F0B-4511-85F3-4919AC1D5A98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Win7", "plugins\LanExchange.Plugin.Win7\LanExchange.Plugin.Win7.csproj", "{26D53677-B560-4697-9C4E-E54ECBD4C048}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Win7", "Plugins\LanExchange.Plugin.Win7\LanExchange.Plugin.Win7.csproj", "{26D53677-B560-4697-9C4E-E54ECBD4C048}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{F429C326-ED8C-431E-96EB-3D069A2AE20C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Images", "Plugins\LanExchange.Plugin.Images\LanExchange.Plugin.Images.csproj", "{BF05AA16-2838-4510-98FD-CB568C07A365}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Radmin", "Plugins\LanExchange.Plugin.Radmin\LanExchange.Plugin.Radmin.csproj", "{BF05AA16-2838-4510-98FD-CB568C07A365}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution

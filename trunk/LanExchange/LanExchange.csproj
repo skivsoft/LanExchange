@@ -88,6 +88,9 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AnyAssemblyInfo.cs">
+      <Link>AnyAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Action\AboutAction.cs" />
     <Compile Include="Action\ReReadAction.cs" />
     <Compile Include="Action\ShortcutKeysAction.cs" />
@@ -96,6 +99,7 @@
     <Compile Include="Model\BackgroundWorkerEx.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Model\HashtableSerializable.cs" />
     <Compile Include="Model\Impl\PanelColumnManagerImpl.cs" />
     <Compile Include="Model\Impl\ImageManagerImpl.cs" />
     <Compile Include="Model\LazyThreadPool.cs" />
@@ -106,7 +110,12 @@
     <Compile Include="Model\PanelItemListEventArgs.cs" />
     <Compile Include="Model\PanelItemsCopyHelper.cs" />
     <Compile Include="Model\PingThread.cs" />
-    <Compile Include="Model\Settings\SettingsGeneral.cs" />
+    <Compile Include="Model\Settings\SettingsChangedArgs.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Service\IPuntoSwitcherService.cs" />
     <Compile Include="Service\PuntoSwitcherServiceEngRus.cs" />
     <Compile Include="Model\Settings\Settings.cs" />
@@ -126,6 +135,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\Impl\ServiceProviderImpl.cs" />
     <Compile Include="Service\PuntoSwitcherServiceFactory.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="UI\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -310,6 +320,10 @@
   <ItemGroup>
     <Content Include="History.txt" />
     <Content Include="LanExchange.ico" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Resources\user_32.png" />
     <None Include="Resources\user_16.png" />
     <None Include="Resources\back_16.png" />
