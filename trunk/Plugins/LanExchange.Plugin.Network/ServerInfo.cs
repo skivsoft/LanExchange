@@ -10,7 +10,7 @@ namespace LanExchange.Plugin.Network
     {
         private string m_Name;
         private string m_Comment;
-        private OSVersion m_Version;
+        private readonly OSVersion m_Version;
 
         private DateTime m_UtcUpdated;
 
@@ -25,13 +25,17 @@ namespace LanExchange.Plugin.Network
         {
             var result = new ServerInfo();
             result.m_Name = info.sv101_name;
-            result.m_Version = new OSVersion();
             result.m_Version.PlatformID = info.sv101_platform_id;
             result.m_Version.Major = info.sv101_version_major;
             result.m_Version.Minor = info.sv101_version_minor;
             result.m_Version.Type = info.sv101_type;
             result.m_Comment = info.sv101_comment;
             return result;
+        }
+
+        public ServerInfo()
+        {
+            m_Version = new OSVersion();
         }
 
         public string Name
@@ -49,7 +53,6 @@ namespace LanExchange.Plugin.Network
         public OSVersion Version
         {
             get { return m_Version; }
-            set { m_Version = value; }
         }
 
         public DateTime UtcUpdated

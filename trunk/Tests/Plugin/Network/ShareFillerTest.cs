@@ -33,8 +33,8 @@ namespace LanExchange.Plugin.Network
             ShareFiller.ShowHiddenShares = true;
             var result = new Collection<PanelItemBase>();
             strategy.Fill(computer, result);
-            Assert.Greater(result.Count, 1);
-            Assert.IsInstanceOf<PanelItemDoubleDot>(result[0]);
+            Assert.Greater(result.Count, 0);
+            Assert.IsInstanceOf<SharePanelItem>(result[0]);
             ShareFiller.ShowHiddenShares = false;
             strategy.Fill(computer, result);
         }
