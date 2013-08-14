@@ -183,21 +183,22 @@ namespace LanExchange.Model
 
         public void SaveSettings()
         {
-            m_PagesSettings.SelectedIndex = SelectedIndex;
-            var pages = new List<Tab>();
-            for (int i = 0; i < Count; i++)
-                pages.Add(GetItem(i).Settings);
-            m_PagesSettings.Items = pages.ToArray();
-            var fileFName = GetConfigFileName();
-            try
-            {
-                Type[] extraTypes = AppPresenter.PanelItemTypes.ToArray();
-                SerializeUtils.SerializeObjectToXMLFile(fileFName, m_PagesSettings, extraTypes);
-            }
-            catch (Exception e)
-            {
-                Debug.Fail(e.Message);
-            }
+            //TODO !!!UNCOMMENT SAVE SETTINGS
+            //m_PagesSettings.SelectedIndex = SelectedIndex;
+            //var pages = new List<Tab>();
+            //for (int i = 0; i < Count; i++)
+            //    pages.Add(GetItem(i).Settings);
+            //m_PagesSettings.Items = pages.ToArray();
+            //var fileFName = GetConfigFileName();
+            //try
+            //{
+            //    Type[] extraTypes = AppPresenter.PanelItemTypes.ToArray();
+            //    SerializeUtils.SerializeObjectToXMLFile(fileFName, m_PagesSettings, extraTypes);
+            //}
+            //catch (Exception e)
+            //{
+            //    Debug.Fail(e.Message);
+            //}
         }
     }
 }

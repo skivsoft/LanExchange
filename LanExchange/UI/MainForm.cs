@@ -333,11 +333,11 @@ namespace LanExchange.UI
             helper.CurrentItem = panelItem;
             int index = 0;
             foreach (var column in helper.Columns)
-                {
-                    pInfo.SetLine(index, helper.GetColumnValue(column.Index));
-                    ++index;
-                    if (index >= pInfo.CountLines) break;
-                }
+            {
+                pInfo.SetLine(index, helper.GetColumnValue(column.Index));
+                ++index;
+                if (index >= pInfo.CountLines) break;
+            }
             for (int i = index; i < pInfo.CountLines; i++)
                 pInfo.SetLine(i, string.Empty);
         }

@@ -240,7 +240,7 @@ namespace LanExchange.SDK
 
         public override int GetHashCode()
         {
-            return Name.GetHashCode();
+            return Name != null ? Name.GetHashCode() : 0;
         }
     }
 }

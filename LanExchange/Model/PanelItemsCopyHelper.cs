@@ -58,7 +58,7 @@ namespace LanExchange.Model
 
         public void MoveTo(int index)
         {
-            m_CurrentItem = m_Model.GetItemAt(m_Indexes[index]);
+            CurrentItem = m_Model.GetItemAt(m_Indexes[index]);
         }
 
         public string GetColumnValue(int colIndex)
