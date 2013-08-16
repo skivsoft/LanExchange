@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?include defines.wxi ?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="$(var.ProductCode)" Name="$(var.Product)" Language="1033"  Version="$(var.Version)" Manufacturer="$(var.Manufacturer)" UpgradeCode="$(var.UpgradeCode)">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Description="$(var.Description)"/>
+    <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <Icon Id="LanExchange.ico" SourceFile="LanExchange.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="LanExchange.ico" />
+    <!--<Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION"/>-->
+    <Property Id="ARPHELPLINK" Value="https://code.google.com/p/lanexchange/" />
+    <Property Id="ARPURLINFOABOUT" Value="https://code.google.com/p/lanexchange/" />
+    <Property Id="ARPURLUPDATEINFO" Value="https://code.google.com/p/lanexchange/downloads/list" />
+    <Property Id="ARPCONTACT" Value="skivsoft@gmail.com"/>
+    <Property Id="ARPCOMMENTS" Value="User-friendly browser of computers for local area network."/>
+
+    <WixVariable Id="WixUILicenseRtf" Overridable="yes" Value="License.rtf"/>
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="LocalAppDataFolder">
+        <Directory Id="INSTALLFOLDERROOT" Name="$(var.DefInstallDir)">
+          <Directory Id="INSTALLDIR" Name="v$(var.VerMajor).$(var.VerMinor)"/>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <FeatureRef Id="LanExchange"/>
+    <UIRef Id="WixUI_Mod" />
+  </Product>
+</Wix>

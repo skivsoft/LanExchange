@@ -20,6 +20,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{F429
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Radmin", "Plugins\LanExchange.Plugin.Radmin\LanExchange.Plugin.Radmin.csproj", "{BF05AA16-2838-4510-98FD-CB568C07A365}"
 EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Setup", "Setup\Setup.wixproj", "{6452745F-D8FC-4B4B-ABF8-A5A3B70135C4}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = LanExchange2010.vsmdi
@@ -102,6 +104,16 @@ Global
 		{BF05AA16-2838-4510-98FD-CB568C07A365}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{BF05AA16-2838-4510-98FD-CB568C07A365}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{BF05AA16-2838-4510-98FD-CB568C07A365}.Release|x86.ActiveCfg = Release|Any CPU
+		{6452745F-D8FC-4B4B-ABF8-A5A3B70135C4}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{6452745F-D8FC-4B4B-ABF8-A5A3B70135C4}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{6452745F-D8FC-4B4B-ABF8-A5A3B70135C4}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{6452745F-D8FC-4B4B-ABF8-A5A3B70135C4}.Debug|x86.ActiveCfg = Debug|x86
+		{6452745F-D8FC-4B4B-ABF8-A5A3B70135C4}.Debug|x86.Build.0 = Debug|x86
+		{6452745F-D8FC-4B4B-ABF8-A5A3B70135C4}.Release|Any CPU.ActiveCfg = Release|x86
+		{6452745F-D8FC-4B4B-ABF8-A5A3B70135C4}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{6452745F-D8FC-4B4B-ABF8-A5A3B70135C4}.Release|Mixed Platforms.Build.0 = Release|x86
+		{6452745F-D8FC-4B4B-ABF8-A5A3B70135C4}.Release|x86.ActiveCfg = Release|x86
+		{6452745F-D8FC-4B4B-ABF8-A5A3B70135C4}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

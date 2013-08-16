@@ -13,7 +13,7 @@
 //   TODO  Sending items to another tab
 //   TODO  Manual creation of computer items
 //   DONE  Classes with IDisposable interface must be a components
-//   TODO  MSI installer
+//   DONE  MSI installer
 //   TODO  Multi-langual support (Russian, Engligh)
 //   DONE  Columns sort (name, comment, version)
 //   TODO  Platform detection based on Platforms.xml refer
