@@ -6,13 +6,11 @@ namespace LanExchange.Model
 {
     public class CustomPanelItem : PanelItemBase
     {
-        private readonly IDictionary<int, PanelColumnHeader> m_Header;
         private readonly IDictionary<int, IComparable> m_Data;
         private int m_CountColumns;
 
         public CustomPanelItem(PanelItemBase parent, string name) : base(parent)
         {
-            m_Header = new Dictionary<int, PanelColumnHeader>();
             m_Data = new Dictionary<int, IComparable>();
             Name = name;
             SetCountColumns(1);

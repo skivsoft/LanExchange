@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using LanExchange.SDK;
@@ -19,38 +20,44 @@ namespace LanExchange.Model
 
         public void LoadPlugins()
         {
-            var folder = AppDomain.CurrentDomain.BaseDirectory;
-            var files = Directory.GetFiles(folder, PluginMask, SearchOption.TopDirectoryOnly);
-            foreach (string file in files)
-            try
-            {
-                var assembly = Assembly.LoadFile(file);
-                //PanelSubscription.Instance.StrategySelector.SearchStrategiesInAssembly(assembly, typeof(PanelStrategyBase));
-                foreach (Type type in assembly.GetTypes())
+            var files = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, PluginMask, SearchOption.TopDirectoryOnly);
+            foreach (var fileName in files)
+                try
                 {
-                    Type iface = type.GetInterface("LanExchange.SDK.IPlugin");
-                    if (iface == null) continue;
-                    IPlugin plugin = null;
-                    try
-                    {
-                        plugin = (IPlugin)Activator.CreateInstance(type);
-                    }
-                    catch (Exception)
-                    {
-                    }
-                    if (plugin == null) continue;
-                    try
-                    {
-                        m_Plugins.Add(plugin);
-                        plugin.Initialize(AppPresenter.ServiceProvider);
-                    }
-                    catch (Exception)
-                    {
-                    }
+                    LoadPlugin(fileName);
                 }
-            }
-            catch (Exception)
+                catch (Exception ex)
+                {
+                    Debug.Print(ex.Message);
+                }
+        }
+
+        public void LoadPlugin(string fileName)
+        {
+            var assembly = Assembly.LoadFile(fileName);
+            foreach (var type in assembly.GetExportedTypes())
             {
+                var iface = type.GetInterface("LanExchange.SDK.IPlugin");
+                if (iface == null) continue;
+                IPlugin plugin = null;
+                try
+                {
+                    plugin = (IPlugin)Activator.CreateInstance(type);
+                }
+                catch (Exception ex)
+                {
+                    Debug.Print(ex.Message);
+                }
+                if (plugin == null) continue;
+                try
+                {
+                    m_Plugins.Add(plugin);
+                    plugin.Initialize(AppPresenter.ServiceProvider);
+                }
+                catch (Exception ex)
+                {
+                    Debug.Print(ex.Message);
+                }
             }
         }
 
@@ -58,11 +65,5 @@ namespace LanExchange.Model
         {
             get { return m_Plugins; }
         }
-
-        //internal void OpenDefaultTab()
-        //{
-        //    foreach (var plugin in m_Plugins)
-        //        plugin.OpenDefaultTab();
-        //}
     }
 }
