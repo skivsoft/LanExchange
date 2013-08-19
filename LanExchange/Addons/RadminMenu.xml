@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanExchangeAddon xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Programs>
+    <Program Id="Radmin" FileName="%ProgramFiles(x86)%\Radmin Viewer 3\Radmin.exe" />
+  </Programs>
+  <PanelItems>
+    <PanelItemBaseRef Id="ComputerPanelItem">
+      <ContextMenuStrip>
+        <ToolStripMenuItem>
+          <Text>Radmin® Full Control</Text>
+          <ShortcutKeys>Ctrl+Enter</ShortcutKeys>
+          <ProgramRef Id="Radmin" />
+          <ProgramArgs>/connect:{0}</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem>
+          <Text>Radmin® View</Text>
+          <ProgramRef Id="Radmin" />
+          <ProgramArgs>/connect:{0} /noinput</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem>
+          <Text>Radmin® Telnet</Text>
+          <ProgramRef Id="Radmin" />
+          <ProgramArgs>/connect:{0} /telnet</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem>
+          <Text>Radmin® File transfer</Text>
+          <ProgramRef Id="Radmin" />
+          <ProgramArgs>/connect:{0} /file</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem>
+          <Text>Radmin® Shutdown</Text>
+          <ProgramRef Id="Radmin" />
+          <ProgramArgs>/connect:{0} /shutdown</ProgramArgs>
+        </ToolStripMenuItem>
+      </ContextMenuStrip>
+    </PanelItemBaseRef>
+  </PanelItems>
+</LanExchangeAddon>

@@ -1,5 +1,6 @@
 ﻿using System;
 using LanExchange.Model;
+using LanExchange.Model.Addon;
 using LanExchange.Model.Impl;
 using LanExchange.SDK;
 using LanExchange.UI;
@@ -31,6 +32,9 @@ namespace LanExchange.Presenter
             ServiceProvider = new ServiceProviderImpl();
             LazyThreadPool = new LazyThreadPool();
             Plugins = new PluginManager();
+            #if DEBUG
+            AddonGen.Generate();
+            #endif
         }
     }
 }
