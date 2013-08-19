@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Drawing;
@@ -9,6 +10,7 @@ namespace LanExchange.Utils
     /// This class contains every method, enumeration, struct and constants from the Windows API, which are
     /// required by the FileBrowser
     /// </summary>
+    [Localizable(false)]
     public static class ShellAPI
     {
         #region Variables and Constants

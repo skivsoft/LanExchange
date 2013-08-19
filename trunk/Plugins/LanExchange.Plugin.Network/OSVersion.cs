@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace LanExchange.Plugin.Network
 {
@@ -125,6 +126,7 @@ namespace LanExchange.Plugin.Network
         /// Returns name and version of operation system.
         /// </summary>
         /// <returns></returns>
+        [Localizable(false)]
         public override string ToString()
         {
             //return String.Format("{0}.{1}.{2}.{3}", platform_id, ver_major, ver_minor, type);

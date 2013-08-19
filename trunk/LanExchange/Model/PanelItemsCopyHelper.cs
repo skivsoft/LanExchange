@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using LanExchange.Presenter;
 using LanExchange.SDK;
@@ -74,6 +75,7 @@ namespace LanExchange.Model
             return comparable != null ? comparable.ToString() : string.Empty;
         }
 
+        [Localizable(false)]
         public string GetSelectedText()
         {
             var sb = new StringBuilder();

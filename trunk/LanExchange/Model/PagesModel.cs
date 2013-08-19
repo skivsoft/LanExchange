@@ -152,8 +152,9 @@ namespace LanExchange.Model
                         m_PagesSettings = temp;
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    Debug.Print(ex.Message);
                 }
             }
             if (m_PagesSettings == null)

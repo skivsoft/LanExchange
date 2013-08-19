@@ -1,4 +1,5 @@
 ﻿using System;
+using LanExchange.Plugin.Network.Properties;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
@@ -9,7 +10,7 @@ namespace LanExchange.Plugin.Network
 
         public static void RegisterColumns(IPanelColumnManager columnManager)
         {
-            columnManager.RegisterColumn(typeof(DomainPanelItem), new PanelColumnHeader("Domain name"));
+            columnManager.RegisterColumn(typeof(DomainPanelItem), new PanelColumnHeader(Resources.DomainName));
         }
 
         public DomainPanelItem()

@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Reflection;
 using System.Windows.Forms;
 using LanExchange.Model;
-using LanExchange.Model.Settings;
 using LanExchange.Presenter;
+using LanExchange.Properties;
 using LanExchange.SDK;
 using LanExchange.Service;
 using LanExchange.Utils;
+using Settings = LanExchange.Model.Settings.Settings;
 
 namespace LanExchange.UI
 {
@@ -276,10 +278,10 @@ namespace LanExchange.UI
             var panelItem = m_Presenter.GetFocusedPanelItem(false, true);
             if (panelItem != null)
             {
-                if (panelItem.GetType().Name.Equals("ComputerPanelItem"))
-                    mCompOpen_Click(mCompOpen, EventArgs.Empty);
-                if (panelItem.GetType().Name.Equals("SharePanelItem"))
-                    mFolderOpen_Click(mFolderOpen, EventArgs.Empty);
+                //if (panelItem.GetType().Name.Equals("ComputerPanelItem"))
+                //    mCompOpen_Click(mCompOpen, EventArgs.Empty);
+                //if (panelItem.GetType().Name.Equals("SharePanelItem"))
+                //    mFolderOpen_Click(mFolderOpen, EventArgs.Empty);
             }
         }
 
@@ -291,11 +293,11 @@ namespace LanExchange.UI
             var panelItem = m_Presenter.GetFocusedPanelItem(false, true);
             if (panelItem != null)
             {
-                if (panelItem.GetType().Name.Equals("ComputerPanelItem"))
-                    mCompOpen_Click(mRadmin1, EventArgs.Empty);
-                if (panelItem.GetType().Name.Equals("SharePanelItem"))
-                    //if (!(panelItem as SharePanelItem).SHI.IsPrinter)
-                        mFolderOpen_Click(mFAROpen, EventArgs.Empty);
+                //if (panelItem.GetType().Name.Equals("ComputerPanelItem"))
+                //    mCompOpen_Click(mRadmin1, EventArgs.Empty);
+                //if (panelItem.GetType().Name.Equals("SharePanelItem"))
+                //    //if (!(panelItem as SharePanelItem).SHI.IsPrinter)
+                //        mFolderOpen_Click(mFAROpen, EventArgs.Empty);
             }
         }
 
@@ -488,7 +490,7 @@ namespace LanExchange.UI
             mComp.Visible = Settings.Instance.AdvancedMode;
             if (Settings.Instance.AdvancedMode && !bCompVisible)
             {
-                mComp.Text = @"\\<ИмяКомпьютера>";
+                mComp.Text = Resources.PanelView_ComputerName;
             }
             //SetEnabledAndVisible(mFolder, bFolderVisible);
 
@@ -619,7 +621,7 @@ namespace LanExchange.UI
 
         public void ShowRunCmdError(string CmdLine)
         {
-                MessageBox.Show(String.Format("Unable to execute command line:\n{0}", CmdLine), "Execution error",
+                MessageBox.Show(String.Format(Resources.PanelView_RunCmdErrorMsg, CmdLine), Resources.PanelView_RunCmdErrorCaption,
                     MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
         }
 
@@ -692,6 +694,7 @@ namespace LanExchange.UI
         /// Creates menu items depends on visible columns.
         /// </summary>
         /// <returns></returns>
+        [Localizable(false)]
         private IEnumerable<ToolStripItem> CreateCopyMenuItems(PanelItemsCopyHelper helper)
         {
             if (helper.Count == 1)
@@ -707,9 +710,9 @@ namespace LanExchange.UI
                         {
                             var menuPath = new ToolStripMenuItem();
                             if (helper.Count == 1)
-                                menuPath.Text = string.Format("Copy «{0}»", valuePath);
+                                menuPath.Text = string.Format(Resources.PanelView_CopyColumn, valuePath);
                             else
-                                menuPath.Text = string.Format("Copy path to «{0}»", column.Text);
+                                menuPath.Text = string.Format(Resources.PanelView_CopyPathTo, column.Text);
                             menuPath.ShortcutKeyDisplayString = "Ctrl+Alt+Ins";
                             menuPath.Tag = -1;
                             menuPath.Click += CopyColumnOnClick;
@@ -724,7 +727,7 @@ namespace LanExchange.UI
                         value = column.Text;
                     if (!string.IsNullOrEmpty(value))
                     {
-                        var menuItem = new ToolStripMenuItem(string.Format("Copy «{0}»", value));
+                        var menuItem = new ToolStripMenuItem(string.Format(Resources.PanelView_CopyColumn, value));
                         if (column.Index == 0)
                             menuItem.ShortcutKeyDisplayString = "Ctrl+Ins";
                         menuItem.Tag = column.Index;
@@ -765,9 +768,9 @@ namespace LanExchange.UI
                 }
             // choose single or plural form for text
             if (m_CopyHelper.Count == 1)
-                mCopySelected.Text = "Copy selected item";
+                mCopySelected.Text = Resources.PanelView_CopySelected;
             else
-                mCopySelected.Text = string.Format("Copy {0} selected items", m_CopyHelper.Count);
+                mCopySelected.Text = string.Format(Resources.PanelView_CopySelectedPlural, m_CopyHelper.Count);
             // add new items
             foreach (var item in CreateCopyMenuItems(m_CopyHelper))
                 mCopyMenu.DropDownItems.Add(item);

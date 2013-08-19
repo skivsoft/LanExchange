@@ -1,4 +1,6 @@
 using System;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using Microsoft.Win32;
@@ -69,6 +71,7 @@ namespace LanExchange.Utils
             return Result;
         }
 
+        [Localizable(false)]
         public static void Autorun_Add(string fileName)
         {
             RegistryKey Key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run\", true);
@@ -110,8 +113,9 @@ namespace LanExchange.Utils
                         Key.SetValue("LanExchange", FileNameQuoted);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Debug.Print(ex.Message);
             }
             finally
             {
@@ -149,8 +153,9 @@ namespace LanExchange.Utils
                         });
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Debug.Print(ex.Message);
             }
             finally
             {

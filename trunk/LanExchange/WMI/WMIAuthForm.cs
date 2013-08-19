@@ -1,6 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using LanExchange.Properties;
 
 namespace LanExchange.WMI
 {
@@ -36,6 +38,7 @@ namespace LanExchange.WMI
             return false;
         }
 
+        [Localizable(false)]
         public void SetComputerName(string computerName)
         {
             Text = String.Format(Text, computerName);
@@ -63,7 +66,7 @@ namespace LanExchange.WMI
         {
             if (string.IsNullOrEmpty(eUserName.Text.Trim()))
             {
-                Error.SetError(eUserName, "Не указано имя пользователя.");
+                Error.SetError(eUserName, Resources.WMIAuthForm_UserNameError);
                 DialogResult = DialogResult.None;
                 return;
             }

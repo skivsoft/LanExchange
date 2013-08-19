@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using LanExchange.SDK;
+using ThreadState = System.Threading.ThreadState;
 
 namespace LanExchange.Model
 {
@@ -91,8 +93,9 @@ namespace LanExchange.Model
                     column.LazyDict.Add(item, result);
                     DoDataReady(item);
                 }
-                catch
+                catch(Exception ex)
                 {
+                    Debug.Print(ex.Message);
                 }
                 ++number;
             }

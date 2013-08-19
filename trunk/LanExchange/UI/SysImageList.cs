@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -147,6 +148,7 @@ namespace LanExchange.UI
 	/// <summary>
 	/// Summary description for SysImageList.
 	/// </summary>
+	[Localizable(false)]
 	public sealed class SysImageList : IDisposable
 	{
 		#region UnmanagedCode
@@ -974,6 +976,7 @@ namespace LanExchange.UI
 	/// <summary>
 	/// Helper Methods for Connecting SysImageList to Common Controls
 	/// </summary>
+	[Localizable(false)]
 	public class SysImageListHelper
 	{
 		#region UnmanagedMethods

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Text;
 
 //using System.Xml.Serialization;
@@ -75,6 +76,7 @@ namespace LanExchange.Plugin.Network
             return DateTime.UtcNow - UtcUpdated;
         }
 
+        [Localizable(false)]
         public string GetTopicalityText()
         {
             TimeSpan diff = GetTopicality();

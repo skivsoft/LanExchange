@@ -44,6 +44,7 @@ namespace LanExchange.UI
         /// </summary>
         /// <param name="sourceToolStripMenuItem">The source tool strip menu item.</param>
         /// <returns>A cloned version of the toolstrip menu item</returns>
+        [Localizable(false)]
         public static ToolStripMenuItem Clone(
 #if NET_3_5
             this 
@@ -122,7 +123,7 @@ namespace LanExchange.UI
                 }
                 else
                 {
-                    throw new NotImplementedException("Menu item is not a ToolStripMenuItem or a ToolStripSeparatorr");
+                    throw new NotImplementedException();
                 }
 
                 menuItem.DropDownItems.Add(newItem);

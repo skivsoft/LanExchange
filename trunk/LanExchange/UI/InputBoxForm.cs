@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using LanExchange.Properties;
 using LanExchange.SDK;
 
 namespace LanExchange.UI
@@ -29,7 +30,7 @@ namespace LanExchange.UI
         {
             if (!m_AllowEmpty && String.IsNullOrEmpty(txtInputText.Text.Trim()))
             {
-                errorProvider.SetError(txtInputText, "Input text must not be empty.");
+                errorProvider.SetError(txtInputText, Resources.InputBoxForm_NotEmpty);
                 DialogResult = DialogResult.None;
             } else
                 DialogResult = DialogResult.OK;

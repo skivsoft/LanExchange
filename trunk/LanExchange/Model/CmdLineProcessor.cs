@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Threading;
 
@@ -19,6 +20,7 @@ namespace LanExchange.Model
             return null;
         }
 
+        [Localizable(false)]
         internal static void Processing()
         {
             s_Args = Environment.GetCommandLineArgs();

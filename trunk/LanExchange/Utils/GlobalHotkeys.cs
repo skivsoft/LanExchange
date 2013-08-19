@@ -8,6 +8,7 @@ using System.Threading;
 namespace LanExchange.Utils
 {
     /// <summary> This class allows you to manage a hotkey </summary>
+    [Localizable(false)]
     public class GlobalHotkeys : IDisposable
     {
         [DllImport("user32", SetLastError = true)]

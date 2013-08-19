@@ -12,6 +12,9 @@ namespace LanExchange.Plugin.Network
         {
             m_Provider = serviceProvider;
 
+            // Get language translator
+            TT.Translator = (ITranslator)m_Provider.GetService(typeof (ITranslator));
+
             // Register new panel item types
             var typeManager = (IPanelItemFactoryManager)m_Provider.GetService(typeof (IPanelItemFactoryManager));
             if (typeManager != null)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Management;
 using System.Collections.Generic;
 using System.Text;
@@ -29,6 +30,7 @@ namespace LanExchange.WMI
             return false;
         }
 
+        [Localizable(false)]
         public override string ToString()
         {
             var list = new List<PropertyDataEx>();

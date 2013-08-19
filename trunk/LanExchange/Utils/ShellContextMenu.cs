@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -35,6 +36,7 @@ namespace AndreasJohansson.Win32.Shell
     ///    files[0] = new FileInfo(@"c:\windows\notepad.exe");
     ///    scm.ShowContextMenu(this.Handle, files, Cursor.Position);
     /// </example>
+    [Localizable(false)]
     public class ShellContextMenu
     {
         #region Constructor
@@ -1416,6 +1418,8 @@ namespace AndreasJohansson.Win32.Shell
     #endregion
 
     #region Class LocalWindowsHook
+
+    [Localizable(false)]
     public class LocalWindowsHook
     {
         // ************************************************************************

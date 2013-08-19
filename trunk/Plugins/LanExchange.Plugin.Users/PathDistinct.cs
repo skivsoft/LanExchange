@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace LanExchange.Plugin.Users
 {
@@ -33,6 +34,7 @@ namespace LanExchange.Plugin.Users
             get { return m_Dict.Count; }
         }
 
+        [Localizable(false)]
         private string GetPrefix()
         {
             var result = new List<string>();

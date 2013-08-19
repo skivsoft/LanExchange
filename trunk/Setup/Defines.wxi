@@ -8,5 +8,5 @@
 <?define Manufacturer="Konstantin Mikhailyuk"?>
 <?define Description="User-friendly browser of computers for local area network."?>
 <?define SourceDir="$(var.SolutionDir)LanExchange\bin\Release\"?>
-<?define DefInstallDir = "LanExchange" ?>
+<?define DefInstallDir="LanExchange" ?>
 <Include />

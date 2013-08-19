@@ -22,8 +22,10 @@
           <Directory Id="INSTALLDIR" Name="v$(var.VerMajor).$(var.VerMinor)"/>
         </Directory>
       </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="$(var.Product)"/>
+      </Directory>
     </Directory>
-
     <FeatureRef Id="LanExchange"/>
     <UIRef Id="WixUI_Mod" />
   </Product>

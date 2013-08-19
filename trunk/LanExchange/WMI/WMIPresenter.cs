@@ -1,7 +1,10 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Management;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using LanExchange.Properties;
 using LanExchange.SDK;
 
 namespace LanExchange.WMI
@@ -29,6 +32,7 @@ namespace LanExchange.WMI
             }
         }
 
+        [Localizable(false)]
         private string MakeConnectionString()
         {
             if (m_Comp == null || 
@@ -40,16 +44,16 @@ namespace LanExchange.WMI
         private void ShowFirewallConnectionError()
         {
             MessageBox.Show(
-                String.Format("Не удалось подключиться к компьютеру \\\\{0}.\nВозможно удалённое подключение было заблокировано брэнмауэром.", m_Comp.Name),
-                "Ошибка подключения WMI",
+                String.Format(Resources.WMIPresenter_ConnectionErrorText, m_Comp.Name),
+                Resources.WMIPresenter_ConnectionErrorCaption,
                 MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
         }
 
         private void ShowCommonConnectionError(Exception ex)
         {
             MessageBox.Show(
-                String.Format("Не удалось подключиться к компьютеру \\\\{0}.\n{1}", m_Comp.Name, ex.Message),
-                "Ошибка подключения WMI",
+                String.Format(Resources.WMIPresenter_CommonConnectionErrorText, m_Comp.Name, ex.Message),
+                Resources.WMIPresenter_ConnectionErrorCaption,
                 MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
         }
 
@@ -126,6 +130,7 @@ namespace LanExchange.WMI
 
         public ManagementObject WMIObject { get; set; }
 
+        [Localizable(false)]
         public void EnumObjects(string className)
         {
             ConnectToComputer();
@@ -164,8 +169,9 @@ namespace LanExchange.WMI
                 }
                 bCheckError = false;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Debug.Print(ex.Message);
             }
             if (bCheckError) return;
 
@@ -199,10 +205,10 @@ namespace LanExchange.WMI
                         m_View.LV.Items.Add(lvi);
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    Debug.Print(ex.Message);
                 }
-
             }
         }
 
@@ -222,6 +228,7 @@ namespace LanExchange.WMI
             }
         }
 
+        [Localizable(false)]
         public void BuildContextMenu()
         {
             m_View.MENU.Items.Clear();
@@ -239,8 +246,9 @@ namespace LanExchange.WMI
                     m_View.MENU.Items.Add(menuItem);
                 }
             }
-            catch (Exception )
+            catch (Exception ex)
             {
+                Debug.Print(ex.Message);
             }
         }
 

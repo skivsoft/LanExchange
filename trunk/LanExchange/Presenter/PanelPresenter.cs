@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using LanExchange.Model;
+using LanExchange.Properties;
 using LanExchange.SDK;
 using LanExchange.UI;
 
@@ -58,9 +59,9 @@ namespace LanExchange.Presenter
                 totalCount--;
             }
             if (showCount != totalCount)
-                MainForm.Instance.ShowStatusText("Items: {0} of {1}", showCount, totalCount);
+                MainForm.Instance.ShowStatusText(Resources.PanelPresenter_Items2, showCount, totalCount);
             else
-                MainForm.Instance.ShowStatusText("Items: {0}", showCount);
+                MainForm.Instance.ShowStatusText(Resources.PanelPresenter_Items1, showCount);
             SetupColumns();
             m_View.SetVirtualListSize(m_Objects.FilterCount);
             if (m_Objects.FilterCount > 0)
@@ -106,7 +107,7 @@ namespace LanExchange.Presenter
                 if (!bReachable)
                 {
                     var result = MessageBox.Show(
-                        String.Format("Resource «{0}» does not reachable.\nContinue anyway?", panelItem.Name), "Query",
+                        String.Format(Resources.PanelPresenter_UnreachableMsg, panelItem.Name), Resources.PanelPresenter_QueryCaption,
                         MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
                     if (result != DialogResult.Yes)
                         panelItem = null;

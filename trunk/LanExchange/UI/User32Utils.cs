@@ -1,9 +1,11 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace LanExchange.UI
 {
+    [Localizable(false)]
     static class User32Utils
     {
         private const int LVM_FIRST = 0x1000;

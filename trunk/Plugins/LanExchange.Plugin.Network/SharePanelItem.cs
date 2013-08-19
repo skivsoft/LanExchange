@@ -1,4 +1,5 @@
 ﻿using System;
+using LanExchange.Plugin.Network.Properties;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
@@ -9,8 +10,8 @@ namespace LanExchange.Plugin.Network
 
         public static void RegisterColumns(IPanelColumnManager columnManager)
         {
-            columnManager.RegisterColumn(typeof(SharePanelItem), new PanelColumnHeader("Resource name"));
-            columnManager.RegisterColumn(typeof(SharePanelItem), new PanelColumnHeader("Description"));
+            columnManager.RegisterColumn(typeof(SharePanelItem), new PanelColumnHeader(Resources.ResourceName));
+            columnManager.RegisterColumn(typeof(SharePanelItem), new PanelColumnHeader(Resources.Description));
         }
 
         public SharePanelItem()

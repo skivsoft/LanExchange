@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
-using LanExchange.Presenter;
 using LanExchange.Utils;
 using System.Security.Principal;
 using System.Collections.Generic;
@@ -12,6 +12,7 @@ namespace LanExchange.Model.Settings
     /// <summary>
     /// Program settings. Implemented as Singleton.
     /// </summary>
+    [Localizable(false)]
     public class Settings
     {
         private static Settings m_Instance;
@@ -100,8 +101,9 @@ namespace LanExchange.Model.Settings
                     Modified = false;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Debug.Print(ex.Message);
             }
         }
 
@@ -114,8 +116,9 @@ namespace LanExchange.Model.Settings
             {
                 SerializeUtils.SerializeObjectToXMLFile(fileName, Instance);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                Debug.Print(ex.Message);
             }
             m_Modified = false;
         }

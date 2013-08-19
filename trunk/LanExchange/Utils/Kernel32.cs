@@ -1,8 +1,10 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.ComponentModel;
+using System.Runtime.InteropServices;
 using System;
 
 namespace LanExchange.Utils
 {
+    [Localizable(false)]
     public static class Kernel32
     {
 

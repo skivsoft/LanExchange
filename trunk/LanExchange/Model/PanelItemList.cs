@@ -296,11 +296,6 @@ namespace LanExchange.Model
             get { return string.Empty; }
         }
 
-        public string Subject
-        {
-            get { return String.Format("Items_{0}", TabName); }
-        }
-
         public bool IsCacheable
         {
             get { return false; }
