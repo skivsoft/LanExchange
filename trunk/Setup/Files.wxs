@@ -25,11 +25,11 @@
         <File Id='Microsoft.WindowsAPICodePack.Shell.dll' KeyPath='yes' Source='$(var.SourceDir)Microsoft.WindowsAPICodePack.Shell.dll'/>
       </Component>
       <Directory Id='Addons' Name='Addons'>
-        <Component Id="RadminMenus.xml" Guid="D00E2705-5A80-4240-AAE1-3B68CF7C6C4D">
-          <File Id='RAdminMenus.xml' KeyPath='yes' Source='$(var.SourceDir)Addons\RadminMenus.xml'/>
+        <Component Id="DefaultMenu.xml" Guid="75CD74AF-D879-4C07-8450-9A43717E456C">
+          <File Id='DefaultMenu.xml' KeyPath='yes' Source='$(var.SourceDir)Addons\DefaultMenu.xml'/>
         </Component>
-        <Component Id="RadminIcons.xml" Guid="75CD74AF-D879-4C07-8450-9A43717E456C">
-          <File Id='RAdminIcons.xml' KeyPath='yes' Source='$(var.SourceDir)Addons\RadminIcons.xml'/>
+        <Component Id="RadminMenu.xml" Guid="D00E2705-5A80-4240-AAE1-3B68CF7C6C4D">
+          <File Id='RAdminMenu.xml' KeyPath='yes' Source='$(var.SourceDir)Addons\RadminMenu.xml'/>
         </Component>
       </Directory>
     </DirectoryRef>

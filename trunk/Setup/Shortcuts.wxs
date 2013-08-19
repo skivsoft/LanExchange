@@ -5,7 +5,7 @@
     <DirectoryRef Id="ApplicationProgramsFolder">
       <Component Id="LanExchangeShortcut" Guid="1C1513B8-2D9C-4FFD-9D6F-401689C9BA08">
         <Shortcut Id="LanExchangeShortcut" Name="$(var.Product)" Description="$(var.Description)" Target="[INSTALLDIR]LanExchange.exe" WorkingDirectory="INSTALLDIR"/>
-        <Shortcut Id="UninstallProduct" Name="Uninstall $(var.Product)" Target="[System64Folder]msiexec.exe" Arguments="/x [ProductCode]"/>
+        <Shortcut Id="UninstallProduct" Name="Uninstall" Target="[System64Folder]msiexec.exe" Arguments="/x [ProductCode]"/>
         <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
         <RegistryValue Root="HKCU" Key="Software\Microsoft\$(var.Product)" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
       </Component>

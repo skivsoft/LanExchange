@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanExchangeAddon xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Programs>
+    <Program Id="explorer" FileName="%systemroot%\explorer.exe" />
+    <Program Id="mmc" FileName="%systemroot%\system32\mmc.exe" />
+    <Program Id="mstsc" FileName="%systemroot%\system32\mstsc.exe" />
+  </Programs>
+  <PanelItems>
+    <PanelItemBaseRef Id="ComputerPanelItem">
+      <ContextMenuStrip>
+        <ToolStripMenuItem>
+          <Text>Open in Explorer</Text>
+          <ShortcutKeys>Shift+Enter</ShortcutKeys>
+          <ProgramRef Id="explorer" />
+          <ProgramArgs>\\{0}</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem>
+          <Text>Computer management</Text>
+          <ShortcutKeys>Ctrl+F1</ShortcutKeys>
+          <ProgramRef Id="mmc" />
+          <ProgramArgs>%systemroot%\system32\compmgmt.msc /computer:{0}</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem>
+          <Text>Connect to remote desktop</Text>
+          <ProgramRef Id="mstsc" />
+          <ProgramArgs>/v:{0}</ProgramArgs>
+        </ToolStripMenuItem>
+      </ContextMenuStrip>
+    </PanelItemBaseRef>
+    <PanelItemBaseRef Id="SharePanelItem">
+      <ContextMenuStrip>
+        <ToolStripMenuItem>
+          <Text>Open in Explorer</Text>
+          <ShortcutKeys>Shift+Enter</ShortcutKeys>
+          <ProgramRef Id="explorer" />
+          <ProgramArgs>{0}</ProgramArgs>
+        </ToolStripMenuItem>
+      </ContextMenuStrip>
+    </PanelItemBaseRef>
+  </PanelItems>
+</LanExchangeAddon>
