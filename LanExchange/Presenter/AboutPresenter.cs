@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.ComponentModel;
+using System.Diagnostics;
 using LanExchange.Model;
 using LanExchange.SDK;
 
@@ -7,6 +8,7 @@ namespace LanExchange.Presenter
     /// <summary>
     /// Presenter for Settings (model) and AboutForm (view).
     /// </summary>
+    [Localizable(false)]
     internal sealed class AboutPresenter
     {
         private readonly IAboutView m_View;

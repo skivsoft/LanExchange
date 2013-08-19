@@ -3,12 +3,15 @@ using LanExchange.Presenter;
 using LanExchange.SDK;
 using LanExchange.UI;
 
-namespace LanExchange.Model
+namespace LanExchange.Model.Impl
 {
     internal class ServiceProviderImpl : IServiceProvider
     {
         public object GetService(Type serviceType)
         {
+            if (serviceType == typeof (ITranslator))
+                return TT.Translator;
+
             if (serviceType == typeof (IImageManager))
                 return AppPresenter.Images;
 

@@ -117,146 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="back_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\back_16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
   </data>
-  <data name="back_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\back_32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="IPAddress" xml:space="preserve">
+    <value>IP address</value>
   </data>
-  <data name="clear_hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\clear_hover.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="MACAddress" xml:space="preserve">
+    <value>MAC address</value>
   </data>
-  <data name="clear_normal" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\clear_normal.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="NetworkName" xml:space="preserve">
+    <value>Network name</value>
   </data>
-  <data name="LanExchange_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\LanExchange_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="OSVersion" xml:space="preserve">
+    <value>OS version</value>
   </data>
-  <data name="user_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\user_16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Ping" xml:space="preserve">
+    <value>Ping</value>
   </data>
-  <data name="user_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\user_32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
   </data>
-  <data name="HideLicense" xml:space="preserve">
-    <value>Hide License</value>
+  <data name="OK_ms" xml:space="preserve">
+    <value>OK {0}ms</value>
   </data>
-  <data name="ShowLicense" xml:space="preserve">
-    <value>Show License</value>
+  <data name="ImageLegendText_ComputerNormal" xml:space="preserve">
+    <value>Computer was found in local area network.</value>
   </data>
-  <data name="Settings_General" xml:space="preserve">
-    <value>General</value>
+  <data name="ImageLegendText_ComputerDisabled" xml:space="preserve">
+    <value>Computer does not reachable via PING.</value>
   </data>
-  <data name="Settings_Plugins" xml:space="preserve">
-    <value>Plugins</value>
+  <data name="DomainName" xml:space="preserve">
+    <value>Domain name</value>
   </data>
-  <data name="ShortcutKeys" xml:space="preserve">
-    <value>Shortcut keys</value>
-  </data>
-  <data name="F1Help" xml:space="preserve">
-    <value>This shortcut keys list.</value>
-  </data>
-  <data name="InputBoxForm_NotEmpty" xml:space="preserve">
-    <value>Input text must not be empty.</value>
-  </data>
-  <data name="PagesPresenter_NewTab" xml:space="preserve">
-    <value>New tab</value>
-  </data>
-  <data name="PagesPresenter_EnterTabName" xml:space="preserve">
-    <value>Enter tab name</value>
-  </data>
-  <data name="PagesPresenter_RenameTab" xml:space="preserve">
-    <value>Rename tab</value>
-  </data>
-  <data name="WMIPresenter_ConnectionErrorCaption" xml:space="preserve">
-    <value>WMI connection error</value>
-  </data>
-  <data name="WMIPresenter_ConnectionErrorText" xml:space="preserve">
-    <value>Unable to connect to computer \\{0}.
-Possible connection has been blocked by firewall.</value>
-  </data>
-  <data name="WMIPresenter_CommonConnectionErrorText" xml:space="preserve">
-    <value>Unable to connect to computer \\{0}.
-{1}</value>
-  </data>
-  <data name="WMIForm_Elements" xml:space="preserve">
-    <value>Elements: {0}</value>
-  </data>
-  <data name="WMIForm_Classes" xml:space="preserve">
-    <value>Classes: {0}</value>
-  </data>
-  <data name="WMIForm_Properties" xml:space="preserve">
-    <value>Properties: {0}</value>
-  </data>
-  <data name="WMIForm_Methods" xml:space="preserve">
-    <value>Methods: {0}</value>
-  </data>
-  <data name="WMIForm_EdittingProperty" xml:space="preserve">
-    <value>Editing property {0}</value>
-  </data>
-  <data name="WMIForm_PropertyChangingMsg" xml:space="preserve">
-    <value>Computer name: \\{0}
-
-Old value: «{1}»
-New value: «{2}»</value>
-  </data>
-  <data name="WMIForm_PropertyChangedMsg" xml:space="preserve">
-    <value>
-
-Property {0} successfully changed.</value>
-  </data>
-  <data name="WMIAuthForm_UserNameError" xml:space="preserve">
-    <value>User name not specified.</value>
-  </data>
-  <data name="MainForm_Legend" xml:space="preserve">
-    <value>Legend</value>
-  </data>
-  <data name="MainForm_Information" xml:space="preserve">
-    <value>Information</value>
-  </data>
-  <data name="MainForm_Close" xml:space="preserve">
-    <value>Close</value>
-  </data>
-  <data name="MainForm_Open" xml:space="preserve">
-    <value>Open</value>
-  </data>
-  <data name="PanelPresenter_Items1" xml:space="preserve">
-    <value>Items: {0}</value>
-  </data>
-  <data name="PanelPresenter_Items2" xml:space="preserve">
-    <value>Items: {0} of {1}</value>
-  </data>
-  <data name="Program_Error" xml:space="preserve">
-    <value>Error</value>
-  </data>
-  <data name="PanelPresenter_UnreachableMsg" xml:space="preserve">
-    <value>Resource «{0}» not reachable.
-Continue anyway?</value>
-  </data>
-  <data name="PanelPresenter_QueryCaption" xml:space="preserve">
-    <value>Query</value>
-  </data>
-  <data name="PanelView_ComputerName" xml:space="preserve">
-    <value>\\&lt;ComputerName&gt;</value>
-  </data>
-  <data name="PanelView_RunCmdErrorMsg" xml:space="preserve">
-    <value>Unable to execute command line:
-{0}</value>
-  </data>
-  <data name="PanelView_RunCmdErrorCaption" xml:space="preserve">
-    <value>Execution error</value>
-  </data>
-  <data name="PanelView_CopyColumn" xml:space="preserve">
-    <value>Copy «{0}»</value>
-  </data>
-  <data name="PanelView_CopyPathTo" xml:space="preserve">
-    <value>Copy path to «{0}»</value>
-  </data>
-  <data name="PanelView_CopySelected" xml:space="preserve">
-    <value>Copy selected item</value>
-  </data>
-  <data name="PanelView_CopySelectedPlural" xml:space="preserve">
-    <value>Copy {0} selected items</value>
+  <data name="ResourceName" xml:space="preserve">
+    <value>Resource name</value>
   </data>
 </root>

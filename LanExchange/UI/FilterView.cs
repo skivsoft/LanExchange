@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
@@ -36,6 +37,7 @@ namespace LanExchange.UI
                 m_Presenter.FilterText = textbox.Text;
         }
 
+        [Localizable(false)]
         private void eFilter_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)

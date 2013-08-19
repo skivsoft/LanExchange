@@ -1,4 +1,5 @@
 ﻿using System;
+using LanExchange.Plugin.Users.Properties;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Users
@@ -10,8 +11,8 @@ namespace LanExchange.Plugin.Users
 
         public static void RegisterColumns(IPanelColumnManager columnManager)
         {
-            columnManager.RegisterColumn(typeof(UserPanelItem), new PanelColumnHeader("User"));
-            columnManager.RegisterColumn(typeof(UserPanelItem), new PanelColumnHeader("Description"));
+            columnManager.RegisterColumn(typeof(UserPanelItem), new PanelColumnHeader(Resources.UserName));
+            columnManager.RegisterColumn(typeof(UserPanelItem), new PanelColumnHeader(Resources.Description));
         }
 
         public UserPanelItem(PanelItemBase parent)

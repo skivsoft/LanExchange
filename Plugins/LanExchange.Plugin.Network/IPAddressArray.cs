@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Net;
 
 namespace LanExchange.Plugin.Network
@@ -25,6 +26,7 @@ namespace LanExchange.Plugin.Network
             }
         }
 
+        [Localizable(false)]
         public override string ToString()
         {
             var result = "";

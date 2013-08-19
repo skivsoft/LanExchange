@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Management;
 using System.Text;
 
@@ -8,6 +10,7 @@ namespace LanExchange.WMI
     /// <summary>
     /// List of used wmi classes.
     /// </summary>
+    [Localizable(false)]
     public class WMIClassList
     {
         private static WMIClassList m_Instance;
@@ -88,8 +91,9 @@ namespace LanExchange.WMI
             {
                 m_Namespace.Connect();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Debug.Print(ex.Message);
             }
             if (!m_Namespace.IsConnected)
             {
@@ -125,7 +129,10 @@ namespace LanExchange.WMI
                     }
                 }
             }
-            catch { }
+            catch(Exception ex)
+            {
+                Debug.Print(ex.Message);
+            }
 
             return sb.ToString();
         }
@@ -155,7 +162,10 @@ namespace LanExchange.WMI
                         }
                 }
             }
-            catch { }
+            catch(Exception ex)
+            {
+                Debug.Print(ex.Message);
+            }
             return Result;
 
         }

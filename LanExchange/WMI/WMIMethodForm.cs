@@ -20,6 +20,7 @@ namespace LanExchange.WMI
         public ManagementObject WMIObject { get; set; }
         public MethodData WMIMethod { get; set; }
 
+        [Localizable(false)]
         private string FormatQualifierValue(object value)
         {
             if (value is string[])
@@ -38,6 +39,7 @@ namespace LanExchange.WMI
 
         private string m_ReturnValueName;
 
+        [Localizable(false)]
         public void PrepareForm()
         {
             Text = String.Format(Text, WMIClass.Path.ClassName, WMIMethod.Name);
@@ -131,6 +133,7 @@ namespace LanExchange.WMI
             lResult.Text = message;
         }
 
+        [Localizable(false)]
         private void RunTheMethod()
         {
             if (WMIObject == null || WMIMethod == null) return;

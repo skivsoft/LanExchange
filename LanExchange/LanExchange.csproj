@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LanExchange</RootNamespace>
     <AssemblyName>LanExchange</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <ApplicationIcon>LanExchange.ico</ApplicationIcon>
@@ -77,7 +77,10 @@
     <StartupObject>LanExchange.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\Common\LanExchange.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -88,7 +91,7 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\AnyAssemblyInfo.cs">
+    <Compile Include="..\Common\AnyAssemblyInfo.cs">
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Action\AboutAction.cs" />
@@ -102,6 +105,7 @@
     <Compile Include="Model\HashtableSerializable.cs" />
     <Compile Include="Model\Impl\PanelColumnManagerImpl.cs" />
     <Compile Include="Model\Impl\ImageManagerImpl.cs" />
+    <Compile Include="Model\Impl\TranslatorImpl.cs" />
     <Compile Include="Model\LazyThreadPool.cs" />
     <Compile Include="Model\PagesModel.cs" />
     <Compile Include="Model\PanelIndexEventArgs.cs" />
@@ -287,6 +291,9 @@
     <Content Include="Addons\RadminMenus.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="..\Common\LanExchange.snk">
+      <Link>LanExchange.snk</Link>
+    </None>
     <None Include="Properties\app.manifest" />
     <None Include="app.config" />
   </ItemGroup>

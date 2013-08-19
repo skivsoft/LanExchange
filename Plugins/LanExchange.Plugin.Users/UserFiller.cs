@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using LanExchange.SDK;
 
@@ -13,6 +14,7 @@ namespace LanExchange.Plugin.Users
             return (parent != null) && (parent != Users.ROOT_OF_ORGUNITS) && (parent is OrgUnitPanelItem);
         }
 
+        [Localizable(false)]
         public void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
             //if (Users.Provider == null) return;

@@ -50,6 +50,7 @@ namespace LanExchange.UI
         /// <param name="text"></param>
         /// <param name="length"></param>
         /// <returns></returns>
+        [Localizable(false)]
         public string Ellipsis(string text, int length)
         {
             if (text.Length > length)
@@ -283,6 +284,7 @@ namespace LanExchange.UI
             }
         }
 
+        [Localizable(false)]
         public IPanelView CreatePanelView(IPanelModel info)
         {
             var PV = new PanelView();

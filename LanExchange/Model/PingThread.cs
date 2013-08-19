@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System;
+using System.Diagnostics;
+using System.Threading;
 using System.Net.NetworkInformation;
 
 namespace LanExchange.Model
@@ -44,8 +46,9 @@ namespace LanExchange.Model
                     m_PingOk = (pingReply != null) && (pingReply.Status == IPStatus.Success);
                 }
             }
-            catch
+            catch(Exception ex)
             {
+                Debug.Print(ex.Message);
             }
         }
 

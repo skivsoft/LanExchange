@@ -10,8 +10,10 @@ using System.Drawing;
 using System.ComponentModel;
 using System.Security.Permissions;
 using LanExchange.Model.Settings;
+using LanExchange.Properties;
 using LanExchange.SDK;
 using LanExchange.Utils;
+using Settings = LanExchange.Model.Settings.Settings;
 
 namespace LanExchange.UI
 {
@@ -26,6 +28,7 @@ namespace LanExchange.UI
 
         private readonly GlobalHotkeys m_Hotkeys;
 
+        [Localizable(false)]
         public MainForm()
         {
             InitializeComponent();
@@ -56,6 +59,7 @@ namespace LanExchange.UI
 #endif
         }
 
+        [Localizable(false)]
         private void SettingsOnChanged(object sender, SettingsChangedArgs e)
         {
             if (e.Name.Equals("ShowMainMenu"))
@@ -150,6 +154,7 @@ namespace LanExchange.UI
             }
         }
 
+        [Localizable(false)]
         private void SetupForm()
         {
             // set mainform bounds
@@ -276,7 +281,7 @@ namespace LanExchange.UI
             if (e.AssociatedControl == pInfo.Picture)
             {
                 tooltip.ToolTipIcon = ToolTipIcon.Info;
-                tooltip.ToolTipTitle = "Legend";
+                tooltip.ToolTipTitle = Resources.MainForm_Legend;
                 return;
             }
             if (e.AssociatedControl is ListView)
@@ -284,7 +289,7 @@ namespace LanExchange.UI
                 var listview = e.AssociatedControl as ListView;
                 Point P = listview.PointToClient(MousePosition);
                 ListViewHitTestInfo Info = listview.HitTest(P);
-                tooltip.ToolTipTitle = Info.Item != null ? Info.Item.Text : "Information";
+                tooltip.ToolTipTitle = Info.Item != null ? Info.Item.Text : Resources.MainForm_Information;
                 return;
             }
             if (e.AssociatedControl is TabControl && e.AssociatedControl == Pages.Pages)
@@ -355,7 +360,7 @@ namespace LanExchange.UI
 
         private void popTray_Opening(object sender, CancelEventArgs e)
         {
-            mOpen.Text = Visible ? "Close" : "Open";
+            mOpen.Text = Visible ? Resources.MainForm_Close : Resources.MainForm_Open;
         }
 
         //private void MainForm_Shown(object sender, EventArgs e)
@@ -543,6 +548,7 @@ namespace LanExchange.UI
         }
 
  #if DEBUG
+        [Localizable(false)]
         private void MainForm_RefreshNumThreads(object sender)
         {
             int count = 0;

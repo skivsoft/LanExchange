@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 namespace LanExchange.WMI
 {
-	public class DynamicObject : ICustomTypeDescriptor
+    [Localizable(false)]
+    public class DynamicObject : ICustomTypeDescriptor
 	{
         private string m_Filter = string.Empty;
         private readonly PropertyDescriptorCollection m_FilteredPropertyDescriptors = new PropertyDescriptorCollection(null);

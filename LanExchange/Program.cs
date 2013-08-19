@@ -9,9 +9,11 @@
 //   DONE  Enum shares after ItemActivate
 //
 // RELEASE 2.0
-//   TODO  Unit-tests coverage 30%
+//   TODO  Unit-tests coverage at least 30%
+//   DONE  Drag&Drop from panel to external app
 //   TODO  Sending items to another tab
-//   TODO  Manual creation of computer items
+//   TODO    Drag&Drop from external app to panel
+//   TODO    Manual creation of computer items
 //   DONE  Classes with IDisposable interface must be a components
 //   DONE  MSI installer
 //   TODO  Multi-langual support (Russian, Engligh)
@@ -25,10 +27,11 @@
 //   TODO  WMI-commands execution with parameters
 //   TODO  Refactoring for strict Model-View-Presenter pattern
 //   TODO  Save/restore sort order for each tab
+//   TODO  Safe store for passwords
 //   TODO  Acceptance level 1: all function Far.Network plugin must be added
 //   TODO    Map disk to share
 //   TODO    Ask username/password if needed when connect to share
-//   TODO  Acceptance level 2: Code Analisys and R# issues must be fixed
+//   TODO  Acceptance level 2: Code Analysis and R# issues must be fixed
 // 
 // *****************************************************************************
 
@@ -36,6 +39,7 @@ using System;
 using System.Windows.Forms;
 using LanExchange.Model;
 using LanExchange.Presenter;
+using LanExchange.Properties;
 using LanExchange.UI;
 using LanExchange.Utils;
 
@@ -56,7 +60,7 @@ namespace LanExchange
             }
             catch(Exception e)
             {
-                MessageBox.Show(null, e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(null, e.Message, Resources.Program_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

@@ -23,6 +23,7 @@ namespace LanExchange.Presenter
 
         public static void Setup()
         {
+            TT.Translator = new TranslatorImpl();
             Images = new ImageManagerImpl();
             PanelItemTypes = new PanelItemFactoryManagerImpl();
             PanelFillers = new PanelFillerManagerImpl();

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -6,10 +7,11 @@ namespace LanExchange.UI
 {
     public static class AppView
     {
+        [Localizable(false)]
         static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
         {
             #if DEBUG
-            MessageBox.Show(e.Exception.Message+"\n"+e.Exception.StackTrace,
+            MessageBox.Show(e.Exception.Message+Environment.NewLine+e.Exception.StackTrace,
               "Error in "+e.Exception.Source, MessageBoxButtons.OK, MessageBoxIcon.Error);
             #else
             MainForm.Instance.ApplicationExit();

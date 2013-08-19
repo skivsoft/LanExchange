@@ -1,8 +1,10 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 
 namespace LanExchange.WMI
 {
+    [Localizable(false)]
     public static class WMIUtils
     {
         public static DateTime ToDateTime(string dmtfDate)

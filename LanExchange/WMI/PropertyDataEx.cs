@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Management;
 
 namespace LanExchange.WMI
@@ -10,6 +11,7 @@ namespace LanExchange.WMI
         RETURN
     }
 
+    [Localizable(false)]
     internal class PropertyDataEx : IComparable<PropertyDataEx>
     {
         private readonly PropertyData m_Data;

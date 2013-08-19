@@ -1,7 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Net;
 using System.Net.NetworkInformation;
+using LanExchange.Plugin.Network.Properties;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
@@ -12,13 +14,13 @@ namespace LanExchange.Plugin.Network
 
         public static void RegisterColumns(IPanelColumnManager columnManager)
         {
-            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("Network name"));
-            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("Description", 250));
-            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("OS version") { Visible = false, Width=110 });
+            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader(Resources.NetworkName));
+            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader(Resources.Description, 250));
+            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader(Resources.OSVersion) { Visible = false, Width=110 });
             // lazy columns
-            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("Ping") { Callback = GetReachable, Visible = false, Width = 110, Refreshable = true });
-            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("IP address") { Callback = GetIPAddress, Visible = false, Width = 80 });
-            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader("MAC address") { Callback = GetMACAddress, Visible = false, Width = 110 });
+            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader(Resources.Ping) { Callback = GetReachable, Visible = false, Width = 110, Refreshable = true });
+            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader(Resources.IPAddress) { Callback = GetIPAddress, Visible = false, Width = 80 });
+            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader(Resources.MACAddress) { Callback = GetMACAddress, Visible = false, Width = 110 });
         }
 
         private static IPAddress InternalGetIPAddress(string computerName)
@@ -26,6 +28,7 @@ namespace LanExchange.Plugin.Network
             return Dns.GetHostEntry(computerName).AddressList[0];
         }
 
+        [Localizable(false)]
         public static IComparable GetReachable(PanelItemBase item)
         {
             var ipAddr = InternalGetIPAddress(item.Name);
@@ -37,7 +40,7 @@ namespace LanExchange.Plugin.Network
                     item.IsReachable = false;
                 else if (pingReply.Status == IPStatus.Success)
                 {
-                    result = pingReply.RoundtripTime == 0 ? "OK" : string.Format("OK {0}ms", pingReply.RoundtripTime);
+                    result = pingReply.RoundtripTime == 0 ? Resources.OK : string.Format(Resources.OK_ms, pingReply.RoundtripTime);
                     item.IsReachable = true;
                 }
                 else
@@ -118,6 +121,7 @@ namespace LanExchange.Plugin.Network
             set { m_SI.Version.PlatformID = value; }
         }
 
+        [Localizable(false)]
         public string Ver
         {
             get { return string.Format("{0}.{1}", m_SI.Version.Major, m_SI.Version.Minor); }
@@ -137,6 +141,7 @@ namespace LanExchange.Plugin.Network
             }
         }
 
+        [Localizable(false)]
         public string Type
         {
             get { return m_SI.Version.Type.ToString("X"); }
@@ -183,15 +188,16 @@ namespace LanExchange.Plugin.Network
                 switch (ImageName)
                 {
                     case PanelImageNames.ComputerNormal:
-                        return "Computer was found in local area network.";
+                        return Resources.ImageLegendText_ComputerNormal;
                     case PanelImageNames.ComputerDisabled:
-                        return "Computer does not reachable via PING.";
+                        return Resources.ImageLegendText_ComputerDisabled;
                     default:
                         return string.Empty;
                 }
             }
         }
 
+        [Localizable(false)]
         public override string ToolTipText
         {
             get
@@ -200,6 +206,7 @@ namespace LanExchange.Plugin.Network
             }
         }
 
+        [Localizable(false)]
         public override string ToString()
         {
             return @"\\" + base.ToString();

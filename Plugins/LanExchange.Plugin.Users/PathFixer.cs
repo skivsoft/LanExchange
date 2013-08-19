@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.ComponentModel;
+using System.Globalization;
 using System.Text;
 
 namespace LanExchange.Plugin.Users
@@ -7,6 +8,7 @@ namespace LanExchange.Plugin.Users
     {
         private const char PathDelimiter = '\\';
 
+        [Localizable(false)]
         public string FixLdapPath(string path)
         {
             if (path == null) return string.Empty;

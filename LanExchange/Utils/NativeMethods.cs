@@ -1,10 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace LanExchange.Utils
 {
+    [Localizable(false)]
     internal static class NativeMethods
     {
         public static HandleRef NullHandleRef = new HandleRef(null, IntPtr.Zero);

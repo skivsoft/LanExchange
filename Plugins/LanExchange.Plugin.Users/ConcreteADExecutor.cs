@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Diagnostics;
 using System.DirectoryServices;
 
 namespace LanExchange.Plugin.Users
@@ -73,8 +74,9 @@ namespace LanExchange.Plugin.Users
                     }
                 }
             }
-            catch
+            catch(Exception ex)
             {
+                Debug.Print(ex.Message);
             }
             return result;
         }

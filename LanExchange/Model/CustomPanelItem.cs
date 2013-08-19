@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using LanExchange.SDK;
 
 namespace LanExchange.Model
@@ -9,6 +10,7 @@ namespace LanExchange.Model
         private readonly IDictionary<int, IComparable> m_Data;
         private int m_CountColumns;
 
+        [Localizable(false)]
         public CustomPanelItem(PanelItemBase parent, string name) : base(parent)
         {
             m_Data = new Dictionary<int, IComparable>();

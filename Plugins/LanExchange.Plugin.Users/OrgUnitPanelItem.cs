@@ -1,15 +1,18 @@
 ﻿using System;
+using System.ComponentModel;
+using LanExchange.Plugin.Users.Properties;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Users
 {
+    [Localizable(false)]
     internal class OrgUnitPanelItem : PanelItemBase
     {
         private string m_Name;
 
         public static void RegisterColumns(IPanelColumnManager columnManager)
         {
-            columnManager.RegisterColumn(typeof(OrgUnitPanelItem), new PanelColumnHeader("Organization unit"));
+            columnManager.RegisterColumn(typeof(OrgUnitPanelItem), new PanelColumnHeader(Resources.OrgUnit));
         }
 
         public OrgUnitPanelItem(PanelItemBase parent)

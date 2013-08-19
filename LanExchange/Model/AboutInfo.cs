@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Reflection;
 
@@ -30,6 +31,7 @@ namespace LanExchange.Model
             }
         }
 
+        [Localizable(false)]
         public static string Version
         {
             get
