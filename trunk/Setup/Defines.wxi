@@ -7,6 +7,6 @@
 <?define UpgradeCode="0B3FF52F-F797-4DBC-BC27-7445B4A991FE"?>
 <?define Manufacturer="Konstantin Mikhailyuk"?>
 <?define Description="User-friendly browser of computers for local area network."?>
-<?define SourceDir="$(var.SolutionDir)LanExchange\bin\Release\"?>
+<?define SourceDir="$(var.SolutionDir)LanExchange\bin\$(var.Configuration)\"?>
 <?define DefInstallDir="LanExchange" ?>
 <Include />

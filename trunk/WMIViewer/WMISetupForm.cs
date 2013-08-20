@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace LanExchange.WMI
+namespace WMIViewer
 {
     public partial class WMISetupForm : Form
     {
@@ -40,10 +40,10 @@ namespace LanExchange.WMI
 
         private void LB_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var chLB = (sender as ListBox);
-            if (chLB == null) return;
-            if (chLB.SelectedIndex == -1) return;
-            var className = chLB.Items[chLB.SelectedIndex].ToString();
+            var checkBox = (sender as ListBox);
+            if (checkBox == null) return;
+            if (checkBox.SelectedIndex == -1) return;
+            var className = checkBox.Items[checkBox.SelectedIndex].ToString();
             lClassName.Text = className;
             lDescription.Text = WMIClassList.Instance.GetClassDescription(null, className);
             //lDescription.Text = WMIClassList.Instance.GetClassQualifiers(null, className);

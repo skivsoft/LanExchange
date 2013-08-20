@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Management;
 using System.Text;
 
-namespace LanExchange.WMI
+namespace WMIViewer
 {
     /// <summary>
     /// List of used wmi classes.
@@ -13,7 +13,7 @@ namespace LanExchange.WMI
     [Localizable(false)]
     public class WMIClassList
     {
-        private static WMIClassList m_Instance;
+        private static WMIClassList s_Instance;
         private bool m_Loaded;
         private readonly List<string> m_Classes;
         private readonly List<string> m_ReadOnlyClasses;
@@ -35,9 +35,9 @@ namespace LanExchange.WMI
         {
             get
             {
-                if (m_Instance == null)
-                    m_Instance = new WMIClassList();
-                return m_Instance;
+                if (s_Instance == null)
+                    s_Instance = new WMIClassList();
+                return s_Instance;
             }
         }
 

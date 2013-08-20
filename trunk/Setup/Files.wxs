@@ -6,6 +6,9 @@
       <Component Id="LanExchange.exe" Guid="6E872465-039C-455A-A413-74B4AE08E86D"> 
         <File Id='LanExchange.exe' Source='$(var.SourceDir)LanExchange.exe'/>
       </Component>
+      <Component Id="WMIViewer.exe" Guid="A1CAFBF8-0BE2-4B63-82E4-E407DD851B02">
+        <File Id='WMIViewer.exe' Source='$(var.SourceDir)WMIViewer.exe'/>
+      </Component>
       <Component Id='LanExchange.SDK.dll' Guid="340AE8C6-C70D-49D0-BA91-6F1FFCD422B2">
         <File Id='LanExchange.SDK.dll' KeyPath='yes' Source='$(var.SourceDir)LanExchange.SDK.dll'/>
       </Component>
@@ -25,11 +28,14 @@
         <File Id='Microsoft.WindowsAPICodePack.Shell.dll' KeyPath='yes' Source='$(var.SourceDir)Microsoft.WindowsAPICodePack.Shell.dll'/>
       </Component>
       <Directory Id='Addons' Name='Addons'>
-        <Component Id="DefaultMenu.xml" Guid="75CD74AF-D879-4C07-8450-9A43717E456C">
-          <File Id='DefaultMenu.xml' KeyPath='yes' Source='$(var.SourceDir)Addons\DefaultMenu.xml'/>
+        <Component Id="Default.xml" Guid="75CD74AF-D879-4C07-8450-9A43717E456C">
+          <File Id='Default.xml' KeyPath='yes' Source='$(var.SourceDir)Addons\Default.xml'/>
         </Component>
-        <Component Id="RadminMenu.xml" Guid="D00E2705-5A80-4240-AAE1-3B68CF7C6C4D">
-          <File Id='RAdminMenu.xml' KeyPath='yes' Source='$(var.SourceDir)Addons\RadminMenu.xml'/>
+        <Component Id="RadminViewer.xml" Guid="D00E2705-5A80-4240-AAE1-3B68CF7C6C4D">
+          <File Id='RadminViewer.xml' KeyPath='yes' Source='$(var.SourceDir)Addons\RadminViewer.xml'/>
+        </Component>
+        <Component Id="WMIViewer.xml" Guid="DAB9A6A5-53B6-442E-85A2-5D4493800962">
+          <File Id='WMIViewer.xml' KeyPath='yes' Source='$(var.SourceDir)Addons\WMIViewer.xml'/>
         </Component>
       </Directory>
     </DirectoryRef>

@@ -6,15 +6,19 @@
       <ComponentRef Id="LanExchange.exe"/>
       <ComponentRef Id="LanExchange.SDK.dll"/>
       <ComponentRef Id="LanExchangeShortcut"/>
-      <ComponentRef Id="DefaultMenu.xml" />
-      <Feature Id="Addons" Level="2" Title="Addons" AllowAdvertise="no">
-        <Feature Id="RadminAddons" Title="Radmin®" Level="1" AllowAdvertise="no" Description="Radmin® Viewer commands in context menu. Optional replacement of computer icons.">
-          <ComponentRef Id="RadminMenu.xml" />
+      <Feature Id="WMIViewer" Level="2" Title="WMI Viewer" AllowAdvertise="no" Description="WMI viewer administration tool.">
+        <ComponentRef Id="WMIViewer.exe"/>
+        <ComponentRef Id="WMIViewer.xml" />
+      </Feature>
+      <Feature Id="Addons" Level="2" Title="Addons" AllowAdvertise="no" Display="expand">
+        <Feature Id="RadminAddons" Title="Radmin® Viewer" Level="1" AllowAdvertise="no" Description="Radmin® Viewer commands in context menu. Optional replacement of computer icons.">
+          <ComponentRef Id="RadminViewer.xml" />
         </Feature>
       </Feature>
       <Feature Id="Plugins" Level="1" Title="Plugins" Display="expand" Absent="disallow" AllowAdvertise="no" Description="LanExchange plugins.">
         <Feature Id="Network" Title="Network" Level="1" Absent="disallow" AllowAdvertise="no" Description="Local Area Network browser of computers and shares.">
           <ComponentRef Id="LanExchange.Plugin.Network.dll" />
+          <ComponentRef Id="Default.xml" />
         </Feature>
         <Feature Id="Users" Title="Users" Level="1" AllowAdvertise="no" Description="Active Directory browser of organization units and users.">
           <ComponentRef Id="LanExchange.Plugin.Users.dll" />

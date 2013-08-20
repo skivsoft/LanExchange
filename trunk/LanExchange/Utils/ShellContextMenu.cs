@@ -432,6 +432,7 @@ namespace AndreasJohansson.Win32.Shell
         /// <param name="handleOwner">Window that will get messages</param>
         /// <param name="csidl">CSIDL value for special folder.</param>
         /// <param name="pointScreen">Where to show the menu</param>
+        [CLSCompliant(false)]
         public void ShowContextMenuForCSIDL(IntPtr handleOwner, ShellAPI.CSIDL csidl, Point pointScreen)
         {
             // Release all resources first.

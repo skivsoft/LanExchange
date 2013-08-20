@@ -1,23 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
+using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using LanExchange.Utils;
 
 namespace LanExchange.Model.Addon
 {
+    [Localizable(false)]
     class AddonGen
     {
-        private const string ADDONS_DIR = "Addons";
-
-        public static string GetAddonsDir()
-        {
-            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ADDONS_DIR);
-        }
 
         public static void Generate()
         {
@@ -69,7 +59,7 @@ namespace LanExchange.Model.Addon
             share.Id = "SharePanelItem";
             root.PanelItems.Add(share);
             // store xml file
-            var fileName = Path.Combine(GetAddonsDir(), "DefaultMenu.xml");
+            var fileName = FolderManager.Instance.GetAddonFileName(true, "Default");
             SerializeUtils.SerializeObjectToXMLFile(fileName, root);
         }
 
@@ -86,7 +76,7 @@ namespace LanExchange.Model.Addon
             program.FileName = @"%ProgramFiles(x86)%\Radmin Viewer 3\Radmin.exe";
             root.Programs.Add(program);
             // store xml file
-            var fileName = Path.Combine(GetAddonsDir(), "RadminMenu.xml");
+            var fileName = FolderManager.Instance.GetAddonFileName(true, "RadminViewer");
             SerializeUtils.SerializeObjectToXMLFile(fileName, root);
         }
 

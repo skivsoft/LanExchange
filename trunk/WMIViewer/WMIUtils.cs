@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Globalization;
 
-namespace LanExchange.WMI
+namespace WMIViewer
 {
     [Localizable(false)]
     public static class WMIUtils

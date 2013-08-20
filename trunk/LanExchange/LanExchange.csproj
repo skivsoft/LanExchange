@@ -84,9 +84,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
   </ItemGroup>
@@ -97,6 +95,7 @@
     <Compile Include="Action\AboutAction.cs" />
     <Compile Include="Action\ReReadAction.cs" />
     <Compile Include="Action\ShortcutKeysAction.cs" />
+    <Compile Include="Model\AddonManager.cs" />
     <Compile Include="Model\Addon\AddonGen.cs" />
     <Compile Include="Model\Addon\Program.cs" />
     <Compile Include="Model\Addon\LanExchangeAddon.cs" />
@@ -108,6 +107,7 @@
     <Compile Include="Model\BackgroundWorkerEx.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Model\FolderManager.cs" />
     <Compile Include="Model\HashtableSerializable.cs" />
     <Compile Include="Model\Impl\PanelColumnManagerImpl.cs" />
     <Compile Include="Model\Impl\ImageManagerImpl.cs" />
@@ -219,38 +219,6 @@
     <Compile Include="Utils\ShellContextMenu.cs" />
     <Compile Include="Utils\SingleInstanceCheck.cs" />
     <Compile Include="Utils\UnsafeNativeMethods.cs" />
-    <Compile Include="WMI\DynamicObject.cs" />
-    <Compile Include="WMI\IWMIView.cs" />
-    <Compile Include="WMI\MethodDataEx.cs" />
-    <Compile Include="WMI\PropertyDataEx.cs" />
-    <Compile Include="WMI\WMIAuthForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WMI\WMIAuthForm.Designer.cs">
-      <DependentUpon>WMIAuthForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WMI\WMIClassList.cs" />
-    <Compile Include="WMI\WMIForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WMI\WMIForm.Designer.cs">
-      <DependentUpon>WMIForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WMI\WMIMethodForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WMI\WMIMethodForm.Designer.cs">
-      <DependentUpon>WMIMethodForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WMI\WMIPresenter.cs" />
-    <Compile Include="WMI\WMISettings.cs" />
-    <Compile Include="WMI\WMISetupForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WMI\WMISetupForm.Designer.cs">
-      <DependentUpon>WMISetupForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WMI\WMIUtils.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -276,23 +244,17 @@
     <EmbeddedResource Include="UI\PanelView.resx">
       <DependentUpon>PanelView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WMI\WMIAuthForm.resx">
-      <DependentUpon>WMIAuthForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WMI\WMIForm.resx">
-      <DependentUpon>WMIForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WMI\WMIMethodForm.resx">
-      <DependentUpon>WMIMethodForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WMI\WMISetupForm.resx">
-      <DependentUpon>WMISetupForm.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Addons\DefaultMenu.xml" />
-    <Content Include="Addons\RadminMenu.xml" />
+    <Content Include="Addons\WMIViewer.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Addons\Default.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Addons\RadminViewer.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="..\Common\LanExchange.snk">
       <Link>LanExchange.snk</Link>
     </None>

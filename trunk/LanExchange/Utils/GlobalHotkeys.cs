@@ -9,6 +9,7 @@ namespace LanExchange.Utils
 {
     /// <summary> This class allows you to manage a hotkey </summary>
     [Localizable(false)]
+    [CLSCompliant(false)]
     public class GlobalHotkeys : IDisposable
     {
         [DllImport("user32", SetLastError = true)]
