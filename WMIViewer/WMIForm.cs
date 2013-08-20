@@ -297,7 +297,7 @@ namespace WMIViewer
             if (PropName == null) return;
             object PropValue = e.ChangedItem.Value;
             string Caption = String.Format("Editing property {0}", PropName);
-            string Message = String.Format(@"Computer name: \\{0}\n\nOld value: «{1}»\nNew value: «{2}»", m_Comp.Name, e.OldValue, PropValue);
+            string Message = String.Format("Computer name: \\{0}\n\nOld value: «{1}»\nNew value: «{2}»", m_Comp.Name, e.OldValue, PropValue);
             try
             {
                 // trying to change wmi property

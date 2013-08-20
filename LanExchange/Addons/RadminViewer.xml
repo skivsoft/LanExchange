@@ -32,6 +32,21 @@
           <ProgramRef Id="Radmin" />
           <ProgramArgs>/connect:{0} /shutdown</ProgramArgs>
         </ToolStripMenuItem>
+        <ToolStripMenuItem>
+          <Text>Radmin® Chat</Text>
+          <ProgramRef Id="Radmin" />
+          <ProgramArgs>/connect:{0} /chat</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem>
+          <Text>Radmin® Voice Chat</Text>
+          <ProgramRef Id="Radmin" />
+          <ProgramArgs>/connect:{0} /voice</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem>
+          <Text>Radmin® Send Message</Text>
+          <ProgramRef Id="Radmin" />
+          <ProgramArgs>/connect:{0} /message</ProgramArgs>
+        </ToolStripMenuItem>
       </ContextMenuStrip>
     </PanelItemBaseRef>
   </PanelItems>

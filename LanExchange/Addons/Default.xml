@@ -12,30 +12,30 @@
     <PanelItemBaseRef Id="ComputerPanelItem">
       <ContextMenuStrip>
         <ToolStripMenuItem>
-          <Text>Open in Explorer</Text>
+          <Text>Windows Explorer</Text>
           <ShortcutKeys>Shift+Enter</ShortcutKeys>
           <ProgramRef Id="explorer" />
           <ProgramArgs>\\{0}</ProgramArgs>
         </ToolStripMenuItem>
         <ToolStripMenuItem>
-          <Text>Connect to remote desktop</Text>
+          <Text>Remote Desktop Connection</Text>
           <ProgramRef Id="mstsc" />
           <ProgramArgs>/v:{0}</ProgramArgs>
         </ToolStripMenuItem>
         <ToolStripMenuItem />
         <ToolStripMenuItem>
-          <Text>Computer management</Text>
+          <Text>Computer Management</Text>
           <ShortcutKeys>Ctrl+F1</ShortcutKeys>
           <ProgramRef Id="compmgmt" />
           <ProgramArgs>/computer:{0}</ProgramArgs>
         </ToolStripMenuItem>
         <ToolStripMenuItem>
-          <Text>Shared folders</Text>
+          <Text>Shared Folders</Text>
           <ProgramRef Id="fsmgmt" />
           <ProgramArgs>/computer:{0}</ProgramArgs>
         </ToolStripMenuItem>
         <ToolStripMenuItem>
-          <Text>Local users and groups</Text>
+          <Text>Local Users and Groups</Text>
           <ProgramRef Id="lusrmgr" />
           <ProgramArgs>/computer:{0}</ProgramArgs>
         </ToolStripMenuItem>
@@ -49,7 +49,7 @@
     <PanelItemBaseRef Id="SharePanelItem">
       <ContextMenuStrip>
         <ToolStripMenuItem>
-          <Text>Open in Explorer</Text>
+          <Text>Windows Explorer</Text>
           <ShortcutKeys>Shift+Enter</ShortcutKeys>
           <ProgramRef Id="explorer" />
           <ProgramArgs>{0}</ProgramArgs>

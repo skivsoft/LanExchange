@@ -9,16 +9,17 @@ using LanExchange.Utils;
 namespace LanExchange.Model.Addon
 {
     [Localizable(false)]
-    public class Program : ObjectId
+    [XmlType("Program")]
+    public class AddonProgram : ObjectId
     {
         private Image m_Image;
 
-        public Program()
+        public AddonProgram()
         {
             
         }
 
-        public Program(string id, string fileName)
+        public AddonProgram(string id, string fileName)
         {
             Id = id;
             FileName = fileName;

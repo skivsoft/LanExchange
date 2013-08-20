@@ -97,7 +97,7 @@
     <Compile Include="Action\ShortcutKeysAction.cs" />
     <Compile Include="Model\AddonManager.cs" />
     <Compile Include="Model\Addon\AddonGen.cs" />
-    <Compile Include="Model\Addon\Program.cs" />
+    <Compile Include="Model\Addon\AddonProgram.cs" />
     <Compile Include="Model\Addon\LanExchangeAddon.cs" />
     <Compile Include="Model\Addon\ObjectId.cs" />
     <Compile Include="Model\Addon\PanelItemBaseRef.cs" />
@@ -248,6 +248,7 @@
   <ItemGroup>
     <Content Include="Addons\WMIViewer.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Addons\Default.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

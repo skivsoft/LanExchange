@@ -7,10 +7,10 @@
     <PanelItemBaseRef Id="ComputerPanelItem">
       <ContextMenuStrip>
         <ToolStripMenuItem>
-          <Text>Windows® Management Instrumentation</Text>
+          <Text>WMI Viewer</Text>
           <ShortcutKeys>Alt+F1</ShortcutKeys>
           <ProgramRef Id="wmiviewer" />
-          <ProgramArgs>{0}</ProgramArgs>
+          <ProgramArgs>/computer:{0}</ProgramArgs>
         </ToolStripMenuItem>
       </ContextMenuStrip>
     </PanelItemBaseRef>
