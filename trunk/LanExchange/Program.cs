@@ -22,7 +22,7 @@
 //   TODO  Recently used items must appears when Tray.onMouseOver event fired
 //   TODO  Save/restore sort order for each tab
 //   TODO  Load context menu for panel items from addons 
-//         (need: run from keyboard, check names, panel submenu)
+//         (need: run from keyboard, panel submenu)
 // 
 // RELEASE 2.1 (Iteration 4)
 //   TODO  Unit-tests coverage at least 50%

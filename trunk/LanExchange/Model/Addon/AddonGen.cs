@@ -22,9 +22,9 @@ namespace LanExchange.Model.Addon
             var share = new PanelItemBaseRef();
             ToolStripMenuItem menuItem;
             // programs
-            root.Programs.Add(new Program("explorer", @"%SystemRoot%\explorer.exe"));
-            root.Programs.Add(new Program("mmc", @"%SystemRoot%\system32\mmc.exe"));
-            root.Programs.Add(new Program("mstsc", @"%SystemRoot%\system32\mstsc.exe"));
+            root.Programs.Add(new AddonProgram("explorer", @"%SystemRoot%\explorer.exe"));
+            root.Programs.Add(new AddonProgram("mmc", @"%SystemRoot%\system32\mmc.exe"));
+            root.Programs.Add(new AddonProgram("mstsc", @"%SystemRoot%\system32\mstsc.exe"));
             // open in explorer (on computer)
             menuItem = new ToolStripMenuItem();
             menuItem.Text = "Open in Explorer";
@@ -71,7 +71,7 @@ namespace LanExchange.Model.Addon
             // computer
             computer.Id = "ComputerPanelItem";
             root.PanelItems.Add(computer);
-            var program = new Program();
+            var program = new AddonProgram();
             program.Id = "Radmin";
             program.FileName = @"%ProgramFiles(x86)%\Radmin Viewer 3\Radmin.exe";
             root.Programs.Add(program);

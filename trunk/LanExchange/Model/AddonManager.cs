@@ -13,12 +13,12 @@ namespace LanExchange.Model
     public class AddonManager
     {
         private static AddonManager s_Instance;
-        private readonly Dictionary<string, Addon.Program> m_Programs;
+        private readonly Dictionary<string, Addon.AddonProgram> m_Programs;
         private readonly Dictionary<string, PanelItemBaseRef> m_PanelItems;
 
         private AddonManager()
         {
-            m_Programs = new Dictionary<string, Addon.Program>();
+            m_Programs = new Dictionary<string, Addon.AddonProgram>();
             m_PanelItems = new Dictionary<string, PanelItemBaseRef>();
         }
 
@@ -134,7 +134,7 @@ namespace LanExchange.Model
             if (fmtValue.StartsWith(@"\\"))
                 fmtValue = fmtValue.Remove(0, 2);
             var programFileName = item.ProgramValue.ExpandedFileName;
-            var programArgs = string.Format(Addon.Program.ExpandCmdLine(item.ProgramArgs), fmtValue);
+            var programArgs = string.Format(Addon.AddonProgram.ExpandCmdLine(item.ProgramArgs), fmtValue);
             try
             {
                 Process.Start(programFileName, programArgs);

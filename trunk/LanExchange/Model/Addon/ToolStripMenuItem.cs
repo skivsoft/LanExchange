@@ -11,7 +11,7 @@ namespace LanExchange.Model.Addon
         public ObjectId ProgramRef { get; set; }
         
         [XmlIgnore]
-        public Program ProgramValue { get; set; }
+        public AddonProgram ProgramValue { get; set; }
         
         public string ProgramArgs { get; set; }
 
