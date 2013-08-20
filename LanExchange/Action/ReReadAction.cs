@@ -21,6 +21,7 @@ namespace LanExchange.Action
                 
                 pageModel.SyncRetrieveData();
             }
+            MainForm.Instance.popTop.Tag = null;
         }
     }
 }

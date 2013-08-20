@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.Presenter;
-using LanExchange.Model;
 using LanExchange.SDK;
 
 namespace LanExchange.UI

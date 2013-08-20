@@ -119,58 +119,6 @@ namespace LanExchange.Presenter
         }
 
         /// <summary>
-        /// Run parametrized cmdline for focused panel item.
-        /// {0} is computer name
-        /// {1} is folder name
-        /// </summary>
-        /// <param name="tagCmd">cmdline from Tag of menu item</param>
-        /// <param name="tagParent">Can be "computer" or "folder"</param>
-        public void RunCmdOnFocusedItem(string tagCmd, string tagParent)
-        {
-            // TODO UNCOMMENT THIS!
-            //PanelItemBase PItem = GetFocusedPanelItem(true, false);
-            //if (PItem == null) return;
-
-            //string CmdLine;
-            //string FmtParam = null;
-
-            //switch (tagParent)
-            //{
-            //    case COMPUTER_MENU:
-            //        if (PItem is ComputerPanelItem)
-            //            FmtParam = (PItem as ComputerPanelItem).Name;
-            //        else
-            //            if (PItem is SharePanelItem)
-            //                FmtParam = (PItem as SharePanelItem).ComputerName;
-            //        break;
-            //    case FOLDER_MENU:
-            //        if (PItem is ComputerPanelItem)
-            //            return;
-            //        if (PItem is SharePanelItem)
-            //            FmtParam = String.Format(@"\\{0}\{1}", (PItem as SharePanelItem).ComputerName, (PItem as SharePanelItem).Name);
-            //        break;
-            //}
-
-            //if (!Kernel32.Is64BitOperatingSystem())
-            //    CmdLine = tagCmd.Replace("%ProgramFiles(x86)%", "%ProgramFiles%");
-            //else
-            //    CmdLine = tagCmd;
-
-            //CmdLine = String.Format(Environment.ExpandEnvironmentVariables(CmdLine), FmtParam);
-            //string FName;
-            //string Params;
-            //AutorunUtils.ExplodeCmd(CmdLine, out FName, out Params);
-            //try
-            //{
-            //    Process.Start(FName, Params);
-            //}
-            //catch
-            //{
-            //    m_View.ShowRunCmdError(CmdLine);
-            //}
-        }
-
-        /// <summary>
         /// Returns computer either focused item is computer or focused item is subitem of computer.
         /// </summary>
         /// <returns>a ComputerPanelItem or null</returns>

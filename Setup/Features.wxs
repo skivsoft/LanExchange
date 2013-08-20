@@ -6,11 +6,12 @@
       <ComponentRef Id="LanExchange.exe"/>
       <ComponentRef Id="LanExchange.SDK.dll"/>
       <ComponentRef Id="LanExchangeShortcut"/>
-      <Feature Id="WMIViewer" Level="2" Title="WMI Viewer" AllowAdvertise="no" Description="WMI viewer administration tool.">
+      <Feature Id="WMIViewer" Level="100" Title="WMI Viewer" AllowAdvertise="no" Description="WMI viewer administration tool.">
         <ComponentRef Id="WMIViewer.exe"/>
         <ComponentRef Id="WMIViewer.xml" />
-      </Feature>
-      <Feature Id="Addons" Level="2" Title="Addons" AllowAdvertise="no" Display="expand">
+        <ComponentRef Id="WMIViewerShortcut"/>
+        </Feature>
+      <Feature Id="Addons" Level="100" Title="Addons" AllowAdvertise="no" Display="expand">
         <Feature Id="RadminAddons" Title="Radmin® Viewer" Level="1" AllowAdvertise="no" Description="Radmin® Viewer commands in context menu. Optional replacement of computer icons.">
           <ComponentRef Id="RadminViewer.xml" />
         </Feature>
@@ -23,7 +24,7 @@
         <Feature Id="Users" Title="Users" Level="1" AllowAdvertise="no" Description="Active Directory browser of organization units and users.">
           <ComponentRef Id="LanExchange.Plugin.Users.dll" />
         </Feature>
-        <Feature Id="Win7" Title="Win7" Level="2" AllowAdvertise="no" Description="Windows® 7 features support.">
+        <Feature Id="Win7" Title="Win7" Level="100" AllowAdvertise="no" Description="Windows® 7 features support.">
           <ComponentRef Id="LanExchange.Plugin.Win7.dll" />
           <ComponentRef Id="Microsoft.WindowsAPICodePack.dll" />
           <ComponentRef Id="Microsoft.WindowsAPICodePack.Shell.dll" />

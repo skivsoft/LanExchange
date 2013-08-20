@@ -16,7 +16,7 @@ namespace LanExchange.Plugin.Network
         {
             columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader(Resources.NetworkName));
             columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader(Resources.Description, 250));
-            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader(Resources.OSVersion) { Visible = false, Width=110 });
+            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader(Resources.OSVersion) { Visible=false, Width=110 });
             // lazy columns
             columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader(Resources.Ping) { Callback = GetReachable, Visible = false, Width = 110, Refreshable = true });
             columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader(Resources.IPAddress) { Callback = GetIPAddress, Visible = false, Width = 80 });
