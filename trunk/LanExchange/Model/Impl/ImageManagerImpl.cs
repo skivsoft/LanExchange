@@ -19,36 +19,36 @@ namespace LanExchange.Model.Impl
         private readonly Dictionary<string, int> m_NamesMap;
         private int m_LastIndex;
 
-        private static Bitmap SmallEmpty = new Bitmap(16, 16);
-        private static Bitmap LargeEmpty = new Bitmap(32, 32);
+        private static readonly Bitmap SmallEmpty = new Bitmap(16, 16);
+        private static readonly Bitmap LargeEmpty = new Bitmap(32, 32);
 
         public ImageManagerImpl()
         {
             m_NamesMap = new Dictionary<string, int>();
             // init system images
             ShellAPI.FileIconInit(true);
-            var Small = new SysImageList(SysImageListSize.smallIcons);
-            var Large = new SysImageList(SysImageListSize.largeIcons);
+            var small = new SysImageList(SysImageListSize.smallIcons);
+            var large = new SysImageList(SysImageListSize.largeIcons);
             // init image lists
             m_SmallImageList = new ImageList();
             m_SmallImageList.ColorDepth = ColorDepth.Depth32Bit;
-            m_SmallImageList.ImageSize = Small.Size;
+            m_SmallImageList.ImageSize = small.Size;
             m_LargeImageList = new ImageList();
             m_LargeImageList.ColorDepth = ColorDepth.Depth32Bit;
-            m_LargeImageList.ImageSize = Large.Size;
+            m_LargeImageList.ImageSize = large.Size;
             // Workgroup icon
-            Icon icon1 = Small.Icon(SYSTEM_INDEX_WORKGROUP);
-            Icon icon2 = Large.Icon(SYSTEM_INDEX_WORKGROUP);
+            Icon icon1 = small.Icon(SYSTEM_INDEX_WORKGROUP);
+            Icon icon2 = large.Icon(SYSTEM_INDEX_WORKGROUP);
             RegisterImage(PanelImageNames.Workgroup, icon1, icon2);
             // MyComputer icon
-            icon1 = Small.Icon(SYSTEM_INDEX_MYCOMPUTER);
-            icon2 = Large.Icon(SYSTEM_INDEX_MYCOMPUTER);
+            icon1 = small.Icon(SYSTEM_INDEX_MYCOMPUTER);
+            icon2 = large.Icon(SYSTEM_INDEX_MYCOMPUTER);
             RegisterImage(PanelImageNames.ComputerNormal, icon1, icon2);
             RegisterDisabledImage(PanelImageNames.ComputerDisabled, icon1, icon2);
             //RegisterImage(PanelImageNames.ComputerDisabled, MadeDisabledBitmap(bitmap1), MadeDisabledBitmap(bitmap2));
             // Folder icon
-            icon1 = Small.Icon(SYSTEM_INDEX_FOLDER);
-            icon2 = Large.Icon(SYSTEM_INDEX_FOLDER);
+            icon1 = small.Icon(SYSTEM_INDEX_FOLDER);
+            icon2 = large.Icon(SYSTEM_INDEX_FOLDER);
             RegisterImage(PanelImageNames.ShareNormal, icon1, icon2);
             //RegisterImage(PanelImageNames.ShareHidden, MadeDisabledBitmap(bitmap1), MadeDisabledBitmap(bitmap2));
             RegisterDisabledImage(PanelImageNames.ShareHidden, icon1, icon2);
@@ -58,8 +58,8 @@ namespace LanExchange.Model.Impl
             RegisterImage(PanelImageNames.UserNormal, Resources.user_16, Resources.user_32);
             RegisterDisabledImage(PanelImageNames.UserDisabled, Resources.user_16, Resources.user_32);
             // release sys images list
-            Small.Dispose();
-            Large.Dispose();
+            small.Dispose();
+            large.Dispose();
         }
 
         public void Dispose()
@@ -70,12 +70,12 @@ namespace LanExchange.Model.Impl
 
         private static Image MadeDisabledBitmap(Image bmp)
         {
-            Image Result = new Bitmap(bmp.Width, bmp.Height);
-            using (Graphics GR = Graphics.FromImage(Result))
+            var result = new Bitmap(bmp.Width, bmp.Height);
+            using (var gr = Graphics.FromImage(result))
             {
-                ControlPaint.DrawImageDisabled(GR, bmp, 0, 0, Color.Transparent);
+                ControlPaint.DrawImageDisabled(gr, bmp, 0, 0, Color.Transparent);
             }
-            return Result;
+            return result;
         }
 
         public ImageList SmallImageList
@@ -164,7 +164,7 @@ namespace LanExchange.Model.Impl
             var index = IndexOf(key);
             if (index == -1) return null;
             Icon result;
-            using (Bitmap bitmap = new Bitmap(SmallImageList.Images[index]))
+            using (var bitmap = new Bitmap(SmallImageList.Images[index]))
             {
                 result = Icon.FromHandle(bitmap.GetHicon());
             }
@@ -176,12 +176,20 @@ namespace LanExchange.Model.Impl
             var index = IndexOf(key);
             if (index == -1) return null;
             Icon result;
-            using (Bitmap bitmap = new Bitmap(LargeImageList.Images[index]))
+            using (var bitmap = new Bitmap(LargeImageList.Images[index]))
             {
                 result = Icon.FromHandle(bitmap.GetHicon());
             }
             return result;
         }
 
+        public Image GetSmallImageOfFileName(string fileName)
+        {
+            using (var small = new SysImageList(SysImageListSize.smallIcons))
+            {
+                var index = small.IconIndex(fileName);
+                return small.Icon(index).ToBitmap();
+            }
+        }
     }
 }

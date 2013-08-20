@@ -247,19 +247,6 @@ namespace LanExchange.UI
             }
         }
 
-        private void popTop_Opened(object sender, EventArgs e)
-        {
-            var pv = Pages.ActivePanelView as PanelView;
-            if (pv == null) return;
-            for (int i = 0; i < Math.Min(pv.mComp.DropDownItems.Count, popTop.Items.Count); i++)
-            {
-                ToolStripItem Src = pv.mComp.DropDownItems[i];
-                ToolStripItem Dest = popTop.Items[i];
-                if (Src is ToolStripMenuItem && Dest is ToolStripMenuItem)
-                    (Dest as ToolStripMenuItem).ShowShortcutKeys = (Src as ToolStripMenuItem).ShowShortcutKeys;
-            }
-        }
-
         private void popTop_Opening(object sender, CancelEventArgs e)
         {
             var pv = Pages.ActivePanelView as PanelView;
@@ -268,9 +255,13 @@ namespace LanExchange.UI
                 e.Cancel = true;
                 return;
             }
-            if (popTop.Items.Count == 1)
-                pv.SetupMenu(popTop);
-            e.Cancel = !pv.PrepareContextMenu();
+            var panelItem = pv.Presenter.GetFocusedPanelItem(false, true);
+            if (panelItem == null)
+            {
+                e.Cancel = true;
+                return;
+            }
+            e.Cancel = !AddonManager.Instance.BuildMenuForPanelItemType(popTop, panelItem.GetType().Name);
         }
 
         private void tipComps_Popup(object sender, PopupEventArgs e)

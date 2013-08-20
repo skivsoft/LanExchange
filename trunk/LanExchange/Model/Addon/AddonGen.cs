@@ -22,9 +22,9 @@ namespace LanExchange.Model.Addon
             var share = new PanelItemBaseRef();
             ToolStripMenuItem menuItem;
             // programs
-            root.Programs.Add(new Program("explorer", @"%systemroot%\explorer.exe"));
-            root.Programs.Add(new Program("mmc", @"%systemroot%\system32\mmc.exe"));
-            root.Programs.Add(new Program("mstsc", @"%systemroot%\system32\mstsc.exe"));
+            root.Programs.Add(new Program("explorer", @"%SystemRoot%\explorer.exe"));
+            root.Programs.Add(new Program("mmc", @"%SystemRoot%\system32\mmc.exe"));
+            root.Programs.Add(new Program("mstsc", @"%SystemRoot%\system32\mstsc.exe"));
             // open in explorer (on computer)
             menuItem = new ToolStripMenuItem();
             menuItem.Text = "Open in Explorer";
@@ -44,7 +44,7 @@ namespace LanExchange.Model.Addon
             menuItem.Text = "Computer management";
             menuItem.ShortcutKeys = "Ctrl+F1";
             menuItem.ProgramRef = new ObjectId("mmc");
-            menuItem.ProgramArgs = @"%systemroot%\system32\compmgmt.msc /computer:{0}";
+            menuItem.ProgramArgs = @"%SystemRoot%\system32\compmgmt.msc /computer:{0}";
             computer.ContextMenuStrip.Add(menuItem);
             // connect to remote desktop
             menuItem = new ToolStripMenuItem();

@@ -59,5 +59,6 @@ namespace LanExchange.SDK
         Icon GetLargeIcon(string key);
         ImageList SmallImageList { get; }
         ImageList LargeImageList { get; }
+        Image GetSmallImageOfFileName(string fileName);
     }
 }

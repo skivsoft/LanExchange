@@ -59,22 +59,6 @@ namespace LanExchange.UI
                 ePath.Text = path.ToString();
         }
 
-        internal void SetupMenu(ContextMenuStrip popTop)
-        {
-            ToolStripItem[] MyItems = new ToolStripItem[mComp.DropDownItems.Count];
-            for (int i = 0; i < MyItems.Length; i++)
-            {
-                var TI = mComp.DropDownItems[i];
-                if (TI is ToolStripSeparator)
-                    MyItems[i] = new ToolStripSeparator();
-                else
-                    if (TI is ToolStripMenuItem)
-                        MyItems[i] = MenuUtils.Clone(TI as ToolStripMenuItem);
-            }
-            popTop.Items.Clear();
-            popTop.Items.AddRange(MyItems);
-        }
-
         #region IListViewItemGetter interface implementation
         /// <summary>
         /// IListViewItemGetter implementation. 
@@ -747,8 +731,7 @@ namespace LanExchange.UI
 
         private void popComps_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            //PrepareContextMenu();
-            // if no selected items just exit
+            PrepareContextMenu();
             SetupCopyHelper();
             mCopyMenu.Enabled = m_CopyHelper.Count > 0;
         }

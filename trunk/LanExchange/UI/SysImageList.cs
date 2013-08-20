@@ -239,7 +239,7 @@ namespace LanExchange.UI
 		private enum SHGetFileInfoConstants
 		{
             //SHGFI_ICON = 0x100,                // get icon 
-            //SHGFI_DISPLAYNAME = 0x200,         // get display name 
+            SHGFI_DISPLAYNAME = 0x200,         // get display name 
             //SHGFI_TYPENAME = 0x400,            // get type name 
             //SHGFI_ATTRIBUTES = 0x800,          // get attributes 
             //SHGFI_ICONLOCATION = 0x1000,       // get icon location 
@@ -659,6 +659,8 @@ namespace LanExchange.UI
 			}
 		    return shfi.iIcon;
 		}
+
+        public string DisplayName { get; set; }
 
 		/// <summary>
 		/// Draws an image

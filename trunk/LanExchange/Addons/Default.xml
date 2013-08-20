@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanExchangeAddon xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Programs>
-    <Program Id="explorer" FileName="%systemroot%\explorer.exe" />
-    <Program Id="mmc" FileName="%systemroot%\system32\mmc.exe" />
-    <Program Id="mstsc" FileName="%systemroot%\system32\mstsc.exe" />
+    <Program Id="explorer" FileName="%SystemRoot%\explorer.exe" />
+    <Program Id="compmgmt" FileName="%SystemRoot%\system32\compmgmt.msc"/>
+    <Program Id="fsmgmt" FileName="%SystemRoot%\system32\fsmgmt.msc"/>
+    <Program Id="lusrmgr" FileName="%SystemRoot%\system32\lusrmgr.msc"/>
+    <Program Id="services" FileName="%SystemRoot%\system32\services.msc"/>
+    <Program Id="mstsc" FileName="%SystemRoot%\system32\mstsc.exe" />
   </Programs>
   <PanelItems>
     <PanelItemBaseRef Id="ComputerPanelItem">
@@ -15,15 +18,31 @@
           <ProgramArgs>\\{0}</ProgramArgs>
         </ToolStripMenuItem>
         <ToolStripMenuItem>
-          <Text>Computer management</Text>
-          <ShortcutKeys>Ctrl+F1</ShortcutKeys>
-          <ProgramRef Id="mmc" />
-          <ProgramArgs>%systemroot%\system32\compmgmt.msc /computer:{0}</ProgramArgs>
-        </ToolStripMenuItem>
-        <ToolStripMenuItem>
           <Text>Connect to remote desktop</Text>
           <ProgramRef Id="mstsc" />
           <ProgramArgs>/v:{0}</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem />
+        <ToolStripMenuItem>
+          <Text>Computer management</Text>
+          <ShortcutKeys>Ctrl+F1</ShortcutKeys>
+          <ProgramRef Id="compmgmt" />
+          <ProgramArgs>/computer:{0}</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem>
+          <Text>Shared folders</Text>
+          <ProgramRef Id="fsmgmt" />
+          <ProgramArgs>/computer:{0}</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem>
+          <Text>Local users and groups</Text>
+          <ProgramRef Id="lusrmgr" />
+          <ProgramArgs>/computer:{0}</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem>
+          <Text>Services</Text>
+          <ProgramRef Id="services" />
+          <ProgramArgs>/computer:{0}</ProgramArgs>
         </ToolStripMenuItem>
       </ContextMenuStrip>
     </PanelItemBaseRef>

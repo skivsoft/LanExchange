@@ -46,7 +46,6 @@
             this.lUserName = new System.Windows.Forms.ToolStripStatusLabel();
             this.tipComps = new System.Windows.Forms.ToolTip(this.components);
             this.popTop = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.menuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Pages = new LanExchange.UI.PagesView();
             this.pInfo = new LanExchange.UI.InfoView();
             this.MainMenu = new System.Windows.Forms.MenuStrip();
@@ -72,7 +71,6 @@
             this.timerTabSettingsSaver = new System.Windows.Forms.Timer(this.components);
             this.popTray.SuspendLayout();
             this.Status.SuspendLayout();
-            this.popTop.SuspendLayout();
             this.MainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -92,7 +90,7 @@
             this.toolStripMenuItem5,
             this.mExitTray});
             this.popTray.Name = "popTray";
-            this.popTray.Size = new System.Drawing.Size(178, 76);
+            this.popTray.Size = new System.Drawing.Size(191, 76);
             this.popTray.Opening += new System.ComponentModel.CancelEventHandler(this.popTray_Opening);
             // 
             // mOpen
@@ -100,26 +98,26 @@
             this.mOpen.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.mOpen.Name = "mOpen";
             this.mOpen.ShortcutKeyDisplayString = "Ctrl+Win+X";
-            this.mOpen.Size = new System.Drawing.Size(177, 22);
+            this.mOpen.Size = new System.Drawing.Size(190, 22);
             this.mOpen.Text = "Open";
             this.mOpen.Click += new System.EventHandler(this.mOpen_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(174, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(187, 6);
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(177, 22);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(190, 22);
             this.toolStripMenuItem5.Text = "About";
             this.toolStripMenuItem5.Click += new System.EventHandler(this.mAbout_Click);
             // 
             // mExitTray
             // 
             this.mExitTray.Name = "mExitTray";
-            this.mExitTray.Size = new System.Drawing.Size(177, 22);
+            this.mExitTray.Size = new System.Drawing.Size(190, 22);
             this.mExitTray.Text = "Exit";
             this.mExitTray.Click += new System.EventHandler(this.mExit_Click);
             // 
@@ -148,7 +146,7 @@
             // lItemsCount
             // 
             this.lItemsCount.Name = "lItemsCount";
-            this.lItemsCount.Size = new System.Drawing.Size(472, 17);
+            this.lItemsCount.Size = new System.Drawing.Size(503, 17);
             this.lItemsCount.Spring = true;
             this.lItemsCount.Text = "    ";
             this.lItemsCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -197,18 +195,9 @@
             // 
             // popTop
             // 
-            this.popTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemToolStripMenuItem});
             this.popTop.Name = "popTop";
-            this.popTop.Size = new System.Drawing.Size(130, 26);
+            this.popTop.Size = new System.Drawing.Size(153, 26);
             this.popTop.Opening += new System.ComponentModel.CancelEventHandler(this.popTop_Opening);
-            this.popTop.Opened += new System.EventHandler(this.popTop_Opened);
-            // 
-            // menuItemToolStripMenuItem
-            // 
-            this.menuItemToolStripMenuItem.Name = "menuItemToolStripMenuItem";
-            this.menuItemToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
-            this.menuItemToolStripMenuItem.Text = "MenuItem";
             // 
             // Pages
             // 
@@ -423,7 +412,6 @@
             this.popTray.ResumeLayout(false);
             this.Status.ResumeLayout(false);
             this.Status.PerformLayout();
-            this.popTop.ResumeLayout(false);
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
             this.ResumeLayout(false);
@@ -444,12 +432,11 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel lCompName;
         public System.Windows.Forms.ToolTip tipComps;
-        private System.Windows.Forms.ContextMenuStrip popTop;
+        internal System.Windows.Forms.ContextMenuStrip popTop;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
         private System.Windows.Forms.ToolStripStatusLabel lUserName;
         internal InfoView pInfo;
         internal PagesView Pages;
-        private System.Windows.Forms.ToolStripMenuItem menuItemToolStripMenuItem;
         private System.Windows.Forms.Timer timerTabSettingsSaver;
         private System.Windows.Forms.MenuStrip MainMenu;
         private System.Windows.Forms.ToolStripMenuItem mHelp;
