@@ -2,14 +2,13 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using LanExchange.Properties;
 
-namespace LanExchange.WMI
+namespace WMIViewer
 {
     public partial class WMIAuthForm : Form
     {
-        private static string m_UserName;
-        private static string m_UserPassword;
+        private static string s_UserName;
+        private static string s_UserPassword;
         
         public WMIAuthForm()
         {
@@ -22,16 +21,16 @@ namespace LanExchange.WMI
             picShield.Image = SystemIcons.Error.ToBitmap();
             bOK.NotifyDefault(true);
             ActiveControl = eUserName;
-            UserName = m_UserName;
-            UserPassword = m_UserPassword;
+            UserName = s_UserName;
+            UserPassword = s_UserPassword;
         }
 
         public bool AutoLogon()
         {
-            if (!String.IsNullOrEmpty(m_UserName))
+            if (!String.IsNullOrEmpty(s_UserName))
             {
-                eUserName.Text = m_UserName;
-                ePassword.Text = m_UserPassword;
+                eUserName.Text = s_UserName;
+                ePassword.Text = s_UserPassword;
                 chSavePassword.Checked = true;
                 return true;
             }
@@ -44,7 +43,7 @@ namespace LanExchange.WMI
             Text = String.Format(Text, computerName);
             string userName;
             if (AutoLogon())
-                userName = m_UserName;
+                userName = s_UserName;
             else
                 userName = string.Format(@"{0}\{1}", Environment.UserDomainName, Environment.UserName);
             lMessage.Text = String.Format(lMessage.Text, userName);
@@ -66,21 +65,21 @@ namespace LanExchange.WMI
         {
             if (string.IsNullOrEmpty(eUserName.Text.Trim()))
             {
-                Error.SetError(eUserName, Resources.WMIAuthForm_UserNameError);
+                Error.SetError(eUserName, "User name not specified.");
                 DialogResult = DialogResult.None;
                 return;
             }
             if (chSavePassword.Checked)
             {
-                m_UserName = UserName;
-                m_UserPassword = UserPassword;
+                s_UserName = UserName;
+                s_UserPassword = UserPassword;
             }
         }
 
         public static void ClearSavedPassword()
         {
-            m_UserName = string.Empty;
-            m_UserPassword = string.Empty;
+            s_UserName = string.Empty;
+            s_UserPassword = string.Empty;
         }
 
         private void WMIAuthForm_KeyDown(object sender, KeyEventArgs e)

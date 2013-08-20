@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanExchangeAddon xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Programs>
+    <Program Id="wmiviewer" FileName="WMIViewer.exe" />
+  </Programs>
+  <PanelItems>
+    <PanelItemBaseRef Id="ComputerPanelItem">
+      <ContextMenuStrip>
+        <ToolStripMenuItem>
+          <Text>Windows® Management Instrumentation</Text>
+          <ShortcutKeys>Alt+F1</ShortcutKeys>
+          <ProgramRef Id="wmiviewer" />
+          <ProgramArgs>{0}</ProgramArgs>
+        </ToolStripMenuItem>
+      </ContextMenuStrip>
+    </PanelItemBaseRef>
+  </PanelItems>
+</LanExchangeAddon>

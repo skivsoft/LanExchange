@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace LanExchange.WMI
+namespace WMIViewer
 {
     public interface IWMIView
     {

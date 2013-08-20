@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace LanExchange.WMI
+namespace WMIViewer
 {
     public partial class WMIMethodForm : Form
     {
@@ -25,14 +25,14 @@ namespace LanExchange.WMI
         {
             if (value is string[])
             {
-                string[] list = value as string[];
-                string S = "";
+                var list = value as string[];
+                var result = string.Empty;
                 for (int i = 0; i < list.Length; i++)
                 {
-                    if (i > 0) S += ", ";
-                    S += list[i];
+                    if (i > 0) result += ", ";
+                    result += list[i];
                 }
-                return S;
+                return result;
             }
             return value.ToString();
         }

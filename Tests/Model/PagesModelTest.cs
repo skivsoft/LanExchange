@@ -113,12 +113,5 @@ namespace LanExchange.Model
             Assert.AreEqual(-1, m_Model.GetItemIndex(null));
             Assert.AreEqual(0, m_Model.GetItemIndex(info));
         }
-
-        [Test]
-        public void TestGetConfigFileName()
-        {
-            var fileName = PagesModel.GetConfigFileName();
-            Assert.AreEqual(PagesModel.CONFIG_FNAME, Path.GetFileName(fileName));
-        }
     }
 }

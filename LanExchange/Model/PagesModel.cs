@@ -17,7 +17,6 @@ namespace LanExchange.Model
 
     public class PagesModel
     {
-        public const string CONFIG_FNAME = "LanExchange.Tabs.cfg";
         private readonly List<PanelItemList> m_List;
         private int m_SelectedIndex;
 
@@ -33,12 +32,6 @@ namespace LanExchange.Model
             m_List = new List<PanelItemList>();
             m_PagesSettings = new Tabs();
             m_SelectedIndex = -1;
-        }
-
-        public static string GetConfigFileName()
-        {
-            var path = Path.GetDirectoryName(Settings.Settings.GetExecutableFileName());
-            return path == null ? string.Empty : Path.Combine(path, CONFIG_FNAME);
         }
 
         public int Count { get { return m_List.Count; }  }
@@ -140,7 +133,7 @@ namespace LanExchange.Model
 
         public void LoadSettings()
         {
-            var fileFName = GetConfigFileName();
+            var fileFName = FolderManager.Instance.TabsConfigFileName;
             if (File.Exists(fileFName))
             {
                 try

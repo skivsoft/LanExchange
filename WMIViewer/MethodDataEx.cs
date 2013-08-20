@@ -4,7 +4,7 @@ using System.Management;
 using System.Collections.Generic;
 using System.Text;
 
-namespace LanExchange.WMI
+namespace WMIViewer
 {
     internal class MethodDataEx
     {

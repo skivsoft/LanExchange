@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 
-namespace LanExchange.WMI
+namespace WMIViewer
 {
     [Localizable(false)]
     public class DynamicObject : ICustomTypeDescriptor

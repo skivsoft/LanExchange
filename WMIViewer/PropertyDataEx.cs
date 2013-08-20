@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Management;
 
-namespace LanExchange.WMI
+namespace WMIViewer
 {
     enum WMIParamType
     {

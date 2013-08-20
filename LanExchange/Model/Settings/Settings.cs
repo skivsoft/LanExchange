@@ -86,7 +86,7 @@ namespace LanExchange.Model.Settings
 
         public void Load()
         {
-            var fileName = GetConfigFileName();
+            var fileName = FolderManager.Instance.ConfigFileName;
             if (!File.Exists(fileName)) return;
             try
             {
@@ -111,7 +111,7 @@ namespace LanExchange.Model.Settings
         public static void SaveIfModified()
         {
             if (!Modified) return;
-            var fileName = GetConfigFileName();
+            var fileName = FolderManager.Instance.ConfigFileName;
             try
             {
                 SerializeUtils.SerializeObjectToXMLFile(fileName, Instance);
@@ -121,17 +121,6 @@ namespace LanExchange.Model.Settings
                 Debug.Print(ex.Message);
             }
             m_Modified = false;
-        }
-
-        public static string GetExecutableFileName()
-        {
-            var Params = Environment.GetCommandLineArgs();
-            return Params.Length > 0 ? Params[0] : string.Empty;
-        }
-
-        public static string GetConfigFileName()
-        {
-            return Path.ChangeExtension(GetExecutableFileName(), ".cfg");
         }
 
         public static string GetCurrentUserName()
@@ -232,11 +221,11 @@ namespace LanExchange.Model.Settings
         {
             get
             {
-                return AutorunUtils.Autorun_Exists(GetExecutableFileName());
+                return AutorunUtils.Autorun_Exists(FolderManager.Instance.ExeFileName);
             }
             set
             {
-                var exeFName = GetExecutableFileName();
+                var exeFName = FolderManager.Instance.ExeFileName;
                 if (value)
                 {
                     AutorunUtils.Autorun_Add(exeFName);

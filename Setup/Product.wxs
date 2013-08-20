@@ -13,12 +13,12 @@
     <Property Id="ARPURLUPDATEINFO" Value="https://code.google.com/p/lanexchange/downloads/list" />
     <Property Id="ARPCONTACT" Value="skivsoft@gmail.com"/>
     <Property Id="ARPCOMMENTS" Value="User-friendly browser of computers for local area network."/>
-    <Property Id="ARPINSTALLLOCATION" Value="[INSTALLDIR]"/>
+    <Property Id="ARPINSTALLLOCATION" Value="INSTALLDIR"/>
 
     <WixVariable Id="WixUILicenseRtf" Overridable="yes" Value="License.rtf"/>
 
     <Directory Id="TARGETDIR" Name="SourceDir">
-      <Directory Id="LocalAppDataFolder">
+      <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLFOLDERROOT" Name="$(var.DefInstallDir)">
           <Directory Id="INSTALLDIR" Name="v$(var.VerMajor).$(var.VerMinor)"/>
         </Directory>

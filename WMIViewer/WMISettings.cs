@@ -1,4 +1,4 @@
-﻿namespace LanExchange.WMI
+﻿namespace WMIViewer
 {
     public static class WMISettings
     {

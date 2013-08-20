@@ -32,9 +32,6 @@ namespace LanExchange.Presenter
             ServiceProvider = new ServiceProviderImpl();
             LazyThreadPool = new LazyThreadPool();
             Plugins = new PluginManager();
-            #if DEBUG
-            AddonGen.Generate();
-            #endif
         }
     }
 }

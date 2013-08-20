@@ -3,10 +3,8 @@ using System.Windows.Forms;
 using System.Management;
 using System.ComponentModel;
 using System.Reflection;
-using LanExchange.Properties;
-using LanExchange.SDK;
 
-namespace LanExchange.WMI
+namespace WMIViewer
 {
     public partial class WMIForm : Form, IWMIView
     {
@@ -197,7 +195,7 @@ namespace LanExchange.WMI
                     lvInstances_FocusedItemChanged(lvInstances, EventArgs.Empty);
                     lvInstances.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
                 }
-                lStatus.Text = String.Format(Resources.WMIForm_Elements, lvInstances.Items.Count);
+                lStatus.Text = String.Format("Elements: {0}", lvInstances.Items.Count);
             }
         }
 
@@ -210,9 +208,9 @@ namespace LanExchange.WMI
 
         public void ShowStat(int classCount, int propCount, int methodCount)
         {
-            lClasses.Text = String.Format(Resources.WMIForm_Classes, classCount);
-            lProps.Text = String.Format(Resources.WMIForm_Properties, propCount);
-            lMethods.Text = String.Format(Resources.WMIForm_Methods, methodCount);
+            lClasses.Text = String.Format("Classes: {0}", classCount);
+            lProps.Text = String.Format("Properties: {0}", propCount);
+            lMethods.Text = String.Format("Methods: {0}", methodCount);
         }
 
         public static void dynObj_AddProperty<T>(DynamicObject dynObj, PropertyData prop, string description, string category, bool isReadOnly)
@@ -298,9 +296,8 @@ namespace LanExchange.WMI
             string PropName = e.ChangedItem.Label;
             if (PropName == null) return;
             object PropValue = e.ChangedItem.Value;
-            string Caption = String.Format(Resources.WMIForm_EdittingProperty, PropName);
-            string Message = String.Format(Resources.WMIForm_PropertyChangingMsg,
-                m_Comp.Name, e.OldValue, PropValue);
+            string Caption = String.Format("Editing property {0}", PropName);
+            string Message = String.Format(@"Computer name: \\{0}\n\nOld value: «{1}»\nNew value: «{2}»", m_Comp.Name, e.OldValue, PropValue);
             try
             {
                 // trying to change wmi property
@@ -312,7 +309,7 @@ namespace LanExchange.WMI
                     m_Comp.Comment = PropValue.ToString();
 
                 // property has been changed
-                Message += String.Format(Resources.WMIForm_PropertyChangedMsg, PropName);
+                Message += String.Format("\n\nProperty {0} successfully changed.", PropName);
                 MessageBox.Show(Message, Caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch(Exception ex)

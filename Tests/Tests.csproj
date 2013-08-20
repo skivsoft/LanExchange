@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\FolderManagerTest.cs" />
     <Compile Include="Model\PagesModelTest.cs" />
     <Compile Include="Model\PanelIndexEvenArgsTest.cs" />
     <Compile Include="Model\CustomPanelItemTest.cs" />

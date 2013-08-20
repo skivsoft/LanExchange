@@ -4,10 +4,8 @@ using System.Diagnostics;
 using System.Management;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using LanExchange.Properties;
-using LanExchange.SDK;
 
-namespace LanExchange.WMI
+namespace WMIViewer
 {
     public sealed class WMIPresenter : IDisposable
     {
@@ -44,16 +42,16 @@ namespace LanExchange.WMI
         private void ShowFirewallConnectionError()
         {
             MessageBox.Show(
-                String.Format(Resources.WMIPresenter_ConnectionErrorText, m_Comp.Name),
-                Resources.WMIPresenter_ConnectionErrorCaption,
+                String.Format("Unable to connect to computer \\\\{0}.\nPossible connection has been blocked by firewall.", m_Comp.Name),
+                "WMI connection error",
                 MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
         }
 
         private void ShowCommonConnectionError(Exception ex)
         {
             MessageBox.Show(
-                String.Format(Resources.WMIPresenter_CommonConnectionErrorText, m_Comp.Name, ex.Message),
-                Resources.WMIPresenter_ConnectionErrorCaption,
+                String.Format("Unable to connect to computer \\\\{0}.\n{1}", m_Comp.Name, ex.Message),
+                "WMI connection error",
                 MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
         }
 

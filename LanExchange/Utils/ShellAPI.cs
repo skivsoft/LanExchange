@@ -11,6 +11,7 @@ namespace LanExchange.Utils
     /// required by the FileBrowser
     /// </summary>
     [Localizable(false)]
+    [CLSCompliant(false)]
     public static class ShellAPI
     {
         #region Variables and Constants
