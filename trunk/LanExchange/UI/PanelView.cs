@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
+using System.Text;
 using System.Windows.Forms;
 using LanExchange.Model;
+using LanExchange.Model.Addon;
 using LanExchange.Presenter;
 using LanExchange.Properties;
 using LanExchange.SDK;
@@ -34,12 +36,8 @@ namespace LanExchange.UI
             m_Cache = new ListViewItemCache(this);
             //LV.CacheVirtualItems += m_Cache.CacheVirtualItems;
             LV.RetrieveVirtualItem += m_Cache.RetrieveVirtualItem;
-            // set mycomputer image
-            mComp.Image = AppPresenter.Images.GetSmallImage(PanelImageNames.ComputerNormal);
-            mFolder.Image = AppPresenter.Images.GetSmallImage(PanelImageNames.ShareNormal);
             // set dropdown direction for sub-menus (actual for dual-monitor system)
             mComp.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
-            mFolder.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
             mSendToNewTab.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
             // focus listview when panel got focus
             GotFocus += (sender, args) => ActiveControl = LV;
@@ -254,40 +252,15 @@ namespace LanExchange.UI
             }
         }
 
-        private void OpenCurrentItem(bool canLevelDown)
+        private void OpenCurrentItem()
         {
-            if (canLevelDown)
-                if (m_Presenter.CommandLevelDown())
-                    return;
-            var panelItem = m_Presenter.GetFocusedPanelItem(false, true);
-            if (panelItem != null)
-            {
-                //if (panelItem.GetType().Name.Equals("ComputerPanelItem"))
-                //    mCompOpen_Click(mCompOpen, EventArgs.Empty);
-                //if (panelItem.GetType().Name.Equals("SharePanelItem"))
-                //    mFolderOpen_Click(mFolderOpen, EventArgs.Empty);
-            }
-        }
-
-        /// <summary>
-        /// Ctrl+Enter - Run RAdmin for computer and FAR for folder.
-        /// </summary>
-        private void RunCurrentItem()
-        {
-            var panelItem = m_Presenter.GetFocusedPanelItem(false, true);
-            if (panelItem != null)
-            {
-                //if (panelItem.GetType().Name.Equals("ComputerPanelItem"))
-                //    mCompOpen_Click(mRadmin1, EventArgs.Empty);
-                //if (panelItem.GetType().Name.Equals("SharePanelItem"))
-                //    //if (!(panelItem as SharePanelItem).SHI.IsPrinter)
-                //        mFolderOpen_Click(mFAROpen, EventArgs.Empty);
-            }
+            if (m_Presenter.CommandLevelDown())
+                return;
+            AddonManager.Instance.RunDefaultCmdLine();
         }
 
         private void lvComps_KeyDown(object sender, KeyEventArgs e)
         {
-            ListView lv = (sender as ListView);
             // Ctrl+Down - Set focus to filter panel
             if (e.Control && e.KeyCode == Keys.Down)
             {
@@ -298,19 +271,7 @@ namespace LanExchange.UI
             // Ctrl+A - Select all items
             if (e.Control && e.KeyCode == Keys.A)
             {
-                User32Utils.SelectAllItems(lv);
-                e.Handled = true;
-            }
-            // Shift+Enter - Open current item
-            if (e.Shift && e.KeyCode == Keys.Enter)
-            {
-                OpenCurrentItem(false);
-                e.Handled = true;
-            }
-            // Ctrl+Enter - Run RAdmin for computer and FAR for folder
-            if (Settings.Instance.AdvancedMode && e.Control && e.KeyCode == Keys.Enter)
-            {
-                RunCurrentItem();
+                User32Utils.SelectAllItems((sender as ListView));
                 e.Handled = true;
             }
             // Backspace - Go level up
@@ -338,12 +299,15 @@ namespace LanExchange.UI
                 m_Presenter.CommandDeleteItems();
                 e.Handled = true;
             }
+            // process KeyDown on addons if KeyDown event not handled yet
+            if (!e.Handled)
+                AddonManager.Instance.ProcessKeyDown(e);
         }
 
         private void lvComps_ItemActivate(object sender, EventArgs e)
         {
             bCanDrag = false;
-            OpenCurrentItem(true);
+            OpenCurrentItem();
         }
 
         private void LV_MouseUp(object sender, MouseEventArgs e)
@@ -351,7 +315,7 @@ namespace LanExchange.UI
             switch (e.Button)
             {
                 case MouseButtons.Middle:
-                    OpenCurrentItem(true);
+                    OpenCurrentItem();
                     break;
             }
         }
@@ -366,7 +330,7 @@ namespace LanExchange.UI
                 if (hitInfo.Item != null && hitInfo.Item.Selected)
                 {
                     SetupCopyHelper();
-                    if (m_CopyHelper.Count > 0)
+                    if (m_CopyHelper.Indexes.Count > 0)
                     {
                         bCanDrag = true;
                     }
@@ -437,66 +401,6 @@ namespace LanExchange.UI
             //    m_Presenter.RunCmdOnFocusedItem(MenuItem.Tag.ToString(), PanelPresenter.FOLDER_MENU);
         }
 
-        internal bool PrepareContextMenu()
-        {
-            if (LV.FocusedItem != null)
-                if (LV.FocusedItem.Selected)
-                    DoFocusedItemChanged();
-            //UpdateViewTypeMenu();
-
-            PanelItemBase PItem = m_Presenter.GetFocusedPanelItem(false, false);
-            bool bCompVisible = false;
-            bool bFolderVisible = false;
-            if (PItem != null)
-            {
-                // TODO UNCOMMENT THIS!
-                //if (PItem is ComputerPanelItem)
-                //{
-                //    var comp = PItem as ComputerPanelItem;
-                //    mComp.Text = @"\\" + comp.Name;
-                //    bCompVisible = Settings.Instance.AdvancedMode;
-                //}
-                //if (PItem is SharePanelItem)
-                //{
-                //    var share = PItem as SharePanelItem;
-                //    mComp.Text = @"\\" + share.ComputerName;
-                //    bCompVisible = Settings.Instance.AdvancedMode;
-                //    if (share.Name != PanelItemBase.s_DoubleDot)
-                //    {
-                //        mFolder.Text = String.Format(@"\\{0}\{1}", share.ComputerName, share.Name);
-                //        mFolder.Image = LanExchangeIcons.Instance.GetSmallImage(share.ImageName);
-                //        bFolderVisible = true;
-                //        mFAROpen.Enabled = !share.SHI.IsPrinter;
-                //    }
-                //}
-            }
-            mComp.Enabled = bCompVisible;
-            mComp.Visible = Settings.Instance.AdvancedMode;
-            if (Settings.Instance.AdvancedMode && !bCompVisible)
-            {
-                mComp.Text = Resources.PanelView_ComputerName;
-            }
-            //SetEnabledAndVisible(mFolder, bFolderVisible);
-
-            //var menu = PanelPresenter.DetectMENU(PItem);
-            //SetEnabledAndVisible(new ToolStripItem[] { mCopyCompName, mCopyComment, mCopySelected }, menu == PanelPresenter.COMPUTER_MENU);
-            //bool bSend = false;
-            //if (menu == PanelPresenter.COMPUTER_MENU)
-            //    bSend = (PItem != null) && (PItem.Name != PanelItemBase.s_DoubleDot);
-            //SetEnabledAndVisible(new ToolStripItem[] { mSendSeparator, mSendToNewTab }, bSend);
-
-            //SetEnabledAndVisible(mCopyPath, menu == PanelPresenter.FOLDER_MENU);
-            //mCopySeparator.Visible = menu != string.Empty;
-
-            //mSeparatorAdmin.Visible = bCompVisible || bFolderVisible || Settings.Instance.AdvancedMode;
-
-            // resolve computer related and folder related shortcut conflict
-            mCompOpen.ShowShortcutKeys = bCompVisible && !bFolderVisible;
-            mRadmin1.ShowShortcutKeys = bCompVisible && !bFolderVisible;
-
-            return mComp.Enabled;
-        }
-
         private static void SetEnabledAndVisible(ToolStripItem item, bool value)
         {
             item.Enabled = value;
@@ -539,8 +443,7 @@ namespace LanExchange.UI
 
         private void pFilter_FilterCountChanged(object sender, EventArgs e)
         {
-            //TODO !!!NEED UPDATE ITEMS
-            //m_Presenter.UpdateItemsAndStatus();
+            m_Presenter.UpdateItemsAndStatus();
         }
 
         public void SetColumnMarker(int columnIndex, SortOrder sortOrder)
@@ -681,19 +584,19 @@ namespace LanExchange.UI
         [Localizable(false)]
         private IEnumerable<ToolStripItem> CreateCopyMenuItems(PanelItemsCopyHelper helper)
         {
-            if (helper.Count == 1)
+            if (helper.IndexesCount == 1)
                 helper.MoveTo(0);
-            var columns = AppPresenter.PanelColumns.GetColumns(helper.Count == 1 ? helper.CurrentItem.GetType() : m_Presenter.Objects.DataType);
+            var columns = AppPresenter.PanelColumns.GetColumns(helper.IndexesCount == 1 ? helper.CurrentItem.GetType() : m_Presenter.Objects.DataType);
             foreach (var column in columns)
                 if (column.Visible)
                 {
                     if (column.Index == 0)
                     {
                         var valuePath = helper.GetColumnValue(-1);
-                        if (helper.Count > 1 || !string.IsNullOrEmpty(valuePath))
+                        if (helper.IndexesCount > 1 || !string.IsNullOrEmpty(valuePath))
                         {
                             var menuPath = new ToolStripMenuItem();
-                            if (helper.Count == 1)
+                            if (helper.IndexesCount == 1)
                                 menuPath.Text = string.Format(Resources.PanelView_CopyColumn, valuePath);
                             else
                                 menuPath.Text = string.Format(Resources.PanelView_CopyPathTo, column.Text);
@@ -705,7 +608,7 @@ namespace LanExchange.UI
                         yield return new ToolStripSeparator();
                     }
                     string value;
-                    if (helper.Count == 1)
+                    if (helper.IndexesCount == 1)
                         value = helper.GetColumnValue(column.Index);
                     else
                         value = column.Text;
@@ -729,11 +632,40 @@ namespace LanExchange.UI
             m_CopyHelper.Prepare();
         }
 
-        private void popComps_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        internal bool PrepareContextMenu()
         {
-            PrepareContextMenu();
+            if (LV.FocusedItem != null)
+                if (LV.FocusedItem.Selected)
+                    DoFocusedItemChanged();
+
+            var panelItem = m_Presenter.GetFocusedPanelItem(false, true);
+            var menuVisible = false;
+            if (panelItem != null)
+            {
+                mComp.Image = AppPresenter.Images.GetSmallImage(panelItem.ImageName);
+                mComp.Text = panelItem.Name;
+                var typeId = panelItem.GetType().Name;
+                menuVisible = AddonManager.Instance.BuildMenuForPanelItemType(mComp, typeId);
+                if (!menuVisible)
+                {
+                    mComp.DropDownItems.Clear();
+                    mComp.Tag = null;
+                }
+            } else
+            {
+                var typeId = m_Presenter.Objects.DataType.Name;
+                mComp.Image = AppPresenter.Images.GetSmallImage(typeId + PanelImageNames.NORMAL_POSTFIX);
+                mComp.Text = Resources.PanelView_ComputerName;
+            }
+
+            return menuVisible;
+        }
+
+        private void popComps_Opening(object sender, CancelEventArgs e)
+        {
+            mComp.Enabled = PrepareContextMenu();
             SetupCopyHelper();
-            mCopyMenu.Enabled = m_CopyHelper.Count > 0;
+            mCopyMenu.Enabled = m_CopyHelper.IndexesCount > 0;
         }
 
         /// <summary>
@@ -750,10 +682,10 @@ namespace LanExchange.UI
                     menuItem.Dispose();
                 }
             // choose single or plural form for text
-            if (m_CopyHelper.Count == 1)
+            if (m_CopyHelper.IndexesCount == 1)
                 mCopySelected.Text = Resources.PanelView_CopySelected;
             else
-                mCopySelected.Text = string.Format(Resources.PanelView_CopySelectedPlural, m_CopyHelper.Count);
+                mCopySelected.Text = string.Format(Resources.PanelView_CopySelectedPlural, m_CopyHelper.IndexesCount);
             // add new items
             foreach (var item in CreateCopyMenuItems(m_CopyHelper))
                 mCopyMenu.DropDownItems.Add(item);
@@ -763,7 +695,6 @@ namespace LanExchange.UI
         {
             PrepareCopyMenu();
         }
-
 
     }
 }

@@ -95,13 +95,13 @@
     <Compile Include="Action\AboutAction.cs" />
     <Compile Include="Action\ReReadAction.cs" />
     <Compile Include="Action\ShortcutKeysAction.cs" />
-    <Compile Include="Model\AddonManager.cs" />
+    <Compile Include="Model\Addon\AddonManager.cs" />
     <Compile Include="Model\Addon\AddonGen.cs" />
     <Compile Include="Model\Addon\AddonProgram.cs" />
-    <Compile Include="Model\Addon\LanExchangeAddon.cs" />
-    <Compile Include="Model\Addon\ObjectId.cs" />
-    <Compile Include="Model\Addon\PanelItemBaseRef.cs" />
-    <Compile Include="Model\Addon\ToolStripMenuItem.cs" />
+    <Compile Include="Model\Addon\Addon.cs" />
+    <Compile Include="Model\Addon\AddonObjectId.cs" />
+    <Compile Include="Model\Addon\AddonItemTypeRef.cs" />
+    <Compile Include="Model\Addon\AddonMenuItem.cs" />
     <Compile Include="Model\CmdLineProcessor.cs" />
     <Compile Include="Model\AboutInfo.cs" />
     <Compile Include="Model\BackgroundWorkerEx.cs">
@@ -212,6 +212,7 @@
     <Compile Include="Utils\ExternDll.cs" />
     <Compile Include="Utils\GlobalHotkeys.cs" />
     <Compile Include="Utils\Kernel32.cs" />
+    <Compile Include="Utils\KeyboardUtils.cs" />
     <Compile Include="Utils\NativeMethods.cs" />
     <Compile Include="Utils\SafeNativeMethods.cs" />
     <Compile Include="Utils\SerializeUtils.cs" />
@@ -231,6 +232,7 @@
     </Compile>
     <EmbeddedResource Include="UI\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\InfoView.resx">
       <DependentUpon>InfoView.cs</DependentUpon>

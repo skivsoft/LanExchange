@@ -10,7 +10,7 @@ namespace LanExchange.Model.Addon
 {
     [Localizable(false)]
     [XmlType("Program")]
-    public class AddonProgram : ObjectId
+    public class AddonProgram : AddonObjectId
     {
         private Image m_Image;
 

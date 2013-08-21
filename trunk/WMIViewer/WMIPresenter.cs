@@ -131,7 +131,11 @@ namespace WMIViewer
         [Localizable(false)]
         public void EnumObjects(string className)
         {
-            ConnectToComputer();
+            if (!ConnectToComputer())
+            {
+                Application.Exit();
+                return;
+            }
 
             m_View.LV.Clear();
 

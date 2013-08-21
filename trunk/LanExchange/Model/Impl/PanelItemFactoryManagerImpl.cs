@@ -7,10 +7,12 @@ namespace LanExchange.Model.Impl
     public class PanelItemFactoryManagerImpl : IPanelItemFactoryManager
     {
         private readonly IDictionary<Type, PanelItemBaseFactory> m_Types;
+        private readonly IList<PanelItemBase> m_DefaultRoots;
 
         public PanelItemFactoryManagerImpl()
         {
             m_Types = new Dictionary<Type, PanelItemBaseFactory>();
+            m_DefaultRoots = new List<PanelItemBase>();
         }
 
         public void RegisterPanelItemFactory(Type type, PanelItemBaseFactory factory)
@@ -24,14 +26,20 @@ namespace LanExchange.Model.Impl
             get { return m_Types; }
         }
 
-        public IEnumerable<PanelItemBase> CreateDefaultRoots()
+        public void CreateDefaultRoots()
         {
+            m_DefaultRoots.Clear();
             foreach(var pair in m_Types)
             {
                 var root = pair.Value.CreateDefaultRoot();
                 if (root != null)
-                    yield return root;
+                    m_DefaultRoots.Add(root);
             }
+        }
+
+        public IList<PanelItemBase> DefaultRoots
+        {
+            get { return m_DefaultRoots; }
         }
 
         public bool Exists(Type type)

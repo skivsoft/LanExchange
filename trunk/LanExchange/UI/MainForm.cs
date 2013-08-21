@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using AndreasJohansson.Win32.Shell;
 using LanExchange.Action;
 using LanExchange.Model;
+using LanExchange.Model.Addon;
 using LanExchange.Presenter;
 using System.Drawing;
 using System.ComponentModel;
@@ -97,10 +98,8 @@ namespace LanExchange.UI
 
         private int GetDefaultWidth()
         {
-            //const double phi2 = 0.6180339887498949;
-            //return (int) (Screen.PrimaryScreen.WorkingArea.Width*phi2*phi2);
-            var rect = Screen.PrimaryScreen.WorkingArea;
-            return rect.Height*rect.Height/rect.Width;
+            const double phi2 = 0.6180339887498949;
+            return (int) (Screen.PrimaryScreen.WorkingArea.Width*phi2*phi2);
         }
 
         public Rectangle SettingsGetBounds()
@@ -161,7 +160,7 @@ namespace LanExchange.UI
             var Rect = SettingsGetBounds();
             SetBounds(Rect.Left, Rect.Top, Rect.Width, Rect.Height);
             // set mainform title
-            Text = String.Format("{0} {1}", AboutInfo.Product, AboutInfo.Version);
+            Text = String.Format("{0} {1}", AboutInfo.Product, AboutInfo.VersionShort);
             // show tray
             TrayIcon.Text = Text;
             TrayIcon.Visible = true;
@@ -186,10 +185,10 @@ namespace LanExchange.UI
                     pv.Filter.SetFilterText(string.Empty);
                 else
                 {
-                    var parent = pv == null || pv.Presenter.Objects.CurrentPath.IsEmpty
+                    var parent = pv == null || pv.Presenter.Objects.CurrentPath.IsEmptyOrRoot
                                      ? null
                                      : pv.Presenter.Objects.CurrentPath.Peek();
-                    if (parent is PanelItemRoot)
+                    if ((parent is PanelItemRoot) || AppPresenter.PanelItemTypes.DefaultRoots.Contains(parent))
                         Instance.Hide();
                     else if (!m_EscDown)
                     {
@@ -234,7 +233,7 @@ namespace LanExchange.UI
                     TimeSpan diff = DateTime.UtcNow - m_EscTime;
                     var pv = Pages.ActivePanelView;
                     var presenter = pv.Presenter;
-                    if (pv != null && !presenter.Objects.CurrentPath.IsEmpty)
+                    if (pv != null && !presenter.Objects.CurrentPath.IsEmptyOrRoot)
                     {
                         if (diff.TotalMilliseconds < WAIT_FOR_KEYUP_MS)
                             presenter.CommandLevelUp();
@@ -546,7 +545,7 @@ namespace LanExchange.UI
             foreach (var column in AppPresenter.PanelColumns.EnumAllColumns())
                 if (column.Callback != null)
                     count += column.LazyDict.Count;
-            Text = String.Format("{0} {1} [Threads: {2}, Dict: {3}]", AboutInfo.Product, AboutInfo.Version, AppPresenter.LazyThreadPool.NumThreads, count);
+            Text = String.Format("{0} {1} [Threads: {2}, Dict: {3}]", AboutInfo.Product, AboutInfo.VersionFull, AppPresenter.LazyThreadPool.NumThreads, count);
         }
  #endif
 

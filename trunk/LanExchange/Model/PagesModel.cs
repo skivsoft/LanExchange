@@ -162,7 +162,8 @@ namespace LanExchange.Model
             //}
             //else
             {
-                foreach (var root in AppPresenter.PanelItemTypes.CreateDefaultRoots())
+                AppPresenter.PanelItemTypes.CreateDefaultRoots();
+                foreach (var root in AppPresenter.PanelItemTypes.DefaultRoots)
                 {
                     var info = new PanelItemList(root.Name);
                     info.CurrentPath.Push(root.Parent);

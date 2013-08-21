@@ -217,22 +217,6 @@ namespace LanExchange.SDK
             }
         }
 
-        /// <summary>
-        /// Gets the strings upper.
-        /// </summary>
-        /// <returns></returns>
-        public string[] GetStringsUpper()
-        {
-            var result = new string[CountColumns];
-            for (int i = 0; i < result.Length; i++)
-            {
-                object item = this[i];
-                if (item != null)
-                    result[i] = item.ToString().ToUpper(CultureInfo.InvariantCulture);
-            }
-            return result;
-        }
-
         public bool Equals(PanelItemBase other)
         {
             return CompareTo(other) == 0;

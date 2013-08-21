@@ -58,10 +58,6 @@
             this.mReRead = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.mPanelExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.mLanguage = new System.Windows.Forms.ToolStripMenuItem();
-            this.langEN_US = new System.Windows.Forms.ToolStripMenuItem();
-            this.langRU_RU = new System.Windows.Forms.ToolStripMenuItem();
-            this.langKK_KZ = new System.Windows.Forms.ToolStripMenuItem();
             this.mHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.mHelpKeys = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -196,7 +192,7 @@
             // popTop
             // 
             this.popTop.Name = "popTop";
-            this.popTop.Size = new System.Drawing.Size(153, 26);
+            this.popTop.Size = new System.Drawing.Size(61, 4);
             this.popTop.Opening += new System.ComponentModel.CancelEventHandler(this.popTop_Opening);
             // 
             // Pages
@@ -226,7 +222,6 @@
             // 
             this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mPanel,
-            this.mLanguage,
             this.mHelp});
             this.MainMenu.Location = new System.Drawing.Point(0, 0);
             this.MainMenu.Name = "MainMenu";
@@ -309,37 +304,6 @@
             this.mPanelExit.Size = new System.Drawing.Size(163, 22);
             this.mPanelExit.Text = "Exit";
             this.mPanelExit.Click += new System.EventHandler(this.mExit_Click);
-            // 
-            // mLanguage
-            // 
-            this.mLanguage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.langEN_US,
-            this.langRU_RU,
-            this.langKK_KZ});
-            this.mLanguage.Name = "mLanguage";
-            this.mLanguage.Size = new System.Drawing.Size(66, 20);
-            this.mLanguage.Text = "&Language";
-            this.mLanguage.Visible = false;
-            // 
-            // langEN_US
-            // 
-            this.langEN_US.Checked = true;
-            this.langEN_US.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.langEN_US.Name = "langEN_US";
-            this.langEN_US.Size = new System.Drawing.Size(184, 22);
-            this.langEN_US.Text = "English";
-            // 
-            // langRU_RU
-            // 
-            this.langRU_RU.Name = "langRU_RU";
-            this.langRU_RU.Size = new System.Drawing.Size(184, 22);
-            this.langRU_RU.Text = "Russian — Русский";
-            // 
-            // langKK_KZ
-            // 
-            this.langKK_KZ.Name = "langKK_KZ";
-            this.langKK_KZ.Size = new System.Drawing.Size(184, 22);
-            this.langKK_KZ.Text = "Kazakh — Қазақ тілі";
             // 
             // mHelp
             // 
@@ -453,10 +417,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem mPanelExit;
-        private System.Windows.Forms.ToolStripMenuItem mLanguage;
-        private System.Windows.Forms.ToolStripMenuItem langEN_US;
-        private System.Windows.Forms.ToolStripMenuItem langRU_RU;
-        private System.Windows.Forms.ToolStripMenuItem langKK_KZ;
         private System.Windows.Forms.ToolStripMenuItem mHelpKeys;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }

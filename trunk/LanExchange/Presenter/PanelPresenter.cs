@@ -145,14 +145,15 @@ namespace LanExchange.Presenter
                 Objects.FocusedItem = new PanelItemDoubleDot(panelItem);
                 Objects.CurrentPath.Push(panelItem);
                 ResetSortOrder();
-                Objects.SyncRetrieveData();
+                Objects.SyncRetrieveData(true);
+                m_View.Filter.SetFilterText(string.Empty);
             }
             return result;
         }
 
         public bool CommandLevelUp()
         {
-            if (Objects == null || Objects.CurrentPath.IsEmpty) 
+            if (Objects == null || Objects.CurrentPath.IsEmptyOrRoot) 
                 return false;
             var panelItem = Objects.CurrentPath.Peek();
             if (panelItem == null || panelItem is PanelItemRoot) 
@@ -163,7 +164,8 @@ namespace LanExchange.Presenter
                 Objects.FocusedItem = panelItem;
                 Objects.CurrentPath.Pop();
                 ResetSortOrder();
-                Objects.SyncRetrieveData();
+                Objects.SyncRetrieveData(true);
+                m_View.Filter.SetFilterText(string.Empty);
             }
             return result;
         }
