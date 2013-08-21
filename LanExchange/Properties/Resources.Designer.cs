@@ -60,6 +60,15 @@ namespace LanExchange.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to  (build {0}).
+        /// </summary>
+        internal static string AboutInfo_Build {
+            get {
+                return ResourceManager.GetString("AboutInfo_Build", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap back_16 {
             get {
                 object obj = ResourceManager.GetObject("back_16", resourceCulture);

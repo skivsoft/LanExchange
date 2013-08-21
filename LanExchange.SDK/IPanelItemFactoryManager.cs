@@ -6,7 +6,9 @@ namespace LanExchange.SDK
     public interface IPanelItemFactoryManager
     {
         void RegisterPanelItemFactory(Type type, PanelItemBaseFactory factory);
-        IEnumerable<PanelItemBase> CreateDefaultRoots();
+        void CreateDefaultRoots();
+        IList<PanelItemBase> DefaultRoots { get; }
+
         Type[] ToArray();
     }
 }

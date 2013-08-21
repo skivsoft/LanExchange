@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
+using LanExchange.Properties;
 
 namespace LanExchange.Model
 {
@@ -32,14 +33,24 @@ namespace LanExchange.Model
         }
 
         [Localizable(false)]
-        public static string Version
+        public static string VersionShort
         {
             get
             {
                 var ver = GetAssembly().GetName().Version;
                 var result = String.Format("{0}.{1}", ver.Major, ver.Minor);
-                if (ver.MajorRevision > 0)
-                    result += String.Format(".{0}", ver.MajorRevision);
+                return result;
+            }
+        }
+
+        public static string VersionFull
+        {
+            get
+            {
+                var ver = GetAssembly().GetName().Version;
+                var result = String.Format("{0}.{1}", ver.Major, ver.Minor);
+                if (ver.Build > 0)
+                    result += String.Format(Resources.AboutInfo_Build, ver.Build);
                 return result;
             }
         }

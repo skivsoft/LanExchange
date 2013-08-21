@@ -1,6 +1,5 @@
 ﻿using System;
 using LanExchange.Model;
-using LanExchange.Model.Addon;
 using LanExchange.Model.Impl;
 using LanExchange.SDK;
 using LanExchange.UI;

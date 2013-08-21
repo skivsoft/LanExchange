@@ -3,14 +3,15 @@ using System.Xml.Serialization;
 
 namespace LanExchange.Model.Addon
 {
-    public class LanExchangeAddon
+    [XmlType("LanExchangeAddon")]
+    public class Addon
     {
         private readonly List<AddonProgram> m_Programs;
-        private readonly List<PanelItemBaseRef> m_PanelItems;
+        private readonly List<AddonItemTypeRef> m_PanelItemTypes;
 
-        public LanExchangeAddon()
+        public Addon()
         {
-            m_PanelItems = new List<PanelItemBaseRef>();
+            m_PanelItemTypes = new List<AddonItemTypeRef>();
             m_Programs = new List<AddonProgram>();
         }
 
@@ -19,9 +20,9 @@ namespace LanExchange.Model.Addon
             get { return m_Programs; }
         }
 
-        public List<PanelItemBaseRef> PanelItems
+        public List<AddonItemTypeRef> PanelItemTypes
         {
-            get { return m_PanelItems; }
+            get { return m_PanelItemTypes; }
         }
     }
 }

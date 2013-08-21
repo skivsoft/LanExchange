@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Windows.Forms;
 using LanExchange.Presenter;
 using LanExchange.SDK;
@@ -146,6 +147,7 @@ namespace LanExchange.Model
         /// </summary>
         public String FilterText { get; set; }
 
+        
         /// <summary>
         /// IFilterModel.AppliFilter()
         /// </summary>
@@ -154,17 +156,26 @@ namespace LanExchange.Model
             var punto = PuntoSwitcherServiceFactory.GetPuntoSwitcherService();
             if (FilterText == null) 
                 FilterText = string.Empty;
-            var bFiltered = FilterText != string.Empty;
-            if (bFiltered && !CurrentPath.IsEmpty)
-                bFiltered = false;
+            var filtered = FilterText != string.Empty;
+            //if (filtered && !CurrentPath.IsEmptyOrRoot)
+            //    filtered = false;
             m_Keys.Clear();
             var filter1 = FilterText.ToUpper();
             var filter2 = punto.Change(FilterText);
             if (filter2 != null) filter2 = filter2.ToUpper();
+            var helper = new PanelItemsCopyHelper(this);
+            var upperValues = new List<string>();
             foreach (var value in m_Data)
             {
-                string[] A = value.GetStringsUpper();
-                if (!bFiltered || String.IsNullOrEmpty(value[0].ToString()) || GoodForFilter(A, filter1, filter2))
+                helper.CurrentItem = value;
+                upperValues.Clear();
+                for (int i = 0; i < helper.ColumnsCount; i++)
+                {
+                    var column = helper.GetColumnValue(i);
+                    if (!string.IsNullOrEmpty(column))
+                        upperValues.Add(column.ToUpper());
+                }
+                if (!filtered || (value is PanelItemDoubleDot) || GoodForFilter(upperValues.ToArray(), filter1, filter2))
                     m_Keys.Add(value);
             }
         }
@@ -254,27 +265,28 @@ namespace LanExchange.Model
         /// <summary>
         /// Sync retrieving panel items using appropriate filler strategy.
         /// </summary>
-        public void SyncRetrieveData()
+        public void SyncRetrieveData(bool clearFilter = false)
         {
             // get parent
             var parent = m_CurrentPath.IsEmpty ? null : m_CurrentPath.Peek();
             // retrieve items
             var items = AppPresenter.PanelFillers.RetrievePanelItems(parent);
             // set items
-            InternalSetData(items);
+            InternalSetData(items, clearFilter);
         }
 
-        private void InternalSetData(PanelFillerResult fillerResult)
+        private void InternalSetData(PanelFillerResult fillerResult, bool clearFilter)
         {
             lock (m_Data)
             {
                 m_Data.Clear();
-                var parent = m_CurrentPath.IsEmpty ? null : m_CurrentPath.Peek();
-                if (!(parent is PanelItemRoot))
-                    m_Data.Add(new PanelItemDoubleDot(parent));
+                if (!m_CurrentPath.IsEmptyOrRoot)
+                    m_Data.Add(new PanelItemDoubleDot(m_CurrentPath.Peek()));
                 m_Data.AddRange(fillerResult.Items);
                 m_Data.Sort(m_Comparer);
                 m_DataType = fillerResult.ItemsType;
+                if (clearFilter)
+                    FilterText = string.Empty;
                 ApplyFilter();
             }
             OnChanged();

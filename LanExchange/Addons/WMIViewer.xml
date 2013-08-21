@@ -3,16 +3,15 @@
   <Programs>
     <Program Id="wmiviewer" FileName="WMIViewer.exe" />
   </Programs>
-  <PanelItems>
-    <PanelItemBaseRef Id="ComputerPanelItem">
+  <PanelItemTypes>
+    <PanelItemTypeRef Id="ComputerPanelItem">
       <ContextMenuStrip>
-        <ToolStripMenuItem>
-          <Text>WMI Viewer</Text>
+        <ToolStripMenuItem Text="WMI Viewer">
           <ShortcutKeys>Alt+F1</ShortcutKeys>
           <ProgramRef Id="wmiviewer" />
           <ProgramArgs>/computer:{0}</ProgramArgs>
         </ToolStripMenuItem>
       </ContextMenuStrip>
-    </PanelItemBaseRef>
-  </PanelItems>
+    </PanelItemTypeRef>
+  </PanelItemTypes>
 </LanExchangeAddon>

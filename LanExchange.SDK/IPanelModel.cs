@@ -85,7 +85,7 @@ namespace LanExchange.SDK
         int IndexOf(PanelItemBase key);
 
         PanelItemBaseFactory ItemFactory { get; set; }
-        void SyncRetrieveData();
+        void SyncRetrieveData(bool clearFilter = false);
         Type DataType { get; }
         ColumnComparer Comparer { get; }
         void Sort(IComparer<PanelItemBase> sorter);

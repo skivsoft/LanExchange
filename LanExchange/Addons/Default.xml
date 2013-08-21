@@ -8,53 +8,46 @@
     <Program Id="services" FileName="%SystemRoot%\system32\services.msc"/>
     <Program Id="mstsc" FileName="%SystemRoot%\system32\mstsc.exe" />
   </Programs>
-  <PanelItems>
-    <PanelItemBaseRef Id="ComputerPanelItem">
+  <PanelItemTypes>
+    <PanelItemTypeRef Id="ComputerPanelItem">
       <ContextMenuStrip>
-        <ToolStripMenuItem>
-          <Text>Windows Explorer</Text>
+        <ToolStripMenuItem Text="Windows Explorer">
           <ShortcutKeys>Shift+Enter</ShortcutKeys>
           <ProgramRef Id="explorer" />
           <ProgramArgs>\\{0}</ProgramArgs>
         </ToolStripMenuItem>
-        <ToolStripMenuItem>
-          <Text>Remote Desktop Connection</Text>
+        <ToolStripMenuItem Text="Remote Desktop Connection">
           <ProgramRef Id="mstsc" />
           <ProgramArgs>/v:{0}</ProgramArgs>
         </ToolStripMenuItem>
-        <ToolStripMenuItem />
-        <ToolStripMenuItem>
-          <Text>Computer Management</Text>
+        <ToolStripMenuItem /> <!-- separator -->
+        <ToolStripMenuItem Text="Computer Management">
           <ShortcutKeys>Ctrl+F1</ShortcutKeys>
           <ProgramRef Id="compmgmt" />
           <ProgramArgs>/computer:{0}</ProgramArgs>
         </ToolStripMenuItem>
-        <ToolStripMenuItem>
-          <Text>Shared Folders</Text>
+        <ToolStripMenuItem Text="Shared Folders">
           <ProgramRef Id="fsmgmt" />
           <ProgramArgs>/computer:{0}</ProgramArgs>
         </ToolStripMenuItem>
-        <ToolStripMenuItem>
-          <Text>Local Users and Groups</Text>
+        <ToolStripMenuItem Text="Local Users and Groups">
           <ProgramRef Id="lusrmgr" />
           <ProgramArgs>/computer:{0}</ProgramArgs>
         </ToolStripMenuItem>
-        <ToolStripMenuItem>
-          <Text>Services</Text>
+        <ToolStripMenuItem Text="Services">
           <ProgramRef Id="services" />
           <ProgramArgs>/computer:{0}</ProgramArgs>
         </ToolStripMenuItem>
       </ContextMenuStrip>
-    </PanelItemBaseRef>
-    <PanelItemBaseRef Id="SharePanelItem">
+    </PanelItemTypeRef>
+    <PanelItemTypeRef Id="SharePanelItem">
       <ContextMenuStrip>
-        <ToolStripMenuItem>
-          <Text>Windows Explorer</Text>
+        <ToolStripMenuItem Text="Windows Explorer" Default="true">
           <ShortcutKeys>Shift+Enter</ShortcutKeys>
           <ProgramRef Id="explorer" />
-          <ProgramArgs>{0}</ProgramArgs>
+          <ProgramArgs>\\{0}</ProgramArgs>
         </ToolStripMenuItem>
       </ContextMenuStrip>
-    </PanelItemBaseRef>
-  </PanelItems>
+    </PanelItemTypeRef>
+  </PanelItemTypes>
 </LanExchangeAddon>

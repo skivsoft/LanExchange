@@ -7,7 +7,7 @@ namespace LanExchange.SDK
     /// <summary>
     /// Path to nested object.
     /// </summary>
-    public class ObjectPath<T>
+    public class ObjectPath<T> where T : PanelItemBase
     {
         private Stack<T> m_Path;
 
@@ -100,6 +100,15 @@ namespace LanExchange.SDK
         public bool IsEmpty
         {
             get { return m_Path.Count == 0; }
+        }
+
+        public bool IsEmptyOrRoot
+        {
+            get
+            {
+                var parent = m_Path.Count == 0 ? null : Peek();
+                return (parent == null) || (parent is PanelItemRoot);
+            }
         }
     }
 }

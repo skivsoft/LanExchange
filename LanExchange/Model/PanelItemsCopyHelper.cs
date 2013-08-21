@@ -25,7 +25,7 @@ namespace LanExchange.Model
             get { return m_Indexes; }
         }
 
-        public int Count
+        public int IndexesCount
         {
             get { return m_Indexes.Count; }
         }
@@ -33,6 +33,11 @@ namespace LanExchange.Model
         public IEnumerable<PanelColumnHeader> Columns
         {
             get { return m_Columns; }
+        }
+
+        public int ColumnsCount
+        {
+            get { return m_Columns.Count; }
         }
 
         public PanelItemBase CurrentItem
@@ -79,17 +84,17 @@ namespace LanExchange.Model
         public string GetSelectedText()
         {
             var sb = new StringBuilder();
-            for (int index = 0; index < Count; index++)
+            for (int index = 0; index < m_Indexes.Count; index++)
             {
                 MoveTo(index);
                 if (index > 0) sb.AppendLine();
-                var bFirst = true;
+                var first = true;
                 foreach(var column in m_Columns)
                     if (column.Visible)
                     {
-                        if (!bFirst) sb.Append("\t");
+                        if (!first) sb.Append("\t");
                         sb.Append(GetColumnValue(column.Index));
-                        bFirst = false;
+                        first = false;
                     }
             }
             return sb.ToString();
@@ -98,7 +103,7 @@ namespace LanExchange.Model
         public string GetColumnText(int colIndex)
         {
             var sb = new StringBuilder();
-            for (int index = 0; index < Count; index++)
+            for (int index = 0; index < m_Indexes.Count; index++)
             {
                 MoveTo(index);
                 if (index > 0) sb.AppendLine();

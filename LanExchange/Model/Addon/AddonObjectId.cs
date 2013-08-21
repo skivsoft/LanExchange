@@ -2,14 +2,14 @@
 
 namespace LanExchange.Model.Addon
 {
-    public class ObjectId
+    public class AddonObjectId
     {
-        public ObjectId()
+        public AddonObjectId()
         {
             
         }
 
-        public ObjectId(string id)
+        public AddonObjectId(string id)
         {
             Id = id;
         }

@@ -219,4 +219,7 @@ Continue anyway?</value>
   <data name="PanelView_CopySelectedPlural" xml:space="preserve">
     <value>Copy {0} selected items</value>
   </data>
+  <data name="AboutInfo_Build" xml:space="preserve">
+    <value> (build {0})</value>
+  </data>
 </root>
