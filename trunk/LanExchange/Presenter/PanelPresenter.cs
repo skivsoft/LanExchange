@@ -170,25 +170,6 @@ namespace LanExchange.Presenter
             return result;
         }
 
-        public void CommandDeleteItems()
-        {
-            //bool Modified = false;
-            //foreach (int index in m_View.SelectedIndexes)
-            //{
-            //    var comp = m_Objects.GetItemAt(index);
-            //    if (comp != null && comp.ParentSubject == ConcreteSubject.s_UserItems)
-            //    {
-            //        m_Objects.Items.Remove(comp);
-            //        Modified = true;
-            //    }
-            //}
-            //m_View.ClearSelected();
-            //if (Modified)
-            //{
-            //    m_Objects.DataChanged(null, ConcreteSubject.s_UserItems);
-            //}
-        }
-
         internal void ColumnClick(int index)
         {
             // TODO Need sort lazy column

@@ -21,15 +21,16 @@ namespace LanExchange.Model.Impl
         public PanelFillerResult RetrievePanelItems(PanelItemBase parent)
         {
             var result = new PanelFillerResult();
-            foreach(var filler in m_Fillers)
-            {
-                if (filler.IsParentAccepted(parent))
+            if (parent != null)
+                foreach(var filler in m_Fillers)
                 {
-                    if (result.ItemsType == null)
-                        result.ItemsType = filler.GetFillType();
-                    filler.Fill(parent, result.Items);
+                    if (filler.IsParentAccepted(parent))
+                    {
+                        if (result.ItemsType == null)
+                            result.ItemsType = filler.GetFillType();
+                        filler.Fill(parent, result.Items);
+                    }
                 }
-            }
             return result;
         }
 

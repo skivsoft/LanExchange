@@ -572,5 +572,27 @@ namespace LanExchange.UI
             AppPresenter.MainPages.CommandNewTab();
         }
 
+        private void pInfo_DragOver(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.None;
+            if (!e.Data.GetDataPresent(DataFormats.UnicodeText)) return;
+            var panelView = Pages.ActivePanelView as PanelView;
+            if (panelView == null) return;
+            var value = e.Data.GetData(DataFormats.UnicodeText);
+            if (value == null) return;
+            if (!value.Equals(panelView.CopyHelper.GetSelectedText())) return;
+            // check if selected two or more items
+            var indexes = panelView.SelectedIndexes.GetEnumerator();
+            if (!indexes.MoveNext()) return;
+            if (!indexes.MoveNext()) return;
+            e.Effect = DragDropEffects.Copy;
+        }
+
+        private void pInfo_DragDrop(object sender, DragEventArgs e)
+        {
+            AppPresenter.MainPages.CommandSendToNewTab();
+        }
+
+
     }
 }
