@@ -281,11 +281,18 @@ namespace LanExchange.Model
             lock (m_Data)
             {
                 m_Data.Clear();
+                // add ".." item
                 if (!m_CurrentPath.IsEmptyOrRoot)
                     m_Data.Add(new PanelItemDoubleDot(m_CurrentPath.Peek()));
+                // add items from filler
                 m_Data.AddRange(fillerResult.Items);
+                // add custom items created by user
+                m_Data.AddRange(Items);
+                // sort 
                 m_Data.Sort(m_Comparer);
-                m_DataType = fillerResult.ItemsType;
+                // set current items DataType and filter
+                if (fillerResult.ItemsType != null)
+                    m_DataType = fillerResult.ItemsType;
                 if (clearFilter)
                     FilterText = string.Empty;
                 ApplyFilter();

@@ -101,27 +101,63 @@ namespace LanExchange.Presenter
             var sourcePV = m_View.ActivePanelView;
             if (sourcePV == null) return;
             var indexes = sourcePV.SelectedIndexes.GetEnumerator();
+            // at least 1 item selected
+            if (!indexes.MoveNext()) return;
+            // at least 2 items selected
             if (!indexes.MoveNext()) return;
             var sourceObjects = sourcePV.Presenter.Objects;
             var destObjects = new PanelItemList(newTabName);
             destObjects.DataType = sourceObjects.DataType;
-            //foreach (int index in sourcePV.SelectedIndexes)
-            //{
-            //    var PItem = sourceObjects.GetItemAt(index);
-            //    if (PItem == null || PItem.Name == PanelItemBase.s_DoubleDot)
-            //        continue;
-            //    if (!(PItem is ComputerPanelItem))
-            //        continue;
-            //    // copy computer and set partent to null
-            //    var newItem = new ComputerPanelItem(null, (PItem as ComputerPanelItem).SI);
-            //    newItem.ParentSubject = ConcreteSubject.s_UserItems;
-            //    // add item to new panel
-            //    destObjects.Items.Add(newItem);
-            //}
+            destObjects.CurrentPath.Push(PanelItemRoot.ROOT_OF_USERITEMS);
+
+            foreach (int index in sourcePV.SelectedIndexes)
+            {
+                var panelItem = sourceObjects.GetItemAt(index);
+                if (panelItem.GetType() == destObjects.DataType)
+                {
+                    // add item to new panel
+                    var newItem = (PanelItemBase) panelItem.Clone();
+                    newItem.Parent = PanelItemRoot.ROOT_OF_USERITEMS;
+                    destObjects.Items.Add(newItem);
+                }
+            }
+            //destObjects.SyncRetrieveData(true);
             // add tab
             m_Model.AddTab(destObjects);
-            m_View.SelectedIndex = m_Model.Count - 1;
+            //m_View.SelectedIndex = m_Model.Count - 1;
             m_Model.SaveSettings();
+            m_View.ActivePanelView.Presenter.UpdateItemsAndStatus();
+        }
+
+        public void CommandDeleteItems()
+        {
+            var panelView = m_View.ActivePanelView;
+            if (panelView == null) return;
+            var indexes = panelView.SelectedIndexes.GetEnumerator();
+            if (!indexes.MoveNext()) return;
+            var modified = false;
+            var firstIndex = -1;
+            foreach (int index in panelView.SelectedIndexes)
+            {
+                var comp = panelView.Presenter.Objects.GetItemAt(index);
+                if (comp.Parent == PanelItemRoot.ROOT_OF_USERITEMS)
+                {
+                    if (firstIndex == -1)
+                        firstIndex = index-1;
+                    panelView.Presenter.Objects.Items.Remove(comp);
+                    modified = true;
+                }
+            }
+            panelView.ClearSelected();
+            if (modified)
+            {
+                if (firstIndex < 0 || firstIndex > panelView.Presenter.Objects.FilterCount - 1)
+                    firstIndex = panelView.Presenter.Objects.FilterCount - 1;
+                if (firstIndex >= 0)
+                    panelView.Presenter.Objects.FocusedItem = panelView.Presenter.Objects.GetItemAt(firstIndex);
+                panelView.Presenter.Objects.SyncRetrieveData();
+                m_Model.SaveSettings();
+            }
         }
 
         public void CommandCloseTab()

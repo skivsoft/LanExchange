@@ -8,7 +8,7 @@ namespace LanExchange.SDK
     /// <summary>
     /// Base class for any LanExchange panel item.
     /// </summary>
-    public class PanelItemBase : IEquatable<PanelItemBase>, IComparable<PanelItemBase>, IComparable
+    public class PanelItemBase : IEquatable<PanelItemBase>, IComparable<PanelItemBase>, IComparable, ICloneable
     {
         protected bool m_IsReachable = true;
 
@@ -225,6 +225,13 @@ namespace LanExchange.SDK
         public override int GetHashCode()
         {
             return Name != null ? Name.GetHashCode() : 0;
+        }
+
+        public virtual object Clone()
+        {
+            var result = new PanelItemBase(Parent);
+            result.Name = Name;
+            return result;
         }
     }
 }

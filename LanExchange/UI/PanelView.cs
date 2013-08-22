@@ -51,6 +51,11 @@ namespace LanExchange.UI
 
         }
 
+        public PanelItemsCopyHelper CopyHelper
+        {
+            get { return m_CopyHelper; }
+        }
+
         private void CurrentPath_Changed(object sender, EventArgs e)
         {
             var path = sender as ObjectPath<PanelItemBase>;
@@ -302,7 +307,7 @@ namespace LanExchange.UI
             // Del - Delete selected items
             if (e.KeyCode == Keys.Delete)
             {
-                m_Presenter.CommandDeleteItems();
+                AppPresenter.MainPages.CommandDeleteItems();
                 e.Handled = true;
             }
             // process KeyDown on addons if KeyDown event not handled yet
@@ -349,7 +354,7 @@ namespace LanExchange.UI
             if (e.Button == MouseButtons.Left && bCanDrag)
             {
                 bCanDrag = false;
-                var obj = new DataObject(DataFormats.Text, m_CopyHelper.GetSelectedText());
+                var obj = new DataObject(DataFormats.UnicodeText, m_CopyHelper.GetSelectedText());
                 LV.DoDragDrop(obj, DragDropEffects.Copy);
             }
         }

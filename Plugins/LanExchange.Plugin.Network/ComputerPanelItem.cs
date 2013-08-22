@@ -211,5 +211,12 @@ namespace LanExchange.Plugin.Network
         {
             return @"\\" + base.ToString();
         }
+
+        public override object Clone()
+        {
+            var result = new ComputerPanelItem(Parent, SI);
+            result.Comment = Comment;
+            return result;
+        }
     }
 }

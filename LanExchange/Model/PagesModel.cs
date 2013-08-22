@@ -107,7 +107,8 @@ namespace LanExchange.Model
                 if (m_SelectedIndex == -1 && m_List.Count == 1)
                     m_SelectedIndex = 0;
                 DoAfterAppendTab(info);
-                //info.UpdateSubscription();
+                m_SelectedIndex = m_List.Count - 1;
+                DoIndexChanged(m_SelectedIndex);
             }
         }
 
@@ -116,6 +117,8 @@ namespace LanExchange.Model
             if (index >= 0 && index < m_List.Count)
             {
                 m_List.RemoveAt(index);
+                m_SelectedIndex = m_List.Count - 1;
+                DoIndexChanged(m_SelectedIndex);
                 DoAfterRemove(index);
             }
         }
