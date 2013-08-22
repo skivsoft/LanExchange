@@ -31,11 +31,12 @@
             this.components = new System.ComponentModel.Container();
             this.popPages = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mNewTab = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.mCloseTab = new System.Windows.Forms.ToolStripMenuItem();
-            this.mRenameTab = new System.Windows.Forms.ToolStripMenuItem();
             this.mSelectTab = new System.Windows.Forms.ToolStripMenuItem();
+            this.mBeforeSelectTab = new System.Windows.Forms.ToolStripSeparator();
+            this.mRenameTab = new System.Windows.Forms.ToolStripMenuItem();
             this.Pages = new System.Windows.Forms.TabControl();
+            this.mAfterNewTab = new System.Windows.Forms.ToolStripSeparator();
             this.popPages.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -43,12 +44,13 @@
             // 
             this.popPages.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mNewTab,
-            this.toolStripSeparator9,
+            this.mAfterNewTab,
             this.mCloseTab,
             this.mRenameTab,
+            this.mBeforeSelectTab,
             this.mSelectTab});
             this.popPages.Name = "popPages";
-            this.popPages.Size = new System.Drawing.Size(179, 120);
+            this.popPages.Size = new System.Drawing.Size(194, 126);
             this.popPages.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.popPages_Closed);
             this.popPages.Opening += new System.ComponentModel.CancelEventHandler(this.popPages_Opening);
             this.popPages.Opened += new System.EventHandler(this.popPages_Opened);
@@ -58,37 +60,37 @@
             // 
             this.mNewTab.Name = "mNewTab";
             this.mNewTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.mNewTab.Size = new System.Drawing.Size(178, 22);
+            this.mNewTab.Size = new System.Drawing.Size(193, 22);
             this.mNewTab.Text = "New tab";
             this.mNewTab.Click += new System.EventHandler(this.mNewTab_Click);
-            // 
-            // toolStripSeparator9
-            // 
-            this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(175, 6);
             // 
             // mCloseTab
             // 
             this.mCloseTab.Name = "mCloseTab";
             this.mCloseTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F4)));
-            this.mCloseTab.Size = new System.Drawing.Size(178, 22);
+            this.mCloseTab.Size = new System.Drawing.Size(193, 22);
             this.mCloseTab.Text = "Close tab";
             this.mCloseTab.Click += new System.EventHandler(this.mCloseTab_Click);
-            // 
-            // mRenameTab
-            // 
-            this.mRenameTab.Name = "mRenameTab";
-            this.mRenameTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.R)));
-            this.mRenameTab.Size = new System.Drawing.Size(178, 22);
-            this.mRenameTab.Text = "Rename tab";
-            this.mRenameTab.Click += new System.EventHandler(this.mRenameTab_Click);
             // 
             // mSelectTab
             // 
             this.mSelectTab.Name = "mSelectTab";
-            this.mSelectTab.Size = new System.Drawing.Size(178, 22);
+            this.mSelectTab.Size = new System.Drawing.Size(193, 22);
             this.mSelectTab.Text = "Select tab";
             this.mSelectTab.DropDownOpening += new System.EventHandler(this.mSelectTab_DropDownOpening);
+            // 
+            // mBeforeSelectTab
+            // 
+            this.mBeforeSelectTab.Name = "mBeforeSelectTab";
+            this.mBeforeSelectTab.Size = new System.Drawing.Size(190, 6);
+            // 
+            // mRenameTab
+            // 
+            this.mRenameTab.Name = "mRenameTab";
+            this.mRenameTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.mRenameTab.Size = new System.Drawing.Size(193, 22);
+            this.mRenameTab.Text = "Tab properties";
+            this.mRenameTab.Click += new System.EventHandler(this.mRenameTab_Click);
             // 
             // Pages
             // 
@@ -104,6 +106,11 @@
             this.Pages.TabIndex = 1;
             this.Pages.Selected += new System.Windows.Forms.TabControlEventHandler(this.Pages_Selected);
             this.Pages.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Pages_MouseDown);
+            // 
+            // mAfterNewTab
+            // 
+            this.mAfterNewTab.Name = "mAfterNewTab";
+            this.mAfterNewTab.Size = new System.Drawing.Size(190, 6);
             // 
             // PagesView
             // 
@@ -121,10 +128,11 @@
 
         private System.Windows.Forms.ContextMenuStrip popPages;
         private System.Windows.Forms.ToolStripMenuItem mNewTab;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripMenuItem mCloseTab;
         private System.Windows.Forms.ToolStripMenuItem mRenameTab;
         private System.Windows.Forms.ToolStripMenuItem mSelectTab;
         internal System.Windows.Forms.TabControl Pages;
+        private System.Windows.Forms.ToolStripSeparator mBeforeSelectTab;
+        private System.Windows.Forms.ToolStripSeparator mAfterNewTab;
     }
 }

@@ -34,10 +34,10 @@
             this.mAfterComp = new System.Windows.Forms.ToolStripSeparator();
             this.mCopyMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.mCopySelected = new System.Windows.Forms.ToolStripMenuItem();
-            this.mSeparatorSend = new System.Windows.Forms.ToolStripSeparator();
+            this.mAfterCopy = new System.Windows.Forms.ToolStripSeparator();
             this.mSendToNewTab = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.mContextClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.mContextProperties = new System.Windows.Forms.ToolStripMenuItem();
             this.ePath = new System.Windows.Forms.TextBox();
             this.LV = new LanExchange.UI.ListViewer();
             this.pFilter = new LanExchange.UI.FilterView();
@@ -50,33 +50,33 @@
             this.mComp,
             this.mAfterComp,
             this.mCopyMenu,
-            this.mSeparatorSend,
+            this.mAfterCopy,
             this.mSendToNewTab,
             this.toolStripSeparator6,
-            this.mContextClose});
+            this.mContextProperties});
             this.popComps.Name = "popComps";
-            this.popComps.Size = new System.Drawing.Size(195, 132);
+            this.popComps.Size = new System.Drawing.Size(233, 132);
             this.popComps.Opening += new System.ComponentModel.CancelEventHandler(this.popComps_Opening);
             // 
             // mComp
             // 
             this.mComp.Enabled = false;
             this.mComp.Name = "mComp";
-            this.mComp.Size = new System.Drawing.Size(194, 22);
+            this.mComp.Size = new System.Drawing.Size(232, 22);
             this.mComp.Tag = "";
             this.mComp.Text = "\\\\COMPUTER";
             // 
             // mAfterComp
             // 
             this.mAfterComp.Name = "mAfterComp";
-            this.mAfterComp.Size = new System.Drawing.Size(191, 6);
+            this.mAfterComp.Size = new System.Drawing.Size(229, 6);
             // 
             // mCopyMenu
             // 
             this.mCopyMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mCopySelected});
             this.mCopyMenu.Name = "mCopyMenu";
-            this.mCopyMenu.Size = new System.Drawing.Size(194, 22);
+            this.mCopyMenu.Size = new System.Drawing.Size(232, 22);
             this.mCopyMenu.Text = "Copy";
             this.mCopyMenu.DropDownOpening += new System.EventHandler(this.mCopyMenu_DropDownOpening);
             // 
@@ -88,31 +88,32 @@
             this.mCopySelected.Text = "Copy selected items";
             this.mCopySelected.Click += new System.EventHandler(this.CopySelectedOnClick);
             // 
-            // mSeparatorSend
+            // mAfterCopy
             // 
-            this.mSeparatorSend.Name = "mSeparatorSend";
-            this.mSeparatorSend.Size = new System.Drawing.Size(191, 6);
-            this.mSeparatorSend.Visible = false;
+            this.mAfterCopy.Name = "mAfterCopy";
+            this.mAfterCopy.Size = new System.Drawing.Size(229, 6);
             // 
             // mSendToNewTab
             // 
             this.mSendToNewTab.Name = "mSendToNewTab";
-            this.mSendToNewTab.Size = new System.Drawing.Size(194, 22);
-            this.mSendToNewTab.Text = "Send to another tab...";
-            this.mSendToNewTab.Visible = false;
+            this.mSendToNewTab.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.T)));
+            this.mSendToNewTab.Size = new System.Drawing.Size(232, 22);
+            this.mSendToNewTab.Text = "Send to new tab";
             this.mSendToNewTab.Click += new System.EventHandler(this.mSendToNewTab_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(191, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(229, 6);
             // 
-            // mContextClose
+            // mContextProperties
             // 
-            this.mContextClose.Name = "mContextClose";
-            this.mContextClose.Size = new System.Drawing.Size(194, 22);
-            this.mContextClose.Text = "Close";
-            this.mContextClose.Click += new System.EventHandler(this.mContextClose_Click);
+            this.mContextProperties.Name = "mContextProperties";
+            this.mContextProperties.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.mContextProperties.Size = new System.Drawing.Size(232, 22);
+            this.mContextProperties.Text = "Tab properties";
+            this.mContextProperties.Click += new System.EventHandler(this.mContextProperties_Click);
             // 
             // ePath
             // 
@@ -199,10 +200,10 @@
         public System.Windows.Forms.ContextMenuStrip popComps;
         public System.Windows.Forms.ToolStripMenuItem mComp;
         private System.Windows.Forms.ToolStripSeparator mAfterComp;
-        private System.Windows.Forms.ToolStripSeparator mSeparatorSend;
+        private System.Windows.Forms.ToolStripSeparator mAfterCopy;
         private System.Windows.Forms.ToolStripMenuItem mSendToNewTab;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-        private System.Windows.Forms.ToolStripMenuItem mContextClose;
+        private System.Windows.Forms.ToolStripMenuItem mContextProperties;
         private FilterView pFilter;
         private System.Windows.Forms.TextBox ePath;
         private System.Windows.Forms.ToolStripMenuItem mCopyMenu;

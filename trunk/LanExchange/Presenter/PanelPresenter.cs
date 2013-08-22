@@ -240,8 +240,11 @@ namespace LanExchange.Presenter
 
         internal void ColumnRightClick(int columnIndex)
         {
-            var columns = AppPresenter.PanelColumns.GetColumns(m_Objects.DataType);
-            m_View.ShowHeaderMenu(columns);
+            if (m_Objects.DataType != null)
+            {
+                var columns = AppPresenter.PanelColumns.GetColumns(m_Objects.DataType);
+                m_View.ShowHeaderMenu(columns);
+            }
         }
 
         internal void ShowHideColumnClick(int columnIndex)

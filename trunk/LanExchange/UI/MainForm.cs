@@ -188,7 +188,7 @@ namespace LanExchange.UI
                     var parent = pv == null || pv.Presenter.Objects.CurrentPath.IsEmptyOrRoot
                                      ? null
                                      : pv.Presenter.Objects.CurrentPath.Peek();
-                    if ((parent is PanelItemRoot) || AppPresenter.PanelItemTypes.DefaultRoots.Contains(parent))
+                    if ((parent == null) || AppPresenter.PanelItemTypes.DefaultRoots.Contains(parent))
                         Instance.Hide();
                     else if (!m_EscDown)
                     {
@@ -320,6 +320,11 @@ namespace LanExchange.UI
             var pv = sender as PanelView;
             if (pv == null) return;
             var panelItem = pv.Presenter.GetFocusedPanelItem(false, true);
+            // check if parent item more informative than current panel item
+            while (panelItem != null &&
+                   !AppPresenter.PanelItemTypes.DefaultRoots.Contains(panelItem) &&
+                   !AppPresenter.PanelItemTypes.DefaultRoots.Contains(panelItem.Parent))
+                panelItem = panelItem.Parent;
             if (panelItem == null) return;
             // update info panel at top of the form
             pInfo.Picture.Image = AppPresenter.Images.GetLargeImage(panelItem.ImageName);
@@ -560,6 +565,11 @@ namespace LanExchange.UI
                     Status.DoDragDrop(obj, DragDropEffects.Copy);
                 }
             }
+        }
+
+        private void mPanelNewTab_Click(object sender, EventArgs e)
+        {
+            AppPresenter.MainPages.CommandNewTab();
         }
 
     }

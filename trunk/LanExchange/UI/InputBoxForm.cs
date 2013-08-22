@@ -1,39 +1,68 @@
-﻿using System;
+﻿using System.ComponentModel;
 using System.Windows.Forms;
-using LanExchange.Properties;
 using LanExchange.SDK;
+using LanExchange.Properties;
 
 namespace LanExchange.UI
 {
     public partial class InputBoxForm : Form, IInputBoxView
     {
-        bool m_AllowEmpty = true;
-
-        //public static string ErrorMsgOnEmpty { get; set; }
+        public static InputBoxForm CreateAskForm(string caption, string prompt, string defText)
+        {
+            var result = new InputBoxForm();
+            result.Text = string.IsNullOrEmpty(caption) ? Application.ProductName : caption;
+            result.lblInputLabel.Text = prompt + ':';
+            result.Value = defText;
+            result.ActiveControl = result.txtInputText;
+            return result;
+        }
 
         public InputBoxForm()
         {
             InitializeComponent();
         }
 
-        public void Prepare(string prompt, string defText, bool bAllowEmpty)
+        public string Value
         {
-            m_AllowEmpty = bAllowEmpty;
-            lblInputLabel.Text = prompt + ':';
-            //ErrorMsgOnEmpty = errorMsgOnEmpty;
-            txtInputText.Text = defText;
-            ActiveControl = txtInputText;
-            errorProvider.SetError(txtInputText, "");
+            get { return txtInputText.Text.Trim(); }
+            set { txtInputText.Text = value.Trim(); }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public void SetError(string errorText)
         {
-            if (!m_AllowEmpty && String.IsNullOrEmpty(txtInputText.Text.Trim()))
-            {
-                errorProvider.SetError(txtInputText, Resources.InputBoxForm_NotEmpty);
-                DialogResult = DialogResult.None;
-            } else
-                DialogResult = DialogResult.OK;
+            errorProvider.SetError(txtInputText, errorText);
         }
-   }
+
+        public event CancelEventHandler InputValidating
+        {
+            add { txtInputText.Validating += value; }
+            remove { txtInputText.Validating -= value; }
+        }
+
+        /// <summary>
+        /// Validating method for InputBoxForm's control.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public static void ValidatingEmpty(object sender, CancelEventArgs e)
+        {
+            var control = sender as Control;
+            if (control == null) return;
+            var form = control.Parent as InputBoxForm;
+            if (form != null && form.Value.Length == 0)
+            {
+                form.SetError(Resources.InputBoxPresenter_NotEmpty);
+                e.Cancel = true;
+            }
+        }
+
+        private void InputBoxForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                DialogResult = DialogResult.Cancel;
+                e.Handled = true;
+            }
+        }
+    }
 }

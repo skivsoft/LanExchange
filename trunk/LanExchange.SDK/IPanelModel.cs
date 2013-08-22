@@ -86,7 +86,7 @@ namespace LanExchange.SDK
 
         PanelItemBaseFactory ItemFactory { get; set; }
         void SyncRetrieveData(bool clearFilter = false);
-        Type DataType { get; }
+        Type DataType { get; set; }
         ColumnComparer Comparer { get; }
         void Sort(IComparer<PanelItemBase> sorter);
     }

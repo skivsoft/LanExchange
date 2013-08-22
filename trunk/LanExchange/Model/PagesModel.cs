@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 using LanExchange.Presenter;
+using LanExchange.Properties;
 using LanExchange.Utils;
 using System.IO;
 using LanExchange.Model.Settings;
@@ -194,6 +195,34 @@ namespace LanExchange.Model
             //{
             //    Debug.Fail(e.Message);
             //}
+        }
+
+        public bool TabNameExists(string tabName)
+        {
+            foreach (var itemList in m_List)
+                if (string.Compare(itemList.TabName, tabName, StringComparison.CurrentCultureIgnoreCase) == 0)
+                    return true;
+            return false;
+        }
+
+        public string GenerateTabName()
+        {
+            if (m_List.Count == 0)
+                return string.Empty;
+            var itemList = m_List[m_SelectedIndex];
+            var result = string.Empty;
+            var index = 0;
+            bool exists;
+            do
+            {
+                if (index == 0)
+                    result = string.Format(Resources.PagesModel_CopyOf, itemList.TabName);
+                else
+                    result = string.Format(Resources.PagesModel_CopyOfMany, index, itemList.TabName);
+                exists = TabNameExists(result);
+                ++index;
+            } while (exists);
+            return result;
         }
     }
 }

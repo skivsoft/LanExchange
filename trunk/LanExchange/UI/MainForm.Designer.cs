@@ -50,6 +50,8 @@
             this.pInfo = new LanExchange.UI.InfoView();
             this.MainMenu = new System.Windows.Forms.MenuStrip();
             this.mPanel = new System.Windows.Forms.ToolStripMenuItem();
+            this.mPanelNewTab = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.mPanelLarge = new System.Windows.Forms.ToolStripMenuItem();
             this.mPanelSmall = new System.Windows.Forms.ToolStripMenuItem();
             this.mPanelList = new System.Windows.Forms.ToolStripMenuItem();
@@ -232,6 +234,8 @@
             // mPanel
             // 
             this.mPanel.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mPanelNewTab,
+            this.toolStripSeparator4,
             this.mPanelLarge,
             this.mPanelSmall,
             this.mPanelList,
@@ -244,6 +248,19 @@
             this.mPanel.Size = new System.Drawing.Size(45, 20);
             this.mPanel.Text = "&Panel";
             this.mPanel.DropDownOpening += new System.EventHandler(this.mPanel_DropDownOpening);
+            // 
+            // mPanelNewTab
+            // 
+            this.mPanelNewTab.Name = "mPanelNewTab";
+            this.mPanelNewTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.mPanelNewTab.Size = new System.Drawing.Size(163, 22);
+            this.mPanelNewTab.Text = "New tab";
+            this.mPanelNewTab.Click += new System.EventHandler(this.mPanelNewTab_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(160, 6);
             // 
             // mPanelLarge
             // 
@@ -419,6 +436,8 @@
         private System.Windows.Forms.ToolStripMenuItem mPanelExit;
         private System.Windows.Forms.ToolStripMenuItem mHelpKeys;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem mPanelNewTab;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }
 
