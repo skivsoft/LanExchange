@@ -1,7 +1,10 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Windows.Forms;
 using LanExchange.Model;
 using LanExchange.Properties;
 using LanExchange.SDK;
+using LanExchange.UI;
 
 namespace LanExchange.Presenter
 {
@@ -28,30 +31,84 @@ namespace LanExchange.Presenter
             return m_Model;
         }
 
-        // TODO: Need check duplicates on new tab
+        private void CheckDuplicateOnNew(object sender, CancelEventArgs e)
+        {
+            var control = sender as Control;
+            if (control == null) return;
+            var form = control.Parent as InputBoxForm;
+            if (form == null) return;
+            if (m_Model.TabNameExists(form.Value))
+            {
+                form.SetError(Resources.InputBoxPresenter_TabNameAlreadyExists);
+                e.Cancel = true;
+            }
+        }
+
+        private void CheckDuplicateOnRename(object sender, CancelEventArgs e)
+        {
+            var control = sender as Control;
+            if (control == null) return;
+            var form = control.Parent as InputBoxForm;
+            if (form == null) return;
+            var index = m_View.PopupSelectedIndex;
+            var itemList = GetModel().GetItem(index);
+            if (itemList == null) return;
+            if ((string.Compare(form.Value, itemList.TabName, StringComparison.CurrentCultureIgnoreCase) != 0) && 
+                m_Model.TabNameExists(form.Value))
+            {
+                form.SetError(Resources.InputBoxPresenter_TabNameAlreadyExists);
+                e.Cancel = true;
+            }
+        }
+
         public void CommandNewTab()
         {
-            var newTabName = InputBoxPresenter.Ask(Resources.PagesPresenter_NewTab, Resources.PagesPresenter_EnterTabName, "", false);
-            if (newTabName != null)
+            using (
+                var form = InputBoxForm.CreateAskForm(Resources.PagesPresenter_NewTab,
+                                                      Resources.PagesPresenter_EnterTabName, ""))
             {
-                m_Model.AddTab(new PanelItemList(newTabName));
-                m_Model.SaveSettings();
+                form.InputValidating += InputBoxForm.ValidatingEmpty;
+                form.InputValidating += CheckDuplicateOnNew;
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    m_Model.AddTab(new PanelItemList(form.Value));
+                    m_Model.SaveSettings();
+                }
+            }
+        }
+
+        public void CommandProperties()
+        {
+            var index = m_View.PopupSelectedIndex;
+            var itemList = GetModel().GetItem(index);
+            if (itemList == null) return;
+            using (var form = InputBoxForm.CreateAskForm(Resources.PagesPresenter_TabProperties,
+                                                         Resources.PagesPresenter_TabName, itemList.TabName))
+            {
+                form.InputValidating += InputBoxForm.ValidatingEmpty;
+                form.InputValidating += CheckDuplicateOnRename;
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    m_Model.RenameTab(index, form.Value);
+                    m_Model.SaveSettings();
+                }
             }
         }
 
         public void CommandSendToNewTab()
         {
-            // TODO UNCOMMENT THIS!
-            //var newTabName = InputBoxPresenter.Ask("Новая вкладка", "Введите имя", "", false);
-            //if (newTabName == null) return;
-            //var sourcePV = m_View.ActivePanelView;
-            //if (sourcePV == null) return;
-            //var sourceObjects = sourcePV.Presenter.Objects;
-            //var destObjects = new PanelItemList(newTabName);
+            var newTabName = m_Model.GenerateTabName();
+            var sourcePV = m_View.ActivePanelView;
+            if (sourcePV == null) return;
+            var indexes = sourcePV.SelectedIndexes.GetEnumerator();
+            if (!indexes.MoveNext()) return;
+            var sourceObjects = sourcePV.Presenter.Objects;
+            var destObjects = new PanelItemList(newTabName);
+            destObjects.DataType = sourceObjects.DataType;
             //foreach (int index in sourcePV.SelectedIndexes)
             //{
             //    var PItem = sourceObjects.GetItemAt(index);
-            //    if (PItem == null || PItem.Name == PanelItemBase.s_DoubleDot) 
+            //    if (PItem == null || PItem.Name == PanelItemBase.s_DoubleDot)
             //        continue;
             //    if (!(PItem is ComputerPanelItem))
             //        continue;
@@ -61,39 +118,25 @@ namespace LanExchange.Presenter
             //    // add item to new panel
             //    destObjects.Items.Add(newItem);
             //}
-            //// add tab
-            //m_Model.AddTab(destObjects);
-            //m_View.SelectedIndex = m_Model.Count-1;
-            //m_Model.SaveSettings();
+            // add tab
+            m_Model.AddTab(destObjects);
+            m_View.SelectedIndex = m_Model.Count - 1;
+            m_Model.SaveSettings();
         }
 
         public void CommandCloseTab()
         {
-            int Index = m_View.PopupSelectedIndex;
+            var index = m_View.PopupSelectedIndex;
             if (CanCloseTab())
             {
-                m_Model.DelTab(Index);
-                m_Model.SaveSettings();
-            }
-        }
-
-        // TODO: Need check duplicates on rename tab
-        public void CommandRenameTab()
-        {
-            int Index = m_View.PopupSelectedIndex;
-            PanelItemList ItemList = GetModel().GetItem(Index);
-            if (ItemList == null) return;
-            string NewTabName = InputBoxPresenter.Ask(Resources.PagesPresenter_RenameTab, Resources.PagesPresenter_EnterTabName, ItemList.TabName, false);
-            if (NewTabName != null)
-            {
-                m_Model.RenameTab(Index, NewTabName);
+                m_Model.DelTab(index);
                 m_Model.SaveSettings();
             }
         }
 
         public bool CanCloseTab()
         {
-            return m_View.TabPagesCount > 1;
+            return true;
         }
 
         public void Model_AfterAppendTab(object sender, PanelItemListEventArgs e)

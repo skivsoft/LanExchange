@@ -2,7 +2,6 @@
 using LanExchange.Model;
 using LanExchange.Model.Impl;
 using LanExchange.SDK;
-using LanExchange.UI;
 
 namespace LanExchange.Presenter
 {

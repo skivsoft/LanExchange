@@ -32,15 +32,15 @@
             this.lblInputLabel = new System.Windows.Forms.Label();
             this.txtInputText = new System.Windows.Forms.TextBox();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.bOK = new System.Windows.Forms.Button();
+            this.bCancel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // lblInputLabel
             // 
             this.lblInputLabel.AutoSize = true;
-            this.lblInputLabel.Location = new System.Drawing.Point(9, 9);
+            this.lblInputLabel.Location = new System.Drawing.Point(12, 16);
             this.lblInputLabel.Name = "lblInputLabel";
             this.lblInputLabel.Size = new System.Drawing.Size(35, 13);
             this.lblInputLabel.TabIndex = 0;
@@ -48,54 +48,59 @@
             // 
             // txtInputText
             // 
-            this.txtInputText.Location = new System.Drawing.Point(12, 34);
+            this.txtInputText.Location = new System.Drawing.Point(16, 34);
             this.txtInputText.Name = "txtInputText";
-            this.txtInputText.Size = new System.Drawing.Size(361, 20);
+            this.txtInputText.Size = new System.Drawing.Size(360, 20);
             this.txtInputText.TabIndex = 1;
             // 
             // errorProvider
             // 
             this.errorProvider.ContainerControl = this;
             // 
-            // button1
+            // bOK
             // 
-            this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.button1.Location = new System.Drawing.Point(217, 78);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "OK";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.bOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.bOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.bOK.Location = new System.Drawing.Point(212, 88);
+            this.bOK.Name = "bOK";
+            this.bOK.Size = new System.Drawing.Size(75, 23);
+            this.bOK.TabIndex = 2;
+            this.bOK.Text = "OK";
+            this.bOK.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // bCancel
             // 
-            this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button2.Location = new System.Drawing.Point(298, 78);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Cancel";
-            this.button2.UseVisualStyleBackColor = true;
+            this.bCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.bCancel.CausesValidation = false;
+            this.bCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.bCancel.Location = new System.Drawing.Point(301, 88);
+            this.bCancel.Name = "bCancel";
+            this.bCancel.Size = new System.Drawing.Size(75, 23);
+            this.bCancel.TabIndex = 3;
+            this.bCancel.Text = "Cancel";
+            this.bCancel.UseVisualStyleBackColor = true;
             // 
             // InputBoxForm
             // 
-            this.AcceptButton = this.button1;
+            this.AcceptButton = this.bOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.button2;
-            this.ClientSize = new System.Drawing.Size(394, 122);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
+            this.CausesValidation = false;
+            this.ClientSize = new System.Drawing.Size(394, 123);
+            this.Controls.Add(this.bCancel);
+            this.Controls.Add(this.bOK);
             this.Controls.Add(this.txtInputText);
             this.Controls.Add(this.lblInputLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "InputBoxForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "InputBoxForm";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.InputBoxForm_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -105,9 +110,9 @@
         #endregion
 
         private System.Windows.Forms.Label lblInputLabel;
-        public System.Windows.Forms.TextBox txtInputText;
+        private System.Windows.Forms.TextBox txtInputText;
         private System.Windows.Forms.ErrorProvider errorProvider;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button bCancel;
+        private System.Windows.Forms.Button bOK;
     }
 }

@@ -118,9 +118,18 @@ namespace LanExchange.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Input text must not be empty..
         /// </summary>
-        internal static string InputBoxForm_NotEmpty {
+        internal static string InputBoxPresenter_NotEmpty {
             get {
-                return ResourceManager.GetString("InputBoxForm_NotEmpty", resourceCulture);
+                return ResourceManager.GetString("InputBoxPresenter_NotEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tab with specified name already exists..
+        /// </summary>
+        internal static string InputBoxPresenter_TabNameAlreadyExists {
+            get {
+                return ResourceManager.GetString("InputBoxPresenter_TabNameAlreadyExists", resourceCulture);
             }
         }
         
@@ -168,6 +177,24 @@ namespace LanExchange.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy of {0}.
+        /// </summary>
+        internal static string PagesModel_CopyOf {
+            get {
+                return ResourceManager.GetString("PagesModel_CopyOf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy ({0}) of {1}.
+        /// </summary>
+        internal static string PagesModel_CopyOfMany {
+            get {
+                return ResourceManager.GetString("PagesModel_CopyOfMany", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter tab name.
         /// </summary>
         internal static string PagesPresenter_EnterTabName {
@@ -191,6 +218,24 @@ namespace LanExchange.Properties {
         internal static string PagesPresenter_RenameTab {
             get {
                 return ResourceManager.GetString("PagesPresenter_RenameTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tab name.
+        /// </summary>
+        internal static string PagesPresenter_TabName {
+            get {
+                return ResourceManager.GetString("PagesPresenter_TabName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tab properties.
+        /// </summary>
+        internal static string PagesPresenter_TabProperties {
+            get {
+                return ResourceManager.GetString("PagesPresenter_TabProperties", resourceCulture);
             }
         }
         
@@ -228,15 +273,6 @@ namespace LanExchange.Properties {
         internal static string PanelPresenter_UnreachableMsg {
             get {
                 return ResourceManager.GetString("PanelPresenter_UnreachableMsg", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to \\&lt;ComputerName&gt;.
-        /// </summary>
-        internal static string PanelView_ComputerName {
-            get {
-                return ResourceManager.GetString("PanelView_ComputerName", resourceCulture);
             }
         }
         

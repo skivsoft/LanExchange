@@ -128,6 +128,7 @@ namespace LanExchange.Model
         public Type DataType
         {
             get { return m_DataType; }
+            set { m_DataType = value; }
         }
 
         public ColumnComparer Comparer

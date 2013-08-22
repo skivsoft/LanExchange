@@ -141,7 +141,7 @@ namespace LanExchange.UI
 
         private void mRenameTab_Click(object sender, EventArgs e)
         {
-            m_Presenter.CommandRenameTab();
+            m_Presenter.CommandProperties();
         }
 
         private void popPages_Opening(object sender, CancelEventArgs e)

@@ -22,6 +22,10 @@
 //   TODO  Recently used items must appears when Tray.onMouseOver event fired
 //   TODO  Save/restore sort order for each tab
 //   DONE  Load context menu for panel items from addons 
+//   TODO  Sort by ping, ip address, mac address
+//   TODO  Async enum items and cache items
+//   TODO  Changing columns order
+//   TODO  Changing font size Ctrl+mouse wheel
 // 
 // RELEASE 2.1 (Iteration 4)
 //   TODO  Unit-tests coverage at least 50%

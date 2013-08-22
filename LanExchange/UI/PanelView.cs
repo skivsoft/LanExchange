@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
@@ -37,8 +38,8 @@ namespace LanExchange.UI
             //LV.CacheVirtualItems += m_Cache.CacheVirtualItems;
             LV.RetrieveVirtualItem += m_Cache.RetrieveVirtualItem;
             // set dropdown direction for sub-menus (actual for dual-monitor system)
-            mComp.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
-            mSendToNewTab.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
+            //mComp.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
+            //mSendToNewTab.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
             // focus listview when panel got focus
             GotFocus += (sender, args) => ActiveControl = LV;
         }
@@ -277,8 +278,13 @@ namespace LanExchange.UI
             // Backspace - Go level up
             if (e.KeyCode == Keys.Back)
             {
-                m_Presenter.CommandLevelUp();
-                e.Handled = true;
+
+                var parent = m_Presenter.Objects.CurrentPath.IsEmpty ? null : m_Presenter.Objects.CurrentPath.Peek();
+                if (parent != null && !AppPresenter.PanelItemTypes.DefaultRoots.Contains(parent))
+                {
+                    m_Presenter.CommandLevelUp();
+                    e.Handled = true;
+                }
             }
             // Ctrl+C - copy selected items
             if (e.Control && e.KeyCode == Keys.C)
@@ -415,11 +421,6 @@ namespace LanExchange.UI
         {
             foreach(var item in items)
                 SetEnabledAndVisible(item, value);
-        }
-
-        private void mContextClose_Click(object sender, EventArgs e)
-        {
-            MainForm.Instance.Hide();
         }
 
         public void FocusListView()
@@ -651,13 +652,9 @@ namespace LanExchange.UI
                     mComp.DropDownItems.Clear();
                     mComp.Tag = null;
                 }
-            } else
-            {
-                var typeId = m_Presenter.Objects.DataType.Name;
-                mComp.Image = AppPresenter.Images.GetSmallImage(typeId + PanelImageNames.NORMAL_POSTFIX);
-                mComp.Text = Resources.PanelView_ComputerName;
             }
-
+            mAfterComp.Visible = panelItem != null;
+            mComp.Visible = panelItem != null;
             return menuVisible;
         }
 
@@ -666,6 +663,7 @@ namespace LanExchange.UI
             mComp.Enabled = PrepareContextMenu();
             SetupCopyHelper();
             mCopyMenu.Enabled = m_CopyHelper.IndexesCount > 0;
+            mSendToNewTab.Enabled = SelectedIndexes.GetEnumerator().MoveNext();
         }
 
         /// <summary>
@@ -694,6 +692,11 @@ namespace LanExchange.UI
         private void mCopyMenu_DropDownOpening(object sender, EventArgs e)
         {
             PrepareCopyMenu();
+        }
+
+        private void mContextProperties_Click(object sender, EventArgs e)
+        {
+            AppPresenter.MainPages.CommandProperties();
         }
 
     }
