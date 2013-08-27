@@ -193,8 +193,7 @@ namespace LanExchange.UI
             if (pv != null && ActiveControl != pv)
             {
                 ActiveControl = pv as Control;
-                //TODO !!!NEED UPDATE ITEMS
-                //pv.Presenter.UpdateItemsAndStatus();
+                pv.Presenter.UpdateItemsAndStatus();
                 pv.FocusListView();
             }
         }
@@ -292,7 +291,7 @@ namespace LanExchange.UI
             {
                 LV.SmallImageList = AppPresenter.Images.SmallImageList;
                 LV.LargeImageList = AppPresenter.Images.LargeImageList;
-                LV.View = (System.Windows.Forms.View) info.CurrentView;
+                LV.View = (View) info.CurrentView;
                 if (MainForm.Instance != null)
                     MainForm.Instance.tipComps.SetToolTip(LV, " ");
             }

@@ -4,6 +4,7 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
 {
+    [Serializable]
     public class SharePanelItem : PanelItemBase//, IComparable<SharePanelItem>
     {
         private readonly ShareInfo m_SHI;

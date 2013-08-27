@@ -6,7 +6,7 @@ using LanExchange.Presenter;
 using LanExchange.SDK;
 
 namespace LanExchange.Model
-{
+{  
     public class PanelItemsCopyHelper
     {
         private readonly IPanelModel m_Model;
@@ -18,6 +18,11 @@ namespace LanExchange.Model
         {
             m_Model = model;
             m_Indexes = new List<int>();
+        }
+
+        public IPanelModel Model
+        {
+            get { return m_Model; }
         }
 
         public IList<int> Indexes
@@ -48,7 +53,8 @@ namespace LanExchange.Model
                 m_CurrentItem = value;
                 if (m_CurrentItem is PanelItemDoubleDot)
                     m_CurrentItem = m_CurrentItem.Parent;
-                m_Columns = AppPresenter.PanelColumns.GetColumns(m_CurrentItem.GetType());
+                if (AppPresenter.PanelColumns != null)
+                    m_Columns = AppPresenter.PanelColumns.GetColumns(m_CurrentItem.GetType());
             }
         }
 
@@ -111,6 +117,25 @@ namespace LanExchange.Model
             }
             return sb.ToString();
         }
+    
+        public PanelItemBaseHolder GetItems()
+        {
+            var result = new PanelItemBaseHolder();
+            for (int index = 0; index < m_Indexes.Count; index++)
+            {
+                MoveTo(index);
+                result.Add(CurrentItem);
+            }
+            result.Context = m_Model.TabName;
+            result.DataType = m_Model.DataType;
+            return result;
+        }
+    }
 
+    [Serializable]
+    public class PanelItemBaseHolder : List<PanelItemBase>
+    {
+        public string Context;
+        public Type DataType;
     }
 }

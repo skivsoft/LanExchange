@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Windows.Forms;
 using LanExchange.Presenter;
 using LanExchange.SDK;
@@ -170,12 +168,13 @@ namespace LanExchange.Model
             {
                 helper.CurrentItem = value;
                 upperValues.Clear();
-                for (int i = 0; i < helper.ColumnsCount; i++)
-                {
-                    var column = helper.GetColumnValue(i);
-                    if (!string.IsNullOrEmpty(column))
-                        upperValues.Add(column.ToUpper());
-                }
+                if (helper.Columns != null)
+                    for (int i = 0; i < helper.ColumnsCount; i++)
+                    {
+                        var column = helper.GetColumnValue(i);
+                        if (!string.IsNullOrEmpty(column))
+                            upperValues.Add(column.ToUpper());
+                    }
                 if (!filtered || (value is PanelItemDoubleDot) || GoodForFilter(upperValues.ToArray(), filter1, filter2))
                     m_Keys.Add(value);
             }
@@ -286,13 +285,15 @@ namespace LanExchange.Model
                     m_Data.Add(new PanelItemDoubleDot(m_CurrentPath.Peek()));
                 // add items from filler
                 m_Data.AddRange(fillerResult.Items);
-                // add custom items created by user
-                m_Data.AddRange(Items);
-                // sort 
-                m_Data.Sort(m_Comparer);
                 // set current items DataType and filter
                 if (fillerResult.ItemsType != null)
                     m_DataType = fillerResult.ItemsType;
+                // add custom items created by user
+                foreach(var panelItem in Items)
+                    if (panelItem.GetType() == m_DataType)
+                        m_Data.Add(panelItem);
+                // sort 
+                m_Data.Sort(m_Comparer);
                 if (clearFilter)
                     FilterText = string.Empty;
                 ApplyFilter();
@@ -322,5 +323,12 @@ namespace LanExchange.Model
         }
 
         public PanelItemBaseFactory ItemFactory { get; set; }
+
+        public bool Contains(PanelItemBase panelItem)
+        {
+            if (m_Data.Contains(panelItem))
+                return true;
+            return m_Items.Contains(panelItem);
+        }
     }
 }

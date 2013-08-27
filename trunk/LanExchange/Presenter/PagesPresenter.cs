@@ -95,16 +95,22 @@ namespace LanExchange.Presenter
             }
         }
 
+        public bool CanSendToNewTab()
+        {
+            var sourcePV = m_View.ActivePanelView;
+            if (sourcePV == null) 
+                return false;
+            var indexes = sourcePV.SelectedIndexes.GetEnumerator();
+            if (!indexes.MoveNext()) 
+                return false;
+            return sourcePV.Presenter.Objects.Count > 1;
+        }
+
         public void CommandSendToNewTab()
         {
+            if (!CanSendToNewTab()) return;
             var newTabName = m_Model.GenerateTabName();
             var sourcePV = m_View.ActivePanelView;
-            if (sourcePV == null) return;
-            var indexes = sourcePV.SelectedIndexes.GetEnumerator();
-            // at least 1 item selected
-            if (!indexes.MoveNext()) return;
-            // at least 2 items selected
-            if (!indexes.MoveNext()) return;
             var sourceObjects = sourcePV.Presenter.Objects;
             var destObjects = new PanelItemList(newTabName);
             destObjects.DataType = sourceObjects.DataType;
@@ -127,6 +133,45 @@ namespace LanExchange.Presenter
             //m_View.SelectedIndex = m_Model.Count - 1;
             m_Model.SaveSettings();
             m_View.ActivePanelView.Presenter.UpdateItemsAndStatus();
+        }
+
+        public bool CanPasteItems()
+        {
+            if (m_View.ActivePanelView == null)
+                return false;
+            var obj = Clipboard.GetDataObject();
+            if (obj == null)
+                return false;
+            if (!obj.GetDataPresent(typeof(PanelItemBaseHolder)))
+                return false;
+            var items = (PanelItemBaseHolder)obj.GetData(typeof(PanelItemBaseHolder));
+            if (items == null)
+                return false;
+            return !m_View.ActivePanelView.Presenter.Objects.TabName.Equals(items.Context);
+        }
+
+        public void CommandPasteItems()
+        {
+            if (!CanPasteItems()) return;
+            var obj = Clipboard.GetDataObject();
+            if (obj == null) return;
+            var items = (PanelItemBaseHolder)obj.GetData(typeof(PanelItemBaseHolder));
+            var destObjects = m_Model.GetItem(m_Model.SelectedIndex);
+            destObjects.DataType = items.DataType;
+            //destObjects.CurrentPath.Push(PanelItemRoot.ROOT_OF_USERITEMS);
+            foreach (var panelItem in items)
+                if (panelItem.GetType() == destObjects.DataType)
+                {
+                    if (destObjects.Contains(panelItem))
+                        continue;
+                    // add item to new panel
+                    var newItem = (PanelItemBase) panelItem.Clone();
+                    newItem.Parent = PanelItemRoot.ROOT_OF_USERITEMS;
+                    destObjects.Items.Add(newItem);
+                }
+            m_Model.SaveSettings();
+            destObjects.SyncRetrieveData(true);
+            //m_View.ActivePanelView.Presenter.UpdateItemsAndStatus();
         }
 
         public void CommandDeleteItems()
@@ -182,14 +227,14 @@ namespace LanExchange.Presenter
             // set update event
             IPanelPresenter presenter = panelView.Presenter;
             presenter.Objects = e.Info;
+            //m_View.SelectedIndex = m_View.TabPagesCount - 1;
             e.Info.Changed += (o, args) => presenter.UpdateItemsAndStatus();
             //e.Info.SubscriptionChanged += Item_SubscriptionChanged;
             // update items
             //e.Info.DataChanged(null, ConcreteSubject.s_UserItems);
-            presenter.ResetSortOrder();
+            panelView.Presenter.ResetSortOrder();
             e.Info.SyncRetrieveData();
         }
-
 
         public void Model_AfterRemove(object sender, PanelIndexEventArgs e)
         {
@@ -217,15 +262,6 @@ namespace LanExchange.Presenter
         {
             if (PanelViewFilterTextChanged != null)
                 PanelViewFilterTextChanged(sender, e);
-        }
-
-        public void Item_SubscriptionChanged(object sender, EventArgs e)
-        {
-            PanelItemList Item = sender as PanelItemList;
-            if (Item == null) return;
-            int Index = m_Model.GetItemIndex(Item);
-            if (Index != -1)
-                m_View.SetTabToolTip(Index, Item.ToolTipText);
         }
     }
 

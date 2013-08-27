@@ -68,7 +68,8 @@ namespace LanExchange.UI
             var label = sender as Label;
             if (label != null && e.Button == MouseButtons.Left)
             {
-                var obj = new DataObject(DataFormats.UnicodeText, label.Text);
+                var obj = new DataObject();
+                obj.SetText(label.Text, TextDataFormat.UnicodeText);
                 DoDragDrop(obj, DragDropEffects.Copy);
             }
         }

@@ -11,7 +11,7 @@
 // RELEASE 2.0 (Iteration 3)
 //   TODO  Unit-tests coverage at least 30%
 //   DONE  Drag&Drop from panel to external app
-//   TODO  Sending items to another tab
+//   DONE  Sending items to new tab
 //   TODO    Drag&Drop from external app to panel
 //   TODO    Manual creation of computer items
 //   DONE  Classes with IDisposable interface must be a components
@@ -19,13 +19,16 @@
 //   DONE  Columns sort (name, comment, version)
 //   TODO  Ctrl+Left/Ctrl+Right - change form size with phi based step
 //   TODO  Help on shortcut keys
-//   TODO  Recently used items must appears when Tray.onMouseOver event fired
 //   TODO  Save/restore sort order for each tab
 //   DONE  Load context menu for panel items from addons 
 //   TODO  Sort by ping, ip address, mac address
+//   TODO  Recently used items must appears when Tray.onMouseOver event fired
 //   TODO  Async enum items and cache items
 //   TODO  Changing columns order
 //   TODO  Changing font size Ctrl+mouse wheel
+//   TODO  User list (Users plugin)
+//   TODO  Enum files and folders (FS plugin)
+//   TODO  Addons editor
 // 
 // RELEASE 2.1 (Iteration 4)
 //   TODO  Unit-tests coverage at least 50%

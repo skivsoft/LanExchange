@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Globalization;
+using System.Collections.Generic;
+using System.Security.Permissions;
 using System.Text;
 using System.Xml.Serialization;
 
@@ -8,6 +9,7 @@ namespace LanExchange.SDK
     /// <summary>
     /// Base class for any LanExchange panel item.
     /// </summary>
+    [Serializable]
     public class PanelItemBase : IEquatable<PanelItemBase>, IComparable<PanelItemBase>, IComparable, ICloneable
     {
         protected bool m_IsReachable = true;
@@ -232,6 +234,43 @@ namespace LanExchange.SDK
             var result = new PanelItemBase(Parent);
             result.Name = Name;
             return result;
+        }
+    }
+
+    /// <summary>
+    /// The ".." item
+    /// </summary>
+    [Serializable]
+    public sealed class PanelItemDoubleDot : PanelItemBase
+    {
+        public PanelItemDoubleDot(PanelItemBase parent)
+        {
+            Parent = parent;
+        }
+
+        public override string ImageName
+        {
+            get { return PanelImageNames.DoubleDot; }
+        }
+    }
+
+    /// <summary>
+    /// The single class for any root item of plugin.
+    /// </summary>
+    [Serializable]
+    public sealed class PanelItemRoot : PanelItemBase
+    {
+        public static PanelItemBase ROOT_OF_USERITEMS = new PanelItemRoot();
+    }
+
+    public abstract class PanelItemBaseFactory
+    {
+        public abstract PanelItemBase CreatePanelItem(PanelItemBase parent, string name);
+
+        [EnvironmentPermission(SecurityAction.LinkDemand, Unrestricted = true)]
+        public virtual PanelItemBase CreateDefaultRoot()
+        {
+            return null;
         }
     }
 }

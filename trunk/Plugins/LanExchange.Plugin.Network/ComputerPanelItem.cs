@@ -8,6 +8,7 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
 {
+    [Serializable]
     public class ComputerPanelItem : PanelItemBase, IWmiComputer
     {
         private readonly ServerInfo m_SI;
@@ -177,7 +178,9 @@ namespace LanExchange.Plugin.Network
         {
             get
             {
-                return IsReachable ? PanelImageNames.ComputerNormal : PanelImageNames.ComputerDisabled;
+                if (Parent == PanelItemRoot.ROOT_OF_USERITEMS)
+                    return PanelImageNames.ComputerCustom;
+                return IsReachable ? PanelImageNames.ComputerNormal : PanelImageNames.ComputerUnreachable;
             }
         }
 
