@@ -4,6 +4,7 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
 {
+    [Serializable]
     public class DomainPanelItem : PanelItemBase
     {
         private readonly ServerInfo m_SI;

@@ -70,8 +70,6 @@
     <Compile Include="IPlugin.cs" />
     <Compile Include="LazyCallback.cs" />
     <Compile Include="PanelFillerResult.cs" />
-    <Compile Include="PanelItemDoubleDot.cs" />
-    <Compile Include="PanelItemRoot.cs" />
     <Compile Include="SettingsBase.cs" />
     <Compile Include="PanelItemBase.cs" />
     <Compile Include="IPanelFiller.cs" />
@@ -84,7 +82,6 @@
     <Compile Include="IWmiComputer.cs" />
     <Compile Include="ObjectPath.cs" />
     <Compile Include="PanelImageNames.cs" />
-    <Compile Include="PanelItemBaseFactory.cs" />
     <Compile Include="PanelViewMode.cs" />
     <Compile Include="IFilterView.cs" />
     <Compile Include="IInputBoxView.cs" />

@@ -51,11 +51,6 @@ namespace LanExchange.UI
 
         }
 
-        public PanelItemsCopyHelper CopyHelper
-        {
-            get { return m_CopyHelper; }
-        }
-
         private void CurrentPath_Changed(object sender, EventArgs e)
         {
             var path = sender as ObjectPath<PanelItemBase>;
@@ -354,7 +349,10 @@ namespace LanExchange.UI
             if (e.Button == MouseButtons.Left && bCanDrag)
             {
                 bCanDrag = false;
-                var obj = new DataObject(DataFormats.UnicodeText, m_CopyHelper.GetSelectedText());
+                var obj = new DataObject();
+                obj.SetText(m_CopyHelper.GetSelectedText(), TextDataFormat.UnicodeText);
+                if (AppPresenter.MainPages.CanSendToNewTab())
+                    obj.SetData(m_CopyHelper.GetType(), m_CopyHelper);
                 LV.DoDragDrop(obj, DragDropEffects.Copy);
             }
         }
@@ -561,7 +559,22 @@ namespace LanExchange.UI
         {
             if (needSetup)
                 SetupCopyHelper();
-            Clipboard.SetText(m_CopyHelper.GetSelectedText(), TextDataFormat.UnicodeText);
+            var selectedText = m_CopyHelper.GetSelectedText();
+            // put object clipboard for this app and for paste into another tab
+            var obj = new DataObject();
+            var items = m_CopyHelper.GetItems();
+            obj.SetData(typeof(PanelItemBaseHolder), items);
+            obj.SetText(selectedText, TextDataFormat.UnicodeText);
+            Clipboard.SetDataObject(obj);
+            // check correctness of item in clipboard
+            obj = (DataObject)Clipboard.GetDataObject();
+            if (obj != null)
+            {
+                items = (PanelItemBaseHolder)obj.GetData(typeof(PanelItemBaseHolder));
+                if (items == null)
+                    // put text to clipboard for external apps
+                    Clipboard.SetText(selectedText, TextDataFormat.UnicodeText);
+            }
         }
 
         private void CopyColumnToClipboard(bool needSetup, int colIndex)
@@ -668,7 +681,19 @@ namespace LanExchange.UI
             mComp.Enabled = PrepareContextMenu();
             SetupCopyHelper();
             mCopyMenu.Enabled = m_CopyHelper.IndexesCount > 0;
-            mSendToNewTab.Enabled = SelectedIndexes.GetEnumerator().MoveNext();
+            mSendToNewTab.Enabled = AppPresenter.MainPages.CanSendToNewTab();
+            mPaste.Enabled = AppPresenter.MainPages.CanPasteItems();
+            mDelete.Enabled = false;
+            // lookup at least 1 item for delete
+            for (int index = 0; index < m_CopyHelper.IndexesCount; index++)
+            {
+                m_CopyHelper.MoveTo(index);
+                if (Presenter.Objects.Items.Contains(m_CopyHelper.CurrentItem))
+                {
+                    mDelete.Enabled = true;
+                    break;
+                }
+            }
         }
 
         /// <summary>
@@ -702,6 +727,16 @@ namespace LanExchange.UI
         private void mContextProperties_Click(object sender, EventArgs e)
         {
             AppPresenter.MainPages.CommandProperties();
+        }
+
+        private void mPaste_Click(object sender, EventArgs e)
+        {
+            AppPresenter.MainPages.CommandPasteItems();
+        }
+
+        private void mDelete_Click(object sender, EventArgs e)
+        {
+            AppPresenter.MainPages.CommandDeleteItems();
         }
 
     }

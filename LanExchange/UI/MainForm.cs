@@ -304,8 +304,8 @@ namespace LanExchange.UI
         {
             if (e.Button == MouseButtons.Right)
             {
-                Point P = Status.PointToScreen(e.Location);
-                popTray.Show(P);
+                var point = Status.PointToScreen(e.Location);
+                popTray.Show(point);
             }
         }
 
@@ -561,7 +561,8 @@ namespace LanExchange.UI
                 var label = (sender as ToolStripStatusLabel);
                 if (label != null)
                 {
-                    var obj = new DataObject(DataFormats.UnicodeText, label.Text);
+                    var obj = new DataObject();
+                    obj.SetText(label.Text, TextDataFormat.UnicodeText);
                     Status.DoDragDrop(obj, DragDropEffects.Copy);
                 }
             }
@@ -575,24 +576,15 @@ namespace LanExchange.UI
         private void pInfo_DragOver(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.None;
-            if (!e.Data.GetDataPresent(DataFormats.UnicodeText)) return;
-            var panelView = Pages.ActivePanelView as PanelView;
-            if (panelView == null) return;
-            var value = e.Data.GetData(DataFormats.UnicodeText);
-            if (value == null) return;
-            if (!value.Equals(panelView.CopyHelper.GetSelectedText())) return;
-            // check if selected two or more items
-            var indexes = panelView.SelectedIndexes.GetEnumerator();
-            if (!indexes.MoveNext()) return;
-            if (!indexes.MoveNext()) return;
-            e.Effect = DragDropEffects.Copy;
+            if (!e.Data.GetDataPresent(typeof(PanelItemsCopyHelper))) return;
+            var helper = (PanelItemsCopyHelper) e.Data.GetData(typeof (PanelItemsCopyHelper));
+            if (helper != null && helper.IndexesCount > 0)
+                e.Effect = DragDropEffects.Copy;
         }
 
         private void pInfo_DragDrop(object sender, DragEventArgs e)
         {
             AppPresenter.MainPages.CommandSendToNewTab();
         }
-
-
     }
 }

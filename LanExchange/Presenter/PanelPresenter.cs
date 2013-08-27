@@ -25,6 +25,7 @@ namespace LanExchange.Presenter
                 return;
             m_View.ColumnsClear();
             var columns = AppPresenter.PanelColumns.GetColumns(m_Objects.DataType);
+            if (columns == null) return;
             int j = 0;
             for (int i = 0; i < columns.Count; i++ )
                 if (columns[i].Visible)

@@ -64,7 +64,7 @@ namespace LanExchange.Plugin.Network
         {
             Assert.AreEqual(PanelImageNames.ComputerNormal, m_Comp.ImageName);
             m_Comp.IsReachable = false;
-            Assert.AreEqual(PanelImageNames.ComputerDisabled, m_Comp.ImageName);
+            Assert.AreEqual(PanelImageNames.ComputerUnreachable, m_Comp.ImageName);
         }
 
         [Test]

@@ -45,7 +45,8 @@ namespace LanExchange.Model.Impl
             icon2 = large.Icon(SYSTEM_INDEX_MYCOMPUTER);
             RegisterImage(PanelImageNames.ComputerNormal, icon1, icon2);
             RegisterDisabledImage(PanelImageNames.ComputerDisabled, icon1, icon2);
-            //RegisterImage(PanelImageNames.ComputerDisabled, MadeDisabledBitmap(bitmap1), MadeDisabledBitmap(bitmap2));
+            RegisterImageWithOtherColor(PanelImageNames.ComputerUnreachable, icon1, icon2, 2);
+            RegisterImageWithOtherColor(PanelImageNames.ComputerCustom, icon1, icon2, 4);
             // Folder icon
             icon1 = small.Icon(SYSTEM_INDEX_FOLDER);
             icon2 = large.Icon(SYSTEM_INDEX_FOLDER);
@@ -60,6 +61,13 @@ namespace LanExchange.Model.Impl
             // release sys images list
             small.Dispose();
             large.Dispose();
+        }
+
+        private void RegisterImageWithOtherColor(string imageName, Icon icon1, Icon icon2 , int shift)
+        {
+            var bitmap1 = BitmapUtils.MadeNewBitmap(icon1.ToBitmap(), 72 * shift);
+            var bitmap2 = BitmapUtils.MadeNewBitmap(icon2.ToBitmap(), 72 * shift);
+            RegisterImage(imageName, bitmap1, bitmap2);
         }
 
         public void Dispose()

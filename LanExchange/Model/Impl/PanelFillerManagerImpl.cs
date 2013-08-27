@@ -22,7 +22,8 @@ namespace LanExchange.Model.Impl
         {
             var result = new PanelFillerResult();
             if (parent != null)
-                foreach(var filler in m_Fillers)
+            {
+                foreach (var filler in m_Fillers)
                 {
                     if (filler.IsParentAccepted(parent))
                     {
@@ -31,6 +32,7 @@ namespace LanExchange.Model.Impl
                         filler.Fill(parent, result.Items);
                     }
                 }
+            }
             return result;
         }
 

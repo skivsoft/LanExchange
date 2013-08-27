@@ -34,6 +34,7 @@
             this.mAfterComp = new System.Windows.Forms.ToolStripSeparator();
             this.mCopyMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.mCopySelected = new System.Windows.Forms.ToolStripMenuItem();
+            this.mPaste = new System.Windows.Forms.ToolStripMenuItem();
             this.mAfterCopy = new System.Windows.Forms.ToolStripSeparator();
             this.mSendToNewTab = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
@@ -41,6 +42,7 @@
             this.ePath = new System.Windows.Forms.TextBox();
             this.LV = new LanExchange.UI.ListViewer();
             this.pFilter = new LanExchange.UI.FilterView();
+            this.mDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.popComps.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,12 +52,14 @@
             this.mComp,
             this.mAfterComp,
             this.mCopyMenu,
+            this.mPaste,
+            this.mDelete,
             this.mAfterCopy,
             this.mSendToNewTab,
             this.toolStripSeparator6,
             this.mContextProperties});
             this.popComps.Name = "popComps";
-            this.popComps.Size = new System.Drawing.Size(233, 132);
+            this.popComps.Size = new System.Drawing.Size(233, 176);
             this.popComps.Opening += new System.ComponentModel.CancelEventHandler(this.popComps_Opening);
             // 
             // mComp
@@ -87,6 +91,14 @@
             this.mCopySelected.Size = new System.Drawing.Size(220, 22);
             this.mCopySelected.Text = "Copy selected items";
             this.mCopySelected.Click += new System.EventHandler(this.CopySelectedOnClick);
+            // 
+            // mPaste
+            // 
+            this.mPaste.Name = "mPaste";
+            this.mPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+            this.mPaste.Size = new System.Drawing.Size(232, 22);
+            this.mPaste.Text = "Paste";
+            this.mPaste.Click += new System.EventHandler(this.mPaste_Click);
             // 
             // mAfterCopy
             // 
@@ -178,6 +190,14 @@
             this.pFilter.Visible = false;
             this.pFilter.FilterCountChanged += new System.EventHandler(this.pFilter_FilterCountChanged);
             // 
+            // mDelete
+            // 
+            this.mDelete.Name = "mDelete";
+            this.mDelete.ShortcutKeyDisplayString = "Del";
+            this.mDelete.Size = new System.Drawing.Size(232, 22);
+            this.mDelete.Text = "Delete";
+            this.mDelete.Click += new System.EventHandler(this.mDelete_Click);
+            // 
             // PanelView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -208,5 +228,7 @@
         private System.Windows.Forms.TextBox ePath;
         private System.Windows.Forms.ToolStripMenuItem mCopyMenu;
         private System.Windows.Forms.ToolStripMenuItem mCopySelected;
+        private System.Windows.Forms.ToolStripMenuItem mPaste;
+        private System.Windows.Forms.ToolStripMenuItem mDelete;
     }
 }
