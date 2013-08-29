@@ -69,8 +69,8 @@ namespace LanExchange
             {
                 CmdLineProcessor.Processing();
 
-                App.Setup();
-                App.Plugins.LoadPlugins();
+                AppBold.Setup();
+                AppBold.Plugins.LoadPlugins();
 #if DEBUG
                 //AddonGen.Generate();
 #endif

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Windows.Forms;
-using LanExchange.Core;
+﻿using System.Windows.Forms;
 
-namespace LanExchange.UI
+namespace LanExchange.Intf
 {
     /// <summary>
     /// View for AboutForm.

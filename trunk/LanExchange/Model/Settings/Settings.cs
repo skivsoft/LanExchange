@@ -3,9 +3,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using LanExchange.Core;
-using LanExchange.Misc;
-using LanExchange.Misc.Impl;
+using LanExchange.Intf;
 using LanExchange.Utils;
 using System.Security.Principal;
 using System.Collections.Generic;
@@ -131,8 +129,8 @@ namespace LanExchange.Model.Settings
             var user = WindowsIdentity.GetCurrent();
             if (user != null)
             {
-                string[] A = user.Name.Split('\\');
-                return A.Length > 1 ? A[1] : A[0];
+                string[] userName = user.Name.Split('\\');
+                return userName.Length > 1 ? userName[1] : userName[0];
             }
             return string.Empty;
         }

@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using LanExchange.Core;
-using LanExchange.Model;
-using LanExchange.Presenter;
 using LanExchange.SDK;
 
-namespace LanExchange.UI
+namespace LanExchange.Intf
 {
     /// <summary>
     /// View of LanExchange panel.

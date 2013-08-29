@@ -1,7 +1,6 @@
 ﻿using System;
-using LanExchange.Core;
 
-namespace LanExchange.Model
+namespace LanExchange.Intf
 {
     public interface IPagesModel : IModel
     {

@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.Properties;
 using LanExchange.SDK;
-using LanExchange.UI;
 using LanExchange.Utils;
 
 namespace LanExchange.Misc.Impl

@@ -1,5 +1,4 @@
-﻿using LanExchange.Core;
-using LanExchange.Model;
+﻿using LanExchange.Intf;
 using LanExchange.Properties;
 using LanExchange.SDK;
 

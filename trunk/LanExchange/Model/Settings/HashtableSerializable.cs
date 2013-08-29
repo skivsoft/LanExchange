@@ -2,7 +2,7 @@
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace LanExchange.Misc
+namespace LanExchange.Model.Settings
 {
     public class HashtableSerializable : Hashtable, IXmlSerializable
     {

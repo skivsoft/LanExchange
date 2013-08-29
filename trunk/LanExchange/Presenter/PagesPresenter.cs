@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 using LanExchange.Core;
+using LanExchange.Intf;
 using LanExchange.Model;
 using LanExchange.Properties;
 using LanExchange.SDK;

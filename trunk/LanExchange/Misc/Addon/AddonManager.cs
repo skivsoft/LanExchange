@@ -4,9 +4,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
-using LanExchange.Core;
+using LanExchange.Intf;
 using LanExchange.SDK;
-using LanExchange.UI;
 using LanExchange.Utils;
 
 namespace LanExchange.Misc.Addon
@@ -172,7 +171,7 @@ namespace LanExchange.Misc.Addon
             if (menuItem == null) return;
             var item = (AddonMenuItem) menuItem.Tag;
             if (item == null || item.ProgramValue == null || !item.ProgramValue.Exists) return;
-            var pv = MainForm.Instance.Pages.ActivePanelView;
+            var pv = App.MainPages.View.ActivePanelView;
             if (pv == null) return;
             var panelItem = pv.Presenter.GetFocusedPanelItem(false, true);
             if (panelItem == null) return;
@@ -181,7 +180,7 @@ namespace LanExchange.Misc.Addon
 
         public void ProcessKeyDown(KeyEventArgs e)
         {
-            var pv = MainForm.Instance.Pages.ActivePanelView;
+            var pv = App.MainPages.View.ActivePanelView;
             if (pv == null) return;
             var panelItem = pv.Presenter.GetFocusedPanelItem(false, true);
             if (panelItem == null) return;
@@ -204,7 +203,7 @@ namespace LanExchange.Misc.Addon
         /// </summary>
         public void RunDefaultCmdLine()
         {
-            var pv = MainForm.Instance.Pages.ActivePanelView;
+            var pv = App.MainPages.View.ActivePanelView;
             if (pv == null) return;
             var panelItem = pv.Presenter.GetFocusedPanelItem(false, true);
             if (panelItem == null) return;

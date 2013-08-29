@@ -2,20 +2,17 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
-using LanExchange.Core;
+using LanExchange.Intf;
 using LanExchange.Misc;
 using LanExchange.Misc.Action;
 using LanExchange.Misc.Addon;
 using LanExchange.Model.Settings;
-using LanExchange.Model;
-using LanExchange.Presenter;
 using System.Drawing;
 using System.ComponentModel;
 using System.Security.Permissions;
 using LanExchange.Properties;
 using LanExchange.SDK;
 using LanExchange.Utils;
-using LanExchange.UI;
 using Settings = LanExchange.Model.Settings.Settings;
 
 namespace LanExchange.UI
@@ -50,15 +47,15 @@ namespace LanExchange.UI
             SetupForm();
             // setup images
             Instance.tipComps.SetToolTip(Pages.Pages, " ");
-            Pages.Pages.ImageList = App.Images.SmallImageList;
-            Status.ImageList = App.Images.SmallImageList;
+            Pages.Pages.ImageList = AppBold.Images.SmallImageList;
+            Status.ImageList = AppBold.Images.SmallImageList;
             // set hotkey for activate: Ctrl+Win+X
             m_Hotkeys = new GlobalHotkeys();
             m_Hotkeys.RegisterGlobalHotKey((int)Keys.X, GlobalHotkeys.MOD_CONTROL + GlobalHotkeys.MOD_WIN, Handle);
             // set lazy events
-            App.LazyThreadPool.DataReady += OnDataReady;
+            AppBold.LazyThreadPool.DataReady += OnDataReady;
 #if DEBUG
-            App.LazyThreadPool.NumThreadsChanged += OnNumThreadsChanged;
+            AppBold.LazyThreadPool.NumThreadsChanged += OnNumThreadsChanged;
 #endif
         }
 
@@ -169,10 +166,10 @@ namespace LanExchange.UI
             TrayIcon.Visible = true;
             // show computer name
             lCompName.Text = SystemInformation.ComputerName;
-            lCompName.ImageIndex = App.Images.IndexOf(PanelImageNames.ComputerNormal);
+            lCompName.ImageIndex = AppBold.Images.IndexOf(PanelImageNames.ComputerNormal);
             // show current user
             lUserName.Text = Settings.GetCurrentUserName();
-            lUserName.ImageIndex = App.Images.IndexOf(PanelImageNames.UserNormal);
+            lUserName.ImageIndex = AppBold.Images.IndexOf(PanelImageNames.UserNormal);
         }
 
         private bool m_EscDown;
@@ -330,9 +327,9 @@ namespace LanExchange.UI
                 panelItem = panelItem.Parent;
             if (panelItem == null) return;
             // update info panel at top of the form
-            pInfo.Picture.Image = App.Images.GetLargeImage(panelItem.ImageName);
+            pInfo.Picture.Image = AppBold.Images.GetLargeImage(panelItem.ImageName);
             tipComps.SetToolTip(pInfo.Picture, panelItem.ImageLegendText);
-            var helper = new PanelItemsCopyHelper(null);
+            var helper = new PanelModelCopyHelper(null);
             helper.CurrentItem = panelItem;
             int index = 0;
             foreach (var column in helper.Columns)
@@ -443,6 +440,7 @@ namespace LanExchange.UI
         private void rereadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             m_ReReadAction.Execute();
+            popTop.Tag = null;
         }
 
         private void lCompName_MouseUp(object sender, MouseEventArgs e)
@@ -519,7 +517,7 @@ namespace LanExchange.UI
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            App.LazyThreadPool.Dispose();
+            AppBold.LazyThreadPool.Dispose();
         }
 
         public void OnDataReady(object sender, DataReadyArgs args)
@@ -554,7 +552,7 @@ namespace LanExchange.UI
                 if (column.Callback != null)
                     count += column.LazyDict.Count;
             var aboutModel = App.Resolve<IAboutModel>();
-            Text = String.Format("{0} {1} [Threads: {2}, Dict: {3}]", aboutModel.Product, aboutModel.VersionFull, App.LazyThreadPool.NumThreads, count);
+            Text = String.Format("{0} {1} [Threads: {2}, Dict: {3}]", aboutModel.Product, aboutModel.VersionFull, AppBold.LazyThreadPool.NumThreads, count);
         }
  #endif
 
@@ -580,8 +578,8 @@ namespace LanExchange.UI
         private void pInfo_DragOver(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.None;
-            if (!e.Data.GetDataPresent(typeof(PanelItemsCopyHelper))) return;
-            var helper = (PanelItemsCopyHelper) e.Data.GetData(typeof (PanelItemsCopyHelper));
+            if (!e.Data.GetDataPresent(typeof(PanelModelCopyHelper))) return;
+            var helper = (PanelModelCopyHelper) e.Data.GetData(typeof (PanelModelCopyHelper));
             if (helper != null && helper.IndexesCount > 0)
                 e.Effect = DragDropEffects.Copy;
         }

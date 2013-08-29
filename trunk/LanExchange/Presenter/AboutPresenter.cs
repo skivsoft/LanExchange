@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
 using LanExchange.Core;
+using LanExchange.Intf;
 using LanExchange.Model;
 using LanExchange.UI;
 

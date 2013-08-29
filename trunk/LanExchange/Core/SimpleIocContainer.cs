@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using LanExchange.Intf;
+using IContainer = LanExchange.Intf.IContainer;
 
 namespace LanExchange.Core
 {

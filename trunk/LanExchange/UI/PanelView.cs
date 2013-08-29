@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using LanExchange.Core;
+using LanExchange.Intf;
 using LanExchange.Misc;
 using LanExchange.Misc.Addon;
-using LanExchange.Misc.Service;
 using LanExchange.Model;
 using LanExchange.Presenter;
 using LanExchange.Properties;
@@ -22,7 +22,7 @@ namespace LanExchange.UI
 
         private readonly IPanelPresenter m_Presenter;
         private readonly ListViewItemCache m_Cache;
-        private PanelItemsCopyHelper m_CopyHelper;
+        private PanelModelCopyHelper m_CopyHelper;
 
         public event EventHandler FocusedItemChanged;
 
@@ -83,7 +83,7 @@ namespace LanExchange.UI
                     {
                         IComparable value;
                         if ((i > 0) && (columns[i].Callback != null))
-                            value = App.LazyThreadPool.AsyncGetData(columns[i], panelItem);
+                            value = AppBold.LazyThreadPool.AsyncGetData(columns[i], panelItem);
                         else
                             value = panelItem[columns[i].Index];
 
@@ -94,7 +94,7 @@ namespace LanExchange.UI
                             result.SubItems.Add(text);
                     }
             }
-            result.ImageIndex = App.Images.IndexOf(panelItem.ImageName);
+            result.ImageIndex = AppBold.Images.IndexOf(panelItem.ImageName);
             result.ToolTipText = panelItem.ToolTipText;
             result.Tag = panelItem;
             return result;
@@ -601,7 +601,7 @@ namespace LanExchange.UI
         /// </summary>
         /// <returns></returns>
         [Localizable(false)]
-        private IEnumerable<ToolStripItem> CreateCopyMenuItems(PanelItemsCopyHelper helper)
+        private IEnumerable<ToolStripItem> CreateCopyMenuItems(PanelModelCopyHelper helper)
         {
             if (helper.IndexesCount == 1)
                 helper.MoveTo(0);
@@ -645,7 +645,7 @@ namespace LanExchange.UI
 
         private void SetupCopyHelper()
         {
-            m_CopyHelper = new PanelItemsCopyHelper(m_Presenter.Objects);
+            m_CopyHelper = new PanelModelCopyHelper(m_Presenter.Objects);
             foreach (int index in LV.SelectedIndices)
                 m_CopyHelper.Indexes.Add(index);
             m_CopyHelper.Prepare();
@@ -661,7 +661,7 @@ namespace LanExchange.UI
             var menuVisible = false;
             if (panelItem != null)
             {
-                mComp.Image = App.Images.GetSmallImage(panelItem.ImageName);
+                mComp.Image = AppBold.Images.GetSmallImage(panelItem.ImageName);
                 mComp.Text = panelItem.Name;
                 var typeId = panelItem.GetType().Name;
                 menuVisible = AddonManager.Instance.BuildMenuForPanelItemType(mComp, typeId);

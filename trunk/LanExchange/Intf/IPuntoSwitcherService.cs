@@ -1,9 +1,9 @@
-﻿namespace LanExchange.Misc.Service
+﻿namespace LanExchange.Intf
 {
     public interface IPuntoSwitcherService
     {
         bool IsValidChar(char ch);
         string Change(string str);
-        bool RussianContains(string s, string what);
+        bool SpecificContains(string s, string what);
     }
 }

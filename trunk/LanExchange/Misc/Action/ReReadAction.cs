@@ -1,6 +1,5 @@
-﻿using LanExchange.Core;
+﻿using LanExchange.Intf;
 using LanExchange.SDK;
-using LanExchange.UI;
 
 namespace LanExchange.Misc.Action
 {
@@ -21,7 +20,6 @@ namespace LanExchange.Misc.Action
                 
                 pageModel.SyncRetrieveData();
             }
-            MainForm.Instance.popTop.Tag = null;
         }
     }
 }

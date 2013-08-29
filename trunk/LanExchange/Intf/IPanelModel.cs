@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using LanExchange.Misc;
 using LanExchange.SDK;
 
-namespace LanExchange.Model
+namespace LanExchange.Intf
 {
     /// <summary>
     /// LanExchange panel model.

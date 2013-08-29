@@ -121,6 +121,6 @@ Global
 		{26D53677-B560-4697-9C4E-E54ECBD4C048} = {FB4F7079-13D6-4D51-9B1F-FB78F5F26B2D}
 	EndGlobalSection
 	GlobalSection(NDepend) = preSolution
-		Project = ".\LanExchange20101.ndproj"
+		Project = ""
 	EndGlobalSection
 EndGlobal

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using LanExchange.Core;
+using LanExchange.Intf;
 using LanExchange.Misc;
-using LanExchange.Misc.Service;
 using LanExchange.Model.Settings;
 using LanExchange.SDK;
 
@@ -114,8 +113,8 @@ namespace LanExchange.Model
             {
                 if (i == 0)
                 {
-                    if (m_Punto.RussianContains(strList[i], filter1) ||
-                        m_Punto.RussianContains(strList[i], filter2))
+                    if (m_Punto.SpecificContains(strList[i], filter1) ||
+                        m_Punto.SpecificContains(strList[i], filter2))
                         return true;
                 } else
                 if (filter1 != null && strList[i].Contains(filter1) || filter2 != null && strList[i].Contains(filter2))
@@ -162,7 +161,7 @@ namespace LanExchange.Model
             var filter1 = FilterText.ToUpper();
             var filter2 = m_Punto.Change(FilterText);
             if (filter2 != null) filter2 = filter2.ToUpper();
-            var helper = new PanelItemsCopyHelper(this);
+            var helper = new PanelModelCopyHelper(this);
             var upperValues = new List<string>();
             foreach (var value in m_Data)
             {

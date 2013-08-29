@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using LanExchange.SDK;
 
-namespace LanExchange.Misc
+namespace LanExchange.Intf
 {
     /// <summary>
     /// Path to nested object.
@@ -77,6 +78,7 @@ namespace LanExchange.Misc
         /// <returns>
         /// A <see cref="System.String" /> that represents this instance.
         /// </returns>
+        [Localizable(false)]
         public override string ToString()
         {
             var sb = new StringBuilder();

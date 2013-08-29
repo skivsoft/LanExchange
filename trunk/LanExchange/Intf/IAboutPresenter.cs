@@ -1,7 +1,6 @@
-﻿using LanExchange.Core;
-using LanExchange.UI;
+﻿using LanExchange.UI;
 
-namespace LanExchange.Presenter
+namespace LanExchange.Intf
 {
     public interface IAboutPresenter : IPresenter<IAboutView>
     {

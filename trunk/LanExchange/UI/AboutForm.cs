@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using LanExchange.Core;
+using LanExchange.Intf;
 using LanExchange.Presenter;
 using LanExchange.Properties;
 using LanExchange.UI;
