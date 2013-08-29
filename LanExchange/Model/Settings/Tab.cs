@@ -1,4 +1,4 @@
-using LanExchange.Misc;
+using LanExchange.Intf;
 using LanExchange.SDK;
 
 namespace LanExchange.Model.Settings

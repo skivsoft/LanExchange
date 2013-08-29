@@ -1,10 +1,7 @@
 ﻿using System;
-using LanExchange.Core;
-using LanExchange.Model;
 using LanExchange.SDK;
-using LanExchange.UI;
 
-namespace LanExchange.Presenter
+namespace LanExchange.Intf
 {
     /// <summary>
     /// Presenter of LanExchange panel.

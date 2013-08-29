@@ -1,8 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Globalization;
+using LanExchange.Intf;
 
-namespace LanExchange.Misc.Service
+namespace LanExchange.Misc
 {
     public class PuntoSwitcherServiceEngRus : IPuntoSwitcherService
     {
@@ -42,7 +43,7 @@ namespace LanExchange.Misc.Service
         /// <param name="s"></param>
         /// <param name="what"></param>
         /// <returns></returns>
-        public bool RussianContains(string s, string what)
+        public bool SpecificContains(string s, string what)
         {
             if (String.IsNullOrEmpty(what))
                 return false;

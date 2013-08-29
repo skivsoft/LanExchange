@@ -1,4 +1,4 @@
-﻿namespace LanExchange.Misc.Impl
+﻿namespace LanExchange.SDK
 {
     public interface IFolderManager
     {

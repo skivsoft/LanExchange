@@ -421,7 +421,7 @@ namespace LanExchange.UI
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
         private System.Windows.Forms.ToolStripStatusLabel lUserName;
         internal InfoView pInfo;
-        internal PagesView Pages;
+        private PagesView Pages;
         private System.Windows.Forms.Timer timerTabSettingsSaver;
         private System.Windows.Forms.MenuStrip MainMenu;
         private System.Windows.Forms.ToolStripMenuItem mHelp;

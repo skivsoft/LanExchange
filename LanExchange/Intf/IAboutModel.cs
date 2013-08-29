@@ -1,6 +1,6 @@
-﻿namespace LanExchange.Model
+﻿namespace LanExchange.Intf
 {
-    public interface IAboutModel
+    public interface IAboutModel : IModel
     {
         string WebSite { get; }
 

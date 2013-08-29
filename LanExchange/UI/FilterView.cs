@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 using LanExchange.Core;
+using LanExchange.Intf;
 using LanExchange.Misc;
 using LanExchange.Model;
 using LanExchange.Presenter;

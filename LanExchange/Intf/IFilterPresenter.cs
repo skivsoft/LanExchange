@@ -1,8 +1,6 @@
-﻿using LanExchange.Core;
-using LanExchange.Model;
-using LanExchange.UI;
+﻿using LanExchange.UI;
 
-namespace LanExchange.Presenter
+namespace LanExchange.Intf
 {
     public interface IFilterPresenter : IPresenter<IFilterView>
     {

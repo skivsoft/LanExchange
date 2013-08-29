@@ -1,6 +1,4 @@
-﻿using LanExchange.Core;
-
-namespace LanExchange.UI
+﻿namespace LanExchange.Intf
 {
     /// <summary>
     /// View of top info panel.

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using LanExchange.Core;
+using LanExchange.Intf;
 using LanExchange.Model.Settings;
 using LanExchange.Properties;
 using LanExchange.Utils;

@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace LanExchange.UI
+namespace LanExchange.Utils
 {
 
 	#region Public Enumerations

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
+using LanExchange.Intf;
 using LanExchange.Properties;
 
 namespace LanExchange.Model

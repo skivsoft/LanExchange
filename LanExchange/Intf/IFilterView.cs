@@ -1,8 +1,4 @@
-﻿using LanExchange.Core;
-using LanExchange.Model;
-using LanExchange.Presenter;
-
-namespace LanExchange.UI
+﻿namespace LanExchange.Intf
 {
     /// <summary>
     /// View for filter panel.

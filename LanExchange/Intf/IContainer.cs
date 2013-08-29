@@ -1,6 +1,6 @@
 using System;
 
-namespace LanExchange.Core
+namespace LanExchange.Intf
 {
     public interface IContainer
     {

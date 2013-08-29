@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
-using LanExchange.Core;
-using LanExchange.Misc.Impl;
+using LanExchange.Intf;
 using LanExchange.Utils;
 
 namespace LanExchange.Misc.Addon

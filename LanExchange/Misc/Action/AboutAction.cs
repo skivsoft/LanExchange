@@ -1,7 +1,6 @@
 ﻿using System.Windows.Forms;
-using LanExchange.Core;
+using LanExchange.Intf;
 using LanExchange.SDK;
-using LanExchange.UI;
 
 namespace LanExchange.Misc.Action
 {

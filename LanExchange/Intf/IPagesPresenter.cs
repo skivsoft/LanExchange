@@ -1,9 +1,7 @@
 ﻿using System;
-using LanExchange.Core;
-using LanExchange.Model;
 using LanExchange.UI;
 
-namespace LanExchange.Presenter
+namespace LanExchange.Intf
 {
     public interface IPagesPresenter : IPresenter<IPagesView>
     {

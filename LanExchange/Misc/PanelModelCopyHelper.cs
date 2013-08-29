@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
-using LanExchange.Core;
+using LanExchange.Intf;
 using LanExchange.Model;
 using LanExchange.SDK;
 
 namespace LanExchange.Misc
 {  
-    public class PanelItemsCopyHelper
+    public class PanelModelCopyHelper
     {
         private readonly IPanelModel m_Model;
         private readonly List<int> m_Indexes;
         private PanelItemBase m_CurrentItem;
         private IList<PanelColumnHeader> m_Columns;
 
-        public PanelItemsCopyHelper(IPanelModel model)
+        public PanelModelCopyHelper(IPanelModel model)
         {
             m_Model = model;
             m_Indexes = new List<int>();

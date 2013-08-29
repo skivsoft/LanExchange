@@ -1,6 +1,4 @@
-﻿using LanExchange.Core;
-
-namespace LanExchange.Model
+﻿namespace LanExchange.Intf
 {
     /// <summary>
     /// Interface for filtering panel items.
