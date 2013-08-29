@@ -27,8 +27,8 @@ namespace LanExchange.Misc.Impl
             m_NamesMap = new Dictionary<string, int>();
             // init system images
             ShellAPI.FileIconInit(true);
-            var small = new SysImageList(SysImageListSize.smallIcons);
-            var large = new SysImageList(SysImageListSize.largeIcons);
+            var small = new SysImageList(SysImageListSize.SmallIcons);
+            var large = new SysImageList(SysImageListSize.LargeIcons);
             // init image lists
             m_SmallImageList = new ImageList();
             m_SmallImageList.ColorDepth = ColorDepth.Depth32Bit;
@@ -183,7 +183,7 @@ namespace LanExchange.Misc.Impl
 
         public Image GetSmallImageOfFileName(string fileName)
         {
-            using (var small = new SysImageList(SysImageListSize.smallIcons))
+            using (var small = new SysImageList(SysImageListSize.SmallIcons))
             {
                 var index = small.IconIndex(fileName);
                 return small.Icon(index).ToBitmap();

@@ -32,7 +32,7 @@ namespace LanExchange.UI
         public PagesView()
         {
             InitializeComponent();
-            m_Presenter = App.Ioc.Resolve<IPagesPresenter>();
+            m_Presenter = App.Resolve<IPagesPresenter>();
             m_Presenter.View = this;
             mSelectTab.DropDownDirection = ToolStripDropDownDirection.BelowLeft;
         }
@@ -284,7 +284,7 @@ namespace LanExchange.UI
         [Localizable(false)]
         public IPanelView CreatePanelView(IPanelModel info)
         {
-            var PV = (PanelView) App.Ioc.Resolve<IPanelView>();
+            var PV = (PanelView) App.Resolve<IPanelView>();
             ListView LV = PV.Controls[0] as ListView;
             if (LV != null)
             {

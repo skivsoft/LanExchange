@@ -19,18 +19,18 @@ namespace LanExchange.Misc.Service
         public string Change(string str)
         {
             var result = string.Empty;
-            foreach (char Ch in str)
+            foreach (char ch in str)
             {
-                int index = m_ABC[1].IndexOf(Ch);
+                int index = m_ABC[1].IndexOf(ch);
                 if (index != -1)
                     result += m_ABC[0][index];
                 else
                 {
-                    index = m_ABC[0].IndexOf(Ch);
+                    index = m_ABC[0].IndexOf(ch);
                     if (index != -1)
                         result += m_ABC[1][index];
                     else
-                        result += Ch;
+                        result += ch;
                 }
             }
             return result;
@@ -48,26 +48,26 @@ namespace LanExchange.Misc.Service
                 return false;
             for (int i = 0; i < s.Length - what.Length + 1; i++)
             {
-                bool IsEqual = true;
+                bool isEqual = true;
                 for (int j = 0; j < what.Length; j++)
                 {
-                    char Ch = s[i + j];
+                    char ch = s[i + j];
                     if (what[j] == 'Е' || what[j] == 'Ё')
                     {
-                        if (Ch != 'Е' && Ch != 'Ё')
+                        if (ch != 'Е' && ch != 'Ё')
                         {
-                            IsEqual = false;
+                            isEqual = false;
                             break;
                         }
                     }
                     else
-                        if (what[j] != Ch)
+                        if (what[j] != ch)
                         {
-                            IsEqual = false;
+                            isEqual = false;
                             break;
                         }
                 }
-                if (IsEqual) return true;
+                if (isEqual) return true;
             }
             return false;
         }

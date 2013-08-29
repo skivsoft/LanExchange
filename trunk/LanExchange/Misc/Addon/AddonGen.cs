@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel;
+using LanExchange.Core;
+using LanExchange.Misc.Impl;
 using LanExchange.Utils;
 
 namespace LanExchange.Misc.Addon
@@ -62,7 +64,7 @@ namespace LanExchange.Misc.Addon
             share.Id = "SharePanelItem";
             root.PanelItemTypes.Add(share);
             // store xml file
-            var fileName = FolderManager.Instance.GetAddonFileName(true, "Default");
+            var fileName = App.FolderManager.GetAddonFileName(true, "Default");
             SerializeUtils.SerializeObjectToXMLFile(fileName, root);
         }
 
@@ -79,7 +81,7 @@ namespace LanExchange.Misc.Addon
             program.FileName = @"%ProgramFiles(x86)%\Radmin Viewer 3\Radmin.exe";
             root.Programs.Add(program);
             // store xml file
-            var fileName = FolderManager.Instance.GetAddonFileName(true, "RadminViewer");
+            var fileName = App.FolderManager.GetAddonFileName(true, "RadminViewer");
             SerializeUtils.SerializeObjectToXMLFile(fileName, root);
         }
 

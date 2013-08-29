@@ -2,12 +2,12 @@
 using System.IO;
 using System.Linq;
 
-namespace LanExchange.Misc
+namespace LanExchange.Misc.Impl
 {
     /// <summary>
     /// This singleton class provides all directory names and config filenames for program.
     /// </summary>
-    public class FolderManager
+    public class FolderManagerImpl : IFolderManager
     {
         public const string PROGRAM_DIR = "LanExchange";
         public const string CONFIG_DIR = "Config";
@@ -15,7 +15,6 @@ namespace LanExchange.Misc
         public const string TABS_FILE = "Tabs.cfg";
         public const string ADDONS_EXT = ".xml";
 
-        private static FolderManager s_Instance;
         private readonly string m_CurrentPath;
         private readonly string m_ExeFileName;
         private readonly string m_ConfigFileName;
@@ -23,7 +22,7 @@ namespace LanExchange.Misc
         private readonly string m_SystemAddonsPath;
         private readonly string m_UserAddonsPath;
 
-        private FolderManager()
+        private FolderManagerImpl()
         {
             var args = Environment.GetCommandLineArgs();
             m_ExeFileName = args.Length > 0 ? args[0] : string.Empty;
@@ -35,16 +34,6 @@ namespace LanExchange.Misc
             m_SystemAddonsPath = Path.Combine(m_CurrentPath, ADDONS_DIR);
             var appData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             m_UserAddonsPath = Path.Combine(Path.Combine(appData, PROGRAM_DIR), ADDONS_DIR);
-        }
-
-        public static FolderManager Instance
-        {
-            get
-            {
-                if (s_Instance == null)
-                    s_Instance = new FolderManager();
-                return s_Instance;
-            }
         }
 
         public string CurrentPath

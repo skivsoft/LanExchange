@@ -2,17 +2,16 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
-using AndreasJohansson.Win32.Shell;
-using LanExchange.Intf;
+using LanExchange.Core;
 using LanExchange.Misc;
 using LanExchange.Misc.Action;
 using LanExchange.Misc.Addon;
+using LanExchange.Model.Settings;
 using LanExchange.Model;
 using LanExchange.Presenter;
 using System.Drawing;
 using System.ComponentModel;
 using System.Security.Permissions;
-using LanExchange.Model.Settings;
 using LanExchange.Properties;
 using LanExchange.SDK;
 using LanExchange.Utils;
@@ -160,10 +159,11 @@ namespace LanExchange.UI
         private void SetupForm()
         {
             // set mainform bounds
-            var Rect = SettingsGetBounds();
-            SetBounds(Rect.Left, Rect.Top, Rect.Width, Rect.Height);
+            var rect = SettingsGetBounds();
+            SetBounds(rect.Left, rect.Top, rect.Width, rect.Height);
             // set mainform title
-            Text = String.Format("{0} {1}", AboutInfo.Product, AboutInfo.VersionShort);
+            var aboutModel = App.Resolve<IAboutModel>();
+            Text = String.Format("{0} {1}", aboutModel.Product, aboutModel.VersionShort);
             // show tray
             TrayIcon.Text = Text;
             TrayIcon.Visible = true;
@@ -508,7 +508,7 @@ namespace LanExchange.UI
 
         private void mWebPage_Click(object sender, EventArgs e)
         {
-            var presenter = App.Ioc.Resolve<IAboutPresenter>();
+            var presenter = App.Resolve<IAboutPresenter>();
             presenter.OpenWebLink();
         }
 
@@ -553,7 +553,8 @@ namespace LanExchange.UI
             foreach (var column in App.PanelColumns.EnumAllColumns())
                 if (column.Callback != null)
                     count += column.LazyDict.Count;
-            Text = String.Format("{0} {1} [Threads: {2}, Dict: {3}]", AboutInfo.Product, AboutInfo.VersionFull, App.LazyThreadPool.NumThreads, count);
+            var aboutModel = App.Resolve<IAboutModel>();
+            Text = String.Format("{0} {1} [Threads: {2}, Dict: {3}]", aboutModel.Product, aboutModel.VersionFull, App.LazyThreadPool.NumThreads, count);
         }
  #endif
 

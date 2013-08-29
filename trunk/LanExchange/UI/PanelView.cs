@@ -245,7 +245,7 @@ namespace LanExchange.UI
 
         private void lvComps_KeyPress(object sender, KeyPressEventArgs e)
         {
-            var punto = App.Ioc.Resolve<IPuntoSwitcherService>();
+            var punto = App.Resolve<IPuntoSwitcherService>();
             if (Char.IsLetterOrDigit(e.KeyChar) || Char.IsPunctuation(e.KeyChar) || punto.IsValidChar(e.KeyChar))
             {
                 pFilter.FocusAndKeyPress(e);

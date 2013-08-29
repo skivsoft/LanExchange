@@ -92,11 +92,15 @@
     <Compile Include="..\Common\AnyAssemblyInfo.cs">
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Core\IModel.cs" />
+    <Compile Include="Core\IPresenter.cs" />
+    <Compile Include="Core\IView.cs" />
+    <Compile Include="Core\PresenterBase.cs" />
     <Compile Include="Misc\Action\AboutAction.cs" />
     <Compile Include="Misc\Action\ReReadAction.cs" />
     <Compile Include="Misc\Action\ShortcutKeysAction.cs" />
     <Compile Include="Misc\CmdLineProcessor.cs" />
-    <Compile Include="Misc\App.cs" />
+    <Compile Include="Core\App.cs" />
     <Compile Include="Misc\Impl\ImageManagerImpl.cs" />
     <Compile Include="Misc\Impl\PanelColumnManagerImpl.cs" />
     <Compile Include="Misc\Impl\PanelFillerManagerImpl.cs" />
@@ -104,11 +108,12 @@
     <Compile Include="Misc\Impl\ServiceProviderImpl.cs" />
     <Compile Include="Misc\Impl\TranslatorImpl.cs" />
     <Compile Include="Misc\ColumnComparer.cs" />
+    <Compile Include="Model\PanelItemBaseHolder.cs" />
+    <Compile Include="Model\IAboutModel.cs" />
     <Compile Include="Model\IFilterModel.cs" />
     <Compile Include="Model\IPagesModel.cs" />
     <Compile Include="Model\IPanelModel.cs" />
     <Compile Include="Misc\ObjectPath.cs" />
-    <Compile Include="Core\PresenterFactory.cs" />
     <Compile Include="Presenter\IAboutPresenter.cs" />
     <Compile Include="Presenter\IFilterPresenter.cs" />
     <Compile Include="Presenter\IPagesPresenter.cs" />
@@ -132,19 +137,18 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Misc\CustomPanelItem.cs" />
-    <Compile Include="Misc\FolderManager.cs" />
+    <Compile Include="Misc\Impl\FolderManagerImpl.cs" />
     <Compile Include="Misc\HashtableSerializable.cs" />
     <Compile Include="Model\PagesModel.cs" />
-    <Compile Include="Model\PanelItemList.cs" />
+    <Compile Include="Model\PanelModel.cs" />
     <Compile Include="Misc\PanelItemsCopyHelper.cs" />
     <Compile Include="Utils\PingUtils.cs" />
     <Compile Include="Misc\Service\IPuntoSwitcherService.cs" />
     <Compile Include="Misc\Service\PuntoSwitcherServiceEngRus.cs" />
-    <Compile Include="Misc\Settings\Settings.cs" />
-    <Compile Include="Misc\Settings\SettingsChangedArgs.cs" />
-    <Compile Include="Misc\Settings\Tab.cs" />
-    <Compile Include="Misc\Settings\Tabs.cs" />
-    <Compile Include="Misc\AboutInfo.cs" />
+    <Compile Include="Model\Settings\Settings.cs" />
+    <Compile Include="Model\Settings\Tab.cs" />
+    <Compile Include="Model\Settings\Tabs.cs" />
+    <Compile Include="Model\AboutModel.cs" />
     <Compile Include="Presenter\AboutPresenter.cs" />
     <Compile Include="Presenter\FilterPresenter.cs" />
     <Compile Include="Misc\LazyThreadPool.cs" />
@@ -202,7 +206,6 @@
     <Compile Include="UI\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\MenuUtils.cs" />
     <Compile Include="UI\PagesView.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -3,7 +3,9 @@ using System.Collections;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using LanExchange.Core;
 using LanExchange.Misc;
+using LanExchange.Misc.Impl;
 using LanExchange.Utils;
 using System.Security.Principal;
 using System.Collections.Generic;
@@ -16,8 +18,8 @@ namespace LanExchange.Model.Settings
     [Localizable(false)]
     public class Settings
     {
-        private static Settings m_Instance;
-        private static bool m_Modified;
+        private static Settings s_Instance;
+        private static bool s_Modified;
 
         private HashtableSerializable m_Config;
         private Hashtable m_Default;
@@ -47,21 +49,21 @@ namespace LanExchange.Model.Settings
         {
             get
             {
-                if (m_Instance == null)
+                if (s_Instance == null)
                 {
                     var temp = new Settings();
-                    m_Instance = temp;
+                    s_Instance = temp;
                 }
-                return m_Instance;
+                return s_Instance;
             }
         }
 
         private static bool Modified
         {
-            get { return m_Modified; }
+            get { return s_Modified; }
             set 
             {
-                m_Modified = value;
+                s_Modified = value;
                 SaveIfModified();
             }
 
@@ -87,7 +89,7 @@ namespace LanExchange.Model.Settings
 
         public void Load()
         {
-            var fileName = FolderManager.Instance.ConfigFileName;
+            var fileName = App.FolderManager.ConfigFileName;
             if (!File.Exists(fileName)) return;
             try
             {
@@ -112,7 +114,7 @@ namespace LanExchange.Model.Settings
         public static void SaveIfModified()
         {
             if (!Modified) return;
-            var fileName = FolderManager.Instance.ConfigFileName;
+            var fileName = App.FolderManager.ConfigFileName;
             try
             {
                 SerializeUtils.SerializeObjectToXMLFile(fileName, Instance);
@@ -121,7 +123,7 @@ namespace LanExchange.Model.Settings
             {
                 Debug.Print(ex.Message);
             }
-            m_Modified = false;
+            s_Modified = false;
         }
 
         public static string GetCurrentUserName()
@@ -201,7 +203,7 @@ namespace LanExchange.Model.Settings
                 Changed(this, args);
                 m_Config[name] = args.NewValue;
             }
-            m_Modified = true;
+            s_Modified = true;
             SaveIfModified();
         }
 
@@ -222,11 +224,11 @@ namespace LanExchange.Model.Settings
         {
             get
             {
-                return AutorunUtils.Autorun_Exists(FolderManager.Instance.ExeFileName);
+                return AutorunUtils.Autorun_Exists(App.FolderManager.ExeFileName);
             }
             set
             {
-                var exeFName = FolderManager.Instance.ExeFileName;
+                var exeFName = App.FolderManager.ExeFileName;
                 if (value)
                 {
                     AutorunUtils.Autorun_Add(exeFName);
@@ -243,7 +245,30 @@ namespace LanExchange.Model.Settings
 
         [DefaultValue(false)]
         public bool AdvancedMode { get; set; }
+    }
 
+    public class SettingsChangedArgs : EventArgs
+    {
+        private readonly string m_Name;
+        private readonly object m_Value;
 
+        public SettingsChangedArgs(string name, object value)
+        {
+            m_Name = name;
+            m_Value = value;
+            NewValue = value;
+        }
+
+        public string Name
+        {
+            get { return m_Name; }
+        }
+
+        public object Value
+        {
+            get { return m_Value; }
+        }
+
+        public object NewValue { get; set; }
     }
 }

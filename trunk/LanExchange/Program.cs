@@ -48,7 +48,7 @@
 
 using System;
 using System.Windows.Forms;
-using LanExchange.Intf;
+using LanExchange.Core;
 using LanExchange.Misc;
 using LanExchange.Misc.Addon;
 using LanExchange.Model;

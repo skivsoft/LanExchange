@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using LanExchange.Model;
 using LanExchange.SDK;
 
-namespace LanExchange.Intf
+namespace LanExchange.Misc
 {
     public class ColumnComparer : IComparer<PanelItemBase>
     {

@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using LanExchange.Intf;
+using LanExchange.Core;
 using LanExchange.Misc;
 using LanExchange.Misc.Service;
-using LanExchange.SDK;
 using LanExchange.Model.Settings;
+using LanExchange.SDK;
 
 namespace LanExchange.Model
 {
-    // TODO !!! rename to PanelModel when will work
-    public class PanelItemList : IEquatable<PanelItemList>, IPanelModel
+    public class PanelModel : IEquatable<IPanelModel>, IPanelModel
     {       
         // items added by user
         private readonly IList<PanelItemBase> m_Items;
@@ -28,7 +27,7 @@ namespace LanExchange.Model
 
         public event EventHandler Changed;
         
-        public PanelItemList(IPuntoSwitcherService puntoService)
+        public PanelModel(IPuntoSwitcherService puntoService)
         {
             m_Punto = puntoService;
             m_Items = new List<PanelItemBase>();
@@ -308,7 +307,7 @@ namespace LanExchange.Model
                 Changed(this, EventArgs.Empty);
         }
 
-        public bool Equals(PanelItemList other)
+        public bool Equals(IPanelModel other)
         {
             return String.Compare(TabName, other.TabName, StringComparison.OrdinalIgnoreCase) == 0;
         }

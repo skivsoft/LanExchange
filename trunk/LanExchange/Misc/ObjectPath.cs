@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using LanExchange.SDK;
 
-namespace LanExchange.Model
+namespace LanExchange.Misc
 {
     /// <summary>
     /// Path to nested object.

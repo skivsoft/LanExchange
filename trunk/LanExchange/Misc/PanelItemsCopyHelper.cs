@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
-using LanExchange.Misc;
+using LanExchange.Core;
+using LanExchange.Model;
 using LanExchange.SDK;
 
-namespace LanExchange.Model
+namespace LanExchange.Misc
 {  
     public class PanelItemsCopyHelper
     {
@@ -130,12 +131,5 @@ namespace LanExchange.Model
             result.DataType = m_Model.DataType;
             return result;
         }
-    }
-
-    [Serializable]
-    public class PanelItemBaseHolder : List<PanelItemBase>
-    {
-        public string Context;
-        public Type DataType;
     }
 }

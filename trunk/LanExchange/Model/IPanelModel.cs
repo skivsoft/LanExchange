@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using LanExchange.Intf;
+using LanExchange.Misc;
 using LanExchange.SDK;
 
 namespace LanExchange.Model

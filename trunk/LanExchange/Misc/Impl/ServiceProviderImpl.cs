@@ -1,6 +1,6 @@
 ﻿using System;
-using LanExchange.SDK;
-using LanExchange.UI;
+using System.Diagnostics;
+using LanExchange.Core;
 
 namespace LanExchange.Misc.Impl
 {
@@ -8,34 +8,16 @@ namespace LanExchange.Misc.Impl
     {
         public object GetService(Type serviceType)
         {
-            if (serviceType == typeof (ITranslator))
-                return TT.Translator;
-
-            if (serviceType == typeof (IImageManager))
-                return App.Images;
-
-            if (serviceType == typeof(IPanelItemFactoryManager))
-                return App.PanelItemTypes;
-
-            if (serviceType == typeof(IPanelFillerManager))
-                return App.PanelFillers;
-
-            if (serviceType == typeof (IPanelColumnManager))
-                return App.PanelColumns;
-
-            //if (PanelSubscription.Instance != null)
-            //    if (serviceType == typeof (IBackgroundStrategySelector))
-            //        return PanelSubscription.Instance.StrategySelector;
-
-            if (MainForm.Instance != null)
+            object result = null;
+            try
             {
-                if (serviceType == typeof (IPagesView))
-                    return MainForm.Instance.Pages;
-                if (serviceType == typeof (IInfoView))
-                    return MainForm.Instance.pInfo;
+                result = App.Resolve(serviceType);
             }
-
-            return null;
+            catch (Exception ex)
+            {
+                Debug.Print(ex.Message);
+            }
+            return result;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using LanExchange.Core;
 using LanExchange.SDK;
 using LanExchange.UI;
 
@@ -12,7 +13,7 @@ namespace LanExchange.Misc.Action
         {
             if (m_Instance == null)
             {
-                m_Instance = App.Ioc.Resolve<IAboutView>();
+                m_Instance = App.Resolve<IAboutView>();
                 m_Instance.FormClosed += OnFormClosed;
                 m_Instance.Show();
             } else
