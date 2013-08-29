@@ -3,9 +3,11 @@ using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
 using AndreasJohansson.Win32.Shell;
-using LanExchange.Action;
+using LanExchange.Intf;
+using LanExchange.Misc;
+using LanExchange.Misc.Action;
+using LanExchange.Misc.Addon;
 using LanExchange.Model;
-using LanExchange.Model.Addon;
 using LanExchange.Presenter;
 using System.Drawing;
 using System.ComponentModel;
@@ -14,6 +16,7 @@ using LanExchange.Model.Settings;
 using LanExchange.Properties;
 using LanExchange.SDK;
 using LanExchange.Utils;
+using LanExchange.UI;
 using Settings = LanExchange.Model.Settings.Settings;
 
 namespace LanExchange.UI
@@ -39,24 +42,24 @@ namespace LanExchange.UI
             //Settings.Instance.Load();
             SetRunMinimized(Settings.Instance.RunMinimized);
             // init Pages presenter
-            AppPresenter.MainPages = Pages.GetPresenter();
-            AppPresenter.MainPages.PanelViewFocusedItemChanged += Pages_PanelViewFocusedItemChanged;
-            AppPresenter.MainPages.PanelViewFilterTextChanged += Pages_FilterTextChanged;
-            AppPresenter.MainPages.GetModel().LoadSettings();
+            App.MainPages = Pages.Presenter;
+            App.MainPages.PanelViewFocusedItemChanged += Pages_PanelViewFocusedItemChanged;
+            App.MainPages.PanelViewFilterTextChanged += Pages_FilterTextChanged;
+            App.MainPages.LoadSettings();
             // init main form
             SetupActions();
             SetupForm();
             // setup images
             Instance.tipComps.SetToolTip(Pages.Pages, " ");
-            Pages.Pages.ImageList = AppPresenter.Images.SmallImageList;
-            Status.ImageList = AppPresenter.Images.SmallImageList;
+            Pages.Pages.ImageList = App.Images.SmallImageList;
+            Status.ImageList = App.Images.SmallImageList;
             // set hotkey for activate: Ctrl+Win+X
             m_Hotkeys = new GlobalHotkeys();
             m_Hotkeys.RegisterGlobalHotKey((int)Keys.X, GlobalHotkeys.MOD_CONTROL + GlobalHotkeys.MOD_WIN, Handle);
             // set lazy events
-            AppPresenter.LazyThreadPool.DataReady += OnDataReady;
+            App.LazyThreadPool.DataReady += OnDataReady;
 #if DEBUG
-            AppPresenter.LazyThreadPool.NumThreadsChanged += OnNumThreadsChanged;
+            App.LazyThreadPool.NumThreadsChanged += OnNumThreadsChanged;
 #endif
         }
 
@@ -73,13 +76,13 @@ namespace LanExchange.UI
                 var value = (int) e.Value;
                 if (value < 2)
                     value = 2;
-                if (AppPresenter.PanelColumns != null)
-                    if (value > AppPresenter.PanelColumns.MaxColumns)
-                        value = AppPresenter.PanelColumns.MaxColumns;
+                if (App.PanelColumns != null)
+                    if (value > App.PanelColumns.MaxColumns)
+                        value = App.PanelColumns.MaxColumns;
                 e.NewValue = value;
                 pInfo.CountLines = value;
-                AppPresenter.MainPages.PV_FocusedItemChanged(Pages.ActivePanelView, EventArgs.Empty);
-                return;
+                App.MainPages.DoPanelViewFocusedItemChanged(Pages.ActivePanelView, EventArgs.Empty);
+                //return;
             }
         }
 
@@ -166,10 +169,10 @@ namespace LanExchange.UI
             TrayIcon.Visible = true;
             // show computer name
             lCompName.Text = SystemInformation.ComputerName;
-            lCompName.ImageIndex = AppPresenter.Images.IndexOf(PanelImageNames.ComputerNormal);
+            lCompName.ImageIndex = App.Images.IndexOf(PanelImageNames.ComputerNormal);
             // show current user
             lUserName.Text = Settings.GetCurrentUserName();
-            lUserName.ImageIndex = AppPresenter.Images.IndexOf(PanelImageNames.UserNormal);
+            lUserName.ImageIndex = App.Images.IndexOf(PanelImageNames.UserNormal);
         }
 
         private bool m_EscDown;
@@ -188,7 +191,7 @@ namespace LanExchange.UI
                     var parent = pv == null || pv.Presenter.Objects.CurrentPath.IsEmptyOrRoot
                                      ? null
                                      : pv.Presenter.Objects.CurrentPath.Peek();
-                    if ((parent == null) || AppPresenter.PanelItemTypes.DefaultRoots.Contains(parent))
+                    if ((parent == null) || App.PanelItemTypes.DefaultRoots.Contains(parent))
                         Instance.Hide();
                     else if (!m_EscDown)
                     {
@@ -322,12 +325,12 @@ namespace LanExchange.UI
             var panelItem = pv.Presenter.GetFocusedPanelItem(false, true);
             // check if parent item more informative than current panel item
             while (panelItem != null &&
-                   !AppPresenter.PanelItemTypes.DefaultRoots.Contains(panelItem) &&
-                   !AppPresenter.PanelItemTypes.DefaultRoots.Contains(panelItem.Parent))
+                   !App.PanelItemTypes.DefaultRoots.Contains(panelItem) &&
+                   !App.PanelItemTypes.DefaultRoots.Contains(panelItem.Parent))
                 panelItem = panelItem.Parent;
             if (panelItem == null) return;
             // update info panel at top of the form
-            pInfo.Picture.Image = AppPresenter.Images.GetLargeImage(panelItem.ImageName);
+            pInfo.Picture.Image = App.Images.GetLargeImage(panelItem.ImageName);
             tipComps.SetToolTip(pInfo.Picture, panelItem.ImageLegendText);
             var helper = new PanelItemsCopyHelper(null);
             helper.CurrentItem = panelItem;
@@ -432,7 +435,7 @@ namespace LanExchange.UI
         private void timerTabSettingsSaver_Tick(object sender, EventArgs e)
         {
             // save tab settings and switch off timer
-            AppPresenter.MainPages.GetModel().SaveSettings();
+            App.MainPages.SaveSettings();
             if (sender is System.Windows.Forms.Timer)
                 (sender as System.Windows.Forms.Timer).Enabled = false;
         }
@@ -505,7 +508,7 @@ namespace LanExchange.UI
 
         private void mWebPage_Click(object sender, EventArgs e)
         {
-            var presenter = new AboutPresenter(null);
+            var presenter = App.Ioc.Resolve<IAboutPresenter>();
             presenter.OpenWebLink();
         }
 
@@ -516,7 +519,7 @@ namespace LanExchange.UI
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            AppPresenter.LazyThreadPool.Dispose();
+            App.LazyThreadPool.Dispose();
         }
 
         public void OnDataReady(object sender, DataReadyArgs args)
@@ -547,10 +550,10 @@ namespace LanExchange.UI
         private void MainForm_RefreshNumThreads(object sender)
         {
             int count = 0;
-            foreach (var column in AppPresenter.PanelColumns.EnumAllColumns())
+            foreach (var column in App.PanelColumns.EnumAllColumns())
                 if (column.Callback != null)
                     count += column.LazyDict.Count;
-            Text = String.Format("{0} {1} [Threads: {2}, Dict: {3}]", AboutInfo.Product, AboutInfo.VersionFull, AppPresenter.LazyThreadPool.NumThreads, count);
+            Text = String.Format("{0} {1} [Threads: {2}, Dict: {3}]", AboutInfo.Product, AboutInfo.VersionFull, App.LazyThreadPool.NumThreads, count);
         }
  #endif
 
@@ -570,7 +573,7 @@ namespace LanExchange.UI
 
         private void mPanelNewTab_Click(object sender, EventArgs e)
         {
-            AppPresenter.MainPages.CommandNewTab();
+            App.MainPages.CommandNewTab();
         }
 
         private void pInfo_DragOver(object sender, DragEventArgs e)
@@ -584,7 +587,7 @@ namespace LanExchange.UI
 
         private void pInfo_DragDrop(object sender, DragEventArgs e)
         {
-            AppPresenter.MainPages.CommandSendToNewTab();
+            App.MainPages.CommandSendToNewTab();
         }
     }
 }

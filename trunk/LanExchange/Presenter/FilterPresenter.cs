@@ -1,18 +1,14 @@
 ﻿using System;
-using LanExchange.SDK;
+using LanExchange.Core;
+using LanExchange.Model;
+using LanExchange.UI;
 
 namespace LanExchange.Presenter
 {
-    public class FilterPresenter : IFilterPresenter
+    public class FilterPresenter : PresenterBase<IFilterView>, IFilterPresenter
     {
-        private readonly IFilterView m_View;
         private IFilterModel m_Model;
         private string m_Filter;
-
-        public FilterPresenter(IFilterView view)
-        {
-            m_View = view;
-        }
 
         public string FilterText
         {
@@ -24,10 +20,10 @@ namespace LanExchange.Presenter
                 {
                     m_Model.FilterText = value;
                     m_Model.ApplyFilter();
-                    m_View.UpdateFromModel(m_Model);
-                    m_View.DoFilterCountChanged();
+                    View.UpdateFromModel(m_Model);
+                    View.DoFilterCountChanged();
                 }
-                m_View.IsVisible = IsFiltered;
+                View.IsVisible = IsFiltered;
             }
         }
 
@@ -49,11 +45,11 @@ namespace LanExchange.Presenter
             m_Model = null;
             if (value != null)
             {
-                m_View.SetFilterText(value.FilterText);
+                View.SetFilterText(value.FilterText);
                 m_Model = value;
                 m_Model.ApplyFilter();
-                m_View.UpdateFromModel(m_Model);
-                m_View.DoFilterCountChanged();
+                View.UpdateFromModel(m_Model);
+                View.DoFilterCountChanged();
             }
         }
     }

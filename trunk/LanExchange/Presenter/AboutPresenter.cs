@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
+using LanExchange.Core;
+using LanExchange.Misc;
 using LanExchange.Model;
-using LanExchange.SDK;
+using LanExchange.UI;
 
 namespace LanExchange.Presenter
 {
@@ -9,26 +11,19 @@ namespace LanExchange.Presenter
     /// Presenter for Settings (model) and AboutForm (view).
     /// </summary>
     [Localizable(false)]
-    internal sealed class AboutPresenter
+    public sealed class AboutPresenter : PresenterBase<IAboutView>, IAboutPresenter
     {
-        private readonly IAboutView m_View;
-
-        public AboutPresenter(IAboutView view)
-        {
-            m_View = view;
-        }
-
         public void LoadFromModel()
         {
-            m_View.Text = string.Format(m_View.Text, AboutInfo.Product);
-            m_View.VersionText = AboutInfo.VersionFull;
-            m_View.CopyrightText = AboutInfo.Copyright;
-            m_View.WebText = AboutInfo.WebSite;
-            m_View.WebToolTip = GetFullWebLink();
-            m_View.TwitterText = "@" + AboutInfo.Twitter;
-            m_View.TwitterToolTip = GetFullTwitterLink();
-            m_View.EmailText = AboutInfo.Email;
-            m_View.EmailToolTip = GetFullEmailLink();
+            View.Text = string.Format(View.Text, AboutInfo.Product);
+            View.VersionText = AboutInfo.VersionFull;
+            View.CopyrightText = AboutInfo.Copyright;
+            View.WebText = AboutInfo.WebSite;
+            View.WebToolTip = GetFullWebLink();
+            View.TwitterText = "@" + AboutInfo.Twitter;
+            View.TwitterToolTip = GetFullTwitterLink();
+            View.EmailText = AboutInfo.Email;
+            View.EmailToolTip = GetFullEmailLink();
         }
 
         private string GetFullWebLink()

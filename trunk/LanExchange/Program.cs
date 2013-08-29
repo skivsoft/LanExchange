@@ -48,8 +48,10 @@
 
 using System;
 using System.Windows.Forms;
+using LanExchange.Intf;
+using LanExchange.Misc;
+using LanExchange.Misc.Addon;
 using LanExchange.Model;
-using LanExchange.Model.Addon;
 using LanExchange.Presenter;
 using LanExchange.Properties;
 using LanExchange.UI;
@@ -66,8 +68,9 @@ namespace LanExchange
             try
             {
                 CmdLineProcessor.Processing();
-                AppPresenter.Setup();
-                AppPresenter.Plugins.LoadPlugins();
+
+                App.Setup();
+                App.Plugins.LoadPlugins();
 #if DEBUG
                 //AddonGen.Generate();
 #endif
@@ -76,7 +79,7 @@ namespace LanExchange
             }
             catch(Exception e)
             {
-                MessageBox.Show(null, e.Message, Resources.Program_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(null, string.Format("{0}\n{1}", e.Message, e.StackTrace), Resources.Program_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

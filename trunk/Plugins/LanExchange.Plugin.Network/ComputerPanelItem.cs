@@ -9,7 +9,7 @@ using LanExchange.SDK;
 namespace LanExchange.Plugin.Network
 {
     [Serializable]
-    public class ComputerPanelItem : PanelItemBase, IWmiComputer
+    public class ComputerPanelItem : PanelItemBase
     {
         private readonly ServerInfo m_SI;
 

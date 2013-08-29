@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel;
 using System.Windows.Forms;
-using LanExchange.SDK;
+using LanExchange.Intf;
 using LanExchange.Properties;
 
 namespace LanExchange.UI
 {
-    public partial class InputBoxForm : Form, IInputBoxView
+    public partial class InputBoxForm : Form
     {
         public static InputBoxForm CreateAskForm(string caption, string prompt, string defText)
         {

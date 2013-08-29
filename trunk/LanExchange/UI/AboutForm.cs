@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
+using LanExchange.Core;
+using LanExchange.Intf;
 using LanExchange.Presenter;
 using LanExchange.Properties;
-using LanExchange.SDK;
+using LanExchange.UI;
 
 namespace LanExchange.UI
 {
@@ -11,14 +13,13 @@ namespace LanExchange.UI
     /// </summary>
     public sealed partial class AboutForm : EscapeForm, IAboutView
     {
-        public static AboutForm Instance;
-
-        private readonly AboutPresenter m_Presenter;
+        private readonly IAboutPresenter m_Presenter;
         
-        public AboutForm()
+        public AboutForm(IAboutPresenter presenter)
         {
+            m_Presenter = presenter;
+            m_Presenter.View = this;
             InitializeComponent();
-            m_Presenter = new AboutPresenter(this);
             m_Presenter.LoadFromModel();
             boxLicense.BringToFront();
         }
@@ -86,12 +87,6 @@ namespace LanExchange.UI
             set { tipAbout.SetToolTip(eEmail, value); }
         }
 
-        private void AboutForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Instance.Dispose();
-            Instance = null;
-        }
-
         private void bShowLicense_Click(object sender, EventArgs e)
         {
             boxLicense.Visible = !boxLicense.Visible;
@@ -110,5 +105,6 @@ namespace LanExchange.UI
         {
             bShowLicense.Text = Resources.ShowLicense;
         }
+
     }
 }

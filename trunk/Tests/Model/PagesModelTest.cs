@@ -29,7 +29,7 @@ namespace LanExchange.Model
             Assert.AreEqual(0, m_Model.Count);
         }
 
-        public void Model_AfterAppend_AfterRename(object sender, PanelItemListEventArgs e)
+        public void Model_AfterAppend_AfterRename(object sender, PanelModelEventArgs e)
         {
             m_EventFired = true;
         }

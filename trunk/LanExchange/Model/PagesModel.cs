@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Windows.Forms;
-using LanExchange.Presenter;
+using System.IO;
+using LanExchange.Misc;
+using LanExchange.Model.Settings;
 using LanExchange.Properties;
 using LanExchange.Utils;
-using System.IO;
-using LanExchange.Model.Settings;
 
 namespace LanExchange.Model
 {
@@ -16,21 +15,21 @@ namespace LanExchange.Model
     // Не содержит информации, как эти знания можно визуализировать.
     // 
 
-    public class PagesModel
+    public class PagesModel : IPagesModel
     {
-        private readonly List<PanelItemList> m_List;
+        private readonly List<IPanelModel> m_List;
         private int m_SelectedIndex;
 
-        public event EventHandler<PanelItemListEventArgs> AfterAppendTab;
+        public event EventHandler<PanelModelEventArgs> AfterAppendTab;
         public event EventHandler<PanelIndexEventArgs> AfterRemove;
-        public event EventHandler<PanelItemListEventArgs> AfterRename;
+        public event EventHandler<PanelModelEventArgs> AfterRename;
         public event EventHandler<PanelIndexEventArgs> IndexChanged;
 
         private Tabs m_PagesSettings;
 
         public PagesModel()
         {
-            m_List = new List<PanelItemList>();
+            m_List = new List<IPanelModel>();
             m_PagesSettings = new Tabs();
             m_SelectedIndex = -1;
         }
@@ -57,22 +56,20 @@ namespace LanExchange.Model
             }
         }
 
-        public PanelItemList GetItem(int index)
+        public IPanelModel GetItem(int index)
         {
-            if (index < 0 || index >= m_List.Count)
-                throw new ArgumentOutOfRangeException("index");
             return m_List[index];
         }
 
-        public int GetItemIndex(PanelItemList item)
+        public int GetItemIndex(IPanelModel item)
         {
             return m_List.IndexOf(item);
         }
 
-        private void DoAfterAppendTab(PanelItemList info)
+        private void DoAfterAppendTab(IPanelModel info)
         {
             if (AfterAppendTab != null)
-                AfterAppendTab(this, new PanelItemListEventArgs(info));
+                AfterAppendTab(this, new PanelModelEventArgs(info));
         }
 
         private void DoAfterRemove(int index)
@@ -81,10 +78,10 @@ namespace LanExchange.Model
                 AfterRemove(this, new PanelIndexEventArgs(index));
         }
 
-        private void DoAfterRename(PanelItemList info)
+        private void DoAfterRename(IPanelModel info)
         {
             if (AfterRename != null)
-                AfterRename(this, new PanelItemListEventArgs(info));
+                AfterRename(this, new PanelModelEventArgs(info));
         }
 
         private void DoIndexChanged(int index)
@@ -98,7 +95,7 @@ namespace LanExchange.Model
         //    return m_List.Contains(info);
         //}
         
-        public void AddTab(PanelItemList info)
+        public void AddTab(IPanelModel info)
         {
             // ommit duplicates
             if (!m_List.Contains(info))
@@ -125,14 +122,14 @@ namespace LanExchange.Model
 
         public void RenameTab(int index, string newTabName)
         {
-            var Info = m_List[index];
-            Info.TabName = newTabName;
-            DoAfterRename(Info);
+            var info = m_List[index];
+            info.TabName = newTabName;
+            DoAfterRename(info);
         }
 
-        public string GetTabName(int i)
+        public string GetTabName(int index)
         {
-            return i >= 0 && i <= Count - 1 ? m_List[i].TabName : null;
+            return index >= 0 && index <= Count - 1 ? m_List[index].TabName : null;
         }
 
         public void LoadSettings()
@@ -166,10 +163,11 @@ namespace LanExchange.Model
             //}
             //else
             {
-                AppPresenter.PanelItemTypes.CreateDefaultRoots();
-                foreach (var root in AppPresenter.PanelItemTypes.DefaultRoots)
+                App.PanelItemTypes.CreateDefaultRoots();
+                foreach (var root in App.PanelItemTypes.DefaultRoots)
                 {
-                    var info = new PanelItemList(root.Name);
+                    var info = App.Ioc.Resolve<IPanelModel>();
+                    info.TabName = root.Name;
                     info.CurrentPath.Push(root.Parent);
                     info.CurrentPath.Push(root);
                     //info.FocusedItem = SystemInformation.ComputerName;
@@ -213,7 +211,7 @@ namespace LanExchange.Model
             if (m_List.Count == 0)
                 return string.Empty;
             var itemList = m_List[m_SelectedIndex];
-            var result = string.Empty;
+            string result;
             var index = 0;
             bool exists;
             do

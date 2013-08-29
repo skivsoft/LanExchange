@@ -9,7 +9,7 @@ namespace LanExchange.Model
        public void TestInfo()
        {
            var info = new PanelItemList("MyTab");
-           var args = new PanelItemListEventArgs(info);
+           var args = new PanelModelEventArgs(info);
            Assert.AreSame(info, args.Info);
        }
     }
