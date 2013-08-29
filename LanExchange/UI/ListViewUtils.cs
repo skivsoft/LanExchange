@@ -7,29 +7,29 @@ namespace LanExchange.UI
     {
         public static int GetCountChecked(ListView lv)
         {
-            int Result = 0;
-            foreach (ListViewItem LVI in lv.Items)
-                if (LVI.Checked)
-                    Result++;
-            return Result;
+            int result = 0;
+            foreach (ListViewItem lvi in lv.Items)
+                if (lvi.Checked)
+                    result++;
+            return result;
         }
 
         public static void SetChecked(ListView lv, string name, bool Checked)
         {
-            foreach (ListViewItem LVI in lv.Items)
-                if (LVI.Text.Equals(name))
+            foreach (ListViewItem lvi in lv.Items)
+                if (lvi.Text.Equals(name))
                 {
-                    LVI.Checked = Checked;
+                    lvi.Checked = Checked;
                     break;
                 }
         }
 
         public static IList<string> GetCheckedList(ListView lv)
         {
-            IList<string> Result = new List<string>();
+            IList<string> result = new List<string>();
             foreach (int index in lv.CheckedIndices)
-                Result.Add(lv.Items[index].Text);
-            return Result;
+                result.Add(lv.Items[index].Text);
+            return result;
         }
 
         //public static void SetCheckedList(ListView LV, IList<string> SaveSelected)

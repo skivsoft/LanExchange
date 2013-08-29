@@ -4,20 +4,35 @@ using System.IO;
 using System.Reflection;
 using LanExchange.Properties;
 
-namespace LanExchange.Misc
+namespace LanExchange.Model
 {
-    internal static class AboutInfo
+    public class AboutModel : IAboutModel
     {
-        public const string WebSite = "code.google.com/p/lanexchange/";
-        public const string Twitter = "LanExchangeHere";
-        public const string Email   = "skivsoft@gmail.com";
+        const string WEBSITE = "code.google.com/p/lanexchange/";
+        const string TWITTER = "LanExchangeHere";
+        const string EMAIL   = "skivsoft@gmail.com";
 
-        private static Assembly GetAssembly()
+        private Assembly GetAssembly()
         {
             return Assembly.GetEntryAssembly();
         }
 
-        public static string Title
+        public string WebSite
+        {
+            get { return WEBSITE; }
+        }
+
+        public string Twitter
+        {
+            get { return TWITTER; }
+        }
+
+        public string Email
+        {
+            get { return EMAIL; }
+        }
+
+        public string Title
         {
             get
             {
@@ -33,7 +48,7 @@ namespace LanExchange.Misc
         }
 
         [Localizable(false)]
-        public static string VersionShort
+        public string VersionShort
         {
             get
             {
@@ -43,7 +58,8 @@ namespace LanExchange.Misc
             }
         }
 
-        public static string VersionFull
+        [Localizable(false)]
+        public string VersionFull
         {
             get
             {
@@ -55,7 +71,7 @@ namespace LanExchange.Misc
             }
         }
 
-        public static string Description
+        public string Description
         {
             get
             {
@@ -64,7 +80,7 @@ namespace LanExchange.Misc
             }
         }
 
-        public static string Product
+        public string Product
         {
             get
             {
@@ -73,7 +89,7 @@ namespace LanExchange.Misc
             }
         }
 
-        public static string Copyright
+        public string Copyright
         {
             get
             {
@@ -82,7 +98,7 @@ namespace LanExchange.Misc
             }
         }
 
-        public static string Company
+        public string Company
         {
             get
             {

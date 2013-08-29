@@ -16,17 +16,17 @@ namespace LanExchange.UI
 		/// <summary>
 		/// System Large Icon Size (typically 32x32)
 		/// </summary>
-		largeIcons = 0x0,
+		LargeIcons = 0x0,
 		/// <summary>
 		/// System Small Icon Size (typically 16x16)
 		/// </summary>
-		smallIcons = 0x1,
+		SmallIcons = 0x1,
 		/// <summary>
 		/// System Extra Large Icon Size (typically 48x48).
 		/// Only available under XP; under other OS the
 		/// Large Icon ImageList is returned.
 		/// </summary>
-		extraLargeIcons = 0x2
+		ExtraLargeIcons = 0x2
 	}
 
 	/// <summary>
@@ -486,7 +486,7 @@ namespace LanExchange.UI
 		#region Member Variables
 		private IntPtr hIml = IntPtr.Zero;
         private IImageList iImageList;
-		private SysImageListSize size = SysImageListSize.smallIcons;
+		private SysImageListSize size = SysImageListSize.SmallIcons;
         private bool disposed;
 		#endregion
 
@@ -625,7 +625,7 @@ namespace LanExchange.UI
 		{
 			SHGetFileInfoConstants dwFlags = SHGetFileInfoConstants.SHGFI_SYSICONINDEX;
 			int dwAttr;
-			if (size == SysImageListSize.smallIcons)
+			if (size == SysImageListSize.SmallIcons)
 			{
 				dwFlags |= SHGetFileInfoConstants.SHGFI_SMALLICON;
 			}
@@ -892,7 +892,7 @@ namespace LanExchange.UI
 			{
 				// Prepare flags:
 				SHGetFileInfoConstants dwFlags = SHGetFileInfoConstants.SHGFI_USEFILEATTRIBUTES | SHGetFileInfoConstants.SHGFI_SYSICONINDEX ;
-				if (size == SysImageListSize.smallIcons)
+				if (size == SysImageListSize.SmallIcons)
 				{
 					dwFlags |= SHGetFileInfoConstants.SHGFI_SMALLICON;
 				}
@@ -1016,7 +1016,7 @@ namespace LanExchange.UI
 			)
 		{
             IntPtr wParam;
-            if (sysImageList.ImageListSize == SysImageListSize.smallIcons)
+            if (sysImageList.ImageListSize == SysImageListSize.SmallIcons)
                 wParam = (IntPtr)LVSIL_SMALL;
             else
                 wParam = (IntPtr)LVSIL_NORMAL;

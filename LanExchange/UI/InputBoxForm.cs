@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Windows.Forms;
-using LanExchange.Intf;
 using LanExchange.Properties;
 
 namespace LanExchange.UI

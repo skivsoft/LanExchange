@@ -1,16 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using LanExchange.Utils;
 
-namespace AndreasJohansson.Win32.Shell
+namespace LanExchange.Utils
 {
     /// <summary>
     /// "Stand-alone" shell context menu
@@ -1250,7 +1247,7 @@ namespace AndreasJohansson.Win32.Shell
         #region IContextMenu
         [ComImport()]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        [GuidAttribute("000214e4-0000-0000-c000-000000000046")]
+        [Guid("000214e4-0000-0000-c000-000000000046")]
         private interface IContextMenu
         {
             // Adds commands to a shortcut menu

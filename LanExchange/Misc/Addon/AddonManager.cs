@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using LanExchange.Core;
 using LanExchange.SDK;
 using LanExchange.UI;
 using LanExchange.Utils;
@@ -35,7 +36,7 @@ namespace LanExchange.Misc.Addon
 
         public void LoadAddons()
         {
-            foreach(var fileName in FolderManager.Instance.GetAddonsFiles())
+            foreach(var fileName in App.FolderManager.GetAddonsFiles())
             try
             {
                 LoadAddon(fileName);
@@ -49,7 +50,7 @@ namespace LanExchange.Misc.Addon
 
         public void LoadAddon(string fileName)
         {
-            var addon = (Misc.Addon.Addon)SerializeUtils.DeserializeObjectFromXMLFile(fileName, typeof(Misc.Addon.Addon));
+            var addon = (Addon)SerializeUtils.DeserializeObjectFromXMLFile(fileName, typeof(Addon));
             foreach (var item in addon.Programs)
                 if (!m_Programs.ContainsKey(item.Id))
                     m_Programs.Add(item.Id, item);

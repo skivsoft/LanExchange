@@ -21,7 +21,7 @@ namespace LanExchange.UI
         {
             InitializeComponent();
             Visible = false;
-            m_Presenter = App.Ioc.Resolve<IFilterPresenter>();
+            m_Presenter = App.Resolve<IFilterPresenter>();
             m_Presenter.View = this;
         }
 

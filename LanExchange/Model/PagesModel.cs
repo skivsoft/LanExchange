@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using LanExchange.Misc;
+using LanExchange.Core;
 using LanExchange.Model.Settings;
 using LanExchange.Properties;
 using LanExchange.Utils;
@@ -134,7 +134,7 @@ namespace LanExchange.Model
 
         public void LoadSettings()
         {
-            var fileFName = FolderManager.Instance.TabsConfigFileName;
+            var fileFName = App.FolderManager.TabsConfigFileName;
             if (File.Exists(fileFName))
             {
                 try
@@ -166,7 +166,7 @@ namespace LanExchange.Model
                 App.PanelItemTypes.CreateDefaultRoots();
                 foreach (var root in App.PanelItemTypes.DefaultRoots)
                 {
-                    var info = App.Ioc.Resolve<IPanelModel>();
+                    var info = App.Resolve<IPanelModel>();
                     info.TabName = root.Name;
                     info.CurrentPath.Push(root.Parent);
                     info.CurrentPath.Push(root);

@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 using LanExchange.Core;
-using LanExchange.Misc;
 using LanExchange.Model;
 using LanExchange.Properties;
 using LanExchange.SDK;
@@ -66,7 +65,7 @@ namespace LanExchange.Presenter
                 form.InputValidating += CheckDuplicateOnNew;
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    var panel = App.Ioc.Resolve<IPanelModel>();
+                    var panel = App.Resolve<IPanelModel>();
                     panel.TabName = form.Value;
                     m_Model.AddTab(panel);
                     m_Model.SaveSettings();
@@ -109,7 +108,7 @@ namespace LanExchange.Presenter
             var newTabName = m_Model.GenerateTabName();
             var sourcePV = View.ActivePanelView;
             var sourceObjects = sourcePV.Presenter.Objects;
-            var destObjects = App.Ioc.Resolve<IPanelModel>();
+            var destObjects = App.Resolve<IPanelModel>();
             destObjects.TabName = newTabName;
             destObjects.DataType = sourceObjects.DataType;
             destObjects.CurrentPath.Push(PanelItemRoot.ROOT_OF_USERITEMS);

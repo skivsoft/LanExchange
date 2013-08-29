@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using LanExchange.SDK;
 
-namespace LanExchange.Model
+namespace LanExchange.Misc
 {
     public class CustomPanelItem : PanelItemBase
     {
