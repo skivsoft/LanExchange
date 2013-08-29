@@ -41,7 +41,7 @@
             this.mContextProperties = new System.Windows.Forms.ToolStripMenuItem();
             this.ePath = new System.Windows.Forms.TextBox();
             this.LV = new LanExchange.UI.ListViewer();
-            this.pFilter = new LanExchange.UI.FilterView();
+            this.pFilter = new FilterView();
             this.mDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.popComps.SuspendLayout();
             this.SuspendLayout();

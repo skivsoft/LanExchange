@@ -1,4 +1,6 @@
-﻿namespace LanExchange.UI
+﻿using LanExchange.UI;
+
+namespace LanExchange.UI
 {
     partial class MainForm
     {
@@ -46,8 +48,8 @@
             this.lUserName = new System.Windows.Forms.ToolStripStatusLabel();
             this.tipComps = new System.Windows.Forms.ToolTip(this.components);
             this.popTop = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.Pages = new LanExchange.UI.PagesView();
-            this.pInfo = new LanExchange.UI.InfoView();
+            this.Pages = new PagesView();
+            this.pInfo = new InfoView();
             this.MainMenu = new System.Windows.Forms.MenuStrip();
             this.mPanel = new System.Windows.Forms.ToolStripMenuItem();
             this.mPanelNewTab = new System.Windows.Forms.ToolStripMenuItem();

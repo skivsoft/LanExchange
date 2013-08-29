@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Reflection;
-using System.Text;
 using System.Windows.Forms;
+using LanExchange.Core;
+using LanExchange.Misc;
+using LanExchange.Misc.Addon;
+using LanExchange.Misc.Service;
 using LanExchange.Model;
-using LanExchange.Model.Addon;
 using LanExchange.Presenter;
 using LanExchange.Properties;
 using LanExchange.SDK;
-using LanExchange.Service;
+using LanExchange.UI;
 using LanExchange.Utils;
-using Settings = LanExchange.Model.Settings.Settings;
 
 namespace LanExchange.UI
 {
@@ -21,17 +20,18 @@ namespace LanExchange.UI
         #region Class declarations and constructor
         private readonly static FormPlacement m_WMIPlacement = new FormPlacement();
 
-        private readonly PanelPresenter m_Presenter;
+        private readonly IPanelPresenter m_Presenter;
         private readonly ListViewItemCache m_Cache;
         private PanelItemsCopyHelper m_CopyHelper;
 
         public event EventHandler FocusedItemChanged;
 
-        public PanelView()
+        public PanelView(IPanelPresenter presenter)
         {
             InitializeComponent();
             // init presenters
-            m_Presenter = new PanelPresenter(this);
+            m_Presenter = presenter;
+            m_Presenter.View = this;
             m_Presenter.CurrentPathChanged += CurrentPath_Changed;
             // setup items cache
             m_Cache = new ListViewItemCache(this);
@@ -77,13 +77,13 @@ namespace LanExchange.UI
             var result = new ListViewItem();
             if (!(panelItem is PanelItemDoubleDot))
             {
-                var columns = AppPresenter.PanelColumns.GetColumns(m_Presenter.Objects.DataType);
+                var columns = App.PanelColumns.GetColumns(m_Presenter.Objects.DataType);
                 for (int i = 0; i < panelItem.CountColumns; i++)
                     if (columns[i].Visible)
                     {
                         IComparable value;
                         if ((i > 0) && (columns[i].Callback != null))
-                            value = AppPresenter.LazyThreadPool.AsyncGetData(columns[i], panelItem);
+                            value = App.LazyThreadPool.AsyncGetData(columns[i], panelItem);
                         else
                             value = panelItem[columns[i].Index];
 
@@ -94,7 +94,7 @@ namespace LanExchange.UI
                             result.SubItems.Add(text);
                     }
             }
-            result.ImageIndex = AppPresenter.Images.IndexOf(panelItem.ImageName);
+            result.ImageIndex = App.Images.IndexOf(panelItem.ImageName);
             result.ToolTipText = panelItem.ToolTipText;
             result.Tag = panelItem;
             return result;
@@ -245,7 +245,7 @@ namespace LanExchange.UI
 
         private void lvComps_KeyPress(object sender, KeyPressEventArgs e)
         {
-            var punto = PuntoSwitcherServiceFactory.GetPuntoSwitcherService();
+            var punto = App.Ioc.Resolve<IPuntoSwitcherService>();
             if (Char.IsLetterOrDigit(e.KeyChar) || Char.IsPunctuation(e.KeyChar) || punto.IsValidChar(e.KeyChar))
             {
                 pFilter.FocusAndKeyPress(e);
@@ -280,7 +280,7 @@ namespace LanExchange.UI
             {
 
                 var parent = m_Presenter.Objects.CurrentPath.IsEmpty ? null : m_Presenter.Objects.CurrentPath.Peek();
-                if (parent != null && !AppPresenter.PanelItemTypes.DefaultRoots.Contains(parent))
+                if (parent != null && !App.PanelItemTypes.DefaultRoots.Contains(parent))
                 {
                     m_Presenter.CommandLevelUp();
                     e.Handled = true;
@@ -302,7 +302,7 @@ namespace LanExchange.UI
             // Del - Delete selected items
             if (e.KeyCode == Keys.Delete)
             {
-                AppPresenter.MainPages.CommandDeleteItems();
+                App.MainPages.CommandDeleteItems();
                 e.Handled = true;
             }
             // process KeyDown on addons if KeyDown event not handled yet
@@ -351,7 +351,7 @@ namespace LanExchange.UI
                 bCanDrag = false;
                 var obj = new DataObject();
                 obj.SetText(m_CopyHelper.GetSelectedText(), TextDataFormat.UnicodeText);
-                if (AppPresenter.MainPages.CanSendToNewTab())
+                if (App.MainPages.CanSendToNewTab())
                     obj.SetData(m_CopyHelper.GetType(), m_CopyHelper);
                 LV.DoDragDrop(obj, DragDropEffects.Copy);
             }
@@ -450,9 +450,9 @@ namespace LanExchange.UI
             m_Presenter.UpdateItemsAndStatus();
         }
 
-        public void SetColumnMarker(int columnIndex, SortOrder sortOrder)
+        public void SetColumnMarker(int columnIndex, PanelSortOrder sortOrder)
         {
-            NativeMethods.SetColumnImage(LV, columnIndex, sortOrder, -1);
+            NativeMethods.SetColumnImage(LV, columnIndex, (SortOrder)sortOrder, -1);
         }
 
         private void ShowHideColumn_Click(object sender, EventArgs e)
@@ -507,7 +507,7 @@ namespace LanExchange.UI
 
         private void mSendToNewTab_Click(object sender, EventArgs e)
         {
-            AppPresenter.MainPages.CommandSendToNewTab();
+            App.MainPages.CommandSendToNewTab();
         }
 
         public void ShowRunCmdError(string CmdLine)
@@ -535,7 +535,7 @@ namespace LanExchange.UI
             {
                 LV.View = (View) value;
                 m_Presenter.Objects.CurrentView = value;
-                AppPresenter.MainPages.GetModel().SaveSettings();
+                App.MainPages.SaveSettings();
             }
         }
 
@@ -605,7 +605,7 @@ namespace LanExchange.UI
         {
             if (helper.IndexesCount == 1)
                 helper.MoveTo(0);
-            var columns = AppPresenter.PanelColumns.GetColumns(helper.IndexesCount == 1 ? helper.CurrentItem.GetType() : m_Presenter.Objects.DataType);
+            var columns = App.PanelColumns.GetColumns(helper.IndexesCount == 1 ? helper.CurrentItem.GetType() : m_Presenter.Objects.DataType);
             foreach (var column in columns)
                 if (column.Visible)
                 {
@@ -661,7 +661,7 @@ namespace LanExchange.UI
             var menuVisible = false;
             if (panelItem != null)
             {
-                mComp.Image = AppPresenter.Images.GetSmallImage(panelItem.ImageName);
+                mComp.Image = App.Images.GetSmallImage(panelItem.ImageName);
                 mComp.Text = panelItem.Name;
                 var typeId = panelItem.GetType().Name;
                 menuVisible = AddonManager.Instance.BuildMenuForPanelItemType(mComp, typeId);
@@ -681,8 +681,8 @@ namespace LanExchange.UI
             mComp.Enabled = PrepareContextMenu();
             SetupCopyHelper();
             mCopyMenu.Enabled = m_CopyHelper.IndexesCount > 0;
-            mSendToNewTab.Enabled = AppPresenter.MainPages.CanSendToNewTab();
-            mPaste.Enabled = AppPresenter.MainPages.CanPasteItems();
+            mSendToNewTab.Enabled = App.MainPages.CanSendToNewTab();
+            mPaste.Enabled = App.MainPages.CanPasteItems();
             mDelete.Enabled = false;
             // lookup at least 1 item for delete
             for (int index = 0; index < m_CopyHelper.IndexesCount; index++)
@@ -726,18 +726,23 @@ namespace LanExchange.UI
 
         private void mContextProperties_Click(object sender, EventArgs e)
         {
-            AppPresenter.MainPages.CommandProperties();
+            App.MainPages.CommandProperties();
         }
 
         private void mPaste_Click(object sender, EventArgs e)
         {
-            AppPresenter.MainPages.CommandPasteItems();
+            App.MainPages.CommandPasteItems();
         }
 
         private void mDelete_Click(object sender, EventArgs e)
         {
-            AppPresenter.MainPages.CommandDeleteItems();
+            App.MainPages.CommandDeleteItems();
         }
 
+    }
+
+    public interface IListViewItemGetter
+    {
+        ListViewItem GetListViewItemAt(int index);
     }
 }

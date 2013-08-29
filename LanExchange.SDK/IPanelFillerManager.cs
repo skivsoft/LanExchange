@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace LanExchange.SDK
+﻿namespace LanExchange.SDK
 {
     public interface IPanelFillerManager
     {

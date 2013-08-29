@@ -3,15 +3,17 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
+using LanExchange.Core;
+using LanExchange.Misc;
+using LanExchange.Model;
 using LanExchange.Presenter;
 using LanExchange.Properties;
-using LanExchange.SDK;
 
 namespace LanExchange.UI
 {
     public partial class FilterView : UserControl, IFilterView
     {
-        private readonly FilterPresenter m_Presenter;
+        private readonly IFilterPresenter m_Presenter;
 
         public event EventHandler FilterCountChanged;
 
@@ -19,14 +21,14 @@ namespace LanExchange.UI
         {
             InitializeComponent();
             Visible = false;
-            m_Presenter = new FilterPresenter(this);
+            m_Presenter = App.Ioc.Resolve<IFilterPresenter>();
+            m_Presenter.View = this;
         }
 
         public IFilterPresenter Presenter
         {
-            get { return m_Presenter;
+            get { return m_Presenter; }
         }
-    }
 
         public Control LinkedControl { get; set; }
 

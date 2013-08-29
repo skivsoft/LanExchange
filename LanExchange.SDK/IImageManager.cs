@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using System.Windows.Forms;
 
 namespace LanExchange.SDK
 {
@@ -57,8 +56,6 @@ namespace LanExchange.SDK
         /// <param name="key">The key.</param>
         /// <returns></returns>
         Icon GetLargeIcon(string key);
-        ImageList SmallImageList { get; }
-        ImageList LargeImageList { get; }
         Image GetSmallImageOfFileName(string fileName);
     }
 }

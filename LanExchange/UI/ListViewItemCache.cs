@@ -1,5 +1,7 @@
 ﻿using System.Windows.Forms;
 using System;
+using LanExchange.UI;
+
 //using NLog;
 
 namespace LanExchange.UI

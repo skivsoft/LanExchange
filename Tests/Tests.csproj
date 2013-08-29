@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\SimpleIocContainerTests.cs" />
     <Compile Include="Model\FolderManagerTest.cs" />
     <Compile Include="Model\PagesModelTest.cs" />
     <Compile Include="Model\PanelIndexEvenArgsTest.cs" />
@@ -74,8 +75,8 @@
     <Compile Include="SDK\PanelItemDoubleDotTest.cs" />
     <Compile Include="SDK\PanelStrategyBaseTest.cs" />
     <Compile Include="SDK\XmlSerializeTest.cs" />
-    <Compile Include="Service\PuntoSwitcherServiceEngRusTest.cs" />
-    <Compile Include="Service\PuntoSwitcherServiceFactoryTest.cs" />
+    <Compile Include="Misc\Service\PuntoSwitcherServiceEngRusTest.cs" />
+    <Compile Include="Misc\Service\PuntoSwitcherServiceFactoryTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

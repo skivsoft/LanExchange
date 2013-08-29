@@ -1,38 +1,35 @@
 ﻿using System;
 using System.Windows.Forms;
+using LanExchange.Core;
+using LanExchange.Misc;
 using LanExchange.Model;
 using LanExchange.Properties;
 using LanExchange.SDK;
 using LanExchange.UI;
+using LanExchange.Utils;
 
 namespace LanExchange.Presenter
 {
-    public class PanelPresenter : IPanelPresenter
+    public class PanelPresenter : PresenterBase<IPanelView>, IPanelPresenter
     {
         private IPanelModel m_Objects;
-        private readonly IPanelView m_View;
 
         public event EventHandler CurrentPathChanged;
-
-        public PanelPresenter(IPanelView view)
-        {
-            m_View = view;
-        }
 
         public void SetupColumns()
         {
             if (m_Objects.DataType == null)
                 return;
-            m_View.ColumnsClear();
-            var columns = AppPresenter.PanelColumns.GetColumns(m_Objects.DataType);
+            View.ColumnsClear();
+            var columns = App.PanelColumns.GetColumns(m_Objects.DataType);
             if (columns == null) return;
             int j = 0;
             for (int i = 0; i < columns.Count; i++ )
                 if (columns[i].Visible)
                 {
-                    m_View.AddColumn(columns[i]);
+                    View.AddColumn(columns[i]);
                     if (i == m_Objects.Comparer.ColumnIndex)
-                        m_View.SetColumnMarker(j, m_Objects.Comparer.SortOrder);
+                        View.SetColumnMarker(j, m_Objects.Comparer.SortOrder);
                     ++j;
                 }
         }
@@ -40,15 +37,15 @@ namespace LanExchange.Presenter
         public void ResetSortOrder()
         {
             m_Objects.Comparer.ColumnIndex = 0;
-            m_Objects.Comparer.SortOrder = SortOrder.Ascending;
+            m_Objects.Comparer.SortOrder = (PanelSortOrder)SortOrder.Ascending;
         }
 
         public void UpdateItemsAndStatus()
         {
             if (m_Objects == null) return;
             // refresh only for current page
-            var model = AppPresenter.MainPages.GetModel();
-            var currentItemList = model.GetItem(model.SelectedIndex);
+            var presenter = App.MainPages;
+            var currentItemList = presenter.GetItem(presenter.SelectedIndex);
             if (currentItemList == null || !m_Objects.Equals(currentItemList)) 
                 return;
             // get number of visible items (filtered) and number of total items
@@ -64,13 +61,13 @@ namespace LanExchange.Presenter
             else
                 MainForm.Instance.ShowStatusText(Resources.PanelPresenter_Items1, showCount);
             SetupColumns();
-            m_View.SetVirtualListSize(m_Objects.FilterCount);
+            View.SetVirtualListSize(m_Objects.FilterCount);
             if (m_Objects.FilterCount > 0)
             {
                 var index = Objects.IndexOf(currentItemList.FocusedItem);
-                m_View.FocusedItemIndex = index;
+                View.FocusedItemIndex = index;
             }
-            m_View.Filter.UpdateFromModel(Objects);
+            View.Filter.UpdateFromModel(Objects);
         }
 
         private void CurrentPath_Changed(object sender, EventArgs e)
@@ -89,23 +86,22 @@ namespace LanExchange.Presenter
                 m_Objects = value;
                 if (m_Objects != null)
                     m_Objects.CurrentPath.Changed += CurrentPath_Changed;
-                m_View.Filter.Presenter.SetModel(value);
-                //m_View.SetVirtualListSize(m_Objects.Count);
+                View.Filter.Presenter.SetModel(value);
             }
         }
 
         public PanelItemBase GetFocusedPanelItem(bool pingAndAsk, bool canReturnParent)
         {
-            var panelItem = m_View.FocusedItem;
+            var panelItem = View.FocusedItem;
             if (panelItem != null && pingAndAsk)
             {
-                var bReachable = PingThread.FastPing(panelItem.Name);
-                if (panelItem.IsReachable != bReachable)
+                var isReachable = PingUtils.FastPing(panelItem.Name);
+                if (panelItem.IsReachable != isReachable)
                 {
-                    panelItem.IsReachable = bReachable;
-                    m_View.RedrawFocusedItem();
+                    panelItem.IsReachable = isReachable;
+                    View.RedrawFocusedItem();
                 }
-                if (!bReachable)
+                if (!isReachable)
                 {
                     var result = MessageBox.Show(
                         String.Format(Resources.PanelPresenter_UnreachableMsg, panelItem.Name), Resources.PanelPresenter_QueryCaption,
@@ -119,20 +115,6 @@ namespace LanExchange.Presenter
             return panelItem;
         }
 
-        /// <summary>
-        /// Returns computer either focused item is computer or focused item is subitem of computer.
-        /// </summary>
-        /// <returns>a ComputerPanelItem or null</returns>
-        public PanelItemBase GetFocusedComputer(bool pingAndAsk)
-        {
-            var panelItem = GetFocusedPanelItem(pingAndAsk, false);
-            if (panelItem == null)
-                return null;
-            while (!(panelItem is IWmiComputer) && (panelItem.Parent != null))
-                panelItem = panelItem.Parent;
-            return panelItem;
-        }
-
         public bool CommandLevelDown()
         {
             var panelItem = GetFocusedPanelItem(false, false);
@@ -140,14 +122,14 @@ namespace LanExchange.Presenter
                 return false;
             if (panelItem is PanelItemDoubleDot)
                 return CommandLevelUp();
-            var result = AppPresenter.PanelFillers.FillerExists(panelItem);
+            var result = App.PanelFillers.FillerExists(panelItem);
             if (result)
             {
                 Objects.FocusedItem = new PanelItemDoubleDot(panelItem);
                 Objects.CurrentPath.Push(panelItem);
                 ResetSortOrder();
                 Objects.SyncRetrieveData(true);
-                m_View.Filter.SetFilterText(string.Empty);
+                View.Filter.SetFilterText(string.Empty);
             }
             return result;
         }
@@ -159,46 +141,46 @@ namespace LanExchange.Presenter
             var panelItem = Objects.CurrentPath.Peek();
             if (panelItem == null || panelItem is PanelItemRoot) 
                 return false;
-            var result = AppPresenter.PanelFillers.FillerExists(panelItem);
+            var result = App.PanelFillers.FillerExists(panelItem);
             if (result)
             {
                 Objects.FocusedItem = panelItem;
                 Objects.CurrentPath.Pop();
                 ResetSortOrder();
                 Objects.SyncRetrieveData(true);
-                m_View.Filter.SetFilterText(string.Empty);
+                View.Filter.SetFilterText(string.Empty);
             }
             return result;
         }
 
-        internal void ColumnClick(int index)
+        public void ColumnClick(int index)
         {
             // TODO Need sort lazy column
-            var columns = AppPresenter.PanelColumns.GetColumns(m_Objects.DataType);
+            var columns = App.PanelColumns.GetColumns(m_Objects.DataType);
             if (columns[index].Callback != null)
                 return;
 
-            var order = SortOrder.None;
+            var order = PanelSortOrder.None;
             if (index == Objects.Comparer.ColumnIndex)
                 switch (Objects.Comparer.SortOrder)
                 {
-                    case SortOrder.None:
-                    case SortOrder.Descending:
-                        order = SortOrder.Ascending;
+                    case PanelSortOrder.None:
+                    case PanelSortOrder.Descending:
+                        order = PanelSortOrder.Ascending;
                         break;
-                    case SortOrder.Ascending:
-                        order = SortOrder.Descending;
+                    case PanelSortOrder.Ascending:
+                        order = PanelSortOrder.Descending;
                         break;
                 }
             else
-                order = SortOrder.Ascending;
+                order = PanelSortOrder.Ascending;
             Objects.Comparer.ColumnIndex = index;
             Objects.Comparer.SortOrder = order;
             Objects.Sort(Objects.Comparer);
         }
 
         // TODO Column reorder
-        internal bool ReorderColumns(int oldIndex, int newIndex)
+        public bool ReorderColumns(int oldIndex, int newIndex)
         {
             //var result = AppPresenter.PanelColumns.ReorderColumns(m_Objects.DataType, oldIndex, newIndex);
             //if (result)
@@ -213,26 +195,26 @@ namespace LanExchange.Presenter
             return false;
         }
 
-        internal void ColumnWidthChanged(int index, int newWidth)
+        public void ColumnWidthChanged(int index, int newWidth)
         {
             // TODO need change internal column width but not always
             //var columns = AppPresenter.PanelColumns.GetColumns(m_Objects.DataType);
             //columns[index].Width = newWidth;
         }
 
-        internal void ColumnRightClick(int columnIndex)
+        public void ColumnRightClick(int columnIndex)
         {
             if (m_Objects.DataType != null)
             {
-                var columns = AppPresenter.PanelColumns.GetColumns(m_Objects.DataType);
-                m_View.ShowHeaderMenu(columns);
+                var columns = App.PanelColumns.GetColumns(m_Objects.DataType);
+                View.ShowHeaderMenu(columns);
             }
         }
 
-        internal void ShowHideColumnClick(int columnIndex)
+        public void ShowHideColumnClick(int columnIndex)
         {
             if (columnIndex == 0) return;
-            var columns = AppPresenter.PanelColumns.GetColumns(m_Objects.DataType);
+            var columns = App.PanelColumns.GetColumns(m_Objects.DataType);
             columns[columnIndex].Visible = !columns[columnIndex].Visible;
             SetupColumns();
             //AppPresenter.MainPages.PV_FocusedItemChanged(m_View, EventArgs.Empty);

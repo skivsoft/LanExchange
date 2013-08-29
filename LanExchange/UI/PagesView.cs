@@ -2,14 +2,18 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using LanExchange.Core;
+using LanExchange.Misc;
+using LanExchange.Model;
 using LanExchange.Presenter;
 using LanExchange.SDK;
+using LanExchange.UI;
 
 namespace LanExchange.UI
 {
     public partial class PagesView : UserControl, IPagesView
     {
-        private readonly PagesPresenter m_Presenter;
+        private readonly IPagesPresenter m_Presenter;
         private int m_PopupSelectedIndex = -1;
 
         /// <summary>
@@ -28,13 +32,9 @@ namespace LanExchange.UI
         public PagesView()
         {
             InitializeComponent();
-            m_Presenter = new PagesPresenter(this);
+            m_Presenter = App.Ioc.Resolve<IPagesPresenter>();
+            m_Presenter.View = this;
             mSelectTab.DropDownDirection = ToolStripDropDownDirection.BelowLeft;
-        }
-
-        public PagesPresenter GetPresenter()
-        {
-            return m_Presenter;
         }
 
         public int TabPagesCount
@@ -62,7 +62,7 @@ namespace LanExchange.UI
             TabPage Tab = new TabPage();
             Tab.Padding = new Padding(0);
             Tab.Text = Ellipsis(info.TabName, 20);
-            Tab.ImageIndex = AppPresenter.Images.IndexOf(PanelImageNames.Workgroup);
+            Tab.ImageIndex = App.Images.IndexOf(PanelImageNames.Workgroup);
             Tab.ToolTipText = info.ToolTipText;
             Pages.Controls.Add(Tab);
         }
@@ -147,7 +147,7 @@ namespace LanExchange.UI
         private void popPages_Opening(object sender, CancelEventArgs e)
         {
             mCloseTab.Enabled = m_Presenter.CanCloseTab();
-            mSelectTab.Enabled = m_Presenter.GetModel().Count > 1;
+            mSelectTab.Enabled = m_Presenter.Count > 1;
             if (mSelectTab.Enabled && mSelectTab.DropDownItems.Count == 0)
             {
                 var menuItem = new ToolStripSeparator();
@@ -166,8 +166,8 @@ namespace LanExchange.UI
 
         private void Pages_Selected(object sender, TabControlEventArgs e)
         {
-            m_Presenter.GetModel().SelectedIndex = e.TabPageIndex;
-            m_Presenter.GetModel().SaveSettings();
+            m_Presenter.SelectedIndex = e.TabPageIndex;
+            m_Presenter.SaveSettings();
         }
 
         public IPanelView ActivePanelView
@@ -258,18 +258,17 @@ namespace LanExchange.UI
             set
             {
                 Pages.SelectedIndex = value;
-                m_Presenter.GetModel().SelectedIndex = value;
+                m_Presenter.SelectedIndex = value;
             }
         }
 
         internal void AddTabsToMenuItem(ToolStripMenuItem menuitem, EventHandler handler, bool bHideActive)
         {
-            var M = m_Presenter.GetModel();
-            for (int i = 0; i < M.Count; i++)
+            for (int i = 0; i < m_Presenter.Count; i++)
             {
                 if (bHideActive && (!m_Presenter.CanCloseTab() || (i == SelectedIndex)))
                     continue;
-                string S = M.GetTabName(i);
+                string S = m_Presenter.GetTabName(i);
                 var Item = new ToolStripMenuItem
                 {
                     Checked = (i == SelectedIndex),
@@ -285,18 +284,17 @@ namespace LanExchange.UI
         [Localizable(false)]
         public IPanelView CreatePanelView(IPanelModel info)
         {
-            var PV = new PanelView();
+            var PV = (PanelView) App.Ioc.Resolve<IPanelView>();
             ListView LV = PV.Controls[0] as ListView;
             if (LV != null)
             {
-                LV.SmallImageList = AppPresenter.Images.SmallImageList;
-                LV.LargeImageList = AppPresenter.Images.LargeImageList;
+                LV.SmallImageList = App.Images.SmallImageList;
+                LV.LargeImageList = App.Images.LargeImageList;
                 LV.View = (View) info.CurrentView;
                 if (MainForm.Instance != null)
                     MainForm.Instance.tipComps.SetToolTip(LV, " ");
             }
-            PV.FocusedItemChanged += m_Presenter.PV_FocusedItemChanged;
-            PV.FilterTextChanged += m_Presenter.PV_FilterTextChanged;
+            m_Presenter.SetupPanelViewEvents(PV);
             // add new tab and insert panel into it
             NewTabFromItemList(info);
             AddControl(TabPagesCount - 1, PV);
@@ -312,6 +310,11 @@ namespace LanExchange.UI
                 if (SelectedIndex != Index)
                     SelectedIndex = Index;
             }
+        }
+
+        public IPagesPresenter Presenter
+        {
+            get { return m_Presenter; }
         }
     }
 }

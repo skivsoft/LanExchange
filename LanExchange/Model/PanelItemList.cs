@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
-using LanExchange.Presenter;
+using LanExchange.Intf;
+using LanExchange.Misc;
+using LanExchange.Misc.Service;
 using LanExchange.SDK;
-using LanExchange.Service;
 using LanExchange.Model.Settings;
 
 namespace LanExchange.Model
 {
+    // TODO !!! rename to PanelModel when will work
     public class PanelItemList : IEquatable<PanelItemList>, IPanelModel
     {       
         // items added by user
@@ -20,19 +21,21 @@ namespace LanExchange.Model
         private readonly ObjectPath<PanelItemBase> m_CurrentPath;
         // column sorter
         private readonly ColumnComparer m_Comparer;
+        // punto switcher service
+        private readonly IPuntoSwitcherService m_Punto;
 
         private Type m_DataType;
 
         public event EventHandler Changed;
         
-        public PanelItemList(string name)
+        public PanelItemList(IPuntoSwitcherService puntoService)
         {
+            m_Punto = puntoService;
             m_Items = new List<PanelItemBase>();
             m_Data = new List<PanelItemBase>();
             m_Keys = new List<PanelItemBase>();
             m_CurrentPath = new ObjectPath<PanelItemBase>();
-            m_Comparer = new ColumnComparer(0, SortOrder.Ascending);
-            TabName = name;
+            m_Comparer = new ColumnComparer(0, PanelSortOrder.Ascending);
             CurrentView = PanelViewMode.Details;
         }
 
@@ -106,15 +109,14 @@ namespace LanExchange.Model
             return m_Keys.IndexOf(key);
         }
 
-        private static bool GoodForFilter(string[] strList, string filter1, string filter2)
+        private bool GoodForFilter(string[] strList, string filter1, string filter2)
         {
-            var puntoService = PuntoSwitcherServiceFactory.GetPuntoSwitcherService();
             for (int i = 0; i < strList.Length; i++)
             {
                 if (i == 0)
                 {
-                    if (puntoService.RussianContains(strList[i], filter1) ||
-                        puntoService.RussianContains(strList[i], filter2))
+                    if (m_Punto.RussianContains(strList[i], filter1) ||
+                        m_Punto.RussianContains(strList[i], filter2))
                         return true;
                 } else
                 if (filter1 != null && strList[i].Contains(filter1) || filter2 != null && strList[i].Contains(filter2))
@@ -152,7 +154,6 @@ namespace LanExchange.Model
         /// </summary>
         public void ApplyFilter()
         {
-            var punto = PuntoSwitcherServiceFactory.GetPuntoSwitcherService();
             if (FilterText == null) 
                 FilterText = string.Empty;
             var filtered = FilterText != string.Empty;
@@ -160,7 +161,7 @@ namespace LanExchange.Model
             //    filtered = false;
             m_Keys.Clear();
             var filter1 = FilterText.ToUpper();
-            var filter2 = punto.Change(FilterText);
+            var filter2 = m_Punto.Change(FilterText);
             if (filter2 != null) filter2 = filter2.ToUpper();
             var helper = new PanelItemsCopyHelper(this);
             var upperValues = new List<string>();
@@ -270,7 +271,7 @@ namespace LanExchange.Model
             // get parent
             var parent = m_CurrentPath.IsEmpty ? null : m_CurrentPath.Peek();
             // retrieve items
-            var items = AppPresenter.PanelFillers.RetrievePanelItems(parent);
+            var items = App.PanelFillers.RetrievePanelItems(parent);
             // set items
             InternalSetData(items, clearFilter);
         }

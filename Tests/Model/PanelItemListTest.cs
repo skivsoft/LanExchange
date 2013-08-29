@@ -1,4 +1,5 @@
 ﻿using System;
+using LanExchange.Misc;
 using LanExchange.Plugin.Network;
 using LanExchange.Presenter;
 using LanExchange.SDK;
@@ -17,6 +18,7 @@ namespace LanExchange.Model
         [SetUp]
         public void SetUp()
         {
+            App.Setup();
             m_Objects = new PanelItemList("MyTab");
         }
 
@@ -53,7 +55,7 @@ namespace LanExchange.Model
             result.Items.Add(m_Comp02);
             result.ItemsType = typeof(ComputerPanelItem);
             filler.Setup(f => f.RetrievePanelItems(domain)).Returns(result);
-            AppPresenter.PanelFillers = filler.Object;
+            App.PanelFillers = filler.Object;
             m_Objects.SyncRetrieveData();
             Assert.AreEqual(3, m_Objects.Count);
         }
@@ -68,7 +70,7 @@ namespace LanExchange.Model
             result.Items.Add(domain);
             result.ItemsType = typeof (DomainPanelItem);
             filler.Setup(f => f.RetrievePanelItems(Network.ROOT_OF_DOMAINS)).Returns(result);
-            AppPresenter.PanelFillers = filler.Object;
+            App.PanelFillers = filler.Object;
             m_Objects.SyncRetrieveData();
             Assert.AreEqual(1, m_Objects.Count);
             Assert.AreEqual(0, m_Objects.IndexOf(domain));
