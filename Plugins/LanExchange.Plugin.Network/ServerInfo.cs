@@ -21,7 +21,6 @@ namespace LanExchange.Plugin.Network
         //public ServerInfo()
         //{
         //}
-
         public static ServerInfo FromNetApi32(NativeMethods.SERVER_INFO_101 info)
         {
             var result = new ServerInfo();

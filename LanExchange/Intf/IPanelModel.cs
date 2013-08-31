@@ -79,42 +79,12 @@ namespace LanExchange.Intf
         /// <returns></returns>
         int IndexOf(PanelItemBase key);
 
-        PanelItemBaseFactory ItemFactory { get; set; }
+        PanelItemFactoryBase ItemFactory { get; set; }
         void SyncRetrieveData(bool clearFilter = false);
         Type DataType { get; set; }
         ColumnComparer Comparer { get; }
         void Sort(IComparer<PanelItemBase> sorter);
 
         bool Contains(PanelItemBase panelItem);
-    }
-
-    public enum PanelSortOrder
-    {
-        None,
-        Ascending,
-        Descending,
-    }
-
-    /// <summary>
-    /// ViewMode of LanExchange panel.
-    /// </summary>
-    public enum PanelViewMode
-    {
-        /// <summary>
-        /// The large icons view
-        /// </summary>
-        LargeIcon,
-        /// <summary>
-        /// The details table view
-        /// </summary>
-        Details,
-        /// <summary>
-        /// The small icons view
-        /// </summary>
-        SmallIcon,
-        /// <summary>
-        /// The list view
-        /// </summary>
-        List
     }
 }

@@ -2,7 +2,7 @@
 
 namespace LanExchange.Plugin.Users
 {
-    class OrgUnitPanelItemFactory : PanelItemBaseFactory
+    class OrgUnitPanelItemFactory : PanelItemFactoryBase
     {
         public override PanelItemBase CreatePanelItem(PanelItemBase parent, string name)
         {

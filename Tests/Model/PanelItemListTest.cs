@@ -5,6 +5,7 @@ using LanExchange.Presenter;
 using LanExchange.SDK;
 using Moq;
 using NUnit.Framework;
+using LanExchange.Intf;
 
 namespace LanExchange.Model
 {
@@ -18,8 +19,9 @@ namespace LanExchange.Model
         [SetUp]
         public void SetUp()
         {
-            App.Setup();
-            m_Objects = new PanelItemList("MyTab");
+            App.SetContainer(ContainerBuilder.Build());
+            m_Objects = new PanelModel(new PuntoSwitcherServiceEngRus());
+            m_Objects.TabName = "MyTab";
         }
 
         [TearDown]

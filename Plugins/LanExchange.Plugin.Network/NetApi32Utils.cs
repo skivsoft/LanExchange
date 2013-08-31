@@ -6,26 +6,15 @@ using System.Security.Permissions;
 
 namespace LanExchange.Plugin.Network
 {
-    public class NetApi32Utils
+    public static class NetApi32Utils
     {
-        private static NetApi32Utils s_Instance;
-
-        private NetApi32Utils()
-        {
-        }
-
-        public static NetApi32Utils Instance
-        {
-            get { return s_Instance ?? (s_Instance = new NetApi32Utils()); }
-        }
-
         /// <summary>
         /// Get domain name for specified machine.
         /// </summary>
         /// <param name="server"></param>
         /// <returns></returns>
         [EnvironmentPermissionAttribute(SecurityAction.LinkDemand, Unrestricted = true)]
-        public string GetMachineNetBiosDomain(string server)
+        public static string GetMachineNetBiosDomain(string server)
         {
             IntPtr pBuffer;
 
@@ -51,7 +40,7 @@ namespace LanExchange.Plugin.Network
         /// <param name="domain"></param>
         /// <param name="types"></param>
         /// <returns></returns>
-        public IEnumerable<NativeMethods.SERVER_INFO_101> NetServerEnum(string domain, NativeMethods.SV_101_TYPES types)
+        public static IEnumerable<NativeMethods.SERVER_INFO_101> NetServerEnum(string domain, NativeMethods.SV_101_TYPES types)
         {
             IntPtr pInfo;
             uint entriesread = 0;
@@ -78,7 +67,7 @@ namespace LanExchange.Plugin.Network
                 }
         }
 
-        public IEnumerable<NativeMethods.SHARE_INFO_1> NetShareEnum(string computer)
+        public static IEnumerable<NativeMethods.SHARE_INFO_1> NetShareEnum(string computer)
         {
             IntPtr pInfo;
             int entriesread = 0;

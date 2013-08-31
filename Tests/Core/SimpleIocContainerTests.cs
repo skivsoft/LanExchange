@@ -1,5 +1,6 @@
 using System;
 using NUnit.Framework;
+using LanExchange.Intf;
 
 namespace LanExchange.Core
 {

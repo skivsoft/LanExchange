@@ -320,7 +320,7 @@ namespace LanExchange.Model
             get { return false; }
         }
 
-        public PanelItemBaseFactory ItemFactory { get; set; }
+        public PanelItemFactoryBase ItemFactory { get; set; }
 
         public bool Contains(PanelItemBase panelItem)
         {

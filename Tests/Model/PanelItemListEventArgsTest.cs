@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using LanExchange.Intf;
 
 namespace LanExchange.Model
 {
@@ -8,7 +9,8 @@ namespace LanExchange.Model
        [Test]
        public void TestInfo()
        {
-           var info = new PanelItemList("MyTab");
+           var info = new PanelModel(null);
+           info.TabName = "MyTab";
            var args = new PanelModelEventArgs(info);
            Assert.AreSame(info, args.Info);
        }

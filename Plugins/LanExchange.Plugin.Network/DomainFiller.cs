@@ -14,7 +14,7 @@ namespace LanExchange.Plugin.Network
         public void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
             // get domain list via OS api
-            foreach (var item in NetApi32Utils.Instance.NetServerEnum(null, NativeMethods.SV_101_TYPES.SV_TYPE_DOMAIN_ENUM))
+            foreach (var item in NetApi32Utils.NetServerEnum(null, NativeMethods.SV_101_TYPES.SV_TYPE_DOMAIN_ENUM))
                 result.Add(new DomainPanelItem(parent, ServerInfo.FromNetApi32(item)));
         }
 

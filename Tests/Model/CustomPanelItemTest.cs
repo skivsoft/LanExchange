@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using NUnit.Framework;
+using LanExchange.Misc;
 
 namespace LanExchange.Model
 {

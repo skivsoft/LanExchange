@@ -6,22 +6,22 @@ namespace LanExchange.Misc.Impl
 {
     public class PanelItemFactoryManagerImpl : IPanelItemFactoryManager
     {
-        private readonly IDictionary<Type, PanelItemBaseFactory> m_Types;
+        private readonly IDictionary<Type, PanelItemFactoryBase> m_Types;
         private readonly IList<PanelItemBase> m_DefaultRoots;
 
         public PanelItemFactoryManagerImpl()
         {
-            m_Types = new Dictionary<Type, PanelItemBaseFactory>();
+            m_Types = new Dictionary<Type, PanelItemFactoryBase>();
             m_DefaultRoots = new List<PanelItemBase>();
         }
 
-        public void RegisterPanelItemFactory(Type type, PanelItemBaseFactory factory)
+        public void RegisterPanelItemFactory(Type type, PanelItemFactoryBase factory)
         {
             //if (PanelItemBaseFactoryValidator.ValidateFactory(factory))
                 m_Types.Add(type, factory);
         }
 
-        public IDictionary<Type, PanelItemBaseFactory> Types
+        public IDictionary<Type, PanelItemFactoryBase> Types
         {
             get { return m_Types; }
         }
@@ -44,7 +44,7 @@ namespace LanExchange.Misc.Impl
 
         public bool Exists(Type type)
         {
-            PanelItemBaseFactory factory;
+            PanelItemFactoryBase factory;
             return m_Types.TryGetValue(type, out factory);
         }
 

@@ -36,11 +36,10 @@ namespace LanExchange.Plugin.Users
                 //Result.Add(new UserPanelItem(PanelItemBase.s_DoubleDot));
                 result.Add(new PanelItemDoubleDot(parent));
 
-                var fixer = new PathFixer();
                 var distinct = new PathDistinct();
 
                 foreach (DataRow row in resultTable.Rows)
-                    distinct.Add(Path.GetDirectoryName(fixer.FixLdapPath(row["adspath"].ToString())));
+                    distinct.Add(Path.GetDirectoryName(PathFixer.FixLdapPath(row["adspath"].ToString())));
 
                 var prefix = distinct.Prefix;
                 if (prefix.Split('\\').Length <= 4)

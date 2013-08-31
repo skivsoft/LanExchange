@@ -23,7 +23,7 @@ namespace LanExchange.Plugin.Network
                 throw new ArgumentNullException("parent");
             //result.Add(new PanelItemDoubleDot(parent));
             // get server list via OS api
-            foreach (var item in NetApi32Utils.Instance.NetServerEnum(parent.Name, NativeMethods.SV_101_TYPES.SV_TYPE_ALL))
+            foreach (var item in NetApi32Utils.NetServerEnum(parent.Name, NativeMethods.SV_101_TYPES.SV_TYPE_ALL))
             {
                 var si = ServerInfo.FromNetApi32(item);
                 si.ResetUtcUpdated();

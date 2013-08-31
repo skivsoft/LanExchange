@@ -67,7 +67,7 @@ namespace LanExchange
             {
                 CmdLineProcessor.Processing();
 
-                App.SetContainer(new ContainerBuilder().Build());
+                App.SetContainer(ContainerBuilder.Build());
                 App.Plugins.LoadPlugins();
 #if DEBUG
                 //AddonGen.Generate();

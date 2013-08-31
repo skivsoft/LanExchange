@@ -9,10 +9,4 @@ namespace LanExchange.Intf
         TTypeToResolve Resolve<TTypeToResolve>();
         object Resolve(Type typeToResolve);
     }
-
-    public enum LifeCycle
-    {
-        Singleton,
-        Transient
-    }
 }

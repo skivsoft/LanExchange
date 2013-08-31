@@ -23,7 +23,7 @@ namespace LanExchange.Misc.Impl
         private readonly string m_SystemAddonsPath;
         private readonly string m_UserAddonsPath;
 
-        private FolderManagerImpl()
+        public FolderManagerImpl()
         {
             var args = Environment.GetCommandLineArgs();
             m_ExeFileName = args.Length > 0 ? args[0] : string.Empty;

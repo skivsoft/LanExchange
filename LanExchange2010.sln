@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Win7", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMIViewer", "WMIViewer\WMIViewer.csproj", "{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{21D3F599-1FA0-423A-8380-8B1041B353AC}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = LanExchange2010.vsmdi
@@ -111,6 +113,16 @@ Global
 		{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}.Release|Mixed Platforms.Build.0 = Release|x86
 		{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}.Release|x86.ActiveCfg = Release|x86
 		{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}.Release|x86.Build.0 = Release|x86
+		{21D3F599-1FA0-423A-8380-8B1041B353AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21D3F599-1FA0-423A-8380-8B1041B353AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21D3F599-1FA0-423A-8380-8B1041B353AC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{21D3F599-1FA0-423A-8380-8B1041B353AC}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{21D3F599-1FA0-423A-8380-8B1041B353AC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{21D3F599-1FA0-423A-8380-8B1041B353AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21D3F599-1FA0-423A-8380-8B1041B353AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21D3F599-1FA0-423A-8380-8B1041B353AC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{21D3F599-1FA0-423A-8380-8B1041B353AC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{21D3F599-1FA0-423A-8380-8B1041B353AC}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

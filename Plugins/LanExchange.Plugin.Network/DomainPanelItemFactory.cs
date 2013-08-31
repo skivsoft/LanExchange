@@ -3,7 +3,7 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
 {
-    public class DomainPanelItemFactory : PanelItemBaseFactory
+    public class DomainPanelItemFactory : PanelItemFactoryBase
     {
         public override PanelItemBase CreatePanelItem(PanelItemBase parent, string name)
         {
@@ -17,7 +17,7 @@ namespace LanExchange.Plugin.Network
         [EnvironmentPermissionAttribute(SecurityAction.LinkDemand, Unrestricted = true)]
         public override PanelItemBase CreateDefaultRoot()
         {
-            var domain = NetApi32Utils.Instance.GetMachineNetBiosDomain(null);
+            var domain = NetApi32Utils.GetMachineNetBiosDomain(null);
             return new DomainPanelItem(Network.ROOT_OF_DOMAINS, domain);
         }
     }

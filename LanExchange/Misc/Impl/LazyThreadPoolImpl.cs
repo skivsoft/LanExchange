@@ -6,7 +6,7 @@ using LanExchange.Intf;
 using LanExchange.SDK;
 using ThreadState = System.Threading.ThreadState;
 
-namespace LanExchange.Model
+namespace LanExchange.Misc.Impl
 {
     public class LazyThreadPoolImpl : ILazyThreadPool
     {
