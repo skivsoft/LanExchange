@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using LanExchange.Intf;
-using LanExchange.Model;
 using LanExchange.SDK;
 
-namespace LanExchange.Misc
+namespace LanExchange.Model
 {  
     public class PanelModelCopyHelper
     {

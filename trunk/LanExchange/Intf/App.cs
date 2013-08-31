@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using LanExchange.SDK;
 
 namespace LanExchange.Intf
@@ -13,6 +14,9 @@ namespace LanExchange.Intf
         public static IPanelColumnManager PanelColumns;
         public static IServiceProvider ServiceProvider;
         public static IFolderManager FolderManager;
+        public static IPluginManager Plugins;
+        public static ILazyThreadPool Threads;
+        public static IImageManager Images;
 
         public static void SetContainer(IContainer container)
         {
@@ -25,6 +29,9 @@ namespace LanExchange.Intf
             PanelColumns = Resolve<IPanelColumnManager>();
             ServiceProvider = Resolve<IServiceProvider>();
             FolderManager = Resolve<IFolderManager>();
+            Plugins = Resolve<IPluginManager>();
+            Threads = Resolve<ILazyThreadPool>();
+            Images = Resolve<IImageManager>();
         }
 
         public static TTypeToResolve Resolve<TTypeToResolve>()

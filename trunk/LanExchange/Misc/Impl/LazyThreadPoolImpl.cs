@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
+using LanExchange.Intf;
 using LanExchange.SDK;
 using ThreadState = System.Threading.ThreadState;
 
 namespace LanExchange.Model
 {
-    public class LazyThreadPool : IDisposable
+    public class LazyThreadPoolImpl : ILazyThreadPool
     {
         private const int NUM_CYCLES_IN_THREAD = 10;
 
@@ -18,7 +19,7 @@ namespace LanExchange.Model
         public event EventHandler<DataReadyArgs> DataReady;
         public event EventHandler NumThreadsChanged;
 
-        public LazyThreadPool()
+        public LazyThreadPoolImpl()
         {
             m_AsyncQueue = new LinkedList<PanelItemBase>();
             m_Threads = new List<Thread>();
@@ -32,7 +33,7 @@ namespace LanExchange.Model
         private void DoDataReady(PanelItemBase item)
         {
             if (DataReady != null)
-                DataReady(this, new DataReadyArgs() { Item = item });
+                DataReady(this, new DataReadyArgs(item));
         }
 
         private void DoNumThreadsChanged()
@@ -138,9 +139,4 @@ namespace LanExchange.Model
 
         private bool m_Disposed;
     }
-}
-
-public class DataReadyArgs : EventArgs
-{
-    public PanelItemBase Item;
 }

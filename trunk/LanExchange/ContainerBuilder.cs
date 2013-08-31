@@ -1,37 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using LanExchange.Core;
 using LanExchange.Intf;
+using LanExchange.Misc;
 using LanExchange.Misc.Impl;
 using LanExchange.Model;
 using LanExchange.Presenter;
 using LanExchange.SDK;
 using LanExchange.UI;
 
-namespace LanExchange.Misc
+namespace LanExchange
 {
-    public static class AppBold
+    public class ContainerBuilder
     {
-        // concrete 
-        public static ImageManagerImpl Images;
-        public static LazyThreadPool LazyThreadPool;
-        public static PluginManager Plugins;
-
-        public static void Setup()
-        {
-            // concrete
-            Images = new ImageManagerImpl();
-            LazyThreadPool = new LazyThreadPool();
-            Plugins = new PluginManager();
-            SetupIoc();
-        }
-
         /// <summary>
         /// Maps interfaces to concrete implementations.
         /// </summary>
-        private static void SetupIoc()
+        public IContainer Build()
         {
             var container = new SimpleIocContainer();
             // core singletons
@@ -41,6 +25,9 @@ namespace LanExchange.Misc
             container.Register<IPanelColumnManager, PanelColumnManagerImpl>();
             container.Register<IServiceProvider, ServiceProviderImpl>();
             container.Register<IFolderManager, FolderManagerImpl>();
+            container.Register<IPluginManager, PluginManagerImpl>();
+            container.Register<ILazyThreadPool, LazyThreadPoolImpl>();
+            container.Register<IImageManager, ImageManagerImpl>();
             // services
             container.Register<IPuntoSwitcherService, PuntoSwitcherServiceEngRus>();
             // models
@@ -57,7 +44,7 @@ namespace LanExchange.Misc
             container.Register<IFilterPresenter, FilterPresenter>(LifeCycle.Transient);
             container.Register<IPagesPresenter, PagesPresenter>(LifeCycle.Singleton);
             container.Register<IPanelPresenter, PanelPresenter>(LifeCycle.Transient);
-            App.SetContainer(container);
+            return container;
         }
     }
 }

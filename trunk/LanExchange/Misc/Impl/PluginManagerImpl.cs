@@ -3,18 +3,17 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using LanExchange.Core;
 using LanExchange.Intf;
 using LanExchange.SDK;
 
-namespace LanExchange.Misc
+namespace LanExchange.Misc.Impl
 {
-    public class PluginManager
+    public class PluginManagerImpl : IPluginManager
     {
         private const string PluginMask = "LanExchange.Plugin.*.dll";
         private readonly IList<IPlugin> m_Plugins;
 
-        public PluginManager()
+        public PluginManagerImpl()
         {
             m_Plugins = new List<IPlugin>();
         }
@@ -33,7 +32,7 @@ namespace LanExchange.Misc
                 }
         }
 
-        public void LoadPlugin(string fileName)
+        private void LoadPlugin(string fileName)
         {
             var assembly = Assembly.LoadFile(fileName);
             foreach (var type in assembly.GetExportedTypes())
