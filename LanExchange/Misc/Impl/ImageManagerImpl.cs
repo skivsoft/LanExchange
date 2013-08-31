@@ -137,8 +137,8 @@ namespace LanExchange.Misc.Impl
             if (m_NamesMap.TryGetValue(name, out index))
             {
                 m_NamesMap.Remove(name);
-                SmallImageList.Images[index] = SmallEmpty;
-                LargeImageList.Images[index] = LargeEmpty;
+                m_SmallImageList.Images[index] = SmallEmpty;
+                m_LargeImageList.Images[index] = LargeEmpty;
             }
         }
 
@@ -146,14 +146,14 @@ namespace LanExchange.Misc.Impl
         {
             var index = IndexOf(key);
             if (index == -1) return null;
-            return SmallImageList.Images[index];
+            return m_SmallImageList.Images[index];
         }
 
         public Image GetLargeImage(string key)
         {
             var index = IndexOf(key);
             if (index == -1) return null;
-            return LargeImageList.Images[index];
+            return m_LargeImageList.Images[index];
         }
 
         public Icon GetSmallIcon(string key)
@@ -161,7 +161,7 @@ namespace LanExchange.Misc.Impl
             var index = IndexOf(key);
             if (index == -1) return null;
             Icon result;
-            using (var bitmap = new Bitmap(SmallImageList.Images[index]))
+            using (var bitmap = new Bitmap(m_SmallImageList.Images[index]))
             {
                 result = Icon.FromHandle(bitmap.GetHicon());
             }
@@ -173,7 +173,7 @@ namespace LanExchange.Misc.Impl
             var index = IndexOf(key);
             if (index == -1) return null;
             Icon result;
-            using (var bitmap = new Bitmap(LargeImageList.Images[index]))
+            using (var bitmap = new Bitmap(m_LargeImageList.Images[index]))
             {
                 result = Icon.FromHandle(bitmap.GetHicon());
             }
@@ -189,15 +189,19 @@ namespace LanExchange.Misc.Impl
             }
         }
 
-
-        public ImageList SmallImageList
+        public void SetImagesTo(object control)
         {
-            get { return m_SmallImageList; }
+            if (control is TabControl)
+                (control as TabControl).ImageList = m_SmallImageList;
+            if (control is StatusStrip)
+                (control as StatusStrip).ImageList = m_SmallImageList;
+            if (control is ListView)
+            {
+                var lv = control as ListView;
+                lv.SmallImageList = m_SmallImageList;
+                lv.LargeImageList = m_LargeImageList;
+            }
         }
 
-        public ImageList LargeImageList
-        {
-            get { return m_LargeImageList; }
-        }
     }
 }

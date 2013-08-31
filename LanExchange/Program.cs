@@ -48,11 +48,9 @@
 
 using System;
 using System.Windows.Forms;
-using LanExchange.Core;
+using LanExchange.Intf;
 using LanExchange.Misc;
 using LanExchange.Misc.Addon;
-using LanExchange.Model;
-using LanExchange.Presenter;
 using LanExchange.Properties;
 using LanExchange.UI;
 using LanExchange.Utils;
@@ -69,8 +67,8 @@ namespace LanExchange
             {
                 CmdLineProcessor.Processing();
 
-                AppBold.Setup();
-                AppBold.Plugins.LoadPlugins();
+                App.SetContainer(new ContainerBuilder().Build());
+                App.Plugins.LoadPlugins();
 #if DEBUG
                 //AddonGen.Generate();
 #endif

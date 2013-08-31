@@ -6,6 +6,7 @@ using LanExchange.Intf;
 using LanExchange.Misc;
 using LanExchange.Misc.Action;
 using LanExchange.Misc.Addon;
+using LanExchange.Model;
 using LanExchange.Model.Settings;
 using System.Drawing;
 using System.ComponentModel;
@@ -47,15 +48,15 @@ namespace LanExchange.UI
             SetupForm();
             // setup images
             Instance.tipComps.SetToolTip(Pages.Pages, " ");
-            Pages.Pages.ImageList = AppBold.Images.SmallImageList;
-            Status.ImageList = AppBold.Images.SmallImageList;
+            App.Images.SetImagesTo(Pages.Pages);
+            App.Images.SetImagesTo(Status);
             // set hotkey for activate: Ctrl+Win+X
             m_Hotkeys = new GlobalHotkeys();
             m_Hotkeys.RegisterGlobalHotKey((int)Keys.X, GlobalHotkeys.MOD_CONTROL + GlobalHotkeys.MOD_WIN, Handle);
             // set lazy events
-            AppBold.LazyThreadPool.DataReady += OnDataReady;
+            App.Threads.DataReady += OnDataReady;
 #if DEBUG
-            AppBold.LazyThreadPool.NumThreadsChanged += OnNumThreadsChanged;
+            App.Threads.NumThreadsChanged += OnNumThreadsChanged;
 #endif
         }
 
@@ -166,10 +167,10 @@ namespace LanExchange.UI
             TrayIcon.Visible = true;
             // show computer name
             lCompName.Text = SystemInformation.ComputerName;
-            lCompName.ImageIndex = AppBold.Images.IndexOf(PanelImageNames.ComputerNormal);
+            lCompName.ImageIndex = App.Images.IndexOf(PanelImageNames.ComputerNormal);
             // show current user
             lUserName.Text = Settings.GetCurrentUserName();
-            lUserName.ImageIndex = AppBold.Images.IndexOf(PanelImageNames.UserNormal);
+            lUserName.ImageIndex = App.Images.IndexOf(PanelImageNames.UserNormal);
         }
 
         private bool m_EscDown;
@@ -327,7 +328,7 @@ namespace LanExchange.UI
                 panelItem = panelItem.Parent;
             if (panelItem == null) return;
             // update info panel at top of the form
-            pInfo.Picture.Image = AppBold.Images.GetLargeImage(panelItem.ImageName);
+            pInfo.Picture.Image = App.Images.GetLargeImage(panelItem.ImageName);
             tipComps.SetToolTip(pInfo.Picture, panelItem.ImageLegendText);
             var helper = new PanelModelCopyHelper(null);
             helper.CurrentItem = panelItem;
@@ -517,7 +518,7 @@ namespace LanExchange.UI
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            AppBold.LazyThreadPool.Dispose();
+            App.Threads.Dispose();
         }
 
         public void OnDataReady(object sender, DataReadyArgs args)
@@ -552,7 +553,7 @@ namespace LanExchange.UI
                 if (column.Callback != null)
                     count += column.LazyDict.Count;
             var aboutModel = App.Resolve<IAboutModel>();
-            Text = String.Format("{0} {1} [Threads: {2}, Dict: {3}]", aboutModel.Product, aboutModel.VersionFull, AppBold.LazyThreadPool.NumThreads, count);
+            Text = String.Format("{0} {1} [Threads: {2}, Dict: {3}]", aboutModel.Product, aboutModel.VersionFull, App.Threads.NumThreads, count);
         }
  #endif
 

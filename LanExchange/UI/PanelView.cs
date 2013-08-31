@@ -83,7 +83,7 @@ namespace LanExchange.UI
                     {
                         IComparable value;
                         if ((i > 0) && (columns[i].Callback != null))
-                            value = AppBold.LazyThreadPool.AsyncGetData(columns[i], panelItem);
+                            value = App.Threads.AsyncGetData(columns[i], panelItem);
                         else
                             value = panelItem[columns[i].Index];
 
@@ -94,7 +94,7 @@ namespace LanExchange.UI
                             result.SubItems.Add(text);
                     }
             }
-            result.ImageIndex = AppBold.Images.IndexOf(panelItem.ImageName);
+            result.ImageIndex = App.Images.IndexOf(panelItem.ImageName);
             result.ToolTipText = panelItem.ToolTipText;
             result.Tag = panelItem;
             return result;
@@ -661,7 +661,7 @@ namespace LanExchange.UI
             var menuVisible = false;
             if (panelItem != null)
             {
-                mComp.Image = AppBold.Images.GetSmallImage(panelItem.ImageName);
+                mComp.Image = App.Images.GetSmallImage(panelItem.ImageName);
                 mComp.Text = panelItem.Name;
                 var typeId = panelItem.GetType().Name;
                 menuVisible = AddonManager.Instance.BuildMenuForPanelItemType(mComp, typeId);

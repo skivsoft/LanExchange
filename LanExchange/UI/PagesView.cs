@@ -63,7 +63,7 @@ namespace LanExchange.UI
             TabPage Tab = new TabPage();
             Tab.Padding = new Padding(0);
             Tab.Text = Ellipsis(info.TabName, 20);
-            Tab.ImageIndex = AppBold.Images.IndexOf(PanelImageNames.Workgroup);
+            Tab.ImageIndex = App.Images.IndexOf(PanelImageNames.Workgroup);
             Tab.ToolTipText = info.ToolTipText;
             Pages.Controls.Add(Tab);
         }
@@ -289,8 +289,7 @@ namespace LanExchange.UI
             ListView LV = PV.Controls[0] as ListView;
             if (LV != null)
             {
-                LV.SmallImageList = AppBold.Images.SmallImageList;
-                LV.LargeImageList = AppBold.Images.LargeImageList;
+                App.Images.SetImagesTo(LV);
                 LV.View = (View) info.CurrentView;
                 if (MainForm.Instance != null)
                     MainForm.Instance.tipComps.SetToolTip(LV, " ");

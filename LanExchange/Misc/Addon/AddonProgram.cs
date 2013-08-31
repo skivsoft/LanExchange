@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Xml.Serialization;
 using LanExchange.Intf;
+using LanExchange.UI;
 using LanExchange.Utils;
 
 namespace LanExchange.Misc.Addon
@@ -55,7 +56,7 @@ namespace LanExchange.Misc.Addon
             if (fileName.Equals(Path.GetFileName(fileName)))
                 fileName = Path.Combine(App.FolderManager.CurrentPath, fileName);
             ExpandedFileName = fileName;
-            m_Image = AppBold.Images.GetSmallImageOfFileName(fileName);
+            m_Image = App.Images.GetSmallImageOfFileName(fileName);
         }
     }
 }
