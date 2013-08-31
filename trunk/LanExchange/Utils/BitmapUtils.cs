@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace LanExchange.Utils
 {
-    public class BitmapUtils
+    public static class BitmapUtils
     {
         public static Bitmap MadeNewBitmap(Bitmap bmp, int deltaHue)
         {

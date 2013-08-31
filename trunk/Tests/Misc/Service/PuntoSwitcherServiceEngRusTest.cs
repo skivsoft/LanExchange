@@ -29,10 +29,10 @@ namespace LanExchange.Misc.Service
         public void TestRussianContains()
         {
             var punto = new PuntoSwitcherServiceEngRus();
-            Assert.IsFalse(punto.RussianContains("ЕЛКА", null));
-            Assert.IsTrue(punto.RussianContains("ЕЛКА", "ЁЛ"));
-            Assert.IsTrue(punto.RussianContains("ЁЛКА", "ЕЛ"));
-            Assert.IsFalse(punto.RussianContains("ЕЛКА", "ЕЛЬ"));
+            Assert.IsFalse(punto.SpecificContains("ЕЛКА", null));
+            Assert.IsTrue(punto.SpecificContains("ЕЛКА", "ЁЛ"));
+            Assert.IsTrue(punto.SpecificContains("ЁЛКА", "ЕЛ"));
+            Assert.IsFalse(punto.SpecificContains("ЕЛКА", "ЕЛЬ"));
         }
     }
 }

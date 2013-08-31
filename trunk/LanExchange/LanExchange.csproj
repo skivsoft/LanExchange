@@ -92,9 +92,16 @@
     <Compile Include="..\Common\AnyAssemblyInfo.cs">
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Core\TypeNotRegisteredException.cs" />
+    <Compile Include="Intf\DataReadyArgs.cs" />
     <Compile Include="Intf\IModel.cs" />
     <Compile Include="Intf\IPresenter.cs" />
     <Compile Include="Intf\IView.cs" />
+    <Compile Include="Intf\LifeCycle.cs" />
+    <Compile Include="Intf\PanelIndexEventArgs.cs" />
+    <Compile Include="Intf\PanelModelEventArgs.cs" />
+    <Compile Include="Intf\PanelSortOrder.cs" />
+    <Compile Include="Intf\PanelViewMode.cs" />
     <Compile Include="Intf\PresenterBase.cs" />
     <Compile Include="Misc\Action\AboutAction.cs" />
     <Compile Include="Misc\Action\ReReadAction.cs" />
@@ -136,15 +143,19 @@
     <Compile Include="Misc\Addon\AddonMenuItem.cs" />
     <Compile Include="Misc\Addon\AddonObjectId.cs" />
     <Compile Include="Misc\Addon\AddonProgram.cs" />
-    <Compile Include="Misc\BackgroundWorkerEx.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Misc\CustomPanelItem.cs" />
     <Compile Include="Misc\Impl\FolderManagerImpl.cs" />
     <Compile Include="Model\Settings\HashtableSerializable.cs" />
     <Compile Include="Model\PagesModel.cs" />
     <Compile Include="Model\PanelModel.cs" />
     <Compile Include="Model\PanelModelCopyHelper.cs" />
+    <Compile Include="Model\Settings\SettingsChangedArgs.cs" />
+    <Compile Include="UI\IListViewItemGetter.cs" />
+    <Compile Include="Utils\HookEventArgs.cs" />
+    <Compile Include="Utils\HookType.cs" />
+    <Compile Include="Utils\ImageListDrawItemConstants.cs" />
+    <Compile Include="Utils\ImageListDrawStateConstants.cs" />
+    <Compile Include="Utils\LocalWindowsHook.cs" />
     <Compile Include="Utils\PingUtils.cs" />
     <Compile Include="Intf\IPuntoSwitcherService.cs" />
     <Compile Include="Misc\PuntoSwitcherServiceEngRus.cs" />
@@ -224,6 +235,8 @@
     <Compile Include="UI\RunMinimizedForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Utils\ShellContextMenuException.cs" />
+    <Compile Include="Utils\ShellIconStateConstants.cs" />
     <Compile Include="Utils\SysImageList.cs" />
     <Compile Include="UI\User32Utils.cs" />
     <Compile Include="Utils\AutorunUtils.cs" />
@@ -238,6 +251,8 @@
     <Compile Include="Utils\ShellAPI.cs" />
     <Compile Include="Utils\ShellContextMenu.cs" />
     <Compile Include="Utils\SingleInstanceCheck.cs" />
+    <Compile Include="Utils\SysImageListHelper.cs" />
+    <Compile Include="Utils\SysImageListSize.cs" />
     <Compile Include="Utils\UnsafeNativeMethods.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

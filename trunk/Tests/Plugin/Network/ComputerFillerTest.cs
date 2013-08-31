@@ -29,7 +29,7 @@ namespace LanExchange.Plugin.Network
         {
             var strategy = new ComputerFiller();
             var result = new Collection<PanelItemBase>();
-            var domain = NetApi32Utils.Instance.GetMachineNetBiosDomain(null);
+            var domain = NetApi32Utils.GetMachineNetBiosDomain(null);
             strategy.Fill(new DomainPanelItem(null, domain), result);
             Assert.Greater(result.Count, 0);
         }

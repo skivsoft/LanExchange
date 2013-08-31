@@ -208,7 +208,6 @@ namespace LanExchange.Model.Settings
         public HashtableSerializable General
         {
             get { return m_Config; }
-            set { m_Config = value; }
         }
 
         // properties below must not be modified instantly
@@ -216,7 +215,7 @@ namespace LanExchange.Model.Settings
         public int MainFormX { get; set; }
         public int MainFormWidth { get; set; }
 
-        public List<string> WMIClassesInclude { get; set; }
+        public IList<string> WMIClassesInclude { get; private set; }
 
         public bool IsAutorun
         {
@@ -243,30 +242,5 @@ namespace LanExchange.Model.Settings
 
         [DefaultValue(false)]
         public bool AdvancedMode { get; set; }
-    }
-
-    public class SettingsChangedArgs : EventArgs
-    {
-        private readonly string m_Name;
-        private readonly object m_Value;
-
-        public SettingsChangedArgs(string name, object value)
-        {
-            m_Name = name;
-            m_Value = value;
-            NewValue = value;
-        }
-
-        public string Name
-        {
-            get { return m_Name; }
-        }
-
-        public object Value
-        {
-            get { return m_Value; }
-        }
-
-        public object NewValue { get; set; }
     }
 }

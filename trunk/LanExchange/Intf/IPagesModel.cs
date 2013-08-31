@@ -26,34 +26,4 @@ namespace LanExchange.Intf
         void SaveSettings();
         void LoadSettings();
     }
-
-    public class PanelIndexEventArgs : EventArgs
-    {
-        private readonly int m_Index;
-
-        public PanelIndexEventArgs(int index)
-        {
-            m_Index = index;
-        }
-
-        public int Index
-        {
-            get { return m_Index; }
-        }
-    }
-
-    public class PanelModelEventArgs : EventArgs
-    {
-        private readonly IPanelModel m_Info;
-
-        public PanelModelEventArgs(IPanelModel info)
-        {
-            m_Info = info;
-        }
-
-        public IPanelModel Info
-        {
-            get { return m_Info; }
-        }
-    }
 }

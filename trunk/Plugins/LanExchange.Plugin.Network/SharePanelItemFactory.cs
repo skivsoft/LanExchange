@@ -2,7 +2,7 @@
 
 namespace LanExchange.Plugin.Network
 {
-    public class SharePanelItemFactory : PanelItemBaseFactory
+    public class SharePanelItemFactory : PanelItemFactoryBase
     {
         public override PanelItemBase CreatePanelItem(PanelItemBase parent, string name)
         {

@@ -28,7 +28,7 @@ namespace LanExchange.Plugin.Network
         public void TestAlgorithm()
         {
             var strategy = new ShareFiller();
-            var domain = NetApi32Utils.Instance.GetMachineNetBiosDomain(null);
+            var domain = NetApi32Utils.GetMachineNetBiosDomain(null);
             var computer = new ComputerPanelItem(new DomainPanelItem(Network.ROOT_OF_DOMAINS, domain), SystemInformation.ComputerName);
             ShareFiller.ShowHiddenShares = true;
             var result = new Collection<PanelItemBase>();

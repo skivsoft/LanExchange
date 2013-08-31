@@ -60,12 +60,4 @@ namespace LanExchange.Core
             return constructorInfo.GetParameters().Select(parameter => ResolveObject(parameter.ParameterType));
         }
     }
-
-    public class TypeNotRegisteredException : Exception
-    {
-        public TypeNotRegisteredException(string message)
-            : base(message)
-        {
-        }
-    }
 }

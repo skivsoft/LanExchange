@@ -10,7 +10,7 @@ namespace LanExchange.Misc.Addon
     /// </summary>
 #if DEBUG
     [Localizable(false)]
-    class AddonGen
+    static class AddonGen
     {
 
         public static void Generate()

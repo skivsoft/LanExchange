@@ -10,12 +10,12 @@ using LanExchange.UI;
 
 namespace LanExchange
 {
-    public class ContainerBuilder
+    public static class ContainerBuilder
     {
         /// <summary>
         /// Maps interfaces to concrete implementations.
         /// </summary>
-        public IContainer Build()
+        public static IContainer Build()
         {
             var container = new SimpleIocContainer();
             // core singletons

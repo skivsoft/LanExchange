@@ -740,9 +740,4 @@ namespace LanExchange.UI
         }
 
     }
-
-    public interface IListViewItemGetter
-    {
-        ListViewItem GetListViewItemAt(int index);
-    }
 }

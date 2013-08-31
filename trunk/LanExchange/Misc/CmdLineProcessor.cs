@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace LanExchange.Misc
 {
-    class CmdLineProcessor
+    static class CmdLineProcessor
     {
         private static string[] s_Args;
 

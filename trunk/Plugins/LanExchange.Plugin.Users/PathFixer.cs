@@ -4,12 +4,12 @@ using System.Text;
 
 namespace LanExchange.Plugin.Users
 {
-    public class PathFixer
+    public static class PathFixer
     {
         private const char PathDelimiter = '\\';
 
         [Localizable(false)]
-        public string FixLdapPath(string path)
+        public static string FixLdapPath(string path)
         {
             if (path == null) return string.Empty;
 
