@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?define VerMajor="2"?>
+<?define VerMinor="0"?>
+<?define Product="LanExchange $(var.VerMajor).$(var.VerMinor)" ?>
+<?define Version="$(var.VerMajor).$(var.VerMinor).0.0" ?>
+<?define ProductCode="34A68278-141B-4C52-97FD-9C08C11091D1"?>
+<?define UpgradeCode="0B3FF52F-F797-4DBC-BC27-7445B4A991FE"?>
+<?define Manufacturer="Konstantin Mikhailyuk"?>
+<?define Description="User-friendly browser of computers for local area network."?>
+<?define SourceDir="$(var.SolutionDir)LanExchange\bin\$(var.Configuration)\"?>
+<?define DefInstallDir="LanExchange" ?>
+<Include />

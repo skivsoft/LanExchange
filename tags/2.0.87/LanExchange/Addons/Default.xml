@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanExchangeAddon xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Programs>
+    <Program Id="explorer" FileName="%SystemRoot%\explorer.exe" />
+    <Program Id="compmgmt" FileName="%SystemRoot%\system32\compmgmt.msc"/>
+    <Program Id="fsmgmt" FileName="%SystemRoot%\system32\fsmgmt.msc"/>
+    <Program Id="lusrmgr" FileName="%SystemRoot%\system32\lusrmgr.msc"/>
+    <Program Id="services" FileName="%SystemRoot%\system32\services.msc"/>
+    <Program Id="mstsc" FileName="%SystemRoot%\system32\mstsc.exe" />
+  </Programs>
+  <PanelItemTypes>
+    <PanelItemTypeRef Id="ComputerPanelItem">
+      <ContextMenuStrip>
+        <ToolStripMenuItem Text="Windows Explorer">
+          <ShortcutKeys>Shift+Enter</ShortcutKeys>
+          <ProgramRef Id="explorer" />
+          <ProgramArgs>\\{0}</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem Text="Remote Desktop Connection">
+          <ProgramRef Id="mstsc" />
+          <ProgramArgs>/v:{0}</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem /> <!-- separator -->
+        <ToolStripMenuItem Text="Computer Management">
+          <ShortcutKeys>Ctrl+F1</ShortcutKeys>
+          <ProgramRef Id="compmgmt" />
+          <ProgramArgs>/computer:{0}</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem Text="Shared Folders">
+          <ProgramRef Id="fsmgmt" />
+          <ProgramArgs>/computer:{0}</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem Text="Local Users and Groups">
+          <ProgramRef Id="lusrmgr" />
+          <ProgramArgs>/computer:{0}</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem Text="Services">
+          <ProgramRef Id="services" />
+          <ProgramArgs>/computer:{0}</ProgramArgs>
+        </ToolStripMenuItem>
+      </ContextMenuStrip>
+    </PanelItemTypeRef>
+    <PanelItemTypeRef Id="SharePanelItem">
+      <ContextMenuStrip>
+        <ToolStripMenuItem Text="Windows Explorer" Default="true">
+          <ShortcutKeys>Shift+Enter</ShortcutKeys>
+          <ProgramRef Id="explorer" />
+          <ProgramArgs>\\{0}</ProgramArgs>
+        </ToolStripMenuItem>
+      </ContextMenuStrip>
+    </PanelItemTypeRef>
+  </PanelItemTypes>
+</LanExchangeAddon>
