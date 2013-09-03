@@ -51,6 +51,7 @@ using System.Windows.Forms;
 using LanExchange.Intf;
 using LanExchange.Misc;
 using LanExchange.Misc.Addon;
+using LanExchange.Misc.Impl;
 using LanExchange.Properties;
 using LanExchange.UI;
 using LanExchange.Utils;
@@ -72,7 +73,7 @@ namespace LanExchange
 #if DEBUG
                 //AddonGen.Generate();
 #endif
-                AddonManager.Instance.LoadAddons();
+                App.Addons.LoadAddons();
                 AppView.ApplicationRun();
             }
             catch(Exception e)

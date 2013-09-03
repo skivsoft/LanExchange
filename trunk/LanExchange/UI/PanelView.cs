@@ -6,6 +6,7 @@ using LanExchange.Core;
 using LanExchange.Intf;
 using LanExchange.Misc;
 using LanExchange.Misc.Addon;
+using LanExchange.Misc.Impl;
 using LanExchange.Model;
 using LanExchange.Presenter;
 using LanExchange.Properties;
@@ -257,7 +258,7 @@ namespace LanExchange.UI
         {
             if (m_Presenter.CommandLevelDown())
                 return;
-            AddonManager.Instance.RunDefaultCmdLine();
+            App.Addons.RunDefaultCmdLine();
         }
 
         private void lvComps_KeyDown(object sender, KeyEventArgs e)
@@ -307,7 +308,7 @@ namespace LanExchange.UI
             }
             // process KeyDown on addons if KeyDown event not handled yet
             if (!e.Handled)
-                AddonManager.Instance.ProcessKeyDown(e);
+                App.Addons.ProcessKeyDown(e);
         }
 
         private void lvComps_ItemActivate(object sender, EventArgs e)
@@ -664,7 +665,7 @@ namespace LanExchange.UI
                 mComp.Image = App.Images.GetSmallImage(panelItem.ImageName);
                 mComp.Text = panelItem.Name;
                 var typeId = panelItem.GetType().Name;
-                menuVisible = AddonManager.Instance.BuildMenuForPanelItemType(mComp, typeId);
+                menuVisible = App.Addons.BuildMenuForPanelItemType(mComp, typeId);
                 if (!menuVisible)
                 {
                     mComp.DropDownItems.Clear();

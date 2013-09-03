@@ -5,33 +5,23 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.Intf;
+using LanExchange.Misc.Addon;
 using LanExchange.SDK;
 using LanExchange.Utils;
 
-namespace LanExchange.Misc.Addon
+namespace LanExchange.Misc.Impl
 {
     [Localizable(false)]
-    public class AddonManager
+    public class AddonManagerImpl : IAddonManager
     {
-        private static AddonManager s_Instance;
-        private readonly Dictionary<string, AddonProgram> m_Programs;
-        private readonly Dictionary<string, AddonItemTypeRef> m_PanelItems;
-
-        private AddonManager()
+        public AddonManagerImpl()
         {
-            m_Programs = new Dictionary<string, AddonProgram>();
-            m_PanelItems = new Dictionary<string, AddonItemTypeRef>();
+            Programs = new Dictionary<string, AddonProgram>();
+            PanelItems = new Dictionary<string, AddonItemTypeRef>();
         }
 
-        public static AddonManager Instance
-        {
-            get
-            {
-                if (s_Instance == null)
-                    s_Instance = new AddonManager();
-                return s_Instance;
-            }
-        }
+        public IDictionary<string, AddonProgram> Programs { get; private set; }
+        public IDictionary<string, AddonItemTypeRef> PanelItems { get; private set; }
 
         public void LoadAddons()
         {
@@ -44,53 +34,55 @@ namespace LanExchange.Misc.Addon
             {
                 Debug.Print(ex.Message);
             }
-            ResolveReferences();
         }
 
-        public void LoadAddon(string fileName)
+        private void LoadAddon(string fileName)
         {
-            var addon = (Addon)SerializeUtils.DeserializeObjectFromXMLFile(fileName, typeof(Addon));
+            var addon = (Addon.Addon)SerializeUtils.DeserializeObjectFromXMLFile(fileName, typeof(Addon.Addon));
             foreach (var item in addon.Programs)
-                if (!m_Programs.ContainsKey(item.Id))
-                    m_Programs.Add(item.Id, item);
-            foreach (var item in addon.PanelItemTypes)
-                if (m_PanelItems.ContainsKey(item.Id))
+                if (!Programs.ContainsKey(item.Id))
                 {
-                    var found = m_PanelItems[item.Id];
-                    if (item.CountVisible > 0)
-                    {
-                        // add separator to split item groups
-                        if (found.ContextMenuStrip.Count > 0)
-                            found.ContextMenuStrip.Add(new AddonMenuItem());
-                        foreach (var menuItem in item.ContextMenuStrip)
-                            if (menuItem.Visible)
-                                found.ContextMenuStrip.Add(menuItem);
-                    }
+                    item.PrepareFileNameAndIcon();
+                    Programs.Add(item.Id, item);
+                }
+            foreach (var item in addon.PanelItemTypes)
+            {
+                AddonItemTypeRef found;
+                if (PanelItems.ContainsKey(item.Id))
+                {
+                    found = PanelItems[item.Id];
+                    PanelItems.Remove(item.Id);
                 }
                 else
-                    m_PanelItems.Add(item.Id, item);
-        }
+                    found = new AddonItemTypeRef();
+                if (item.CountVisible == 0) continue;
 
-        private void ResolveReferences()
-        {
-            foreach (var program in m_Programs)
-            {
-                program.Value.PrepareFileNameAndIcon();
-            }
-            foreach(var item in m_PanelItems)
-                foreach (var menuItem in item.Value.ContextMenuStrip)
-                    if (!menuItem.IsSeparator)
-                        if (m_Programs.ContainsKey(menuItem.ProgramRef.Id))
-                            menuItem.ProgramValue = m_Programs[menuItem.ProgramRef.Id];
+                // add separator to split item groups
+                if (found.ContextMenuStrip.Count > 0)
+                    found.ContextMenuStrip.Add(new AddonMenuItem());
+                foreach (var menuItem in item.ContextMenuStrip)
+                    if (menuItem.Visible)
+                    {
+                        if (menuItem.IsSeparator)
+                            found.ContextMenuStrip.Add(menuItem);
                         else
-                            menuItem.ProgramValue = null;
+                        {
+                            menuItem.ProgramValue = Programs[menuItem.ProgramRef.Id];
+                            if (!found.ContextMenuStrip.Contains(menuItem) && 
+                                menuItem.ProgramRef != null && 
+                                Programs.ContainsKey(menuItem.ProgramRef.Id))
+                                found.ContextMenuStrip.Add(menuItem);
+                        }
+                    }
+                PanelItems.Add(item.Id, found);
+            }
         }
 
         private void InternalBuildMenu(ToolStripItemCollection Items, string Id)
         {
             Items.Clear();
             ToolStripMenuItem defaultItem = null;
-            foreach (var item in m_PanelItems[Id].ContextMenuStrip)
+            foreach (var item in PanelItems[Id].ContextMenuStrip)
             {
                 if (item.IsSeparator)
                     Items.Add(new ToolStripSeparator());
@@ -121,7 +113,7 @@ namespace LanExchange.Misc.Addon
 
         public bool BuildMenuForPanelItemType(ContextMenuStrip popTop, string Id)
         {
-            if (!m_PanelItems.ContainsKey(Id))
+            if (!PanelItems.ContainsKey(Id))
                 return false;
             if (popTop.Tag == null || !popTop.Tag.Equals(Id))
             {
@@ -133,7 +125,7 @@ namespace LanExchange.Misc.Addon
 
         public bool BuildMenuForPanelItemType(ToolStripMenuItem popTop, string Id)
         {
-            if (!m_PanelItems.ContainsKey(Id))
+            if (!PanelItems.ContainsKey(Id))
                 return false;
             if (popTop.Tag == null || !popTop.Tag.Equals(Id))
             {
@@ -185,9 +177,9 @@ namespace LanExchange.Misc.Addon
             var panelItem = pv.Presenter.GetFocusedPanelItem(false, true);
             if (panelItem == null) return;
             var typeId = panelItem.GetType().Name;
-            if (!m_PanelItems.ContainsKey(typeId))
+            if (!PanelItems.ContainsKey(typeId))
                 return;
-            var item = m_PanelItems[typeId];
+            var item = PanelItems[typeId];
             var shortcut = KeyboardUtils.KeyEventToString(e);
             foreach (var menuItem in item.ContextMenuStrip)
                 if (menuItem.ShortcutPresent && menuItem.ShortcutKeys.Equals(shortcut))
@@ -208,9 +200,9 @@ namespace LanExchange.Misc.Addon
             var panelItem = pv.Presenter.GetFocusedPanelItem(false, true);
             if (panelItem == null) return;
             var typeId = panelItem.GetType().Name;
-            if (!m_PanelItems.ContainsKey(typeId))
+            if (!PanelItems.ContainsKey(typeId))
                 return;
-            var item = m_PanelItems[typeId];
+            var item = PanelItems[typeId];
             AddonMenuItem defaultItem = null;
             foreach (var menuItem in item.ContextMenuStrip)
                 if (menuItem.Default)
