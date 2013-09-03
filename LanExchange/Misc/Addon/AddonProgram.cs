@@ -4,7 +4,6 @@ using System.Drawing;
 using System.IO;
 using System.Xml.Serialization;
 using LanExchange.Intf;
-using LanExchange.UI;
 using LanExchange.Utils;
 
 namespace LanExchange.Misc.Addon

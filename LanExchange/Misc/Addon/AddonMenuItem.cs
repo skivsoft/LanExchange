@@ -1,9 +1,10 @@
-﻿using System.Xml.Serialization;
+﻿using System;
+using System.Xml.Serialization;
 
 namespace LanExchange.Misc.Addon
 {
     [XmlType("ToolStripMenuItem")]
-    public class AddonMenuItem
+    public class AddonMenuItem : IEquatable<AddonMenuItem>
     {
         public AddonMenuItem()
         {
@@ -36,6 +37,29 @@ namespace LanExchange.Misc.Addon
         public bool ShortcutPresent
         {
             get { return !string.IsNullOrEmpty(ShortcutKeys); }
+        }
+
+        public bool Equals(AddonMenuItem other)
+        {
+            if (Text == null)
+                return other.Text == null;
+            if (Text.Equals(other.Text))
+                return true;
+            if (ProgramValue == null || other.ProgramValue == null)
+                return (ProgramValue == null) == (other.ProgramValue == null);
+            if (String.Compare(ProgramValue.ExpandedFileName,
+                               other.ProgramValue.ExpandedFileName,
+                               StringComparison.InvariantCultureIgnoreCase) != 0)
+                return false;
+            return String.Compare(ProgramArgs, other.ProgramArgs, StringComparison.InvariantCulture) == 0;
+        }
+
+        public override int GetHashCode()
+        {
+            var result = Text == null ? 0 : Text.GetHashCode();
+            result ^= ProgramValue.ExpandedFileName.GetHashCode();
+            result ^= ProgramArgs.GetHashCode();
+            return result;
         }
     }
 }

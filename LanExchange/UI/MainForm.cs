@@ -6,6 +6,7 @@ using LanExchange.Intf;
 using LanExchange.Misc;
 using LanExchange.Misc.Action;
 using LanExchange.Misc.Addon;
+using LanExchange.Misc.Impl;
 using LanExchange.Model;
 using LanExchange.Model.Settings;
 using System.Drawing;
@@ -261,7 +262,7 @@ namespace LanExchange.UI
                 e.Cancel = true;
                 return;
             }
-            e.Cancel = !AddonManager.Instance.BuildMenuForPanelItemType(popTop, panelItem.GetType().Name);
+            e.Cancel = !App.Addons.BuildMenuForPanelItemType(popTop, panelItem.GetType().Name);
         }
 
         private void tipComps_Popup(object sender, PopupEventArgs e)

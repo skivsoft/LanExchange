@@ -28,6 +28,7 @@ namespace LanExchange
             container.Register<IPluginManager, PluginManagerImpl>();
             container.Register<ILazyThreadPool, LazyThreadPoolImpl>();
             container.Register<IImageManager, ImageManagerImpl>();
+            container.Register<IAddonManager, AddonManagerImpl>();
             // services
             container.Register<IPuntoSwitcherService, PuntoSwitcherServiceEngRus>();
             // models

@@ -107,6 +107,7 @@
     <Compile Include="Misc\Action\ReReadAction.cs" />
     <Compile Include="Misc\Action\ShortcutKeysAction.cs" />
     <Compile Include="ContainerBuilder.cs" />
+    <Compile Include="Intf\IAddonManager.cs" />
     <Compile Include="Misc\CmdLineProcessor.cs" />
     <Compile Include="Intf\App.cs" />
     <Compile Include="Intf\ILazyThreadPool.cs" />
@@ -139,7 +140,7 @@
     <Compile Include="Misc\Addon\Addon.cs" />
     <Compile Include="Misc\Addon\AddonGen.cs" />
     <Compile Include="Misc\Addon\AddonItemTypeRef.cs" />
-    <Compile Include="Misc\Addon\AddonManager.cs" />
+    <Compile Include="Misc\Impl\AddonManagerImpl.cs" />
     <Compile Include="Misc\Addon\AddonMenuItem.cs" />
     <Compile Include="Misc\Addon\AddonObjectId.cs" />
     <Compile Include="Misc\Addon\AddonProgram.cs" />
@@ -286,8 +287,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Addons\WMIViewer.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Addons\Default.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

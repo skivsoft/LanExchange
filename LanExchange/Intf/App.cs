@@ -17,6 +17,7 @@ namespace LanExchange.Intf
         public static IPluginManager Plugins;
         public static ILazyThreadPool Threads;
         public static IImageManager Images;
+        public static IAddonManager Addons;
 
         public static void SetContainer(IContainer container)
         {
@@ -32,6 +33,7 @@ namespace LanExchange.Intf
             Plugins = Resolve<IPluginManager>();
             Threads = Resolve<ILazyThreadPool>();
             Images = Resolve<IImageManager>();
+            Addons = Resolve<IAddonManager>();
         }
 
         public static TTypeToResolve Resolve<TTypeToResolve>()
