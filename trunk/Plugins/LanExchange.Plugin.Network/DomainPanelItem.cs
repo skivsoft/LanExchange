@@ -59,5 +59,12 @@ namespace LanExchange.Plugin.Network
         {
             get { return PanelImageNames.Workgroup; }
         }
+
+        public override object Clone()
+        {
+            var result = new DomainPanelItem(Parent, m_SI);
+            result.Name = Name;
+            return result;
+        }
     }
 }

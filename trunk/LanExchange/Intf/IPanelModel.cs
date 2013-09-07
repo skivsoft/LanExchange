@@ -86,5 +86,7 @@ namespace LanExchange.Intf
         void Sort(IComparer<PanelItemBase> sorter);
 
         bool Contains(PanelItemBase panelItem);
+
+        void SetDefaultRoot(PanelItemBase root);
     }
 }

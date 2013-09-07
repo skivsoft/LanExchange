@@ -57,9 +57,9 @@ namespace LanExchange.Presenter
                 totalCount--;
             }
             if (showCount != totalCount)
-                MainForm.Instance.ShowStatusText(Resources.PanelPresenter_Items2, showCount, totalCount);
+                App.MainView.ShowStatusText(Resources.PanelPresenter_Items2, showCount, totalCount);
             else
-                MainForm.Instance.ShowStatusText(Resources.PanelPresenter_Items1, showCount);
+                App.MainView.ShowStatusText(Resources.PanelPresenter_Items1, showCount);
             SetupColumns();
             View.SetVirtualListSize(m_Objects.FilterCount);
             if (m_Objects.FilterCount > 0)

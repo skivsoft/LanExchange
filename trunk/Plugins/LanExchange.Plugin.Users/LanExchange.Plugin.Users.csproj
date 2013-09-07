@@ -48,8 +48,7 @@
     <Compile Include="..\..\Common\AnyAssemblyInfo.cs">
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ConcreteADExecutor.cs" />
-    <Compile Include="OrgUnitPanelItemFactory.cs" />
+    <Compile Include="LdapUtils.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -57,8 +56,6 @@
     </Compile>
     <Compile Include="UserPanelItemFactory.cs" />
     <Compile Include="StringEqualityComparer.cs" />
-    <Compile Include="OrgUnitFiller.cs" />
-    <Compile Include="OrgUnitPanelItem.cs" />
     <Compile Include="PathDistinct.cs" />
     <Compile Include="PathFixer.cs" />
     <Compile Include="AssemblyInfo.cs" />

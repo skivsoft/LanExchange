@@ -30,5 +30,14 @@ namespace LanExchange.Plugin.Users
             }
             return result.ToString();
         }
+
+        [Localizable(false)]
+        public static string GetLdapContainer(string ldapPath)
+        {
+            var index = ldapPath.IndexOf(',');
+            if (index == -1)
+                return string.Empty;
+            return "LDAP://" + ldapPath.Remove(0, index+1);
+        }
     }
 }

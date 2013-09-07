@@ -94,6 +94,8 @@
     </Compile>
     <Compile Include="Core\TypeNotRegisteredException.cs" />
     <Compile Include="Intf\DataReadyArgs.cs" />
+    <Compile Include="Intf\IMainPresenter.cs" />
+    <Compile Include="Intf\IMainView.cs" />
     <Compile Include="Intf\IModel.cs" />
     <Compile Include="Intf\IPresenter.cs" />
     <Compile Include="Intf\IView.cs" />
@@ -137,13 +139,12 @@
     <Compile Include="Intf\IInfoView.cs" />
     <Compile Include="Intf\IPagesView.cs" />
     <Compile Include="Intf\IPanelView.cs" />
-    <Compile Include="Misc\Addon\Addon.cs" />
-    <Compile Include="Misc\Addon\AddonGen.cs" />
-    <Compile Include="Misc\Addon\AddonItemTypeRef.cs" />
+    <Compile Include="Intf\Addon\Addon.cs" />
+    <Compile Include="Intf\Addon\AddonItemTypeRef.cs" />
     <Compile Include="Misc\Impl\AddonManagerImpl.cs" />
-    <Compile Include="Misc\Addon\AddonMenuItem.cs" />
-    <Compile Include="Misc\Addon\AddonObjectId.cs" />
-    <Compile Include="Misc\Addon\AddonProgram.cs" />
+    <Compile Include="Intf\Addon\AddonMenuItem.cs" />
+    <Compile Include="Intf\Addon\AddonObjectId.cs" />
+    <Compile Include="Intf\Addon\AddonProgram.cs" />
     <Compile Include="Misc\CustomPanelItem.cs" />
     <Compile Include="Misc\Impl\FolderManagerImpl.cs" />
     <Compile Include="Model\Settings\HashtableSerializable.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="Model\PanelModel.cs" />
     <Compile Include="Model\PanelModelCopyHelper.cs" />
     <Compile Include="Model\Settings\SettingsChangedArgs.cs" />
+    <Compile Include="Presenter\MainPresenter.cs" />
     <Compile Include="UI\IListViewItemGetter.cs" />
     <Compile Include="Utils\HookEventArgs.cs" />
     <Compile Include="Utils\HookType.cs" />

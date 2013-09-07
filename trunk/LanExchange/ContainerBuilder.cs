@@ -40,10 +40,12 @@ namespace LanExchange
             container.Register<IFilterView, FilterView>(LifeCycle.Transient);
             container.Register<IPanelView, PanelView>(LifeCycle.Transient);
             container.Register<IPagesView, PagesView>();
+            container.Register<IMainView, MainForm>();
             // presenters
+            container.Register<IMainPresenter, MainPresenter>(LifeCycle.Singleton);
             container.Register<IAboutPresenter, AboutPresenter>(LifeCycle.Singleton);
-            container.Register<IFilterPresenter, FilterPresenter>(LifeCycle.Transient);
             container.Register<IPagesPresenter, PagesPresenter>(LifeCycle.Singleton);
+            container.Register<IFilterPresenter, FilterPresenter>(LifeCycle.Transient);
             container.Register<IPanelPresenter, PanelPresenter>(LifeCycle.Transient);
             return container;
         }

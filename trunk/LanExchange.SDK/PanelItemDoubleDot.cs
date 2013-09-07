@@ -17,5 +17,10 @@ namespace LanExchange.SDK
         {
             get { return PanelImageNames.DoubleDot; }
         }
+
+        public override object Clone()
+        {
+            return new PanelItemDoubleDot(Parent);
+        }
     }
 }

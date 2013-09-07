@@ -8,7 +8,7 @@ namespace LanExchange.SDK
     /// Base class for any LanExchange panel item.
     /// </summary>
     [Serializable]
-    public class PanelItemBase : IEquatable<PanelItemBase>, IComparable<PanelItemBase>, IComparable, ICloneable
+    public abstract class PanelItemBase : IEquatable<PanelItemBase>, IComparable<PanelItemBase>, IComparable, ICloneable
     {
         protected bool m_IsReachable = true;
 
@@ -21,7 +21,8 @@ namespace LanExchange.SDK
         /// Initializes a new instance of the <see cref="PanelItemBase"/> class.
         /// </summary>
         /// <param name="parent">The parent.</param>
-        public PanelItemBase(PanelItemBase parent) : this()
+        public PanelItemBase(PanelItemBase parent)
+            : this()
         {
             Parent = parent;
         }
@@ -146,6 +147,7 @@ namespace LanExchange.SDK
                 return 0;
             var value1 = this[column];
             var value2 = otherItem[column];
+
             return value1.CompareTo(value2);
         }
 
@@ -227,11 +229,6 @@ namespace LanExchange.SDK
             return Name != null ? Name.GetHashCode() : 0;
         }
 
-        public virtual object Clone()
-        {
-            var result = new PanelItemBase(Parent);
-            result.Name = Name;
-            return result;
-        }
+        public abstract object Clone();
     }
 }

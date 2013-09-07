@@ -5,7 +5,6 @@ using System.Windows.Forms;
 using LanExchange.Core;
 using LanExchange.Intf;
 using LanExchange.Misc;
-using LanExchange.Misc.Addon;
 using LanExchange.Misc.Impl;
 using LanExchange.Model;
 using LanExchange.Presenter;

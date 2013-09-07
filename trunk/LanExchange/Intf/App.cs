@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Forms;
 using LanExchange.SDK;
 
 namespace LanExchange.Intf
@@ -18,6 +17,14 @@ namespace LanExchange.Intf
         public static ILazyThreadPool Threads;
         public static IImageManager Images;
         public static IAddonManager Addons;
+        /// <summary>
+        /// MainView singleton instance.
+        /// </summary>
+        public static IMainView MainView;
+        /// <summary>
+        /// MainPresenter singleton instance.
+        /// </summary>
+        public static IMainPresenter Presenter;
 
         public static void SetContainer(IContainer container)
         {
@@ -34,6 +41,7 @@ namespace LanExchange.Intf
             Threads = Resolve<ILazyThreadPool>();
             Images = Resolve<IImageManager>();
             Addons = Resolve<IAddonManager>();
+            Presenter = Resolve<IMainPresenter>();
         }
 
         public static TTypeToResolve Resolve<TTypeToResolve>()

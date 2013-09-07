@@ -287,60 +287,60 @@ namespace LanExchange.Utils
         #endregion
 
         #region InvokeContextMenuDefault
-        private void InvokeContextMenuDefault(FileInfo[] arrFI)
-        {
-            // Release all resources first.
-            ReleaseAll();
+        //private void InvokeContextMenuDefault(FileInfo[] arrFI)
+        //{
+        //    // Release all resources first.
+        //    ReleaseAll();
 
-            IntPtr pMenu = IntPtr.Zero;
+        //    IntPtr pMenu = IntPtr.Zero;
 
-            try
-            {
-                _arrPIDLs = GetPIDLs(arrFI);
-                if (null == _arrPIDLs)
-                {
-                    ReleaseAll();
-                    return;
-                }
+        //    try
+        //    {
+        //        _arrPIDLs = GetPIDLs(arrFI);
+        //        if (null == _arrPIDLs)
+        //        {
+        //            ReleaseAll();
+        //            return;
+        //        }
 
-                if (false == GetContextMenuInterfaces(_oParentFolder, _arrPIDLs))
-                {
-                    ReleaseAll();
-                    return;
-                }
+        //        if (false == GetContextMenuInterfaces(_oParentFolder, _arrPIDLs))
+        //        {
+        //            ReleaseAll();
+        //            return;
+        //        }
 
-                pMenu = CreatePopupMenu();
+        //        pMenu = CreatePopupMenu();
 
-                int nResult = _oContextMenu.QueryContextMenu(
-                    pMenu,
-                    0,
-                    CMD_FIRST,
-                    CMD_LAST,
-                    CMF.DEFAULTONLY |
-                    ((Control.ModifierKeys & Keys.Shift) != 0 ? CMF.EXTENDEDVERBS : 0));
+        //        int nResult = _oContextMenu.QueryContextMenu(
+        //            pMenu,
+        //            0,
+        //            CMD_FIRST,
+        //            CMD_LAST,
+        //            CMF.DEFAULTONLY |
+        //            ((Control.ModifierKeys & Keys.Shift) != 0 ? CMF.EXTENDEDVERBS : 0));
 
-                uint nDefaultCmd = (uint)GetMenuDefaultItem(pMenu, false, 0);
-                if (nDefaultCmd >= CMD_FIRST)
-                {
-                    InvokeCommand(_oContextMenu, nDefaultCmd, arrFI[0].DirectoryName, Control.MousePosition);
-                }
+        //        uint nDefaultCmd = (uint)GetMenuDefaultItem(pMenu, false, 0);
+        //        if (nDefaultCmd >= CMD_FIRST)
+        //        {
+        //            InvokeCommand(_oContextMenu, nDefaultCmd, arrFI[0].DirectoryName, Control.MousePosition);
+        //        }
 
-                DestroyMenu(pMenu);
-                pMenu = IntPtr.Zero;
-            }
-            catch
-            {
-                throw;
-            }
-            finally
-            {
-                if (pMenu != IntPtr.Zero)
-                {
-                    DestroyMenu(pMenu);
-                }
-                ReleaseAll();
-            }
-        }
+        //        DestroyMenu(pMenu);
+        //        pMenu = IntPtr.Zero;
+        //    }
+        //    catch
+        //    {
+        //        throw;
+        //    }
+        //    finally
+        //    {
+        //        if (pMenu != IntPtr.Zero)
+        //        {
+        //            DestroyMenu(pMenu);
+        //        }
+        //        ReleaseAll();
+        //    }
+        //}
         #endregion
 
         #region ShowContextMenu()

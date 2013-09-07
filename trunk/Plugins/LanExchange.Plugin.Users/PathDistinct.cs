@@ -43,7 +43,7 @@ namespace LanExchange.Plugin.Users
             while (true)
             {
                 var enumDict = m_Dict.GetEnumerator();
-                enumDict.MoveNext();
+                if (!enumDict.MoveNext()) break;
                 var str = enumDict.Current.Key.Split('\\');
                 if (index + 1 > str.Length) break;
                 string current = str[index];

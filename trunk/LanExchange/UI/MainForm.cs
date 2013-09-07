@@ -5,7 +5,6 @@ using System.Windows.Forms;
 using LanExchange.Intf;
 using LanExchange.Misc;
 using LanExchange.Misc.Action;
-using LanExchange.Misc.Addon;
 using LanExchange.Misc.Impl;
 using LanExchange.Model;
 using LanExchange.Model.Settings;
@@ -19,27 +18,28 @@ using Settings = LanExchange.Model.Settings.Settings;
 
 namespace LanExchange.UI
 {
-    public partial class MainForm : RunMinimizedForm
+    public partial class MainForm : RunMinimizedForm, IMainView
     {
         public const int WAIT_FOR_KEYUP_MS = 500;
 
-        /// <summary>
-        /// ManiForm single instance.
-        /// </summary>
-        public static MainForm Instance;
-
         private readonly GlobalHotkeys m_Hotkeys;
 
-        [Localizable(false)]
+        public PagesView Pages;
+
         public MainForm()
         {
             InitializeComponent();
-            Instance = this;
+            // App.MainView must be set before panel view will be created
+            App.MainView = this;
             // load settings from cfg-file
             Settings.Instance.Changed += SettingsOnChanged;
             //Settings.Instance.Load();
             SetRunMinimized(Settings.Instance.RunMinimized);
             // init Pages presenter
+            Pages = (PagesView)App.Resolve<IPagesView>();
+            Pages.Dock = DockStyle.Fill;
+            Controls.Add(Pages);
+            Pages.BringToFront();
             App.MainPages = Pages.Presenter;
             App.MainPages.PanelViewFocusedItemChanged += Pages_PanelViewFocusedItemChanged;
             App.MainPages.PanelViewFilterTextChanged += Pages_FilterTextChanged;
@@ -48,7 +48,7 @@ namespace LanExchange.UI
             SetupActions();
             SetupForm();
             // setup images
-            Instance.tipComps.SetToolTip(Pages.Pages, " ");
+            ClearToolTip(Pages.Pages);
             App.Images.SetImagesTo(Pages.Pages);
             App.Images.SetImagesTo(Status);
             // set hotkey for activate: Ctrl+Win+X
@@ -191,7 +191,7 @@ namespace LanExchange.UI
                                      ? null
                                      : pv.Presenter.Objects.CurrentPath.Peek();
                     if ((parent == null) || App.PanelItemTypes.DefaultRoots.Contains(parent))
-                        Instance.Hide();
+                        Hide();
                     else if (!m_EscDown)
                     {
                         m_EscTime = DateTime.UtcNow;
@@ -202,7 +202,7 @@ namespace LanExchange.UI
                         TimeSpan diff = DateTime.UtcNow - m_EscTime;
                         if (diff.TotalMilliseconds >= WAIT_FOR_KEYUP_MS)
                         {
-                            Instance.Hide();
+                            Hide();
                             m_EscDown = false;
                         }
                     }
@@ -240,7 +240,7 @@ namespace LanExchange.UI
                         if (diff.TotalMilliseconds < WAIT_FOR_KEYUP_MS)
                             presenter.CommandLevelUp();
                         else
-                            Instance.Hide();
+                            Hide();
                     }
                     m_EscDown = false;
                 }
@@ -324,13 +324,14 @@ namespace LanExchange.UI
             var panelItem = pv.Presenter.GetFocusedPanelItem(false, true);
             // check if parent item more informative than current panel item
             while (panelItem != null &&
+                   panelItem.Parent != PanelItemRoot.ROOT_OF_USERITEMS &&
                    !App.PanelItemTypes.DefaultRoots.Contains(panelItem) &&
                    !App.PanelItemTypes.DefaultRoots.Contains(panelItem.Parent))
                 panelItem = panelItem.Parent;
             if (panelItem == null) return;
             // update info panel at top of the form
             pInfo.Picture.Image = App.Images.GetLargeImage(panelItem.ImageName);
-            tipComps.SetToolTip(pInfo.Picture, panelItem.ImageLegendText);
+            SetToolTip(pInfo.Picture, panelItem.ImageLegendText);
             var helper = new PanelModelCopyHelper(null);
             helper.CurrentItem = panelItem;
             int index = 0;
@@ -348,11 +349,6 @@ namespace LanExchange.UI
         {
             timerTabSettingsSaver.Stop();
             timerTabSettingsSaver.Start();
-        }
-
-        public void ShowStatusText(string format, params object[] args)
-        {
-            lItemsCount.Text = String.Format(format, args);
         }
 
         private void popTray_Opening(object sender, CancelEventArgs e)
@@ -589,6 +585,22 @@ namespace LanExchange.UI
         private void pInfo_DragDrop(object sender, DragEventArgs e)
         {
             App.MainPages.CommandSendToNewTab();
+        }
+
+        public void SetToolTip(object control, string tipText)
+        {
+            tipComps.SetToolTip(Pages.Pages, tipText);
+        }
+
+        [Localizable(false)]
+        public void ClearToolTip(object control)
+        {
+            SetToolTip(control, " ");
+        }
+
+        public void ShowStatusText(string format, params object[] args)
+        {
+            lItemsCount.Text = String.Format(format, args);
         }
     }
 }

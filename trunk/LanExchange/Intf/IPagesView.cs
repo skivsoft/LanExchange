@@ -1,6 +1,4 @@
-﻿using LanExchange.UI;
-
-namespace LanExchange.Intf
+﻿namespace LanExchange.Intf
 {
     /// <summary>
     /// LanExchange main TabControl View interface.

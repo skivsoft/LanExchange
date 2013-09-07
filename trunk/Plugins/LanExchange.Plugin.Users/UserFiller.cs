@@ -1,54 +1,96 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
+using System.DirectoryServices;
+using System.Security.Principal;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Users
 {
     internal class UserFiller : IPanelFiller
     {
-        private const string LdapStartPath = "";
-
         public bool IsParentAccepted(PanelItemBase parent)
         {
-            return (parent != null) && (parent != Users.ROOT_OF_ORGUNITS) && (parent is OrgUnitPanelItem);
+            return (parent != null) && (parent == Users.ROOT_OF_DNS);
+        }
+
+        private string DataRow_GetString(DataRow row, string index)
+        {
+            if (row.Table.Columns.Contains(index))
+                return row[index].ToString();
+            return string.Empty;
+        }
+
+        private string SearchResult_GetString(SearchResult sr, string index)
+        {
+            string result = string.Empty;
+            try
+            {
+                if (sr.Properties.Contains(index))
+                    result = sr.Properties[index][0].ToString();
+            }
+            catch(Exception ex)
+            {
+                Debug.Print(ex.Message);
+            }
+            return result;
         }
 
         [Localizable(false)]
         public void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
-            //if (Users.Provider == null) return;
-            using (var rootEntry = new ConcreteADExecutor())
+            var startPath = LdapUtils.GetUserPath(LdapUtils.GetCurrentUserName());
+            using (var searcher = new DirectorySearcher())
             {
-                //if (rootEntry == null) return;
-
-                // connect to Active Directory
-                rootEntry.Connect(LdapStartPath);
-
                 // execute filter query to Active Directory
-                const string filter = "(&(objectCategory=person)(objectClass=user))"; // lockoutTime
-                //var filter = "(&(objectCategory=person)(objectClass=user)(!userAccountControl:1.2.840.113556.1.4.803:=16))";
+                searcher.SearchRoot = new DirectoryEntry(startPath);
+                //searcher.PageSize = 10000;
+                searcher.Filter = "(objectCategory=person)"; // lockoutTime
+                //var filter = "(&(&(|(&(objectCategory=person)(objectSid=*)(!samAccountType:1.2.840.113556.1.4.804:=3))(&(objectCategory=person)(!objectSid=*))(&(objectCategory=group)(groupType:1.2.840.113556.1.4.804:=14)))objectCategory=user)(cn=khmau.isup_builder)))";
+                //var filter = "(&(&(&(objectCategory=person)(objectClass=user)(lockoutTime:1.2.840.113556.1.4.804:=4294967295))))";
+                //var filter = "(&(objectClass=user)(userAccountControl:1.2.840.113556.1.4.803:=16))";
                 //var filter = "((!userAccountControl:1.2.840.113556.1.4.803:=2))";
                 //var filter = "(!(userAccountControl:1.2.840.113556.1.4.803:=2))";
-                DataTable resultTable = rootEntry.Query(filter, new[] {"description", "title", "useraccountcontrol"});
-                if (resultTable == null) return;
+                searcher.PropertiesToLoad.Add("cn");
+                searcher.PropertiesToLoad.Add("description");
+                searcher.PropertiesToLoad.Add("company");
+                searcher.PropertiesToLoad.Add("department");
+                searcher.PropertiesToLoad.Add("title");
+                searcher.PropertiesToLoad.Add("sAMAccountName");
+                searcher.PropertiesToLoad.Add("mail");
+                searcher.PropertiesToLoad.Add("telephoneNumber");
+                searcher.PropertiesToLoad.Add("userAccountControl");
 
-                result.Add(new PanelItemDoubleDot(parent));
-
-                foreach (DataRow row in resultTable.Rows)
+                try
                 {
-                    var name = row["description"].ToString();
-                    var user = new UserPanelItem(null, name);
-                    user.UserAccControl = uint.Parse(row["useraccountcontrol"].ToString());
-                    user.Description = user.UserAccControl.ToString("X");
-                    //user.Description = row["lockoutTime"].ToString();
-                    result.Add(user);
+                    foreach (SearchResult row in searcher.FindAll())
+                    {
+                        var name = SearchResult_GetString(row, "cn");
+
+                        var user = new UserPanelItem(parent, name);
+                        user.UserAccControl = uint.Parse(SearchResult_GetString(row, "useraccountcontrol"));
+                        user.Description = SearchResult_GetString(row, "description");
+                        user.Company = SearchResult_GetString(row, "company");
+                        user.Department = SearchResult_GetString(row, "department");
+                        user.Title = SearchResult_GetString(row, "title");
+                        user.Account = SearchResult_GetString(row, "sAMAccountName");
+                        user.Email = SearchResult_GetString(row, "mail");
+                        user.WorkPhone = SearchResult_GetString(row, "telephoneNumber");
+                        //user.WorkPhone = "0x" + user.UserAccControl.ToString("X");
+                        //user.Description = row["lockoutTime"].ToString();
+                        result.Add(user);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.Print(ex.Message);
                 }
             }
         }
 
-
-        public System.Type GetFillType()
+        public Type GetFillType()
         {
             return typeof (UserPanelItem);
         }

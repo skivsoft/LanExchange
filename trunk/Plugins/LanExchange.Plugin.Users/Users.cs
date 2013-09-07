@@ -3,9 +3,11 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Users
 {
-    internal class Users : IPlugin
+    public class Users : IPlugin
     {
-        public static PanelItemBase ROOT_OF_ORGUNITS = new PanelItemRoot();
+        public static PanelItemBase ROOT_OF_DNS = new PanelItemRoot();
+        public const string LDAP_PREFIX = "LDAP://";
+
         private IServiceProvider m_Provider;
 
         public void Initialize(IServiceProvider serviceProvider)
@@ -16,7 +18,6 @@ namespace LanExchange.Plugin.Users
             var typesManager = (IPanelItemFactoryManager)m_Provider.GetService(typeof(IPanelItemFactoryManager));
             if (typesManager != null)
             {
-                typesManager.RegisterPanelItemFactory(typeof(OrgUnitPanelItem), new OrgUnitPanelItemFactory());
                 typesManager.RegisterPanelItemFactory(typeof(UserPanelItem), new UserPanelItemFactory());
             }
 
@@ -24,7 +25,6 @@ namespace LanExchange.Plugin.Users
             var columnManager = (IPanelColumnManager)m_Provider.GetService(typeof(IPanelColumnManager));
             if (columnManager != null)
             {
-                OrgUnitPanelItem.RegisterColumns(columnManager);
                 UserPanelItem.RegisterColumns(columnManager);
             }
 
@@ -32,7 +32,6 @@ namespace LanExchange.Plugin.Users
             var fillerManager = (IPanelFillerManager)m_Provider.GetService(typeof(IPanelFillerManager));
             if (fillerManager != null)
             {
-                fillerManager.RegisterPanelFiller(new OrgUnitFiller());
                 fillerManager.RegisterPanelFiller(new UserFiller());
             }
         }
