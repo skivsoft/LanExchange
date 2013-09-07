@@ -7,6 +7,7 @@
     <Program Id="lusrmgr" FileName="%SystemRoot%\system32\lusrmgr.msc"/>
     <Program Id="services" FileName="%SystemRoot%\system32\services.msc"/>
     <Program Id="mstsc" FileName="%SystemRoot%\system32\mstsc.exe" />
+    <Program Id="start" FileName="%SystemRoot%\system32\calc.exe" />
   </Programs>
   <PanelItemTypes>
     <PanelItemTypeRef Id="ComputerPanelItem">
@@ -46,6 +47,15 @@
           <ShortcutKeys>Shift+Enter</ShortcutKeys>
           <ProgramRef Id="explorer" />
           <ProgramArgs>\\{0}</ProgramArgs>
+        </ToolStripMenuItem>
+      </ContextMenuStrip>
+    </PanelItemTypeRef>
+    <PanelItemTypeRef Id="UserPanelItem">
+      <ContextMenuStrip>
+        <ToolStripMenuItem Text="Send Email" Default="true">
+          <ShortcutKeys>Ctrl+Enter</ShortcutKeys>
+          <ProgramRef Id="start" />
+          <ProgramArgs>mailto:$(Email)</ProgramArgs>
         </ToolStripMenuItem>
       </ContextMenuStrip>
     </PanelItemTypeRef>

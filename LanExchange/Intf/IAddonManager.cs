@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
-using LanExchange.Misc.Addon;
+using LanExchange.Intf.Addon;
 
 namespace LanExchange.Intf
 {

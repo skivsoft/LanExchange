@@ -47,5 +47,14 @@ namespace LanExchange.Misc
             m_Data.Remove(index);
             m_Data.Add(index, value);
         }
+
+        public override object Clone()
+        {
+            var result = new CustomPanelItem(Parent, Name);
+            result.SetCountColumns(CountColumns);
+            for (int index = 0; index < CountColumns; index++)
+                result.SetValue(index, GetValue(index));
+            return result;
+        }
     }
 }

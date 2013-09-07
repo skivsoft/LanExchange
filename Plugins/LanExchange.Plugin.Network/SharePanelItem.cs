@@ -95,5 +95,14 @@ namespace LanExchange.Plugin.Network
             get { return m_SHI.ShareType; }
             set { m_SHI.ShareType = value; }
         }
+
+        public override object Clone()
+        {
+            var result = new SharePanelItem(Parent, SHI);
+            result.Name = Name;
+            result.Comment = Comment;
+            result.ShareType = ShareType;
+            return result;
+        }
     }
 }

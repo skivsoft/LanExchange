@@ -8,5 +8,12 @@ namespace LanExchange.Plugin.Users
         {
             return new UserPanelItem(parent, name);
         }
+
+        public override PanelItemBase CreateDefaultRoot()
+        {
+            var root = Users.ROOT_OF_DNS;
+            root.Name = "QQQ";
+            return root;
+        }
     }
 }

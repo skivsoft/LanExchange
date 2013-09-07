@@ -9,5 +9,10 @@ namespace LanExchange.SDK
     public sealed class PanelItemRoot : PanelItemBase
     {
         public static PanelItemBase ROOT_OF_USERITEMS = new PanelItemRoot();
+
+        public override object Clone()
+        {
+            return new PanelItemRoot();
+        }
     }
 }

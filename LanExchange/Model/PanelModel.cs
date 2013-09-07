@@ -328,5 +328,12 @@ namespace LanExchange.Model
                 return true;
             return m_Items.Contains(panelItem);
         }
+
+        public void SetDefaultRoot(PanelItemBase root)
+        {
+            if (root.Parent != null)
+                SetDefaultRoot(root.Parent);
+            CurrentPath.Push(root);
+        }
     }
 }

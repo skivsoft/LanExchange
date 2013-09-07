@@ -48,8 +48,7 @@ namespace LanExchange.UI
             this.lUserName = new System.Windows.Forms.ToolStripStatusLabel();
             this.tipComps = new System.Windows.Forms.ToolTip(this.components);
             this.popTop = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.Pages = new PagesView();
-            this.pInfo = new InfoView();
+            this.pInfo = new LanExchange.UI.InfoView();
             this.MainMenu = new System.Windows.Forms.MenuStrip();
             this.mPanel = new System.Windows.Forms.ToolStripMenuItem();
             this.mPanelNewTab = new System.Windows.Forms.ToolStripMenuItem();
@@ -146,7 +145,7 @@ namespace LanExchange.UI
             // lItemsCount
             // 
             this.lItemsCount.Name = "lItemsCount";
-            this.lItemsCount.Size = new System.Drawing.Size(472, 17);
+            this.lItemsCount.Size = new System.Drawing.Size(503, 17);
             this.lItemsCount.Spring = true;
             this.lItemsCount.Text = "    ";
             this.lItemsCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -188,6 +187,7 @@ namespace LanExchange.UI
             // 
             // tipComps
             // 
+            this.tipComps.IsBalloon = true;
             this.tipComps.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.tipComps.ToolTipTitle = "DefaultTitle";
             this.tipComps.Popup += new System.Windows.Forms.PopupEventHandler(this.tipComps_Popup);
@@ -197,17 +197,6 @@ namespace LanExchange.UI
             this.popTop.Name = "popTop";
             this.popTop.Size = new System.Drawing.Size(61, 4);
             this.popTop.Opening += new System.ComponentModel.CancelEventHandler(this.popTop_Opening);
-            // 
-            // Pages
-            // 
-            this.Pages.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Pages.Location = new System.Drawing.Point(0, 88);
-            this.Pages.Margin = new System.Windows.Forms.Padding(0);
-            this.Pages.Name = "Pages";
-            this.Pages.SelectedIndex = -1;
-            this.Pages.SelectedTabText = "";
-            this.Pages.Size = new System.Drawing.Size(564, 432);
-            this.Pages.TabIndex = 24;
             // 
             // pInfo
             // 
@@ -380,7 +369,6 @@ namespace LanExchange.UI
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(564, 542);
-            this.Controls.Add(this.Pages);
             this.Controls.Add(this.pInfo);
             this.Controls.Add(this.MainMenu);
             this.Controls.Add(this.Status);
@@ -421,7 +409,6 @@ namespace LanExchange.UI
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
         private System.Windows.Forms.ToolStripStatusLabel lUserName;
         internal InfoView pInfo;
-        private PagesView Pages;
         private System.Windows.Forms.Timer timerTabSettingsSaver;
         private System.Windows.Forms.MenuStrip MainMenu;
         private System.Windows.Forms.ToolStripMenuItem mHelp;

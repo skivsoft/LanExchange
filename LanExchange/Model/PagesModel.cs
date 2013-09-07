@@ -168,8 +168,7 @@ namespace LanExchange.Model
                 {
                     var info = App.Resolve<IPanelModel>();
                     info.TabName = root.Name;
-                    info.CurrentPath.Push(root.Parent);
-                    info.CurrentPath.Push(root);
+                    info.SetDefaultRoot(root);
                     //info.FocusedItem = SystemInformation.ComputerName;
                     AddTab(info);
                 }

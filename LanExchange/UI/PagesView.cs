@@ -30,10 +30,10 @@ namespace LanExchange.UI
         /// </summary>
         private bool m_Clicked;
 
-        public PagesView()
+        public PagesView(IPagesPresenter presenter)
         {
             InitializeComponent();
-            m_Presenter = App.Resolve<IPagesPresenter>();
+            m_Presenter = presenter;
             m_Presenter.View = this;
             mSelectTab.DropDownDirection = ToolStripDropDownDirection.BelowLeft;
         }
@@ -291,8 +291,7 @@ namespace LanExchange.UI
             {
                 App.Images.SetImagesTo(LV);
                 LV.View = (View) info.CurrentView;
-                if (MainForm.Instance != null)
-                    MainForm.Instance.tipComps.SetToolTip(LV, " ");
+                App.MainView.ClearToolTip(LV);
             }
             m_Presenter.SetupPanelViewEvents(PV);
             // add new tab and insert panel into it
