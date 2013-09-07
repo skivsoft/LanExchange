@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace LanExchange.Plugin.Users
 {
-    internal class StringEqualityComparer : IEqualityComparer<string>
+    internal sealed class StringEqualityComparer : IEqualityComparer<string>
     {
         public bool Equals(string x, string y)
         {

@@ -1,11 +1,18 @@
-﻿using System;
+﻿// ********************************************************************************
+// Network plugin
+// 
+// TODO Show several ip addresses if present
+//
+//
+// ********************************************************************************
+using System;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
 {
-    public class Network : IPlugin
+    public sealed class PluginNetwork : IPlugin
     {
-        public static PanelItemBase ROOT_OF_DOMAINS = new PanelItemRoot();
+        public static readonly PanelItemBase ROOT_OF_DOMAINS = new PanelItemRoot();
         private IServiceProvider m_Provider;
 
         public void Initialize(IServiceProvider serviceProvider)

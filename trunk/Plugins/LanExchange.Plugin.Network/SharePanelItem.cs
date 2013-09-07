@@ -5,7 +5,7 @@ using LanExchange.SDK;
 namespace LanExchange.Plugin.Network
 {
     [Serializable]
-    public class SharePanelItem : PanelItemBase//, IComparable<SharePanelItem>
+    public sealed class SharePanelItem : PanelItemBase//, IComparable<SharePanelItem>
     {
         private readonly ShareInfo m_SHI;
 
@@ -55,17 +55,16 @@ namespace LanExchange.Plugin.Network
 
         public override int CountColumns
         {
-            get { return 2; }
+            get { return base.CountColumns + 1; }
         }
 
         public override IComparable GetValue(int index)
         {
             switch (index)
             {
-                case 0: return Name;
                 case 1: return Comment;
                 default:
-                    return null;
+                    return base.GetValue(index);
             }
         }
 
@@ -103,6 +102,11 @@ namespace LanExchange.Plugin.Network
             result.Comment = Comment;
             result.ShareType = ShareType;
             return result;
+        }
+
+        public override string ImageLegendText
+        {
+            get { return string.Empty; }
         }
     }
 }

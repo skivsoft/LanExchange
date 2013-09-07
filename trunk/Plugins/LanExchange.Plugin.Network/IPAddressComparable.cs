@@ -3,7 +3,7 @@ using System.Net;
 
 namespace LanExchange.Plugin.Network
 {
-    public class IPAddressComparable : IPAddress, IComparable<IPAddressComparable>, IComparable
+    public sealed class IPAddressComparable : IPAddress, IComparable<IPAddressComparable>, IComparable
     {
         public IPAddressComparable(IPAddress ip)
             : base(ip.GetAddressBytes())

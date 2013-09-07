@@ -3,9 +3,9 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Users
 {
-    public class Users : IPlugin
+    public sealed class PluginUsers : IPlugin
     {
-        public static PanelItemBase ROOT_OF_DNS = new PanelItemRoot();
+        public static readonly PanelItemBase ROOT_OF_DNS = new PanelItemRoot();
         public const string LDAP_PREFIX = "LDAP://";
 
         private IServiceProvider m_Provider;

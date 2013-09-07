@@ -7,7 +7,7 @@ using System.Text;
 namespace LanExchange.Plugin.Network
 {
     [Serializable]
-    public class ServerInfo
+    public sealed class ServerInfo
     {
         private string m_Name;
         private string m_Comment;
@@ -70,7 +70,7 @@ namespace LanExchange.Plugin.Network
         /// This method is virtual for unit-tests only.
         /// </summary>
         /// <returns></returns>
-        public virtual TimeSpan GetTopicality()
+        public TimeSpan GetTopicality()
         {
             return DateTime.UtcNow - UtcUpdated;
         }

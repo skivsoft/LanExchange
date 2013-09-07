@@ -4,7 +4,7 @@ using System.Net;
 
 namespace LanExchange.Plugin.Network
 {
-    public class IPAddressArray : IComparable<IPAddressArray>, IComparable
+    public sealed class IPAddressArray : IComparable<IPAddressArray>, IComparable
     {
         private readonly IPAddressComparable[] m_List;
 

@@ -8,11 +8,23 @@ namespace LanExchange.SDK
     [Serializable]
     public sealed class PanelItemRoot : PanelItemBase
     {
-        public static PanelItemBase ROOT_OF_USERITEMS = new PanelItemRoot();
+        public static readonly PanelItemBase ROOT_OF_USERITEMS = new PanelItemRoot();
 
         public override object Clone()
         {
             return new PanelItemRoot();
+        }
+
+        public override string Name { get; set; }
+
+        public override string ImageName
+        {
+            get { return string.Empty; }
+        }
+
+        public override string ImageLegendText
+        {
+            get { return string.Empty; }
         }
     }
 }

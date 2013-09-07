@@ -4,7 +4,7 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
 {
-    public class ShareFiller : IPanelFiller
+    public sealed class ShareFiller : IPanelFiller
     {
         public static bool ShowHiddenShares = true;
         public static bool ShowPrinters = true;
@@ -12,7 +12,7 @@ namespace LanExchange.Plugin.Network
         public bool IsParentAccepted(PanelItemBase parent)
         {
             // parent for share can be only computer
-            return (parent != null) && (parent != Network.ROOT_OF_DOMAINS) && (parent is ComputerPanelItem);
+            return (parent != null) && (parent != PluginNetwork.ROOT_OF_DOMAINS) && (parent is ComputerPanelItem);
         }
 
         public void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)

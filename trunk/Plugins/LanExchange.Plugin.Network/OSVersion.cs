@@ -4,7 +4,7 @@ using System.ComponentModel;
 namespace LanExchange.Plugin.Network
 {
     [Serializable]
-    public class OSVersion : IComparable<OSVersion>, IComparable
+    public sealed class OSVersion : IComparable<OSVersion>, IComparable
     {
         private uint m_PlatformID;
         private uint m_Major;

@@ -6,7 +6,7 @@ namespace LanExchange.SDK
     /// <summary>
     /// Column header interface returns by <cref>PanelItemBase</cref>.
     /// </summary>
-    public class PanelColumnHeader
+    public sealed class PanelColumnHeader
     {
         /// <summary>
         /// Gets or sets the text.

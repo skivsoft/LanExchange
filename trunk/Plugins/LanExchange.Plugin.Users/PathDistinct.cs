@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace LanExchange.Plugin.Users
 {
-    public class PathDistinct
+    public sealed class PathDistinct
     {
         private readonly Dictionary<string, int> m_Dict;
 

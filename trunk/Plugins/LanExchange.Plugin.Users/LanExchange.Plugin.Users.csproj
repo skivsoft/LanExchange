@@ -40,9 +40,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.DirectoryServices" />
-    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Common\AnyAssemblyInfo.cs">
@@ -61,7 +59,7 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="UserFiller.cs" />
     <Compile Include="UserPanelItem.cs" />
-    <Compile Include="Users.cs" />
+    <Compile Include="PluginUsers.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\LanExchange.Sdk\LanExchange.SDK.csproj">

@@ -56,5 +56,15 @@ namespace LanExchange.Misc
                 result.SetValue(index, GetValue(index));
             return result;
         }
+
+        public override string ImageName
+        {
+            get { return string.Empty; }
+        }
+
+        public override string ImageLegendText
+        {
+            get { return string.Empty; }
+        }
     }
 }

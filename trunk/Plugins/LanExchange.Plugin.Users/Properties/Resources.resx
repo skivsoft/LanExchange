@@ -125,4 +125,10 @@
   <data name="Department" xml:space="preserve">
     <value>Department</value>
   </data>
+  <data name="Legend_UserDisabled" xml:space="preserve">
+    <value>User account have been disabled.</value>
+  </data>
+  <data name="Legend_UserNormal" xml:space="preserve">
+    <value>User account found in Active Directory.</value>
+  </data>
 </root>
