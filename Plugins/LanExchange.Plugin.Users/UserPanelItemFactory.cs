@@ -2,7 +2,7 @@
 
 namespace LanExchange.Plugin.Users
 {
-    class UserPanelItemFactory : PanelItemFactoryBase
+    internal sealed class UserPanelItemFactory : PanelItemFactoryBase
     {
         public override PanelItemBase CreatePanelItem(PanelItemBase parent, string name)
         {
@@ -11,7 +11,7 @@ namespace LanExchange.Plugin.Users
 
         public override PanelItemBase CreateDefaultRoot()
         {
-            var root = Users.ROOT_OF_DNS;
+            var root = PluginUsers.ROOT_OF_DNS;
             root.Name = "QQQ";
             return root;
         }

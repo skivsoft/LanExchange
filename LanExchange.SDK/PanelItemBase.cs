@@ -10,9 +10,9 @@ namespace LanExchange.SDK
     [Serializable]
     public abstract class PanelItemBase : IEquatable<PanelItemBase>, IComparable<PanelItemBase>, IComparable, ICloneable
     {
-        protected bool m_IsReachable = true;
+        private bool m_IsReachable;
 
-        public PanelItemBase()
+        protected PanelItemBase()
         {
             m_IsReachable = true;
         }
@@ -21,7 +21,7 @@ namespace LanExchange.SDK
         /// Initializes a new instance of the <see cref="PanelItemBase"/> class.
         /// </summary>
         /// <param name="parent">The parent.</param>
-        public PanelItemBase(PanelItemBase parent)
+        protected PanelItemBase(PanelItemBase parent)
             : this()
         {
             Parent = parent;
@@ -33,14 +33,14 @@ namespace LanExchange.SDK
         /// <value>
         /// The name.
         /// </value>
-        public virtual string Name { get; set; }
+        public abstract string Name { get; set; }
         /// <summary>
         /// Gets the count columns.
         /// </summary>
         /// <value>
         /// The count columns.
         /// </value>
-        public virtual int CountColumns 
+        public virtual int CountColumns
         {
             get { return 1; }
         }
@@ -82,15 +82,9 @@ namespace LanExchange.SDK
         /// <value>
         /// The name of the image.
         /// </value>
-        public virtual string ImageName
-        {
-            get { return string.Empty; }
-        }
+        public abstract string ImageName { get; }
 
-        public virtual string ImageLegendText
-        {
-            get { return string.Empty; }
-        }
+        public abstract string ImageLegendText { get; }
 
         /// <summary>
         /// Gets or sets the parent.

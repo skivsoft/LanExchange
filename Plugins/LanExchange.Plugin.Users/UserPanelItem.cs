@@ -4,11 +4,9 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Users
 {
-    internal class UserPanelItem : PanelItemBase
+    internal sealed class UserPanelItem : PanelItemBase
     {
-        private readonly string m_Name;
-
-        public static void RegisterColumns(IPanelColumnManager columnManager)
+        internal static void RegisterColumns(IPanelColumnManager columnManager)
         {
             columnManager.RegisterColumn(typeof(UserPanelItem), new PanelColumnHeader(Resources.UserName));
             columnManager.RegisterColumn(typeof(UserPanelItem), new PanelColumnHeader(Resources.Description) {Width = 200});
@@ -20,21 +18,16 @@ namespace LanExchange.Plugin.Users
             columnManager.RegisterColumn(typeof(UserPanelItem), new PanelColumnHeader(Resources.Account) {Visible = false} );
         }
 
-        public UserPanelItem(PanelItemBase parent)
-            : base(parent)
+        internal UserPanelItem(PanelItemBase parent, string name) : base(parent)
         {
+            Name = name;
         }
 
-        public UserPanelItem(PanelItemBase parent, string name) : base(parent)
-        {
-            m_Name = name;
-        }
+        internal uint UserAccControl { get; set; }
 
-        public uint UserAccControl { get; set; }
+        internal string LockoutTime { get; set; }
 
-        public string LockoutTime { get; set; }
-
-        public bool IsAccountDisabled
+        internal bool IsAccountDisabled
         {
             get { return (UserAccControl & 2) != 0; }
         }
@@ -57,14 +50,13 @@ namespace LanExchange.Plugin.Users
 
         public override int CountColumns
         {
-            get { return 8; }
+            get { return base.CountColumns + 7; }
         }
 
         public override IComparable GetValue(int index)
         {
             switch (index)
             {
-                case 0: return m_Name;
                 case 1: return Description;
                 case 2: return Company;
                 case 3: return Department;
@@ -73,7 +65,7 @@ namespace LanExchange.Plugin.Users
                 case 6: return Email;
                 case 7: return Account;
                 default:
-                    return null;
+                    return base.GetValue(index);
             }
         }
 
@@ -83,6 +75,11 @@ namespace LanExchange.Plugin.Users
             {
                 return IsAccountDisabled ? PanelImageNames.UserDisabled : PanelImageNames.UserNormal;
             }
+        }
+
+        public override string ImageLegendText
+        {
+            get { return IsAccountDisabled ? Resources.Legend_UserDisabled : Resources.Legend_UserNormal; }
         }
 
         public override object Clone()
@@ -97,5 +94,6 @@ namespace LanExchange.Plugin.Users
             result.Email = Email;
             return result;
         }
+
     }
 }

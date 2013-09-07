@@ -4,12 +4,12 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
 {
-    public class ComputerFiller : IPanelFiller
+    public sealed class ComputerFiller : IPanelFiller
     {
         public bool IsParentAccepted(PanelItemBase parent)
         {
             // computers can be only into domains
-            return (parent != null) && (parent != Network.ROOT_OF_DOMAINS) && (parent is DomainPanelItem);
+            return (parent != null) && (parent != PluginNetwork.ROOT_OF_DOMAINS) && (parent is DomainPanelItem);
         }
 
         public Type GetFillType()

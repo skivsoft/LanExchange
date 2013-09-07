@@ -3,9 +3,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
 using LanExchange.Intf;
-using LanExchange.Misc;
 using LanExchange.Misc.Action;
-using LanExchange.Misc.Impl;
 using LanExchange.Model;
 using LanExchange.Model.Settings;
 using System.Drawing;
@@ -97,68 +95,11 @@ namespace LanExchange.UI
         }
         #endregion
 
-        private int GetDefaultWidth()
-        {
-            const double phi2 = 0.6180339887498949;
-            return (int) (Screen.PrimaryScreen.WorkingArea.Width*phi2*phi2);
-        }
-
-        public Rectangle SettingsGetBounds()
-        {
-            // correct width and height
-            bool BoundsIsNotSet = Settings.Instance.MainFormWidth == 0;
-            Rectangle WorkingArea;
-            if (BoundsIsNotSet)
-                WorkingArea = Screen.PrimaryScreen.WorkingArea;
-            else
-                WorkingArea = Screen.GetWorkingArea(new Point(Settings.Instance.MainFormX + Settings.Instance.MainFormWidth/2, 0));
-            var rect = new Rectangle();
-            rect.X = Settings.Instance.MainFormX;
-            rect.Y = WorkingArea.Top;
-            rect.Width = Math.Min(Math.Max(GetDefaultWidth(), Settings.Instance.MainFormWidth), WorkingArea.Width);
-            rect.Height = WorkingArea.Height;
-            // determination side to snap right or left
-            int CenterX = (rect.Left + rect.Right) >> 1;
-            int WorkingAreaCenterX = (WorkingArea.Left + WorkingArea.Right) >> 1;
-            if (BoundsIsNotSet || CenterX >= WorkingAreaCenterX)
-                // snap to right side
-                rect.X = WorkingArea.Right - rect.Width;
-            else
-                // snap to left side
-                rect.X -= rect.Left - WorkingArea.Left;
-            return rect;
-        }
-
-        public void SettingsSetBounds(Rectangle rect)
-        {
-            Rectangle WorkingArea = Screen.GetWorkingArea(rect);
-            // shift rect into working area
-            if (rect.Left < WorkingArea.Left) rect.X = WorkingArea.Left;
-            if (rect.Top < WorkingArea.Top) rect.Y = WorkingArea.Top;
-            if (rect.Right > WorkingArea.Right) rect.X -= rect.Right - WorkingArea.Right;
-            if (rect.Bottom > WorkingArea.Bottom) rect.Y -= rect.Bottom - WorkingArea.Bottom;
-            // determination side to snap right or left
-            int CenterX = (rect.Left + rect.Right) >> 1;
-            int WorkingAreaCenterX = (WorkingArea.Left + WorkingArea.Right) >> 1;
-            if (CenterX >= WorkingAreaCenterX)
-                // snap to right side
-                rect.X = WorkingArea.Right - rect.Width;
-            else
-                // snap to left side
-                rect.X -= rect.Left - WorkingArea.Left;
-            // set properties
-            if (rect.Left != Settings.Instance.MainFormX || rect.Width != Settings.Instance.MainFormWidth)
-            {
-                Settings.Instance.MainFormX = rect.Left;
-                Settings.Instance.MainFormWidth = rect.Width;
-            }
-        }
-
         [Localizable(false)]
         private void SetupForm()
         {
             // set mainform bounds
-            var rect = SettingsGetBounds();
+            var rect = App.Presenter.SettingsGetBounds();
             SetBounds(rect.Left, rect.Top, rect.Width, rect.Height);
             // set mainform title
             var aboutModel = App.Resolve<IAboutModel>();
@@ -418,7 +359,7 @@ namespace LanExchange.UI
 
         private void MainForm_ResizeEnd(object sender, EventArgs e)
         {
-            SettingsSetBounds(Bounds);
+            App.Presenter.SettingsSetBounds(Bounds);
             //Settings.SaveIfModified();
         }
 
@@ -463,11 +404,11 @@ namespace LanExchange.UI
             mPanelList.Checked = false;
             mPanelDetails.Checked = false;
             var pv = Pages.ActivePanelView;
-            var bEnabled = pv != null;
-            mPanelLarge.Enabled = bEnabled;
-            mPanelSmall.Enabled = bEnabled;
-            mPanelList.Enabled = bEnabled;
-            mPanelDetails.Enabled = bEnabled;
+            var enabled = pv != null;
+            mPanelLarge.Enabled = enabled;
+            mPanelSmall.Enabled = enabled;
+            mPanelList.Enabled = enabled;
+            mPanelDetails.Enabled = enabled;
             if (pv != null)
                 switch (pv.ViewMode)
                 {

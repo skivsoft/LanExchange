@@ -5,7 +5,7 @@ using LanExchange.SDK;
 namespace LanExchange.Plugin.Network
 {
     [Serializable]
-    public class DomainPanelItem : PanelItemBase
+    public sealed class DomainPanelItem : PanelItemBase
     {
         private readonly ServerInfo m_SI;
 
@@ -35,16 +35,6 @@ namespace LanExchange.Plugin.Network
             set { m_SI.Name = value; }
         }
 
-        public override int CountColumns
-        {
-            get { return 1; }
-        }
-
-        public override IComparable GetValue(int index)
-        {
-            return m_SI.Name;
-        }
-
         public override string ToString()
         {
             return string.Empty;
@@ -65,6 +55,11 @@ namespace LanExchange.Plugin.Network
             var result = new DomainPanelItem(Parent, m_SI);
             result.Name = Name;
             return result;
+        }
+
+        public override string ImageLegendText
+        {
+            get { return string.Empty; }
         }
     }
 }

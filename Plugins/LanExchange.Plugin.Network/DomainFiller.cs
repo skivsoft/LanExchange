@@ -3,12 +3,12 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
 {
-    public class DomainFiller : IPanelFiller
+    public sealed class DomainFiller : IPanelFiller
     {
         public bool IsParentAccepted(PanelItemBase parent)
         {
             // domains can be only at root level
-            return parent == Network.ROOT_OF_DOMAINS;
+            return parent == PluginNetwork.ROOT_OF_DOMAINS;
         }
 
         public void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)

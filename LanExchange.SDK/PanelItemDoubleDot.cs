@@ -18,9 +18,16 @@ namespace LanExchange.SDK
             get { return PanelImageNames.DoubleDot; }
         }
 
+        public override string ImageLegendText
+        {
+            get { return string.Empty; }
+        }
+
         public override object Clone()
         {
             return new PanelItemDoubleDot(Parent);
         }
+
+        public override string Name { get; set; }
     }
 }

@@ -47,6 +47,7 @@
 // *****************************************************************************
 
 using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 using LanExchange.Intf;
 using LanExchange.Misc;
@@ -77,8 +78,17 @@ namespace LanExchange
             }
             catch(Exception e)
             {
-                MessageBox.Show(null, string.Format("{0}\n{1}", e.Message, e.StackTrace), Resources.Program_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (e is System.Reflection.TargetInvocationException)
+                    ShowException(e.InnerException);
+                else
+                    ShowException(e);
             }
+        }
+
+        [Localizable(false)]
+        static void ShowException(Exception e)
+        {
+            MessageBox.Show(null, string.Format("{0}\n{1}", e.Message, e.StackTrace), Resources.Program_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

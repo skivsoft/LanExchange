@@ -16,22 +16,32 @@ namespace LanExchange.Plugin.Users
                 string[] userName = user.Name.Split('\\');
                 return userName.Length > 1 ? userName[1] : userName[0];
             }
-            return string.Empty;
+            return String.Empty;
         }
 
         [Localizable(false)]
         internal static string GetUserPath(string userName)
         {
-            string result = string.Empty;
-            using (var searcher = new DirectorySearcher(Users.LDAP_PREFIX))
+            string result = String.Empty;
+            using (var searcher = new DirectorySearcher(PluginUsers.LDAP_PREFIX))
             {
-                searcher.Filter = string.Format("(&(objectCategory=person)(sAMAccountName={0}))", userName);
+                searcher.Filter = String.Format("(&(objectCategory=person)(sAMAccountName={0}))", userName);
                 var found = searcher.FindOne();
                 if (found != null)
-                    result = PathFixer.GetLdapContainer(found.Path);
+                    result = found.Path;
             }
             return result;
         }
+
+        [Localizable(false)]
+        public static string GetLdapContainer(string ldapPath)
+        {
+            var index = ldapPath.IndexOf(',');
+            if (index == -1)
+                return String.Empty;
+            return "LDAP://" + ldapPath.Remove(0, index + 1);
+        }
+
 
         [Localizable(false)]
         internal static string GetDCNameFromPath(string path)
@@ -42,8 +52,11 @@ namespace LanExchange.Plugin.Users
                 if (arr[index].StartsWith("DC="))
                     list.Insert(0, arr[index]);
                 else
+                {
+                    list.Insert(0, arr[index]);
                     break;
-            return string.Join(",", list.ToArray());
+                }
+            return String.Join(",", list.ToArray());
         }
     }
 }

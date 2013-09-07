@@ -9,7 +9,7 @@ using LanExchange.SDK;
 namespace LanExchange.Plugin.Network
 {
     [Serializable]
-    public class ComputerPanelItem : PanelItemBase
+    public sealed class ComputerPanelItem : PanelItemBase
     {
         private readonly ServerInfo m_SI;
 
@@ -88,7 +88,7 @@ namespace LanExchange.Plugin.Network
 
         public override int CountColumns
         {
-            get { return 6; }
+            get { return base.CountColumns + 4; }
         }
 
         /// <summary>
@@ -164,13 +164,12 @@ namespace LanExchange.Plugin.Network
         {
             switch (index)
             {
-                case 0: return Name;
                 case 1: return Comment;
                 case 2: return m_SI.Version;
                 case 3: return string.Empty;
                 case 4: return string.Empty;
                 default:
-                    return null;
+                    return base.GetValue(index);
             }
         }
 

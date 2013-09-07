@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using LanExchange.SDK;
 
 namespace LanExchange.Misc.Impl
@@ -28,7 +30,14 @@ namespace LanExchange.Misc.Impl
                     {
                         if (result.ItemsType == null)
                             result.ItemsType = filler.GetFillType();
-                        filler.Fill(parent, result.Items);
+                        try
+                        {
+                            filler.Fill(parent, result.Items);
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.Print(ex.Message);
+                        }
                     }
                 }
             }

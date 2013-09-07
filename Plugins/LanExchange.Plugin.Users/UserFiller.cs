@@ -1,26 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.DirectoryServices;
-using System.Security.Principal;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Users
 {
-    internal class UserFiller : IPanelFiller
+    internal sealed class UserFiller : IPanelFiller
     {
         public bool IsParentAccepted(PanelItemBase parent)
         {
-            return (parent != null) && (parent == Users.ROOT_OF_DNS);
-        }
-
-        private string DataRow_GetString(DataRow row, string index)
-        {
-            if (row.Table.Columns.Contains(index))
-                return row[index].ToString();
-            return string.Empty;
+            return (parent != null) && (parent == PluginUsers.ROOT_OF_DNS);
         }
 
         private string SearchResult_GetString(SearchResult sr, string index)
@@ -42,6 +33,7 @@ namespace LanExchange.Plugin.Users
         public void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
             var startPath = LdapUtils.GetUserPath(LdapUtils.GetCurrentUserName());
+            startPath = LdapUtils.GetDCNameFromPath(startPath);
             using (var searcher = new DirectorySearcher())
             {
                 // execute filter query to Active Directory

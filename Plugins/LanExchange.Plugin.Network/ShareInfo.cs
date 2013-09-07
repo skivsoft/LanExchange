@@ -2,7 +2,7 @@
 
 namespace LanExchange.Plugin.Network
 {
-    public class ShareInfo : IComparable<ShareInfo>
+    public sealed class ShareInfo : IComparable<ShareInfo>
     {
         private NativeMethods.SHARE_INFO_1 m_Info;
 

@@ -4,14 +4,14 @@ using System.Collections.ObjectModel;
 
 namespace LanExchange.SDK
 {
-    public class PanelFillerResult
+    public sealed class PanelFillerResult
     {
-        public readonly ICollection<PanelItemBase> Items;
-        public Type ItemsType;
-
         public PanelFillerResult()
         {
             Items = new Collection<PanelItemBase>();
         }
+
+        public ICollection<PanelItemBase> Items { get; private set; }
+        public Type ItemsType { get; set; }
     }
 }
