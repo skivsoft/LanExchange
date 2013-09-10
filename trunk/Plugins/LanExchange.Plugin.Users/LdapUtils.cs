@@ -42,21 +42,55 @@ namespace LanExchange.Plugin.Users
             return "LDAP://" + ldapPath.Remove(0, index + 1);
         }
 
+        /// <summary>
+        /// Split distinguished name (DN) to array of string.
+        /// This function skips chars after '\'.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        internal static string[] DNSplit(string path)
+        {
+            path += ',';
+            var list = new List<string>();
+            string word = string.Empty;
+            bool masked = false;
+            for (int i = 0; i < path.Length; i++)
+            {
+                if (!masked && path[i] == '\\')
+                {
+                    word += path[i];
+                    masked = true;
+                    continue;
+                }
+                if ((path[i] == ',' || path[i] == ';') && !masked)
+                {
+                    list.Add(word);
+                    word = string.Empty;
+                }
+                else
+                {
+                    word += path[i];
+                    masked = false;
+                }
+            }
+            return list.ToArray();
+        }
 
         [Localizable(false)]
-        internal static string GetDCNameFromPath(string path)
+        internal static string GetDCNameFromPath(string path, bool addOrgUnit)
         {
-            var arr = path.Split(',');
+            var arr = DNSplit(path);
             var list = new List<string>();
             for (int index = arr.Length - 1; index >= 0; index--)
                 if (arr[index].StartsWith("DC="))
                     list.Insert(0, arr[index]);
                 else
                 {
-                    list.Insert(0, arr[index]);
+                    if (addOrgUnit)
+                        list.Insert(0, arr[index]);
                     break;
                 }
-            return String.Join(",", list.ToArray());
+            return "LDAP://" + String.Join(",", list.ToArray());
         }
     }
 }
