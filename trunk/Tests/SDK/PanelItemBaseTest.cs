@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using LanExchange.Misc;
 using LanExchange.Model;
 using NUnit.Framework;
 
@@ -14,7 +15,7 @@ namespace LanExchange.SDK
         [SetUp]
         public void SetUp()
         {
-            m_Item = new PanelItemBase();
+            m_Item = new CustomPanelItem(null, string.Empty);
         }
 
         [TearDown]
@@ -27,10 +28,8 @@ namespace LanExchange.SDK
         public void TestDictionaryCS()
         {
             m_Item.Name = "hello";
-            var item2 = new PanelItemBase();
-            item2.Name = "hello";
-            var item3 = new PanelItemBase();
-            item3.Name = "hi";
+            var item2 = new CustomPanelItem(null, "hello");
+            var item3 = new CustomPanelItem(null, "hi");
             var dict = new Dictionary<PanelItemBase, int>();
             dict.Add(m_Item, 1);
             int result;

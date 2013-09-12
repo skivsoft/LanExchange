@@ -73,8 +73,11 @@ namespace LanExchange.UI
                 if (value < 2)
                     value = 2;
                 if (App.PanelColumns != null)
-                    if (value > App.PanelColumns.MaxColumns)
-                        value = App.PanelColumns.MaxColumns;
+                {
+                    var maxColumns = Math.Max(3, App.PanelColumns.MaxColumns);
+                    if (value > maxColumns)
+                        value = maxColumns;
+                }
                 e.NewValue = value;
                 pInfo.CountLines = value;
                 App.MainPages.DoPanelViewFocusedItemChanged(Pages.ActivePanelView, EventArgs.Empty);
@@ -197,13 +200,12 @@ namespace LanExchange.UI
                 e.Cancel = true;
                 return;
             }
-            var panelItem = pv.Presenter.GetFocusedPanelItem(false, true);
-            if (panelItem == null)
+            if (pInfo.CurrentItem == null)
             {
                 e.Cancel = true;
                 return;
             }
-            e.Cancel = !App.Addons.BuildMenuForPanelItemType(popTop, panelItem.GetType().Name);
+            e.Cancel = !App.Addons.BuildMenuForPanelItemType(popTop, pInfo.CurrentItem.GetType().Name);
         }
 
         private void tipComps_Popup(object sender, PopupEventArgs e)
@@ -270,6 +272,7 @@ namespace LanExchange.UI
                    !App.PanelItemTypes.DefaultRoots.Contains(panelItem.Parent))
                 panelItem = panelItem.Parent;
             if (panelItem == null) return;
+            pInfo.CurrentItem = panelItem;
             // update info panel at top of the form
             pInfo.Picture.Image = App.Images.GetLargeImage(panelItem.ImageName);
             SetToolTip(pInfo.Picture, panelItem.ImageLegendText);

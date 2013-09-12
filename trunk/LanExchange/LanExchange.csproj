@@ -110,6 +110,7 @@
     <Compile Include="Misc\Action\ShortcutKeysAction.cs" />
     <Compile Include="ContainerBuilder.cs" />
     <Compile Include="Intf\IAddonManager.cs" />
+    <Compile Include="Misc\Action\ShortcutPanelItem.cs" />
     <Compile Include="Misc\CmdLineProcessor.cs" />
     <Compile Include="Intf\App.cs" />
     <Compile Include="Intf\ILazyThreadPool.cs" />
@@ -288,14 +289,20 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Addons\WMIViewer.xml">
+    <Content Include="Addons\Users.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Addons\Network.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Addons\NetworkWMI.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Addons\Default.xml">
+    <Content Include="Addons\NetworkSystem.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Addons\RadminViewer.xml">
+    <Content Include="Addons\NetworkRadmin.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="..\Common\LanExchange.snk">
@@ -351,6 +358,7 @@
     <None Include="Resources\clear_normal.png" />
     <Content Include="Core\MVP.gif" />
     <Content Include="Presenter\!Readme.txt" />
+    <None Include="Resources\input-keyboard-6.png" />
     <Content Include="Resources\LanExchange_16x16.ico" />
     <None Include="Resources\LanExchange_48x48.png" />
   </ItemGroup>

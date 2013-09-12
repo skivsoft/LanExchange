@@ -11,7 +11,7 @@ namespace LanExchange.Plugin.Network
         [Test]
         public void TestInitialize()
         {
-            var network = new Network();
+            var network = new PluginNetwork();
             var mock = new Mock<IServiceProvider>();
             var typeManager = Mock.Of<IPanelItemFactoryManager>();
             var columnManager = Mock.Of<IPanelColumnManager>();

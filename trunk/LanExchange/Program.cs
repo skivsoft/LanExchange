@@ -51,7 +51,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using LanExchange.Intf;
 using LanExchange.Misc;
-using LanExchange.Misc.Impl;
+using LanExchange.Misc.Action;
 using LanExchange.Properties;
 using LanExchange.UI;
 using LanExchange.Utils;
@@ -74,6 +74,7 @@ namespace LanExchange
                 //AddonGen.Generate();
 #endif
                 App.Addons.LoadAddons();
+                ShortcutPanelItem.RegisterColumns(App.PanelColumns);
                 AppView.ApplicationRun();
             }
             catch(Exception e)

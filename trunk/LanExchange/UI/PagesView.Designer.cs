@@ -31,12 +31,12 @@
             this.components = new System.ComponentModel.Container();
             this.popPages = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mNewTab = new System.Windows.Forms.ToolStripMenuItem();
-            this.mCloseTab = new System.Windows.Forms.ToolStripMenuItem();
-            this.mSelectTab = new System.Windows.Forms.ToolStripMenuItem();
-            this.mBeforeSelectTab = new System.Windows.Forms.ToolStripSeparator();
-            this.mRenameTab = new System.Windows.Forms.ToolStripMenuItem();
-            this.Pages = new System.Windows.Forms.TabControl();
             this.mAfterNewTab = new System.Windows.Forms.ToolStripSeparator();
+            this.mCloseTab = new System.Windows.Forms.ToolStripMenuItem();
+            this.mRenameTab = new System.Windows.Forms.ToolStripMenuItem();
+            this.mBeforeSelectTab = new System.Windows.Forms.ToolStripSeparator();
+            this.mSelectTab = new System.Windows.Forms.ToolStripMenuItem();
+            this.Pages = new System.Windows.Forms.TabControl();
             this.popPages.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,6 +64,11 @@
             this.mNewTab.Text = "New tab";
             this.mNewTab.Click += new System.EventHandler(this.mNewTab_Click);
             // 
+            // mAfterNewTab
+            // 
+            this.mAfterNewTab.Name = "mAfterNewTab";
+            this.mAfterNewTab.Size = new System.Drawing.Size(190, 6);
+            // 
             // mCloseTab
             // 
             this.mCloseTab.Name = "mCloseTab";
@@ -72,18 +77,6 @@
             this.mCloseTab.Text = "Close tab";
             this.mCloseTab.Click += new System.EventHandler(this.mCloseTab_Click);
             // 
-            // mSelectTab
-            // 
-            this.mSelectTab.Name = "mSelectTab";
-            this.mSelectTab.Size = new System.Drawing.Size(193, 22);
-            this.mSelectTab.Text = "Select tab";
-            this.mSelectTab.DropDownOpening += new System.EventHandler(this.mSelectTab_DropDownOpening);
-            // 
-            // mBeforeSelectTab
-            // 
-            this.mBeforeSelectTab.Name = "mBeforeSelectTab";
-            this.mBeforeSelectTab.Size = new System.Drawing.Size(190, 6);
-            // 
             // mRenameTab
             // 
             this.mRenameTab.Name = "mRenameTab";
@@ -91,6 +84,18 @@
             this.mRenameTab.Size = new System.Drawing.Size(193, 22);
             this.mRenameTab.Text = "Tab properties";
             this.mRenameTab.Click += new System.EventHandler(this.mRenameTab_Click);
+            // 
+            // mBeforeSelectTab
+            // 
+            this.mBeforeSelectTab.Name = "mBeforeSelectTab";
+            this.mBeforeSelectTab.Size = new System.Drawing.Size(190, 6);
+            // 
+            // mSelectTab
+            // 
+            this.mSelectTab.Name = "mSelectTab";
+            this.mSelectTab.Size = new System.Drawing.Size(193, 22);
+            this.mSelectTab.Text = "Select tab";
+            this.mSelectTab.DropDownOpening += new System.EventHandler(this.mSelectTab_DropDownOpening);
             // 
             // Pages
             // 
@@ -106,11 +111,6 @@
             this.Pages.TabIndex = 1;
             this.Pages.Selected += new System.Windows.Forms.TabControlEventHandler(this.Pages_Selected);
             this.Pages.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Pages_MouseDown);
-            // 
-            // mAfterNewTab
-            // 
-            this.mAfterNewTab.Name = "mAfterNewTab";
-            this.mAfterNewTab.Size = new System.Drawing.Size(190, 6);
             // 
             // PagesView
             // 

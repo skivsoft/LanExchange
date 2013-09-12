@@ -329,6 +329,7 @@ namespace LanExchange.UI
             // 
             // mHelpKeys
             // 
+            this.mHelpKeys.Image = global::LanExchange.Properties.Resources.keyboard_16;
             this.mHelpKeys.Name = "mHelpKeys";
             this.mHelpKeys.ShortcutKeys = System.Windows.Forms.Keys.F1;
             this.mHelpKeys.Size = new System.Drawing.Size(198, 22);

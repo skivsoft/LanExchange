@@ -54,9 +54,11 @@ namespace LanExchange.Misc.Impl
             RegisterDisabledImage(PanelImageNames.ShareHidden, icon1, icon2);
             // ".." icon
             RegisterImage(PanelImageNames.DoubleDot, Resources.back_16, Resources.back_32);
-            //// User icon
+            // User icon
             RegisterImage(PanelImageNames.UserNormal, Resources.user_16, Resources.user_32);
             RegisterDisabledImage(PanelImageNames.UserDisabled, Resources.user_16, Resources.user_32);
+            // Shortcuts icon
+            RegisterImage(PanelImageNames.ShortcutNormal, Resources.keyboard_16, Resources.keyboard_16);
             // release sys images list
             small.Dispose();
             large.Dispose();
@@ -88,7 +90,7 @@ namespace LanExchange.Misc.Impl
         public int IndexOf(string name)
         {
             int index;
-            if (m_NamesMap.TryGetValue(name, out index))
+            if (name != null && m_NamesMap.TryGetValue(name, out index))
                 return index;
             return -1;
         }

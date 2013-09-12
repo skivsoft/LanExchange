@@ -8,5 +8,9 @@
 <?define Manufacturer="Konstantin Mikhailyuk"?>
 <?define Description="User-friendly browser of computers for local area network."?>
 <?define SourceDir="$(var.SolutionDir)LanExchange\bin\$(var.Configuration)\"?>
+<?define PluginsDir="$(var.SolutionDir)Plugins\"?>
+<?define PluginNetwork="LanExchange.Plugin.Network"?>
+<?define PluginUsers="LanExchange.Plugin.Users"?>
+<?define PluginWin7="LanExchange.Plugin.Win7"?>
 <?define DefInstallDir="LanExchange" ?>
 <Include />

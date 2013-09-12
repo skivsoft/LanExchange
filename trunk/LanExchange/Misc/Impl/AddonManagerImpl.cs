@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.Intf;
 using LanExchange.Intf.Addon;
+using LanExchange.Properties;
 using LanExchange.SDK;
 using LanExchange.Utils;
 
@@ -38,12 +39,14 @@ namespace LanExchange.Misc.Impl
 
         private void LoadAddon(string fileName)
         {
-            var addon = (Intf.Addon.Addon)SerializeUtils.DeserializeObjectFromXMLFile(fileName, typeof(Intf.Addon.Addon));
+            var addon = (Addon)SerializeUtils.DeserializeObjectFromXMLFile(fileName, typeof(Addon));
             foreach (var item in addon.Programs)
                 if (!Programs.ContainsKey(item.Id))
                 {
                     item.PrepareFileNameAndIcon();
                     Programs.Add(item.Id, item);
+                    if (item.ProgramImage != null)
+                        App.Images.RegisterImage(string.Format(Resources.ProgramImageFormat, item.Id), item.ProgramImage, item.ProgramImage);
                 }
             foreach (var item in addon.PanelItemTypes)
             {
@@ -67,10 +70,12 @@ namespace LanExchange.Misc.Impl
                             found.ContextMenuStrip.Add(menuItem);
                         else
                         {
-                            menuItem.ProgramValue = Programs[menuItem.ProgramRef.Id];
+                            if (Programs.ContainsKey(menuItem.ProgramRef.Id))
+                                menuItem.ProgramValue = Programs[menuItem.ProgramRef.Id];
                             if (!found.ContextMenuStrip.Contains(menuItem) && 
                                 menuItem.ProgramRef != null && 
-                                Programs.ContainsKey(menuItem.ProgramRef.Id))
+                                // check for protocol ex.: "mailto:"
+                                (menuItem.IsProtocol || Programs.ContainsKey(menuItem.ProgramRef.Id)))
                                 found.ContextMenuStrip.Add(menuItem);
                         }
                     }
@@ -93,6 +98,12 @@ namespace LanExchange.Misc.Impl
                     menuItem.Text = item.Text;
                     menuItem.ShortcutKeyDisplayString = item.ShortcutKeys;
                     menuItem.Click += MenuItemOnClick;
+                    if (item.IsProtocol)
+                    {
+                        if (!item.ProtocolExists)
+                            menuItem.Enabled = false;
+                    }
+                    else
                     if (item.ProgramValue != null)
                     {
                         if (!item.ProgramValue.Exists)

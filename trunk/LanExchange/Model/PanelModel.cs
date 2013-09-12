@@ -6,7 +6,7 @@ using LanExchange.SDK;
 
 namespace LanExchange.Model
 {
-    public class PanelModel : IEquatable<IPanelModel>, IPanelModel
+    public class PanelModel : IPanelModel
     {       
         // items added by user
         private readonly IList<PanelItemBase> m_Items;
@@ -334,6 +334,10 @@ namespace LanExchange.Model
             if (root.Parent != null)
                 SetDefaultRoot(root.Parent);
             CurrentPath.Push(root);
+            if (root.Parent is PanelItemRoot)
+                ImageName = root.ImageName;
         }
+
+        public string ImageName { get; set; }
     }
 }
