@@ -133,6 +133,13 @@ namespace LanExchange.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap keyboard_16 {
+            get {
+                object obj = ResourceManager.GetObject("keyboard_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap LanExchange_48x48 {
             get {
                 object obj = ResourceManager.GetObject("LanExchange_48x48", resourceCulture);
@@ -337,6 +344,15 @@ namespace LanExchange.Properties {
         internal static string Program_Error {
             get {
                 return ResourceManager.GetString("Program_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to program.{0}.
+        /// </summary>
+        internal static string ProgramImageFormat {
+            get {
+                return ResourceManager.GetString("ProgramImageFormat", resourceCulture);
             }
         }
         

@@ -9,7 +9,7 @@ namespace LanExchange.Intf
         event EventHandler<PanelModelEventArgs> AfterRename;
         event EventHandler<PanelIndexEventArgs> IndexChanged;
 
-        void AddTab(IPanelModel panelItemList);
+        bool AddTab(IPanelModel panelItemList);
 
         bool TabNameExists(string tabName);
 

@@ -7,7 +7,7 @@ namespace LanExchange.Intf
     /// <summary>
     /// LanExchange panel model.
     /// </summary>
-    public interface IPanelModel : IFilterModel
+    public interface IPanelModel : IFilterModel, IEquatable<IPanelModel>
     {
         event EventHandler Changed;
         /// <summary>
@@ -88,5 +88,7 @@ namespace LanExchange.Intf
         bool Contains(PanelItemBase panelItem);
 
         void SetDefaultRoot(PanelItemBase root);
+
+        string ImageName { get; set; }
     }
 }

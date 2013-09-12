@@ -60,12 +60,12 @@ namespace LanExchange.UI
 
         public void NewTabFromItemList(IPanelModel info)
         {
-            TabPage Tab = new TabPage();
-            Tab.Padding = new Padding(0);
-            Tab.Text = Ellipsis(info.TabName, 20);
-            Tab.ImageIndex = App.Images.IndexOf(PanelImageNames.Workgroup);
-            Tab.ToolTipText = info.ToolTipText;
-            Pages.Controls.Add(Tab);
+            var tab = new TabPage();
+            tab.Padding = new Padding(0);
+            tab.Text = Ellipsis(info.TabName, 20);
+            tab.ImageIndex = App.Images.IndexOf(info.ImageName);
+            tab.ToolTipText = info.ToolTipText;
+            Pages.Controls.Add(tab);
         }
 
         public string SelectedTabText
@@ -285,19 +285,19 @@ namespace LanExchange.UI
         [Localizable(false)]
         public IPanelView CreatePanelView(IPanelModel info)
         {
-            var PV = (PanelView) App.Resolve<IPanelView>();
-            ListView LV = PV.Controls[0] as ListView;
-            if (LV != null)
+            var panelView = (PanelView) App.Resolve<IPanelView>();
+            var listView = panelView.Controls[0] as ListView;
+            if (listView != null)
             {
-                App.Images.SetImagesTo(LV);
-                LV.View = (View) info.CurrentView;
-                App.MainView.ClearToolTip(LV);
+                App.Images.SetImagesTo(listView);
+                listView.View = (View) info.CurrentView;
+                App.MainView.ClearToolTip(listView);
             }
-            m_Presenter.SetupPanelViewEvents(PV);
+            m_Presenter.SetupPanelViewEvents(panelView);
             // add new tab and insert panel into it
             NewTabFromItemList(info);
-            AddControl(TabPagesCount - 1, PV);
-            return PV;
+            AddControl(TabPagesCount - 1, panelView);
+            return panelView;
         }
 
         public void mSelectTab_Click(object sender, EventArgs e)

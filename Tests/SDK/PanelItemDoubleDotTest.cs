@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using LanExchange.Misc;
+using NUnit.Framework;
 
 namespace LanExchange.SDK
 {
@@ -10,7 +11,7 @@ namespace LanExchange.SDK
         {
             var dot = new PanelItemDoubleDot(null);
             Assert.AreEqual(PanelImageNames.DoubleDot, dot.ImageName);
-            var item = new PanelItemBase();
+            var item = new CustomPanelItem(null, "TEST");
             Assert.AreEqual(-1, dot.CompareTo(item));
             Assert.AreEqual(1, dot.CompareTo(null));
             Assert.AreEqual(1, item.CompareTo(dot));

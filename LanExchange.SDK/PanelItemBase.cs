@@ -141,8 +141,16 @@ namespace LanExchange.SDK
                 return 0;
             var value1 = this[column];
             var value2 = otherItem[column];
-
-            return value1.CompareTo(value2);
+            int compres;
+            if (value1 == null && value2 == null)
+                compres = 0;
+            else
+                if (value1 == null) compres = -1;
+                else
+                    if (value2 == null) compres = 1;
+                    else
+                        compres = value1.CompareTo(value2);
+            return compres == 0 ? CompareTo(other) : compres;
         }
 
 

@@ -29,7 +29,7 @@ namespace LanExchange.Plugin.Network
         {
             var strategy = new ShareFiller();
             var domain = NetApi32Utils.GetMachineNetBiosDomain(null);
-            var computer = new ComputerPanelItem(new DomainPanelItem(Network.ROOT_OF_DOMAINS, domain), SystemInformation.ComputerName);
+            var computer = new ComputerPanelItem(new DomainPanelItem(PluginNetwork.ROOT_OF_DOMAINS, domain), SystemInformation.ComputerName);
             ShareFiller.ShowHiddenShares = true;
             var result = new Collection<PanelItemBase>();
             strategy.Fill(computer, result);

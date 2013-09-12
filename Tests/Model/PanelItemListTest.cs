@@ -46,8 +46,8 @@ namespace LanExchange.Model
 
         private void RetrieveTwoComps()
         {
-            var domain = new DomainPanelItem(Network.ROOT_OF_DOMAINS, "TEST");
-            m_Objects.CurrentPath.Push(Network.ROOT_OF_DOMAINS);
+            var domain = new DomainPanelItem(PluginNetwork.ROOT_OF_DOMAINS, "TEST");
+            m_Objects.CurrentPath.Push(PluginNetwork.ROOT_OF_DOMAINS);
             m_Objects.CurrentPath.Push(domain);
             var filler = new Mock<IPanelFillerManager>();
             var result = new PanelFillerResult();
@@ -65,13 +65,13 @@ namespace LanExchange.Model
         [Test]
         public void TestIndexOf()
         {
-            m_Objects.CurrentPath.Push(Network.ROOT_OF_DOMAINS);
+            m_Objects.CurrentPath.Push(PluginNetwork.ROOT_OF_DOMAINS);
             var filler = new Mock<IPanelFillerManager>();
             var result = new PanelFillerResult();
-            var domain = new DomainPanelItem(Network.ROOT_OF_DOMAINS, "TEST");
+            var domain = new DomainPanelItem(PluginNetwork.ROOT_OF_DOMAINS, "TEST");
             result.Items.Add(domain);
             result.ItemsType = typeof (DomainPanelItem);
-            filler.Setup(f => f.RetrievePanelItems(Network.ROOT_OF_DOMAINS)).Returns(result);
+            filler.Setup(f => f.RetrievePanelItems(PluginNetwork.ROOT_OF_DOMAINS)).Returns(result);
             App.PanelFillers = filler.Object;
             m_Objects.SyncRetrieveData();
             Assert.AreEqual(1, m_Objects.Count);

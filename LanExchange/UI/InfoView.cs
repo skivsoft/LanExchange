@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.Intf;
+using LanExchange.SDK;
 
 namespace LanExchange.UI
 {
@@ -87,5 +88,7 @@ namespace LanExchange.UI
             }
             control.Text = text;
         }
+
+        public PanelItemBase CurrentItem { get; set; }
     }
 }

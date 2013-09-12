@@ -9,6 +9,7 @@
         public const string COMPUTER = "ComuterPanelItem";
         public const string SHARE    = "SharePanelItem";
         public const string USER     = "UserPanelItem";
+        public const string SHORTCUT = "Shortcut";
         public const string NORMAL_POSTFIX      = ".normal";
         public const string DISABLED_POSTFIX    = ".disabled";
         public const string HIDDEN_POSTFIX      = ".hidden";
@@ -54,5 +55,7 @@
         /// The user disabled
         /// </summary>
         public const string UserDisabled     = USER + DISABLED_POSTFIX;
+
+        public const string ShortcutNormal   = SHORTCUT + NORMAL_POSTFIX;
     }
 }

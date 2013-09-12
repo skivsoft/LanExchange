@@ -46,7 +46,7 @@ namespace LanExchange.Plugin.Users
         {
             var startPath = LdapUtils.GetUserPath(LdapUtils.GetCurrentUserName()); // "u770503350189"
             
-            startPath = LdapUtils.GetDCNameFromPath(startPath, false);
+            startPath = LdapUtils.GetDCNameFromPath(startPath, true);
             using (var searcher = new DirectorySearcher())
             {
                 // execute filter query to Active Directory

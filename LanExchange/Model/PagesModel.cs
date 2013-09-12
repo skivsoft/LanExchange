@@ -95,18 +95,18 @@ namespace LanExchange.Model
         //    return m_List.Contains(info);
         //}
         
-        public void AddTab(IPanelModel info)
+        public bool AddTab(IPanelModel info)
         {
             // ommit duplicates
-            if (!m_List.Contains(info))
-            {
-                m_List.Add(info);
-                if (m_SelectedIndex == -1 && m_List.Count == 1)
-                    m_SelectedIndex = 0;
-                DoAfterAppendTab(info);
-                m_SelectedIndex = m_List.Count - 1;
-                DoIndexChanged(m_SelectedIndex);
-            }
+            if (m_List.Contains(info))
+                return false;
+            m_List.Add(info);
+            if (m_SelectedIndex == -1 && m_List.Count == 1)
+                m_SelectedIndex = 0;
+            DoAfterAppendTab(info);
+            m_SelectedIndex = m_List.Count - 1;
+            DoIndexChanged(m_SelectedIndex);
+            return true;
         }
 
         public void DelTab(int index)

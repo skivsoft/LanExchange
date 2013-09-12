@@ -33,7 +33,7 @@ namespace LanExchange.Intf
 
         bool CanPasteItems();
 
-        void AddTab(IPanelModel info);
+        bool AddTab(IPanelModel info);
 
         void CommandDeleteItems();
 
