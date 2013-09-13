@@ -54,6 +54,8 @@ namespace LanExchange.Plugin.Users
 
         public string Description { get; set; }
 
+        public string EmployeeID { get; set; }
+
         public override int CountColumns
         {
             get { return base.CountColumns + 9; }
@@ -103,6 +105,7 @@ namespace LanExchange.Plugin.Users
             result.LegacyLogon = LegacyLogon;
             result.Description = Description;
             result.UserAccControl = UserAccControl;
+            result.EmployeeID = EmployeeID;
             return result;
         }
 

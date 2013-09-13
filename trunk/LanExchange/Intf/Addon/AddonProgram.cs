@@ -56,5 +56,17 @@ namespace LanExchange.Intf.Addon
             ExpandedFileName = fileName;
             m_Image = App.Images.GetSmallImageOfFileName(fileName);
         }
+
+        public static AddonProgram CreateFromProtocol(string protocol)
+        {
+            string fileName;
+            int iconIndex;
+            if (!ProtocolHelper.LookupInRegistry(protocol, out fileName, out iconIndex))
+                return null;
+            var result = new AddonProgram(protocol, fileName);
+            result.PrepareFileNameAndIcon();
+            return result;
+        }
+
     }
 }

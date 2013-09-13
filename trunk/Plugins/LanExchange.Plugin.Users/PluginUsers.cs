@@ -1,4 +1,11 @@
-﻿using System;
+﻿// ********************************************************************************
+// Users plugin
+// 
+// TODO use fields from ldap in addons like $(AD.employeeID)
+//
+//
+// ********************************************************************************
+using System;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Users

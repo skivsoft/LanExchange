@@ -35,19 +35,38 @@ namespace LanExchange.Misc.Impl
             {
                 Debug.Print(ex.Message);
             }
+            RegisterImages();
+        }
+
+        private void RegisterImages()
+        {
+            // register programs images
+            foreach (var pair in Programs)
+                if (pair.Value.ProgramImage != null)
+                    App.Images.RegisterImage(string.Format(Resources.ProgramImageFormat, pair.Key), pair.Value.ProgramImage, pair.Value.ProgramImage);
         }
 
         private void LoadAddon(string fileName)
         {
+            // load addon from xml
             var addon = (Addon)SerializeUtils.DeserializeObjectFromXMLFile(fileName, typeof(Addon));
+            // process programs
             foreach (var item in addon.Programs)
                 if (!Programs.ContainsKey(item.Id))
                 {
                     item.PrepareFileNameAndIcon();
                     Programs.Add(item.Id, item);
-                    if (item.ProgramImage != null)
-                        App.Images.RegisterImage(string.Format(Resources.ProgramImageFormat, item.Id), item.ProgramImage, item.ProgramImage);
                 }
+            // process protocols
+            foreach (var item in addon.PanelItemTypes)
+                foreach(var menuItem in item.ContextMenuStrip)
+                    if (ProtocolHelper.IsProtocol(menuItem.ProgramRef.Id))
+                    {
+                        var itemProgram = AddonProgram.CreateFromProtocol(menuItem.ProgramRef.Id);
+                        if (itemProgram != null)
+                            Programs.Add(itemProgram.Id, itemProgram);
+                    }
+            // process menu items
             foreach (var item in addon.PanelItemTypes)
             {
                 AddonItemTypeRef found;
@@ -74,8 +93,7 @@ namespace LanExchange.Misc.Impl
                                 menuItem.ProgramValue = Programs[menuItem.ProgramRef.Id];
                             if (!found.ContextMenuStrip.Contains(menuItem) && 
                                 menuItem.ProgramRef != null && 
-                                // check for protocol ex.: "mailto:"
-                                (menuItem.IsProtocol || Programs.ContainsKey(menuItem.ProgramRef.Id)))
+                                menuItem.ProgramValue != null)
                                 found.ContextMenuStrip.Add(menuItem);
                         }
                     }
@@ -98,12 +116,6 @@ namespace LanExchange.Misc.Impl
                     menuItem.Text = item.Text;
                     menuItem.ShortcutKeyDisplayString = item.ShortcutKeys;
                     menuItem.Click += MenuItemOnClick;
-                    if (item.IsProtocol)
-                    {
-                        if (!item.ProtocolExists)
-                            menuItem.Enabled = false;
-                    }
-                    else
                     if (item.ProgramValue != null)
                     {
                         if (!item.ProgramValue.Exists)
@@ -153,9 +165,13 @@ namespace LanExchange.Misc.Impl
                 fmtValue = fmtValue.Remove(0, 2);
             var programFileName = item.ProgramValue.ExpandedFileName;
             var programArgs = string.Format(AddonProgram.ExpandCmdLine(item.ProgramArgs), fmtValue);
+            programArgs = MacroHelper.ExpandPublicProperties(programArgs, panelItem);
             try
             {
-                Process.Start(programFileName, programArgs);
+                if (ProtocolHelper.IsProtocol(item.ProgramRef.Id))
+                    Process.Start(item.ProgramRef.Id + programArgs);
+                else
+                    Process.Start(programFileName, programArgs);
             }
             catch(Exception ex)
             {

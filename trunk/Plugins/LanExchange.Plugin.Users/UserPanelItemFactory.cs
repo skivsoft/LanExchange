@@ -11,8 +11,10 @@ namespace LanExchange.Plugin.Users
 
         public override PanelItemBase CreateDefaultRoot()
         {
+            var startPath = LdapUtils.GetUserPath(LdapUtils.GetCurrentUserName());
+            startPath = LdapUtils.GetDCNameFromPath(startPath, 2);
             var root = PluginUsers.ROOT_OF_DNS;
-            root.Name = "QQQ";
+            root.Name = LdapUtils.GetLdapValue(startPath);
             return root;
         }
     }

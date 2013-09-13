@@ -61,18 +61,5 @@ namespace LanExchange.Intf.Addon
             result ^= ProgramArgs.GetHashCode();
             return result;
         }
-
-        public bool IsProtocol
-        {
-            get { return ProgramRef.Id.EndsWith(":"); }
-        }
-
-        public bool ProtocolExists
-        {
-            get
-            {
-                return true;
-            }
-        }
     }
 }
