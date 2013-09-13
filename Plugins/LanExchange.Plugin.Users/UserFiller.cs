@@ -20,6 +20,7 @@ namespace LanExchange.Plugin.Users
         const string LEGACY_LOGON = "sAMAccountName";
         const string DESCRIPTION = "description";
         const string ACCOUNT_CONTROL = "userAccountControl";
+        const string EMPLOYEE_ID = "employeeID";
 
         public bool IsParentAccepted(PanelItemBase parent)
         {
@@ -46,7 +47,7 @@ namespace LanExchange.Plugin.Users
         {
             var startPath = LdapUtils.GetUserPath(LdapUtils.GetCurrentUserName()); // "u770503350189"
             
-            startPath = LdapUtils.GetDCNameFromPath(startPath, true);
+            startPath = LdapUtils.GetDCNameFromPath(startPath, 2);
             using (var searcher = new DirectorySearcher())
             {
                 // execute filter query to Active Directory
@@ -69,6 +70,7 @@ namespace LanExchange.Plugin.Users
                 searcher.PropertiesToLoad.Add(LEGACY_LOGON);
                 searcher.PropertiesToLoad.Add(DESCRIPTION);
                 searcher.PropertiesToLoad.Add(ACCOUNT_CONTROL);
+                searcher.PropertiesToLoad.Add(EMPLOYEE_ID);
                 try
                 {
                     var results = searcher.FindAll();
@@ -85,6 +87,7 @@ namespace LanExchange.Plugin.Users
                         user.LegacyLogon = SearchResult_GetString(row, LEGACY_LOGON);
                         user.Description = SearchResult_GetString(row, DESCRIPTION);
                         user.UserAccControl = uint.Parse(SearchResult_GetString(row, ACCOUNT_CONTROL));
+                        user.EmployeeID = SearchResult_GetString(row, EMPLOYEE_ID);
                         //user.WorkPhone = "0x" + user.UserAccControl.ToString("X");
                         //user.Description = row["lockoutTime"].ToString();
                         result.Add(user);

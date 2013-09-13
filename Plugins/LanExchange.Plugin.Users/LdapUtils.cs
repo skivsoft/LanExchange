@@ -77,7 +77,7 @@ namespace LanExchange.Plugin.Users
         }
 
         [Localizable(false)]
-        internal static string GetDCNameFromPath(string path, bool addOrgUnit)
+        internal static string GetDCNameFromPath(string path, int numOrgUnit)
         {
             var arr = DNSplit(path);
             var list = new List<string>();
@@ -86,11 +86,23 @@ namespace LanExchange.Plugin.Users
                     list.Insert(0, arr[index]);
                 else
                 {
-                    if (addOrgUnit)
+                    if (numOrgUnit > 0)
+                    {
                         list.Insert(0, arr[index]);
-                    break;
+                        numOrgUnit--;
+                    }
+                    if (numOrgUnit == 0)
+                        break;
                 }
             return "LDAP://" + String.Join(",", list.ToArray());
+        }
+
+        [Localizable(false)]
+        internal static string GetLdapValue(string path)
+        {
+            var arr = DNSplit(path);
+            var result = arr[0].Split('=')[1];
+            return result;
         }
     }
 }

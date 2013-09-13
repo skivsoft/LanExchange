@@ -93,6 +93,7 @@
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Core\TypeNotRegisteredException.cs" />
+    <Compile Include="Intf\Addon\ProtocolHelper.cs" />
     <Compile Include="Intf\DataReadyArgs.cs" />
     <Compile Include="Intf\IMainPresenter.cs" />
     <Compile Include="Intf\IMainView.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Intf\ILazyThreadPool.cs" />
     <Compile Include="Misc\Impl\ImageManagerImpl.cs" />
     <Compile Include="Intf\IPluginManager.cs" />
+    <Compile Include="Misc\Impl\MacroHelper.cs" />
     <Compile Include="Misc\Impl\PanelColumnManagerImpl.cs" />
     <Compile Include="Misc\Impl\PanelFillerManagerImpl.cs" />
     <Compile Include="Misc\Impl\PanelItemFactoryManagerImpl.cs" />
