@@ -179,22 +179,21 @@ namespace LanExchange.Model
 
         public void SaveSettings()
         {
-            //TODO !!!UNCOMMENT SAVE SETTINGS
-            //m_PagesSettings.SelectedIndex = SelectedIndex;
-            //var pages = new List<Tab>();
-            //for (int i = 0; i < Count; i++)
-            //    pages.Add(GetItem(i).Settings);
-            //m_PagesSettings.Items = pages.ToArray();
-            //var fileFName = GetConfigFileName();
-            //try
-            //{
-            //    Type[] extraTypes = AppPresenter.PanelItemTypes.ToArray();
-            //    SerializeUtils.SerializeObjectToXMLFile(fileFName, m_PagesSettings, extraTypes);
-            //}
-            //catch (Exception e)
-            //{
-            //    Debug.Fail(e.Message);
-            //}
+            m_PagesSettings.SelectedIndex = SelectedIndex;
+            var pages = new List<Tab>();
+            for (int i = 0; i < Count; i++)
+                pages.Add(GetItem(i).Settings);
+            m_PagesSettings.Items = pages.ToArray();
+            var fileFName = App.FolderManager.TabsConfigFileName;
+            Type[] extraTypes = App.PanelItemTypes.ToArray();
+            try
+            {
+                SerializeUtils.SerializeObjectToXMLFile(fileFName, m_PagesSettings, extraTypes);
+            }
+            catch(Exception ex)
+            {
+                Debug.Fail(ex.Message);
+            }
         }
 
         public bool TabNameExists(string tabName)

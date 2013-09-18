@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using LanExchange.Model.Settings;
 using LanExchange.SDK;
 
 namespace LanExchange.Intf
@@ -90,5 +91,7 @@ namespace LanExchange.Intf
         void SetDefaultRoot(PanelItemBase root);
 
         string ImageName { get; set; }
+
+        Tab Settings { get; set; }
     }
 }

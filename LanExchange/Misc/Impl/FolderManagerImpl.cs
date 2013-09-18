@@ -28,13 +28,14 @@ namespace LanExchange.Misc.Impl
             var args = Environment.GetCommandLineArgs();
             m_ExeFileName = args.Length > 0 ? args[0] : string.Empty;
             m_CurrentPath = Path.GetDirectoryName(m_ExeFileName) ?? string.Empty;
-            var fileName = Path.ChangeExtension(Path.GetFileName(m_ExeFileName), ".cfg");
-            var configDir = Path.Combine(m_CurrentPath, CONFIG_DIR);
-            m_ConfigFileName = Path.Combine(configDir, fileName);
-            m_TabsConfigFileName = Path.Combine(configDir, TABS_FILE);
             m_SystemAddonsPath = Path.Combine(m_CurrentPath, ADDONS_DIR);
             var appData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            m_UserAddonsPath = Path.Combine(Path.Combine(appData, PROGRAM_DIR), ADDONS_DIR);
+            var programDir = Path.Combine(appData, PROGRAM_DIR);
+            m_UserAddonsPath = Path.Combine(programDir, ADDONS_DIR);
+            var configDir = Path.Combine(programDir, CONFIG_DIR);
+            var fileName = Path.ChangeExtension(Path.GetFileName(m_ExeFileName), ".cfg");
+            m_ConfigFileName = Path.Combine(configDir, fileName);
+            m_TabsConfigFileName = Path.Combine(configDir, TABS_FILE);
         }
 
         public string CurrentPath

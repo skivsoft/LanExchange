@@ -67,7 +67,6 @@ namespace LanExchange.UI
             this.mWebPage = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.mHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.timerTabSettingsSaver = new System.Windows.Forms.Timer(this.components);
             this.popTray.SuspendLayout();
             this.Status.SuspendLayout();
             this.MainMenu.SuspendLayout();
@@ -204,6 +203,7 @@ namespace LanExchange.UI
             this.pInfo.BackColor = System.Drawing.SystemColors.Window;
             this.pInfo.ContextMenuStrip = this.popTop;
             this.pInfo.CountLines = 3;
+            this.pInfo.CurrentItem = null;
             this.pInfo.Dock = System.Windows.Forms.DockStyle.Top;
             this.pInfo.Location = new System.Drawing.Point(0, 24);
             this.pInfo.MinimumSize = new System.Drawing.Size(0, 64);
@@ -360,11 +360,6 @@ namespace LanExchange.UI
             this.mHelpAbout.Text = "About";
             this.mHelpAbout.Click += new System.EventHandler(this.mAbout_Click);
             // 
-            // timerTabSettingsSaver
-            // 
-            this.timerTabSettingsSaver.Interval = 5000;
-            this.timerTabSettingsSaver.Tick += new System.EventHandler(this.timerTabSettingsSaver_Tick);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -410,7 +405,6 @@ namespace LanExchange.UI
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
         private System.Windows.Forms.ToolStripStatusLabel lUserName;
         internal InfoView pInfo;
-        private System.Windows.Forms.Timer timerTabSettingsSaver;
         private System.Windows.Forms.MenuStrip MainMenu;
         private System.Windows.Forms.ToolStripMenuItem mHelp;
         private System.Windows.Forms.ToolStripMenuItem mHelpAbout;

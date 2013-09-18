@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Xml.Serialization;
 using LanExchange.Plugin.Users.Properties;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Users
 {
-    internal sealed class UserPanelItem : PanelItemBase
+    public sealed class UserPanelItem : PanelItemBase
     {
         internal static void RegisterColumns(IPanelColumnManager columnManager)
         {
@@ -20,41 +21,57 @@ namespace LanExchange.Plugin.Users
             columnManager.RegisterColumn(typeof(UserPanelItem), new PanelColumnHeader(Resources.Description) { Visible = false, Width = 200 });
         }
 
-        internal UserPanelItem(PanelItemBase parent, string name) : base(parent)
+        public UserPanelItem()
+        {
+        }
+
+        public UserPanelItem(PanelItemBase parent, string name) : base(parent)
         {
             Name = name;
         }
 
-        internal uint UserAccControl { get; set; }
+        [XmlAttribute]
+        public override string Name { get; set; }
 
-        internal string LockoutTime { get; set; }
+        [XmlAttribute]
+        public string Title { get; set; }
 
-        internal bool IsAccountDisabled
+        [XmlAttribute]
+        public string WorkPhone { get; set; }
+
+        [XmlAttribute]
+        public string Office { get; set; }
+
+        [XmlAttribute]
+        public string Department { get; set; }
+
+        [XmlAttribute]
+        public string Email { get; set; }
+
+        [XmlAttribute]
+        public string Company { get; set; }
+
+        [XmlAttribute]
+        public string Nickname { get; set; }
+
+        [XmlAttribute]
+        public string LegacyLogon { get; set; }
+
+        [XmlAttribute]
+        public string Description { get; set; }
+
+        [XmlAttribute]
+        public string EmployeeID { get; set; }
+
+        [XmlAttribute]
+        public int UserAccControl { get; set; }
+
+        public string LockoutTime { get; set; }
+
+        public bool IsAccountDisabled
         {
             get { return (UserAccControl & 2) != 0; }
         }
-
-        public override string Name { get; set; }
-
-        public string Title { get; set; }
-
-        public string WorkPhone { get; set; }
-
-        public string Office { get; set; }
-
-        public string Department { get; set; }
-
-        public string Email { get; set; }
-
-        public string Company { get; set; }
-
-        public string Nickname { get; set; }
-
-        public string LegacyLogon { get; set; }
-
-        public string Description { get; set; }
-
-        public string EmployeeID { get; set; }
 
         public override int CountColumns
         {

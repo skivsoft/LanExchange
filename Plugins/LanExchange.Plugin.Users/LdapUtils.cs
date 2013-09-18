@@ -8,17 +8,6 @@ namespace LanExchange.Plugin.Users
 {
     internal static class LdapUtils
     {
-        internal static string GetCurrentUserName()
-        {
-            var user = WindowsIdentity.GetCurrent();
-            if (user != null)
-            {
-                string[] userName = user.Name.Split('\\');
-                return userName.Length > 1 ? userName[1] : userName[0];
-            }
-            return String.Empty;
-        }
-
         [Localizable(false)]
         internal static string GetUserPath(string userName)
         {

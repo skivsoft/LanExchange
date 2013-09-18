@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Forms;
-using LanExchange.Core;
 using LanExchange.Intf;
+using LanExchange.Misc;
 using LanExchange.Model;
 using LanExchange.Properties;
 using LanExchange.SDK;
@@ -10,9 +10,12 @@ using LanExchange.UI;
 
 namespace LanExchange.Presenter
 {
-    public class PagesPresenter : PresenterBase<IPagesView>, IPagesPresenter
+    public class PagesPresenter : PresenterBase<IPagesView>, IPagesPresenter, IDisposable
     {
+        private const int SAVE_ACTION_MS = 1000; // 1 sec
+
         private readonly IPagesModel m_Model;
+        private DefferedAction m_SaveAction;
 
         public event EventHandler PanelViewFocusedItemChanged;
         public event EventHandler PanelViewFilterTextChanged;
@@ -24,6 +27,12 @@ namespace LanExchange.Presenter
             m_Model.AfterRemove += Model_AfterRemove;
             m_Model.AfterRename += Model_AfterRename;
             m_Model.IndexChanged += Model_IndexChanged;
+            m_SaveAction = new DefferedAction((o) => m_Model.SaveSettings(), SAVE_ACTION_MS);
+        }
+
+        public void Dispose()
+        {
+            m_SaveAction.Dispose();
         }
 
         private void CheckDuplicateOnNew(object sender, CancelEventArgs e)
@@ -69,7 +78,6 @@ namespace LanExchange.Presenter
                     var panel = App.Resolve<IPanelModel>();
                     panel.TabName = form.Value;
                     m_Model.AddTab(panel);
-                    m_Model.SaveSettings();
                 }
             }
         }
@@ -85,10 +93,7 @@ namespace LanExchange.Presenter
                 form.InputValidating += InputBoxForm.ValidatingEmpty;
                 form.InputValidating += CheckDuplicateOnRename;
                 if (form.ShowDialog() == DialogResult.OK)
-                {
                     m_Model.RenameTab(index, form.Value);
-                    m_Model.SaveSettings();
-                }
             }
         }
 
@@ -130,7 +135,6 @@ namespace LanExchange.Presenter
             // add tab
             m_Model.AddTab(destObjects);
             //m_View.SelectedIndex = m_Model.Count - 1;
-            m_Model.SaveSettings();
             View.ActivePanelView.Presenter.UpdateItemsAndStatus();
         }
 
@@ -168,7 +172,7 @@ namespace LanExchange.Presenter
                     newItem.Parent = PanelItemRoot.ROOT_OF_USERITEMS;
                     destObjects.Items.Add(newItem);
                 }
-            m_Model.SaveSettings();
+            SaveSettings();
             destObjects.SyncRetrieveData(true);
             //m_View.ActivePanelView.Presenter.UpdateItemsAndStatus();
         }
@@ -200,7 +204,7 @@ namespace LanExchange.Presenter
                 if (firstIndex >= 0)
                     panelView.Presenter.Objects.FocusedItem = panelView.Presenter.Objects.GetItemAt(firstIndex);
                 panelView.Presenter.Objects.SyncRetrieveData();
-                m_Model.SaveSettings();
+                SaveSettings();
             }
         }
 
@@ -208,10 +212,7 @@ namespace LanExchange.Presenter
         {
             var index = View.PopupSelectedIndex;
             if (CanCloseTab())
-            {
                 m_Model.DelTab(index);
-                m_Model.SaveSettings();
-            }
         }
 
         public bool CanCloseTab()
@@ -233,34 +234,40 @@ namespace LanExchange.Presenter
             //e.Info.DataChanged(null, ConcreteSubject.s_UserItems);
             panelView.Presenter.ResetSortOrder();
             e.Info.SyncRetrieveData();
+            SaveSettings();
         }
 
         public void Model_AfterRemove(object sender, PanelIndexEventArgs e)
         {
             View.RemoveTabAt(e.Index);
+            SaveSettings();
         }
 
         public void Model_AfterRename(object sender, PanelModelEventArgs e)
         {
             View.SelectedTabText = e.Info.TabName;
+            SaveSettings();
         }
 
         public void Model_IndexChanged(object sender, PanelIndexEventArgs e)
         {
             View.SelectedIndex = e.Index;
             View.FocusPanelView();
+            SaveSettings();
         }
 
         public void DoPanelViewFocusedItemChanged(object sender, EventArgs e)
         {
             if (PanelViewFocusedItemChanged != null)
                 PanelViewFocusedItemChanged(sender, e);
+            SaveSettings();
         }
 
         public void DoPanelViewFilterTextChanged(object sender, EventArgs e)
         {
             if (PanelViewFilterTextChanged != null)
                 PanelViewFilterTextChanged(sender, e);
+            SaveSettings();
         }
 
         public int Count
@@ -276,7 +283,7 @@ namespace LanExchange.Presenter
 
         public void SaveSettings()
         {
-            m_Model.SaveSettings();
+            m_SaveAction.Reset();
         }
 
 
@@ -292,7 +299,6 @@ namespace LanExchange.Presenter
             PV.FilterTextChanged += DoPanelViewFilterTextChanged;
         }
 
-
         public IPanelModel GetItem(int index)
         {
             return m_Model.GetItem(index);
@@ -303,11 +309,9 @@ namespace LanExchange.Presenter
             m_Model.LoadSettings();
         }
 
-
         public bool AddTab(IPanelModel info)
         {
             return m_Model.AddTab(info);
         }
     }
-
 }

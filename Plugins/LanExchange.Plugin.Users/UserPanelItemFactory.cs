@@ -1,4 +1,5 @@
-﻿using LanExchange.SDK;
+﻿using System.Windows.Forms;
+using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Users
 {
@@ -11,7 +12,7 @@ namespace LanExchange.Plugin.Users
 
         public override PanelItemBase CreateDefaultRoot()
         {
-            var startPath = LdapUtils.GetUserPath(LdapUtils.GetCurrentUserName());
+            var startPath = LdapUtils.GetUserPath(SystemInformation.UserName);
             startPath = LdapUtils.GetDCNameFromPath(startPath, 2);
             var root = PluginUsers.ROOT_OF_DNS;
             root.Name = LdapUtils.GetLdapValue(startPath);
