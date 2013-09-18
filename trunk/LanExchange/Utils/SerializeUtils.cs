@@ -8,8 +8,18 @@ namespace LanExchange.Utils
 {
     public static class SerializeUtils
     {
+        public static void ForceCreatePath(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                ForceCreatePath(Path.GetDirectoryName(path));
+                Directory.CreateDirectory(path);
+            }
+        }
+
         public static void SerializeObjectToBinaryFile(string fileName, object obj)
         {
+            ForceCreatePath(Path.GetDirectoryName(fileName));
             var stream = File.Open(fileName, FileMode.Create);
             var bformatter = new BinaryFormatter();
             bformatter.Serialize(stream, obj);
@@ -39,6 +49,7 @@ namespace LanExchange.Utils
         public static void SerializeObjectToXMLFile(string fileName, object obj)
         {
             if (obj == null) return;
+            ForceCreatePath(Path.GetDirectoryName(fileName));
             var writer = new XmlSerializer(obj.GetType());
             using (var file = new StreamWriter(fileName))
             {
@@ -49,6 +60,7 @@ namespace LanExchange.Utils
         public static void SerializeObjectToXMLFile(string fileName, object obj, Type[] extraTypes)
         {
             if (obj == null) return;
+            ForceCreatePath(Path.GetDirectoryName(fileName));
             var writer = new XmlSerializer(obj.GetType(), extraTypes);
             using (var file = new StreamWriter(fileName))
             {

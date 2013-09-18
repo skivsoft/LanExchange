@@ -124,17 +124,6 @@ namespace LanExchange.Model.Settings
             s_Modified = false;
         }
 
-        public static string GetCurrentUserName()
-        {
-            var user = WindowsIdentity.GetCurrent();
-            if (user != null)
-            {
-                string[] userName = user.Name.Split('\\');
-                return userName.Length > 1 ? userName[1] : userName[0];
-            }
-            return string.Empty;
-        }
-
         public bool GetBoolValue(string name)
         {
             var value = m_Config[name] ?? m_Default[name];

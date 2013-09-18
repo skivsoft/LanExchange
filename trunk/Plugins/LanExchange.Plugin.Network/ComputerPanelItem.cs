@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Xml.Serialization;
 using LanExchange.Plugin.Network.Properties;
 using LanExchange.SDK;
 
@@ -110,12 +111,14 @@ namespace LanExchange.Plugin.Network
             get { return m_SI; }
         }
 
+        [XmlAttribute]
         public override string Name
         {
             get { return m_SI.Name; }
             set { m_SI.Name = value; }
         }
 
+        [XmlAttribute]
         public uint Platform
         {
             get { return m_SI.Version.PlatformID; }
@@ -123,6 +126,7 @@ namespace LanExchange.Plugin.Network
         }
 
         [Localizable(false)]
+        [XmlAttribute]
         public string Ver
         {
             get { return string.Format("{0}.{1}", m_SI.Version.Major, m_SI.Version.Minor); }
@@ -143,6 +147,7 @@ namespace LanExchange.Plugin.Network
         }
 
         [Localizable(false)]
+        [XmlAttribute]
         public string Type
         {
             get { return m_SI.Version.Type.ToString("X"); }
@@ -154,6 +159,7 @@ namespace LanExchange.Plugin.Network
             }
         }
 
+        [XmlAttribute]
         public string Comment
         {
             get { return m_SI.Comment; }

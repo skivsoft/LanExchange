@@ -33,6 +33,7 @@ namespace LanExchange.SDK
         /// <value>
         /// The name.
         /// </value>
+        [XmlAttribute]
         public abstract string Name { get; set; }
         /// <summary>
         /// Gets the count columns.

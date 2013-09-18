@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.DirectoryServices;
+using System.Windows.Forms;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Users
@@ -45,7 +46,7 @@ namespace LanExchange.Plugin.Users
         [Localizable(false)]
         public void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
-            var startPath = LdapUtils.GetUserPath(LdapUtils.GetCurrentUserName()); // "u770503350189"
+            var startPath = LdapUtils.GetUserPath(SystemInformation.UserName); // "u770503350189"
             
             startPath = LdapUtils.GetDCNameFromPath(startPath, 2);
             using (var searcher = new DirectorySearcher())
@@ -86,7 +87,7 @@ namespace LanExchange.Plugin.Users
                         user.Nickname = SearchResult_GetString(row, NICKNAME);
                         user.LegacyLogon = SearchResult_GetString(row, LEGACY_LOGON);
                         user.Description = SearchResult_GetString(row, DESCRIPTION);
-                        user.UserAccControl = uint.Parse(SearchResult_GetString(row, ACCOUNT_CONTROL));
+                        user.UserAccControl = int.Parse(SearchResult_GetString(row, ACCOUNT_CONTROL));
                         user.EmployeeID = SearchResult_GetString(row, EMPLOYEE_ID);
                         //user.WorkPhone = "0x" + user.UserAccControl.ToString("X");
                         //user.Description = row["lockoutTime"].ToString();

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Serialization;
 
 namespace LanExchange.SDK
 {
@@ -15,6 +16,7 @@ namespace LanExchange.SDK
             return new PanelItemRoot();
         }
 
+        [XmlAttribute]
         public override string Name { get; set; }
 
         public override string ImageName

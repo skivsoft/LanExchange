@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Serialization;
 using LanExchange.Plugin.Network.Properties;
 using LanExchange.SDK;
 
@@ -77,22 +78,25 @@ namespace LanExchange.Plugin.Network
             }
         }
 
+        [XmlAttribute]
         public override string Name 
         { 
             get { return m_SHI.Name; }
             set { m_SHI.Name = value; }
         }
 
-        public string Comment
-        {
-            get { return m_SHI.Comment; }
-            set { m_SHI.Comment = value; }
-        }
-
+        [XmlAttribute]
         public uint ShareType
         {
             get { return m_SHI.ShareType; }
             set { m_SHI.ShareType = value; }
+        }
+
+        [XmlAttribute]
+        public string Comment
+        {
+            get { return m_SHI.Comment; }
+            set { m_SHI.Comment = value; }
         }
 
         public override object Clone()

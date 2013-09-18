@@ -18,7 +18,7 @@
 //   DONE  MSI installer
 //   DONE  Columns sort (name, comment, version)
 //   TODO  Ctrl+Left/Ctrl+Right - change form size with phi based step
-//   TODO  Help on shortcut keys
+//   DONE  Help on shortcut keys
 //   TODO  Save/restore sort order for each tab
 //   DONE  Load context menu for panel items from addons 
 //   TODO  Sort by ping, ip address, mac address
@@ -26,7 +26,7 @@
 //   TODO  Async enum items and cache items
 //   TODO  Changing columns order
 //   TODO  Changing font size Ctrl+mouse wheel
-//   TODO  User list (Users plugin)
+//   DONE  User list (Users plugin)
 //   TODO  Enum files and folders (FS plugin)
 //   TODO  Addons editor
 // 
@@ -47,12 +47,9 @@
 // *****************************************************************************
 
 using System;
-using System.ComponentModel;
-using System.Windows.Forms;
 using LanExchange.Intf;
 using LanExchange.Misc;
 using LanExchange.Misc.Action;
-using LanExchange.Properties;
 using LanExchange.UI;
 using LanExchange.Utils;
 
@@ -64,32 +61,16 @@ namespace LanExchange
         static void Main()
         {
             SingleInstanceCheck.Check();
-            try
-            {
-                CmdLineProcessor.Processing();
+            CmdLineProcessor.Processing();
 
-                App.SetContainer(ContainerBuilder.Build());
-                App.Plugins.LoadPlugins();
+            App.SetContainer(ContainerBuilder.Build());
+            App.Plugins.LoadPlugins();
 #if DEBUG
-                //AddonGen.Generate();
+            //AddonGen.Generate();
 #endif
-                App.Addons.LoadAddons();
-                ShortcutPanelItem.RegisterColumns(App.PanelColumns);
-                AppView.ApplicationRun();
-            }
-            catch(Exception e)
-            {
-                if (e is System.Reflection.TargetInvocationException)
-                    ShowException(e.InnerException);
-                else
-                    ShowException(e);
-            }
-        }
-
-        [Localizable(false)]
-        static void ShowException(Exception e)
-        {
-            MessageBox.Show(null, string.Format("{0}\n{1}", e.Message, e.StackTrace), Resources.Program_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            App.Addons.LoadAddons();
+            ShortcutPanelItem.RegisterColumns(App.PanelColumns);
+            AppView.ApplicationRun();
         }
     }
 }

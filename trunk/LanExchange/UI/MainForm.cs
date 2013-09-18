@@ -40,7 +40,6 @@ namespace LanExchange.UI
             Pages.BringToFront();
             App.MainPages = Pages.Presenter;
             App.MainPages.PanelViewFocusedItemChanged += Pages_PanelViewFocusedItemChanged;
-            App.MainPages.PanelViewFilterTextChanged += Pages_FilterTextChanged;
             App.MainPages.LoadSettings();
             // init main form
             SetupActions();
@@ -114,7 +113,7 @@ namespace LanExchange.UI
             lCompName.Text = SystemInformation.ComputerName;
             lCompName.ImageIndex = App.Images.IndexOf(PanelImageNames.ComputerNormal);
             // show current user
-            lUserName.Text = Settings.GetCurrentUserName();
+            lUserName.Text = SystemInformation.UserName;
             lUserName.ImageIndex = App.Images.IndexOf(PanelImageNames.UserNormal);
         }
 
@@ -289,12 +288,6 @@ namespace LanExchange.UI
                 pInfo.SetLine(i, string.Empty);
         }
 
-        private void Pages_FilterTextChanged(object sender, EventArgs e)
-        {
-            timerTabSettingsSaver.Stop();
-            timerTabSettingsSaver.Start();
-        }
-
         private void popTray_Opening(object sender, CancelEventArgs e)
         {
             mOpen.Text = Visible ? Resources.MainForm_Close : Resources.MainForm_Open;
@@ -369,14 +362,6 @@ namespace LanExchange.UI
         private void MainForm_Activated(object sender, EventArgs e)
         {
             Pages.FocusPanelView();
-        }
-
-        private void timerTabSettingsSaver_Tick(object sender, EventArgs e)
-        {
-            // save tab settings and switch off timer
-            App.MainPages.SaveSettings();
-            if (sender is System.Windows.Forms.Timer)
-                (sender as System.Windows.Forms.Timer).Enabled = false;
         }
 
         private void rereadToolStripMenuItem_Click(object sender, EventArgs e)

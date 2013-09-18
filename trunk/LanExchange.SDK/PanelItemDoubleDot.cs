@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Serialization;
 
 namespace LanExchange.SDK
 {
@@ -8,9 +9,13 @@ namespace LanExchange.SDK
     [Serializable]
     public sealed class PanelItemDoubleDot : PanelItemBase
     {
-        public PanelItemDoubleDot(PanelItemBase parent)
+        public PanelItemDoubleDot()
         {
-            Parent = parent;
+            
+        }
+        
+        public PanelItemDoubleDot(PanelItemBase parent) : base(parent)
+        {
         }
 
         public override string ImageName
@@ -28,6 +33,7 @@ namespace LanExchange.SDK
             return new PanelItemDoubleDot(Parent);
         }
 
+        [XmlAttribute]
         public override string Name { get; set; }
     }
 }

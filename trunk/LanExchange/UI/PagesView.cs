@@ -168,7 +168,6 @@ namespace LanExchange.UI
         private void Pages_Selected(object sender, TabControlEventArgs e)
         {
             m_Presenter.SelectedIndex = e.TabPageIndex;
-            m_Presenter.SaveSettings();
         }
 
         public IPanelView ActivePanelView
