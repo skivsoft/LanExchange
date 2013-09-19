@@ -160,11 +160,8 @@ namespace LanExchange.Misc.Impl
 
         private void InternalRunCmdLine(IPanelView pv, PanelItemBase panelItem, AddonMenuItem item)
         {
-            var fmtValue = panelItem.FullItemName;
-            if (fmtValue.StartsWith(@"\\"))
-                fmtValue = fmtValue.Remove(0, 2);
             var programFileName = item.ProgramValue.ExpandedFileName;
-            var programArgs = string.Format(AddonProgram.ExpandCmdLine(item.ProgramArgs), fmtValue);
+            var programArgs = AddonProgram.ExpandCmdLine(item.ProgramArgs);
             programArgs = MacroHelper.ExpandPublicProperties(programArgs, panelItem);
             try
             {

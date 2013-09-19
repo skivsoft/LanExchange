@@ -183,7 +183,7 @@ namespace LanExchange.Plugin.Network
         {
             get
             {
-                if (Parent == PanelItemRoot.ROOT_OF_USERITEMS)
+                if (Parent == null)
                     return PanelImageNames.ComputerCustom;
                 return IsReachable ? PanelImageNames.ComputerNormal : PanelImageNames.ComputerUnreachable;
             }

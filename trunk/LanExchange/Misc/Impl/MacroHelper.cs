@@ -11,9 +11,11 @@ namespace LanExchange.Misc.Impl
         public static IDictionary<string, string> GetPublicReadProperties(object obj)
         {
             var props = new Dictionary<string, string>();
-            foreach (var prop in obj.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly))
+            foreach (var prop in obj.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
                 if (prop.CanRead)
                 {
+                    var indexParams = prop.GetIndexParameters();
+                    if (indexParams.Length > 0) continue;
                     var propValue = prop.GetValue(obj, null).ToString();
                     props.Add(string.Format("$({0})", prop.Name), propValue);
                 }

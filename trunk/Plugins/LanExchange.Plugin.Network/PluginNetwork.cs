@@ -12,7 +12,7 @@ namespace LanExchange.Plugin.Network
 {
     public sealed class PluginNetwork : IPlugin
     {
-        public static readonly PanelItemBase ROOT_OF_DOMAINS = new PanelItemRoot();
+        public static readonly PanelItemBase ROOT_OF_DOMAINS = new PanelItemRoot("DomainPanelItem");
         private IServiceProvider m_Provider;
 
         public void Initialize(IServiceProvider serviceProvider)

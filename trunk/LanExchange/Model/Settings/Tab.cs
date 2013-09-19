@@ -1,3 +1,4 @@
+using System;
 using System.Xml.Serialization;
 using LanExchange.Intf;
 using LanExchange.SDK;
@@ -6,8 +7,17 @@ namespace LanExchange.Model.Settings
 {
     public class Tab
     {
+        public Tab()
+        {
+            View = PanelViewMode.Details;
+            Items = new PanelItemBase[0];
+        }
+
         [XmlAttribute]
         public string Name { get; set; }
+
+        [XmlAttribute]
+        public string DataType { get; set; }
 
         [XmlAttribute]
         public PanelViewMode View { get; set; }
@@ -21,10 +31,5 @@ namespace LanExchange.Model.Settings
         
         public PanelItemBase[] Items;
 
-        public Tab()
-        {
-            View = PanelViewMode.Details;
-            Items = new PanelItemBase[0];
-        }
     }
 }

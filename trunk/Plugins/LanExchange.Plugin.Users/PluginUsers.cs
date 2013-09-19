@@ -13,7 +13,7 @@ namespace LanExchange.Plugin.Users
 {
     public sealed class PluginUsers : IPlugin
     {
-        public static readonly PanelItemBase ROOT_OF_DNS = new PanelItemRoot();
+        public static readonly PanelItemBase ROOT_OF_DNS = new PanelItemRoot("DNSPanelItem");
         public const string LDAP_PREFIX = "LDAP://";
 
         private IServiceProvider m_Provider;

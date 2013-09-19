@@ -69,7 +69,11 @@ namespace LanExchange
             //AddonGen.Generate();
 #endif
             App.Addons.LoadAddons();
+            // register ShortcutPanelItem
+            App.PanelItemTypes.RegisterPanelItemFactory(typeof(ShortcutPanelItem), new ShortcutPanelItemFactory());
             ShortcutPanelItem.RegisterColumns(App.PanelColumns);
+            App.PanelFillers.RegisterPanelFiller(new ShortcutFiller());
+            // run
             AppView.ApplicationRun();
         }
     }

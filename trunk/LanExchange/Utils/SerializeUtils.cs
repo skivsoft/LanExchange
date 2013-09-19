@@ -78,6 +78,16 @@ namespace LanExchange.Utils
             }
         }
 
+        public static object DeserializeObjectFromXMLFile(string fileName, Type tp, Type[] extraTypes)
+        {
+            var ser = new XmlSerializer(tp, extraTypes);
+            using (var tr = new StreamReader(fileName))
+            {
+                object obj = ser.Deserialize(tr);
+                return obj;
+            }
+        }
+
         public static object DeserializeObjectFromXMLFile(string fileName, Type tp)
         {
             var ser = new XmlSerializer(tp);

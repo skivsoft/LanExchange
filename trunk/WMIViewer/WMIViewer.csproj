@@ -52,7 +52,6 @@
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="DynamicObject.cs" />
-    <Compile Include="IWMIComputer.cs" />
     <Compile Include="IWMIView.cs" />
     <Compile Include="MethodDataEx.cs" />
     <Compile Include="Program.cs" />
@@ -65,7 +64,13 @@
       <DependentUpon>WMIAuthForm.cs</DependentUpon>
     </Compile>
     <Compile Include="WMIClassList.cs" />
-    <Compile Include="WMIComputer.cs" />
+    <Compile Include="WMIArgs.cs" />
+    <Compile Include="WMIEditProperty.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WMIEditProperty.Designer.cs">
+      <DependentUpon>WMIEditProperty.cs</DependentUpon>
+    </Compile>
     <Compile Include="WMIForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,6 +103,9 @@
     </Compile>
     <EmbeddedResource Include="WMIAuthForm.resx">
       <DependentUpon>WMIAuthForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WMIEditProperty.resx">
+      <DependentUpon>WMIEditProperty.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WMIForm.resx">
       <DependentUpon>WMIForm.cs</DependentUpon>

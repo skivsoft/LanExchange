@@ -109,12 +109,14 @@
     <Compile Include="Intf\PresenterBase.cs" />
     <Compile Include="Misc\Action\AboutAction.cs" />
     <Compile Include="Misc\Action\ReReadAction.cs" />
+    <Compile Include="Misc\Action\ShortcutFiller.cs" />
     <Compile Include="Misc\Action\ShortcutKeysAction.cs" />
     <Compile Include="ContainerBuilder.cs" />
     <Compile Include="Intf\IAddonManager.cs" />
     <Compile Include="Misc\Action\ShortcutPanelItem.cs" />
     <Compile Include="Intf\App.cs" />
     <Compile Include="Intf\ILazyThreadPool.cs" />
+    <Compile Include="Misc\Action\ShortcutPanelItemFactory.cs" />
     <Compile Include="Misc\CmdLineProcessor.cs" />
     <Compile Include="Misc\DefferedAction.cs" />
     <Compile Include="Misc\Impl\ImageManagerImpl.cs" />

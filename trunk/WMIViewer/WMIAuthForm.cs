@@ -31,7 +31,6 @@ namespace WMIViewer
             {
                 eUserName.Text = s_UserName;
                 ePassword.Text = s_UserPassword;
-                chSavePassword.Checked = true;
                 return true;
             }
             return false;
@@ -69,11 +68,8 @@ namespace WMIViewer
                 DialogResult = DialogResult.None;
                 return;
             }
-            if (chSavePassword.Checked)
-            {
-                s_UserName = UserName;
-                s_UserPassword = UserPassword;
-            }
+            s_UserName = UserName;
+            s_UserPassword = UserPassword;
         }
 
         public static void ClearSavedPassword()

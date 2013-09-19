@@ -2,15 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
-using LanExchange.Core;
 using LanExchange.Intf;
-using LanExchange.Misc;
-using LanExchange.Misc.Impl;
 using LanExchange.Model;
-using LanExchange.Presenter;
 using LanExchange.Properties;
 using LanExchange.SDK;
-using LanExchange.UI;
 using LanExchange.Utils;
 
 namespace LanExchange.UI
@@ -23,6 +18,7 @@ namespace LanExchange.UI
         private readonly IPanelPresenter m_Presenter;
         private readonly ListViewItemCache m_Cache;
         private PanelModelCopyHelper m_CopyHelper;
+        private int m_SortColumn;
 
         public event EventHandler FocusedItemChanged;
 
@@ -296,7 +292,8 @@ namespace LanExchange.UI
             // Ctrl+Alt+Ins - copy full path to item name
             if (e.Control && e.KeyCode == Keys.Insert)
             {
-                CopyColumnToClipboard(true, e.Alt ? -1 : 0);
+                SetupCopyHelper();
+                CopyColumnToClipboard(e.Alt ? -1 : GetCtrlInsColumnIndex());
                 e.Handled = true;
             }
             // Del - Delete selected items
@@ -308,6 +305,20 @@ namespace LanExchange.UI
             // process KeyDown on addons if KeyDown event not handled yet
             if (!e.Handled)
                 App.Addons.ProcessKeyDown(e);
+        }
+
+        [Localizable(false)]
+        private int GetCtrlInsColumnIndex()
+        {
+            foreach(var item in CreateCopyMenuItems(m_CopyHelper))
+                if (item is ToolStripMenuItem)
+                {
+                    var menuItem = item as ToolStripMenuItem;
+                    if (!string.IsNullOrEmpty(menuItem.ShortcutKeyDisplayString))
+                        if (menuItem.ShortcutKeyDisplayString.Equals("Ctrl+Ins"))
+                            return (int) item.Tag;
+                }
+            return 0;
         }
 
         private void lvComps_ItemActivate(object sender, EventArgs e)
@@ -453,6 +464,7 @@ namespace LanExchange.UI
         public void SetColumnMarker(int columnIndex, PanelSortOrder sortOrder)
         {
             NativeMethods.SetColumnImage(LV, columnIndex, (SortOrder)sortOrder, -1);
+            m_SortColumn = columnIndex;
         }
 
         private void ShowHideColumn_Click(object sender, EventArgs e)
@@ -577,10 +589,8 @@ namespace LanExchange.UI
             }
         }
 
-        private void CopyColumnToClipboard(bool needSetup, int colIndex)
+        private void CopyColumnToClipboard(int colIndex)
         {
-            if (needSetup)
-                SetupCopyHelper();
             Clipboard.SetText(m_CopyHelper.GetColumnText(colIndex), TextDataFormat.UnicodeText);
         }
 
@@ -593,7 +603,7 @@ namespace LanExchange.UI
         {
             var menuItem = sender as ToolStripMenuItem;
             if (menuItem != null)
-                CopyColumnToClipboard(false, (int) menuItem.Tag);
+                CopyColumnToClipboard((int) menuItem.Tag);
         }
 
         /// <summary>
@@ -605,7 +615,9 @@ namespace LanExchange.UI
         {
             if (helper.IndexesCount == 1)
                 helper.MoveTo(0);
+            var result = new List<ToolStripItem>();
             var columns = App.PanelColumns.GetColumns(helper.IndexesCount == 1 ? helper.CurrentItem.GetType() : m_Presenter.Objects.DataType);
+            var ctrlInsColumn = 0;
             foreach (var column in columns)
                 if (column.Visible)
                 {
@@ -622,9 +634,9 @@ namespace LanExchange.UI
                             menuPath.ShortcutKeyDisplayString = "Ctrl+Alt+Ins";
                             menuPath.Tag = -1;
                             menuPath.Click += CopyColumnOnClick;
-                            yield return menuPath;
+                            result.Add(menuPath);
                         }
-                        yield return new ToolStripSeparator();
+                        result.Add(new ToolStripSeparator());
                     }
                     string value;
                     if (helper.IndexesCount == 1)
@@ -634,13 +646,20 @@ namespace LanExchange.UI
                     if (!string.IsNullOrEmpty(value))
                     {
                         var menuItem = new ToolStripMenuItem(string.Format(Resources.PanelView_CopyColumn, value));
-                        if (column.Index == 0)
-                            menuItem.ShortcutKeyDisplayString = "Ctrl+Ins";
+                        if (column.Index == m_SortColumn)
+                            ctrlInsColumn = m_SortColumn;
                         menuItem.Tag = column.Index;
                         menuItem.Click += CopyColumnOnClick;
-                        yield return menuItem;
+                        result.Add(menuItem);
                     }
                 }
+            foreach(var menuItem in result)
+                if ((menuItem is ToolStripMenuItem) && (int)menuItem.Tag == ctrlInsColumn)
+                {
+                    (menuItem as ToolStripMenuItem).ShortcutKeyDisplayString = "Ctrl+Ins";
+                    break;
+                }
+            return result;
         }
 
         private void SetupCopyHelper()

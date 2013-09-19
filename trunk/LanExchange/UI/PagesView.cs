@@ -63,7 +63,7 @@ namespace LanExchange.UI
             var tab = new TabPage();
             tab.Padding = new Padding(0);
             tab.Text = Ellipsis(info.TabName, 20);
-            tab.ImageIndex = App.Images.IndexOf(info.ImageName);
+            tab.ImageIndex = App.Images.IndexOf(info.GetImageName());
             tab.ToolTipText = info.ToolTipText;
             Pages.Controls.Add(tab);
         }

@@ -9,35 +9,35 @@
         <ToolStripMenuItem Text="Radmin® Full Control">
           <ShortcutKeys>Ctrl+Enter</ShortcutKeys>
           <ProgramRef Id="Radmin" />
-          <ProgramArgs>/connect:{0}</ProgramArgs>
+          <ProgramArgs>/connect:$(Name)</ProgramArgs>
         </ToolStripMenuItem>
         <ToolStripMenuItem Text="Radmin® View">
           <ProgramRef Id="Radmin" />
-          <ProgramArgs>/connect:{0} /noinput</ProgramArgs>
+          <ProgramArgs>/connect:$(Name) /noinput</ProgramArgs>
         </ToolStripMenuItem>
         <ToolStripMenuItem Text="Radmin® Telnet" Visible="false">
           <ProgramRef Id="Radmin" />
-          <ProgramArgs>/connect:{0} /telnet</ProgramArgs>
+          <ProgramArgs>/connect:$(Name) /telnet</ProgramArgs>
         </ToolStripMenuItem>
         <ToolStripMenuItem Text="Radmin® File transfer">
           <ProgramRef Id="Radmin" />
-          <ProgramArgs>/connect:{0} /file</ProgramArgs>
+          <ProgramArgs>/connect:$(Name) /file</ProgramArgs>
         </ToolStripMenuItem>
         <ToolStripMenuItem Text="Radmin® Shutdown">
           <ProgramRef Id="Radmin" />
-          <ProgramArgs>/connect:{0} /shutdown</ProgramArgs>
+          <ProgramArgs>/connect:$(Name) /shutdown</ProgramArgs>
         </ToolStripMenuItem>
         <ToolStripMenuItem Text="Radmin® Chat" Visible="false">
           <ProgramRef Id="Radmin" />
-          <ProgramArgs>/connect:{0} /chat</ProgramArgs>
+          <ProgramArgs>/connect:$(Name) /chat</ProgramArgs>
         </ToolStripMenuItem>
         <ToolStripMenuItem Text="Radmin® Voice Chat" Visible="false">
           <ProgramRef Id="Radmin" />
-          <ProgramArgs>/connect:{0} /voice</ProgramArgs>
+          <ProgramArgs>/connect:$(Name) /voice</ProgramArgs>
         </ToolStripMenuItem>
         <ToolStripMenuItem Text="Radmin® Send Message" Visible="false">
           <ProgramRef Id="Radmin" />
-          <ProgramArgs>/connect:{0} /message</ProgramArgs>
+          <ProgramArgs>/connect:$(Name) /message</ProgramArgs>
         </ToolStripMenuItem>
       </ContextMenuStrip>
     </PanelItemTypeRef>
