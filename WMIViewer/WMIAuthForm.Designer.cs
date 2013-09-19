@@ -38,7 +38,6 @@
             this.ePassword = new System.Windows.Forms.TextBox();
             this.bOK = new System.Windows.Forms.Button();
             this.bCancel = new System.Windows.Forms.Button();
-            this.chSavePassword = new System.Windows.Forms.CheckBox();
             this.Error = new System.Windows.Forms.ErrorProvider(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picShield)).BeginInit();
@@ -73,26 +72,26 @@
             this.lMessage.Name = "lMessage";
             this.lMessage.Size = new System.Drawing.Size(335, 56);
             this.lMessage.TabIndex = 0;
-            this.lMessage.Text = "Не удалось подключиться под учётной записью {0}.\nУкажите имя пользователя и парол" +
-    "ь для повторной попытки подключения.";
+            this.lMessage.Text = "Unable to connect under account {0}.\nEnter user name and password to retry the co" +
+    "nnection.";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(50, 94);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(83, 13);
+            this.label2.Size = new System.Drawing.Size(32, 13);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Пользователь:";
+            this.label2.Text = "User:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(50, 121);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(48, 13);
+            this.label3.Size = new System.Drawing.Size(56, 13);
             this.label3.TabIndex = 2;
-            this.label3.Text = "Пароль:";
+            this.label3.Text = "Password:";
             // 
             // eUserName
             // 
@@ -115,34 +114,26 @@
             // 
             // bOK
             // 
+            this.bOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.bOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.bOK.Location = new System.Drawing.Point(174, 190);
+            this.bOK.Location = new System.Drawing.Point(174, 158);
             this.bOK.Name = "bOK";
             this.bOK.Size = new System.Drawing.Size(90, 23);
             this.bOK.TabIndex = 6;
-            this.bOK.Text = "Подключиться";
+            this.bOK.Text = "Connect";
             this.bOK.UseVisualStyleBackColor = true;
             this.bOK.Click += new System.EventHandler(this.bOK_Click);
             // 
             // bCancel
             // 
+            this.bCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.bCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.bCancel.Location = new System.Drawing.Point(280, 190);
+            this.bCancel.Location = new System.Drawing.Point(280, 158);
             this.bCancel.Name = "bCancel";
             this.bCancel.Size = new System.Drawing.Size(90, 23);
             this.bCancel.TabIndex = 7;
-            this.bCancel.Text = "Отмена";
+            this.bCancel.Text = "Cancel";
             this.bCancel.UseVisualStyleBackColor = true;
-            // 
-            // chSavePassword
-            // 
-            this.chSavePassword.AutoSize = true;
-            this.chSavePassword.Location = new System.Drawing.Point(53, 152);
-            this.chSavePassword.Name = "chSavePassword";
-            this.chSavePassword.Size = new System.Drawing.Size(319, 17);
-            this.chSavePassword.TabIndex = 5;
-            this.chSavePassword.Text = "Сохранить учётные данные на время работы программы.";
-            this.chSavePassword.UseVisualStyleBackColor = true;
             // 
             // Error
             // 
@@ -152,8 +143,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(394, 225);
-            this.Controls.Add(this.chSavePassword);
+            this.ClientSize = new System.Drawing.Size(394, 193);
             this.Controls.Add(this.bCancel);
             this.Controls.Add(this.bOK);
             this.Controls.Add(this.ePassword);
@@ -167,7 +157,7 @@
             this.MinimizeBox = false;
             this.Name = "WMIAuthForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "WMI-подключение к \\\\{0}";
+            this.Text = "WMI connection to \\\\{0}";
             this.Load += new System.EventHandler(this.WMIAuthForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WMIAuthForm_KeyDown);
             this.panel1.ResumeLayout(false);
@@ -189,7 +179,6 @@
         private System.Windows.Forms.TextBox ePassword;
         private System.Windows.Forms.Button bOK;
         private System.Windows.Forms.Button bCancel;
-        private System.Windows.Forms.CheckBox chSavePassword;
         private System.Windows.Forms.ErrorProvider Error;
     }
 }

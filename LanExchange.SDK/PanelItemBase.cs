@@ -200,7 +200,7 @@ namespace LanExchange.SDK
         /// Gets the full name of panel item.
         /// </summary>
         /// <returns></returns>
-        public string FullItemName
+        public string FullName
         {
             get
             {

@@ -12,24 +12,24 @@
       <ContextMenuStrip>
         <ToolStripMenuItem Text="Remote Desktop Connection">
           <ProgramRef Id="mstsc" />
-          <ProgramArgs>/v:{0}</ProgramArgs>
+          <ProgramArgs>/v:$(Name)</ProgramArgs>
         </ToolStripMenuItem>
         <ToolStripMenuItem Text="Computer Management">
           <ShortcutKeys>Ctrl+F1</ShortcutKeys>
           <ProgramRef Id="compmgmt" />
-          <ProgramArgs>/computer:{0}</ProgramArgs>
+          <ProgramArgs>/computer:$(Name)</ProgramArgs>
         </ToolStripMenuItem>
         <ToolStripMenuItem Text="Shared Folders">
           <ProgramRef Id="fsmgmt" />
-          <ProgramArgs>/computer:{0}</ProgramArgs>
+          <ProgramArgs>/computer:$(Name)</ProgramArgs>
         </ToolStripMenuItem>
         <ToolStripMenuItem Text="Local Users and Groups">
           <ProgramRef Id="lusrmgr" />
-          <ProgramArgs>/computer:{0}</ProgramArgs>
+          <ProgramArgs>/computer:$(Name)</ProgramArgs>
         </ToolStripMenuItem>
         <ToolStripMenuItem Text="Services">
           <ProgramRef Id="services" />
-          <ProgramArgs>/computer:{0}</ProgramArgs>
+          <ProgramArgs>/computer:$(Name)</ProgramArgs>
         </ToolStripMenuItem>
       </ContextMenuStrip>
     </PanelItemTypeRef>

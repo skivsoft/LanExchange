@@ -117,8 +117,7 @@ namespace LanExchange.Presenter
             var destObjects = App.Resolve<IPanelModel>();
             destObjects.TabName = newTabName;
             destObjects.DataType = sourceObjects.DataType;
-            destObjects.ImageName = sourceObjects.ImageName;
-            destObjects.CurrentPath.Push(PanelItemRoot.ROOT_OF_USERITEMS);
+            //destObjects.CurrentPath.Push(PanelItemRoot.ROOT_OF_USERITEMS);
 
             foreach (int index in sourcePV.SelectedIndexes)
             {
@@ -127,7 +126,7 @@ namespace LanExchange.Presenter
                 {
                     // add item to new panel
                     var newItem = (PanelItemBase) panelItem.Clone();
-                    newItem.Parent = PanelItemRoot.ROOT_OF_USERITEMS;
+                    newItem.Parent = null;
                     destObjects.Items.Add(newItem);
                 }
             }

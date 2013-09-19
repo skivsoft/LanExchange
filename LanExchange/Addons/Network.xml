@@ -9,7 +9,7 @@
         <ToolStripMenuItem Text="Windows Explorer" Default="true">
           <ShortcutKeys>Shift+Enter</ShortcutKeys>
           <ProgramRef Id="explorer" />
-          <ProgramArgs>\\{0}</ProgramArgs>
+          <ProgramArgs>$(FullName)</ProgramArgs>
         </ToolStripMenuItem>
       </ContextMenuStrip>
     </PanelItemTypeRef>
@@ -18,7 +18,7 @@
         <ToolStripMenuItem Text="Windows Explorer" Default="true">
           <ShortcutKeys>Shift+Enter</ShortcutKeys>
           <ProgramRef Id="explorer" />
-          <ProgramArgs>\\{0}</ProgramArgs>
+          <ProgramArgs>$(FullName)</ProgramArgs>
         </ToolStripMenuItem>
       </ContextMenuStrip>
     </PanelItemTypeRef>

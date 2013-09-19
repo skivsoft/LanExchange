@@ -76,7 +76,7 @@ namespace LanExchange.Model
         public string GetColumnValue(int colIndex)
         {
             if (colIndex == -1)
-                return m_CurrentItem != null ? m_CurrentItem.FullItemName : string.Empty;
+                return m_CurrentItem != null ? m_CurrentItem.FullName : string.Empty;
             IComparable comparable;
             var column = m_Columns[colIndex];
             if (column.Callback != null)

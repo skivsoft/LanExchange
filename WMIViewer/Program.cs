@@ -11,22 +11,20 @@ namespace WMIViewer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new WMIForm(GetComputer(args)));
-        }
 
-        static IWmiComputer GetComputer(IEnumerable<string> args)
-        {
-            const string COMPUTER_MARKER = "/COMPUTER:";
-            var compName = SystemInformation.ComputerName;
-            foreach(var word in args)
-                if (word.ToUpper().StartsWith(COMPUTER_MARKER))
-                {
-                    var comp = word.Remove(0, COMPUTER_MARKER.Length);
-                    if (!string.IsNullOrEmpty(comp))
-                        compName = comp;
-                    break;
-                }
-            return new WMIComputer(compName);
+            var wmiArgs = WMIArgs.ParseFromCmdLine(args);
+
+            var presenter = new WMIPresenter(wmiArgs, null);
+
+            if (presenter.ConnectToComputer())
+            {
+                Form mainForm;
+                if (wmiArgs.EditPropertyMode)
+                    mainForm = new WMIEditProperty(presenter);
+                else
+                    mainForm = new WMIForm(presenter);
+                Application.Run(mainForm);
+            }
         }
     }
 }

@@ -6,10 +6,10 @@
     public static class PanelImageNames
     {
         public const string DOMAIN   = "DomainPanelItem";
-        public const string COMPUTER = "ComuterPanelItem";
+        public const string COMPUTER = "ComputerPanelItem";
         public const string SHARE    = "SharePanelItem";
         public const string USER     = "UserPanelItem";
-        public const string SHORTCUT = "Shortcut";
+        public const string SHORTCUT = "ShortcutPanelItem";
         public const string NORMAL_POSTFIX      = ".normal";
         public const string DISABLED_POSTFIX    = ".disabled";
         public const string HIDDEN_POSTFIX      = ".hidden";

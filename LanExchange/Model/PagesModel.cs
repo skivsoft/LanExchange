@@ -139,7 +139,7 @@ namespace LanExchange.Model
             {
                 try
                 {
-                    var temp = (Tabs) SerializeUtils.DeserializeObjectFromXMLFile(fileFName, typeof (Tabs));
+                    var temp = (Tabs)SerializeUtils.DeserializeObjectFromXMLFile(fileFName, typeof(Tabs), App.PanelItemTypes.ToArray());
                     if (temp != null)
                     {
                         m_PagesSettings = null;
@@ -153,17 +153,17 @@ namespace LanExchange.Model
             }
             if (m_PagesSettings == null)
                 throw new ArgumentNullException();
-            //if (m_PagesSettings.Items.Length > 0)
-            //{
-            //    Array.ForEach(m_PagesSettings.Items, page =>
-            //    {
-            //        var Info = new PanelItemList(page.Name) { Settings = page };
-            //        AddTab(Info);
-            //    });
-            //}
-            //else
-            {
-                App.PanelItemTypes.CreateDefaultRoots();
+            App.PanelItemTypes.CreateDefaultRoots();
+            if (m_PagesSettings.Items.Length > 0)
+                // add loaded tabs if present
+                foreach(var page in m_PagesSettings.Items)
+                {
+                    var info = App.Resolve<IPanelModel>();
+                    info.Settings = page;
+                    AddTab(info);
+                }
+            else
+                // create default tabs
                 foreach (var root in App.PanelItemTypes.DefaultRoots)
                 {
                     var info = App.Resolve<IPanelModel>();
@@ -172,9 +172,9 @@ namespace LanExchange.Model
                     //info.FocusedItem = SystemInformation.ComputerName;
                     AddTab(info);
                 }
-            }
             if (m_PagesSettings.SelectedIndex != -1)
                 SelectedIndex = m_PagesSettings.SelectedIndex;
+            App.MainPages.View.ActivePanelView.Presenter.UpdateItemsAndStatus();
         }
 
         public void SaveSettings()
@@ -185,10 +185,9 @@ namespace LanExchange.Model
                 pages.Add(GetItem(i).Settings);
             m_PagesSettings.Items = pages.ToArray();
             var fileFName = App.FolderManager.TabsConfigFileName;
-            Type[] extraTypes = App.PanelItemTypes.ToArray();
             try
             {
-                SerializeUtils.SerializeObjectToXMLFile(fileFName, m_PagesSettings, extraTypes);
+                SerializeUtils.SerializeObjectToXMLFile(fileFName, m_PagesSettings, App.PanelItemTypes.ToArray());
             }
             catch(Exception ex)
             {

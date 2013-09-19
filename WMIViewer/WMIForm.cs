@@ -9,29 +9,32 @@ namespace WMIViewer
     public partial class WMIForm : Form, IWMIView
     {
         private readonly WMIPresenter m_Presenter;
+        private readonly WMIArgs m_Args;
         private string m_CurrentWMIClass;
-        private readonly IWmiComputer m_Comp;
 
         public event EventHandler FocusedItemChanged;
 
         [Localizable(false)]
-        public WMIForm(IWmiComputer comp)
+        public WMIForm(WMIPresenter presenter)
         {
+            m_Presenter = presenter;
+            m_Presenter.View = this;
+            m_Args = m_Presenter.Args;
             InitializeComponent();
             // Enable double buffer for ListView
             var mi = typeof(Control).GetMethod("SetStyle", BindingFlags.Instance | BindingFlags.NonPublic);
             mi.Invoke(lvInstances, new object[] { ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true });
 
-            m_Presenter = new WMIPresenter(comp, this);
-            if (comp != null)
-            {
-                if (String.IsNullOrEmpty(comp.Comment))
-                    Text = comp.Name;
-                else
-                    Text = String.Format("{0} — {1}", comp.Name, comp.Comment);
-                m_Comp = comp;
-            }
             FocusedItemChanged += lvInstances_FocusedItemChanged;
+            UpdateTitle();
+        }
+
+        public void UpdateTitle()
+        {
+            if (string.IsNullOrEmpty(m_Args.Comment))
+                Text = @"\\" + m_Args.Name;
+            else
+                Text = String.Format(@"\\{0} — {1}", m_Args.Name, m_Args.Comment);
         }
 
         public WMIPresenter GetPresenter()
@@ -297,7 +300,7 @@ namespace WMIViewer
             if (PropName == null) return;
             object PropValue = e.ChangedItem.Value;
             string Caption = String.Format("Editing property {0}", PropName);
-            string Message = String.Format("Computer name: \\{0}\n\nOld value: «{1}»\nNew value: «{2}»", m_Comp.Name, e.OldValue, PropValue);
+            string Message = String.Format("Computer name: \\{0}\n\nOld value: «{1}»\nNew value: «{2}»", m_Args.Name, e.OldValue, PropValue);
             try
             {
                 // trying to change wmi property
@@ -306,7 +309,10 @@ namespace WMIViewer
 
                 // update computer comment if we changes Win32_OperatingSystme.Description
                 if (CurrentWMIClass.Equals("Win32_OperatingSystem") && PropName.Equals("Description"))
-                    m_Comp.Comment = PropValue.ToString();
+                {
+                    m_Args.Comment = PropValue.ToString();
+                    UpdateTitle();
+                }
 
                 // property has been changed
                 Message += String.Format("\n\nProperty {0} successfully changed.", PropName);
@@ -351,6 +357,41 @@ namespace WMIViewer
                 DialogResult = DialogResult.Cancel;
                 e.Handled = true;
             }
+        }
+
+        private void WMIForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Esc
+            if (e.KeyCode == Keys.Escape)
+            {
+                Close();
+                e.Handled = true;
+            }
+            // F9 - Show/Hide menu
+            if (e.KeyCode == Keys.F9)
+            {
+                menuMAIN.Visible = !menuMAIN.Visible;
+                e.Handled = true;
+            }
+            // Ctrl+Left
+            if (e.Control && e.KeyCode == Keys.Left)
+            {
+                PropGrid.Dock = DockStyle.Left;
+                TheSplitter.Dock = DockStyle.Left;
+                e.Handled = true;
+            }
+            // Ctrl+Right
+            if (e.Control && e.KeyCode == Keys.Right)
+            {
+                PropGrid.Dock = DockStyle.Right;
+                TheSplitter.Dock = DockStyle.Right;
+                e.Handled = true;
+            }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 

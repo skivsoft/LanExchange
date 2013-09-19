@@ -9,7 +9,11 @@
         <ToolStripMenuItem Text="WMI Viewer">
           <ShortcutKeys>Alt+F1</ShortcutKeys>
           <ProgramRef Id="wmiviewer" />
-          <ProgramArgs>/computer:{0}</ProgramArgs>
+          <ProgramArgs>/computer:$(Name)</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem Text="Set Computer Description">
+          <ProgramRef Id="wmiviewer" />
+          <ProgramArgs>/computer:$(Name) /edit:Win32_OperatingSystem.Description</ProgramArgs>
         </ToolStripMenuItem>
       </ContextMenuStrip>
     </PanelItemTypeRef>

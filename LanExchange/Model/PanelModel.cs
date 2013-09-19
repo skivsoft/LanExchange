@@ -61,19 +61,53 @@ namespace LanExchange.Model
                 int i = 0;
                 foreach (var panelItem in m_Items)
                     page.Items[i++] = panelItem;
+                page.DataType = DataType == null ? string.Empty : DataType.Name;
                 return page;
             }
             set
             {
                 TabName = value.Name;
+                // build path from loaded items
+                var items = value.Path.Item;
+                m_CurrentPath.Clear();
+                for (int index = items.Length - 1; index >= 0; index-- )
+                {
+                    var item = items[index];
+                    if (index < items.Length - 1)
+                        item.Parent = items[index + 1];
+                    m_CurrentPath.Push(item);
+                }
+                // set filter, currentview and focused
                 FilterText = value.Filter;
                 CurrentView = value.View;
                 FocusedItem = value.Focused;
+                // add loaded items
                 m_Items.Clear();
                 foreach (var panelItem in value.Items)
                     Items.Add(panelItem);
+                // set DataType by thier name
+                var types = App.PanelItemTypes.ToArray();
+                foreach(var tp in types)
+                    if (tp.Name.Equals(value.DataType))
+                    {
+                        DataType = tp;
+                        break;
+                    }
             }
             
+        }
+
+        public string GetImageName()
+        {
+            var items = m_CurrentPath.Item;
+            if (items != null)
+                for (int index = items.Length-1; index >= 0; index--)
+                {
+                    var item = items[index];
+                    if (item.Parent is PanelItemRoot)
+                        return item.ImageName;
+                }
+            return DataType.Name + PanelImageNames.NORMAL_POSTFIX;
         }
 
         public string TabName { get; set; }
@@ -334,8 +368,6 @@ namespace LanExchange.Model
             if (root.Parent != null)
                 SetDefaultRoot(root.Parent);
             CurrentPath.Push(root);
-            if (root.Parent is PanelItemRoot)
-                ImageName = root.ImageName;
         }
 
         public string ImageName { get; set; }

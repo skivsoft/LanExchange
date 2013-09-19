@@ -1,4 +1,5 @@
 using System;
+using System.Xml.Serialization;
 using LanExchange.SDK;
 
 namespace LanExchange.Misc.Action
@@ -7,23 +8,36 @@ namespace LanExchange.Misc.Action
     {
         public static void RegisterColumns(IPanelColumnManager columnManager)
         {
-            columnManager.RegisterColumn(typeof(ShortcutPanelItem), new PanelColumnHeader("Shortcut keys"));
-            columnManager.RegisterColumn(typeof(ShortcutPanelItem), new PanelColumnHeader("Action") { Width = 300});
-            columnManager.RegisterColumn(typeof(ShortcutPanelItem), new PanelColumnHeader("Context"));
+            columnManager.RegisterColumn(typeof(ShortcutPanelItem), new PanelColumnHeader("Shortcut keys") { Width = 100 });
+            columnManager.RegisterColumn(typeof(ShortcutPanelItem), new PanelColumnHeader("Action") { Width = 280 });
+            columnManager.RegisterColumn(typeof(ShortcutPanelItem), new PanelColumnHeader("Context") { Width = 80 });
         }
 
-        public ShortcutPanelItem(PanelItemBase parent, string name, string action)
+        public ShortcutPanelItem()
+        {
+        }
+
+        public ShortcutPanelItem(PanelItemBase parent, string name) : base(parent)
+        {
+            Name = name;
+        }
+
+        public ShortcutPanelItem(PanelItemBase parent, string name, string action) : base(parent)
         {
             Name = name;
             Action = action;
         }
 
+        [XmlAttribute]
         public override string Name { get; set; }
 
+        [XmlIgnore]
         public string Action { get; set; }
 
+        [XmlIgnore]
         public string Context { get; set; }
 
+        [XmlIgnore]
         public string CustomImageName { get; set; }
 
         public override string ImageName

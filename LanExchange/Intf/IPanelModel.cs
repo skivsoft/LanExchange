@@ -90,8 +90,8 @@ namespace LanExchange.Intf
 
         void SetDefaultRoot(PanelItemBase root);
 
-        string ImageName { get; set; }
-
         Tab Settings { get; set; }
+
+        string GetImageName();
     }
 }

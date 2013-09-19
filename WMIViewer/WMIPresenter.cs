@@ -9,17 +9,18 @@ namespace WMIViewer
 {
     public sealed class WMIPresenter : IDisposable
     {
-        private readonly IWmiComputer m_Comp;
         private ManagementScope m_Namespace;
 
-        private readonly IWMIView m_View;
         private ManagementClass m_Class;
 
-        public WMIPresenter(IWmiComputer comp, IWMIView view)
+        public WMIPresenter(WMIArgs args, IWMIView view)
         {
-            m_Comp = comp;
-            m_View = view;
+            Args = args;
+            View = view;
         }
+
+        public WMIArgs Args { get; private set; }
+        public IWMIView View { get; set; }
 
         public void Dispose()
         {
@@ -33,16 +34,16 @@ namespace WMIViewer
         [Localizable(false)]
         private string MakeConnectionString()
         {
-            if (m_Comp == null || 
-                String.Compare(m_Comp.Name, SystemInformation.ComputerName, StringComparison.OrdinalIgnoreCase) == 0)
+            if (Args == null || 
+                String.Compare(Args.Name, SystemInformation.ComputerName, StringComparison.OrdinalIgnoreCase) == 0)
                 return WMISettings.DefaultNamespace;
-            return String.Format(@"\\{0}\{1}", m_Comp.Name, WMISettings.DefaultNamespace);
+            return String.Format(@"\\{0}\{1}", Args.Name, WMISettings.DefaultNamespace);
         }
 
         private void ShowFirewallConnectionError()
         {
             MessageBox.Show(
-                String.Format("Unable to connect to computer \\\\{0}.\nPossible connection has been blocked by firewall.", m_Comp.Name),
+                String.Format("Unable to connect to computer \\\\{0}.\nPossible connection has been blocked by firewall.", Args.Name),
                 "WMI connection error",
                 MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
         }
@@ -50,7 +51,7 @@ namespace WMIViewer
         private void ShowCommonConnectionError(Exception ex)
         {
             MessageBox.Show(
-                String.Format("Unable to connect to computer \\\\{0}.\n{1}", m_Comp.Name, ex.Message),
+                String.Format("Unable to connect to computer \\\\{0}.\n{1}", Args.Name, ex.Message),
                 "WMI connection error",
                 MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
         }
@@ -85,7 +86,7 @@ namespace WMIViewer
                         if (autoLogon)
                             WMIAuthForm.ClearSavedPassword();
 
-                        form.SetComputerName(m_Comp.Name);
+                        form.SetComputerName(Args.Name);
                         autoLogon = form.AutoLogon();
                         bool ok;
                         if (autoLogon)
@@ -131,13 +132,7 @@ namespace WMIViewer
         [Localizable(false)]
         public void EnumObjects(string className)
         {
-            if (!ConnectToComputer())
-            {
-                Application.Exit();
-                return;
-            }
-
-            m_View.LV.Clear();
+            View.LV.Clear();
 
             var op = new ObjectGetOptions(null, TimeSpan.MaxValue, true);
             var mc = new ManagementClass(m_Namespace, new ManagementPath(className), op);
@@ -148,8 +143,8 @@ namespace WMIViewer
             bool bCheckError = true;
             try
             {
-                m_View.LV.Columns.Add("Name");
-                m_View.LV.Columns.Add("Caption");
+                View.LV.Columns.Add("Name");
+                View.LV.Columns.Add("Caption");
                 foreach (var prop in m_Class.Properties)
                 {
                     if (prop.Name.Equals("Name")) continue;
@@ -167,7 +162,7 @@ namespace WMIViewer
                         //|| Prop.Type.Equals(CimType.Boolean) || Prop.Type.Equals(CimType.DateTime)
                         )
                         continue;
-                    m_View.LV.Columns.Add(prop.Name);
+                    View.LV.Columns.Add(prop.Name);
                 }
                 bCheckError = false;
             }
@@ -187,7 +182,7 @@ namespace WMIViewer
                         if (wmiObject == null) continue;
                         var lvi = new ListViewItem {Tag = wmiObject};
                         int index = 0;
-                        foreach (ColumnHeader header in m_View.LV.Columns)
+                        foreach (ColumnHeader header in View.LV.Columns)
                         {
                             PropertyData prop = wmiObject.Properties[header.Text];
 
@@ -204,7 +199,7 @@ namespace WMIViewer
                                 lvi.SubItems.Add(value);
                             index++;
                         }
-                        m_View.LV.Items.Add(lvi);
+                        View.LV.Items.Add(lvi);
                     }
                 }
                 catch (Exception ex)
@@ -233,7 +228,7 @@ namespace WMIViewer
         [Localizable(false)]
         public void BuildContextMenu()
         {
-            m_View.MENU.Items.Clear();
+            View.MENU.Items.Clear();
             if (m_Class == null) return;
             try
             {
@@ -245,7 +240,7 @@ namespace WMIViewer
                     menuItem.Text = method.ToString();
                     menuItem.Tag = md;
                     menuItem.Click += Method_Click;
-                    m_View.MENU.Items.Add(menuItem);
+                    View.MENU.Items.Add(menuItem);
                 }
             }
             catch (Exception ex)
@@ -258,5 +253,6 @@ namespace WMIViewer
         {
             get { return m_Namespace; }
         }
+
     }
 }
