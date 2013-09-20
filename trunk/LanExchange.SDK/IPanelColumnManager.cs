@@ -5,12 +5,12 @@ namespace LanExchange.SDK
 {
     public interface IPanelColumnManager
     {
-        void RegisterColumn(Type type, PanelColumnHeader header);
-        IList<PanelColumnHeader> GetColumns(Type type);
+        void RegisterColumn(string typeName, PanelColumnHeader header);
+        IList<PanelColumnHeader> GetColumns(string typeName);
         IEnumerable<PanelColumnHeader> EnumAllColumns();
         int MaxColumns { get; }
 
-        bool ReorderColumns(Type type, int oldIndex, int newIndex);
+        bool ReorderColumns(string typeName, int oldIndex, int newIndex);
     }
 
     public delegate IComparable LazyCallback(PanelItemBase item);

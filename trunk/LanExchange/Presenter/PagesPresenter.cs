@@ -122,7 +122,7 @@ namespace LanExchange.Presenter
             foreach (int index in sourcePV.SelectedIndexes)
             {
                 var panelItem = sourceObjects.GetItemAt(index);
-                if (panelItem.GetType() == destObjects.DataType)
+                if (panelItem.GetType().Name.Equals(destObjects.DataType))
                 {
                     // add item to new panel
                     var newItem = (PanelItemBase) panelItem.Clone();
@@ -162,7 +162,7 @@ namespace LanExchange.Presenter
             destObjects.DataType = items.DataType;
             //destObjects.CurrentPath.Push(PanelItemRoot.ROOT_OF_USERITEMS);
             foreach (var panelItem in items)
-                if (panelItem.GetType() == destObjects.DataType)
+                if (panelItem.GetType().Name.Equals(destObjects.DataType))
                 {
                     if (destObjects.Contains(panelItem))
                         continue;
@@ -280,11 +280,13 @@ namespace LanExchange.Presenter
             set { m_Model.SelectedIndex = value; }
         }
 
-        public void SaveSettings()
+        public void SaveSettings(bool deffered = true)
         {
-            m_SaveAction.Reset();
+            if (deffered)
+                m_SaveAction.Reset();
+            else
+                m_Model.SaveSettings();
         }
-
 
         public string GetTabName(int index)
         {
@@ -307,7 +309,13 @@ namespace LanExchange.Presenter
         {
             try
             {
-                m_Model.LoadSettings();
+                IPagesModel model;
+                m_Model.LoadSettings(out model);
+                if (model != null)
+                {
+                    m_Model.SetLoadedModel(model);
+                    //App.MainPages.View.ActivePanelView.Presenter.UpdateItemsAndStatus();
+                }
             }
             catch(Exception)
             {

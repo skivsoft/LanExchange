@@ -24,6 +24,8 @@ namespace LanExchange.Intf
         string GetTabName(int index);
 
         void SaveSettings();
-        void LoadSettings();
+        void LoadSettings(out IPagesModel model);
+
+        void SetLoadedModel(IPagesModel model);
     }
 }

@@ -1,8 +1,5 @@
 ﻿using System;
-using LanExchange.Core;
 using LanExchange.Intf;
-using LanExchange.Model;
-using LanExchange.UI;
 
 namespace LanExchange.Presenter
 {

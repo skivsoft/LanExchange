@@ -8,30 +8,36 @@ namespace LanExchange.UI
 {
     public static class AppView
     {
+        public static void ApplicationRun()
+        {
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
+            Application.ThreadException += ApplicationOnThreadException;
+            Application.ThreadExit += ApplicationOnThreadExit;
+            
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false); // must be called before first form created
+            Application.Run((Form)App.Resolve<IMainView>());
+        }
+
+        private static void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            App.MainView.ApplicationExit();
+        }
+
         [Localizable(false)]
-        static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
+        private static void ApplicationOnThreadException(object sender, ThreadExceptionEventArgs e)
         {
             #if DEBUG
-            MessageBox.Show(e.Exception.Message+Environment.NewLine+e.Exception.StackTrace,
-              "Error in "+e.Exception.Source, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(e.Exception.Message + Environment.NewLine + e.Exception.StackTrace,
+                "Error in " + e.Exception.Source, MessageBoxButtons.OK, MessageBoxIcon.Error);
             #else
             App.MainView.ApplicationExit();
             #endif
         }
 
-        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        private static void ApplicationOnThreadExit(object sender, EventArgs e)
         {
-            App.MainView.ApplicationExit();
-        }
-
-        public static void ApplicationRun()
-        {
-            Application.ThreadException += Application_ThreadException;
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;            
-            
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false); // must be called before first form created
-            Application.Run((Form)App.Resolve<IMainView>());
+            App.MainPages.SaveSettings(false);
         }
     }
 }

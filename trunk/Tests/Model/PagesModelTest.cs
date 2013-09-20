@@ -42,7 +42,7 @@ namespace LanExchange.Model
 
         private PanelModel NewPanelModel(string name)
         {
-            var tab = new PanelModel(null);
+            var tab = new PanelModel();
             tab.TabName = name;
             return tab;
         }
@@ -174,7 +174,8 @@ namespace LanExchange.Model
         {
             App.SetContainer(ContainerBuilder.Build());
             m_Model.SaveSettings();
-            m_Model.LoadSettings();
+            IPagesModel pages;
+            m_Model.LoadSettings(out pages);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace LanExchange.Intf
 
         int SelectedIndex { get; set; }
 
-        void SaveSettings();
+        void SaveSettings(bool deffered = true);
 
         string GetTabName(int index);
 

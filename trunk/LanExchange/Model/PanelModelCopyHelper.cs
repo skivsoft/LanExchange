@@ -54,7 +54,7 @@ namespace LanExchange.Model
                 if (m_CurrentItem is PanelItemDoubleDot)
                     m_CurrentItem = m_CurrentItem.Parent;
                 if (App.PanelColumns != null)
-                    m_Columns = App.PanelColumns.GetColumns(m_CurrentItem.GetType());
+                    m_Columns = App.PanelColumns.GetColumns(m_CurrentItem.GetType().Name);
             }
         }
 

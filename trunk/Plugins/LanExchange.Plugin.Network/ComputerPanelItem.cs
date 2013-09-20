@@ -16,13 +16,14 @@ namespace LanExchange.Plugin.Network
 
         public static void RegisterColumns(IPanelColumnManager columnManager)
         {
-            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader(Resources.NetworkName));
-            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader(Resources.Description, 250));
-            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader(Resources.OSVersion) { Visible=false, Width=110 });
+            var typeName = typeof (ComputerPanelItem).Name;
+            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.NetworkName));
+            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.Description, 250));
+            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.OSVersion) { Visible = false, Width = 110 });
             // lazy columns
-            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader(Resources.Ping) { Callback = GetReachable, Visible = false, Width = 110, Refreshable = true });
-            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader(Resources.IPAddress) { Callback = GetIPAddress, Visible = false, Width = 80 });
-            columnManager.RegisterColumn(typeof(ComputerPanelItem), new PanelColumnHeader(Resources.MACAddress) { Callback = GetMACAddress, Visible = false, Width = 110 });
+            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.Ping) { Callback = GetReachable, Visible = false, Width = 110, Refreshable = true });
+            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.IPAddress) { Callback = GetIPAddress, Visible = false, Width = 80 });
+            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.MACAddress) { Callback = GetMACAddress, Visible = false, Width = 110 });
         }
 
         private static IPAddress InternalGetIPAddress(string computerName)

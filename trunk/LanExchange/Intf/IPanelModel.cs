@@ -75,15 +75,13 @@ namespace LanExchange.Intf
 
         PanelItemFactoryBase ItemFactory { get; set; }
         void SyncRetrieveData(bool clearFilter = false);
-        Type DataType { get; set; }
+        string DataType { get; set; }
         ColumnComparer Comparer { get; }
         void Sort(IComparer<PanelItemBase> sorter);
 
         bool Contains(PanelItemBase panelItem);
 
         void SetDefaultRoot(PanelItemBase root);
-
-        Tab Settings { get; set; }
 
         string GetImageName();
     }

@@ -616,7 +616,7 @@ namespace LanExchange.UI
             if (helper.IndexesCount == 1)
                 helper.MoveTo(0);
             var result = new List<ToolStripItem>();
-            var columns = App.PanelColumns.GetColumns(helper.IndexesCount == 1 ? helper.CurrentItem.GetType() : m_Presenter.Objects.DataType);
+            var columns = App.PanelColumns.GetColumns(helper.IndexesCount == 1 ? helper.CurrentItem.GetType().Name : m_Presenter.Objects.DataType);
             var ctrlInsColumn = 0;
             foreach (var column in columns)
                 if (column.Visible)

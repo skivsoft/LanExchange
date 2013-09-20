@@ -8,9 +8,10 @@ namespace LanExchange.Misc.Action
     {
         public static void RegisterColumns(IPanelColumnManager columnManager)
         {
-            columnManager.RegisterColumn(typeof(ShortcutPanelItem), new PanelColumnHeader("Shortcut keys") { Width = 100 });
-            columnManager.RegisterColumn(typeof(ShortcutPanelItem), new PanelColumnHeader("Action") { Width = 280 });
-            columnManager.RegisterColumn(typeof(ShortcutPanelItem), new PanelColumnHeader("Context") { Width = 80 });
+            var typeName = typeof (ShortcutPanelItem).Name;
+            columnManager.RegisterColumn(typeName, new PanelColumnHeader("Shortcut keys") { Width = 100 });
+            columnManager.RegisterColumn(typeName, new PanelColumnHeader("Action") { Width = 280 });
+            columnManager.RegisterColumn(typeName, new PanelColumnHeader("Context") { Width = 80 });
         }
 
         public ShortcutPanelItem()

@@ -8,6 +8,6 @@ namespace LanExchange.Model
     public class PanelItemBaseHolder : List<PanelItemBase>
     {
         public string Context;
-        public Type DataType;
+        public string DataType;
     }
 }

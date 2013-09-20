@@ -20,7 +20,7 @@ namespace LanExchange.Model
         public void SetUp()
         {
             App.SetContainer(ContainerBuilder.Build());
-            m_Objects = new PanelModel(new PuntoSwitcherServiceEngRus());
+            m_Objects = new PanelModel();
             m_Objects.TabName = "MyTab";
         }
 

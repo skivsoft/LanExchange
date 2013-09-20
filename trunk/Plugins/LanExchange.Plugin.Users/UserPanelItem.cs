@@ -9,16 +9,17 @@ namespace LanExchange.Plugin.Users
     {
         internal static void RegisterColumns(IPanelColumnManager columnManager)
         {
-            columnManager.RegisterColumn(typeof(UserPanelItem), new PanelColumnHeader(Resources.UserName));
-            columnManager.RegisterColumn(typeof(UserPanelItem), new PanelColumnHeader(Resources.Title));
-            columnManager.RegisterColumn(typeof(UserPanelItem), new PanelColumnHeader(Resources.WorkPhone) { Width = 80 });
-            columnManager.RegisterColumn(typeof(UserPanelItem), new PanelColumnHeader(Resources.Office));
-            columnManager.RegisterColumn(typeof(UserPanelItem), new PanelColumnHeader(Resources.Department));
-            columnManager.RegisterColumn(typeof(UserPanelItem), new PanelColumnHeader(Resources.Email));
-            columnManager.RegisterColumn(typeof(UserPanelItem), new PanelColumnHeader(Resources.Company));
-            columnManager.RegisterColumn(typeof(UserPanelItem), new PanelColumnHeader(Resources.Nickname));
-            columnManager.RegisterColumn(typeof(UserPanelItem), new PanelColumnHeader(Resources.Pre2000Logon) { Visible = false });
-            columnManager.RegisterColumn(typeof(UserPanelItem), new PanelColumnHeader(Resources.Description) { Visible = false, Width = 200 });
+            var typeName = typeof (UserPanelItem).Name;
+            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.UserName));
+            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.Title));
+            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.WorkPhone) { Width = 80 });
+            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.Office));
+            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.Department));
+            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.Email));
+            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.Company));
+            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.Nickname));
+            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.Pre2000Logon) { Visible = false });
+            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.Description) { Visible = false, Width = 200 });
         }
 
         public UserPanelItem()
