@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanExchangeAddon xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Programs>
+    <Program Id="Radmin" FileName="%ProgramFiles(x86)%\Radmin Viewer 3\Radmin.exe" />
+  </Programs>
+  <PanelItemTypes>
+    <PanelItemTypeRef Id="ComputerPanelItem">
+      <ContextMenuStrip>
+        <ToolStripMenuItem Text="Radmin® Full Control">
+          <ShortcutKeys>Ctrl+Enter</ShortcutKeys>
+          <ProgramRef Id="Radmin" />
+          <ProgramArgs>/connect:$(Name)</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem Text="Radmin® View">
+          <ProgramRef Id="Radmin" />
+          <ProgramArgs>/connect:$(Name) /noinput</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem Text="Radmin® Telnet" Visible="false">
+          <ProgramRef Id="Radmin" />
+          <ProgramArgs>/connect:$(Name) /telnet</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem Text="Radmin® File transfer">
+          <ProgramRef Id="Radmin" />
+          <ProgramArgs>/connect:$(Name) /file</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem Text="Radmin® Shutdown">
+          <ProgramRef Id="Radmin" />
+          <ProgramArgs>/connect:$(Name) /shutdown</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem Text="Radmin® Chat" Visible="false">
+          <ProgramRef Id="Radmin" />
+          <ProgramArgs>/connect:$(Name) /chat</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem Text="Radmin® Voice Chat" Visible="false">
+          <ProgramRef Id="Radmin" />
+          <ProgramArgs>/connect:$(Name) /voice</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem Text="Radmin® Send Message" Visible="false">
+          <ProgramRef Id="Radmin" />
+          <ProgramArgs>/connect:$(Name) /message</ProgramArgs>
+        </ToolStripMenuItem>
+      </ContextMenuStrip>
+    </PanelItemTypeRef>
+  </PanelItemTypes>
+</LanExchangeAddon>
