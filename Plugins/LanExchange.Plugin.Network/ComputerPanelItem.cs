@@ -119,6 +119,12 @@ namespace LanExchange.Plugin.Network
             set { m_SI.Name = value; }
         }
 
+        [Localizable(false)]
+        public override string FullName
+        {
+            get { return @"\\" + base.FullName; }
+        }
+
         [XmlAttribute]
         public uint Platform
         {

@@ -35,6 +35,18 @@ namespace LanExchange.SDK
         /// </value>
         [XmlAttribute]
         public abstract string Name { get; set; }
+
+        /// <summary>
+        /// Gets the full name.
+        /// </summary>
+        /// <value>
+        /// The full name.
+        /// </value>
+        public virtual string FullName
+        {
+            get { return Name; }
+        }
+
         /// <summary>
         /// Gets the count columns.
         /// </summary>
@@ -183,43 +195,6 @@ namespace LanExchange.SDK
         public int CompareTo(object obj)
         {
             return CompareTo(obj as PanelItemBase);
-        }
-
-        /// <summary>
-        /// Returns a <see cref="System.String" /> that represents this instance.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="System.String" /> that represents this instance.
-        /// </returns>
-        public override string ToString()
-        {
-            return Name;
-        }
-
-        /// <summary>
-        /// Gets the full name of panel item.
-        /// </summary>
-        /// <returns></returns>
-        public string FullName
-        {
-            get
-            {
-                var sb = new StringBuilder();
-                var item = this;
-                while (true)
-                {
-                    var s = item.ToString();
-                    if (!String.IsNullOrEmpty(s))
-                    {
-                        if (sb.Length > 0)
-                            sb.Insert(0, @"\");
-                        sb.Insert(0, s);
-                    }
-                    if (item.Parent == null) break;
-                    item = item.Parent;
-                }
-                return sb.ToString();
-            }
         }
 
         public bool Equals(PanelItemBase other)

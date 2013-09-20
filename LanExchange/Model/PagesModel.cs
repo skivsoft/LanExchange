@@ -152,21 +152,23 @@ namespace LanExchange.Model
         public void SetLoadedModel(IPagesModel model)
         {
             App.PanelItemTypes.CreateDefaultRoots();
-            if (model.Count > 0)
+            if (model != null && model.Count > 0)
+            {
                 // add loaded tabs if present
-                for(int index = 0; index < model.Count; index++)
+                for (int index = 0; index < model.Count; index++)
                     AddTab(model.GetItem(index));
+                if (model.SelectedIndex != -1)
+                    SelectedIndex = model.SelectedIndex;
+            }
             else
-               //create default tabs
+                //create default tabs
                 foreach (var root in App.PanelItemTypes.DefaultRoots)
                 {
                     var info = App.Resolve<IPanelModel>();
                     info.TabName = root.Name;
                     info.SetDefaultRoot(root);
-                    model.AddTab(info);
+                    AddTab(info);
                 }
-            if (model.SelectedIndex != -1)
-                SelectedIndex = model.SelectedIndex;
         }
 
         public void SaveSettings()

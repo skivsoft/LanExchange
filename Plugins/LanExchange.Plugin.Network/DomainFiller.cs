@@ -8,7 +8,7 @@ namespace LanExchange.Plugin.Network
         public bool IsParentAccepted(PanelItemBase parent)
         {
             // domains can be only at root level
-            return parent == PluginNetwork.ROOT_OF_DOMAINS;
+            return (parent is PanelItemRoot) && (parent.Name == PluginNetwork.ROOT_OF_DOMAINS.Name);
         }
 
         public void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)

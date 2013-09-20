@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Xml.Serialization;
 using LanExchange.Plugin.Users.Properties;
 using LanExchange.SDK;
@@ -33,6 +34,15 @@ namespace LanExchange.Plugin.Users
 
         [XmlAttribute]
         public override string Name { get; set; }
+
+        [Localizable(false)]
+        public override string FullName
+        {
+            get
+            {
+                return "CN=" + base.FullName;
+            }
+        }
 
         [XmlAttribute]
         public string Title { get; set; }

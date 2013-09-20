@@ -1,11 +1,4 @@
-﻿// ********************************************************************************
-// Network plugin
-// 
-// TODO Show several ip addresses if present
-//
-//
-// ********************************************************************************
-using System;
+﻿using System;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network

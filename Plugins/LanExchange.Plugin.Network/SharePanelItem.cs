@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Xml.Serialization;
 using LanExchange.Plugin.Network.Properties;
 using LanExchange.SDK;
@@ -84,6 +85,15 @@ namespace LanExchange.Plugin.Network
         { 
             get { return m_SHI.Name; }
             set { m_SHI.Name = value; }
+        }
+
+        [Localizable(false)]
+        public override string FullName
+        {
+            get
+            {
+                return Parent == null ? base.FullName : Parent.FullName + @"\" + base.FullName;
+            }
         }
 
         [XmlAttribute]
