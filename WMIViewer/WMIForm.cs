@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Management;
 using System.ComponentModel;
@@ -27,7 +28,18 @@ namespace WMIViewer
 
             FocusedItemChanged += lvInstances_FocusedItemChanged;
             UpdateTitle();
+
+            WMIClassesInclude = new List<string>();
+            WMIClassesInclude.Add("Win32_Desktop");
+            WMIClassesInclude.Add("Win32_DesktopMonitor");
+            WMIClassesInclude.Add("Win32_DiskDrive");
+            WMIClassesInclude.Add("Win32_BIOS");
+            WMIClassesInclude.Add("Win32_Processor");
+            WMIClassesInclude.Add("Win32_PhysicalMemory");
+
         }
+
+        public IList<string> WMIClassesInclude { get; private set; }
 
         public void UpdateTitle()
         {

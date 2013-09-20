@@ -137,62 +137,24 @@ namespace LanExchange.Model
             var fileFName = App.FolderManager.TabsConfigFileName;
             if (File.Exists(fileFName))
             {
-                try
+                var temp = (Tabs)SerializeUtils.DeserializeObjectFromXMLFile(fileFName, typeof(Tabs), App.PanelItemTypes.ToArray());
+                if (temp != null)
                 {
-                    var temp = (Tabs)SerializeUtils.DeserializeObjectFromXMLFile(fileFName, typeof(Tabs), App.PanelItemTypes.ToArray());
-                    if (temp != null)
-                    {
-                        m_PagesSettings = null;
-                        m_PagesSettings = temp;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Debug.Print(ex.Message);
+                    m_PagesSettings = null;
+                    m_PagesSettings = temp;
                 }
             }
-            if (m_PagesSettings == null)
-                throw new ArgumentNullException();
-            App.PanelItemTypes.CreateDefaultRoots();
-            if (m_PagesSettings.Items.Length > 0)
-                // add loaded tabs if present
-                foreach(var page in m_PagesSettings.Items)
-                {
-                    var info = App.Resolve<IPanelModel>();
-                    info.Settings = page;
-                    AddTab(info);
-                }
-            else
-                // create default tabs
-                foreach (var root in App.PanelItemTypes.DefaultRoots)
-                {
-                    var info = App.Resolve<IPanelModel>();
-                    info.TabName = root.Name;
-                    info.SetDefaultRoot(root);
-                    //info.FocusedItem = SystemInformation.ComputerName;
-                    AddTab(info);
-                }
-            if (m_PagesSettings.SelectedIndex != -1)
-                SelectedIndex = m_PagesSettings.SelectedIndex;
-            App.MainPages.View.ActivePanelView.Presenter.UpdateItemsAndStatus();
+            if (m_PagesSettings != null)
+            {
+                m_PagesSettings.SetToModel(this);
+                //App.MainPages.View.ActivePanelView.Presenter.UpdateItemsAndStatus();
+            }
         }
 
         public void SaveSettings()
         {
-            m_PagesSettings.SelectedIndex = SelectedIndex;
-            var pages = new List<Tab>();
-            for (int i = 0; i < Count; i++)
-                pages.Add(GetItem(i).Settings);
-            m_PagesSettings.Items = pages.ToArray();
-            var fileFName = App.FolderManager.TabsConfigFileName;
-            try
-            {
-                SerializeUtils.SerializeObjectToXMLFile(fileFName, m_PagesSettings, App.PanelItemTypes.ToArray());
-            }
-            catch(Exception ex)
-            {
-                Debug.Fail(ex.Message);
-            }
+            m_PagesSettings.GetFromModel(this);
+            SerializeUtils.SerializeObjectToXMLFile(App.FolderManager.TabsConfigFileName, m_PagesSettings, App.PanelItemTypes.ToArray());
         }
 
         public bool TabNameExists(string tabName)

@@ -305,7 +305,13 @@ namespace LanExchange.Presenter
 
         public void LoadSettings()
         {
-            m_Model.LoadSettings();
+            try
+            {
+                m_Model.LoadSettings();
+            }
+            catch(Exception)
+            {
+            }
         }
 
         public bool AddTab(IPanelModel info)

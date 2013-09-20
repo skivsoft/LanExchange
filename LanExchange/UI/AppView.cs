@@ -15,7 +15,7 @@ namespace LanExchange.UI
             MessageBox.Show(e.Exception.Message+Environment.NewLine+e.Exception.StackTrace,
               "Error in "+e.Exception.Source, MessageBoxButtons.OK, MessageBoxIcon.Error);
             #else
-            App.MainPresenter.ApplicationExit();
+            App.MainView.ApplicationExit();
             #endif
         }
 

@@ -50,10 +50,11 @@ namespace LanExchange.Model
         {
             get
             {
-                var page = new Tab { 
-                    Name = TabName, 
+                var page = new Tab
+                {
+                    Name = TabName,
                     Path = m_CurrentPath,
-                    Filter = FilterText, 
+                    Filter = FilterText,
                     View = CurrentView,
                     Focused = FocusedItem
                 };
@@ -70,7 +71,7 @@ namespace LanExchange.Model
                 // build path from loaded items
                 var items = value.Path.Item;
                 m_CurrentPath.Clear();
-                for (int index = items.Length - 1; index >= 0; index-- )
+                for (int index = items.Length - 1; index >= 0; index--)
                 {
                     var item = items[index];
                     if (index < items.Length - 1)
@@ -87,14 +88,14 @@ namespace LanExchange.Model
                     Items.Add(panelItem);
                 // set DataType by thier name
                 var types = App.PanelItemTypes.ToArray();
-                foreach(var tp in types)
+                foreach (var tp in types)
                     if (tp.Name.Equals(value.DataType))
                     {
                         DataType = tp;
                         break;
                     }
             }
-            
+
         }
 
         public string GetImageName()
@@ -198,6 +199,11 @@ namespace LanExchange.Model
             var upperValues = new List<string>();
             foreach (var value in m_Data)
             {
+                if (value is PanelItemDoubleDot)
+                {
+                    m_Keys.Add(value);
+                    continue;
+                }
                 helper.CurrentItem = value;
                 upperValues.Clear();
                 if (helper.Columns != null)
@@ -207,7 +213,7 @@ namespace LanExchange.Model
                         if (!string.IsNullOrEmpty(column))
                             upperValues.Add(column.ToUpper());
                     }
-                if (!filtered || (value is PanelItemDoubleDot) || GoodForFilter(upperValues.ToArray(), filter1, filter2))
+                if (!filtered || GoodForFilter(upperValues.ToArray(), filter1, filter2))
                     m_Keys.Add(value);
             }
         }

@@ -71,6 +71,7 @@ namespace LanExchange.Model
             m_Model.AfterAppendTab += Model_AfterAppend_AfterRename;
             m_Model.AddTab(NewPanelModel("YourTab"));
             Assert.IsTrue(m_EventFired);
+            Assert.IsFalse(m_Model.AddTab(NewPanelModel("MyTab")));
         }
 
         [Test]
@@ -120,6 +121,60 @@ namespace LanExchange.Model
             m_Model.AddTab(info);
             Assert.AreEqual(-1, m_Model.GetItemIndex(null));
             Assert.AreEqual(0, m_Model.GetItemIndex(info));
+        }
+
+        [Test]
+        public void TestTabNameExists()
+        {
+            m_Model.AddTab(NewPanelModel("MyTab"));
+            Assert.IsFalse(m_Model.TabNameExists("MaiTab"));
+            Assert.IsTrue(m_Model.TabNameExists("mytAB"));
+        }
+
+        [Test]
+        public void TestGenerateTabName()
+        {
+            Assert.IsEmpty(m_Model.GenerateTabName());
+            m_Model.AddTab(NewPanelModel("MyTab"));
+            Assert.AreEqual("Copy of MyTab", m_Model.GenerateTabName());
+            m_Model.AddTab(NewPanelModel("Copy of MyTab"));
+            m_Model.SelectedIndex = 0;
+            Assert.AreEqual("Copy (1) of MyTab", m_Model.GenerateTabName());
+        }
+
+        [Test, ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void ExceptionGenerateTabName()
+        {
+            m_Model.AddTab(NewPanelModel("MyTab"));
+            m_Model.SelectedIndex = 100;
+            m_Model.GenerateTabName();
+        }
+
+        [Test]
+        public void TestSaveSettings()
+        {
+            App.SetContainer(ContainerBuilder.Build());
+            var fileFName = App.FolderManager.TabsConfigFileName;
+            var fileFNameBak = fileFName + ".bak";
+            if (File.Exists(fileFName))
+            {
+                if (File.Exists(fileFNameBak))
+                    File.Delete(fileFNameBak);
+                File.Move(fileFName, fileFNameBak);
+            }
+            m_Model.SaveSettings();
+            Assert.IsTrue(File.Exists(fileFName));
+            if (File.Exists(fileFName))
+                File.Delete(fileFName);
+            File.Move(fileFNameBak, fileFName);
+        }
+
+        [Test]
+        public void TestLoadSettings()
+        {
+            App.SetContainer(ContainerBuilder.Build());
+            m_Model.SaveSettings();
+            m_Model.LoadSettings();
         }
     }
 }

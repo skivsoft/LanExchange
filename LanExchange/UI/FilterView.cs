@@ -84,7 +84,10 @@ namespace LanExchange.UI
         public void UpdateFromModel(IFilterModel model)
         {
             Color notFoundColor = Color.FromArgb(255, 102, 102); // firefox color
-            eFilter.BackColor = String.IsNullOrEmpty(model.FilterText) || model.FilterCount > 0 ? Color.White : notFoundColor;
+            var filterCount = model.FilterCount;
+            if (model.HasBackItem)
+                filterCount--;
+            eFilter.BackColor = string.IsNullOrEmpty(model.FilterText) || filterCount > 0 ? Color.White : notFoundColor;
         }
 
         
