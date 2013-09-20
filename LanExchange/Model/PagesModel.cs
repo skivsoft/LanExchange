@@ -1,20 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
+using System.Xml.Serialization;
 using LanExchange.Intf;
-using LanExchange.Model.Settings;
 using LanExchange.Properties;
 using LanExchange.Utils;
 
 namespace LanExchange.Model
 {
-    // 
-    // Модель предоставляет знания: данные и методы работы с этими данными, 
-    // реагирует на запросы, изменяя своё состояние. 
-    // Не содержит информации, как эти знания можно визуализировать.
-    // 
-
+    [XmlType("Tabs")]
     public class PagesModel : IPagesModel
     {
         private readonly List<IPanelModel> m_List;
@@ -25,12 +19,9 @@ namespace LanExchange.Model
         public event EventHandler<PanelModelEventArgs> AfterRename;
         public event EventHandler<PanelIndexEventArgs> IndexChanged;
 
-        private Tabs m_PagesSettings;
-
         public PagesModel()
         {
             m_List = new List<IPanelModel>();
-            m_PagesSettings = new Tabs();
             m_SelectedIndex = -1;
         }
 
@@ -59,6 +50,29 @@ namespace LanExchange.Model
         public IPanelModel GetItem(int index)
         {
             return m_List[index];
+        }
+
+        /// <summary>
+        /// Gets or sets the items for xml serialization.
+        /// </summary>
+        /// <value>
+        /// The items.
+        /// </value>
+        public PanelModel[] Items
+        {
+            get
+            {
+                var result = new PanelModel[m_List.Count];
+                for (int index = 0; index < m_List.Count; index++)
+                    result[index] = (PanelModel)m_List[index];
+                return result;
+            }
+            set
+            {
+                m_List.Clear();
+                foreach (var tab in value)
+                    AddTab(tab);
+            }
         }
 
         public int GetItemIndex(IPanelModel item)
@@ -90,11 +104,6 @@ namespace LanExchange.Model
                 IndexChanged(this, new PanelIndexEventArgs(index));
         }
 
-        //public bool Contains(PanelItemList info)
-        //{
-        //    return m_List.Contains(info);
-        //}
-        
         public bool AddTab(IPanelModel info)
         {
             // ommit duplicates
@@ -132,29 +141,37 @@ namespace LanExchange.Model
             return index >= 0 && index <= Count - 1 ? m_List[index].TabName : null;
         }
 
-        public void LoadSettings()
+        public void LoadSettings(out IPagesModel model)
         {
             var fileFName = App.FolderManager.TabsConfigFileName;
+            model = null;
             if (File.Exists(fileFName))
-            {
-                var temp = (Tabs)SerializeUtils.DeserializeObjectFromXMLFile(fileFName, typeof(Tabs), App.PanelItemTypes.ToArray());
-                if (temp != null)
+                model = (PagesModel)SerializeUtils.DeserializeObjectFromXMLFile(fileFName, typeof(PagesModel), App.PanelItemTypes.ToArray());
+        }
+
+        public void SetLoadedModel(IPagesModel model)
+        {
+            App.PanelItemTypes.CreateDefaultRoots();
+            if (model.Count > 0)
+                // add loaded tabs if present
+                for(int index = 0; index < model.Count; index++)
+                    AddTab(model.GetItem(index));
+            else
+               //create default tabs
+                foreach (var root in App.PanelItemTypes.DefaultRoots)
                 {
-                    m_PagesSettings = null;
-                    m_PagesSettings = temp;
+                    var info = App.Resolve<IPanelModel>();
+                    info.TabName = root.Name;
+                    info.SetDefaultRoot(root);
+                    model.AddTab(info);
                 }
-            }
-            if (m_PagesSettings != null)
-            {
-                m_PagesSettings.SetToModel(this);
-                //App.MainPages.View.ActivePanelView.Presenter.UpdateItemsAndStatus();
-            }
+            if (model.SelectedIndex != -1)
+                SelectedIndex = model.SelectedIndex;
         }
 
         public void SaveSettings()
         {
-            m_PagesSettings.GetFromModel(this);
-            SerializeUtils.SerializeObjectToXMLFile(App.FolderManager.TabsConfigFileName, m_PagesSettings, App.PanelItemTypes.ToArray());
+            SerializeUtils.SerializeObjectToXMLFile(App.FolderManager.TabsConfigFileName, this, App.PanelItemTypes.ToArray());
         }
 
         public bool TabNameExists(string tabName)

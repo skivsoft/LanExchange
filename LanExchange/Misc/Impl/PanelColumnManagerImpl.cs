@@ -6,21 +6,21 @@ namespace LanExchange.Misc.Impl
 {
     class PanelColumnManagerImpl : IPanelColumnManager
     {
-        private readonly IDictionary<Type, IList<PanelColumnHeader>> m_Types;
+        private readonly IDictionary<string, IList<PanelColumnHeader>> m_Types;
         private int m_MaxColumns;
 
         public PanelColumnManagerImpl()
         {
-            m_Types = new Dictionary<Type, IList<PanelColumnHeader>>();
+            m_Types = new Dictionary<string, IList<PanelColumnHeader>>();
         }
 
-        public void RegisterColumn(Type type, PanelColumnHeader header)
+        public void RegisterColumn(string typeName, PanelColumnHeader header)
         {
             IList<PanelColumnHeader> found;
-            if (!m_Types.TryGetValue(type, out found))
+            if (!m_Types.TryGetValue(typeName, out found))
             {
                 found = new List<PanelColumnHeader>();
-                m_Types.Add(type, found);
+                m_Types.Add(typeName, found);
             }
             header.Index = found.Count;
             found.Add(header);
@@ -30,8 +30,13 @@ namespace LanExchange.Misc.Impl
 
         public IList<PanelColumnHeader> GetColumns(Type type)
         {
+            return GetColumns(type.Name);
+        }
+
+        public IList<PanelColumnHeader> GetColumns(string typeName)
+        {
             IList<PanelColumnHeader> result;
-            m_Types.TryGetValue(type, out result);
+            m_Types.TryGetValue(typeName, out result);
             return result;
         }
 
@@ -49,7 +54,7 @@ namespace LanExchange.Misc.Impl
         }
 
         // TODO Column reorder
-        public bool ReorderColumns(Type type, int oldIndex, int newIndex)
+        public bool ReorderColumns(string typeName, int oldIndex, int newIndex)
         {
             //// lock reorder for 0-column
             //if (oldIndex == 0 || newIndex == 0)

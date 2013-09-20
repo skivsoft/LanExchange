@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 
 namespace LanExchange.Misc
@@ -19,7 +20,14 @@ namespace LanExchange.Misc
         private void InternalCallback(object state)
         {
             if (m_Callback != null)
-                m_Callback(state);
+                try
+                {
+                    m_Callback(state);
+                }
+                catch(Exception ex)
+                {
+                    Debug.Fail(ex.Message);
+                }
         }
 
         private void KillTimer()

@@ -12,8 +12,9 @@ namespace LanExchange.Plugin.Network
 
         public static void RegisterColumns(IPanelColumnManager columnManager)
         {
-            columnManager.RegisterColumn(typeof(SharePanelItem), new PanelColumnHeader(Resources.ResourceName));
-            columnManager.RegisterColumn(typeof(SharePanelItem), new PanelColumnHeader(Resources.Description));
+            var typeName = typeof (SharePanelItem).Name;
+            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.ResourceName));
+            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.Description));
         }
 
         public SharePanelItem()

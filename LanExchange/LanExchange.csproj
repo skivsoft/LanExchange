@@ -170,8 +170,6 @@
     <Compile Include="Intf\IPuntoSwitcherService.cs" />
     <Compile Include="Misc\PuntoSwitcherServiceEngRus.cs" />
     <Compile Include="Model\Settings\Settings.cs" />
-    <Compile Include="Model\Settings\Tab.cs" />
-    <Compile Include="Model\Settings\Tabs.cs" />
     <Compile Include="Model\AboutModel.cs" />
     <Compile Include="Presenter\AboutPresenter.cs" />
     <Compile Include="Presenter\FilterPresenter.cs" />

@@ -12,7 +12,8 @@ namespace LanExchange.Plugin.Network
 
         public static void RegisterColumns(IPanelColumnManager columnManager)
         {
-            columnManager.RegisterColumn(typeof(DomainPanelItem), new PanelColumnHeader(Resources.DomainName));
+            var typeName = typeof (DomainPanelItem).Name;
+            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.DomainName));
         }
 
         public DomainPanelItem()

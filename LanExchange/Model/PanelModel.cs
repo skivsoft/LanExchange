@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using LanExchange.Intf;
-using LanExchange.Model.Settings;
 using LanExchange.SDK;
 
 namespace LanExchange.Model
 {
+    [XmlType("Tab")]
     public class PanelModel : IPanelModel
     {       
         // items added by user
@@ -21,81 +22,20 @@ namespace LanExchange.Model
         // punto switcher service
         private readonly IPuntoSwitcherService m_Punto;
 
-        private Type m_DataType;
-
         public event EventHandler Changed;
         
-        public PanelModel(IPuntoSwitcherService puntoService)
+        /// <summary>
+        /// Parameterless constructor for xml serialization.
+        /// </summary>
+        public PanelModel()
         {
-            m_Punto = puntoService;
+            m_Punto = App.Resolve<IPuntoSwitcherService>();
             m_Items = new List<PanelItemBase>();
             m_Data = new List<PanelItemBase>();
             m_Keys = new List<PanelItemBase>();
             m_CurrentPath = new ObjectPath<PanelItemBase>();
             m_Comparer = new ColumnComparer(0, PanelSortOrder.Ascending);
             CurrentView = PanelViewMode.Details;
-        }
-
-        public ObjectPath<PanelItemBase> CurrentPath
-        {
-            get { return m_CurrentPath; }
-        }
-
-        public IList<PanelItemBase> Items
-        {
-            get { return m_Items; }
-        }
-
-        public Tab Settings
-        {
-            get
-            {
-                var page = new Tab
-                {
-                    Name = TabName,
-                    Path = m_CurrentPath,
-                    Filter = FilterText,
-                    View = CurrentView,
-                    Focused = FocusedItem
-                };
-                page.Items = new PanelItemBase[m_Items.Count];
-                int i = 0;
-                foreach (var panelItem in m_Items)
-                    page.Items[i++] = panelItem;
-                page.DataType = DataType == null ? string.Empty : DataType.Name;
-                return page;
-            }
-            set
-            {
-                TabName = value.Name;
-                // build path from loaded items
-                var items = value.Path.Item;
-                m_CurrentPath.Clear();
-                for (int index = items.Length - 1; index >= 0; index--)
-                {
-                    var item = items[index];
-                    if (index < items.Length - 1)
-                        item.Parent = items[index + 1];
-                    m_CurrentPath.Push(item);
-                }
-                // set filter, currentview and focused
-                FilterText = value.Filter;
-                CurrentView = value.View;
-                FocusedItem = value.Focused;
-                // add loaded items
-                m_Items.Clear();
-                foreach (var panelItem in value.Items)
-                    Items.Add(panelItem);
-                // set DataType by thier name
-                var types = App.PanelItemTypes.ToArray();
-                foreach (var tp in types)
-                    if (tp.Name.Equals(value.DataType))
-                    {
-                        DataType = tp;
-                        break;
-                    }
-            }
-
         }
 
         public string GetImageName()
@@ -108,33 +48,58 @@ namespace LanExchange.Model
                     if (item.Parent is PanelItemRoot)
                         return item.ImageName;
                 }
-            return DataType.Name + PanelImageNames.NORMAL_POSTFIX;
+            return string.IsNullOrEmpty(DataType) ? string.Empty : DataType + PanelImageNames.NORMAL_POSTFIX;
         }
 
+        /// <summary>
+        /// Gets or sets the name of the tab.
+        /// </summary>
+        /// <value>
+        /// The name of the tab.
+        /// </value>
+        [XmlAttribute("Name")]
         public string TabName { get; set; }
+
+        [XmlAttribute]
+        public string DataType { get; set; }
+
+        [XmlAttribute("View")]
         public PanelViewMode CurrentView { get; set; }
+
+        [XmlAttribute("Filter")]
+        public string FilterText { get; set; }
+
+        [XmlElement("Path")]
+        public ObjectPath<PanelItemBase> CurrentPath
+        {
+            get { return m_CurrentPath; }
+            set
+            {
+                // build path from loaded items
+                var items = value.Item;
+                m_CurrentPath.Clear();
+                for (int index = items.Length - 1; index >= 0; index--)
+                {
+                    var item = items[index];
+                    if (index < items.Length - 1)
+                        item.Parent = items[index + 1];
+                    m_CurrentPath.Push(item);
+                }
+            }
+        }
+
+        [XmlElement("Focused")]
         public PanelItemBase FocusedItem { get; set; }
 
-        //TODO: add delete item
-        //public void Delete(PanelItem comp)
-        //{
-        //    m_Data.Remove(comp.Name);
-        //}
+        public IList<PanelItemBase> Items
+        {
+            get { return m_Items; }
+        }
 
         public PanelItemBase GetItemAt(int index)
         {
             return m_Keys[index];
         }
-
-        //public PanelItemBase GetItem(string key)
-        //{
-        //    if (key == null) return null;
-        //    var tempComp = new CustomPanelItem(null, key);
-        //    int index = m_Data.BinarySearch(tempComp);
-        //    if (index >= 0)
-        //        return m_Data[index];
-        //    return null;
-        //}
 
         public int IndexOf(PanelItemBase key)
         {
@@ -157,12 +122,6 @@ namespace LanExchange.Model
             return false;
         }
 
-        public Type DataType
-        {
-            get { return m_DataType; }
-            set { m_DataType = value; }
-        }
-
         public ColumnComparer Comparer
         {
             get { return m_Comparer; }
@@ -175,11 +134,6 @@ namespace LanExchange.Model
             OnChanged();
         }
 
-        /// <summary>
-        /// IFilterModel.FilterText
-        /// </summary>
-        public String FilterText { get; set; }
-
         
         /// <summary>
         /// IFilterModel.AppliFilter()
@@ -189,8 +143,6 @@ namespace LanExchange.Model
             if (FilterText == null) 
                 FilterText = string.Empty;
             var filtered = FilterText != string.Empty;
-            //if (filtered && !CurrentPath.IsEmptyOrRoot)
-            //    filtered = false;
             m_Keys.Clear();
             var filter1 = FilterText.ToUpper();
             var filter2 = m_Punto.Change(FilterText);
@@ -239,67 +191,6 @@ namespace LanExchange.Model
             }
         }
 
-        //    PanelItemComparer comparer = new PanelItemComparer();
-        //    Result.Sort(comparer);
-        //    return Result;
-        //}
-
-        // TODO uncomment ListView_GetSelected
-        //public List<string> ListView_GetSelected(ListView LV, bool bAll)
-        //{
-        //    List<string> Result = new List<string>();
-        //    if (LV.FocusedItem != null)
-        //        Result.Add(LV.FocusedItem.Text);
-        //    else
-        //        Result.Add("");
-        //    if (bAll)
-        //        for (int index = 0; index < LV.Items.Count; index++)
-        //            Result.Add(m_Keys[index]);
-        //    else
-        //        foreach (int index in LV.SelectedIndices)
-        //            Result.Add(m_Keys[index]);
-        //    return Result;
-        //}
-        
-        // TODO uncomment ListView_SetSelected
-        //public void ListView_SetSelected(ListView LV, List<string> SaveSelected)
-        //{
-        //    LV.SelectedIndices.Clear();
-        //    LV.FocusedItem = null;
-        //    if (LV.VirtualListSize > 0)
-        //    {
-        //        for (int i = 0; i < SaveSelected.Count; i++)
-        //        {
-        //            int index = m_Keys.IndexOf(SaveSelected[i]);
-        //            if (index == -1) continue;
-        //            if (i == 0)
-        //            {
-        //                LV.FocusedItem = LV.Items[index];
-        //                //LV.EnsureVisible(index);
-        //            }
-        //            else
-        //                LV.SelectedIndices.Add(index);
-        //        }
-        //    }
-        //}
-
-
-        //public void Add(AbstractPanelItem comp)
-        //{
-        //    if (comp == null)
-        //        throw new ArgumentNullException("comp");
-        //    if (!m_Data.Contains(comp))
-        //        m_Data.Add(comp);
-        //}
-
-        //public List<string> ToList()
-        //{
-        //    List<string> Result = new List<string>();
-        //    foreach (var Pair in m_Data)
-        //        Result.Add(Pair.Value.Name);
-        //    return Result;
-        //}
-
         /// <summary>
         /// Sync retrieving panel items using appropriate filler strategy.
         /// </summary>
@@ -325,10 +216,10 @@ namespace LanExchange.Model
                 m_Data.AddRange(fillerResult.Items);
                 // set current items DataType and filter
                 if (fillerResult.ItemsType != null)
-                    m_DataType = fillerResult.ItemsType;
+                    DataType = fillerResult.ItemsType.Name;
                 // add custom items created by user
                 foreach(var panelItem in Items)
-                    if (panelItem.GetType() == m_DataType)
+                    if (panelItem.GetType().Name == DataType)
                         m_Data.Add(panelItem);
                 // sort 
                 m_Data.Sort(m_Comparer);
@@ -375,7 +266,5 @@ namespace LanExchange.Model
                 SetDefaultRoot(root.Parent);
             CurrentPath.Push(root);
         }
-
-        public string ImageName { get; set; }
     }
 }

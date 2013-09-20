@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using LanExchange.Model;
 using LanExchange.SDK;
 
 namespace LanExchange.Misc.Impl
@@ -55,7 +56,7 @@ namespace LanExchange.Misc.Impl
             foreach (var key in m_Types.Keys)
                 result[i++] = key;
             result[m_Types.Count] = typeof (PanelItemRoot);
-            result[m_Types.Count+1] = typeof(PanelItemDoubleDot);
+            result[m_Types.Count + 1] = typeof (PanelItemDoubleDot);
             return result;
         }
     }

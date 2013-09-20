@@ -12,7 +12,7 @@ namespace LanExchange.Misc.Action
 
         public bool IsParentAccepted(PanelItemBase parent)
         {
-            return parent == ROOT_OF_SHORTCUTS;
+            return (parent is PanelItemRoot) && (parent.Name.Equals(ROOT_OF_SHORTCUTS.Name));
         }
 
         public void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
