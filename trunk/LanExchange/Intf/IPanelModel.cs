@@ -33,13 +33,6 @@ namespace LanExchange.Intf
         /// </value>
         int Count { get; }
         /// <summary>
-        /// Gets a value indicating whether this instance has back item.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if this instance has back item; otherwise, <c>false</c>.
-        /// </value>
-        bool HasBackItem { get; }
-        /// <summary>
         /// Gets the current path.
         /// </summary>
         /// <value>

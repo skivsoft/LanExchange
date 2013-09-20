@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.IO;
 using LanExchange.Intf;
 using LanExchange.Utils;
-using System.Security.Principal;
 using System.Collections.Generic;
 
 namespace LanExchange.Model.Settings
@@ -33,14 +32,6 @@ namespace LanExchange.Model.Settings
             m_Default.Add("AdvancedMode", false);
             m_Default.Add("NumInfoLines", 3);
             m_Default.Add("Language", "en-US");
-            
-            WMIClassesInclude = new List<string>();
-            WMIClassesInclude.Add("Win32_Desktop");
-            WMIClassesInclude.Add("Win32_DesktopMonitor");
-            WMIClassesInclude.Add("Win32_DiskDrive");
-            WMIClassesInclude.Add("Win32_BIOS");
-            WMIClassesInclude.Add("Win32_Processor");
-            WMIClassesInclude.Add("Win32_PhysicalMemory");
         }
 
         public static Settings Instance
@@ -203,8 +194,6 @@ namespace LanExchange.Model.Settings
 
         public int MainFormX { get; set; }
         public int MainFormWidth { get; set; }
-
-        public IList<string> WMIClassesInclude { get; private set; }
 
         public bool IsAutorun
         {

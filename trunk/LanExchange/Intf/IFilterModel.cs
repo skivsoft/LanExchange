@@ -20,6 +20,13 @@
         /// </value>
         int FilterCount { get; }
         /// <summary>
+        /// Gets a value indicating whether this instance has back item.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance has back item; otherwise, <c>false</c>.
+        /// </value>
+        bool HasBackItem { get; }
+        /// <summary>
         /// Applies the filter.
         /// </summary>
         void ApplyFilter();

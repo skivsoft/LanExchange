@@ -62,6 +62,11 @@ namespace LanExchange.Plugin.Network
         [Test]
         public void TestImageName()
         {
+            Assert.AreEqual(PanelImageNames.ComputerCustom, m_Comp.ImageName);
+            m_Comp.IsReachable = false;
+            Assert.AreEqual(PanelImageNames.ComputerCustom, m_Comp.ImageName);
+            m_Comp.Parent = new PanelItemRoot("ROOT");
+            m_Comp.IsReachable = true;
             Assert.AreEqual(PanelImageNames.ComputerNormal, m_Comp.ImageName);
             m_Comp.IsReachable = false;
             Assert.AreEqual(PanelImageNames.ComputerUnreachable, m_Comp.ImageName);
