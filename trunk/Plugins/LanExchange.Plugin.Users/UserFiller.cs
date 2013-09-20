@@ -25,7 +25,7 @@ namespace LanExchange.Plugin.Users
 
         public bool IsParentAccepted(PanelItemBase parent)
         {
-            return (parent != null) && (parent == PluginUsers.ROOT_OF_DNS);
+            return (parent is PanelItemRoot) && (parent.Name == PluginUsers.ROOT_OF_DNS.Name);
         }
 
         private string SearchResult_GetString(SearchResult sr, string index)

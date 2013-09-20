@@ -311,11 +311,7 @@ namespace LanExchange.Presenter
             {
                 IPagesModel model;
                 m_Model.LoadSettings(out model);
-                if (model != null)
-                {
-                    m_Model.SetLoadedModel(model);
-                    //App.MainPages.View.ActivePanelView.Presenter.UpdateItemsAndStatus();
-                }
+                m_Model.SetLoadedModel(model);
             }
             catch(Exception)
             {
