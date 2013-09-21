@@ -38,15 +38,10 @@ namespace LanExchange.Plugin.Network
             set { m_SI.Name = value; }
         }
 
-        public override string ToString()
+        public override string FullName
         {
-            return string.Empty;
+            get { return string.Empty; }
         }
-
-        //public int CompareTo(DomainPanelItem other)
-        //{
-        //    return String.Compare(Name, other.Name, StringComparison.Ordinal);
-        //}
 
         public override string ImageName
         {

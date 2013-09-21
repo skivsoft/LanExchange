@@ -11,7 +11,7 @@
           <ProgramRef Id="wmiviewer" />
           <ProgramArgs>/computer:$(Name)</ProgramArgs>
         </ToolStripMenuItem>
-        <ToolStripMenuItem Text="Set Computer Description">
+        <ToolStripMenuItem Text="Edit Description">
           <ProgramRef Id="wmiviewer" />
           <ProgramArgs>/computer:$(Name) /edit:Win32_OperatingSystem.Description</ProgramArgs>
         </ToolStripMenuItem>

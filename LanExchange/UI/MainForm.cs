@@ -45,7 +45,7 @@ namespace LanExchange.UI
             SetupActions();
             SetupForm();
             // setup images
-            ClearToolTip(Pages.Pages);
+            //ClearToolTip(Pages.Pages);
             App.Images.SetImagesTo(Pages.Pages);
             App.Images.SetImagesTo(Status);
             // set hotkey for activate: Ctrl+Win+X
@@ -209,34 +209,23 @@ namespace LanExchange.UI
 
         private void tipComps_Popup(object sender, PopupEventArgs e)
         {
-            //logger.Info("tipComps_Popup: {0}", e.AssociatedControl.GetType().Name);
             var tooltip = (sender as ToolTip);
             if (tooltip == null) return;
             if (e.AssociatedControl == pInfo.Picture)
             {
-                tooltip.ToolTipIcon = ToolTipIcon.Info;
                 tooltip.ToolTipTitle = Resources.MainForm_Legend;
-                return;
-            }
-            if (e.AssociatedControl is ListView)
-            {
-                var listview = e.AssociatedControl as ListView;
-                Point P = listview.PointToClient(MousePosition);
-                ListViewHitTestInfo Info = listview.HitTest(P);
-                tooltip.ToolTipTitle = Info.Item != null ? Info.Item.Text : Resources.MainForm_Information;
                 return;
             }
             if (e.AssociatedControl is TabControl && e.AssociatedControl == Pages.Pages)
             {
-                Point P = e.AssociatedControl.PointToClient(MousePosition);
-                TabPage Tab = Pages.GetTabPageByPoint(P);
-                if (Tab != null)
-                    tooltip.ToolTipTitle = Tab.Text;
+                var tab = Pages.GetTabPageByPoint(e.AssociatedControl.PointToClient(MousePosition));
+                if (tab != null)
+                    tooltip.ToolTipTitle = tab.Text;
                 else
                     e.Cancel = true;
                 return;
             }
-            tooltip.ToolTipTitle = "";
+            tooltip.ToolTipTitle = string.Empty;
         }
 
         private void mAbout_Click(object sender, EventArgs e)
@@ -292,28 +281,6 @@ namespace LanExchange.UI
         {
             mOpen.Text = Visible ? Resources.MainForm_Close : Resources.MainForm_Open;
         }
-
-        //private void MainForm_Shown(object sender, EventArgs e)
-        //{
-        //    m_RunMinimized.Form_Shown();
-        //}
-
-        //private void MainForm_Resize(object sender, EventArgs e)
-        //{
-        //    m_RunMinimized.Form_Resize();
-        //    logger.Info("MainForm_Resize: {0}", Width);
-        //}
-
-        //private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-        //{
-        //    logger.Info("MainForm is closing with reason {0}", e.CloseReason.ToString());
-        //    if (e.CloseReason == CloseReason.None || e.CloseReason == CloseReason.UserClosing)
-        //    {
-        //        e.Cancel = true;
-        //        IsFormVisible = false;
-        //        logger.Info("Closing is canceled");
-        //    }
-        //}
 
         private void mOpen_Click(object sender, EventArgs e)
         {
@@ -518,13 +485,8 @@ namespace LanExchange.UI
 
         public void SetToolTip(object control, string tipText)
         {
-            tipComps.SetToolTip(Pages.Pages, tipText);
-        }
-
-        [Localizable(false)]
-        public void ClearToolTip(object control)
-        {
-            SetToolTip(control, " ");
+            if (control is Control)
+                tipComps.SetToolTip(control as Control, tipText);
         }
 
         public void ShowStatusText(string format, params object[] args)

@@ -31,10 +31,14 @@ namespace LanExchange.Misc.Impl
         {
             m_DefaultRoots.Clear();
             foreach(var pair in m_Types)
+            try
             {
                 var root = pair.Value.CreateDefaultRoot();
                 if (root != null)
                     m_DefaultRoots.Add(root);
+            }
+            catch (Exception)
+            {
             }
         }
 

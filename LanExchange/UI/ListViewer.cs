@@ -1,11 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
+using LanExchange.Properties;
 
 namespace LanExchange.UI
 {
     public class ListViewer : ListView
     {
+        private ToolTip m_ToolTip;
         public event EventHandler<ColumnClickEventArgs> ColumnRightClick;
 
         public ListViewer()
@@ -84,5 +87,25 @@ namespace LanExchange.UI
             return false;
         }
 
+        [Localizable(false)]
+        protected override void OnCreateControl()
+        {
+            m_ToolTip = new ToolTip(); 
+            m_ToolTip.IsBalloon = true;
+            m_ToolTip.ToolTipIcon = ToolTipIcon.Info;
+            m_ToolTip.SetToolTip(this, " ");
+            m_ToolTip.Popup += ToolTipOnPopup;
+        }
+
+        private void ToolTipOnPopup(object sender, PopupEventArgs e)
+        {
+            if (sender == m_ToolTip && e.AssociatedControl == this)
+            {
+                var point = PointToClient(MousePosition);
+                var info = HitTest(point);
+                if (info.Item != null)
+                    m_ToolTip.ToolTipTitle = info.Item.Text;
+            }
+        }
     }
 }
