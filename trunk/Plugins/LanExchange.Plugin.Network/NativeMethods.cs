@@ -10,7 +10,7 @@ namespace LanExchange.Plugin.Network
         internal const string NETAPI32 = "netapi32.dll";
 
         [DllImport(IPHLPAPI, ExactSpelling = true)]
-        internal static extern int SendARP(int destIP, int srcIP, [Out] byte[] pMacAddr, ref int physAddrLen);
+        internal static extern int SendARP(int destIP, int srcIP, [Out] byte[] pMacAddr, ref uint physAddrLen);
 
         #region WinApi: NetWkstaGetInfo
         [DllImport(NETAPI32, CharSet = CharSet.Unicode)]

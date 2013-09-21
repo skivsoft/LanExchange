@@ -16,8 +16,8 @@ namespace LanExchange.Misc.Impl
                 {
                     var indexParams = prop.GetIndexParameters();
                     if (indexParams.Length > 0) continue;
-                    var propValue = prop.GetValue(obj, null).ToString();
-                    props.Add(string.Format("$({0})", prop.Name), propValue);
+                    var propValue = prop.GetValue(obj, null);
+                    props.Add(string.Format("$({0})", prop.Name), propValue == null ? string.Empty : propValue.ToString());
                 }
             return props;
         }

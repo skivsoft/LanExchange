@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Threading;
 using System.Windows.Forms;
 using LanExchange.Intf;
+using System.Diagnostics;
 
 namespace LanExchange.UI
 {
@@ -28,8 +29,7 @@ namespace LanExchange.UI
         private static void ApplicationOnThreadException(object sender, ThreadExceptionEventArgs e)
         {
             #if DEBUG
-            MessageBox.Show(e.Exception.Message + Environment.NewLine + e.Exception.StackTrace,
-                "Error in " + e.Exception.Source, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Debug.Fail(e.Exception.Message + Environment.NewLine + e.Exception.StackTrace);
             #else
             App.MainView.ApplicationExit();
             #endif
