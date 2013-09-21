@@ -77,10 +77,10 @@ namespace LanExchange.Plugin.Network
         public static IComparable GetMACAddress(PanelItemBase item)
         {
             var ipAddr = InternalGetIPAddress(item.Name);
-            var ab = new byte[6];
-            int len = ab.Length;
-            NativeMethods.SendARP(ipAddr.GetHashCode(), 0, ab, ref len);
-            return BitConverter.ToString(ab, 0, 6);
+            var mac = new byte[6];
+            var len = (uint)mac.Length;
+            NativeMethods.SendARP(ipAddr.GetHashCode(), 0, mac, ref len);
+            return BitConverter.ToString(mac, 0, 6);
         }
 
         public ComputerPanelItem()
@@ -90,7 +90,7 @@ namespace LanExchange.Plugin.Network
 
         public override int CountColumns
         {
-            get { return base.CountColumns + 4; }
+            get { return base.CountColumns + 5; }
         }
 
         /// <summary>
@@ -181,6 +181,7 @@ namespace LanExchange.Plugin.Network
                 case 2: return m_SI.Version;
                 case 3: return string.Empty;
                 case 4: return string.Empty;
+                case 5: return string.Empty;
                 default:
                     return base.GetValue(index);
             }
