@@ -3,33 +3,22 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
-using LanExchange.Core;
 using LanExchange.Intf;
-using LanExchange.Misc;
-using LanExchange.Model;
-using LanExchange.Presenter;
 using LanExchange.Properties;
 
 namespace LanExchange.UI
 {
     public partial class FilterView : UserControl, IFilterView
     {
-        private readonly IFilterPresenter m_Presenter;
-
         public event EventHandler FilterCountChanged;
 
         public FilterView()
         {
             InitializeComponent();
             Visible = false;
-            m_Presenter = App.Resolve<IFilterPresenter>();
-            m_Presenter.View = this;
         }
 
-        public IFilterPresenter Presenter
-        {
-            get { return m_Presenter; }
-        }
+        public IFilterPresenter Presenter { get; set; }
 
         public Control LinkedControl { get; set; }
 
@@ -37,7 +26,7 @@ namespace LanExchange.UI
         {
             var textbox = sender as TextBox;
             if (textbox != null)
-                m_Presenter.FilterText = textbox.Text;
+                Presenter.FilterText = textbox.Text;
         }
 
         [Localizable(false)]

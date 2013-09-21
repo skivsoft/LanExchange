@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Forms;
 using LanExchange.Intf;
 using LanExchange.Model;
@@ -13,7 +14,6 @@ namespace LanExchange.UI
     public partial class PanelView : UserControl, IPanelView, IListViewItemGetter
     {
         #region Class declarations and constructor
-        private readonly static FormPlacement m_WMIPlacement = new FormPlacement();
 
         private readonly IPanelPresenter m_Presenter;
         private readonly ListViewItemCache m_Cache;
@@ -38,6 +38,9 @@ namespace LanExchange.UI
             //mSendToNewTab.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
             // focus listview when panel got focus
             GotFocus += (sender, args) => ActiveControl = LV;
+            // set filter's presenter
+            pFilter.Presenter = App.Resolve<IFilterPresenter>();
+            pFilter.Presenter.View = pFilter;
         }
         #endregion
 
@@ -109,11 +112,7 @@ namespace LanExchange.UI
 
         public IEnumerable<int> SelectedIndexes
         {
-            get
-            {
-                foreach (int index in LV.SelectedIndices)
-                    yield return index;
-            }
+            get { return LV.SelectedIndices.Cast<int>(); }
         }
 
         public void ClearSelected()
@@ -181,8 +180,8 @@ namespace LanExchange.UI
         {
             if (LV.FocusedItem != null)
             {
-                int FocusedIndex = LV.FocusedItem.Index;
-                LV.RedrawItems(FocusedIndex, FocusedIndex, false);
+                int focusedIndex = LV.FocusedItem.Index;
+                LV.RedrawItems(focusedIndex, focusedIndex, false);
             }
         }
 
@@ -194,26 +193,6 @@ namespace LanExchange.UI
         {
             get { return m_Presenter; }
         }
-
-        //public ImageList SmallImageList
-        //{
-        //    get
-        //    {
-        //        return LV.SmallImageList;
-        //    }
-        //}
-
-        //public ImageList LargeImageList
-        //{
-        //    get
-        //    {
-        //        return LV.LargeImageList;
-        //    }
-        //    set
-        //    {
-        //        LV.LargeImageList = value;
-        //    }
-        //}
 
         private int focusedLockCount;
 
@@ -323,7 +302,7 @@ namespace LanExchange.UI
 
         private void lvComps_ItemActivate(object sender, EventArgs e)
         {
-            bCanDrag = false;
+            m_CanDrag = false;
             OpenCurrentItem();
         }
 
@@ -337,7 +316,7 @@ namespace LanExchange.UI
             }
         }
 
-        private bool bCanDrag = false;
+        private bool m_CanDrag;
 
         private void LV_MouseDown(object sender, MouseEventArgs e)
         {
@@ -349,7 +328,7 @@ namespace LanExchange.UI
                     SetupCopyHelper();
                     if (m_CopyHelper.Indexes.Count > 0)
                     {
-                        bCanDrag = true;
+                        m_CanDrag = true;
                     }
                 }
             }
@@ -357,9 +336,9 @@ namespace LanExchange.UI
 
         private void LV_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left && bCanDrag)
+            if (e.Button == MouseButtons.Left && m_CanDrag)
             {
-                bCanDrag = false;
+                m_CanDrag = false;
                 var obj = new DataObject();
                 obj.SetText(m_CopyHelper.GetSelectedText(), TextDataFormat.UnicodeText);
                 if (App.MainPages.CanSendToNewTab())
@@ -368,74 +347,6 @@ namespace LanExchange.UI
             }
         }
 
-        private void mWMI_Click(object sender, EventArgs e)
-        {
-            // TODO UNCOMMENT THIS!
-            //// check advanced mode
-            //if (!Settings.Instance.AdvancedMode) return;
-            //// get focused computer
-            //ComputerPanelItem comp = m_Presenter.GetFocusedComputer(true) as ComputerPanelItem;
-            //if (comp == null) return;
-            //// create wmi form
-            //WMIForm form = new WMIForm(comp);
-            //// try connect to computer via wmi
-            //if (!form.GetPresenter().ConnectToComputer())
-            //{
-            //    form.Dispose();
-            //    return;
-            //}
-            //// asynchronous load avaible wmi classes list, if needed
-            //if (!WMIClassList.Instance.Loaded)
-            //{
-            //    WMIClassList.Instance.IncludeClasses.Clear();
-            //    foreach (string str in Settings.Instance.WMIClassesInclude)
-            //        WMIClassList.Instance.IncludeClasses.Add(str);
-            //    BackgroundWorkers.Instance.Add(new BackgroundContext(new WMIClassesInitStrategy()));
-            //}
-            //// set MyComputer icon to form
-            //form.Icon = LanExchangeIcons.Instance.GetSmallIcon(PanelImageNames.ComputerNormal);
-            //// display wmi form
-            //m_WMIPlacement.AttachToForm(form);
-            //try
-            //{
-            //    form.ShowDialog();
-            //}
-            //finally
-            //{
-            //    m_WMIPlacement.DetachFromForm(form);
-            //    form.Dispose();
-            //}
-        }
-
-        private void mCompOpen_Click(object sender, EventArgs e)
-        {
-            //var MenuItem = sender as ToolStripMenuItem;
-            //if (MenuItem != null)
-            //    m_Presenter.RunCmdOnFocusedItem(MenuItem.Tag.ToString(), PanelPresenter.COMPUTER_MENU);
-        }
-
-        private void mFolderOpen_Click(object sender, EventArgs e)
-        {
-            //var MenuItem = sender as ToolStripMenuItem;
-            //if (MenuItem != null)
-            //    m_Presenter.RunCmdOnFocusedItem(MenuItem.Tag.ToString(), PanelPresenter.FOLDER_MENU);
-        }
-
-        private static void SetEnabledAndVisible(ToolStripItem item, bool value)
-        {
-            item.Enabled = value;
-            item.Visible = value;
-            if (item is ToolStripMenuItem)
-                foreach(var MI in (item as ToolStripMenuItem).DropDownItems)
-                    if (MI is ToolStripMenuItem)
-                        SetEnabledAndVisible((MI as ToolStripMenuItem), value);
-        }
-
-        private static void SetEnabledAndVisible(IEnumerable<ToolStripItem> items, bool value)
-        {
-            foreach(var item in items)
-                SetEnabledAndVisible(item, value);
-        }
 
         public void FocusListView()
         {
@@ -500,11 +411,7 @@ namespace LanExchange.UI
         {
             if (e.Control && e.KeyCode == Keys.C || e.Control && e.KeyCode == Keys.Insert)
             {
-                if (ePath.SelectionLength == 0)
-                {
-                    Clipboard.SetText(ePath.Text);
-                } else
-                    Clipboard.SetText(ePath.SelectedText);
+                Clipboard.SetText(ePath.SelectionLength == 0 ? ePath.Text : ePath.SelectedText);
                 e.Handled = true;
             }
         }

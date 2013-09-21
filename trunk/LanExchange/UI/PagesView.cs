@@ -290,7 +290,6 @@ namespace LanExchange.UI
             {
                 App.Images.SetImagesTo(listView);
                 listView.View = (View) info.CurrentView;
-                App.MainView.ClearToolTip(listView);
             }
             m_Presenter.SetupPanelViewEvents(panelView);
             // add new tab and insert panel into it

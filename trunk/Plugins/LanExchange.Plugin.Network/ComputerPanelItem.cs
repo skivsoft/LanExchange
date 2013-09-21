@@ -18,7 +18,7 @@ namespace LanExchange.Plugin.Network
         {
             var typeName = typeof (ComputerPanelItem).Name;
             columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.NetworkName));
-            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.Description, 250));
+            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.Description, 240));
             columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.OSVersion) { Visible = false, Width = 110 });
             // lazy columns
             columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.Ping) { Callback = GetReachable, Visible = false, Width = 110, Refreshable = true });
@@ -210,21 +210,6 @@ namespace LanExchange.Plugin.Network
                         return string.Empty;
                 }
             }
-        }
-
-        [Localizable(false)]
-        public override string ToolTipText
-        {
-            get
-            {
-                return String.Format("{0}\n{1}\n{2}", Comment, m_SI.Version, m_SI.GetTopicalityText());
-            }
-        }
-
-        [Localizable(false)]
-        public override string ToString()
-        {
-            return @"\\" + base.ToString();
         }
 
         public override object Clone()

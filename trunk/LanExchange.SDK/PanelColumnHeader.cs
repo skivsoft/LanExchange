@@ -31,7 +31,7 @@ namespace LanExchange.SDK
         public PanelColumnHeader(string text, int width = 0)
         {
             Text = text;
-            Width = width == 0 ? 130 : width;
+            Width = width == 0 ? 120 : width;
             Visible = true;
             m_LazyDict = new Dictionary<PanelItemBase, IComparable>();
         }

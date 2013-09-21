@@ -35,14 +35,14 @@
             this.mCopyMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.mCopySelected = new System.Windows.Forms.ToolStripMenuItem();
             this.mPaste = new System.Windows.Forms.ToolStripMenuItem();
+            this.mDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.mAfterCopy = new System.Windows.Forms.ToolStripSeparator();
             this.mSendToNewTab = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.mContextProperties = new System.Windows.Forms.ToolStripMenuItem();
             this.ePath = new System.Windows.Forms.TextBox();
             this.LV = new LanExchange.UI.ListViewer();
-            this.pFilter = new FilterView();
-            this.mDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.pFilter = new LanExchange.UI.FilterView();
             this.popComps.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,7 +59,7 @@
             this.toolStripSeparator6,
             this.mContextProperties});
             this.popComps.Name = "popComps";
-            this.popComps.Size = new System.Drawing.Size(233, 176);
+            this.popComps.Size = new System.Drawing.Size(233, 154);
             this.popComps.Opening += new System.ComponentModel.CancelEventHandler(this.popComps_Opening);
             // 
             // mComp
@@ -88,7 +88,7 @@
             // 
             this.mCopySelected.Name = "mCopySelected";
             this.mCopySelected.ShortcutKeyDisplayString = "Ctrl+C";
-            this.mCopySelected.Size = new System.Drawing.Size(220, 22);
+            this.mCopySelected.Size = new System.Drawing.Size(222, 22);
             this.mCopySelected.Text = "Copy selected items";
             this.mCopySelected.Click += new System.EventHandler(this.CopySelectedOnClick);
             // 
@@ -99,6 +99,14 @@
             this.mPaste.Size = new System.Drawing.Size(232, 22);
             this.mPaste.Text = "Paste";
             this.mPaste.Click += new System.EventHandler(this.mPaste_Click);
+            // 
+            // mDelete
+            // 
+            this.mDelete.Name = "mDelete";
+            this.mDelete.ShortcutKeyDisplayString = "Del";
+            this.mDelete.Size = new System.Drawing.Size(232, 22);
+            this.mDelete.Text = "Delete";
+            this.mDelete.Click += new System.EventHandler(this.mDelete_Click);
             // 
             // mAfterCopy
             // 
@@ -185,18 +193,11 @@
             this.pFilter.Location = new System.Drawing.Point(0, 368);
             this.pFilter.Margin = new System.Windows.Forms.Padding(0);
             this.pFilter.Name = "pFilter";
+            this.pFilter.Presenter = null;
             this.pFilter.Size = new System.Drawing.Size(423, 30);
             this.pFilter.TabIndex = 27;
             this.pFilter.Visible = false;
             this.pFilter.FilterCountChanged += new System.EventHandler(this.pFilter_FilterCountChanged);
-            // 
-            // mDelete
-            // 
-            this.mDelete.Name = "mDelete";
-            this.mDelete.ShortcutKeyDisplayString = "Del";
-            this.mDelete.Size = new System.Drawing.Size(232, 22);
-            this.mDelete.Text = "Delete";
-            this.mDelete.Click += new System.EventHandler(this.mDelete_Click);
             // 
             // PanelView
             // 

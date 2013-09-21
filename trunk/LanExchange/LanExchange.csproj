@@ -221,7 +221,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\ListViewItemCache.cs" />
-    <Compile Include="UI\ListViewUtils.cs" />
     <Compile Include="UI\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
