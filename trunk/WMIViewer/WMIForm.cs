@@ -28,18 +28,8 @@ namespace WMIViewer
 
             FocusedItemChanged += lvInstances_FocusedItemChanged;
             UpdateTitle();
-
-            WMIClassesInclude = new List<string>();
-            WMIClassesInclude.Add("Win32_Desktop");
-            WMIClassesInclude.Add("Win32_DesktopMonitor");
-            WMIClassesInclude.Add("Win32_DiskDrive");
-            WMIClassesInclude.Add("Win32_BIOS");
-            WMIClassesInclude.Add("Win32_Processor");
-            WMIClassesInclude.Add("Win32_PhysicalMemory");
-
+            ShowStat(WMIClassList.Instance.ClassCount, WMIClassList.Instance.PropCount, WMIClassList.Instance.MethodCount);
         }
-
-        public IList<string> WMIClassesInclude { get; private set; }
 
         public void UpdateTitle()
         {
@@ -183,11 +173,6 @@ namespace WMIViewer
             get { return lvInstances; }
         }
 
-        public ContextMenuStrip MENU
-        {
-            get { return menuCommands; }
-        }
-
         public string CurrentWMIClass
         {
             get
@@ -200,7 +185,8 @@ namespace WMIViewer
                 lDescription.Text = WMIClassList.Instance.GetClassDescription(m_Presenter.Namespace, value);
                 lClassName.Text = value;
                 m_Presenter.EnumObjects(value);
-                m_Presenter.BuildContextMenu();
+                m_Presenter.BuildContextMenu(menuCommands.Items);
+                m_Presenter.BuildContextMenu(mMethod.DropDownItems);
                 if (lvInstances.Items.Count == 0)
                     PropGrid.SelectedObject = null;
                 else
@@ -210,7 +196,7 @@ namespace WMIViewer
                     lvInstances_FocusedItemChanged(lvInstances, EventArgs.Empty);
                     lvInstances.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
                 }
-                lStatus.Text = String.Format("Elements: {0}", lvInstances.Items.Count);
+                lStatus.Text = String.Format("Items: {0}", lvInstances.Items.Count);
             }
         }
 
@@ -294,7 +280,6 @@ namespace WMIViewer
             if (!m_MenuUpdated)
             {
                 UpdateClassesMenu();
-                ShowStat(WMIClassList.Instance.ClassCount, WMIClassList.Instance.PropCount, WMIClassList.Instance.MethodCount);
                 m_MenuUpdated = true;
             }
             foreach (var MI in menuClasses.Items)

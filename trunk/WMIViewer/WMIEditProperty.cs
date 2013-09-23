@@ -17,10 +17,5 @@ namespace WMIViewer
         {
             get { return null; }
         }
-
-        public ContextMenuStrip MENU
-        {
-            get { return null; }
-        }
     }
 }

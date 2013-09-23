@@ -22,7 +22,10 @@ namespace WMIViewer
                 if (wmiArgs.EditPropertyMode)
                     mainForm = new WMIEditProperty(presenter);
                 else
+                {
+                    WMIClassList.Instance.EnumLocalMachineClasses();
                     mainForm = new WMIForm(presenter);
+                }
                 Application.Run(mainForm);
             }
         }

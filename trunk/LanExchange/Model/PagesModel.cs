@@ -160,15 +160,14 @@ namespace LanExchange.Model
                 if (model.SelectedIndex != -1)
                     SelectedIndex = model.SelectedIndex;
             }
-            else
-                //create default tabs
-                foreach (var root in App.PanelItemTypes.DefaultRoots)
-                {
-                    var info = App.Resolve<IPanelModel>();
-                    info.TabName = root.Name;
-                    info.SetDefaultRoot(root);
-                    AddTab(info);
-                }
+            //create default tabs
+            foreach (var root in App.PanelItemTypes.DefaultRoots)
+            {
+                var info = App.Resolve<IPanelModel>();
+                info.TabName = root.Name;
+                info.SetDefaultRoot(root);
+                AddTab(info);
+            }
         }
 
         public void SaveSettings()

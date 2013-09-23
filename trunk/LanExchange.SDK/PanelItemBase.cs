@@ -128,6 +128,9 @@ namespace LanExchange.SDK
                 var sb = new StringBuilder();
                 for (int i = 1; i < CountColumns; i++)
                 {
+                    var value = this[i];
+                    if (value == null || string.IsNullOrEmpty(value.ToString()))
+                        continue;
                     if (sb.Length > 0)
                         sb.AppendLine();
                     sb.Append(this[i]);

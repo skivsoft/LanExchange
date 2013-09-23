@@ -35,8 +35,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.bDefault = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.LB1 = new System.Windows.Forms.ListBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.LB2 = new System.Windows.Forms.ListBox();
             this.pTop.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -83,7 +83,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(90, 23);
             this.button1.TabIndex = 8;
-            this.button1.Text = "Сохранить";
+            this.button1.Text = "Save";
             this.button1.UseVisualStyleBackColor = true;
             // 
             // button2
@@ -94,7 +94,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(90, 23);
             this.button2.TabIndex = 9;
-            this.button2.Text = "Отмена";
+            this.button2.Text = "Cancel";
             this.button2.UseVisualStyleBackColor = true;
             // 
             // bDefault
@@ -104,7 +104,7 @@
             this.bDefault.Name = "bDefault";
             this.bDefault.Size = new System.Drawing.Size(90, 23);
             this.bDefault.TabIndex = 10;
-            this.bDefault.Text = "По умолчанию";
+            this.bDefault.Text = "Reset to default";
             this.bDefault.UseVisualStyleBackColor = true;
             // 
             // groupBox1
@@ -115,17 +115,7 @@
             this.groupBox1.Size = new System.Drawing.Size(310, 320);
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Доступные классы";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.LB2);
-            this.groupBox2.Location = new System.Drawing.Point(372, 106);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(310, 320);
-            this.groupBox2.TabIndex = 12;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Выбранные классы";
+            this.groupBox1.Text = "Available classes";
             // 
             // LB1
             // 
@@ -137,6 +127,16 @@
             this.LB1.Size = new System.Drawing.Size(304, 301);
             this.LB1.TabIndex = 0;
             this.LB1.SelectedIndexChanged += new System.EventHandler(this.LB_SelectedIndexChanged);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.LB2);
+            this.groupBox2.Location = new System.Drawing.Point(372, 106);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(310, 320);
+            this.groupBox2.TabIndex = 12;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Selected classes";
             // 
             // LB2
             // 
@@ -165,7 +165,7 @@
             this.MinimizeBox = false;
             this.Name = "WMISetupForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Выбор используемых классов WMI";
+            this.Text = "Select WMI Classes";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WMISetupForm_KeyDown);
             this.pTop.ResumeLayout(false);
             this.pTop.PerformLayout();

@@ -49,10 +49,10 @@
             this.lDescription = new System.Windows.Forms.Label();
             this.lClassName = new System.Windows.Forms.Label();
             this.menuMAIN = new System.Windows.Forms.MenuStrip();
-            this.classToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.propertyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.methodToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mClass = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mProperty = new System.Windows.Forms.ToolStripMenuItem();
+            this.mMethod = new System.Windows.Forms.ToolStripMenuItem();
             this.Status.SuspendLayout();
             this.pLeft.SuspendLayout();
             this.pTop.SuspendLayout();
@@ -70,16 +70,16 @@
             this.lProps,
             this.toolStripStatusLabel5,
             this.lMethods});
-            this.Status.Location = new System.Drawing.Point(0, 540);
+            this.Status.Location = new System.Drawing.Point(0, 549);
             this.Status.Name = "Status";
-            this.Status.Size = new System.Drawing.Size(784, 22);
+            this.Status.Size = new System.Drawing.Size(792, 22);
             this.Status.TabIndex = 3;
             this.Status.Text = "statusStrip1";
             // 
             // lStatus
             // 
             this.lStatus.Name = "lStatus";
-            this.lStatus.Size = new System.Drawing.Size(700, 17);
+            this.lStatus.Size = new System.Drawing.Size(708, 17);
             this.lStatus.Spring = true;
             this.lStatus.Text = "    ";
             this.lStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -137,7 +137,7 @@
             this.pLeft.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pLeft.Location = new System.Drawing.Point(0, 124);
             this.pLeft.Name = "pLeft";
-            this.pLeft.Size = new System.Drawing.Size(784, 416);
+            this.pLeft.Size = new System.Drawing.Size(792, 425);
             this.pLeft.TabIndex = 4;
             // 
             // lvInstances
@@ -149,7 +149,7 @@
             this.lvInstances.HideSelection = false;
             this.lvInstances.Location = new System.Drawing.Point(0, 0);
             this.lvInstances.Name = "lvInstances";
-            this.lvInstances.Size = new System.Drawing.Size(478, 416);
+            this.lvInstances.Size = new System.Drawing.Size(486, 425);
             this.lvInstances.TabIndex = 8;
             this.lvInstances.UseCompatibleStateImageBehavior = false;
             this.lvInstances.View = System.Windows.Forms.View.Details;
@@ -165,9 +165,9 @@
             // TheSplitter
             // 
             this.TheSplitter.Dock = System.Windows.Forms.DockStyle.Right;
-            this.TheSplitter.Location = new System.Drawing.Point(478, 0);
+            this.TheSplitter.Location = new System.Drawing.Point(486, 0);
             this.TheSplitter.Name = "TheSplitter";
-            this.TheSplitter.Size = new System.Drawing.Size(6, 416);
+            this.TheSplitter.Size = new System.Drawing.Size(6, 425);
             this.TheSplitter.TabIndex = 9;
             this.TheSplitter.TabStop = false;
             // 
@@ -175,10 +175,10 @@
             // 
             this.PropGrid.ContextMenuStrip = this.menuCommands;
             this.PropGrid.Dock = System.Windows.Forms.DockStyle.Right;
-            this.PropGrid.Location = new System.Drawing.Point(484, 0);
+            this.PropGrid.Location = new System.Drawing.Point(492, 0);
             this.PropGrid.Name = "PropGrid";
             this.PropGrid.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
-            this.PropGrid.Size = new System.Drawing.Size(300, 416);
+            this.PropGrid.Size = new System.Drawing.Size(300, 425);
             this.PropGrid.TabIndex = 5;
             this.PropGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.PropGrid_PropertyValueChanged);
             // 
@@ -191,7 +191,7 @@
             this.pTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pTop.Location = new System.Drawing.Point(0, 24);
             this.pTop.Name = "pTop";
-            this.pTop.Size = new System.Drawing.Size(784, 100);
+            this.pTop.Size = new System.Drawing.Size(792, 100);
             this.pTop.TabIndex = 5;
             // 
             // menuClasses
@@ -215,7 +215,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lDescription.Location = new System.Drawing.Point(12, 37);
             this.lDescription.Name = "lDescription";
-            this.lDescription.Size = new System.Drawing.Size(760, 49);
+            this.lDescription.Size = new System.Drawing.Size(768, 49);
             this.lDescription.TabIndex = 1;
             this.lDescription.Text = "    ";
             // 
@@ -232,48 +232,49 @@
             // menuMAIN
             // 
             this.menuMAIN.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.classToolStripMenuItem,
-            this.propertyToolStripMenuItem,
-            this.methodToolStripMenuItem});
+            this.mClass,
+            this.mProperty,
+            this.mMethod});
             this.menuMAIN.Location = new System.Drawing.Point(0, 0);
             this.menuMAIN.Name = "menuMAIN";
-            this.menuMAIN.Size = new System.Drawing.Size(784, 24);
+            this.menuMAIN.Size = new System.Drawing.Size(792, 24);
             this.menuMAIN.TabIndex = 6;
             this.menuMAIN.Text = "menuStrip1";
+            this.menuMAIN.Visible = false;
             // 
-            // classToolStripMenuItem
+            // mClass
             // 
-            this.classToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mClass.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exitToolStripMenuItem});
-            this.classToolStripMenuItem.Name = "classToolStripMenuItem";
-            this.classToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.classToolStripMenuItem.Text = "Class";
-            // 
-            // propertyToolStripMenuItem
-            // 
-            this.propertyToolStripMenuItem.Name = "propertyToolStripMenuItem";
-            this.propertyToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.propertyToolStripMenuItem.Text = "Property";
-            // 
-            // methodToolStripMenuItem
-            // 
-            this.methodToolStripMenuItem.Name = "methodToolStripMenuItem";
-            this.methodToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
-            this.methodToolStripMenuItem.Text = "Command";
+            this.mClass.Name = "mClass";
+            this.mClass.Size = new System.Drawing.Size(44, 20);
+            this.mClass.Text = "Class";
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F10;
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // mProperty
+            // 
+            this.mProperty.Name = "mProperty";
+            this.mProperty.Size = new System.Drawing.Size(61, 20);
+            this.mProperty.Text = "Property";
+            // 
+            // mMethod
+            // 
+            this.mMethod.Name = "mMethod";
+            this.mMethod.Size = new System.Drawing.Size(55, 20);
+            this.mMethod.Text = "Method";
             // 
             // WMIForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 562);
+            this.ClientSize = new System.Drawing.Size(792, 571);
             this.Controls.Add(this.pLeft);
             this.Controls.Add(this.Status);
             this.Controls.Add(this.pTop);
@@ -321,10 +322,10 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel5;
         private System.Windows.Forms.ToolStripStatusLabel lMethods;
         private System.Windows.Forms.MenuStrip menuMAIN;
-        private System.Windows.Forms.ToolStripMenuItem classToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mClass;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem propertyToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem methodToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mProperty;
+        private System.Windows.Forms.ToolStripMenuItem mMethod;
 
     }
 }

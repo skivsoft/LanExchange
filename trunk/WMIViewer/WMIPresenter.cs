@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Management;
@@ -17,6 +18,12 @@ namespace WMIViewer
         {
             Args = args;
             View = view;
+            WMIClassList.Instance.IncludeClasses.Add("Win32_Desktop");
+            WMIClassList.Instance.IncludeClasses.Add("Win32_DesktopMonitor");
+            WMIClassList.Instance.IncludeClasses.Add("Win32_DiskDrive");
+            WMIClassList.Instance.IncludeClasses.Add("Win32_BIOS");
+            WMIClassList.Instance.IncludeClasses.Add("Win32_Processor");
+            WMIClassList.Instance.IncludeClasses.Add("Win32_PhysicalMemory");
         }
 
         public WMIArgs Args { get; private set; }
@@ -226,9 +233,9 @@ namespace WMIViewer
         }
 
         [Localizable(false)]
-        public void BuildContextMenu()
+        public void BuildContextMenu(ToolStripItemCollection items)
         {
-            View.MENU.Items.Clear();
+            items.Clear();
             if (m_Class == null) return;
             try
             {
@@ -240,7 +247,7 @@ namespace WMIViewer
                     menuItem.Text = method.ToString();
                     menuItem.Tag = md;
                     menuItem.Click += Method_Click;
-                    View.MENU.Items.Add(menuItem);
+                    items.Add(menuItem);
                 }
             }
             catch (Exception ex)
