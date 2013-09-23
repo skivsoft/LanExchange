@@ -88,7 +88,7 @@
             // 
             this.mCopySelected.Name = "mCopySelected";
             this.mCopySelected.ShortcutKeyDisplayString = "Ctrl+C";
-            this.mCopySelected.Size = new System.Drawing.Size(222, 22);
+            this.mCopySelected.Size = new System.Drawing.Size(220, 22);
             this.mCopySelected.Text = "Copy selected items";
             this.mCopySelected.Click += new System.EventHandler(this.CopySelectedOnClick);
             // 
