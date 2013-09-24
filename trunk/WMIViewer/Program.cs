@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace WMIViewer
@@ -11,22 +10,27 @@ namespace WMIViewer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
             var wmiArgs = WMIArgs.ParseFromCmdLine(args);
-
             var presenter = new WMIPresenter(wmiArgs, null);
-
             if (presenter.ConnectToComputer())
             {
                 Form mainForm;
-                if (wmiArgs.EditPropertyMode)
-                    mainForm = new WMIEditProperty(presenter);
-                else
+                switch (wmiArgs.StartCmd)
                 {
-                    WMIClassList.Instance.EnumLocalMachineClasses();
-                    mainForm = new WMIForm(presenter);
+                    case WMIStartCommand.EditProperty:
+                        mainForm = new WMIEditProperty(presenter);
+                        mainForm.ShowDialog();
+                        break;
+                    case WMIStartCommand.ExecuteMethod:
+                        mainForm = new WMIMethodForm(presenter);
+                        Application.Run(mainForm);
+                        break;
+                    default:
+                        WMIClassList.Instance.EnumLocalMachineClasses();
+                        mainForm = new WMIForm(presenter);
+                        Application.Run(mainForm);
+                        break;
                 }
-                Application.Run(mainForm);
             }
         }
     }

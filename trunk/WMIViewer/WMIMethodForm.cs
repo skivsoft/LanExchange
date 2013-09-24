@@ -7,12 +7,17 @@ using System.ComponentModel;
 
 namespace WMIViewer
 {
-    public partial class WMIMethodForm : Form
+    public partial class WMIMethodForm : Form, IWMIView
     {
+        private readonly WMIPresenter m_Presenter;
+        private readonly WMIArgs m_Args;
         private bool m_OutParamPresent;
 
-        public WMIMethodForm()
+        public WMIMethodForm(WMIPresenter presenter)
         {
+            m_Presenter = presenter;
+            m_Presenter.View = this;
+            m_Args = m_Presenter.Args;
             InitializeComponent();
         }
 
@@ -182,6 +187,11 @@ namespace WMIViewer
         private void timerOK_Tick(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
+        }
+
+        public ListView LV
+        {
+            get { return null; }
         }
     }
 }

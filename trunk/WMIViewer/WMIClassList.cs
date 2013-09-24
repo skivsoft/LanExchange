@@ -85,8 +85,7 @@ namespace WMIViewer
         {
             if (m_Namespace != null && m_Namespace.IsConnected)
                 return true;
-            const string connectionString = WMISettings.DefaultNamespace;
-            m_Namespace = new ManagementScope(connectionString, null);
+            m_Namespace = new ManagementScope(WMIArgs.DefaultNamespaceName, null);
             try
             {
                 m_Namespace.Connect();
@@ -109,7 +108,7 @@ namespace WMIViewer
                 if (!ConnectToLocalMachine()) return string.Empty;
                 scope = m_Namespace;
             }
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             try
             {
                 // Gets the property qualifiers.
@@ -144,7 +143,7 @@ namespace WMIViewer
                 if (!ConnectToLocalMachine()) return string.Empty;
                 scope = m_Namespace;
             }
-            string Result = "";
+            var result = string.Empty;
             try
             {
                 // Gets the property qualifiers.
@@ -157,7 +156,7 @@ namespace WMIViewer
                     foreach (var dataObject in mc.Qualifiers)
                         if (dataObject.Name.Equals("Description"))
                         {
-                            Result = dataObject.Value.ToString();
+                            result = dataObject.Value.ToString();
                             break;
                         }
                 }
@@ -166,8 +165,83 @@ namespace WMIViewer
             {
                 Debug.Print(ex.Message);
             }
-            return Result;
+            return result;
 
+        }
+
+        public string GetPropertyDescription(string className, string propName, out bool editable)
+        {
+            editable = false;
+            if (!ConnectToLocalMachine()) return string.Empty;
+            var result = string.Empty;
+            try
+            {
+                // Gets the property qualifiers.
+                var op = new ObjectGetOptions(null, TimeSpan.MaxValue, true);
+
+                var path = new ManagementPath(className);
+                using (var mc = new ManagementClass(m_Namespace, path, op))
+                {
+                    mc.Options.UseAmendedQualifiers = true;
+                    foreach (var dataObject in mc.Properties[propName].Qualifiers)
+                        if (dataObject.Name.Equals("write"))
+                            editable = true;
+                        else
+                        if (dataObject.Name.Equals("Description"))
+                            result = dataObject.Value.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.Print(ex.Message);
+            }
+            return result;
+        }
+
+        public string GetPropertyValue(ManagementScope scope, string className, string propName)
+        {
+            var result = string.Empty;
+            try
+            {
+                scope.Connect();
+                var query = new ObjectQuery("SELECT * FROM " + className);
+                using (var searcher = new ManagementObjectSearcher(scope, query))
+                {
+                    foreach (ManagementObject queryObj in searcher.Get())
+                    {
+                        result = queryObj[propName].ToString();
+                        break;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Debug.Print(ex.Message);
+            }
+            return result;
+        }
+
+        public void SetPropertyValue(ManagementScope scope, string className, string propName, string value)
+        {
+            try
+            {
+                scope.Connect();
+                var query = new ObjectQuery("SELECT * FROM " + className);
+                using (var searcher = new ManagementObjectSearcher(scope, query))
+                {
+                    foreach (ManagementObject queryObj in searcher.Get())
+                    {
+                        queryObj[propName] = value;
+                        queryObj.Put();
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.Print(ex.Message);
+            }
         }
 
         public void EnumLocalMachineClasses()

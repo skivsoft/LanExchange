@@ -28,19 +28,146 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WMIEditProperty));
+            this.pTop = new System.Windows.Forms.Panel();
+            this.lDescription = new System.Windows.Forms.Label();
+            this.lProperty = new System.Windows.Forms.Label();
+            this.eProp = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.lClass = new System.Windows.Forms.Label();
+            this.eClass = new System.Windows.Forms.TextBox();
+            this.pTop.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // pTop
+            // 
+            this.pTop.BackColor = System.Drawing.Color.White;
+            this.pTop.Controls.Add(this.lDescription);
+            this.pTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pTop.Location = new System.Drawing.Point(0, 0);
+            this.pTop.Name = "pTop";
+            this.pTop.Size = new System.Drawing.Size(494, 80);
+            this.pTop.TabIndex = 0;
+            // 
+            // lDescription
+            // 
+            this.lDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lDescription.Location = new System.Drawing.Point(12, 9);
+            this.lDescription.Name = "lDescription";
+            this.lDescription.Size = new System.Drawing.Size(470, 57);
+            this.lDescription.TabIndex = 1;
+            this.lDescription.Text = "    ";
+            // 
+            // lProperty
+            // 
+            this.lProperty.AutoSize = true;
+            this.lProperty.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lProperty.Location = new System.Drawing.Point(12, 133);
+            this.lProperty.Name = "lProperty";
+            this.lProperty.Size = new System.Drawing.Size(33, 13);
+            this.lProperty.TabIndex = 2;
+            this.lProperty.Text = "Prop";
+            // 
+            // eProp
+            // 
+            this.eProp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.eProp.Location = new System.Drawing.Point(15, 150);
+            this.eProp.Name = "eProp";
+            this.eProp.Size = new System.Drawing.Size(467, 20);
+            this.eProp.TabIndex = 3;
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.button1.Location = new System.Drawing.Point(316, 186);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "OK";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.button2.Location = new System.Drawing.Point(407, 186);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 5;
+            this.button2.Text = "Cancel";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // panel1
+            // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 80);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(494, 1);
+            this.panel1.TabIndex = 6;
+            // 
+            // lClass
+            // 
+            this.lClass.AutoSize = true;
+            this.lClass.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lClass.Location = new System.Drawing.Point(12, 91);
+            this.lClass.Name = "lClass";
+            this.lClass.Size = new System.Drawing.Size(37, 13);
+            this.lClass.TabIndex = 7;
+            this.lClass.Text = "Class";
+            // 
+            // eClass
+            // 
+            this.eClass.Location = new System.Drawing.Point(15, 107);
+            this.eClass.Name = "eClass";
+            this.eClass.ReadOnly = true;
+            this.eClass.Size = new System.Drawing.Size(467, 20);
+            this.eClass.TabIndex = 8;
             // 
             // WMIEditProperty
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(571, 406);
+            this.ClientSize = new System.Drawing.Size(494, 223);
+            this.Controls.Add(this.eClass);
+            this.Controls.Add(this.lClass);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.eProp);
+            this.Controls.Add(this.lProperty);
+            this.Controls.Add(this.pTop);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
+            this.MaximizeBox = false;
             this.Name = "WMIEditProperty";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "WMIEditProperty";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WMIEditProperty_KeyDown);
+            this.pTop.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Panel pTop;
+        private System.Windows.Forms.Label lDescription;
+        private System.Windows.Forms.Label lProperty;
+        private System.Windows.Forms.TextBox eProp;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label lClass;
+        private System.Windows.Forms.TextBox eClass;
     }
 }
