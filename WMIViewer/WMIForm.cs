@@ -33,10 +33,12 @@ namespace WMIViewer
 
         public void UpdateTitle()
         {
-            if (string.IsNullOrEmpty(m_Args.Comment))
-                Text = @"\\" + m_Args.Name;
+            var description = WMIClassList.Instance.GetPropertyValue(m_Presenter.Namespace, "Win32_OperatingSystem",
+                "Description");
+            if (string.IsNullOrEmpty(description))
+                Text = @"\\" + m_Args.ComputerName;
             else
-                Text = String.Format(@"\\{0} — {1}", m_Args.Name, m_Args.Comment);
+                Text = string.Format(@"\\{0} — {1}", m_Args.ComputerName, description);
         }
 
         public WMIPresenter GetPresenter()
@@ -297,7 +299,7 @@ namespace WMIViewer
             if (PropName == null) return;
             object PropValue = e.ChangedItem.Value;
             string Caption = String.Format("Editing property {0}", PropName);
-            string Message = String.Format("Computer name: \\{0}\n\nOld value: «{1}»\nNew value: «{2}»", m_Args.Name, e.OldValue, PropValue);
+            string Message = String.Format("Computer name: \\{0}\n\nOld value: «{1}»\nNew value: «{2}»", m_Args.ComputerName, e.OldValue, PropValue);
             try
             {
                 // trying to change wmi property
@@ -306,10 +308,7 @@ namespace WMIViewer
 
                 // update computer comment if we changes Win32_OperatingSystme.Description
                 if (CurrentWMIClass.Equals("Win32_OperatingSystem") && PropName.Equals("Description"))
-                {
-                    m_Args.Comment = PropValue.ToString();
                     UpdateTitle();
-                }
 
                 // property has been changed
                 Message += String.Format("\n\nProperty {0} successfully changed.", PropName);

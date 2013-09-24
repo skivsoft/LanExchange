@@ -135,9 +135,9 @@
             this.pLeft.Controls.Add(this.TheSplitter);
             this.pLeft.Controls.Add(this.PropGrid);
             this.pLeft.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pLeft.Location = new System.Drawing.Point(0, 124);
+            this.pLeft.Location = new System.Drawing.Point(0, 100);
             this.pLeft.Name = "pLeft";
-            this.pLeft.Size = new System.Drawing.Size(792, 425);
+            this.pLeft.Size = new System.Drawing.Size(792, 449);
             this.pLeft.TabIndex = 4;
             // 
             // lvInstances
@@ -149,7 +149,7 @@
             this.lvInstances.HideSelection = false;
             this.lvInstances.Location = new System.Drawing.Point(0, 0);
             this.lvInstances.Name = "lvInstances";
-            this.lvInstances.Size = new System.Drawing.Size(486, 425);
+            this.lvInstances.Size = new System.Drawing.Size(486, 449);
             this.lvInstances.TabIndex = 8;
             this.lvInstances.UseCompatibleStateImageBehavior = false;
             this.lvInstances.View = System.Windows.Forms.View.Details;
@@ -167,7 +167,7 @@
             this.TheSplitter.Dock = System.Windows.Forms.DockStyle.Right;
             this.TheSplitter.Location = new System.Drawing.Point(486, 0);
             this.TheSplitter.Name = "TheSplitter";
-            this.TheSplitter.Size = new System.Drawing.Size(6, 425);
+            this.TheSplitter.Size = new System.Drawing.Size(6, 449);
             this.TheSplitter.TabIndex = 9;
             this.TheSplitter.TabStop = false;
             // 
@@ -178,7 +178,7 @@
             this.PropGrid.Location = new System.Drawing.Point(492, 0);
             this.PropGrid.Name = "PropGrid";
             this.PropGrid.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
-            this.PropGrid.Size = new System.Drawing.Size(300, 425);
+            this.PropGrid.Size = new System.Drawing.Size(300, 449);
             this.PropGrid.TabIndex = 5;
             this.PropGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.PropGrid_PropertyValueChanged);
             // 
@@ -189,7 +189,7 @@
             this.pTop.Controls.Add(this.lDescription);
             this.pTop.Controls.Add(this.lClassName);
             this.pTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pTop.Location = new System.Drawing.Point(0, 24);
+            this.pTop.Location = new System.Drawing.Point(0, 0);
             this.pTop.Name = "pTop";
             this.pTop.Size = new System.Drawing.Size(792, 100);
             this.pTop.TabIndex = 5;

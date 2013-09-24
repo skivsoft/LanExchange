@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Management;
@@ -41,16 +40,15 @@ namespace WMIViewer
         [Localizable(false)]
         private string MakeConnectionString()
         {
-            if (Args == null || 
-                String.Compare(Args.Name, SystemInformation.ComputerName, StringComparison.OrdinalIgnoreCase) == 0)
-                return WMISettings.DefaultNamespace;
-            return String.Format(@"\\{0}\{1}", Args.Name, WMISettings.DefaultNamespace);
+            if (string.Compare(Args.ComputerName, SystemInformation.ComputerName, StringComparison.OrdinalIgnoreCase) == 0)
+                return Args.NamespaceName;
+            return string.Format(@"\\{0}\{1}", Args.ComputerName, Args.NamespaceName);
         }
 
         private void ShowFirewallConnectionError()
         {
             MessageBox.Show(
-                String.Format("Unable to connect to computer \\\\{0}.\nPossible connection has been blocked by firewall.", Args.Name),
+                string.Format("Unable to connect to computer \\\\{0}.\nPossible connection has been blocked by firewall.", Args.ComputerName),
                 "WMI connection error",
                 MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
         }
@@ -58,7 +56,7 @@ namespace WMIViewer
         private void ShowCommonConnectionError(Exception ex)
         {
             MessageBox.Show(
-                String.Format("Unable to connect to computer \\\\{0}.\n{1}", Args.Name, ex.Message),
+                string.Format("Unable to connect to computer \\\\{0}.\n{1}", Args.ComputerName, ex.Message),
                 "WMI connection error",
                 MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
         }
@@ -93,7 +91,7 @@ namespace WMIViewer
                         if (autoLogon)
                             WMIAuthForm.ClearSavedPassword();
 
-                        form.SetComputerName(Args.Name);
+                        form.SetComputerName(Args.ComputerName);
                         autoLogon = form.AutoLogon();
                         bool ok;
                         if (autoLogon)
@@ -222,7 +220,7 @@ namespace WMIViewer
             if (menuItem == null) return;
             var md = menuItem.Tag as MethodData;
             if (md == null) return;
-            using (var form = new WMIMethodForm())
+            using (var form = new WMIMethodForm(this))
             {
                 form.WMIClass = m_Class;
                 form.WMIObject = WMIObject;
