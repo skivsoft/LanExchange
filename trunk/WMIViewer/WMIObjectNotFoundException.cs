@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Globalization;
 
 namespace WMIViewer
 {
-    class WMIObjectNotFoundException : Exception
+    [Serializable]
+    public sealed class WMIObjectNotFoundException : Exception
     {
-        private string m_WMIObject;
+        private readonly string m_WMIObject;
 
         public WMIObjectNotFoundException(string wmiObject)
         {
@@ -13,7 +15,7 @@ namespace WMIViewer
 
         public override string Message
         {
-            get { return string.Format("WMI property \"{0}\" not found.", m_WMIObject ); }
+            get { return string.Format(CultureInfo.InvariantCulture, "WMI property \"{0}\" not found.", m_WMIObject); }
         }
     }
 }

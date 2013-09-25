@@ -1,11 +1,12 @@
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace WMIViewer
 {
     [Localizable(false)]
-    public class DynamicObject : ICustomTypeDescriptor
+    public sealed class DynamicObject : ICustomTypeDescriptor
 	{
         private string m_Filter = string.Empty;
         private readonly PropertyDescriptorCollection m_FilteredPropertyDescriptors = new PropertyDescriptorCollection(null);
@@ -92,7 +93,7 @@ namespace WMIViewer
             if (descriptor != null)
                 m_FullPropertyDescriptors.Remove(descriptor);
             else
-                throw new Exception("Property is not found");
+                throw new WMIObjectNotFoundException(propertyName);
         }
 
 
@@ -112,7 +113,7 @@ namespace WMIViewer
             m_FilteredPropertyDescriptors.Clear();
 
             foreach (var descriptor in m_FullPropertyDescriptors)
-                if (((PropertyDescriptor)descriptor).Name.ToLower().IndexOf(filter, StringComparison.Ordinal) > -1)
+                if (((PropertyDescriptor)descriptor).Name.ToLower(CultureInfo.InvariantCulture).IndexOf(filter, StringComparison.Ordinal) > -1)
                     m_FilteredPropertyDescriptors.Add(((PropertyDescriptor)descriptor));
         }
 
@@ -128,7 +129,7 @@ namespace WMIViewer
             var descriptor = m_FullPropertyDescriptors.Find(propertyName, true);
             if (descriptor != null)
                 return descriptor.GetValue(new object());
-            throw new Exception("Property is not found");
+            throw new WMIObjectNotFoundException(propertyName);
         }
 
         private void SetPropertyValue(string propertyName, object value)
@@ -137,7 +138,7 @@ namespace WMIViewer
             if (descriptor != null)
                 descriptor.SetValue(null, value);
             else
-                throw new Exception("Property is not found");
+                throw new WMIObjectNotFoundException(propertyName);
         }
 
 
@@ -206,82 +207,6 @@ namespace WMIViewer
 
 		#endregion
 	}
-
-    public class GenericPropertyDescriptor<T> : PropertyDescriptor
-    {
-        private T m_Value;
-
-        public GenericPropertyDescriptor(string name, Attribute[] attrs)
-            : base(name, attrs)
-        {
-        }
-
-        public GenericPropertyDescriptor(string name, T value, Attribute[] attrs)
-            : base(name, attrs)
-        {
-            m_Value = value;
-        }
-        protected GenericPropertyDescriptor(MemberDescriptor descr)
-            : base(descr)
-        {
-            
-        }
-        protected GenericPropertyDescriptor(MemberDescriptor descr, Attribute[] attrs)
-            : base(descr, attrs)
-        {
-            
-        }
-         
-
-        public override bool CanResetValue(object component)
-        {
-            return false;
-        }
-
-        public override Type ComponentType
-        {
-            get
-            {
-                return typeof(GenericPropertyDescriptor<T>);
-            }
-        }
-
-        public override object GetValue(object component)
-        {
-            return m_Value;
-        }
-
-        public override bool IsReadOnly
-        {
-            get
-            {
-                return Array.Exists(AttributeArray, attr => attr is ReadOnlyAttribute);
-            }
-        }
-
-        public override Type PropertyType
-        {
-            get
-            {
-                return typeof(T);
-            }
-        }
-
-        public override void ResetValue(object component)
-        {
-            SetValue(component, null);
-        }
-
-        public override void SetValue(object component, object value)
-        {
-            m_Value = (T)value;
-        }
-
-        public override bool ShouldSerializeValue(object component)
-        {
-            return false;
-        }
-    }
 
 
     //public class GenericPropertyDescriptor<T> : PropertyDescriptor

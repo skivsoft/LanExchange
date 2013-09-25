@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Management;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
@@ -41,13 +42,13 @@ namespace WMIViewer
         {
             if (string.Compare(Args.ComputerName, SystemInformation.ComputerName, StringComparison.OrdinalIgnoreCase) == 0)
                 return Args.NamespaceName;
-            return string.Format(@"\\{0}\{1}", Args.ComputerName, Args.NamespaceName);
+            return string.Format(CultureInfo.InvariantCulture, @"\\{0}\{1}", Args.ComputerName, Args.NamespaceName);
         }
 
         private void ShowFirewallConnectionError()
         {
             MessageBox.Show(
-                string.Format("Unable to connect to computer \\\\{0}.\nPossible connection has been blocked by firewall.", Args.ComputerName),
+                string.Format(CultureInfo.InvariantCulture, "Unable to connect to computer \\\\{0}.\nPossible connection has been blocked by firewall.", Args.ComputerName),
                 "WMI connection error",
                 MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
         }
@@ -55,7 +56,7 @@ namespace WMIViewer
         private void ShowCommonConnectionError(Exception ex)
         {
             MessageBox.Show(
-                string.Format("Unable to connect to computer \\\\{0}.\n{1}", Args.ComputerName, ex.Message),
+                string.Format(CultureInfo.InvariantCulture, "Unable to connect to computer \\\\{0}.\n{1}", Args.ComputerName, ex.Message),
                 "WMI connection error",
                 MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
         }
@@ -139,42 +140,12 @@ namespace WMIViewer
             View.LV.Clear();
 
             var op = new ObjectGetOptions(null, TimeSpan.MaxValue, true);
-            var mc = new ManagementClass(m_Namespace, new ManagementPath(className), op);
-            mc.Options.UseAmendedQualifiers = true;
-            m_Class = mc;
-            mc.Dispose();
-
-            bool bCheckError = true;
-            try
+            using (var mc = new ManagementClass(m_Namespace, new ManagementPath(className), op))
             {
-                View.LV.Columns.Add("Name");
-                View.LV.Columns.Add("Caption");
-                foreach (var prop in m_Class.Properties)
-                {
-                    if (prop.Name.Equals("Name")) continue;
-                    if (prop.Name.Equals("Caption")) continue;
-                    if (prop.Name.Equals("Description")) continue;
-                    if (prop.IsLocal) continue;
-                    bool isCimKey = false;
-                    foreach (var qd in prop.Qualifiers)
-                        if (qd.Name.Equals("CIM_Key"))
-                        {
-                            isCimKey = true;
-                            break;
-                        }
-                    if (isCimKey || prop.IsArray || !prop.Type.Equals(CimType.String)
-                        //|| Prop.Type.Equals(CimType.Boolean) || Prop.Type.Equals(CimType.DateTime)
-                        )
-                        continue;
-                    View.LV.Columns.Add(prop.Name);
-                }
-                bCheckError = false;
+                mc.Options.UseAmendedQualifiers = true;
+                m_Class = mc;
             }
-            catch (Exception ex)
-            {
-                Debug.Print(ex.Message);
-            }
-            if (bCheckError) return;
+            if (!SetupColumns()) return;
 
             var query = new ObjectQuery("select * from " + className);
             using (var searcher = new ManagementObjectSearcher(m_Namespace, query))
@@ -213,6 +184,41 @@ namespace WMIViewer
             }
         }
 
+        private bool SetupColumns()
+        {
+            bool checkError = true;
+            try
+            {
+                View.LV.Columns.Add("Name");
+                View.LV.Columns.Add("Caption");
+                foreach (var prop in m_Class.Properties)
+                {
+                    if (prop.Name.Equals("Name")) continue;
+                    if (prop.Name.Equals("Caption")) continue;
+                    if (prop.Name.Equals("Description")) continue;
+                    if (prop.IsLocal) continue;
+                    bool isCimKey = false;
+                    foreach (var qd in prop.Qualifiers)
+                        if (qd.Name.Equals("CIM_Key"))
+                        {
+                            isCimKey = true;
+                            break;
+                        }
+                    if (isCimKey || prop.IsArray || !prop.Type.Equals(CimType.String)
+                        //|| Prop.Type.Equals(CimType.Boolean) || Prop.Type.Equals(CimType.DateTime)
+                        )
+                        continue;
+                    View.LV.Columns.Add(prop.Name);
+                }
+                checkError = false;
+            }
+            catch (Exception ex)
+            {
+                Debug.Print(ex.Message);
+            }
+            return !checkError;
+        }
+
         public void Method_Click(object sender, EventArgs e)
         {
             var menuItem = sender as ToolStripMenuItem;
@@ -230,6 +236,7 @@ namespace WMIViewer
         }
 
         [Localizable(false)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public void BuildContextMenu(ToolStripItemCollection items)
         {
             items.Clear();

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows.Forms;
 using System.Management;
 using System.ComponentModel;
@@ -7,7 +8,7 @@ using WMIViewer.Properties;
 
 namespace WMIViewer
 {
-    public partial class WMIForm : Form
+    public sealed partial class WMIForm : Form
     {
         private readonly WMIPresenter m_Presenter;
         private readonly WMIArgs m_Args;
@@ -34,12 +35,12 @@ namespace WMIViewer
 
         public void UpdateTitle()
         {
-            var description = WMIClassList.Instance.GetPropertyValue(m_Presenter.Namespace, "Win32_OperatingSystem",
+            var description = WMIClassList.GetPropertyValue(m_Presenter.Namespace, "Win32_OperatingSystem",
                 "Description");
             if (string.IsNullOrEmpty(description))
                 Text = @"\\" + m_Args.ComputerName;
             else
-                Text = string.Format(@"\\{0} — {1}", m_Args.ComputerName, description);
+                Text = string.Format(CultureInfo.InvariantCulture, @"\\{0} — {1}", m_Args.ComputerName, description);
         }
 
         public WMIPresenter GetPresenter()
@@ -56,109 +57,109 @@ namespace WMIViewer
             if (m_Presenter.WMIObject == null) return;
 
             var dynObj = new DynamicObject();
-            foreach (PropertyData Prop in m_Presenter.WMIObject.Properties)
+            foreach (var prop in m_Presenter.WMIObject.Properties)
             {
                 // skip array of bytes
-                if (Prop.Type == CimType.UInt8 && Prop.IsArray)
+                if (prop.Type == CimType.UInt8 && prop.IsArray)
                     continue;
 
-                PropertyData ClassProp = m_Presenter.WMIClass.Properties[Prop.Name];
+                var classProp = m_Presenter.WMIClass.Properties[prop.Name];
 
                 bool isCimKey = false;
-                bool IsReadOnly = true;
-                string Description = "";
+                bool isReadOnly = true;
+                string description = "";
 
-                foreach (QualifierData qd in ClassProp.Qualifiers)
+                foreach (QualifierData qd in classProp.Qualifiers)
                 {
                     if (qd.Name.Equals("CIM_Key"))
                         isCimKey = true;
                     if (qd.Name.Equals("write"))
-                        IsReadOnly = false;
+                        isReadOnly = false;
                     if (qd.Name.Equals("Description"))
-                        Description = qd.Value.ToString();
+                        description = qd.Value.ToString();
                 }
                 if (isCimKey) continue;
-                string Category = Prop.Type.ToString();
-                switch (Prop.Type)
+                string category = prop.Type.ToString();
+                switch (prop.Type)
                 {
 
                     //     A signed 16-bit integer. This value maps to the System.Int16 type.
                     case CimType.SInt16:
-                        dynObj_AddProperty<Int16>(dynObj, Prop, Description, Category, IsReadOnly);
+                        dynObj_AddProperty<Int16>(dynObj, prop, description, category, isReadOnly);
                         break;
                     //     A signed 32-bit integer. This value maps to the System.Int32 type.
                     case CimType.SInt32:
-                        dynObj_AddProperty<Int32>(dynObj, Prop, Description, Category, IsReadOnly);
+                        dynObj_AddProperty<Int32>(dynObj, prop, description, category, isReadOnly);
                         break;
                     //     A floating-point 32-bit number. This value maps to the System.Single type.
                     case CimType.Real32:
-                        dynObj_AddProperty<Single>(dynObj, Prop, Description, Category, IsReadOnly);
+                        dynObj_AddProperty<Single>(dynObj, prop, description, category, isReadOnly);
                         break;
                     //     A floating point 64-bit number. This value maps to the System.Double type.
                     case CimType.Real64:
-                        dynObj_AddProperty<Double>(dynObj, Prop, Description, Category, IsReadOnly);
+                        dynObj_AddProperty<Double>(dynObj, prop, description, category, isReadOnly);
                         break;
                     //     A string. This value maps to the System.String type.
                     case CimType.String:
-                        dynObj_AddProperty<String>(dynObj, Prop, Description, Category, IsReadOnly);
+                        dynObj_AddProperty<String>(dynObj, prop, description, category, isReadOnly);
                         break;
                     //     A Boolean. This value maps to the System.Boolean type.
                     case CimType.Boolean:
-                        dynObj_AddProperty<Boolean>(dynObj, Prop, Description, Category, IsReadOnly);
+                        dynObj_AddProperty<Boolean>(dynObj, prop, description, category, isReadOnly);
                         break;
                     //     An embedded object. Note that embedded objects differ from references in
                     //     that the embedded object does not have a path and its lifetime is identical
                     //     to the lifetime of the containing object. This value maps to the System.Object
                     //     type.
                     case CimType.Object:
-                        dynObj_AddProperty<Object>(dynObj, Prop, Description, Category, IsReadOnly);
+                        dynObj_AddProperty<Object>(dynObj, prop, description, category, isReadOnly);
                         break;
                     //     A signed 8-bit integer. This value maps to the System.SByte type.
                     case CimType.SInt8:
-                        dynObj_AddProperty<SByte>(dynObj, Prop, Description, Category, IsReadOnly);
+                        dynObj_AddProperty<SByte>(dynObj, prop, description, category, isReadOnly);
                         break;
                     //     An unsigned 8-bit integer. This value maps to the System.Byte type.
                     case CimType.UInt8:
-                        dynObj_AddProperty<Byte>(dynObj, Prop, Description, Category, IsReadOnly);
+                        dynObj_AddProperty<Byte>(dynObj, prop, description, category, isReadOnly);
                         break;
                     //     An unsigned 16-bit integer. This value maps to the System.UInt16 type.
                     case CimType.UInt16:
-                        dynObj_AddProperty<UInt16>(dynObj, Prop, Description, Category, IsReadOnly);
+                        dynObj_AddProperty<UInt16>(dynObj, prop, description, category, isReadOnly);
                         break;
                     //     An unsigned 32-bit integer. This value maps to the System.UInt32 type.
                     case CimType.UInt32:
-                        dynObj_AddProperty<UInt32>(dynObj, Prop, Description, Category, IsReadOnly);
+                        dynObj_AddProperty<UInt32>(dynObj, prop, description, category, isReadOnly);
                         break;
                     //     A signed 64-bit integer. This value maps to the System.Int64 type.
                     case CimType.SInt64:
-                        dynObj_AddProperty<Int64>(dynObj, Prop, Description, Category, IsReadOnly);
+                        dynObj_AddProperty<Int64>(dynObj, prop, description, category, isReadOnly);
                         break;
                     //     An unsigned 64-bit integer. This value maps to the System.UInt64 type.
                     case CimType.UInt64:
-                        dynObj_AddProperty<UInt64>(dynObj, Prop, Description, Category, IsReadOnly);
+                        dynObj_AddProperty<UInt64>(dynObj, prop, description, category, isReadOnly);
                         break;
                     //     A date or time value, represented in a string in DMTF date/time format: yyyymmddHHMMSS.mmmmmmsUUU,
                     //     where yyyymmdd is the date in year/month/day; HHMMSS is the time in hours/minutes/seconds;
                     //     mmmmmm is the number of microseconds in 6 digits; and sUUU is a sign (+ or
                     //     -) and a 3-digit UTC offset. This value maps to the System.DateTime type.
                     case CimType.DateTime:
-                        if (Prop.Value == null)
-                            dynObj.AddPropertyNull<DateTime>(Prop.Name, Description, Category, IsReadOnly);
+                        if (prop.Value == null)
+                            dynObj.AddPropertyNull<DateTime>(prop.Name, description, category, isReadOnly);
                         else
-                            dynObj.AddProperty(Prop.Name, WMIUtils.ToDateTime(Prop.Value.ToString()), Description, Category, IsReadOnly);
+                            dynObj.AddProperty(prop.Name, WMIUtils.ToDateTime(prop.Value.ToString()), description, category, isReadOnly);
                         break;
                     //     A reference to another object. This is represented by a string containing
                     //     the path to the referenced object. This value maps to the System.Int16 type.
                     case CimType.Reference:
-                        dynObj_AddProperty<Int16>(dynObj, Prop, Description, Category, IsReadOnly);
+                        dynObj_AddProperty<Int16>(dynObj, prop, description, category, isReadOnly);
                         break;
                     //     A 16-bit character. This value maps to the System.Char type.
                     case CimType.Char16:
-                        dynObj_AddProperty<Char>(dynObj, Prop, Description, Category, IsReadOnly);
+                        dynObj_AddProperty<Char>(dynObj, prop, description, category, isReadOnly);
                         break;
                     default:
-                        string Value = Prop.Value == null ? null : Prop.Value.ToString();
-                        dynObj.AddProperty(String.Format("{0} : {1}", Prop.Name, Prop.Type), Value, Description, "Unknown", IsReadOnly);
+                        string value = prop.Value == null ? null : prop.Value.ToString();
+                        dynObj.AddProperty(String.Format(CultureInfo.InvariantCulture, "{0} : {1}", prop.Name, prop.Type), value, description, "Unknown", isReadOnly);
                         break;
                 }
             }
@@ -199,7 +200,7 @@ namespace WMIViewer
                     lvInstances_FocusedItemChanged(lvInstances, EventArgs.Empty);
                     lvInstances.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
                 }
-                lStatus.Text = String.Format("Items: {0}", lvInstances.Items.Count);
+                lStatus.Text = String.Format(CultureInfo.InvariantCulture, "Items: {0}", lvInstances.Items.Count);
             }
         }
 
@@ -212,9 +213,9 @@ namespace WMIViewer
 
         public void ShowStat(int classCount, int propCount, int methodCount)
         {
-            lClasses.Text = String.Format("Classes: {0}", classCount);
-            lProps.Text = String.Format("Properties: {0}", propCount);
-            lMethods.Text = String.Format("Methods: {0}", methodCount);
+            lClasses.Text = String.Format(CultureInfo.InvariantCulture, "Classes: {0}", classCount);
+            lProps.Text = String.Format(CultureInfo.InvariantCulture, "Properties: {0}", propCount);
+            lMethods.Text = String.Format(CultureInfo.InvariantCulture, "Methods: {0}", methodCount);
         }
 
         public static void dynObj_AddProperty<T>(DynamicObject dynObj, PropertyData prop, string description, string category, bool isReadOnly)
@@ -244,24 +245,25 @@ namespace WMIViewer
         //    }
         //}
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public void UpdateClassesMenu()
         {
             menuClasses.Items.Clear();
-            int Count1 = WMIClassList.Instance.Classes.Count;
-            int Count2 = WMIClassList.Instance.ReadOnlyClasses.Count;
-            foreach(string str in WMIClassList.Instance.Classes)
+            int count1 = WMIClassList.Instance.Classes.Count;
+            int count2 = WMIClassList.Instance.ReadOnlyClasses.Count;
+            foreach(var str in WMIClassList.Instance.Classes)
             {
-                ToolStripMenuItem MI = new ToolStripMenuItem { Text = str };
-                MI.Click += menuClasses_Click;
-                menuClasses.Items.Add(MI);
+                var menuItem = new ToolStripMenuItem {Text = str};
+                menuItem.Click += menuClasses_Click;
+                menuClasses.Items.Add(menuItem);
             }
-            if (Count1 > 0 && Count2 > 0)
+            if (count1 > 0 && count2 > 0)
                 menuClasses.Items.Add(new ToolStripSeparator());
-            foreach (string str in WMIClassList.Instance.ReadOnlyClasses)
+            foreach (var str in WMIClassList.Instance.ReadOnlyClasses)
             {
-                ToolStripMenuItem MI = new ToolStripMenuItem { Text = str };
-                MI.Click += menuClasses_Click;
-                menuClasses.Items.Add(MI);
+                var menuItem = new ToolStripMenuItem { Text = str };
+                menuItem.Click += menuClasses_Click;
+                menuClasses.Items.Add(menuItem);
             }
             // TODO uncomment setup wmi-classes
             //if (Count1 + Count2 > 0)
@@ -285,9 +287,9 @@ namespace WMIViewer
                 UpdateClassesMenu();
                 m_MenuUpdated = true;
             }
-            foreach (var MI in menuClasses.Items)
+            foreach (var menuItem in menuClasses.Items)
             {
-                var mi = MI as ToolStripMenuItem;
+                var mi = menuItem as ToolStripMenuItem;
                 if (mi != null)
                     mi.Checked = mi.Text.Equals(CurrentWMIClass);
             }
@@ -296,35 +298,35 @@ namespace WMIViewer
         [Localizable(false)]
         private void PropGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
-            string PropName = e.ChangedItem.Label;
-            if (PropName == null) return;
-            object PropValue = e.ChangedItem.Value;
-            string Caption = String.Format("Editing property {0}", PropName);
-            string Message = String.Format("Computer name: \\{0}\n\nOld value: «{1}»\nNew value: «{2}»", m_Args.ComputerName, e.OldValue, PropValue);
+            string propName = e.ChangedItem.Label;
+            if (propName == null) return;
+            object propValue = e.ChangedItem.Value;
+            string caption = String.Format(CultureInfo.InvariantCulture, "Editing property {0}", propName);
+            string message = String.Format(CultureInfo.InvariantCulture, "Computer name: \\{0}\n\nOld value: «{1}»\nNew value: «{2}»", m_Args.ComputerName, e.OldValue, propValue);
             try
             {
                 // trying to change wmi property
-                m_Presenter.WMIObject[PropName] = PropValue;
+                m_Presenter.WMIObject[propName] = propValue;
                 m_Presenter.WMIObject.Put();
 
                 // update computer comment if we changes Win32_OperatingSystme.Description
-                if (CurrentWMIClass.Equals("Win32_OperatingSystem") && PropName.Equals("Description"))
+                if (CurrentWMIClass.Equals("Win32_OperatingSystem") && propName.Equals("Description"))
                     UpdateTitle();
 
                 // property has been changed
-                Message += String.Format("\n\nProperty {0} successfully changed.", PropName);
-                MessageBox.Show(Message, Caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                message += String.Format(CultureInfo.InvariantCulture, "\n\nProperty {0} successfully changed.", propName);
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch(Exception ex)
             {
                 // property not changed
                 var dynObj = PropGrid.SelectedObject as DynamicObject;
                 if (dynObj != null)
-                    dynObj[PropName] = e.OldValue;
-                Message += "\n\n" + ex.Message;
+                    dynObj[propName] = e.OldValue;
+                message += "\n\n" + ex.Message;
                 if (ex.InnerException != null)
-                    Message += "\n\n" + ex.InnerException.Message;
-                MessageBox.Show(Message, Caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    message += "\n\n" + ex.InnerException.Message;
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -388,11 +390,6 @@ namespace WMIViewer
                 TheSplitter.Dock = DockStyle.Right;
                 e.Handled = true;
             }
-        }
-
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Close();
         }
     }
 

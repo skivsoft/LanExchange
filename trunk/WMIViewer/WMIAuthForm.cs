@@ -1,11 +1,12 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace WMIViewer
 {
-    public partial class WMIAuthForm : Form
+    public sealed partial class WMIAuthForm : Form
     {
         private static string s_UserName;
         private static string s_UserPassword;
@@ -39,13 +40,10 @@ namespace WMIViewer
         [Localizable(false)]
         public void SetComputerName(string computerName)
         {
-            Text = String.Format(Text, computerName);
-            string userName;
-            if (AutoLogon())
-                userName = s_UserName;
-            else
-                userName = string.Format(@"{0}\{1}", Environment.UserDomainName, Environment.UserName);
-            lMessage.Text = String.Format(lMessage.Text, userName);
+            Text = String.Format(CultureInfo.InvariantCulture, Text, computerName);
+            var userName = AutoLogon() ? s_UserName : 
+                string.Format(CultureInfo.InvariantCulture, @"{0}\{1}", Environment.UserDomainName, Environment.UserName);
+            lMessage.Text = String.Format(CultureInfo.InvariantCulture, lMessage.Text, userName);
         }
 
         public string UserName

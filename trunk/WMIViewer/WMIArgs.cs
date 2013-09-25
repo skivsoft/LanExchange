@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace WMIViewer
 {
     public sealed class WMIArgs
     {
-        public static string DefaultNamespaceName = @"ROOT\CIMV2";
+        public const string DefaultNamespaceName = @"ROOT\CIMV2";
 
         public static WMIArgs ParseFromCmdLine(IEnumerable<string> args)
         {
@@ -22,45 +23,45 @@ namespace WMIViewer
             result.ComputerName = SystemInformation.ComputerName;
             foreach (var word in args)
             {
-                var wordUpper = word.ToUpper();
+                var wordUpper = word.ToUpper(CultureInfo.InvariantCulture);
                 // computer
-                if (wordUpper.StartsWith(COMPUTER_MARKER))
+                if (wordUpper.StartsWith(COMPUTER_MARKER, StringComparison.OrdinalIgnoreCase))
                 {
                     result.ComputerName = word.Remove(0, COMPUTER_MARKER.Length);
                     continue;
                 }
                 // namespace
-                if (wordUpper.StartsWith(NAMESPACE_MARKER))
+                if (wordUpper.StartsWith(NAMESPACE_MARKER, StringComparison.OrdinalIgnoreCase))
                 {
                     result.NamespaceName = word.Remove(0, NAMESPACE_MARKER.Length);
                     continue;
                 }
                 // class
-                if (wordUpper.StartsWith(CLASS_MARKER))
+                if (wordUpper.StartsWith(CLASS_MARKER, StringComparison.OrdinalIgnoreCase))
                 {
                     result.ClassName = word.Remove(0, CLASS_MARKER.Length);
                     continue;
                 }
                 // property
-                if (wordUpper.StartsWith(PROPERTY_MARKER))
+                if (wordUpper.StartsWith(PROPERTY_MARKER, StringComparison.OrdinalIgnoreCase))
                 {
                     result.PropertyName = word.Remove(0, PROPERTY_MARKER.Length);
                     continue;
                 }
                 // method
-                if (wordUpper.StartsWith(METHOD_MARKER))
+                if (wordUpper.StartsWith(METHOD_MARKER, StringComparison.OrdinalIgnoreCase))
                 {
                     result.MethodName = word.Remove(0, METHOD_MARKER.Length);
                     continue;
                 }
                 // edit property command
-                if (wordUpper.Equals(EDIT_CMD_MARKER))
+                if (wordUpper.Equals(EDIT_CMD_MARKER, StringComparison.OrdinalIgnoreCase))
                 {
                     result.StartCmd = WMIStartCommand.EditProperty;
                     continue;
                 }
                 // execute method command
-                if (wordUpper.Equals(EXECUTE_CMD_MARKER))
+                if (wordUpper.Equals(EXECUTE_CMD_MARKER, StringComparison.OrdinalIgnoreCase))
                     result.StartCmd = WMIStartCommand.ExecuteMethod;
             }
             if (string.IsNullOrEmpty(result.NamespaceName))
@@ -77,7 +78,7 @@ namespace WMIViewer
                     WMIClassList.Instance.GetPropertyDescription(result.ClassName, result.PropertyName, 
                         out editable, out propFound);
                     if (!propFound)
-                        throw new WMIObjectNotFoundException(string.Format(@"{0}\{1}.{2}", result.NamespaceName, result.ClassName, result.PropertyName));
+                        throw new WMIObjectNotFoundException(string.Format(CultureInfo.InvariantCulture, @"{0}\{1}.{2}", result.NamespaceName, result.ClassName, result.PropertyName));
                     break;
                 case WMIStartCommand.ExecuteMethod:
                     if (string.IsNullOrEmpty(result.ClassName))
@@ -85,7 +86,7 @@ namespace WMIViewer
                     if (string.IsNullOrEmpty(result.MethodName))
                         throw new WMIRequiredParamException(METHOD_MARKER);
                     if (!WMIClassList.Instance.IsMethodExists(result.ClassName, result.MethodName))
-                        throw new WMIObjectNotFoundException(string.Format(@"{0}\{1}.{2}()", result.NamespaceName, result.ClassName, result.MethodName));
+                        throw new WMIObjectNotFoundException(string.Format(CultureInfo.InvariantCulture, @"{0}\{1}.{2}()", result.NamespaceName, result.ClassName, result.MethodName));
                     break;
             }
             return result;

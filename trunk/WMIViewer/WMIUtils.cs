@@ -21,52 +21,52 @@ namespace WMIViewer
             string tempString;
             if (dmtf == null)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException("dmtfDate");
             }
             if (dmtf.Length == 0)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException("dmtfDate");
             }
             if (dmtf.Length != 25)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException("dmtfDate");
             }
             try
             {
                 tempString = dmtf.Substring(0, 4);
                 if ((String.CompareOrdinal("****", tempString) != 0))
                 {
-                    year = int.Parse(tempString);
+                    year = int.Parse(tempString, CultureInfo.InvariantCulture);
                 }
                 tempString = dmtf.Substring(4, 2);
                 if ((String.CompareOrdinal("**", tempString) != 0))
                 {
-                    month = int.Parse(tempString);
+                    month = int.Parse(tempString, CultureInfo.InvariantCulture);
                 }
                 tempString = dmtf.Substring(6, 2);
                 if ((String.CompareOrdinal("**", tempString) != 0))
                 {
-                    day = int.Parse(tempString);
+                    day = int.Parse(tempString, CultureInfo.InvariantCulture);
                 }
                 tempString = dmtf.Substring(8, 2);
                 if ((String.CompareOrdinal("**", tempString) != 0))
                 {
-                    hour = int.Parse(tempString);
+                    hour = int.Parse(tempString, CultureInfo.InvariantCulture);
                 }
                 tempString = dmtf.Substring(10, 2);
                 if ((String.CompareOrdinal("**", tempString) != 0))
                 {
-                    minute = int.Parse(tempString);
+                    minute = int.Parse(tempString, CultureInfo.InvariantCulture);
                 }
                 tempString = dmtf.Substring(12, 2);
                 if ((String.CompareOrdinal("**", tempString) != 0))
                 {
-                    second = int.Parse(tempString);
+                    second = int.Parse(tempString, CultureInfo.InvariantCulture);
                 }
                 tempString = dmtf.Substring(15, 6);
                 if ((String.CompareOrdinal("******", tempString) != 0))
                 {
-                    ticks = (long.Parse(tempString) * (TimeSpan.TicksPerMillisecond / 1000));
+                    ticks = (long.Parse(tempString, CultureInfo.InvariantCulture) * (TimeSpan.TicksPerMillisecond / 1000));
                 }
                 if (((((((((year < 0)
                             || (month < 0))
@@ -77,18 +77,18 @@ namespace WMIViewer
                             || (second < 0))
                             || (ticks < 0)))
                 {
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException("dmtfDate");
                 }
             }
             catch (Exception e)
             {
                 throw new ArgumentOutOfRangeException(null, e.Message);
             }
-            DateTime datetime = new DateTime(year, month, day, hour, minute, second, 0);
+            var datetime = new DateTime(year, month, day, hour, minute, second, 0);
             datetime = datetime.AddTicks(ticks);
             var tickOffset = TimeZone.CurrentTimeZone.GetUtcOffset(datetime);
             int utcOffset;
-            long OffsetMins = tickOffset.Ticks / TimeSpan.TicksPerMinute;
+            long offsetMins = tickOffset.Ticks / TimeSpan.TicksPerMinute;
             tempString = dmtf.Substring(22, 3);
             if (String.CompareOrdinal(tempString, "******") == 0)
                 return datetime;
@@ -96,14 +96,14 @@ namespace WMIViewer
             tempString = dmtf.Substring(21, 4);
             try
             {
-                utcOffset = int.Parse(tempString);
+                utcOffset = int.Parse(tempString, CultureInfo.InvariantCulture);
             }
             catch (Exception e)
             {
                 throw new ArgumentOutOfRangeException(null, e.Message);
             }
-            int OffsetToBeAdjusted = ((int)((OffsetMins - utcOffset)));
-            datetime = datetime.AddMinutes(OffsetToBeAdjusted);
+            var offsetToBeAdjusted = ((int)((offsetMins - utcOffset)));
+            datetime = datetime.AddMinutes(offsetToBeAdjusted);
             return datetime;
         }
 
@@ -111,8 +111,8 @@ namespace WMIViewer
         {
             string utcString;
             var tickOffset = TimeZone.CurrentTimeZone.GetUtcOffset(date);
-            long OffsetMins = tickOffset.Ticks / TimeSpan.TicksPerMinute;
-            if ((Math.Abs(OffsetMins) > 999))
+            long offsetMins = tickOffset.Ticks / TimeSpan.TicksPerMinute;
+            if ((Math.Abs(offsetMins) > 999))
             {
                 date = date.ToUniversalTime();
                 utcString = "+000";
@@ -125,7 +125,7 @@ namespace WMIViewer
                 }
                 else
                 {
-                    string strTemp = OffsetMins.ToString(CultureInfo.InvariantCulture);
+                    string strTemp = offsetMins.ToString(CultureInfo.InvariantCulture);
                     utcString = string.Concat("-", strTemp.Substring(1, (strTemp.Length - 1)).PadLeft(3, '0'));
                 }
             }

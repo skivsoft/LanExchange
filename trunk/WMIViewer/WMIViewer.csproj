@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -52,10 +53,12 @@
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="DynamicObject.cs" />
+    <Compile Include="GenericPropertyDescriptor.cs" />
     <Compile Include="MethodDataEx.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyDataEx.cs" />
+    <Compile Include="WMIParamType.cs" />
     <Compile Include="WMIRequiredParamException.cs" />
     <Compile Include="WMIAuthForm.cs">
       <SubType>Form</SubType>

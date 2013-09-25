@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Globalization;
 using System.Management;
 using System.Windows.Forms;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using WMIViewer.Properties;
 
 namespace WMIViewer
 {
-    public partial class WMIMethodForm : Form
+    public sealed partial class WMIMethodForm : Form
     {
         private readonly WMIPresenter m_Presenter;
         private readonly WMIArgs m_Args;
@@ -27,7 +28,7 @@ namespace WMIViewer
         public MethodData WMIMethod { get; set; }
 
         [Localizable(false)]
-        private string FormatQualifierValue(object value)
+        private static string FormatQualifierValue(object value)
         {
             if (value is string[])
             {
@@ -58,7 +59,7 @@ namespace WMIViewer
             {
                 foreach(var md in WMIClass.Methods)
                 {
-                    if (string.Compare(md.Name, m_Args.MethodName, StringComparison.InvariantCultureIgnoreCase) == 0)
+                    if (string.Compare(md.Name, m_Args.MethodName, StringComparison.OrdinalIgnoreCase) == 0)
                     {
                         WMIMethod = md;
                         break;
@@ -84,8 +85,8 @@ namespace WMIViewer
         public void PrepareForm()
         {
             PrepareArgs();
-            Text = String.Format(Text, m_Args.NamespaceName, WMIClass.Path.ClassName, WMIMethod.Name);
-            lMethodName.Text = String.Format("{0}()", WMIMethod.Name);
+            Text = String.Format(CultureInfo.InvariantCulture, Text, m_Args.NamespaceName, WMIClass.Path.ClassName, WMIMethod.Name);
+            lMethodName.Text = String.Format(CultureInfo.InvariantCulture, "{0}()", WMIMethod.Name);
             foreach (var qd in WMIMethod.Qualifiers)
             {
                 if (qd.Name.Equals("Description"))
@@ -94,13 +95,13 @@ namespace WMIViewer
                 }
             }
             // output method qualifiers
-            string str = String.Format("Class={0}, Method={1}", WMIClass.Path.ClassName, WMIMethod.Name);
+            string str = String.Format(CultureInfo.InvariantCulture, "Class={0}, Method={1}", WMIClass.Path.ClassName, WMIMethod.Name);
             LB.Items.Add(str);
             foreach (var qd in WMIMethod.Qualifiers)
             {
                 if (qd.Name.Equals("Description") || qd.Name.Equals("Implemented"))
                     continue;
-                str = String.Format("{0}={1}", qd.Name, FormatQualifierValue(qd.Value));
+                str = String.Format(CultureInfo.InvariantCulture, "{0}={1}", qd.Name, FormatQualifierValue(qd.Value));
                 LB.Items.Add(str);
             }
             LB.Items.Add(string.Empty);
@@ -124,16 +125,16 @@ namespace WMIViewer
             foreach (PropertyDataEx prop in propList)
             {
                 // detect return value parameter name
-                if (prop.ParamType == WMIParamType.RETURN)
+                if (prop.ParamType == WMIParamType.Return)
                     m_ReturnValueName = prop.Name;
-                if (prop.ParamType == WMIParamType.OUT)
+                if (prop.ParamType == WMIParamType.Out)
                     m_OutParamPresent = true;
-                str = String.Format("{0} {1} {2} : {3}", prop.ID, prop.ParamType, prop.Name, prop.Type);
+                str = String.Format(CultureInfo.InvariantCulture, "{0} {1} {2} : {3}", prop.ID, prop.ParamType, prop.Name, prop.Type);
                 LB.Items.Add(str);
                 foreach (var qd in prop.Qualifiers)
                     if (!excludeList.Contains(qd.Name))
                     {
-                        str = String.Format("    {0}={1}", qd.Name, FormatQualifierValue(qd.Value));
+                        str = String.Format(CultureInfo.InvariantCulture, "    {0}={1}", qd.Name, FormatQualifierValue(qd.Value));
                         LB.Items.Add(str);
                     }
             }
@@ -189,9 +190,9 @@ namespace WMIViewer
             {
                 result = WMIObject.InvokeMethod(WMIMethod.Name, inParams, options);
             }
-            catch (Exception E)
+            catch (Exception ex)
             {
-                ShowFAIL(E.Message);
+                ShowFAIL(ex.Message);
             }
             bRun.Enabled = true;
             if (result == null) return;
@@ -199,15 +200,15 @@ namespace WMIViewer
             string str;
             foreach (PropertyData pd in result.Properties)
             {
-                str = String.Format("{0} = {1}", pd.Name, pd.Value);
+                str = String.Format(CultureInfo.InvariantCulture, "{0} = {1}", pd.Name, pd.Value);
                 LB.Items.Add(str);
             }
-            PropertyDataEx resultProp = new PropertyDataEx(result.Properties[m_ReturnValueName]);
+            var resultProp = new PropertyDataEx(result.Properties[m_ReturnValueName]);
             if (resultProp.Value != null)
             {
-                int value = (int) ((UInt32) resultProp.Value);
+                var value = (int) ((UInt32) resultProp.Value);
                 var message = new Win32Exception(value).Message;
-                str = String.Format("[{0}] {1}", value, message);
+                str = String.Format(CultureInfo.InvariantCulture, "[{0}] {1}", value, message);
                 LB.Items.Add(str);
                 if (value == 0)
                 {
@@ -217,7 +218,7 @@ namespace WMIViewer
                 }
                 else
                 {
-                    ShowFAIL(String.Format("[{0}] {1}", value, message));
+                    ShowFAIL(String.Format(CultureInfo.InvariantCulture, "[{0}] {1}", value, message));
                 }
             }
         }
@@ -225,11 +226,6 @@ namespace WMIViewer
         private void timerOK_Tick(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
-        }
-
-        public ListView LV
-        {
-            get { return null; }
         }
     }
 }

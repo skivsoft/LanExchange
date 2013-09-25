@@ -4,15 +4,8 @@ using System.Management;
 
 namespace WMIViewer
 {
-    enum WMIParamType
-    {
-        IN,
-        OUT,
-        RETURN
-    }
-
     [Localizable(false)]
-    internal class PropertyDataEx : IComparable<PropertyDataEx>
+    public sealed class PropertyDataEx : IComparable<PropertyDataEx>
     {
         private readonly PropertyData m_Data;
         private readonly WMIParamType m_ParamType;
@@ -21,17 +14,17 @@ namespace WMIViewer
         public PropertyDataEx(PropertyData data)
         {
             if (data == null)
-                throw new ArgumentNullException();
+                throw new ArgumentNullException("data");
             m_Data = data;
             m_ID = 100;
             foreach (var qd in m_Data.Qualifiers)
             {
                 if (qd.Name.Equals("In") || qd.Name.Equals("in"))
-                    m_ParamType = WMIParamType.IN;
+                    m_ParamType = WMIParamType.In;
                 if (qd.Name.Equals("Out"))
-                    m_ParamType = WMIParamType.OUT;
+                    m_ParamType = WMIParamType.Out;
                 if (qd.Name.Equals("out"))
-                    m_ParamType = WMIParamType.RETURN;
+                    m_ParamType = WMIParamType.Return;
                 if (qd.Name.Equals("ID"))
                     m_ID = (int) qd.Value;
             }
