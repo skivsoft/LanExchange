@@ -6,6 +6,7 @@
     <Program Id="fsmgmt" FileName="%SystemRoot%\system32\fsmgmt.msc"/>
     <Program Id="lusrmgr" FileName="%SystemRoot%\system32\lusrmgr.msc"/>
     <Program Id="services" FileName="%SystemRoot%\system32\services.msc"/>
+    <Program Id="cmd" FileName="%SystemRoot%\system32\cmd.exe"/>
   </Programs>
   <PanelItemTypes>
     <PanelItemTypeRef Id="ComputerPanelItem">
@@ -30,6 +31,10 @@
         <ToolStripMenuItem Text="Services">
           <ProgramRef Id="services" />
           <ProgramArgs>/computer:$(Name)</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem Text="Ping Computer">
+          <ProgramRef Id="cmd" />
+          <ProgramArgs>/c ping -t $(Name)</ProgramArgs>
         </ToolStripMenuItem>
       </ContextMenuStrip>
     </PanelItemTypeRef>

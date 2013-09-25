@@ -146,8 +146,10 @@
             // 
             // WMIMethodForm
             // 
+            this.AcceptButton = this.bRun;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.bCancel;
             this.ClientSize = new System.Drawing.Size(794, 452);
             this.Controls.Add(this.pResult);
             this.Controls.Add(this.bCancel);
@@ -160,7 +162,7 @@
             this.MinimizeBox = false;
             this.Name = "WMIMethodForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Executing WMI Method {0}.{1}()";
+            this.Text = "Executing Method {0}\\{1}.{2}()";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WMIMethodForm_KeyDown);
             this.pTop.ResumeLayout(false);
             this.pTop.PerformLayout();

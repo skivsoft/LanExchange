@@ -1,10 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using WMIViewer.Properties;
 
 namespace WMIViewer
 {
-    public partial class WMIEditProperty : Form, IWMIView
+    public partial class WMIEditProperty : Form
     {
         private WMIPresenter m_Presenter;
         private WMIArgs m_Args;
@@ -13,11 +14,11 @@ namespace WMIViewer
         public WMIEditProperty(WMIPresenter presenter)
         {
             m_Presenter = presenter;
-            m_Presenter.View = this;
             m_Args = presenter.Args;
             InitializeComponent();
             UpdateTitle();
             SetArgsToControls();
+            Icon = Resources.WMIViewer16;
         }
 
         public void UpdateTitle()
@@ -37,8 +38,9 @@ namespace WMIViewer
             eClass.Text = WMIClassList.Instance.GetPropertyValue(m_Presenter.Namespace, m_Args.ClassName, "Caption");
             lProperty.Text = "&" + m_Args.PropertyName;
             bool editable;
+            bool propFound;
             lDescription.Text = WMIClassList.Instance.GetPropertyDescription(m_Args.ClassName, 
-                m_Args.PropertyName, out editable);
+                m_Args.PropertyName, out editable, out propFound);
             m_OldValue = WMIClassList.Instance.GetPropertyValue(m_Presenter.Namespace, m_Args.ClassName,
                 m_Args.PropertyName);
             eProp.Text = m_OldValue;
@@ -48,15 +50,6 @@ namespace WMIViewer
         public ListView LV
         {
             get { return null; }
-        }
-
-        private void WMIEditProperty_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Escape)
-            {
-                DialogResult = DialogResult.Cancel;
-                e.Handled = true;
-            }
         }
 
         private void button1_Click(object sender, EventArgs e)

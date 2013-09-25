@@ -28,13 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WMIEditProperty));
             this.pTop = new System.Windows.Forms.Panel();
             this.lDescription = new System.Windows.Forms.Label();
             this.lProperty = new System.Windows.Forms.Label();
             this.eProp = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.bOK = new System.Windows.Forms.Button();
+            this.bCancel = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lClass = new System.Windows.Forms.Label();
             this.eClass = new System.Windows.Forms.TextBox();
@@ -81,28 +80,28 @@
             this.eProp.Size = new System.Drawing.Size(467, 20);
             this.eProp.TabIndex = 3;
             // 
-            // button1
+            // bOK
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.button1.Location = new System.Drawing.Point(316, 186);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "OK";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.bOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.bOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.bOK.Location = new System.Drawing.Point(316, 186);
+            this.bOK.Name = "bOK";
+            this.bOK.Size = new System.Drawing.Size(75, 23);
+            this.bOK.TabIndex = 4;
+            this.bOK.Text = "OK";
+            this.bOK.UseVisualStyleBackColor = true;
+            this.bOK.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // bCancel
             // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button2.Location = new System.Drawing.Point(407, 186);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "Cancel";
-            this.button2.UseVisualStyleBackColor = true;
+            this.bCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.bCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.bCancel.Location = new System.Drawing.Point(407, 186);
+            this.bCancel.Name = "bCancel";
+            this.bCancel.Size = new System.Drawing.Size(75, 23);
+            this.bCancel.TabIndex = 5;
+            this.bCancel.Text = "Cancel";
+            this.bCancel.UseVisualStyleBackColor = true;
             // 
             // panel1
             // 
@@ -133,25 +132,25 @@
             // 
             // WMIEditProperty
             // 
+            this.AcceptButton = this.bOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.bCancel;
             this.ClientSize = new System.Drawing.Size(494, 223);
             this.Controls.Add(this.eClass);
             this.Controls.Add(this.lClass);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.bCancel);
+            this.Controls.Add(this.bOK);
             this.Controls.Add(this.eProp);
             this.Controls.Add(this.lProperty);
             this.Controls.Add(this.pTop);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.Name = "WMIEditProperty";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "WMIEditProperty";
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WMIEditProperty_KeyDown);
             this.pTop.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -164,8 +163,8 @@
         private System.Windows.Forms.Label lDescription;
         private System.Windows.Forms.Label lProperty;
         private System.Windows.Forms.TextBox eProp;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button bOK;
+        private System.Windows.Forms.Button bCancel;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label lClass;
         private System.Windows.Forms.TextBox eClass;

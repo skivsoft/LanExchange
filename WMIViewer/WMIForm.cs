@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Management;
 using System.ComponentModel;
 using System.Reflection;
+using WMIViewer.Properties;
 
 namespace WMIViewer
 {
-    public partial class WMIForm : Form, IWMIView
+    public partial class WMIForm : Form
     {
         private readonly WMIPresenter m_Presenter;
         private readonly WMIArgs m_Args;
@@ -29,6 +29,7 @@ namespace WMIViewer
             FocusedItemChanged += lvInstances_FocusedItemChanged;
             UpdateTitle();
             ShowStat(WMIClassList.Instance.ClassCount, WMIClassList.Instance.PropCount, WMIClassList.Instance.MethodCount);
+            Icon = Resources.WMIViewer16;
         }
 
         public void UpdateTitle()
@@ -188,7 +189,7 @@ namespace WMIViewer
                 lClassName.Text = value;
                 m_Presenter.EnumObjects(value);
                 m_Presenter.BuildContextMenu(menuCommands.Items);
-                m_Presenter.BuildContextMenu(mMethod.DropDownItems);
+                //m_Presenter.BuildContextMenu(mMethod.DropDownItems);
                 if (lvInstances.Items.Count == 0)
                     PropGrid.SelectedObject = null;
                 else
@@ -357,16 +358,20 @@ namespace WMIViewer
 
         private void WMIForm_KeyDown(object sender, KeyEventArgs e)
         {
-            // Esc
-            if (e.KeyCode == Keys.Escape)
+            // Esc, F10 - quit program
+            if (e.KeyCode == Keys.Escape || e.KeyCode == Keys.F10)
             {
                 Close();
                 e.Handled = true;
             }
-            // F9 - Show/Hide menu
-            if (e.KeyCode == Keys.F9)
+            if (e.KeyCode == Keys.F2)
             {
-                menuMAIN.Visible = !menuMAIN.Visible;
+                lClassName.ShowDropDown();
+                e.Handled = true;
+            }
+            if (e.Control && e.KeyCode == Keys.R)
+            {
+                CurrentWMIClass = CurrentWMIClass;
                 e.Handled = true;
             }
             // Ctrl+Left
