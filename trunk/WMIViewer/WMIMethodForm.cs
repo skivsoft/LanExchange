@@ -4,10 +4,11 @@ using System.Management;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.ComponentModel;
+using WMIViewer.Properties;
 
 namespace WMIViewer
 {
-    public partial class WMIMethodForm : Form, IWMIView
+    public partial class WMIMethodForm : Form
     {
         private readonly WMIPresenter m_Presenter;
         private readonly WMIArgs m_Args;
@@ -16,9 +17,9 @@ namespace WMIViewer
         public WMIMethodForm(WMIPresenter presenter)
         {
             m_Presenter = presenter;
-            m_Presenter.View = this;
             m_Args = m_Presenter.Args;
             InitializeComponent();
+            Icon = Resources.WMIViewer16;
         }
 
         public ManagementClass WMIClass { get; set; }
@@ -44,10 +45,46 @@ namespace WMIViewer
 
         private string m_ReturnValueName;
 
+
+        private void PrepareArgs()
+        {
+            if (WMIClass == null)
+            {
+                var op = new ObjectGetOptions(null, TimeSpan.MaxValue, true);
+                var path = new ManagementPath(m_Args.ClassName);
+                WMIClass = new ManagementClass(m_Presenter.Namespace, path, op);
+            }
+            if (WMIMethod == null)
+            {
+                foreach(var md in WMIClass.Methods)
+                {
+                    if (string.Compare(md.Name, m_Args.MethodName, StringComparison.InvariantCultureIgnoreCase) == 0)
+                    {
+                        WMIMethod = md;
+                        break;
+                    }
+                }
+            }
+            if (WMIObject == null)
+            {
+                m_Presenter.Namespace.Connect();
+                var query = new ObjectQuery("SELECT * FROM " + m_Args.ClassName);
+                using (var searcher = new ManagementObjectSearcher(m_Presenter.Namespace, query))
+                {
+                    foreach (ManagementObject queryObj in searcher.Get())
+                    {
+                        WMIObject = queryObj;
+                        break;
+                    }
+                }
+            }
+        }
+
         [Localizable(false)]
         public void PrepareForm()
         {
-            Text = String.Format(Text, WMIClass.Path.ClassName, WMIMethod.Name);
+            PrepareArgs();
+            Text = String.Format(Text, m_Args.NamespaceName, WMIClass.Path.ClassName, WMIMethod.Name);
             lMethodName.Text = String.Format("{0}()", WMIMethod.Name);
             foreach (var qd in WMIMethod.Qualifiers)
             {
@@ -104,11 +141,6 @@ namespace WMIViewer
 
         private void WMIMethodForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape)
-            {
-                DialogResult = DialogResult.Cancel;
-                e.Handled = true;
-            }
             if (e.Control && e.KeyCode == Keys.Enter)
             {
                 RunTheMethod();
@@ -124,18 +156,24 @@ namespace WMIViewer
         private void bRun_Click(object sender, EventArgs e)
         {
             RunTheMethod();
+            if (m_Args.StartCmd == WMIStartCommand.ExecuteMethod && m_ExecuteOK)
+                DialogResult = DialogResult.OK;
         }
+
+        private bool m_ExecuteOK;
 
         private void ShowOK(string message)
         {
             lResult.BackColor = Color.Green;
             lResult.Text = message;
+            m_ExecuteOK = true;
         }
 
         private void ShowFAIL(string message)
         {
             lResult.BackColor = Color.Red;
             lResult.Text = message;
+            m_ExecuteOK = false;
         }
 
         [Localizable(false)]

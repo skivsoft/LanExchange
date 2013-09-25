@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace WMIViewer
@@ -64,6 +65,29 @@ namespace WMIViewer
             }
             if (string.IsNullOrEmpty(result.NamespaceName))
                 result.NamespaceName = DefaultNamespaceName;
+            switch(result.StartCmd)
+            {
+                case WMIStartCommand.EditProperty:
+                    if (string.IsNullOrEmpty(result.ClassName))
+                        throw new WMIRequiredParamException(CLASS_MARKER);
+                    if (string.IsNullOrEmpty(result.PropertyName))
+                        throw new WMIRequiredParamException(PROPERTY_MARKER);
+                    bool editable;
+                    bool propFound;
+                    WMIClassList.Instance.GetPropertyDescription(result.ClassName, result.PropertyName, 
+                        out editable, out propFound);
+                    if (!propFound)
+                        throw new WMIObjectNotFoundException(string.Format(@"{0}\{1}.{2}", result.NamespaceName, result.ClassName, result.PropertyName));
+                    break;
+                case WMIStartCommand.ExecuteMethod:
+                    if (string.IsNullOrEmpty(result.ClassName))
+                        throw new WMIRequiredParamException(CLASS_MARKER);
+                    if (string.IsNullOrEmpty(result.MethodName))
+                        throw new WMIRequiredParamException(METHOD_MARKER);
+                    if (!WMIClassList.Instance.IsMethodExists(result.ClassName, result.MethodName))
+                        throw new WMIObjectNotFoundException(string.Format(@"{0}\{1}.{2}()", result.NamespaceName, result.ClassName, result.MethodName));
+                    break;
+            }
             return result;
         }
 

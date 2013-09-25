@@ -15,11 +15,11 @@
           <ProgramRef Id="wmiviewer" />
           <ProgramArgs>/computer:$(Name) /edit /namespace:ROOT\CIMV2 /class:Win32_OperatingSystem /property:Description</ProgramArgs>
         </ToolStripMenuItem>
-        <ToolStripMenuItem Text="WMI: Reboot" Visible="false">
+        <ToolStripMenuItem Text="WMI: Reboot">
           <ProgramRef Id="wmiviewer" />
           <ProgramArgs>/computer:$(Name) /execute /namespace:ROOT\CIMV2 /class:Win32_OperatingSystem /method:Reboot</ProgramArgs>
         </ToolStripMenuItem>
-        <ToolStripMenuItem Text="WMI: Shutdown" Visible="false">
+        <ToolStripMenuItem Text="WMI: Shutdown">
           <ProgramRef Id="wmiviewer" />
           <ProgramArgs>/computer:$(Name) /execute /namespace:ROOT\CIMV2 /class:Win32_OperatingSystem /method:Shutdown</ProgramArgs>
         </ToolStripMenuItem>

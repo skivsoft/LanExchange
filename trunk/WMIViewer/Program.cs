@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace WMIViewer
@@ -8,27 +9,35 @@ namespace WMIViewer
         [STAThread]
         static void Main(string[] args)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            var wmiArgs = WMIArgs.ParseFromCmdLine(args);
-            var presenter = new WMIPresenter(wmiArgs, null);
-            if (presenter.ConnectToComputer())
+            WMIArgs wmiArgs = null;
+            try
             {
-                Form mainForm;
+                wmiArgs = WMIArgs.ParseFromCmdLine(args);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "WMIViewer.exe", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            }
+
+            var presenter = new WMIPresenter(wmiArgs);
+            if (wmiArgs != null && presenter.ConnectToComputer())
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
                 switch (wmiArgs.StartCmd)
                 {
                     case WMIStartCommand.EditProperty:
-                        mainForm = new WMIEditProperty(presenter);
-                        mainForm.ShowDialog();
+                        var propForm = new WMIEditProperty(presenter);
+                        propForm.ShowDialog();
                         break;
                     case WMIStartCommand.ExecuteMethod:
-                        mainForm = new WMIMethodForm(presenter);
-                        Application.Run(mainForm);
+                        var methodForm = new WMIMethodForm(presenter);
+                        methodForm.PrepareForm();
+                        methodForm.ShowDialog();
                         break;
                     default:
                         WMIClassList.Instance.EnumLocalMachineClasses();
-                        mainForm = new WMIForm(presenter);
-                        Application.Run(mainForm);
+                        Application.Run(new WMIForm(presenter));
                         break;
                 }
             }

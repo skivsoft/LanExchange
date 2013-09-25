@@ -13,10 +13,9 @@ namespace WMIViewer
 
         private ManagementClass m_Class;
 
-        public WMIPresenter(WMIArgs args, IWMIView view)
+        public WMIPresenter(WMIArgs args)
         {
             Args = args;
-            View = view;
             WMIClassList.Instance.IncludeClasses.Add("Win32_Desktop");
             WMIClassList.Instance.IncludeClasses.Add("Win32_DesktopMonitor");
             WMIClassList.Instance.IncludeClasses.Add("Win32_DiskDrive");
@@ -26,7 +25,7 @@ namespace WMIViewer
         }
 
         public WMIArgs Args { get; private set; }
-        public IWMIView View { get; set; }
+        public WMIForm View { get; set; }
 
         public void Dispose()
         {

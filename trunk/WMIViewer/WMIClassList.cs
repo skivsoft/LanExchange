@@ -169,9 +169,10 @@ namespace WMIViewer
 
         }
 
-        public string GetPropertyDescription(string className, string propName, out bool editable)
+        public string GetPropertyDescription(string className, string propName, out bool editable, out bool propFound)
         {
             editable = false;
+            propFound = false;
             if (!ConnectToLocalMachine()) return string.Empty;
             var result = string.Empty;
             try
@@ -183,15 +184,42 @@ namespace WMIViewer
                 using (var mc = new ManagementClass(m_Namespace, path, op))
                 {
                     mc.Options.UseAmendedQualifiers = true;
-                    foreach (var dataObject in mc.Properties[propName].Qualifiers)
+                    var prop = mc.Properties[propName];
+                    foreach (var dataObject in prop.Qualifiers)
                         if (dataObject.Name.Equals("write"))
                             editable = true;
                         else
                         if (dataObject.Name.Equals("Description"))
                             result = dataObject.Value.ToString();
                 }
+                propFound = true;
             }
-            catch (Exception ex)
+            catch (ManagementException ex)
+            {
+                Debug.Print(ex.Message);
+            }
+            return result;
+        }
+
+        public bool IsMethodExists(string className, string methodName)
+        {
+            if (!ConnectToLocalMachine()) return false;
+            var result = false;
+            try
+            {
+                var op = new ObjectGetOptions(null, TimeSpan.MaxValue, true);
+                var path = new ManagementPath(className);
+                using (var mc = new ManagementClass(m_Namespace, path, op))
+                {
+                    foreach (var md in mc.Methods)
+                        if (string.Compare(md.Name, methodName, StringComparison.InvariantCultureIgnoreCase) == 0)
+                        {
+                            result = true;
+                            break;
+                        }
+                }
+            }
+            catch (ManagementException ex)
             {
                 Debug.Print(ex.Message);
             }
