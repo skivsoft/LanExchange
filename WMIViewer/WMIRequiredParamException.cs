@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Globalization;
 
 namespace WMIViewer
 {
-    class WMIRequiredParamException : Exception
+    [Serializable]
+    public sealed class WMIRequiredParamException : Exception
     {
-        private string m_Marker;
+        private readonly string m_Marker;
 
         public WMIRequiredParamException(string marker)
         {
@@ -15,7 +17,7 @@ namespace WMIViewer
         {
             get
             {
-                return string.Format("Command line parameter \"{0}\" not specified.", m_Marker);
+                return string.Format(CultureInfo.InvariantCulture, "Command line parameter \"{0}\" not specified.", m_Marker);
             }
         }
     }

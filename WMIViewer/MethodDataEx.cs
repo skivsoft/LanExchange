@@ -1,12 +1,13 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Management;
 using System.Collections.Generic;
 using System.Text;
 
 namespace WMIViewer
 {
-    internal class MethodDataEx
+    public sealed class MethodDataEx
     {
         private readonly MethodData m_Data;
 
@@ -22,7 +23,7 @@ namespace WMIViewer
             m_Data = data;
         }
 
-        internal bool HasQualifier(string qName)
+        public bool HasQualifier(string qName)
         {
             foreach (var qd in m_Data.Qualifiers)
                 if (qd.Name.Equals(qName))
@@ -45,22 +46,22 @@ namespace WMIViewer
             var sb = new StringBuilder();
             foreach (var prop in list)
             {
-                if (prop.ParamType == WMIParamType.RETURN)
+                if (prop.ParamType == WMIParamType.Return)
                 {
                     //sReturn = prop.Type.ToString();
                     continue;
                 }
                 if (sb.Length > 0)
                     sb.Append(", ");
-                if (prop.ParamType == WMIParamType.OUT)
+                if (prop.ParamType == WMIParamType.Out)
                     sb.Append("out ");
                 //sb.Append(prop.Type);
                 //sb.Append(" ");
-                string s = prop.Name; 
-                sb.Append(s.Substring(0, 1).ToLower());
+                string s = prop.Name;
+                sb.Append(s.Substring(0, 1).ToLower(CultureInfo.InvariantCulture));
                 sb.Append(s.Substring(1));
             }
-            return string.Format("{0}({1})", m_Data.Name, sb);
+            return string.Format(CultureInfo.InvariantCulture, "{0}({1})", m_Data.Name, sb);
         }
     }
 }

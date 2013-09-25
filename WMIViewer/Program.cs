@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace WMIViewer
@@ -18,29 +17,30 @@ namespace WMIViewer
             {
                 MessageBox.Show(ex.Message, "WMIViewer.exe", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
-
-            var presenter = new WMIPresenter(wmiArgs);
-            if (wmiArgs != null && presenter.ConnectToComputer())
-            {
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                switch (wmiArgs.StartCmd)
+            using (var presenter = new WMIPresenter(wmiArgs))
+                if (wmiArgs != null && presenter.ConnectToComputer())
                 {
-                    case WMIStartCommand.EditProperty:
-                        var propForm = new WMIEditProperty(presenter);
-                        propForm.ShowDialog();
-                        break;
-                    case WMIStartCommand.ExecuteMethod:
-                        var methodForm = new WMIMethodForm(presenter);
-                        methodForm.PrepareForm();
-                        methodForm.ShowDialog();
-                        break;
-                    default:
-                        WMIClassList.Instance.EnumLocalMachineClasses();
-                        Application.Run(new WMIForm(presenter));
-                        break;
+                    Application.EnableVisualStyles();
+                    Application.SetCompatibleTextRenderingDefault(false);
+                    switch (wmiArgs.StartCmd)
+                    {
+                        case WMIStartCommand.EditProperty:
+                            using (var propForm = new WMIEditProperty(presenter))
+                                propForm.ShowDialog();
+                            break;
+                        case WMIStartCommand.ExecuteMethod:
+                            using (var methodForm = new WMIMethodForm(presenter))
+                            {
+                                methodForm.PrepareForm();
+                                methodForm.ShowDialog();
+                            }
+                            break;
+                        default:
+                            WMIClassList.Instance.EnumLocalMachineClasses();
+                            Application.Run(new WMIForm(presenter));
+                            break;
+                    }
                 }
-            }
         }
     }
 }

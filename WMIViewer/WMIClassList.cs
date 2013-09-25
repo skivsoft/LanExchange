@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Management;
 using System.Text;
 
@@ -11,7 +12,7 @@ namespace WMIViewer
     /// List of used wmi classes.
     /// </summary>
     [Localizable(false)]
-    public class WMIClassList
+    public sealed class WMIClassList
     {
         private static WMIClassList s_Instance;
         private bool m_Loaded;
@@ -23,7 +24,7 @@ namespace WMIViewer
         private int m_MethodCount;
         private ManagementScope m_Namespace;
 
-        protected WMIClassList()
+        private WMIClassList()
         {
             m_Classes = new List<string>();
             m_IncludeClasses = new List<string>();
@@ -212,7 +213,7 @@ namespace WMIViewer
                 using (var mc = new ManagementClass(m_Namespace, path, op))
                 {
                     foreach (var md in mc.Methods)
-                        if (string.Compare(md.Name, methodName, StringComparison.InvariantCultureIgnoreCase) == 0)
+                        if (string.Compare(md.Name, methodName, StringComparison.OrdinalIgnoreCase) == 0)
                         {
                             result = true;
                             break;
@@ -226,7 +227,7 @@ namespace WMIViewer
             return result;
         }
 
-        public string GetPropertyValue(ManagementScope scope, string className, string propName)
+        public static string GetPropertyValue(ManagementScope scope, string className, string propName)
         {
             var result = string.Empty;
             try
@@ -250,7 +251,7 @@ namespace WMIViewer
             return result;
         }
 
-        public void SetPropertyValue(ManagementScope scope, string className, string propName, string value)
+        public static void SetPropertyValue(ManagementScope scope, string className, string propName, string value)
         {
             try
             {
@@ -284,32 +285,32 @@ namespace WMIViewer
                     if (wmiClass.Derivation.Contains("__Event")) continue;
                     // skip classes in exclude list
                     string className = wmiClass["__CLASS"].ToString();
-                    if (!className.StartsWith("Win32_")) continue;
+                    if (!className.StartsWith("Win32_", StringComparison.Ordinal)) continue;
                     // skip classes without qualifiers (ex.: Win32_Perf*)
                     if (wmiClass.Qualifiers.Count == 0) continue;
                     //if (m_ExcludeClasses.Contains(ClassName)) continue;
-                    bool IsDynamic = false;
+                    bool isDynamic = false;
                     //bool IsAbstract = false;
-                    bool IsPerf = false;
-                    bool IsAssociation = false;
-                    bool IsSupportsUpdate = false;
-                    bool IsSupportsCreate = false;
-                    bool IsSupportsDelete = false;
+                    bool isPerf = false;
+                    bool isAssociation = false;
+                    bool isSupportsUpdate = false;
+                    bool isSupportsCreate = false;
+                    bool isSupportsDelete = false;
                     foreach (var qd in wmiClass.Qualifiers)
                     {
                         //if (qd.Name.Equals("Aggregation")) IsAggregation = true;
-                        if (qd.Name.Equals("Association")) IsAssociation = true;
-                        if (qd.Name.Equals("dynamic")) IsDynamic = true;
+                        if (qd.Name.Equals("Association")) isAssociation = true;
+                        if (qd.Name.Equals("dynamic")) isDynamic = true;
                         //if (qd.Name.Equals("abstract")) IsAbstract = true;
-                        if (qd.Name.ToLower().Equals("genericperfctr")) IsPerf = true;
-                        if (qd.Name.Equals("SupportsUpdate")) IsSupportsUpdate = true;
-                        if (qd.Name.Equals("SupportsCreate")) IsSupportsCreate = true;
-                        if (qd.Name.Equals("SupportsDelete")) IsSupportsDelete = true;
+                        if (qd.Name.ToLower(CultureInfo.InvariantCulture).Equals("genericperfctr")) isPerf = true;
+                        if (qd.Name.Equals("SupportsUpdate")) isSupportsUpdate = true;
+                        if (qd.Name.Equals("SupportsCreate")) isSupportsCreate = true;
+                        if (qd.Name.Equals("SupportsDelete")) isSupportsDelete = true;
                     }
-                    if (IsAssociation || !IsDynamic || IsPerf) continue;
+                    if (isAssociation || !isDynamic || isPerf) continue;
                     m_AllClasses.Add(className);
-                    bool bInclude = m_IncludeClasses.Contains(className);
-                    if (bInclude || IsSupportsUpdate || IsSupportsCreate || IsSupportsDelete)
+                    bool isInclude = m_IncludeClasses.Contains(className);
+                    if (isInclude || isSupportsUpdate || isSupportsCreate || isSupportsDelete)
                     {
                         m_PropCount += wmiClass.Properties.Count;
                         // count implemented methods
@@ -322,7 +323,7 @@ namespace WMIViewer
                                     m_MethodCount++;
                                     break;
                                 }
-                        if (!bInclude && !foundMethod)
+                        if (!isInclude && !foundMethod)
                             continue;
                         if (foundMethod)
                             m_Classes.Add(className);

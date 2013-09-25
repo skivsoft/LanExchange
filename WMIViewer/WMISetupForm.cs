@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace WMIViewer
 {
-    public partial class WMISetupForm : Form
+    public sealed partial class WMISetupForm : Form
     {
         //public WMIPresenter Presenter { get; set; }
 
@@ -11,8 +11,6 @@ namespace WMIViewer
         {
             InitializeComponent();
             // Enable double buffer for CheckedListBox
-
-
         }
 
         private void WMISetupForm_KeyDown(object sender, KeyEventArgs e)
