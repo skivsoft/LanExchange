@@ -63,7 +63,7 @@ namespace WMIViewer
         {
             if (string.IsNullOrEmpty(eUserName.Text.Trim()))
             {
-                Error.SetError(eUserName, Resources.WMIAuthForm_UserNameNotSpecified);
+                Error.SetError(eUserName, Resources.AuthForm_UserNameNotSpecified);
                 DialogResult = DialogResult.None;
                 return;
             }

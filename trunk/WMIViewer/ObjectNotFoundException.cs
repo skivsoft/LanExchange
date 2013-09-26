@@ -42,7 +42,7 @@ namespace WMIViewer
 
         public override string Message
         {
-            get { return string.Format(CultureInfo.InvariantCulture, Resources.WMIObjectNotFoundException_Message, m_WMIObject); }
+            get { return string.Format(CultureInfo.InvariantCulture, Resources.ObjectNotFoundException_Message, m_WMIObject); }
         }
     }
 }

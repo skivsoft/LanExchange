@@ -68,7 +68,7 @@
     <Compile Include="AuthForm.Designer.cs">
       <DependentUpon>AuthForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ClassList.cs" />
+    <Compile Include="WmiClassList.cs" />
     <Compile Include="CmdLineArgs.cs" />
     <Compile Include="EditPropertyForm.cs">
       <SubType>Form</SubType>
@@ -89,9 +89,9 @@
       <DependentUpon>MethodForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ObjectNotFoundException.cs" />
-    <Compile Include="Presenter.cs" />
-    <Compile Include="StartCommand.cs" />
-    <Compile Include="Helper.cs" />
+    <Compile Include="WmiPresenter.cs" />
+    <Compile Include="CmdLineCommand.cs" />
+    <Compile Include="WmiHelper.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

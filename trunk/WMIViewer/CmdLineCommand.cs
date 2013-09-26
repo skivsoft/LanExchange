@@ -1,6 +1,6 @@
 ﻿namespace WMIViewer
 {
-    public enum StartCommand
+    public enum CmdLineCommand
     {
         None,
         EditProperty,

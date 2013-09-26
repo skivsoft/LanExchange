@@ -62,32 +62,32 @@ namespace WMIViewer
                 // edit property command
                 if (wordUpper.Equals(EDIT_CMD_MARKER, StringComparison.OrdinalIgnoreCase))
                 {
-                    result.StartCmd = StartCommand.EditProperty;
+                    result.StartCmd = CmdLineCommand.EditProperty;
                     continue;
                 }
                 // execute method command
                 if (wordUpper.Equals(EXECUTE_CMD_MARKER, StringComparison.OrdinalIgnoreCase))
-                    result.StartCmd = StartCommand.ExecuteMethod;
+                    result.StartCmd = CmdLineCommand.ExecuteMethod;
             }
             if (string.IsNullOrEmpty(result.NamespaceName))
                 result.NamespaceName = DefaultNamespaceName;
             switch(result.StartCmd)
             {
-                case StartCommand.EditProperty:
+                case CmdLineCommand.EditProperty:
                     if (string.IsNullOrEmpty(result.ClassName))
                         throw new RequiredArgException(CLASS_MARKER);
                     if (string.IsNullOrEmpty(result.PropertyName))
                         throw new RequiredArgException(PROPERTY_MARKER);
-                    var description = ClassList.Instance.GetPropertyDescription(result.ClassName, result.PropertyName);
+                    var description = WmiClassList.Instance.GetPropertyDescription(result.ClassName, result.PropertyName);
                     if (string.IsNullOrEmpty(description))
                         throw new ObjectNotFoundException(string.Format(CultureInfo.InvariantCulture, @"{0}\{1}.{2}", result.NamespaceName, result.ClassName, result.PropertyName));
                     break;
-                case StartCommand.ExecuteMethod:
+                case CmdLineCommand.ExecuteMethod:
                     if (string.IsNullOrEmpty(result.ClassName))
                         throw new RequiredArgException(CLASS_MARKER);
                     if (string.IsNullOrEmpty(result.MethodName))
                         throw new RequiredArgException(METHOD_MARKER);
-                    if (!ClassList.Instance.IsMethodExists(result.ClassName, result.MethodName))
+                    if (!WmiClassList.Instance.IsMethodExists(result.ClassName, result.MethodName))
                         throw new ObjectNotFoundException(string.Format(CultureInfo.InvariantCulture, @"{0}\{1}.{2}()", result.NamespaceName, result.ClassName, result.MethodName));
                     break;
             }
@@ -99,6 +99,6 @@ namespace WMIViewer
         public string ClassName { get; set; }
         public string PropertyName { get; set; }
         public string MethodName { get; set; }
-        public StartCommand StartCmd { get; set; }
+        public CmdLineCommand StartCmd { get; set; }
     }
 }

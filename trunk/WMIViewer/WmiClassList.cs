@@ -12,9 +12,9 @@ namespace WMIViewer
     /// List of used wmi classes.
     /// </summary>
     [Localizable(false)]
-    public sealed class ClassList
+    public sealed class WmiClassList
     {
-        private static ClassList s_Instance;
+        private static WmiClassList s_Instance;
         private bool m_Loaded;
         private readonly List<string> m_Classes;
         private readonly List<string> m_ReadOnlyClasses;
@@ -24,7 +24,7 @@ namespace WMIViewer
         private int m_MethodCount;
         private ManagementScope m_Namespace;
 
-        private ClassList()
+        private WmiClassList()
         {
             m_Classes = new List<string>();
             m_IncludeClasses = new List<string>();
@@ -32,12 +32,12 @@ namespace WMIViewer
             m_AllClasses = new List<string>();
         }
 
-        public static ClassList Instance
+        public static WmiClassList Instance
         {
             get
             {
                 if (s_Instance == null)
-                    s_Instance = new ClassList();
+                    s_Instance = new WmiClassList();
                 return s_Instance;
             }
         }

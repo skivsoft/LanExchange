@@ -121,93 +121,93 @@
   <data name="WMIViewer16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\WMIViewer16.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="WMIObjectNotFoundException_Message" xml:space="preserve">
+  <data name="ObjectNotFoundException_Message" xml:space="preserve">
     <value>WMI property "{0}" not found.</value>
   </data>
-  <data name="WMIRequiredParamException_Message" xml:space="preserve">
+  <data name="WmiRequiredParamException_Message" xml:space="preserve">
     <value>Command line parameter "{0}" not specified.</value>
   </data>
-  <data name="WMIPresenter_ConnectionError_Caption" xml:space="preserve">
+  <data name="WmiPresenter_ConnectionError_Caption" xml:space="preserve">
     <value>WMI connection error</value>
   </data>
-  <data name="WMIPresenter_ShowFirewallConnectionError" xml:space="preserve">
+  <data name="WmiPresenter_ShowFirewallConnectionError" xml:space="preserve">
     <value>Unable to connect to computer \\{0}.
 Possible connection has been blocked by firewall.</value>
   </data>
-  <data name="WMIPresenter_ShowCommonConnectionError" xml:space="preserve">
+  <data name="WmiPresenter_ShowCommonConnectionError" xml:space="preserve">
     <value>Unable to connect to computer \\{0}.
 {1}</value>
   </data>
-  <data name="WMIAuthForm_UserNameNotSpecified" xml:space="preserve">
+  <data name="AuthForm_UserNameNotSpecified" xml:space="preserve">
     <value>User name not specified.</value>
   </data>
-  <data name="WMIForm_Items" xml:space="preserve">
+  <data name="MainForm_Items" xml:space="preserve">
     <value>Items: {0}</value>
   </data>
-  <data name="WMIForm_Classes" xml:space="preserve">
+  <data name="MainForm_Classes" xml:space="preserve">
     <value>Classes: {0}</value>
   </data>
-  <data name="WMIForm_Properties" xml:space="preserve">
+  <data name="MainForm_Properties" xml:space="preserve">
     <value>Properties: {0}</value>
   </data>
-  <data name="WMIForm_Methods" xml:space="preserve">
+  <data name="MainForm_Methods" xml:space="preserve">
     <value>Methods: {0}</value>
   </data>
-  <data name="WMIPresenter_NULL" xml:space="preserve">
+  <data name="NULL" xml:space="preserve">
     <value>null</value>
   </data>
-  <data name="WMIMethodForm_Success" xml:space="preserve">
+  <data name="MethodForm_Success" xml:space="preserve">
     <value>[0] Success</value>
   </data>
-  <data name="WMIMethodForm_Fail" xml:space="preserve">
+  <data name="MethodForm_Fail" xml:space="preserve">
     <value>[{0}] {1}</value>
   </data>
   <data name="ButtonCancel" xml:space="preserve">
     <value>Cancel
 [Esc]</value>
   </data>
-  <data name="WMIMethodForm_bRun" xml:space="preserve">
+  <data name="MethodForm_bRun" xml:space="preserve">
     <value>Execute [Ctrl+Enter]</value>
   </data>
-  <data name="WMIMethodForm_Caption" xml:space="preserve">
+  <data name="MethodForm_Caption" xml:space="preserve">
     <value>Executing method: {0}\\{1}.{2}</value>
   </data>
   <data name="EmptyText" xml:space="preserve">
     <value>    </value>
   </data>
-  <data name="WMIForm_Title" xml:space="preserve">
+  <data name="MainForm_Title" xml:space="preserve">
     <value>\\{0} — {1}</value>
   </data>
-  <data name="WMIForm_CompPrefix" xml:space="preserve">
+  <data name="MainForm_CompPrefix" xml:space="preserve">
     <value>\\</value>
   </data>
-  <data name="WMIForm_EditingProperty" xml:space="preserve">
+  <data name="MainForm_EditingProperty" xml:space="preserve">
     <value>Editing property {0}</value>
   </data>
-  <data name="WMIForm_PropertyChanged_Message" xml:space="preserve">
+  <data name="MainForm_PropertyChanged_Message" xml:space="preserve">
     <value>Computer name: \{0}
 
 Old value: «{1}»
 New value: «{2}»</value>
   </data>
-  <data name="WMIForm_PropertyChanged_Success" xml:space="preserve">
+  <data name="MainForm_PropertyChanged_Success" xml:space="preserve">
     <value>
 
 Property {0} successfully changed.</value>
   </data>
-  <data name="WMIEditProperty_PropertyFmt" xml:space="preserve">
+  <data name="EditProperty_PropertyFmt" xml:space="preserve">
     <value>{0}\{1}</value>
   </data>
   <data name="AMP" xml:space="preserve">
     <value>&amp;</value>
   </data>
-  <data name="WMIAuthForm_Title" xml:space="preserve">
+  <data name="AuthForm_Title" xml:space="preserve">
     <value>WMI connection to \\{0}</value>
   </data>
-  <data name="WMIEditProperty_Cancel" xml:space="preserve">
+  <data name="EditProperty_Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="WMIEditProperty_OK" xml:space="preserve">
+  <data name="EditProperty_OK" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="ButtonConnect" xml:space="preserve">
@@ -216,10 +216,10 @@ Property {0} successfully changed.</value>
   <data name="AuthForm_Password" xml:space="preserve">
     <value>Password:</value>
   </data>
-  <data name="WMIAuthForm_User" xml:space="preserve">
+  <data name="AuthForm_User" xml:space="preserve">
     <value>User:</value>
   </data>
-  <data name="WMIAuthForm_UnableToConnect" xml:space="preserve">
+  <data name="AuthForm_UnableToConnect" xml:space="preserve">
     <value>Unable to connect under account {0}.
 Enter user name and password to retry the connection.</value>
   </data>

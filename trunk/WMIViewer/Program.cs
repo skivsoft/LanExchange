@@ -21,18 +21,18 @@ namespace WMIViewer
             {
                 MessageBox.Show(ex.Message, GetProgramTitle(), MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, RightToLeft.Options);
             }
-            using (var presenter = new Presenter(wmiArgs))
+            using (var presenter = new WmiPresenter(wmiArgs))
                 if (wmiArgs != null && presenter.ConnectToComputer())
                 {
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
                     switch (wmiArgs.StartCmd)
                     {
-                        case StartCommand.EditProperty:
+                        case CmdLineCommand.EditProperty:
                             using (var propForm = new EditPropertyForm(presenter))
                                 propForm.ShowDialog();
                             break;
-                        case StartCommand.ExecuteMethod:
+                        case CmdLineCommand.ExecuteMethod:
                             using (var methodForm = new MethodForm(presenter))
                             {
                                 methodForm.PrepareForm();
@@ -40,7 +40,7 @@ namespace WMIViewer
                             }
                             break;
                         default:
-                            ClassList.Instance.EnumLocalMachineClasses();
+                            WmiClassList.Instance.EnumLocalMachineClasses();
                             Application.Run(new MainForm(presenter));
                             break;
                     }

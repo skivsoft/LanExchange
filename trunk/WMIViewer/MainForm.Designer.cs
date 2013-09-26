@@ -48,8 +48,8 @@ namespace WMIViewer
             this.pTop = new System.Windows.Forms.Panel();
             this.menuClasses = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.wMIItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lClassName = new System.Windows.Forms.ToolStripDropDownButton();
             this.lDescription = new System.Windows.Forms.Label();
+            this.lClassName = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.Status.SuspendLayout();
             this.pLeft.SuspendLayout();
@@ -192,13 +192,25 @@ namespace WMIViewer
             this.menuClasses.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.wMIItemToolStripMenuItem});
             this.menuClasses.Name = "menuClasses";
-            this.menuClasses.Size = new System.Drawing.Size(79, 26);
+            this.menuClasses.OwnerItem = this.lClassName;
+            this.menuClasses.Size = new System.Drawing.Size(68, 26);
             this.menuClasses.Opening += new System.ComponentModel.CancelEventHandler(this.menuClasses_Opening);
             // 
             // wMIItemToolStripMenuItem
             // 
             this.wMIItemToolStripMenuItem.Name = "wMIItemToolStripMenuItem";
-            this.wMIItemToolStripMenuItem.Size = new System.Drawing.Size(78, 22);
+            this.wMIItemToolStripMenuItem.Size = new System.Drawing.Size(67, 22);
+            // 
+            // lDescription
+            // 
+            this.lDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lDescription.Location = new System.Drawing.Point(12, 10);
+            this.lDescription.Name = "lDescription";
+            this.lDescription.Size = new System.Drawing.Size(768, 56);
+            this.lDescription.TabIndex = 1;
+            this.lDescription.Text = "    ";
             // 
             // lClassName
             // 
@@ -210,17 +222,6 @@ namespace WMIViewer
             this.lClassName.Size = new System.Drawing.Size(32, 22);
             this.lClassName.Text = global::WMIViewer.Properties.Resources.EmptyText;
             // 
-            // lDescription
-            // 
-            this.lDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lDescription.Location = new System.Drawing.Point(12, 10);
-            this.lDescription.Name = "lDescription";
-            this.lDescription.Size = new System.Drawing.Size(768, 56);
-            this.lDescription.TabIndex = 1;
-            this.lDescription.Text = Resources.EmptyText;
-            // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -230,7 +231,7 @@ namespace WMIViewer
             this.toolStrip1.Size = new System.Drawing.Size(792, 25);
             this.toolStrip1.TabIndex = 6;
             // 
-            // WMIForm
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -241,8 +242,7 @@ namespace WMIViewer
             this.Controls.Add(this.toolStrip1);
             this.KeyPreview = true;
             this.MinimizeBox = false;
-            this.Name = "WMIForm";
-            this.ShowInTaskbar = false;
+            this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.WMIForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WMIForm_KeyDown);

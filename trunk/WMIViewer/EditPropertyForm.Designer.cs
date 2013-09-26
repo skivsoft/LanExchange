@@ -90,7 +90,7 @@ namespace WMIViewer
             this.bOK.Name = "bOK";
             this.bOK.Size = new System.Drawing.Size(75, 23);
             this.bOK.TabIndex = 4;
-            this.bOK.Text = Resources.WMIEditProperty_OK;
+            this.bOK.Text = Resources.EditProperty_OK;
             this.bOK.UseVisualStyleBackColor = true;
             this.bOK.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -102,7 +102,7 @@ namespace WMIViewer
             this.bCancel.Name = "bCancel";
             this.bCancel.Size = new System.Drawing.Size(75, 23);
             this.bCancel.TabIndex = 5;
-            this.bCancel.Text = Resources.WMIEditProperty_Cancel;
+            this.bCancel.Text = Resources.EditProperty_Cancel;
             this.bCancel.UseVisualStyleBackColor = true;
             // 
             // panel1
