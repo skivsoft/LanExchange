@@ -2,7 +2,7 @@
 
 namespace WMIViewer
 {
-    partial class WMIAuthForm
+    partial class WmiAuthForm
     {
         /// <summary>
         /// Required designer variable.

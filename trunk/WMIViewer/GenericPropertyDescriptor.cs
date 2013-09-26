@@ -7,25 +7,25 @@ namespace WMIViewer
     {
         private T m_Value;
 
-        public GenericPropertyDescriptor(string name, Attribute[] attrs)
-            : base(name, attrs)
+        public GenericPropertyDescriptor(string name, Attribute[] attributes)
+            : base(name, attributes)
         {
         }
 
-        public GenericPropertyDescriptor(string name, T value, Attribute[] attrs)
-            : base(name, attrs)
+        public GenericPropertyDescriptor(string name, T value, Attribute[] attributes)
+            : base(name, attributes)
         {
             m_Value = value;
         }
 
-        public GenericPropertyDescriptor(MemberDescriptor descr)
-            : base(descr)
+        public GenericPropertyDescriptor(MemberDescriptor description)
+            : base(description)
         {
             
         }
 
-        public GenericPropertyDescriptor(MemberDescriptor descr, Attribute[] attrs)
-            : base(descr, attrs)
+        public GenericPropertyDescriptor(MemberDescriptor description, Attribute[] attributes)
+            : base(description, attributes)
         {
             
         }

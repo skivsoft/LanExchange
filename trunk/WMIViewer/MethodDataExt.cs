@@ -23,10 +23,10 @@ namespace WMIViewer
             m_Data = data;
         }
 
-        public bool HasQualifier(string qName)
+        public bool HasQualifier(string name)
         {
             foreach (var qd in m_Data.Qualifiers)
-                if (qd.Name.Equals(qName))
+                if (qd.Name.Equals(name))
                     return true;
             return false;
         }
@@ -47,14 +47,14 @@ namespace WMIViewer
             int numArgs = 0;
             foreach (var prop in list)
             {
-                if (prop.ParamType == WMIParamType.Return)
+                if (prop.ParameterType == WmiParameterType.Return)
                 {
                     continue;
                 }
                 numArgs++;
                 if (sb.Length > 0)
                     sb.Append(", ");
-                if (prop.ParamType == WMIParamType.Out)
+                if (prop.ParameterType == WmiParameterType.Out)
                     sb.Append("out ");
                 sb.Append(prop.Name);
             }

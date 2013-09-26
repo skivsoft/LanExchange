@@ -2,7 +2,7 @@
 
 namespace WMIViewer
 {
-    public static class RtlUtils
+    public static class RightToLeft
     {
         public static MessageBoxOptions Options
         {

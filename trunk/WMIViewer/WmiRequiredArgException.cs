@@ -7,26 +7,26 @@ using WMIViewer.Properties;
 namespace WMIViewer
 {
     [Serializable]
-    public sealed class WMIRequiredParamException : Exception
+    public sealed class WmiRequiredArgException : Exception
     {
         private readonly string m_Marker;
 
         //public WMIRequiredParamException
 
-        public WMIRequiredParamException()
+        public WmiRequiredArgException()
         {
         }
 
-        public WMIRequiredParamException(string marker)
+        public WmiRequiredArgException(string marker)
         {
             m_Marker = marker;
         }
 
-        public WMIRequiredParamException(string message, Exception innerException) : base(message, innerException)
+        public WmiRequiredArgException(string message, Exception innerException) : base(message, innerException)
         {
         }
 
-        private WMIRequiredParamException(SerializationInfo info, StreamingContext context)
+        private WmiRequiredArgException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
             m_Marker = info.GetString ("Marker");
@@ -35,6 +35,8 @@ namespace WMIViewer
         [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
+            if (info == null)
+                throw new ArgumentNullException("info");
             info.AddValue("Marker", m_Marker);
             base.GetObjectData(info, context);
         }

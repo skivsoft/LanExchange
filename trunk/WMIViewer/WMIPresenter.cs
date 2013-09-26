@@ -9,26 +9,26 @@ using WMIViewer.Properties;
 
 namespace WMIViewer
 {
-    public sealed class WMIPresenter : IDisposable
+    public sealed class WmiPresenter : IDisposable
     {
         private ManagementScope m_Namespace;
 
         private ManagementClass m_Class;
 
         [Localizable(false)]
-        public WMIPresenter(WMIArgs args)
+        public WmiPresenter(WmiArgs args)
         {
             Args = args;
-            WMIClassList.Instance.IncludeClasses.Add("Win32_Desktop");
-            WMIClassList.Instance.IncludeClasses.Add("Win32_DesktopMonitor");
-            WMIClassList.Instance.IncludeClasses.Add("Win32_DiskDrive");
-            WMIClassList.Instance.IncludeClasses.Add("Win32_BIOS");
-            WMIClassList.Instance.IncludeClasses.Add("Win32_Processor");
-            WMIClassList.Instance.IncludeClasses.Add("Win32_PhysicalMemory");
+            WmiClassList.Instance.IncludeClasses.Add("Win32_Desktop");
+            WmiClassList.Instance.IncludeClasses.Add("Win32_DesktopMonitor");
+            WmiClassList.Instance.IncludeClasses.Add("Win32_DiskDrive");
+            WmiClassList.Instance.IncludeClasses.Add("Win32_BIOS");
+            WmiClassList.Instance.IncludeClasses.Add("Win32_Processor");
+            WmiClassList.Instance.IncludeClasses.Add("Win32_PhysicalMemory");
         }
 
-        public WMIArgs Args { get; private set; }
-        public WMIForm View { get; set; }
+        public WmiArgs Args { get; private set; }
+        public WmiForm View { get; set; }
 
         public void Dispose()
         {
@@ -52,7 +52,7 @@ namespace WMIViewer
             MessageBox.Show(
                 string.Format(CultureInfo.InvariantCulture, Resources.WMIPresenter_ShowFirewallConnectionError, Args.ComputerName),
                 Resources.WMIPresenter_ConnectionError_Caption,
-                MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, RtlUtils.Options);
+                MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, RightToLeft.Options);
         }
 
         private void ShowCommonConnectionError(Exception ex)
@@ -60,7 +60,7 @@ namespace WMIViewer
             MessageBox.Show(
                 string.Format(CultureInfo.InvariantCulture, Resources.WMIPresenter_ShowCommonConnectionError, Args.ComputerName, ex.Message),
                 Resources.WMIPresenter_ConnectionError_Caption,
-                MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, RtlUtils.Options);
+                MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, RightToLeft.Options);
         }
 
         public bool ConnectToComputer()
@@ -88,13 +88,13 @@ namespace WMIViewer
             catch (UnauthorizedAccessException ex)
             {
                 if (options == null || String.IsNullOrEmpty(options.Username) || autoLogon)
-                    using (var form = new WMIAuthForm())
+                    using (var form = new WmiAuthForm())
                     {
                         if (autoLogon)
-                            WMIAuthForm.ClearSavedPassword();
+                            WmiAuthForm.ClearSavedPassword();
 
                         form.SetComputerName(Args.ComputerName);
-                        autoLogon = form.AutoLogon();
+                        autoLogon = form.AutoLogOn();
                         bool ok;
                         if (autoLogon)
                             ok = true;
@@ -129,12 +129,12 @@ namespace WMIViewer
             return false;
         }
 
-        public ManagementClass WMIClass 
+        public ManagementClass WmiClass 
         {
             get { return m_Class; }
         }
 
-        public ManagementObject WMIObject { get; set; }
+        public ManagementObject WmiObject { get; set; }
 
         [Localizable(false)]
         public void EnumObjects(string className)
@@ -226,17 +226,17 @@ namespace WMIViewer
             return !checkError;
         }
 
-        public void Method_Click(object sender, EventArgs e)
+        public void MethodOnClick(object sender, EventArgs e)
         {
             var menuItem = sender as ToolStripMenuItem;
             if (menuItem == null) return;
             var md = menuItem.Tag as MethodData;
             if (md == null) return;
-            using (var form = new WMIMethodForm(this))
+            using (var form = new WmiMethodForm(this))
             {
-                form.WMIClass = m_Class;
-                form.WMIObject = WMIObject;
-                form.WMIMethod = md;
+                form.WmiClass = m_Class;
+                form.WmiObject = WmiObject;
+                form.WmiMethod = md;
                 form.PrepareForm();
                 form.ShowDialog();
             }
@@ -246,6 +246,8 @@ namespace WMIViewer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public void BuildContextMenu(ToolStripItemCollection items)
         {
+            if (items == null)
+                throw new ArgumentNullException("items");
             items.Clear();
             if (m_Class == null) return;
             try
@@ -257,7 +259,7 @@ namespace WMIViewer
                     var menuItem = new ToolStripMenuItem();
                     menuItem.Text = method.ToString();
                     menuItem.Tag = md;
-                    menuItem.Click += Method_Click;
+                    menuItem.Click += MethodOnClick;
                     items.Add(menuItem);
                 }
             }

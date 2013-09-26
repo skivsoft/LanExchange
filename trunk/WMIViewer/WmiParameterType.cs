@@ -1,6 +1,6 @@
 namespace WMIViewer
 {
-    public enum WMIParamType
+    public enum WmiParameterType
     {
         In,
         Out,

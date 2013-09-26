@@ -12,9 +12,9 @@ namespace WMIViewer
     /// List of used wmi classes.
     /// </summary>
     [Localizable(false)]
-    public sealed class WMIClassList
+    public sealed class WmiClassList
     {
-        private static WMIClassList s_Instance;
+        private static WmiClassList s_Instance;
         private bool m_Loaded;
         private readonly List<string> m_Classes;
         private readonly List<string> m_ReadOnlyClasses;
@@ -24,7 +24,7 @@ namespace WMIViewer
         private int m_MethodCount;
         private ManagementScope m_Namespace;
 
-        private WMIClassList()
+        private WmiClassList()
         {
             m_Classes = new List<string>();
             m_IncludeClasses = new List<string>();
@@ -32,12 +32,12 @@ namespace WMIViewer
             m_AllClasses = new List<string>();
         }
 
-        public static WMIClassList Instance
+        public static WmiClassList Instance
         {
             get
             {
                 if (s_Instance == null)
-                    s_Instance = new WMIClassList();
+                    s_Instance = new WmiClassList();
                 return s_Instance;
             }
         }
@@ -86,7 +86,7 @@ namespace WMIViewer
         {
             if (m_Namespace != null && m_Namespace.IsConnected)
                 return true;
-            m_Namespace = new ManagementScope(WMIArgs.DefaultNamespaceName, null);
+            m_Namespace = new ManagementScope(WmiArgs.DefaultNamespaceName, null);
             try
             {
                 m_Namespace.Connect();
@@ -225,6 +225,8 @@ namespace WMIViewer
 
         public static string GetPropertyValue(ManagementScope scope, string className, string propName)
         {
+            if (scope == null)
+                throw new ArgumentNullException("scope");
             var result = string.Empty;
             try
             {
@@ -249,6 +251,8 @@ namespace WMIViewer
 
         public static void SetPropertyValue(ManagementScope scope, string className, string propName, string value)
         {
+            if (scope == null)
+                throw new ArgumentNullException("scope");
             try
             {
                 scope.Connect();

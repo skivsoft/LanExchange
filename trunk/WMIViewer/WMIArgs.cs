@@ -6,12 +6,12 @@ using System.Windows.Forms;
 
 namespace WMIViewer
 {
-    public sealed class WMIArgs
+    public sealed class WmiArgs
     {
         public const string DefaultNamespaceName = @"ROOT\CIMV2";
 
         [Localizable(false)]
-        public static WMIArgs ParseFromCmdLine(IEnumerable<string> args)
+        public static WmiArgs ParseFromCmdLine(IEnumerable<string> args)
         {
             const string COMPUTER_MARKER    = "/COMPUTER:";
             const string NAMESPACE_MARKER   = "/NAMESPACE:";
@@ -21,7 +21,10 @@ namespace WMIViewer
             const string EDIT_CMD_MARKER    = "/EDIT";
             const string EXECUTE_CMD_MARKER = "/EXECUTE";
 
-            var result = new WMIArgs();
+            if (args == null)
+                throw new ArgumentNullException("args");
+
+            var result = new WmiArgs();
             result.ComputerName = SystemInformation.ComputerName;
             foreach (var word in args)
             {
@@ -59,36 +62,36 @@ namespace WMIViewer
                 // edit property command
                 if (wordUpper.Equals(EDIT_CMD_MARKER, StringComparison.OrdinalIgnoreCase))
                 {
-                    result.StartCmd = WMIStartCommand.EditProperty;
+                    result.StartCmd = WmiStartCommand.EditProperty;
                     continue;
                 }
                 // execute method command
                 if (wordUpper.Equals(EXECUTE_CMD_MARKER, StringComparison.OrdinalIgnoreCase))
-                    result.StartCmd = WMIStartCommand.ExecuteMethod;
+                    result.StartCmd = WmiStartCommand.ExecuteMethod;
             }
             if (string.IsNullOrEmpty(result.NamespaceName))
                 result.NamespaceName = DefaultNamespaceName;
             switch(result.StartCmd)
             {
-                case WMIStartCommand.EditProperty:
+                case WmiStartCommand.EditProperty:
                     if (string.IsNullOrEmpty(result.ClassName))
-                        throw new WMIRequiredParamException(CLASS_MARKER);
+                        throw new WmiRequiredArgException(CLASS_MARKER);
                     if (string.IsNullOrEmpty(result.PropertyName))
-                        throw new WMIRequiredParamException(PROPERTY_MARKER);
+                        throw new WmiRequiredArgException(PROPERTY_MARKER);
                     bool editable;
                     bool propFound;
-                    WMIClassList.Instance.GetPropertyDescription(result.ClassName, result.PropertyName, 
+                    WmiClassList.Instance.GetPropertyDescription(result.ClassName, result.PropertyName, 
                         out editable, out propFound);
                     if (!propFound)
-                        throw new WMIObjectNotFoundException(string.Format(CultureInfo.InvariantCulture, @"{0}\{1}.{2}", result.NamespaceName, result.ClassName, result.PropertyName));
+                        throw new WmiObjectNotFoundException(string.Format(CultureInfo.InvariantCulture, @"{0}\{1}.{2}", result.NamespaceName, result.ClassName, result.PropertyName));
                     break;
-                case WMIStartCommand.ExecuteMethod:
+                case WmiStartCommand.ExecuteMethod:
                     if (string.IsNullOrEmpty(result.ClassName))
-                        throw new WMIRequiredParamException(CLASS_MARKER);
+                        throw new WmiRequiredArgException(CLASS_MARKER);
                     if (string.IsNullOrEmpty(result.MethodName))
-                        throw new WMIRequiredParamException(METHOD_MARKER);
-                    if (!WMIClassList.Instance.IsMethodExists(result.ClassName, result.MethodName))
-                        throw new WMIObjectNotFoundException(string.Format(CultureInfo.InvariantCulture, @"{0}\{1}.{2}()", result.NamespaceName, result.ClassName, result.MethodName));
+                        throw new WmiRequiredArgException(METHOD_MARKER);
+                    if (!WmiClassList.Instance.IsMethodExists(result.ClassName, result.MethodName))
+                        throw new WmiObjectNotFoundException(string.Format(CultureInfo.InvariantCulture, @"{0}\{1}.{2}()", result.NamespaceName, result.ClassName, result.MethodName));
                     break;
             }
             return result;
@@ -99,6 +102,6 @@ namespace WMIViewer
         public string ClassName { get; set; }
         public string PropertyName { get; set; }
         public string MethodName { get; set; }
-        public WMIStartCommand StartCmd { get; set; }
+        public WmiStartCommand StartCmd { get; set; }
     }
 }

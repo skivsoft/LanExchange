@@ -2,7 +2,7 @@
 
 namespace WMIViewer
 {
-    partial class WMIEditProperty
+    partial class WmiEditProperty
     {
         /// <summary>
         /// Required designer variable.

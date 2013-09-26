@@ -7,12 +7,12 @@ using WMIViewer.Properties;
 
 namespace WMIViewer
 {
-    public sealed partial class WMIAuthForm : Form
+    public sealed partial class WmiAuthForm : Form
     {
         private static string s_UserName;
         private static string s_UserPassword;
         
-        public WMIAuthForm()
+        public WmiAuthForm()
         {
             InitializeComponent();
         }
@@ -27,7 +27,7 @@ namespace WMIViewer
             UserPassword = s_UserPassword;
         }
 
-        public bool AutoLogon()
+        public bool AutoLogOn()
         {
             if (!String.IsNullOrEmpty(s_UserName))
             {
@@ -42,7 +42,7 @@ namespace WMIViewer
         public void SetComputerName(string computerName)
         {
             Text = String.Format(CultureInfo.InvariantCulture, Text, computerName);
-            var userName = AutoLogon() ? s_UserName : 
+            var userName = AutoLogOn() ? s_UserName : 
                 string.Format(CultureInfo.InvariantCulture, @"{0}\{1}", Environment.UserDomainName, Environment.UserName);
             lMessage.Text = String.Format(CultureInfo.InvariantCulture, lMessage.Text, userName);
         }

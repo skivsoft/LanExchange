@@ -2,7 +2,7 @@
 
 namespace WMIViewer
 {
-    partial class WMIForm
+    partial class WmiForm
     {
         /// <summary>
         /// Required designer variable.
@@ -31,7 +31,7 @@ namespace WMIViewer
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WMIForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WmiForm));
             this.Status = new System.Windows.Forms.StatusStrip();
             this.lStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -147,14 +147,14 @@ namespace WMIViewer
             this.lvInstances.TabIndex = 8;
             this.lvInstances.UseCompatibleStateImageBehavior = false;
             this.lvInstances.View = System.Windows.Forms.View.Details;
-            this.lvInstances.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lvComps_ItemSelectionChanged);
+            this.lvInstances.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.LVCompsOnItemSelectionChanged);
             this.lvInstances.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvInstances_KeyDown);
             // 
             // menuCommands
             // 
             this.menuCommands.Name = "menuCommands";
             this.menuCommands.Size = new System.Drawing.Size(61, 4);
-            this.menuCommands.Opening += new System.ComponentModel.CancelEventHandler(this.menuCommands_Opening);
+            this.menuCommands.Opening += new System.ComponentModel.CancelEventHandler(this.MenuCommandsOnOpening);
             // 
             // TheSplitter
             // 
