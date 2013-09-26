@@ -79,7 +79,7 @@ namespace WMIViewer
             if (descriptor != null)
                 m_FullPropertyDescriptors.Remove(descriptor);
             else
-                throw new WmiObjectNotFoundException(propertyName);
+                throw new ObjectNotFoundException(propertyName);
         }
 
         public object this[string propertyName]
@@ -93,7 +93,7 @@ namespace WMIViewer
             var descriptor = m_FullPropertyDescriptors.Find(propertyName, true);
             if (descriptor != null)
                 return descriptor.GetValue(new object());
-            throw new WmiObjectNotFoundException(propertyName);
+            throw new ObjectNotFoundException(propertyName);
         }
 
         private void SetPropertyValue(string propertyName, object value)
@@ -102,7 +102,7 @@ namespace WMIViewer
             if (descriptor != null)
                 descriptor.SetValue(null, value);
             else
-                throw new WmiObjectNotFoundException(propertyName);
+                throw new ObjectNotFoundException(propertyName);
         }
 
 

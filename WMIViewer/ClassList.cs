@@ -12,9 +12,9 @@ namespace WMIViewer
     /// List of used wmi classes.
     /// </summary>
     [Localizable(false)]
-    public sealed class WmiClassList
+    public sealed class ClassList
     {
-        private static WmiClassList s_Instance;
+        private static ClassList s_Instance;
         private bool m_Loaded;
         private readonly List<string> m_Classes;
         private readonly List<string> m_ReadOnlyClasses;
@@ -24,7 +24,7 @@ namespace WMIViewer
         private int m_MethodCount;
         private ManagementScope m_Namespace;
 
-        private WmiClassList()
+        private ClassList()
         {
             m_Classes = new List<string>();
             m_IncludeClasses = new List<string>();
@@ -32,12 +32,12 @@ namespace WMIViewer
             m_AllClasses = new List<string>();
         }
 
-        public static WmiClassList Instance
+        public static ClassList Instance
         {
             get
             {
                 if (s_Instance == null)
-                    s_Instance = new WmiClassList();
+                    s_Instance = new ClassList();
                 return s_Instance;
             }
         }
@@ -86,7 +86,7 @@ namespace WMIViewer
         {
             if (m_Namespace != null && m_Namespace.IsConnected)
                 return true;
-            m_Namespace = new ManagementScope(WmiArgs.DefaultNamespaceName, null);
+            m_Namespace = new ManagementScope(CmdLineArgs.DefaultNamespaceName, null);
             try
             {
                 m_Namespace.Connect();
@@ -166,10 +166,8 @@ namespace WMIViewer
 
         }
 
-        public string GetPropertyDescription(string className, string propName, out bool editable, out bool propFound)
+        public string GetPropertyDescription(string className, string propName)
         {
-            editable = false;
-            propFound = false;
             if (!ConnectToLocalMachine()) return string.Empty;
             var result = string.Empty;
             try
@@ -183,13 +181,38 @@ namespace WMIViewer
                     mc.Options.UseAmendedQualifiers = true;
                     var prop = mc.Properties[propName];
                     foreach (var dataObject in prop.Qualifiers)
-                        if (dataObject.Name.Equals("write"))
-                            editable = true;
-                        else
                         if (dataObject.Name.Equals("Description"))
                             result = dataObject.Value.ToString();
                 }
-                propFound = true;
+            }
+            catch (ManagementException ex)
+            {
+                Debug.Print(ex.Message);
+            }
+            return result;
+        }
+
+        public bool IsPropertyEditable(string className, string propName)
+        {
+            if (!ConnectToLocalMachine()) return false;
+            var result = false;
+            try
+            {
+                // Gets the property qualifiers.
+                var op = new ObjectGetOptions(null, TimeSpan.MaxValue, true);
+
+                var path = new ManagementPath(className);
+                using (var mc = new ManagementClass(m_Namespace, path, op))
+                {
+                    mc.Options.UseAmendedQualifiers = true;
+                    var prop = mc.Properties[propName];
+                    foreach (var dataObject in prop.Qualifiers)
+                        if (dataObject.Name.Equals("write"))
+                        {
+                            result = true;
+                            break;
+                        }
+                }
             }
             catch (ManagementException ex)
             {

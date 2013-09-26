@@ -9,26 +9,26 @@ using WMIViewer.Properties;
 
 namespace WMIViewer
 {
-    public sealed class WmiPresenter : IDisposable
+    public sealed class Presenter : IDisposable
     {
         private ManagementScope m_Namespace;
 
         private ManagementClass m_Class;
 
         [Localizable(false)]
-        public WmiPresenter(WmiArgs args)
+        public Presenter(CmdLineArgs args)
         {
             Args = args;
-            WmiClassList.Instance.IncludeClasses.Add("Win32_Desktop");
-            WmiClassList.Instance.IncludeClasses.Add("Win32_DesktopMonitor");
-            WmiClassList.Instance.IncludeClasses.Add("Win32_DiskDrive");
-            WmiClassList.Instance.IncludeClasses.Add("Win32_BIOS");
-            WmiClassList.Instance.IncludeClasses.Add("Win32_Processor");
-            WmiClassList.Instance.IncludeClasses.Add("Win32_PhysicalMemory");
+            ClassList.Instance.IncludeClasses.Add("Win32_Desktop");
+            ClassList.Instance.IncludeClasses.Add("Win32_DesktopMonitor");
+            ClassList.Instance.IncludeClasses.Add("Win32_DiskDrive");
+            ClassList.Instance.IncludeClasses.Add("Win32_BIOS");
+            ClassList.Instance.IncludeClasses.Add("Win32_Processor");
+            ClassList.Instance.IncludeClasses.Add("Win32_PhysicalMemory");
         }
 
-        public WmiArgs Args { get; private set; }
-        public WmiForm View { get; set; }
+        public CmdLineArgs Args { get; private set; }
+        public MainForm View { get; set; }
 
         public void Dispose()
         {
@@ -88,10 +88,10 @@ namespace WMIViewer
             catch (UnauthorizedAccessException ex)
             {
                 if (options == null || String.IsNullOrEmpty(options.Username) || autoLogon)
-                    using (var form = new WmiAuthForm())
+                    using (var form = new AuthForm())
                     {
                         if (autoLogon)
-                            WmiAuthForm.ClearSavedPassword();
+                            AuthForm.ClearSavedPassword();
 
                         form.SetComputerName(Args.ComputerName);
                         autoLogon = form.AutoLogOn();
@@ -232,7 +232,7 @@ namespace WMIViewer
             if (menuItem == null) return;
             var md = menuItem.Tag as MethodData;
             if (md == null) return;
-            using (var form = new WmiMethodForm(this))
+            using (var form = new MethodForm(this))
             {
                 form.WmiClass = m_Class;
                 form.WmiObject = WmiObject;

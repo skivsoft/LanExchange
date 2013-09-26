@@ -5,7 +5,7 @@ using System.Globalization;
 namespace WMIViewer
 {
     [Localizable(false)]
-    public static class WmiHelper
+    public static class Helper
     {
         public static DateTime ToDateTime(string wmiDate)
         {

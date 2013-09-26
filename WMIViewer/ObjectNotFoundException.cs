@@ -7,29 +7,28 @@ using WMIViewer.Properties;
 namespace WMIViewer
 {
     [Serializable]
-    public sealed class WmiRequiredArgException : Exception
+    public sealed class ObjectNotFoundException : Exception
     {
-        private readonly string m_Marker;
+        private readonly string m_WMIObject;
 
-        //public WMIRequiredParamException
+        public ObjectNotFoundException()
+        {
+            
+        }
 
-        public WmiRequiredArgException()
+        public ObjectNotFoundException(string wmiObject)
+        {
+            m_WMIObject = wmiObject;
+        }
+
+        public ObjectNotFoundException(string message, Exception innerException) : base(message, innerException)
         {
         }
 
-        public WmiRequiredArgException(string marker)
-        {
-            m_Marker = marker;
-        }
-
-        public WmiRequiredArgException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        private WmiRequiredArgException(SerializationInfo info, StreamingContext context)
+        private ObjectNotFoundException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            m_Marker = info.GetString ("Marker");
+            m_WMIObject = info.GetString("WMIObject");
         }        
 
         [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
@@ -37,16 +36,13 @@ namespace WMIViewer
         {
             if (info == null)
                 throw new ArgumentNullException("info");
-            info.AddValue("Marker", m_Marker);
+            info.AddValue("WMIObject", m_WMIObject);
             base.GetObjectData(info, context);
         }
 
         public override string Message
         {
-            get
-            {
-                return string.Format(CultureInfo.InvariantCulture, Resources.WMIRequiredParamException_Message, m_Marker);
-            }
+            get { return string.Format(CultureInfo.InvariantCulture, Resources.WMIObjectNotFoundException_Message, m_WMIObject); }
         }
     }
 }

@@ -9,13 +9,13 @@ using WMIViewer.Properties;
 
 namespace WMIViewer
 {
-    public sealed partial class WmiMethodForm : Form
+    public sealed partial class MethodForm : Form
     {
-        private readonly WmiPresenter m_Presenter;
-        private readonly WmiArgs m_Args;
+        private readonly Presenter m_Presenter;
+        private readonly CmdLineArgs m_Args;
         private bool m_OutParamPresent;
 
-        public WmiMethodForm(WmiPresenter presenter)
+        public MethodForm(Presenter presenter)
         {
             if (presenter == null)
                 throw new ArgumentNullException("presenter");
@@ -128,9 +128,9 @@ namespace WMIViewer
             foreach (PropertyDataExt prop in propList)
             {
                 // detect return value parameter name
-                if (prop.ParameterType == WmiParameterType.Return)
+                if (prop.ParameterType == ParameterType.Return)
                     m_ReturnValueName = prop.Name;
-                if (prop.ParameterType == WmiParameterType.Out)
+                if (prop.ParameterType == ParameterType.Out)
                     m_OutParamPresent = true;
                 str = String.Format(CultureInfo.InvariantCulture, "{0} {1} {2} : {3}", prop.Id, prop.ParameterType, prop.Name, prop.PropType);
                 LB.Items.Add(str);
@@ -160,7 +160,7 @@ namespace WMIViewer
         private void bRun_Click(object sender, EventArgs e)
         {
             RunTheMethod();
-            if (m_Args.StartCmd == WmiStartCommand.ExecuteMethod && m_ExecuteOK)
+            if (m_Args.StartCmd == StartCommand.ExecuteMethod && m_ExecuteOK)
                 DialogResult = DialogResult.OK;
         }
 

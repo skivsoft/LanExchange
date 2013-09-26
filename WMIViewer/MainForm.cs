@@ -8,16 +8,16 @@ using WMIViewer.Properties;
 
 namespace WMIViewer
 {
-    public sealed partial class WmiForm : Form
+    public sealed partial class MainForm : Form
     {
-        private readonly WmiPresenter m_Presenter;
-        private readonly WmiArgs m_Args;
+        private readonly Presenter m_Presenter;
+        private readonly CmdLineArgs m_Args;
         private string m_CurrentWmiClass;
 
         public event EventHandler FocusedItemChanged;
 
         [Localizable(false)]
-        public WmiForm(WmiPresenter presenter)
+        public MainForm(Presenter presenter)
         {
             if (presenter == null)
                 throw new ArgumentNullException("presenter");
@@ -31,13 +31,13 @@ namespace WMIViewer
 
             FocusedItemChanged += lvInstances_FocusedItemChanged;
             UpdateTitle();
-            ShowStat(WmiClassList.Instance.ClassCount, WmiClassList.Instance.PropCount, WmiClassList.Instance.MethodCount);
+            ShowStat(ClassList.Instance.ClassCount, ClassList.Instance.PropCount, ClassList.Instance.MethodCount);
             Icon = Resources.WMIViewer16;
         }
 
         public void UpdateTitle()
         {
-            var description = WmiClassList.GetPropertyValue(m_Presenter.Namespace, "Win32_OperatingSystem",
+            var description = ClassList.GetPropertyValue(m_Presenter.Namespace, "Win32_OperatingSystem",
                 "Description");
             if (string.IsNullOrEmpty(description))
                 Text = Resources.WMIForm_CompPrefix + m_Args.ComputerName;
@@ -45,7 +45,7 @@ namespace WMIViewer
                 Text = string.Format(CultureInfo.InvariantCulture, Resources.WMIForm_Title, m_Args.ComputerName, description);
         }
 
-        public WmiPresenter Presenter
+        public Presenter Presenter
         {
             get { return m_Presenter; }
         }
@@ -148,7 +148,7 @@ namespace WMIViewer
                         if (prop.Value == null)
                             dynObj.AddPropertyNull<DateTime>(prop.Name, prop.Name, description, category, isReadOnly, null);
                         else
-                            dynObj.AddProperty(prop.Name, WmiHelper.ToDateTime(prop.Value.ToString()), description, category, isReadOnly);
+                            dynObj.AddProperty(prop.Name, Helper.ToDateTime(prop.Value.ToString()), description, category, isReadOnly);
                         break;
                     //     A reference to another object. This is represented by a string containing
                     //     the path to the referenced object. This value maps to the System.Int16 type.
@@ -182,7 +182,7 @@ namespace WMIViewer
             set
             {
                 m_CurrentWmiClass = value;
-                lDescription.Text = WmiClassList.Instance.GetClassDescription(m_Presenter.Namespace, value);
+                lDescription.Text = ClassList.Instance.GetClassDescription(m_Presenter.Namespace, value);
                 lClassName.Text = value;
                 m_Presenter.EnumObjects(value);
                 m_Presenter.BuildContextMenu(menuCommands.Items);
@@ -236,9 +236,9 @@ namespace WMIViewer
         public void UpdateClassesMenu()
         {
             menuClasses.Items.Clear();
-            int count1 = WmiClassList.Instance.Classes.Count;
-            int count2 = WmiClassList.Instance.ReadOnlyClasses.Count;
-            foreach(var str in WmiClassList.Instance.Classes)
+            int count1 = ClassList.Instance.Classes.Count;
+            int count2 = ClassList.Instance.ReadOnlyClasses.Count;
+            foreach(var str in ClassList.Instance.Classes)
             {
                 var menuItem = new ToolStripMenuItem {Text = str};
                 menuItem.Click += MenuClassesOnClick;
@@ -246,7 +246,7 @@ namespace WMIViewer
             }
             if (count1 > 0 && count2 > 0)
                 menuClasses.Items.Add(new ToolStripSeparator());
-            foreach (var str in WmiClassList.Instance.ReadOnlyClasses)
+            foreach (var str in ClassList.Instance.ReadOnlyClasses)
             {
                 var menuItem = new ToolStripMenuItem { Text = str };
                 menuItem.Click += MenuClassesOnClick;
@@ -264,7 +264,7 @@ namespace WMIViewer
 
         private void menuClasses_Opening(object sender, CancelEventArgs e)
         {
-            if (!WmiClassList.Instance.Loaded)
+            if (!ClassList.Instance.Loaded)
             {
                 e.Cancel = true;
                 return;

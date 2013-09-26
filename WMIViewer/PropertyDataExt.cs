@@ -8,7 +8,7 @@ namespace WMIViewer
     public sealed class PropertyDataExt : IComparable<PropertyDataExt>
     {
         private readonly PropertyData m_Data;
-        private readonly WmiParameterType m_ParameterType;
+        private readonly ParameterType m_ParameterType;
         private readonly int m_Id;
 
         public PropertyDataExt(PropertyData data)
@@ -20,17 +20,17 @@ namespace WMIViewer
             foreach (var qd in m_Data.Qualifiers)
             {
                 if (qd.Name.Equals("In") || qd.Name.Equals("in"))
-                    m_ParameterType = WmiParameterType.In;
+                    m_ParameterType = ParameterType.In;
                 if (qd.Name.Equals("Out"))
-                    m_ParameterType = WmiParameterType.Out;
+                    m_ParameterType = ParameterType.Out;
                 if (qd.Name.Equals("out"))
-                    m_ParameterType = WmiParameterType.Return;
+                    m_ParameterType = ParameterType.Return;
                 if (qd.Name.Equals("ID"))
                     m_Id = (int) qd.Value;
             }
         }
 
-        public WmiParameterType ParameterType
+        public ParameterType ParameterType
         {
             get { return m_ParameterType; }
         }

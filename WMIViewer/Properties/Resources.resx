@@ -213,7 +213,7 @@ Property {0} successfully changed.</value>
   <data name="ButtonConnect" xml:space="preserve">
     <value>Connect</value>
   </data>
-  <data name="WMIAuthForm_Password" xml:space="preserve">
+  <data name="AuthForm_Password" xml:space="preserve">
     <value>Password:</value>
   </data>
   <data name="WMIAuthForm_User" xml:space="preserve">
