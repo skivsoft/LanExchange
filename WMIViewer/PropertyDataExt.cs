@@ -5,13 +5,13 @@ using System.Management;
 namespace WMIViewer
 {
     [Localizable(false)]
-    public sealed class PropertyDataEx : IComparable<PropertyDataEx>
+    public sealed class PropertyDataExt : IComparable<PropertyDataExt>
     {
         private readonly PropertyData m_Data;
         private readonly WMIParamType m_ParamType;
         private readonly int m_ID;
 
-        public PropertyDataEx(PropertyData data)
+        public PropertyDataExt(PropertyData data)
         {
             if (data == null)
                 throw new ArgumentNullException("data");
@@ -45,7 +45,7 @@ namespace WMIViewer
             get { return m_Data.Name; }
         }
 
-        public CimType Type
+        public CimType PropType
         {
             get { return m_Data.Type; }
         }
@@ -60,7 +60,7 @@ namespace WMIViewer
             get { return m_Data.Value; }   
         }
 
-        public int CompareTo(PropertyDataEx other)
+        public int CompareTo(PropertyDataExt other)
         {
             return ID - other.ID;
         }

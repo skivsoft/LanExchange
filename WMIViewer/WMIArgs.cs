@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Forms;
 
@@ -9,6 +10,7 @@ namespace WMIViewer
     {
         public const string DefaultNamespaceName = @"ROOT\CIMV2";
 
+        [Localizable(false)]
         public static WMIArgs ParseFromCmdLine(IEnumerable<string> args)
         {
             const string COMPUTER_MARKER    = "/COMPUTER:";

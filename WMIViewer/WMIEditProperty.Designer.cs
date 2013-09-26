@@ -1,4 +1,6 @@
-﻿namespace WMIViewer
+﻿using WMIViewer.Properties;
+
+namespace WMIViewer
 {
     partial class WMIEditProperty
     {
@@ -59,7 +61,7 @@
             this.lDescription.Name = "lDescription";
             this.lDescription.Size = new System.Drawing.Size(470, 57);
             this.lDescription.TabIndex = 1;
-            this.lDescription.Text = "    ";
+            this.lDescription.Text = Resources.EmptyText;
             // 
             // lProperty
             // 
@@ -69,7 +71,7 @@
             this.lProperty.Name = "lProperty";
             this.lProperty.Size = new System.Drawing.Size(33, 13);
             this.lProperty.TabIndex = 2;
-            this.lProperty.Text = "Prop";
+            this.lProperty.Text = Resources.EmptyText;
             // 
             // eProp
             // 
@@ -88,7 +90,7 @@
             this.bOK.Name = "bOK";
             this.bOK.Size = new System.Drawing.Size(75, 23);
             this.bOK.TabIndex = 4;
-            this.bOK.Text = "OK";
+            this.bOK.Text = Resources.WMIEditProperty_OK;
             this.bOK.UseVisualStyleBackColor = true;
             this.bOK.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -100,7 +102,7 @@
             this.bCancel.Name = "bCancel";
             this.bCancel.Size = new System.Drawing.Size(75, 23);
             this.bCancel.TabIndex = 5;
-            this.bCancel.Text = "Cancel";
+            this.bCancel.Text = Resources.WMIEditProperty_Cancel;
             this.bCancel.UseVisualStyleBackColor = true;
             // 
             // panel1
@@ -120,7 +122,7 @@
             this.lClass.Name = "lClass";
             this.lClass.Size = new System.Drawing.Size(37, 13);
             this.lClass.TabIndex = 7;
-            this.lClass.Text = "Class";
+            this.lClass.Text = Resources.EmptyText;
             // 
             // eClass
             // 
@@ -150,7 +152,6 @@
             this.MaximizeBox = false;
             this.Name = "WMIEditProperty";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "WMIEditProperty";
             this.pTop.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

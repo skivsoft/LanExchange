@@ -91,15 +91,11 @@ namespace WMIViewer
             {
                 m_Namespace.Connect();
             }
-            catch (Exception ex)
+            catch (ManagementException ex)
             {
                 Debug.Print(ex.Message);
             }
-            if (!m_Namespace.IsConnected)
-            {
-                return false;
-            }
-            return true;
+            return m_Namespace.IsConnected;
         }
 
         public string GetClassQualifiers(ManagementScope scope, string className)
@@ -129,7 +125,7 @@ namespace WMIViewer
                     }
                 }
             }
-            catch(Exception ex)
+            catch(ManagementException ex)
             {
                 Debug.Print(ex.Message);
             }
@@ -162,7 +158,7 @@ namespace WMIViewer
                         }
                 }
             }
-            catch(Exception ex)
+            catch(ManagementException ex)
             {
                 Debug.Print(ex.Message);
             }
@@ -244,7 +240,7 @@ namespace WMIViewer
                 }
 
             }
-            catch (Exception ex)
+            catch (ManagementException ex)
             {
                 Debug.Print(ex.Message);
             }
@@ -267,7 +263,7 @@ namespace WMIViewer
                     }
                 }
             }
-            catch (Exception ex)
+            catch (ManagementException ex)
             {
                 Debug.Print(ex.Message);
             }
@@ -302,7 +298,7 @@ namespace WMIViewer
                         if (qd.Name.Equals("Association")) isAssociation = true;
                         if (qd.Name.Equals("dynamic")) isDynamic = true;
                         //if (qd.Name.Equals("abstract")) IsAbstract = true;
-                        if (qd.Name.ToLower(CultureInfo.InvariantCulture).Equals("genericperfctr")) isPerf = true;
+                        if (qd.Name.ToUpperInvariant().Equals("GENERICPERFCTR")) isPerf = true;
                         if (qd.Name.Equals("SupportsUpdate")) isSupportsUpdate = true;
                         if (qd.Name.Equals("SupportsCreate")) isSupportsCreate = true;
                         if (qd.Name.Equals("SupportsDelete")) isSupportsDelete = true;

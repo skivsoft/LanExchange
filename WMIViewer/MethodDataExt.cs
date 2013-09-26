@@ -7,7 +7,7 @@ using System.Text;
 
 namespace WMIViewer
 {
-    public sealed class MethodDataEx
+    public sealed class MethodDataExt
     {
         private readonly MethodData m_Data;
 
@@ -16,7 +16,7 @@ namespace WMIViewer
         /// </summary>
         /// <exception cref="ArgumentNullException"></exception>
         /// <param name="data"></param>
-        public MethodDataEx(MethodData data)
+        public MethodDataExt(MethodData data)
         {
             if (data == null)
                 throw new ArgumentNullException("data");
@@ -34,34 +34,31 @@ namespace WMIViewer
         [Localizable(false)]
         public override string ToString()
         {
-            var list = new List<PropertyDataEx>();
+            var list = new List<PropertyDataExt>();
             if (m_Data.InParameters != null)
                 foreach (var pd in m_Data.InParameters.Properties)
-                    list.Add(new PropertyDataEx(pd));
+                    list.Add(new PropertyDataExt(pd));
             if (m_Data.OutParameters != null)
                 foreach (var pd in m_Data.OutParameters.Properties)
-                    list.Add(new PropertyDataEx(pd));
+                    list.Add(new PropertyDataExt(pd));
             list.Sort();
             //string sReturn = string.Empty;
             var sb = new StringBuilder();
+            int numArgs = 0;
             foreach (var prop in list)
             {
                 if (prop.ParamType == WMIParamType.Return)
                 {
-                    //sReturn = prop.Type.ToString();
                     continue;
                 }
+                numArgs++;
                 if (sb.Length > 0)
                     sb.Append(", ");
                 if (prop.ParamType == WMIParamType.Out)
                     sb.Append("out ");
-                //sb.Append(prop.Type);
-                //sb.Append(" ");
-                string s = prop.Name;
-                sb.Append(s.Substring(0, 1).ToLower(CultureInfo.InvariantCulture));
-                sb.Append(s.Substring(1));
+                sb.Append(prop.Name);
             }
-            return string.Format(CultureInfo.InvariantCulture, "{0}({1})", m_Data.Name, sb);
+            return numArgs == 0 ? m_Data.Name : string.Format(CultureInfo.InvariantCulture, "{0} ({1})", m_Data.Name, sb);
         }
     }
 }

@@ -96,28 +96,6 @@ namespace WMIViewer
                 throw new WMIObjectNotFoundException(propertyName);
         }
 
-
-        public string Filter
-        {
-            get { return m_Filter; }
-            set
-            {
-                m_Filter = value.Trim().ToLower();
-                if (m_Filter.Length != 0)
-                    FilterProperties(m_Filter);
-            }
-        }
-
-        private void FilterProperties(string filter)
-        {
-            m_FilteredPropertyDescriptors.Clear();
-
-            foreach (var descriptor in m_FullPropertyDescriptors)
-                if (((PropertyDescriptor)descriptor).Name.ToLower(CultureInfo.InvariantCulture).IndexOf(filter, StringComparison.Ordinal) > -1)
-                    m_FilteredPropertyDescriptors.Add(((PropertyDescriptor)descriptor));
-        }
-
-
         public object this[string propertyName]
         {
             get { return GetPropertyValue(propertyName); }
