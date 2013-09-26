@@ -47,14 +47,14 @@ namespace WMIViewer
             int numArgs = 0;
             foreach (var prop in list)
             {
-                if (prop.ParameterType == WmiParameterType.Return)
+                if (prop.ParameterType == ParameterType.Return)
                 {
                     continue;
                 }
                 numArgs++;
                 if (sb.Length > 0)
                     sb.Append(", ");
-                if (prop.ParameterType == WmiParameterType.Out)
+                if (prop.ParameterType == ParameterType.Out)
                     sb.Append("out ");
                 sb.Append(prop.Name);
             }

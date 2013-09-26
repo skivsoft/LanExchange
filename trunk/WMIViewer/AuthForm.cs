@@ -7,12 +7,12 @@ using WMIViewer.Properties;
 
 namespace WMIViewer
 {
-    public sealed partial class WmiAuthForm : Form
+    public sealed partial class AuthForm : Form
     {
         private static string s_UserName;
         private static string s_UserPassword;
         
-        public WmiAuthForm()
+        public AuthForm()
         {
             InitializeComponent();
         }

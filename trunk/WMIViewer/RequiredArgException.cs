@@ -7,28 +7,29 @@ using WMIViewer.Properties;
 namespace WMIViewer
 {
     [Serializable]
-    public sealed class WmiObjectNotFoundException : Exception
+    public sealed class RequiredArgException : Exception
     {
-        private readonly string m_WMIObject;
+        private readonly string m_Marker;
 
-        public WmiObjectNotFoundException()
-        {
-            
-        }
+        //public WMIRequiredParamException
 
-        public WmiObjectNotFoundException(string wmiObject)
-        {
-            m_WMIObject = wmiObject;
-        }
-
-        public WmiObjectNotFoundException(string message, Exception innerException) : base(message, innerException)
+        public RequiredArgException()
         {
         }
 
-        private WmiObjectNotFoundException(SerializationInfo info, StreamingContext context)
+        public RequiredArgException(string marker)
+        {
+            m_Marker = marker;
+        }
+
+        public RequiredArgException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        private RequiredArgException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            m_WMIObject = info.GetString("WMIObject");
+            m_Marker = info.GetString ("Marker");
         }        
 
         [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
@@ -36,13 +37,16 @@ namespace WMIViewer
         {
             if (info == null)
                 throw new ArgumentNullException("info");
-            info.AddValue("WMIObject", m_WMIObject);
+            info.AddValue("Marker", m_Marker);
             base.GetObjectData(info, context);
         }
 
         public override string Message
         {
-            get { return string.Format(CultureInfo.InvariantCulture, Resources.WMIObjectNotFoundException_Message, m_WMIObject); }
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture, Resources.WMIRequiredParamException_Message, m_Marker);
+            }
         }
     }
 }

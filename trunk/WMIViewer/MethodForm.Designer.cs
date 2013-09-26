@@ -2,7 +2,7 @@
 
 namespace WMIViewer
 {
-    partial class WmiMethodForm
+    partial class MethodForm
     {
         /// <summary>
         /// Required designer variable.

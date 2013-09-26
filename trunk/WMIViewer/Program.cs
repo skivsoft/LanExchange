@@ -12,36 +12,36 @@ namespace WMIViewer
         [Localizable(true)]
         static void Main(string[] args)
         {
-            WmiArgs wmiArgs = null;
+            CmdLineArgs wmiArgs = null;
             try
             {
-                wmiArgs = WmiArgs.ParseFromCmdLine(args);
+                wmiArgs = CmdLineArgs.ParseFromCmdLine(args);
             }
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message, GetProgramTitle(), MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, RightToLeft.Options);
             }
-            using (var presenter = new WmiPresenter(wmiArgs))
+            using (var presenter = new Presenter(wmiArgs))
                 if (wmiArgs != null && presenter.ConnectToComputer())
                 {
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
                     switch (wmiArgs.StartCmd)
                     {
-                        case WmiStartCommand.EditProperty:
-                            using (var propForm = new WmiEditProperty(presenter))
+                        case StartCommand.EditProperty:
+                            using (var propForm = new EditPropertyForm(presenter))
                                 propForm.ShowDialog();
                             break;
-                        case WmiStartCommand.ExecuteMethod:
-                            using (var methodForm = new WmiMethodForm(presenter))
+                        case StartCommand.ExecuteMethod:
+                            using (var methodForm = new MethodForm(presenter))
                             {
                                 methodForm.PrepareForm();
                                 methodForm.ShowDialog();
                             }
                             break;
                         default:
-                            WmiClassList.Instance.EnumLocalMachineClasses();
-                            Application.Run(new WmiForm(presenter));
+                            ClassList.Instance.EnumLocalMachineClasses();
+                            Application.Run(new MainForm(presenter));
                             break;
                     }
                 }

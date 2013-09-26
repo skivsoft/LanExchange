@@ -2,7 +2,7 @@
 
 namespace WMIViewer
 {
-    partial class WmiForm
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -31,7 +31,7 @@ namespace WMIViewer
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WmiForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.Status = new System.Windows.Forms.StatusStrip();
             this.lStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
