@@ -9,22 +9,22 @@ using WMIViewer.Properties;
 
 namespace WMIViewer
 {
-    public sealed class Presenter : IDisposable
+    public sealed class WmiPresenter : IDisposable
     {
         private ManagementScope m_Namespace;
 
         private ManagementClass m_Class;
 
         [Localizable(false)]
-        public Presenter(CmdLineArgs args)
+        public WmiPresenter(CmdLineArgs args)
         {
             Args = args;
-            ClassList.Instance.IncludeClasses.Add("Win32_Desktop");
-            ClassList.Instance.IncludeClasses.Add("Win32_DesktopMonitor");
-            ClassList.Instance.IncludeClasses.Add("Win32_DiskDrive");
-            ClassList.Instance.IncludeClasses.Add("Win32_BIOS");
-            ClassList.Instance.IncludeClasses.Add("Win32_Processor");
-            ClassList.Instance.IncludeClasses.Add("Win32_PhysicalMemory");
+            WmiClassList.Instance.IncludeClasses.Add("Win32_Desktop");
+            WmiClassList.Instance.IncludeClasses.Add("Win32_DesktopMonitor");
+            WmiClassList.Instance.IncludeClasses.Add("Win32_DiskDrive");
+            WmiClassList.Instance.IncludeClasses.Add("Win32_BIOS");
+            WmiClassList.Instance.IncludeClasses.Add("Win32_Processor");
+            WmiClassList.Instance.IncludeClasses.Add("Win32_PhysicalMemory");
         }
 
         public CmdLineArgs Args { get; private set; }
@@ -50,16 +50,16 @@ namespace WMIViewer
         private void ShowFirewallConnectionError()
         {
             MessageBox.Show(
-                string.Format(CultureInfo.InvariantCulture, Resources.WMIPresenter_ShowFirewallConnectionError, Args.ComputerName),
-                Resources.WMIPresenter_ConnectionError_Caption,
+                string.Format(CultureInfo.InvariantCulture, Resources.WmiPresenter_ShowFirewallConnectionError, Args.ComputerName),
+                Resources.WmiPresenter_ConnectionError_Caption,
                 MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, RightToLeft.Options);
         }
 
         private void ShowCommonConnectionError(Exception ex)
         {
             MessageBox.Show(
-                string.Format(CultureInfo.InvariantCulture, Resources.WMIPresenter_ShowCommonConnectionError, Args.ComputerName, ex.Message),
-                Resources.WMIPresenter_ConnectionError_Caption,
+                string.Format(CultureInfo.InvariantCulture, Resources.WmiPresenter_ShowCommonConnectionError, Args.ComputerName, ex.Message),
+                Resources.WmiPresenter_ConnectionError_Caption,
                 MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, RightToLeft.Options);
         }
 
@@ -163,7 +163,7 @@ namespace WMIViewer
                         {
                             PropertyData prop = wmiObject.Properties[header.Text];
 
-                            string value = prop.Value == null ? Resources.WMIPresenter_NULL : prop.Value.ToString();
+                            string value = prop.Value == null ? Resources.NULL : prop.Value.ToString();
                             if (prop.Name.Equals("Name"))
                             {
                                 string[] sList = value.Split('|');

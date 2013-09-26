@@ -95,7 +95,7 @@ namespace WMIViewer
             this.bRun.Name = "bRun";
             this.bRun.Size = new System.Drawing.Size(100, 40);
             this.bRun.TabIndex = 9;
-            this.bRun.Text = Resources.WMIMethodForm_bRun;
+            this.bRun.Text = Resources.MethodForm_bRun;
             this.bRun.UseVisualStyleBackColor = true;
             this.bRun.Click += new System.EventHandler(this.bRun_Click);
             // 
@@ -163,7 +163,7 @@ namespace WMIViewer
             this.MinimizeBox = false;
             this.Name = "WMIMethodForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = Resources.WMIMethodForm_Caption;
+            this.Text = Resources.MethodForm_Caption;
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WMIMethodForm_KeyDown);
             this.pTop.ResumeLayout(false);
             this.pTop.PerformLayout();

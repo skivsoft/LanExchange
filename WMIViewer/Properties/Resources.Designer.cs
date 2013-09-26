@@ -79,6 +79,43 @@ namespace WMIViewer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to WMI connection to \\{0}.
+        /// </summary>
+        internal static string AuthForm_Title {
+            get {
+                return ResourceManager.GetString("AuthForm_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to connect under account {0}.
+        ///Enter user name and password to retry the connection..
+        /// </summary>
+        internal static string AuthForm_UnableToConnect {
+            get {
+                return ResourceManager.GetString("AuthForm_UnableToConnect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User:.
+        /// </summary>
+        internal static string AuthForm_User {
+            get {
+                return ResourceManager.GetString("AuthForm_User", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User name not specified..
+        /// </summary>
+        internal static string AuthForm_UserNameNotSpecified {
+            get {
+                return ResourceManager.GetString("AuthForm_UserNameNotSpecified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel
         ///[Esc].
         /// </summary>
@@ -98,6 +135,33 @@ namespace WMIViewer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string EditProperty_Cancel {
+            get {
+                return ResourceManager.GetString("EditProperty_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        internal static string EditProperty_OK {
+            get {
+                return ResourceManager.GetString("EditProperty_OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}\{1}.
+        /// </summary>
+        internal static string EditProperty_PropertyFmt {
+            get {
+                return ResourceManager.GetString("EditProperty_PropertyFmt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to     .
         /// </summary>
         internal static string EmptyText {
@@ -107,120 +171,56 @@ namespace WMIViewer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to WMI connection to \\{0}.
-        /// </summary>
-        internal static string WMIAuthForm_Title {
-            get {
-                return ResourceManager.GetString("WMIAuthForm_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unable to connect under account {0}.
-        ///Enter user name and password to retry the connection..
-        /// </summary>
-        internal static string WMIAuthForm_UnableToConnect {
-            get {
-                return ResourceManager.GetString("WMIAuthForm_UnableToConnect", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to User:.
-        /// </summary>
-        internal static string WMIAuthForm_User {
-            get {
-                return ResourceManager.GetString("WMIAuthForm_User", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to User name not specified..
-        /// </summary>
-        internal static string WMIAuthForm_UserNameNotSpecified {
-            get {
-                return ResourceManager.GetString("WMIAuthForm_UserNameNotSpecified", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cancel.
-        /// </summary>
-        internal static string WMIEditProperty_Cancel {
-            get {
-                return ResourceManager.GetString("WMIEditProperty_Cancel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to OK.
-        /// </summary>
-        internal static string WMIEditProperty_OK {
-            get {
-                return ResourceManager.GetString("WMIEditProperty_OK", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0}\{1}.
-        /// </summary>
-        internal static string WMIEditProperty_PropertyFmt {
-            get {
-                return ResourceManager.GetString("WMIEditProperty_PropertyFmt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Classes: {0}.
         /// </summary>
-        internal static string WMIForm_Classes {
+        internal static string MainForm_Classes {
             get {
-                return ResourceManager.GetString("WMIForm_Classes", resourceCulture);
+                return ResourceManager.GetString("MainForm_Classes", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to \\.
         /// </summary>
-        internal static string WMIForm_CompPrefix {
+        internal static string MainForm_CompPrefix {
             get {
-                return ResourceManager.GetString("WMIForm_CompPrefix", resourceCulture);
+                return ResourceManager.GetString("MainForm_CompPrefix", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Editing property {0}.
         /// </summary>
-        internal static string WMIForm_EditingProperty {
+        internal static string MainForm_EditingProperty {
             get {
-                return ResourceManager.GetString("WMIForm_EditingProperty", resourceCulture);
+                return ResourceManager.GetString("MainForm_EditingProperty", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Items: {0}.
         /// </summary>
-        internal static string WMIForm_Items {
+        internal static string MainForm_Items {
             get {
-                return ResourceManager.GetString("WMIForm_Items", resourceCulture);
+                return ResourceManager.GetString("MainForm_Items", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Methods: {0}.
         /// </summary>
-        internal static string WMIForm_Methods {
+        internal static string MainForm_Methods {
             get {
-                return ResourceManager.GetString("WMIForm_Methods", resourceCulture);
+                return ResourceManager.GetString("MainForm_Methods", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Properties: {0}.
         /// </summary>
-        internal static string WMIForm_Properties {
+        internal static string MainForm_Properties {
             get {
-                return ResourceManager.GetString("WMIForm_Properties", resourceCulture);
+                return ResourceManager.GetString("MainForm_Properties", resourceCulture);
             }
         }
         
@@ -230,9 +230,9 @@ namespace WMIViewer.Properties {
         ///Old value: «{1}»
         ///New value: «{2}».
         /// </summary>
-        internal static string WMIForm_PropertyChanged_Message {
+        internal static string MainForm_PropertyChanged_Message {
             get {
-                return ResourceManager.GetString("WMIForm_PropertyChanged_Message", resourceCulture);
+                return ResourceManager.GetString("MainForm_PropertyChanged_Message", resourceCulture);
             }
         }
         
@@ -241,81 +241,81 @@ namespace WMIViewer.Properties {
         ///
         ///Property {0} successfully changed..
         /// </summary>
-        internal static string WMIForm_PropertyChanged_Success {
+        internal static string MainForm_PropertyChanged_Success {
             get {
-                return ResourceManager.GetString("WMIForm_PropertyChanged_Success", resourceCulture);
+                return ResourceManager.GetString("MainForm_PropertyChanged_Success", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to \\{0} — {1}.
         /// </summary>
-        internal static string WMIForm_Title {
+        internal static string MainForm_Title {
             get {
-                return ResourceManager.GetString("WMIForm_Title", resourceCulture);
+                return ResourceManager.GetString("MainForm_Title", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Execute [Ctrl+Enter].
         /// </summary>
-        internal static string WMIMethodForm_bRun {
+        internal static string MethodForm_bRun {
             get {
-                return ResourceManager.GetString("WMIMethodForm_bRun", resourceCulture);
+                return ResourceManager.GetString("MethodForm_bRun", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Executing method: {0}\\{1}.{2}.
         /// </summary>
-        internal static string WMIMethodForm_Caption {
+        internal static string MethodForm_Caption {
             get {
-                return ResourceManager.GetString("WMIMethodForm_Caption", resourceCulture);
+                return ResourceManager.GetString("MethodForm_Caption", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to [{0}] {1}.
         /// </summary>
-        internal static string WMIMethodForm_Fail {
+        internal static string MethodForm_Fail {
             get {
-                return ResourceManager.GetString("WMIMethodForm_Fail", resourceCulture);
+                return ResourceManager.GetString("MethodForm_Fail", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to [0] Success.
         /// </summary>
-        internal static string WMIMethodForm_Success {
+        internal static string MethodForm_Success {
             get {
-                return ResourceManager.GetString("WMIMethodForm_Success", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to WMI property &quot;{0}&quot; not found..
-        /// </summary>
-        internal static string WMIObjectNotFoundException_Message {
-            get {
-                return ResourceManager.GetString("WMIObjectNotFoundException_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to WMI connection error.
-        /// </summary>
-        internal static string WMIPresenter_ConnectionError_Caption {
-            get {
-                return ResourceManager.GetString("WMIPresenter_ConnectionError_Caption", resourceCulture);
+                return ResourceManager.GetString("MethodForm_Success", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to null.
         /// </summary>
-        internal static string WMIPresenter_NULL {
+        internal static string NULL {
             get {
-                return ResourceManager.GetString("WMIPresenter_NULL", resourceCulture);
+                return ResourceManager.GetString("NULL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WMI property &quot;{0}&quot; not found..
+        /// </summary>
+        internal static string ObjectNotFoundException_Message {
+            get {
+                return ResourceManager.GetString("ObjectNotFoundException_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WMI connection error.
+        /// </summary>
+        internal static string WmiPresenter_ConnectionError_Caption {
+            get {
+                return ResourceManager.GetString("WmiPresenter_ConnectionError_Caption", resourceCulture);
             }
         }
         
@@ -323,9 +323,9 @@ namespace WMIViewer.Properties {
         ///   Looks up a localized string similar to Unable to connect to computer \\{0}.
         ///{1}.
         /// </summary>
-        internal static string WMIPresenter_ShowCommonConnectionError {
+        internal static string WmiPresenter_ShowCommonConnectionError {
             get {
-                return ResourceManager.GetString("WMIPresenter_ShowCommonConnectionError", resourceCulture);
+                return ResourceManager.GetString("WmiPresenter_ShowCommonConnectionError", resourceCulture);
             }
         }
         
@@ -333,18 +333,18 @@ namespace WMIViewer.Properties {
         ///   Looks up a localized string similar to Unable to connect to computer \\{0}.
         ///Possible connection has been blocked by firewall..
         /// </summary>
-        internal static string WMIPresenter_ShowFirewallConnectionError {
+        internal static string WmiPresenter_ShowFirewallConnectionError {
             get {
-                return ResourceManager.GetString("WMIPresenter_ShowFirewallConnectionError", resourceCulture);
+                return ResourceManager.GetString("WmiPresenter_ShowFirewallConnectionError", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Command line parameter &quot;{0}&quot; not specified..
         /// </summary>
-        internal static string WMIRequiredParamException_Message {
+        internal static string WmiRequiredParamException_Message {
             get {
-                return ResourceManager.GetString("WMIRequiredParamException_Message", resourceCulture);
+                return ResourceManager.GetString("WmiRequiredParamException_Message", resourceCulture);
             }
         }
         

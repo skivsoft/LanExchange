@@ -45,7 +45,7 @@ namespace WMIViewer
         {
             get
             {
-                return string.Format(CultureInfo.InvariantCulture, Resources.WMIRequiredParamException_Message, m_Marker);
+                return string.Format(CultureInfo.InvariantCulture, Resources.WmiRequiredParamException_Message, m_Marker);
             }
         }
     }

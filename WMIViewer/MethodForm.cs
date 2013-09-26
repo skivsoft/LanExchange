@@ -11,11 +11,11 @@ namespace WMIViewer
 {
     public sealed partial class MethodForm : Form
     {
-        private readonly Presenter m_Presenter;
+        private readonly WmiPresenter m_Presenter;
         private readonly CmdLineArgs m_Args;
         private bool m_OutParamPresent;
 
-        public MethodForm(Presenter presenter)
+        public MethodForm(WmiPresenter presenter)
         {
             if (presenter == null)
                 throw new ArgumentNullException("presenter");
@@ -160,7 +160,7 @@ namespace WMIViewer
         private void bRun_Click(object sender, EventArgs e)
         {
             RunTheMethod();
-            if (m_Args.StartCmd == StartCommand.ExecuteMethod && m_ExecuteOK)
+            if (m_Args.StartCmd == CmdLineCommand.ExecuteMethod && m_ExecuteOK)
                 DialogResult = DialogResult.OK;
         }
 
@@ -210,17 +210,17 @@ namespace WMIViewer
             {
                 var value = (int) ((UInt32) resultProp.Value);
                 var message = new Win32Exception(value).Message;
-                str = String.Format(CultureInfo.InvariantCulture, Resources.WMIMethodForm_Fail, value, message);
+                str = String.Format(CultureInfo.InvariantCulture, Resources.MethodForm_Fail, value, message);
                 LB.Items.Add(str);
                 if (value == 0)
                 {
-                    ShowOK(Resources.WMIMethodForm_Success);
+                    ShowOK(Resources.MethodForm_Success);
                     if (!m_OutParamPresent)
                         timerOK.Enabled = true;
                 }
                 else
                 {
-                    ShowFAIL(String.Format(CultureInfo.InvariantCulture, Resources.WMIMethodForm_Fail, value, message));
+                    ShowFAIL(String.Format(CultureInfo.InvariantCulture, Resources.MethodForm_Fail, value, message));
                 }
             }
         }

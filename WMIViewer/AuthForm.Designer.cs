@@ -74,7 +74,7 @@ namespace WMIViewer
             this.lMessage.Name = "lMessage";
             this.lMessage.Size = new System.Drawing.Size(335, 56);
             this.lMessage.TabIndex = 0;
-            this.lMessage.Text = Resources.WMIAuthForm_UnableToConnect;
+            this.lMessage.Text = Resources.AuthForm_UnableToConnect;
             // 
             // label2
             // 
@@ -83,7 +83,7 @@ namespace WMIViewer
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(32, 13);
             this.label2.TabIndex = 1;
-            this.label2.Text = Resources.WMIAuthForm_User;
+            this.label2.Text = Resources.AuthForm_User;
             // 
             // label3
             // 
@@ -158,7 +158,7 @@ namespace WMIViewer
             this.MinimizeBox = false;
             this.Name = "WMIAuthForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = Resources.WMIAuthForm_Title;
+            this.Text = Resources.AuthForm_Title;
             this.Load += new System.EventHandler(this.WMIAuthForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WMIAuthForm_KeyDown);
             this.panel1.ResumeLayout(false);
