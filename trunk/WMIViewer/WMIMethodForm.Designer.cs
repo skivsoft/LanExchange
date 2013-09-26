@@ -1,4 +1,6 @@
-﻿namespace WMIViewer
+﻿using WMIViewer.Properties;
+
+namespace WMIViewer
 {
     partial class WMIMethodForm
     {
@@ -63,7 +65,7 @@
             this.lDescription.Name = "lDescription";
             this.lDescription.Size = new System.Drawing.Size(222, 387);
             this.lDescription.TabIndex = 1;
-            this.lDescription.Text = "    ";
+            this.lDescription.Text = Resources.EmptyText;
             // 
             // lMethodName
             // 
@@ -73,7 +75,7 @@
             this.lMethodName.Name = "lMethodName";
             this.lMethodName.Size = new System.Drawing.Size(24, 16);
             this.lMethodName.TabIndex = 0;
-            this.lMethodName.Text = "    ";
+            this.lMethodName.Text = Resources.EmptyText;
             // 
             // LB
             // 
@@ -93,7 +95,7 @@
             this.bRun.Name = "bRun";
             this.bRun.Size = new System.Drawing.Size(100, 40);
             this.bRun.TabIndex = 9;
-            this.bRun.Text = "Execute [Ctrl+Enter]";
+            this.bRun.Text = Resources.WMIMethodForm_bRun;
             this.bRun.UseVisualStyleBackColor = true;
             this.bRun.Click += new System.EventHandler(this.bRun_Click);
             // 
@@ -105,7 +107,7 @@
             this.bCancel.Name = "bCancel";
             this.bCancel.Size = new System.Drawing.Size(100, 40);
             this.bCancel.TabIndex = 10;
-            this.bCancel.Text = "Cancel\n[Esc]";
+            this.bCancel.Text = Resources.ButtonCancel;
             this.bCancel.UseVisualStyleBackColor = true;
             // 
             // statusStrip1
@@ -114,7 +116,6 @@
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(794, 22);
             this.statusStrip1.TabIndex = 11;
-            this.statusStrip1.Text = "statusStrip1";
             // 
             // pResult
             // 
@@ -162,7 +163,7 @@
             this.MinimizeBox = false;
             this.Name = "WMIMethodForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Executing Method {0}\\{1}.{2}()";
+            this.Text = Resources.WMIMethodForm_Caption;
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WMIMethodForm_KeyDown);
             this.pTop.ResumeLayout(false);
             this.pTop.PerformLayout();

@@ -30,9 +30,9 @@ namespace WMIViewer
         [Localizable(false)]
         private static string FormatQualifierValue(object value)
         {
-            if (value is string[])
+            var list = value as string[];
+            if (list != null)
             {
-                var list = value as string[];
                 var result = string.Empty;
                 for (int i = 0; i < list.Length; i++)
                 {
@@ -46,7 +46,7 @@ namespace WMIViewer
 
         private string m_ReturnValueName;
 
-
+        [Localizable(false)]
         private void PrepareArgs()
         {
             if (WMIClass == null)
@@ -86,12 +86,13 @@ namespace WMIViewer
         {
             PrepareArgs();
             Text = String.Format(CultureInfo.InvariantCulture, Text, m_Args.NamespaceName, WMIClass.Path.ClassName, WMIMethod.Name);
-            lMethodName.Text = String.Format(CultureInfo.InvariantCulture, "{0}()", WMIMethod.Name);
+            lMethodName.Text = WMIMethod.Name;
             foreach (var qd in WMIMethod.Qualifiers)
             {
                 if (qd.Name.Equals("Description"))
                 {
                     lDescription.Text = qd.Value.ToString();
+                    break;
                 }
             }
             // output method qualifiers
@@ -106,13 +107,13 @@ namespace WMIViewer
             }
             LB.Items.Add(string.Empty);
             // prepare properties list and sort it by ID
-            var propList = new List<PropertyDataEx>();
+            var propList = new List<PropertyDataExt>();
             if (WMIMethod.InParameters != null)
                 foreach (PropertyData pd in WMIMethod.InParameters.Properties)
-                    propList.Add(new PropertyDataEx(pd));
+                    propList.Add(new PropertyDataExt(pd));
             if (WMIMethod.OutParameters != null)
                 foreach (PropertyData pd in WMIMethod.OutParameters.Properties)
-                    propList.Add(new PropertyDataEx(pd));
+                    propList.Add(new PropertyDataExt(pd));
             propList.Sort();
             // output properties
             var excludeList = new List<string>();
@@ -122,14 +123,14 @@ namespace WMIViewer
             excludeList.Add("Out");
             excludeList.Add("in");
             excludeList.Add("out");
-            foreach (PropertyDataEx prop in propList)
+            foreach (PropertyDataExt prop in propList)
             {
                 // detect return value parameter name
                 if (prop.ParamType == WMIParamType.Return)
                     m_ReturnValueName = prop.Name;
                 if (prop.ParamType == WMIParamType.Out)
                     m_OutParamPresent = true;
-                str = String.Format(CultureInfo.InvariantCulture, "{0} {1} {2} : {3}", prop.ID, prop.ParamType, prop.Name, prop.Type);
+                str = String.Format(CultureInfo.InvariantCulture, "{0} {1} {2} : {3}", prop.ID, prop.ParamType, prop.Name, prop.PropType);
                 LB.Items.Add(str);
                 foreach (var qd in prop.Qualifiers)
                     if (!excludeList.Contains(qd.Name))
@@ -177,7 +178,6 @@ namespace WMIViewer
             m_ExecuteOK = false;
         }
 
-        [Localizable(false)]
         private void RunTheMethod()
         {
             if (WMIObject == null || WMIMethod == null) return;
@@ -190,7 +190,7 @@ namespace WMIViewer
             {
                 result = WMIObject.InvokeMethod(WMIMethod.Name, inParams, options);
             }
-            catch (Exception ex)
+            catch (ManagementException ex)
             {
                 ShowFAIL(ex.Message);
             }
@@ -203,22 +203,22 @@ namespace WMIViewer
                 str = String.Format(CultureInfo.InvariantCulture, "{0} = {1}", pd.Name, pd.Value);
                 LB.Items.Add(str);
             }
-            var resultProp = new PropertyDataEx(result.Properties[m_ReturnValueName]);
+            var resultProp = new PropertyDataExt(result.Properties[m_ReturnValueName]);
             if (resultProp.Value != null)
             {
                 var value = (int) ((UInt32) resultProp.Value);
                 var message = new Win32Exception(value).Message;
-                str = String.Format(CultureInfo.InvariantCulture, "[{0}] {1}", value, message);
+                str = String.Format(CultureInfo.InvariantCulture, Resources.WMIMethodForm_Fail, value, message);
                 LB.Items.Add(str);
                 if (value == 0)
                 {
-                    ShowOK("[0] Success");
+                    ShowOK(Resources.WMIMethodForm_Success);
                     if (!m_OutParamPresent)
                         timerOK.Enabled = true;
                 }
                 else
                 {
-                    ShowFAIL(String.Format(CultureInfo.InvariantCulture, "[{0}] {1}", value, message));
+                    ShowFAIL(String.Format(CultureInfo.InvariantCulture, Resources.WMIMethodForm_Fail, value, message));
                 }
             }
         }

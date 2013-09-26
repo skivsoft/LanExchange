@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Management;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using WMIViewer.Properties;
 
 namespace WMIViewer
 {
@@ -14,6 +15,7 @@ namespace WMIViewer
 
         private ManagementClass m_Class;
 
+        [Localizable(false)]
         public WMIPresenter(WMIArgs args)
         {
             Args = args;
@@ -30,11 +32,11 @@ namespace WMIViewer
 
         public void Dispose()
         {
-            if (m_Class != null)
-            {
-                m_Class.Dispose();
-                m_Class = null;
-            }
+            //if (m_Class != null)
+            //{
+            //    m_Class.Dispose();
+            //    m_Class = null;
+            //}
         }
 
         [Localizable(false)]
@@ -48,17 +50,17 @@ namespace WMIViewer
         private void ShowFirewallConnectionError()
         {
             MessageBox.Show(
-                string.Format(CultureInfo.InvariantCulture, "Unable to connect to computer \\\\{0}.\nPossible connection has been blocked by firewall.", Args.ComputerName),
-                "WMI connection error",
-                MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
+                string.Format(CultureInfo.InvariantCulture, Resources.WMIPresenter_ShowFirewallConnectionError, Args.ComputerName),
+                Resources.WMIPresenter_ConnectionError_Caption,
+                MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, RtlUtils.Options);
         }
 
         private void ShowCommonConnectionError(Exception ex)
         {
             MessageBox.Show(
-                string.Format(CultureInfo.InvariantCulture, "Unable to connect to computer \\\\{0}.\n{1}", Args.ComputerName, ex.Message),
-                "WMI connection error",
-                MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
+                string.Format(CultureInfo.InvariantCulture, Resources.WMIPresenter_ShowCommonConnectionError, Args.ComputerName, ex.Message),
+                Resources.WMIPresenter_ConnectionError_Caption,
+                MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, RtlUtils.Options);
         }
 
         public bool ConnectToComputer()
@@ -119,10 +121,10 @@ namespace WMIViewer
                 else
                     ShowCommonConnectionError(ex);
             }
-            catch (Exception ex)
-            {
-                ShowCommonConnectionError(ex);
-            }
+            //catch (Exception ex)
+            //{
+            //    ShowCommonConnectionError(ex);
+            //}
             m_Namespace = null;
             return false;
         }
@@ -161,7 +163,7 @@ namespace WMIViewer
                         {
                             PropertyData prop = wmiObject.Properties[header.Text];
 
-                            string value = prop.Value == null ? "null" : prop.Value.ToString();
+                            string value = prop.Value == null ? Resources.WMIPresenter_NULL : prop.Value.ToString();
                             if (prop.Name.Equals("Name"))
                             {
                                 string[] sList = value.Split('|');
@@ -177,7 +179,7 @@ namespace WMIViewer
                         View.LV.Items.Add(lvi);
                     }
                 }
-                catch (Exception ex)
+                catch (ManagementException ex)
                 {
                     Debug.Print(ex.Message);
                 }
@@ -186,20 +188,25 @@ namespace WMIViewer
 
         private bool SetupColumns()
         {
+            const string WMI_NAME        = "Name";
+            const string WMI_CAPTION     = "Caption";
+            const string WMI_DESCRIPTION = "DESCRIPTION";
+            const string WMI_CIM_KEY     = "CIM_Key";
             bool checkError = true;
             try
             {
-                View.LV.Columns.Add("Name");
-                View.LV.Columns.Add("Caption");
                 foreach (var prop in m_Class.Properties)
                 {
-                    if (prop.Name.Equals("Name")) continue;
-                    if (prop.Name.Equals("Caption")) continue;
-                    if (prop.Name.Equals("Description")) continue;
+                    if (prop.Name.Equals(WMI_NAME) || prop.Name.Equals(WMI_CAPTION))
+                    {
+                        View.LV.Columns.Insert(0, prop.Name);
+                        continue;
+                    }
+                    if (prop.Name.Equals(WMI_DESCRIPTION)) continue;
                     if (prop.IsLocal) continue;
                     bool isCimKey = false;
                     foreach (var qd in prop.Qualifiers)
-                        if (qd.Name.Equals("CIM_Key"))
+                        if (qd.Name.Equals(WMI_CIM_KEY))
                         {
                             isCimKey = true;
                             break;
@@ -212,7 +219,7 @@ namespace WMIViewer
                 }
                 checkError = false;
             }
-            catch (Exception ex)
+            catch (ManagementException ex)
             {
                 Debug.Print(ex.Message);
             }
@@ -245,7 +252,7 @@ namespace WMIViewer
             {
                 foreach (MethodData md in m_Class.Methods)
                 {
-                    var method = new MethodDataEx(md);
+                    var method = new MethodDataExt(md);
                     if (!method.HasQualifier("Implemented")) continue;
                     var menuItem = new ToolStripMenuItem();
                     menuItem.Text = method.ToString();
@@ -254,7 +261,7 @@ namespace WMIViewer
                     items.Add(menuItem);
                 }
             }
-            catch (Exception ex)
+            catch (ManagementException ex)
             {
                 Debug.Print(ex.Message);
             }

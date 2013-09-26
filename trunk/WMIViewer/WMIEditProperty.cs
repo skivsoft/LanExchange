@@ -22,22 +22,22 @@ namespace WMIViewer
             Icon = Resources.WMIViewer16;
         }
 
+        [Localizable(false)]
         public void UpdateTitle()
         {
             var description = WMIClassList.GetPropertyValue(m_Presenter.Namespace, "Win32_OperatingSystem",
                 "Description");
             if (string.IsNullOrEmpty(description))
-                Text = @"\\" + m_Args.ComputerName;
+                Text = Resources.WMIForm_CompPrefix + m_Args.ComputerName;
             else
-                Text = string.Format(CultureInfo.InvariantCulture, @"\\{0} — {1}", m_Args.ComputerName, description);
+                Text = string.Format(CultureInfo.InvariantCulture, Resources.WMIForm_Title, m_Args.ComputerName, description);
         }
 
-        [Localizable(false)]
         public void SetArgsToControls()
         {
-            lClass.Text = string.Format(CultureInfo.InvariantCulture, @"{0}\{1}", m_Args.NamespaceName, m_Args.ClassName);
+            lClass.Text = string.Format(CultureInfo.InvariantCulture, Resources.WMIEditProperty_PropertyFmt, m_Args.NamespaceName, m_Args.ClassName);
             eClass.Text = WMIClassList.GetPropertyValue(m_Presenter.Namespace, m_Args.ClassName, "Caption");
-            lProperty.Text = "&" + m_Args.PropertyName;
+            lProperty.Text = Resources.AMP + m_Args.PropertyName;
             bool editable;
             bool propFound;
             lDescription.Text = WMIClassList.Instance.GetPropertyDescription(m_Args.ClassName, 

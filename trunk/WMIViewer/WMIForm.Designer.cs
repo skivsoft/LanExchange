@@ -1,4 +1,6 @@
-﻿namespace WMIViewer
+﻿using WMIViewer.Properties;
+
+namespace WMIViewer
 {
     partial class WMIForm
     {
@@ -39,16 +41,16 @@
             this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lMethods = new System.Windows.Forms.ToolStripStatusLabel();
             this.pLeft = new System.Windows.Forms.Panel();
+            this.lvInstances = new System.Windows.Forms.ListView();
             this.menuCommands = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.TheSplitter = new System.Windows.Forms.Splitter();
             this.PropGrid = new System.Windows.Forms.PropertyGrid();
             this.pTop = new System.Windows.Forms.Panel();
             this.menuClasses = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.wMIItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lClassName = new System.Windows.Forms.ToolStripDropDownButton();
             this.lDescription = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.lClassName = new System.Windows.Forms.ToolStripDropDownButton();
-            this.lvInstances = new System.Windows.Forms.ListView();
             this.Status.SuspendLayout();
             this.pLeft.SuspendLayout();
             this.pTop.SuspendLayout();
@@ -70,14 +72,13 @@
             this.Status.Name = "Status";
             this.Status.Size = new System.Drawing.Size(792, 22);
             this.Status.TabIndex = 3;
-            this.Status.Text = "statusStrip1";
             // 
             // lStatus
             // 
             this.lStatus.Name = "lStatus";
             this.lStatus.Size = new System.Drawing.Size(708, 17);
             this.lStatus.Spring = true;
-            this.lStatus.Text = "    ";
+            this.lStatus.Text = global::WMIViewer.Properties.Resources.EmptyText;
             this.lStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // toolStripStatusLabel1
@@ -87,13 +88,12 @@
             this.toolStripStatusLabel1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(4, 17);
-            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
             // lClasses
             // 
             this.lClasses.Name = "lClasses";
             this.lClasses.Size = new System.Drawing.Size(19, 17);
-            this.lClasses.Text = "    ";
+            this.lClasses.Text = global::WMIViewer.Properties.Resources.EmptyText;
             // 
             // toolStripStatusLabel3
             // 
@@ -102,13 +102,12 @@
             this.toolStripStatusLabel3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
             this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
             this.toolStripStatusLabel3.Size = new System.Drawing.Size(4, 17);
-            this.toolStripStatusLabel3.Text = "toolStripStatusLabel3";
             // 
             // lProps
             // 
             this.lProps.Name = "lProps";
             this.lProps.Size = new System.Drawing.Size(19, 17);
-            this.lProps.Text = "    ";
+            this.lProps.Text = global::WMIViewer.Properties.Resources.EmptyText;
             // 
             // toolStripStatusLabel5
             // 
@@ -117,13 +116,12 @@
             this.toolStripStatusLabel5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
             this.toolStripStatusLabel5.Name = "toolStripStatusLabel5";
             this.toolStripStatusLabel5.Size = new System.Drawing.Size(4, 17);
-            this.toolStripStatusLabel5.Text = "toolStripStatusLabel5";
             // 
             // lMethods
             // 
             this.lMethods.Name = "lMethods";
             this.lMethods.Size = new System.Drawing.Size(19, 17);
-            this.lMethods.Text = "    ";
+            this.lMethods.Text = global::WMIViewer.Properties.Resources.EmptyText;
             // 
             // pLeft
             // 
@@ -135,6 +133,22 @@
             this.pLeft.Name = "pLeft";
             this.pLeft.Size = new System.Drawing.Size(792, 444);
             this.pLeft.TabIndex = 4;
+            // 
+            // lvInstances
+            // 
+            this.lvInstances.ContextMenuStrip = this.menuCommands;
+            this.lvInstances.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvInstances.FullRowSelect = true;
+            this.lvInstances.GridLines = true;
+            this.lvInstances.HideSelection = false;
+            this.lvInstances.Location = new System.Drawing.Point(0, 0);
+            this.lvInstances.Name = "lvInstances";
+            this.lvInstances.Size = new System.Drawing.Size(486, 444);
+            this.lvInstances.TabIndex = 8;
+            this.lvInstances.UseCompatibleStateImageBehavior = false;
+            this.lvInstances.View = System.Windows.Forms.View.Details;
+            this.lvInstances.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lvComps_ItemSelectionChanged);
+            this.lvInstances.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvInstances_KeyDown);
             // 
             // menuCommands
             // 
@@ -178,14 +192,23 @@
             this.menuClasses.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.wMIItemToolStripMenuItem});
             this.menuClasses.Name = "menuClasses";
-            this.menuClasses.Size = new System.Drawing.Size(130, 26);
+            this.menuClasses.Size = new System.Drawing.Size(79, 26);
             this.menuClasses.Opening += new System.ComponentModel.CancelEventHandler(this.menuClasses_Opening);
             // 
             // wMIItemToolStripMenuItem
             // 
             this.wMIItemToolStripMenuItem.Name = "wMIItemToolStripMenuItem";
-            this.wMIItemToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
-            this.wMIItemToolStripMenuItem.Text = "WMIItem";
+            this.wMIItemToolStripMenuItem.Size = new System.Drawing.Size(78, 22);
+            // 
+            // lClassName
+            // 
+            this.lClassName.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.lClassName.DropDown = this.menuClasses;
+            this.lClassName.Image = ((System.Drawing.Image)(resources.GetObject("lClassName.Image")));
+            this.lClassName.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.lClassName.Name = "lClassName";
+            this.lClassName.Size = new System.Drawing.Size(32, 22);
+            this.lClassName.Text = global::WMIViewer.Properties.Resources.EmptyText;
             // 
             // lDescription
             // 
@@ -196,7 +219,7 @@
             this.lDescription.Name = "lDescription";
             this.lDescription.Size = new System.Drawing.Size(768, 56);
             this.lDescription.TabIndex = 1;
-            this.lDescription.Text = "    ";
+            this.lDescription.Text = Resources.EmptyText;
             // 
             // toolStrip1
             // 
@@ -206,33 +229,6 @@
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(792, 25);
             this.toolStrip1.TabIndex = 6;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // lClassName
-            // 
-            this.lClassName.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.lClassName.DropDown = this.menuClasses;
-            this.lClassName.Image = ((System.Drawing.Image)(resources.GetObject("lClassName.Image")));
-            this.lClassName.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.lClassName.Name = "lClassName";
-            this.lClassName.Size = new System.Drawing.Size(51, 22);
-            this.lClassName.Text = "CLASS";
-            // 
-            // lvInstances
-            // 
-            this.lvInstances.ContextMenuStrip = this.menuCommands;
-            this.lvInstances.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvInstances.FullRowSelect = true;
-            this.lvInstances.GridLines = true;
-            this.lvInstances.HideSelection = false;
-            this.lvInstances.Location = new System.Drawing.Point(0, 0);
-            this.lvInstances.Name = "lvInstances";
-            this.lvInstances.Size = new System.Drawing.Size(486, 444);
-            this.lvInstances.TabIndex = 8;
-            this.lvInstances.UseCompatibleStateImageBehavior = false;
-            this.lvInstances.View = System.Windows.Forms.View.Details;
-            this.lvInstances.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lvComps_ItemSelectionChanged);
-            this.lvInstances.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvInstances_KeyDown);
             // 
             // WMIForm
             // 

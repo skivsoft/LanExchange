@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
+using WMIViewer.Properties;
 
 namespace WMIViewer
 {
@@ -62,7 +63,7 @@ namespace WMIViewer
         {
             if (string.IsNullOrEmpty(eUserName.Text.Trim()))
             {
-                Error.SetError(eUserName, "User name not specified.");
+                Error.SetError(eUserName, Resources.WMIAuthForm_UserNameNotSpecified);
                 DialogResult = DialogResult.None;
                 return;
             }

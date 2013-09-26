@@ -4,7 +4,8 @@ using System.Globalization;
 
 namespace WMIViewer
 {
-    [Localizable(false)]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Utils")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "WMI")]
     public static class WMIUtils
     {
         public static DateTime ToDateTime(string dmtfDate)

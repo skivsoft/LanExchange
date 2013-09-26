@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Resources;
 
 [assembly: AssemblyTitle("WMIViewer")]
 [assembly: AssemblyDescription("WMI viewer administration tool.")]
@@ -8,3 +9,4 @@ using System.Runtime.InteropServices;
 
 [assembly: ComVisible(false)]
 [assembly: CLSCompliant(true)]
+[assembly: NeutralResourcesLanguageAttribute("en")]

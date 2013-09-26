@@ -22,7 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>ExtendedDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -54,10 +54,11 @@
     </Compile>
     <Compile Include="DynamicObject.cs" />
     <Compile Include="GenericPropertyDescriptor.cs" />
-    <Compile Include="MethodDataEx.cs" />
+    <Compile Include="MethodDataExt.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PropertyDataEx.cs" />
+    <Compile Include="PropertyDataExt.cs" />
+    <Compile Include="RtlUtils.cs" />
     <Compile Include="WMIParamType.cs" />
     <Compile Include="WMIRequiredParamException.cs" />
     <Compile Include="WMIAuthForm.cs">
@@ -88,12 +89,6 @@
     </Compile>
     <Compile Include="WMIObjectNotFoundException.cs" />
     <Compile Include="WMIPresenter.cs" />
-    <Compile Include="WMISetupForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WMISetupForm.Designer.cs">
-      <DependentUpon>WMISetupForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="WMIStartCommand.cs" />
     <Compile Include="WMIUtils.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -119,9 +114,6 @@
     <EmbeddedResource Include="WMIMethodForm.resx">
       <DependentUpon>WMIMethodForm.cs</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WMISetupForm.resx">
-      <DependentUpon>WMISetupForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="..\Common\LanExchange.snk">
       <Link>LanExchange.snk</Link>

@@ -38,14 +38,14 @@ namespace WMIViewer
             var description = WMIClassList.GetPropertyValue(m_Presenter.Namespace, "Win32_OperatingSystem",
                 "Description");
             if (string.IsNullOrEmpty(description))
-                Text = @"\\" + m_Args.ComputerName;
+                Text = Resources.WMIForm_CompPrefix + m_Args.ComputerName;
             else
-                Text = string.Format(CultureInfo.InvariantCulture, @"\\{0} — {1}", m_Args.ComputerName, description);
+                Text = string.Format(CultureInfo.InvariantCulture, Resources.WMIForm_Title, m_Args.ComputerName, description);
         }
 
-        public WMIPresenter GetPresenter()
+        public WMIPresenter Presenter
         {
-            return m_Presenter;
+            get { return m_Presenter; }
         }
 
         [Localizable(false)]
@@ -166,12 +166,6 @@ namespace WMIViewer
             PropGrid.SelectedObject = dynObj;
         }
 
-        public override sealed string Text
-        {
-            get { return base.Text; }
-            set { base.Text = value; }
-        }
-
         public ListView LV
         {
             get { return lvInstances; }
@@ -200,7 +194,7 @@ namespace WMIViewer
                     lvInstances_FocusedItemChanged(lvInstances, EventArgs.Empty);
                     lvInstances.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
                 }
-                lStatus.Text = String.Format(CultureInfo.InvariantCulture, "Items: {0}", lvInstances.Items.Count);
+                lStatus.Text = String.Format(CultureInfo.InvariantCulture, Resources.WMIForm_Items, lvInstances.Items.Count);
             }
         }
 
@@ -213,9 +207,9 @@ namespace WMIViewer
 
         public void ShowStat(int classCount, int propCount, int methodCount)
         {
-            lClasses.Text = String.Format(CultureInfo.InvariantCulture, "Classes: {0}", classCount);
-            lProps.Text = String.Format(CultureInfo.InvariantCulture, "Properties: {0}", propCount);
-            lMethods.Text = String.Format(CultureInfo.InvariantCulture, "Methods: {0}", methodCount);
+            lClasses.Text = String.Format(CultureInfo.InvariantCulture, Resources.WMIForm_Classes, classCount);
+            lProps.Text = String.Format(CultureInfo.InvariantCulture, Resources.WMIForm_Properties, propCount);
+            lMethods.Text = String.Format(CultureInfo.InvariantCulture, Resources.WMIForm_Methods, methodCount);
         }
 
         public static void dynObj_AddProperty<T>(DynamicObject dynObj, PropertyData prop, string description, string category, bool isReadOnly)
@@ -295,14 +289,13 @@ namespace WMIViewer
             }
         }
 
-        [Localizable(false)]
         private void PropGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
             string propName = e.ChangedItem.Label;
             if (propName == null) return;
             object propValue = e.ChangedItem.Value;
-            string caption = String.Format(CultureInfo.InvariantCulture, "Editing property {0}", propName);
-            string message = String.Format(CultureInfo.InvariantCulture, "Computer name: \\{0}\n\nOld value: «{1}»\nNew value: «{2}»", m_Args.ComputerName, e.OldValue, propValue);
+            string caption = String.Format(CultureInfo.InvariantCulture, Resources.WMIForm_EditingProperty, propName);
+            string message = String.Format(CultureInfo.InvariantCulture, Resources.WMIForm_PropertyChanged_Message, m_Args.ComputerName, e.OldValue, propValue);
             try
             {
                 // trying to change wmi property
@@ -314,10 +307,10 @@ namespace WMIViewer
                     UpdateTitle();
 
                 // property has been changed
-                message += String.Format(CultureInfo.InvariantCulture, "\n\nProperty {0} successfully changed.", propName);
-                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                message += String.Format(CultureInfo.InvariantCulture, Resources.WMIForm_PropertyChanged_Success, propName);
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, RtlUtils.Options);
             }
-            catch(Exception ex)
+            catch(ManagementException ex)
             {
                 // property not changed
                 var dynObj = PropGrid.SelectedObject as DynamicObject;
@@ -326,7 +319,7 @@ namespace WMIViewer
                 message += "\n\n" + ex.Message;
                 if (ex.InnerException != null)
                     message += "\n\n" + ex.InnerException.Message;
-                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, RtlUtils.Options);
             }
         }
 

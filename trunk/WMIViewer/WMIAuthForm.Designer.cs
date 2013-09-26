@@ -1,4 +1,6 @@
-﻿namespace WMIViewer
+﻿using WMIViewer.Properties;
+
+namespace WMIViewer
 {
     partial class WMIAuthForm
     {
@@ -72,8 +74,7 @@
             this.lMessage.Name = "lMessage";
             this.lMessage.Size = new System.Drawing.Size(335, 56);
             this.lMessage.TabIndex = 0;
-            this.lMessage.Text = "Unable to connect under account {0}.\nEnter user name and password to retry the co" +
-    "nnection.";
+            this.lMessage.Text = Resources.WMIAuthForm_UnableToConnect;
             // 
             // label2
             // 
@@ -82,7 +83,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(32, 13);
             this.label2.TabIndex = 1;
-            this.label2.Text = "User:";
+            this.label2.Text = Resources.WMIAuthForm_User;
             // 
             // label3
             // 
@@ -91,7 +92,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(56, 13);
             this.label3.TabIndex = 2;
-            this.label3.Text = "Password:";
+            this.label3.Text = Resources.WMIAuthForm_Password;
             // 
             // eUserName
             // 
@@ -120,7 +121,7 @@
             this.bOK.Name = "bOK";
             this.bOK.Size = new System.Drawing.Size(90, 23);
             this.bOK.TabIndex = 6;
-            this.bOK.Text = "Connect";
+            this.bOK.Text = Resources.ButtonConnect;
             this.bOK.UseVisualStyleBackColor = true;
             this.bOK.Click += new System.EventHandler(this.bOK_Click);
             // 
@@ -132,7 +133,7 @@
             this.bCancel.Name = "bCancel";
             this.bCancel.Size = new System.Drawing.Size(90, 23);
             this.bCancel.TabIndex = 7;
-            this.bCancel.Text = "Cancel";
+            this.bCancel.Text = Resources.ButtonCancel;
             this.bCancel.UseVisualStyleBackColor = true;
             // 
             // Error
@@ -157,7 +158,7 @@
             this.MinimizeBox = false;
             this.Name = "WMIAuthForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "WMI connection to \\\\{0}";
+            this.Text = Resources.WMIAuthForm_Title;
             this.Load += new System.EventHandler(this.WMIAuthForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WMIAuthForm_KeyDown);
             this.panel1.ResumeLayout(false);
