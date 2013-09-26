@@ -4,11 +4,10 @@ using System.Globalization;
 
 namespace WMIViewer
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Utils")]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "WMI")]
-    public static class WMIUtils
+    [Localizable(false)]
+    public static class WmiHelper
     {
-        public static DateTime ToDateTime(string dmtfDate)
+        public static DateTime ToDateTime(string wmiDate)
         {
             var initializer = DateTime.MinValue;
             int year = initializer.Year;
@@ -18,19 +17,19 @@ namespace WMIViewer
             int minute = initializer.Minute;
             int second = initializer.Second;
             long ticks = 0;
-            var dmtf = dmtfDate;
+            var dmtf = wmiDate;
             string tempString;
             if (dmtf == null)
             {
-                throw new ArgumentOutOfRangeException("dmtfDate");
+                throw new ArgumentOutOfRangeException("wmiDate");
             }
             if (dmtf.Length == 0)
             {
-                throw new ArgumentOutOfRangeException("dmtfDate");
+                throw new ArgumentOutOfRangeException("wmiDate");
             }
             if (dmtf.Length != 25)
             {
-                throw new ArgumentOutOfRangeException("dmtfDate");
+                throw new ArgumentOutOfRangeException("wmiDate");
             }
             try
             {
@@ -78,7 +77,7 @@ namespace WMIViewer
                             || (second < 0))
                             || (ticks < 0)))
                 {
-                    throw new ArgumentOutOfRangeException("dmtfDate");
+                    throw new ArgumentOutOfRangeException("wmiDate");
                 }
             }
             catch (Exception e)
@@ -108,7 +107,7 @@ namespace WMIViewer
             return datetime;
         }
 
-        public static string ToDmtfDateTime(DateTime date)
+        public static string ToWmiDateTime(DateTime date)
         {
             string utcString;
             var tickOffset = TimeZone.CurrentTimeZone.GetUtcOffset(date);

@@ -6,14 +6,16 @@ using WMIViewer.Properties;
 
 namespace WMIViewer
 {
-    public sealed partial class WMIEditProperty : Form
+    public sealed partial class WmiEditProperty : Form
     {
-        private readonly WMIPresenter m_Presenter;
-        private readonly WMIArgs m_Args;
+        private readonly WmiPresenter m_Presenter;
+        private readonly WmiArgs m_Args;
         private string m_OldValue;
 
-        public WMIEditProperty(WMIPresenter presenter)
+        public WmiEditProperty(WmiPresenter presenter)
         {
+            if (presenter == null)
+                throw new ArgumentNullException("presenter");
             m_Presenter = presenter;
             m_Args = presenter.Args;
             InitializeComponent();
@@ -25,7 +27,7 @@ namespace WMIViewer
         [Localizable(false)]
         public void UpdateTitle()
         {
-            var description = WMIClassList.GetPropertyValue(m_Presenter.Namespace, "Win32_OperatingSystem",
+            var description = WmiClassList.GetPropertyValue(m_Presenter.Namespace, "Win32_OperatingSystem",
                 "Description");
             if (string.IsNullOrEmpty(description))
                 Text = Resources.WMIForm_CompPrefix + m_Args.ComputerName;
@@ -36,13 +38,13 @@ namespace WMIViewer
         public void SetArgsToControls()
         {
             lClass.Text = string.Format(CultureInfo.InvariantCulture, Resources.WMIEditProperty_PropertyFmt, m_Args.NamespaceName, m_Args.ClassName);
-            eClass.Text = WMIClassList.GetPropertyValue(m_Presenter.Namespace, m_Args.ClassName, "Caption");
+            eClass.Text = WmiClassList.GetPropertyValue(m_Presenter.Namespace, m_Args.ClassName, "Caption");
             lProperty.Text = Resources.AMP + m_Args.PropertyName;
             bool editable;
             bool propFound;
-            lDescription.Text = WMIClassList.Instance.GetPropertyDescription(m_Args.ClassName, 
+            lDescription.Text = WmiClassList.Instance.GetPropertyDescription(m_Args.ClassName, 
                 m_Args.PropertyName, out editable, out propFound);
-            m_OldValue = WMIClassList.GetPropertyValue(m_Presenter.Namespace, m_Args.ClassName,
+            m_OldValue = WmiClassList.GetPropertyValue(m_Presenter.Namespace, m_Args.ClassName,
                 m_Args.PropertyName);
             eProp.Text = m_OldValue;
             eProp.ReadOnly = !editable;
@@ -52,7 +54,7 @@ namespace WMIViewer
         {
             if (!eProp.ReadOnly && !m_OldValue.Equals(eProp.Text))
             {
-                WMIClassList.SetPropertyValue(m_Presenter.Namespace, m_Args.ClassName, m_Args.PropertyName, eProp.Text);
+                WmiClassList.SetPropertyValue(m_Presenter.Namespace, m_Args.ClassName, m_Args.PropertyName, eProp.Text);
             }
         }
     }

@@ -40,13 +40,9 @@ namespace WMIViewer
               name, value, attrs.ToArray()));
         }
 
-        public void AddPropertyNull<T>(
-          string name,
-          string displayName,
-          string description,
-          string category,
-          bool readOnly,
-          IEnumerable<Attribute> attributes)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
+        public void AddPropertyNull<T>(string name, string displayName, string description,
+            string category, bool readOnly, IEnumerable<Attribute> attributes)
         {
             var attrs = attributes == null ? new List<Attribute>()
                                            : new List<Attribute>(attributes);
@@ -77,23 +73,13 @@ namespace WMIViewer
             AddProperty(name, value, name, description, category, readOnly, null);
         }
 
-        public void AddPropertyNull<T>(
-          string name,
-          string description,
-          string category,
-          bool readOnly)
-        {
-            AddPropertyNull<T>(name, name, description, category, readOnly, null);
-        }
-
-
         public void RemoveProperty(string propertyName)
         {
             var descriptor = m_FullPropertyDescriptors.Find(propertyName, true);
             if (descriptor != null)
                 m_FullPropertyDescriptors.Remove(descriptor);
             else
-                throw new WMIObjectNotFoundException(propertyName);
+                throw new WmiObjectNotFoundException(propertyName);
         }
 
         public object this[string propertyName]
@@ -107,7 +93,7 @@ namespace WMIViewer
             var descriptor = m_FullPropertyDescriptors.Find(propertyName, true);
             if (descriptor != null)
                 return descriptor.GetValue(new object());
-            throw new WMIObjectNotFoundException(propertyName);
+            throw new WmiObjectNotFoundException(propertyName);
         }
 
         private void SetPropertyValue(string propertyName, object value)
@@ -116,7 +102,7 @@ namespace WMIViewer
             if (descriptor != null)
                 descriptor.SetValue(null, value);
             else
-                throw new WMIObjectNotFoundException(propertyName);
+                throw new WmiObjectNotFoundException(propertyName);
         }
 
 
@@ -185,76 +171,4 @@ namespace WMIViewer
 
 		#endregion
 	}
-
-
-    //public class GenericPropertyDescriptor<T> : PropertyDescriptor
-    //{
-    //    private T m_value;
-
-    //    public GenericPropertyDescriptor(string name, Attribute[] attrs)
-    //        : base(name, attrs)
-    //    {
-    //    }
-
-    //    public GenericPropertyDescriptor(string name, T value, Attribute[] attrs)
-    //        : base(name, attrs)
-    //    {
-    //        this.m_value = value;
-    //    }
-
-    //    public override bool CanResetValue(object component)
-    //    {
-    //        return false;
-    //    }
-
-    //    public override System.Type ComponentType
-    //    {
-    //        get
-    //        {
-    //            return typeof(GenericPropertyDescriptor<T>);
-    //        }
-    //    }
-
-    //    public override object GetValue(object component)
-    //    {
-    //        return this.m_value;
-    //    }
-
-    //    public override bool IsReadOnly
-    //    {
-    //        get
-    //        {
-    //            foreach (Attribute attribute in this.AttributeArray)
-    //            {
-    //                if (attribute is ReadOnlyAttribute)
-    //                {
-    //                    return true;
-    //                }
-    //            }
-    //            return false;
-    //        }
-    //    }
-
-    //    public override System.Type PropertyType
-    //    {
-    //        get
-    //        {
-    //            return typeof(T);
-    //        }
-    //    }
-
-    //    public override void ResetValue(object component)
-    //    {
-    //    }
-
-    //    public override void SetValue(object component, object value)
-    //    {
-    //        this.m_value = (T)value;
-    //    }
-
-    //    public override bool ShouldSerializeValue(object component)
-    //    {
-    //        return false;
-    //    }
-    //}
 }

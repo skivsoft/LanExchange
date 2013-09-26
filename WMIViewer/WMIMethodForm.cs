@@ -9,23 +9,25 @@ using WMIViewer.Properties;
 
 namespace WMIViewer
 {
-    public sealed partial class WMIMethodForm : Form
+    public sealed partial class WmiMethodForm : Form
     {
-        private readonly WMIPresenter m_Presenter;
-        private readonly WMIArgs m_Args;
+        private readonly WmiPresenter m_Presenter;
+        private readonly WmiArgs m_Args;
         private bool m_OutParamPresent;
 
-        public WMIMethodForm(WMIPresenter presenter)
+        public WmiMethodForm(WmiPresenter presenter)
         {
+            if (presenter == null)
+                throw new ArgumentNullException("presenter");
             m_Presenter = presenter;
             m_Args = m_Presenter.Args;
             InitializeComponent();
             Icon = Resources.WMIViewer16;
         }
 
-        public ManagementClass WMIClass { get; set; }
-        public ManagementObject WMIObject { get; set; }
-        public MethodData WMIMethod { get; set; }
+        public ManagementClass WmiClass { get; set; }
+        public ManagementObject WmiObject { get; set; }
+        public MethodData WmiMethod { get; set; }
 
         [Localizable(false)]
         private static string FormatQualifierValue(object value)
@@ -49,24 +51,24 @@ namespace WMIViewer
         [Localizable(false)]
         private void PrepareArgs()
         {
-            if (WMIClass == null)
+            if (WmiClass == null)
             {
                 var op = new ObjectGetOptions(null, TimeSpan.MaxValue, true);
                 var path = new ManagementPath(m_Args.ClassName);
-                WMIClass = new ManagementClass(m_Presenter.Namespace, path, op);
+                WmiClass = new ManagementClass(m_Presenter.Namespace, path, op);
             }
-            if (WMIMethod == null)
+            if (WmiMethod == null)
             {
-                foreach(var md in WMIClass.Methods)
+                foreach(var md in WmiClass.Methods)
                 {
                     if (string.Compare(md.Name, m_Args.MethodName, StringComparison.OrdinalIgnoreCase) == 0)
                     {
-                        WMIMethod = md;
+                        WmiMethod = md;
                         break;
                     }
                 }
             }
-            if (WMIObject == null)
+            if (WmiObject == null)
             {
                 m_Presenter.Namespace.Connect();
                 var query = new ObjectQuery("SELECT * FROM " + m_Args.ClassName);
@@ -74,7 +76,7 @@ namespace WMIViewer
                 {
                     foreach (ManagementObject queryObj in searcher.Get())
                     {
-                        WMIObject = queryObj;
+                        WmiObject = queryObj;
                         break;
                     }
                 }
@@ -85,9 +87,9 @@ namespace WMIViewer
         public void PrepareForm()
         {
             PrepareArgs();
-            Text = String.Format(CultureInfo.InvariantCulture, Text, m_Args.NamespaceName, WMIClass.Path.ClassName, WMIMethod.Name);
-            lMethodName.Text = WMIMethod.Name;
-            foreach (var qd in WMIMethod.Qualifiers)
+            Text = String.Format(CultureInfo.InvariantCulture, Text, m_Args.NamespaceName, WmiClass.Path.ClassName, WmiMethod.Name);
+            lMethodName.Text = WmiMethod.Name;
+            foreach (var qd in WmiMethod.Qualifiers)
             {
                 if (qd.Name.Equals("Description"))
                 {
@@ -96,9 +98,9 @@ namespace WMIViewer
                 }
             }
             // output method qualifiers
-            string str = String.Format(CultureInfo.InvariantCulture, "Class={0}, Method={1}", WMIClass.Path.ClassName, WMIMethod.Name);
+            string str = String.Format(CultureInfo.InvariantCulture, "Class={0}, Method={1}", WmiClass.Path.ClassName, WmiMethod.Name);
             LB.Items.Add(str);
-            foreach (var qd in WMIMethod.Qualifiers)
+            foreach (var qd in WmiMethod.Qualifiers)
             {
                 if (qd.Name.Equals("Description") || qd.Name.Equals("Implemented"))
                     continue;
@@ -108,11 +110,11 @@ namespace WMIViewer
             LB.Items.Add(string.Empty);
             // prepare properties list and sort it by ID
             var propList = new List<PropertyDataExt>();
-            if (WMIMethod.InParameters != null)
-                foreach (PropertyData pd in WMIMethod.InParameters.Properties)
+            if (WmiMethod.InParameters != null)
+                foreach (PropertyData pd in WmiMethod.InParameters.Properties)
                     propList.Add(new PropertyDataExt(pd));
-            if (WMIMethod.OutParameters != null)
-                foreach (PropertyData pd in WMIMethod.OutParameters.Properties)
+            if (WmiMethod.OutParameters != null)
+                foreach (PropertyData pd in WmiMethod.OutParameters.Properties)
                     propList.Add(new PropertyDataExt(pd));
             propList.Sort();
             // output properties
@@ -126,11 +128,11 @@ namespace WMIViewer
             foreach (PropertyDataExt prop in propList)
             {
                 // detect return value parameter name
-                if (prop.ParamType == WMIParamType.Return)
+                if (prop.ParameterType == WmiParameterType.Return)
                     m_ReturnValueName = prop.Name;
-                if (prop.ParamType == WMIParamType.Out)
+                if (prop.ParameterType == WmiParameterType.Out)
                     m_OutParamPresent = true;
-                str = String.Format(CultureInfo.InvariantCulture, "{0} {1} {2} : {3}", prop.ID, prop.ParamType, prop.Name, prop.PropType);
+                str = String.Format(CultureInfo.InvariantCulture, "{0} {1} {2} : {3}", prop.Id, prop.ParameterType, prop.Name, prop.PropType);
                 LB.Items.Add(str);
                 foreach (var qd in prop.Qualifiers)
                     if (!excludeList.Contains(qd.Name))
@@ -158,7 +160,7 @@ namespace WMIViewer
         private void bRun_Click(object sender, EventArgs e)
         {
             RunTheMethod();
-            if (m_Args.StartCmd == WMIStartCommand.ExecuteMethod && m_ExecuteOK)
+            if (m_Args.StartCmd == WmiStartCommand.ExecuteMethod && m_ExecuteOK)
                 DialogResult = DialogResult.OK;
         }
 
@@ -180,15 +182,15 @@ namespace WMIViewer
 
         private void RunTheMethod()
         {
-            if (WMIObject == null || WMIMethod == null) return;
+            if (WmiObject == null || WmiMethod == null) return;
             //var watcher = new ManagementOperationObserver();
-            var inParams = WMIMethod.InParameters;
+            var inParams = WmiMethod.InParameters;
             var options = new InvokeMethodOptions();
             ManagementBaseObject result = null;
             bRun.Enabled = false;
             try
             {
-                result = WMIObject.InvokeMethod(WMIMethod.Name, inParams, options);
+                result = WmiObject.InvokeMethod(WmiMethod.Name, inParams, options);
             }
             catch (ManagementException ex)
             {

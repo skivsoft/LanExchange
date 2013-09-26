@@ -7,25 +7,25 @@ using WMIViewer.Properties;
 namespace WMIViewer
 {
     [Serializable]
-    public sealed class WMIObjectNotFoundException : Exception
+    public sealed class WmiObjectNotFoundException : Exception
     {
         private readonly string m_WMIObject;
 
-        public WMIObjectNotFoundException()
+        public WmiObjectNotFoundException()
         {
             
         }
 
-        public WMIObjectNotFoundException(string wmiObject)
+        public WmiObjectNotFoundException(string wmiObject)
         {
             m_WMIObject = wmiObject;
         }
 
-        public WMIObjectNotFoundException(string message, Exception innerException) : base(message, innerException)
+        public WmiObjectNotFoundException(string message, Exception innerException) : base(message, innerException)
         {
         }
 
-        private WMIObjectNotFoundException(SerializationInfo info, StreamingContext context)
+        private WmiObjectNotFoundException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
             m_WMIObject = info.GetString("WMIObject");
@@ -34,6 +34,8 @@ namespace WMIViewer
         [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
+            if (info == null)
+                throw new ArgumentNullException("info");
             info.AddValue("WMIObject", m_WMIObject);
             base.GetObjectData(info, context);
         }

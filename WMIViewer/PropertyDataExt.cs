@@ -8,36 +8,36 @@ namespace WMIViewer
     public sealed class PropertyDataExt : IComparable<PropertyDataExt>
     {
         private readonly PropertyData m_Data;
-        private readonly WMIParamType m_ParamType;
-        private readonly int m_ID;
+        private readonly WmiParameterType m_ParameterType;
+        private readonly int m_Id;
 
         public PropertyDataExt(PropertyData data)
         {
             if (data == null)
                 throw new ArgumentNullException("data");
             m_Data = data;
-            m_ID = 100;
+            m_Id = 100;
             foreach (var qd in m_Data.Qualifiers)
             {
                 if (qd.Name.Equals("In") || qd.Name.Equals("in"))
-                    m_ParamType = WMIParamType.In;
+                    m_ParameterType = WmiParameterType.In;
                 if (qd.Name.Equals("Out"))
-                    m_ParamType = WMIParamType.Out;
+                    m_ParameterType = WmiParameterType.Out;
                 if (qd.Name.Equals("out"))
-                    m_ParamType = WMIParamType.Return;
+                    m_ParameterType = WmiParameterType.Return;
                 if (qd.Name.Equals("ID"))
-                    m_ID = (int) qd.Value;
+                    m_Id = (int) qd.Value;
             }
         }
 
-        public WMIParamType ParamType
+        public WmiParameterType ParameterType
         {
-            get { return m_ParamType; }
+            get { return m_ParameterType; }
         }
 
-        public int ID
+        public int Id
         {
-            get { return m_ID; }
+            get { return m_Id; }
         }
 
         public string Name
@@ -62,7 +62,9 @@ namespace WMIViewer
 
         public int CompareTo(PropertyDataExt other)
         {
-            return ID - other.ID;
+            if (other == null)
+                return 1;
+            return Id - other.Id;
         }
     }
 }

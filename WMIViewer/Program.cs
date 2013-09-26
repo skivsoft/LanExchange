@@ -12,36 +12,36 @@ namespace WMIViewer
         [Localizable(true)]
         static void Main(string[] args)
         {
-            WMIArgs wmiArgs = null;
+            WmiArgs wmiArgs = null;
             try
             {
-                wmiArgs = WMIArgs.ParseFromCmdLine(args);
+                wmiArgs = WmiArgs.ParseFromCmdLine(args);
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message, GetProgramTitle(), MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, RtlUtils.Options);
+                MessageBox.Show(ex.Message, GetProgramTitle(), MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, RightToLeft.Options);
             }
-            using (var presenter = new WMIPresenter(wmiArgs))
+            using (var presenter = new WmiPresenter(wmiArgs))
                 if (wmiArgs != null && presenter.ConnectToComputer())
                 {
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
                     switch (wmiArgs.StartCmd)
                     {
-                        case WMIStartCommand.EditProperty:
-                            using (var propForm = new WMIEditProperty(presenter))
+                        case WmiStartCommand.EditProperty:
+                            using (var propForm = new WmiEditProperty(presenter))
                                 propForm.ShowDialog();
                             break;
-                        case WMIStartCommand.ExecuteMethod:
-                            using (var methodForm = new WMIMethodForm(presenter))
+                        case WmiStartCommand.ExecuteMethod:
+                            using (var methodForm = new WmiMethodForm(presenter))
                             {
                                 methodForm.PrepareForm();
                                 methodForm.ShowDialog();
                             }
                             break;
                         default:
-                            WMIClassList.Instance.EnumLocalMachineClasses();
-                            Application.Run(new WMIForm(presenter));
+                            WmiClassList.Instance.EnumLocalMachineClasses();
+                            Application.Run(new WmiForm(presenter));
                             break;
                     }
                 }
