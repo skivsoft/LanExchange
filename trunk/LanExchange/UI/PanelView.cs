@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 using LanExchange.Intf;
 using LanExchange.Model;
@@ -74,27 +75,42 @@ namespace LanExchange.UI
             if (panelItem == null)
                 return null;
             var result = new ListViewItem();
+            var sb = new StringBuilder();
             if (!(panelItem is PanelItemDoubleDot))
             {
                 var columns = App.PanelColumns.GetColumns(m_Presenter.Objects.DataType);
                 for (int i = 0; i < panelItem.CountColumns; i++)
+                {
+                    IComparable value;
+                    var text = string.Empty;
                     if (columns[i].Visible)
                     {
-                        IComparable value;
                         if ((i > 0) && (columns[i].Callback != null))
                             value = App.Threads.AsyncGetData(columns[i], panelItem);
                         else
                             value = panelItem[columns[i].Index];
 
-                        var text = value != null ? value.ToString() : string.Empty;
+                        text = value != null ? value.ToString() : string.Empty;
                         if (i == 0)
                             result.Text = text;
                         else
                             result.SubItems.Add(text);
+                    } else
+                        if (columns[i].Callback == null)
+                        {
+                            value = panelItem[columns[i].Index];
+                            text = value != null ? value.ToString() : string.Empty;
+                        }
+                    if (i > 0 && !string.IsNullOrEmpty(text))
+                    {
+                        if (sb.Length > 0)
+                            sb.AppendLine();
+                        sb.Append(string.Format("{0}: {1}", columns[i].Text, text));
                     }
+                }
             }
             result.ImageIndex = App.Images.IndexOf(panelItem.ImageName);
-            result.ToolTipText = panelItem.ToolTipText;
+            result.ToolTipText = sb.ToString();
             result.Tag = panelItem;
             return result;
         }
@@ -453,6 +469,7 @@ namespace LanExchange.UI
             set
             {
                 LV.View = (View) value;
+                LV.ToolTipActive = LV.View != View.Details;
                 m_Presenter.Objects.CurrentView = value;
                 App.MainPages.SaveSettings();
             }

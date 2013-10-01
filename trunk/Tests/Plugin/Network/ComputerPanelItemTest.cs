@@ -73,12 +73,6 @@ namespace LanExchange.Plugin.Network
         }
 
         [Test]
-        public void TestToolTipText()
-        {
-            Assert.IsNotEmpty(m_Comp.ToolTipText);
-        }
-
-        [Test]
         public void TestToString()
         {
             Assert.AreEqual(@"\\COMP01", m_Comp.ToString());

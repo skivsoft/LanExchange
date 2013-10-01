@@ -93,6 +93,7 @@ namespace LanExchange.UI
             m_ToolTip.ToolTipIcon = ToolTipIcon.Info;
             m_ToolTip.SetToolTip(this, " ");
             m_ToolTip.Popup += ToolTipOnPopup;
+            m_ToolTip.Active = View != View.Details;
         }
 
         private void ToolTipOnPopup(object sender, PopupEventArgs e)
@@ -104,6 +105,12 @@ namespace LanExchange.UI
                 if (info.Item != null)
                     m_ToolTip.ToolTipTitle = info.Item.Text;
             }
+        }
+
+        public bool ToolTipActive
+        {
+            get { return m_ToolTip.Active; }
+            set { m_ToolTip.Active = value; }
         }
     }
 }

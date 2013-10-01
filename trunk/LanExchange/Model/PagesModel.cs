@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
 using LanExchange.Intf;
@@ -146,7 +147,17 @@ namespace LanExchange.Model
             var fileFName = App.FolderManager.TabsConfigFileName;
             model = null;
             if (File.Exists(fileFName))
-                model = (PagesModel)SerializeUtils.DeserializeObjectFromXMLFile(fileFName, typeof(PagesModel), App.PanelItemTypes.ToArray());
+                try
+                {
+                    model =
+                        (PagesModel)
+                        SerializeUtils.DeserializeObjectFromXMLFile(fileFName, typeof (PagesModel),
+                                                                    App.PanelItemTypes.ToArray());
+                }
+                catch(Exception ex)
+                {
+                    Debug.Print(ex.Message);
+                }
         }
 
         public void SetLoadedModel(IPagesModel model)
@@ -166,13 +177,22 @@ namespace LanExchange.Model
                 var info = App.Resolve<IPanelModel>();
                 info.TabName = root.Name;
                 info.SetDefaultRoot(root);
+                info.DataType = App.PanelFillers.GetFillType(root).Name;
                 AddTab(info);
             }
         }
 
         public void SaveSettings()
         {
-            SerializeUtils.SerializeObjectToXMLFile(App.FolderManager.TabsConfigFileName, this, App.PanelItemTypes.ToArray());
+            try
+            {
+                SerializeUtils.SerializeObjectToXMLFile(App.FolderManager.TabsConfigFileName, this,
+                                                        App.PanelItemTypes.ToArray());
+            }
+            catch(Exception ex)
+            {
+                Debug.Print(ex.Message);
+            }
         }
 
         public bool TabNameExists(string tabName)
