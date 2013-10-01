@@ -307,15 +307,9 @@ namespace LanExchange.Presenter
 
         public void LoadSettings()
         {
-            try
-            {
-                IPagesModel model;
-                m_Model.LoadSettings(out model);
-                m_Model.SetLoadedModel(model);
-            }
-            catch(Exception)
-            {
-            }
+            IPagesModel model;
+            m_Model.LoadSettings(out model);
+            m_Model.SetLoadedModel(model);
         }
 
         public bool AddTab(IPanelModel info)

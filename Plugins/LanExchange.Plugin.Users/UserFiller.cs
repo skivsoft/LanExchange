@@ -77,6 +77,10 @@ namespace LanExchange.Plugin.Users
                     var results = searcher.FindAll();
                     foreach (SearchResult row in results)
                     {
+                        // skip disabled users
+                        var userAccControl = int.Parse(SearchResult_GetString(row, ACCOUNT_CONTROL));
+                        if ((userAccControl & 2) != 0) continue;
+
                         var user = new UserPanelItem(parent, SearchResult_GetString(row, CN));
                         user.Title = SearchResult_GetString(row, TITLE);
                         user.WorkPhone = SearchResult_GetString(row, WORK_PHONE);

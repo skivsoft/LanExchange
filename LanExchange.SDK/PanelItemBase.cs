@@ -116,30 +116,6 @@ namespace LanExchange.SDK
         }
 
         /// <summary>
-        /// Gets the tool tip text.
-        /// </summary>
-        /// <value>
-        /// The tool tip text.
-        /// </value>
-        public virtual string ToolTipText
-        {
-            get 
-            { 
-                var sb = new StringBuilder();
-                for (int i = 1; i < CountColumns; i++)
-                {
-                    var value = this[i];
-                    if (value == null || string.IsNullOrEmpty(value.ToString()))
-                        continue;
-                    if (sb.Length > 0)
-                        sb.AppendLine();
-                    sb.Append(this[i]);
-                }
-                return sb.ToString();
-            }
-        }
-
-        /// <summary>
         /// IColumnsComparable.CompareTo implementation.
         /// </summary>
         /// <param name="other"></param>

@@ -19,6 +19,14 @@ namespace LanExchange.Misc.Impl
             m_Fillers.Add(filler);
         }
 
+        public Type GetFillType(PanelItemBase parent)
+        {
+            foreach (var filler in m_Fillers)
+                if (filler.IsParentAccepted(parent))
+                    return filler.GetFillType();
+            return null;
+        }
+
         public PanelFillerResult RetrievePanelItems(PanelItemBase parent)
         {
             var result = new PanelFillerResult();

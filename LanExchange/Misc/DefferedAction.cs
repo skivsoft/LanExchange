@@ -26,7 +26,7 @@ namespace LanExchange.Misc
                 }
                 catch(Exception ex)
                 {
-                    Debug.Fail(ex.Message);
+                    Debug.Print(ex.Message);
                 }
         }
 
