@@ -211,7 +211,7 @@ namespace LanExchange.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New tab.
+        ///   Looks up a localized string similar to New Tab.
         /// </summary>
         internal static string PagesPresenter_NewTab {
             get {

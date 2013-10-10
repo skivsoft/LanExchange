@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LanExchange</RootNamespace>
     <AssemblyName>LanExchange</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <ApplicationIcon>LanExchange.ico</ApplicationIcon>
@@ -138,7 +138,7 @@
     <Compile Include="Intf\IFilterPresenter.cs" />
     <Compile Include="Intf\IPagesPresenter.cs" />
     <Compile Include="Intf\IPanelPresenter.cs" />
-    <Compile Include="Intf\IContainer.cs" />
+    <Compile Include="Intf\IIoCContainer.cs" />
     <Compile Include="Core\RegisteredObject.cs" />
     <Compile Include="Core\SimpleIocContainer.cs" />
     <Compile Include="Intf\IAboutView.cs" />
@@ -359,6 +359,7 @@
     <Content Include="Core\MVP.gif" />
     <Content Include="Presenter\!Readme.txt" />
     <None Include="Resources\input-keyboard-6.png" />
+    <None Include="Resources\home_16.png" />
     <Content Include="Resources\LanExchange_16x16.ico" />
     <None Include="Resources\LanExchange_48x48.png" />
   </ItemGroup>

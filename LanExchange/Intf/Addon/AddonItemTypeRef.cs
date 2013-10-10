@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
-using System.Linq;
 
 namespace LanExchange.Intf.Addon
 {
@@ -21,7 +20,14 @@ namespace LanExchange.Intf.Addon
 
         public int CountVisible
         {
-            get { return m_Items.Count(item => item.Visible); }
+            get
+            {
+                var result = 0;
+                foreach (var item in m_Items)
+                    if (item.Visible)
+                        result++;
+                return result;
+            }
         }
     }
 }

@@ -210,13 +210,7 @@ namespace LanExchange.Presenter
         public void CommandCloseTab()
         {
             var index = View.PopupSelectedIndex;
-            if (CanCloseTab())
-                m_Model.DelTab(index);
-        }
-
-        public bool CanCloseTab()
-        {
-            return true;
+            m_Model.DelTab(index);
         }
 
         public void Model_AfterAppendTab(object sender, PanelModelEventArgs e)

@@ -6,7 +6,7 @@ namespace LanExchange.Intf
     public static class App
     {
         // abstract
-        private static IContainer s_Ioc;
+        private static IIoCContainer s_Ioc;
         public static IPagesPresenter MainPages;
         public static IPanelItemFactoryManager PanelItemTypes;
         public static IPanelFillerManager PanelFillers;
@@ -26,9 +26,9 @@ namespace LanExchange.Intf
         /// </summary>
         public static IMainPresenter Presenter;
 
-        public static void SetContainer(IContainer container)
+        public static void SetContainer(IIoCContainer iioCContainer)
         {
-            s_Ioc = container;
+            s_Ioc = iioCContainer;
             // abstract
             MainPages = Resolve<IPagesPresenter>();
             TT.Translator = Resolve<ITranslator>();

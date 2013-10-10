@@ -2,13 +2,9 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using LanExchange.Core;
 using LanExchange.Intf;
-using LanExchange.Misc;
-using LanExchange.Model;
-using LanExchange.Presenter;
+using LanExchange.Properties;
 using LanExchange.SDK;
-using LanExchange.UI;
 
 namespace LanExchange.UI
 {
@@ -56,16 +52,6 @@ namespace LanExchange.UI
             if (text.Length > length)
                 return text.Substring(0, length) + "…";
             return text;
-        }
-
-        public void NewTabFromItemList(IPanelModel info)
-        {
-            var tab = new TabPage();
-            tab.Padding = new Padding(0);
-            tab.Text = Ellipsis(info.TabName, 20);
-            tab.ImageIndex = App.Images.IndexOf(info.GetImageName());
-            tab.ToolTipText = info.ToolTipText;
-            Pages.Controls.Add(tab);
         }
 
         public string SelectedTabText
@@ -147,7 +133,6 @@ namespace LanExchange.UI
 
         private void popPages_Opening(object sender, CancelEventArgs e)
         {
-            mCloseTab.Enabled = m_Presenter.CanCloseTab();
             mSelectTab.Enabled = m_Presenter.Count > 1;
             if (mSelectTab.Enabled && mSelectTab.DropDownItems.Count == 0)
             {
@@ -266,7 +251,7 @@ namespace LanExchange.UI
         {
             for (int i = 0; i < m_Presenter.Count; i++)
             {
-                if (bHideActive && (!m_Presenter.CanCloseTab() || (i == SelectedIndex)))
+                if (bHideActive && (i == SelectedIndex))
                     continue;
                 string S = m_Presenter.GetTabName(i);
                 var Item = new ToolStripMenuItem
@@ -279,6 +264,16 @@ namespace LanExchange.UI
                 Item.Click += handler;
                 menuitem.DropDownItems.Add(Item);
             }
+        }
+
+        public void NewTabFromItemList(IPanelModel info)
+        {
+            var tab = new TabPage();
+            tab.Padding = new Padding(0);
+            tab.Text = Ellipsis(info.TabName, 20);
+            tab.ImageIndex = App.Images.IndexOf(info.GetImageName());
+            tab.ToolTipText = info.ToolTipText;
+            Pages.Controls.Add(tab);
         }
 
         [Localizable(false)]

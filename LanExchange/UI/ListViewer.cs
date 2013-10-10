@@ -109,8 +109,12 @@ namespace LanExchange.UI
 
         public bool ToolTipActive
         {
-            get { return m_ToolTip.Active; }
-            set { m_ToolTip.Active = value; }
+            get { return m_ToolTip != null && m_ToolTip.Active; }
+            set
+            {
+                if (m_ToolTip != null)
+                    m_ToolTip.Active = value;
+            }
         }
     }
 }

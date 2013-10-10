@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using LanExchange.Intf;
@@ -29,7 +28,6 @@ namespace LanExchange.UI
             // init presenters
             m_Presenter = presenter;
             m_Presenter.View = this;
-            m_Presenter.CurrentPathChanged += CurrentPath_Changed;
             // setup items cache
             m_Cache = new ListViewItemCache(this);
             //LV.CacheVirtualItems += m_Cache.CacheVirtualItems;
@@ -49,13 +47,6 @@ namespace LanExchange.UI
         {
             LV.VirtualListSize = count;
 
-        }
-
-        private void CurrentPath_Changed(object sender, EventArgs e)
-        {
-            var path = sender as ObjectPath<PanelItemBase>;
-            if (path != null)
-                ePath.Text = path.ToString();
         }
 
         #region IListViewItemGetter interface implementation
@@ -128,7 +119,11 @@ namespace LanExchange.UI
 
         public IEnumerable<int> SelectedIndexes
         {
-            get { return LV.SelectedIndices.Cast<int>(); }
+            get
+            {
+                foreach (var obj in LV.SelectedIndices)
+                    yield return (int)obj;
+            }
         }
 
         public void ClearSelected()
@@ -421,23 +416,6 @@ namespace LanExchange.UI
             var header = LV.Columns[e.Column].Tag as PanelColumnHeader;
             if (header != null)
                 m_Presenter.ColumnClick(header.Index);
-        }
-
-        private void ePath_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Control && e.KeyCode == Keys.C || e.Control && e.KeyCode == Keys.Insert)
-            {
-                Clipboard.SetText(ePath.SelectionLength == 0 ? ePath.Text : ePath.SelectedText);
-                e.Handled = true;
-            }
-        }
-
-        private void ePath_DoubleClick(object sender, EventArgs e)
-        {
-            // TODO: need change path on double click
-            //var P = ePath.PointToClient(MousePosition);
-            //int index = ePath.GetCharIndexFromPosition(P);
-            //MessageBox.Show(index.ToString());
         }
 
         private void mSendToNewTab_Click(object sender, EventArgs e)

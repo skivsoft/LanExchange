@@ -50,7 +50,7 @@
             this.mBeforeSelectTab,
             this.mSelectTab});
             this.popPages.Name = "popPages";
-            this.popPages.Size = new System.Drawing.Size(192, 104);
+            this.popPages.Size = new System.Drawing.Size(194, 126);
             this.popPages.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.popPages_Closed);
             this.popPages.Opening += new System.ComponentModel.CancelEventHandler(this.popPages_Opening);
             this.popPages.Opened += new System.EventHandler(this.popPages_Opened);
@@ -60,20 +60,20 @@
             // 
             this.mNewTab.Name = "mNewTab";
             this.mNewTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.mNewTab.Size = new System.Drawing.Size(191, 22);
+            this.mNewTab.Size = new System.Drawing.Size(193, 22);
             this.mNewTab.Text = "New tab";
             this.mNewTab.Click += new System.EventHandler(this.mNewTab_Click);
             // 
             // mAfterNewTab
             // 
             this.mAfterNewTab.Name = "mAfterNewTab";
-            this.mAfterNewTab.Size = new System.Drawing.Size(188, 6);
+            this.mAfterNewTab.Size = new System.Drawing.Size(190, 6);
             // 
             // mCloseTab
             // 
             this.mCloseTab.Name = "mCloseTab";
             this.mCloseTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F4)));
-            this.mCloseTab.Size = new System.Drawing.Size(191, 22);
+            this.mCloseTab.Size = new System.Drawing.Size(193, 22);
             this.mCloseTab.Text = "Close tab";
             this.mCloseTab.Click += new System.EventHandler(this.mCloseTab_Click);
             // 
@@ -81,19 +81,19 @@
             // 
             this.mRenameTab.Name = "mRenameTab";
             this.mRenameTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.mRenameTab.Size = new System.Drawing.Size(191, 22);
+            this.mRenameTab.Size = new System.Drawing.Size(193, 22);
             this.mRenameTab.Text = "Tab properties";
             this.mRenameTab.Click += new System.EventHandler(this.mRenameTab_Click);
             // 
             // mBeforeSelectTab
             // 
             this.mBeforeSelectTab.Name = "mBeforeSelectTab";
-            this.mBeforeSelectTab.Size = new System.Drawing.Size(188, 6);
+            this.mBeforeSelectTab.Size = new System.Drawing.Size(190, 6);
             // 
             // mSelectTab
             // 
             this.mSelectTab.Name = "mSelectTab";
-            this.mSelectTab.Size = new System.Drawing.Size(191, 22);
+            this.mSelectTab.Size = new System.Drawing.Size(193, 22);
             this.mSelectTab.Text = "Select tab";
             this.mSelectTab.DropDownOpening += new System.EventHandler(this.mSelectTab_DropDownOpening);
             // 
@@ -102,11 +102,11 @@
             this.Pages.AllowDrop = true;
             this.Pages.ContextMenuStrip = this.popPages;
             this.Pages.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Pages.ItemSize = new System.Drawing.Size(50, 18);
             this.Pages.Location = new System.Drawing.Point(0, 0);
-            this.Pages.Multiline = true;
             this.Pages.Name = "Pages";
             this.Pages.SelectedIndex = 0;
-            this.Pages.Size = new System.Drawing.Size(335, 296);
+            this.Pages.Size = new System.Drawing.Size(484, 621);
             this.Pages.TabIndex = 1;
             this.Pages.Selected += new System.Windows.Forms.TabControlEventHandler(this.Pages_Selected);
             this.Pages.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Pages_MouseDown);
@@ -117,7 +117,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.Pages);
             this.Name = "PagesView";
-            this.Size = new System.Drawing.Size(335, 296);
+            this.Size = new System.Drawing.Size(484, 621);
             this.popPages.ResumeLayout(false);
             this.ResumeLayout(false);
 

@@ -1,8 +1,8 @@
 using System;
 
-namespace LanExchange.Intf
+namespace LanTabs
 {
-    public interface IContainer
+    public interface IIoCContainer
     {
         void Register<TTypeToResolve, TConcrete>();
         void Register<TTypeToResolve, TConcrete>(LifeCycle lifeCycle);
