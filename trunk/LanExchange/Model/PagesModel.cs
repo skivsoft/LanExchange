@@ -105,15 +105,15 @@ namespace LanExchange.Model
                 IndexChanged(this, new PanelIndexEventArgs(index));
         }
 
-        public bool AddTab(IPanelModel info)
+        public bool AddTab(IPanelModel model)
         {
             // ommit duplicates
-            if (m_List.Contains(info))
+            if (m_List.Contains(model))
                 return false;
-            m_List.Add(info);
+            m_List.Add(model);
             if (m_SelectedIndex == -1 && m_List.Count == 1)
                 m_SelectedIndex = 0;
-            DoAfterAppendTab(info);
+            DoAfterAppendTab(model);
             m_SelectedIndex = m_List.Count - 1;
             DoIndexChanged(m_SelectedIndex);
             return true;
@@ -172,6 +172,7 @@ namespace LanExchange.Model
                     SelectedIndex = model.SelectedIndex;
             }
             //create default tabs
+            // TODO !!! CreateDefaultTabs
             foreach (var root in App.PanelItemTypes.DefaultRoots)
             {
                 var info = App.Resolve<IPanelModel>();

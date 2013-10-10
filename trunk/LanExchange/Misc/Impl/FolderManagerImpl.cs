@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using LanExchange.SDK;
 
 namespace LanExchange.Misc.Impl
@@ -81,7 +81,10 @@ namespace LanExchange.Misc.Impl
                 sysAddons = Directory.GetFiles(m_SystemAddonsPath, "*" + ADDONS_EXT, SearchOption.AllDirectories);
             if (Directory.Exists(m_UserAddonsPath))
                 userAddons = Directory.GetFiles(m_UserAddonsPath, "*" + ADDONS_EXT, SearchOption.AllDirectories);
-            return sysAddons.Union(userAddons).ToArray();
+            var result = new List<string>();
+            result.AddRange(sysAddons);
+            result.AddRange(userAddons);
+            return result.ToArray();
         }
 
         public string GetAddonFileName(bool isSystem, string addonName)

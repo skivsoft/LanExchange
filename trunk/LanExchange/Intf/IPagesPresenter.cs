@@ -7,8 +7,6 @@ namespace LanExchange.Intf
         event EventHandler PanelViewFocusedItemChanged;
         event EventHandler PanelViewFilterTextChanged;
 
-        bool CanCloseTab();
-
         int Count { get; }
 
         void CommandNewTab();

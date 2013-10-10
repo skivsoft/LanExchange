@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using LanExchange.Intf;
 
-namespace LanExchange.Core
+namespace LanTabs
 {
     public class SimpleIocContainer : IIoCContainer
     {
@@ -16,12 +15,12 @@ namespace LanExchange.Core
 
         public void Register<TTypeToResolve, TConcrete>(LifeCycle lifeCycle)
         {
-            registeredObjects.Add(new RegisteredObject(typeof (TTypeToResolve), typeof (TConcrete), lifeCycle));
+            registeredObjects.Add(new RegisteredObject(typeof(TTypeToResolve), typeof(TConcrete), lifeCycle));
         }
 
         public TTypeToResolve Resolve<TTypeToResolve>()
         {
-            return (TTypeToResolve) ResolveObject(typeof (TTypeToResolve));
+            return (TTypeToResolve)ResolveObject(typeof(TTypeToResolve));
         }
 
         public object Resolve(Type typeToResolve)
@@ -34,7 +33,7 @@ namespace LanExchange.Core
         {
 
             RegisteredObject registeredObject = null;
-            foreach(var obj in registeredObjects)
+            foreach (var obj in registeredObjects)
                 if (obj.TypeToResolve == typeToResolve)
                 {
                     registeredObject = obj;
@@ -50,11 +49,11 @@ namespace LanExchange.Core
 
         private object GetInstance(RegisteredObject registeredObject)
         {
-            if (registeredObject.Instance == null || 
+            if (registeredObject.Instance == null ||
                 registeredObject.LifeCycle == LifeCycle.Transient)
             {
                 var list = new List<object>();
-                foreach(var param in ResolveConstructorParameters(registeredObject))
+                foreach (var param in ResolveConstructorParameters(registeredObject))
                     list.Add(param);
                 registeredObject.CreateInstance(list.ToArray());
             }
@@ -64,7 +63,7 @@ namespace LanExchange.Core
         private IEnumerable<object> ResolveConstructorParameters(RegisteredObject registeredObject)
         {
             var constructorInfo = registeredObject.ConcreteType.GetConstructors()[0];
-            foreach(var parameter in constructorInfo.GetParameters())
+            foreach (var parameter in constructorInfo.GetParameters())
                 yield return ResolveObject(parameter.ParameterType);
         }
     }

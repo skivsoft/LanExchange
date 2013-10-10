@@ -15,7 +15,7 @@ namespace LanExchange
         /// <summary>
         /// Maps interfaces to concrete implementations.
         /// </summary>
-        public static IContainer Build()
+        public static IIoCContainer Build()
         {
             var container = new SimpleIocContainer();
             // core singletons

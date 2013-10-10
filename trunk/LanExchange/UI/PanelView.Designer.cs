@@ -40,7 +40,6 @@
             this.mSendToNewTab = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.mContextProperties = new System.Windows.Forms.ToolStripMenuItem();
-            this.ePath = new System.Windows.Forms.TextBox();
             this.LV = new LanExchange.UI.ListViewer();
             this.pFilter = new LanExchange.UI.FilterView();
             this.popComps.SuspendLayout();
@@ -135,24 +134,6 @@
             this.mContextProperties.Text = "Tab properties";
             this.mContextProperties.Click += new System.EventHandler(this.mContextProperties_Click);
             // 
-            // ePath
-            // 
-            this.ePath.BackColor = System.Drawing.SystemColors.Control;
-            this.ePath.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.ePath.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ePath.Enabled = false;
-            this.ePath.Location = new System.Drawing.Point(0, 0);
-            this.ePath.Margin = new System.Windows.Forms.Padding(0);
-            this.ePath.Name = "ePath";
-            this.ePath.ReadOnly = true;
-            this.ePath.Size = new System.Drawing.Size(423, 20);
-            this.ePath.TabIndex = 25;
-            this.ePath.TabStop = false;
-            this.ePath.Visible = false;
-            this.ePath.DoubleClick += new System.EventHandler(this.ePath_DoubleClick);
-            this.ePath.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ePath_KeyDown);
-            this.ePath.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lvComps_KeyPress);
-            // 
             // LV
             // 
             this.LV.BackColor = System.Drawing.SystemColors.Window;
@@ -164,12 +145,13 @@
             this.LV.FullRowSelect = true;
             this.LV.GridLines = true;
             this.LV.HideSelection = false;
-            this.LV.Location = new System.Drawing.Point(0, 20);
+            this.LV.Location = new System.Drawing.Point(0, 0);
             this.LV.Margin = new System.Windows.Forms.Padding(0);
             this.LV.Name = "LV";
             this.LV.ShowItemToolTips = true;
-            this.LV.Size = new System.Drawing.Size(423, 348);
+            this.LV.Size = new System.Drawing.Size(423, 368);
             this.LV.TabIndex = 26;
+            this.LV.ToolTipActive = false;
             this.LV.UseCompatibleStateImageBehavior = false;
             this.LV.View = System.Windows.Forms.View.Details;
             this.LV.VirtualMode = true;
@@ -204,14 +186,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.LV);
-            this.Controls.Add(this.ePath);
             this.Controls.Add(this.pFilter);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "PanelView";
             this.Size = new System.Drawing.Size(423, 398);
             this.popComps.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -226,7 +206,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem mContextProperties;
         private FilterView pFilter;
-        private System.Windows.Forms.TextBox ePath;
         private System.Windows.Forms.ToolStripMenuItem mCopyMenu;
         private System.Windows.Forms.ToolStripMenuItem mCopySelected;
         private System.Windows.Forms.ToolStripMenuItem mPaste;
