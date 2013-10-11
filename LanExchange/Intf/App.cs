@@ -17,6 +17,7 @@ namespace LanExchange.Intf
         public static ILazyThreadPool Threads;
         public static IImageManager Images;
         public static IAddonManager Addons;
+        public static ITranslationService TR;
         /// <summary>
         /// MainView singleton instance.
         /// </summary>
@@ -31,7 +32,6 @@ namespace LanExchange.Intf
             s_Ioc = iioCContainer;
             // abstract
             MainPages = Resolve<IPagesPresenter>();
-            TT.Translator = Resolve<ITranslator>();
             PanelItemTypes = Resolve<IPanelItemFactoryManager>();
             PanelFillers = Resolve<IPanelFillerManager>();
             PanelColumns = Resolve<IPanelColumnManager>();
@@ -41,6 +41,7 @@ namespace LanExchange.Intf
             Threads = Resolve<ILazyThreadPool>();
             Images = Resolve<IImageManager>();
             Addons = Resolve<IAddonManager>();
+            TR = Resolve<ITranslationService>();
             Presenter = Resolve<IMainPresenter>();
         }
 

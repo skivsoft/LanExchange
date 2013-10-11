@@ -9,5 +9,9 @@
         void OpenTwitterLink();
 
         void OpenEmailLink();
+
+        void OpenTranslationWebLink();
+
+        void OpenBugtrackerWebLink();
     }
 }

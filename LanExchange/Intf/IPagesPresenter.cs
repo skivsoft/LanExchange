@@ -13,8 +13,6 @@ namespace LanExchange.Intf
 
         void CommandCloseTab();
 
-        void CommandProperties();
-
         int SelectedIndex { get; set; }
 
         void SaveSettings(bool deffered = true);

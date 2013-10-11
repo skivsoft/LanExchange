@@ -19,7 +19,6 @@ namespace LanExchange
         {
             var container = new SimpleIocContainer();
             // core singletons
-            container.Register<ITranslator, TranslatorImpl>();
             container.Register<IPanelItemFactoryManager, PanelItemFactoryManagerImpl>();
             container.Register<IPanelFillerManager, PanelFillerManagerImpl>();
             container.Register<IPanelColumnManager, PanelColumnManagerImpl>();
@@ -31,6 +30,7 @@ namespace LanExchange
             container.Register<IAddonManager, AddonManagerImpl>();
             // services
             container.Register<IPuntoSwitcherService, PuntoSwitcherServiceEngRus>();
+            container.Register<ITranslationService, TranslationServiceImpl>();
             // models
             container.Register<IAboutModel, AboutModel>();
             container.Register<IPagesModel, PagesModel>(LifeCycle.Transient);

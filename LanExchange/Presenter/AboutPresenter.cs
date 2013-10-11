@@ -62,5 +62,15 @@ namespace LanExchange.Presenter
         {
             Process.Start(GetFullEmailLink());
         }
+
+        public void OpenTranslationWebLink()
+        {
+            Process.Start("https://crowdin.net/project/lanexchange");
+        }
+
+        public void OpenBugtrackerWebLink()
+        {
+            Process.Start("http://lanexchange.myjetbrains.com/youtrack/issues");
+        }
     }
 }

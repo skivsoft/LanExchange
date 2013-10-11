@@ -70,11 +70,9 @@
     <Compile Include="IPanelFiller.cs" />
     <Compile Include="PanelImageNames.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="ITranslator.cs" />
     <Compile Include="PanelItemDoubleDot.cs" />
     <Compile Include="PanelItemFactoryBase.cs" />
     <Compile Include="PanelItemRoot.cs" />
-    <Compile Include="TT.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

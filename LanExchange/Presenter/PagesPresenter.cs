@@ -35,66 +35,9 @@ namespace LanExchange.Presenter
             m_SaveAction.Dispose();
         }
 
-        private void CheckDuplicateOnNew(object sender, CancelEventArgs e)
-        {
-            var control = sender as Control;
-            if (control == null) return;
-            var form = control.Parent as InputBoxForm;
-            if (form == null) return;
-            if (m_Model.TabNameExists(form.Value))
-            {
-                form.SetError(Resources.InputBoxPresenter_TabNameAlreadyExists);
-                e.Cancel = true;
-            }
-        }
-
-        private void CheckDuplicateOnRename(object sender, CancelEventArgs e)
-        {
-            var control = sender as Control;
-            if (control == null) return;
-            var form = control.Parent as InputBoxForm;
-            if (form == null) return;
-            var index = View.PopupSelectedIndex;
-            var itemList = m_Model.GetItem(index);
-            if (itemList == null) return;
-            if ((string.Compare(form.Value, itemList.TabName, StringComparison.CurrentCultureIgnoreCase) != 0) && 
-                m_Model.TabNameExists(form.Value))
-            {
-                form.SetError(Resources.InputBoxPresenter_TabNameAlreadyExists);
-                e.Cancel = true;
-            }
-        }
-
         public void CommandNewTab()
         {
-            using (
-                var form = InputBoxForm.CreateAskForm(Resources.PagesPresenter_NewTab,
-                                                      Resources.PagesPresenter_EnterTabName, ""))
-            {
-                form.InputValidating += InputBoxForm.ValidatingEmpty;
-                form.InputValidating += CheckDuplicateOnNew;
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-                    var panel = App.Resolve<IPanelModel>();
-                    panel.TabName = form.Value;
-                    m_Model.AddTab(panel);
-                }
-            }
-        }
 
-        public void CommandProperties()
-        {
-            var index = View.PopupSelectedIndex;
-            var itemList = m_Model.GetItem(index);
-            if (itemList == null) return;
-            using (var form = InputBoxForm.CreateAskForm(Resources.PagesPresenter_TabProperties,
-                                                         Resources.PagesPresenter_TabName, itemList.TabName))
-            {
-                form.InputValidating += InputBoxForm.ValidatingEmpty;
-                form.InputValidating += CheckDuplicateOnRename;
-                if (form.ShowDialog() == DialogResult.OK)
-                    m_Model.RenameTab(index, form.Value);
-            }
         }
 
         public bool CanSendToNewTab()

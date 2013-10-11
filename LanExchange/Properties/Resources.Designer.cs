@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using LanExchange.Core;
+
 namespace LanExchange.Properties {
     using System;
     
@@ -39,7 +41,7 @@ namespace LanExchange.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LanExchange.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new TranslationResourceManager("LanExchange.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -162,6 +164,15 @@ namespace LanExchange.Properties {
         internal static string MainForm_Information {
             get {
                 return ResourceManager.GetString("MainForm_Information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Language.
+        /// </summary>
+        internal static string MainForm_Language {
+            get {
+                return ResourceManager.GetString("MainForm_Language", resourceCulture);
             }
         }
         

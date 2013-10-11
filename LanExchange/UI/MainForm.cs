@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
+using LanExchange.Core;
 using LanExchange.Intf;
 using LanExchange.Misc.Action;
 using LanExchange.Model;
@@ -44,6 +46,7 @@ namespace LanExchange.UI
             // init main form
             SetupActions();
             SetupForm();
+            SetupLanguages(App.TR.SourceLanguage);
             // setup images
             //ClearToolTip(Pages.Pages);
             App.Images.SetImagesTo(Pages.Pages);
@@ -115,6 +118,43 @@ namespace LanExchange.UI
             // show current user
             lUserName.Text = SystemInformation.UserName;
             lUserName.ImageIndex = App.Images.IndexOf(PanelImageNames.UserNormal);
+        }
+
+        private void SetupLanguages(string newLanguage)
+        {
+            var needApply = App.TR.CurrentLanguage != newLanguage;
+            App.TR.CurrentLanguage = newLanguage;
+            var nameDict = App.TR.GetLanguagesNames();
+            if (nameDict.Count == 0)
+            {
+                mLanguage.Enabled = false;
+                return;
+            }
+            mLanguage.DropDownItems.Clear();
+            foreach(var pair in nameDict)
+            {
+                var menuItem = new ToolStripMenuItem(pair.Value);
+                if (pair.Key.Equals(App.TR.CurrentLanguage))
+                {
+                    menuItem.Font = new Font(menuItem.Font, FontStyle.Bold);
+                    mLanguage.DropDownItems.Insert(0, menuItem);
+                    mLanguage.DropDownItems.Insert(1, new ToolStripSeparator());
+                }
+                else
+                {
+                    menuItem.Tag = pair.Key;
+                    menuItem.Click += MenuItemOnClick;
+                    mLanguage.DropDownItems.Add(menuItem);
+                }
+            }
+        }
+
+
+        private void MenuItemOnClick(object sender, EventArgs eventArgs)
+        {
+            var menuItem = sender as ToolStripMenuItem;
+            if (menuItem != null)
+                SetupLanguages((string) menuItem.Tag);
         }
 
         private bool m_EscDown;
@@ -402,6 +442,18 @@ namespace LanExchange.UI
         {
             var presenter = App.Resolve<IAboutPresenter>();
             presenter.OpenWebLink();
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var presenter = App.Resolve<IAboutPresenter>();
+            presenter.OpenTranslationWebLink();
+        }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            var presenter = App.Resolve<IAboutPresenter>();
+            presenter.OpenBugtrackerWebLink();
         }
 
         private void mHelpKeys_Click(object sender, EventArgs e)

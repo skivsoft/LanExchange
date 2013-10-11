@@ -31,7 +31,6 @@ namespace LanExchange.UI
             InitializeComponent();
             m_Presenter = presenter;
             m_Presenter.View = this;
-            mSelectTab.DropDownDirection = ToolStripDropDownDirection.BelowLeft;
         }
 
         public int TabPagesCount
@@ -124,30 +123,6 @@ namespace LanExchange.UI
         private void mCloseTab_Click(object sender, EventArgs e)
         {
             m_Presenter.CommandCloseTab();
-        }
-
-        private void mRenameTab_Click(object sender, EventArgs e)
-        {
-            m_Presenter.CommandProperties();
-        }
-
-        private void popPages_Opening(object sender, CancelEventArgs e)
-        {
-            mSelectTab.Enabled = m_Presenter.Count > 1;
-            if (mSelectTab.Enabled && mSelectTab.DropDownItems.Count == 0)
-            {
-                var menuItem = new ToolStripSeparator();
-                mSelectTab.DropDownItems.Add(menuItem);
-            }
-        }
-
-        private void mSelectTab_DropDownOpening(object sender, EventArgs e)
-        {
-            if (mSelectTab.Enabled)
-            {
-                mSelectTab.DropDownItems.Clear();
-                AddTabsToMenuItem(mSelectTab, mSelectTab_Click, false);
-            }
         }
 
         private void Pages_Selected(object sender, TabControlEventArgs e)

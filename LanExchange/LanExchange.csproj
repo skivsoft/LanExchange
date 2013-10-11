@@ -93,6 +93,7 @@
     <Compile Include="..\Common\AnyAssemblyInfo.cs">
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Core\TranslationResourceManager.cs" />
     <Compile Include="Core\TypeNotRegisteredException.cs" />
     <Compile Include="Intf\Addon\ProtocolHelper.cs" />
     <Compile Include="Intf\DataReadyArgs.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Intf\IMainView.cs" />
     <Compile Include="Intf\IModel.cs" />
     <Compile Include="Intf\IPresenter.cs" />
+    <Compile Include="Intf\ITranslationService.cs" />
     <Compile Include="Intf\IView.cs" />
     <Compile Include="Intf\LifeCycle.cs" />
     <Compile Include="Intf\PanelIndexEventArgs.cs" />
@@ -126,8 +128,8 @@
     <Compile Include="Misc\Impl\PanelFillerManagerImpl.cs" />
     <Compile Include="Misc\Impl\PanelItemFactoryManagerImpl.cs" />
     <Compile Include="Misc\Impl\ServiceProviderImpl.cs" />
-    <Compile Include="Misc\Impl\TranslatorImpl.cs" />
     <Compile Include="Intf\ColumnComparer.cs" />
+    <Compile Include="Misc\Impl\TranslationServiceImpl.cs" />
     <Compile Include="Model\PanelItemBaseHolder.cs" />
     <Compile Include="Intf\IAboutModel.cs" />
     <Compile Include="Intf\IFilterModel.cs" />
@@ -211,12 +213,6 @@
     <Compile Include="UI\InfoView.Designer.cs">
       <DependentUpon>InfoView.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\InputBoxForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\InputBoxForm.Designer.cs">
-      <DependentUpon>InputBoxForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI\ListViewer.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -278,14 +274,14 @@
     <EmbeddedResource Include="UI\InfoView.resx">
       <DependentUpon>InfoView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\InputBoxForm.resx">
-      <DependentUpon>InputBoxForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UI\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\PagesView.resx">
       <DependentUpon>PagesView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\PanelView.resx">
+      <DependentUpon>PanelView.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -308,7 +304,6 @@
     <None Include="..\Common\LanExchange.snk">
       <Link>LanExchange.snk</Link>
     </None>
-    <None Include="Languages\English.po" />
     <None Include="Languages\Russian.po">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -364,7 +359,6 @@
     <Content Include="Languages\!Readme.txt" />
     <Content Include="Presenter\!Readme.txt" />
     <None Include="Resources\input-keyboard-6.png" />
-    <None Include="Resources\home_16.png" />
     <Content Include="Resources\LanExchange_16x16.ico" />
     <None Include="Resources\LanExchange_48x48.png" />
   </ItemGroup>
