@@ -1,4 +1,5 @@
-﻿using LanExchange.UI;
+﻿using LanExchange.Properties;
+using LanExchange.UI;
 
 namespace LanExchange.UI
 {
@@ -61,10 +62,13 @@ namespace LanExchange.UI
             this.mReRead = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.mPanelExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.mLanguage = new System.Windows.Forms.ToolStripMenuItem();
             this.mHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.mHelpKeys = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.mWebPage = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.mHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.popTray.SuspendLayout();
@@ -75,7 +79,6 @@ namespace LanExchange.UI
             // TrayIcon
             // 
             this.TrayIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.TrayIcon.BalloonTipTitle = "Оповещение";
             this.TrayIcon.ContextMenuStrip = this.popTray;
             this.TrayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("TrayIcon.Icon")));
             this.TrayIcon.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TrayIcon_MouseUp);
@@ -216,6 +219,7 @@ namespace LanExchange.UI
             // 
             this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mPanel,
+            this.mLanguage,
             this.mHelp});
             this.MainMenu.Location = new System.Drawing.Point(0, 0);
             this.MainMenu.Name = "MainMenu";
@@ -314,12 +318,20 @@ namespace LanExchange.UI
             this.mPanelExit.Text = "Exit";
             this.mPanelExit.Click += new System.EventHandler(this.mExit_Click);
             // 
+            // mLanguage
+            // 
+            this.mLanguage.Name = "mLanguage";
+            this.mLanguage.Size = new System.Drawing.Size(66, 20);
+            this.mLanguage.Text = Resources.MainForm_Language;
+            // 
             // mHelp
             // 
             this.mHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mHelpKeys,
             this.toolStripSeparator2,
             this.mWebPage,
+            this.toolStripMenuItem1,
+            this.toolStripMenuItem2,
             this.toolStripSeparator6,
             this.mHelpAbout});
             this.mHelp.Name = "mHelp";
@@ -346,6 +358,20 @@ namespace LanExchange.UI
             this.mWebPage.Size = new System.Drawing.Size(198, 22);
             this.mWebPage.Text = "LanExchange Webpage";
             this.mWebPage.Click += new System.EventHandler(this.mWebPage_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(198, 22);
+            this.toolStripMenuItem1.Text = "Translation Webpage";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(198, 22);
+            this.toolStripMenuItem2.Text = "Bugtracker Webpage";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
             // toolStripSeparator6
             // 
@@ -423,6 +449,9 @@ namespace LanExchange.UI
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem mPanelNewTab;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem mLanguage;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
     }
 }
 

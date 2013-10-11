@@ -645,11 +645,6 @@ namespace LanExchange.UI
             PrepareCopyMenu();
         }
 
-        private void mContextProperties_Click(object sender, EventArgs e)
-        {
-            App.MainPages.CommandProperties();
-        }
-
         private void mPaste_Click(object sender, EventArgs e)
         {
             App.MainPages.CommandPasteItems();

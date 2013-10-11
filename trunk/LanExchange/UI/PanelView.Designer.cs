@@ -38,8 +38,6 @@
             this.mDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.mAfterCopy = new System.Windows.Forms.ToolStripSeparator();
             this.mSendToNewTab = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.mContextProperties = new System.Windows.Forms.ToolStripMenuItem();
             this.LV = new LanExchange.UI.ListViewer();
             this.pFilter = new LanExchange.UI.FilterView();
             this.popComps.SuspendLayout();
@@ -54,11 +52,9 @@
             this.mPaste,
             this.mDelete,
             this.mAfterCopy,
-            this.mSendToNewTab,
-            this.toolStripSeparator6,
-            this.mContextProperties});
+            this.mSendToNewTab});
             this.popComps.Name = "popComps";
-            this.popComps.Size = new System.Drawing.Size(233, 154);
+            this.popComps.Size = new System.Drawing.Size(233, 148);
             this.popComps.Opening += new System.ComponentModel.CancelEventHandler(this.popComps_Opening);
             // 
             // mComp
@@ -120,19 +116,6 @@
             this.mSendToNewTab.Size = new System.Drawing.Size(232, 22);
             this.mSendToNewTab.Text = "Send to new tab";
             this.mSendToNewTab.Click += new System.EventHandler(this.mSendToNewTab_Click);
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(229, 6);
-            // 
-            // mContextProperties
-            // 
-            this.mContextProperties.Name = "mContextProperties";
-            this.mContextProperties.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.mContextProperties.Size = new System.Drawing.Size(232, 22);
-            this.mContextProperties.Text = "Tab properties";
-            this.mContextProperties.Click += new System.EventHandler(this.mContextProperties_Click);
             // 
             // LV
             // 
@@ -203,8 +186,6 @@
         private System.Windows.Forms.ToolStripSeparator mAfterComp;
         private System.Windows.Forms.ToolStripSeparator mAfterCopy;
         private System.Windows.Forms.ToolStripMenuItem mSendToNewTab;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-        private System.Windows.Forms.ToolStripMenuItem mContextProperties;
         private FilterView pFilter;
         private System.Windows.Forms.ToolStripMenuItem mCopyMenu;
         private System.Windows.Forms.ToolStripMenuItem mCopySelected;

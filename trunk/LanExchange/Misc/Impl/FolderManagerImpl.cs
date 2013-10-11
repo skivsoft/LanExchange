@@ -13,8 +13,10 @@ namespace LanExchange.Misc.Impl
         public const string PROGRAM_DIR = "LanExchange";
         public const string CONFIG_DIR = "Config";
         public const string ADDONS_DIR = "Addons";
+        public const string LANGUAGES_DIR = "Languages";
         public const string TABS_FILE = "Tabs.cfg";
         public const string ADDONS_EXT = ".xml";
+        public const string LANGUAGES_EXT = ".po";
 
         private readonly string m_CurrentPath;
         private readonly string m_ExeFileName;
@@ -22,6 +24,7 @@ namespace LanExchange.Misc.Impl
         private readonly string m_TabsConfigFileName;
         private readonly string m_SystemAddonsPath;
         private readonly string m_UserAddonsPath;
+        private readonly string m_LanguagesPath;
 
         public FolderManagerImpl()
         {
@@ -29,6 +32,7 @@ namespace LanExchange.Misc.Impl
             m_ExeFileName = args.Length > 0 ? args[0] : string.Empty;
             m_CurrentPath = Path.GetDirectoryName(m_ExeFileName) ?? string.Empty;
             m_SystemAddonsPath = Path.Combine(m_CurrentPath, ADDONS_DIR);
+            m_LanguagesPath = Path.Combine(m_CurrentPath, LANGUAGES_DIR);
             var appData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             var programDir = Path.Combine(appData, PROGRAM_DIR);
             m_UserAddonsPath = Path.Combine(programDir, ADDONS_DIR);
@@ -85,6 +89,14 @@ namespace LanExchange.Misc.Impl
             result.AddRange(sysAddons);
             result.AddRange(userAddons);
             return result.ToArray();
+        }
+
+        public string[] GetLanguagesFiles()
+        {
+            var languages = new string[0];
+            if (Directory.Exists(m_LanguagesPath))
+                languages = Directory.GetFiles(m_LanguagesPath, "*" + LANGUAGES_EXT, SearchOption.TopDirectoryOnly);
+            return languages;
         }
 
         public string GetAddonFileName(bool isSystem, string addonName)

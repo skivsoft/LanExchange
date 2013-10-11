@@ -9,6 +9,7 @@
         string SystemAddonsPath { get; }
         string UserAddonsPath { get; }
         string[] GetAddonsFiles();
+        string[] GetLanguagesFiles();
         string GetAddonFileName(bool isSystem, string addonName);
     }
 }
