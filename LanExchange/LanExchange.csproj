@@ -308,6 +308,10 @@
     <None Include="..\Common\LanExchange.snk">
       <Link>LanExchange.snk</Link>
     </None>
+    <None Include="Languages\English.po" />
+    <None Include="Languages\Russian.po">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\app.manifest" />
     <None Include="app.config" />
   </ItemGroup>
@@ -357,6 +361,7 @@
     <None Include="Resources\clear_hover.png" />
     <None Include="Resources\clear_normal.png" />
     <Content Include="Core\MVP.gif" />
+    <Content Include="Languages\!Readme.txt" />
     <Content Include="Presenter\!Readme.txt" />
     <None Include="Resources\input-keyboard-6.png" />
     <None Include="Resources\home_16.png" />

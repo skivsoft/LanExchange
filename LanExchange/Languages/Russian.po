@@ -1,0 +1,83 @@
+msgid "Language"
+msgstr "Язык"
+
+msgctxt "Language"
+msgid "English"
+msgstr "Английский"
+
+msgctxt "Language"
+msgid "German"
+msgstr "Немецкий"
+
+msgctxt "Language"
+msgid "Kazakh"
+msgstr "Казахский"
+
+msgctxt "Language"
+msgid "Russian"
+msgstr "Русский"
+
+msgctxt "LanExchange.exe"
+msgid "Panel"
+msgstr "Панель"
+
+msgctxt "LanExchange.exe"
+msgid "New tab"
+msgstr "Новая вкладка"
+
+msgctxt "LanExchange.exe"
+msgid "Large icons"
+msgstr "Обычные значки"
+
+msgctxt "LanExchange.exe"
+msgid "Small icons"
+msgstr "Мелкие значки"
+
+msgctxt "LanExchange.exe"
+msgid "List"
+msgstr "Список"
+
+msgctxt "LanExchange.exe"
+msgid "Details"
+msgstr "Таблица"
+
+msgctxt "LanExchange.exe"
+msgid "Re-read"
+msgstr "Перечитать"
+
+msgctxt "LanExchange.exe"
+msgid "Exit"
+msgstr "Выйти"
+
+msgctxt "LanExchange.exe"
+msgid "Help"
+msgstr "Помощь"
+
+msgctxt "LanExchange.exe"
+msgid "Shortcut keys"
+msgstr "Горячие клавиши"
+
+msgctxt "LanExchange.exe"
+msgid "LanExchange Webpage"
+msgstr "Домашняя страница LanExchange"
+
+msgctxt "LanExchange.exe"
+msgid "About"
+msgstr "О программе"
+
+msgctxt "LanExchange.exe"
+msgid "Copy"
+msgstr "Копировать"
+
+msgctxt "LanExchange.exe"
+msgid "Paste"
+msgstr "Вставить"
+
+msgctxt "LanExchange.exe"
+msgid "Delete"
+msgstr "Удалить"
+
+msgctxt "LanExchange.exe"
+msgid "Close"
+msgstr "Закрыть"
+

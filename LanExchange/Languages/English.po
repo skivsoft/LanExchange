@@ -1,0 +1,83 @@
+msgid "Language"
+msgstr ""
+
+msgctxt "Language"
+msgid "English"
+msgstr ""
+
+msgctxt "Language"
+msgid "German"
+msgstr ""
+
+msgctxt "Language"
+msgid "Kazakh"
+msgstr ""
+
+msgctxt "Language"
+msgid "Russian"
+msgstr ""
+
+msgctxt "LanExchange.exe"
+msgid "Panel"
+msgstr ""
+
+msgctxt "LanExchange.exe"
+msgid "New tab"
+msgstr ""
+
+msgctxt "LanExchange.exe"
+msgid "Large icons"
+msgstr ""
+
+msgctxt "LanExchange.exe"
+msgid "Small icons"
+msgstr ""
+
+msgctxt "LanExchange.exe"
+msgid "List"
+msgstr ""
+
+msgctxt "LanExchange.exe"
+msgid "Details"
+msgstr ""
+
+msgctxt "LanExchange.exe"
+msgid "Re-read"
+msgstr ""
+
+msgctxt "LanExchange.exe"
+msgid "Exit"
+msgstr ""
+
+msgctxt "LanExchange.exe"
+msgid "Help"
+msgstr ""
+
+msgctxt "LanExchange.exe"
+msgid "Shortcut keys"
+msgstr ""
+
+msgctxt "LanExchange.exe"
+msgid "LanExchange Webpage"
+msgstr ""
+
+msgctxt "LanExchange.exe"
+msgid "About"
+msgstr ""
+
+msgctxt "LanExchange.exe"
+msgid "Copy"
+msgstr ""
+
+msgctxt "LanExchange.exe"
+msgid "Paste"
+msgstr ""
+
+msgctxt "LanExchange.exe"
+msgid "Delete"
+msgstr ""
+
+msgctxt "LanExchange.exe"
+msgid "Close"
+msgstr ""
+

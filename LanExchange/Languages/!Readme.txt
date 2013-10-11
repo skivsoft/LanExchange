@@ -1,0 +1,3 @@
+﻿PLEASE DO NOT EDIT LANGUAGES DIRECTLY.
+JOIN LANEXCHANGE TRANSLATION PROJECT: 
+https://crowdin.net/project/lanexchange
