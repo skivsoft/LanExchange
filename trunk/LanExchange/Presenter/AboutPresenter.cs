@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using LanExchange.Core;
 using LanExchange.Intf;
 using LanExchange.Model;
@@ -22,7 +23,7 @@ namespace LanExchange.Presenter
 
         public void LoadFromModel()
         {
-            View.Text = string.Format(View.Text, m_Model.Product);
+            View.Text = string.Format(CultureInfo.CurrentCulture, View.Text, m_Model.Product);
             View.VersionText = m_Model.VersionFull;
             View.CopyrightText = m_Model.Copyright;
             View.WebText = m_Model.WebSite;

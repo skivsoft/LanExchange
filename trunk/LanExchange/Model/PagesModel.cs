@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Xml.Serialization;
 using LanExchange.Intf;
@@ -215,9 +216,9 @@ namespace LanExchange.Model
             do
             {
                 if (index == 0)
-                    result = string.Format(Resources.PagesModel_CopyOf, itemList.TabName);
+                    result = string.Format(CultureInfo.CurrentCulture, Resources.PagesModel_CopyOf, itemList.TabName);
                 else
-                    result = string.Format(Resources.PagesModel_CopyOfMany, index, itemList.TabName);
+                    result = string.Format(CultureInfo.CurrentCulture, Resources.PagesModel_CopyOfMany, index, itemList.TabName);
                 exists = TabNameExists(result);
                 ++index;
             } while (exists);

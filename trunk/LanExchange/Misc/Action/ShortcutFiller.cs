@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
 using LanExchange.Intf;
 using LanExchange.Properties;
 using LanExchange.SDK;
@@ -8,6 +10,9 @@ namespace LanExchange.Misc.Action
 {
     public sealed class ShortcutFiller : IPanelFiller
     {
+        private const string PANEL_ITEM_SUFFIX = "PanelItem";
+
+        [Localizable(false)]
         public static PanelItemRoot ROOT_OF_SHORTCUTS = new PanelItemRoot("ShortcutPanelItem");
 
         public bool IsParentAccepted(PanelItemBase parent)
@@ -17,35 +22,35 @@ namespace LanExchange.Misc.Action
 
         public void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
-            result.Add(new ShortcutPanelItem(parent, "F1", "This help on shortcuts."));
-            result.Add(new ShortcutPanelItem(parent, "F9", "Show/hide main menu."));
-            result.Add(new ShortcutPanelItem(parent, "F10", "Quit from LanExchange program."));
-            result.Add(new ShortcutPanelItem(parent, "Ctrl+T", "Open new tab."));
-            result.Add(new ShortcutPanelItem(parent, "Ctrl+P", "Current tab properties."));
-            result.Add(new ShortcutPanelItem(parent, "Ctrl+F4", "Close current tab."));
-            result.Add(new ShortcutPanelItem(parent, "Ctrl+R", "Re-read panel."));
-            result.Add(new ShortcutPanelItem(parent, "Ctrl+Win+X", "Show/hide main window."));
-            result.Add(new ShortcutPanelItem(parent, "Ctrl+A", "Select all items in panel."));
-            result.Add(new ShortcutPanelItem(parent, "Ctrl+C", "Copy selected item(s) to clipboard."));
-            result.Add(new ShortcutPanelItem(parent, "Ctrl+V", "Paste items from clipboard."));
-            result.Add(new ShortcutPanelItem(parent, "Ctrl+Ins", "Copy column on which the ordered item(s) to clipboard."));
-            result.Add(new ShortcutPanelItem(parent, "Ctrl+Alt+Ins", "Copy full path of selected item(s) to clipboard."));
-            result.Add(new ShortcutPanelItem(parent, "Del", "Delete selected item(s) which was created by user."));
-            result.Add(new ShortcutPanelItem(parent, "Esc", "Clear filter OR go level up OR hide main window."));
-            result.Add(new ShortcutPanelItem(parent, "Esc (long press)", "Hide main window."));
-            result.Add(new ShortcutPanelItem(parent, "Any char", "Filter panel items by all columns."));
-            result.Add(new ShortcutPanelItem(parent, "Backspace", "Go level up in panel."));
-            result.Add(new ShortcutPanelItem(parent, "Ctrl+Down", "Increase height of info panel or show it."));
-            result.Add(new ShortcutPanelItem(parent, "Ctrl+Up", "Decrease height of info panel or hide it."));
-            result.Add(new ShortcutPanelItem(parent, "Ctrl+Shift+T", "Send selected item(s) to new tab."));
+            result.Add(new ShortcutPanelItem(parent, Resources.KeyF1, Resources.KeyF1__));
+            result.Add(new ShortcutPanelItem(parent, Resources.KeyF9, Resources.KeyF9__));
+            result.Add(new ShortcutPanelItem(parent, Resources.KeyF10, Resources.KeyF10__));
+            result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlT, Resources.KeyCtrlT__));
+            result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlP, Resources.KeyCtrlP__));
+            result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlF4, Resources.KeyCtrlF4__));
+            result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlR, Resources.KeyCtrlR__));
+            result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlWinX, Resources.KeyCtrlWinX__));
+            result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlA, Resources.KeyCtrlA__));
+            result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlC, Resources.KeyCtrlC__));
+            result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlV, Resources.KeyCtrlV__));
+            result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlIns, Resources.KeyCtrlIns__));
+            result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlAltIns, Resources.KeyCtrlAltIns__));
+            result.Add(new ShortcutPanelItem(parent, Resources.KeyDel, Resources.KeyDel__));
+            result.Add(new ShortcutPanelItem(parent, Resources.KeyEsc, Resources.KeyEsc__));
+            result.Add(new ShortcutPanelItem(parent, Resources.KeyEscLong, Resources.KeyEscLong__));
+            result.Add(new ShortcutPanelItem(parent, Resources.KeyAnyChar, Resources.KeyAnyChar__));
+            result.Add(new ShortcutPanelItem(parent, Resources.KeyBackspace, Resources.KeyBackspace__));
+            result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlDown, Resources.KeyCtrlDown__));
+            result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlUp, Resources.KeyCtrlUp__));
+            result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlShiftT, Resources.KeyCtrlShiftT__));
             foreach (var pair in App.Addons.PanelItems)
                 foreach (var menuItem in pair.Value.ContextMenuStrip)
                     if (!string.IsNullOrEmpty(menuItem.ShortcutKeys))
                     {
                         var shortcut = new ShortcutPanelItem(parent, menuItem.ShortcutKeys, menuItem.Text);
-                        shortcut.Context = SuppressPostfix(pair.Key, "PanelItem");
+                        shortcut.Context = SuppressPostfix(pair.Key, PANEL_ITEM_SUFFIX);
                         if (menuItem.ProgramValue != null)
-                            shortcut.CustomImageName = string.Format(Resources.ProgramImageFormat, menuItem.ProgramValue.Id);
+                            shortcut.CustomImageName = string.Format(CultureInfo.InvariantCulture, PanelImageNames.ADDON_FMT, menuItem.ProgramValue.Id);
                         result.Add(shortcut);
                     }
         }
@@ -58,7 +63,7 @@ namespace LanExchange.Misc.Action
 
         private string SuppressPostfix(string value, string postfix)
         {
-            if (value.EndsWith(postfix))
+            if (value.EndsWith(postfix, StringComparison.Ordinal))
                 return value.Remove(value.Length - postfix.Length);
             return value;
         }

@@ -15,6 +15,7 @@
         public const string HIDDEN_POSTFIX      = ".hidden";
         public const string UNREACHABLE_POSTFIX = ".unreachable";
         public const string CUSTOM_POSTFIX      = ".custom";
+        public const string ADDON_FMT = "program.{0}";
         /// <summary>
         /// The workgroup
         /// </summary>

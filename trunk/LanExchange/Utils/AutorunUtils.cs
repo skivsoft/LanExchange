@@ -36,7 +36,7 @@ namespace LanExchange.Utils
         {
             string exeName = Path.GetFileName(fileName);
             if (exeName == null) return false;
-            exeName = exeName.ToUpper();
+            exeName = exeName.ToUpper(CultureInfo.InvariantCulture);
             RegistryKey regKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run\", false);
             if (regKey == null)
                 return false;
@@ -54,7 +54,7 @@ namespace LanExchange.Utils
                         var name = Path.GetFileName(fName);
                         if (name != null)
                         {
-                            string value = name.ToUpper();
+                            string value = name.ToUpper(CultureInfo.InvariantCulture);
                             if (exeName.Equals(value))
                             {
                                 result = true;
@@ -82,8 +82,8 @@ namespace LanExchange.Utils
                 var name = Path.GetFileName(fileName);
                 if (name != null)
                 {
-                    string exeName = name.ToUpper();
-                    string fileNameQuoted = String.Format("\"{0}\"", fileName);
+                    string exeName = name.ToUpper(CultureInfo.InvariantCulture);
+                    string fileNameQuoted = String.Format(CultureInfo.InvariantCulture, "\"{0}\"", fileName);
 
                     bool found = false;
                     Array.ForEach(regKey.GetValueNames(), str =>
@@ -97,7 +97,7 @@ namespace LanExchange.Utils
                                 var s = Path.GetFileName(fName);
                                 if (s != null)
                                 {
-                                    string value = s.ToUpper();
+                                    string value = s.ToUpper(CultureInfo.InvariantCulture);
                                     if (exeName.Equals(value))
                                         if (!found)
                                         {
@@ -133,7 +133,7 @@ namespace LanExchange.Utils
                 var name = Path.GetFileName(fileName);
                 if (name != null)
                 {
-                    string exeName = name.ToUpper();
+                    string exeName = name.ToUpper(CultureInfo.InvariantCulture);
                     Array.ForEach(regKey.GetValueNames(), str =>
                         {
                             var kind = regKey.GetValueKind(str);
@@ -145,7 +145,7 @@ namespace LanExchange.Utils
                                 var s = Path.GetFileName(fName);
                                 if (s != null)
                                 {
-                                    string value = s.ToUpper();
+                                    string value = s.ToUpper(CultureInfo.InvariantCulture);
                                     if (exeName.Equals(value))
                                         regKey.DeleteValue(str, false);
                                 }

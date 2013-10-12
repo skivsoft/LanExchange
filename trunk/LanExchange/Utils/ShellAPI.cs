@@ -41,17 +41,17 @@ namespace LanExchange.Utils
 
         // Retrieves information about an object in the file system,
         // such as a file, a folder, a directory, or a drive root.
-        [DllImport("shell32", 
-            EntryPoint = "SHGetFileInfo", 
-            ExactSpelling = false, 
-            CharSet = CharSet.Auto,
-            SetLastError = true)]
-        public static extern IntPtr SHGetFileInfo(
-            string pszPath, 
-            FILE_ATTRIBUTE dwFileAttributes, 
-            ref SHFILEINFO sfi,
-            int cbFileInfo, 
-            SHGFI uFlags);
+        //[DllImport("shell32", 
+        //    EntryPoint = "SHGetFileInfo", 
+        //    ExactSpelling = false, 
+        //    CharSet = CharSet.Auto,
+        //    SetLastError = true)]
+        //public static extern IntPtr SHGetFileInfo(
+        //    string pszPath, 
+        //    FILE_ATTRIBUTE dwFileAttributes, 
+        //    ref SHFILEINFO sfi,
+        //    int cbFileInfo, 
+        //    SHGFI uFlags);
 
         // Retrieves information about an object in the file system,
         // such as a file, a folder, a directory, or a drive root.
@@ -68,13 +68,13 @@ namespace LanExchange.Utils
             SHGFI uFlags);
 
         // Takes the CSIDL of a folder and returns the pathname.
-        [DllImport("shell32.dll")]
-        public static extern Int32 SHGetFolderPath(
-            IntPtr hwndOwner,
-            CSIDL nFolder,
-            IntPtr hToken,
-            SHGFP dwFlags,
-            StringBuilder pszPath);
+        //[DllImport("shell32.dll")]
+        //public static extern Int32 SHGetFolderPath(
+        //    IntPtr hwndOwner,
+        //    CSIDL nFolder,
+        //    IntPtr hToken,
+        //    SHGFP dwFlags,
+        //    StringBuilder pszPath);
 
         // Retrieves the IShellFolder interface for the desktop folder,
         // which is the root of the Shell's namespace. 
@@ -120,10 +120,10 @@ namespace LanExchange.Utils
             uint hNotify);
 
         // Converts an item identifier list to a file system path
-        [DllImport("shell32.dll")]
-        public static extern bool SHGetPathFromIDList(
-            IntPtr pidl,
-            StringBuilder pszPath);
+        //[DllImport("shell32.dll")]
+        //public static extern bool SHGetPathFromIDList(
+        //    IntPtr pidl,
+        //    StringBuilder pszPath);
 
         // SHGetRealIDL converts a simple PIDL to a full PIDL
         //[DllImport("shell32.dll")]
@@ -148,16 +148,16 @@ namespace LanExchange.Utils
 
         // Takes a STRRET structure returned by IShellFolder::GetDisplayNameOf,
         // converts it to a string, and places the result in a buffer. 
-        [DllImport("shlwapi.dll", 
-            EntryPoint = "StrRetToBuf", 
-            ExactSpelling = false, 
-            CharSet = CharSet.Auto, 
-            SetLastError = true)]
-        public static extern Int32 StrRetToBuf(
-            IntPtr pstr, 
-            IntPtr pidl,
-            StringBuilder pszBuf, 
-            int cchBuf);
+        //[DllImport("shlwapi.dll", 
+        //    EntryPoint = "StrRetToBuf", 
+        //    ExactSpelling = false, 
+        //    CharSet = CharSet.Auto, 
+        //    SetLastError = true)]
+        //public static extern Int32 StrRetToBuf(
+        //    IntPtr pstr, 
+        //    IntPtr pidl,
+        //    StringBuilder pszBuf, 
+        //    int cchBuf);
 
         #endregion
 
@@ -214,27 +214,27 @@ namespace LanExchange.Utils
         // appends a new item to the end of the specified menu bar, drop-down menu, submenu, 
         // or shortcut menu. You can use this function to specify the content, appearance, and 
         // behavior of the menu item
-        [DllImport("user32",
-            SetLastError = true,
-            CharSet = CharSet.Auto)]
-        public static extern bool AppendMenu(
-            IntPtr hMenu,
-            MFT uFlags,
-            uint uIDNewItem,
-            [MarshalAs(UnmanagedType.LPTStr)]
-            string lpNewItem);
+        //[DllImport("user32",
+        //    SetLastError = true,
+        //    CharSet = CharSet.Auto)]
+        //public static extern bool AppendMenu(
+        //    IntPtr hMenu,
+        //    MFT uFlags,
+        //    uint uIDNewItem,
+        //    [MarshalAs(UnmanagedType.LPTStr)]
+        //    string lpNewItem);
 
         // Inserts a new menu item into a menu, moving other items down the menu
-        [DllImport("user32", 
-            SetLastError = true, 
-            CharSet = CharSet.Auto)]
-        public static extern bool InsertMenu(
-            IntPtr hmenu, 
-            uint uPosition, 
-            MFT uflags,
-            uint uIDNewItem, 
-            [MarshalAs(UnmanagedType.LPTStr)]
-            string lpNewItem);
+        //[DllImport("user32", 
+        //    SetLastError = true, 
+        //    CharSet = CharSet.Auto)]
+        //public static extern bool InsertMenu(
+        //    IntPtr hmenu, 
+        //    uint uPosition, 
+        //    MFT uflags,
+        //    uint uIDNewItem, 
+        //    [MarshalAs(UnmanagedType.LPTStr)]
+        //    string lpNewItem);
 
         // Inserts a new menu item at the specified position in a menu
         [DllImport("user32",

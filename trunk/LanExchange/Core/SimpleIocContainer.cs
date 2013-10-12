@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using LanExchange.Intf;
 
 namespace LanExchange.Core
@@ -42,7 +43,7 @@ namespace LanExchange.Core
                 }
             if (registeredObject == null)
             {
-                throw new TypeNotRegisteredException(string.Format(
+                throw new TypeNotRegisteredException(string.Format(CultureInfo.InvariantCulture, 
                     "The type {0} has not been registered", typeToResolve.Name));
             }
             return GetInstance(registeredObject);

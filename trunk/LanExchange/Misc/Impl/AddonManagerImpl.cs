@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.Windows.Forms;
 using LanExchange.Intf;
 using LanExchange.Intf.Addon;
@@ -43,7 +44,10 @@ namespace LanExchange.Misc.Impl
             // register programs images
             foreach (var pair in Programs)
                 if (pair.Value.ProgramImage != null)
-                    App.Images.RegisterImage(string.Format(Resources.ProgramImageFormat, pair.Key), pair.Value.ProgramImage, pair.Value.ProgramImage);
+                {
+                    var imageName = string.Format(CultureInfo.InvariantCulture, PanelImageNames.ADDON_FMT, pair.Key);
+                    App.Images.RegisterImage(imageName, pair.Value.ProgramImage, pair.Value.ProgramImage);
+                }
         }
 
         private void LoadAddon(string fileName)
@@ -172,7 +176,7 @@ namespace LanExchange.Misc.Impl
             }
             catch(Exception ex)
             {
-                pv.ShowRunCmdError(string.Format("{0} {1}\n{2}", programFileName, programArgs, ex.Message));
+                pv.ShowRunCmdError(string.Format(CultureInfo.InvariantCulture, "{0} {1}\n{2}", programFileName, programArgs, ex.Message));
             }
         }
 

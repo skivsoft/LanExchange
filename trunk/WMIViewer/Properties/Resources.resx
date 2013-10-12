@@ -153,14 +153,8 @@ Possible connection has been blocked by firewall.</value>
   <data name="MainForm_Methods" xml:space="preserve">
     <value>Methods: {0}</value>
   </data>
-  <data name="NULL" xml:space="preserve">
-    <value>null</value>
-  </data>
   <data name="MethodForm_Success" xml:space="preserve">
     <value>[0] Success</value>
-  </data>
-  <data name="MethodForm_Fail" xml:space="preserve">
-    <value>[{0}] {1}</value>
   </data>
   <data name="ButtonCancel" xml:space="preserve">
     <value>Cancel
@@ -175,12 +169,6 @@ Possible connection has been blocked by firewall.</value>
   <data name="EmptyText" xml:space="preserve">
     <value>    </value>
   </data>
-  <data name="MainForm_Title" xml:space="preserve">
-    <value>\\{0} — {1}</value>
-  </data>
-  <data name="MainForm_CompPrefix" xml:space="preserve">
-    <value>\\</value>
-  </data>
   <data name="MainForm_EditingProperty" xml:space="preserve">
     <value>Editing property {0}</value>
   </data>
@@ -194,12 +182,6 @@ New value: «{2}»</value>
     <value>
 
 Property {0} successfully changed.</value>
-  </data>
-  <data name="EditProperty_PropertyFmt" xml:space="preserve">
-    <value>{0}\{1}</value>
-  </data>
-  <data name="AMP" xml:space="preserve">
-    <value>&amp;</value>
   </data>
   <data name="AuthForm_Title" xml:space="preserve">
     <value>WMI connection to \\{0}</value>

@@ -11,6 +11,7 @@ namespace WMIViewer
 {
     public sealed class WmiPresenter : IDisposable
     {
+        private const string NULL = "null";
         private ManagementScope m_Namespace;
 
         private ManagementClass m_Class;
@@ -163,7 +164,7 @@ namespace WMIViewer
                         {
                             PropertyData prop = wmiObject.Properties[header.Text];
 
-                            string value = prop.Value == null ? Resources.NULL : prop.Value.ToString();
+                            string value = prop.Value == null ? NULL : prop.Value.ToString();
                             if (prop.Name.Equals("Name"))
                             {
                                 string[] sList = value.Split('|');

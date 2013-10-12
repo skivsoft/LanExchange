@@ -13,8 +13,8 @@ namespace LanExchange.Misc
         {
             for (int i = 1; i < s_Args.Length; i++)
             {
-                var arg = s_Args[i].ToUpper();
-                if (arg.StartsWith(name))
+                var arg = s_Args[i].ToUpper(CultureInfo.InvariantCulture);
+                if (arg.StartsWith(name, StringComparison.OrdinalIgnoreCase))
                     return arg.Remove(0, name.Length);
             }
             return null;

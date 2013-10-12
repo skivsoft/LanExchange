@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Reflection;
 
 namespace LanExchange.Misc.Impl
 {
     public static class MacroHelper
     {
+        private const string MACRO_VAR_FMT = "$({0})";
+
         [Localizable(false)]
         public static IDictionary<string, string> GetPublicReadProperties(object obj)
         {
@@ -17,7 +20,7 @@ namespace LanExchange.Misc.Impl
                     var indexParams = prop.GetIndexParameters();
                     if (indexParams.Length > 0) continue;
                     var propValue = prop.GetValue(obj, null);
-                    props.Add(string.Format("$({0})", prop.Name), propValue == null ? string.Empty : propValue.ToString());
+                    props.Add(string.Format(CultureInfo.InvariantCulture, MACRO_VAR_FMT, prop.Name), propValue == null ? string.Empty : propValue.ToString());
                 }
             return props;
         }

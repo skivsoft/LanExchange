@@ -46,7 +46,7 @@ namespace LanExchange.UI
             // init main form
             SetupActions();
             SetupForm();
-            SetupLanguages(App.TR.SourceLanguage);
+            SetupLanguages("Russian");//App.TR.SourceLanguage);
             // setup images
             //ClearToolTip(Pages.Pages);
             App.Images.SetImagesTo(Pages.Pages);
@@ -100,6 +100,7 @@ namespace LanExchange.UI
         }
         #endregion
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Windows.Forms.Control.set_Text(System.String)")]
         [Localizable(false)]
         private void SetupForm()
         {
@@ -108,7 +109,7 @@ namespace LanExchange.UI
             SetBounds(rect.Left, rect.Top, rect.Width, rect.Height);
             // set mainform title
             var aboutModel = App.Resolve<IAboutModel>();
-            Text = String.Format("{0} {1}", aboutModel.Product, aboutModel.VersionShort);
+            Text = String.Format(CultureInfo.CurrentCulture, "{0} {1}", aboutModel.Product, aboutModel.VersionShort);
             // show tray
             TrayIcon.Text = Text;
             TrayIcon.Visible = true;
@@ -319,7 +320,7 @@ namespace LanExchange.UI
 
         private void popTray_Opening(object sender, CancelEventArgs e)
         {
-            mOpen.Text = Visible ? Resources.MainForm_Close : Resources.MainForm_Open;
+            mOpen.Text = Visible ? Resources.Close : Resources.MainForm_Open;
         }
 
         private void mOpen_Click(object sender, EventArgs e)
@@ -490,6 +491,7 @@ namespace LanExchange.UI
         }
 
  #if DEBUG
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Windows.Forms.Control.set_Text(System.String)")]
         [Localizable(false)]
         private void MainForm_RefreshNumThreads(object sender)
         {
@@ -498,7 +500,7 @@ namespace LanExchange.UI
                 if (column.Callback != null)
                     count += column.LazyDict.Count;
             var aboutModel = App.Resolve<IAboutModel>();
-            Text = String.Format("{0} {1} [Threads: {2}, Dict: {3}]", aboutModel.Product, aboutModel.VersionFull, App.Threads.NumThreads, count);
+            Text = String.Format(CultureInfo.CurrentCulture, "{0} {1} [Threads: {2}, Dict: {3}]", aboutModel.Product, aboutModel.VersionFull, App.Threads.NumThreads, count);
         }
  #endif
 
@@ -543,7 +545,7 @@ namespace LanExchange.UI
 
         public void ShowStatusText(string format, params object[] args)
         {
-            lItemsCount.Text = String.Format(format, args);
+            lItemsCount.Text = String.Format(CultureInfo.InvariantCulture, format, args);
         }
     }
 }

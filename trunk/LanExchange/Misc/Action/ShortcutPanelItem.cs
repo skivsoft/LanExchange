@@ -1,5 +1,6 @@
 using System;
 using System.Xml.Serialization;
+using LanExchange.Properties;
 using LanExchange.SDK;
 
 namespace LanExchange.Misc.Action
@@ -9,9 +10,9 @@ namespace LanExchange.Misc.Action
         public static void RegisterColumns(IPanelColumnManager columnManager)
         {
             var typeName = typeof (ShortcutPanelItem).Name;
-            columnManager.RegisterColumn(typeName, new PanelColumnHeader("Shortcut keys") { Width = 100 });
-            columnManager.RegisterColumn(typeName, new PanelColumnHeader("Action") { Width = 280 });
-            columnManager.RegisterColumn(typeName, new PanelColumnHeader("Context") { Width = 80 });
+            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.ShortcutKeys) { Width = 100 });
+            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.Action) { Width = 280 });
+            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.Context) { Width = 80 });
         }
 
         public ShortcutPanelItem()
