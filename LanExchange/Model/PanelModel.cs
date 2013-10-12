@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Xml.Serialization;
 using LanExchange.Intf;
 using LanExchange.SDK;
@@ -144,9 +145,9 @@ namespace LanExchange.Model
                 FilterText = string.Empty;
             var filtered = FilterText != string.Empty;
             m_Keys.Clear();
-            var filter1 = FilterText.ToUpper();
+            var filter1 = FilterText.ToUpper(CultureInfo.CurrentCulture);
             var filter2 = m_Punto.Change(FilterText);
-            if (filter2 != null) filter2 = filter2.ToUpper();
+            if (filter2 != null) filter2 = filter2.ToUpper(CultureInfo.CurrentCulture);
             var helper = new PanelModelCopyHelper(this);
             var upperValues = new List<string>();
             foreach (var value in m_Data)
@@ -163,7 +164,7 @@ namespace LanExchange.Model
                     {
                         var column = helper.GetColumnValue(i);
                         if (!string.IsNullOrEmpty(column))
-                            upperValues.Add(column.ToUpper());
+                            upperValues.Add(column.ToUpper(CultureInfo.CurrentCulture));
                     }
                 if (!filtered || GoodForFilter(upperValues.ToArray(), filter1, filter2))
                     m_Keys.Add(value);

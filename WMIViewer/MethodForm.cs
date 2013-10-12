@@ -11,6 +11,8 @@ namespace WMIViewer
 {
     public sealed partial class MethodForm : Form
     {
+        const string METHOD_FAIL_FMT = "[{0}] {1}";
+
         private readonly WmiPresenter m_Presenter;
         private readonly CmdLineArgs m_Args;
         private bool m_OutParamPresent;
@@ -210,7 +212,7 @@ namespace WMIViewer
             {
                 var value = (int) ((UInt32) resultProp.Value);
                 var message = new Win32Exception(value).Message;
-                str = String.Format(CultureInfo.InvariantCulture, Resources.MethodForm_Fail, value, message);
+                str = String.Format(CultureInfo.InvariantCulture, METHOD_FAIL_FMT, value, message);
                 LB.Items.Add(str);
                 if (value == 0)
                 {
@@ -220,7 +222,7 @@ namespace WMIViewer
                 }
                 else
                 {
-                    ShowFAIL(String.Format(CultureInfo.InvariantCulture, Resources.MethodForm_Fail, value, message));
+                    ShowFAIL(String.Format(CultureInfo.InvariantCulture, METHOD_FAIL_FMT, value, message));
                 }
             }
         }

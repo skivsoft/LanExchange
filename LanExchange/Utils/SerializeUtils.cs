@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Xml.Serialization;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -39,7 +40,7 @@ namespace LanExchange.Utils
         {
             if (obj == null) return null;
             var ser = new XmlSerializer(obj.GetType());
-            using (var sw = new StringWriter())
+            using (var sw = new StringWriter(CultureInfo.InvariantCulture))
             {
                 ser.Serialize(sw, obj);
                 return sw.ToString();

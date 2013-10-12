@@ -9,7 +9,7 @@ namespace LanExchange.Intf.Addon
         [Localizable(false)]
         public static bool IsProtocol(string proto)
         {
-            return (proto != null) && proto.EndsWith(":");
+            return (proto != null) && proto.EndsWith(":", StringComparison.Ordinal);
         }
     
         public static bool LookupInRegistry(string proto, out string fileName, out int iconIndex)

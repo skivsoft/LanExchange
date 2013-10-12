@@ -49,9 +49,9 @@ namespace LanExchange.Intf.Addon
                 return (ProgramValue == null) == (other.ProgramValue == null);
             if (String.Compare(ProgramValue.ExpandedFileName,
                                other.ProgramValue.ExpandedFileName,
-                               StringComparison.InvariantCultureIgnoreCase) != 0)
+                               StringComparison.OrdinalIgnoreCase) != 0)
                 return false;
-            return String.Compare(ProgramArgs, other.ProgramArgs, StringComparison.InvariantCulture) == 0;
+            return String.Compare(ProgramArgs, other.ProgramArgs, StringComparison.OrdinalIgnoreCase) == 0;
         }
 
         public override int GetHashCode()

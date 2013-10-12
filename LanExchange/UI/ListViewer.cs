@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using LanExchange.Properties;
 
 namespace LanExchange.UI
 {
@@ -91,7 +92,7 @@ namespace LanExchange.UI
             m_ToolTip = new ToolTip(); 
             m_ToolTip.IsBalloon = true;
             m_ToolTip.ToolTipIcon = ToolTipIcon.Info;
-            m_ToolTip.SetToolTip(this, " ");
+            m_ToolTip.SetToolTip(this, Resources.EmptyText);
             m_ToolTip.Popup += ToolTipOnPopup;
             m_ToolTip.Active = View != View.Details;
         }

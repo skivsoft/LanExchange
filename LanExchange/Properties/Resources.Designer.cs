@@ -8,8 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using LanExchange.Core;
-
 namespace LanExchange.Properties {
     using System;
     
@@ -41,7 +39,7 @@ namespace LanExchange.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new TranslationResourceManager("LanExchange.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LanExchange.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -63,11 +61,92 @@ namespace LanExchange.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copyright.
+        /// </summary>
+        internal static string AboutForm_Copyright {
+            get {
+                return ResourceManager.GetString("AboutForm_Copyright", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        internal static string AboutForm_Email {
+            get {
+                return ResourceManager.GetString("AboutForm_Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to License.
+        /// </summary>
+        internal static string AboutForm_License {
+            get {
+                return ResourceManager.GetString("AboutForm_License", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Released under the MIT license..
+        /// </summary>
+        internal static string AboutForm_MIT {
+            get {
+                return ResourceManager.GetString("AboutForm_MIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About «{0}».
+        /// </summary>
+        internal static string AboutForm_Title {
+            get {
+                return ResourceManager.GetString("AboutForm_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Twitter.
+        /// </summary>
+        internal static string AboutForm_Twitter {
+            get {
+                return ResourceManager.GetString("AboutForm_Twitter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version.
+        /// </summary>
+        internal static string AboutForm_Version {
+            get {
+                return ResourceManager.GetString("AboutForm_Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Webpage.
+        /// </summary>
+        internal static string AboutForm_Webpage {
+            get {
+                return ResourceManager.GetString("AboutForm_Webpage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to  (build {0}).
         /// </summary>
         internal static string AboutInfo_Build {
             get {
                 return ResourceManager.GetString("AboutInfo_Build", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Action.
+        /// </summary>
+        internal static string Action {
+            get {
+                return ResourceManager.GetString("Action", resourceCulture);
             }
         }
         
@@ -96,6 +175,42 @@ namespace LanExchange.Properties {
             get {
                 object obj = ResourceManager.GetObject("clear_normal", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        internal static string Close {
+            get {
+                return ResourceManager.GetString("Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Context.
+        /// </summary>
+        internal static string Context {
+            get {
+                return ResourceManager.GetString("Context", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy.
+        /// </summary>
+        internal static string Copy {
+            get {
+                return ResourceManager.GetString("Copy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to     .
+        /// </summary>
+        internal static string EmptyText {
+            get {
+                return ResourceManager.GetString("EmptyText", resourceCulture);
             }
         }
         
@@ -135,10 +250,460 @@ namespace LanExchange.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Any char.
+        /// </summary>
+        internal static string KeyAnyChar {
+            get {
+                return ResourceManager.GetString("KeyAnyChar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter panel items by all columns..
+        /// </summary>
+        internal static string KeyAnyChar__ {
+            get {
+                return ResourceManager.GetString("KeyAnyChar__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backspace.
+        /// </summary>
+        internal static string KeyBackspace {
+            get {
+                return ResourceManager.GetString("KeyBackspace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go level up in panel..
+        /// </summary>
+        internal static string KeyBackspace__ {
+            get {
+                return ResourceManager.GetString("KeyBackspace__", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap keyboard_16 {
             get {
                 object obj = ResourceManager.GetObject("keyboard_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ctrl+A.
+        /// </summary>
+        internal static string KeyCtrlA {
+            get {
+                return ResourceManager.GetString("KeyCtrlA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select all items in panel..
+        /// </summary>
+        internal static string KeyCtrlA__ {
+            get {
+                return ResourceManager.GetString("KeyCtrlA__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ctrl+Alt+Ins.
+        /// </summary>
+        internal static string KeyCtrlAltIns {
+            get {
+                return ResourceManager.GetString("KeyCtrlAltIns", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy full path of selected item(s) to clipboard..
+        /// </summary>
+        internal static string KeyCtrlAltIns__ {
+            get {
+                return ResourceManager.GetString("KeyCtrlAltIns__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ctrl+C.
+        /// </summary>
+        internal static string KeyCtrlC {
+            get {
+                return ResourceManager.GetString("KeyCtrlC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy selected items.
+        /// </summary>
+        internal static string KeyCtrlC_ {
+            get {
+                return ResourceManager.GetString("KeyCtrlC_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy selected item(s) to clipboard..
+        /// </summary>
+        internal static string KeyCtrlC__ {
+            get {
+                return ResourceManager.GetString("KeyCtrlC__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ctrl+Down.
+        /// </summary>
+        internal static string KeyCtrlDown {
+            get {
+                return ResourceManager.GetString("KeyCtrlDown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Increase height of info panel or show it..
+        /// </summary>
+        internal static string KeyCtrlDown__ {
+            get {
+                return ResourceManager.GetString("KeyCtrlDown__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ctrl+F4.
+        /// </summary>
+        internal static string KeyCtrlF4 {
+            get {
+                return ResourceManager.GetString("KeyCtrlF4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close current tab..
+        /// </summary>
+        internal static string KeyCtrlF4__ {
+            get {
+                return ResourceManager.GetString("KeyCtrlF4__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ctrl+Ins.
+        /// </summary>
+        internal static string KeyCtrlIns {
+            get {
+                return ResourceManager.GetString("KeyCtrlIns", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy column on which the ordered item(s) to clipboard..
+        /// </summary>
+        internal static string KeyCtrlIns__ {
+            get {
+                return ResourceManager.GetString("KeyCtrlIns__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ctrl+P.
+        /// </summary>
+        internal static string KeyCtrlP {
+            get {
+                return ResourceManager.GetString("KeyCtrlP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current tab properties..
+        /// </summary>
+        internal static string KeyCtrlP__ {
+            get {
+                return ResourceManager.GetString("KeyCtrlP__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ctrl+R.
+        /// </summary>
+        internal static string KeyCtrlR {
+            get {
+                return ResourceManager.GetString("KeyCtrlR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Re-read.
+        /// </summary>
+        internal static string KeyCtrlR_ {
+            get {
+                return ResourceManager.GetString("KeyCtrlR_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Re-read panel..
+        /// </summary>
+        internal static string KeyCtrlR__ {
+            get {
+                return ResourceManager.GetString("KeyCtrlR__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ctrl+Shift+T.
+        /// </summary>
+        internal static string KeyCtrlShiftT {
+            get {
+                return ResourceManager.GetString("KeyCtrlShiftT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send to new tab.
+        /// </summary>
+        internal static string KeyCtrlShiftT_ {
+            get {
+                return ResourceManager.GetString("KeyCtrlShiftT_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send selected item(s) to new tab..
+        /// </summary>
+        internal static string KeyCtrlShiftT__ {
+            get {
+                return ResourceManager.GetString("KeyCtrlShiftT__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ctrl+T.
+        /// </summary>
+        internal static string KeyCtrlT {
+            get {
+                return ResourceManager.GetString("KeyCtrlT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New tab.
+        /// </summary>
+        internal static string KeyCtrlT_ {
+            get {
+                return ResourceManager.GetString("KeyCtrlT_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open new tab..
+        /// </summary>
+        internal static string KeyCtrlT__ {
+            get {
+                return ResourceManager.GetString("KeyCtrlT__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ctrl+Up.
+        /// </summary>
+        internal static string KeyCtrlUp {
+            get {
+                return ResourceManager.GetString("KeyCtrlUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decrease height of info panel or hide it..
+        /// </summary>
+        internal static string KeyCtrlUp__ {
+            get {
+                return ResourceManager.GetString("KeyCtrlUp__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ctrl+V.
+        /// </summary>
+        internal static string KeyCtrlV {
+            get {
+                return ResourceManager.GetString("KeyCtrlV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paste.
+        /// </summary>
+        internal static string KeyCtrlV_ {
+            get {
+                return ResourceManager.GetString("KeyCtrlV_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paste items from clipboard..
+        /// </summary>
+        internal static string KeyCtrlV__ {
+            get {
+                return ResourceManager.GetString("KeyCtrlV__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close tab.
+        /// </summary>
+        internal static string KeyCtrlW_ {
+            get {
+                return ResourceManager.GetString("KeyCtrlW_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ctrl+Win+X.
+        /// </summary>
+        internal static string KeyCtrlWinX {
+            get {
+                return ResourceManager.GetString("KeyCtrlWinX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show/hide main window..
+        /// </summary>
+        internal static string KeyCtrlWinX__ {
+            get {
+                return ResourceManager.GetString("KeyCtrlWinX__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Del.
+        /// </summary>
+        internal static string KeyDel {
+            get {
+                return ResourceManager.GetString("KeyDel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        internal static string KeyDel_ {
+            get {
+                return ResourceManager.GetString("KeyDel_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete selected item(s) which was created by user..
+        /// </summary>
+        internal static string KeyDel__ {
+            get {
+                return ResourceManager.GetString("KeyDel__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Esc.
+        /// </summary>
+        internal static string KeyEsc {
+            get {
+                return ResourceManager.GetString("KeyEsc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear filter OR go level up OR hide main window..
+        /// </summary>
+        internal static string KeyEsc__ {
+            get {
+                return ResourceManager.GetString("KeyEsc__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Esc (long press).
+        /// </summary>
+        internal static string KeyEscLong {
+            get {
+                return ResourceManager.GetString("KeyEscLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide main window..
+        /// </summary>
+        internal static string KeyEscLong__ {
+            get {
+                return ResourceManager.GetString("KeyEscLong__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to F1.
+        /// </summary>
+        internal static string KeyF1 {
+            get {
+                return ResourceManager.GetString("KeyF1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This help on shortcuts..
+        /// </summary>
+        internal static string KeyF1__ {
+            get {
+                return ResourceManager.GetString("KeyF1__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to F10.
+        /// </summary>
+        internal static string KeyF10 {
+            get {
+                return ResourceManager.GetString("KeyF10", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exit.
+        /// </summary>
+        internal static string KeyF10_ {
+            get {
+                return ResourceManager.GetString("KeyF10_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quit from LanExchange program..
+        /// </summary>
+        internal static string KeyF10__ {
+            get {
+                return ResourceManager.GetString("KeyF10__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to F9.
+        /// </summary>
+        internal static string KeyF9 {
+            get {
+                return ResourceManager.GetString("KeyF9", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show/hide main menu..
+        /// </summary>
+        internal static string KeyF9__ {
+            get {
+                return ResourceManager.GetString("KeyF9__", resourceCulture);
             }
         }
         
@@ -150,11 +715,20 @@ namespace LanExchange.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Close.
+        ///   Looks up a localized string similar to About.
         /// </summary>
-        internal static string MainForm_Close {
+        internal static string MainForm_About {
             get {
-                return ResourceManager.GetString("MainForm_Close", resourceCulture);
+                return ResourceManager.GetString("MainForm_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exit.
+        /// </summary>
+        internal static string MainForm_Exit {
+            get {
+                return ResourceManager.GetString("MainForm_Exit", resourceCulture);
             }
         }
         
@@ -191,6 +765,60 @@ namespace LanExchange.Properties {
         internal static string MainForm_Open {
             get {
                 return ResourceManager.GetString("MainForm_Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        internal static string MenuAbout {
+            get {
+                return ResourceManager.GetString("MenuAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BugTracker Webpage.
+        /// </summary>
+        internal static string MenuBugtrackerPage {
+            get {
+                return ResourceManager.GetString("MenuBugtrackerPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Help.
+        /// </summary>
+        internal static string MenuHelp {
+            get {
+                return ResourceManager.GetString("MenuHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LanExchange Webpage.
+        /// </summary>
+        internal static string MenuHomePage {
+            get {
+                return ResourceManager.GetString("MenuHomePage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Panel.
+        /// </summary>
+        internal static string MenuPanel {
+            get {
+                return ResourceManager.GetString("MenuPanel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Translation Webpage.
+        /// </summary>
+        internal static string MenuTranslationPage {
+            get {
+                return ResourceManager.GetString("MenuTranslationPage", resourceCulture);
             }
         }
         
@@ -359,15 +987,6 @@ namespace LanExchange.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to program.{0}.
-        /// </summary>
-        internal static string ProgramImageFormat {
-            get {
-                return ResourceManager.GetString("ProgramImageFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to General.
         /// </summary>
         internal static string Settings_General {
@@ -386,7 +1005,7 @@ namespace LanExchange.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Shortcut keys.
+        ///   Looks up a localized string similar to Shortcut Keys.
         /// </summary>
         internal static string ShortcutKeys {
             get {
@@ -414,6 +1033,42 @@ namespace LanExchange.Properties {
             get {
                 object obj = ResourceManager.GetObject("user_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        internal static string ViewDetails {
+            get {
+                return ResourceManager.GetString("ViewDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Large icons.
+        /// </summary>
+        internal static string ViewLargeIcons {
+            get {
+                return ResourceManager.GetString("ViewLargeIcons", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List.
+        /// </summary>
+        internal static string ViewList {
+            get {
+                return ResourceManager.GetString("ViewList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Small icons.
+        /// </summary>
+        internal static string ViewSmallIcons {
+            get {
+                return ResourceManager.GetString("ViewSmallIcons", resourceCulture);
             }
         }
     }

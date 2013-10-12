@@ -20,7 +20,7 @@ namespace LanExchange.Utils
         public static extern int UnregisterHotKey(IntPtr hwnd, int id);
 
         [DllImport("kernel32", SetLastError = true)]
-        public static extern short GlobalAddAtom(string lpString);
+        public static extern short GlobalAddAtom([MarshalAs(UnmanagedType.LPWStr)]string lpString);
 
         [DllImport("kernel32", SetLastError = true)]
         public static extern short GlobalDeleteAtom(short nAtom);
@@ -59,7 +59,7 @@ namespace LanExchange.Utils
             try
             {
                 // use the GlobalAddAtom API to get a unique ID (as suggested by MSDN)
-                string atomName = Thread.CurrentThread.ManagedThreadId.ToString("X8") + GetType().FullName;
+                string atomName = Thread.CurrentThread.ManagedThreadId.ToString("X8", CultureInfo.InvariantCulture) + GetType().FullName;
                 HotkeyID = GlobalAddAtom(atomName);
                 if (HotkeyID == 0)
                     throw new Exception("Unable to generate unique hotkey ID. Error: " +

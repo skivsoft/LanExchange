@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using LanExchange.Model;
 using LanExchange.SDK;
 
@@ -37,8 +38,9 @@ namespace LanExchange.Misc.Impl
                 if (root != null)
                     m_DefaultRoots.Add(root);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Debug.Print(ex.Message);
             }
         }
 

@@ -1,4 +1,6 @@
-﻿namespace LanExchange.UI
+﻿using LanExchange.Properties;
+
+namespace LanExchange.UI
 {
     public sealed partial class AboutForm
     {
@@ -19,7 +21,7 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        #region Windows Form Designer generated code!
 
         /// <summary>
         /// Required method for Designer support - do not modify
@@ -71,7 +73,7 @@
             this.eEmail.Size = new System.Drawing.Size(31, 13);
             this.eEmail.TabIndex = 45;
             this.eEmail.TabStop = true;
-            this.eEmail.Text = "email";
+            this.eEmail.Text = Resources.EmptyText;
             this.eEmail.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.eEmail_LinkClicked);
             // 
             // lEmail
@@ -85,7 +87,7 @@
             this.lEmail.Name = "lEmail";
             this.lEmail.Size = new System.Drawing.Size(37, 13);
             this.lEmail.TabIndex = 44;
-            this.lEmail.Text = "Email";
+            this.lEmail.Text = Resources.AboutForm_Email;
             this.lEmail.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // eWeb
@@ -97,7 +99,7 @@
             this.eWeb.Size = new System.Drawing.Size(27, 13);
             this.eWeb.TabIndex = 43;
             this.eWeb.TabStop = true;
-            this.eWeb.Text = "web";
+            this.eWeb.Text = Resources.EmptyText;
             this.eWeb.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.eWeb_LinkClicked);
             // 
             // lWeb
@@ -111,7 +113,7 @@
             this.lWeb.Name = "lWeb";
             this.lWeb.Size = new System.Drawing.Size(61, 13);
             this.lWeb.TabIndex = 42;
-            this.lWeb.Text = "Webpage";
+            this.lWeb.Text = Resources.AboutForm_Webpage;
             this.lWeb.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // eVersion
@@ -122,7 +124,7 @@
             this.eVersion.Name = "eVersion";
             this.eVersion.Size = new System.Drawing.Size(31, 13);
             this.eVersion.TabIndex = 41;
-            this.eVersion.Text = "1.0.0";
+            this.eVersion.Text = Resources.EmptyText;
             // 
             // bClose
             // 
@@ -132,7 +134,7 @@
             this.bClose.Name = "bClose";
             this.bClose.Size = new System.Drawing.Size(100, 23);
             this.bClose.TabIndex = 36;
-            this.bClose.Text = "Close";
+            this.bClose.Text = Resources.Close;
             this.bClose.UseVisualStyleBackColor = true;
             this.bClose.Click += new System.EventHandler(this.bClose_Click);
             // 
@@ -158,7 +160,7 @@
             this.lCopyright.Name = "lCopyright";
             this.lCopyright.Size = new System.Drawing.Size(60, 13);
             this.lCopyright.TabIndex = 34;
-            this.lCopyright.Text = "Copyright";
+            this.lCopyright.Text = Resources.AboutForm_Copyright;
             this.lCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // eLicense
@@ -170,7 +172,7 @@
             this.eLicense.Size = new System.Drawing.Size(167, 17);
             this.eLicense.TabIndex = 33;
             this.eLicense.TabStop = true;
-            this.eLicense.Text = "Released under the MIT license.";
+            this.eLicense.Text = Resources.AboutForm_MIT;
             this.eLicense.UseCompatibleTextRendering = true;
             // 
             // lLicense
@@ -184,7 +186,7 @@
             this.lLicense.Name = "lLicense";
             this.lLicense.Size = new System.Drawing.Size(51, 13);
             this.lLicense.TabIndex = 31;
-            this.lLicense.Text = "License";
+            this.lLicense.Text = Resources.AboutForm_License;
             this.lLicense.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lVersion
@@ -198,7 +200,7 @@
             this.lVersion.Name = "lVersion";
             this.lVersion.Size = new System.Drawing.Size(49, 13);
             this.lVersion.TabIndex = 19;
-            this.lVersion.Text = "Version";
+            this.lVersion.Text = Resources.AboutForm_Version;
             this.lVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // eCopyright
@@ -209,7 +211,7 @@
             this.eCopyright.Name = "eCopyright";
             this.eCopyright.Size = new System.Drawing.Size(51, 13);
             this.eCopyright.TabIndex = 28;
-            this.eCopyright.Text = "Copyright";
+            this.eCopyright.Text = Resources.EmptyText;
             // 
             // logoPictureBox
             // 
@@ -233,7 +235,7 @@
             this.lTwitter.Name = "lTwitter";
             this.lTwitter.Size = new System.Drawing.Size(46, 13);
             this.lTwitter.TabIndex = 47;
-            this.lTwitter.Text = "Twitter";
+            this.lTwitter.Text = Resources.AboutForm_Twitter;
             this.lTwitter.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // eTwitter
@@ -245,7 +247,7 @@
             this.eTwitter.Size = new System.Drawing.Size(35, 13);
             this.eTwitter.TabIndex = 48;
             this.eTwitter.TabStop = true;
-            this.eTwitter.Text = "twitter";
+            this.eTwitter.Text = Resources.EmptyText;
             this.eTwitter.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.eTwitter_LinkClicked);
             // 
             // AboutForm
@@ -277,7 +279,7 @@
             this.Padding = new System.Windows.Forms.Padding(9);
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "About «{0}»";
+            this.Text = Resources.AboutForm_Title;
             this.Load += new System.EventHandler(this.AboutForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
             this.ResumeLayout(false);

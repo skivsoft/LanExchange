@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows.Forms;
 using LanExchange.Core;
 using LanExchange.Intf;
@@ -104,7 +105,8 @@ namespace LanExchange.Presenter
                 if (!isReachable)
                 {
                     var result = MessageBox.Show(
-                        String.Format(Resources.PanelPresenter_UnreachableMsg, panelItem.Name), Resources.PanelPresenter_QueryCaption,
+                        String.Format(CultureInfo.CurrentCulture, Resources.PanelPresenter_UnreachableMsg, panelItem.Name), 
+                        Resources.PanelPresenter_QueryCaption,
                         MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
                     if (result != DialogResult.Yes)
                         panelItem = null;

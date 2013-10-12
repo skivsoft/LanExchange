@@ -1,4 +1,6 @@
-﻿namespace LanExchange.UI
+﻿using LanExchange.Properties;
+
+namespace LanExchange.UI
 {
     partial class PanelView
     {
@@ -63,7 +65,6 @@
             this.mComp.Name = "mComp";
             this.mComp.Size = new System.Drawing.Size(232, 22);
             this.mComp.Tag = "";
-            this.mComp.Text = "\\\\COMPUTER";
             // 
             // mAfterComp
             // 
@@ -76,15 +77,15 @@
             this.mCopySelected});
             this.mCopyMenu.Name = "mCopyMenu";
             this.mCopyMenu.Size = new System.Drawing.Size(232, 22);
-            this.mCopyMenu.Text = "Copy";
+            this.mCopyMenu.Text = Resources.Copy;
             this.mCopyMenu.DropDownOpening += new System.EventHandler(this.mCopyMenu_DropDownOpening);
             // 
             // mCopySelected
             // 
             this.mCopySelected.Name = "mCopySelected";
-            this.mCopySelected.ShortcutKeyDisplayString = "Ctrl+C";
+            this.mCopySelected.ShortcutKeyDisplayString = Resources.KeyCtrlC;
             this.mCopySelected.Size = new System.Drawing.Size(220, 22);
-            this.mCopySelected.Text = "Copy selected items";
+            this.mCopySelected.Text = Resources.KeyCtrlC_;
             this.mCopySelected.Click += new System.EventHandler(this.CopySelectedOnClick);
             // 
             // mPaste
@@ -92,15 +93,15 @@
             this.mPaste.Name = "mPaste";
             this.mPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
             this.mPaste.Size = new System.Drawing.Size(232, 22);
-            this.mPaste.Text = "Paste";
+            this.mPaste.Text = Resources.KeyCtrlV_;
             this.mPaste.Click += new System.EventHandler(this.mPaste_Click);
             // 
             // mDelete
             // 
             this.mDelete.Name = "mDelete";
-            this.mDelete.ShortcutKeyDisplayString = "Del";
+            this.mDelete.ShortcutKeyDisplayString = Resources.KeyDel;
             this.mDelete.Size = new System.Drawing.Size(232, 22);
-            this.mDelete.Text = "Delete";
+            this.mDelete.Text = Resources.KeyDel_;
             this.mDelete.Click += new System.EventHandler(this.mDelete_Click);
             // 
             // mAfterCopy
@@ -114,7 +115,7 @@
             this.mSendToNewTab.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.T)));
             this.mSendToNewTab.Size = new System.Drawing.Size(232, 22);
-            this.mSendToNewTab.Text = "Send to new tab";
+            this.mSendToNewTab.Text = Resources.KeyCtrlShiftT_;
             this.mSendToNewTab.Click += new System.EventHandler(this.mSendToNewTab_Click);
             // 
             // LV

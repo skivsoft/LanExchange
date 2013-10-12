@@ -98,9 +98,9 @@ namespace LanExchange.UI
             // 
             this.mOpen.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.mOpen.Name = "mOpen";
-            this.mOpen.ShortcutKeyDisplayString = "Ctrl+Win+X";
+            this.mOpen.ShortcutKeyDisplayString = Resources.KeyCtrlWinX;
             this.mOpen.Size = new System.Drawing.Size(177, 22);
-            this.mOpen.Text = "Open";
+            this.mOpen.Text = Resources.MainForm_Open;
             this.mOpen.Click += new System.EventHandler(this.mOpen_Click);
             // 
             // toolStripSeparator3
@@ -112,21 +112,20 @@ namespace LanExchange.UI
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
             this.toolStripMenuItem5.Size = new System.Drawing.Size(177, 22);
-            this.toolStripMenuItem5.Text = "About";
+            this.toolStripMenuItem5.Text = Resources.MainForm_About;
             this.toolStripMenuItem5.Click += new System.EventHandler(this.mAbout_Click);
             // 
             // mExitTray
             // 
             this.mExitTray.Name = "mExitTray";
             this.mExitTray.Size = new System.Drawing.Size(177, 22);
-            this.mExitTray.Text = "Exit";
+            this.mExitTray.Text = Resources.MainForm_Exit;
             this.mExitTray.Click += new System.EventHandler(this.mExit_Click);
             // 
             // toolStripStatusLabel2
             // 
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
             this.toolStripStatusLabel2.Size = new System.Drawing.Size(118, 17);
-            this.toolStripStatusLabel2.Text = "toolStripStatusLabel2";
             // 
             // Status
             // 
@@ -141,7 +140,6 @@ namespace LanExchange.UI
             this.Status.ShowItemToolTips = true;
             this.Status.Size = new System.Drawing.Size(564, 22);
             this.Status.TabIndex = 15;
-            this.Status.Text = "statusStrip1";
             this.Status.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Status_MouseDoubleClick);
             // 
             // lItemsCount
@@ -149,7 +147,7 @@ namespace LanExchange.UI
             this.lItemsCount.Name = "lItemsCount";
             this.lItemsCount.Size = new System.Drawing.Size(503, 17);
             this.lItemsCount.Spring = true;
-            this.lItemsCount.Text = "    ";
+            this.lItemsCount.Text = Resources.EmptyText;
             this.lItemsCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lItemsCount.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lItemsCount_MouseUp);
             // 
@@ -160,13 +158,12 @@ namespace LanExchange.UI
             this.toolStripStatusLabel1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(4, 17);
-            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
             // lCompName
             // 
             this.lCompName.Name = "lCompName";
             this.lCompName.Size = new System.Drawing.Size(19, 17);
-            this.lCompName.Text = "    ";
+            this.lCompName.Text = Resources.EmptyText;
             this.lCompName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lCompName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lCompName_MouseDown);
             this.lCompName.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lCompName_MouseUp);
@@ -178,13 +175,12 @@ namespace LanExchange.UI
             this.toolStripStatusLabel4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
             this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
             this.toolStripStatusLabel4.Size = new System.Drawing.Size(4, 17);
-            this.toolStripStatusLabel4.Text = "toolStripStatusLabel4";
             // 
             // lUserName
             // 
             this.lUserName.Name = "lUserName";
             this.lUserName.Size = new System.Drawing.Size(19, 17);
-            this.lUserName.Text = "    ";
+            this.lUserName.Text = Resources.EmptyText;
             this.lUserName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lCompName_MouseDown);
             // 
             // tipComps
@@ -225,7 +221,6 @@ namespace LanExchange.UI
             this.MainMenu.Name = "MainMenu";
             this.MainMenu.Size = new System.Drawing.Size(564, 24);
             this.MainMenu.TabIndex = 25;
-            this.MainMenu.Text = "menuStrip1";
             // 
             // mPanel
             // 
@@ -242,7 +237,7 @@ namespace LanExchange.UI
             this.mPanelExit});
             this.mPanel.Name = "mPanel";
             this.mPanel.Size = new System.Drawing.Size(45, 20);
-            this.mPanel.Text = "&Panel";
+            this.mPanel.Text = Resources.MenuPanel;
             this.mPanel.DropDownOpening += new System.EventHandler(this.mPanel_DropDownOpening);
             // 
             // mPanelNewTab
@@ -250,7 +245,7 @@ namespace LanExchange.UI
             this.mPanelNewTab.Name = "mPanelNewTab";
             this.mPanelNewTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
             this.mPanelNewTab.Size = new System.Drawing.Size(163, 22);
-            this.mPanelNewTab.Text = "New tab";
+            this.mPanelNewTab.Text = Resources.KeyCtrlT_;
             this.mPanelNewTab.Click += new System.EventHandler(this.mPanelNewTab_Click);
             // 
             // toolStripSeparator4
@@ -263,7 +258,7 @@ namespace LanExchange.UI
             this.mPanelLarge.Name = "mPanelLarge";
             this.mPanelLarge.Size = new System.Drawing.Size(163, 22);
             this.mPanelLarge.Tag = "0";
-            this.mPanelLarge.Text = "Large icons";
+            this.mPanelLarge.Text = Resources.ViewLargeIcons;
             this.mPanelLarge.Click += new System.EventHandler(this.mPanelLarge_Click);
             // 
             // mPanelSmall
@@ -271,7 +266,7 @@ namespace LanExchange.UI
             this.mPanelSmall.Name = "mPanelSmall";
             this.mPanelSmall.Size = new System.Drawing.Size(163, 22);
             this.mPanelSmall.Tag = "2";
-            this.mPanelSmall.Text = "Small icons";
+            this.mPanelSmall.Text = Resources.ViewSmallIcons;
             this.mPanelSmall.Click += new System.EventHandler(this.mPanelLarge_Click);
             // 
             // mPanelList
@@ -279,7 +274,7 @@ namespace LanExchange.UI
             this.mPanelList.Name = "mPanelList";
             this.mPanelList.Size = new System.Drawing.Size(163, 22);
             this.mPanelList.Tag = "3";
-            this.mPanelList.Text = "List";
+            this.mPanelList.Text = Resources.ViewList;
             this.mPanelList.Click += new System.EventHandler(this.mPanelLarge_Click);
             // 
             // mPanelDetails
@@ -289,7 +284,7 @@ namespace LanExchange.UI
             this.mPanelDetails.Name = "mPanelDetails";
             this.mPanelDetails.Size = new System.Drawing.Size(163, 22);
             this.mPanelDetails.Tag = "1";
-            this.mPanelDetails.Text = "Details";
+            this.mPanelDetails.Text = Resources.ViewDetails;
             this.mPanelDetails.Click += new System.EventHandler(this.mPanelLarge_Click);
             // 
             // toolStripSeparator1
@@ -302,7 +297,7 @@ namespace LanExchange.UI
             this.mReRead.Name = "mReRead";
             this.mReRead.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
             this.mReRead.Size = new System.Drawing.Size(163, 22);
-            this.mReRead.Text = "Re-read";
+            this.mReRead.Text = Resources.KeyCtrlR_;
             this.mReRead.Click += new System.EventHandler(this.rereadToolStripMenuItem_Click);
             // 
             // toolStripSeparator8
@@ -315,7 +310,7 @@ namespace LanExchange.UI
             this.mPanelExit.Name = "mPanelExit";
             this.mPanelExit.ShortcutKeys = System.Windows.Forms.Keys.F10;
             this.mPanelExit.Size = new System.Drawing.Size(163, 22);
-            this.mPanelExit.Text = "Exit";
+            this.mPanelExit.Text = Resources.KeyF10_;
             this.mPanelExit.Click += new System.EventHandler(this.mExit_Click);
             // 
             // mLanguage
@@ -336,7 +331,7 @@ namespace LanExchange.UI
             this.mHelpAbout});
             this.mHelp.Name = "mHelp";
             this.mHelp.Size = new System.Drawing.Size(40, 20);
-            this.mHelp.Text = "&Help";
+            this.mHelp.Text = Resources.MenuHelp;
             // 
             // mHelpKeys
             // 
@@ -344,7 +339,7 @@ namespace LanExchange.UI
             this.mHelpKeys.Name = "mHelpKeys";
             this.mHelpKeys.ShortcutKeys = System.Windows.Forms.Keys.F1;
             this.mHelpKeys.Size = new System.Drawing.Size(198, 22);
-            this.mHelpKeys.Text = "Shortcut keys";
+            this.mHelpKeys.Text = Resources.ShortcutKeys;
             this.mHelpKeys.Click += new System.EventHandler(this.mHelpKeys_Click);
             // 
             // toolStripSeparator2
@@ -356,21 +351,21 @@ namespace LanExchange.UI
             // 
             this.mWebPage.Name = "mWebPage";
             this.mWebPage.Size = new System.Drawing.Size(198, 22);
-            this.mWebPage.Text = "LanExchange Webpage";
+            this.mWebPage.Text = Resources.MenuHomePage;
             this.mWebPage.Click += new System.EventHandler(this.mWebPage_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(198, 22);
-            this.toolStripMenuItem1.Text = "Translation Webpage";
+            this.toolStripMenuItem1.Text = Resources.MenuTranslationPage;
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(198, 22);
-            this.toolStripMenuItem2.Text = "Bugtracker Webpage";
+            this.toolStripMenuItem2.Text = Resources.MenuBugtrackerPage;
             this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
             // toolStripSeparator6
@@ -382,7 +377,7 @@ namespace LanExchange.UI
             // 
             this.mHelpAbout.Name = "mHelpAbout";
             this.mHelpAbout.Size = new System.Drawing.Size(198, 22);
-            this.mHelpAbout.Text = "About";
+            this.mHelpAbout.Text = Resources.MenuAbout;
             this.mHelpAbout.Click += new System.EventHandler(this.mAbout_Click);
             // 
             // MainForm

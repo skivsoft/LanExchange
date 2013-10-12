@@ -35,10 +35,10 @@ namespace LanExchange.Utils
         private static extern IntPtr GetCurrentProcess();
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
-        private static extern IntPtr GetModuleHandle(string moduleName);
+        private static extern IntPtr GetModuleHandle([MarshalAs(UnmanagedType.LPWStr)]string moduleName);
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr GetProcAddress(IntPtr module, [MarshalAs(UnmanagedType.LPStr)]string procName);
+        private static extern IntPtr GetProcAddress(IntPtr module, [MarshalAs(UnmanagedType.LPWStr)]string procName);
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]

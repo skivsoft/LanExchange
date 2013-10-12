@@ -10,6 +10,8 @@ namespace WMIViewer
 {
     public sealed partial class MainForm : Form
     {
+        public const string TITLE_FMT = @"\\{0} — {1}";
+
         private readonly WmiPresenter m_Presenter;
         private readonly CmdLineArgs m_Args;
         private string m_CurrentWmiClass;
@@ -40,9 +42,9 @@ namespace WMIViewer
             var description = WmiClassList.GetPropertyValue(m_Presenter.Namespace, "Win32_OperatingSystem",
                 "Description");
             if (string.IsNullOrEmpty(description))
-                Text = Resources.MainForm_CompPrefix + m_Args.ComputerName;
+                Text = @"\\" + m_Args.ComputerName;
             else
-                Text = string.Format(CultureInfo.InvariantCulture, Resources.MainForm_Title, m_Args.ComputerName, description);
+                Text = string.Format(CultureInfo.InvariantCulture, TITLE_FMT, m_Args.ComputerName, description);
         }
 
         public WmiPresenter Presenter

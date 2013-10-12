@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using LanExchange.Intf;
@@ -54,7 +55,7 @@ namespace LanExchange.Model
             get
             {
                 var ver = GetAssembly().GetName().Version;
-                var result = String.Format("{0}.{1}", ver.Major, ver.Minor);
+                var result = String.Format(CultureInfo.CurrentCulture, "{0}.{1}", ver.Major, ver.Minor);
                 return result;
             }
         }
@@ -65,9 +66,9 @@ namespace LanExchange.Model
             get
             {
                 var ver = GetAssembly().GetName().Version;
-                var result = String.Format("{0}.{1}", ver.Major, ver.Minor);
+                var result = String.Format(CultureInfo.CurrentCulture, "{0}.{1}", ver.Major, ver.Minor);
                 if (ver.Build > 0)
-                    result += String.Format(Resources.AboutInfo_Build, ver.Build);
+                    result += String.Format(CultureInfo.CurrentCulture, Resources.AboutInfo_Build, ver.Build);
                 return result;
             }
         }

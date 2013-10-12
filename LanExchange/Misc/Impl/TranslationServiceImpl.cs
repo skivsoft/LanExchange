@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using LanExchange.Intf;
@@ -52,7 +53,7 @@ namespace LanExchange.Misc.Impl
             if (SourceLanguage == CurrentLanguage)
                 sorted.Add(Translate(SourceLanguage), SourceLanguage);
             else
-                sorted.Add(string.Format("{0} — {1}", Translate(SourceLanguage), SourceLanguage), SourceLanguage);
+                sorted.Add(string.Format(CultureInfo.CurrentCulture, "{0} — {1}", Translate(SourceLanguage), SourceLanguage), SourceLanguage);
             foreach (var fileName in App.FolderManager.GetLanguagesFiles())
             {
                 var lang = Path.GetFileNameWithoutExtension(fileName);
@@ -62,11 +63,10 @@ namespace LanExchange.Misc.Impl
                     if (lang == CurrentLanguage)
                         sorted.Add(Translate(lang), lang);
                     else
-                        sorted.Add(string.Format("{0} — {1}", Translate(lang), TranslateFromPO(fileName, lang)), lang);
+                        sorted.Add(string.Format(CultureInfo.CurrentCulture, "{0} — {1}", Translate(lang), TranslateFromPO(fileName, lang)), lang);
                 }
-                catch(ArgumentException ex)
+                catch(ArgumentException)
                 {
-                    
                 }
             }
             var result = new Dictionary<string, string>();
@@ -78,7 +78,7 @@ namespace LanExchange.Misc.Impl
         [Localizable(false)]
         private string InternalTranslate(IEnumerable<string> lines, string id)
         {
-            var marker = string.Format("msgid \"{0}\"", id);
+            var marker = string.Format(CultureInfo.InvariantCulture, "msgid \"{0}\"", id);
             var markerFound = false;
             const string MSGSTR_MARKER = "msgstr \"";
             foreach (var line in lines)
@@ -88,7 +88,8 @@ namespace LanExchange.Misc.Impl
                     markerFound = true;
                     continue;
                 }
-                if (markerFound && line.StartsWith(MSGSTR_MARKER) && line.Substring(line.Length - 1, 1).Equals("\""))
+                if (markerFound && line.StartsWith(MSGSTR_MARKER, StringComparison.Ordinal) && 
+                    line.Substring(line.Length - 1, 1).Equals("\""))
                 {
                     var result = line.Substring(MSGSTR_MARKER.Length, line.Length - MSGSTR_MARKER.Length - 1);
                     return result;

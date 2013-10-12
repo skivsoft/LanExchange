@@ -30,16 +30,17 @@ namespace WMIViewer
             var description = WmiClassList.GetPropertyValue(m_Presenter.Namespace, "Win32_OperatingSystem",
                 "Description");
             if (string.IsNullOrEmpty(description))
-                Text = Resources.MainForm_CompPrefix + m_Args.ComputerName;
+                Text = @"\\" + m_Args.ComputerName;
             else
-                Text = string.Format(CultureInfo.InvariantCulture, Resources.MainForm_Title, m_Args.ComputerName, description);
+                Text = string.Format(CultureInfo.InvariantCulture, MainForm.TITLE_FMT, m_Args.ComputerName, description);
         }
 
+        [Localizable(false)]
         public void SetArgsToControls()
         {
-            lClass.Text = string.Format(CultureInfo.InvariantCulture, Resources.EditProperty_PropertyFmt, m_Args.NamespaceName, m_Args.ClassName);
+            lClass.Text = string.Format(CultureInfo.InvariantCulture, @"{0}\{1}", m_Args.NamespaceName, m_Args.ClassName);
             eClass.Text = WmiClassList.GetPropertyValue(m_Presenter.Namespace, m_Args.ClassName, "Caption");
-            lProperty.Text = Resources.AMP + m_Args.PropertyName;
+            lProperty.Text = "&" + m_Args.PropertyName;
             lDescription.Text = WmiClassList.Instance.GetPropertyDescription(m_Args.ClassName, 
                 m_Args.PropertyName);
             m_OldValue = WmiClassList.GetPropertyValue(m_Presenter.Namespace, m_Args.ClassName,

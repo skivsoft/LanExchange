@@ -1,4 +1,6 @@
-﻿namespace LanExchange.UI
+﻿using LanExchange.Properties;
+
+namespace LanExchange.UI
 {
     partial class PagesView
     {
@@ -54,7 +56,7 @@
             this.mNewTab.Name = "mNewTab";
             this.mNewTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
             this.mNewTab.Size = new System.Drawing.Size(172, 22);
-            this.mNewTab.Text = "New tab";
+            this.mNewTab.Text = Resources.KeyCtrlT_;
             this.mNewTab.Click += new System.EventHandler(this.mNewTab_Click);
             // 
             // mAfterNewTab
@@ -67,7 +69,7 @@
             this.mCloseTab.Name = "mCloseTab";
             this.mCloseTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
             this.mCloseTab.Size = new System.Drawing.Size(172, 22);
-            this.mCloseTab.Text = "Close tab";
+            this.mCloseTab.Text = Resources.KeyCtrlW_;
             this.mCloseTab.Click += new System.EventHandler(this.mCloseTab_Click);
             // 
             // Pages

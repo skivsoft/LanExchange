@@ -36,7 +36,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(292, 271);
             this.Name = "EscapeForm";
-            this.Text = "EscapeForm";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EscapeForm_KeyDown);
             this.ResumeLayout(false);
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Text;
 using System.Windows.Forms;
 using LanExchange.Intf;
@@ -56,6 +57,7 @@ namespace LanExchange.UI
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
+        [Localizable(false)]
         public ListViewItem GetListViewItemAt(int index)
         {
             if (m_Presenter.Objects == null)
@@ -96,7 +98,7 @@ namespace LanExchange.UI
                     {
                         if (sb.Length > 0)
                             sb.AppendLine();
-                        sb.Append(string.Format("{0}: {1}", columns[i].Text, text));
+                        sb.Append(string.Format(CultureInfo.CurrentCulture, "{0}: {1}", columns[i].Text, text));
                     }
                 }
             }
@@ -425,7 +427,8 @@ namespace LanExchange.UI
 
         public void ShowRunCmdError(string CmdLine)
         {
-                MessageBox.Show(String.Format(Resources.PanelView_RunCmdErrorMsg, CmdLine), Resources.PanelView_RunCmdErrorCaption,
+                MessageBox.Show(String.Format(CultureInfo.CurrentCulture, Resources.PanelView_RunCmdErrorMsg, CmdLine), 
+                    Resources.PanelView_RunCmdErrorCaption,
                     MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
         }
 
@@ -512,7 +515,6 @@ namespace LanExchange.UI
         /// Creates menu items depends on visible columns.
         /// </summary>
         /// <returns></returns>
-        [Localizable(false)]
         private IEnumerable<ToolStripItem> CreateCopyMenuItems(PanelModelCopyHelper helper)
         {
             if (helper.IndexesCount == 1)
@@ -530,10 +532,10 @@ namespace LanExchange.UI
                         {
                             var menuPath = new ToolStripMenuItem();
                             if (helper.IndexesCount == 1)
-                                menuPath.Text = string.Format(Resources.PanelView_CopyColumn, valuePath);
+                                menuPath.Text = string.Format(CultureInfo.CurrentCulture, Resources.PanelView_CopyColumn, valuePath);
                             else
-                                menuPath.Text = string.Format(Resources.PanelView_CopyPathTo, column.Text);
-                            menuPath.ShortcutKeyDisplayString = "Ctrl+Alt+Ins";
+                                menuPath.Text = string.Format(CultureInfo.CurrentCulture, Resources.PanelView_CopyPathTo, column.Text);
+                            menuPath.ShortcutKeyDisplayString = Resources.KeyCtrlAltIns;
                             menuPath.Tag = -1;
                             menuPath.Click += CopyColumnOnClick;
                             result.Add(menuPath);
@@ -547,7 +549,7 @@ namespace LanExchange.UI
                         value = column.Text;
                     if (!string.IsNullOrEmpty(value))
                     {
-                        var menuItem = new ToolStripMenuItem(string.Format(Resources.PanelView_CopyColumn, value));
+                        var menuItem = new ToolStripMenuItem(string.Format(CultureInfo.CurrentCulture, Resources.PanelView_CopyColumn, value));
                         if (column.Index == m_SortColumn)
                             ctrlInsColumn = m_SortColumn;
                         menuItem.Tag = column.Index;
@@ -558,7 +560,7 @@ namespace LanExchange.UI
             foreach(var menuItem in result)
                 if ((menuItem is ToolStripMenuItem) && (int)menuItem.Tag == ctrlInsColumn)
                 {
-                    (menuItem as ToolStripMenuItem).ShortcutKeyDisplayString = "Ctrl+Ins";
+                    (menuItem as ToolStripMenuItem).ShortcutKeyDisplayString = Resources.KeyCtrlIns;
                     break;
                 }
             return result;
@@ -634,7 +636,7 @@ namespace LanExchange.UI
             if (m_CopyHelper.IndexesCount == 1)
                 mCopySelected.Text = Resources.PanelView_CopySelected;
             else
-                mCopySelected.Text = string.Format(Resources.PanelView_CopySelectedPlural, m_CopyHelper.IndexesCount);
+                mCopySelected.Text = string.Format(CultureInfo.CurrentCulture, Resources.PanelView_CopySelectedPlural, m_CopyHelper.IndexesCount);
             // add new items
             foreach (var item in CreateCopyMenuItems(m_CopyHelper))
                 mCopyMenu.DropDownItems.Add(item);
