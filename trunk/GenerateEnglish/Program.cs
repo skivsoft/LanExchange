@@ -16,9 +16,13 @@ namespace GenerateEnglish
         private static readonly string[] Languages = new []
         {
             "English",
+            "Esperanto",
+            "French",
             "German",
+            "Hungarian",
             "Kazakh",
-            "Russian"
+            "Russian",
+            "Spanish"
         };
         
         static void Main(string[] args)

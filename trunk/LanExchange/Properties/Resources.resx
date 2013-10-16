@@ -429,8 +429,8 @@ Continue anyway?</value>
   <data name="MenuHomePage" xml:space="preserve">
     <value>LanExchange Webpage</value>
   </data>
-  <data name="MenuTranslationPage" xml:space="preserve">
-    <value>Translation Webpage</value>
+  <data name="MenuLocalizationPage" xml:space="preserve">
+    <value>Localization Webpage</value>
   </data>
   <data name="MenuBugtrackerPage" xml:space="preserve">
     <value>BugTracker Webpage</value>
