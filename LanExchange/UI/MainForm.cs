@@ -46,7 +46,7 @@ namespace LanExchange.UI
             // init main form
             SetupActions();
             SetupForm();
-            SetupLanguages("Russian");//App.TR.SourceLanguage);
+            SetupLanguages(App.TR.CurrentLanguage);
             // setup images
             //ClearToolTip(Pages.Pages);
             App.Images.SetImagesTo(Pages.Pages);
@@ -126,11 +126,12 @@ namespace LanExchange.UI
             var needApply = App.TR.CurrentLanguage != newLanguage;
             App.TR.CurrentLanguage = newLanguage;
             var nameDict = App.TR.GetLanguagesNames();
-            if (nameDict.Count == 0)
+            if (nameDict.Count < 2)
             {
-                mLanguage.Enabled = false;
+                mLanguage.Visible = false;
                 return;
             }
+            mLanguage.Visible = true;
             mLanguage.DropDownItems.Clear();
             foreach(var pair in nameDict)
             {

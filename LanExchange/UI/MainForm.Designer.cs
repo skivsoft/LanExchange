@@ -98,9 +98,9 @@ namespace LanExchange.UI
             // 
             this.mOpen.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.mOpen.Name = "mOpen";
-            this.mOpen.ShortcutKeyDisplayString = Resources.KeyCtrlWinX;
+            this.mOpen.ShortcutKeyDisplayString = global::LanExchange.Properties.Resources.KeyCtrlWinX;
             this.mOpen.Size = new System.Drawing.Size(177, 22);
-            this.mOpen.Text = Resources.MainForm_Open;
+            this.mOpen.Text = global::LanExchange.Properties.Resources.MainForm_Open;
             this.mOpen.Click += new System.EventHandler(this.mOpen_Click);
             // 
             // toolStripSeparator3
@@ -112,14 +112,14 @@ namespace LanExchange.UI
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
             this.toolStripMenuItem5.Size = new System.Drawing.Size(177, 22);
-            this.toolStripMenuItem5.Text = Resources.MainForm_About;
+            this.toolStripMenuItem5.Text = global::LanExchange.Properties.Resources.MainForm_About;
             this.toolStripMenuItem5.Click += new System.EventHandler(this.mAbout_Click);
             // 
             // mExitTray
             // 
             this.mExitTray.Name = "mExitTray";
             this.mExitTray.Size = new System.Drawing.Size(177, 22);
-            this.mExitTray.Text = Resources.MainForm_Exit;
+            this.mExitTray.Text = global::LanExchange.Properties.Resources.MainForm_Exit;
             this.mExitTray.Click += new System.EventHandler(this.mExit_Click);
             // 
             // toolStripStatusLabel2
@@ -147,7 +147,7 @@ namespace LanExchange.UI
             this.lItemsCount.Name = "lItemsCount";
             this.lItemsCount.Size = new System.Drawing.Size(503, 17);
             this.lItemsCount.Spring = true;
-            this.lItemsCount.Text = Resources.EmptyText;
+            this.lItemsCount.Text = global::LanExchange.Properties.Resources.EmptyText;
             this.lItemsCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lItemsCount.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lItemsCount_MouseUp);
             // 
@@ -163,7 +163,7 @@ namespace LanExchange.UI
             // 
             this.lCompName.Name = "lCompName";
             this.lCompName.Size = new System.Drawing.Size(19, 17);
-            this.lCompName.Text = Resources.EmptyText;
+            this.lCompName.Text = global::LanExchange.Properties.Resources.EmptyText;
             this.lCompName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lCompName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lCompName_MouseDown);
             this.lCompName.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lCompName_MouseUp);
@@ -180,7 +180,7 @@ namespace LanExchange.UI
             // 
             this.lUserName.Name = "lUserName";
             this.lUserName.Size = new System.Drawing.Size(19, 17);
-            this.lUserName.Text = Resources.EmptyText;
+            this.lUserName.Text = global::LanExchange.Properties.Resources.EmptyText;
             this.lUserName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lCompName_MouseDown);
             // 
             // tipComps
@@ -236,45 +236,45 @@ namespace LanExchange.UI
             this.toolStripSeparator8,
             this.mPanelExit});
             this.mPanel.Name = "mPanel";
-            this.mPanel.Size = new System.Drawing.Size(45, 20);
-            this.mPanel.Text = Resources.MenuPanel;
+            this.mPanel.Size = new System.Drawing.Size(48, 20);
+            this.mPanel.Text = global::LanExchange.Properties.Resources.MenuPanel;
             this.mPanel.DropDownOpening += new System.EventHandler(this.mPanel_DropDownOpening);
             // 
             // mPanelNewTab
             // 
             this.mPanelNewTab.Name = "mPanelNewTab";
             this.mPanelNewTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.mPanelNewTab.Size = new System.Drawing.Size(163, 22);
-            this.mPanelNewTab.Text = Resources.KeyCtrlT_;
+            this.mPanelNewTab.Size = new System.Drawing.Size(159, 22);
+            this.mPanelNewTab.Text = global::LanExchange.Properties.Resources.KeyCtrlT_;
             this.mPanelNewTab.Click += new System.EventHandler(this.mPanelNewTab_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(160, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(156, 6);
             // 
             // mPanelLarge
             // 
             this.mPanelLarge.Name = "mPanelLarge";
-            this.mPanelLarge.Size = new System.Drawing.Size(163, 22);
+            this.mPanelLarge.Size = new System.Drawing.Size(159, 22);
             this.mPanelLarge.Tag = "0";
-            this.mPanelLarge.Text = Resources.ViewLargeIcons;
+            this.mPanelLarge.Text = global::LanExchange.Properties.Resources.ViewLargeIcons;
             this.mPanelLarge.Click += new System.EventHandler(this.mPanelLarge_Click);
             // 
             // mPanelSmall
             // 
             this.mPanelSmall.Name = "mPanelSmall";
-            this.mPanelSmall.Size = new System.Drawing.Size(163, 22);
+            this.mPanelSmall.Size = new System.Drawing.Size(159, 22);
             this.mPanelSmall.Tag = "2";
-            this.mPanelSmall.Text = Resources.ViewSmallIcons;
+            this.mPanelSmall.Text = global::LanExchange.Properties.Resources.ViewSmallIcons;
             this.mPanelSmall.Click += new System.EventHandler(this.mPanelLarge_Click);
             // 
             // mPanelList
             // 
             this.mPanelList.Name = "mPanelList";
-            this.mPanelList.Size = new System.Drawing.Size(163, 22);
+            this.mPanelList.Size = new System.Drawing.Size(159, 22);
             this.mPanelList.Tag = "3";
-            this.mPanelList.Text = Resources.ViewList;
+            this.mPanelList.Text = global::LanExchange.Properties.Resources.ViewList;
             this.mPanelList.Click += new System.EventHandler(this.mPanelLarge_Click);
             // 
             // mPanelDetails
@@ -282,42 +282,42 @@ namespace LanExchange.UI
             this.mPanelDetails.Checked = true;
             this.mPanelDetails.CheckState = System.Windows.Forms.CheckState.Checked;
             this.mPanelDetails.Name = "mPanelDetails";
-            this.mPanelDetails.Size = new System.Drawing.Size(163, 22);
+            this.mPanelDetails.Size = new System.Drawing.Size(159, 22);
             this.mPanelDetails.Tag = "1";
-            this.mPanelDetails.Text = Resources.ViewDetails;
+            this.mPanelDetails.Text = global::LanExchange.Properties.Resources.ViewDetails;
             this.mPanelDetails.Click += new System.EventHandler(this.mPanelLarge_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(160, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(156, 6);
             // 
             // mReRead
             // 
             this.mReRead.Name = "mReRead";
             this.mReRead.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.mReRead.Size = new System.Drawing.Size(163, 22);
-            this.mReRead.Text = Resources.KeyCtrlR_;
+            this.mReRead.Size = new System.Drawing.Size(159, 22);
+            this.mReRead.Text = global::LanExchange.Properties.Resources.KeyCtrlR_;
             this.mReRead.Click += new System.EventHandler(this.rereadToolStripMenuItem_Click);
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(160, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(156, 6);
             // 
             // mPanelExit
             // 
             this.mPanelExit.Name = "mPanelExit";
             this.mPanelExit.ShortcutKeys = System.Windows.Forms.Keys.F10;
-            this.mPanelExit.Size = new System.Drawing.Size(163, 22);
-            this.mPanelExit.Text = Resources.KeyF10_;
+            this.mPanelExit.Size = new System.Drawing.Size(159, 22);
+            this.mPanelExit.Text = global::LanExchange.Properties.Resources.KeyF10_;
             this.mPanelExit.Click += new System.EventHandler(this.mExit_Click);
             // 
             // mLanguage
             // 
             this.mLanguage.Name = "mLanguage";
-            this.mLanguage.Size = new System.Drawing.Size(66, 20);
-            this.mLanguage.Text = Resources.MainForm_Language;
+            this.mLanguage.Size = new System.Drawing.Size(71, 20);
+            this.mLanguage.Text = global::LanExchange.Properties.Resources.MainForm_Language;
             // 
             // mHelp
             // 
@@ -330,54 +330,54 @@ namespace LanExchange.UI
             this.toolStripSeparator6,
             this.mHelpAbout});
             this.mHelp.Name = "mHelp";
-            this.mHelp.Size = new System.Drawing.Size(40, 20);
-            this.mHelp.Text = Resources.MenuHelp;
+            this.mHelp.Size = new System.Drawing.Size(44, 20);
+            this.mHelp.Text = global::LanExchange.Properties.Resources.MenuHelp;
             // 
             // mHelpKeys
             // 
             this.mHelpKeys.Image = global::LanExchange.Properties.Resources.keyboard_16;
             this.mHelpKeys.Name = "mHelpKeys";
             this.mHelpKeys.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.mHelpKeys.Size = new System.Drawing.Size(198, 22);
-            this.mHelpKeys.Text = Resources.ShortcutKeys;
+            this.mHelpKeys.Size = new System.Drawing.Size(165, 22);
+            this.mHelpKeys.Text = global::LanExchange.Properties.Resources.ShortcutKeys;
             this.mHelpKeys.Click += new System.EventHandler(this.mHelpKeys_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(195, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(162, 6);
             // 
             // mWebPage
             // 
             this.mWebPage.Name = "mWebPage";
-            this.mWebPage.Size = new System.Drawing.Size(198, 22);
+            this.mWebPage.Size = new System.Drawing.Size(165, 22);
             this.mWebPage.Text = Resources.MenuHomePage;
             this.mWebPage.Click += new System.EventHandler(this.mWebPage_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(198, 22);
-            this.toolStripMenuItem1.Text = Resources.MenuTranslationPage;
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(165, 22);
+            this.toolStripMenuItem1.Text = Resources.MenuLocalizationPage;
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(198, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(165, 22);
             this.toolStripMenuItem2.Text = Resources.MenuBugtrackerPage;
             this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(195, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(162, 6);
             // 
             // mHelpAbout
             // 
             this.mHelpAbout.Name = "mHelpAbout";
-            this.mHelpAbout.Size = new System.Drawing.Size(198, 22);
-            this.mHelpAbout.Text = Resources.MenuAbout;
+            this.mHelpAbout.Size = new System.Drawing.Size(165, 22);
+            this.mHelpAbout.Text = global::LanExchange.Properties.Resources.MenuAbout;
             this.mHelpAbout.Click += new System.EventHandler(this.mAbout_Click);
             // 
             // MainForm

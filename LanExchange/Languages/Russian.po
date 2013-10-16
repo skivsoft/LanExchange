@@ -3,8 +3,20 @@ msgid "English"
 msgstr "Английский"
 
 msgctxt "Language"
+msgid "Esperanto"
+msgstr "Эсперанто"
+
+msgctxt "Language"
+msgid "French"
+msgstr "Французский"
+
+msgctxt "Language"
 msgid "German"
 msgstr "Немецкий"
+
+msgctxt "Language"
+msgid "Hungarian"
+msgstr "Венгерский"
 
 msgctxt "Language"
 msgid "Kazakh"
@@ -13,6 +25,10 @@ msgstr "Казахский"
 msgctxt "Language"
 msgid "Russian"
 msgstr "Русский"
+
+msgctxt "Language"
+msgid "Spanish"
+msgstr "Испанский"
 
 msgctxt "LanExchange.exe"
 msgid "Backspace"
@@ -92,7 +108,7 @@ msgstr "Показать лицензию"
 
 msgctxt "LanExchange.exe"
 msgid "LanExchange Webpage"
-msgstr "Домашняя страница LanExchange"
+msgstr "Домашняя страница"
 
 msgctxt "LanExchange.exe"
 msgid "Copy {0} selected items"
@@ -164,7 +180,7 @@ msgstr "&Язык"
 
 msgctxt "LanExchange.exe"
 msgid "Copy «{0}»"
-msgstr "Копия «{0}»"
+msgstr "Копировать «{0}»"
 
 msgctxt "LanExchange.exe"
 msgid "Error"
@@ -259,10 +275,6 @@ msgid "Details"
 msgstr "Таблица"
 
 msgctxt "LanExchange.exe"
-msgid "{0} {1}"
-msgstr "{0} {1}"
-
-msgctxt "LanExchange.exe"
 msgid "List"
 msgstr "Список"
 
@@ -273,10 +285,6 @@ msgstr "Отправить на новую вкладку"
 msgctxt "LanExchange.exe"
 msgid "Go level up in panel."
 msgstr "Перейти на уровень выше в панели."
-
-msgctxt "LanExchange.exe"
-msgid "Translation Webpage"
-msgstr "Translation Webpage"
 
 msgctxt "LanExchange.exe"
 msgid "Ctrl+Shift+T"
@@ -331,8 +339,12 @@ msgid "Ctrl+F4"
 msgstr "Ctrl+F4"
 
 msgctxt "LanExchange.exe"
+msgid "Localization Webpage"
+msgstr "Страница локализации"
+
+msgctxt "LanExchange.exe"
 msgid "Exit"
-msgstr "Выйти"
+msgstr "Выход"
 
 msgctxt "LanExchange.exe"
 msgid "This help on shortcuts."
@@ -416,7 +428,7 @@ msgstr "Любой символ"
 
 msgctxt "LanExchange.exe"
 msgid "BugTracker Webpage"
-msgstr "BugTracker Webpage"
+msgstr "Страница багтрэкера"
 
 msgctxt "LanExchange.exe"
 msgid "Small icons"
