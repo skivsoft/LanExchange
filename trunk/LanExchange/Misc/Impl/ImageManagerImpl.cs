@@ -197,6 +197,8 @@ namespace LanExchange.Misc.Impl
                 (control as TabControl).ImageList = m_SmallImageList;
             if (control is StatusStrip)
                 (control as StatusStrip).ImageList = m_SmallImageList;
+            if (control is ContextMenuStrip)
+                (control as ContextMenuStrip).ImageList = m_SmallImageList;
             if (control is ListView)
             {
                 var lv = control as ListView;

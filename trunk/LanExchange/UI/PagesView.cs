@@ -31,7 +31,42 @@ namespace LanExchange.UI
             InitializeComponent();
             m_Presenter = presenter;
             m_Presenter.View = this;
+            SetupContextMenu();
         }
+
+        private void SetupContextMenu()
+        {
+            popPages.Items.Clear();
+            App.Images.SetImagesTo(popPages);
+            App.PanelItemTypes.CreateDefaultRoots();
+            foreach (var root in App.PanelItemTypes.DefaultRoots)
+            {
+                var imageName = App.PanelFillers.GetFillType(root).Name + PanelImageNames.NORMAL_POSTFIX;
+                var menuItem = new ToolStripMenuItem(root.Name);
+                menuItem.Tag = root;
+                menuItem.ImageIndex = App.Images.IndexOf(imageName);
+                menuItem.Click += PluginOnClick;
+                popPages.Items.Add(menuItem);
+            }
+        }
+
+        private void PluginOnClick(object sender, EventArgs eventArgs)
+        {
+            var menuItem = sender as ToolStripMenuItem;
+            if (menuItem == null) return;
+            if (menuItem.Checked)
+            {
+                return;
+            }
+            var root = menuItem.Tag as PanelItemBase;
+            if (root == null) return;
+            var info = App.Resolve<IPanelModel>();
+            info.TabName = root.Name;
+            info.SetDefaultRoot(root);
+            info.DataType = App.PanelFillers.GetFillType(root).Name;
+            m_Presenter.AddTab(info);
+        }
+
 
         public int TabPagesCount
         {
@@ -113,16 +148,6 @@ namespace LanExchange.UI
                 if (Pages.GetTabRect(i).Contains(point))
                     return Pages.TabPages[i];
             return null;
-        }
-
-        private void mNewTab_Click(object sender, EventArgs e)
-        {
-            m_Presenter.CommandNewTab();
-        }
-
-        private void mCloseTab_Click(object sender, EventArgs e)
-        {
-            m_Presenter.CommandCloseTab();
         }
 
         private void Pages_Selected(object sender, TabControlEventArgs e)

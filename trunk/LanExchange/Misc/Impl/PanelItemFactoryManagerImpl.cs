@@ -9,7 +9,7 @@ namespace LanExchange.Misc.Impl
     public class PanelItemFactoryManagerImpl : IPanelItemFactoryManager
     {
         private readonly IDictionary<Type, PanelItemFactoryBase> m_Types;
-        private readonly IList<PanelItemBase> m_DefaultRoots;
+        private readonly List<PanelItemBase> m_DefaultRoots;
 
         public PanelItemFactoryManagerImpl()
         {
@@ -37,6 +37,7 @@ namespace LanExchange.Misc.Impl
                 var root = pair.Value.CreateDefaultRoot();
                 if (root != null)
                     m_DefaultRoots.Add(root);
+                m_DefaultRoots.Sort();
             }
             catch (Exception ex)
             {
