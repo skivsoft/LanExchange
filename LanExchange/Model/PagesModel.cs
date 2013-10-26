@@ -163,7 +163,7 @@ namespace LanExchange.Model
 
         public void SetLoadedModel(IPagesModel model)
         {
-            App.PanelItemTypes.CreateDefaultRoots();
+            //App.PanelItemTypes.CreateDefaultRoots();
             if (model != null && model.Count > 0)
             {
                 // add loaded tabs if present
@@ -174,14 +174,14 @@ namespace LanExchange.Model
             }
             //create default tabs
             // TODO !!! CreateDefaultTabs
-            foreach (var root in App.PanelItemTypes.DefaultRoots)
-            {
-                var info = App.Resolve<IPanelModel>();
-                info.TabName = root.Name;
-                info.SetDefaultRoot(root);
-                info.DataType = App.PanelFillers.GetFillType(root).Name;
-                AddTab(info);
-            }
+            //foreach (var root in App.PanelItemTypes.DefaultRoots)
+            //{
+            //    var info = App.Resolve<IPanelModel>();
+            //    info.TabName = root.Name;
+            //    info.SetDefaultRoot(root);
+            //    info.DataType = App.PanelFillers.GetFillType(root).Name;
+            //    AddTab(info);
+            //}
         }
 
         public void SaveSettings()

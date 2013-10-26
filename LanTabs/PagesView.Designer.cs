@@ -36,10 +36,8 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.mReload = new System.Windows.Forms.ToolStripMenuItem();
             this.mCloseTab = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.mCloseOther = new System.Windows.Forms.ToolStripMenuItem();
-            this.mMoveToLeft = new System.Windows.Forms.ToolStripMenuItem();
-            this.mMoveToRight = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.Pages.SuspendLayout();
             this.popPages.SuspendLayout();
             this.SuspendLayout();
@@ -54,6 +52,10 @@
             this.Pages.Size = new System.Drawing.Size(384, 405);
             this.Pages.TabIndex = 0;
             this.Pages.Selected += new System.Windows.Forms.TabControlEventHandler(this.Pages_Selected);
+            this.Pages.DragOver += new System.Windows.Forms.DragEventHandler(this.tc_DragOver);
+            this.Pages.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tc_MouseDown);
+            this.Pages.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tc_MouseMove);
+            this.Pages.MouseUp += new System.Windows.Forms.MouseEventHandler(this.tc_MouseUp);
             // 
             // tabNew
             // 
@@ -70,32 +72,30 @@
             this.mNewTab,
             this.toolStripSeparator1,
             this.mReload,
-            this.mMoveToLeft,
-            this.mMoveToRight,
             this.toolStripSeparator2,
             this.mCloseTab,
             this.mCloseOther});
             this.popPages.Name = "popPages";
-            this.popPages.Size = new System.Drawing.Size(173, 170);
+            this.popPages.Size = new System.Drawing.Size(162, 104);
             // 
             // mNewTab
             // 
             this.mNewTab.Name = "mNewTab";
             this.mNewTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.mNewTab.Size = new System.Drawing.Size(172, 22);
+            this.mNewTab.Size = new System.Drawing.Size(161, 22);
             this.mNewTab.Text = "New tab";
             this.mNewTab.Click += new System.EventHandler(this.mNewTab_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(169, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(158, 6);
             // 
             // mReload
             // 
             this.mReload.Name = "mReload";
             this.mReload.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.mReload.Size = new System.Drawing.Size(172, 22);
+            this.mReload.Size = new System.Drawing.Size(161, 22);
             this.mReload.Text = "Reload";
             this.mReload.Click += new System.EventHandler(this.mReload_Click);
             // 
@@ -103,35 +103,21 @@
             // 
             this.mCloseTab.Name = "mCloseTab";
             this.mCloseTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
-            this.mCloseTab.Size = new System.Drawing.Size(172, 22);
+            this.mCloseTab.Size = new System.Drawing.Size(161, 22);
             this.mCloseTab.Text = "Close tab";
             this.mCloseTab.Click += new System.EventHandler(this.mCloseTab_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(169, 6);
             // 
             // mCloseOther
             // 
             this.mCloseOther.Name = "mCloseOther";
-            this.mCloseOther.Size = new System.Drawing.Size(172, 22);
+            this.mCloseOther.Size = new System.Drawing.Size(161, 22);
             this.mCloseOther.Text = "Close other tabs";
             this.mCloseOther.Click += new System.EventHandler(this.mCloseOther_Click);
             // 
-            // mMoveToLeft
+            // toolStripSeparator2
             // 
-            this.mMoveToLeft.Name = "mMoveToLeft";
-            this.mMoveToLeft.Size = new System.Drawing.Size(172, 22);
-            this.mMoveToLeft.Text = "Move to left";
-            this.mMoveToLeft.Click += new System.EventHandler(this.mMoveToLeft_Click);
-            // 
-            // mMoveToRight
-            // 
-            this.mMoveToRight.Name = "mMoveToRight";
-            this.mMoveToRight.Size = new System.Drawing.Size(172, 22);
-            this.mMoveToRight.Text = "Move to right";
-            this.mMoveToRight.Click += new System.EventHandler(this.mMoveToRight_Click);
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(158, 6);
             // 
             // PagesView
             // 
@@ -156,9 +142,7 @@
         private System.Windows.Forms.ToolStripMenuItem mCloseTab;
         private System.Windows.Forms.ToolStripMenuItem mReload;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem mMoveToLeft;
-        private System.Windows.Forms.ToolStripMenuItem mMoveToRight;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem mCloseOther;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }
