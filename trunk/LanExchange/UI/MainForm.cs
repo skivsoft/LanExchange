@@ -139,6 +139,8 @@ namespace LanExchange.UI
                 if (pair.Key.Equals(App.TR.CurrentLanguage))
                 {
                     menuItem.Font = new Font(menuItem.Font, FontStyle.Bold);
+                    menuItem.Enabled = false;
+                    menuItem.Checked = true;
                     mLanguage.DropDownItems.Insert(0, menuItem);
                     mLanguage.DropDownItems.Insert(1, new ToolStripSeparator());
                 }
@@ -517,11 +519,6 @@ namespace LanExchange.UI
                     Status.DoDragDrop(obj, DragDropEffects.Copy);
                 }
             }
-        }
-
-        private void mPanelNewTab_Click(object sender, EventArgs e)
-        {
-            App.MainPages.CommandNewTab();
         }
 
         private void pInfo_DragOver(object sender, DragEventArgs e)
