@@ -9,8 +9,6 @@ namespace LanExchange.Intf
 
         int Count { get; }
 
-        void CommandNewTab();
-
         void CommandCloseTab();
 
         int SelectedIndex { get; set; }

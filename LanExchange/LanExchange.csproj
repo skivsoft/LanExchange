@@ -304,6 +304,8 @@
     <None Include="..\Common\LanExchange.snk">
       <Link>LanExchange.snk</Link>
     </None>
+    <None Include="Languages\Esperanto.po" />
+    <None Include="Languages\Kazakh.po" />
     <None Include="Languages\Russian.po">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

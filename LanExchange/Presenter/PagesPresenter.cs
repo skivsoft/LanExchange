@@ -35,11 +35,6 @@ namespace LanExchange.Presenter
             m_SaveAction.Dispose();
         }
 
-        public void CommandNewTab()
-        {
-
-        }
-
         public bool CanSendToNewTab()
         {
             var sourcePV = View.ActivePanelView;

@@ -53,7 +53,7 @@ namespace LanExchange.Misc.Impl
             if (SourceLanguage == CurrentLanguage)
                 sorted.Add(Translate(SourceLanguage), SourceLanguage);
             else
-                sorted.Add(string.Format(CultureInfo.CurrentCulture, "{0} — {1}", Translate(SourceLanguage), SourceLanguage), SourceLanguage);
+                sorted.Add(string.Format(CultureInfo.CurrentCulture, "{0} ({1})", Translate(SourceLanguage), SourceLanguage), SourceLanguage);
             foreach (var fileName in App.FolderManager.GetLanguagesFiles())
             {
                 var lang = Path.GetFileNameWithoutExtension(fileName);
@@ -63,7 +63,7 @@ namespace LanExchange.Misc.Impl
                     if (lang == CurrentLanguage)
                         sorted.Add(Translate(lang), lang);
                     else
-                        sorted.Add(string.Format(CultureInfo.CurrentCulture, "{0} — {1}", Translate(lang), TranslateFromPO(fileName, lang)), lang);
+                        sorted.Add(string.Format(CultureInfo.CurrentCulture, "{0} ({1})", Translate(lang), TranslateFromPO(fileName, lang)), lang);
                 }
                 catch(ArgumentException)
                 {

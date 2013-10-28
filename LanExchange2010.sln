@@ -30,8 +30,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMIViewer", "WMIViewer\WMIV
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{21D3F599-1FA0-423A-8380-8B1041B353AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanTabs", "LanTabs\LanTabs.csproj", "{6DADD4BF-1C37-497B-88BA-3A9631E49583}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenerateEnglish", "GenerateEnglish\GenerateEnglish.csproj", "{C703B9E2-1C5F-4F31-A662-E389AF3C9F55}"
 EndProject
 Global
@@ -127,16 +125,6 @@ Global
 		{21D3F599-1FA0-423A-8380-8B1041B353AC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{21D3F599-1FA0-423A-8380-8B1041B353AC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{21D3F599-1FA0-423A-8380-8B1041B353AC}.Release|x86.ActiveCfg = Release|Any CPU
-		{6DADD4BF-1C37-497B-88BA-3A9631E49583}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{6DADD4BF-1C37-497B-88BA-3A9631E49583}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{6DADD4BF-1C37-497B-88BA-3A9631E49583}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{6DADD4BF-1C37-497B-88BA-3A9631E49583}.Debug|x86.ActiveCfg = Debug|x86
-		{6DADD4BF-1C37-497B-88BA-3A9631E49583}.Debug|x86.Build.0 = Debug|x86
-		{6DADD4BF-1C37-497B-88BA-3A9631E49583}.Release|Any CPU.ActiveCfg = Release|x86
-		{6DADD4BF-1C37-497B-88BA-3A9631E49583}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{6DADD4BF-1C37-497B-88BA-3A9631E49583}.Release|Mixed Platforms.Build.0 = Release|x86
-		{6DADD4BF-1C37-497B-88BA-3A9631E49583}.Release|x86.ActiveCfg = Release|x86
-		{6DADD4BF-1C37-497B-88BA-3A9631E49583}.Release|x86.Build.0 = Release|x86
 		{C703B9E2-1C5F-4F31-A662-E389AF3C9F55}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{C703B9E2-1C5F-4F31-A662-E389AF3C9F55}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{C703B9E2-1C5F-4F31-A662-E389AF3C9F55}.Debug|Mixed Platforms.Build.0 = Debug|x86
