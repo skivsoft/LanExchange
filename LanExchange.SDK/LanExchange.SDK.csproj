@@ -64,6 +64,7 @@
     <Compile Include="IImageManager.cs" />
     <Compile Include="IPanelItemFactoryManager.cs" />
     <Compile Include="IPlugin.cs" />
+    <Compile Include="ITranslationService.cs" />
     <Compile Include="PanelColumnHeader.cs" />
     <Compile Include="PanelFillerResult.cs" />
     <Compile Include="PanelItemBase.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="PanelItemDoubleDot.cs" />
     <Compile Include="PanelItemFactoryBase.cs" />
     <Compile Include="PanelItemRoot.cs" />
+    <Compile Include="TranslationResourceManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

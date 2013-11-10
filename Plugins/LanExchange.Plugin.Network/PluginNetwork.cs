@@ -11,6 +11,7 @@ namespace LanExchange.Plugin.Network
         public void Initialize(IServiceProvider serviceProvider)
         {
             m_Provider = serviceProvider;
+            TranslationResourceManager.Service = (ITranslationService)m_Provider.GetService(typeof(ITranslationService));
 
             // Register new panel item types
             var typeManager = (IPanelItemFactoryManager)m_Provider.GetService(typeof (IPanelItemFactoryManager));

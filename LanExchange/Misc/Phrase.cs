@@ -1,4 +1,4 @@
-﻿namespace GenerateEnglish
+﻿namespace LanExchange.Misc
 {
     public class Phrase
     {

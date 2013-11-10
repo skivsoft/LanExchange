@@ -1,34 +1,86 @@
-msgctxt "Language"
-msgid "English"
-msgstr "Ағылшын тілі"
-
-msgctxt "Language"
-msgid "Esperanto"
-msgstr "Эсперанто тiлi"
-
-msgctxt "Language"
-msgid "French"
-msgstr "Француз тілі"
-
-msgctxt "Language"
-msgid "German"
-msgstr "Неміс тілі"
-
-msgctxt "Language"
-msgid "Hungarian"
-msgstr "Венгр тілі"
-
-msgctxt "Language"
-msgid "Kazakh"
+msgctxt "Variables"
+msgid "@LANGUAGE_NAME"
 msgstr "Қазақ тілі"
 
-msgctxt "Language"
-msgid "Russian"
-msgstr "Орыс тілі"
+msgctxt "Variables"
+msgid "@AUTHOR"
+msgstr "Yeltay Nashyn"
 
-msgctxt "Language"
-msgid "Spanish"
-msgstr "Испан тілi"
+msgctxt "Network.xml"
+msgid "Windows Explorer"
+msgstr "Windows Explorer"
+
+msgctxt "NetworkRadmin.xml"
+msgid "Radmin® Full Control"
+msgstr "Radmin® Full Control"
+
+msgctxt "NetworkRadmin.xml"
+msgid "Radmin® View"
+msgstr "Radmin® View"
+
+msgctxt "NetworkRadmin.xml"
+msgid "Radmin® Telnet"
+msgstr "Radmin® Telnet"
+
+msgctxt "NetworkRadmin.xml"
+msgid "Radmin® File transfer"
+msgstr "Radmin® File transfer"
+
+msgctxt "NetworkRadmin.xml"
+msgid "Radmin® Shutdown"
+msgstr "Radmin® Shutdown"
+
+msgctxt "NetworkRadmin.xml"
+msgid "Radmin® Chat"
+msgstr "Radmin® Chat"
+
+msgctxt "NetworkRadmin.xml"
+msgid "Radmin® Voice Chat"
+msgstr "Radmin® Voice Chat"
+
+msgctxt "NetworkRadmin.xml"
+msgid "Radmin® Send Message"
+msgstr "Radmin® Send Message"
+
+msgctxt "NetworkSystem.xml"
+msgid "Remote Desktop Connection"
+msgstr "Remote Desktop Connection"
+
+msgctxt "NetworkSystem.xml"
+msgid "Computer Management"
+msgstr "Computer Management"
+
+msgctxt "NetworkSystem.xml"
+msgid "Shared Folders"
+msgstr "Shared Folders"
+
+msgctxt "NetworkSystem.xml"
+msgid "Local Users and Groups"
+msgstr "Local Users and Groups"
+
+msgctxt "NetworkSystem.xml"
+msgid "Services"
+msgstr "Services"
+
+msgctxt "NetworkWMI.xml"
+msgid "WMI Viewer"
+msgstr "WMI Viewer"
+
+msgctxt "NetworkWMI.xml"
+msgid "WMI: Edit Description"
+msgstr "WMI: Edit Description"
+
+msgctxt "NetworkWMI.xml"
+msgid "WMI: Reboot"
+msgstr "WMI: Reboot"
+
+msgctxt "NetworkWMI.xml"
+msgid "WMI: Shutdown"
+msgstr "WMI: Shutdown"
+
+msgctxt "Users.xml"
+msgid "Send Email"
+msgstr "Send Email"
 
 msgctxt "LanExchange.exe"
 msgid "Backspace"

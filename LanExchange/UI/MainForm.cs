@@ -126,30 +126,20 @@ namespace LanExchange.UI
             var needApply = App.TR.CurrentLanguage != newLanguage;
             App.TR.CurrentLanguage = newLanguage;
             var nameDict = App.TR.GetLanguagesNames();
-            if (nameDict.Count < 2)
-            {
-                mLanguage.Visible = false;
-                return;
-            }
+            //if (nameDict.Count < 2)
+            //{
+            //    mLanguage.Visible = false;
+            //    return;
+            //}
             mLanguage.Visible = true;
             mLanguage.DropDownItems.Clear();
             foreach(var pair in nameDict)
             {
                 var menuItem = new ToolStripMenuItem(pair.Value);
-                if (pair.Key.Equals(App.TR.CurrentLanguage))
-                {
-                    menuItem.Font = new Font(menuItem.Font, FontStyle.Bold);
-                    menuItem.Enabled = false;
-                    menuItem.Checked = true;
-                    mLanguage.DropDownItems.Insert(0, menuItem);
-                    mLanguage.DropDownItems.Insert(1, new ToolStripSeparator());
-                }
-                else
-                {
-                    menuItem.Tag = pair.Key;
-                    menuItem.Click += MenuItemOnClick;
-                    mLanguage.DropDownItems.Add(menuItem);
-                }
+                menuItem.Checked = pair.Key.Equals(App.TR.CurrentLanguage);
+                menuItem.Tag = pair.Key;
+                menuItem.Click += MenuItemOnClick;
+                mLanguage.DropDownItems.Add(menuItem);
             }
         }
 
