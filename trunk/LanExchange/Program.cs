@@ -68,16 +68,12 @@ namespace LanExchange
     internal static class Program
     {
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
-            SingleInstanceCheck.Check();
-            CmdLineProcessor.Processing();
-
             App.SetContainer(ContainerBuilder.Build());
+            CmdLineProcessor.Processing();
+            SingleInstanceCheck.Check();
             App.Plugins.LoadPlugins();
-#if DEBUG
-            //AddonGen.Generate();
-#endif
             App.Addons.LoadAddons();
             // register ShortcutPanelItem
             App.PanelItemTypes.RegisterPanelItemFactory(typeof(ShortcutPanelItem), new ShortcutPanelItemFactory());

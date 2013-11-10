@@ -11,7 +11,7 @@
           <ProgramRef Id="Radmin" />
           <ProgramArgs>/connect:$(Name)</ProgramArgs>
         </ToolStripMenuItem>
-        <ToolStripMenuItem Text="Radmin® View">
+        <ToolStripMenuItem Text="Radmin® View" Visible="false">
           <ProgramRef Id="Radmin" />
           <ProgramArgs>/connect:$(Name) /noinput</ProgramArgs>
         </ToolStripMenuItem>
@@ -23,7 +23,7 @@
           <ProgramRef Id="Radmin" />
           <ProgramArgs>/connect:$(Name) /file</ProgramArgs>
         </ToolStripMenuItem>
-        <ToolStripMenuItem Text="Radmin® Shutdown">
+        <ToolStripMenuItem Text="Radmin® Shutdown" Visible="false">
           <ProgramRef Id="Radmin" />
           <ProgramArgs>/connect:$(Name) /shutdown</ProgramArgs>
         </ToolStripMenuItem>

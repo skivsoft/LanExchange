@@ -93,7 +93,7 @@
     <Compile Include="..\Common\AnyAssemblyInfo.cs">
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Core\TranslationResourceManager.cs" />
+    <Compile Include="Misc\GenerateEnglish.cs" />
     <Compile Include="Core\TypeNotRegisteredException.cs" />
     <Compile Include="Intf\Addon\ProtocolHelper.cs" />
     <Compile Include="Intf\DataReadyArgs.cs" />
@@ -101,7 +101,6 @@
     <Compile Include="Intf\IMainView.cs" />
     <Compile Include="Intf\IModel.cs" />
     <Compile Include="Intf\IPresenter.cs" />
-    <Compile Include="Intf\ITranslationService.cs" />
     <Compile Include="Intf\IView.cs" />
     <Compile Include="Intf\LifeCycle.cs" />
     <Compile Include="Intf\PanelIndexEventArgs.cs" />
@@ -161,6 +160,7 @@
     <Compile Include="Model\PanelModel.cs" />
     <Compile Include="Model\PanelModelCopyHelper.cs" />
     <Compile Include="Model\Settings\SettingsChangedArgs.cs" />
+    <Compile Include="Misc\Phrase.cs" />
     <Compile Include="Presenter\MainPresenter.cs" />
     <Compile Include="UI\IListViewItemGetter.cs" />
     <Compile Include="Utils\HookEventArgs.cs" />
@@ -297,6 +297,7 @@
     </Content>
     <Content Include="Addons\NetworkSystem.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Addons\NetworkRadmin.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -304,10 +305,14 @@
     <None Include="..\Common\LanExchange.snk">
       <Link>LanExchange.snk</Link>
     </None>
-    <None Include="Languages\Esperanto.po" />
-    <None Include="Languages\Kazakh.po" />
+    <None Include="Languages\Esperanto.po">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Languages\Kazakh.po">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Languages\Russian.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Properties\app.manifest" />
     <None Include="app.config" />

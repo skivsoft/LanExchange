@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace LanExchange.Intf
+namespace LanExchange.SDK
 {
     public interface ITranslationService
     {

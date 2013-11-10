@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 using LanExchange.Intf;
+using LanExchange.SDK;
 
 namespace LanExchange.Misc.Impl
 {
@@ -30,13 +31,13 @@ namespace LanExchange.Misc.Impl
             get { return m_CurrentLanguage; } 
             set
             {
-                if (SourceLanguage.Equals(value))
+                if (String.Compare(SourceLanguage, value, StringComparison.OrdinalIgnoreCase) == 0)
                     m_CurrentLanguage = value;
                 else
                     foreach(var fileName in App.FolderManager.GetLanguagesFiles())
                     {
                         var lang = Path.GetFileNameWithoutExtension(fileName);
-                        if (lang != null && lang.Equals(value))
+                        if (lang != null && String.Compare(lang, value, StringComparison.OrdinalIgnoreCase) == 0)
                         {
                             m_CurrentLanguageLines = File.ReadAllLines(fileName);
                             m_CurrentLanguage = value;
@@ -49,21 +50,16 @@ namespace LanExchange.Misc.Impl
         [Localizable(false)]
         public IDictionary<string, string> GetLanguagesNames()
         {
+            const string LANG = "@LANGUAGE_NAME";
             var sorted = new SortedDictionary<string, string>();
-            if (SourceLanguage == CurrentLanguage)
-                sorted.Add(Translate(SourceLanguage), SourceLanguage);
-            else
-                sorted.Add(string.Format(CultureInfo.CurrentCulture, "{0} ({1})", Translate(SourceLanguage), SourceLanguage), SourceLanguage);
+            sorted.Add(SourceLanguage, SourceLanguage);
             foreach (var fileName in App.FolderManager.GetLanguagesFiles())
             {
                 var lang = Path.GetFileNameWithoutExtension(fileName);
                 if (lang == null) continue;
                 try
                 {
-                    if (lang == CurrentLanguage)
-                        sorted.Add(Translate(lang), lang);
-                    else
-                        sorted.Add(string.Format(CultureInfo.CurrentCulture, "{0} ({1})", Translate(lang), TranslateFromPO(fileName, lang)), lang);
+                    sorted.Add(TranslateFromPO(fileName, LANG), lang);
                 }
                 catch(ArgumentException)
                 {

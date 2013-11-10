@@ -32,10 +32,6 @@
           <ProgramRef Id="services" />
           <ProgramArgs>/computer:$(Name)</ProgramArgs>
         </ToolStripMenuItem>
-        <ToolStripMenuItem Text="Ping Computer">
-          <ProgramRef Id="cmd" />
-          <ProgramArgs>/c ping -t $(Name)</ProgramArgs>
-        </ToolStripMenuItem>
       </ContextMenuStrip>
     </PanelItemTypeRef>
   </PanelItemTypes>

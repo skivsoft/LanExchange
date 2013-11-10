@@ -237,25 +237,25 @@ namespace LanExchange.UI
             this.toolStripSeparator8,
             this.mPanelExit});
             this.mPanel.Name = "mPanel";
-            this.mPanel.Size = new System.Drawing.Size(48, 20);
+            this.mPanel.Size = new System.Drawing.Size(45, 20);
             this.mPanel.Text = global::LanExchange.Properties.Resources.MenuPanel;
             this.mPanel.DropDownOpening += new System.EventHandler(this.mPanel_DropDownOpening);
             // 
             // mTabs
             // 
             this.mTabs.Name = "mTabs";
-            this.mTabs.Size = new System.Drawing.Size(156, 22);
+            this.mTabs.Size = new System.Drawing.Size(152, 22);
             this.mTabs.Text = "Tabs";
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(153, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
             // 
             // mPanelLarge
             // 
             this.mPanelLarge.Name = "mPanelLarge";
-            this.mPanelLarge.Size = new System.Drawing.Size(156, 22);
+            this.mPanelLarge.Size = new System.Drawing.Size(152, 22);
             this.mPanelLarge.Tag = "0";
             this.mPanelLarge.Text = global::LanExchange.Properties.Resources.ViewLargeIcons;
             this.mPanelLarge.Click += new System.EventHandler(this.mPanelLarge_Click);
@@ -263,7 +263,7 @@ namespace LanExchange.UI
             // mPanelSmall
             // 
             this.mPanelSmall.Name = "mPanelSmall";
-            this.mPanelSmall.Size = new System.Drawing.Size(156, 22);
+            this.mPanelSmall.Size = new System.Drawing.Size(152, 22);
             this.mPanelSmall.Tag = "2";
             this.mPanelSmall.Text = global::LanExchange.Properties.Resources.ViewSmallIcons;
             this.mPanelSmall.Click += new System.EventHandler(this.mPanelLarge_Click);
@@ -271,7 +271,7 @@ namespace LanExchange.UI
             // mPanelList
             // 
             this.mPanelList.Name = "mPanelList";
-            this.mPanelList.Size = new System.Drawing.Size(156, 22);
+            this.mPanelList.Size = new System.Drawing.Size(152, 22);
             this.mPanelList.Tag = "3";
             this.mPanelList.Text = global::LanExchange.Properties.Resources.ViewList;
             this.mPanelList.Click += new System.EventHandler(this.mPanelLarge_Click);
@@ -281,7 +281,7 @@ namespace LanExchange.UI
             this.mPanelDetails.Checked = true;
             this.mPanelDetails.CheckState = System.Windows.Forms.CheckState.Checked;
             this.mPanelDetails.Name = "mPanelDetails";
-            this.mPanelDetails.Size = new System.Drawing.Size(156, 22);
+            this.mPanelDetails.Size = new System.Drawing.Size(152, 22);
             this.mPanelDetails.Tag = "1";
             this.mPanelDetails.Text = global::LanExchange.Properties.Resources.ViewDetails;
             this.mPanelDetails.Click += new System.EventHandler(this.mPanelLarge_Click);
@@ -289,33 +289,33 @@ namespace LanExchange.UI
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(153, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // mReRead
             // 
             this.mReRead.Name = "mReRead";
             this.mReRead.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.mReRead.Size = new System.Drawing.Size(156, 22);
+            this.mReRead.Size = new System.Drawing.Size(152, 22);
             this.mReRead.Text = global::LanExchange.Properties.Resources.KeyCtrlR_;
             this.mReRead.Click += new System.EventHandler(this.rereadToolStripMenuItem_Click);
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(153, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(149, 6);
             // 
             // mPanelExit
             // 
             this.mPanelExit.Name = "mPanelExit";
             this.mPanelExit.ShortcutKeys = System.Windows.Forms.Keys.F10;
-            this.mPanelExit.Size = new System.Drawing.Size(156, 22);
+            this.mPanelExit.Size = new System.Drawing.Size(152, 22);
             this.mPanelExit.Text = global::LanExchange.Properties.Resources.KeyF10_;
             this.mPanelExit.Click += new System.EventHandler(this.mExit_Click);
             // 
             // mLanguage
             // 
             this.mLanguage.Name = "mLanguage";
-            this.mLanguage.Size = new System.Drawing.Size(71, 20);
+            this.mLanguage.Size = new System.Drawing.Size(66, 20);
             this.mLanguage.Text = global::LanExchange.Properties.Resources.MainForm_Language;
             // 
             // mHelp
@@ -329,7 +329,7 @@ namespace LanExchange.UI
             this.toolStripSeparator6,
             this.mHelpAbout});
             this.mHelp.Name = "mHelp";
-            this.mHelp.Size = new System.Drawing.Size(44, 20);
+            this.mHelp.Size = new System.Drawing.Size(40, 20);
             this.mHelp.Text = global::LanExchange.Properties.Resources.MenuHelp;
             // 
             // mHelpKeys
@@ -337,45 +337,45 @@ namespace LanExchange.UI
             this.mHelpKeys.Image = global::LanExchange.Properties.Resources.keyboard_16;
             this.mHelpKeys.Name = "mHelpKeys";
             this.mHelpKeys.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.mHelpKeys.Size = new System.Drawing.Size(196, 22);
+            this.mHelpKeys.Size = new System.Drawing.Size(187, 22);
             this.mHelpKeys.Text = global::LanExchange.Properties.Resources.ShortcutKeys;
             this.mHelpKeys.Click += new System.EventHandler(this.mHelpKeys_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(193, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(184, 6);
             // 
             // mWebPage
             // 
             this.mWebPage.Name = "mWebPage";
-            this.mWebPage.Size = new System.Drawing.Size(196, 22);
+            this.mWebPage.Size = new System.Drawing.Size(187, 22);
             this.mWebPage.Text = global::LanExchange.Properties.Resources.MenuHomePage;
             this.mWebPage.Click += new System.EventHandler(this.mWebPage_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(196, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(187, 22);
             this.toolStripMenuItem1.Text = global::LanExchange.Properties.Resources.MenuLocalizationPage;
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(196, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(187, 22);
             this.toolStripMenuItem2.Text = global::LanExchange.Properties.Resources.MenuBugtrackerPage;
             this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(193, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(184, 6);
             // 
             // mHelpAbout
             // 
             this.mHelpAbout.Name = "mHelpAbout";
-            this.mHelpAbout.Size = new System.Drawing.Size(196, 22);
+            this.mHelpAbout.Size = new System.Drawing.Size(187, 22);
             this.mHelpAbout.Text = global::LanExchange.Properties.Resources.MenuAbout;
             this.mHelpAbout.Click += new System.EventHandler(this.mAbout_Click);
             // 

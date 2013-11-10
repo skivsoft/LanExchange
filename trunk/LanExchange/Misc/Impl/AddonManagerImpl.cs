@@ -117,7 +117,7 @@ namespace LanExchange.Misc.Impl
                 {
                     var menuItem = new ToolStripMenuItem();
                     menuItem.Tag = item;
-                    menuItem.Text = item.Text;
+                    menuItem.Text = App.TR.Translate(item.Text);
                     menuItem.ShortcutKeyDisplayString = item.ShortcutKeys;
                     menuItem.Click += MenuItemOnClick;
                     if (item.ProgramValue != null)

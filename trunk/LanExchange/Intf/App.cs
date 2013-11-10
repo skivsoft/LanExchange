@@ -41,8 +41,9 @@ namespace LanExchange.Intf
             Threads = Resolve<ILazyThreadPool>();
             Images = Resolve<IImageManager>();
             Addons = Resolve<IAddonManager>();
-            TR = Resolve<ITranslationService>();
             Presenter = Resolve<IMainPresenter>();
+            TR = Resolve<ITranslationService>();
+            TranslationResourceManager.Service = TR;
         }
 
         public static TTypeToResolve Resolve<TTypeToResolve>()
