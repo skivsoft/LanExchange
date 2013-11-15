@@ -5,16 +5,15 @@ using System.Threading;
 using System.Windows.Forms;
 using LanExchange.Core;
 using LanExchange.Intf;
-using LanExchange.Misc.Action;
+using LanExchange.Misc.Impl;
 using LanExchange.Model;
-using LanExchange.Model.Settings;
 using System.Drawing;
 using System.ComponentModel;
 using System.Security.Permissions;
+using LanExchange.Presenter.Action;
 using LanExchange.Properties;
 using LanExchange.SDK;
 using LanExchange.Utils;
-using Settings = LanExchange.Model.Settings.Settings;
 
 namespace LanExchange.UI
 {
@@ -32,9 +31,9 @@ namespace LanExchange.UI
             // App.MainView must be set before panel view will be created
             App.MainView = this;
             // load settings from cfg-file
-            Settings.Instance.Changed += SettingsOnChanged;
-            //Settings.Instance.Load();
-            SetRunMinimized(Settings.Instance.RunMinimized);
+            App.Config.Changed += ConfigOnChanged;
+            App.Config.Load();
+            SetRunMinimized(App.Config.GetBoolValue(ConfigNames.RunMinimized));
             // init Pages presenter
             Pages = (PagesView)App.Resolve<IPagesView>();
             Pages.Dock = DockStyle.Fill;
@@ -44,7 +43,6 @@ namespace LanExchange.UI
             App.MainPages.PanelViewFocusedItemChanged += Pages_PanelViewFocusedItemChanged;
             App.MainPages.LoadSettings();
             // init main form
-            SetupActions();
             SetupForm();
             SetupLanguages(App.TR.CurrentLanguage);
             // setup images
@@ -62,43 +60,29 @@ namespace LanExchange.UI
         }
 
         [Localizable(false)]
-        private void SettingsOnChanged(object sender, SettingsChangedArgs e)
+        private void ConfigOnChanged(object sender, ConfigChangedArgs e)
         {
-            if (e.Name.Equals("ShowMainMenu"))
+            switch(e.Name)
             {
-                MainMenu.Visible = (bool) e.Value;
-                return;
-            }
-            if (e.Name.Equals("NumInfoLines"))
-            {
-                var value = (int) e.Value;
-                if (value < 2)
-                    value = 2;
-                if (App.PanelColumns != null)
-                {
-                    var maxColumns = Math.Max(3, App.PanelColumns.MaxColumns);
-                    if (value > maxColumns)
-                        value = maxColumns;
-                }
-                e.NewValue = value;
-                pInfo.CountLines = value;
-                App.MainPages.DoPanelViewFocusedItemChanged(Pages.ActivePanelView, EventArgs.Empty);
-                //return;
+                case ConfigNames.ShowMainMenu:
+                    MainMenu.Visible = (bool) e.Value;
+                    break;
+                case ConfigNames.NumInfoLines:
+                    var value = (int) e.Value;
+                    if (value < 2)
+                        value = 2;
+                    if (App.PanelColumns != null)
+                    {
+                        var maxColumns = Math.Max(3, App.PanelColumns.MaxColumns);
+                        if (value > maxColumns)
+                            value = maxColumns;
+                    }
+                    e.NewValue = value;
+                    pInfo.CountLines = value;
+                    App.MainPages.DoPanelViewFocusedItemChanged(Pages.ActivePanelView, EventArgs.Empty);
+                    break;
             }
         }
-
-        #region Global actions
-        private IAction m_AboutAction;
-        private IAction m_ReReadAction;
-        private IAction m_ShortcutKeysAction;
-
-        public void SetupActions()
-        {
-            m_AboutAction = new AboutAction();
-            m_ReReadAction = new ReReadAction();
-            m_ShortcutKeysAction = new ShortcutKeysAction();
-        }
-        #endregion
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Windows.Forms.Control.set_Text(System.String)")]
         [Localizable(false)]
@@ -188,17 +172,17 @@ namespace LanExchange.UI
             // F9 - Show/Hide main menu
             if (e.KeyCode == Keys.F9)
             {
-                Settings.Instance.SetBoolValue("ShowMainMenu", !Settings.Instance.GetBoolValue("ShowMainMenu"));
+                App.Config.SetValue(ConfigNames.ShowMainMenu, !App.Config.GetBoolValue(ConfigNames.ShowMainMenu));
                 e.Handled = true;
             }
             // Ctrl+Up/Ctrl+Down - change number of info lines
             if (e.Control && (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down))
             {
-                int value = Settings.Instance.GetIntValue("NumInfoLines");
+                int value = App.Config.GetIntValue(ConfigNames.NumInfoLines);
                 if (e.KeyCode == Keys.Down)
-                    Settings.Instance.SetIntValue("NumInfoLines", value + 1);
+                    App.Config.SetValue(ConfigNames.NumInfoLines, value + 1);
                 else
-                    Settings.Instance.SetIntValue("NumInfoLines", value - 1);
+                    App.Config.SetValue(ConfigNames.NumInfoLines, value - 1);
                 e.Handled = true;
             }
         }
@@ -264,7 +248,7 @@ namespace LanExchange.UI
 
         private void mAbout_Click(object sender, EventArgs e)
         {
-            m_AboutAction.Execute();
+            App.Presenter.ExecuteAction<AboutAction>();
         }
         
         private void lItemsCount_MouseUp(object sender, MouseEventArgs e)
@@ -341,6 +325,7 @@ namespace LanExchange.UI
                     if ((short)m.WParam == m_Hotkeys.HotkeyID)
                     {
                         ToggleVisible();
+                        m.Result = new IntPtr(1);
                     }
                     break;
                 case NativeMethods.WM_QUERYENDSESSION:
@@ -367,7 +352,7 @@ namespace LanExchange.UI
 
         private void rereadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            m_ReReadAction.Execute();
+            App.Presenter.ExecuteAction<ReReadAction>();
             popTop.Tag = null;
         }
 
@@ -416,12 +401,12 @@ namespace LanExchange.UI
                 }
         }
 
-        private void mPanel_DropDownOpening(object sender, EventArgs e)
+        private void mView_DropDownOpening(object sender, EventArgs e)
         {
             UpdateViewTypeMenu();
         }
 
-        private void mPanelLarge_Click(object sender, EventArgs e)
+        private void mViewLarge_Click(object sender, EventArgs e)
         {
             var pv = Pages.ActivePanelView;
             if (pv == null) return;
@@ -452,7 +437,7 @@ namespace LanExchange.UI
 
         private void mHelpKeys_Click(object sender, EventArgs e)
         {
-            m_ShortcutKeysAction.Execute();
+            App.Presenter.ExecuteAction<ShortcutKeysAction>();
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -534,6 +519,38 @@ namespace LanExchange.UI
         public void ShowStatusText(string format, params object[] args)
         {
             lItemsCount.Text = String.Format(CultureInfo.InvariantCulture, format, args);
+        }
+
+        private void mPanel_DropDownOpened(object sender, EventArgs e)
+        {
+            mReRead.Enabled = App.Presenter.IsActionEnabled<ReReadAction>();
+            mCloseTab.Enabled = App.Presenter.IsActionEnabled<CloseTabAction>();
+            mCloseOther.Enabled = App.Presenter.IsActionEnabled<CloseOtherAction>();
+        }
+
+        private void mCloseTab_Click(object sender, EventArgs e)
+        {
+            App.Presenter.ExecuteAction<CloseTabAction>();
+        }
+
+        private void mCloseOther_Click(object sender, EventArgs e)
+        {
+            App.Presenter.ExecuteAction<CloseOtherAction>();
+        }
+
+        private void mInfoPanel_Click(object sender, EventArgs e)
+        {
+            mInfoPanel.Checked = !mInfoPanel.Checked;
+            if (mInfoPanel.Checked)
+                App.Config.SetValue(ConfigNames.NumInfoLines, App.Config.GetDefaultValue(ConfigNames.NumInfoLines));
+            else
+                App.Config.SetValue(ConfigNames.NumInfoLines, 0);
+        }
+
+        private void mGridLines_Click(object sender, EventArgs e)
+        {
+            mGridLines.Checked = !mGridLines.Checked;
+            App.Config.SetValue(ConfigNames.GridLines, mGridLines.Checked);
         }
     }
 }

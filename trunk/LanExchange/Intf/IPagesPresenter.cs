@@ -37,5 +37,9 @@ namespace LanExchange.Intf
 
         void DoPanelViewFocusedItemChanged(object sender, EventArgs e);
         void DoPanelViewFilterTextChanged(object sender, EventArgs e);
+
+        bool SelectTabByName(string tabName);
+
+        void CommanCloseOtherTabs();
     }
 }

@@ -2,7 +2,7 @@
 using LanExchange.Intf;
 using LanExchange.SDK;
 
-namespace LanExchange.Misc.Action
+namespace LanExchange.Presenter.Action
 {
     class AboutAction : IAction
     {
@@ -17,6 +17,11 @@ namespace LanExchange.Misc.Action
                 m_Instance.Show();
             } else
                 m_Instance.Activate();
+        }
+
+        public bool Enabled
+        {
+            get { return true; }
         }
 
         private void OnFormClosed(object sender, FormClosedEventArgs formClosedEventArgs)

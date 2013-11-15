@@ -3,7 +3,7 @@ using LanExchange.Intf;
 using LanExchange.Properties;
 using LanExchange.SDK;
 
-namespace LanExchange.Misc.Action
+namespace LanExchange.Presenter.Action
 {
     class ShortcutKeysAction : IAction
     {
@@ -12,7 +12,7 @@ namespace LanExchange.Misc.Action
         {
             var presenter = App.MainPages;
             var info = App.Resolve<IPanelModel>();
-            info.TabName = Resources.ShortcutKeys;
+            info.TabName = Resources.KeyF1_;
             SetupPanelModel(info);
             if (presenter.AddTab(info))
             {
@@ -26,6 +26,11 @@ namespace LanExchange.Misc.Action
                     presenter.SelectedIndex = index;
                 }
             //presenter.SelectedIndex = presenter.Count - 1;
+        }
+
+        public bool Enabled
+        {
+            get { return true; }
         }
 
         [Localizable(false)]

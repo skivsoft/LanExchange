@@ -1,13 +1,29 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.Intf;
-using LanExchange.Model.Settings;
+using LanExchange.Misc.Impl;
+using LanExchange.Presenter.Action;
+using LanExchange.SDK;
 
 namespace LanExchange.Presenter
 {
     public class MainPresenter : PresenterBase<IMainView>, IMainPresenter
     {
+        private readonly Dictionary<Type, IAction> m_Actions;
+
+        public MainPresenter()
+        {
+            m_Actions = new Dictionary<Type, IAction>();
+            RegisterAction(new AboutAction());
+            RegisterAction(new ReReadAction());
+            RegisterAction(new CloseTabAction());
+            RegisterAction(new CloseOtherAction());
+            RegisterAction(new ShortcutKeysAction());
+        }
+
         private int GetDefaultWidth()
         {
             const double phi2 = 0.6180339887498949;
@@ -16,17 +32,19 @@ namespace LanExchange.Presenter
 
         public Rectangle SettingsGetBounds()
         {
+            var mainFormWidth = App.Config.GetIntValue(ConfigNames.MainFormWidth);
+            var mainFormX = App.Config.GetIntValue(ConfigNames.MainFormX);
             // correct width and height
-            bool boundsIsNotSet = Settings.Instance.MainFormWidth == 0;
+            bool boundsIsNotSet = mainFormWidth == 0;
             Rectangle workingArea;
             if (boundsIsNotSet)
                 workingArea = Screen.PrimaryScreen.WorkingArea;
             else
-                workingArea = Screen.GetWorkingArea(new Point(Settings.Instance.MainFormX + Settings.Instance.MainFormWidth / 2, 0));
+                workingArea = Screen.GetWorkingArea(new Point(mainFormX + mainFormWidth / 2, 0));
             var rect = new Rectangle();
-            rect.X = Settings.Instance.MainFormX;
+            rect.X = mainFormX;
             rect.Y = workingArea.Top;
-            rect.Width = Math.Min(Math.Max(GetDefaultWidth(), Settings.Instance.MainFormWidth), workingArea.Width);
+            rect.Width = Math.Min(Math.Max(GetDefaultWidth(), mainFormWidth), workingArea.Width);
             rect.Height = workingArea.Height;
             // determination side to snap right or left
             int centerX = (rect.Left + rect.Right) >> 1;
@@ -58,11 +76,35 @@ namespace LanExchange.Presenter
                 // snap to left side
                 rect.X -= rect.Left - workingArea.Left;
             // set properties
-            if (rect.Left != Settings.Instance.MainFormX || rect.Width != Settings.Instance.MainFormWidth)
+            var mainFormWidth = App.Config.GetIntValue(ConfigNames.MainFormWidth);
+            var mainFormX = App.Config.GetIntValue(ConfigNames.MainFormX);
+            if (rect.Left != mainFormX || rect.Width != mainFormWidth)
             {
-                Settings.Instance.MainFormX = rect.Left;
-                Settings.Instance.MainFormWidth = rect.Width;
+                App.Config.SetValue(ConfigNames.MainFormX, rect.Left);
+                App.Config.SetValue(ConfigNames.MainFormWidth, rect.Width);
             }
+        }
+
+        public void RegisterAction(IAction action)
+        {
+            if (action == null)
+                throw new ArgumentNullException("action");
+            m_Actions.Add(action.GetType(), action);
+        }
+
+        public void ExecuteAction<T>() where T : IAction
+        {
+            IAction action;
+            if (m_Actions.TryGetValue(typeof(T), out action))
+                action.Execute();
+        }
+
+        public bool IsActionEnabled<T>() where T : IAction
+        {
+            IAction action;
+            if (m_Actions.TryGetValue(typeof(T), out action))
+                return action.Enabled;
+            return false;
         }
     }
 }

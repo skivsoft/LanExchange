@@ -9,5 +9,7 @@
         /// Executes action.
         /// </summary>
         void Execute();
+
+        bool Enabled { get; }
     }
 }

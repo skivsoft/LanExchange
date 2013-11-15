@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Threading;
 using LanExchange.Core;
 using LanExchange.Intf;
+using LanExchange.Misc.Impl;
 
 namespace LanExchange.Misc
 {
@@ -33,7 +34,7 @@ namespace LanExchange.Misc
             }
             var lang = GetIfPresent("/LANG:");
             if (lang == null)
-                lang = Model.Settings.Settings.Instance.GetStringValue("Language");
+                lang = App.Config.GetStringValue(ConfigNames.Language);
             App.TR.CurrentLanguage = lang;
             //Thread.CurrentThread.CurrentUICulture = new CultureInfo(lang);
         }
