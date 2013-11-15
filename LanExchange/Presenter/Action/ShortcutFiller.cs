@@ -6,7 +6,7 @@ using LanExchange.Intf;
 using LanExchange.Properties;
 using LanExchange.SDK;
 
-namespace LanExchange.Misc.Action
+namespace LanExchange.Presenter.Action
 {
     public sealed class ShortcutFiller : IPanelFiller
     {
@@ -25,10 +25,9 @@ namespace LanExchange.Misc.Action
             result.Add(new ShortcutPanelItem(parent, Resources.KeyF1, Resources.KeyF1__));
             result.Add(new ShortcutPanelItem(parent, Resources.KeyF9, Resources.KeyF9__));
             result.Add(new ShortcutPanelItem(parent, Resources.KeyF10, Resources.KeyF10__));
-            result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlT, Resources.KeyCtrlT__));
-            result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlP, Resources.KeyCtrlP__));
-            result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlF4, Resources.KeyCtrlF4__));
+            result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlW, Resources.KeyCtrlW__));
             result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlR, Resources.KeyCtrlR__));
+            result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlW, Resources.KeyCtrlW__));
             result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlWinX, Resources.KeyCtrlWinX__));
             result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlA, Resources.KeyCtrlA__));
             result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlC, Resources.KeyCtrlC__));

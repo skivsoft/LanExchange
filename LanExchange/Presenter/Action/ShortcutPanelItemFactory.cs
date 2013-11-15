@@ -1,6 +1,6 @@
 using LanExchange.SDK;
 
-namespace LanExchange.Misc.Action
+namespace LanExchange.Presenter.Action
 {
     public sealed class ShortcutPanelItemFactory : PanelItemFactoryBase
     {

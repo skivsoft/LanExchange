@@ -59,7 +59,7 @@ namespace LanExchange.Utils
             try
             {
                 // use the GlobalAddAtom API to get a unique ID (as suggested by MSDN)
-                string atomName = Thread.CurrentThread.ManagedThreadId.ToString("X8", CultureInfo.InvariantCulture) + GetType().FullName;
+                string atomName = Handle.ToInt32().ToString("X8", CultureInfo.InvariantCulture) + GetType().FullName;
                 HotkeyID = GlobalAddAtom(atomName);
                 if (HotkeyID == 0)
                     throw new Exception("Unable to generate unique hotkey ID. Error: " +

@@ -151,9 +151,6 @@
   <data name="Settings_Plugins" xml:space="preserve">
     <value>Plugins</value>
   </data>
-  <data name="F1Help" xml:space="preserve">
-    <value>This shortcut keys list.</value>
-  </data>
   <data name="InputBoxPresenter_NotEmpty" xml:space="preserve">
     <value>Input text must not be empty.</value>
   </data>
@@ -261,14 +258,8 @@ Continue anyway?</value>
   <data name="KeyF10" xml:space="preserve">
     <value>F10</value>
   </data>
-  <data name="KeyCtrlT" xml:space="preserve">
-    <value>Ctrl+T</value>
-  </data>
-  <data name="KeyCtrlP" xml:space="preserve">
-    <value>Ctrl+P</value>
-  </data>
-  <data name="KeyCtrlF4" xml:space="preserve">
-    <value>Ctrl+F4</value>
+  <data name="KeyCtrlW" xml:space="preserve">
+    <value>Ctrl+W</value>
   </data>
   <data name="KeyCtrlR" xml:space="preserve">
     <value>Ctrl+R</value>
@@ -324,13 +315,7 @@ Continue anyway?</value>
   <data name="KeyF10__" xml:space="preserve">
     <value>Quit from LanExchange program.</value>
   </data>
-  <data name="KeyCtrlT__" xml:space="preserve">
-    <value>Open new tab.</value>
-  </data>
-  <data name="KeyCtrlP__" xml:space="preserve">
-    <value>Current tab properties.</value>
-  </data>
-  <data name="KeyCtrlF4__" xml:space="preserve">
+  <data name="KeyCtrlW__" xml:space="preserve">
     <value>Close current tab.</value>
   </data>
   <data name="KeyCtrlR__" xml:space="preserve">
@@ -378,7 +363,7 @@ Continue anyway?</value>
   <data name="KeyCtrlShiftT__" xml:space="preserve">
     <value>Send selected item(s) to new tab.</value>
   </data>
-  <data name="ShortcutKeys" xml:space="preserve">
+  <data name="KeyF1_" xml:space="preserve">
     <value>Shortcut Keys</value>
   </data>
   <data name="KeyDel_" xml:space="preserve">
@@ -395,9 +380,6 @@ Continue anyway?</value>
   </data>
   <data name="KeyCtrlShiftT_" xml:space="preserve">
     <value>Send to new tab</value>
-  </data>
-  <data name="KeyCtrlT_" xml:space="preserve">
-    <value>New tab</value>
   </data>
   <data name="KeyCtrlW_" xml:space="preserve">
     <value>Close tab</value>
@@ -461,5 +443,17 @@ Continue anyway?</value>
   </data>
   <data name="AboutForm_Title" xml:space="preserve">
     <value>About «{0}»</value>
+  </data>
+  <data name="PagesView_CloseTab" xml:space="preserve">
+    <value>Close tab</value>
+  </data>
+  <data name="PagesView_CloseOtherTabs" xml:space="preserve">
+    <value>Close other tabs</value>
+  </data>
+  <data name="PagesView_OpenTab" xml:space="preserve">
+    <value>Open tab «{0}»</value>
+  </data>
+  <data name="MainForm_View">
+    <value xml:space="preserve">&amp;View</value>
   </data>
 </root>

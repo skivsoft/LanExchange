@@ -108,16 +108,21 @@
     <Compile Include="Intf\PanelSortOrder.cs" />
     <Compile Include="Intf\PanelViewMode.cs" />
     <Compile Include="Intf\PresenterBase.cs" />
-    <Compile Include="Misc\Action\AboutAction.cs" />
-    <Compile Include="Misc\Action\ReReadAction.cs" />
-    <Compile Include="Misc\Action\ShortcutFiller.cs" />
-    <Compile Include="Misc\Action\ShortcutKeysAction.cs" />
+    <Compile Include="Intf\IConfig.cs" />
+    <Compile Include="Intf\ConfigNames.cs" />
+    <Compile Include="Misc\Impl\ConfigElement.cs" />
+    <Compile Include="Presenter\Action\AboutAction.cs" />
+    <Compile Include="Presenter\Action\CloseTabAction.cs" />
+    <Compile Include="Presenter\Action\CloseOtherAction.cs" />
+    <Compile Include="Presenter\Action\ReReadAction.cs" />
+    <Compile Include="Presenter\Action\ShortcutFiller.cs" />
+    <Compile Include="Presenter\Action\ShortcutKeysAction.cs" />
     <Compile Include="ContainerBuilder.cs" />
     <Compile Include="Intf\IAddonManager.cs" />
-    <Compile Include="Misc\Action\ShortcutPanelItem.cs" />
+    <Compile Include="Presenter\Action\ShortcutPanelItem.cs" />
     <Compile Include="Intf\App.cs" />
     <Compile Include="Intf\ILazyThreadPool.cs" />
-    <Compile Include="Misc\Action\ShortcutPanelItemFactory.cs" />
+    <Compile Include="Presenter\Action\ShortcutPanelItemFactory.cs" />
     <Compile Include="Misc\CmdLineProcessor.cs" />
     <Compile Include="Misc\DefferedAction.cs" />
     <Compile Include="Misc\Impl\ImageManagerImpl.cs" />
@@ -155,11 +160,10 @@
     <Compile Include="Intf\Addon\AddonProgram.cs" />
     <Compile Include="Misc\CustomPanelItem.cs" />
     <Compile Include="Misc\Impl\FolderManagerImpl.cs" />
-    <Compile Include="Model\Settings\HashtableSerializable.cs" />
     <Compile Include="Model\PagesModel.cs" />
     <Compile Include="Model\PanelModel.cs" />
     <Compile Include="Model\PanelModelCopyHelper.cs" />
-    <Compile Include="Model\Settings\SettingsChangedArgs.cs" />
+    <Compile Include="Intf\ConfigChangedArgs.cs" />
     <Compile Include="Misc\Phrase.cs" />
     <Compile Include="Presenter\MainPresenter.cs" />
     <Compile Include="UI\IListViewItemGetter.cs" />
@@ -171,7 +175,7 @@
     <Compile Include="Utils\PingUtils.cs" />
     <Compile Include="Intf\IPuntoSwitcherService.cs" />
     <Compile Include="Misc\PuntoSwitcherServiceEngRus.cs" />
-    <Compile Include="Model\Settings\Settings.cs" />
+    <Compile Include="Misc\Impl\ConfigImpl.cs" />
     <Compile Include="Model\AboutModel.cs" />
     <Compile Include="Presenter\AboutPresenter.cs" />
     <Compile Include="Presenter\FilterPresenter.cs" />
@@ -179,11 +183,6 @@
     <Compile Include="Presenter\PagesPresenter.cs" />
     <Compile Include="Presenter\PanelPresenter.cs" />
     <Compile Include="Misc\Impl\PluginManagerImpl.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\AboutForm.cs">
@@ -352,10 +351,6 @@
   <ItemGroup>
     <Content Include="History.txt" />
     <Content Include="LanExchange.ico" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
     <None Include="Resources\user_32.png" />
     <None Include="Resources\user_16.png" />
     <None Include="Resources\back_16.png" />

@@ -122,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="WMIViewer.ico" />
+    <None Include="app.config" />
     <None Include="WMIViewer16.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

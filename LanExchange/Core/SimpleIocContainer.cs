@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Reflection;
 using LanExchange.Intf;
 
 namespace LanExchange.Core
@@ -64,7 +65,11 @@ namespace LanExchange.Core
 
         private IEnumerable<object> ResolveConstructorParameters(RegisteredObject registeredObject)
         {
-            var constructorInfo = registeredObject.ConcreteType.GetConstructors()[0];
+            var constructors =
+                registeredObject.ConcreteType.GetConstructors();
+            if (constructors.Length == 0)
+                throw new NotImplementedException("Constructor is not implemented or non-public in class " + registeredObject.ConcreteType.Name);
+            var constructorInfo = constructors[0];
             foreach(var parameter in constructorInfo.GetParameters())
                 yield return ResolveObject(parameter.ParameterType);
         }

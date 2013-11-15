@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.Intf;
+using LanExchange.Presenter.Action;
 using LanExchange.Properties;
 using LanExchange.SDK;
 
@@ -31,22 +32,23 @@ namespace LanExchange.UI
             InitializeComponent();
             m_Presenter = presenter;
             m_Presenter.View = this;
-            SetupContextMenu();
+            App.Images.SetImagesTo(popPages);
+            SetupContextMenu(popPages.Items);
         }
 
-        private void SetupContextMenu()
+        private void SetupContextMenu(ToolStripItemCollection items)
         {
-            popPages.Items.Clear();
-            App.Images.SetImagesTo(popPages);
             App.PanelItemTypes.CreateDefaultRoots();
+            var index = 0;
             foreach (var root in App.PanelItemTypes.DefaultRoots)
             {
                 var imageName = App.PanelFillers.GetFillType(root).Name + PanelImageNames.NORMAL_POSTFIX;
-                var menuItem = new ToolStripMenuItem(root.Name);
+                var menuItem = new ToolStripMenuItem(string.Format(Resources.PagesView_OpenTab, root.Name));
                 menuItem.Tag = root;
                 menuItem.ImageIndex = App.Images.IndexOf(imageName);
                 menuItem.Click += PluginOnClick;
-                popPages.Items.Add(menuItem);
+                items.Insert(index, menuItem);
+                index++;
             }
         }
 
@@ -60,11 +62,14 @@ namespace LanExchange.UI
             }
             var root = menuItem.Tag as PanelItemBase;
             if (root == null) return;
-            var info = App.Resolve<IPanelModel>();
-            info.TabName = root.Name;
-            info.SetDefaultRoot(root);
-            info.DataType = App.PanelFillers.GetFillType(root).Name;
-            m_Presenter.AddTab(info);
+            if (!m_Presenter.SelectTabByName(root.Name))
+            {
+                var info = App.Resolve<IPanelModel>();
+                info.TabName = root.Name;
+                info.SetDefaultRoot(root);
+                info.DataType = App.PanelFillers.GetFillType(root).Name;
+                m_Presenter.AddTab(info);
+            }
         }
 
 
@@ -210,6 +215,9 @@ namespace LanExchange.UI
             }
             else
                 m_Opened = false;
+            mReread.Enabled = App.Presenter.IsActionEnabled<ReReadAction>();
+            mCloseTab.Enabled = App.Presenter.IsActionEnabled<CloseTabAction>();
+            mCloseOtherTabs.Enabled = App.Presenter.IsActionEnabled<CloseOtherAction>();
             //logger.Info("Opened={0}", bOpened);
         }
 
@@ -293,20 +301,24 @@ namespace LanExchange.UI
             return panelView;
         }
 
-        public void mSelectTab_Click(object sender, EventArgs e)
-        {
-            var menu = sender as ToolStripMenuItem;
-            if (menu != null)
-            {
-                int Index = (int)menu.Tag;
-                if (SelectedIndex != Index)
-                    SelectedIndex = Index;
-            }
-        }
-
         public IPagesPresenter Presenter
         {
             get { return m_Presenter; }
+        }
+
+        private void mReread_Click(object sender, EventArgs e)
+        {
+            App.Presenter.ExecuteAction<ReReadAction>();
+        }
+
+        private void mCloseTab_Click(object sender, EventArgs e)
+        {
+            App.Presenter.ExecuteAction<CloseTabAction>();
+        }
+
+        private void mCloseOtherTabs_Click(object sender, EventArgs e)
+        {
+            App.Presenter.ExecuteAction<CloseOtherAction>();
         }
     }
 }

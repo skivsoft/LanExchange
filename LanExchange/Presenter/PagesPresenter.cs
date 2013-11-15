@@ -151,6 +151,15 @@ namespace LanExchange.Presenter
             m_Model.DelTab(index);
         }
 
+        public void CommanCloseOtherTabs()
+        {
+            var popupIndex = View.PopupSelectedIndex;
+            for (int index = m_Model.Count - 1; index >= 0; index--)
+                if (index != m_Model.Count - 1 && index != popupIndex)
+                    m_Model.DelTab(index);
+            m_Model.SelectedIndex = 0;
+        }
+
         public void Model_AfterAppendTab(object sender, PanelModelEventArgs e)
         {
             // create panel
@@ -199,6 +208,17 @@ namespace LanExchange.Presenter
             if (PanelViewFilterTextChanged != null)
                 PanelViewFilterTextChanged(sender, e);
             SaveSettings();
+        }
+
+        public bool SelectTabByName(string tabName)
+        {
+            for (int index = 0; index < m_Model.Count; index++ )
+                if (m_Model.GetTabName(index).Equals(tabName))
+                {
+                    SelectedIndex = index;
+                    return true;
+                }
+            return false;
         }
 
         public int Count
