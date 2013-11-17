@@ -4,17 +4,11 @@ namespace LanExchange.Intf
 {
     public class ConfigChangedArgs : EventArgs
     {
-        public ConfigChangedArgs(ConfigNames name, object value)
+        public ConfigChangedArgs(ConfigNames name)
         {
             Name = name;
-            Value = value;
-            NewValue = value;
         }
 
         public ConfigNames Name { get; private set; }
-
-        public object Value { get; private set; }
-
-        public object NewValue { get; set; }
     }
 }

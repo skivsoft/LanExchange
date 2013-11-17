@@ -1,4 +1,5 @@
-﻿using LanExchange.Properties;
+﻿using System.Windows.Forms;
+using LanExchange.Properties;
 using LanExchange.UI;
 
 namespace LanExchange.UI
@@ -36,50 +37,49 @@ namespace LanExchange.UI
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.TrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.popTray = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.mOpen = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
-            this.mExitTray = new System.Windows.Forms.ToolStripMenuItem();
+            this.mTrayOpen = new System.Windows.Forms.ToolStripMenuItem();
+            this.mTraySep1 = new System.Windows.Forms.ToolStripSeparator();
+            this.mTrayAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.mTrayExit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.Status = new System.Windows.Forms.StatusStrip();
             this.lItemsCount = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.StatusSep1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lCompName = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.StatusSep2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lUserName = new System.Windows.Forms.ToolStripStatusLabel();
             this.tipComps = new System.Windows.Forms.ToolTip(this.components);
             this.popTop = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.pInfo = new LanExchange.UI.InfoView();
-            this.MainMenu = new System.Windows.Forms.MenuStrip();
-            this.mPanel = new System.Windows.Forms.ToolStripMenuItem();
-            this.mTabs = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.mReRead = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.mCloseTab = new System.Windows.Forms.ToolStripMenuItem();
-            this.mCloseOther = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.mPanelExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.mView = new System.Windows.Forms.ToolStripMenuItem();
-            this.mPanelLarge = new System.Windows.Forms.ToolStripMenuItem();
-            this.mPanelSmall = new System.Windows.Forms.ToolStripMenuItem();
-            this.mPanelList = new System.Windows.Forms.ToolStripMenuItem();
-            this.mPanelDetails = new System.Windows.Forms.ToolStripMenuItem();
-            this.mLanguage = new System.Windows.Forms.ToolStripMenuItem();
-            this.mHelp = new System.Windows.Forms.ToolStripMenuItem();
-            this.mHelpKeys = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.mWebPage = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.mHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.mInfoPanel = new System.Windows.Forms.ToolStripMenuItem();
-            this.mGridLines = new System.Windows.Forms.ToolStripMenuItem();
+            this.MainMenu = new System.Windows.Forms.MainMenu(this.components);
+            this.mPanel = new System.Windows.Forms.MenuItem();
+            this.mPanelSep1 = new System.Windows.Forms.MenuItem();
+            this.mPanelReRead = new System.Windows.Forms.MenuItem();
+            this.mPanelSep2 = new System.Windows.Forms.MenuItem();
+            this.mPanelCloseTab = new System.Windows.Forms.MenuItem();
+            this.mPanelCloseOther = new System.Windows.Forms.MenuItem();
+            this.mPanelSep3 = new System.Windows.Forms.MenuItem();
+            this.mPanelExit = new System.Windows.Forms.MenuItem();
+            this.mView = new System.Windows.Forms.MenuItem();
+            this.mViewMenu = new System.Windows.Forms.MenuItem();
+            this.mViewInfo = new System.Windows.Forms.MenuItem();
+            this.mViewGrid = new System.Windows.Forms.MenuItem();
+            this.mViewSep1 = new System.Windows.Forms.MenuItem();
+            this.mViewLarge = new System.Windows.Forms.MenuItem();
+            this.mViewSmall = new System.Windows.Forms.MenuItem();
+            this.mViewList = new System.Windows.Forms.MenuItem();
+            this.mViewDetails = new System.Windows.Forms.MenuItem();
+            this.mLanguage = new System.Windows.Forms.MenuItem();
+            this.mHelp = new System.Windows.Forms.MenuItem();
+            this.mHelpKeys = new System.Windows.Forms.MenuItem();
+            this.mHelpSep1 = new System.Windows.Forms.MenuItem();
+            this.mHelpWeb = new System.Windows.Forms.MenuItem();
+            this.mHelpLangs = new System.Windows.Forms.MenuItem();
+            this.mHelpBugs = new System.Windows.Forms.MenuItem();
+            this.mHelpSep2 = new System.Windows.Forms.MenuItem();
+            this.mHelpAbout = new System.Windows.Forms.MenuItem();
             this.popTray.SuspendLayout();
             this.Status.SuspendLayout();
-            this.MainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // TrayIcon
@@ -92,41 +92,41 @@ namespace LanExchange.UI
             // popTray
             // 
             this.popTray.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mOpen,
-            this.toolStripSeparator3,
-            this.toolStripMenuItem5,
-            this.mExitTray});
+            this.mTrayOpen,
+            this.mTraySep1,
+            this.mTrayAbout,
+            this.mTrayExit});
             this.popTray.Name = "popTray";
-            this.popTray.Size = new System.Drawing.Size(180, 76);
+            this.popTray.Size = new System.Drawing.Size(178, 76);
             this.popTray.Opening += new System.ComponentModel.CancelEventHandler(this.popTray_Opening);
             // 
-            // mOpen
+            // mTrayOpen
             // 
-            this.mOpen.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.mOpen.Name = "mOpen";
-            this.mOpen.ShortcutKeyDisplayString = global::LanExchange.Properties.Resources.KeyCtrlWinX;
-            this.mOpen.Size = new System.Drawing.Size(179, 22);
-            this.mOpen.Text = global::LanExchange.Properties.Resources.MainForm_Open;
-            this.mOpen.Click += new System.EventHandler(this.mOpen_Click);
+            this.mTrayOpen.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.mTrayOpen.Name = "mTrayOpen";
+            this.mTrayOpen.ShortcutKeyDisplayString = global::LanExchange.Properties.Resources.KeyCtrlWinX;
+            this.mTrayOpen.Size = new System.Drawing.Size(177, 22);
+            this.mTrayOpen.Text = global::LanExchange.Properties.Resources.MainForm_Open;
+            this.mTrayOpen.Click += new System.EventHandler(this.mOpen_Click);
             // 
-            // toolStripSeparator3
+            // mTraySep1
             // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(176, 6);
+            this.mTraySep1.Name = "mTraySep1";
+            this.mTraySep1.Size = new System.Drawing.Size(174, 6);
             // 
-            // toolStripMenuItem5
+            // mTrayAbout
             // 
-            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(179, 22);
-            this.toolStripMenuItem5.Text = global::LanExchange.Properties.Resources.MainForm_About;
-            this.toolStripMenuItem5.Click += new System.EventHandler(this.mAbout_Click);
+            this.mTrayAbout.Name = "mTrayAbout";
+            this.mTrayAbout.Size = new System.Drawing.Size(177, 22);
+            this.mTrayAbout.Text = global::LanExchange.Properties.Resources.MainForm_About;
+            this.mTrayAbout.Click += new System.EventHandler(this.mAbout_Click);
             // 
-            // mExitTray
+            // mTrayExit
             // 
-            this.mExitTray.Name = "mExitTray";
-            this.mExitTray.Size = new System.Drawing.Size(179, 22);
-            this.mExitTray.Text = global::LanExchange.Properties.Resources.MainForm_Exit;
-            this.mExitTray.Click += new System.EventHandler(this.mExit_Click);
+            this.mTrayExit.Name = "mTrayExit";
+            this.mTrayExit.Size = new System.Drawing.Size(177, 22);
+            this.mTrayExit.Text = global::LanExchange.Properties.Resources.MainForm_Exit;
+            this.mTrayExit.Click += new System.EventHandler(this.mExit_Click);
             // 
             // toolStripStatusLabel2
             // 
@@ -137,9 +137,9 @@ namespace LanExchange.UI
             // 
             this.Status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lItemsCount,
-            this.toolStripStatusLabel1,
+            this.StatusSep1,
             this.lCompName,
-            this.toolStripStatusLabel4,
+            this.StatusSep2,
             this.lUserName});
             this.Status.Location = new System.Drawing.Point(0, 520);
             this.Status.Name = "Status";
@@ -157,13 +157,13 @@ namespace LanExchange.UI
             this.lItemsCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lItemsCount.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lItemsCount_MouseUp);
             // 
-            // toolStripStatusLabel1
+            // StatusSep1
             // 
-            this.toolStripStatusLabel1.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-            this.toolStripStatusLabel1.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
-            this.toolStripStatusLabel1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(4, 17);
+            this.StatusSep1.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.StatusSep1.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            this.StatusSep1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
+            this.StatusSep1.Name = "StatusSep1";
+            this.StatusSep1.Size = new System.Drawing.Size(4, 17);
             // 
             // lCompName
             // 
@@ -174,13 +174,13 @@ namespace LanExchange.UI
             this.lCompName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lCompName_MouseDown);
             this.lCompName.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lCompName_MouseUp);
             // 
-            // toolStripStatusLabel4
+            // StatusSep2
             // 
-            this.toolStripStatusLabel4.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-            this.toolStripStatusLabel4.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
-            this.toolStripStatusLabel4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
-            this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
-            this.toolStripStatusLabel4.Size = new System.Drawing.Size(4, 17);
+            this.StatusSep2.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.StatusSep2.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            this.StatusSep2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
+            this.StatusSep2.Name = "StatusSep2";
+            this.StatusSep2.Size = new System.Drawing.Size(4, 17);
             // 
             // lUserName
             // 
@@ -209,7 +209,7 @@ namespace LanExchange.UI
             this.pInfo.CountLines = 3;
             this.pInfo.CurrentItem = null;
             this.pInfo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pInfo.Location = new System.Drawing.Point(0, 24);
+            this.pInfo.Location = new System.Drawing.Point(0, 0);
             this.pInfo.MinimumSize = new System.Drawing.Size(0, 64);
             this.pInfo.Name = "pInfo";
             this.pInfo.Size = new System.Drawing.Size(564, 64);
@@ -219,223 +219,201 @@ namespace LanExchange.UI
             // 
             // MainMenu
             // 
-            this.MainMenu.BackColor = System.Drawing.Color.White;
-            this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MainMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.mPanel,
             this.mView,
             this.mLanguage,
             this.mHelp});
-            this.MainMenu.Location = new System.Drawing.Point(0, 0);
-            this.MainMenu.Name = "MainMenu";
-            this.MainMenu.Size = new System.Drawing.Size(564, 24);
-            this.MainMenu.TabIndex = 25;
             // 
             // mPanel
             // 
-            this.mPanel.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mTabs,
-            this.toolStripSeparator4,
-            this.mReRead,
-            this.toolStripSeparator1,
-            this.mCloseTab,
-            this.mCloseOther,
-            this.toolStripSeparator8,
+            this.mPanel.Index = 0;
+            this.mPanel.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mPanelSep1,
+            this.mPanelReRead,
+            this.mPanelSep2,
+            this.mPanelCloseTab,
+            this.mPanelCloseOther,
+            this.mPanelSep3,
             this.mPanelExit});
-            this.mPanel.Name = "mPanel";
-            this.mPanel.Size = new System.Drawing.Size(45, 20);
             this.mPanel.Text = global::LanExchange.Properties.Resources.MenuPanel;
-            this.mPanel.DropDownOpened += new System.EventHandler(this.mPanel_DropDownOpened);
+            this.mPanel.Popup += new System.EventHandler(this.mPanel_Popup);
             // 
-            // mTabs
+            // mPanelSep1
             // 
-            this.mTabs.Name = "mTabs";
-            this.mTabs.Size = new System.Drawing.Size(161, 22);
-            this.mTabs.Text = "Open tab";
+            this.mPanelSep1.Index = 0;
+            this.mPanelSep1.Text = "-";
             // 
-            // toolStripSeparator4
+            // mPanelReRead
             // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(158, 6);
+            this.mPanelReRead.Index = 1;
+            this.mPanelReRead.Shortcut = System.Windows.Forms.Shortcut.CtrlR;
+            this.mPanelReRead.Text = global::LanExchange.Properties.Resources.KeyCtrlR_;
+            this.mPanelReRead.Click += new System.EventHandler(this.rereadToolStripMenuItem_Click);
             // 
-            // mReRead
+            // mPanelSep2
             // 
-            this.mReRead.Name = "mReRead";
-            this.mReRead.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.mReRead.Size = new System.Drawing.Size(161, 22);
-            this.mReRead.Text = global::LanExchange.Properties.Resources.KeyCtrlR_;
-            this.mReRead.Click += new System.EventHandler(this.rereadToolStripMenuItem_Click);
+            this.mPanelSep2.Index = 2;
+            this.mPanelSep2.Text = "-";
             // 
-            // toolStripSeparator1
+            // mPanelCloseTab
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(158, 6);
+            this.mPanelCloseTab.Index = 3;
+            this.mPanelCloseTab.Shortcut = System.Windows.Forms.Shortcut.CtrlW;
+            this.mPanelCloseTab.Text = global::LanExchange.Properties.Resources.PagesView_CloseTab;
+            this.mPanelCloseTab.Click += new System.EventHandler(this.mCloseTab_Click);
             // 
-            // mCloseTab
+            // mPanelCloseOther
             // 
-            this.mCloseTab.Name = "mCloseTab";
-            this.mCloseTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
-            this.mCloseTab.Size = new System.Drawing.Size(161, 22);
-            this.mCloseTab.Text = global::LanExchange.Properties.Resources.PagesView_CloseTab;
-            this.mCloseTab.Click += new System.EventHandler(this.mCloseTab_Click);
+            this.mPanelCloseOther.Index = 4;
+            this.mPanelCloseOther.Text = global::LanExchange.Properties.Resources.PagesView_CloseOtherTabs;
+            this.mPanelCloseOther.Click += new System.EventHandler(this.mCloseOther_Click);
             // 
-            // mCloseOther
+            // mPanelSep3
             // 
-            this.mCloseOther.Name = "mCloseOther";
-            this.mCloseOther.Size = new System.Drawing.Size(161, 22);
-            this.mCloseOther.Text = global::LanExchange.Properties.Resources.PagesView_CloseOtherTabs;
-            this.mCloseOther.Click += new System.EventHandler(this.mCloseOther_Click);
-            // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(158, 6);
+            this.mPanelSep3.Index = 5;
+            this.mPanelSep3.Text = "-";
             // 
             // mPanelExit
             // 
-            this.mPanelExit.Name = "mPanelExit";
-            this.mPanelExit.ShortcutKeys = System.Windows.Forms.Keys.F10;
-            this.mPanelExit.Size = new System.Drawing.Size(161, 22);
+            this.mPanelExit.Index = 6;
+            this.mPanelExit.Shortcut = System.Windows.Forms.Shortcut.F10;
             this.mPanelExit.Text = global::LanExchange.Properties.Resources.KeyF10_;
             this.mPanelExit.Click += new System.EventHandler(this.mExit_Click);
             // 
             // mView
             // 
-            this.mView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mInfoPanel,
-            this.mGridLines,
-            this.toolStripSeparator5,
-            this.mPanelLarge,
-            this.mPanelSmall,
-            this.mPanelList,
-            this.mPanelDetails});
-            this.mView.Name = "mView";
-            this.mView.Size = new System.Drawing.Size(41, 20);
+            this.mView.Index = 1;
+            this.mView.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mViewMenu,
+            this.mViewInfo,
+            this.mViewGrid,
+            this.mViewSep1,
+            this.mViewLarge,
+            this.mViewSmall,
+            this.mViewList,
+            this.mViewDetails});
             this.mView.Text = global::LanExchange.Properties.Resources.MainForm_View;
-            this.mView.DropDownOpening += new System.EventHandler(this.mView_DropDownOpening);
+            this.mView.Popup += new System.EventHandler(this.mView_Popup);
             // 
-            // mPanelLarge
+            // mViewMenu
             // 
-            this.mPanelLarge.Name = "mPanelLarge";
-            this.mPanelLarge.Size = new System.Drawing.Size(152, 22);
-            this.mPanelLarge.Tag = "0";
-            this.mPanelLarge.Text = global::LanExchange.Properties.Resources.ViewLargeIcons;
-            this.mPanelLarge.Click += new System.EventHandler(this.mViewLarge_Click);
+            this.mViewMenu.Checked = true;
+            this.mViewMenu.Index = 0;
+            this.mViewMenu.Shortcut = System.Windows.Forms.Shortcut.F9;
+            this.mViewMenu.Text = "Menu bar";
+            this.mViewMenu.Click += new System.EventHandler(this.mViewMenu_Click);
             // 
-            // mPanelSmall
+            // mViewInfo
             // 
-            this.mPanelSmall.Name = "mPanelSmall";
-            this.mPanelSmall.Size = new System.Drawing.Size(152, 22);
-            this.mPanelSmall.Tag = "2";
-            this.mPanelSmall.Text = global::LanExchange.Properties.Resources.ViewSmallIcons;
-            this.mPanelSmall.Click += new System.EventHandler(this.mViewLarge_Click);
+            this.mViewInfo.Checked = true;
+            this.mViewInfo.Index = 1;
+            this.mViewInfo.Text = "Info panel";
+            this.mViewInfo.Click += new System.EventHandler(this.mInfoPanel_Click);
             // 
-            // mPanelList
+            // mViewGrid
             // 
-            this.mPanelList.Name = "mPanelList";
-            this.mPanelList.Size = new System.Drawing.Size(152, 22);
-            this.mPanelList.Tag = "3";
-            this.mPanelList.Text = global::LanExchange.Properties.Resources.ViewList;
-            this.mPanelList.Click += new System.EventHandler(this.mViewLarge_Click);
+            this.mViewGrid.Checked = true;
+            this.mViewGrid.Index = 2;
+            this.mViewGrid.Text = "Grid lines";
+            this.mViewGrid.Click += new System.EventHandler(this.mGridLines_Click);
             // 
-            // mPanelDetails
+            // mViewSep1
             // 
-            this.mPanelDetails.Checked = true;
-            this.mPanelDetails.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.mPanelDetails.Name = "mPanelDetails";
-            this.mPanelDetails.Size = new System.Drawing.Size(152, 22);
-            this.mPanelDetails.Tag = "1";
-            this.mPanelDetails.Text = global::LanExchange.Properties.Resources.ViewDetails;
-            this.mPanelDetails.Click += new System.EventHandler(this.mViewLarge_Click);
+            this.mViewSep1.Index = 3;
+            this.mViewSep1.Text = "-";
+            // 
+            // mViewLarge
+            // 
+            this.mViewLarge.Index = 4;
+            this.mViewLarge.RadioCheck = true;
+            this.mViewLarge.Tag = "0";
+            this.mViewLarge.Text = "Large icons";
+            this.mViewLarge.Click += new System.EventHandler(this.mViewLarge_Click);
+            // 
+            // mViewSmall
+            // 
+            this.mViewSmall.Index = 5;
+            this.mViewSmall.RadioCheck = true;
+            this.mViewSmall.Tag = "2";
+            this.mViewSmall.Text = global::LanExchange.Properties.Resources.ViewSmallIcons;
+            this.mViewSmall.Click += new System.EventHandler(this.mViewLarge_Click);
+            // 
+            // mViewList
+            // 
+            this.mViewList.Index = 6;
+            this.mViewList.RadioCheck = true;
+            this.mViewList.Tag = "3";
+            this.mViewList.Text = global::LanExchange.Properties.Resources.ViewList;
+            this.mViewList.Click += new System.EventHandler(this.mViewLarge_Click);
+            // 
+            // mViewDetails
+            // 
+            this.mViewDetails.Checked = true;
+            this.mViewDetails.Index = 7;
+            this.mViewDetails.RadioCheck = true;
+            this.mViewDetails.Tag = "1";
+            this.mViewDetails.Text = global::LanExchange.Properties.Resources.ViewDetails;
+            this.mViewDetails.Click += new System.EventHandler(this.mViewLarge_Click);
             // 
             // mLanguage
             // 
-            this.mLanguage.Name = "mLanguage";
-            this.mLanguage.Size = new System.Drawing.Size(66, 20);
+            this.mLanguage.Index = 2;
             this.mLanguage.Text = global::LanExchange.Properties.Resources.MainForm_Language;
             // 
             // mHelp
             // 
-            this.mHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mHelp.Index = 3;
+            this.mHelp.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.mHelpKeys,
-            this.toolStripSeparator2,
-            this.mWebPage,
-            this.toolStripMenuItem1,
-            this.toolStripMenuItem2,
-            this.toolStripSeparator6,
+            this.mHelpSep1,
+            this.mHelpWeb,
+            this.mHelpLangs,
+            this.mHelpBugs,
+            this.mHelpSep2,
             this.mHelpAbout});
-            this.mHelp.Name = "mHelp";
-            this.mHelp.Size = new System.Drawing.Size(40, 20);
             this.mHelp.Text = global::LanExchange.Properties.Resources.MenuHelp;
             // 
             // mHelpKeys
             // 
-            this.mHelpKeys.Image = global::LanExchange.Properties.Resources.keyboard_16;
-            this.mHelpKeys.Name = "mHelpKeys";
-            this.mHelpKeys.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.mHelpKeys.Size = new System.Drawing.Size(187, 22);
+            this.mHelpKeys.Index = 0;
+            this.mHelpKeys.Shortcut = System.Windows.Forms.Shortcut.F1;
             this.mHelpKeys.Text = global::LanExchange.Properties.Resources.KeyF1_;
             this.mHelpKeys.Click += new System.EventHandler(this.mHelpKeys_Click);
             // 
-            // toolStripSeparator2
+            // mHelpSep1
             // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(184, 6);
+            this.mHelpSep1.Index = 1;
+            this.mHelpSep1.Text = "-";
             // 
-            // mWebPage
+            // mHelpWeb
             // 
-            this.mWebPage.Name = "mWebPage";
-            this.mWebPage.Size = new System.Drawing.Size(187, 22);
-            this.mWebPage.Text = global::LanExchange.Properties.Resources.MenuHomePage;
-            this.mWebPage.Click += new System.EventHandler(this.mWebPage_Click);
+            this.mHelpWeb.Index = 2;
+            this.mHelpWeb.Text = global::LanExchange.Properties.Resources.MenuHomePage;
+            this.mHelpWeb.Click += new System.EventHandler(this.mWebPage_Click);
             // 
-            // toolStripMenuItem1
+            // mHelpLangs
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(187, 22);
-            this.toolStripMenuItem1.Text = global::LanExchange.Properties.Resources.MenuLocalizationPage;
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            this.mHelpLangs.Index = 3;
+            this.mHelpLangs.Text = global::LanExchange.Properties.Resources.MenuLocalizationPage;
+            this.mHelpLangs.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
-            // toolStripMenuItem2
+            // mHelpBugs
             // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(187, 22);
-            this.toolStripMenuItem2.Text = global::LanExchange.Properties.Resources.MenuBugtrackerPage;
-            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
+            this.mHelpBugs.Index = 4;
+            this.mHelpBugs.Text = global::LanExchange.Properties.Resources.MenuBugtrackerPage;
+            this.mHelpBugs.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
-            // toolStripSeparator6
+            // mHelpSep2
             // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(184, 6);
+            this.mHelpSep2.Index = 5;
+            this.mHelpSep2.Text = "-";
             // 
             // mHelpAbout
             // 
-            this.mHelpAbout.Name = "mHelpAbout";
-            this.mHelpAbout.Size = new System.Drawing.Size(187, 22);
+            this.mHelpAbout.Index = 6;
             this.mHelpAbout.Text = global::LanExchange.Properties.Resources.MenuAbout;
             this.mHelpAbout.Click += new System.EventHandler(this.mAbout_Click);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(149, 6);
-            // 
-            // mInfoPanel
-            // 
-            this.mInfoPanel.Checked = true;
-            this.mInfoPanel.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.mInfoPanel.Name = "mInfoPanel";
-            this.mInfoPanel.Size = new System.Drawing.Size(152, 22);
-            this.mInfoPanel.Text = "Info panel";
-            this.mInfoPanel.Click += new System.EventHandler(this.mInfoPanel_Click);
-            // 
-            // mGridLines
-            // 
-            this.mGridLines.Checked = true;
-            this.mGridLines.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.mGridLines.Name = "mGridLines";
-            this.mGridLines.Size = new System.Drawing.Size(152, 22);
-            this.mGridLines.Text = "Grid lines";
-            this.mGridLines.Click += new System.EventHandler(this.mGridLines_Click);
             // 
             // MainForm
             // 
@@ -444,10 +422,9 @@ namespace LanExchange.UI
             this.ClientSize = new System.Drawing.Size(564, 542);
             this.Controls.Add(this.pInfo);
             this.Controls.Add(this.Status);
-            this.Controls.Add(this.MainMenu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.MainMenuStrip = this.MainMenu;
+            this.Menu = this.MainMenu;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Activated += new System.EventHandler(this.MainForm_Activated);
@@ -458,8 +435,6 @@ namespace LanExchange.UI
             this.popTray.ResumeLayout(false);
             this.Status.ResumeLayout(false);
             this.Status.PerformLayout();
-            this.MainMenu.ResumeLayout(false);
-            this.MainMenu.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -469,47 +444,47 @@ namespace LanExchange.UI
 
         private System.Windows.Forms.NotifyIcon TrayIcon;
         private System.Windows.Forms.ContextMenuStrip popTray;
-        private System.Windows.Forms.ToolStripMenuItem mExitTray;
-        private System.Windows.Forms.ToolStripMenuItem mOpen;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem mTrayAbout;
+        private System.Windows.Forms.ToolStripMenuItem mTrayExit;
+        private System.Windows.Forms.ToolStripMenuItem mTrayOpen;
+        private System.Windows.Forms.ToolStripSeparator mTraySep1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         private System.Windows.Forms.StatusStrip Status;
         public System.Windows.Forms.ToolStripStatusLabel lItemsCount;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel StatusSep1;
         private System.Windows.Forms.ToolStripStatusLabel lCompName;
         public System.Windows.Forms.ToolTip tipComps;
         internal System.Windows.Forms.ContextMenuStrip popTop;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
+        private System.Windows.Forms.ToolStripStatusLabel StatusSep2;
         private System.Windows.Forms.ToolStripStatusLabel lUserName;
         internal InfoView pInfo;
-        private System.Windows.Forms.MenuStrip MainMenu;
-        private System.Windows.Forms.ToolStripMenuItem mHelp;
-        private System.Windows.Forms.ToolStripMenuItem mHelpAbout;
-        private System.Windows.Forms.ToolStripMenuItem mPanel;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
-        private System.Windows.Forms.ToolStripMenuItem mReRead;
-        private System.Windows.Forms.ToolStripMenuItem mWebPage;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
-        private System.Windows.Forms.ToolStripMenuItem mPanelExit;
-        private System.Windows.Forms.ToolStripMenuItem mHelpKeys;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem mTabs;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripMenuItem mLanguage;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem mView;
-        private System.Windows.Forms.ToolStripMenuItem mPanelLarge;
-        private System.Windows.Forms.ToolStripMenuItem mPanelSmall;
-        private System.Windows.Forms.ToolStripMenuItem mPanelList;
-        private System.Windows.Forms.ToolStripMenuItem mPanelDetails;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem mCloseTab;
-        private System.Windows.Forms.ToolStripMenuItem mCloseOther;
-        private System.Windows.Forms.ToolStripMenuItem mInfoPanel;
-        private System.Windows.Forms.ToolStripMenuItem mGridLines;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.MainMenu MainMenu;
+        private System.Windows.Forms.MenuItem mHelp;
+        private System.Windows.Forms.MenuItem mHelpAbout;
+        private System.Windows.Forms.MenuItem mPanel;
+        private System.Windows.Forms.MenuItem mPanelReRead;
+        private System.Windows.Forms.MenuItem mHelpWeb;
+        private System.Windows.Forms.MenuItem mPanelSep3;
+        private System.Windows.Forms.MenuItem mPanelExit;
+        private System.Windows.Forms.MenuItem mHelpKeys;
+        private System.Windows.Forms.MenuItem mPanelSep1;
+        private System.Windows.Forms.MenuItem mLanguage;
+        private System.Windows.Forms.MenuItem mHelpLangs;
+        private System.Windows.Forms.MenuItem mHelpBugs;
+        private System.Windows.Forms.MenuItem mView;
+        private System.Windows.Forms.MenuItem mViewLarge;
+        private System.Windows.Forms.MenuItem mViewSmall;
+        private System.Windows.Forms.MenuItem mViewList;
+        private System.Windows.Forms.MenuItem mViewDetails;
+        private System.Windows.Forms.MenuItem mPanelSep2;
+        private System.Windows.Forms.MenuItem mPanelCloseTab;
+        private System.Windows.Forms.MenuItem mPanelCloseOther;
+        private System.Windows.Forms.MenuItem mViewInfo;
+        private System.Windows.Forms.MenuItem mViewGrid;
+        private System.Windows.Forms.MenuItem mViewSep1;
+        private MenuItem mHelpSep1;
+        private MenuItem mHelpSep2;
+        private MenuItem mViewMenu;
     }
 }
 

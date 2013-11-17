@@ -18,7 +18,7 @@ namespace LanExchange.Intf
         public static IImageManager Images;
         public static IAddonManager Addons;
         public static ITranslationService TR;
-        public static IConfig Config;
+        public static IConfigModel Config;
         /// <summary>
         /// MainView singleton instance.
         /// </summary>
@@ -44,7 +44,7 @@ namespace LanExchange.Intf
             Addons = Resolve<IAddonManager>();
             Presenter = Resolve<IMainPresenter>();
             TR = Resolve<ITranslationService>();
-            Config = Resolve<IConfig>();
+            Config = Resolve<IConfigModel>();
             TranslationResourceManager.Service = TR;
         }
 

@@ -34,7 +34,7 @@ namespace LanExchange.Misc
             }
             var lang = GetIfPresent("/LANG:");
             if (lang == null)
-                lang = App.Config.GetStringValue(ConfigNames.Language);
+                lang = App.Config.Language;
             App.TR.CurrentLanguage = lang;
             //Thread.CurrentThread.CurrentUICulture = new CultureInfo(lang);
         }

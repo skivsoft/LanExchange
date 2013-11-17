@@ -108,9 +108,8 @@
     <Compile Include="Intf\PanelSortOrder.cs" />
     <Compile Include="Intf\PanelViewMode.cs" />
     <Compile Include="Intf\PresenterBase.cs" />
-    <Compile Include="Intf\IConfig.cs" />
+    <Compile Include="Intf\IConfigModel.cs" />
     <Compile Include="Intf\ConfigNames.cs" />
-    <Compile Include="Misc\Impl\ConfigElement.cs" />
     <Compile Include="Presenter\Action\AboutAction.cs" />
     <Compile Include="Presenter\Action\CloseTabAction.cs" />
     <Compile Include="Presenter\Action\CloseOtherAction.cs" />
@@ -175,7 +174,7 @@
     <Compile Include="Utils\PingUtils.cs" />
     <Compile Include="Intf\IPuntoSwitcherService.cs" />
     <Compile Include="Misc\PuntoSwitcherServiceEngRus.cs" />
-    <Compile Include="Misc\Impl\ConfigImpl.cs" />
+    <Compile Include="Model\ConfigModel.cs" />
     <Compile Include="Model\AboutModel.cs" />
     <Compile Include="Presenter\AboutPresenter.cs" />
     <Compile Include="Presenter\FilterPresenter.cs" />
