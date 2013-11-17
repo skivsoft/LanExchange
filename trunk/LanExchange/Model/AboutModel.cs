@@ -11,7 +11,7 @@ namespace LanExchange.Model
     public class AboutModel : IAboutModel
     {
         const string WEBSITE = "code.google.com/p/lanexchange/";
-        const string TWITTER = "LanExchangeHere";
+        const string TWITTER = "TheLanExchange";
         const string EMAIL   = "skivsoft@gmail.com";
 
         private Assembly GetAssembly()

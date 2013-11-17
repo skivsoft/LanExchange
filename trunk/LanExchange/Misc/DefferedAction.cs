@@ -6,6 +6,8 @@ namespace LanExchange.Misc
 {
     public class DefferedAction : IDisposable
     {
+        public const int SAVE_ACTION_MS = 1000; // 1 sec
+        
         private readonly int m_Delay;
         private readonly TimerCallback m_Callback;
         private Timer m_Timer;

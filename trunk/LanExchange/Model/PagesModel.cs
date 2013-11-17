@@ -10,7 +10,7 @@ using LanExchange.Utils;
 
 namespace LanExchange.Model
 {
-    [XmlType("Tabs")]
+    [XmlType("LanExchangeTabs")]
     public class PagesModel : IPagesModel
     {
         private readonly List<IPanelModel> m_List;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Windows.Forms;
 using LanExchange.Core;
 using LanExchange.Intf;
@@ -14,6 +15,7 @@ namespace LanExchange.UI
     public sealed partial class AboutForm : EscapeForm, IAboutView
     {
         private readonly IAboutPresenter m_Presenter;
+        private RichTextBox m_BoxDetails;
         
         public AboutForm(IAboutPresenter presenter)
         {
@@ -21,9 +23,39 @@ namespace LanExchange.UI
             m_Presenter.View = this;
             InitializeComponent();
             m_Presenter.LoadFromModel();
-            boxLicense.BringToFront();
+            SetupBoxDetails();
         }
        
+        private void SetupBoxDetails()
+        {
+            m_BoxDetails = new RichTextBox();
+            var rect = ClientRectangle;
+            m_BoxDetails.SetBounds(rect.Left+16, rect.Top+16, rect.Width-32, rect.Height-bShowDetails.Height-32);
+            m_BoxDetails.Visible = false;
+            m_BoxDetails.ReadOnly = true;
+            m_BoxDetails.BorderStyle = BorderStyle.None;
+            m_BoxDetails.Rtf = GetDetailsRtf();
+            Controls.Add(m_BoxDetails);
+            m_BoxDetails.BringToFront();
+        }
+
+        private string GetDetailsRtf()
+        {
+            var sb = new StringBuilder();
+            sb.Append(@"{\rtf1\ansi");
+            sb.AppendLine(@"\b Plugins:\b0");
+            sb.AppendLine("  Network");
+            sb.AppendLine("  Users");
+            sb.AppendLine();
+            sb.AppendLine(@"\b Translations:\b0");
+            sb.AppendLine(@"  English - Translator1");
+            sb.AppendLine(@"  Russian - Translator2");
+            sb.AppendLine(@"  Kazakh - Translator3");
+            sb.AppendLine(@"  Esperanto - Translator4");
+            sb.Append("}");
+            return sb.ToString().Replace("\r\n", @"\line ");
+        }
+
         private void eWeb_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             m_Presenter.OpenWebLink();
@@ -89,11 +121,11 @@ namespace LanExchange.UI
 
         private void bShowLicense_Click(object sender, EventArgs e)
         {
-            boxLicense.Visible = !boxLicense.Visible;
-            if (boxLicense.Visible)
-                bShowLicense.Text = Resources.HideLicense;
+            m_BoxDetails.Visible = !m_BoxDetails.Visible;
+            if (m_BoxDetails.Visible)
+                bShowDetails.Text = Resources.HideDetails;
             else
-                bShowLicense.Text = Resources.ShowLicense;
+                bShowDetails.Text = Resources.ShowDetails;
         }
 
         private void bClose_Click(object sender, EventArgs e)
@@ -103,7 +135,7 @@ namespace LanExchange.UI
 
         private void AboutForm_Load(object sender, EventArgs e)
         {
-            bShowLicense.Text = Resources.ShowLicense;
+            bShowDetails.Text = Resources.ShowDetails;
         }
 
     }

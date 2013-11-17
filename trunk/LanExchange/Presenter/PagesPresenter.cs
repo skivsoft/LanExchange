@@ -12,8 +12,6 @@ namespace LanExchange.Presenter
 {
     public class PagesPresenter : PresenterBase<IPagesView>, IPagesPresenter, IDisposable
     {
-        private const int SAVE_ACTION_MS = 1000; // 1 sec
-
         private readonly IPagesModel m_Model;
         private DefferedAction m_SaveAction;
 
@@ -27,7 +25,7 @@ namespace LanExchange.Presenter
             m_Model.AfterRemove += Model_AfterRemove;
             m_Model.AfterRename += Model_AfterRename;
             m_Model.IndexChanged += Model_IndexChanged;
-            m_SaveAction = new DefferedAction((o) => m_Model.SaveSettings(), SAVE_ACTION_MS);
+            m_SaveAction = new DefferedAction((o) => m_Model.SaveSettings(), DefferedAction.SAVE_ACTION_MS);
         }
 
         public void Dispose()

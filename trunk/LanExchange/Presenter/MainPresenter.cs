@@ -32,8 +32,8 @@ namespace LanExchange.Presenter
 
         public Rectangle SettingsGetBounds()
         {
-            var mainFormWidth = App.Config.GetIntValue(ConfigNames.MainFormWidth);
-            var mainFormX = App.Config.GetIntValue(ConfigNames.MainFormX);
+            var mainFormWidth = App.Config.MainFormWidth;
+            var mainFormX = App.Config.MainFormX;
             // correct width and height
             bool boundsIsNotSet = mainFormWidth == 0;
             Rectangle workingArea;
@@ -45,7 +45,7 @@ namespace LanExchange.Presenter
             rect.X = mainFormX;
             rect.Y = workingArea.Top;
             rect.Width = Math.Min(Math.Max(GetDefaultWidth(), mainFormWidth), workingArea.Width);
-            rect.Height = workingArea.Height;
+            rect.Height = workingArea.Height - SystemInformation.MenuHeight;
             // determination side to snap right or left
             int centerX = (rect.Left + rect.Right) >> 1;
             int workingAreaCenterX = (workingArea.Left + workingArea.Right) >> 1;
@@ -76,12 +76,12 @@ namespace LanExchange.Presenter
                 // snap to left side
                 rect.X -= rect.Left - workingArea.Left;
             // set properties
-            var mainFormWidth = App.Config.GetIntValue(ConfigNames.MainFormWidth);
-            var mainFormX = App.Config.GetIntValue(ConfigNames.MainFormX);
+            var mainFormWidth = App.Config.MainFormWidth;
+            var mainFormX = App.Config.MainFormX;
             if (rect.Left != mainFormX || rect.Width != mainFormWidth)
             {
-                App.Config.SetValue(ConfigNames.MainFormX, rect.Left);
-                App.Config.SetValue(ConfigNames.MainFormWidth, rect.Width);
+                App.Config.MainFormX = rect.Left;
+                App.Config.MainFormWidth = rect.Width;
             }
         }
 

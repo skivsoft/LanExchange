@@ -5,6 +5,7 @@ using System.Threading;
 using System.Windows.Forms;
 using LanExchange.Core;
 using LanExchange.Intf;
+using LanExchange.Misc;
 using LanExchange.Misc.Impl;
 using LanExchange.Model;
 using System.Drawing;
@@ -23,6 +24,8 @@ namespace LanExchange.UI
 
         private readonly GlobalHotkeys m_Hotkeys;
 
+        private readonly DefferedAction m_ConfigSave;
+
         public PagesView Pages;
 
         public MainForm()
@@ -31,9 +34,10 @@ namespace LanExchange.UI
             // App.MainView must be set before panel view will be created
             App.MainView = this;
             // load settings from cfg-file
+            m_ConfigSave = new DefferedAction(e => App.Config.Save(), DefferedAction.SAVE_ACTION_MS);
             App.Config.Changed += ConfigOnChanged;
             App.Config.Load();
-            SetRunMinimized(App.Config.GetBoolValue(ConfigNames.RunMinimized));
+            SetRunMinimized(App.Config.RunMinimized);
             // init Pages presenter
             Pages = (PagesView)App.Resolve<IPagesView>();
             Pages.Dock = DockStyle.Fill;
@@ -65,23 +69,17 @@ namespace LanExchange.UI
             switch(e.Name)
             {
                 case ConfigNames.ShowMainMenu:
-                    MainMenu.Visible = (bool) e.Value;
+                    if (Menu == null)
+                        Menu = MainMenu;
+                    else
+                        Menu = null;
                     break;
                 case ConfigNames.NumInfoLines:
-                    var value = (int) e.Value;
-                    if (value < 2)
-                        value = 2;
-                    if (App.PanelColumns != null)
-                    {
-                        var maxColumns = Math.Max(3, App.PanelColumns.MaxColumns);
-                        if (value > maxColumns)
-                            value = maxColumns;
-                    }
-                    e.NewValue = value;
-                    pInfo.CountLines = value;
+                    pInfo.CountLines = App.Config.NumInfoLines;
                     App.MainPages.DoPanelViewFocusedItemChanged(Pages.ActivePanelView, EventArgs.Empty);
                     break;
             }
+            m_ConfigSave.Reset();
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Windows.Forms.Control.set_Text(System.String)")]
@@ -116,14 +114,14 @@ namespace LanExchange.UI
             //    return;
             //}
             mLanguage.Visible = true;
-            mLanguage.DropDownItems.Clear();
+            mLanguage.MenuItems.Clear();
             foreach(var pair in nameDict)
             {
-                var menuItem = new ToolStripMenuItem(pair.Value);
+                var menuItem = new MenuItem(pair.Value);
                 menuItem.Checked = pair.Key.Equals(App.TR.CurrentLanguage);
                 menuItem.Tag = pair.Key;
                 menuItem.Click += MenuItemOnClick;
-                mLanguage.DropDownItems.Add(menuItem);
+                mLanguage.MenuItems.Add(menuItem);
             }
         }
 
@@ -172,17 +170,17 @@ namespace LanExchange.UI
             // F9 - Show/Hide main menu
             if (e.KeyCode == Keys.F9)
             {
-                App.Config.SetValue(ConfigNames.ShowMainMenu, !App.Config.GetBoolValue(ConfigNames.ShowMainMenu));
+                App.Config.ShowMainMenu = !App.Config.ShowMainMenu;
                 e.Handled = true;
             }
             // Ctrl+Up/Ctrl+Down - change number of info lines
             if (e.Control && (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down))
             {
-                int value = App.Config.GetIntValue(ConfigNames.NumInfoLines);
+                int value = App.Config.NumInfoLines;
                 if (e.KeyCode == Keys.Down)
-                    App.Config.SetValue(ConfigNames.NumInfoLines, value + 1);
+                    App.Config.NumInfoLines = value + 1;
                 else
-                    App.Config.SetValue(ConfigNames.NumInfoLines, value - 1);
+                    App.Config.NumInfoLines = value - 1;
                 e.Handled = true;
             }
         }
@@ -297,7 +295,7 @@ namespace LanExchange.UI
 
         private void popTray_Opening(object sender, CancelEventArgs e)
         {
-            mOpen.Text = Visible ? Resources.Close : Resources.MainForm_Open;
+            mTrayOpen.Text = Visible ? Resources.Close : Resources.MainForm_Open;
         }
 
         private void mOpen_Click(object sender, EventArgs e)
@@ -371,46 +369,48 @@ namespace LanExchange.UI
                 Process.Start("explorer.exe", "/n,::{20D04FE0-3AEA-1069-A2D8-08002B30309D}");
         }
 
-        private void UpdateViewTypeMenu()
+        private void UpdateViewMenu()
         {
-            mPanelLarge.Checked = false;
-            mPanelSmall.Checked = false;
-            mPanelList.Checked = false;
-            mPanelDetails.Checked = false;
+            mViewLarge.Checked = false;
+            mViewSmall.Checked = false;
+            mViewList.Checked = false;
+            mViewDetails.Checked = false;
             var pv = Pages.ActivePanelView;
             var enabled = pv != null;
-            mPanelLarge.Enabled = enabled;
-            mPanelSmall.Enabled = enabled;
-            mPanelList.Enabled = enabled;
-            mPanelDetails.Enabled = enabled;
+            mViewLarge.Enabled = enabled;
+            mViewSmall.Enabled = enabled;
+            mViewList.Enabled = enabled;
+            mViewDetails.Enabled = enabled;
             if (pv != null)
                 switch (pv.ViewMode)
                 {
                     case PanelViewMode.LargeIcon:
-                        mPanelLarge.Checked = true;
+                        mViewLarge.Checked = true;
                         break;
                     case PanelViewMode.SmallIcon:
-                        mPanelSmall.Checked = true;
+                        mViewSmall.Checked = true;
                         break;
                     case PanelViewMode.List:
-                        mPanelList.Checked = true;
+                        mViewList.Checked = true;
                         break;
                     case PanelViewMode.Details:
-                        mPanelDetails.Checked = true;
+                        mViewDetails.Checked = true;
                         break;
                 }
         }
 
-        private void mView_DropDownOpening(object sender, EventArgs e)
+        private void mView_Popup(object sender, EventArgs e)
         {
-            UpdateViewTypeMenu();
+            mViewGrid.Checked = App.Config.ShowGridLines;
+            mViewInfo.Checked = App.Config.NumInfoLines > 0;
+            UpdateViewMenu();
         }
 
         private void mViewLarge_Click(object sender, EventArgs e)
         {
             var pv = Pages.ActivePanelView;
             if (pv == null) return;
-            var menuItem = sender as ToolStripMenuItem;
+            var menuItem = sender as MenuItem;
             if (menuItem == null) return;
             int tag;
             if (int.TryParse(menuItem.Tag.ToString(), out tag))
@@ -521,11 +521,11 @@ namespace LanExchange.UI
             lItemsCount.Text = String.Format(CultureInfo.InvariantCulture, format, args);
         }
 
-        private void mPanel_DropDownOpened(object sender, EventArgs e)
+        private void mPanel_Popup(object sender, EventArgs e)
         {
-            mReRead.Enabled = App.Presenter.IsActionEnabled<ReReadAction>();
-            mCloseTab.Enabled = App.Presenter.IsActionEnabled<CloseTabAction>();
-            mCloseOther.Enabled = App.Presenter.IsActionEnabled<CloseOtherAction>();
+            mPanelReRead.Enabled = App.Presenter.IsActionEnabled<ReReadAction>();
+            mPanelCloseTab.Enabled = App.Presenter.IsActionEnabled<CloseTabAction>();
+            mPanelCloseOther.Enabled = App.Presenter.IsActionEnabled<CloseOtherAction>();
         }
 
         private void mCloseTab_Click(object sender, EventArgs e)
@@ -540,17 +540,17 @@ namespace LanExchange.UI
 
         private void mInfoPanel_Click(object sender, EventArgs e)
         {
-            mInfoPanel.Checked = !mInfoPanel.Checked;
-            if (mInfoPanel.Checked)
-                App.Config.SetValue(ConfigNames.NumInfoLines, App.Config.GetDefaultValue(ConfigNames.NumInfoLines));
-            else
-                App.Config.SetValue(ConfigNames.NumInfoLines, 0);
+            App.Config.ShowInfoPanel = !App.Config.ShowInfoPanel;
         }
 
         private void mGridLines_Click(object sender, EventArgs e)
         {
-            mGridLines.Checked = !mGridLines.Checked;
-            App.Config.SetValue(ConfigNames.GridLines, mGridLines.Checked);
+            App.Config.ShowGridLines = !App.Config.ShowGridLines;
+        }
+
+        private void mViewMenu_Click(object sender, EventArgs e)
+        {
+            App.Config.ShowMainMenu = false;
         }
     }
 }
