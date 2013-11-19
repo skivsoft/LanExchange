@@ -20,6 +20,11 @@ namespace LanExchange.UI
             m_Presenter = presenter;
             m_Presenter.View = this;
             InitializeComponent();
+            lVersion.Text = Resources.AboutForm_Version;
+            lLicense.Text = Resources.AboutForm_License;
+            eLicense.Text = Resources.AboutForm_MIT;
+            lCopyright.Text = Resources.AboutForm_Copyright;
+            lWeb.Text = Resources.AboutForm_Webpage;
             m_Presenter.LoadFromModel();
             SetupBoxDetails();
         }
@@ -41,7 +46,9 @@ namespace LanExchange.UI
         private string GetDetailsRtf()
         {
             var sb = new StringBuilder();
-            sb.Append(@"{\rtf1\ansi");
+            //sb.Append(@"{\rtf1\ansi");
+            sb.Append(@"{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset204 Microsoft Sans Serif;}}");
+            sb.Append(@"\viewkind4\uc1\pard\f0\fs17\ ");
             sb.AppendLine(string.Format(@"\b {0}\b0", Resources.AboutForm_Plugins));
             foreach (var pair in App.Plugins.PluginsAuthors)
             {
@@ -66,16 +73,6 @@ namespace LanExchange.UI
         private void eWeb_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             m_Presenter.OpenHomeLink();
-        }
-
-        private void eTwitter_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            m_Presenter.OpenTwitterLink();
-        }
-
-        private void eEmail_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            m_Presenter.OpenEmailLink();
         }
 
         public string VersionText

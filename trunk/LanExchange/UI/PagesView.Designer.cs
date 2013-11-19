@@ -1,6 +1,4 @@
-﻿using LanExchange.Properties;
-
-namespace LanExchange.UI
+﻿namespace LanExchange.UI
 {
     partial class PagesView
     {

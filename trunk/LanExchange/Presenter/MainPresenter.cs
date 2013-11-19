@@ -37,7 +37,9 @@ namespace LanExchange.Presenter
                     App.MainView.ShowInfoPanel = config.ShowInfoPanel;
                     break;
                 case ConfigNames.ShowGridLines:
-                    App.MainPages.View.ActivePanelView.GridLines = config.ShowGridLines;
+                    var panelView = App.MainPages.View.ActivePanelView;
+                    if (panelView != null)
+                        panelView.GridLines = config.ShowGridLines;
                     break;
                 case ConfigNames.NumInfoLines:
                     App.MainView.NumInfoLines = config.NumInfoLines;
