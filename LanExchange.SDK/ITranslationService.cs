@@ -7,6 +7,7 @@ namespace LanExchange.SDK
         string SourceLanguage { get; }
         string CurrentLanguage { get; set; }
         IDictionary<string, string> GetLanguagesNames();
+        IDictionary<string, string> GetTranslations();
         string Translate(string id);
     }
 }

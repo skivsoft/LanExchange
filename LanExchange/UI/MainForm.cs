@@ -3,12 +3,8 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
-using LanExchange.Core;
 using LanExchange.Intf;
-using LanExchange.Misc;
-using LanExchange.Misc.Impl;
 using LanExchange.Model;
-using System.Drawing;
 using System.ComponentModel;
 using System.Security.Permissions;
 using LanExchange.Presenter.Action;
@@ -24,8 +20,6 @@ namespace LanExchange.UI
 
         private readonly GlobalHotkeys m_Hotkeys;
 
-        private readonly DefferedAction m_ConfigSave;
-
         public PagesView Pages;
 
         public MainForm()
@@ -34,8 +28,7 @@ namespace LanExchange.UI
             // App.MainView must be set before panel view will be created
             App.MainView = this;
             // load settings from cfg-file
-            m_ConfigSave = new DefferedAction(e => App.Config.Save(), DefferedAction.SAVE_ACTION_MS);
-            App.Config.Changed += ConfigOnChanged;
+            App.Config.Changed += App.Presenter.ConfigOnChanged;
             App.Config.Load();
             SetRunMinimized(App.Config.RunMinimized);
             // init Pages presenter
@@ -61,25 +54,6 @@ namespace LanExchange.UI
 #if DEBUG
             App.Threads.NumThreadsChanged += OnNumThreadsChanged;
 #endif
-        }
-
-        [Localizable(false)]
-        private void ConfigOnChanged(object sender, ConfigChangedArgs e)
-        {
-            switch(e.Name)
-            {
-                case ConfigNames.ShowMainMenu:
-                    if (Menu == null)
-                        Menu = MainMenu;
-                    else
-                        Menu = null;
-                    break;
-                case ConfigNames.NumInfoLines:
-                    pInfo.CountLines = App.Config.NumInfoLines;
-                    App.MainPages.DoPanelViewFocusedItemChanged(Pages.ActivePanelView, EventArgs.Empty);
-                    break;
-            }
-            m_ConfigSave.Reset();
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Windows.Forms.Control.set_Text(System.String)")]
@@ -166,12 +140,6 @@ namespace LanExchange.UI
                         }
                     }
                 }
-            }
-            // F9 - Show/Hide main menu
-            if (e.KeyCode == Keys.F9)
-            {
-                App.Config.ShowMainMenu = !App.Config.ShowMainMenu;
-                e.Handled = true;
             }
             // Ctrl+Up/Ctrl+Down - change number of info lines
             if (e.Control && (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down))
@@ -287,9 +255,9 @@ namespace LanExchange.UI
             {
                 pInfo.SetLine(index, helper.GetColumnValue(column.Index));
                 ++index;
-                if (index >= pInfo.CountLines) break;
+                if (index >= pInfo.NumLines) break;
             }
-            for (int i = index; i < pInfo.CountLines; i++)
+            for (int i = index; i < pInfo.NumLines; i++)
                 pInfo.SetLine(i, string.Empty);
         }
 
@@ -369,7 +337,7 @@ namespace LanExchange.UI
                 Process.Start("explorer.exe", "/n,::{20D04FE0-3AEA-1069-A2D8-08002B30309D}");
         }
 
-        private void UpdateViewMenu()
+        private void UpdatePanelRelatedMenu()
         {
             mViewLarge.Checked = false;
             mViewSmall.Checked = false;
@@ -402,8 +370,8 @@ namespace LanExchange.UI
         private void mView_Popup(object sender, EventArgs e)
         {
             mViewGrid.Checked = App.Config.ShowGridLines;
-            mViewInfo.Checked = App.Config.NumInfoLines > 0;
-            UpdateViewMenu();
+            mViewInfo.Checked = App.Config.ShowInfoPanel;
+            UpdatePanelRelatedMenu();
         }
 
         private void mViewLarge_Click(object sender, EventArgs e)
@@ -420,19 +388,19 @@ namespace LanExchange.UI
         private void mWebPage_Click(object sender, EventArgs e)
         {
             var presenter = App.Resolve<IAboutPresenter>();
-            presenter.OpenWebLink();
+            presenter.OpenHomeLink();
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
             var presenter = App.Resolve<IAboutPresenter>();
-            presenter.OpenTranslationWebLink();
+            presenter.OpenLocalizationLink();
         }
 
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
             var presenter = App.Resolve<IAboutPresenter>();
-            presenter.OpenBugtrackerWebLink();
+            presenter.OpenBugTrackerWebLink();
         }
 
         private void mHelpKeys_Click(object sender, EventArgs e)
@@ -548,9 +516,16 @@ namespace LanExchange.UI
             App.Config.ShowGridLines = !App.Config.ShowGridLines;
         }
 
-        private void mViewMenu_Click(object sender, EventArgs e)
+        public bool ShowInfoPanel
         {
-            App.Config.ShowMainMenu = false;
+            get { return pInfo.Visible; }
+            set { pInfo.Visible = value; }
+        }
+
+        public int NumInfoLines
+        {
+            get { return pInfo.NumLines; }
+            set { pInfo.NumLines = value; }
         }
     }
 }

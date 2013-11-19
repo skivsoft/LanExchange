@@ -4,7 +4,7 @@ msgstr "Русский"
 
 msgctxt "Variables"
 msgid "@AUTHOR"
-msgstr "Konstantin Mikhailyuk"
+msgstr "Kostya Mikhailyuk"
 
 msgctxt "Network.xml"
 msgid "Windows Explorer"
@@ -64,7 +64,7 @@ msgstr "Сервисы"
 
 msgctxt "NetworkWMI.xml"
 msgid "WMI Viewer"
-msgstr "Просмотрщик WMI"
+msgstr "WMI Viewer"
 
 msgctxt "NetworkWMI.xml"
 msgid "WMI: Edit Description"
@@ -87,16 +87,12 @@ msgid "Backspace"
 msgstr "Backspace"
 
 msgctxt "LanExchange.exe"
-msgid "Current tab properties."
-msgstr "Свойства текущей вкладки."
+msgid "Close current tab."
+msgstr "Закрыть активную вкладку."
 
 msgctxt "LanExchange.exe"
 msgid "Re-read panel."
 msgstr "Перечитать панель."
-
-msgctxt "LanExchange.exe"
-msgid "Open new tab."
-msgstr "Открыть новую вкладку."
 
 msgctxt "LanExchange.exe"
 msgid "Paste items from clipboard."
@@ -131,6 +127,10 @@ msgid "Copyright"
 msgstr "Авторское право"
 
 msgctxt "LanExchange.exe"
+msgid "Info panel"
+msgstr "Инфо-панель"
+
+msgctxt "LanExchange.exe"
 msgid "Action"
 msgstr "Действие"
 
@@ -147,16 +147,8 @@ msgid "Filter panel items by all columns."
 msgstr "Фильтровать элементы панели по всем колонкам."
 
 msgctxt "LanExchange.exe"
-msgid "This shortcut keys list."
-msgstr "Этот список горячих клавиш."
-
-msgctxt "LanExchange.exe"
 msgid "Unable to execute command line:\n{0}"
 msgstr "Не удалось выполнить следующую команду:\n{0}"
-
-msgctxt "LanExchange.exe"
-msgid "Show License"
-msgstr "Показать лицензию"
 
 msgctxt "LanExchange.exe"
 msgid "LanExchange Webpage"
@@ -187,6 +179,10 @@ msgid "F10"
 msgstr "F10"
 
 msgctxt "LanExchange.exe"
+msgid "Shortcut Keys"
+msgstr "Горячие клавишы"
+
+msgctxt "LanExchange.exe"
 msgid "Esc"
 msgstr "Esc"
 
@@ -195,8 +191,8 @@ msgid "Del"
 msgstr "Del"
 
 msgctxt "LanExchange.exe"
-msgid "Twitter"
-msgstr "Твиттер"
+msgid "Hide Details"
+msgstr "Скрыть детали"
 
 msgctxt "LanExchange.exe"
 msgid "Copy of {0}"
@@ -223,6 +219,10 @@ msgid "Copy selected item"
 msgstr "Копировать выбранный элемент"
 
 msgctxt "LanExchange.exe"
+msgid "Plugins:"
+msgstr "Плагины:"
+
+msgctxt "LanExchange.exe"
 msgid "Legend"
 msgstr "Легенда"
 
@@ -247,16 +247,12 @@ msgid "Ctrl+R"
 msgstr "Ctrl+R"
 
 msgctxt "LanExchange.exe"
-msgid "Ctrl+P"
-msgstr "Ctrl+P"
+msgid "Ctrl+W"
+msgstr "Ctrl+W"
 
 msgctxt "LanExchange.exe"
 msgid "Ctrl+V"
 msgstr "Ctrl+V"
-
-msgctxt "LanExchange.exe"
-msgid "Ctrl+T"
-msgstr "Ctrl+T"
 
 msgctxt "LanExchange.exe"
 msgid "Ctrl+C"
@@ -291,10 +287,6 @@ msgid "Released under the MIT license."
 msgstr "Продукт выпущен под лицензией MIT."
 
 msgctxt "LanExchange.exe"
-msgid "Email"
-msgstr "Электронная почта"
-
-msgctxt "LanExchange.exe"
 msgid "About «{0}»"
 msgstr "О программе «{0}»"
 
@@ -305,10 +297,6 @@ msgstr "Копировать путь к «{0}»"
 msgctxt "LanExchange.exe"
 msgid "Execution error"
 msgstr "Ошибка выполнения"
-
-msgctxt "LanExchange.exe"
-msgid "Hide License"
-msgstr "Скрыть лицензию"
 
 msgctxt "LanExchange.exe"
 msgid "Close"
@@ -327,6 +315,10 @@ msgid "Details"
 msgstr "Таблица"
 
 msgctxt "LanExchange.exe"
+msgid "Open tab «{0}»"
+msgstr "Открыть вкладку «{0}»"
+
+msgctxt "LanExchange.exe"
 msgid "List"
 msgstr "Список"
 
@@ -341,10 +333,6 @@ msgstr "Перейти на уровень выше в панели."
 msgctxt "LanExchange.exe"
 msgid "Ctrl+Shift+T"
 msgstr "Ctrl+Shift+T"
-
-msgctxt "LanExchange.exe"
-msgid "Shortcut Keys"
-msgstr "Горячие клавишы"
 
 msgctxt "LanExchange.exe"
 msgid "Send selected item(s) to new tab."
@@ -363,16 +351,16 @@ msgid "Copy full path of selected item(s) to clipboard."
 msgstr "Копировать полные пути для выбранных элементов."
 
 msgctxt "LanExchange.exe"
+msgid "Close other tabs"
+msgstr "Закрыть другие вкладки"
+
+msgctxt "LanExchange.exe"
 msgid "Close tab"
 msgstr "Закрыть вкладку"
 
 msgctxt "LanExchange.exe"
 msgid "Re-read"
 msgstr "Перечитать"
-
-msgctxt "LanExchange.exe"
-msgid "New tab"
-msgstr "Новая вкладка"
 
 msgctxt "LanExchange.exe"
 msgid "Paste"
@@ -387,8 +375,8 @@ msgid "Copy selected items"
 msgstr "Копировать выбранные элементы"
 
 msgctxt "LanExchange.exe"
-msgid "Ctrl+F4"
-msgstr "Ctrl+F4"
+msgid "Grid lines"
+msgstr "Линии сетки"
 
 msgctxt "LanExchange.exe"
 msgid "Localization Webpage"
@@ -423,10 +411,6 @@ msgid "Decrease height of info panel or hide it."
 msgstr "Уменьшить высоту инфо-панели либо скрыть инфо-панель."
 
 msgctxt "LanExchange.exe"
-msgid "Close current tab."
-msgstr "Закрыть активную вкладку."
-
-msgctxt "LanExchange.exe"
 msgid "Ctrl+Down"
 msgstr "Ctrl+Down"
 
@@ -445,6 +429,10 @@ msgstr "Скрыть главное окно."
 msgctxt "LanExchange.exe"
 msgid "Increase height of info panel or show it."
 msgstr "Увеличить высоту инфо-панели либо показать инфо-панель."
+
+msgctxt "LanExchange.exe"
+msgid "Show Details"
+msgstr "Показать детали"
 
 msgctxt "LanExchange.exe"
 msgid "Copy column on which the ordered item(s) to clipboard."
@@ -479,6 +467,10 @@ msgid "Any char"
 msgstr "Любой символ"
 
 msgctxt "LanExchange.exe"
+msgid "Translations:"
+msgstr "Переводы:"
+
+msgctxt "LanExchange.exe"
 msgid "BugTracker Webpage"
 msgstr "Страница багтрэкера"
 
@@ -493,6 +485,10 @@ msgstr "Копировать"
 msgctxt "LanExchange.exe"
 msgid "Open"
 msgstr "Открыть"
+
+msgctxt "LanExchange.exe"
+msgid "&View"
+msgstr "&Вид"
 
 msgctxt "LanExchange.exe"
 msgid "License"
@@ -657,6 +653,10 @@ msgstr "Псевдоним"
 msgctxt "LanExchange.Plugin.Users.dll"
 msgid "User account have been disabled."
 msgstr "Учетная запись пользователя была отключена."
+
+msgctxt "LanExchange.Plugin.Users.dll"
+msgid "Email"
+msgstr "Электронная почта"
 
 msgctxt "LanExchange.Plugin.Users.dll"
 msgid "Title"

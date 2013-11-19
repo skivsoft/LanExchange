@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using LanExchange.SDK;
 
 namespace LanExchange.Intf
@@ -10,5 +11,6 @@ namespace LanExchange.Intf
         void RegisterAction(IAction action);
         void ExecuteAction<T>() where T : IAction;
         bool IsActionEnabled<T>() where T : IAction;
+        void ConfigOnChanged(object sender, ConfigChangedArgs e);
     }
 }

@@ -30,8 +30,6 @@ namespace LanExchange.UI
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.eEmail = new System.Windows.Forms.LinkLabel();
-            this.lEmail = new System.Windows.Forms.Label();
             this.eWeb = new System.Windows.Forms.LinkLabel();
             this.lWeb = new System.Windows.Forms.Label();
             this.eVersion = new System.Windows.Forms.Label();
@@ -43,37 +41,13 @@ namespace LanExchange.UI
             this.lVersion = new System.Windows.Forms.Label();
             this.eCopyright = new System.Windows.Forms.Label();
             this.logoPictureBox = new System.Windows.Forms.PictureBox();
-            this.lTwitter = new System.Windows.Forms.Label();
-            this.eTwitter = new System.Windows.Forms.LinkLabel();
             this.tipAbout = new System.Windows.Forms.ToolTip(this.components);
+            this.picEmail = new System.Windows.Forms.PictureBox();
+            this.picTwitter = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picEmail)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picTwitter)).BeginInit();
             this.SuspendLayout();
-            // 
-            // eEmail
-            // 
-            this.eEmail.AutoSize = true;
-            this.eEmail.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.eEmail.Location = new System.Drawing.Point(93, 229);
-            this.eEmail.Name = "eEmail";
-            this.eEmail.Size = new System.Drawing.Size(19, 13);
-            this.eEmail.TabIndex = 45;
-            this.eEmail.TabStop = true;
-            this.eEmail.Text = "    ";
-            this.eEmail.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.eEmail_LinkClicked);
-            // 
-            // lEmail
-            // 
-            this.lEmail.AutoSize = true;
-            this.lEmail.BackColor = System.Drawing.SystemColors.Control;
-            this.lEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.lEmail.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lEmail.Location = new System.Drawing.Point(80, 216);
-            this.lEmail.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
-            this.lEmail.Name = "lEmail";
-            this.lEmail.Size = new System.Drawing.Size(37, 13);
-            this.lEmail.TabIndex = 44;
-            this.lEmail.Text = "Email";
-            this.lEmail.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // eWeb
             // 
@@ -115,7 +89,7 @@ namespace LanExchange.UI
             // 
             this.bClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.bClose.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.bClose.Location = new System.Drawing.Point(226, 289);
+            this.bClose.Location = new System.Drawing.Point(326, 240);
             this.bClose.Name = "bClose";
             this.bClose.Size = new System.Drawing.Size(100, 23);
             this.bClose.TabIndex = 36;
@@ -127,7 +101,7 @@ namespace LanExchange.UI
             // 
             this.bShowDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.bShowDetails.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.bShowDetails.Location = new System.Drawing.Point(116, 289);
+            this.bShowDetails.Location = new System.Drawing.Point(216, 240);
             this.bShowDetails.Name = "bShowDetails";
             this.bShowDetails.Size = new System.Drawing.Size(100, 23);
             this.bShowDetails.TabIndex = 35;
@@ -209,41 +183,41 @@ namespace LanExchange.UI
             this.logoPictureBox.TabIndex = 13;
             this.logoPictureBox.TabStop = false;
             // 
-            // lTwitter
+            // picEmail
             // 
-            this.lTwitter.AutoSize = true;
-            this.lTwitter.BackColor = System.Drawing.SystemColors.Control;
-            this.lTwitter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.lTwitter.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lTwitter.Location = new System.Drawing.Point(80, 175);
-            this.lTwitter.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
-            this.lTwitter.Name = "lTwitter";
-            this.lTwitter.Size = new System.Drawing.Size(46, 13);
-            this.lTwitter.TabIndex = 47;
-            this.lTwitter.Text = "Twitter";
-            this.lTwitter.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.picEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.picEmail.BackColor = System.Drawing.Color.White;
+            this.picEmail.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picEmail.Image = global::LanExchange.Properties.Resources.email_icon;
+            this.picEmail.Location = new System.Drawing.Point(16, 247);
+            this.picEmail.Name = "picEmail";
+            this.picEmail.Size = new System.Drawing.Size(16, 16);
+            this.picEmail.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.picEmail.TabIndex = 49;
+            this.picEmail.TabStop = false;
+            this.picEmail.Click += new System.EventHandler(this.picEmail_Click);
             // 
-            // eTwitter
+            // picTwitter
             // 
-            this.eTwitter.AutoSize = true;
-            this.eTwitter.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.eTwitter.Location = new System.Drawing.Point(93, 191);
-            this.eTwitter.Name = "eTwitter";
-            this.eTwitter.Size = new System.Drawing.Size(19, 13);
-            this.eTwitter.TabIndex = 48;
-            this.eTwitter.TabStop = true;
-            this.eTwitter.Text = "    ";
-            this.eTwitter.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.eTwitter_LinkClicked);
+            this.picTwitter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.picTwitter.BackColor = System.Drawing.SystemColors.Control;
+            this.picTwitter.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picTwitter.Image = global::LanExchange.Properties.Resources.twitter_icon;
+            this.picTwitter.Location = new System.Drawing.Point(40, 247);
+            this.picTwitter.Name = "picTwitter";
+            this.picTwitter.Size = new System.Drawing.Size(16, 16);
+            this.picTwitter.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.picTwitter.TabIndex = 50;
+            this.picTwitter.TabStop = false;
+            this.picTwitter.Click += new System.EventHandler(this.picTwitter_Click);
             // 
             // AboutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(344, 322);
-            this.Controls.Add(this.eTwitter);
-            this.Controls.Add(this.lTwitter);
-            this.Controls.Add(this.eEmail);
-            this.Controls.Add(this.lEmail);
+            this.ClientSize = new System.Drawing.Size(444, 273);
+            this.Controls.Add(this.picTwitter);
+            this.Controls.Add(this.picEmail);
             this.Controls.Add(this.eWeb);
             this.Controls.Add(this.lWeb);
             this.Controls.Add(this.eVersion);
@@ -266,6 +240,8 @@ namespace LanExchange.UI
             this.Text = "About «{0}»";
             this.Load += new System.EventHandler(this.AboutForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picEmail)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picTwitter)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -284,10 +260,8 @@ namespace LanExchange.UI
         private System.Windows.Forms.Label eVersion;
         private System.Windows.Forms.Label lWeb;
         private System.Windows.Forms.LinkLabel eWeb;
-        private System.Windows.Forms.Label lEmail;
-        private System.Windows.Forms.LinkLabel eEmail;
-        private System.Windows.Forms.Label lTwitter;
-        private System.Windows.Forms.LinkLabel eTwitter;
         private System.Windows.Forms.ToolTip tipAbout;
+        private System.Windows.Forms.PictureBox picEmail;
+        private System.Windows.Forms.PictureBox picTwitter;
     }
 }

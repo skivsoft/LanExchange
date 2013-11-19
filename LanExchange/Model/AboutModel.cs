@@ -10,28 +10,42 @@ namespace LanExchange.Model
 {
     public class AboutModel : IAboutModel
     {
-        const string WEBSITE = "code.google.com/p/lanexchange/";
-        const string TWITTER = "TheLanExchange";
-        const string EMAIL   = "skivsoft@gmail.com";
+        private const string HOME_LINK = "https://code.google.com/p/lanexchange/";
+        private const string LOCALIZATION_LINK = "https://crowdin.net/project/lanexchange";
+        private const string BUGTRACKER_LINK = "http://lanexchange.myjetbrains.com/youtrack/issues";
+        private const string TWITTER = "TheLanExchange";
+        private const string EMAIL   = "skivsoft@gmail.com";
 
         private Assembly GetAssembly()
         {
             return Assembly.GetEntryAssembly();
         }
 
-        public string WebSite
+        public string HomeLink
         {
-            get { return WEBSITE; }
+            get { return HOME_LINK; }
         }
 
-        public string Twitter
+        public string LocalizationLink
         {
-            get { return TWITTER; }
+            get { return LOCALIZATION_LINK; }
         }
 
-        public string Email
+        public string BugTrackerLink
         {
-            get { return EMAIL; }
+            get { return BUGTRACKER_LINK; }
+        }
+
+        [Localizable(false)]
+        public string TwitterLink
+        {
+            get { return "https://twitter.com/" + TWITTER; }
+        }
+
+        [Localizable(false)]
+        public string EmailLink
+        {
+            get { return "mailto:" + EMAIL; }
         }
 
         public string Title

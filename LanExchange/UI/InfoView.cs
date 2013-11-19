@@ -8,7 +8,7 @@ namespace LanExchange.UI
 {
     public partial class InfoView : UserControl, IInfoView
     {
-        private int m_CountLines;
+        private int m_NumLines;
         private readonly Dictionary<int, Label> m_Lines;
         
         public InfoView()
@@ -22,14 +22,14 @@ namespace LanExchange.UI
             get { return imgInfo; }
         }
 
-        public int CountLines
+        public int NumLines
         {
-            get { return m_CountLines; }
+            get { return m_NumLines; }
             set
             {
-                m_CountLines = value;
-                Height = GetLocationY(m_CountLines) + 8;
-                Visible = m_CountLines >= 3;
+                m_NumLines = value;
+                Height = GetLocationY(m_NumLines) + 8;
+                Visible = m_NumLines >= 3;
             }
         }
 
@@ -40,7 +40,7 @@ namespace LanExchange.UI
 
         public string GetLine(int index)
         {
-            if (index < 0 || index > m_CountLines - 1)
+            if (index < 0 || index > m_NumLines - 1)
                 return string.Empty;
             Label control;
             if (m_Lines.TryGetValue(index, out control))
@@ -77,7 +77,7 @@ namespace LanExchange.UI
 
         public void SetLine(int index, string text)
         {
-            if (index < 0 || index > m_CountLines - 1)
+            if (index < 0 || index > m_NumLines - 1)
                 return;
             Label control;
             if (!m_Lines.TryGetValue(index, out control))

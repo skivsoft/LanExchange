@@ -2,11 +2,15 @@
 {
     public interface IAboutModel : IModel
     {
-        string WebSite { get; }
+        string HomeLink { get; }
 
-        string Twitter { get; }
+        string LocalizationLink { get; }
 
-        string Email { get; }
+        string BugTrackerLink { get; }
+
+        string TwitterLink { get; }
+
+        string EmailLink { get; }
 
         string Title { get; }
 

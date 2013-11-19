@@ -1,10 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
-using LanExchange.Core;
 using LanExchange.Intf;
-using LanExchange.Model;
-using LanExchange.UI;
 
 namespace LanExchange.Presenter
 {
@@ -26,52 +23,35 @@ namespace LanExchange.Presenter
             View.Text = string.Format(CultureInfo.CurrentCulture, View.Text, m_Model.Product);
             View.VersionText = m_Model.VersionFull;
             View.CopyrightText = m_Model.Copyright;
-            View.WebText = m_Model.WebSite;
-            View.WebToolTip = GetFullWebLink();
-            View.TwitterText = "@" + m_Model.Twitter;
-            View.TwitterToolTip = GetFullTwitterLink();
-            View.EmailText = m_Model.Email;
-            View.EmailToolTip = GetFullEmailLink();
+            View.WebText = m_Model.HomeLink;
+            View.WebToolTip = m_Model.HomeLink;
+            View.TwitterToolTip = m_Model.TwitterLink;
+            View.EmailToolTip = m_Model.EmailLink;
         }
 
-        private string GetFullWebLink()
+        public void OpenHomeLink()
         {
-            return "https://" + m_Model.WebSite;
+            Process.Start(m_Model.HomeLink);
         }
 
-        private string GetFullTwitterLink()
+        public void OpenLocalizationLink()
         {
-            return "https://twitter.com/" + m_Model.Twitter;
+            Process.Start(m_Model.LocalizationLink);
         }
 
-        private string GetFullEmailLink()
+        public void OpenBugTrackerWebLink()
         {
-            return "mailto:" + m_Model.Email;
-        }
-
-        public void OpenWebLink()
-        {
-            Process.Start(GetFullWebLink());
+            Process.Start(m_Model.BugTrackerLink);
         }
 
         public void OpenTwitterLink()
         {
-            Process.Start(GetFullTwitterLink());
+            Process.Start(m_Model.TwitterLink);
         }
 
         public void OpenEmailLink()
         {
-            Process.Start(GetFullEmailLink());
-        }
-
-        public void OpenTranslationWebLink()
-        {
-            Process.Start("https://crowdin.net/project/lanexchange");
-        }
-
-        public void OpenBugtrackerWebLink()
-        {
-            Process.Start("http://lanexchange.myjetbrains.com/youtrack/issues");
+            Process.Start(m_Model.EmailLink);
         }
     }
 }

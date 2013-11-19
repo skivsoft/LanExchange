@@ -7,5 +7,6 @@ namespace LanExchange.Intf
     {
         void LoadPlugins();
         IList<IPlugin> Items { get; }
+        IDictionary<string, string> PluginsAuthors { get; }
     }
 }

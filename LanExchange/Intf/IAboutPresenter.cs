@@ -4,14 +4,14 @@
     {
         void LoadFromModel();
 
-        void OpenWebLink();
+        void OpenHomeLink();
 
         void OpenTwitterLink();
 
         void OpenEmailLink();
 
-        void OpenTranslationWebLink();
+        void OpenLocalizationLink();
 
-        void OpenBugtrackerWebLink();
+        void OpenBugTrackerWebLink();
     }
 }

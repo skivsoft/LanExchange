@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.Intf;
-using LanExchange.Misc.Impl;
+using LanExchange.Misc;
 using LanExchange.Presenter.Action;
 using LanExchange.SDK;
 
@@ -13,6 +13,7 @@ namespace LanExchange.Presenter
     public class MainPresenter : PresenterBase<IMainView>, IMainPresenter
     {
         private readonly Dictionary<Type, IAction> m_Actions;
+        private readonly DefferedAction m_ConfigSave;
 
         public MainPresenter()
         {
@@ -22,8 +23,29 @@ namespace LanExchange.Presenter
             RegisterAction(new CloseTabAction());
             RegisterAction(new CloseOtherAction());
             RegisterAction(new ShortcutKeysAction());
+            m_ConfigSave = new DefferedAction(e => App.Config.Save(), DefferedAction.SAVE_ACTION_MS);
         }
 
+        [Localizable(false)]
+        public void ConfigOnChanged(object sender, ConfigChangedArgs e)
+        {
+            var config = sender as IConfigModel;
+            if (config == null) return;
+            switch (e.Name)
+            {
+                case ConfigNames.ShowInfoPanel:
+                    App.MainView.ShowInfoPanel = config.ShowInfoPanel;
+                    break;
+                case ConfigNames.ShowGridLines:
+                    App.MainPages.View.ActivePanelView.GridLines = config.ShowGridLines;
+                    break;
+                case ConfigNames.NumInfoLines:
+                    App.MainView.NumInfoLines = config.NumInfoLines;
+                    App.MainPages.DoPanelViewFocusedItemChanged(App.MainPages.View.ActivePanelView, EventArgs.Empty);
+                    break;
+            }
+            m_ConfigSave.Reset();
+        }
         private int GetDefaultWidth()
         {
             const double phi2 = 0.6180339887498949;

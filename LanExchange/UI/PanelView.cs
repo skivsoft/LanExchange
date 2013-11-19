@@ -657,5 +657,12 @@ namespace LanExchange.UI
             App.MainPages.CommandDeleteItems();
         }
 
+
+
+        public bool GridLines
+        {
+            get { return LV.GridLines; }
+            set { LV.GridLines = value; }
+        }
     }
 }
