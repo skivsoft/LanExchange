@@ -1,6 +1,4 @@
 ﻿using System.Windows.Forms;
-using LanExchange.Properties;
-using LanExchange.UI;
 
 namespace LanExchange.UI
 {
@@ -298,14 +296,14 @@ namespace LanExchange.UI
             // 
             this.mViewInfo.Checked = true;
             this.mViewInfo.Index = 0;
-            this.mViewInfo.Text = Resources.MainForm_InfoPanel;
+            this.mViewInfo.Text = global::LanExchange.Properties.Resources.MainForm_InfoPanel;
             this.mViewInfo.Click += new System.EventHandler(this.mInfoPanel_Click);
             // 
             // mViewGrid
             // 
             this.mViewGrid.Checked = true;
             this.mViewGrid.Index = 1;
-            this.mViewGrid.Text = Resources.MainForm_GridLines;
+            this.mViewGrid.Text = global::LanExchange.Properties.Resources.MainForm_GridLines;
             this.mViewGrid.Click += new System.EventHandler(this.mGridLines_Click);
             // 
             // mViewSep1
@@ -318,7 +316,7 @@ namespace LanExchange.UI
             this.mViewLarge.Index = 3;
             this.mViewLarge.RadioCheck = true;
             this.mViewLarge.Tag = "0";
-            this.mViewLarge.Text = Resources.ViewLargeIcons;
+            this.mViewLarge.Text = global::LanExchange.Properties.Resources.ViewLargeIcons;
             this.mViewLarge.Click += new System.EventHandler(this.mViewLarge_Click);
             // 
             // mViewSmall

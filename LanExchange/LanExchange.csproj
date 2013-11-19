@@ -313,7 +313,9 @@
     <None Include="Languages\Russian.po">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Properties\app.manifest" />
+    <None Include="Properties\app.manifest">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>

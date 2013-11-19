@@ -1,6 +1,4 @@
-﻿using LanExchange.Properties;
-
-namespace LanExchange.UI
+﻿namespace LanExchange.UI
 {
     public sealed partial class AboutForm
     {
@@ -21,7 +19,7 @@ namespace LanExchange.UI
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code!
+        #region Windows Form Designer generated code
 
         /// <summary>
         /// Required method for Designer support - do not modify
@@ -70,9 +68,9 @@ namespace LanExchange.UI
             this.lWeb.Location = new System.Drawing.Point(80, 136);
             this.lWeb.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
             this.lWeb.Name = "lWeb";
-            this.lWeb.Size = new System.Drawing.Size(61, 13);
+            this.lWeb.Size = new System.Drawing.Size(11, 13);
             this.lWeb.TabIndex = 42;
-            this.lWeb.Text = "Webpage";
+            this.lWeb.Text = " ";
             this.lWeb.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // eVersion
@@ -81,9 +79,9 @@ namespace LanExchange.UI
             this.eVersion.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.eVersion.Location = new System.Drawing.Point(93, 32);
             this.eVersion.Name = "eVersion";
-            this.eVersion.Size = new System.Drawing.Size(19, 13);
+            this.eVersion.Size = new System.Drawing.Size(10, 13);
             this.eVersion.TabIndex = 41;
-            this.eVersion.Text = "    ";
+            this.eVersion.Text = " ";
             // 
             // bClose
             // 
@@ -100,6 +98,7 @@ namespace LanExchange.UI
             // bShowDetails
             // 
             this.bShowDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.bShowDetails.AutoSize = true;
             this.bShowDetails.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.bShowDetails.Location = new System.Drawing.Point(216, 240);
             this.bShowDetails.Name = "bShowDetails";
@@ -117,9 +116,9 @@ namespace LanExchange.UI
             this.lCopyright.Location = new System.Drawing.Point(80, 96);
             this.lCopyright.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
             this.lCopyright.Name = "lCopyright";
-            this.lCopyright.Size = new System.Drawing.Size(60, 13);
+            this.lCopyright.Size = new System.Drawing.Size(11, 13);
             this.lCopyright.TabIndex = 34;
-            this.lCopyright.Text = "Copyright";
+            this.lCopyright.Text = " ";
             this.lCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // eLicense
@@ -128,10 +127,10 @@ namespace LanExchange.UI
             this.eLicense.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.eLicense.Location = new System.Drawing.Point(93, 72);
             this.eLicense.Name = "eLicense";
-            this.eLicense.Size = new System.Drawing.Size(167, 17);
+            this.eLicense.Size = new System.Drawing.Size(7, 17);
             this.eLicense.TabIndex = 33;
             this.eLicense.TabStop = true;
-            this.eLicense.Text = "Released under the MIT license.";
+            this.eLicense.Text = " ";
             this.eLicense.UseCompatibleTextRendering = true;
             // 
             // lLicense
@@ -143,9 +142,9 @@ namespace LanExchange.UI
             this.lLicense.Location = new System.Drawing.Point(80, 56);
             this.lLicense.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
             this.lLicense.Name = "lLicense";
-            this.lLicense.Size = new System.Drawing.Size(51, 13);
+            this.lLicense.Size = new System.Drawing.Size(11, 13);
             this.lLicense.TabIndex = 31;
-            this.lLicense.Text = "License";
+            this.lLicense.Text = " ";
             this.lLicense.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lVersion
@@ -157,9 +156,9 @@ namespace LanExchange.UI
             this.lVersion.Location = new System.Drawing.Point(80, 16);
             this.lVersion.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
             this.lVersion.Name = "lVersion";
-            this.lVersion.Size = new System.Drawing.Size(49, 13);
+            this.lVersion.Size = new System.Drawing.Size(11, 13);
             this.lVersion.TabIndex = 19;
-            this.lVersion.Text = "Version";
+            this.lVersion.Text = " ";
             this.lVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // eCopyright
