@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
-using System.Text;
 using LanExchange.Intf;
 using LanExchange.SDK;
 
 namespace LanExchange.Misc.Impl
 {
+    [Localizable(false)]
     public class TranslationServiceImpl : ITranslationService
     {
+        private string LANGUAGE_NAME = "@LANGUAGE_NAME";
+        private string AUTHOR = "@AUTHOR";
+
         private string[] m_CurrentLanguageLines;
         private string m_CurrentLanguage;
 
@@ -20,7 +23,6 @@ namespace LanExchange.Misc.Impl
             //CurrentLanguage = "Russian";
         }
         
-        [Localizable(false)]
         public string SourceLanguage
         {
             get { return "English"; }
@@ -47,10 +49,8 @@ namespace LanExchange.Misc.Impl
             }
         }
 
-        [Localizable(false)]
         public IDictionary<string, string> GetLanguagesNames()
         {
-            const string LANG = "@LANGUAGE_NAME";
             var sorted = new SortedDictionary<string, string>();
             sorted.Add(SourceLanguage, SourceLanguage);
             foreach (var fileName in App.FolderManager.GetLanguagesFiles())
@@ -59,7 +59,7 @@ namespace LanExchange.Misc.Impl
                 if (lang == null) continue;
                 try
                 {
-                    sorted.Add(TranslateFromPO(fileName, LANG), lang);
+                    sorted.Add(TranslateFromPO(fileName, LANGUAGE_NAME), lang);
                 }
                 catch(ArgumentException)
                 {
@@ -71,7 +71,24 @@ namespace LanExchange.Misc.Impl
             return result;
         }
 
-        [Localizable(false)]
+        public IDictionary<string, string> GetTranslations()
+        {
+            var result = new SortedDictionary<string, string>();
+            foreach (var fileName in App.FolderManager.GetLanguagesFiles())
+            {
+                var lang = Path.GetFileNameWithoutExtension(fileName);
+                if (lang == null) continue;
+                try
+                {
+                    result.Add(lang, TranslateFromPO(fileName, AUTHOR));
+                }
+                catch (ArgumentException)
+                {
+                }
+            }
+            return result;
+        }
+
         private string InternalTranslate(IEnumerable<string> lines, string id)
         {
             var marker = string.Format(CultureInfo.InvariantCulture, "msgid \"{0}\"", id);
@@ -106,5 +123,6 @@ namespace LanExchange.Misc.Impl
                 return id;
             return InternalTranslate(m_CurrentLanguageLines, id);
         }
+
     }
 }

@@ -288,6 +288,7 @@ namespace LanExchange.UI
         public IPanelView CreatePanelView(IPanelModel info)
         {
             var panelView = (PanelView) App.Resolve<IPanelView>();
+            panelView.GridLines = App.Config.ShowGridLines;
             var listView = panelView.Controls[0] as ListView;
             if (listView != null)
             {

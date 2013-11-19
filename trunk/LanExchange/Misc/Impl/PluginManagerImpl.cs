@@ -10,17 +10,20 @@ namespace LanExchange.Misc.Impl
 {
     public class PluginManagerImpl : IPluginManager
     {
-        private const string PluginMask = "LanExchange.Plugin.*.dll";
+        private const string PLUGIN_MASK = "LanExchange.Plugin.*.dll";
+        private const string IPLUGIN_INTERFACE = "LanExchange.SDK.IPlugin";
         private readonly IList<IPlugin> m_Plugins;
+        private readonly IDictionary<string, string> m_PluginsAuthors;
 
         public PluginManagerImpl()
         {
             m_Plugins = new List<IPlugin>();
+            m_PluginsAuthors = new Dictionary<string, string>();
         }
 
         public void LoadPlugins()
         {
-            var files = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, PluginMask, SearchOption.TopDirectoryOnly);
+            var files = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, PLUGIN_MASK, SearchOption.TopDirectoryOnly);
             foreach (var fileName in files)
                 try
                 {
@@ -35,9 +38,16 @@ namespace LanExchange.Misc.Impl
         private void LoadPlugin(string fileName)
         {
             var assembly = Assembly.LoadFile(fileName);
+            var fileNameWithoutPath = Path.GetFileName(fileName);
+            if (fileNameWithoutPath != null)
+            {
+                var attributes = assembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
+                var author = attributes.Length == 0 ? "" : ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
+                m_PluginsAuthors.Add(fileNameWithoutPath, author);
+            }
             foreach (var type in assembly.GetExportedTypes())
             {
-                var iface = type.GetInterface("LanExchange.SDK.IPlugin");
+                var iface = type.GetInterface(IPLUGIN_INTERFACE);
                 if (iface == null) continue;
                 IPlugin plugin = null;
                 try
@@ -65,5 +75,11 @@ namespace LanExchange.Misc.Impl
         {
             get { return m_Plugins; }
         }
+
+        public IDictionary<string, string> PluginsAuthors
+        {
+            get { return m_PluginsAuthors; }
+        }
+
     }
 }

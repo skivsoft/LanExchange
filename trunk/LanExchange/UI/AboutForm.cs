@@ -1,11 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Text;
 using System.Windows.Forms;
-using LanExchange.Core;
 using LanExchange.Intf;
-using LanExchange.Presenter;
 using LanExchange.Properties;
-using LanExchange.UI;
 
 namespace LanExchange.UI
 {
@@ -39,26 +37,35 @@ namespace LanExchange.UI
             m_BoxDetails.BringToFront();
         }
 
+        [Localizable(false)]
         private string GetDetailsRtf()
         {
             var sb = new StringBuilder();
             sb.Append(@"{\rtf1\ansi");
-            sb.AppendLine(@"\b Plugins:\b0");
-            sb.AppendLine("  Network");
-            sb.AppendLine("  Users");
+            sb.AppendLine(string.Format(@"\b {0}\b0", Resources.AboutForm_Plugins));
+            foreach (var pair in App.Plugins.PluginsAuthors)
+            {
+                sb.Append("    " + pair.Key);
+                if (!string.IsNullOrEmpty(pair.Value))
+                    sb.Append(@"\tab " + pair.Value);
+                sb.AppendLine();
+            }
             sb.AppendLine();
-            sb.AppendLine(@"\b Translations:\b0");
-            sb.AppendLine(@"  English - Translator1");
-            sb.AppendLine(@"  Russian - Translator2");
-            sb.AppendLine(@"  Kazakh - Translator3");
-            sb.AppendLine(@"  Esperanto - Translator4");
+            sb.AppendLine(string.Format(@"\b {0}\b0", Resources.AboutForm_Translations));
+            foreach (var pair in App.TR.GetTranslations())
+            {
+                var line = pair.Key;
+                if (!string.IsNullOrEmpty(pair.Value))
+                    line += @" \tab " + pair.Value;
+                sb.AppendLine("    " + line);
+            }
             sb.Append("}");
             return sb.ToString().Replace("\r\n", @"\line ");
         }
 
         private void eWeb_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            m_Presenter.OpenWebLink();
+            m_Presenter.OpenHomeLink();
         }
 
         private void eTwitter_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -89,18 +96,6 @@ namespace LanExchange.UI
             set { eWeb.Text = value; }
         }
 
-        public string TwitterText
-        {
-            get { return eTwitter.Text; }
-            set { eTwitter.Text = value; }
-        }
-
-        public string EmailText
-        {
-            get { return eEmail.Text; }
-            set { eEmail.Text = value; }
-        }
-
         public string WebToolTip
         {
             get { return tipAbout.GetToolTip(eWeb); }
@@ -109,14 +104,20 @@ namespace LanExchange.UI
 
         public string TwitterToolTip
         {
-            get { return tipAbout.GetToolTip(eTwitter); }
-            set { tipAbout.SetToolTip(eTwitter, value); }
+            get { return tipAbout.GetToolTip(picTwitter); }
+            set
+            {
+                tipAbout.SetToolTip(picTwitter, value);
+            }
         }
 
         public string EmailToolTip
         {
-            get { return tipAbout.GetToolTip(eEmail); }
-            set { tipAbout.SetToolTip(eEmail, value); }
+            get { return tipAbout.GetToolTip(picEmail); }
+            set
+            {
+                tipAbout.SetToolTip(picEmail, value);
+            }
         }
 
         private void bShowLicense_Click(object sender, EventArgs e)
@@ -136,6 +137,16 @@ namespace LanExchange.UI
         private void AboutForm_Load(object sender, EventArgs e)
         {
             bShowDetails.Text = Resources.ShowDetails;
+        }
+
+        private void picTwitter_Click(object sender, EventArgs e)
+        {
+            m_Presenter.OpenTwitterLink();
+        }
+
+        private void picEmail_Click(object sender, EventArgs e)
+        {
+            m_Presenter.OpenEmailLink();
         }
 
     }

@@ -6,7 +6,6 @@ namespace LanExchange.Intf
     {
         event EventHandler<ConfigChangedArgs> Changed;
 
-        bool ShowMainMenu { get; set; }
         bool ShowInfoPanel { get; set; }
         bool ShowGridLines { get; set; }
         bool RunMinimized { get; set; }

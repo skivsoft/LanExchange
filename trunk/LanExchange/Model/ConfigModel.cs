@@ -15,7 +15,6 @@ namespace LanExchange.Model
     public class ConfigModel : IConfigModel
     {
         public event EventHandler<ConfigChangedArgs> Changed;
-        private bool m_ShowMainMenu;
         private bool m_ShowInfoPanel;
         private bool m_RunMinimized;
         private bool m_AdvancedMode;
@@ -28,7 +27,6 @@ namespace LanExchange.Model
         [Localizable(false)]
         public ConfigModel()
         {
-            ShowMainMenu = true;
             ShowInfoPanel = true;
             RunMinimized = true;
             NumInfoLines = 3;
@@ -44,7 +42,14 @@ namespace LanExchange.Model
             {
                 var temp = (ConfigModel)SerializeUtils.DeserializeObjectFromXMLFile(fileName, typeof(ConfigModel));
                 if (temp != null)
-                    App.Config = temp;
+                {
+                    var props = temp.GetType().GetProperties();
+                    foreach(var prop in props)
+                    {
+                        var obj = prop.GetValue(temp, null);
+                        prop.SetValue(this, obj, null);
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -90,20 +95,6 @@ namespace LanExchange.Model
                 else
                 {
                     AutorunUtils.Autorun_Delete(exeFName);
-                }
-            }
-        }
-
-        [DefaultValue(true)]
-        public bool ShowMainMenu
-        {
-            get { return m_ShowMainMenu; }
-            set
-            {
-                if (m_ShowMainMenu != value)
-                {
-                    m_ShowMainMenu = value;
-                    OnChanged(ConfigNames.ShowMainMenu);
                 }
             }
         }

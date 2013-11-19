@@ -79,6 +79,7 @@ namespace LanExchange.Intf
         void AddColumn(PanelColumnHeader header);
         PanelViewMode ViewMode { get; set; }
         PanelItemBase FocusedItem { get; }
+        bool GridLines { get; set; }
 
         void RedrawItem(int index);
 

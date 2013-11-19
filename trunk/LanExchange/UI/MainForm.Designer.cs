@@ -61,7 +61,6 @@ namespace LanExchange.UI
             this.mPanelSep3 = new System.Windows.Forms.MenuItem();
             this.mPanelExit = new System.Windows.Forms.MenuItem();
             this.mView = new System.Windows.Forms.MenuItem();
-            this.mViewMenu = new System.Windows.Forms.MenuItem();
             this.mViewInfo = new System.Windows.Forms.MenuItem();
             this.mViewGrid = new System.Windows.Forms.MenuItem();
             this.mViewSep1 = new System.Windows.Forms.MenuItem();
@@ -206,12 +205,12 @@ namespace LanExchange.UI
             this.pInfo.AllowDrop = true;
             this.pInfo.BackColor = System.Drawing.SystemColors.Window;
             this.pInfo.ContextMenuStrip = this.popTop;
-            this.pInfo.CountLines = 3;
             this.pInfo.CurrentItem = null;
             this.pInfo.Dock = System.Windows.Forms.DockStyle.Top;
             this.pInfo.Location = new System.Drawing.Point(0, 0);
             this.pInfo.MinimumSize = new System.Drawing.Size(0, 64);
             this.pInfo.Name = "pInfo";
+            this.pInfo.NumLines = 3;
             this.pInfo.Size = new System.Drawing.Size(564, 64);
             this.pInfo.TabIndex = 23;
             this.pInfo.DragDrop += new System.Windows.Forms.DragEventHandler(this.pInfo_DragDrop);
@@ -285,7 +284,6 @@ namespace LanExchange.UI
             // 
             this.mView.Index = 1;
             this.mView.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.mViewMenu,
             this.mViewInfo,
             this.mViewGrid,
             this.mViewSep1,
@@ -296,44 +294,36 @@ namespace LanExchange.UI
             this.mView.Text = global::LanExchange.Properties.Resources.MainForm_View;
             this.mView.Popup += new System.EventHandler(this.mView_Popup);
             // 
-            // mViewMenu
-            // 
-            this.mViewMenu.Checked = true;
-            this.mViewMenu.Index = 0;
-            this.mViewMenu.Shortcut = System.Windows.Forms.Shortcut.F9;
-            this.mViewMenu.Text = "Menu bar";
-            this.mViewMenu.Click += new System.EventHandler(this.mViewMenu_Click);
-            // 
             // mViewInfo
             // 
             this.mViewInfo.Checked = true;
-            this.mViewInfo.Index = 1;
-            this.mViewInfo.Text = "Info panel";
+            this.mViewInfo.Index = 0;
+            this.mViewInfo.Text = Resources.MainForm_InfoPanel;
             this.mViewInfo.Click += new System.EventHandler(this.mInfoPanel_Click);
             // 
             // mViewGrid
             // 
             this.mViewGrid.Checked = true;
-            this.mViewGrid.Index = 2;
-            this.mViewGrid.Text = "Grid lines";
+            this.mViewGrid.Index = 1;
+            this.mViewGrid.Text = Resources.MainForm_GridLines;
             this.mViewGrid.Click += new System.EventHandler(this.mGridLines_Click);
             // 
             // mViewSep1
             // 
-            this.mViewSep1.Index = 3;
+            this.mViewSep1.Index = 2;
             this.mViewSep1.Text = "-";
             // 
             // mViewLarge
             // 
-            this.mViewLarge.Index = 4;
+            this.mViewLarge.Index = 3;
             this.mViewLarge.RadioCheck = true;
             this.mViewLarge.Tag = "0";
-            this.mViewLarge.Text = "Large icons";
+            this.mViewLarge.Text = Resources.ViewLargeIcons;
             this.mViewLarge.Click += new System.EventHandler(this.mViewLarge_Click);
             // 
             // mViewSmall
             // 
-            this.mViewSmall.Index = 5;
+            this.mViewSmall.Index = 4;
             this.mViewSmall.RadioCheck = true;
             this.mViewSmall.Tag = "2";
             this.mViewSmall.Text = global::LanExchange.Properties.Resources.ViewSmallIcons;
@@ -341,7 +331,7 @@ namespace LanExchange.UI
             // 
             // mViewList
             // 
-            this.mViewList.Index = 6;
+            this.mViewList.Index = 5;
             this.mViewList.RadioCheck = true;
             this.mViewList.Tag = "3";
             this.mViewList.Text = global::LanExchange.Properties.Resources.ViewList;
@@ -350,7 +340,7 @@ namespace LanExchange.UI
             // mViewDetails
             // 
             this.mViewDetails.Checked = true;
-            this.mViewDetails.Index = 7;
+            this.mViewDetails.Index = 6;
             this.mViewDetails.RadioCheck = true;
             this.mViewDetails.Tag = "1";
             this.mViewDetails.Text = global::LanExchange.Properties.Resources.ViewDetails;
@@ -484,7 +474,6 @@ namespace LanExchange.UI
         private System.Windows.Forms.MenuItem mViewSep1;
         private MenuItem mHelpSep1;
         private MenuItem mHelpSep2;
-        private MenuItem mViewMenu;
     }
 }
 

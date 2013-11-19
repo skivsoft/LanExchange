@@ -1,5 +1,6 @@
 ﻿using System.Windows.Forms;
 using System;
+using LanExchange.Intf;
 
 namespace LanExchange.UI
 {
@@ -74,6 +75,7 @@ namespace LanExchange.UI
         {
             Visible = !Visible;
             if (Visible) Activate();
+            App.Config.RunMinimized = !Visible;
         }
     }
 }
