@@ -1,19 +1,16 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Windows.Forms;
 using LanExchange.Intf;
 using LanExchange.Misc;
 using LanExchange.Model;
-using LanExchange.Properties;
 using LanExchange.SDK;
-using LanExchange.UI;
 
 namespace LanExchange.Presenter
 {
     public class PagesPresenter : PresenterBase<IPagesView>, IPagesPresenter, IDisposable
     {
         private readonly IPagesModel m_Model;
-        private DefferedAction m_SaveAction;
+        private readonly DefferedAction m_SaveAction;
 
         public event EventHandler PanelViewFocusedItemChanged;
         public event EventHandler PanelViewFilterTextChanged;
@@ -25,7 +22,7 @@ namespace LanExchange.Presenter
             m_Model.AfterRemove += Model_AfterRemove;
             m_Model.AfterRename += Model_AfterRename;
             m_Model.IndexChanged += Model_IndexChanged;
-            m_SaveAction = new DefferedAction((o) => m_Model.SaveSettings(), DefferedAction.SAVE_ACTION_MS);
+            m_SaveAction = new DefferedAction(o => m_Model.SaveSettings(), DefferedAction.SAVE_ACTION_MS);
         }
 
         public void Dispose()
@@ -107,7 +104,7 @@ namespace LanExchange.Presenter
                     newItem.Parent = PanelItemRoot.ROOT_OF_USERITEMS;
                     destObjects.Items.Add(newItem);
                 }
-            SaveSettings();
+            SaveDeffered();
             destObjects.SyncRetrieveData(true);
             //m_View.ActivePanelView.Presenter.UpdateItemsAndStatus();
         }
@@ -139,7 +136,7 @@ namespace LanExchange.Presenter
                 if (firstIndex >= 0)
                     panelView.Presenter.Objects.FocusedItem = panelView.Presenter.Objects.GetItemAt(firstIndex);
                 panelView.Presenter.Objects.SyncRetrieveData();
-                SaveSettings();
+                SaveDeffered();
             }
         }
 
@@ -153,7 +150,7 @@ namespace LanExchange.Presenter
         {
             var popupIndex = View.PopupSelectedIndex;
             for (int index = m_Model.Count - 1; index >= 0; index--)
-                if (index != m_Model.Count - 1 && index != popupIndex)
+                if (index != popupIndex)
                     m_Model.DelTab(index);
             m_Model.SelectedIndex = 0;
         }
@@ -172,40 +169,40 @@ namespace LanExchange.Presenter
             //e.Info.DataChanged(null, ConcreteSubject.s_UserItems);
             panelView.Presenter.ResetSortOrder();
             e.Info.SyncRetrieveData();
-            SaveSettings();
+            SaveDeffered();
         }
 
         public void Model_AfterRemove(object sender, PanelIndexEventArgs e)
         {
             View.RemoveTabAt(e.Index);
-            SaveSettings();
+            SaveDeffered();
         }
 
         public void Model_AfterRename(object sender, PanelModelEventArgs e)
         {
             View.SelectedTabText = e.Info.TabName;
-            SaveSettings();
+            SaveDeffered();
         }
 
         public void Model_IndexChanged(object sender, PanelIndexEventArgs e)
         {
             View.SelectedIndex = e.Index;
             View.FocusPanelView();
-            SaveSettings();
+            SaveDeffered();
         }
 
         public void DoPanelViewFocusedItemChanged(object sender, EventArgs e)
         {
             if (PanelViewFocusedItemChanged != null)
                 PanelViewFocusedItemChanged(sender, e);
-            SaveSettings();
+            SaveDeffered();
         }
 
         public void DoPanelViewFilterTextChanged(object sender, EventArgs e)
         {
             if (PanelViewFilterTextChanged != null)
                 PanelViewFilterTextChanged(sender, e);
-            SaveSettings();
+            SaveDeffered();
         }
 
         public bool SelectTabByName(string tabName)
@@ -230,12 +227,14 @@ namespace LanExchange.Presenter
             set { m_Model.SelectedIndex = value; }
         }
 
-        public void SaveSettings(bool deffered = true)
+        public void SaveDeffered()
         {
-            if (deffered)
-                m_SaveAction.Reset();
-            else
-                m_Model.SaveSettings();
+            m_SaveAction.Reset();
+        }
+
+        public void SaveInstant()
+        {
+            m_Model.SaveSettings();
         }
 
         public string GetTabName(int index)

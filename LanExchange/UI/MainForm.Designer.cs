@@ -94,7 +94,7 @@ namespace LanExchange.UI
             this.mTrayAbout,
             this.mTrayExit});
             this.popTray.Name = "popTray";
-            this.popTray.Size = new System.Drawing.Size(178, 76);
+            this.popTray.Size = new System.Drawing.Size(180, 76);
             this.popTray.Opening += new System.ComponentModel.CancelEventHandler(this.popTray_Opening);
             // 
             // mTrayOpen
@@ -102,26 +102,26 @@ namespace LanExchange.UI
             this.mTrayOpen.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.mTrayOpen.Name = "mTrayOpen";
             this.mTrayOpen.ShortcutKeyDisplayString = global::LanExchange.Properties.Resources.KeyCtrlWinX;
-            this.mTrayOpen.Size = new System.Drawing.Size(177, 22);
+            this.mTrayOpen.Size = new System.Drawing.Size(179, 22);
             this.mTrayOpen.Text = global::LanExchange.Properties.Resources.MainForm_Open;
             this.mTrayOpen.Click += new System.EventHandler(this.mOpen_Click);
             // 
             // mTraySep1
             // 
             this.mTraySep1.Name = "mTraySep1";
-            this.mTraySep1.Size = new System.Drawing.Size(174, 6);
+            this.mTraySep1.Size = new System.Drawing.Size(176, 6);
             // 
             // mTrayAbout
             // 
             this.mTrayAbout.Name = "mTrayAbout";
-            this.mTrayAbout.Size = new System.Drawing.Size(177, 22);
+            this.mTrayAbout.Size = new System.Drawing.Size(179, 22);
             this.mTrayAbout.Text = global::LanExchange.Properties.Resources.MainForm_About;
             this.mTrayAbout.Click += new System.EventHandler(this.mAbout_Click);
             // 
             // mTrayExit
             // 
             this.mTrayExit.Name = "mTrayExit";
-            this.mTrayExit.Size = new System.Drawing.Size(177, 22);
+            this.mTrayExit.Size = new System.Drawing.Size(179, 22);
             this.mTrayExit.Text = global::LanExchange.Properties.Resources.MainForm_Exit;
             this.mTrayExit.Click += new System.EventHandler(this.mExit_Click);
             // 

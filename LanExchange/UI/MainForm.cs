@@ -261,6 +261,14 @@ namespace LanExchange.UI
                 pInfo.SetLine(i, string.Empty);
         }
 
+        public void ClearInfoPanel()
+        {
+            pInfo.CurrentItem = null;
+            pInfo.Picture.Image = null;
+            for (int index = 0; index < pInfo.NumLines; index++)
+                pInfo.SetLine(index, string.Empty);
+        }
+
         private void popTray_Opening(object sender, CancelEventArgs e)
         {
             mTrayOpen.Text = Visible ? Resources.Close : Resources.MainForm_Open;

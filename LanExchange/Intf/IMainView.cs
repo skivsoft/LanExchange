@@ -9,5 +9,7 @@ namespace LanExchange.Intf
         void SetToolTip(object control, string tipText);
         bool ShowInfoPanel { get; set; }
         int NumInfoLines { get; set; }
+
+        void ClearInfoPanel();
     }
 }

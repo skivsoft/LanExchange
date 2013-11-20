@@ -56,10 +56,6 @@ namespace LanExchange.UI
         {
             var menuItem = sender as ToolStripMenuItem;
             if (menuItem == null) return;
-            if (menuItem.Checked)
-            {
-                return;
-            }
             var root = menuItem.Tag as PanelItemBase;
             if (root == null) return;
             if (!m_Presenter.SelectTabByName(root.Name))
