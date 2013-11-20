@@ -7,8 +7,10 @@ namespace LanExchange.Presenter.Action
     {
         public void Execute()
         {
-            if (Enabled)
-                App.MainPages.CommandCloseTab();
+            if (!Enabled) return;
+            App.MainPages.CommandCloseTab();
+            if (App.MainPages.Count == 0)
+                App.MainView.ClearInfoPanel();
         }
 
         public bool Enabled

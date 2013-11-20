@@ -1,32 +1,41 @@
 ﻿// *****************************************************************************
+// START DATE: Jan 22, 2012
+//
 // ROADMAP OF RELEASES
 //
-// RELEASE 1.0 (Iteration 1)
+// RELEASE 1.0
 //   DONE  Basic functional
 //
-// RELEASE 1.1.0 (Iteration 2)
+// RELEASE 1.1.0
 //   DONE  Autoupdate computer lists
 //   DONE  Update counts in status list
 //   DONE  Filtering computer items
 //   DONE  ContextMenuStrip for top panel
 //   DONE  Enum shares after ItemActivate
 //
-// RELEASE 2.0 (Iteration 3)
-//   TODO  Unit-tests coverage at least 30%
+// RELEASE 2.0
 //   DONE  Drag&Drop from panel to external app
 //   DONE  Sending items to new tab
-//   TODO    Drag&Drop from external app to panel
-//   TODO    Manual creation of computer items
 //   DONE  Classes with IDisposable interface must be a components
 //   DONE  MSI installer
 //   DONE  Columns sort (name, comment, version)
 //   DONE  Help on shortcut keys
 //   DONE  Load context menu for panel items from addons 
-//   TODO  Recently used items must appears when Tray.onMouseOver event fired
-//   TODO  Async enum items and cache items
 //   DONE  User list (Users plugin)
 // 
-// RELEASE 2.x (Iteration 4)
+// RELEASE 2.11 (Nov, 2013)
+//   TODO  Changing language without restart program
+//   TODO  Changing tabs order
+//   TODO  Network: ping computer before performing action on it
+//   TODO  Network: set tab name after changing domain/group
+//   TODO  Async enum items and cache items
+//
+// RELEASE 2.12 (Dec, 2013)
+//   TODO  Unit-tests coverage at least 30%
+//   TODO  Manual creation of computer items
+//   TODO  Recently used items must appears when Tray.onMouseOver event fired
+//
+// RELEASE 2.x
 //   TODO  Network: Show several ip addresses if present
 //   TODO  Users: Address books as root for users
 //   TODO  Users: use fields from ldap in addons like $(AD.employeeID)
@@ -40,7 +49,7 @@
 //   TODO  Enum files and folders (FS plugin)
 //   TODO  Addons editor
 //
-// RELEASE 2.x (Iteration 5)
+// RELEASE 2.x
 //   TODO  Unit-tests coverage at least 50%
 //   TODO  Multi-langual support (Russian, Engligh)
 //   TODO  Internal language editor

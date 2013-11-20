@@ -452,7 +452,7 @@ namespace LanExchange.UI
                 LV.View = (View) value;
                 LV.ToolTipActive = LV.View != View.Details;
                 m_Presenter.Objects.CurrentView = value;
-                App.MainPages.SaveSettings();
+                App.MainPages.SaveDeffered();
             }
         }
 

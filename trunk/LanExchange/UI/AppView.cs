@@ -37,7 +37,7 @@ namespace LanExchange.UI
 
         private static void ApplicationOnThreadExit(object sender, EventArgs e)
         {
-            App.MainPages.SaveSettings(false);
+            App.MainPages.SaveInstant();
             App.Config.Save();
         }
     }
