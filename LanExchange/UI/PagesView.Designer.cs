@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.popPages = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.mReread = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.mCloseTab = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,25 +41,19 @@
             // popPages
             // 
             this.popPages.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripSeparator1,
             this.mReread,
             this.toolStripSeparator2,
             this.mCloseTab,
             this.mCloseOtherTabs});
             this.popPages.Name = "popPages";
-            this.popPages.Size = new System.Drawing.Size(162, 104);
+            this.popPages.Size = new System.Drawing.Size(162, 98);
             this.popPages.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.popPages_Closed);
             this.popPages.Opened += new System.EventHandler(this.popPages_Opened);
             this.popPages.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.popPages_ItemClicked);
             // 
-            // toolStripSeparator1
+            // mReread
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(158, 6);
-            // 
-            // mReload
-            // 
-            this.mReread.Name = "mReload";
+            this.mReread.Name = "mReread";
             this.mReread.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
             this.mReread.Size = new System.Drawing.Size(161, 22);
             this.mReread.Text = global::LanExchange.Properties.Resources.KeyCtrlR_;
@@ -117,7 +110,6 @@
 
         private System.Windows.Forms.ContextMenuStrip popPages;
         internal System.Windows.Forms.TabControl Pages;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem mReread;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem mCloseTab;

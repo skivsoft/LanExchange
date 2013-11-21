@@ -31,21 +31,10 @@ namespace LanExchange.UI
             App.Config.Changed += App.Presenter.ConfigOnChanged;
             App.Config.Load();
             SetRunMinimized(App.Config.RunMinimized);
-            // init Pages presenter
-            Pages = (PagesView)App.Resolve<IPagesView>();
-            Pages.Dock = DockStyle.Fill;
-            Controls.Add(Pages);
-            Pages.BringToFront();
-            App.MainPages = Pages.Presenter;
-            App.MainPages.PanelViewFocusedItemChanged += Pages_PanelViewFocusedItemChanged;
-            App.MainPages.LoadSettings();
+            // setup languages in menu
+            SetupMenuLanguages(App.TR.CurrentLanguage);
             // init main form
             SetupForm();
-            SetupLanguages(App.TR.CurrentLanguage);
-            // setup images
-            //ClearToolTip(Pages.Pages);
-            App.Images.SetImagesTo(Pages.Pages);
-            App.Images.SetImagesTo(Status);
             // set hotkey for activate: Ctrl+Win+X
             m_Hotkeys = new GlobalHotkeys();
             m_Hotkeys.RegisterGlobalHotKey((int)Keys.X, GlobalHotkeys.MOD_CONTROL + GlobalHotkeys.MOD_WIN, Handle);
@@ -60,6 +49,18 @@ namespace LanExchange.UI
         [Localizable(false)]
         private void SetupForm()
         {
+            // init Pages presenter
+            Pages = (PagesView)App.Resolve<IPagesView>();
+            Pages.Dock = DockStyle.Fill;
+            Controls.Add(Pages);
+            Pages.BringToFront();
+            // setup images
+            App.Images.SetImagesTo(Pages.Pages);
+            App.Images.SetImagesTo(Status);
+            // load saved pages from config
+            App.MainPages.View.SetupContextMenu();
+            App.MainPages.PanelViewFocusedItemChanged += Pages_PanelViewFocusedItemChanged;
+            App.MainPages.LoadSettings();
             // set mainform bounds
             var rect = App.Presenter.SettingsGetBounds();
             SetBounds(rect.Left, rect.Top, rect.Width, rect.Height);
@@ -77,7 +78,7 @@ namespace LanExchange.UI
             lUserName.ImageIndex = App.Images.IndexOf(PanelImageNames.UserNormal);
         }
 
-        private void SetupLanguages(string newLanguage)
+        private void SetupMenuLanguages(string newLanguage)
         {
             var needApply = App.TR.CurrentLanguage != newLanguage;
             App.TR.CurrentLanguage = newLanguage;
@@ -104,7 +105,7 @@ namespace LanExchange.UI
         {
             var menuItem = sender as ToolStripMenuItem;
             if (menuItem != null)
-                SetupLanguages((string) menuItem.Tag);
+                SetupMenuLanguages((string) menuItem.Tag);
         }
 
         private bool m_EscDown;

@@ -51,7 +51,6 @@ namespace LanExchange.UI
             this.pInfo = new LanExchange.UI.InfoView();
             this.MainMenu = new System.Windows.Forms.MainMenu(this.components);
             this.mPanel = new System.Windows.Forms.MenuItem();
-            this.mPanelSep1 = new System.Windows.Forms.MenuItem();
             this.mPanelReRead = new System.Windows.Forms.MenuItem();
             this.mPanelSep2 = new System.Windows.Forms.MenuItem();
             this.mPanelCloseTab = new System.Windows.Forms.MenuItem();
@@ -226,7 +225,6 @@ namespace LanExchange.UI
             // 
             this.mPanel.Index = 0;
             this.mPanel.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.mPanelSep1,
             this.mPanelReRead,
             this.mPanelSep2,
             this.mPanelCloseTab,
@@ -236,44 +234,39 @@ namespace LanExchange.UI
             this.mPanel.Text = global::LanExchange.Properties.Resources.MenuPanel;
             this.mPanel.Popup += new System.EventHandler(this.mPanel_Popup);
             // 
-            // mPanelSep1
-            // 
-            this.mPanelSep1.Index = 0;
-            this.mPanelSep1.Text = "-";
-            // 
             // mPanelReRead
             // 
-            this.mPanelReRead.Index = 1;
+            this.mPanelReRead.Index = 0;
             this.mPanelReRead.Shortcut = System.Windows.Forms.Shortcut.CtrlR;
             this.mPanelReRead.Text = global::LanExchange.Properties.Resources.KeyCtrlR_;
             this.mPanelReRead.Click += new System.EventHandler(this.rereadToolStripMenuItem_Click);
             // 
             // mPanelSep2
             // 
-            this.mPanelSep2.Index = 2;
+            this.mPanelSep2.Index = 1;
             this.mPanelSep2.Text = "-";
             // 
             // mPanelCloseTab
             // 
-            this.mPanelCloseTab.Index = 3;
+            this.mPanelCloseTab.Index = 2;
             this.mPanelCloseTab.Shortcut = System.Windows.Forms.Shortcut.CtrlW;
             this.mPanelCloseTab.Text = global::LanExchange.Properties.Resources.PagesView_CloseTab;
             this.mPanelCloseTab.Click += new System.EventHandler(this.mCloseTab_Click);
             // 
             // mPanelCloseOther
             // 
-            this.mPanelCloseOther.Index = 4;
+            this.mPanelCloseOther.Index = 3;
             this.mPanelCloseOther.Text = global::LanExchange.Properties.Resources.PagesView_CloseOtherTabs;
             this.mPanelCloseOther.Click += new System.EventHandler(this.mCloseOther_Click);
             // 
             // mPanelSep3
             // 
-            this.mPanelSep3.Index = 5;
+            this.mPanelSep3.Index = 4;
             this.mPanelSep3.Text = "-";
             // 
             // mPanelExit
             // 
-            this.mPanelExit.Index = 6;
+            this.mPanelExit.Index = 5;
             this.mPanelExit.Shortcut = System.Windows.Forms.Shortcut.F10;
             this.mPanelExit.Text = global::LanExchange.Properties.Resources.KeyF10_;
             this.mPanelExit.Click += new System.EventHandler(this.mExit_Click);
@@ -455,7 +448,6 @@ namespace LanExchange.UI
         private System.Windows.Forms.MenuItem mPanelSep3;
         private System.Windows.Forms.MenuItem mPanelExit;
         private System.Windows.Forms.MenuItem mHelpKeys;
-        private System.Windows.Forms.MenuItem mPanelSep1;
         private System.Windows.Forms.MenuItem mLanguage;
         private System.Windows.Forms.MenuItem mHelpLangs;
         private System.Windows.Forms.MenuItem mHelpBugs;

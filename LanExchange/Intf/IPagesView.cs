@@ -62,5 +62,6 @@
         /// <returns></returns>
         IPanelView CreatePanelView(IPanelModel info);
         IPagesPresenter Presenter { get; }
+        void SetupContextMenu();
     }
 }
