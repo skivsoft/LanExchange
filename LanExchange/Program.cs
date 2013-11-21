@@ -24,13 +24,16 @@
 //   DONE  User list (Users plugin)
 // 
 // RELEASE 2.11 (Nov, 2013)
+//   DONE  Show/Hide panel info option
+//   DONE  Show/Hide grid lines option
+//   DONE  Open plugin's tab from context menu
+//
+// RELEASE 2.12 (Dec, 2013)
+//   TODO  Unit-tests coverage at least 30%
 //   TODO  Changing language without restart program
 //   TODO  Network: ping computer before performing action on it
 //   TODO  Network: set tab name after changing domain/group
 //   TODO  Async enum items and cache items
-//
-// RELEASE 2.12 (Dec, 2013)
-//   TODO  Unit-tests coverage at least 30%
 //   TODO  Changing tabs order
 //   TODO  Manual creation of computer items
 //   TODO  Recently used items must appears when Tray.onMouseOver event fired

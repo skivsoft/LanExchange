@@ -28,6 +28,14 @@ namespace LanExchange.Misc.Impl
             get { return m_Types; }
         }
 
+        public PanelItemBase CreateDefaultRoot(string typeName)
+        {
+            foreach(var pair in m_Types)
+                if (pair.Key.Name.Equals(typeName))
+                    return pair.Value.CreateDefaultRoot();
+            return null;
+        }
+
         public void CreateDefaultRoots()
         {
             m_DefaultRoots.Clear();
@@ -66,5 +74,6 @@ namespace LanExchange.Misc.Impl
             result[m_Types.Count + 1] = typeof (PanelItemDoubleDot);
             return result;
         }
+
     }
 }
