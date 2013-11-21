@@ -44,9 +44,9 @@ namespace LanExchange.Plugin.Network
         }
 
         [Test]
-        public void TestToString()
+        public void TestFullName()
         {
-            Assert.IsEmpty(m_Domain.ToString());
+            Assert.IsEmpty(m_Domain.FullName);
         }
 
         [Test]

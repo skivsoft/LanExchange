@@ -33,6 +33,10 @@ namespace LanExchange.UI
             m_Presenter = presenter;
             m_Presenter.View = this;
             App.Images.SetImagesTo(popPages);
+        }
+
+        public void SetupContextMenu()
+        {
             SetupContextMenu(popPages.Items);
         }
 
@@ -49,6 +53,10 @@ namespace LanExchange.UI
                 menuItem.Click += PluginOnClick;
                 items.Insert(index, menuItem);
                 index++;
+            }
+            if (index > 0)
+            {
+                items.Insert(index, new ToolStripSeparator());
             }
         }
 

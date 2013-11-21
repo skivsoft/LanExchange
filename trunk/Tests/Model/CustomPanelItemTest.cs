@@ -39,7 +39,7 @@ namespace LanExchange.Model
         {
             Assert.AreEqual("test", m_Custom.FullName);
             var subItem = new CustomPanelItem(m_Custom, "hello");
-            Assert.AreEqual(@"test\hello", subItem.FullName);
+            Assert.AreEqual("hello", subItem.FullName);
         }
 
         [Test]

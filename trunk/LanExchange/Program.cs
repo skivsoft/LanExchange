@@ -1,7 +1,7 @@
 ﻿// *****************************************************************************
-// START DATE: Jan 22, 2012
-//
 // ROADMAP OF RELEASES
+//
+// START DATE: Jan 22, 2012
 //
 // RELEASE 1.0
 //   DONE  Basic functional
@@ -25,13 +25,13 @@
 // 
 // RELEASE 2.11 (Nov, 2013)
 //   TODO  Changing language without restart program
-//   TODO  Changing tabs order
 //   TODO  Network: ping computer before performing action on it
 //   TODO  Network: set tab name after changing domain/group
 //   TODO  Async enum items and cache items
 //
 // RELEASE 2.12 (Dec, 2013)
 //   TODO  Unit-tests coverage at least 30%
+//   TODO  Changing tabs order
 //   TODO  Manual creation of computer items
 //   TODO  Recently used items must appears when Tray.onMouseOver event fired
 //
@@ -77,13 +77,12 @@ namespace LanExchange
     internal static class Program
     {
         [STAThread]
-        static void Main(string[] args)
+        static void Main()
         {
             App.SetContainer(ContainerBuilder.Build());
             CmdLineProcessor.Processing();
             SingleInstanceCheck.Check();
             App.Plugins.LoadPlugins();
-            App.Addons.LoadAddons();
             // register ShortcutPanelItem
             App.PanelItemTypes.RegisterPanelItemFactory(typeof(ShortcutPanelItem), new ShortcutPanelItemFactory());
             ShortcutPanelItem.RegisterColumns(App.PanelColumns);

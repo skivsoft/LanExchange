@@ -7,7 +7,6 @@ using System.Globalization;
 using System.Windows.Forms;
 using LanExchange.Intf;
 using LanExchange.Intf.Addon;
-using LanExchange.Properties;
 using LanExchange.SDK;
 using LanExchange.Utils;
 
@@ -16,38 +15,69 @@ namespace LanExchange.Misc.Impl
     [Localizable(false)]
     public class AddonManagerImpl : IAddonManager
     {
+        private readonly IDictionary<string, AddonProgram> m_Programs;
+        private readonly IDictionary<string, AddonItemTypeRef> m_PanelItems;
+
+        private bool m_Loaded;
+
         public AddonManagerImpl()
         {
-            Programs = new Dictionary<string, AddonProgram>();
-            PanelItems = new Dictionary<string, AddonItemTypeRef>();
+            m_Programs = new Dictionary<string, AddonProgram>();
+            m_PanelItems = new Dictionary<string, AddonItemTypeRef>();
         }
 
-        public IDictionary<string, AddonProgram> Programs { get; private set; }
-        public IDictionary<string, AddonItemTypeRef> PanelItems { get; private set; }
-
-        public void LoadAddons()
+        public IDictionary<string, AddonProgram> Programs 
+        { 
+            get
+            {
+                if (!m_Loaded)
+                {
+                    InternalLoadAddons();
+                    m_Loaded = true;
+                }
+                return m_Programs;
+            }
+        }
+        
+        public IDictionary<string, AddonItemTypeRef> PanelItems
         {
-            foreach(var fileName in App.FolderManager.GetAddonsFiles())
+            get
+            {
+                if (!m_Loaded)
+                {
+                    InternalLoadAddons();
+                    m_Loaded = true;
+                }
+                return m_PanelItems;
+            }
+        }
+
+        private void InternalLoadAddons()
+        {
+            Cursor.Current = Cursors.WaitCursor;
             try
             {
-                LoadAddon(fileName);
+                foreach (var fileName in App.FolderManager.GetAddonsFiles())
+                    try
+                    {
+                        LoadAddon(fileName);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.Print(ex.Message);
+                    }
+                // register programs images
+                foreach (var pair in m_Programs)
+                    if (pair.Value.ProgramImage != null)
+                    {
+                        var imageName = string.Format(CultureInfo.InvariantCulture, PanelImageNames.ADDON_FMT, pair.Key);
+                        App.Images.RegisterImage(imageName, pair.Value.ProgramImage, pair.Value.ProgramImage);
+                    }
             }
-            catch (Exception ex)
+            finally
             {
-                Debug.Print(ex.Message);
+                Cursor.Current = Cursors.Default;
             }
-            RegisterImages();
-        }
-
-        private void RegisterImages()
-        {
-            // register programs images
-            foreach (var pair in Programs)
-                if (pair.Value.ProgramImage != null)
-                {
-                    var imageName = string.Format(CultureInfo.InvariantCulture, PanelImageNames.ADDON_FMT, pair.Key);
-                    App.Images.RegisterImage(imageName, pair.Value.ProgramImage, pair.Value.ProgramImage);
-                }
         }
 
         private void LoadAddon(string fileName)
@@ -56,10 +86,10 @@ namespace LanExchange.Misc.Impl
             var addon = (Addon)SerializeUtils.DeserializeObjectFromXMLFile(fileName, typeof(Addon));
             // process programs
             foreach (var item in addon.Programs)
-                if (!Programs.ContainsKey(item.Id))
+                if (!m_Programs.ContainsKey(item.Id))
                 {
                     item.PrepareFileNameAndIcon();
-                    Programs.Add(item.Id, item);
+                    m_Programs.Add(item.Id, item);
                 }
             // process protocols
             foreach (var item in addon.PanelItemTypes)
@@ -68,16 +98,16 @@ namespace LanExchange.Misc.Impl
                     {
                         var itemProgram = AddonProgram.CreateFromProtocol(menuItem.ProgramRef.Id);
                         if (itemProgram != null)
-                            Programs.Add(itemProgram.Id, itemProgram);
+                            m_Programs.Add(itemProgram.Id, itemProgram);
                     }
             // process menu items
             foreach (var item in addon.PanelItemTypes)
             {
                 AddonItemTypeRef found;
-                if (PanelItems.ContainsKey(item.Id))
+                if (m_PanelItems.ContainsKey(item.Id))
                 {
-                    found = PanelItems[item.Id];
-                    PanelItems.Remove(item.Id);
+                    found = m_PanelItems[item.Id];
+                    m_PanelItems.Remove(item.Id);
                 }
                 else
                     found = new AddonItemTypeRef();
@@ -93,15 +123,15 @@ namespace LanExchange.Misc.Impl
                             found.ContextMenuStrip.Add(menuItem);
                         else
                         {
-                            if (Programs.ContainsKey(menuItem.ProgramRef.Id))
-                                menuItem.ProgramValue = Programs[menuItem.ProgramRef.Id];
+                            if (m_Programs.ContainsKey(menuItem.ProgramRef.Id))
+                                menuItem.ProgramValue = m_Programs[menuItem.ProgramRef.Id];
                             if (!found.ContextMenuStrip.Contains(menuItem) && 
                                 menuItem.ProgramRef != null && 
                                 menuItem.ProgramValue != null)
                                 found.ContextMenuStrip.Add(menuItem);
                         }
                     }
-                PanelItems.Add(item.Id, found);
+                m_PanelItems.Add(item.Id, found);
             }
         }
 

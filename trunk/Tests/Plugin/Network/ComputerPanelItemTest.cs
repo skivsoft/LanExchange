@@ -73,9 +73,11 @@ namespace LanExchange.Plugin.Network
         }
 
         [Test]
-        public void TestToString()
+        public void TestFullName()
         {
-            Assert.AreEqual(@"\\COMP01", m_Comp.ToString());
+            Assert.AreEqual(@"\\COMP01", m_Comp.FullName);
+            var share = new SharePanelItem(m_Comp, "SHARE01");
+            Assert.AreEqual(@"\\COMP01\SHARE01", share.FullName);
         }
 
         //[Test]
