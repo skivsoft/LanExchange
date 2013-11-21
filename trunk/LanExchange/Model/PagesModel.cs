@@ -13,6 +13,7 @@ namespace LanExchange.Model
     [XmlType("LanExchangeTabs")]
     public class PagesModel : IPagesModel
     {
+        private const string DEFAULT_PANELITEMTYPE = "DomainPanelItem";
         private readonly List<IPanelModel> m_List;
         private int m_SelectedIndex;
 
@@ -163,7 +164,6 @@ namespace LanExchange.Model
 
         public void SetLoadedModel(IPagesModel model)
         {
-            //App.PanelItemTypes.CreateDefaultRoots();
             if (model != null && model.Count > 0)
             {
                 // add loaded tabs if present
@@ -172,16 +172,17 @@ namespace LanExchange.Model
                 if (model.SelectedIndex != -1)
                     SelectedIndex = model.SelectedIndex;
             }
-            //create default tabs
-            // TODO !!! CreateDefaultTabs
-            //foreach (var root in App.PanelItemTypes.DefaultRoots)
-            //{
-            //    var info = App.Resolve<IPanelModel>();
-            //    info.TabName = root.Name;
-            //    info.SetDefaultRoot(root);
-            //    info.DataType = App.PanelFillers.GetFillType(root).Name;
-            //    AddTab(info);
-            //}
+            if (Count == 0)
+            {
+                var root = App.PanelItemTypes.CreateDefaultRoot(DEFAULT_PANELITEMTYPE);
+                if (root == null) return;
+                // create default tab
+                var info = App.Resolve<IPanelModel>();
+                info.TabName = root.Name;
+                info.SetDefaultRoot(root);
+                info.DataType = App.PanelFillers.GetFillType(root).Name;
+                AddTab(info);
+            }
         }
 
         public void SaveSettings()

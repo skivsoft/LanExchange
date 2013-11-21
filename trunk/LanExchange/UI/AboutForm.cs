@@ -58,13 +58,17 @@ namespace LanExchange.UI
                 sb.AppendLine();
             }
             sb.AppendLine();
-            sb.AppendLine(string.Format(@"\b {0}\b0", Resources.AboutForm_Translations));
-            foreach (var pair in App.TR.GetTranslations())
+            var translations = App.TR.GetTranslations();
+            if (translations.Count > 0)
             {
-                var line = pair.Key;
-                if (!string.IsNullOrEmpty(pair.Value))
-                    line += @" \tab " + pair.Value;
-                sb.AppendLine("    " + line);
+                sb.AppendLine(string.Format(@"\b {0}\b0", Resources.AboutForm_Translations));
+                foreach (var pair in translations)
+                {
+                    var line = pair.Key;
+                    if (!string.IsNullOrEmpty(pair.Value))
+                        line += @" \tab " + pair.Value;
+                    sb.AppendLine("    " + line);
+                }
             }
             sb.Append("}");
             return sb.ToString().Replace("\r\n", @"\line ");

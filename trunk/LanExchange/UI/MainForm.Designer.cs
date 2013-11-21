@@ -341,6 +341,7 @@ namespace LanExchange.UI
             // 
             this.mLanguage.Index = 2;
             this.mLanguage.Text = global::LanExchange.Properties.Resources.MainForm_Language;
+            this.mLanguage.Visible = false;
             // 
             // mHelp
             // 
