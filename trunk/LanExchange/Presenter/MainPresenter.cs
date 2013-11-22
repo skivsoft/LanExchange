@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.Intf;
-using LanExchange.Misc;
 using LanExchange.Presenter.Action;
 using LanExchange.SDK;
 
@@ -13,7 +12,6 @@ namespace LanExchange.Presenter
     public class MainPresenter : PresenterBase<IMainView>, IMainPresenter
     {
         private readonly Dictionary<Type, IAction> m_Actions;
-        private readonly DefferedAction m_ConfigSave;
 
         public MainPresenter()
         {
@@ -23,7 +21,6 @@ namespace LanExchange.Presenter
             RegisterAction(new CloseTabAction());
             RegisterAction(new CloseOtherAction());
             RegisterAction(new ShortcutKeysAction());
-            m_ConfigSave = new DefferedAction(e => App.Config.Save(), DefferedAction.SAVE_ACTION_MS);
         }
 
         [Localizable(false)]
@@ -46,7 +43,6 @@ namespace LanExchange.Presenter
                     App.MainPages.DoPanelViewFocusedItemChanged(App.MainPages.View.ActivePanelView, EventArgs.Empty);
                     break;
             }
-            m_ConfigSave.Reset();
         }
         private int GetDefaultWidth()
         {

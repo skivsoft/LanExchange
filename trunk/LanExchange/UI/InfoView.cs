@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.Intf;
@@ -9,12 +10,12 @@ namespace LanExchange.UI
     public partial class InfoView : UserControl, IInfoView
     {
         private int m_NumLines;
-        private readonly Dictionary<int, Label> m_Lines;
+        private readonly IList<Label> m_Lines;
         
         public InfoView()
         {
             InitializeComponent();
-            m_Lines = new Dictionary<int, Label>();
+            m_Lines = new List<Label>();
         }
 
         public PictureBox Picture
@@ -29,7 +30,18 @@ namespace LanExchange.UI
             {
                 m_NumLines = value;
                 Height = GetLocationY(m_NumLines) + 8;
-                Visible = m_NumLines >= 3;
+                for (int i = m_Lines.Count; i < m_NumLines; i++ )
+                {
+                    var control = CreateLabelControl(i);
+                    Controls.Add(control);
+                    m_Lines.Add(control);
+                }
+                for (int i = m_Lines.Count - 1; i > m_NumLines - 1; i--)
+                {
+                    var label = m_Lines[i];
+                    m_Lines.RemoveAt(i);
+                    label.Dispose();
+                }
             }
         }
 
@@ -42,10 +54,14 @@ namespace LanExchange.UI
         {
             if (index < 0 || index > m_NumLines - 1)
                 return string.Empty;
-            Label control;
-            if (m_Lines.TryGetValue(index, out control))
-                return control.Text;
-            return string.Empty;
+            return m_Lines[index].Text;
+        }
+
+        public void SetLine(int index, string text)
+        {
+            if (index < 0 || index > m_NumLines - 1)
+                return;
+            m_Lines[index].Text = text;
         }
 
         private Label CreateLabelControl(int index)
@@ -73,20 +89,6 @@ namespace LanExchange.UI
                 obj.SetText(label.Text, TextDataFormat.UnicodeText);
                 DoDragDrop(obj, DragDropEffects.Copy);
             }
-        }
-
-        public void SetLine(int index, string text)
-        {
-            if (index < 0 || index > m_NumLines - 1)
-                return;
-            Label control;
-            if (!m_Lines.TryGetValue(index, out control))
-            {
-                control = CreateLabelControl(index);
-                Controls.Add(control);
-                m_Lines.Add(index, control);
-            }
-            control.Text = text;
         }
 
         public PanelItemBase CurrentItem { get; set; }

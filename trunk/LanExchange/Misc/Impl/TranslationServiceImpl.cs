@@ -74,21 +74,19 @@ namespace LanExchange.Misc.Impl
         public IDictionary<string, string> GetTranslations()
         {
             var result = new SortedDictionary<string, string>();
+            foreach (var fileName in App.FolderManager.GetLanguagesFiles())
+            {
+                var lang = Path.GetFileNameWithoutExtension(fileName);
+                if (lang == null) continue;
+                try
+                {
+                    result.Add(lang, TranslateFromPO(fileName, AUTHOR));
+                }
+                catch (ArgumentException)
+                {
+                }
+            }
             return result;
-            // TODO !!! NEED UNCOMMENT
-            //foreach (var fileName in App.FolderManager.GetLanguagesFiles())
-            //{
-            //    var lang = Path.GetFileNameWithoutExtension(fileName);
-            //    if (lang == null) continue;
-            //    try
-            //    {
-            //        result.Add(lang, TranslateFromPO(fileName, AUTHOR));
-            //    }
-            //    catch (ArgumentException)
-            //    {
-            //    }
-            //}
-            //return result;
         }
 
         private string InternalTranslate(IEnumerable<string> lines, string id)

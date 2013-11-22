@@ -122,7 +122,6 @@
     <Compile Include="Intf\ILazyThreadPool.cs" />
     <Compile Include="Presenter\Action\ShortcutPanelItemFactory.cs" />
     <Compile Include="Misc\CmdLineProcessor.cs" />
-    <Compile Include="Misc\DefferedAction.cs" />
     <Compile Include="Misc\Impl\ImageManagerImpl.cs" />
     <Compile Include="Intf\IPluginManager.cs" />
     <Compile Include="Misc\Impl\MacroHelper.cs" />
