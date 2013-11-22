@@ -192,7 +192,7 @@ msgstr "Del"
 
 msgctxt "LanExchange.exe"
 msgid "Hide Details"
-msgstr "Скрыть детали"
+msgstr "Скрыть"
 
 msgctxt "LanExchange.exe"
 msgid "Copy of {0}"
@@ -432,7 +432,7 @@ msgstr "Увеличить высоту инфо-панели либо пока�
 
 msgctxt "LanExchange.exe"
 msgid "Show Details"
-msgstr "Показать детали"
+msgstr "Подробнее"
 
 msgctxt "LanExchange.exe"
 msgid "Copy column on which the ordered item(s) to clipboard."

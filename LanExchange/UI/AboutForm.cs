@@ -20,6 +20,7 @@ namespace LanExchange.UI
             m_Presenter = presenter;
             m_Presenter.View = this;
             InitializeComponent();
+            Text = Resources.AboutForm_Title;
             lVersion.Text = Resources.AboutForm_Version;
             lLicense.Text = Resources.AboutForm_License;
             eLicense.Text = Resources.AboutForm_MIT;

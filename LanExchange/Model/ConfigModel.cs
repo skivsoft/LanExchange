@@ -14,6 +14,7 @@ namespace LanExchange.Model
     [XmlType("LanExchangeConfig")]
     public class ConfigModel : IConfigModel
     {
+        private const int MIN_INFO_LINES = 3;
         public event EventHandler<ConfigChangedArgs> Changed;
         private bool m_ShowInfoPanel;
         private bool m_RunMinimized;
@@ -140,17 +141,17 @@ namespace LanExchange.Model
             }
         }
 
-        [DefaultValue(3)]
+        [DefaultValue(MIN_INFO_LINES)]
         public int NumInfoLines
         {
             get { return m_NumInfoLines; }
             set
             {
-                if (value < 2)
-                    value = 2;
+                if (value < MIN_INFO_LINES)
+                    value = MIN_INFO_LINES;
                 if (App.PanelColumns != null)
                 {
-                    var maxColumns = Math.Max(3, App.PanelColumns.MaxColumns);
+                    var maxColumns = Math.Max(MIN_INFO_LINES, App.PanelColumns.MaxColumns);
                     if (value > maxColumns)
                         value = maxColumns;
                 }

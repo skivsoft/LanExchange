@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Windows.Forms;
 using LanExchange.Intf;
-using LanExchange.Misc;
 using LanExchange.Model;
 using LanExchange.SDK;
 
 namespace LanExchange.Presenter
 {
-    public class PagesPresenter : PresenterBase<IPagesView>, IPagesPresenter, IDisposable
+    public class PagesPresenter : PresenterBase<IPagesView>, IPagesPresenter
     {
         private readonly IPagesModel m_Model;
-        private readonly DefferedAction m_SaveAction;
 
         public event EventHandler PanelViewFocusedItemChanged;
         public event EventHandler PanelViewFilterTextChanged;
@@ -22,12 +20,6 @@ namespace LanExchange.Presenter
             m_Model.AfterRemove += Model_AfterRemove;
             m_Model.AfterRename += Model_AfterRename;
             m_Model.IndexChanged += Model_IndexChanged;
-            m_SaveAction = new DefferedAction(o => m_Model.SaveSettings(), DefferedAction.SAVE_ACTION_MS);
-        }
-
-        public void Dispose()
-        {
-            m_SaveAction.Dispose();
         }
 
         public bool CanSendToNewTab()
@@ -104,7 +96,6 @@ namespace LanExchange.Presenter
                     newItem.Parent = PanelItemRoot.ROOT_OF_USERITEMS;
                     destObjects.Items.Add(newItem);
                 }
-            SaveDeffered();
             destObjects.SyncRetrieveData(true);
             //m_View.ActivePanelView.Presenter.UpdateItemsAndStatus();
         }
@@ -136,7 +127,6 @@ namespace LanExchange.Presenter
                 if (firstIndex >= 0)
                     panelView.Presenter.Objects.FocusedItem = panelView.Presenter.Objects.GetItemAt(firstIndex);
                 panelView.Presenter.Objects.SyncRetrieveData();
-                SaveDeffered();
             }
         }
 
@@ -169,40 +159,34 @@ namespace LanExchange.Presenter
             //e.Info.DataChanged(null, ConcreteSubject.s_UserItems);
             panelView.Presenter.ResetSortOrder();
             e.Info.SyncRetrieveData();
-            SaveDeffered();
         }
 
         public void Model_AfterRemove(object sender, PanelIndexEventArgs e)
         {
             View.RemoveTabAt(e.Index);
-            SaveDeffered();
         }
 
         public void Model_AfterRename(object sender, PanelModelEventArgs e)
         {
             View.SelectedTabText = e.Info.TabName;
-            SaveDeffered();
         }
 
         public void Model_IndexChanged(object sender, PanelIndexEventArgs e)
         {
             View.SelectedIndex = e.Index;
             View.FocusPanelView();
-            SaveDeffered();
         }
 
         public void DoPanelViewFocusedItemChanged(object sender, EventArgs e)
         {
             if (PanelViewFocusedItemChanged != null)
                 PanelViewFocusedItemChanged(sender, e);
-            SaveDeffered();
         }
 
         public void DoPanelViewFilterTextChanged(object sender, EventArgs e)
         {
             if (PanelViewFilterTextChanged != null)
                 PanelViewFilterTextChanged(sender, e);
-            SaveDeffered();
         }
 
         public bool SelectTabByName(string tabName)
@@ -227,11 +211,6 @@ namespace LanExchange.Presenter
             set { m_Model.SelectedIndex = value; }
         }
 
-        public void SaveDeffered()
-        {
-            m_SaveAction.Reset();
-        }
-
         public void SaveInstant()
         {
             m_Model.SaveSettings();
@@ -241,7 +220,6 @@ namespace LanExchange.Presenter
         {
             return m_Model.GetTabName(index);
         }
-
 
         public void SetupPanelViewEvents(IPanelView PV)
         {

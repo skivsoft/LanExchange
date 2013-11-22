@@ -83,11 +83,11 @@ namespace LanExchange.UI
             var needApply = App.TR.CurrentLanguage != newLanguage;
             App.TR.CurrentLanguage = newLanguage;
             var nameDict = App.TR.GetLanguagesNames();
-            //if (nameDict.Count < 2)
-            //{
-            //    mLanguage.Visible = false;
-            //    return;
-            //}
+            if (nameDict.Count < 2)
+            {
+                mLanguage.Visible = false;
+                return;
+            }
             mLanguage.Visible = true;
             mLanguage.MenuItems.Clear();
             foreach(var pair in nameDict)
@@ -145,11 +145,7 @@ namespace LanExchange.UI
             // Ctrl+Up/Ctrl+Down - change number of info lines
             if (e.Control && (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down))
             {
-                int value = App.Config.NumInfoLines;
-                if (e.KeyCode == Keys.Down)
-                    App.Config.NumInfoLines = value + 1;
-                else
-                    App.Config.NumInfoLines = value - 1;
+                App.Config.NumInfoLines = App.Config.NumInfoLines + (e.KeyCode == Keys.Down ? +1 : -1);
                 e.Handled = true;
             }
         }

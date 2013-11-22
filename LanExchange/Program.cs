@@ -34,7 +34,6 @@
 //   TODO  Network: ping computer before performing action on it
 //   TODO  Network: set tab name after changing domain/group
 //   TODO  Async enum items and cache items
-//   TODO  Changing tabs order
 //   TODO  Manual creation of computer items
 //   TODO  Recently used items must appears when Tray.onMouseOver event fired
 //

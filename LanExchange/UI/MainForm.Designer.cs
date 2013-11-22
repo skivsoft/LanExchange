@@ -341,7 +341,6 @@ namespace LanExchange.UI
             // 
             this.mLanguage.Index = 2;
             this.mLanguage.Text = global::LanExchange.Properties.Resources.MainForm_Language;
-            this.mLanguage.Visible = false;
             // 
             // mHelp
             // 
@@ -350,8 +349,8 @@ namespace LanExchange.UI
             this.mHelpKeys,
             this.mHelpSep1,
             this.mHelpWeb,
-            this.mHelpLangs,
             this.mHelpBugs,
+            this.mHelpLangs,
             this.mHelpSep2,
             this.mHelpAbout});
             this.mHelp.Text = global::LanExchange.Properties.Resources.MenuHelp;
@@ -376,13 +375,13 @@ namespace LanExchange.UI
             // 
             // mHelpLangs
             // 
-            this.mHelpLangs.Index = 3;
+            this.mHelpLangs.Index = 4;
             this.mHelpLangs.Text = global::LanExchange.Properties.Resources.MenuLocalizationPage;
             this.mHelpLangs.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // mHelpBugs
             // 
-            this.mHelpBugs.Index = 4;
+            this.mHelpBugs.Index = 3;
             this.mHelpBugs.Text = global::LanExchange.Properties.Resources.MenuBugtrackerPage;
             this.mHelpBugs.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
