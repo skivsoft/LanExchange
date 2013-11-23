@@ -1,5 +1,4 @@
-﻿using System;
-using LanExchange.Core;
+using System;
 using LanExchange.Intf;
 using LanExchange.Misc;
 using LanExchange.Misc.Impl;
@@ -8,7 +7,7 @@ using LanExchange.Presenter;
 using LanExchange.SDK;
 using LanExchange.UI;
 
-namespace LanExchange
+namespace LanExchange.Core
 {
     public static class ContainerBuilder
     {
@@ -22,18 +21,17 @@ namespace LanExchange
             container.Register<IPanelItemFactoryManager, PanelItemFactoryManagerImpl>();
             container.Register<IPanelFillerManager, PanelFillerManagerImpl>();
             container.Register<IPanelColumnManager, PanelColumnManagerImpl>();
-            container.Register<IServiceProvider, ServiceProviderImpl>();
             container.Register<IFolderManager, FolderManagerImpl>();
             container.Register<IPluginManager, PluginManagerImpl>();
-            container.Register<ILazyThreadPool, LazyThreadPoolImpl>();
             container.Register<IImageManager, ImageManagerImpl>();
             container.Register<IAddonManager, AddonManagerImpl>();
-            container.Register<IConfigModel, ConfigModel>();
-            // services
+            container.Register<IServiceProvider, ServiceProviderImpl>();
+            container.Register<ILazyThreadPool, LazyThreadPoolImpl>();
             container.Register<IPuntoSwitcherService, PuntoSwitcherServiceEngRus>();
             container.Register<ITranslationService, TranslationServiceImpl>();
             // models
             container.Register<IAboutModel, AboutModel>();
+            container.Register<IConfigModel, ConfigModel>();
             container.Register<IPagesModel, PagesModel>(LifeCycle.Transient);
             container.Register<IPanelModel, PanelModel>(LifeCycle.Transient);
             // views
@@ -43,9 +41,9 @@ namespace LanExchange
             container.Register<IPagesView, PagesView>();
             container.Register<IMainView, MainForm>();
             // presenters
-            container.Register<IMainPresenter, MainPresenter>(LifeCycle.Singleton);
-            container.Register<IAboutPresenter, AboutPresenter>(LifeCycle.Singleton);
-            container.Register<IPagesPresenter, PagesPresenter>(LifeCycle.Singleton);
+            container.Register<IMainPresenter, MainPresenter>();
+            container.Register<IAboutPresenter, AboutPresenter>();
+            container.Register<IPagesPresenter, PagesPresenter>();
             container.Register<IFilterPresenter, FilterPresenter>(LifeCycle.Transient);
             container.Register<IPanelPresenter, PanelPresenter>(LifeCycle.Transient);
             return container;

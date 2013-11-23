@@ -52,7 +52,9 @@ namespace LanExchange.Model
         {
             get
             {
-                var attributes = GetAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
+                var assembly = GetAssembly();
+                if (assembly == null) return string.Empty;
+                var attributes = assembly.GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
                 if (attributes.Length > 0)
                 {
                     var titleAttribute = (AssemblyTitleAttribute)attributes[0];
@@ -68,7 +70,9 @@ namespace LanExchange.Model
         {
             get
             {
-                var ver = GetAssembly().GetName().Version;
+                var assembly = GetAssembly();
+                if (assembly == null) return string.Empty;
+                var ver = assembly.GetName().Version;
                 var result = String.Format(CultureInfo.CurrentCulture, "{0}.{1}", ver.Major, ver.Minor);
                 return result;
             }
@@ -79,7 +83,9 @@ namespace LanExchange.Model
         {
             get
             {
-                var ver = GetAssembly().GetName().Version;
+                var assembly = GetAssembly();
+                if (assembly == null) return string.Empty;
+                var ver = assembly.GetName().Version;
                 var result = String.Format(CultureInfo.CurrentCulture, "{0}.{1}", ver.Major, ver.Minor);
                 if (ver.Build > 0)
                     result += String.Format(CultureInfo.CurrentCulture, Resources.AboutInfo_Build, ver.Build);
@@ -91,8 +97,10 @@ namespace LanExchange.Model
         {
             get
             {
-                var attributes = GetAssembly().GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
-                return attributes.Length == 0 ? "" : ((AssemblyDescriptionAttribute)attributes[0]).Description;
+                var assembly = GetAssembly();
+                if (assembly == null) return string.Empty;
+                var attributes = assembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
+                return attributes.Length == 0 ? string.Empty : ((AssemblyDescriptionAttribute)attributes[0]).Description;
             }
         }
 
@@ -100,8 +108,10 @@ namespace LanExchange.Model
         {
             get
             {
-                var attributes = GetAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
-                return attributes.Length == 0 ? "" : ((AssemblyProductAttribute)attributes[0]).Product;
+                var assembly = GetAssembly();
+                if (assembly == null) return string.Empty;
+                var attributes = assembly.GetCustomAttributes(typeof(AssemblyProductAttribute), false);
+                return attributes.Length == 0 ? string.Empty : ((AssemblyProductAttribute)attributes[0]).Product;
             }
         }
 
@@ -109,7 +119,9 @@ namespace LanExchange.Model
         {
             get
             {
-                var attributes = GetAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
+                var assembly = GetAssembly();
+                if (assembly == null) return string.Empty;
+                var attributes = assembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
                 return attributes.Length == 0 ? "" : ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
             }
         }
@@ -118,7 +130,9 @@ namespace LanExchange.Model
         {
             get
             {
-                var attributes = GetAssembly().GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
+                var assembly = GetAssembly();
+                if (assembly == null) return string.Empty;
+                var attributes = assembly.GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
                 return attributes.Length == 0 ? "" : ((AssemblyCompanyAttribute)attributes[0]).Company;
             }
         }

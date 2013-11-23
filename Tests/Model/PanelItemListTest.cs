@@ -1,4 +1,5 @@
 ﻿using System;
+using LanExchange.Core;
 using LanExchange.Misc;
 using LanExchange.Plugin.Network;
 using LanExchange.Presenter;

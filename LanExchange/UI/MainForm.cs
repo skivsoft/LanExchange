@@ -58,7 +58,8 @@ namespace LanExchange.UI
             App.Images.SetImagesTo(Pages.Pages);
             App.Images.SetImagesTo(Status);
             // load saved pages from config
-            App.MainPages.View.SetupContextMenu();
+            Pages.SetupContextMenu();
+            //App.MainPages.View.SetupContextMenu();
             App.MainPages.PanelViewFocusedItemChanged += Pages_PanelViewFocusedItemChanged;
             App.MainPages.LoadSettings();
             // set mainform bounds

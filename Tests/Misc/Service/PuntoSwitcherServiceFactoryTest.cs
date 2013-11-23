@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using LanExchange.Core;
+using NUnit.Framework;
 using LanExchange.Intf;
 
 namespace LanExchange.Misc.Service

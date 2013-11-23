@@ -62,7 +62,7 @@ namespace LanExchange.Misc.Impl
                 try
                 {
                     m_Plugins.Add(plugin);
-                    plugin.Initialize(App.ServiceProvider);
+                    plugin.Initialize(App.Resolve<IServiceProvider>());
                 }
                 catch (Exception ex)
                 {
