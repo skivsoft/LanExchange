@@ -27,11 +27,11 @@ namespace LanExchange.UI
             lCopyright.Text = Resources.AboutForm_Copyright;
             lWeb.Text = Resources.AboutForm_Webpage;
             m_Presenter.LoadFromModel();
-            SetupBoxDetails();
         }
        
         private void SetupBoxDetails()
         {
+            if (m_BoxDetails != null) return;
             m_BoxDetails = new RichTextBox();
             var rect = ClientRectangle;
             m_BoxDetails.SetBounds(rect.Left+16, rect.Top+16, rect.Width-32, rect.Height-bShowDetails.Height-32);
@@ -51,7 +51,7 @@ namespace LanExchange.UI
             sb.Append(@"{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset204 Microsoft Sans Serif;}}");
             sb.Append(@"\viewkind4\uc1\pard\f0\fs17\ ");
             sb.AppendLine(string.Format(@"\b {0}\b0", Resources.AboutForm_Plugins));
-            foreach (var pair in App.Plugins.PluginsAuthors)
+            foreach (var pair in App.Resolve<IPluginManager>().PluginsAuthors)
             {
                 sb.Append("    " + pair.Key);
                 if (!string.IsNullOrEmpty(pair.Value))
@@ -124,11 +124,9 @@ namespace LanExchange.UI
 
         private void bShowLicense_Click(object sender, EventArgs e)
         {
+            SetupBoxDetails();
             m_BoxDetails.Visible = !m_BoxDetails.Visible;
-            if (m_BoxDetails.Visible)
-                bShowDetails.Text = Resources.HideDetails;
-            else
-                bShowDetails.Text = Resources.ShowDetails;
+            bShowDetails.Text = m_BoxDetails.Visible ? Resources.HideDetails : Resources.ShowDetails;
         }
 
         private void bClose_Click(object sender, EventArgs e)

@@ -68,6 +68,7 @@
 // *****************************************************************************
 
 using System;
+using LanExchange.Core;
 using LanExchange.Intf;
 using LanExchange.Misc;
 using LanExchange.Presenter.Action;
@@ -84,7 +85,7 @@ namespace LanExchange
             App.SetContainer(ContainerBuilder.Build());
             CmdLineProcessor.Processing();
             SingleInstanceCheck.Check();
-            App.Plugins.LoadPlugins();
+            App.Resolve<IPluginManager>().LoadPlugins();
             // register ShortcutPanelItem
             App.PanelItemTypes.RegisterPanelItemFactory(typeof(ShortcutPanelItem), new ShortcutPanelItemFactory());
             ShortcutPanelItem.RegisterColumns(App.PanelColumns);

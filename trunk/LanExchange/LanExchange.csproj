@@ -77,7 +77,7 @@
     <StartupObject>LanExchange.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\Common\LanExchange.snk</AssemblyOriginatorKeyFile>
@@ -92,6 +92,7 @@
     <Compile Include="..\Common\AnyAssemblyInfo.cs">
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Core\ContainerBuilder.cs" />
     <Compile Include="Misc\GenerateEnglish.cs" />
     <Compile Include="Core\TypeNotRegisteredException.cs" />
     <Compile Include="Intf\Addon\ProtocolHelper.cs" />
@@ -115,7 +116,6 @@
     <Compile Include="Presenter\Action\ReReadAction.cs" />
     <Compile Include="Presenter\Action\ShortcutFiller.cs" />
     <Compile Include="Presenter\Action\ShortcutKeysAction.cs" />
-    <Compile Include="ContainerBuilder.cs" />
     <Compile Include="Intf\IAddonManager.cs" />
     <Compile Include="Presenter\Action\ShortcutPanelItem.cs" />
     <Compile Include="Intf\App.cs" />

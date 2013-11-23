@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
+using System.Text;
 using LanExchange.Intf;
 using LanExchange.SDK;
 
@@ -14,11 +15,12 @@ namespace LanExchange.Misc.Impl
         private string LANGUAGE_NAME = "@LANGUAGE_NAME";
         private string AUTHOR = "@AUTHOR";
 
-        private string[] m_CurrentLanguageLines;
+        private readonly IList<string> m_CurrentLanguageLines;
         private string m_CurrentLanguage;
 
         public TranslationServiceImpl()
         {
+            m_CurrentLanguageLines = new List<string>();
             CurrentLanguage = SourceLanguage;
             //CurrentLanguage = "Russian";
         }
@@ -26,6 +28,14 @@ namespace LanExchange.Misc.Impl
         public string SourceLanguage
         {
             get { return "English"; }
+        }
+
+        private IEnumerable<string> ReadAllLines(string fileName)
+        {
+            string line;
+            using (var sr = new StreamReader(fileName, Encoding.UTF8))
+                while ((line = sr.ReadLine()) != null)
+                    yield return line;
         }
 
         public string CurrentLanguage
@@ -41,7 +51,9 @@ namespace LanExchange.Misc.Impl
                         var lang = Path.GetFileNameWithoutExtension(fileName);
                         if (lang != null && String.Compare(lang, value, StringComparison.OrdinalIgnoreCase) == 0)
                         {
-                            m_CurrentLanguageLines = File.ReadAllLines(fileName);
+                            m_CurrentLanguageLines.Clear();
+                            foreach(var line in ReadAllLines(fileName))
+                                m_CurrentLanguageLines.Add(line);
                             m_CurrentLanguage = value;
                             break;
                         }
@@ -113,8 +125,7 @@ namespace LanExchange.Misc.Impl
 
         private string TranslateFromPO(string fileName, string id)
         {
-            var lines = File.ReadAllLines(fileName);
-            return InternalTranslate(lines, id);
+            return InternalTranslate(ReadAllLines(fileName), id);
         }
 
         public string Translate(string id)

@@ -16,7 +16,8 @@ namespace LanExchange.UI
             Application.ThreadExit += ApplicationOnThreadExit;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false); // must be called before first form created
-            Application.Run((Form)App.Resolve<IMainView>());
+            var form = (Form) App.Resolve<IMainView>();
+            Application.Run(form);
         }
 
         private static void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)

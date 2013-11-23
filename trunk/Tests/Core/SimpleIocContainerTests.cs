@@ -14,7 +14,7 @@ namespace LanExchange.Core
 
             container.Register<ITypeToResolve, ConcreteType>();
 
-            var instance = container.Resolve<ITypeToResolve>();
+            var instance = container.Resolve(typeof(ITypeToResolve));
 
             Assert.IsInstanceOf<ConcreteType>(instance);
         }
@@ -23,7 +23,7 @@ namespace LanExchange.Core
         public void should_throw_exception_if_type_not_registered()
         {
             var container = new SimpleIocContainer();
-            container.Resolve<ITypeToResolve>();
+            container.Resolve(typeof(ITypeToResolve));
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace LanExchange.Core
             container.Register<ITypeToResolve, ConcreteType>();
             container.Register<ITypeToResolveWithConstructorParams, ConcreteTypeWithConstructorParams>();
 
-            var instance = container.Resolve<ITypeToResolveWithConstructorParams>();
+            var instance = container.Resolve(typeof(ITypeToResolveWithConstructorParams));
 
             Assert.IsInstanceOf<ConcreteTypeWithConstructorParams>(instance);
         }
@@ -46,9 +46,9 @@ namespace LanExchange.Core
 
             container.Register<ITypeToResolve, ConcreteType>();
 
-            var instance = container.Resolve<ITypeToResolve>();
+            var instance = container.Resolve(typeof(ITypeToResolve));
 
-            Assert.That(container.Resolve<ITypeToResolve>(), Is.SameAs(instance));
+            Assert.That(container.Resolve(typeof(ITypeToResolve)), Is.SameAs(instance));
         }
 
         [Test]
@@ -58,9 +58,9 @@ namespace LanExchange.Core
 
             container.Register<ITypeToResolve, ConcreteType>(LifeCycle.Transient);
 
-            var instance = container.Resolve<ITypeToResolve>();
+            var instance = container.Resolve(typeof(ITypeToResolve));
 
-            Assert.That(container.Resolve<ITypeToResolve>(), Is.Not.SameAs(instance));
+            Assert.That(container.Resolve(typeof(ITypeToResolve)), Is.Not.SameAs(instance));
         }
     }
 
