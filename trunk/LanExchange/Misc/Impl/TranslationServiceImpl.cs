@@ -135,5 +135,39 @@ namespace LanExchange.Misc.Impl
             return InternalTranslate(m_CurrentLanguageLines, id);
         }
 
+        public string PluralForm(string forms, int num)
+        {
+            switch (CurrentLanguage)
+            {
+                case "Kazakh":
+                    var arr = forms.Split('|');
+                    var index = PluralFormKazakh(num);
+                    return index <= arr.Length - 1 ? arr[index] : arr[0];
+                default:
+                    return forms;
+            }
+        }
+
+        /// <summary>
+        /// Translation of plural form in Kazakh language.
+        /// </summary>
+        /// <param name="num"></param>
+        /// <returns>0: "-дан", 1: "-ден", 2: "-нан", 3: "-нен", 4: "-тан", 5: "-тен".</returns>
+        private static int PluralFormKazakh(int num)
+        {
+            if (num%10 == 6 || num%10 == 9 || num%100 == 20 || num%100 == 30)
+                return 0;
+            if (num%10 == 1 || num%10 == 2 || num%10 == 7 || num%10 == 8 || num%100 == 50 || num%1000 == 100)
+                return 1;
+            if (num%100 == 10 || num%100 == 90)
+                return 2;
+            if (num%100 == 80)
+                return 3;
+            if (num%100 == 40 || num%100 == 60)
+                return 4;
+            if (num%10 == 3 || num%10 == 4 || num%10 == 5 || num%100 == 70)
+                return 5;
+            return 0;
+        }
     }
 }

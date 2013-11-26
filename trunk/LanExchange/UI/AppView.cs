@@ -4,6 +4,7 @@ using System.Threading;
 using System.Windows.Forms;
 using LanExchange.Intf;
 using System.Diagnostics;
+using LanExchange.SDK;
 
 namespace LanExchange.UI
 {
@@ -39,6 +40,8 @@ namespace LanExchange.UI
         {
             App.MainPages.SaveInstant();
             App.Config.Save();
+            // dispose instances registered in plugins
+            App.Resolve<IDisposableManager>().Dispose();
         }
     }
 }
