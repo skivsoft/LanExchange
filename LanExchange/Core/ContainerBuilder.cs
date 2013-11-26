@@ -29,6 +29,7 @@ namespace LanExchange.Core
             container.Register<ILazyThreadPool, LazyThreadPoolImpl>();
             container.Register<IPuntoSwitcherService, PuntoSwitcherServiceEngRus>();
             container.Register<ITranslationService, TranslationServiceImpl>();
+            container.Register<IDisposableManager, DisposableManagerImpl>();
             // models
             container.Register<IAboutModel, AboutModel>();
             container.Register<IConfigModel, ConfigModel>();

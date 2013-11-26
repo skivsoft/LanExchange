@@ -58,6 +58,7 @@
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IAction.cs" />
+    <Compile Include="IDisposableManager.cs" />
     <Compile Include="IFolderManager.cs" />
     <Compile Include="IPanelColumnManager.cs" />
     <Compile Include="IPanelFillerManager.cs" />

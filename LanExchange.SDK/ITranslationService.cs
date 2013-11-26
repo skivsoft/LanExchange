@@ -9,5 +9,6 @@ namespace LanExchange.SDK
         IDictionary<string, string> GetLanguagesNames();
         IDictionary<string, string> GetTranslations();
         string Translate(string id);
+        string PluralForm(string forms, int num);
     }
 }

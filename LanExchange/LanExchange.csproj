@@ -110,6 +110,7 @@
     <Compile Include="Intf\PresenterBase.cs" />
     <Compile Include="Intf\IConfigModel.cs" />
     <Compile Include="Intf\ConfigNames.cs" />
+    <Compile Include="Misc\Impl\DisposableManagerImpl.cs" />
     <Compile Include="Presenter\Action\AboutAction.cs" />
     <Compile Include="Presenter\Action\CloseTabAction.cs" />
     <Compile Include="Presenter\Action\CloseOtherAction.cs" />
