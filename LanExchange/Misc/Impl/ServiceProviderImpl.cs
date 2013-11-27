@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using LanExchange.Intf;
+using LanExchange.SDK;
 
 namespace LanExchange.Misc.Impl
 {
@@ -9,6 +10,13 @@ namespace LanExchange.Misc.Impl
         public object GetService(Type serviceType)
         {
             object result = null;
+
+            if (serviceType == typeof(IPagesPresenter))
+                return App.MainPages;
+            if (serviceType == typeof(IMainView))
+                return App.MainView;
+            if (serviceType == typeof(IPagesView))
+                return App.MainPages.View;
             try
             {
                 result = App.Resolve(serviceType);

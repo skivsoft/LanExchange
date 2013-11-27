@@ -6,6 +6,7 @@ using System.IO;
 using System.Xml.Serialization;
 using LanExchange.Intf;
 using LanExchange.Properties;
+using LanExchange.SDK;
 using LanExchange.Utils;
 
 namespace LanExchange.Model

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Drawing;
-using LanExchange.SDK;
 
-namespace LanExchange.Intf
+namespace LanExchange.SDK
 {
     public interface IMainPresenter : IPresenter<IMainView>
     {

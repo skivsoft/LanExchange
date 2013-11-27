@@ -1,4 +1,5 @@
 ﻿using System;
+using LanExchange.SDK;
 
 namespace LanExchange.Intf
 {

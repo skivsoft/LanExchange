@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using LanExchange.SDK;
+using NUnit.Framework;
 using LanExchange.Intf;
 
 namespace LanExchange.Model

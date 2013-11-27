@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LanExchange.Intf
+namespace LanExchange.SDK
 {
     public class ConfigChangedArgs : EventArgs
     {
