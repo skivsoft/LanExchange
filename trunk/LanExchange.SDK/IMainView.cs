@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LanExchange.Intf
+namespace LanExchange.SDK
 {
     public interface IMainView : IView
     {
@@ -9,7 +9,7 @@ namespace LanExchange.Intf
         void SetToolTip(object control, string tipText);
         bool ShowInfoPanel { get; set; }
         int NumInfoLines { get; set; }
-
         void ClearInfoPanel();
+        void Invoke(Delegate method, object sender);
     }
 }

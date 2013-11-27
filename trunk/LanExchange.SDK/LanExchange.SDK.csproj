@@ -56,18 +56,36 @@
     <Compile Include="..\Common\AnyAssemblyInfo.cs">
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ColumnComparer.cs" />
+    <Compile Include="ConfigChangedArgs.cs" />
+    <Compile Include="ConfigNames.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IAction.cs" />
     <Compile Include="IDisposableManager.cs" />
+    <Compile Include="IFilterModel.cs" />
+    <Compile Include="IFilterPresenter.cs" />
+    <Compile Include="IFilterView.cs" />
     <Compile Include="IFolderManager.cs" />
+    <Compile Include="IMainPresenter.cs" />
+    <Compile Include="IMainView.cs" />
+    <Compile Include="IModel.cs" />
+    <Compile Include="IPagesPresenter.cs" />
+    <Compile Include="IPagesView.cs" />
     <Compile Include="IPanelColumnManager.cs" />
     <Compile Include="IPanelFillerManager.cs" />
     <Compile Include="IImageManager.cs" />
     <Compile Include="IPanelItemFactoryManager.cs" />
+    <Compile Include="IPanelModel.cs" />
+    <Compile Include="IPanelPresenter.cs" />
+    <Compile Include="IPanelView.cs" />
     <Compile Include="IPlugin.cs" />
+    <Compile Include="IPresenter.cs" />
     <Compile Include="ITranslationService.cs" />
+    <Compile Include="IView.cs" />
+    <Compile Include="ObjectPath.cs" />
     <Compile Include="PanelColumnHeader.cs" />
     <Compile Include="PanelFillerResult.cs" />
+    <Compile Include="PanelIndexEventArgs.cs" />
     <Compile Include="PanelItemBase.cs" />
     <Compile Include="IPanelFiller.cs" />
     <Compile Include="PanelImageNames.cs" />
@@ -75,6 +93,9 @@
     <Compile Include="PanelItemDoubleDot.cs" />
     <Compile Include="PanelItemFactoryBase.cs" />
     <Compile Include="PanelItemRoot.cs" />
+    <Compile Include="PanelModelEventArgs.cs" />
+    <Compile Include="PanelSortOrder.cs" />
+    <Compile Include="PanelViewMode.cs" />
     <Compile Include="TranslationResourceManager.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using LanExchange.SDK;
 
 namespace LanExchange.Intf
 {

@@ -1,4 +1,6 @@
-﻿namespace LanExchange.Intf
+﻿using LanExchange.SDK;
+
+namespace LanExchange.Intf
 {
     public interface IAboutPresenter : IPresenter<IAboutView>
     {

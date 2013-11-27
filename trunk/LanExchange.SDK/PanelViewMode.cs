@@ -1,4 +1,4 @@
-﻿namespace LanExchange.Intf
+﻿namespace LanExchange.SDK
 {
     /// <summary>
     /// ViewMode of LanExchange panel.

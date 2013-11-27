@@ -1,6 +1,4 @@
-﻿using LanExchange.UI;
-
-namespace LanExchange.Intf
+﻿namespace LanExchange.SDK
 {
     public interface IFilterPresenter : IPresenter<IFilterView>
     {

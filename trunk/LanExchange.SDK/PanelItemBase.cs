@@ -187,5 +187,11 @@ namespace LanExchange.SDK
         }
 
         public abstract object Clone();
+
+        public virtual bool IsRereadAccepted(string subject)
+        {
+            return false;
+        }
+
     }
 }

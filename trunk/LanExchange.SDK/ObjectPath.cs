@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
-using LanExchange.SDK;
 
-namespace LanExchange.Intf
+namespace LanExchange.SDK
 {
     /// <summary>
     /// Path to nested object.

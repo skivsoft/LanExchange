@@ -533,5 +533,11 @@ namespace LanExchange.UI
             get { return pInfo.NumLines; }
             set { pInfo.NumLines = value; }
         }
+
+
+        public void Invoke(Delegate method, object sender)
+        {
+            base.Invoke(method, sender);
+        }
     }
 }
