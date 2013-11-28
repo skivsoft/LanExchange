@@ -2,7 +2,7 @@ using LanExchange.SDK;
 
 namespace LanExchange.Presenter.Action
 {
-    public sealed class ShortcutPanelItemFactory : PanelItemFactoryBase
+    public sealed class ShortcutFactory : PanelItemFactoryBase
     {
         public override PanelItemBase CreatePanelItem(PanelItemBase parent, string name)
         {

@@ -10,7 +10,7 @@ namespace LanExchange.Presenter.Action
         public static void RegisterColumns(IPanelColumnManager columnManager)
         {
             var typeName = typeof (ShortcutPanelItem).Name;
-            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.KeyF1_) { Width = 100 });
+            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.mHelpKeys_Text) { Width = 100 });
             columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.Action) { Width = 280 });
             columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.Context) { Width = 80 });
         }

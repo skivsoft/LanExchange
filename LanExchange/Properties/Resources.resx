@@ -127,13 +127,13 @@
   <data name="mTrayExit_Text" xml:space="preserve">
     <value>Exit</value>
   </data>
-  <data name="MenuPanel" xml:space="preserve">
+  <data name="mPanel_Text" xml:space="preserve">
     <value>&amp;Panel</value>
   </data>
   <data name="EmptyText" xml:space="preserve">
     <value>    </value>
   </data>
-  <data name="ViewSmallIcons" xml:space="preserve">
+  <data name="mViewSmall_Text" xml:space="preserve">
     <value>Small icons</value>
   </data>
   <data name="clear_normal" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -163,7 +163,7 @@
   <data name="KeyF9" xml:space="preserve">
     <value>F9</value>
   </data>
-  <data name="KeyCtrlR_" xml:space="preserve">
+  <data name="mReRead_Text" xml:space="preserve">
     <value>Re-read</value>
   </data>
   <data name="user_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -178,7 +178,7 @@
   <data name="PagesPresenter_NewTab" xml:space="preserve">
     <value>New Tab</value>
   </data>
-  <data name="MenuLocalizationPage" xml:space="preserve">
+  <data name="mHelpLangs_Text" xml:space="preserve">
     <value>Localization Webpage</value>
   </data>
   <data name="Settings_Plugins" xml:space="preserve">
@@ -238,7 +238,7 @@
   <data name="KeyCtrlA" xml:space="preserve">
     <value>Ctrl+A</value>
   </data>
-  <data name="MenuAbout" xml:space="preserve">
+  <data name="mHelpAbout_Text" xml:space="preserve">
     <value>About</value>
   </data>
   <data name="Settings_General" xml:space="preserve">
@@ -262,7 +262,7 @@
   <data name="LanExchange_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\LanExchange_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="MenuHelp" xml:space="preserve">
+  <data name="mHelp_Text" xml:space="preserve">
     <value>&amp;Help</value>
   </data>
   <data name="KeyCtrlDown" xml:space="preserve">
@@ -274,7 +274,7 @@
   <data name="PanelPresenter_QueryCaption" xml:space="preserve">
     <value>Query</value>
   </data>
-  <data name="ViewDetails" xml:space="preserve">
+  <data name="mViewDetails_Text" xml:space="preserve">
     <value>Details</value>
   </data>
   <data name="KeyF9__" xml:space="preserve">
@@ -283,7 +283,7 @@
   <data name="clear_hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\clear_hover.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="KeyF10_" xml:space="preserve">
+  <data name="mExit_Text" xml:space="preserve">
     <value>Exit</value>
   </data>
   <data name="Copy" xml:space="preserve">
@@ -292,7 +292,7 @@
   <data name="AboutForm_Webpage" xml:space="preserve">
     <value>Webpage</value>
   </data>
-  <data name="PagesView_CloseOtherTabs" xml:space="preserve">
+  <data name="mCloseOther_Text" xml:space="preserve">
     <value>Close other tabs</value>
   </data>
   <data name="KeyCtrlUp" xml:space="preserve">
@@ -340,7 +340,7 @@
   <data name="MainForm_Legend" xml:space="preserve">
     <value>Legend</value>
   </data>
-  <data name="MainForm_Language" xml:space="preserve">
+  <data name="mLanguage_Text" xml:space="preserve">
     <value>&amp;Language</value>
   </data>
   <data name="KeyCtrlR" xml:space="preserve">
@@ -352,7 +352,7 @@
   <data name="PagesView_OpenTab" xml:space="preserve">
     <value>Open tab «{0}»</value>
   </data>
-  <data name="MainForm_View" xml:space="preserve">
+  <data name="mView_Text" xml:space="preserve">
     <value>&amp;View</value>
   </data>
   <data name="KeyCtrlWinX__" xml:space="preserve">
@@ -362,10 +362,10 @@
     <value>Unable to execute command line:
 {0}</value>
   </data>
-  <data name="MenuBugtrackerPage" xml:space="preserve">
+  <data name="mHelpBugs_Text" xml:space="preserve">
     <value>BugTracker Webpage</value>
   </data>
-  <data name="PagesView_CloseTab" xml:space="preserve">
+  <data name="mCloseTab_Text" xml:space="preserve">
     <value>Close tab</value>
   </data>
   <data name="MainForm_Close" xml:space="preserve">
@@ -416,7 +416,7 @@
   <data name="PanelView_RunCmdErrorCaption" xml:space="preserve">
     <value>Execution error</value>
   </data>
-  <data name="MenuHomePage" xml:space="preserve">
+  <data name="mHelpWeb_Text" xml:space="preserve">
     <value>LanExchange Webpage</value>
   </data>
   <data name="AboutForm_License" xml:space="preserve">
@@ -431,13 +431,13 @@
   <data name="KeyCtrlDown__" xml:space="preserve">
     <value>Increase height of info panel or show it.</value>
   </data>
-  <data name="ViewLargeIcons" xml:space="preserve">
+  <data name="mViewLarge_Text" xml:space="preserve">
     <value>Large icons</value>
   </data>
   <data name="KeyF1__" xml:space="preserve">
     <value>This help on shortcuts.</value>
   </data>
-  <data name="ViewList" xml:space="preserve">
+  <data name="mViewList_Text" xml:space="preserve">
     <value>List</value>
   </data>
   <data name="KeyCtrlIns__" xml:space="preserve">
@@ -450,7 +450,7 @@ Continue anyway?</value>
   <data name="user_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\user_32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="KeyF1_" xml:space="preserve">
+  <data name="mHelpKeys_Text" xml:space="preserve">
     <value>Shortcut Keys</value>
   </data>
   <data name="AboutForm_Translations" xml:space="preserve">
@@ -462,10 +462,10 @@ Continue anyway?</value>
   <data name="twitter_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\twitter-icon-v2.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="MainForm_InfoPanel" xml:space="preserve">
+  <data name="mViewInfo_Text" xml:space="preserve">
     <value>Info panel</value>
   </data>
-  <data name="MainForm_GridLines" xml:space="preserve">
+  <data name="mViewGrid_Text" xml:space="preserve">
     <value>Grid lines</value>
   </data>
 </root>

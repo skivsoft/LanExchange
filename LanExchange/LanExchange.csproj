@@ -286,9 +286,7 @@
     <None Include="..\Common\LanExchange.snk">
       <Link>LanExchange.snk</Link>
     </None>
-    <None Include="Languages\Esperanto.po">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="Languages\Esperanto.po" />
     <None Include="Languages\Kazakh.po">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

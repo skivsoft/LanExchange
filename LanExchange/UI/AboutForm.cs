@@ -64,16 +64,20 @@ namespace LanExchange.UI
             var sb = new StringBuilder();
             //sb.Append(@"{\rtf1\ansi");
             sb.Append(@"{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset204 Microsoft Sans Serif;}}");
-            sb.Append(@"\viewkind4\uc1\pard\f0\fs17\ ");
-            sb.AppendLine(string.Format(@"\b {0}\b0", Resources.AboutForm_Plugins));
-            foreach (var pair in App.Resolve<IPluginManager>().PluginsAuthors)
+            sb.Append(@"\viewkind4\uc1\pard\f0\fs17 ");
+            var plugins = App.Resolve<IPluginManager>().PluginsAuthors;
+            if (plugins.Count > 0)
             {
-                sb.Append("    " + pair.Key);
-                if (!string.IsNullOrEmpty(pair.Value))
-                    sb.Append(@"\tab " + pair.Value);
+                sb.AppendLine(string.Format(@"\b {0}\b0", Resources.AboutForm_Plugins));
+                foreach (var pair in plugins)
+                {
+                    sb.Append("    " + pair.Key);
+                    if (!string.IsNullOrEmpty(pair.Value))
+                        sb.Append(@"\tab " + pair.Value);
+                    sb.AppendLine();
+                }
                 sb.AppendLine();
             }
-            sb.AppendLine();
             var translations = App.TR.GetTranslations();
             if (translations.Count > 0)
             {
@@ -104,7 +108,12 @@ namespace LanExchange.UI
         public string CopyrightText
         {
             get { return eCopyright.Text; }
-            set { eCopyright.Text = value; }
+            set
+            {
+                eCopyright.Text = value;
+                lWeb.Top = eCopyright.Top + eCopyright.Height + 8;
+                eWeb.Top = lWeb.Top + lWeb.Height;
+            }
         }
 
         public string WebText

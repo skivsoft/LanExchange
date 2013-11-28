@@ -12,7 +12,7 @@ namespace LanExchange.Presenter.Action
         {
             var presenter = App.MainPages;
             var info = App.Resolve<IPanelModel>();
-            info.TabName = Resources.KeyF1_;
+            info.TabName = Resources.mHelpKeys_Text;
             SetupPanelModel(info);
             if (presenter.AddTab(info))
             {
