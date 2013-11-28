@@ -6,7 +6,7 @@ namespace LanExchange.Intf
     /// <summary>
     /// View for AboutForm.
     /// </summary>
-    public interface IAboutView : IView
+    public interface IAboutView : IView, ITranslationable
     {
         event FormClosedEventHandler FormClosed;
 

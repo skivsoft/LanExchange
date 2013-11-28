@@ -27,12 +27,9 @@ namespace LanExchange.UI
             InitializeComponent();
             // App.MainView must be set before panel view will be created
             App.MainView = this;
-            // load settings from cfg-file
-            App.Config.Changed += App.Presenter.ConfigOnChanged;
-            App.Config.Load();
             SetRunMinimized(App.Config.RunMinimized);
             // setup languages in menu
-            SetupMenuLanguages(App.TR.CurrentLanguage);
+            SetupMenuLanguages();
             // init main form
             SetupForm();
             // set hotkey for activate: Ctrl+Win+X
@@ -79,10 +76,8 @@ namespace LanExchange.UI
             lUserName.ImageIndex = App.Images.IndexOf(PanelImageNames.UserNormal);
         }
 
-        private void SetupMenuLanguages(string newLanguage)
+        private void SetupMenuLanguages()
         {
-            var needApply = App.TR.CurrentLanguage != newLanguage;
-            App.TR.CurrentLanguage = newLanguage;
             var nameDict = App.TR.GetLanguagesNames();
             if (nameDict.Count < 2)
             {
@@ -94,19 +89,41 @@ namespace LanExchange.UI
             foreach(var pair in nameDict)
             {
                 var menuItem = new MenuItem(pair.Value);
-                menuItem.Checked = pair.Key.Equals(App.TR.CurrentLanguage);
                 menuItem.Tag = pair.Key;
                 menuItem.Click += MenuItemOnClick;
                 mLanguage.MenuItems.Add(menuItem);
             }
         }
 
+        private void MarkCurrentLanguage()
+        {
+            foreach(MenuItem menuItem in mLanguage.MenuItems)
+                menuItem.Checked = menuItem.Tag.Equals(App.TR.CurrentLanguage);
+        }
+
+        private void mLanguage_Popup(object sender, EventArgs e)
+        {
+            MarkCurrentLanguage();
+        }
 
         private void MenuItemOnClick(object sender, EventArgs eventArgs)
         {
-            var menuItem = sender as ToolStripMenuItem;
+            var menuItem = sender as MenuItem;
             if (menuItem != null)
-                SetupMenuLanguages((string) menuItem.Tag);
+                App.Config.Language = (string)menuItem.Tag;
+        }
+
+        public void ApplyResources()
+        {
+            var resources = new ComponentResourceManager(typeof(MainForm));
+            TranslationUtils.ApplyResources(resources, components);
+            TranslationUtils.ApplyResources(resources, Controls);
+            mTrayOpen_ApplyResources();
+        }
+
+        private void mTrayOpen_ApplyResources()
+        {
+            mTrayOpen.Text = Visible ? Resources.MainForm_Close : Resources.MainForm_Open;
         }
 
         private bool m_EscDown;
@@ -269,7 +286,7 @@ namespace LanExchange.UI
 
         private void popTray_Opening(object sender, CancelEventArgs e)
         {
-            mTrayOpen.Text = Visible ? Resources.Close : Resources.MainForm_Open;
+            mTrayOpen_ApplyResources();
         }
 
         private void mOpen_Click(object sender, EventArgs e)

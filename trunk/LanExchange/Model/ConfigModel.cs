@@ -44,14 +44,7 @@ namespace LanExchange.Model
             {
                 var temp = (ConfigModel)SerializeUtils.DeserializeObjectFromXMLFile(fileName, typeof(ConfigModel));
                 if (temp != null)
-                {
-                    var props = temp.GetType().GetProperties();
-                    foreach(var prop in props)
-                    {
-                        var obj = prop.GetValue(temp, null);
-                        prop.SetValue(this, obj, null);
-                    }
-                }
+                    ReflectionUtils.CopyObjectProperties(temp, this);
             }
             catch (Exception ex)
             {

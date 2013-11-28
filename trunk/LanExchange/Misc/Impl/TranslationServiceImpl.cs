@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
+using System.Resources;
 using System.Text;
 using LanExchange.Intf;
 using LanExchange.SDK;
+using LanExchange.Utils;
 
 namespace LanExchange.Misc.Impl
 {
@@ -168,6 +170,13 @@ namespace LanExchange.Misc.Impl
             if (num%10 == 3 || num%10 == 4 || num%10 == 5 || num%100 == 70)
                 return 5;
             return 0;
+        }
+
+        [Localizable(false)]
+        public void SetResourceManagerTo<TClass>() where TClass : class
+        {
+            var resourceMan = new TranslationResourceManager(typeof (TClass).FullName, typeof (TClass).Assembly);
+            ReflectionUtils.SetClassPrivateField<TClass, ResourceManager>("resourceMan", resourceMan);
         }
     }
 }

@@ -68,10 +68,14 @@
 // *****************************************************************************
 
 using System;
+using System.ComponentModel;
+using System.Resources;
 using LanExchange.Core;
 using LanExchange.Intf;
 using LanExchange.Misc;
 using LanExchange.Presenter.Action;
+using LanExchange.Properties;
+using LanExchange.SDK;
 using LanExchange.UI;
 using LanExchange.Utils;
 
@@ -80,11 +84,17 @@ namespace LanExchange
     internal static class Program
     {
         [STAThread]
+        [Localizable(false)]
         static void Main()
         {
+            // global map interfaces to classes
             App.SetContainer(ContainerBuilder.Build());
+            // process cmdline params
             CmdLineProcessor.Processing();
             SingleInstanceCheck.Check();
+            // load settings from cfg-file (must be loaded before plugins)
+            App.Config.Changed += App.Presenter.ConfigOnChanged;
+            App.Config.Load();
             App.Resolve<IPluginManager>().LoadPlugins();
             // register ShortcutPanelItem
             App.PanelItemTypes.RegisterPanelItemFactory(typeof(ShortcutPanelItem), new ShortcutPanelItemFactory());

@@ -14,18 +14,33 @@ namespace LanExchange.UI
     {
         private readonly IAboutPresenter m_Presenter;
         private RichTextBox m_BoxDetails;
+        private bool m_DetailsVisible;
         
         public AboutForm(IAboutPresenter presenter)
         {
             m_Presenter = presenter;
             m_Presenter.View = this;
             InitializeComponent();
+            ApplyResources();
+        }
+
+        public void ApplyResources()
+        {
+            var resources = new ComponentResourceManager(typeof(AboutForm));
+            resources.ApplyResources(bClose, bClose.Name);
             Text = Resources.AboutForm_Title;
             lVersion.Text = Resources.AboutForm_Version;
             lLicense.Text = Resources.AboutForm_License;
             eLicense.Text = Resources.AboutForm_MIT;
             lCopyright.Text = Resources.AboutForm_Copyright;
             lWeb.Text = Resources.AboutForm_Webpage;
+            UpdateShowDetailsButton();
+            bClose.Text = Resources.MainForm_Close;
+            if (m_DetailsVisible)
+            {
+                SetupBoxDetails();
+                m_BoxDetails.Rtf = GetDetailsRtf();
+            }
             m_Presenter.LoadFromModel();
         }
        
@@ -124,9 +139,16 @@ namespace LanExchange.UI
 
         private void bShowLicense_Click(object sender, EventArgs e)
         {
+            m_DetailsVisible = !m_DetailsVisible;
             SetupBoxDetails();
-            m_BoxDetails.Visible = !m_BoxDetails.Visible;
-            bShowDetails.Text = m_BoxDetails.Visible ? Resources.HideDetails : Resources.ShowDetails;
+            m_BoxDetails.Visible = m_DetailsVisible;
+            UpdateShowDetailsButton();
+        }
+
+
+        private void UpdateShowDetailsButton()
+        {
+            bShowDetails.Text = m_DetailsVisible ? Resources.HideDetails : Resources.ShowDetails;
         }
 
         private void bClose_Click(object sender, EventArgs e)
@@ -148,6 +170,5 @@ namespace LanExchange.UI
         {
             m_Presenter.OpenEmailLink();
         }
-
     }
 }
