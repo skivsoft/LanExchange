@@ -91,7 +91,6 @@
             this.bClose.Name = "bClose";
             this.bClose.Size = new System.Drawing.Size(100, 23);
             this.bClose.TabIndex = 36;
-            this.bClose.Text = global::LanExchange.Properties.Resources.Close;
             this.bClose.UseVisualStyleBackColor = true;
             this.bClose.Click += new System.EventHandler(this.bClose_Click);
             // 

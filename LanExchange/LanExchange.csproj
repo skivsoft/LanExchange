@@ -102,6 +102,7 @@
     <Compile Include="Intf\PresenterBase.cs" />
     <Compile Include="Intf\IConfigModel.cs" />
     <Compile Include="Misc\Impl\DisposableManagerImpl.cs" />
+    <Compile Include="Misc\TranslationResourceManager.cs" />
     <Compile Include="Presenter\Action\AboutAction.cs" />
     <Compile Include="Presenter\Action\CloseTabAction.cs" />
     <Compile Include="Presenter\Action\CloseOtherAction.cs" />
@@ -214,6 +215,7 @@
     <Compile Include="UI\RunMinimizedForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Utils\ReflectionUtils.cs" />
     <Compile Include="Utils\ShellContextMenuException.cs" />
     <Compile Include="Utils\ShellIconStateConstants.cs" />
     <Compile Include="Utils\SysImageList.cs" />
@@ -232,6 +234,7 @@
     <Compile Include="Utils\SingleInstanceCheck.cs" />
     <Compile Include="Utils\SysImageListHelper.cs" />
     <Compile Include="Utils\SysImageListSize.cs" />
+    <Compile Include="Utils\TranslationUtils.cs" />
     <Compile Include="Utils\UnsafeNativeMethods.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

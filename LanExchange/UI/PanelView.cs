@@ -12,7 +12,7 @@ using LanExchange.Utils;
 
 namespace LanExchange.UI
 {
-    public partial class PanelView : UserControl, IPanelView, IListViewItemGetter
+    public partial class PanelView : UserControl, IPanelView, IListViewItemGetter, ITranslationable
     {
         #region Class declarations and constructor
 
@@ -662,6 +662,16 @@ namespace LanExchange.UI
         {
             get { return LV.GridLines; }
             set { LV.GridLines = value; }
+        }
+
+        public void ApplyResources()
+        {
+            var panelView = App.MainPages.View.ActivePanelView;
+            if (panelView == this)
+                m_Presenter.UpdateItemsAndStatus();
+            var resources = new ComponentResourceManager(typeof(PanelView));
+            TranslationUtils.ApplyResources(resources, components);
+            TranslationUtils.ApplyResources(resources, Controls);
         }
     }
 }

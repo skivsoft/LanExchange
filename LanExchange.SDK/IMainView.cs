@@ -2,7 +2,7 @@
 
 namespace LanExchange.SDK
 {
-    public interface IMainView : IView
+    public interface IMainView : IView, ITranslationable
     {
         void ApplicationExit();
         void ShowStatusText(string format, params object[] args);

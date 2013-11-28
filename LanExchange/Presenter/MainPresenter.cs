@@ -42,6 +42,14 @@ namespace LanExchange.Presenter
                     App.MainView.NumInfoLines = config.NumInfoLines;
                     App.MainPages.DoPanelViewFocusedItemChanged(App.MainPages.View.ActivePanelView, EventArgs.Empty);
                     break;
+                case ConfigNames.Language:
+                    App.TR.CurrentLanguage = config.Language;
+                    foreach(var form in Application.OpenForms)
+                    {
+                        if (form is ITranslationable)
+                            (form as ITranslationable).ApplyResources();
+                    }
+                    break;
             }
         }
         private int GetDefaultWidth()

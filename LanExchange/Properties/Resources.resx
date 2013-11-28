@@ -368,7 +368,7 @@
   <data name="PagesView_CloseTab" xml:space="preserve">
     <value>Close tab</value>
   </data>
-  <data name="Close" xml:space="preserve">
+  <data name="MainForm_Close" xml:space="preserve">
     <value>Close</value>
   </data>
   <data name="KeyDel" xml:space="preserve">

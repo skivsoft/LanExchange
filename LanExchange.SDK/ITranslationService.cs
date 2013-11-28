@@ -10,5 +10,6 @@ namespace LanExchange.SDK
         IDictionary<string, string> GetTranslations();
         string Translate(string id);
         string PluralForm(string forms, int num);
+        void SetResourceManagerTo<TClass>() where TClass : class;
     }
 }

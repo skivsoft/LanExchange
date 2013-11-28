@@ -70,8 +70,8 @@ namespace LanExchange.UI
             this.mHelpKeys = new System.Windows.Forms.MenuItem();
             this.mHelpSep1 = new System.Windows.Forms.MenuItem();
             this.mHelpWeb = new System.Windows.Forms.MenuItem();
-            this.mHelpLangs = new System.Windows.Forms.MenuItem();
             this.mHelpBugs = new System.Windows.Forms.MenuItem();
+            this.mHelpLangs = new System.Windows.Forms.MenuItem();
             this.mHelpSep2 = new System.Windows.Forms.MenuItem();
             this.mHelpAbout = new System.Windows.Forms.MenuItem();
             this.popTray.SuspendLayout();
@@ -341,6 +341,7 @@ namespace LanExchange.UI
             // 
             this.mLanguage.Index = 2;
             this.mLanguage.Text = global::LanExchange.Properties.Resources.MainForm_Language;
+            this.mLanguage.Popup += new System.EventHandler(this.mLanguage_Popup);
             // 
             // mHelp
             // 
@@ -373,17 +374,17 @@ namespace LanExchange.UI
             this.mHelpWeb.Text = global::LanExchange.Properties.Resources.MenuHomePage;
             this.mHelpWeb.Click += new System.EventHandler(this.mWebPage_Click);
             // 
-            // mHelpLangs
-            // 
-            this.mHelpLangs.Index = 4;
-            this.mHelpLangs.Text = global::LanExchange.Properties.Resources.MenuLocalizationPage;
-            this.mHelpLangs.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
-            // 
             // mHelpBugs
             // 
             this.mHelpBugs.Index = 3;
             this.mHelpBugs.Text = global::LanExchange.Properties.Resources.MenuBugtrackerPage;
             this.mHelpBugs.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
+            // 
+            // mHelpLangs
+            // 
+            this.mHelpLangs.Index = 4;
+            this.mHelpLangs.Text = global::LanExchange.Properties.Resources.MenuLocalizationPage;
+            this.mHelpLangs.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // mHelpSep2
             // 

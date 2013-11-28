@@ -39,7 +39,7 @@ namespace LanExchange.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new SDK.TranslationResourceManager("LanExchange.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LanExchange.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -175,15 +175,6 @@ namespace LanExchange.Properties {
             get {
                 object obj = ResourceManager.GetObject("clear_normal", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Close.
-        /// </summary>
-        internal static string Close {
-            get {
-                return ResourceManager.GetString("Close", resourceCulture);
             }
         }
         
@@ -682,6 +673,15 @@ namespace LanExchange.Properties {
         internal static string MainForm_About {
             get {
                 return ResourceManager.GetString("MainForm_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        internal static string MainForm_Close {
+            get {
+                return ResourceManager.GetString("MainForm_Close", resourceCulture);
             }
         }
         

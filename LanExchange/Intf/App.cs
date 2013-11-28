@@ -1,5 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
+using LanExchange.Misc;
 using LanExchange.SDK;
+using LanExchange.Properties;
 
 namespace LanExchange.Intf
 {
@@ -28,9 +31,13 @@ namespace LanExchange.Intf
         public static ILazyThreadPool Threads;
         public static ITranslationService TR;
 
-        public static void SetContainer(IIoCContainer iioCContainer)
+        [Localizable(false)]
+        public static void SetContainer(IIoCContainer container)
         {
-            s_Ioc = iioCContainer;
+            s_Ioc = container;
+            // init translation service first and replace global resource manager
+            TR = Resolve<ITranslationService>();
+            TR.SetResourceManagerTo<Resources>();//"LanExchange.Properties.Resources");
             // managers
             PanelItemTypes = Resolve<IPanelItemFactoryManager>();
             PanelFillers = Resolve<IPanelFillerManager>();
@@ -44,8 +51,6 @@ namespace LanExchange.Intf
             // other
             Config = Resolve<IConfigModel>();
             Threads = Resolve<ILazyThreadPool>();
-            TR = Resolve<ITranslationService>();
-            TranslationResourceManager.Service = TR;
         }
 
         public static TTypeToResolve Resolve<TTypeToResolve>()

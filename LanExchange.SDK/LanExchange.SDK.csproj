@@ -80,6 +80,7 @@
     <Compile Include="IPanelView.cs" />
     <Compile Include="IPlugin.cs" />
     <Compile Include="IPresenter.cs" />
+    <Compile Include="ITranslationable.cs" />
     <Compile Include="ITranslationService.cs" />
     <Compile Include="IView.cs" />
     <Compile Include="ObjectPath.cs" />
@@ -96,7 +97,6 @@
     <Compile Include="PanelModelEventArgs.cs" />
     <Compile Include="PanelSortOrder.cs" />
     <Compile Include="PanelViewMode.cs" />
-    <Compile Include="TranslationResourceManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
