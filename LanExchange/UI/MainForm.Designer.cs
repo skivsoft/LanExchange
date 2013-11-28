@@ -102,7 +102,7 @@ namespace LanExchange.UI
             this.mTrayOpen.Name = "mTrayOpen";
             this.mTrayOpen.ShortcutKeyDisplayString = global::LanExchange.Properties.Resources.KeyCtrlWinX;
             this.mTrayOpen.Size = new System.Drawing.Size(179, 22);
-            this.mTrayOpen.Text = global::LanExchange.Properties.Resources.MainForm_Open;
+            this.mTrayOpen.Text = global::LanExchange.Properties.Resources.mTrayOpen_Text;
             this.mTrayOpen.Click += new System.EventHandler(this.mOpen_Click);
             // 
             // mTraySep1
@@ -114,14 +114,14 @@ namespace LanExchange.UI
             // 
             this.mTrayAbout.Name = "mTrayAbout";
             this.mTrayAbout.Size = new System.Drawing.Size(179, 22);
-            this.mTrayAbout.Text = global::LanExchange.Properties.Resources.MainForm_About;
+            this.mTrayAbout.Text = global::LanExchange.Properties.Resources.mTrayAbout_Text;
             this.mTrayAbout.Click += new System.EventHandler(this.mAbout_Click);
             // 
             // mTrayExit
             // 
             this.mTrayExit.Name = "mTrayExit";
             this.mTrayExit.Size = new System.Drawing.Size(179, 22);
-            this.mTrayExit.Text = global::LanExchange.Properties.Resources.MainForm_Exit;
+            this.mTrayExit.Text = global::LanExchange.Properties.Resources.mTrayExit_Text;
             this.mTrayExit.Click += new System.EventHandler(this.mExit_Click);
             // 
             // toolStripStatusLabel2

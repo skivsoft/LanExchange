@@ -80,7 +80,6 @@
     <Compile Include="IPanelView.cs" />
     <Compile Include="IPlugin.cs" />
     <Compile Include="IPresenter.cs" />
-    <Compile Include="ITranslationable.cs" />
     <Compile Include="ITranslationService.cs" />
     <Compile Include="IView.cs" />
     <Compile Include="ObjectPath.cs" />

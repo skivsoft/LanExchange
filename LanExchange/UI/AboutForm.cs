@@ -10,7 +10,7 @@ namespace LanExchange.UI
     /// <summary>
     /// Concrete class for IAboutView.
     /// </summary>
-    public sealed partial class AboutForm : EscapeForm, IAboutView
+    public sealed partial class AboutForm : EscapeForm, IAboutView, ITranslationable
     {
         private readonly IAboutPresenter m_Presenter;
         private RichTextBox m_BoxDetails;

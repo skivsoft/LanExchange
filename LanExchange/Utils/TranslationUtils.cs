@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel;
+using System.Resources;
 using System.Windows.Forms;
+using LanExchange.Intf;
 using LanExchange.SDK;
 
 namespace LanExchange.Utils
@@ -7,7 +9,7 @@ namespace LanExchange.Utils
     public static class TranslationUtils
     {
         [Localizable(false)]
-        public static void ApplyResources(ComponentResourceManager resources, IContainer container)
+        public static void ApplyResources(ResourceManager resources, IContainer container)
         {
             foreach (Component component in container.Components)
             {
@@ -15,9 +17,11 @@ namespace LanExchange.Utils
                     (component as ITranslationable).ApplyResources();
                 else
                 {
-                    var name = ReflectionUtils.GetObjectProperty<string>(component, "Name");
-                    if (name != null)
-                        resources.ApplyResources(component, name);
+                    if (component is ContextMenuStrip)
+                        ApplyResourcesToContextMenuStrip(resources, component as ContextMenuStrip);
+                    //var name = ReflectionUtils.GetObjectProperty<string>(component, "Name");
+                    //if (name != null)
+                    //    resources.ApplyResources(component, name);
                 }
             }
         }
@@ -34,6 +38,17 @@ namespace LanExchange.Utils
                     ApplyResources(resources, control.Controls);
                 }
             }
+        }
+
+        private static void ApplyResourcesToContextMenuStrip(ResourceManager resources, ContextMenuStrip menu)
+        {
+            foreach(var item in menu.Items)
+            {
+                var menuItem = item as ToolStripMenuItem;
+                if (menuItem != null)
+                    menuItem.Text = resources.GetString(menuItem.Name + "_Text");
+            }
+            
         }
     }
 }
