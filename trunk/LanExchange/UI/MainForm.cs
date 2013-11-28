@@ -14,7 +14,7 @@ using LanExchange.Utils;
 
 namespace LanExchange.UI
 {
-    public partial class MainForm : RunMinimizedForm, IMainView
+    public partial class MainForm : RunMinimizedForm, IMainView, ITranslationable
     {
         public const int WAIT_FOR_KEYUP_MS = 500;
 
@@ -89,6 +89,7 @@ namespace LanExchange.UI
             foreach(var pair in nameDict)
             {
                 var menuItem = new MenuItem(pair.Value);
+                menuItem.RadioCheck = true;
                 menuItem.Tag = pair.Key;
                 menuItem.Click += MenuItemOnClick;
                 mLanguage.MenuItems.Add(menuItem);
@@ -97,7 +98,7 @@ namespace LanExchange.UI
 
         private void MarkCurrentLanguage()
         {
-            foreach(MenuItem menuItem in mLanguage.MenuItems)
+            foreach (MenuItem menuItem in mLanguage.MenuItems)
                 menuItem.Checked = menuItem.Tag.Equals(App.TR.CurrentLanguage);
         }
 
@@ -115,15 +116,15 @@ namespace LanExchange.UI
 
         public void ApplyResources()
         {
+            TranslationUtils.ApplyResources(Resources.ResourceManager, components);
             var resources = new ComponentResourceManager(typeof(MainForm));
-            TranslationUtils.ApplyResources(resources, components);
             TranslationUtils.ApplyResources(resources, Controls);
             mTrayOpen_ApplyResources();
         }
 
         private void mTrayOpen_ApplyResources()
         {
-            mTrayOpen.Text = Visible ? Resources.MainForm_Close : Resources.MainForm_Open;
+            mTrayOpen.Text = Visible ? Resources.MainForm_Close : Resources.mTrayOpen_Text;
         }
 
         private bool m_EscDown;

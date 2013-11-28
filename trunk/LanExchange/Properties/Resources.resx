@@ -124,7 +124,7 @@
   <data name="keyboard_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\input-keyboard-6.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="MainForm_Exit" xml:space="preserve">
+  <data name="mTrayExit_Text" xml:space="preserve">
     <value>Exit</value>
   </data>
   <data name="MenuPanel" xml:space="preserve">
@@ -187,7 +187,7 @@
   <data name="KeyCtrlR__" xml:space="preserve">
     <value>Re-read panel.</value>
   </data>
-  <data name="MainForm_Open" xml:space="preserve">
+  <data name="mTrayOpen_Text" xml:space="preserve">
     <value>Open</value>
   </data>
   <data name="PanelPresenter_Items2" xml:space="preserve">
@@ -380,7 +380,7 @@
   <data name="KeyEsc__" xml:space="preserve">
     <value>Clear filter OR go level up OR hide main window.</value>
   </data>
-  <data name="MainForm_About" xml:space="preserve">
+  <data name="mTrayAbout_Text" xml:space="preserve">
     <value>About</value>
   </data>
   <data name="KeyCtrlWinX" xml:space="preserve">

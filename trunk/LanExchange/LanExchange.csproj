@@ -94,6 +94,7 @@
     </Compile>
     <Compile Include="Core\ContainerBuilder.cs" />
     <Compile Include="Intf\IPagesModel.cs" />
+    <Compile Include="Intf\ITranslationable.cs" />
     <Compile Include="Misc\GenerateEnglish.cs" />
     <Compile Include="Core\TypeNotRegisteredException.cs" />
     <Compile Include="Intf\Addon\ProtocolHelper.cs" />

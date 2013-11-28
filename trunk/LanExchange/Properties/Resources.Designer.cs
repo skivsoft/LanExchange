@@ -668,29 +668,11 @@ namespace LanExchange.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to About.
-        /// </summary>
-        internal static string MainForm_About {
-            get {
-                return ResourceManager.GetString("MainForm_About", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         internal static string MainForm_Close {
             get {
                 return ResourceManager.GetString("MainForm_Close", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Exit.
-        /// </summary>
-        internal static string MainForm_Exit {
-            get {
-                return ResourceManager.GetString("MainForm_Exit", resourceCulture);
             }
         }
         
@@ -736,15 +718,6 @@ namespace LanExchange.Properties {
         internal static string MainForm_Legend {
             get {
                 return ResourceManager.GetString("MainForm_Legend", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Open.
-        /// </summary>
-        internal static string MainForm_Open {
-            get {
-                return ResourceManager.GetString("MainForm_Open", resourceCulture);
             }
         }
         
@@ -808,6 +781,33 @@ namespace LanExchange.Properties {
         internal static string MenuPanel {
             get {
                 return ResourceManager.GetString("MenuPanel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        internal static string mTrayAbout_Text {
+            get {
+                return ResourceManager.GetString("mTrayAbout_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exit.
+        /// </summary>
+        internal static string mTrayExit_Text {
+            get {
+                return ResourceManager.GetString("mTrayExit_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        internal static string mTrayOpen_Text {
+            get {
+                return ResourceManager.GetString("mTrayOpen_Text", resourceCulture);
             }
         }
         
