@@ -8,7 +8,20 @@ namespace LanExchange.Utils
 {
     public static class TranslationUtils
     {
-        [Localizable(false)]
+        public static void ApplyResources(ComponentResourceManager resources, Control.ControlCollection controls)
+        {
+            foreach (Control control in controls)
+            {
+                if (control is ITranslationable)
+                    (control as ITranslationable).ApplyResources();
+                else
+                {
+                    //resources.ApplyResources(control, control.Name);
+                    ApplyResources(resources, control.Controls);
+                }
+            }
+        }
+
         public static void ApplyResources(ResourceManager resources, IContainer container)
         {
             foreach (Component component in container.Components)
@@ -18,7 +31,9 @@ namespace LanExchange.Utils
                 else
                 {
                     if (component is ContextMenuStrip)
-                        ApplyResourcesToContextMenuStrip(resources, component as ContextMenuStrip);
+                        ProcessContextMenuStrip(resources, component as ContextMenuStrip);
+                    if (component is MainMenu)
+                        ProcessMenuItems(resources, (component as MainMenu).MenuItems);
                     //var name = ReflectionUtils.GetObjectProperty<string>(component, "Name");
                     //if (name != null)
                     //    resources.ApplyResources(component, name);
@@ -26,21 +41,20 @@ namespace LanExchange.Utils
             }
         }
 
-        public static void ApplyResources(ComponentResourceManager resources, Control.ControlCollection controls)
+        [Localizable(false)]
+        private static void ProcessMenuItems(ResourceManager resources, Menu.MenuItemCollection menuItems)
         {
-            foreach (Control control in controls)
-            {
-                if (control is ITranslationable)
-                    (control as ITranslationable).ApplyResources();
-                else
+            foreach (MenuItem menuItem in menuItems)
+                if (menuItem.Text != "-")
                 {
-                    resources.ApplyResources(control, control.Name);
-                    ApplyResources(resources, control.Controls);
+                    if (!string.IsNullOrEmpty(menuItem.Name))
+                        menuItem.Text = resources.GetString(menuItem.Name + "_Text");
+                    if (menuItem.MenuItems.Count > 0)
+                        ProcessMenuItems(resources, menuItem.MenuItems);
                 }
-            }
         }
 
-        private static void ApplyResourcesToContextMenuStrip(ResourceManager resources, ContextMenuStrip menu)
+        private static void ProcessContextMenuStrip(ResourceManager resources, ContextMenuStrip menu)
         {
             foreach(var item in menu.Items)
             {

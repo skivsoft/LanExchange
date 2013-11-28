@@ -6,10 +6,11 @@ using LanExchange.Intf;
 using LanExchange.Presenter.Action;
 using LanExchange.Properties;
 using LanExchange.SDK;
+using LanExchange.Utils;
 
 namespace LanExchange.UI
 {
-    public partial class PagesView : UserControl, IPagesView
+    public partial class PagesView : UserControl, IPagesView, ITranslationable
     {
         private readonly IPagesPresenter m_Presenter;
         private int m_PopupSelectedIndex = -1;
@@ -35,6 +36,12 @@ namespace LanExchange.UI
             App.Images.SetImagesTo(popPages);
         }
 
+        public void ApplyResources()
+        {
+            TranslationUtils.ApplyResources(Resources.ResourceManager, components);
+            SetupContextMenu(popPages.Items);
+        }
+
         public void SetupContextMenu()
         {
             SetupContextMenu(popPages.Items);
@@ -42,6 +49,12 @@ namespace LanExchange.UI
 
         private void SetupContextMenu(ToolStripItemCollection items)
         {
+            while (items[0] != mReRead)
+            {
+                var menuItem = items[0];
+                items.RemoveAt(0);
+                menuItem.Dispose();
+            }
             App.PanelItemTypes.CreateDefaultRoots();
             var index = 0;
             foreach (var root in App.PanelItemTypes.DefaultRoots)
@@ -219,9 +232,9 @@ namespace LanExchange.UI
             }
             else
                 m_Opened = false;
-            mReread.Enabled = App.Presenter.IsActionEnabled<ReReadAction>();
+            mReRead.Enabled = App.Presenter.IsActionEnabled<ReReadAction>();
             mCloseTab.Enabled = App.Presenter.IsActionEnabled<CloseTabAction>();
-            mCloseOtherTabs.Enabled = App.Presenter.IsActionEnabled<CloseOtherAction>();
+            mCloseOther.Enabled = App.Presenter.IsActionEnabled<CloseOtherAction>();
             //logger.Info("Opened={0}", bOpened);
         }
 
@@ -311,7 +324,7 @@ namespace LanExchange.UI
             get { return m_Presenter; }
         }
 
-        private void mReread_Click(object sender, EventArgs e)
+        private void mReRead_Click(object sender, EventArgs e)
         {
             App.Presenter.ExecuteAction<ReReadAction>();
         }
@@ -321,7 +334,7 @@ namespace LanExchange.UI
             App.Presenter.ExecuteAction<CloseTabAction>();
         }
 
-        private void mCloseOtherTabs_Click(object sender, EventArgs e)
+        private void mCloseOther_Click(object sender, EventArgs e)
         {
             App.Presenter.ExecuteAction<CloseOtherAction>();
         }

@@ -51,10 +51,12 @@
         <Component Id="Kazakh.po" Guid="351088BF-22E4-4114-AA8A-5503367C8894">
           <File Id="Kazakh.po" KeyPath="yes" Source="$(var.SourceDir)Languages\Kazakh.po"/>
         </Component>
+        <!--
         <Component Id="Esperanto.po" Guid="DB0B6820-716D-4F5C-B0FE-BE9CEE871ECD">
           <File Id="Esperanto.po" KeyPath="yes" Source="$(var.SourceDir)Languages\Esperanto.po"/>
         </Component>
-      </Directory>
+        -->
+        </Directory>
     </DirectoryRef>
   </Fragment>
 </Wix>

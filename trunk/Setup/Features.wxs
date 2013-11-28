@@ -8,7 +8,9 @@
       <ComponentRef Id="LanExchangeShortcut"/>
       <ComponentRef Id="Russian.po"/>
       <ComponentRef Id="Kazakh.po"/>
+      <!--
       <ComponentRef Id="Esperanto.po"/>
+      -->
       <Feature Id="WMIViewer" Level="100" Title="WMI Viewer" AllowAdvertise="no" Description="WMI viewer administration tool.">
         <ComponentRef Id="WMIViewer.exe"/>
         <ComponentRef Id="NetworkWMI.xml" />

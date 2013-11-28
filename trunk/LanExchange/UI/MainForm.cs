@@ -117,9 +117,9 @@ namespace LanExchange.UI
         public void ApplyResources()
         {
             TranslationUtils.ApplyResources(Resources.ResourceManager, components);
+            mTrayOpen_ApplyResources();
             var resources = new ComponentResourceManager(typeof(MainForm));
             TranslationUtils.ApplyResources(resources, Controls);
-            mTrayOpen_ApplyResources();
         }
 
         private void mTrayOpen_ApplyResources()
@@ -228,7 +228,7 @@ namespace LanExchange.UI
             tooltip.ToolTipTitle = string.Empty;
         }
 
-        private void mAbout_Click(object sender, EventArgs e)
+        private void mHelpAbout_Click(object sender, EventArgs e)
         {
             App.Presenter.ExecuteAction<AboutAction>();
         }
@@ -301,7 +301,7 @@ namespace LanExchange.UI
                 ToggleVisible();
         }
 
-        private void mExit_Click(object sender, EventArgs e)
+        private void mTrayExit_Click(object sender, EventArgs e)
         {
             ApplicationExit();
         }
@@ -340,7 +340,7 @@ namespace LanExchange.UI
             Pages.FocusPanelView();
         }
 
-        private void rereadToolStripMenuItem_Click(object sender, EventArgs e)
+        private void mReRead_Click(object sender, EventArgs e)
         {
             App.Presenter.ExecuteAction<ReReadAction>();
             popTop.Tag = null;
@@ -415,13 +415,13 @@ namespace LanExchange.UI
             presenter.OpenHomeLink();
         }
 
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        private void mHelpLangs_Click(object sender, EventArgs e)
         {
             var presenter = App.Resolve<IAboutPresenter>();
             presenter.OpenLocalizationLink();
         }
 
-        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        private void mHelpBugs_Click(object sender, EventArgs e)
         {
             var presenter = App.Resolve<IAboutPresenter>();
             presenter.OpenBugTrackerWebLink();
@@ -515,9 +515,9 @@ namespace LanExchange.UI
 
         private void mPanel_Popup(object sender, EventArgs e)
         {
-            mPanelReRead.Enabled = App.Presenter.IsActionEnabled<ReReadAction>();
-            mPanelCloseTab.Enabled = App.Presenter.IsActionEnabled<CloseTabAction>();
-            mPanelCloseOther.Enabled = App.Presenter.IsActionEnabled<CloseOtherAction>();
+            mReRead.Enabled = App.Presenter.IsActionEnabled<ReReadAction>();
+            mCloseTab.Enabled = App.Presenter.IsActionEnabled<CloseTabAction>();
+            mCloseOther.Enabled = App.Presenter.IsActionEnabled<CloseOtherAction>();
         }
 
         private void mCloseTab_Click(object sender, EventArgs e)
@@ -530,12 +530,12 @@ namespace LanExchange.UI
             App.Presenter.ExecuteAction<CloseOtherAction>();
         }
 
-        private void mInfoPanel_Click(object sender, EventArgs e)
+        private void mViewInfo_Click(object sender, EventArgs e)
         {
             App.Config.ShowInfoPanel = !App.Config.ShowInfoPanel;
         }
 
-        private void mGridLines_Click(object sender, EventArgs e)
+        private void mViewGrid_Click(object sender, EventArgs e)
         {
             App.Config.ShowGridLines = !App.Config.ShowGridLines;
         }

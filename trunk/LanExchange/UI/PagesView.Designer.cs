@@ -30,10 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             this.popPages = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.mReread = new System.Windows.Forms.ToolStripMenuItem();
+            this.mReRead = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.mCloseTab = new System.Windows.Forms.ToolStripMenuItem();
-            this.mCloseOtherTabs = new System.Windows.Forms.ToolStripMenuItem();
+            this.mCloseOther = new System.Windows.Forms.ToolStripMenuItem();
             this.Pages = new System.Windows.Forms.TabControl();
             this.popPages.SuspendLayout();
             this.SuspendLayout();
@@ -41,10 +41,10 @@
             // popPages
             // 
             this.popPages.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mReread,
+            this.mReRead,
             this.toolStripSeparator2,
             this.mCloseTab,
-            this.mCloseOtherTabs});
+            this.mCloseOther});
             this.popPages.Name = "popPages";
             this.popPages.Size = new System.Drawing.Size(162, 98);
             this.popPages.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.popPages_Closed);
@@ -53,11 +53,11 @@
             // 
             // mReread
             // 
-            this.mReread.Name = "mReread";
-            this.mReread.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.mReread.Size = new System.Drawing.Size(161, 22);
-            this.mReread.Text = global::LanExchange.Properties.Resources.KeyCtrlR_;
-            this.mReread.Click += new System.EventHandler(this.mReread_Click);
+            this.mReRead.Name = "mReRead";
+            this.mReRead.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.mReRead.Size = new System.Drawing.Size(161, 22);
+            this.mReRead.Text = global::LanExchange.Properties.Resources.mReRead_Text;
+            this.mReRead.Click += new System.EventHandler(this.mReRead_Click);
             // 
             // toolStripSeparator2
             // 
@@ -69,15 +69,15 @@
             this.mCloseTab.Name = "mCloseTab";
             this.mCloseTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
             this.mCloseTab.Size = new System.Drawing.Size(161, 22);
-            this.mCloseTab.Text = global::LanExchange.Properties.Resources.PagesView_CloseTab;
+            this.mCloseTab.Text = global::LanExchange.Properties.Resources.mCloseTab_Text;
             this.mCloseTab.Click += new System.EventHandler(this.mCloseTab_Click);
             // 
-            // mCloseOtherTabs
+            // mCloseOther
             // 
-            this.mCloseOtherTabs.Name = "mCloseOtherTabs";
-            this.mCloseOtherTabs.Size = new System.Drawing.Size(161, 22);
-            this.mCloseOtherTabs.Text = global::LanExchange.Properties.Resources.PagesView_CloseOtherTabs;
-            this.mCloseOtherTabs.Click += new System.EventHandler(this.mCloseOtherTabs_Click);
+            this.mCloseOther.Name = "mCloseOther";
+            this.mCloseOther.Size = new System.Drawing.Size(161, 22);
+            this.mCloseOther.Text = global::LanExchange.Properties.Resources.mCloseOther_Text;
+            this.mCloseOther.Click += new System.EventHandler(this.mCloseOther_Click);
             // 
             // Pages
             // 
@@ -110,9 +110,9 @@
 
         private System.Windows.Forms.ContextMenuStrip popPages;
         internal System.Windows.Forms.TabControl Pages;
-        private System.Windows.Forms.ToolStripMenuItem mReread;
+        private System.Windows.Forms.ToolStripMenuItem mReRead;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem mCloseTab;
-        private System.Windows.Forms.ToolStripMenuItem mCloseOtherTabs;
+        private System.Windows.Forms.ToolStripMenuItem mCloseOther;
     }
 }
