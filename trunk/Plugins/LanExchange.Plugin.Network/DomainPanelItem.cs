@@ -10,12 +10,6 @@ namespace LanExchange.Plugin.Network
     {
         private readonly ServerInfo m_SI;
 
-        public static void RegisterColumns(IPanelColumnManager columnManager)
-        {
-            var typeName = typeof (DomainPanelItem).Name;
-            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.DomainName));
-        }
-
         public DomainPanelItem()
         {
             m_SI = new ServerInfo();

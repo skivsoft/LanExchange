@@ -15,29 +15,23 @@ namespace LanExchange.Plugin.Users
         {
             m_Provider = serviceProvider;
 
+            // Setup resource manager
             var translationService = (ITranslationService)m_Provider.GetService(typeof(ITranslationService));
             if (translationService != null)
                 translationService.SetResourceManagerTo<Resources>();
 
             // Register new panel item types
-            var typesManager = (IPanelItemFactoryManager)m_Provider.GetService(typeof(IPanelItemFactoryManager));
-            if (typesManager != null)
+            var factoryManager = (IPanelItemFactoryManager)m_Provider.GetService(typeof(IPanelItemFactoryManager));
+            if (factoryManager != null)
             {
-                typesManager.RegisterPanelItemFactory(typeof(UserPanelItem), new UserFactory());
-            }
-
-            // Register columns for panel item types
-            var columnManager = (IPanelColumnManager)m_Provider.GetService(typeof(IPanelColumnManager));
-            if (columnManager != null)
-            {
-                UserPanelItem.RegisterColumns(columnManager);
+                factoryManager.RegisterFactory<UserPanelItem>(new UserFactory());
             }
 
             // Register new panel fillers
             var fillerManager = (IPanelFillerManager)m_Provider.GetService(typeof(IPanelFillerManager));
             if (fillerManager != null)
             {
-                fillerManager.RegisterPanelFiller(new UserFiller());
+                fillerManager.RegisterFiller<UserPanelItem>(new UserFiller());
             }
         }
     }

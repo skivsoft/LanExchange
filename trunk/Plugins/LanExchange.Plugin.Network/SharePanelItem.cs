@@ -11,13 +11,6 @@ namespace LanExchange.Plugin.Network
     {
         private readonly ShareInfo m_SHI;
 
-        public static void RegisterColumns(IPanelColumnManager columnManager)
-        {
-            var typeName = typeof (SharePanelItem).Name;
-            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.ResourceName));
-            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.Description));
-        }
-
         public SharePanelItem()
         {
             m_SHI = new ShareInfo();

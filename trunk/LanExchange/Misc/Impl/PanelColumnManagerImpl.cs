@@ -14,9 +14,10 @@ namespace LanExchange.Misc.Impl
             m_Types = new Dictionary<string, IList<PanelColumnHeader>>();
         }
 
-        public void RegisterColumn(string typeName, PanelColumnHeader header)
+        public void RegisterColumn<TPanelItem>(PanelColumnHeader header) where TPanelItem : PanelItemBase
         {
             IList<PanelColumnHeader> found;
+            var typeName = typeof (TPanelItem).Name;
             if (!m_Types.TryGetValue(typeName, out found))
             {
                 found = new List<PanelColumnHeader>();
@@ -26,6 +27,11 @@ namespace LanExchange.Misc.Impl
             found.Add(header);
             if (found.Count > m_MaxColumns)
                 m_MaxColumns = found.Count;
+        }
+
+        public void UnregisterColumns(string typeName)
+        {
+            m_Types.Remove(typeName);
         }
 
         public IList<PanelColumnHeader> GetColumns(Type type)
@@ -39,7 +45,6 @@ namespace LanExchange.Misc.Impl
             m_Types.TryGetValue(typeName, out result);
             return result;
         }
-
 
         public IEnumerable<PanelColumnHeader> EnumAllColumns()
         {

@@ -11,9 +11,10 @@ namespace LanExchange.Misc
         {
         }
 
-        public override string  GetString(string name, CultureInfo culture)
+        public override string GetString(string name, CultureInfo culture)
         {
-            return App.TR != null ? App.TR.Translate(base.GetString(name, culture)) : name;
+            var result = base.GetString(name, culture);
+            return !string.IsNullOrEmpty(result) ? App.TR.Translate(result) : result;
         }
     }
 }

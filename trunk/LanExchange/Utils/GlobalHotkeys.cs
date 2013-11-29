@@ -44,36 +44,24 @@ namespace LanExchange.Utils
         public short HotkeyID { get; private set; }
 
         /// <summary>Register the hotkey</summary>
-        public void RegisterGlobalHotKey(int hotkey, int modifiers, IntPtr handle)
+        public bool RegisterGlobalHotKey(int hotkey, int modifiers, IntPtr handle)
         {
             UnregisterGlobalHotKey();
             Handle = handle;
-            RegisterGlobalHotKey(hotkey, modifiers);
+            return RegisterGlobalHotKey(hotkey, modifiers);
         }
 
         /// <summary>Register the hotkey</summary>
-        public void RegisterGlobalHotKey(int hotkey, int modifiers)
+        public bool RegisterGlobalHotKey(int hotkey, int modifiers)
         {
             UnregisterGlobalHotKey();
-
-            try
-            {
-                // use the GlobalAddAtom API to get a unique ID (as suggested by MSDN)
-                string atomName = Handle.ToInt32().ToString("X8", CultureInfo.InvariantCulture) + GetType().FullName;
-                HotkeyID = GlobalAddAtom(atomName);
-                if (HotkeyID == 0)
-                    throw new Exception("Unable to generate unique hotkey ID. Error: " +
-                                        Marshal.GetLastWin32Error().ToString(CultureInfo.InvariantCulture));
-
-                // register the hotkey, throw if any error
-                if (!RegisterHotKey(Handle, HotkeyID, (uint) modifiers, (uint) hotkey))
-                    throw new Win32Exception(Marshal.GetLastWin32Error());
-            }
-            catch (Exception)
-            {
-                // clean up if hotkey registration failed
-                Dispose();
-            }
+            // use the GlobalAddAtom API to get a unique ID (as suggested by MSDN)
+            string atomName = Handle.ToInt32().ToString("X8", CultureInfo.InvariantCulture) + GetType().FullName;
+            HotkeyID = GlobalAddAtom(atomName);
+            if (HotkeyID == 0)
+                return false;
+            // register the hotkey, throw if any error
+            return RegisterHotKey(Handle, HotkeyID, (uint) modifiers, (uint) hotkey);
         }
 
         /// <summary>Unregister the hotkey</summary>

@@ -4,20 +4,15 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
 {
-    public sealed class ComputerFiller : IPanelFiller
+    public sealed class ComputerFiller : PanelFillerBase
     {
-        public bool IsParentAccepted(PanelItemBase parent)
+        public override bool IsParentAccepted(PanelItemBase parent)
         {
             // computers can be only into domains
             return (parent != null) && (parent != PluginNetwork.ROOT_OF_DOMAINS) && (parent is DomainPanelItem);
         }
 
-        public Type GetFillType()
-        {
-            return typeof (ComputerPanelItem);
-        }
-
-        public void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
+        public override void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
             if (parent == null)
                 throw new ArgumentNullException("parent");

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using LanExchange.Model;
+using LanExchange.Intf;
 using LanExchange.SDK;
 
 namespace LanExchange.Misc.Impl
@@ -17,10 +17,12 @@ namespace LanExchange.Misc.Impl
             m_DefaultRoots = new List<PanelItemBase>();
         }
 
-        public void RegisterPanelItemFactory(Type type, PanelItemFactoryBase factory)
+        public void RegisterFactory<TPanelItem>(PanelItemFactoryBase factory) where TPanelItem : PanelItemBase
         {
-            //if (PanelItemBaseFactoryValidator.ValidateFactory(factory))
-                m_Types.Add(type, factory);
+            if (factory == null)
+                throw new ArgumentNullException("factory");
+            m_Types.Add(typeof(TPanelItem), factory);
+            factory.RegisterColumns(App.Resolve<IPanelColumnManager>());
         }
 
         public IDictionary<Type, PanelItemFactoryBase> Types
@@ -75,5 +77,9 @@ namespace LanExchange.Misc.Impl
             return result;
         }
 
+        public bool IsEmpty
+        {
+            get { return m_Types.Count == 0; }
+        }
     }
 }

@@ -8,7 +8,7 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Users
 {
-    internal sealed class UserFiller : IPanelFiller
+    internal sealed class UserFiller : PanelFillerBase
     {
         const string CN = "cn";
         const string TITLE = "title";
@@ -23,7 +23,7 @@ namespace LanExchange.Plugin.Users
         const string ACCOUNT_CONTROL = "userAccountControl";
         const string EMPLOYEE_ID = "employeeID";
 
-        public bool IsParentAccepted(PanelItemBase parent)
+        public override bool IsParentAccepted(PanelItemBase parent)
         {
             return (parent is PanelItemRoot) && (parent.Name == PluginUsers.ROOT_OF_DNS.Name);
         }
@@ -44,7 +44,7 @@ namespace LanExchange.Plugin.Users
         }
 
         [Localizable(false)]
-        public void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
+        public override void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
             var startPath = LdapUtils.GetUserPath(SystemInformation.UserName); // "u770503350189"
             
@@ -104,11 +104,6 @@ namespace LanExchange.Plugin.Users
                     Debug.Print(ex.Message);
                 }
             }
-        }
-
-        public Type GetFillType()
-        {
-            return typeof (UserPanelItem);
         }
     }
 }

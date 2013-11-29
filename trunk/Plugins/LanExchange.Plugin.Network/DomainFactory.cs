@@ -1,4 +1,5 @@
 ﻿using System.Security.Permissions;
+using LanExchange.Plugin.Network.Properties;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
@@ -19,6 +20,11 @@ namespace LanExchange.Plugin.Network
         {
             var domain = NetApi32Utils.GetMachineNetBiosDomain(null);
             return new DomainPanelItem(PluginNetwork.ROOT_OF_DOMAINS, domain);
+        }
+
+        public override void RegisterColumns(IPanelColumnManager columnManager)
+        {
+            columnManager.RegisterColumn<DomainPanelItem>(new PanelColumnHeader(Resources.DomainName));
         }
     }
 }

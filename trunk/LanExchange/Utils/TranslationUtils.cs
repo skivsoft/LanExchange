@@ -7,6 +7,10 @@ namespace LanExchange.Utils
 {
     public static class TranslationUtils
     {
+        /// <summary>
+        /// Recursive translation every control.
+        /// </summary>
+        /// <param name="controls"></param>
         public static void TranslateControls(Control.ControlCollection controls)
         {
             foreach (Control control in controls)
@@ -14,12 +18,15 @@ namespace LanExchange.Utils
                 if (control is ITranslationable)
                     (control as ITranslationable).TranslateUI();
                 else
-                {
                     TranslateControls(control.Controls);
-                }
             }
         }
 
+        /// <summary>
+        /// Translation of components. Menus mostly.
+        /// </summary>
+        /// <param name="resources"></param>
+        /// <param name="container"></param>
         public static void TranslateComponents(ResourceManager resources, IContainer container)
         {
             foreach (Component component in container.Components)
@@ -32,9 +39,6 @@ namespace LanExchange.Utils
                         ProcessContextMenuStrip(resources, component as ContextMenuStrip);
                     if (component is MainMenu)
                         ProcessMenuItems(resources, (component as MainMenu).MenuItems);
-                    //var name = ReflectionUtils.GetObjectProperty<string>(component, "Name");
-                    //if (name != null)
-                    //    resources.ApplyResources(component, name);
                 }
             }
         }
@@ -57,7 +61,7 @@ namespace LanExchange.Utils
             foreach(var item in menu.Items)
             {
                 var menuItem = item as ToolStripMenuItem;
-                if (menuItem != null)
+                if (menuItem != null && !string.IsNullOrEmpty(menuItem.Name))
                     menuItem.Text = resources.GetString(menuItem.Name + "_Text");
             }
             

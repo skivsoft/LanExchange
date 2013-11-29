@@ -8,19 +8,19 @@ using LanExchange.SDK;
 
 namespace LanExchange.Presenter.Action
 {
-    public sealed class ShortcutFiller : IPanelFiller
+    public sealed class ShortcutFiller : PanelFillerBase
     {
         private const string PANEL_ITEM_SUFFIX = "PanelItem";
 
         [Localizable(false)]
         public static PanelItemRoot ROOT_OF_SHORTCUTS = new PanelItemRoot("ShortcutPanelItem");
 
-        public bool IsParentAccepted(PanelItemBase parent)
+        public override bool IsParentAccepted(PanelItemBase parent)
         {
             return (parent is PanelItemRoot) && (parent.Name.Equals(ROOT_OF_SHORTCUTS.Name));
         }
 
-        public void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
+        public override void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
             result.Add(new ShortcutPanelItem(parent, Resources.KeyF1, Resources.KeyF1__));
             result.Add(new ShortcutPanelItem(parent, Resources.KeyF10, Resources.KeyF10__));
@@ -49,12 +49,6 @@ namespace LanExchange.Presenter.Action
                             shortcut.CustomImageName = string.Format(CultureInfo.InvariantCulture, PanelImageNames.ADDON_FMT, menuItem.ProgramValue.Id);
                         result.Add(shortcut);
                     }
-        }
-
-
-        public Type GetFillType()
-        {
-            return typeof(ShortcutPanelItem);
         }
 
         private string SuppressPostfix(string value, string postfix)
