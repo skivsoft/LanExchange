@@ -7,55 +7,52 @@ namespace LanExchange.Misc.Impl
 {
     public class PanelFillerManagerImpl : IPanelFillerManager
     {
-        private readonly IList<IPanelFiller> m_Fillers;
+        private readonly IDictionary<Type, PanelFillerBase> m_Fillers;
 
         public PanelFillerManagerImpl()
         {
-            m_Fillers = new List<IPanelFiller>();
+            m_Fillers = new Dictionary<Type, PanelFillerBase>();
         }
 
-        public void RegisterPanelFiller(IPanelFiller filler)
+        public void RegisterFiller<TPanelItem>(PanelFillerBase filler) where TPanelItem : PanelItemBase
         {
-            m_Fillers.Add(filler);
+            m_Fillers.Add(typeof(TPanelItem), filler);
         }
 
         public Type GetFillType(PanelItemBase parent)
         {
-            foreach (var filler in m_Fillers)
-                if (filler.IsParentAccepted(parent))
-                    return filler.GetFillType();
+            foreach (var pair in m_Fillers)
+                if (pair.Value.IsParentAccepted(parent))
+                    return pair.Key;
             return null;
         }
 
         public PanelFillerResult RetrievePanelItems(PanelItemBase parent)
         {
+            if (parent == null)
+                throw new ArgumentNullException("parent");
             var result = new PanelFillerResult();
-            if (parent != null)
-            {
-                foreach (var filler in m_Fillers)
+            foreach (var pair in m_Fillers)
+                if (pair.Value.IsParentAccepted(parent))
                 {
-                    if (filler.IsParentAccepted(parent))
+                    if (result.ItemsType == null)
+                        result.ItemsType = pair.Key;
+                    try
                     {
-                        if (result.ItemsType == null)
-                            result.ItemsType = filler.GetFillType();
-                        try
-                        {
-                            filler.Fill(parent, result.Items);
-                        }
-                        catch (Exception ex)
-                        {
-                            Debug.Print(ex.Message);
-                        }
+                        pair.Value.Fill(parent, result.Items);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.Print(ex.Message);
                     }
                 }
-            }
             return result;
         }
 
         public bool FillerExists(PanelItemBase parent)
         {
-            foreach (var strategy in m_Fillers)
-                if (strategy.IsParentAccepted(parent))
+            foreach (var pair in m_Fillers)
+                if (pair.Value.IsParentAccepted(parent))
                     return true;
             return false;
         }

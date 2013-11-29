@@ -8,21 +8,6 @@ namespace LanExchange.Plugin.Users
 {
     public sealed class UserPanelItem : PanelItemBase
     {
-        internal static void RegisterColumns(IPanelColumnManager columnManager)
-        {
-            var typeName = typeof (UserPanelItem).Name;
-            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.UserName));
-            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.Title));
-            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.WorkPhone) { Width = 80 });
-            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.Office));
-            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.Department));
-            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.Email));
-            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.Company));
-            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.Nickname));
-            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.Pre2000Logon) { Visible = false });
-            columnManager.RegisterColumn(typeName, new PanelColumnHeader(Resources.Description) { Visible = false, Width = 200 });
-        }
-
         public UserPanelItem()
         {
         }

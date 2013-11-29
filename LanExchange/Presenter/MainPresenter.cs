@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using LanExchange.Intf;
 using LanExchange.Presenter.Action;
 using LanExchange.SDK;
+using LanExchange.Utils;
 
 namespace LanExchange.Presenter
 {
@@ -44,14 +45,42 @@ namespace LanExchange.Presenter
                     break;
                 case ConfigNames.Language:
                     App.TR.CurrentLanguage = config.Language;
-                    foreach(var form in Application.OpenForms)
-                    {
-                        if (form is ITranslationable)
-                            (form as ITranslationable).TranslateUI();
-                    }
+                    GlobalTranslateUI();
                     break;
             }
         }
+
+        private void GlobalTranslateUI()
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            try
+            {
+                // recreate all columns
+                GlobalTranslateColumns();
+                // Run TranslateUI() for all opened forms
+                foreach (var form in Application.OpenForms)
+                    if (form is ITranslationable)
+                        (form as ITranslationable).TranslateUI();
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
+            }
+        }
+
+        private void GlobalTranslateColumns()
+        {
+            var columnManager = App.Resolve<IPanelColumnManager>();
+            var factoryManager = App.Resolve<IPanelItemFactoryManager>();
+            if (columnManager == null || factoryManager == null || factoryManager.IsEmpty) 
+                return;
+            foreach (var pair in factoryManager.Types)
+            {
+                columnManager.UnregisterColumns(pair.Key.Name);
+                pair.Value.RegisterColumns(columnManager);
+            }
+        }
+
         private int GetDefaultWidth()
         {
             const double phi2 = 0.6180339887498949;

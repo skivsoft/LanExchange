@@ -1,4 +1,5 @@
-﻿using LanExchange.SDK;
+﻿using LanExchange.Plugin.Network.Properties;
+using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
 {
@@ -12,6 +13,12 @@ namespace LanExchange.Plugin.Network
         public override PanelItemBase CreateDefaultRoot()
         {
             return null;
+        }
+
+        public override void RegisterColumns(IPanelColumnManager columnManager)
+        {
+            columnManager.RegisterColumn<SharePanelItem>(new PanelColumnHeader(Resources.ResourceName));
+            columnManager.RegisterColumn<SharePanelItem>(new PanelColumnHeader(Resources.Description));
         }
     }
 }

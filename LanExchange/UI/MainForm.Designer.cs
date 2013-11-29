@@ -18,7 +18,6 @@ namespace LanExchange.UI
             if (disposing && (components != null))
             {
                 components.Dispose();
-                m_Hotkeys.Dispose();
             }
             base.Dispose(disposing);
         }

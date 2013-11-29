@@ -87,7 +87,7 @@
     <Compile Include="PanelFillerResult.cs" />
     <Compile Include="PanelIndexEventArgs.cs" />
     <Compile Include="PanelItemBase.cs" />
-    <Compile Include="IPanelFiller.cs" />
+    <Compile Include="PanelFillerBase.cs" />
     <Compile Include="PanelImageNames.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="PanelItemDoubleDot.cs" />

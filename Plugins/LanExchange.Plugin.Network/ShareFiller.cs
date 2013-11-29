@@ -4,18 +4,18 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
 {
-    public sealed class ShareFiller : IPanelFiller
+    public sealed class ShareFiller : PanelFillerBase
     {
         public static bool ShowHiddenShares = true;
         public static bool ShowPrinters = true;
 
-        public bool IsParentAccepted(PanelItemBase parent)
+        public override bool IsParentAccepted(PanelItemBase parent)
         {
             // parent for share can be only computer
             return (parent != null) && (parent != PluginNetwork.ROOT_OF_DOMAINS) && (parent is ComputerPanelItem);
         }
 
-        public void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
+        public override void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
             if (parent == null)
                 throw new ArgumentNullException("parent");
@@ -31,12 +31,6 @@ namespace LanExchange.Plugin.Network
                     continue;
                 result.Add(new SharePanelItem(parent, si));
             }
-        }
-
-
-        public Type GetFillType()
-        {
-            return typeof (SharePanelItem);
         }
     }
 }

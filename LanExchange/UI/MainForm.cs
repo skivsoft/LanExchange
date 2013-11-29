@@ -17,10 +17,8 @@ namespace LanExchange.UI
     public partial class MainForm : RunMinimizedForm, IMainView, ITranslationable
     {
         public const int WAIT_FOR_KEYUP_MS = 500;
-
-        private readonly GlobalHotkeys m_Hotkeys;
-
         public PagesView Pages;
+        private readonly GlobalHotkeys m_Hotkeys;
 
         public MainForm()
         {
@@ -34,7 +32,9 @@ namespace LanExchange.UI
             SetupForm();
             // set hotkey for activate: Ctrl+Win+X
             m_Hotkeys = new GlobalHotkeys();
-            m_Hotkeys.RegisterGlobalHotKey((int)Keys.X, GlobalHotkeys.MOD_CONTROL + GlobalHotkeys.MOD_WIN, Handle);
+            App.Resolve<IDisposableManager>().RegisterInstance(m_Hotkeys);
+            if (!m_Hotkeys.RegisterGlobalHotKey((int) Keys.X, GlobalHotkeys.MOD_CONTROL + GlobalHotkeys.MOD_WIN, Handle))
+                mTrayOpen.ShortcutKeyDisplayString = string.Empty;
             // set lazy events
             App.Threads.DataReady += OnDataReady;
 #if DEBUG

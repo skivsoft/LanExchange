@@ -92,9 +92,8 @@ namespace LanExchange
             App.Config.Load();
             App.Resolve<IPluginManager>().LoadPlugins();
             // register ShortcutPanelItem
-            App.PanelItemTypes.RegisterPanelItemFactory(typeof(ShortcutPanelItem), new ShortcutFactory());
-            ShortcutPanelItem.RegisterColumns(App.PanelColumns);
-            App.PanelFillers.RegisterPanelFiller(new ShortcutFiller());
+            App.PanelItemTypes.RegisterFactory<ShortcutPanelItem>(new ShortcutFactory());
+            App.PanelFillers.RegisterFiller<ShortcutPanelItem>(new ShortcutFiller());
             // run
             AppView.ApplicationRun();
         }

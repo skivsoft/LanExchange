@@ -5,7 +5,9 @@ namespace LanExchange.SDK
 {
     public interface IPanelColumnManager
     {
-        void RegisterColumn(string typeName, PanelColumnHeader header);
+        void RegisterColumn<TPanelItem>(PanelColumnHeader header) where TPanelItem : PanelItemBase;
+        void UnregisterColumns(string typeName);
+
         IList<PanelColumnHeader> GetColumns(string typeName);
         IEnumerable<PanelColumnHeader> EnumAllColumns();
         int MaxColumns { get; }

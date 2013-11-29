@@ -13,35 +13,27 @@ namespace LanExchange.Plugin.Network
         {
             m_Provider = serviceProvider;
             
+            // Setup resource manager
             var translationService = (ITranslationService)m_Provider.GetService(typeof(ITranslationService));
             if (translationService != null)
                 translationService.SetResourceManagerTo<Resources>();
 
             // Register new panel item types
-            var typeManager = (IPanelItemFactoryManager)m_Provider.GetService(typeof (IPanelItemFactoryManager));
-            if (typeManager != null)
+            var factoryManager = (IPanelItemFactoryManager)m_Provider.GetService(typeof (IPanelItemFactoryManager));
+            if (factoryManager != null)
             {
-                typeManager.RegisterPanelItemFactory(typeof(DomainPanelItem), new DomainFactory());
-                typeManager.RegisterPanelItemFactory(typeof(ComputerPanelItem), new ComputerFactory());
-                typeManager.RegisterPanelItemFactory(typeof(SharePanelItem), new ShareFactory());
-            }
-
-            // Register columns for panel item types
-            var columnManager = (IPanelColumnManager) m_Provider.GetService(typeof(IPanelColumnManager));
-            if (columnManager != null)
-            {
-                DomainPanelItem.RegisterColumns(columnManager);
-                ComputerPanelItem.RegisterColumns(columnManager);
-                SharePanelItem.RegisterColumns(columnManager);
+                factoryManager.RegisterFactory<DomainPanelItem>(new DomainFactory());
+                factoryManager.RegisterFactory<ComputerPanelItem>(new ComputerFactory());
+                factoryManager.RegisterFactory<SharePanelItem>(new ShareFactory());
             }
 
             // Register new panel fillers
             var fillerManager = (IPanelFillerManager) m_Provider.GetService(typeof (IPanelFillerManager));
             if (fillerManager != null)
             {
-                fillerManager.RegisterPanelFiller(new DomainFiller());
-                fillerManager.RegisterPanelFiller(new ComputerFiller());
-                fillerManager.RegisterPanelFiller(new ShareFiller());
+                fillerManager.RegisterFiller<DomainPanelItem>(new DomainFiller());
+                fillerManager.RegisterFiller<ComputerPanelItem>(new ComputerFiller());
+                fillerManager.RegisterFiller<SharePanelItem>(new ShareFiller());
             }
         }
     }
