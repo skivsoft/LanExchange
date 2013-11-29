@@ -87,6 +87,10 @@ msgid "Backspace"
 msgstr "Backspace"
 
 msgctxt "LanExchange.exe"
+msgid "About"
+msgstr "Бағдарлама туралы"
+
+msgctxt "LanExchange.exe"
 msgid "Close current tab."
 msgstr "Осы қыстырманы жабу."
 
@@ -111,24 +115,8 @@ msgid "Select all items in panel."
 msgstr "Панельдегі барлық элементтерді таңдау."
 
 msgctxt "LanExchange.exe"
-msgid "&Panel"
-msgstr "&Панель"
-
-msgctxt "LanExchange.exe"
-msgid "About"
-msgstr "Бағдарлама туралы"
-
-msgctxt "LanExchange.exe"
-msgid "Input text must not be empty."
-msgstr "Енгізілген мәтін бос болмау керек."
-
-msgctxt "LanExchange.exe"
 msgid "Copyright"
 msgstr "Авторлық құқық"
-
-msgctxt "LanExchange.exe"
-msgid "Info panel"
-msgstr "Инфо-панель"
 
 msgctxt "LanExchange.exe"
 msgid "Action"
@@ -139,10 +127,6 @@ msgid "    "
 msgstr "    "
 
 msgctxt "LanExchange.exe"
-msgid "Plugins"
-msgstr "Плагиндер"
-
-msgctxt "LanExchange.exe"
 msgid "Filter panel items by all columns."
 msgstr "Панельдегі элементтерді барлық бағаналармен фильтрлеу."
 
@@ -151,16 +135,12 @@ msgid "Unable to execute command line:\n{0}"
 msgstr "Келесі команда орындалмады:\n{0}"
 
 msgctxt "LanExchange.exe"
-msgid "LanExchange Webpage"
-msgstr "LanExchange вебсайты"
+msgid "Query"
+msgstr "Сұрау"
 
 msgctxt "LanExchange.exe"
 msgid "Copy {0} selected items"
 msgstr "{0} таңдалған элементтерді көшіру"
-
-msgctxt "LanExchange.exe"
-msgid "Tab name"
-msgstr "Қыстырма аты"
 
 msgctxt "LanExchange.exe"
 msgid "Information"
@@ -171,16 +151,8 @@ msgid "Version"
 msgstr "Нұсқа"
 
 msgctxt "LanExchange.exe"
-msgid "Rename tab"
-msgstr "Қыстырманы қайта атау"
-
-msgctxt "LanExchange.exe"
 msgid "F10"
 msgstr "F10"
-
-msgctxt "LanExchange.exe"
-msgid "Shortcut Keys"
-msgstr "Үйлестіру клавиштері"
 
 msgctxt "LanExchange.exe"
 msgid "Esc"
@@ -191,24 +163,28 @@ msgid "Del"
 msgstr "Del"
 
 msgctxt "LanExchange.exe"
+msgid "Grid lines"
+msgstr "Тор сызықтары"
+
+msgctxt "LanExchange.exe"
 msgid "Hide Details"
 msgstr "Егжей-тегжейлерді жасыру"
 
 msgctxt "LanExchange.exe"
-msgid "Copy of {0}"
-msgstr "{0} көшірмесі"
+msgid "Close other tabs"
+msgstr "Басқа қыстырмаларды жабу"
 
 msgctxt "LanExchange.exe"
-msgid "Large icons"
-msgstr "Ірі бейнелер"
+msgid "Exit"
+msgstr "Шығу"
 
 msgctxt "LanExchange.exe"
-msgid "General"
-msgstr "Жалпы"
+msgid "List"
+msgstr "Тізім"
 
 msgctxt "LanExchange.exe"
-msgid "Enter tab name"
-msgstr "Қыстырма атын енгізіңіз"
+msgid "&Language"
+msgstr "&Тiлi"
 
 msgctxt "LanExchange.exe"
 msgid "Context"
@@ -227,20 +203,12 @@ msgid "Legend"
 msgstr "Түсінік сөздер"
 
 msgctxt "LanExchange.exe"
-msgid "&Language"
-msgstr "&Тiлi"
-
-msgctxt "LanExchange.exe"
 msgid "Copy «{0}»"
 msgstr "«{0}» көшiрiп алу"
 
 msgctxt "LanExchange.exe"
 msgid "Error"
 msgstr "Қате"
-
-msgctxt "LanExchange.exe"
-msgid "Tab properties"
-msgstr "Қыстырма сипаттары"
 
 msgctxt "LanExchange.exe"
 msgid "Ctrl+R"
@@ -275,12 +243,12 @@ msgid "Delete selected item(s) which was created by user."
 msgstr "Пайдаланушы жасаған таңдалған элементтерді өшіру."
 
 msgctxt "LanExchange.exe"
-msgid "Tab with specified name already exists."
-msgstr "Енгізілген қыстырма аты бар."
-
-msgctxt "LanExchange.exe"
 msgid "Webpage"
 msgstr "Вебсайт"
+
+msgctxt "LanExchange.exe"
+msgid "BugTracker Webpage"
+msgstr "Багтрэкера вебсайты"
 
 msgctxt "LanExchange.exe"
 msgid "Released under the MIT license."
@@ -299,16 +267,20 @@ msgid "Execution error"
 msgstr "Орындалу қатесі"
 
 msgctxt "LanExchange.exe"
-msgid "Close"
-msgstr "Жабу"
-
-msgctxt "LanExchange.exe"
 msgid "F1"
 msgstr "F1"
 
 msgctxt "LanExchange.exe"
 msgid "F9"
 msgstr "F9"
+
+msgctxt "LanExchange.exe"
+msgid "Small icons"
+msgstr "Кіші белгiшелер"
+
+msgctxt "LanExchange.exe"
+msgid "Close"
+msgstr "Жабу"
 
 msgctxt "LanExchange.exe"
 msgid "Details"
@@ -319,52 +291,36 @@ msgid "Open tab «{0}»"
 msgstr "«{0}» қыстырманы ашу"
 
 msgctxt "LanExchange.exe"
-msgid "List"
-msgstr "Тізім"
-
-msgctxt "LanExchange.exe"
-msgid "Send to new tab"
-msgstr "Жаңа қыстырмаға жіберу"
+msgid "Shortcut Keys"
+msgstr "Үйлестіру клавиштері"
 
 msgctxt "LanExchange.exe"
 msgid "Go level up in panel."
 msgstr "Панельде бір деңгей жоғары шығу."
 
 msgctxt "LanExchange.exe"
-msgid "Ctrl+Shift+T"
-msgstr "Ctrl+Shift+T"
-
-msgctxt "LanExchange.exe"
-msgid "Send selected item(s) to new tab."
-msgstr "Таңдалған элементтерді жаңа қыстырмаға жіберу."
-
-msgctxt "LanExchange.exe"
 msgid "Show/hide main window."
 msgstr "Бас терезені көрсету/жасыру."
 
 msgctxt "LanExchange.exe"
-msgid "&Help"
-msgstr "&Көмек"
+msgid "Large icons"
+msgstr "Орташа белгішілер"
+
+msgctxt "LanExchange.exe"
+msgid "&View"
+msgstr "&Көрініс"
 
 msgctxt "LanExchange.exe"
 msgid "Copy full path of selected item(s) to clipboard."
 msgstr "Таңдалған элемменттердің толық жолын айырбастау буферіне көшіру."
 
 msgctxt "LanExchange.exe"
-msgid "Close other tabs"
-msgstr "Басқа қыстырмаларды жабу"
-
-msgctxt "LanExchange.exe"
 msgid "Close tab"
 msgstr "Қыстырманы жабу"
 
 msgctxt "LanExchange.exe"
-msgid "Re-read"
-msgstr "Қайта оқу"
-
-msgctxt "LanExchange.exe"
 msgid "Paste"
-msgstr "Көшіру"
+msgstr "Қою"
 
 msgctxt "LanExchange.exe"
 msgid "Ctrl+Up"
@@ -375,32 +331,20 @@ msgid "Copy selected items"
 msgstr "Таңдалған элементтерді көшіру"
 
 msgctxt "LanExchange.exe"
-msgid "Grid lines"
-msgstr "Тор сызықтары"
-
-msgctxt "LanExchange.exe"
-msgid "Localization Webpage"
-msgstr "Локализация вебсайты"
-
-msgctxt "LanExchange.exe"
-msgid "Exit"
-msgstr "Шығу"
+msgid "LanExchange Webpage"
+msgstr "LanExchange вебсайты"
 
 msgctxt "LanExchange.exe"
 msgid "This help on shortcuts."
 msgstr "Бұл үйлестіру клавиштер мәліметі."
 
 msgctxt "LanExchange.exe"
-msgid "Show/hide main menu."
-msgstr "Басты мәзірді көрсету/жасыру."
-
-msgctxt "LanExchange.exe"
 msgid "Delete"
-msgstr "Өшіру"
+msgstr "Жою"
 
 msgctxt "LanExchange.exe"
-msgid "Copy ({0}) of {1}"
-msgstr "Көшірме ({0}) {1}"
+msgid "Open"
+msgstr "Ашу"
 
 msgctxt "LanExchange.exe"
 msgid "Ctrl+Win+X"
@@ -419,6 +363,10 @@ msgid "Resource «{0}» not reachable.\nContinue anyway?"
 msgstr "«{0}» ресурсы жетерліксіз.\nБәрібір жалғастырасыз ба?"
 
 msgctxt "LanExchange.exe"
+msgid "&Help"
+msgstr "Кө&мек"
+
+msgctxt "LanExchange.exe"
 msgid "Ctrl+Alt+Ins"
 msgstr "Ctrl+Alt+Ins"
 
@@ -435,6 +383,14 @@ msgid "Show Details"
 msgstr "Егжей-тегжейлерді көрсету"
 
 msgctxt "LanExchange.exe"
+msgid "&Panel"
+msgstr "&Панель"
+
+msgctxt "LanExchange.exe"
+msgid "Info panel"
+msgstr "Инфо-панель"
+
+msgctxt "LanExchange.exe"
 msgid "Copy column on which the ordered item(s) to clipboard."
 msgstr "Қатар бойынша элементтері реттелген қатарды айырбастау буферіне көшіру."
 
@@ -448,19 +404,11 @@ msgstr "Элементтер: {1}-дан {0}|Элементтер: {1}-ден {0
 
 msgctxt "LanExchange.exe"
 msgid "Items: {0}"
-msgstr "Элементтер: {0}"
-
-msgctxt "LanExchange.exe"
-msgid "New Tab"
-msgstr "Жаңа Қыстырма"
+msgstr "{0} элементтер"
 
 msgctxt "LanExchange.exe"
 msgid " (build {0})"
 msgstr " (құрастыру {0})"
-
-msgctxt "LanExchange.exe"
-msgid "Query"
-msgstr "Сұрау"
 
 msgctxt "LanExchange.exe"
 msgid "Any char"
@@ -471,24 +419,16 @@ msgid "Translations:"
 msgstr "Аудармалар:"
 
 msgctxt "LanExchange.exe"
-msgid "BugTracker Webpage"
-msgstr "Багтрэкера вебсайты"
+msgid "Re-read"
+msgstr "Қайта оқу"
 
 msgctxt "LanExchange.exe"
-msgid "Small icons"
-msgstr "Ұсақ белгiшелер"
+msgid "Localization Webpage"
+msgstr "Локализация вебсайты"
 
 msgctxt "LanExchange.exe"
 msgid "Copy"
 msgstr "Көшіру"
-
-msgctxt "LanExchange.exe"
-msgid "Open"
-msgstr "Ашу"
-
-msgctxt "LanExchange.exe"
-msgid "&View"
-msgstr "&Көрініс"
 
 msgctxt "LanExchange.exe"
 msgid "License"

@@ -73,16 +73,16 @@
     <Compile Include="OSVersion.cs" />
     <Compile Include="ComputerFiller.cs" />
     <Compile Include="ComputerPanelItem.cs" />
-    <Compile Include="ComputerPanelItemFactory.cs" />
+    <Compile Include="ComputerFactory.cs" />
     <Compile Include="DomainFiller.cs" />
     <Compile Include="DomainPanelItem.cs" />
-    <Compile Include="DomainPanelItemFactory.cs" />
+    <Compile Include="DomainFactory.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SharePanelItemFactory.cs" />
+    <Compile Include="ShareFactory.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="NetApi32Utils.cs" />
     <Compile Include="ServerInfo.cs" />

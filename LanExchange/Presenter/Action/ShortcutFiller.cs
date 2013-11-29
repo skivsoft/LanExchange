@@ -23,11 +23,9 @@ namespace LanExchange.Presenter.Action
         public void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
             result.Add(new ShortcutPanelItem(parent, Resources.KeyF1, Resources.KeyF1__));
-            result.Add(new ShortcutPanelItem(parent, Resources.KeyF9, Resources.KeyF9__));
             result.Add(new ShortcutPanelItem(parent, Resources.KeyF10, Resources.KeyF10__));
             result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlW, Resources.KeyCtrlW__));
             result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlR, Resources.KeyCtrlR__));
-            result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlW, Resources.KeyCtrlW__));
             result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlWinX, Resources.KeyCtrlWinX__));
             result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlA, Resources.KeyCtrlA__));
             result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlC, Resources.KeyCtrlC__));
@@ -41,12 +39,11 @@ namespace LanExchange.Presenter.Action
             result.Add(new ShortcutPanelItem(parent, Resources.KeyBackspace, Resources.KeyBackspace__));
             result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlDown, Resources.KeyCtrlDown__));
             result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlUp, Resources.KeyCtrlUp__));
-            result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlShiftT, Resources.KeyCtrlShiftT__));
             foreach (var pair in App.Addons.PanelItems)
                 foreach (var menuItem in pair.Value.ContextMenuStrip)
                     if (!string.IsNullOrEmpty(menuItem.ShortcutKeys))
                     {
-                        var shortcut = new ShortcutPanelItem(parent, menuItem.ShortcutKeys, menuItem.Text);
+                        var shortcut = new ShortcutPanelItem(parent, menuItem.ShortcutKeys, App.TR.Translate(menuItem.Text));
                         shortcut.Context = SuppressPostfix(pair.Key, PANEL_ITEM_SUFFIX);
                         if (menuItem.ProgramValue != null)
                             shortcut.CustomImageName = string.Format(CultureInfo.InvariantCulture, PanelImageNames.ADDON_FMT, menuItem.ProgramValue.Id);

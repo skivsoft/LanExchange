@@ -3,7 +3,7 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
 {
-    public sealed class DomainPanelItemFactory : PanelItemFactoryBase
+    public sealed class DomainFactory : PanelItemFactoryBase
     {
         public override PanelItemBase CreatePanelItem(PanelItemBase parent, string name)
         {

@@ -54,7 +54,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="UserPanelItemFactory.cs" />
+    <Compile Include="UserFactory.cs" />
     <Compile Include="StringEqualityComparer.cs" />
     <Compile Include="PathDistinct.cs" />
     <Compile Include="PathFixer.cs" />

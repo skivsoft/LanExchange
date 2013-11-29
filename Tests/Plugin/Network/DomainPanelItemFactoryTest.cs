@@ -8,7 +8,7 @@ namespace LanExchange.Plugin.Network
         [Test]
         public void TestFactory()
         {
-            var factory = new DomainPanelItemFactory();
+            var factory = new DomainFactory();
             Assert.IsNotNull(factory.CreatePanelItem(null, null));
             Assert.IsNotNull(factory.CreateDefaultRoot());
         }

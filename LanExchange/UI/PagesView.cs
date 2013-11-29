@@ -36,10 +36,11 @@ namespace LanExchange.UI
             App.Images.SetImagesTo(popPages);
         }
 
-        public void ApplyResources()
+        public void TranslateUI()
         {
-            TranslationUtils.ApplyResources(Resources.ResourceManager, components);
+            TranslationUtils.TranslateComponents(Resources.ResourceManager, components);
             SetupContextMenu(popPages.Items);
+            TranslationUtils.TranslateControls(Controls);
         }
 
         public void SetupContextMenu()
@@ -59,10 +60,9 @@ namespace LanExchange.UI
             var index = 0;
             foreach (var root in App.PanelItemTypes.DefaultRoots)
             {
-                var imageName = App.PanelFillers.GetFillType(root).Name + PanelImageNames.NORMAL_POSTFIX;
                 var menuItem = new ToolStripMenuItem(string.Format(Resources.PagesView_OpenTab, root.Name));
                 menuItem.Tag = root;
-                menuItem.ImageIndex = App.Images.IndexOf(imageName);
+                menuItem.ImageIndex = App.Images.IndexOf(root.GetTabImageName());
                 menuItem.Click += PluginOnClick;
                 items.Insert(index, menuItem);
                 index++;
@@ -95,21 +95,6 @@ namespace LanExchange.UI
             get { return Pages.TabPages.Count; }
         }
 
-        /// <summary>
-        /// Simple solution for long strings. 
-        /// TODO: Changes needed here. Max length must be in pixels instead number of chars.
-        /// </summary>
-        /// <param name="text"></param>
-        /// <param name="length"></param>
-        /// <returns></returns>
-        [Localizable(false)]
-        public string Ellipsis(string text, int length)
-        {
-            if (text.Length > length)
-                return text.Substring(0, length) + "…";
-            return text;
-        }
-
         public string SelectedTabText
         {
             get
@@ -121,40 +106,14 @@ namespace LanExchange.UI
             set
             {
                 if (Pages.TabPages.Count > 0 && Pages.SelectedTab != null)
-                    Pages.SelectedTab.Text = Ellipsis(value, 20);
+                    Pages.SelectedTab.Text = value;
             }
         }
-
-
-        public void AddControl(int index, Control control)
-        {
-            if (index < 0 || index > Pages.TabPages.Count - 1)
-                throw new ArgumentOutOfRangeException("index");
-            control.Dock = DockStyle.Fill;
-            Pages.TabPages[index].Controls.Add(control);
-        }
-
 
         public void RemoveTabAt(int index)
         {
             Pages.TabPages.RemoveAt(index);
         }
-
-        //public PanelItemList GetPanelItemListByPoint(Point point)
-        //{
-        //    int Index = -1;
-        //    for (int i = 0; i < Pages.TabPages.Count; i++)
-        //    {
-        //        TabPage page = Pages.TabPages[i];
-        //        if (Pages.GetTabRect(i).Contains(point))
-        //        {
-        //            Index = i;
-        //            break;
-        //        }
-        //    }
-        //    if (Index == -1) return null;
-        //    return m_Presenter.GetModel().GetItem(Index);
-        //}
 
         private int GetTabIndexByPoint(Point point)
         {
@@ -272,35 +231,6 @@ namespace LanExchange.UI
             }
         }
 
-        internal void AddTabsToMenuItem(ToolStripMenuItem menuitem, EventHandler handler, bool bHideActive)
-        {
-            for (int i = 0; i < m_Presenter.Count; i++)
-            {
-                if (bHideActive && (i == SelectedIndex))
-                    continue;
-                string S = m_Presenter.GetTabName(i);
-                var Item = new ToolStripMenuItem
-                {
-                    Checked = (i == SelectedIndex),
-                    Text = Ellipsis(S, 20),
-                    ToolTipText = S,
-                    Tag = i
-                };
-                Item.Click += handler;
-                menuitem.DropDownItems.Add(Item);
-            }
-        }
-
-        public void NewTabFromItemList(IPanelModel info)
-        {
-            var tab = new TabPage();
-            tab.Padding = new Padding(0);
-            tab.Text = Ellipsis(info.TabName, 20);
-            tab.ImageIndex = App.Images.IndexOf(info.GetImageName());
-            tab.ToolTipText = info.ToolTipText;
-            Pages.Controls.Add(tab);
-        }
-
         [Localizable(false)]
         public IPanelView CreatePanelView(IPanelModel info)
         {
@@ -314,9 +244,21 @@ namespace LanExchange.UI
             }
             m_Presenter.SetupPanelViewEvents(panelView);
             // add new tab and insert panel into it
-            NewTabFromItemList(info);
-            AddControl(TabPagesCount - 1, panelView);
+            var tabPage = CreateTabPageFromModel(info);
+            panelView.Dock = DockStyle.Fill;
+            tabPage.Controls.Add(panelView);
+            Pages.Controls.Add(tabPage);
             return panelView;
+        }
+
+        public TabPage CreateTabPageFromModel(IPanelModel model)
+        {
+            var tabPage = new TabPage();
+            tabPage.Padding = new Padding(0);
+            tabPage.Text = model.TabName;
+            tabPage.ImageIndex = App.Images.IndexOf(model.CurrentPath.Item[0].GetTabImageName());
+            tabPage.ToolTipText = model.ToolTipText;
+            return tabPage;
         }
 
         public IPagesPresenter Presenter

@@ -210,8 +210,6 @@ namespace LanExchange.UI
             this.pInfo.NumLines = 3;
             this.pInfo.Size = new System.Drawing.Size(564, 64);
             this.pInfo.TabIndex = 23;
-            this.pInfo.DragDrop += new System.Windows.Forms.DragEventHandler(this.pInfo_DragDrop);
-            this.pInfo.DragOver += new System.Windows.Forms.DragEventHandler(this.pInfo_DragOver);
             // 
             // MainMenu
             // 

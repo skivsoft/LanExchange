@@ -114,12 +114,12 @@ namespace LanExchange.UI
                 App.Config.Language = (string)menuItem.Tag;
         }
 
-        public void ApplyResources()
+        public void TranslateUI()
         {
-            TranslationUtils.ApplyResources(Resources.ResourceManager, components);
+            TranslationUtils.TranslateComponents(Resources.ResourceManager, components);
             mTrayOpen_ApplyResources();
-            var resources = new ComponentResourceManager(typeof(MainForm));
-            TranslationUtils.ApplyResources(resources, Controls);
+            TranslationUtils.TranslateControls(Controls);
+            popTop.Tag = null;
         }
 
         private void mTrayOpen_ApplyResources()
@@ -486,20 +486,6 @@ namespace LanExchange.UI
                     Status.DoDragDrop(obj, DragDropEffects.Copy);
                 }
             }
-        }
-
-        private void pInfo_DragOver(object sender, DragEventArgs e)
-        {
-            e.Effect = DragDropEffects.None;
-            if (!e.Data.GetDataPresent(typeof(PanelModelCopyHelper))) return;
-            var helper = (PanelModelCopyHelper) e.Data.GetData(typeof (PanelModelCopyHelper));
-            if (helper != null && helper.IndexesCount > 0)
-                e.Effect = DragDropEffects.Copy;
-        }
-
-        private void pInfo_DragDrop(object sender, DragEventArgs e)
-        {
-            App.MainPages.CommandSendToNewTab();
         }
 
         public void SetToolTip(object control, string tipText)

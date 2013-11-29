@@ -21,9 +21,9 @@ namespace LanExchange.Plugin.Network
             var typeManager = (IPanelItemFactoryManager)m_Provider.GetService(typeof (IPanelItemFactoryManager));
             if (typeManager != null)
             {
-                typeManager.RegisterPanelItemFactory(typeof(DomainPanelItem), new DomainPanelItemFactory());
-                typeManager.RegisterPanelItemFactory(typeof(ComputerPanelItem), new ComputerPanelItemFactory());
-                typeManager.RegisterPanelItemFactory(typeof(SharePanelItem), new SharePanelItemFactory());
+                typeManager.RegisterPanelItemFactory(typeof(DomainPanelItem), new DomainFactory());
+                typeManager.RegisterPanelItemFactory(typeof(ComputerPanelItem), new ComputerFactory());
+                typeManager.RegisterPanelItemFactory(typeof(SharePanelItem), new ShareFactory());
             }
 
             // Register columns for panel item types

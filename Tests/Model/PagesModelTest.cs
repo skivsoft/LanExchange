@@ -134,25 +134,6 @@ namespace LanExchange.Model
         }
 
         [Test]
-        public void TestGenerateTabName()
-        {
-            Assert.IsEmpty(m_Model.GenerateTabName());
-            m_Model.AddTab(NewPanelModel("MyTab"));
-            Assert.AreEqual("Copy of MyTab", m_Model.GenerateTabName());
-            m_Model.AddTab(NewPanelModel("Copy of MyTab"));
-            m_Model.SelectedIndex = 0;
-            Assert.AreEqual("Copy (1) of MyTab", m_Model.GenerateTabName());
-        }
-
-        [Test, ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void ExceptionGenerateTabName()
-        {
-            m_Model.AddTab(NewPanelModel("MyTab"));
-            m_Model.SelectedIndex = 100;
-            m_Model.GenerateTabName();
-        }
-
-        [Test]
         public void TestSaveSettings()
         {
             App.SetContainer(ContainerBuilder.Build());

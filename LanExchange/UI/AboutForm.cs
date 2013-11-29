@@ -21,13 +21,11 @@ namespace LanExchange.UI
             m_Presenter = presenter;
             m_Presenter.View = this;
             InitializeComponent();
-            ApplyResources();
+            TranslateUI();
         }
 
-        public void ApplyResources()
+        public void TranslateUI()
         {
-            var resources = new ComponentResourceManager(typeof(AboutForm));
-            resources.ApplyResources(bClose, bClose.Name);
             Text = Resources.AboutForm_Title;
             lVersion.Text = Resources.AboutForm_Version;
             lLicense.Text = Resources.AboutForm_License;

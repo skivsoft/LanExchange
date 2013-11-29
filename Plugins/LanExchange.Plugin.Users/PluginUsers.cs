@@ -23,7 +23,7 @@ namespace LanExchange.Plugin.Users
             var typesManager = (IPanelItemFactoryManager)m_Provider.GetService(typeof(IPanelItemFactoryManager));
             if (typesManager != null)
             {
-                typesManager.RegisterPanelItemFactory(typeof(UserPanelItem), new UserPanelItemFactory());
+                typesManager.RegisterPanelItemFactory(typeof(UserPanelItem), new UserFactory());
             }
 
             // Register columns for panel item types

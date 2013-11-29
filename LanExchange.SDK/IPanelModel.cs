@@ -80,7 +80,5 @@ namespace LanExchange.SDK
         bool Contains(PanelItemBase panelItem);
 
         void SetDefaultRoot(PanelItemBase root);
-
-        string GetImageName();
     }
 }
