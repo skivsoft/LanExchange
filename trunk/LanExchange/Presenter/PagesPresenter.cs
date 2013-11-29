@@ -35,31 +35,31 @@ namespace LanExchange.Presenter
 
         public void CommandSendToNewTab()
         {
-            if (!CanSendToNewTab()) return;
-            var newTabName = m_Model.GenerateTabName();
-            var sourcePV = View.ActivePanelView;
-            var sourceObjects = sourcePV.Presenter.Objects;
-            var destObjects = App.Resolve<IPanelModel>();
-            destObjects.TabName = newTabName;
-            destObjects.DataType = sourceObjects.DataType;
-            //destObjects.CurrentPath.Push(PanelItemRoot.ROOT_OF_USERITEMS);
+            //if (!CanSendToNewTab()) return;
+            //var newTabName = m_Model.GenerateTabName();
+            //var sourcePV = View.ActivePanelView;
+            //var sourceObjects = sourcePV.Presenter.Objects;
+            //var destObjects = App.Resolve<IPanelModel>();
+            //destObjects.TabName = newTabName;
+            //destObjects.DataType = sourceObjects.DataType;
+            ////destObjects.CurrentPath.Push(PanelItemRoot.ROOT_OF_USERITEMS);
 
-            foreach (int index in sourcePV.SelectedIndexes)
-            {
-                var panelItem = sourceObjects.GetItemAt(index);
-                if (panelItem.GetType().Name.Equals(destObjects.DataType))
-                {
-                    // add item to new panel
-                    var newItem = (PanelItemBase) panelItem.Clone();
-                    newItem.Parent = null;
-                    destObjects.Items.Add(newItem);
-                }
-            }
-            //destObjects.SyncRetrieveData(true);
-            // add tab
-            m_Model.AddTab(destObjects);
-            //m_View.SelectedIndex = m_Model.Count - 1;
-            View.ActivePanelView.Presenter.UpdateItemsAndStatus();
+            //foreach (int index in sourcePV.SelectedIndexes)
+            //{
+            //    var panelItem = sourceObjects.GetItemAt(index);
+            //    if (panelItem.GetType().Name.Equals(destObjects.DataType))
+            //    {
+            //        // add item to new panel
+            //        var newItem = (PanelItemBase) panelItem.Clone();
+            //        newItem.Parent = null;
+            //        destObjects.Items.Add(newItem);
+            //    }
+            //}
+            ////destObjects.SyncRetrieveData(true);
+            //// add tab
+            //m_Model.AddTab(destObjects);
+            ////m_View.SelectedIndex = m_Model.Count - 1;
+            //View.ActivePanelView.Presenter.UpdateItemsAndStatus();
         }
 
         public bool CanPasteItems()

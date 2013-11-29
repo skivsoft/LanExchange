@@ -38,8 +38,7 @@ namespace LanExchange.UI
             this.mCopySelected = new System.Windows.Forms.ToolStripMenuItem();
             this.mPaste = new System.Windows.Forms.ToolStripMenuItem();
             this.mDelete = new System.Windows.Forms.ToolStripMenuItem();
-            this.mAfterCopy = new System.Windows.Forms.ToolStripSeparator();
-            this.mSendToNewTab = new System.Windows.Forms.ToolStripMenuItem();
+            this.mAfterDelete = new System.Windows.Forms.ToolStripSeparator();
             this.LV = new LanExchange.UI.ListViewer();
             this.pFilter = new LanExchange.UI.FilterView();
             this.popComps.SuspendLayout();
@@ -53,31 +52,30 @@ namespace LanExchange.UI
             this.mCopyMenu,
             this.mPaste,
             this.mDelete,
-            this.mAfterCopy,
-            this.mSendToNewTab});
+            this.mAfterDelete});
             this.popComps.Name = "popComps";
-            this.popComps.Size = new System.Drawing.Size(233, 148);
+            this.popComps.Size = new System.Drawing.Size(153, 126);
             this.popComps.Opening += new System.ComponentModel.CancelEventHandler(this.popComps_Opening);
             // 
             // mComp
             // 
             this.mComp.Enabled = false;
             this.mComp.Name = "mComp";
-            this.mComp.Size = new System.Drawing.Size(232, 22);
+            this.mComp.Size = new System.Drawing.Size(152, 22);
             this.mComp.Tag = "";
             // 
             // mAfterComp
             // 
             this.mAfterComp.Name = "mAfterComp";
-            this.mAfterComp.Size = new System.Drawing.Size(229, 6);
+            this.mAfterComp.Size = new System.Drawing.Size(149, 6);
             // 
             // mCopyMenu
             // 
             this.mCopyMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mCopySelected});
             this.mCopyMenu.Name = "mCopyMenu";
-            this.mCopyMenu.Size = new System.Drawing.Size(232, 22);
-            this.mCopyMenu.Text = global::LanExchange.Properties.Resources.Copy;
+            this.mCopyMenu.Size = new System.Drawing.Size(152, 22);
+            this.mCopyMenu.Text = global::LanExchange.Properties.Resources.mCopyMenu_Text;
             this.mCopyMenu.DropDownOpening += new System.EventHandler(this.mCopyMenu_DropDownOpening);
             // 
             // mCopySelected
@@ -92,31 +90,23 @@ namespace LanExchange.UI
             // 
             this.mPaste.Name = "mPaste";
             this.mPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.mPaste.Size = new System.Drawing.Size(232, 22);
-            this.mPaste.Text = global::LanExchange.Properties.Resources.KeyCtrlV_;
+            this.mPaste.Size = new System.Drawing.Size(152, 22);
+            this.mPaste.Text = global::LanExchange.Properties.Resources.mPaste_Text;
             this.mPaste.Click += new System.EventHandler(this.mPaste_Click);
             // 
             // mDelete
             // 
             this.mDelete.Name = "mDelete";
             this.mDelete.ShortcutKeyDisplayString = global::LanExchange.Properties.Resources.KeyDel;
-            this.mDelete.Size = new System.Drawing.Size(232, 22);
-            this.mDelete.Text = global::LanExchange.Properties.Resources.KeyDel_;
+            this.mDelete.Size = new System.Drawing.Size(152, 22);
+            this.mDelete.Text = global::LanExchange.Properties.Resources.mDelete_Text;
             this.mDelete.Click += new System.EventHandler(this.mDelete_Click);
             // 
-            // mAfterCopy
+            // mAfterDelete
             // 
-            this.mAfterCopy.Name = "mAfterCopy";
-            this.mAfterCopy.Size = new System.Drawing.Size(229, 6);
-            // 
-            // mSendToNewTab
-            // 
-            this.mSendToNewTab.Name = "mSendToNewTab";
-            this.mSendToNewTab.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.T)));
-            this.mSendToNewTab.Size = new System.Drawing.Size(232, 22);
-            this.mSendToNewTab.Text = global::LanExchange.Properties.Resources.KeyCtrlShiftT_;
-            this.mSendToNewTab.Click += new System.EventHandler(this.mSendToNewTab_Click);
+            this.mAfterDelete.Name = "mAfterDelete";
+            this.mAfterDelete.Size = new System.Drawing.Size(149, 6);
+            this.mAfterDelete.Visible = false;
             // 
             // LV
             // 
@@ -185,8 +175,7 @@ namespace LanExchange.UI
         public System.Windows.Forms.ContextMenuStrip popComps;
         public System.Windows.Forms.ToolStripMenuItem mComp;
         private System.Windows.Forms.ToolStripSeparator mAfterComp;
-        private System.Windows.Forms.ToolStripSeparator mAfterCopy;
-        private System.Windows.Forms.ToolStripMenuItem mSendToNewTab;
+        private System.Windows.Forms.ToolStripSeparator mAfterDelete;
         private FilterView pFilter;
         private System.Windows.Forms.ToolStripMenuItem mCopyMenu;
         private System.Windows.Forms.ToolStripMenuItem mCopySelected;

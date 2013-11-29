@@ -206,25 +206,5 @@ namespace LanExchange.Model
                     return true;
             return false;
         }
-
-        public string GenerateTabName()
-        {
-            if (m_List.Count == 0)
-                return string.Empty;
-            var itemList = m_List[m_SelectedIndex];
-            string result;
-            var index = 0;
-            bool exists;
-            do
-            {
-                if (index == 0)
-                    result = string.Format(CultureInfo.CurrentCulture, Resources.PagesModel_CopyOf, itemList.TabName);
-                else
-                    result = string.Format(CultureInfo.CurrentCulture, Resources.PagesModel_CopyOfMany, index, itemList.TabName);
-                exists = TabNameExists(result);
-                ++index;
-            } while (exists);
-            return result;
-        }
     }
 }

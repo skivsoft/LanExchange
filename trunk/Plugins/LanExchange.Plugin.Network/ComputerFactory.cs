@@ -2,7 +2,7 @@
 
 namespace LanExchange.Plugin.Network
 {
-    public sealed class ComputerPanelItemFactory : PanelItemFactoryBase
+    public sealed class ComputerFactory : PanelItemFactoryBase
     {
         public override PanelItemBase CreatePanelItem(PanelItemBase parent, string name)
         {

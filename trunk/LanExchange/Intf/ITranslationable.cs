@@ -2,6 +2,6 @@
 {
     public interface ITranslationable
     {
-        void ApplyResources();
+        void TranslateUI();
     }
 }

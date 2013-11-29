@@ -1,18 +1,15 @@
 using System;
 using System.ComponentModel;
-using System.Globalization;
-using System.Threading;
-using LanExchange.Core;
 using LanExchange.Intf;
-using LanExchange.Misc.Impl;
+using LanExchange.Utils;
 
 namespace LanExchange.Misc
 {
-    static class CmdLineProcessor
+    internal static class CmdLineProcessor
     {
-        private static string[] s_Args = Environment.GetCommandLineArgs();
+        private static readonly string[] s_Args = Environment.GetCommandLineArgs();
 
-        public static string GetIfPresent(string name)
+        internal static string GetIfPresent(string name)
         {
             for (int i = 1; i < s_Args.Length; i++)
             {
@@ -31,11 +28,12 @@ namespace LanExchange.Misc
                 GenerateEnglish.Generate();
                 Environment.Exit(0);
             }
-            var lang = GetIfPresent("/LANG:");
+            if (GetIfPresent("/new") == null)
+                SingleInstanceCheck.Check();
+            var lang = GetIfPresent("/lang:");
             if (lang == null)
                 lang = App.Config.Language;
             App.TR.CurrentLanguage = lang;
-            //Thread.CurrentThread.CurrentUICulture = new CultureInfo(lang);
         }
     }
 }

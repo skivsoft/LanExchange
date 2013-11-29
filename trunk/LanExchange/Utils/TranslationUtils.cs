@@ -2,32 +2,30 @@
 using System.Resources;
 using System.Windows.Forms;
 using LanExchange.Intf;
-using LanExchange.SDK;
 
 namespace LanExchange.Utils
 {
     public static class TranslationUtils
     {
-        public static void ApplyResources(ComponentResourceManager resources, Control.ControlCollection controls)
+        public static void TranslateControls(Control.ControlCollection controls)
         {
             foreach (Control control in controls)
             {
                 if (control is ITranslationable)
-                    (control as ITranslationable).ApplyResources();
+                    (control as ITranslationable).TranslateUI();
                 else
                 {
-                    //resources.ApplyResources(control, control.Name);
-                    ApplyResources(resources, control.Controls);
+                    TranslateControls(control.Controls);
                 }
             }
         }
 
-        public static void ApplyResources(ResourceManager resources, IContainer container)
+        public static void TranslateComponents(ResourceManager resources, IContainer container)
         {
             foreach (Component component in container.Components)
             {
                 if (component is ITranslationable)
-                    (component as ITranslationable).ApplyResources();
+                    (component as ITranslationable).TranslateUI();
                 else
                 {
                     if (component is ContextMenuStrip)

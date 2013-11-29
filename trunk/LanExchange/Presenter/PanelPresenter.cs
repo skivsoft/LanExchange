@@ -106,7 +106,7 @@ namespace LanExchange.Presenter
                 {
                     var result = MessageBox.Show(
                         String.Format(CultureInfo.CurrentCulture, Resources.PanelPresenter_UnreachableMsg, panelItem.Name), 
-                        Resources.PanelPresenter_QueryCaption,
+                        Resources.PanelPresenter_Query,
                         MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
                     if (result != DialogResult.Yes)
                         panelItem = null;

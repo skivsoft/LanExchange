@@ -193,5 +193,16 @@ namespace LanExchange.SDK
             return false;
         }
 
+        public string GetTabImageName()
+        {
+            var item = this;
+            while (item.Parent != null)
+            {
+                if (item.Parent is PanelItemRoot)
+                    return item.ImageName;
+                item = Parent;
+            }
+            return item.GetType().Name + PanelImageNames.NORMAL_POSTFIX;
+        }
     }
 }

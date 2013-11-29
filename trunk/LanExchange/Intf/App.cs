@@ -37,7 +37,7 @@ namespace LanExchange.Intf
             s_Ioc = container;
             // init translation service first and replace global resource manager
             TR = Resolve<ITranslationService>();
-            TR.SetResourceManagerTo<Resources>();//"LanExchange.Properties.Resources");
+            TR.SetResourceManagerTo<Resources>();
             // managers
             PanelItemTypes = Resolve<IPanelItemFactoryManager>();
             PanelFillers = Resolve<IPanelFillerManager>();

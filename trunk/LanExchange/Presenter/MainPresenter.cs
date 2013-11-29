@@ -47,7 +47,7 @@ namespace LanExchange.Presenter
                     foreach(var form in Application.OpenForms)
                     {
                         if (form is ITranslationable)
-                            (form as ITranslationable).ApplyResources();
+                            (form as ITranslationable).TranslateUI();
                     }
                     break;
             }

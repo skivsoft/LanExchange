@@ -145,9 +145,6 @@
   <data name="KeyF1" xml:space="preserve">
     <value>F1</value>
   </data>
-  <data name="KeyCtrlShiftT" xml:space="preserve">
-    <value>Ctrl+Shift+T</value>
-  </data>
   <data name="KeyF10" xml:space="preserve">
     <value>F10</value>
   </data>
@@ -156,9 +153,6 @@
   </data>
   <data name="AboutForm_Version" xml:space="preserve">
     <value>Version</value>
-  </data>
-  <data name="InputBoxPresenter_TabNameAlreadyExists" xml:space="preserve">
-    <value>Tab with specified name already exists.</value>
   </data>
   <data name="KeyF9" xml:space="preserve">
     <value>F9</value>
@@ -175,14 +169,8 @@
   <data name="PanelView_CopySelected" xml:space="preserve">
     <value>Copy selected item</value>
   </data>
-  <data name="PagesPresenter_NewTab" xml:space="preserve">
-    <value>New Tab</value>
-  </data>
   <data name="mHelpLangs_Text" xml:space="preserve">
     <value>Localization Webpage</value>
-  </data>
-  <data name="Settings_Plugins" xml:space="preserve">
-    <value>Plugins</value>
   </data>
   <data name="KeyCtrlR__" xml:space="preserve">
     <value>Re-read panel.</value>
@@ -196,19 +184,13 @@
   <data name="Program_Error" xml:space="preserve">
     <value>Error</value>
   </data>
-  <data name="PagesModel_CopyOfMany" xml:space="preserve">
-    <value>Copy ({0}) of {1}</value>
-  </data>
   <data name="PanelPresenter_Items1" xml:space="preserve">
     <value>Items: {0}</value>
   </data>
   <data name="KeyCtrlW__" xml:space="preserve">
     <value>Close current tab.</value>
   </data>
-  <data name="PagesPresenter_TabName" xml:space="preserve">
-    <value>Tab name</value>
-  </data>
-  <data name="KeyDel_" xml:space="preserve">
+  <data name="mDelete_Text" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="back_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -226,9 +208,6 @@
   <data name="KeyF10__" xml:space="preserve">
     <value>Quit from LanExchange program.</value>
   </data>
-  <data name="InputBoxPresenter_NotEmpty" xml:space="preserve">
-    <value>Input text must not be empty.</value>
-  </data>
   <data name="KeyCtrlC" xml:space="preserve">
     <value>Ctrl+C</value>
   </data>
@@ -241,14 +220,8 @@
   <data name="mHelpAbout_Text" xml:space="preserve">
     <value>About</value>
   </data>
-  <data name="Settings_General" xml:space="preserve">
-    <value>General</value>
-  </data>
   <data name="KeyCtrlAltIns" xml:space="preserve">
     <value>Ctrl+Alt+Ins</value>
-  </data>
-  <data name="PagesPresenter_EnterTabName" xml:space="preserve">
-    <value>Enter tab name</value>
   </data>
   <data name="KeyCtrlIns" xml:space="preserve">
     <value>Ctrl+Ins</value>
@@ -271,14 +244,8 @@
   <data name="ShowDetails" xml:space="preserve">
     <value>Show Details</value>
   </data>
-  <data name="PanelPresenter_QueryCaption" xml:space="preserve">
-    <value>Query</value>
-  </data>
   <data name="mViewDetails_Text" xml:space="preserve">
     <value>Details</value>
-  </data>
-  <data name="KeyF9__" xml:space="preserve">
-    <value>Show/hide main menu.</value>
   </data>
   <data name="clear_hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\clear_hover.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -286,7 +253,7 @@
   <data name="mExit_Text" xml:space="preserve">
     <value>Exit</value>
   </data>
-  <data name="Copy" xml:space="preserve">
+  <data name="mCopyMenu_Text" xml:space="preserve">
     <value>Copy</value>
   </data>
   <data name="AboutForm_Webpage" xml:space="preserve">
@@ -304,32 +271,20 @@
   <data name="KeyAnyChar" xml:space="preserve">
     <value>Any char</value>
   </data>
-  <data name="PagesPresenter_RenameTab" xml:space="preserve">
-    <value>Rename tab</value>
-  </data>
   <data name="KeyCtrlC_" xml:space="preserve">
     <value>Copy selected items</value>
   </data>
   <data name="KeyBackspace" xml:space="preserve">
     <value>Backspace</value>
   </data>
-  <data name="KeyCtrlShiftT__" xml:space="preserve">
-    <value>Send selected item(s) to new tab.</value>
-  </data>
   <data name="Action" xml:space="preserve">
     <value>Action</value>
-  </data>
-  <data name="PagesModel_CopyOf" xml:space="preserve">
-    <value>Copy of {0}</value>
   </data>
   <data name="KeyCtrlC__" xml:space="preserve">
     <value>Copy selected item(s) to clipboard.</value>
   </data>
   <data name="PanelView_CopyColumn" xml:space="preserve">
     <value>Copy «{0}»</value>
-  </data>
-  <data name="KeyCtrlShiftT_" xml:space="preserve">
-    <value>Send to new tab</value>
   </data>
   <data name="HideDetails" xml:space="preserve">
     <value>Hide Details</value>
@@ -374,9 +329,6 @@
   <data name="KeyDel" xml:space="preserve">
     <value>Del</value>
   </data>
-  <data name="PagesPresenter_TabProperties" xml:space="preserve">
-    <value>Tab properties</value>
-  </data>
   <data name="KeyEsc__" xml:space="preserve">
     <value>Clear filter OR go level up OR hide main window.</value>
   </data>
@@ -386,7 +338,7 @@
   <data name="KeyCtrlWinX" xml:space="preserve">
     <value>Ctrl+Win+X</value>
   </data>
-  <data name="KeyCtrlV_" xml:space="preserve">
+  <data name="mPaste_Text" xml:space="preserve">
     <value>Paste</value>
   </data>
   <data name="KeyCtrlA__" xml:space="preserve">
@@ -467,5 +419,8 @@ Continue anyway?</value>
   </data>
   <data name="mViewGrid_Text" xml:space="preserve">
     <value>Grid lines</value>
+  </data>
+  <data name="PanelPresenter_Query">
+    <value xml:space="preserve">Query</value>
   </data>
 </root>

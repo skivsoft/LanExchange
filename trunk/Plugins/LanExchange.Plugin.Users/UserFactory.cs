@@ -3,7 +3,7 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Users
 {
-    internal sealed class UserPanelItemFactory : PanelItemFactoryBase
+    internal sealed class UserFactory : PanelItemFactoryBase
     {
         public override PanelItemBase CreatePanelItem(PanelItemBase parent, string name)
         {

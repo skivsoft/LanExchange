@@ -39,19 +39,6 @@ namespace LanExchange.Model
             CurrentView = PanelViewMode.Details;
         }
 
-        public string GetImageName()
-        {
-            var items = m_CurrentPath.Item;
-            if (items != null)
-                for (int index = items.Length-1; index >= 0; index--)
-                {
-                    var item = items[index];
-                    if (item.Parent is PanelItemRoot)
-                        return item.ImageName;
-                }
-            return string.IsNullOrEmpty(DataType) ? string.Empty : DataType + PanelImageNames.NORMAL_POSTFIX;
-        }
-
         /// <summary>
         /// Gets or sets the name of the tab.
         /// </summary>

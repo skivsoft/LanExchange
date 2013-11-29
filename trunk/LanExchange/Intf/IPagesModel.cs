@@ -16,8 +16,6 @@ namespace LanExchange.Intf
 
         void DelTab(int index);
 
-        string GenerateTabName();
-
         int Count { get; }
         int SelectedIndex { get; set; }
         IPanelModel GetItem(int index);

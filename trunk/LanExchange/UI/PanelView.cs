@@ -420,11 +420,6 @@ namespace LanExchange.UI
                 m_Presenter.ColumnClick(header.Index);
         }
 
-        private void mSendToNewTab_Click(object sender, EventArgs e)
-        {
-            App.MainPages.CommandSendToNewTab();
-        }
-
         public void ShowRunCmdError(string CmdLine)
         {
                 MessageBox.Show(String.Format(CultureInfo.CurrentCulture, Resources.PanelView_RunCmdErrorMsg, CmdLine), 
@@ -603,7 +598,7 @@ namespace LanExchange.UI
             mComp.Enabled = PrepareContextMenu();
             SetupCopyHelper();
             mCopyMenu.Enabled = m_CopyHelper.IndexesCount > 0;
-            mSendToNewTab.Enabled = App.MainPages.CanSendToNewTab();
+            //mSendToNewTab.Enabled = App.MainPages.CanSendToNewTab();
             mPaste.Enabled = App.MainPages.CanPasteItems();
             mDelete.Enabled = false;
             // lookup at least 1 item for delete
@@ -664,14 +659,15 @@ namespace LanExchange.UI
             set { LV.GridLines = value; }
         }
 
-        public void ApplyResources()
+        public void TranslateUI()
         {
+            TranslationUtils.TranslateComponents(Resources.ResourceManager, components);
+            TranslationUtils.TranslateControls(Controls);
+            mComp.Tag = null;
+            //PrepareContextMenu();
             var panelView = App.MainPages.View.ActivePanelView;
             if (panelView == this)
                 m_Presenter.UpdateItemsAndStatus();
-            var resources = new ComponentResourceManager(typeof(PanelView));
-            TranslationUtils.ApplyResources(resources, components);
-            TranslationUtils.ApplyResources(resources, Controls);
         }
     }
 }
