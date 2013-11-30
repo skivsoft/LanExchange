@@ -1,5 +1,4 @@
 #summary LanExchange 1.1.x.x release notes
-#labels Featured
 
 ==Features==
   * Browse computers of local area network
