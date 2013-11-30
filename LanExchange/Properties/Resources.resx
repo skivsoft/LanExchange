@@ -211,9 +211,6 @@
   <data name="KeyCtrlC" xml:space="preserve">
     <value>Ctrl+C</value>
   </data>
-  <data name="email_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\email-icon-v2.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="KeyCtrlA" xml:space="preserve">
     <value>Ctrl+A</value>
   </data>
@@ -420,7 +417,13 @@ Continue anyway?</value>
   <data name="mViewGrid_Text" xml:space="preserve">
     <value>Grid lines</value>
   </data>
-  <data name="PanelPresenter_Query">
-    <value xml:space="preserve">Query</value>
+  <data name="PanelPresenter_Query" xml:space="preserve">
+    <value>Query</value>
+  </data>
+  <data name="mHelpFeedback_Text" xml:space="preserve">
+    <value>Send Feedback...</value>
+  </data>
+  <data name="AboutModel_FeedbackFmt" xml:space="preserve">
+    <value>{0} {1} Feedback</value>
   </data>
 </root>

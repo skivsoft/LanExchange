@@ -135,15 +135,6 @@ namespace LanExchange.UI
             }
         }
 
-        public string EmailToolTip
-        {
-            get { return tipAbout.GetToolTip(picEmail); }
-            set
-            {
-                tipAbout.SetToolTip(picEmail, value);
-            }
-        }
-
         private void bShowLicense_Click(object sender, EventArgs e)
         {
             m_DetailsVisible = !m_DetailsVisible;
@@ -171,11 +162,6 @@ namespace LanExchange.UI
         private void picTwitter_Click(object sender, EventArgs e)
         {
             m_Presenter.OpenTwitterLink();
-        }
-
-        private void picEmail_Click(object sender, EventArgs e)
-        {
-            m_Presenter.OpenEmailLink();
         }
     }
 }

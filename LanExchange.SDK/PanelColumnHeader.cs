@@ -8,30 +8,12 @@ namespace LanExchange.SDK
     /// </summary>
     public sealed class PanelColumnHeader
     {
-        /// <summary>
-        /// Gets or sets the text.
-        /// </summary>
-        /// <value>
-        /// The text.
-        /// </value>
-        public string Text;
-
-        public bool Visible;
-
-        public bool Refreshable;
-
-        public int Width;
-
-        public LazyCallback Callback;
-
-        public int Index;
-
         private readonly IDictionary<PanelItemBase, IComparable> m_LazyDict;
 
-        public PanelColumnHeader(string text, int width = 0)
+        public PanelColumnHeader(string text, int width = 120)
         {
             Text = text;
-            Width = width == 0 ? 120 : width;
+            Width = width;
             Visible = true;
             m_LazyDict = new Dictionary<PanelItemBase, IComparable>();
         }
@@ -40,5 +22,17 @@ namespace LanExchange.SDK
         {
             get { return m_LazyDict; }
         }
+
+        public string Text { get; private set; }
+
+        public int Width { get; private set; }
+
+        public bool Visible { get; set; }
+
+        public bool Refreshable { get; set; }
+
+        public LazyCallback Callback { get; set; }
+
+        public int Index { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using LanExchange.Properties;
 
 namespace LanExchange.UI
 {
@@ -71,6 +72,8 @@ namespace LanExchange.UI
             this.mHelpWeb = new System.Windows.Forms.MenuItem();
             this.mHelpBugs = new System.Windows.Forms.MenuItem();
             this.mHelpLangs = new System.Windows.Forms.MenuItem();
+            this.menuItem1 = new System.Windows.Forms.MenuItem();
+            this.mHelpFeedback = new System.Windows.Forms.MenuItem();
             this.mHelpSep2 = new System.Windows.Forms.MenuItem();
             this.mHelpAbout = new System.Windows.Forms.MenuItem();
             this.popTray.SuspendLayout();
@@ -92,7 +95,7 @@ namespace LanExchange.UI
             this.mTrayAbout,
             this.mTrayExit});
             this.popTray.Name = "popTray";
-            this.popTray.Size = new System.Drawing.Size(180, 76);
+            this.popTray.Size = new System.Drawing.Size(178, 76);
             this.popTray.Opening += new System.ComponentModel.CancelEventHandler(this.popTray_Opening);
             // 
             // mTrayOpen
@@ -100,26 +103,26 @@ namespace LanExchange.UI
             this.mTrayOpen.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.mTrayOpen.Name = "mTrayOpen";
             this.mTrayOpen.ShortcutKeyDisplayString = global::LanExchange.Properties.Resources.KeyCtrlWinX;
-            this.mTrayOpen.Size = new System.Drawing.Size(179, 22);
+            this.mTrayOpen.Size = new System.Drawing.Size(177, 22);
             this.mTrayOpen.Text = global::LanExchange.Properties.Resources.mTrayOpen_Text;
             this.mTrayOpen.Click += new System.EventHandler(this.mOpen_Click);
             // 
             // mTraySep1
             // 
             this.mTraySep1.Name = "mTraySep1";
-            this.mTraySep1.Size = new System.Drawing.Size(176, 6);
+            this.mTraySep1.Size = new System.Drawing.Size(174, 6);
             // 
             // mTrayAbout
             // 
             this.mTrayAbout.Name = "mTrayAbout";
-            this.mTrayAbout.Size = new System.Drawing.Size(179, 22);
+            this.mTrayAbout.Size = new System.Drawing.Size(177, 22);
             this.mTrayAbout.Text = global::LanExchange.Properties.Resources.mTrayAbout_Text;
             this.mTrayAbout.Click += new System.EventHandler(this.mHelpAbout_Click);
             // 
             // mTrayExit
             // 
             this.mTrayExit.Name = "mTrayExit";
-            this.mTrayExit.Size = new System.Drawing.Size(179, 22);
+            this.mTrayExit.Size = new System.Drawing.Size(177, 22);
             this.mTrayExit.Text = global::LanExchange.Properties.Resources.mTrayExit_Text;
             this.mTrayExit.Click += new System.EventHandler(this.mTrayExit_Click);
             // 
@@ -220,7 +223,6 @@ namespace LanExchange.UI
             // 
             // mPanel
             // 
-            this.mPanel.Name = "mPanel";
             this.mPanel.Index = 0;
             this.mPanel.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.mReRead,
@@ -234,7 +236,6 @@ namespace LanExchange.UI
             // 
             // mReRead
             // 
-            this.mReRead.Name = "mReRead";
             this.mReRead.Index = 0;
             this.mReRead.Shortcut = System.Windows.Forms.Shortcut.CtrlR;
             this.mReRead.Text = global::LanExchange.Properties.Resources.mReRead_Text;
@@ -247,7 +248,6 @@ namespace LanExchange.UI
             // 
             // mCloseTab
             // 
-            this.mCloseTab.Name = "mCloseTab";
             this.mCloseTab.Index = 2;
             this.mCloseTab.Shortcut = System.Windows.Forms.Shortcut.CtrlW;
             this.mCloseTab.Text = global::LanExchange.Properties.Resources.mCloseTab_Text;
@@ -255,7 +255,6 @@ namespace LanExchange.UI
             // 
             // mCloseOther
             // 
-            this.mCloseOther.Name = "mCloseOther";
             this.mCloseOther.Index = 3;
             this.mCloseOther.Text = global::LanExchange.Properties.Resources.mCloseOther_Text;
             this.mCloseOther.Click += new System.EventHandler(this.mCloseOther_Click);
@@ -267,7 +266,6 @@ namespace LanExchange.UI
             // 
             // mExit
             // 
-            this.mExit.Name = "mExit";
             this.mExit.Index = 5;
             this.mExit.Shortcut = System.Windows.Forms.Shortcut.F10;
             this.mExit.Text = global::LanExchange.Properties.Resources.mExit_Text;
@@ -275,7 +273,6 @@ namespace LanExchange.UI
             // 
             // mView
             // 
-            this.mView.Name = "mView";
             this.mView.Index = 1;
             this.mView.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.mViewInfo,
@@ -290,7 +287,6 @@ namespace LanExchange.UI
             // 
             // mViewInfo
             // 
-            this.mViewInfo.Name = "mViewInfo";
             this.mViewInfo.Checked = true;
             this.mViewInfo.Index = 0;
             this.mViewInfo.Text = global::LanExchange.Properties.Resources.mViewInfo_Text;
@@ -298,7 +294,6 @@ namespace LanExchange.UI
             // 
             // mViewGrid
             // 
-            this.mViewGrid.Name = "mViewGrid";
             this.mViewGrid.Checked = true;
             this.mViewGrid.Index = 1;
             this.mViewGrid.Text = global::LanExchange.Properties.Resources.mViewGrid_Text;
@@ -311,7 +306,6 @@ namespace LanExchange.UI
             // 
             // mViewLarge
             // 
-            this.mViewLarge.Name = "mViewLarge";
             this.mViewLarge.Index = 3;
             this.mViewLarge.RadioCheck = true;
             this.mViewLarge.Tag = "0";
@@ -320,7 +314,6 @@ namespace LanExchange.UI
             // 
             // mViewSmall
             // 
-            this.mViewSmall.Name = "mViewSmall";
             this.mViewSmall.Index = 4;
             this.mViewSmall.RadioCheck = true;
             this.mViewSmall.Tag = "2";
@@ -329,7 +322,6 @@ namespace LanExchange.UI
             // 
             // mViewList
             // 
-            this.mViewList.Name = "mViewList";
             this.mViewList.Index = 5;
             this.mViewList.RadioCheck = true;
             this.mViewList.Tag = "3";
@@ -338,7 +330,6 @@ namespace LanExchange.UI
             // 
             // mViewDetails
             // 
-            this.mViewDetails.Name = "mViewDetails";
             this.mViewDetails.Checked = true;
             this.mViewDetails.Index = 6;
             this.mViewDetails.RadioCheck = true;
@@ -348,14 +339,12 @@ namespace LanExchange.UI
             // 
             // mLanguage
             // 
-            this.mLanguage.Name = "mLanguage";
             this.mLanguage.Index = 2;
             this.mLanguage.Text = global::LanExchange.Properties.Resources.mLanguage_Text;
             this.mLanguage.Popup += new System.EventHandler(this.mLanguage_Popup);
             // 
             // mHelp
             // 
-            this.mHelp.Name = "mHelp";
             this.mHelp.Index = 3;
             this.mHelp.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.mHelpKeys,
@@ -363,13 +352,14 @@ namespace LanExchange.UI
             this.mHelpWeb,
             this.mHelpBugs,
             this.mHelpLangs,
+            this.menuItem1,
+            this.mHelpFeedback,
             this.mHelpSep2,
             this.mHelpAbout});
             this.mHelp.Text = global::LanExchange.Properties.Resources.mHelp_Text;
             // 
             // mHelpKeys
             // 
-            this.mHelpKeys.Name = "mHelpKeys";
             this.mHelpKeys.Index = 0;
             this.mHelpKeys.Shortcut = System.Windows.Forms.Shortcut.F1;
             this.mHelpKeys.Text = global::LanExchange.Properties.Resources.mHelpKeys_Text;
@@ -382,35 +372,42 @@ namespace LanExchange.UI
             // 
             // mHelpWeb
             // 
-            this.mHelpWeb.Name = "mHelpWeb";
             this.mHelpWeb.Index = 2;
             this.mHelpWeb.Text = global::LanExchange.Properties.Resources.mHelpWeb_Text;
             this.mHelpWeb.Click += new System.EventHandler(this.mWebPage_Click);
             // 
             // mHelpBugs
             // 
-            this.mHelpBugs.Name = "mHelpBugs";
             this.mHelpBugs.Index = 3;
             this.mHelpBugs.Text = global::LanExchange.Properties.Resources.mHelpBugs_Text;
             this.mHelpBugs.Click += new System.EventHandler(this.mHelpBugs_Click);
             // 
             // mHelpLangs
             // 
-            this.mHelpLangs.Name = "mHelpLangs";
             this.mHelpLangs.Index = 4;
             this.mHelpLangs.Text = global::LanExchange.Properties.Resources.mHelpLangs_Text;
             this.mHelpLangs.Click += new System.EventHandler(this.mHelpLangs_Click);
             // 
+            // menuItem1
+            // 
+            this.menuItem1.Index = 5;
+            this.menuItem1.Text = "-";
+            // 
+            // mHelpFeedback
+            // 
+            this.mHelpFeedback.Index = 6;
+            this.mHelpFeedback.Text = global::LanExchange.Properties.Resources.mHelpFeedback_Text;
+            this.mHelpFeedback.Click += new System.EventHandler(this.mHelpFeedback_Click);
+            // 
             // mHelpSep2
             // 
-            this.mHelpSep2.Index = 5;
+            this.mHelpSep2.Index = 7;
             this.mHelpSep2.Text = "-";
             // 
             // mHelpAbout
             // 
-            this.mHelpAbout.Name = "mHelpAbout";
-            this.mHelpAbout.Index = 6;
-            this.mHelpAbout.Text = global::LanExchange.Properties.Resources.mHelpAbout_Text;
+            this.mHelpAbout.Index = 8;
+            this.mHelpAbout.Text = "About";
             this.mHelpAbout.Click += new System.EventHandler(this.mHelpAbout_Click);
             // 
             // MainForm
@@ -481,6 +478,8 @@ namespace LanExchange.UI
         private System.Windows.Forms.MenuItem mViewSep1;
         private MenuItem mHelpSep1;
         private MenuItem mHelpSep2;
+        private MenuItem mHelpFeedback;
+        private MenuItem menuItem1;
     }
 }
 

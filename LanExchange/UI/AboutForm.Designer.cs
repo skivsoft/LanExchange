@@ -40,10 +40,8 @@
             this.eCopyright = new System.Windows.Forms.Label();
             this.logoPictureBox = new System.Windows.Forms.PictureBox();
             this.tipAbout = new System.Windows.Forms.ToolTip(this.components);
-            this.picEmail = new System.Windows.Forms.PictureBox();
             this.picTwitter = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picEmail)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picTwitter)).BeginInit();
             this.SuspendLayout();
             // 
@@ -181,27 +179,13 @@
             this.logoPictureBox.TabIndex = 13;
             this.logoPictureBox.TabStop = false;
             // 
-            // picEmail
-            // 
-            this.picEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.picEmail.BackColor = System.Drawing.Color.White;
-            this.picEmail.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picEmail.Image = global::LanExchange.Properties.Resources.email_icon;
-            this.picEmail.Location = new System.Drawing.Point(16, 247);
-            this.picEmail.Name = "picEmail";
-            this.picEmail.Size = new System.Drawing.Size(16, 16);
-            this.picEmail.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.picEmail.TabIndex = 49;
-            this.picEmail.TabStop = false;
-            this.picEmail.Click += new System.EventHandler(this.picEmail_Click);
-            // 
             // picTwitter
             // 
             this.picTwitter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.picTwitter.BackColor = System.Drawing.SystemColors.Control;
             this.picTwitter.Cursor = System.Windows.Forms.Cursors.Hand;
             this.picTwitter.Image = global::LanExchange.Properties.Resources.twitter_icon;
-            this.picTwitter.Location = new System.Drawing.Point(40, 247);
+            this.picTwitter.Location = new System.Drawing.Point(16, 247);
             this.picTwitter.Name = "picTwitter";
             this.picTwitter.Size = new System.Drawing.Size(16, 16);
             this.picTwitter.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -215,7 +199,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(444, 273);
             this.Controls.Add(this.picTwitter);
-            this.Controls.Add(this.picEmail);
             this.Controls.Add(this.eWeb);
             this.Controls.Add(this.lWeb);
             this.Controls.Add(this.eVersion);
@@ -237,7 +220,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.AboutForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picEmail)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picTwitter)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -258,7 +240,6 @@
         private System.Windows.Forms.Label lWeb;
         private System.Windows.Forms.LinkLabel eWeb;
         private System.Windows.Forms.ToolTip tipAbout;
-        private System.Windows.Forms.PictureBox picEmail;
         private System.Windows.Forms.PictureBox picTwitter;
     }
 }

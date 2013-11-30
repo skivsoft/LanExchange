@@ -17,9 +17,9 @@ namespace LanExchange.Presenter.Action
 
         public override void RegisterColumns(IPanelColumnManager columnManager)
         {
-            columnManager.RegisterColumn<ShortcutPanelItem>(new PanelColumnHeader(Resources.mHelpKeys_Text) { Width = 100 });
-            columnManager.RegisterColumn<ShortcutPanelItem>(new PanelColumnHeader(Resources.Action) { Width = 280 });
-            columnManager.RegisterColumn<ShortcutPanelItem>(new PanelColumnHeader(Resources.Context) { Width = 80 });
+            columnManager.RegisterColumn<ShortcutPanelItem>(new PanelColumnHeader(Resources.mHelpKeys_Text, 100));
+            columnManager.RegisterColumn<ShortcutPanelItem>(new PanelColumnHeader(Resources.Action, 280));
+            columnManager.RegisterColumn<ShortcutPanelItem>(new PanelColumnHeader(Resources.Context, 80));
         }
     }
 }

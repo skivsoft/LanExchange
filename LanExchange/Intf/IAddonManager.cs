@@ -9,6 +9,7 @@ namespace LanExchange.Intf
         IDictionary<string, AddonProgram> Programs { get; }
         IDictionary<string, AddonItemTypeRef> PanelItems { get; }
 
+        void LoadAddons();
         bool BuildMenuForPanelItemType(ContextMenuStrip popTop, string Id);
         bool BuildMenuForPanelItemType(ToolStripMenuItem popTop, string Id);
         void RunDefaultCmdLine();

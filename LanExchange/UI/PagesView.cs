@@ -38,7 +38,7 @@ namespace LanExchange.UI
 
         public void TranslateUI()
         {
-            TranslationUtils.TranslateComponents(Resources.ResourceManager, components);
+            TranslationUtils.TranslateComponents(Resources.ResourceManager, this, components);
             SetupContextMenu(popPages.Items);
             TranslationUtils.TranslateControls(Controls);
         }

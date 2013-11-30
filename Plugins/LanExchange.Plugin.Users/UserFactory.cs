@@ -24,14 +24,14 @@ namespace LanExchange.Plugin.Users
         {
             columnManager.RegisterColumn<UserPanelItem>(new PanelColumnHeader(Resources.UserName));
             columnManager.RegisterColumn<UserPanelItem>(new PanelColumnHeader(Resources.Title));
-            columnManager.RegisterColumn<UserPanelItem>(new PanelColumnHeader(Resources.WorkPhone) { Width = 80 });
+            columnManager.RegisterColumn<UserPanelItem>(new PanelColumnHeader(Resources.WorkPhone, 80));
             columnManager.RegisterColumn<UserPanelItem>(new PanelColumnHeader(Resources.Office));
             columnManager.RegisterColumn<UserPanelItem>(new PanelColumnHeader(Resources.Department));
             columnManager.RegisterColumn<UserPanelItem>(new PanelColumnHeader(Resources.Email));
             columnManager.RegisterColumn<UserPanelItem>(new PanelColumnHeader(Resources.Company));
             columnManager.RegisterColumn<UserPanelItem>(new PanelColumnHeader(Resources.Nickname));
             columnManager.RegisterColumn<UserPanelItem>(new PanelColumnHeader(Resources.Pre2000Logon) { Visible = false });
-            columnManager.RegisterColumn<UserPanelItem>(new PanelColumnHeader(Resources.Description) { Visible = false, Width = 200 });
+            columnManager.RegisterColumn<UserPanelItem>(new PanelColumnHeader(Resources.Description, 200) { Visible = false });
         }
     }
 }
