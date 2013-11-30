@@ -407,7 +407,7 @@ namespace LanExchange.UI
             // mHelpAbout
             // 
             this.mHelpAbout.Index = 8;
-            this.mHelpAbout.Text = "About";
+            this.mHelpAbout.Text = global::LanExchange.Properties.Resources.mHelpAbout_Text;
             this.mHelpAbout.Click += new System.EventHandler(this.mHelpAbout_Click);
             // 
             // MainForm

@@ -52,7 +52,8 @@ namespace LanExchange.Presenter
 
         private void GlobalTranslateUI()
         {
-            Cursor.Current = Cursors.WaitCursor;
+            var service = App.Resolve<IWaitingService>();
+            service.BeginWait();
             try
             {
                 // recreate all columns
@@ -62,7 +63,7 @@ namespace LanExchange.Presenter
             }
             finally
             {
-                Cursor.Current = Cursors.Default;
+                service.EndWait();
             }
         }
 

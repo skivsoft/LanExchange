@@ -66,6 +66,7 @@
     <Compile Include="IFilterPresenter.cs" />
     <Compile Include="IFilterView.cs" />
     <Compile Include="IFolderManager.cs" />
+    <Compile Include="IIoCContainer.cs" />
     <Compile Include="IMainPresenter.cs" />
     <Compile Include="IMainView.cs" />
     <Compile Include="IModel.cs" />
@@ -82,6 +83,8 @@
     <Compile Include="IPresenter.cs" />
     <Compile Include="ITranslationService.cs" />
     <Compile Include="IView.cs" />
+    <Compile Include="IWaitingService.cs" />
+    <Compile Include="LifeCycle.cs" />
     <Compile Include="ObjectPath.cs" />
     <Compile Include="PanelColumnHeader.cs" />
     <Compile Include="PanelFillerResult.cs" />

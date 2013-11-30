@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using LanExchange.Intf;
+using LanExchange.SDK;
 
 namespace LanExchange.Core
 {
@@ -13,6 +13,16 @@ namespace LanExchange.Core
         public void Register<TTypeToResolve, TConcrete>(LifeCycle lifeCycle = LifeCycle.Singleton)
         {
             m_Objects.Add(new RegisteredObject(typeof (TTypeToResolve), typeof (TConcrete), lifeCycle));
+        }
+
+        public void Unregister<TTypeToResolve>()
+        {
+            for (int index = m_Objects.Count - 1; index >= 0; index--)
+            {
+                var obj = m_Objects[index];
+                if (obj.TypeToResolve == typeof(TTypeToResolve))
+                    m_Objects.RemoveAt(index);
+            }
         }
 
         [Localizable(false)]

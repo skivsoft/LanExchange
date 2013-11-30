@@ -11,6 +11,8 @@ namespace LanExchange.Misc.Impl
         {
             object result = null;
 
+            if (serviceType == typeof (IIoCContainer))
+                return App.GetContainer();
             if (serviceType == typeof(IPagesPresenter))
                 return App.MainPages;
             if (serviceType == typeof(IMainView))

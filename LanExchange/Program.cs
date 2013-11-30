@@ -29,8 +29,7 @@
 //   DONE  Open plugin's tab from context menu
 //
 // RELEASE 2.12 (Dec, 2013)
-//   TODO  Unit-tests coverage at least 30%
-//   TODO  Changing language without restart program
+//   DONE  Changing language without restart program
 //   TODO  Network: ping computer before performing action on it
 //   TODO  Network: set tab name after changing domain/group
 //   TODO  Async enum items and cache items

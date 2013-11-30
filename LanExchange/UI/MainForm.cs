@@ -292,6 +292,7 @@ namespace LanExchange.UI
             pInfo.Picture.Image = null;
             for (int index = 0; index < pInfo.NumLines; index++)
                 pInfo.SetLine(index, string.Empty);
+            lItemsCount.Text = string.Empty;
         }
 
         private void popTray_Opening(object sender, CancelEventArgs e)
