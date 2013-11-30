@@ -20,7 +20,7 @@ namespace LanExchange.Model
 
         public event EventHandler<PanelModelEventArgs> AfterAppendTab;
         public event EventHandler<PanelIndexEventArgs> AfterRemove;
-        public event EventHandler<PanelModelEventArgs> AfterRename;
+        public event EventHandler<PanelIndexEventArgs> AfterRename;
         public event EventHandler<PanelIndexEventArgs> IndexChanged;
 
         public PagesModel()
@@ -96,10 +96,10 @@ namespace LanExchange.Model
                 AfterRemove(this, new PanelIndexEventArgs(index));
         }
 
-        private void DoAfterRename(IPanelModel info)
+        private void DoAfterRename(int index)
         {
             if (AfterRename != null)
-                AfterRename(this, new PanelModelEventArgs(info));
+                AfterRename(this, new PanelIndexEventArgs(index));
         }
 
         private void DoIndexChanged(int index)
@@ -137,7 +137,7 @@ namespace LanExchange.Model
         {
             var info = m_List[index];
             info.TabName = newTabName;
-            DoAfterRename(info);
+            DoAfterRename(index);
         }
 
         public string GetTabName(int index)

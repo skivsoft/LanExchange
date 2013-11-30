@@ -3,7 +3,7 @@ using LanExchange.SDK;
 
 namespace LanExchange.Presenter.Action
 {
-    class CloseOtherAction : IAction
+    class ActionCloseOther : IAction
     {
         public void Execute()
         {

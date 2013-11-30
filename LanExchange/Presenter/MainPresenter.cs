@@ -17,11 +17,11 @@ namespace LanExchange.Presenter
         public MainPresenter()
         {
             m_Actions = new Dictionary<Type, IAction>();
-            RegisterAction(new AboutAction());
-            RegisterAction(new ReReadAction());
-            RegisterAction(new CloseTabAction());
-            RegisterAction(new CloseOtherAction());
-            RegisterAction(new ShortcutKeysAction());
+            RegisterAction(new ActionAbout());
+            RegisterAction(new ActionReRead());
+            RegisterAction(new ActionCloseTab());
+            RegisterAction(new ActionCloseOther());
+            RegisterAction(new ActionShortcutKeys());
         }
 
         [Localizable(false)]

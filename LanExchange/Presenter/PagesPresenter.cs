@@ -145,6 +145,11 @@ namespace LanExchange.Presenter
             m_Model.SelectedIndex = 0;
         }
 
+        public void RenameTab(int index, string tabName)
+        {
+            m_Model.RenameTab(index, tabName);
+        }
+
         public void Model_AfterAppendTab(object sender, PanelModelEventArgs e)
         {
             // create panel
@@ -166,9 +171,10 @@ namespace LanExchange.Presenter
             View.RemoveTabAt(e.Index);
         }
 
-        public void Model_AfterRename(object sender, PanelModelEventArgs e)
+        public void Model_AfterRename(object sender, PanelIndexEventArgs e)
         {
-            View.SelectedTabText = e.Info.TabName;
+            var model = m_Model.GetItem(e.Index);
+            View.SetTabText(e.Index, model.TabName);
         }
 
         public void Model_IndexChanged(object sender, PanelIndexEventArgs e)
