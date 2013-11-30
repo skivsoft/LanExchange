@@ -33,11 +33,13 @@
           <ComponentRef Id="$(var.PluginUsers).dll" />
           <ComponentRef Id="Users.xml" />
         </Feature>
+        <!--
         <Feature Id="Win7" Title="Win7" Level="100" AllowAdvertise="no" Description="Windows® 7 features support.">
           <ComponentRef Id="$(var.PluginWin7).dll" />
           <ComponentRef Id="Microsoft.WindowsAPICodePack.dll" />
           <ComponentRef Id="Microsoft.WindowsAPICodePack.Shell.dll" />
         </Feature>
+        -->
       </Feature>
     </Feature>
   </Fragment>

@@ -18,6 +18,7 @@
       <Component Id="$(var.PluginUsers).dll" Guid="7671C1F3-76BF-400B-B8F5-D17A27B2E2B1">
         <File Id='$(var.PluginUsers).dll' KeyPath='yes' Source='$(var.PluginsDir)$(var.PluginUsers)\bin\$(var.Configuration)\$(var.PluginUsers).dll'/>
       </Component>
+      <!--
       <Component Id="$(var.PluginWin7).dll" Guid="F800769F-5AAB-4407-9DA2-9B9EFCD91630">
         <File Id='$(var.PluginWin7).dll' KeyPath='yes' Source='$(var.PluginsDir)$(var.PluginWin7)\bin\$(var.Configuration)\$(var.PluginWin7).dll'/>
       </Component>
@@ -27,6 +28,7 @@
       <Component Id="Microsoft.WindowsAPICodePack.Shell.dll" Guid="84320F78-8FD8-48E8-94A1-DBD2EF916F83">
         <File Id='Microsoft.WindowsAPICodePack.Shell.dll' KeyPath='yes' Source='$(var.PluginsDir)$(var.PluginWin7)\bin\$(var.Configuration)\Microsoft.WindowsAPICodePack.Shell.dll'/>
       </Component>
+      -->
       <Directory Id='Addons' Name='Addons'>
         <Component Id="Network.xml" Guid="75CD74AF-D879-4C07-8450-9A43717E456C">
           <File Id='Network.xml' KeyPath='yes' Source='$(var.SourceDir)Addons\Network.xml'/>

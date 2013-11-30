@@ -99,10 +99,10 @@
     <Compile Include="Core\TypeNotRegisteredException.cs" />
     <Compile Include="Intf\Addon\ProtocolHelper.cs" />
     <Compile Include="Intf\DataReadyArgs.cs" />
-    <Compile Include="Intf\LifeCycle.cs" />
     <Compile Include="Intf\PresenterBase.cs" />
     <Compile Include="Intf\IConfigModel.cs" />
     <Compile Include="Misc\Impl\DisposableManagerImpl.cs" />
+    <Compile Include="Misc\Impl\WaitingServiceImpl.cs" />
     <Compile Include="Misc\TranslationResourceManager.cs" />
     <Compile Include="Presenter\Action\ActionAbout.cs" />
     <Compile Include="Presenter\Action\ActionCloseTab.cs" />
@@ -127,7 +127,6 @@
     <Compile Include="Model\PanelItemBaseHolder.cs" />
     <Compile Include="Intf\IAboutModel.cs" />
     <Compile Include="Intf\IAboutPresenter.cs" />
-    <Compile Include="Intf\IIoCContainer.cs" />
     <Compile Include="Core\RegisteredObject.cs" />
     <Compile Include="Core\SimpleIocContainer.cs" />
     <Compile Include="Intf\IAboutView.cs" />

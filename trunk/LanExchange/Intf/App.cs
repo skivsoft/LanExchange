@@ -53,6 +53,11 @@ namespace LanExchange.Intf
             Threads = Resolve<ILazyThreadPool>();
         }
 
+        public static IIoCContainer GetContainer()
+        {
+            return s_Ioc;
+        }
+
         public static TTypeToResolve Resolve<TTypeToResolve>()
         {
             return (TTypeToResolve)s_Ioc.Resolve(typeof(TTypeToResolve));

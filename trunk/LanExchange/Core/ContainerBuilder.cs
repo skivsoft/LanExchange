@@ -30,6 +30,7 @@ namespace LanExchange.Core
             container.Register<IPuntoSwitcherService, PuntoSwitcherServiceEngRus>();
             container.Register<ITranslationService, TranslationServiceImpl>();
             container.Register<IDisposableManager, DisposableManagerImpl>();
+            container.Register<IWaitingService, WaitingServiceImpl>();
             // models
             container.Register<IAboutModel, AboutModel>();
             container.Register<IConfigModel, ConfigModel>();
