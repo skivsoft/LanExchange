@@ -1,0 +1,429 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutForm_MIT" xml:space="preserve">
+    <value>Released under the MIT license.</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="keyboard_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\input-keyboard-6.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mTrayExit_Text" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="mPanel_Text" xml:space="preserve">
+    <value>&amp;Panel</value>
+  </data>
+  <data name="EmptyText" xml:space="preserve">
+    <value>    </value>
+  </data>
+  <data name="mViewSmall_Text" xml:space="preserve">
+    <value>Small icons</value>
+  </data>
+  <data name="clear_normal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\clear_normal.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="KeyCtrlV" xml:space="preserve">
+    <value>Ctrl+V</value>
+  </data>
+  <data name="KeyF1" xml:space="preserve">
+    <value>F1</value>
+  </data>
+  <data name="KeyF10" xml:space="preserve">
+    <value>F10</value>
+  </data>
+  <data name="MainForm_Information" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="AboutForm_Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="KeyF9" xml:space="preserve">
+    <value>F9</value>
+  </data>
+  <data name="mReRead_Text" xml:space="preserve">
+    <value>Re-read</value>
+  </data>
+  <data name="user_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\user_16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="KeyAnyChar__" xml:space="preserve">
+    <value>Filter panel items by all columns.</value>
+  </data>
+  <data name="PanelView_CopySelected" xml:space="preserve">
+    <value>Copy selected item</value>
+  </data>
+  <data name="mHelpLangs_Text" xml:space="preserve">
+    <value>Localization Webpage</value>
+  </data>
+  <data name="KeyCtrlR__" xml:space="preserve">
+    <value>Re-read panel.</value>
+  </data>
+  <data name="mTrayOpen_Text" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="PanelPresenter_Items2" xml:space="preserve">
+    <value>Items: {0} of {1}</value>
+  </data>
+  <data name="Program_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="PanelPresenter_Items1" xml:space="preserve">
+    <value>Items: {0}</value>
+  </data>
+  <data name="KeyCtrlW__" xml:space="preserve">
+    <value>Close current tab.</value>
+  </data>
+  <data name="mDelete_Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="back_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\back_32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="KeyEsc" xml:space="preserve">
+    <value>Esc</value>
+  </data>
+  <data name="KeyBackspace__" xml:space="preserve">
+    <value>Go level up in panel.</value>
+  </data>
+  <data name="KeyEscLong" xml:space="preserve">
+    <value>Esc (long press)</value>
+  </data>
+  <data name="KeyF10__" xml:space="preserve">
+    <value>Quit from LanExchange program.</value>
+  </data>
+  <data name="KeyCtrlC" xml:space="preserve">
+    <value>Ctrl+C</value>
+  </data>
+  <data name="KeyCtrlA" xml:space="preserve">
+    <value>Ctrl+A</value>
+  </data>
+  <data name="mHelpAbout_Text" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="KeyCtrlAltIns" xml:space="preserve">
+    <value>Ctrl+Alt+Ins</value>
+  </data>
+  <data name="KeyCtrlIns" xml:space="preserve">
+    <value>Ctrl+Ins</value>
+  </data>
+  <data name="KeyCtrlW_" xml:space="preserve">
+    <value>Close tab</value>
+  </data>
+  <data name="PanelView_CopyPathTo" xml:space="preserve">
+    <value>Copy path to «{0}»</value>
+  </data>
+  <data name="LanExchange_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LanExchange_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mHelp_Text" xml:space="preserve">
+    <value>&amp;Help</value>
+  </data>
+  <data name="KeyCtrlDown" xml:space="preserve">
+    <value>Ctrl+Down</value>
+  </data>
+  <data name="ShowDetails" xml:space="preserve">
+    <value>Show Details</value>
+  </data>
+  <data name="mViewDetails_Text" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="clear_hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\clear_hover.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mExit_Text" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="mCopyMenu_Text" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="AboutForm_Webpage" xml:space="preserve">
+    <value>Webpage</value>
+  </data>
+  <data name="mCloseOther_Text" xml:space="preserve">
+    <value>Close other tabs</value>
+  </data>
+  <data name="KeyCtrlUp" xml:space="preserve">
+    <value>Ctrl+Up</value>
+  </data>
+  <data name="AboutInfo_Build" xml:space="preserve">
+    <value> (build {0})</value>
+  </data>
+  <data name="KeyAnyChar" xml:space="preserve">
+    <value>Any char</value>
+  </data>
+  <data name="KeyCtrlC_" xml:space="preserve">
+    <value>Copy selected items</value>
+  </data>
+  <data name="KeyBackspace" xml:space="preserve">
+    <value>Backspace</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="KeyCtrlC__" xml:space="preserve">
+    <value>Copy selected item(s) to clipboard.</value>
+  </data>
+  <data name="PanelView_CopyColumn" xml:space="preserve">
+    <value>Copy «{0}»</value>
+  </data>
+  <data name="HideDetails" xml:space="preserve">
+    <value>Hide Details</value>
+  </data>
+  <data name="KeyCtrlV__" xml:space="preserve">
+    <value>Paste items from clipboard.</value>
+  </data>
+  <data name="MainForm_Legend" xml:space="preserve">
+    <value>Legend</value>
+  </data>
+  <data name="mLanguage_Text" xml:space="preserve">
+    <value>&amp;Language</value>
+  </data>
+  <data name="KeyCtrlR" xml:space="preserve">
+    <value>Ctrl+R</value>
+  </data>
+  <data name="back_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\back_16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PagesView_OpenTab" xml:space="preserve">
+    <value>Open tab «{0}»</value>
+  </data>
+  <data name="mView_Text" xml:space="preserve">
+    <value>&amp;View</value>
+  </data>
+  <data name="KeyCtrlWinX__" xml:space="preserve">
+    <value>Show/hide main window.</value>
+  </data>
+  <data name="PanelView_RunCmdErrorMsg" xml:space="preserve">
+    <value>Unable to execute command line:
+{0}</value>
+  </data>
+  <data name="mHelpBugs_Text" xml:space="preserve">
+    <value>BugTracker Webpage</value>
+  </data>
+  <data name="mCloseTab_Text" xml:space="preserve">
+    <value>Close tab</value>
+  </data>
+  <data name="MainForm_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="KeyDel" xml:space="preserve">
+    <value>Del</value>
+  </data>
+  <data name="KeyEsc__" xml:space="preserve">
+    <value>Clear filter OR go level up OR hide main window.</value>
+  </data>
+  <data name="mTrayAbout_Text" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="KeyCtrlWinX" xml:space="preserve">
+    <value>Ctrl+Win+X</value>
+  </data>
+  <data name="mPaste_Text" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="KeyCtrlA__" xml:space="preserve">
+    <value>Select all items in panel.</value>
+  </data>
+  <data name="KeyCtrlW" xml:space="preserve">
+    <value>Ctrl+W</value>
+  </data>
+  <data name="AboutForm_Title" xml:space="preserve">
+    <value>About «{0}»</value>
+  </data>
+  <data name="KeyEscLong__" xml:space="preserve">
+    <value>Hide main window.</value>
+  </data>
+  <data name="PanelView_CopySelectedPlural" xml:space="preserve">
+    <value>Copy {0} selected items</value>
+  </data>
+  <data name="Context" xml:space="preserve">
+    <value>Context</value>
+  </data>
+  <data name="AboutForm_Copyright" xml:space="preserve">
+    <value>Copyright</value>
+  </data>
+  <data name="KeyCtrlAltIns__" xml:space="preserve">
+    <value>Copy full path of selected item(s) to clipboard.</value>
+  </data>
+  <data name="PanelView_RunCmdErrorCaption" xml:space="preserve">
+    <value>Execution error</value>
+  </data>
+  <data name="mHelpWeb_Text" xml:space="preserve">
+    <value>LanExchange Webpage</value>
+  </data>
+  <data name="AboutForm_License" xml:space="preserve">
+    <value>License</value>
+  </data>
+  <data name="KeyDel__" xml:space="preserve">
+    <value>Delete selected item(s) which was created by user.</value>
+  </data>
+  <data name="KeyCtrlUp__" xml:space="preserve">
+    <value>Decrease height of info panel or hide it.</value>
+  </data>
+  <data name="KeyCtrlDown__" xml:space="preserve">
+    <value>Increase height of info panel or show it.</value>
+  </data>
+  <data name="mViewLarge_Text" xml:space="preserve">
+    <value>Large icons</value>
+  </data>
+  <data name="KeyF1__" xml:space="preserve">
+    <value>This help on shortcuts.</value>
+  </data>
+  <data name="mViewList_Text" xml:space="preserve">
+    <value>List</value>
+  </data>
+  <data name="KeyCtrlIns__" xml:space="preserve">
+    <value>Copy column on which the ordered item(s) to clipboard.</value>
+  </data>
+  <data name="PanelPresenter_UnreachableMsg" xml:space="preserve">
+    <value>Resource «{0}» not reachable.
+Continue anyway?</value>
+  </data>
+  <data name="user_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\user_32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mHelpKeys_Text" xml:space="preserve">
+    <value>Shortcut Keys</value>
+  </data>
+  <data name="AboutForm_Translations" xml:space="preserve">
+    <value>Translations:</value>
+  </data>
+  <data name="AboutForm_Plugins" xml:space="preserve">
+    <value>Plugins:</value>
+  </data>
+  <data name="twitter_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\twitter-icon-v2.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mViewInfo_Text" xml:space="preserve">
+    <value>Info panel</value>
+  </data>
+  <data name="mViewGrid_Text" xml:space="preserve">
+    <value>Grid lines</value>
+  </data>
+  <data name="PanelPresenter_Query" xml:space="preserve">
+    <value>Query</value>
+  </data>
+  <data name="mHelpFeedback_Text" xml:space="preserve">
+    <value>Send Feedback...</value>
+  </data>
+  <data name="AboutModel_FeedbackFmt" xml:space="preserve">
+    <value>{0} {1} Feedback</value>
+  </data>
+</root>

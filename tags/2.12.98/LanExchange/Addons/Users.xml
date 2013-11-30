@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanExchangeAddon xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <PanelItemTypes>
+    <PanelItemTypeRef Id="UserPanelItem">
+      <ContextMenuStrip>
+        <ToolStripMenuItem Text="Send Email" Default="true">
+          <ShortcutKeys>Ctrl+Enter</ShortcutKeys>
+          <ProgramRef Id="mailto:" />
+          <ProgramArgs>$(Email)</ProgramArgs>
+        </ToolStripMenuItem>
+      </ContextMenuStrip>
+    </PanelItemTypeRef>
+  </PanelItemTypes>
+</LanExchangeAddon>
