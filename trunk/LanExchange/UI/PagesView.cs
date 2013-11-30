@@ -95,19 +95,12 @@ namespace LanExchange.UI
             get { return Pages.TabPages.Count; }
         }
 
-        public string SelectedTabText
+
+        public void SetTabText(int index, string title)
         {
-            get
-            {
-                if (Pages.TabPages.Count > 0 && Pages.SelectedTab != null)
-                    return Pages.SelectedTab.Text;
-                return string.Empty;
-            }
-            set
-            {
-                if (Pages.TabPages.Count > 0 && Pages.SelectedTab != null)
-                    Pages.SelectedTab.Text = value;
-            }
+            if (index < 0 || index > Pages.TabCount - 1)
+                return;
+            Pages.TabPages[index].Text = title;
         }
 
         public void RemoveTabAt(int index)
@@ -191,9 +184,9 @@ namespace LanExchange.UI
             }
             else
                 m_Opened = false;
-            mReRead.Enabled = App.Presenter.IsActionEnabled<ReReadAction>();
-            mCloseTab.Enabled = App.Presenter.IsActionEnabled<CloseTabAction>();
-            mCloseOther.Enabled = App.Presenter.IsActionEnabled<CloseOtherAction>();
+            mReRead.Enabled = App.Presenter.IsActionEnabled<ActionReRead>();
+            mCloseTab.Enabled = App.Presenter.IsActionEnabled<ActionCloseTab>();
+            mCloseOther.Enabled = App.Presenter.IsActionEnabled<ActionCloseOther>();
             //logger.Info("Opened={0}", bOpened);
         }
 
@@ -268,17 +261,17 @@ namespace LanExchange.UI
 
         private void mReRead_Click(object sender, EventArgs e)
         {
-            App.Presenter.ExecuteAction<ReReadAction>();
+            App.Presenter.ExecuteAction<ActionReRead>();
         }
 
         private void mCloseTab_Click(object sender, EventArgs e)
         {
-            App.Presenter.ExecuteAction<CloseTabAction>();
+            App.Presenter.ExecuteAction<ActionCloseTab>();
         }
 
         private void mCloseOther_Click(object sender, EventArgs e)
         {
-            App.Presenter.ExecuteAction<CloseOtherAction>();
+            App.Presenter.ExecuteAction<ActionCloseOther>();
         }
     }
 }

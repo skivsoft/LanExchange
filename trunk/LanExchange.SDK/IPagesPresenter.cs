@@ -41,5 +41,7 @@ namespace LanExchange.SDK
         bool SelectTabByName(string tabName);
 
         void CommanCloseOtherTabs();
+
+        void RenameTab(int index, string tabName);
     }
 }

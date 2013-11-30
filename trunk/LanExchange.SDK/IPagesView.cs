@@ -6,13 +6,6 @@
     public interface IPagesView : IView
     {
         /// <summary>
-        /// Gets or sets the selected tab text.
-        /// </summary>
-        /// <value>
-        /// The selected tab text.
-        /// </value>
-        string SelectedTabText { get; set; }
-        /// <summary>
         /// Gets the tab pages count.
         /// </summary>
         /// <value>
@@ -63,5 +56,6 @@
         IPanelView CreatePanelView(IPanelModel info);
         IPagesPresenter Presenter { get; }
         void SetupContextMenu();
+        void SetTabText(int index, string title);
     }
 }

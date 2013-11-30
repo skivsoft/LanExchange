@@ -3,7 +3,7 @@ using LanExchange.SDK;
 
 namespace LanExchange.Presenter.Action
 {
-    class ReReadAction : IAction
+    class ActionReRead : IAction
     {
         public void Execute()
         {

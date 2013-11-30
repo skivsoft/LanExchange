@@ -7,7 +7,7 @@ namespace LanExchange.Intf
     {
         event EventHandler<PanelModelEventArgs> AfterAppendTab;
         event EventHandler<PanelIndexEventArgs> AfterRemove;
-        event EventHandler<PanelModelEventArgs> AfterRename;
+        event EventHandler<PanelIndexEventArgs> AfterRename;
         event EventHandler<PanelIndexEventArgs> IndexChanged;
 
         bool AddTab(IPanelModel model);

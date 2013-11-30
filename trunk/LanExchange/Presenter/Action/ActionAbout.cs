@@ -4,7 +4,7 @@ using LanExchange.SDK;
 
 namespace LanExchange.Presenter.Action
 {
-    class AboutAction : IAction
+    class ActionAbout : IAction
     {
         private IAboutView m_Instance;
 

@@ -3,7 +3,7 @@ using LanExchange.SDK;
 
 namespace LanExchange.Presenter.Action
 {
-    class CloseTabAction : IAction
+    class ActionCloseTab : IAction
     {
         public void Execute()
         {

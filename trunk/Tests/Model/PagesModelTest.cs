@@ -32,12 +32,12 @@ namespace LanExchange.Model
             Assert.AreEqual(0, m_Model.Count);
         }
 
-        public void Model_AfterAppend_AfterRename(object sender, PanelModelEventArgs e)
+        public void Model_AfterAppend(object sender, PanelModelEventArgs e)
         {
             m_EventFired = true;
         }
 
-        public void Model_AfterRemove_IndexChanged(object sender, PanelIndexEventArgs e)
+        public void Model_AfterRemove(object sender, PanelIndexEventArgs e)
         {
             m_EventFired = true;
         }
@@ -57,7 +57,7 @@ namespace LanExchange.Model
             Assert.AreEqual(0, m_Model.Count);
             Assert.IsFalse(m_EventFired);
             m_Model.AddTab(NewPanelModel("MyTab"));
-            m_Model.AfterRemove += Model_AfterRemove_IndexChanged;
+            m_Model.AfterRemove += Model_AfterRemove;
             m_Model.DelTab(0);
             Assert.IsTrue(m_EventFired);
         }
@@ -70,7 +70,7 @@ namespace LanExchange.Model
             Assert.AreEqual("MyTab", m_Model.GetTabName(0));
             Assert.AreEqual(null, m_Model.GetTabName(-1));
             Assert.AreEqual(null, m_Model.GetTabName(1));
-            m_Model.AfterAppendTab += Model_AfterAppend_AfterRename;
+            m_Model.AfterAppendTab += Model_AfterAppend;
             m_Model.AddTab(NewPanelModel("YourTab"));
             Assert.IsTrue(m_EventFired);
             Assert.IsFalse(m_Model.AddTab(NewPanelModel("MyTab")));
@@ -83,7 +83,7 @@ namespace LanExchange.Model
             Assert.IsFalse(m_EventFired);
             m_Model.RenameTab(0, "YourTab");
             Assert.AreEqual("YourTab", m_Model.GetTabName(0));
-            m_Model.AfterRename += Model_AfterAppend_AfterRename;
+            m_Model.AfterRename += Model_AfterRemove;
             m_Model.RenameTab(0, "MyTab");
             Assert.IsTrue(m_EventFired);
         }
@@ -96,7 +96,7 @@ namespace LanExchange.Model
             m_Model.SelectedIndex = 1;
             Assert.IsFalse(m_EventFired);
             Assert.AreEqual(1, m_Model.SelectedIndex);
-            m_Model.IndexChanged += Model_AfterRemove_IndexChanged;
+            m_Model.IndexChanged += Model_AfterRemove;
             m_Model.SelectedIndex = 0;
             Assert.IsTrue(m_EventFired);
         }

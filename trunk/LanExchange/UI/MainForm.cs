@@ -117,12 +117,21 @@ namespace LanExchange.UI
         public void TranslateUI()
         {
             TranslationUtils.TranslateComponents(Resources.ResourceManager, this, components);
-            mTrayOpen_ApplyResources();
+            mTrayOpen_TranslateUI();
             TranslationUtils.TranslateControls(Controls);
+            // addons context menu will refresh later
             popTop.Tag = null;
+            // refresh shortcut panel if present
+            var foundIndex = ActionShortcutKeys.FindPanelIndex();
+            if (foundIndex != -1)
+            {
+                App.MainPages.RenameTab(foundIndex, Resources.mHelpKeys_Text);
+                var model = App.MainPages.GetItem(foundIndex);
+                model.SyncRetrieveData();
+            }
         }
 
-        private void mTrayOpen_ApplyResources()
+        private void mTrayOpen_TranslateUI()
         {
             mTrayOpen.Text = Visible ? Resources.MainForm_Close : Resources.mTrayOpen_Text;
         }
@@ -230,7 +239,7 @@ namespace LanExchange.UI
 
         private void mHelpAbout_Click(object sender, EventArgs e)
         {
-            App.Presenter.ExecuteAction<AboutAction>();
+            App.Presenter.ExecuteAction<ActionAbout>();
         }
         
         private void lItemsCount_MouseUp(object sender, MouseEventArgs e)
@@ -287,7 +296,7 @@ namespace LanExchange.UI
 
         private void popTray_Opening(object sender, CancelEventArgs e)
         {
-            mTrayOpen_ApplyResources();
+            mTrayOpen_TranslateUI();
         }
 
         private void mOpen_Click(object sender, EventArgs e)
@@ -342,7 +351,7 @@ namespace LanExchange.UI
 
         private void mReRead_Click(object sender, EventArgs e)
         {
-            App.Presenter.ExecuteAction<ReReadAction>();
+            App.Presenter.ExecuteAction<ActionReRead>();
             popTop.Tag = null;
         }
 
@@ -435,7 +444,7 @@ namespace LanExchange.UI
 
         private void mHelpKeys_Click(object sender, EventArgs e)
         {
-            App.Presenter.ExecuteAction<ShortcutKeysAction>();
+            App.Presenter.ExecuteAction<ActionShortcutKeys>();
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -507,19 +516,19 @@ namespace LanExchange.UI
 
         private void mPanel_Popup(object sender, EventArgs e)
         {
-            mReRead.Enabled = App.Presenter.IsActionEnabled<ReReadAction>();
-            mCloseTab.Enabled = App.Presenter.IsActionEnabled<CloseTabAction>();
-            mCloseOther.Enabled = App.Presenter.IsActionEnabled<CloseOtherAction>();
+            mReRead.Enabled = App.Presenter.IsActionEnabled<ActionReRead>();
+            mCloseTab.Enabled = App.Presenter.IsActionEnabled<ActionCloseTab>();
+            mCloseOther.Enabled = App.Presenter.IsActionEnabled<ActionCloseOther>();
         }
 
         private void mCloseTab_Click(object sender, EventArgs e)
         {
-            App.Presenter.ExecuteAction<CloseTabAction>();
+            App.Presenter.ExecuteAction<ActionCloseTab>();
         }
 
         private void mCloseOther_Click(object sender, EventArgs e)
         {
-            App.Presenter.ExecuteAction<CloseOtherAction>();
+            App.Presenter.ExecuteAction<ActionCloseOther>();
         }
 
         private void mViewInfo_Click(object sender, EventArgs e)
