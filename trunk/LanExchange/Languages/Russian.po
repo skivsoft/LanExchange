@@ -119,6 +119,10 @@ msgid "Copyright"
 msgstr "Авторское право"
 
 msgctxt "LanExchange.exe"
+msgid "Send Feedback..."
+msgstr "Отправить отзыв..."
+
+msgctxt "LanExchange.exe"
 msgid "Action"
 msgstr "Действие"
 
@@ -175,6 +179,10 @@ msgid "Close other tabs"
 msgstr "Закрыть другие вкладки"
 
 msgctxt "LanExchange.exe"
+msgid "Paste"
+msgstr "Вставить"
+
+msgctxt "LanExchange.exe"
 msgid "Exit"
 msgstr "Выход"
 
@@ -209,6 +217,10 @@ msgstr "Копировать «{0}»"
 msgctxt "LanExchange.exe"
 msgid "Error"
 msgstr "Ошибка"
+
+msgctxt "LanExchange.exe"
+msgid "{0} {1} Feedback"
+msgstr "Отзыв о {0} {1}"
 
 msgctxt "LanExchange.exe"
 msgid "Ctrl+R"
@@ -299,6 +311,10 @@ msgid "Go level up in panel."
 msgstr "Перейти на уровень выше в панели."
 
 msgctxt "LanExchange.exe"
+msgid "Delete"
+msgstr "Удалить"
+
+msgctxt "LanExchange.exe"
 msgid "Show/hide main window."
 msgstr "Показать/скрыть главное окно."
 
@@ -319,10 +335,6 @@ msgid "Close tab"
 msgstr "Закрыть вкладку"
 
 msgctxt "LanExchange.exe"
-msgid "Paste"
-msgstr "Вставить"
-
-msgctxt "LanExchange.exe"
 msgid "Ctrl+Up"
 msgstr "Ctrl+Up"
 
@@ -337,10 +349,6 @@ msgstr "Домашняя страница"
 msgctxt "LanExchange.exe"
 msgid "This help on shortcuts."
 msgstr "Эта справка по горячим клавишам."
-
-msgctxt "LanExchange.exe"
-msgid "Delete"
-msgstr "Удалить"
 
 msgctxt "LanExchange.exe"
 msgid "Open"
@@ -391,6 +399,10 @@ msgid "Info panel"
 msgstr "Инфо-панель"
 
 msgctxt "LanExchange.exe"
+msgid "Copy"
+msgstr "Копировать"
+
+msgctxt "LanExchange.exe"
 msgid "Copy column on which the ordered item(s) to clipboard."
 msgstr "Копирование столбца по которому упорядочены элементы в буфер обмена."
 
@@ -425,10 +437,6 @@ msgstr "Перечитать"
 msgctxt "LanExchange.exe"
 msgid "Localization Webpage"
 msgstr "Страница локализации"
-
-msgctxt "LanExchange.exe"
-msgid "Copy"
-msgstr "Копировать"
 
 msgctxt "LanExchange.exe"
 msgid "License"

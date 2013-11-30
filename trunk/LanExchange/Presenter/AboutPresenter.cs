@@ -20,13 +20,12 @@ namespace LanExchange.Presenter
 
         public void LoadFromModel()
         {
-            View.Text = string.Format(CultureInfo.CurrentCulture, View.Text, m_Model.Product);
+            View.Text = string.Format(CultureInfo.CurrentCulture, View.Text, m_Model.Title);
             View.VersionText = m_Model.VersionFull;
             View.CopyrightText = m_Model.Copyright;
             View.WebText = m_Model.HomeLink;
             View.WebToolTip = m_Model.HomeLink;
             View.TwitterToolTip = m_Model.TwitterLink;
-            View.EmailToolTip = m_Model.EmailLink;
         }
 
         public void OpenHomeLink()

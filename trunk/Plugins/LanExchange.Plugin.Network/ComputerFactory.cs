@@ -23,11 +23,11 @@ namespace LanExchange.Plugin.Network
         {
             columnManager.RegisterColumn<ComputerPanelItem>(new PanelColumnHeader(Resources.NetworkName));
             columnManager.RegisterColumn<ComputerPanelItem>(new PanelColumnHeader(Resources.Description, 240));
-            columnManager.RegisterColumn<ComputerPanelItem>(new PanelColumnHeader(Resources.OSVersion) { Visible = false, Width = 110 });
+            columnManager.RegisterColumn<ComputerPanelItem>(new PanelColumnHeader(Resources.OSVersion, 110) { Visible = false});
             // lazy columns
-            columnManager.RegisterColumn<ComputerPanelItem>(new PanelColumnHeader(Resources.Ping) { Callback = GetReachable, Visible = false, Width = 110, Refreshable = true });
-            columnManager.RegisterColumn<ComputerPanelItem>(new PanelColumnHeader(Resources.IPAddress) { Callback = GetIPAddress, Visible = false, Width = 80 });
-            columnManager.RegisterColumn<ComputerPanelItem>(new PanelColumnHeader(Resources.MACAddress) { Callback = GetMACAddress, Visible = false, Width = 110 });
+            columnManager.RegisterColumn<ComputerPanelItem>(new PanelColumnHeader(Resources.Ping, 110) { Callback = GetReachable, Visible = false, Refreshable = true });
+            columnManager.RegisterColumn<ComputerPanelItem>(new PanelColumnHeader(Resources.IPAddress, 80) { Callback = GetIPAddress, Visible = false});
+            columnManager.RegisterColumn<ComputerPanelItem>(new PanelColumnHeader(Resources.MACAddress, 110) { Callback = GetMACAddress, Visible = false});
         }
 
         [Localizable(false)]

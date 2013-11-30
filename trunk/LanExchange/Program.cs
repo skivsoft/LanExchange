@@ -91,6 +91,7 @@ namespace LanExchange
             App.Config.Changed += App.Presenter.ConfigOnChanged;
             App.Config.Load();
             App.Resolve<IPluginManager>().LoadPlugins();
+            App.Addons.LoadAddons();
             // register ShortcutPanelItem
             App.PanelItemTypes.RegisterFactory<ShortcutPanelItem>(new ShortcutFactory());
             App.PanelFillers.RegisterFiller<ShortcutPanelItem>(new ShortcutFiller());

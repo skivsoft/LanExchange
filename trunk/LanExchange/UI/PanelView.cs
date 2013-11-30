@@ -661,7 +661,7 @@ namespace LanExchange.UI
 
         public void TranslateUI()
         {
-            TranslationUtils.TranslateComponents(Resources.ResourceManager, components);
+            TranslationUtils.TranslateComponents(Resources.ResourceManager, this, components);
             TranslationUtils.TranslateControls(Controls);
             mComp.Tag = null;
             //PrepareContextMenu();

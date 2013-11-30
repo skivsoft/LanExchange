@@ -30,11 +30,7 @@ namespace LanExchange.Misc.Impl
         { 
             get
             {
-                if (!m_Loaded)
-                {
-                    InternalLoadAddons();
-                    m_Loaded = true;
-                }
+                LoadAddons();
                 return m_Programs;
             }
         }
@@ -43,41 +39,31 @@ namespace LanExchange.Misc.Impl
         {
             get
             {
-                if (!m_Loaded)
-                {
-                    InternalLoadAddons();
-                    m_Loaded = true;
-                }
+                LoadAddons();
                 return m_PanelItems;
             }
         }
 
-        private void InternalLoadAddons()
+        public void LoadAddons()
         {
-            Cursor.Current = Cursors.WaitCursor;
-            try
-            {
-                foreach (var fileName in App.FolderManager.GetAddonsFiles())
-                    try
-                    {
-                        LoadAddon(fileName);
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.Print(ex.Message);
-                    }
-                // register programs images
-                foreach (var pair in m_Programs)
-                    if (pair.Value.ProgramImage != null)
-                    {
-                        var imageName = string.Format(CultureInfo.InvariantCulture, PanelImageNames.ADDON_FMT, pair.Key);
-                        App.Images.RegisterImage(imageName, pair.Value.ProgramImage, pair.Value.ProgramImage);
-                    }
-            }
-            finally
-            {
-                Cursor.Current = Cursors.Default;
-            }
+            if (m_Loaded) return;
+            foreach (var fileName in App.FolderManager.GetAddonsFiles())
+                try
+                {
+                    LoadAddon(fileName);
+                }
+                catch (Exception ex)
+                {
+                    Debug.Print(ex.Message);
+                }
+            // register programs images
+            foreach (var pair in m_Programs)
+                if (pair.Value.ProgramImage != null)
+                {
+                    var imageName = string.Format(CultureInfo.InvariantCulture, PanelImageNames.ADDON_FMT, pair.Key);
+                    App.Images.RegisterImage(imageName, pair.Value.ProgramImage, pair.Value.ProgramImage);
+                }
+            m_Loaded = true;
         }
 
         private void LoadAddon(string fileName)

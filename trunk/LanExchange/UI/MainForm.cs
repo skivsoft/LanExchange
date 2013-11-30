@@ -64,7 +64,7 @@ namespace LanExchange.UI
             SetBounds(rect.Left, rect.Top, rect.Width, rect.Height);
             // set mainform title
             var aboutModel = App.Resolve<IAboutModel>();
-            Text = String.Format(CultureInfo.CurrentCulture, "{0} {1}", aboutModel.Product, aboutModel.VersionShort);
+            Text = String.Format(CultureInfo.CurrentCulture, "{0} {1}", aboutModel.Title, aboutModel.VersionShort);
             // show tray
             TrayIcon.Text = Text;
             TrayIcon.Visible = true;
@@ -116,7 +116,7 @@ namespace LanExchange.UI
 
         public void TranslateUI()
         {
-            TranslationUtils.TranslateComponents(Resources.ResourceManager, components);
+            TranslationUtils.TranslateComponents(Resources.ResourceManager, this, components);
             mTrayOpen_ApplyResources();
             TranslationUtils.TranslateControls(Controls);
             popTop.Tag = null;
@@ -427,6 +427,12 @@ namespace LanExchange.UI
             presenter.OpenBugTrackerWebLink();
         }
 
+        private void mHelpFeedback_Click(object sender, EventArgs e)
+        {
+            var presenter = App.Resolve<IAboutPresenter>();
+            presenter.OpenEmailLink();
+        }
+
         private void mHelpKeys_Click(object sender, EventArgs e)
         {
             App.Presenter.ExecuteAction<ShortcutKeysAction>();
@@ -470,7 +476,7 @@ namespace LanExchange.UI
                 if (column.Callback != null)
                     count += column.LazyDict.Count;
             var aboutModel = App.Resolve<IAboutModel>();
-            Text = String.Format(CultureInfo.CurrentCulture, "{0} {1} [Threads: {2}, Dict: {3}]", aboutModel.Product, aboutModel.VersionFull, App.Threads.NumThreads, count);
+            Text = String.Format(CultureInfo.CurrentCulture, "{0} {1} [Threads: {2}, Dict: {3}]", aboutModel.Title, aboutModel.VersionFull, App.Threads.NumThreads, count);
         }
  #endif
 

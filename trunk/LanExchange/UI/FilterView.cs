@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
-using LanExchange.Intf;
 using LanExchange.Properties;
 using LanExchange.SDK;
 

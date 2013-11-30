@@ -58,9 +58,7 @@ namespace LanExchange.Presenter
                 // recreate all columns
                 GlobalTranslateColumns();
                 // Run TranslateUI() for all opened forms
-                foreach (var form in Application.OpenForms)
-                    if (form is ITranslationable)
-                        (form as ITranslationable).TranslateUI();
+                TranslationUtils.TranslateOpenForms();
             }
             finally
             {

@@ -45,7 +45,12 @@ namespace LanExchange.Model
         [Localizable(false)]
         public string EmailLink
         {
-            get { return "mailto:" + EMAIL; }
+            get
+            {
+                var ver = GetVersion();
+                var subject = string.Format(Resources.AboutModel_FeedbackFmt, Title, ver.ToString(3));
+                return string.Format("mailto:{0}?subject={1}", EMAIL, subject);
+            }
         }
 
         public string Title
@@ -65,16 +70,19 @@ namespace LanExchange.Model
             }
         }
 
+        private Version GetVersion()
+        {
+            var assembly = GetAssembly();
+            return assembly == null ? null : assembly.GetName().Version;
+        }
+
         [Localizable(false)]
         public string VersionShort
         {
             get
             {
-                var assembly = GetAssembly();
-                if (assembly == null) return string.Empty;
-                var ver = assembly.GetName().Version;
-                var result = String.Format(CultureInfo.CurrentCulture, "{0}.{1}", ver.Major, ver.Minor);
-                return result;
+                var ver = GetVersion();
+                return ver == null ? string.Empty : ver.ToString(2);
             }
         }
 
@@ -83,10 +91,9 @@ namespace LanExchange.Model
         {
             get
             {
-                var assembly = GetAssembly();
-                if (assembly == null) return string.Empty;
-                var ver = assembly.GetName().Version;
-                var result = String.Format(CultureInfo.CurrentCulture, "{0}.{1}", ver.Major, ver.Minor);
+                var ver = GetVersion();
+                if (ver == null) return string.Empty;
+                var result = ver.ToString(2);
                 if (ver.Build > 0)
                     result += String.Format(CultureInfo.CurrentCulture, Resources.AboutInfo_Build, ver.Build);
                 return result;

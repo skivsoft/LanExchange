@@ -20,7 +20,6 @@ namespace LanExchange.Intf
 
         string WebToolTip { get; set; }
         string TwitterToolTip { get; set; }
-        string EmailToolTip { get; set; }
 
         string VersionText { get; set; }
 

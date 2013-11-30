@@ -21,7 +21,7 @@ namespace LanExchange.SDK
             return 0;
         }
 
-        public int ColumnIndex;
-        public PanelSortOrder SortOrder;
+        public int ColumnIndex { get; set; }
+        public PanelSortOrder SortOrder { get; set; }
     }
 }

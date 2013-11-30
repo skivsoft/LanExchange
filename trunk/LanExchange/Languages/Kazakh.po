@@ -119,6 +119,10 @@ msgid "Copyright"
 msgstr "Авторлық құқық"
 
 msgctxt "LanExchange.exe"
+msgid "Send Feedback..."
+msgstr "Пікір жіберу..."
+
+msgctxt "LanExchange.exe"
 msgid "Action"
 msgstr "Әрекет"
 
@@ -175,6 +179,10 @@ msgid "Close other tabs"
 msgstr "Басқа қыстырмаларды жабу"
 
 msgctxt "LanExchange.exe"
+msgid "Paste"
+msgstr "Қою"
+
+msgctxt "LanExchange.exe"
 msgid "Exit"
 msgstr "Шығу"
 
@@ -209,6 +217,10 @@ msgstr "«{0}» көшiрiп алу"
 msgctxt "LanExchange.exe"
 msgid "Error"
 msgstr "Қате"
+
+msgctxt "LanExchange.exe"
+msgid "{0} {1} Feedback"
+msgstr "{0} {1} туралы пікір"
 
 msgctxt "LanExchange.exe"
 msgid "Ctrl+R"
@@ -299,6 +311,10 @@ msgid "Go level up in panel."
 msgstr "Панельде бір деңгей жоғары шығу."
 
 msgctxt "LanExchange.exe"
+msgid "Delete"
+msgstr "Жою"
+
+msgctxt "LanExchange.exe"
 msgid "Show/hide main window."
 msgstr "Бас терезені көрсету/жасыру."
 
@@ -319,10 +335,6 @@ msgid "Close tab"
 msgstr "Қыстырманы жабу"
 
 msgctxt "LanExchange.exe"
-msgid "Paste"
-msgstr "Қою"
-
-msgctxt "LanExchange.exe"
 msgid "Ctrl+Up"
 msgstr "Ctrl+Up"
 
@@ -337,10 +349,6 @@ msgstr "LanExchange вебсайты"
 msgctxt "LanExchange.exe"
 msgid "This help on shortcuts."
 msgstr "Бұл үйлестіру клавиштер мәліметі."
-
-msgctxt "LanExchange.exe"
-msgid "Delete"
-msgstr "Жою"
 
 msgctxt "LanExchange.exe"
 msgid "Open"
@@ -391,6 +399,10 @@ msgid "Info panel"
 msgstr "Инфо-панель"
 
 msgctxt "LanExchange.exe"
+msgid "Copy"
+msgstr "Көшіру"
+
+msgctxt "LanExchange.exe"
 msgid "Copy column on which the ordered item(s) to clipboard."
 msgstr "Қатар бойынша элементтері реттелген қатарды айырбастау буферіне көшіру."
 
@@ -425,10 +437,6 @@ msgstr "Қайта оқу"
 msgctxt "LanExchange.exe"
 msgid "Localization Webpage"
 msgstr "Локализация вебсайты"
-
-msgctxt "LanExchange.exe"
-msgid "Copy"
-msgstr "Көшіру"
 
 msgctxt "LanExchange.exe"
 msgid "License"
