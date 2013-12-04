@@ -76,6 +76,19 @@ namespace LanExchange.Model
             Assert.IsFalse(m_Model.AddTab(NewPanelModel("MyTab")));
         }
 
+        /// <summary>
+        /// Issue 2: Current tab not restored after restart
+        /// </summary>
+        [Test]
+        public void TestAddTab_Issue2()
+        {
+            App.SetContainer(ContainerBuilder.Build());
+            m_Model.AddTab(NewPanelModel("MyTab"));
+            Assert.AreEqual(0, m_Model.SelectedIndex);
+            m_Model.AddTab(NewPanelModel("YourTab"));
+            Assert.AreEqual(0, m_Model.SelectedIndex);
+        }
+
         [Test]
         public void TestRenameTab()
         {

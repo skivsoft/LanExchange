@@ -37,9 +37,6 @@ namespace LanExchange.UI
                 mTrayOpen.ShortcutKeyDisplayString = string.Empty;
             // set lazy events
             App.Threads.DataReady += OnDataReady;
-#if DEBUG
-            App.Threads.NumThreadsChanged += OnNumThreadsChanged;
-#endif
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Windows.Forms.Control.set_Text(System.String)")]
@@ -64,7 +61,10 @@ namespace LanExchange.UI
             SetBounds(rect.Left, rect.Top, rect.Width, rect.Height);
             // set mainform title
             var aboutModel = App.Resolve<IAboutModel>();
-            Text = String.Format(CultureInfo.CurrentCulture, "{0} {1}", aboutModel.Title, aboutModel.VersionShort);
+            var text = String.Format(CultureInfo.CurrentCulture, "{0} {1}", aboutModel.Title, aboutModel.VersionShort);
+            if (SystemInformation.TerminalServerSession)
+                text += string.Format(" [{0}]", "Terminal");
+            Text = text;
             // show tray
             TrayIcon.Text = Text;
             TrayIcon.Visible = true;
@@ -458,13 +458,6 @@ namespace LanExchange.UI
             BeginInvoke(new WaitCallback(MainForm_RefreshItem), new object[1] { args.Item });
         }
 
-#if DEBUG
-        public void OnNumThreadsChanged(object sender, EventArgs eventArgs)
-        {
-            BeginInvoke(new WaitCallback(MainForm_RefreshNumThreads), new object[1] { sender });
-        }
-#endif
-
         private void MainForm_RefreshItem(object item)
         {
             var pv = Pages.ActivePanelView;
@@ -475,20 +468,6 @@ namespace LanExchange.UI
                     pv.RedrawItem(index);
             }
         }
-
- #if DEBUG
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Windows.Forms.Control.set_Text(System.String)")]
-        [Localizable(false)]
-        private void MainForm_RefreshNumThreads(object sender)
-        {
-            int count = 0;
-            foreach (var column in App.PanelColumns.EnumAllColumns())
-                if (column.Callback != null)
-                    count += column.LazyDict.Count;
-            var aboutModel = App.Resolve<IAboutModel>();
-            Text = String.Format(CultureInfo.CurrentCulture, "{0} {1} [Threads: {2}, Dict: {3}]", aboutModel.Title, aboutModel.VersionFull, App.Threads.NumThreads, count);
-        }
- #endif
 
         private void lCompName_MouseDown(object sender, MouseEventArgs e)
         {

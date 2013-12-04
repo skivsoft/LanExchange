@@ -12,8 +12,9 @@ namespace LanExchange.UI
 
         public ListViewer()
         {
-            // switch off flikering
-            SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);    
+            if (!SystemInformation.TerminalServerSession)
+                // switch off flikering only if not terminal session
+                SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);    
         }
 
         protected override void WndProc(ref Message m)
