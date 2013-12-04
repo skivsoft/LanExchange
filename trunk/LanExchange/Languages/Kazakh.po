@@ -172,7 +172,7 @@ msgstr "Тор сызықтары"
 
 msgctxt "LanExchange.exe"
 msgid "Hide Details"
-msgstr "Егжей-тегжейлерді жасыру"
+msgstr "Жасыру"
 
 msgctxt "LanExchange.exe"
 msgid "Close other tabs"
@@ -192,7 +192,7 @@ msgstr "Тізім"
 
 msgctxt "LanExchange.exe"
 msgid "&Language"
-msgstr "&Тiлi"
+msgstr "&Тiл"
 
 msgctxt "LanExchange.exe"
 msgid "Context"
@@ -244,7 +244,7 @@ msgstr "Ctrl+A"
 
 msgctxt "LanExchange.exe"
 msgid "Quit from LanExchange program."
-msgstr "LanExchange программасынан шығу."
+msgstr "LanExchange бағдарламасынан шығу."
 
 msgctxt "LanExchange.exe"
 msgid "Clear filter OR go level up OR hide main window."
@@ -260,7 +260,7 @@ msgstr "Вебсайт"
 
 msgctxt "LanExchange.exe"
 msgid "BugTracker Webpage"
-msgstr "Багтрэкера вебсайты"
+msgstr "Багтрэкер вебсайты"
 
 msgctxt "LanExchange.exe"
 msgid "Released under the MIT license."
@@ -388,7 +388,7 @@ msgstr "Инфо панель биіктігін арттыру немесе к�
 
 msgctxt "LanExchange.exe"
 msgid "Show Details"
-msgstr "Егжей-тегжейлерді көрсету"
+msgstr "Толығырақ"
 
 msgctxt "LanExchange.exe"
 msgid "&Panel"

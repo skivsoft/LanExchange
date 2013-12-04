@@ -117,8 +117,6 @@ namespace LanExchange.Model
             if (m_SelectedIndex == -1 && m_List.Count == 1)
                 m_SelectedIndex = 0;
             DoAfterAppendTab(model);
-            m_SelectedIndex = m_List.Count - 1;
-            DoIndexChanged(m_SelectedIndex);
             return true;
         }
 
