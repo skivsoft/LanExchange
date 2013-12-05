@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanExchangeAddon xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Programs>
+    <Program Id="mstsc" FileName="%SystemRoot%\system32\mstsc.exe" />
+    <Program Id="compmgmt" FileName="%SystemRoot%\system32\compmgmt.msc"/>
+    <Program Id="fsmgmt" FileName="%SystemRoot%\system32\fsmgmt.msc"/>
+    <Program Id="lusrmgr" FileName="%SystemRoot%\system32\lusrmgr.msc"/>
+    <Program Id="services" FileName="%SystemRoot%\system32\services.msc"/>
+    <Program Id="cmd" FileName="%SystemRoot%\system32\cmd.exe"/>
+  </Programs>
+  <PanelItemTypes>
+    <PanelItemTypeRef Id="ComputerPanelItem">
+      <ContextMenuStrip>
+        <ToolStripMenuItem Text="Remote Desktop Connection">
+          <ProgramRef Id="mstsc" />
+          <ProgramArgs>/v:$(Name)</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem Text="Computer Management">
+          <ShortcutKeys>Ctrl+F1</ShortcutKeys>
+          <ProgramRef Id="compmgmt" />
+          <ProgramArgs>/computer:$(Name)</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem Text="Shared Folders">
+          <ProgramRef Id="fsmgmt" />
+          <ProgramArgs>/computer:$(Name)</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem Text="Local Users and Groups">
+          <ProgramRef Id="lusrmgr" />
+          <ProgramArgs>/computer:$(Name)</ProgramArgs>
+        </ToolStripMenuItem>
+        <ToolStripMenuItem Text="Services">
+          <ProgramRef Id="services" />
+          <ProgramArgs>/computer:$(Name)</ProgramArgs>
+        </ToolStripMenuItem>
+      </ContextMenuStrip>
+    </PanelItemTypeRef>
+  </PanelItemTypes>
+</LanExchangeAddon>
