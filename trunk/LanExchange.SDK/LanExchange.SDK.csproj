@@ -39,7 +39,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\Common\LanExchange.snk</AssemblyOriginatorKeyFile>
@@ -61,6 +61,7 @@
     <Compile Include="ConfigNames.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IAction.cs" />
+    <Compile Include="IAppView.cs" />
     <Compile Include="IDisposableManager.cs" />
     <Compile Include="IFilterModel.cs" />
     <Compile Include="IFilterPresenter.cs" />

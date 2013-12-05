@@ -18,6 +18,7 @@ namespace LanExchange.Core
         {
             var container = new SimpleIocContainer();
             // core singletons
+            container.Register<IAppView, AppView>();
             container.Register<IPanelItemFactoryManager, PanelItemFactoryManagerImpl>();
             container.Register<IPanelFillerManager, PanelFillerManagerImpl>();
             container.Register<IPanelColumnManager, PanelColumnManagerImpl>();

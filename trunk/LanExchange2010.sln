@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMIViewer", "WMIViewer\WMIV
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{21D3F599-1FA0-423A-8380-8B1041B353AC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.WPF", "Plugins\LanExchange.Plugin.WPF\LanExchange.Plugin.WPF.csproj", "{9B9EBF04-BB88-445A-A562-EFB308D8D0A9}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = LanExchange2010.vsmdi
@@ -120,6 +122,16 @@ Global
 		{21D3F599-1FA0-423A-8380-8B1041B353AC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{21D3F599-1FA0-423A-8380-8B1041B353AC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{21D3F599-1FA0-423A-8380-8B1041B353AC}.Release|x86.ActiveCfg = Release|Any CPU
+		{9B9EBF04-BB88-445A-A562-EFB308D8D0A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B9EBF04-BB88-445A-A562-EFB308D8D0A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B9EBF04-BB88-445A-A562-EFB308D8D0A9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{9B9EBF04-BB88-445A-A562-EFB308D8D0A9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{9B9EBF04-BB88-445A-A562-EFB308D8D0A9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9B9EBF04-BB88-445A-A562-EFB308D8D0A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B9EBF04-BB88-445A-A562-EFB308D8D0A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B9EBF04-BB88-445A-A562-EFB308D8D0A9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9B9EBF04-BB88-445A-A562-EFB308D8D0A9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{9B9EBF04-BB88-445A-A562-EFB308D8D0A9}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -128,6 +140,7 @@ Global
 		{18971728-B208-45D9-B4BB-4BB6020963E7} = {FB4F7079-13D6-4D51-9B1F-FB78F5F26B2D}
 		{064D3413-8F0B-4511-85F3-4919AC1D5A98} = {FB4F7079-13D6-4D51-9B1F-FB78F5F26B2D}
 		{26D53677-B560-4697-9C4E-E54ECBD4C048} = {FB4F7079-13D6-4D51-9B1F-FB78F5F26B2D}
+		{9B9EBF04-BB88-445A-A562-EFB308D8D0A9} = {FB4F7079-13D6-4D51-9B1F-FB78F5F26B2D}
 	EndGlobalSection
 	GlobalSection(NDepend) = preSolution
 		Project = ""

@@ -426,4 +426,7 @@ Continue anyway?</value>
   <data name="AboutModel_FeedbackFmt" xml:space="preserve">
     <value>{0} {1} Feedback</value>
   </data>
+  <data name="Terminal">
+    <value xml:space="preserve">Terminal</value>
+  </data>
 </root>
