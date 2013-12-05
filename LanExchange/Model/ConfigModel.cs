@@ -72,28 +72,6 @@ namespace LanExchange.Model
                 Changed(this, new ConfigChangedArgs(name));
         }
 
-        // properties below must not be modified instantly
-
-        public bool IsAutorun
-        {
-            get
-            {
-                return AutorunUtils.Autorun_Exists(App.FolderManager.ExeFileName);
-            }
-            set
-            {
-                var exeFName = App.FolderManager.ExeFileName;
-                if (value)
-                {
-                    AutorunUtils.Autorun_Add(exeFName);
-                }
-                else
-                {
-                    AutorunUtils.Autorun_Delete(exeFName);
-                }
-            }
-        }
-
         [DefaultValue(true)]
         public bool ShowInfoPanel
         {

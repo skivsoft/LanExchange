@@ -555,7 +555,7 @@ namespace LanExchange.Utils
         #region DLL Import
 
         // Retrieves the IShellFolder interface for the desktop folder, which is the root of the Shell's namespace.
-        [DllImport("shell32.dll")]
+        [DllImport(ExternDll.Shell32)]
         private static extern Int32 SHGetDesktopFolder(out IntPtr ppshf);
 
         // Takes a STRRET structure returned by IShellFolder::GetDisplayNameOf, converts it to a string, and places the result in a buffer. 
@@ -563,20 +563,20 @@ namespace LanExchange.Utils
         //private static extern Int32 StrRetToBuf(IntPtr pstr, IntPtr pidl, StringBuilder pszBuf, int cchBuf);
 
         // The TrackPopupMenuEx function displays a shortcut menu at the specified location and tracks the selection of items on the shortcut menu. The shortcut menu can appear anywhere on the screen.
-        [DllImport("user32.dll", ExactSpelling = true, CharSet = CharSet.Auto)]
+        [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]
         private static extern uint TrackPopupMenuEx(IntPtr hmenu, TPM flags, int x, int y, IntPtr hwnd, IntPtr lptpm);
 
         // The CreatePopupMenu function creates a drop-down menu, submenu, or shortcut menu. The menu is initially empty. You can insert or append menu items by using the InsertMenuItem function. You can also use the InsertMenu function to insert menu items and the AppendMenu function to append menu items.
-        [DllImport("user32", SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport(ExternDll.User32, SetLastError = true, CharSet = CharSet.Auto)]
         private static extern IntPtr CreatePopupMenu();
 
         // The DestroyMenu function destroys the specified menu and frees any memory that the menu occupies.
-        [DllImport("user32", SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport(ExternDll.User32, SetLastError = true, CharSet = CharSet.Auto)]
         private static extern bool DestroyMenu(IntPtr hMenu);
 
         // Determines the default menu item on the specified menu
-        [DllImport("user32", SetLastError = true, CharSet = CharSet.Auto)]
-        private static extern int GetMenuDefaultItem(IntPtr hMenu, bool fByPos, uint gmdiFlags);
+        //[DllImport(ExternDll.User32, SetLastError = true, CharSet = CharSet.Auto)]
+        //private static extern int GetMenuDefaultItem(IntPtr hMenu, bool fByPos, uint gmdiFlags);
 
         #endregion
 

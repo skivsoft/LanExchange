@@ -14,7 +14,7 @@ namespace LanExchange.Utils
 		#region UnmanagedCode
 		private const int MAX_PATH = 260;
 		
-		[DllImport("shell32", CharSet = CharSet.Unicode)]
+		[DllImport(ExternDll.Shell32, CharSet = CharSet.Unicode)]
 		private static extern IntPtr SHGetFileInfo (
 			string pszPath, 
 			int dwFileAttributes,
@@ -48,7 +48,7 @@ namespace LanExchange.Utils
         //[DllImport("kernel32")]
         //private extern static int GetLastError();
 
-		[DllImport("comctl32")]
+		[DllImport(ExternDll.Comctl32)]
 		private extern static int ImageList_Draw(
 			IntPtr hIml,
 			int i,
@@ -57,17 +57,17 @@ namespace LanExchange.Utils
 			int y,
 			int fStyle);
 
-		[DllImport("comctl32")]
+        [DllImport(ExternDll.Comctl32)]
 		private extern static int ImageList_DrawIndirect(
 			ref IMAGELISTDRAWPARAMS pimldp);
 
-		[DllImport("comctl32")]
+        [DllImport(ExternDll.Comctl32)]
 		private extern static int ImageList_GetIconSize(
 			IntPtr himl, 
 			ref int cx, 
 			ref int cy);
 
-		[DllImport("comctl32")]
+        [DllImport(ExternDll.Comctl32)]
 		private extern static IntPtr ImageList_GetIcon(
 			IntPtr himl, 
 			int i, 
@@ -78,14 +78,14 @@ namespace LanExchange.Utils
 		/// http://support.microsoft.com/default.aspx?scid=kb;EN-US;Q316931
 		/// Apparently (and hopefully) ordinal 727 isn't going to change.
 		/// </summary>
-		[DllImport("shell32.dll", EntryPoint = "#727")]
+        [DllImport(ExternDll.Shell32, EntryPoint = "#727")]
 		private extern static int SHGetImageList(
 			int iImageList,
 			ref Guid riid,
 			ref IImageList ppv
 			);
 
-		[DllImport("shell32.dll", EntryPoint = "#727")]
+        [DllImport(ExternDll.Shell32, EntryPoint = "#727")]
 		private extern static int SHGetImageListHandle(
 			int iImageList,
 			ref Guid riid,

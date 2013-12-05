@@ -36,7 +36,7 @@ namespace LanExchange.Utils
 
         #region Shell32
 
-        [DllImport("shell32.dll", EntryPoint = "#660")]
+        [DllImport(ExternDll.Shell32, EntryPoint = "#660")]
         public static extern bool FileIconInit(bool bFullInit);
 
         // Retrieves information about an object in the file system,
@@ -55,7 +55,7 @@ namespace LanExchange.Utils
 
         // Retrieves information about an object in the file system,
         // such as a file, a folder, a directory, or a drive root.
-        [DllImport("shell32", 
+        [DllImport(ExternDll.Shell32, 
             EntryPoint = "SHGetFileInfo", 
             ExactSpelling = false, 
             CharSet = CharSet.Auto, 
@@ -78,12 +78,12 @@ namespace LanExchange.Utils
 
         // Retrieves the IShellFolder interface for the desktop folder,
         // which is the root of the Shell's namespace. 
-        [DllImport("shell32.dll")]
+        [DllImport(ExternDll.Shell32)]
         public static extern Int32 SHGetDesktopFolder(
             out IntPtr ppshf);
 
         // Retrieves ppidl of special folder
-        [DllImport("Shell32", 
+        [DllImport(ExternDll.Shell32, 
             EntryPoint = "SHGetSpecialFolderLocation", 
             ExactSpelling = true, 
             CharSet = CharSet.Ansi, 
@@ -96,7 +96,7 @@ namespace LanExchange.Utils
         // This function takes the fully-qualified pointer to an item
         // identifier list (PIDL) of a namespace object, and returns a specified
         // interface pointer on the parent object.
-        [DllImport("shell32.dll")]
+        [DllImport(ExternDll.Shell32)]
         public static extern Int32 SHBindToParent(
             IntPtr pidl,            
             ref Guid riid,
@@ -104,7 +104,7 @@ namespace LanExchange.Utils
             out IntPtr ppidlLast);
 
         // Registers a window that receives notifications from the file system or shell
-        [DllImport("shell32.dll", EntryPoint = "#2", CharSet = CharSet.Auto)]
+        [DllImport(ExternDll.Shell32, EntryPoint = "#2", CharSet = CharSet.Auto)]
         public static extern uint SHChangeNotifyRegister(
             IntPtr hwnd,
             SHCNRF fSources,
@@ -115,7 +115,7 @@ namespace LanExchange.Utils
             SHChangeNotifyEntry[] pfsne);
 
         // Unregisters the client's window process from receiving SHChangeNotify
-        [DllImport("shell32.dll", EntryPoint = "#4", CharSet = CharSet.Auto)]
+        [DllImport(ExternDll.Shell32, EntryPoint = "#4", CharSet = CharSet.Auto)]
         public static extern bool SHChangeNotifyDeregister(
             uint hNotify);
 
@@ -133,7 +133,7 @@ namespace LanExchange.Utils
         //    out IntPtr ppidlReal);
 
         // Tests whether two ITEMIDLIST structures are equal in a binary comparison
-        [DllImport("shell32.dll",
+        [DllImport(ExternDll.Shell32,
             EntryPoint = "ILIsEqual", 
             ExactSpelling = true, 
             CharSet = CharSet.Ansi, 
@@ -164,7 +164,7 @@ namespace LanExchange.Utils
         #region User32
 
         // Sends the specified message to a window or windows
-        [DllImport("user32", 
+        [DllImport(ExternDll.User32, 
             EntryPoint = "SendMessage", 
             ExactSpelling = false, 
             CharSet = CharSet.Auto, 
@@ -176,7 +176,7 @@ namespace LanExchange.Utils
             IntPtr lParam);
 
         // Destroys an icon and frees any memory the icon occupied
-        [DllImport("user32.dll",
+        [DllImport(ExternDll.User32,
             EntryPoint = "DestroyIcon",
             ExactSpelling = true,
             CharSet = CharSet.Ansi,
@@ -186,7 +186,7 @@ namespace LanExchange.Utils
 
         // Displays a shortcut menu at the specified location and 
         // tracks the selection of items on the shortcut menu
-        [DllImport("user32.dll", 
+        [DllImport(ExternDll.User32, 
             ExactSpelling=true,
             CharSet = CharSet.Auto)]
         public static extern uint TrackPopupMenuEx(
@@ -199,13 +199,13 @@ namespace LanExchange.Utils
 
         // Creates a popup-menu. The menu is initially empty, but it can be filled with 
         // menu items by using the InsertMenuItem, AppendMenu, and InsertMenu functions
-        [DllImport("user32",
+        [DllImport(ExternDll.User32,
             SetLastError = true, 
             CharSet = CharSet.Auto)]
         public static extern IntPtr CreatePopupMenu();
 
         // Destroys the specified menu and frees any memory that the menu occupies
-        [DllImport("user32",
+        [DllImport(ExternDll.User32,
             SetLastError = true,
             CharSet = CharSet.Auto)]
         public static extern bool DestroyMenu(
@@ -237,7 +237,7 @@ namespace LanExchange.Utils
         //    string lpNewItem);
 
         // Inserts a new menu item at the specified position in a menu
-        [DllImport("user32",
+        [DllImport(ExternDll.User32,
             SetLastError = true,
             CharSet = CharSet.Auto)]
         public static extern bool InsertMenuItem(
@@ -247,7 +247,7 @@ namespace LanExchange.Utils
             ref MENUITEMINFO lpmii);
 
         // Deletes a menu item or detaches a submenu from the specified menu
-        [DllImport("user32",
+        [DllImport(ExternDll.User32,
             SetLastError = true,
             CharSet = CharSet.Auto)]
         public static extern bool RemoveMenu(
@@ -256,7 +256,7 @@ namespace LanExchange.Utils
             MFT uFlags);
 
         // Retrieves information about a menu item
-        [DllImport("user32",
+        [DllImport(ExternDll.User32,
             SetLastError = true,
             CharSet = CharSet.Auto)]
         public static extern bool GetMenuItemInfo(
@@ -266,7 +266,7 @@ namespace LanExchange.Utils
             ref ShellAPI.MENUITEMINFO lpmii);
 
         // Changes information about a menu item.
-        [DllImport("user32",
+        [DllImport(ExternDll.User32,
             SetLastError = true,
             CharSet = CharSet.Auto)]
         public static extern bool SetMenuItemInfo(
@@ -276,7 +276,7 @@ namespace LanExchange.Utils
             ref ShellAPI.MENUITEMINFO lpmii);
 
         // Determines the default menu item on the specified menu
-        [DllImport("user32",
+        [DllImport(ExternDll.User32,
             SetLastError = true,
             CharSet = CharSet.Auto)]
         public static extern int GetMenuDefaultItem(
@@ -285,7 +285,7 @@ namespace LanExchange.Utils
             uint gmdiFlags);
 
         // Sets the default menu item for the specified menu
-        [DllImport("user32",
+        [DllImport(ExternDll.User32,
             SetLastError = true,
             CharSet = CharSet.Auto)]
         public static extern bool SetMenuDefaultItem(
@@ -294,7 +294,7 @@ namespace LanExchange.Utils
             bool fByPos);
 
         // Retrieves a handle to the drop-down menu or submenu activated by the specified menu item
-        [DllImport("user32",
+        [DllImport(ExternDll.User32,
             SetLastError = true,
             CharSet = CharSet.Auto)]
         public static extern IntPtr GetSubMenu(
@@ -302,7 +302,7 @@ namespace LanExchange.Utils
             int nPos);
 
         // Retrieves information about the specified combo box
-        [DllImport("user32",
+        [DllImport(ExternDll.User32,
             SetLastError = true,
             CharSet = CharSet.Auto)]
         public static extern bool GetComboBoxInfo(
@@ -314,7 +314,7 @@ namespace LanExchange.Utils
         #region Comctl
 
         // Replaces an image with an icon or cursor
-        [DllImport("comctl32", 
+        [DllImport(ExternDll.Comctl32, 
             EntryPoint = "ImageList_ReplaceIcon", 
             ExactSpelling = false, 
             CharSet = CharSet.Auto, 
@@ -325,7 +325,7 @@ namespace LanExchange.Utils
             IntPtr hicon);
 
         // Adds an image or images to an image list
-        [DllImport("comctl32",
+        [DllImport(ExternDll.Comctl32,
             EntryPoint = "ImageList_Add",
             ExactSpelling = false,
             CharSet = CharSet.Auto,
@@ -336,7 +336,7 @@ namespace LanExchange.Utils
             IntPtr hbmMask);
 
         // Creates an icon from an image and mask in an image list
-        [DllImport("comctl32", 
+        [DllImport(ExternDll.Comctl32, 
             EntryPoint = "ImageList_GetIcon", 
             ExactSpelling = true, 
             CharSet = CharSet.Ansi, 
@@ -361,14 +361,14 @@ namespace LanExchange.Utils
 
         // Revokes the registration of the specified application window as a potential target for 
         // OLE drag-and-drop operations
-        [DllImport("ole32.dll", 
+        [DllImport(ExternDll.Ole32, 
             CharSet = CharSet.Auto, 
             SetLastError = true)]
         public static extern int RevokeDragDrop(
             IntPtr hWnd);
 
         // This function frees the specified storage medium
-        [DllImport("ole32.dll", 
+        [DllImport(ExternDll.Ole32, 
             CharSet = CharSet.Auto, 
             SetLastError = true)]
         public static extern void ReleaseStgMedium(
@@ -386,7 +386,7 @@ namespace LanExchange.Utils
         //    out DragDropEffects pdwEffect);
 
         // Retrieves a drag/drop helper interface for drawing the drag/drop images
-        [DllImport("ole32.dll",
+        [DllImport(ExternDll.Ole32,
             CharSet = CharSet.Auto,
             SetLastError = true)]
         public static extern int CoCreateInstance(
@@ -397,7 +397,7 @@ namespace LanExchange.Utils
             out IntPtr ppv);
 
         // Retrieves a data object that you can use to access the contents of the clipboard
-        [DllImport("ole32.dll",
+        [DllImport(ExternDll.Ole32,
             CharSet = CharSet.Auto,
             SetLastError = true)]
         public static extern int OleGetClipboard(

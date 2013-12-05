@@ -12,17 +12,17 @@ namespace LanExchange.Utils
     [CLSCompliant(false)]
     public class GlobalHotkeys : IDisposable
     {
-        [DllImport("user32", SetLastError = true)]
+        [DllImport(ExternDll.User32, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool RegisterHotKey(IntPtr hwnd, int id, uint fsModifiers, uint vk);
 
-        [DllImport("user32", SetLastError = true)]
+        [DllImport(ExternDll.User32, SetLastError = true)]
         public static extern int UnregisterHotKey(IntPtr hwnd, int id);
 
-        [DllImport("kernel32", SetLastError = true)]
+        [DllImport(ExternDll.Kernel32, SetLastError = true)]
         public static extern short GlobalAddAtom([MarshalAs(UnmanagedType.LPWStr)]string lpString);
 
-        [DllImport("kernel32", SetLastError = true)]
+        [DllImport(ExternDll.Kernel32, SetLastError = true)]
         public static extern short GlobalDeleteAtom(short nAtom);
 
         public const int MOD_ALT = 1;

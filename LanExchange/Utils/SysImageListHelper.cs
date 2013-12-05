@@ -25,7 +25,7 @@ namespace LanExchange.Utils
         private const int TVSIL_NORMAL = 0;
         private const int TVSIL_STATE = 2;
 
-        [DllImport("user32", CharSet = CharSet.Auto)]
+        [DllImport(ExternDll.Shell32, CharSet = CharSet.Auto)]
         private static extern IntPtr SendMessage(
             IntPtr hWnd, 
             int wMsg, 

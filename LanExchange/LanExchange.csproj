@@ -77,7 +77,7 @@
     <StartupObject>LanExchange.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\Common\LanExchange.snk</AssemblyOriginatorKeyFile>
@@ -220,11 +220,10 @@
     <Compile Include="Utils\ShellIconStateConstants.cs" />
     <Compile Include="Utils\SysImageList.cs" />
     <Compile Include="UI\User32Utils.cs" />
-    <Compile Include="Utils\AutorunUtils.cs" />
     <Compile Include="Utils\BitmapUtils.cs" />
     <Compile Include="Utils\ExternDll.cs" />
     <Compile Include="Utils\GlobalHotkeys.cs" />
-    <Compile Include="Utils\Kernel32.cs" />
+    <Compile Include="Utils\EnvironmentUtils.cs" />
     <Compile Include="Utils\KeyboardUtils.cs" />
     <Compile Include="Utils\NativeMethods.cs" />
     <Compile Include="Utils\SafeNativeMethods.cs" />

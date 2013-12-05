@@ -8,9 +8,9 @@ using LanExchange.SDK;
 
 namespace LanExchange.UI
 {
-    public static class AppView
+    public class AppView : IAppView
     {
-        public static void ApplicationRun()
+        public void ApplicationRun()
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
             Application.ThreadException += ApplicationOnThreadException;

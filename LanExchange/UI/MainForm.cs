@@ -63,7 +63,7 @@ namespace LanExchange.UI
             var aboutModel = App.Resolve<IAboutModel>();
             var text = String.Format(CultureInfo.CurrentCulture, "{0} {1}", aboutModel.Title, aboutModel.VersionShort);
             if (SystemInformation.TerminalServerSession)
-                text += string.Format(" [{0}]", "Terminal");
+                text += string.Format(" [{0}]", Resources.Terminal);
             Text = text;
             // show tray
             TrayIcon.Text = Text;

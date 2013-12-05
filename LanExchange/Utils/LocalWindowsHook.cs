@@ -92,7 +92,7 @@ namespace LanExchange.Utils
         #region Win32 Imports
         // ************************************************************************
         // Win32: SetWindowsHookEx()
-        [DllImport("user32.dll")]
+        [DllImport(ExternDll.User32)]
         protected static extern IntPtr SetWindowsHookEx(HookType code,
                                                         HookProc func,
                                                         IntPtr hInstance,
@@ -101,13 +101,13 @@ namespace LanExchange.Utils
 
         // ************************************************************************
         // Win32: UnhookWindowsHookEx()
-        [DllImport("user32.dll")]
+        [DllImport(ExternDll.User32)]
         protected static extern int UnhookWindowsHookEx(IntPtr hhook);
         // ************************************************************************
 
         // ************************************************************************
         // Win32: CallNextHookEx()
-        [DllImport("user32.dll")]
+        [DllImport(ExternDll.User32)]
         protected static extern int CallNextHookEx(IntPtr hhook,
                                                    int code, IntPtr wParam, IntPtr lParam);
         // ************************************************************************

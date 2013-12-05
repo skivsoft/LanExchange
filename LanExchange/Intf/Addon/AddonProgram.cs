@@ -43,7 +43,7 @@ namespace LanExchange.Intf.Addon
         public static string ExpandCmdLine(string fileName)
         {
             var cmdLine = fileName;
-            if (!Kernel32.Is64BitOperatingSystem())
+            if (!EnvironmentUtils.Is64BitOperatingSystem())
                 cmdLine = cmdLine.Replace("%ProgramFiles(x86)%", "%ProgramFiles%");
             return Environment.ExpandEnvironmentVariables(cmdLine);
         }
