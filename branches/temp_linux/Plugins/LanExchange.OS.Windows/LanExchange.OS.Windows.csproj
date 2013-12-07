@@ -34,14 +34,28 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Common\AnyAssemblyInfo.cs">
+      <Link>AnyAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="ExternDll.cs" />
+    <Compile Include="HotkeysService.cs" />
+    <Compile Include="Comctl32Service.cs" />
+    <Compile Include="Kernel32Service.cs" />
+    <Compile Include="Ole32Service.cs" />
+    <Compile Include="Shell32Service.cs" />
+    <Compile Include="User32Service.cs" />
+    <Compile Include="ListViewService.cs" />
     <Compile Include="PluginWindows.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\LanExchange.SDK\LanExchange.SDK.csproj">
       <Project>{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}</Project>
       <Name>LanExchange.SDK</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

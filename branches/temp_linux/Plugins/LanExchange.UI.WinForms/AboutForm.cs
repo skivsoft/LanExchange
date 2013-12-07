@@ -2,10 +2,11 @@
 using System.Text;
 using System.Windows.Forms;
 using LanExchange.Properties;
+using LanExchange.SDK;
 using LanExchange.SDK.UI;
 //using System.ComponentModel;
 
-namespace LanExchange.UI.WinForms.UI
+namespace LanExchange.UI.WinForms
 {
     /// <summary>
     /// Concrete class for IAboutView.

@@ -4,13 +4,11 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 using System.Windows.Forms;
-using LanExchange.Model;
 using LanExchange.Properties;
 using LanExchange.SDK;
 using LanExchange.SDK.UI;
-using LanExchange.UI.WinForms;
 
-namespace LanExchange.UI
+namespace LanExchange.UI.WinForms
 {
     public partial class PanelView : UserControl, IPanelView, IListViewItemGetter, ITranslationable
     {

@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
 using System;
 
-namespace LanExchange.UI
+namespace LanExchange.UI.WinForms
 {
     /// <summary>
     /// We must not use ShowInTaskbar=false for MainForm. 
@@ -44,7 +44,7 @@ namespace LanExchange.UI
             base.OnFormClosing(e);
         }
 
-        protected void SetRunMinimized(bool value)
+        public void SetRunMinimized(bool value)
         {
             m_RunMinimized = value;
         }

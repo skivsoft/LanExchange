@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace LanExchange.UI
+namespace LanExchange.UI.WinForms
 {
     partial class FilterView
     {

@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using LanExchange.SDK;
 using LanExchange.SDK.UI;
 
-namespace LanExchange.UI
+namespace LanExchange.UI.WinForms
 {
     public partial class InfoView : UserControl, IInfoView
     {

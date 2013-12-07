@@ -1,5 +1,5 @@
 ﻿using System;
-using LanExchange.Intf.Addon;
+using LanExchange.SDK.Addon;
 using NUnit.Framework;
 
 namespace LanExchange.Misc.Impl

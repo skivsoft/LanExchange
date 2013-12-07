@@ -4,7 +4,7 @@ using LanExchange.UI;
 
 //using NLog;
 
-namespace LanExchange.UI
+namespace LanExchange.UI.WinForms
 {
     public class ListViewItemCache
     {

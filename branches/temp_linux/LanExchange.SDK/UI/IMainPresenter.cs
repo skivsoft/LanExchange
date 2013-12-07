@@ -10,5 +10,6 @@ namespace LanExchange.SDK.UI
         void ExecuteAction<T>() where T : IAction;
         bool IsActionEnabled<T>() where T : IAction;
         void ConfigOnChanged(object sender, ConfigChangedArgs e);
+        void PrepareForm();
     }
 }

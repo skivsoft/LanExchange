@@ -11,7 +11,6 @@ namespace LanExchange.UI.WinForms
     public class AppPresenter : IAppPresenter
     {
        
-
         public void ApplicationRun(IMainView view)
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
@@ -43,6 +42,13 @@ namespace LanExchange.UI.WinForms
             App.Config.Save();
             // dispose instances registered in plugins
             App.Resolve<IDisposableManager>().Dispose();
+        }
+
+        public void TranslateOpenForms()
+        {
+            foreach (var form in Application.OpenForms)
+                if (form is ITranslationable)
+                    (form as ITranslationable).TranslateUI();
         }
     }
 }

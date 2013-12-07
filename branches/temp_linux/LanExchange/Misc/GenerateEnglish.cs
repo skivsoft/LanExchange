@@ -9,7 +9,8 @@ using System.Reflection;
 using System.Resources;
 using System.Text;
 using LanExchange.Intf;
-using LanExchange.Intf.Addon;
+using LanExchange.SDK;
+using LanExchange.SDK.Addon;
 using LanExchange.Utils;
 
 namespace LanExchange.Misc

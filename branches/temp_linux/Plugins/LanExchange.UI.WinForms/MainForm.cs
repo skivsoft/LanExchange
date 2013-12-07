@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Security.Permissions;
 using LanExchange.Properties;
 using LanExchange.SDK;
+using LanExchange.SDK.OS;
 using LanExchange.SDK.UI;
 
 namespace LanExchange.UI.WinForms
@@ -15,67 +16,23 @@ namespace LanExchange.UI.WinForms
     {
         public const int WAIT_FOR_KEYUP_MS = 500;
         public PagesView Pages;
-        private readonly GlobalHotkeys m_Hotkeys;
+        private readonly IHotkeysService m_Hotkeys;
 
         public MainForm()
         {
             InitializeComponent();
-            // App.MainView must be set before panel view will be created
-            App.MainView = this;
-            SetRunMinimized(App.Config.RunMinimized);
-            // setup languages in menu
-            SetupMenuLanguages();
-            // init main form
-            SetupForm();
             // set hotkey for activate: Ctrl+Win+X
-            m_Hotkeys = new GlobalHotkeys();
+            m_Hotkeys = App.Resolve<IHotkeysService>();
             App.Resolve<IDisposableManager>().RegisterInstance(m_Hotkeys);
-            if (!m_Hotkeys.RegisterGlobalHotKey((int) Keys.X, GlobalHotkeys.MOD_CONTROL + GlobalHotkeys.MOD_WIN, Handle))
+            if (m_Hotkeys.RegisterShowWindowKey(Handle))
+                mTrayOpen.ShortcutKeyDisplayString = m_Hotkeys.ShowWindowKey;
+            else
                 mTrayOpen.ShortcutKeyDisplayString = string.Empty;
-            // set lazy events
-            App.Threads.DataReady += OnDataReady;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Windows.Forms.Control.set_Text(System.String)")]
-        [Localizable(false)]
-        private void SetupForm()
+        public void SetupMenuLanguages()
         {
-            // init Pages presenter
-            Pages = (PagesView)App.Resolve<IPagesView>();
-            Pages.Dock = DockStyle.Fill;
-            Controls.Add(Pages);
-            Pages.BringToFront();
-            // setup images
-            App.Images.SetImagesTo(Pages.Pages);
-            App.Images.SetImagesTo(Status);
-            // load saved pages from config
-            Pages.SetupContextMenu();
-            //App.MainPages.View.SetupContextMenu();
-            App.MainPages.PanelViewFocusedItemChanged += Pages_PanelViewFocusedItemChanged;
-            App.MainPages.LoadSettings();
-            // set mainform bounds
-            var rect = App.Presenter.SettingsGetBounds();
-            SetBounds(rect.Left, rect.Top, rect.Width, rect.Height);
-            // set mainform title
-            var aboutModel = App.Resolve<IAboutModel>();
-            var text = String.Format(CultureInfo.CurrentCulture, "{0} {1}", aboutModel.Title, aboutModel.VersionShort);
-            if (SystemInformation.TerminalServerSession)
-                text += string.Format(" [{0}]", Resources.Terminal);
-            Text = text;
-            // show tray
-            TrayIcon.Text = Text;
-            TrayIcon.Visible = true;
-            // show computer name
-            lCompName.Text = SystemInformation.ComputerName;
-            lCompName.ImageIndex = App.Images.IndexOf(PanelImageNames.ComputerNormal);
-            // show current user
-            lUserName.Text = SystemInformation.UserName;
-            lUserName.ImageIndex = App.Images.IndexOf(PanelImageNames.UserNormal);
-        }
-
-        private void SetupMenuLanguages()
-        {
-            var nameDict = App.TR.GetLanguagesNames();
+            var nameDict = App.Resolve<ITranslationService>().GetLanguagesNames();
             if (nameDict.Count < 2)
             {
                 mLanguage.Visible = false;
@@ -316,19 +273,23 @@ namespace LanExchange.UI.WinForms
         [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         protected override void WndProc(ref Message m)
         {
+            const int WM_HOTKEY = 0x312;
+            const int WM_QUERYENDSESSION = 0x0011;
+            const int WM_ENDSESSION = 0x0016;
+
             switch (m.Msg)
             {
-                case GlobalHotkeys.WM_HOTKEY:
+                case WM_HOTKEY:
                     if ((short)m.WParam == m_Hotkeys.HotkeyID)
                     {
                         ToggleVisible();
                         m.Result = new IntPtr(1);
                     }
                     break;
-                case NativeMethods.WM_QUERYENDSESSION:
+                case WM_QUERYENDSESSION:
                     m.Result = new IntPtr(1);
                     break;
-                case NativeMethods.WM_ENDSESSION:
+                case WM_ENDSESSION:
                     break;
                 default:
                     base.WndProc(ref m);

@@ -1,7 +1,6 @@
 ﻿using System;
 using LanExchange.SDK;
 using LanExchange.SDK.UI;
-using LanExchange.UI.WinForms.UI;
 
 namespace LanExchange.UI.WinForms
 {
@@ -25,6 +24,7 @@ namespace LanExchange.UI.WinForms
             container.Register<IPagesView, PagesView>();
             container.Register<IPanelView, PanelView>();
             container.Register<IWaitingService, WaitingServiceImpl>();
+            container.Register<IAddonManager, AddonManagerImpl>();
         }
     }
 }

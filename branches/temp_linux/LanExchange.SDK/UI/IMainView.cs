@@ -11,5 +11,8 @@ namespace LanExchange.SDK.UI
         int NumInfoLines { get; set; }
         void ClearInfoPanel();
         void Invoke(Delegate method, object sender);
+
+        void SetRunMinimized(bool minimized);
+        void SetupMenuLanguages();
     }
 }

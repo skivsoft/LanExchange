@@ -1,6 +1,4 @@
-﻿using LanExchange.Properties;
-
-namespace LanExchange.UI
+﻿namespace LanExchange.UI.WinForms
 {
     partial class PanelView
     {
@@ -171,7 +169,7 @@ namespace LanExchange.UI
 
         #endregion
 
-        private LanExchange.UI.ListViewer LV;
+        private LanExchange.UI.WinForms.ListViewer LV;
         public System.Windows.Forms.ContextMenuStrip popComps;
         public System.Windows.Forms.ToolStripMenuItem mComp;
         private System.Windows.Forms.ToolStripSeparator mAfterComp;

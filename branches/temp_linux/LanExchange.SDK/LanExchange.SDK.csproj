@@ -56,12 +56,33 @@
     <Compile Include="..\Common\AnyAssemblyInfo.cs">
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Addon\Addon.cs" />
+    <Compile Include="Addon\AddonItemTypeRef.cs" />
+    <Compile Include="Addon\AddonMenuItem.cs" />
+    <Compile Include="Addon\AddonObjectId.cs" />
+    <Compile Include="Addon\AddonProgram.cs" />
+    <Compile Include="Addon\ProtocolHelper.cs" />
+    <Compile Include="App.cs" />
     <Compile Include="ColumnComparer.cs" />
     <Compile Include="ConfigChangedArgs.cs" />
     <Compile Include="ConfigNames.cs" />
+    <Compile Include="DataReadyArgs.cs" />
+    <Compile Include="EnvironmentUtils.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IAction.cs" />
+    <Compile Include="OS\IComctl32Service.cs" />
+    <Compile Include="OS\IKernel32Service.cs" />
+    <Compile Include="OS\IOle32Service.cs" />
+    <Compile Include="OS\IShell32Service.cs" />
+    <Compile Include="OS\IUser32Service.cs" />
+    <Compile Include="UI\IAddonManager.cs" />
+    <Compile Include="IConfigModel.cs" />
+    <Compile Include="ILazyThreadPool.cs" />
     <Compile Include="ITranslationable.cs" />
+    <Compile Include="OS\IHotkeysService.cs" />
+    <Compile Include="OS\IListViewService.cs" />
+    <Compile Include="UI\IAboutModel.cs" />
+    <Compile Include="UI\IAboutPresenter.cs" />
     <Compile Include="UI\IAppPresenter.cs" />
     <Compile Include="IDisposableManager.cs" />
     <Compile Include="IFilterModel.cs" />
@@ -85,7 +106,7 @@
     <Compile Include="IPresenter.cs" />
     <Compile Include="ITranslationService.cs" />
     <Compile Include="IView.cs" />
-    <Compile Include="IWaitingService.cs" />
+    <Compile Include="UI\IWaitingService.cs" />
     <Compile Include="LifeCycle.cs" />
     <Compile Include="ObjectPath.cs" />
     <Compile Include="PanelColumnHeader.cs" />

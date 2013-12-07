@@ -2,8 +2,9 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 using LanExchange.Properties;
+using LanExchange.UI.WinForms;
 
-namespace LanExchange.UI
+namespace LanExchange.UI.WinForms
 {
     public class ListViewer : ListView
     {

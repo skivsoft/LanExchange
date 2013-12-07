@@ -12,13 +12,6 @@ namespace LanExchange.UI.WinForms
     {
         private static readonly IDictionary<Component, string> s_FieldsMap = new Dictionary<Component, string>();
 
-        internal static void TranslateOpenForms()
-        {
-            foreach (var form in Application.OpenForms)
-                if (form is ITranslationable)
-                    (form as ITranslationable).TranslateUI();
-        }
-
         /// <summary>
         /// Recursive translation every control.
         /// </summary>

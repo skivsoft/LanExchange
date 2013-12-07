@@ -3,8 +3,8 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
-using LanExchange.Intf;
 using LanExchange.Properties;
+using LanExchange.SDK.UI;
 
 namespace LanExchange.Model
 {

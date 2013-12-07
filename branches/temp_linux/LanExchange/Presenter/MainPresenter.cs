@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Net.Mime;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using LanExchange.Intf;
 using LanExchange.Presenter.Action;
 using LanExchange.SDK;
+using LanExchange.SDK.OS;
 using LanExchange.SDK.UI;
 using LanExchange.Utils;
 
@@ -23,6 +26,55 @@ namespace LanExchange.Presenter
             RegisterAction(new ActionCloseTab());
             RegisterAction(new ActionCloseOther());
             RegisterAction(new ActionShortcutKeys());
+        }
+
+        public void PrepareForm()
+        {
+            View.SetRunMinimized(App.Config.RunMinimized);
+            // setup languages in menu
+            View.SetupMenuLanguages();
+            // init main form
+            SetupForm();
+            View.SetupHotkeys();
+            // set lazy events
+            App.Threads.DataReady += OnDataReady;
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Windows.Forms.Control.set_Text(System.String)")]
+        [Localizable(false)]
+        public void SetupForm()
+        {
+            // init Pages presenter
+            Pages = (PagesView)App.Resolve<IPagesView>();
+            Pages.Dock = DockStyle.Fill;
+            Controls.Add(Pages);
+            Pages.BringToFront();
+            // setup images
+            App.Images.SetImagesTo(Pages.Pages);
+            App.Images.SetImagesTo(Status);
+            // load saved pages from config
+            Pages.SetupContextMenu();
+            //App.MainPages.View.SetupContextMenu();
+            App.MainPages.PanelViewFocusedItemChanged += Pages_PanelViewFocusedItemChanged;
+            App.MainPages.LoadSettings();
+            // set mainform bounds
+            var rect = App.Presenter.SettingsGetBounds();
+            SetBounds(rect.Left, rect.Top, rect.Width, rect.Height);
+            // set mainform title
+            var aboutModel = App.Resolve<IAboutModel>();
+            var text = String.Format(CultureInfo.CurrentCulture, "{0} {1}", aboutModel.Title, aboutModel.VersionShort);
+            if (SystemInformation.TerminalServerSession)
+                text += string.Format(" [{0}]", Resources.Terminal);
+            Text = text;
+            // show tray
+            TrayIcon.Text = MediaTypeNames.Text;
+            TrayIcon.Visible = true;
+            // show computer name
+            lCompName.Text = SystemInformation.ComputerName;
+            lCompName.ImageIndex = App.Images.IndexOf(PanelImageNames.ComputerNormal);
+            // show current user
+            lUserName.Text = SystemInformation.UserName;
+            lUserName.ImageIndex = App.Images.IndexOf(PanelImageNames.UserNormal);
         }
 
         [Localizable(false)]

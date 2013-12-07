@@ -85,7 +85,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
@@ -94,12 +93,10 @@
     </Compile>
     <Compile Include="Core\ContainerBuilder.cs" />
     <Compile Include="Intf\IPagesModel.cs" />
+    <Compile Include="Intf\PluginType.cs" />
     <Compile Include="Misc\GenerateEnglish.cs" />
     <Compile Include="Core\TypeNotRegisteredException.cs" />
-    <Compile Include="Intf\Addon\ProtocolHelper.cs" />
-    <Compile Include="Intf\DataReadyArgs.cs" />
     <Compile Include="Intf\PresenterBase.cs" />
-    <Compile Include="Intf\IConfigModel.cs" />
     <Compile Include="Misc\Impl\DisposableManagerImpl.cs" />
     <Compile Include="Misc\TranslationResourceManager.cs" />
     <Compile Include="Presenter\Action\ActionAbout.cs" />
@@ -109,35 +106,21 @@
     <Compile Include="Presenter\Action\ShortcutFactory.cs" />
     <Compile Include="Presenter\Action\ShortcutFiller.cs" />
     <Compile Include="Presenter\Action\ActionShortcutKeys.cs" />
-    <Compile Include="Intf\IAddonManager.cs" />
     <Compile Include="Presenter\Action\ShortcutPanelItem.cs" />
-    <Compile Include="Intf\App.cs" />
-    <Compile Include="Intf\ILazyThreadPool.cs" />
     <Compile Include="Misc\CmdLineProcessor.cs" />
     <Compile Include="Misc\Impl\ImageManagerImpl.cs" />
     <Compile Include="Intf\IPluginManager.cs" />
-    <Compile Include="Misc\Impl\MacroHelper.cs" />
     <Compile Include="Misc\Impl\PanelColumnManagerImpl.cs" />
     <Compile Include="Misc\Impl\PanelFillerManagerImpl.cs" />
     <Compile Include="Misc\Impl\PanelItemFactoryManagerImpl.cs" />
     <Compile Include="Misc\Impl\ServiceProviderImpl.cs" />
     <Compile Include="Misc\Impl\TranslationServiceImpl.cs" />
-    <Compile Include="Model\PanelItemBaseHolder.cs" />
-    <Compile Include="Intf\IAboutModel.cs" />
-    <Compile Include="Intf\IAboutPresenter.cs" />
     <Compile Include="Core\RegisteredObject.cs" />
     <Compile Include="Core\SimpleIocContainer.cs" />
-    <Compile Include="Intf\Addon\Addon.cs" />
-    <Compile Include="Intf\Addon\AddonItemTypeRef.cs" />
-    <Compile Include="Misc\Impl\AddonManagerImpl.cs" />
-    <Compile Include="Intf\Addon\AddonMenuItem.cs" />
-    <Compile Include="Intf\Addon\AddonObjectId.cs" />
-    <Compile Include="Intf\Addon\AddonProgram.cs" />
     <Compile Include="Misc\CustomPanelItem.cs" />
     <Compile Include="Misc\Impl\FolderManagerImpl.cs" />
     <Compile Include="Model\PagesModel.cs" />
     <Compile Include="Model\PanelModel.cs" />
-    <Compile Include="Model\PanelModelCopyHelper.cs" />
     <Compile Include="Misc\Phrase.cs" />
     <Compile Include="Presenter\MainPresenter.cs" />
     <Compile Include="Utils\HookEventArgs.cs" />
@@ -163,11 +146,6 @@
     <Compile Include="Utils\ShellIconStateConstants.cs" />
     <Compile Include="Utils\SysImageList.cs" />
     <Compile Include="Utils\BitmapUtils.cs" />
-    <Compile Include="Utils\ExternDll.cs" />
-    <Compile Include="Utils\GlobalHotkeys.cs" />
-    <Compile Include="Utils\EnvironmentUtils.cs" />
-    <Compile Include="Utils\KeyboardUtils.cs" />
-    <Compile Include="Utils\NativeMethods.cs" />
     <Compile Include="Utils\SafeNativeMethods.cs" />
     <Compile Include="Utils\SerializeUtils.cs" />
     <Compile Include="Utils\ShellAPI.cs" />

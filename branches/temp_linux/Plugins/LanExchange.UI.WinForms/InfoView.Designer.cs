@@ -1,4 +1,4 @@
-﻿namespace LanExchange.UI
+﻿namespace LanExchange.UI.WinForms
 {
     partial class InfoView
     {

@@ -72,6 +72,7 @@ using LanExchange.Core;
 using LanExchange.Intf;
 using LanExchange.Misc;
 using LanExchange.Presenter.Action;
+using LanExchange.SDK;
 using LanExchange.SDK.UI;
 
 namespace LanExchange
@@ -84,18 +85,25 @@ namespace LanExchange
         {
             // global map interfaces to classes
             App.SetContainer(ContainerBuilder.Build());
+            App.TR.SetResourceManagerTo<Properties.Resources>();
             // process cmdline params
             CmdLineProcessor.Processing();
             // load settings from cfg-file (must be loaded before plugins)
             App.Config.Changed += App.Presenter.ConfigOnChanged;
             App.Config.Load();
-            App.Resolve<IPluginManager>().LoadPlugins();
+            // load plugins
+            var plugins = App.Resolve<IPluginManager>();
+            plugins.LoadPlugins(PluginType.OS);
+            plugins.LoadPlugins(PluginType.UI);
+            plugins.LoadPlugins(PluginType.Regular);
+            // load addons
             App.Addons.LoadAddons();
             // register ShortcutPanelItem
             App.PanelItemTypes.RegisterFactory<ShortcutPanelItem>(new ShortcutFactory());
             App.PanelFillers.RegisterFiller<ShortcutPanelItem>(new ShortcutFiller());
             // create main form
             App.MainView = App.Resolve<IMainView>();
+            App.Presenter.PrepareForm();
             // run application
             App.Resolve<IAppPresenter>().ApplicationRun(App.MainView);
         }

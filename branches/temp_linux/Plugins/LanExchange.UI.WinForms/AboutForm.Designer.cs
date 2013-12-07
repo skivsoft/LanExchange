@@ -1,4 +1,4 @@
-﻿namespace LanExchange.UI.WinForms.UI
+﻿namespace LanExchange.UI.WinForms
 {
     public sealed partial class AboutForm
     {
