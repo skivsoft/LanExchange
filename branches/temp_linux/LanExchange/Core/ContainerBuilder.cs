@@ -5,7 +5,7 @@ using LanExchange.Misc.Impl;
 using LanExchange.Model;
 using LanExchange.Presenter;
 using LanExchange.SDK;
-using LanExchange.UI;
+using LanExchange.SDK.UI;
 
 namespace LanExchange.Core
 {
@@ -18,7 +18,6 @@ namespace LanExchange.Core
         {
             var container = new SimpleIocContainer();
             // core singletons
-            container.Register<IAppView, AppView>();
             container.Register<IPanelItemFactoryManager, PanelItemFactoryManagerImpl>();
             container.Register<IPanelFillerManager, PanelFillerManagerImpl>();
             container.Register<IPanelColumnManager, PanelColumnManagerImpl>();
@@ -31,18 +30,11 @@ namespace LanExchange.Core
             container.Register<IPuntoSwitcherService, PuntoSwitcherServiceEngRus>();
             container.Register<ITranslationService, TranslationServiceImpl>();
             container.Register<IDisposableManager, DisposableManagerImpl>();
-            container.Register<IWaitingService, WaitingServiceImpl>();
             // models
             container.Register<IAboutModel, AboutModel>();
             container.Register<IConfigModel, ConfigModel>();
             container.Register<IPagesModel, PagesModel>(LifeCycle.Transient);
             container.Register<IPanelModel, PanelModel>(LifeCycle.Transient);
-            // views
-            container.Register<IAboutView, AboutForm>(LifeCycle.Transient);
-            container.Register<IFilterView, FilterView>(LifeCycle.Transient);
-            container.Register<IPanelView, PanelView>(LifeCycle.Transient);
-            container.Register<IPagesView, PagesView>();
-            container.Register<IMainView, MainForm>();
             // presenters
             container.Register<IMainPresenter, MainPresenter>();
             container.Register<IAboutPresenter, AboutPresenter>();

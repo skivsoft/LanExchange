@@ -3,6 +3,7 @@ using System.ComponentModel;
 using LanExchange.Misc;
 using LanExchange.SDK;
 using LanExchange.Properties;
+using LanExchange.SDK.UI;
 
 namespace LanExchange.Intf
 {

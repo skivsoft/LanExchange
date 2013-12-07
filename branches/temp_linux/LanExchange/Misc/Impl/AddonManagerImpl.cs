@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using LanExchange.Intf;
 using LanExchange.Intf.Addon;
 using LanExchange.SDK;
+using LanExchange.SDK.UI;
 using LanExchange.Utils;
 
 namespace LanExchange.Misc.Impl

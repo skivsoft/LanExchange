@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Forms;
-using LanExchange.Core;
 using LanExchange.Intf;
-using LanExchange.Model;
 using LanExchange.Properties;
 using LanExchange.SDK;
-using LanExchange.UI;
+using LanExchange.SDK.UI;
 using LanExchange.Utils;
 
 namespace LanExchange.Presenter

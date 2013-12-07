@@ -1,6 +1,7 @@
-﻿using System.Windows.Forms;
+﻿using System;
 using LanExchange.Intf;
 using LanExchange.SDK;
+using LanExchange.SDK.UI;
 
 namespace LanExchange.Presenter.Action
 {
@@ -13,7 +14,7 @@ namespace LanExchange.Presenter.Action
             if (m_Instance == null)
             {
                 m_Instance = App.Resolve<IAboutView>();
-                m_Instance.FormClosed += OnFormClosed;
+                m_Instance.ViewClosed += OnViewClosed;
                 m_Instance.Show();
             } else
                 m_Instance.Activate();
@@ -24,7 +25,7 @@ namespace LanExchange.Presenter.Action
             get { return true; }
         }
 
-        private void OnFormClosed(object sender, FormClosedEventArgs formClosedEventArgs)
+        private void OnViewClosed(object sender, EventArgs e)
         {
             m_Instance = null;
         }

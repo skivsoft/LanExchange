@@ -72,7 +72,7 @@ using LanExchange.Core;
 using LanExchange.Intf;
 using LanExchange.Misc;
 using LanExchange.Presenter.Action;
-using LanExchange.SDK;
+using LanExchange.SDK.UI;
 
 namespace LanExchange
 {
@@ -94,8 +94,10 @@ namespace LanExchange
             // register ShortcutPanelItem
             App.PanelItemTypes.RegisterFactory<ShortcutPanelItem>(new ShortcutFactory());
             App.PanelFillers.RegisterFiller<ShortcutPanelItem>(new ShortcutFiller());
-            // run
-            App.Resolve<IAppView>().ApplicationRun();
+            // create main form
+            App.MainView = App.Resolve<IMainView>();
+            // run application
+            App.Resolve<IAppPresenter>().ApplicationRun(App.MainView);
         }
     }
 }

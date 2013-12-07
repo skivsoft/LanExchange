@@ -94,7 +94,6 @@
     </Compile>
     <Compile Include="Core\ContainerBuilder.cs" />
     <Compile Include="Intf\IPagesModel.cs" />
-    <Compile Include="Intf\ITranslationable.cs" />
     <Compile Include="Misc\GenerateEnglish.cs" />
     <Compile Include="Core\TypeNotRegisteredException.cs" />
     <Compile Include="Intf\Addon\ProtocolHelper.cs" />
@@ -102,7 +101,6 @@
     <Compile Include="Intf\PresenterBase.cs" />
     <Compile Include="Intf\IConfigModel.cs" />
     <Compile Include="Misc\Impl\DisposableManagerImpl.cs" />
-    <Compile Include="Misc\Impl\WaitingServiceImpl.cs" />
     <Compile Include="Misc\TranslationResourceManager.cs" />
     <Compile Include="Presenter\Action\ActionAbout.cs" />
     <Compile Include="Presenter\Action\ActionCloseTab.cs" />
@@ -129,8 +127,6 @@
     <Compile Include="Intf\IAboutPresenter.cs" />
     <Compile Include="Core\RegisteredObject.cs" />
     <Compile Include="Core\SimpleIocContainer.cs" />
-    <Compile Include="Intf\IAboutView.cs" />
-    <Compile Include="Intf\IInfoView.cs" />
     <Compile Include="Intf\Addon\Addon.cs" />
     <Compile Include="Intf\Addon\AddonItemTypeRef.cs" />
     <Compile Include="Misc\Impl\AddonManagerImpl.cs" />
@@ -144,7 +140,6 @@
     <Compile Include="Model\PanelModelCopyHelper.cs" />
     <Compile Include="Misc\Phrase.cs" />
     <Compile Include="Presenter\MainPresenter.cs" />
-    <Compile Include="UI\IListViewItemGetter.cs" />
     <Compile Include="Utils\HookEventArgs.cs" />
     <Compile Include="Utils\HookType.cs" />
     <Compile Include="Utils\ImageListDrawItemConstants.cs" />
@@ -163,63 +158,10 @@
     <Compile Include="Misc\Impl\PluginManagerImpl.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI\AboutForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\AboutForm.Designer.cs">
-      <DependentUpon>AboutForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\AppView.cs" />
-    <Compile Include="UI\EscapeForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\EscapeForm.Designer.cs">
-      <DependentUpon>EscapeForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\FilterView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\FilterView.Designer.cs">
-      <DependentUpon>FilterView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\FormPlacement.cs" />
-    <Compile Include="UI\HeaderControl.cs" />
-    <Compile Include="UI\InfoView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\InfoView.Designer.cs">
-      <DependentUpon>InfoView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\ListViewer.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\ListViewItemCache.cs" />
-    <Compile Include="UI\MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\PagesView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\PagesView.Designer.cs">
-      <DependentUpon>PagesView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\PanelView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\PanelView.Designer.cs">
-      <DependentUpon>PanelView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\RunMinimizedForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Utils\ReflectionUtils.cs" />
     <Compile Include="Utils\ShellContextMenuException.cs" />
     <Compile Include="Utils\ShellIconStateConstants.cs" />
     <Compile Include="Utils\SysImageList.cs" />
-    <Compile Include="UI\User32Utils.cs" />
     <Compile Include="Utils\BitmapUtils.cs" />
     <Compile Include="Utils\ExternDll.cs" />
     <Compile Include="Utils\GlobalHotkeys.cs" />
@@ -233,7 +175,6 @@
     <Compile Include="Utils\SingleInstanceCheck.cs" />
     <Compile Include="Utils\SysImageListHelper.cs" />
     <Compile Include="Utils\SysImageListSize.cs" />
-    <Compile Include="Utils\TranslationUtils.cs" />
     <Compile Include="Utils\UnsafeNativeMethods.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -245,22 +186,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="UI\AboutForm.resx">
-      <DependentUpon>AboutForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\InfoView.resx">
-      <DependentUpon>InfoView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\PagesView.resx">
-      <DependentUpon>PagesView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\PanelView.resx">
-      <DependentUpon>PanelView.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Addons\Users.xml">

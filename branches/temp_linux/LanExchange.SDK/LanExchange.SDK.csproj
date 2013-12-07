@@ -61,25 +61,26 @@
     <Compile Include="ConfigNames.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IAction.cs" />
-    <Compile Include="IAppView.cs" />
+    <Compile Include="ITranslationable.cs" />
+    <Compile Include="UI\IAppPresenter.cs" />
     <Compile Include="IDisposableManager.cs" />
     <Compile Include="IFilterModel.cs" />
-    <Compile Include="IFilterPresenter.cs" />
-    <Compile Include="IFilterView.cs" />
+    <Compile Include="UI\IFilterPresenter.cs" />
+    <Compile Include="UI\IFilterView.cs" />
     <Compile Include="IFolderManager.cs" />
     <Compile Include="IIoCContainer.cs" />
-    <Compile Include="IMainPresenter.cs" />
-    <Compile Include="IMainView.cs" />
+    <Compile Include="UI\IMainPresenter.cs" />
+    <Compile Include="UI\IMainView.cs" />
     <Compile Include="IModel.cs" />
-    <Compile Include="IPagesPresenter.cs" />
-    <Compile Include="IPagesView.cs" />
+    <Compile Include="UI\IPagesPresenter.cs" />
+    <Compile Include="UI\IPagesView.cs" />
     <Compile Include="IPanelColumnManager.cs" />
     <Compile Include="IPanelFillerManager.cs" />
     <Compile Include="IImageManager.cs" />
     <Compile Include="IPanelItemFactoryManager.cs" />
     <Compile Include="IPanelModel.cs" />
-    <Compile Include="IPanelPresenter.cs" />
-    <Compile Include="IPanelView.cs" />
+    <Compile Include="UI\IPanelPresenter.cs" />
+    <Compile Include="UI\IPanelView.cs" />
     <Compile Include="IPlugin.cs" />
     <Compile Include="IPresenter.cs" />
     <Compile Include="ITranslationService.cs" />
@@ -100,6 +101,8 @@
     <Compile Include="PanelModelEventArgs.cs" />
     <Compile Include="PanelSortOrder.cs" />
     <Compile Include="PanelViewMode.cs" />
+    <Compile Include="UI\IAboutView.cs" />
+    <Compile Include="UI\IInfoView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

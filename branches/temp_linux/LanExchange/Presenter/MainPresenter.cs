@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using LanExchange.Intf;
 using LanExchange.Presenter.Action;
 using LanExchange.SDK;
+using LanExchange.SDK.UI;
 using LanExchange.Utils;
 
 namespace LanExchange.Presenter
@@ -59,7 +60,7 @@ namespace LanExchange.Presenter
                 // recreate all columns
                 GlobalTranslateColumns();
                 // Run TranslateUI() for all opened forms
-                TranslationUtils.TranslateOpenForms();
+                App.Resolve<IAppPresenter>().TranslateOpenForms();
             }
             finally
             {
