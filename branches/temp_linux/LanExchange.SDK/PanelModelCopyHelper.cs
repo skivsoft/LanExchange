@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using LanExchange.SDK.Model;
 
 namespace LanExchange.SDK
 {  

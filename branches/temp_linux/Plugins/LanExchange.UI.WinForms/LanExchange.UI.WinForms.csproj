@@ -38,12 +38,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddonManagerImpl.cs" />
+    <Compile Include="Impl\AddonManagerImpl.cs" />
     <Compile Include="Utils\BitmapUtils.cs" />
     <Compile Include="Utils\ExternDll.cs" />
-    <Compile Include="ImageManagerImpl.cs" />
-    <Compile Include="Utils\ImageListDrawItemConstants.cs" />
-    <Compile Include="Utils\ImageListDrawStateConstants.cs" />
+    <Compile Include="Impl\ImageManagerImpl.cs" />
     <Compile Include="Utils\KeyboardUtils.cs" />
     <Compile Include="MacroHelper.cs" />
     <Compile Include="Utils\NativeMethods.cs" />
@@ -106,12 +104,8 @@
     <Compile Include="RunMinimizedForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TranslationUtils.cs" />
-    <Compile Include="Utils\ShellIconStateConstants.cs" />
-    <Compile Include="Utils\SysImageList.cs" />
-    <Compile Include="Utils\SysImageListHelper.cs" />
-    <Compile Include="Utils\SysImageListSize.cs" />
-    <Compile Include="WaitingServiceImpl.cs" />
+    <Compile Include="Utils\TranslationUtils.cs" />
+    <Compile Include="Impl\WaitingServiceImpl.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\LanExchange.SDK\LanExchange.SDK.csproj">

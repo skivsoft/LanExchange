@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
+using LanExchange.SDK.Model;
+using LanExchange.SDK.Presenter;
 using LanExchange.SDK.UI;
 
 namespace LanExchange.SDK
@@ -40,8 +42,6 @@ namespace LanExchange.SDK
             PanelFillers = Resolve<IPanelFillerManager>();
             PanelColumns = Resolve<IPanelColumnManager>();
             FolderManager = Resolve<IFolderManager>();
-            Images = Resolve<IImageManager>();
-            Addons = Resolve<IAddonManager>();
             // presenters
             Presenter = Resolve<IMainPresenter>();
             MainPages = Resolve<IPagesPresenter>();

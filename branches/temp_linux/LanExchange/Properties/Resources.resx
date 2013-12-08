@@ -136,9 +136,6 @@
   <data name="mViewSmall_Text" xml:space="preserve">
     <value>Small icons</value>
   </data>
-  <data name="clear_normal" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\clear_normal.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="KeyCtrlV" xml:space="preserve">
     <value>Ctrl+V</value>
   </data>
@@ -159,9 +156,6 @@
   </data>
   <data name="mReRead_Text" xml:space="preserve">
     <value>Re-read</value>
-  </data>
-  <data name="user_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\user_16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="KeyAnyChar__" xml:space="preserve">
     <value>Filter panel items by all columns.</value>
@@ -192,9 +186,6 @@
   </data>
   <data name="mDelete_Text" xml:space="preserve">
     <value>Delete</value>
-  </data>
-  <data name="back_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\back_32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="KeyEsc" xml:space="preserve">
     <value>Esc</value>
@@ -240,9 +231,6 @@
   </data>
   <data name="mViewDetails_Text" xml:space="preserve">
     <value>Details</value>
-  </data>
-  <data name="clear_hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\clear_hover.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="mExit_Text" xml:space="preserve">
     <value>Exit</value>
@@ -294,9 +282,6 @@
   </data>
   <data name="KeyCtrlR" xml:space="preserve">
     <value>Ctrl+R</value>
-  </data>
-  <data name="back_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\back_16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PagesView_OpenTab" xml:space="preserve">
     <value>Open tab «{0}»</value>
@@ -392,9 +377,6 @@
   <data name="PanelPresenter_UnreachableMsg" xml:space="preserve">
     <value>Resource «{0}» not reachable.
 Continue anyway?</value>
-  </data>
-  <data name="user_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\user_32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="mHelpKeys_Text" xml:space="preserve">
     <value>Shortcut Keys</value>

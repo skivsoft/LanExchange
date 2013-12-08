@@ -1,5 +1,7 @@
-﻿using LanExchange.Properties;
+﻿using LanExchange.Misc;
+using LanExchange.Properties;
 using LanExchange.SDK;
+using LanExchange.SDK.Model;
 
 namespace LanExchange.Presenter.Action
 {

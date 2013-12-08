@@ -5,7 +5,6 @@
 //
 
 using System;
-using LanExchange.OS.Windows.Utils;
 using LanExchange.SDK;
 using LanExchange.SDK.OS;
 
@@ -17,6 +16,10 @@ namespace LanExchange.OS.Windows
 
         public void Initialize(IServiceProvider serviceProvider)
         {
+            // load plugin if only mono runtime doesn't present
+            if (EnvironmentUtils.IsRunningOnMono())
+                return;
+
             m_Provider = serviceProvider;
 
             var container = (IIoCContainer) m_Provider.GetService(typeof (IIoCContainer));
@@ -30,6 +33,7 @@ namespace LanExchange.OS.Windows
 
             container.Register<IHotkeysService, HotkeysService>();
             container.Register<ISingleInstanceService, SingleInstanceService>();
+            container.Register<ISysImageListService, SysImageListService>(LifeCycle.Transient);
         }
     }
 }

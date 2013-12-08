@@ -17,51 +17,79 @@ namespace LanExchange.UI.WPF
 
         public void ApplicationExit()
         {
-            throw new NotImplementedException();
         }
 
         public void ShowStatusText(string format, params object[] args)
         {
-            throw new NotImplementedException();
         }
 
         public void SetToolTip(object control, string tipText)
         {
-            throw new NotImplementedException();
         }
 
         public bool ShowInfoPanel
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { return false; }
             set
             {
-                throw new NotImplementedException();
             }
         }
 
         public int NumInfoLines
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { return 0; }
             set
             {
-                throw new NotImplementedException();
             }
         }
 
         public void ClearInfoPanel()
         {
-            throw new NotImplementedException();
         }
 
         public void Invoke(Delegate method, object sender)
         {
-            throw new NotImplementedException();
+        }
+
+        public string TrayText
+        {
+            get { return string.Empty; }
+            set
+            {
+            }
+        }
+
+        public bool TrayVisible
+        {
+            get { return false; }
+            set
+            {
+            }
+        }
+
+        public void SetRunMinimized(bool minimized)
+        {
+        }
+
+        public void SetupMenuLanguages()
+        {
+        }
+
+        public void SetBounds(int left, int top, int width, int height)
+        {
+        }
+
+        public void SetupPages()
+        {
+        }
+
+
+        public string Text
+        {
+            get { return string.Empty; }
+            set
+            {
+            }
         }
     }
 }

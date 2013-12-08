@@ -17,6 +17,7 @@ namespace LanExchange.UI.WPF
 
             container.Register<IAppPresenter, App>();
             container.Register<IMainView, MainWindow>();
+            //container.Register<IImageManager, ImageManagerImpl>();
         }
 
        

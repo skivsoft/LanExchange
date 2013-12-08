@@ -70,41 +70,52 @@
     <Compile Include="EnvironmentUtils.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IAction.cs" />
+    <Compile Include="IPluginManager.cs" />
     <Compile Include="IPuntoSwitcherService.cs" />
+    <Compile Include="Model\IPagesModel.cs" />
     <Compile Include="OS\IComctl32Service.cs" />
     <Compile Include="OS\IKernel32Service.cs" />
     <Compile Include="OS\IOle32Service.cs" />
     <Compile Include="OS\IShell32Service.cs" />
     <Compile Include="OS\ISingleInstanceService.cs" />
+    <Compile Include="OS\ISysImageListService.cs" />
     <Compile Include="OS\IUser32Service.cs" />
+    <Compile Include="OS\SysImageListSize.cs" />
     <Compile Include="PanelItemBaseHolder.cs" />
     <Compile Include="PanelModelCopyHelper.cs" />
+    <Compile Include="PluginType.cs" />
+    <Compile Include="Presenter\PresenterBase.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="SerializeUtils.cs" />
     <Compile Include="UI\IAddonManager.cs" />
-    <Compile Include="IConfigModel.cs" />
+    <Compile Include="Model\IConfigModel.cs" />
     <Compile Include="ILazyThreadPool.cs" />
     <Compile Include="ITranslationable.cs" />
     <Compile Include="OS\IHotkeysService.cs" />
-    <Compile Include="UI\IAboutModel.cs" />
-    <Compile Include="UI\IAboutPresenter.cs" />
-    <Compile Include="UI\IAppPresenter.cs" />
+    <Compile Include="Model\IAboutModel.cs" />
+    <Compile Include="Presenter\IAboutPresenter.cs" />
+    <Compile Include="Presenter\IAppPresenter.cs" />
     <Compile Include="IDisposableManager.cs" />
-    <Compile Include="IFilterModel.cs" />
-    <Compile Include="UI\IFilterPresenter.cs" />
+    <Compile Include="Model\IFilterModel.cs" />
+    <Compile Include="Presenter\IFilterPresenter.cs" />
     <Compile Include="UI\IFilterView.cs" />
     <Compile Include="IFolderManager.cs" />
     <Compile Include="IIoCContainer.cs" />
-    <Compile Include="UI\IMainPresenter.cs" />
+    <Compile Include="Presenter\IMainPresenter.cs" />
     <Compile Include="UI\IMainView.cs" />
     <Compile Include="IModel.cs" />
-    <Compile Include="UI\IPagesPresenter.cs" />
+    <Compile Include="Presenter\IPagesPresenter.cs" />
     <Compile Include="UI\IPagesView.cs" />
     <Compile Include="IPanelColumnManager.cs" />
     <Compile Include="IPanelFillerManager.cs" />
     <Compile Include="UI\IImageManager.cs" />
     <Compile Include="IPanelItemFactoryManager.cs" />
-    <Compile Include="IPanelModel.cs" />
-    <Compile Include="UI\IPanelPresenter.cs" />
+    <Compile Include="Model\IPanelModel.cs" />
+    <Compile Include="Presenter\IPanelPresenter.cs" />
     <Compile Include="UI\IPanelView.cs" />
     <Compile Include="IPlugin.cs" />
     <Compile Include="IPresenter.cs" />
@@ -129,13 +140,17 @@
     <Compile Include="UI\IAboutView.cs" />
     <Compile Include="UI\IInfoView.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="..\Common\LanExchange.snk">
       <Link>LanExchange.snk</Link>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

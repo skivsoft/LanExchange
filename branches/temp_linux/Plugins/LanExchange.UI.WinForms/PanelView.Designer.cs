@@ -1,4 +1,6 @@
-﻿namespace LanExchange.UI.WinForms
+﻿using LanExchange.UI.WinForms.Properties;
+
+namespace LanExchange.UI.WinForms
 {
     partial class PanelView
     {
@@ -73,15 +75,15 @@
             this.mCopySelected});
             this.mCopyMenu.Name = "mCopyMenu";
             this.mCopyMenu.Size = new System.Drawing.Size(152, 22);
-            this.mCopyMenu.Text = global::LanExchange.Properties.Resources.mCopyMenu_Text;
+            this.mCopyMenu.Text = Resources.mCopyMenu_Text;
             this.mCopyMenu.DropDownOpening += new System.EventHandler(this.mCopyMenu_DropDownOpening);
             // 
             // mCopySelected
             // 
             this.mCopySelected.Name = "mCopySelected";
-            this.mCopySelected.ShortcutKeyDisplayString = global::LanExchange.Properties.Resources.KeyCtrlC;
+            this.mCopySelected.ShortcutKeyDisplayString = Resources.KeyCtrlC;
             this.mCopySelected.Size = new System.Drawing.Size(209, 22);
-            this.mCopySelected.Text = global::LanExchange.Properties.Resources.KeyCtrlC_;
+            this.mCopySelected.Text = Resources.KeyCtrlC_;
             this.mCopySelected.Click += new System.EventHandler(this.CopySelectedOnClick);
             // 
             // mPaste
@@ -89,15 +91,15 @@
             this.mPaste.Name = "mPaste";
             this.mPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
             this.mPaste.Size = new System.Drawing.Size(152, 22);
-            this.mPaste.Text = global::LanExchange.Properties.Resources.mPaste_Text;
+            this.mPaste.Text = Resources.mPaste_Text;
             this.mPaste.Click += new System.EventHandler(this.mPaste_Click);
             // 
             // mDelete
             // 
             this.mDelete.Name = "mDelete";
-            this.mDelete.ShortcutKeyDisplayString = global::LanExchange.Properties.Resources.KeyDel;
+            this.mDelete.ShortcutKeyDisplayString = Resources.KeyDel;
             this.mDelete.Size = new System.Drawing.Size(152, 22);
-            this.mDelete.Text = global::LanExchange.Properties.Resources.mDelete_Text;
+            this.mDelete.Text = Resources.mDelete_Text;
             this.mDelete.Click += new System.EventHandler(this.mDelete_Click);
             // 
             // mAfterDelete

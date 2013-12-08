@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 using LanExchange.Properties;
+using LanExchange.SDK.Model;
 using LanExchange.SDK.UI;
 
 namespace LanExchange.Model

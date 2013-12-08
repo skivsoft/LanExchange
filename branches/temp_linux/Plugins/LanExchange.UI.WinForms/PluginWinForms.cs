@@ -4,7 +4,10 @@
 
 using System;
 using LanExchange.SDK;
+using LanExchange.SDK.Presenter;
 using LanExchange.SDK.UI;
+using LanExchange.UI.WinForms.Impl;
+using LanExchange.UI.WinForms.Properties;
 
 namespace LanExchange.UI.WinForms
 {
@@ -16,17 +19,22 @@ namespace LanExchange.UI.WinForms
         {
             m_Provider = serviceProvider;
 
+            // Setup resource manager
+            var translationService = (ITranslationService)m_Provider.GetService(typeof(ITranslationService));
+            if (translationService != null)
+                translationService.SetResourceManagerTo<Resources>();
+
             var container = (IIoCContainer) m_Provider.GetService(typeof (IIoCContainer));
             if (container == null) return;
 
             App.SetContainer(container);
             container.Register<IAppPresenter, AppPresenter>();
-            container.Register<IAboutView, AboutForm>();
-            container.Register<IFilterView, FilterView>();
+            container.Register<IAboutView, AboutForm>(LifeCycle.Transient);
+            container.Register<IFilterView, FilterView>(LifeCycle.Transient);
+            container.Register<IPanelView, PanelView>(LifeCycle.Transient);
             container.Register<IInfoView, InfoView>();
             container.Register<IMainView, MainForm>();
             container.Register<IPagesView, PagesView>();
-            container.Register<IPanelView, PanelView>();
             container.Register<IWaitingService, WaitingServiceImpl>();
             container.Register<IAddonManager, AddonManagerImpl>();
             container.Register<IImageManager, ImageManagerImpl>();

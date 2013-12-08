@@ -1,4 +1,5 @@
 ﻿using System;
+using LanExchange.SDK.Model;
 
 namespace LanExchange.SDK
 {

@@ -5,10 +5,12 @@ using System.Threading;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Security.Permissions;
-using LanExchange.Properties;
+using LanExchange.SDK.Presenter;
+using LanExchange.UI.WinForms.Properties;
 using LanExchange.SDK;
 using LanExchange.SDK.OS;
 using LanExchange.SDK.UI;
+using LanExchange.UI.WinForms.Utils;
 
 namespace LanExchange.UI.WinForms
 {

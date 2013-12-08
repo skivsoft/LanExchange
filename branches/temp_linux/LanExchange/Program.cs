@@ -71,8 +71,9 @@ using System.ComponentModel;
 using LanExchange.Core;
 using LanExchange.Intf;
 using LanExchange.Misc;
-using LanExchange.Presenter.Action;
+using LanExchange.Properties;
 using LanExchange.SDK;
+using LanExchange.SDK.Presenter;
 using LanExchange.SDK.UI;
 
 namespace LanExchange
@@ -85,27 +86,31 @@ namespace LanExchange
         {
             // global map interfaces to classes
             App.SetContainer(ContainerBuilder.Build());
-            App.TR.SetResourceManagerTo<Properties.Resources>();
+            App.TR.SetResourceManagerTo<Resources>();
+            // load plugins
+            var plugins = App.Resolve<IPluginManager>();
+            plugins.LoadPlugins(PluginType.OS);
+            plugins.LoadPlugins(PluginType.UI);
+            App.Images = App.Resolve<IImageManager>();
+            App.Addons = App.Resolve<IAddonManager>();
+            plugins.LoadPlugins(PluginType.Regular);
+            (new PluginInternal()).Initialize(App.Resolve<IServiceProvider>());
             // process cmdline params
             CmdLineProcessor.Processing();
             // load settings from cfg-file (must be loaded before plugins)
             App.Config.Changed += App.Presenter.ConfigOnChanged;
             App.Config.Load();
-            // load plugins
-            var plugins = App.Resolve<IPluginManager>();
-            plugins.LoadPlugins(PluginType.OS);
-            plugins.LoadPlugins(PluginType.UI);
-            plugins.LoadPlugins(PluginType.Regular);
             // load addons
             App.Addons.LoadAddons();
-            // register ShortcutPanelItem
-            App.PanelItemTypes.RegisterFactory<ShortcutPanelItem>(new ShortcutFactory());
-            App.PanelFillers.RegisterFiller<ShortcutPanelItem>(new ShortcutFiller());
+            // init application
+            var application = App.Resolve<IAppPresenter>();
+            application.Init();
             // create main form
             App.MainView = App.Resolve<IMainView>();
+            App.Presenter.View = App.MainView;
             App.Presenter.PrepareForm();
             // run application
-            App.Resolve<IAppPresenter>().ApplicationRun(App.MainView);
+            application.Run(App.MainView);
         }
     }
 }

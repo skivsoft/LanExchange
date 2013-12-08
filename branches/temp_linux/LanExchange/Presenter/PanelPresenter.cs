@@ -4,6 +4,8 @@ using System.Windows.Forms;
 using LanExchange.Intf;
 using LanExchange.Properties;
 using LanExchange.SDK;
+using LanExchange.SDK.Model;
+using LanExchange.SDK.Presenter;
 using LanExchange.SDK.UI;
 using LanExchange.Utils;
 

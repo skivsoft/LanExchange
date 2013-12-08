@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.SDK;
@@ -98,8 +97,11 @@ namespace LanExchange.UI.WinForms
             set
             {
                 m_CurrentItem = value;
-                Picture.Image = App.Images.GetLargeImage(m_CurrentItem.ImageName);
-                App.MainView.SetToolTip(Picture, m_CurrentItem.ImageLegendText);
+                if (m_CurrentItem != null)
+                {
+                    Picture.Image = App.Images.GetLargeImage(m_CurrentItem.ImageName);
+                    App.MainView.SetToolTip(Picture, m_CurrentItem.ImageLegendText);
+                }
             }
         }
     }

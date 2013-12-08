@@ -3,6 +3,8 @@ using System.Windows.Forms;
 using LanExchange.Intf;
 using LanExchange.Model;
 using LanExchange.SDK;
+using LanExchange.SDK.Model;
+using LanExchange.SDK.Presenter;
 using LanExchange.SDK.UI;
 
 namespace LanExchange.Presenter

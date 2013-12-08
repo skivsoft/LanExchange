@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using LanExchange.UI.WinForms.Properties;
 
 namespace LanExchange.UI.WinForms
 {
@@ -39,7 +40,7 @@ namespace LanExchange.UI.WinForms
             // 
             this.imgClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.imgClear.BackColor = System.Drawing.Color.Transparent;
-            this.imgClear.Image = global::LanExchange.Properties.Resources.clear_normal;
+            this.imgClear.Image = Resources.clear_normal;
             this.imgClear.Location = new System.Drawing.Point(447, 7);
             this.imgClear.Name = "imgClear";
             this.imgClear.Size = new System.Drawing.Size(16, 16);

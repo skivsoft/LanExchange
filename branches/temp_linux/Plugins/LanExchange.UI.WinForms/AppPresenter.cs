@@ -4,20 +4,25 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
 using LanExchange.SDK;
+using LanExchange.SDK.Presenter;
 using LanExchange.SDK.UI;
 
 namespace LanExchange.UI.WinForms
 {
     public class AppPresenter : IAppPresenter
     {
-       
-        public void ApplicationRun(IMainView view)
+        public void Init()
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
             Application.ThreadException += ApplicationOnThreadException;
             Application.ThreadExit += ApplicationOnThreadExit;
             Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false); // must be called before first form created
+            // must be called before first form created
+            Application.SetCompatibleTextRenderingDefault(false);
+        }
+
+        public void Run(IMainView view)
+        {
             Application.Run((Form)view);
         }
 
