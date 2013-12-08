@@ -1,4 +1,8 @@
-﻿using System;
+﻿//
+// TODO Windows API calls (in Utils folder) must be removed in future
+//
+
+using System;
 using LanExchange.SDK;
 using LanExchange.SDK.UI;
 
@@ -25,6 +29,7 @@ namespace LanExchange.UI.WinForms
             container.Register<IPanelView, PanelView>();
             container.Register<IWaitingService, WaitingServiceImpl>();
             container.Register<IAddonManager, AddonManagerImpl>();
+            container.Register<IImageManager, ImageManagerImpl>();
         }
     }
 }

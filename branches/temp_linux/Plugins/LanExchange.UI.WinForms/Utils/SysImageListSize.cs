@@ -1,4 +1,4 @@
-namespace LanExchange.Utils
+namespace LanExchange.UI.WinForms.Utils
 {
     /// <summary>
     /// Available system image list sizes

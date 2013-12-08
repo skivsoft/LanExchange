@@ -32,21 +32,34 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Common\AnyAssemblyInfo.cs">
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="ExternDll.cs" />
+    <Compile Include="SingleInstanceService.cs" />
+    <Compile Include="Utils\ExternDll.cs" />
     <Compile Include="HotkeysService.cs" />
     <Compile Include="Comctl32Service.cs" />
     <Compile Include="Kernel32Service.cs" />
+    <Compile Include="Utils\LocalWindowsHook.cs" />
     <Compile Include="Ole32Service.cs" />
+    <Compile Include="Utils\NativeMethods.cs" />
+    <Compile Include="Utils\SafeNativeMethods.cs" />
     <Compile Include="Shell32Service.cs" />
     <Compile Include="User32Service.cs" />
-    <Compile Include="ListViewService.cs" />
+    <Compile Include="Utils\HookEventArgs.cs" />
+    <Compile Include="Utils\HookType.cs" />
+    <Compile Include="Utils\SingleInstanceCheck.cs" />
+    <Compile Include="Utils\UnsafeNativeMethods.cs" />
+    <Compile Include="Utils\User32Utils.cs" />
     <Compile Include="PluginWindows.cs" />
+    <Compile Include="Utils\ShellAPI.cs" />
+    <Compile Include="Utils\ShellContextMenu.cs" />
+    <Compile Include="Utils\ShellContextMenuException.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\LanExchange.SDK\LanExchange.SDK.csproj">

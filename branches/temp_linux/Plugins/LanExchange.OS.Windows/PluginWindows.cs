@@ -1,4 +1,11 @@
-﻿using System;
+﻿//
+// TODO System.Drawing reference must be removed in future
+// TODO System.Windows.Forms reference must be removed in future
+//
+//
+
+using System;
+using LanExchange.OS.Windows.Utils;
 using LanExchange.SDK;
 using LanExchange.SDK.OS;
 
@@ -15,13 +22,14 @@ namespace LanExchange.OS.Windows
             var container = (IIoCContainer) m_Provider.GetService(typeof (IIoCContainer));
             if (container == null) return;
 
-            container.Register<IHotkeysService, HotkeysService>();
-            container.Register<IListViewService, ListViewService>();
             container.Register<IUser32Service, User32Service>();
             container.Register<IShell32Service, Shell32Service>();
             container.Register<IKernel32Service, Kernel32Service>();
             container.Register<IComctl32Service, Comctl32Service>();
             container.Register<IOle32Service, Ole32Service>();
+
+            container.Register<IHotkeysService, HotkeysService>();
+            container.Register<ISingleInstanceService, SingleInstanceService>();
         }
     }
 }

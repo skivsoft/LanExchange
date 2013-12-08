@@ -1,10 +1,9 @@
 using System;
 using System.ComponentModel;
-using System.Text;
-using System.Runtime.InteropServices;
 using System.Drawing;
+using System.Runtime.InteropServices;
 
-namespace LanExchange.Utils
+namespace LanExchange.OS.Windows.Utils
 {
     /// <summary>
     /// This class contains every method, enumeration, struct and constants from the Windows API, which are

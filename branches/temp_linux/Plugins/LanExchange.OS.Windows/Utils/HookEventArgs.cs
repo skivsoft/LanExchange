@@ -1,6 +1,6 @@
 using System;
 
-namespace LanExchange.Utils
+namespace LanExchange.OS.Windows.Utils
 {
     public class HookEventArgs : EventArgs
     {

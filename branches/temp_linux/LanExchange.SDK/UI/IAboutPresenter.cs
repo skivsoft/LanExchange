@@ -13,5 +13,7 @@
         void OpenLocalizationLink();
 
         void OpenBugTrackerWebLink();
+
+        string GetDetailsRtf();
     }
 }

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 
-namespace LanExchange.Utils
+namespace LanExchange.UI.WinForms.Utils
 {
     public static class BitmapUtils
     {

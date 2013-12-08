@@ -1,6 +1,6 @@
 using System;
 
-namespace LanExchange.Utils
+namespace LanExchange.UI.WinForms.Utils
 {
     /// <summary>
     /// Flags controlling how the Image List item is 

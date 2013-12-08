@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using LanExchange.Intf;
 using LanExchange.SDK;
+using LanExchange.SDK.OS;
 using LanExchange.Utils;
 
 namespace LanExchange.Misc
@@ -30,7 +31,8 @@ namespace LanExchange.Misc
                 Environment.Exit(0);
             }
             if (GetIfPresent("/new") == null)
-                SingleInstanceCheck.Check();
+                if (App.Resolve<ISingleInstanceService>().CheckExists("LanExchange"))
+                    Environment.Exit(0);
             var lang = GetIfPresent("/lang:");
             if (lang == null)
                 lang = App.Config.Language;

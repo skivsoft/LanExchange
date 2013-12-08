@@ -23,8 +23,6 @@ namespace LanExchange.Core
             container.Register<IPanelColumnManager, PanelColumnManagerImpl>();
             container.Register<IFolderManager, FolderManagerImpl>();
             container.Register<IPluginManager, PluginManagerImpl>();
-            container.Register<IImageManager, ImageManagerImpl>();
-            container.Register<IAddonManager, AddonManagerImpl>();
             container.Register<IServiceProvider, ServiceProviderImpl>();
             container.Register<ILazyThreadPool, LazyThreadPoolImpl>();
             container.Register<IPuntoSwitcherService, PuntoSwitcherServiceEngRus>();

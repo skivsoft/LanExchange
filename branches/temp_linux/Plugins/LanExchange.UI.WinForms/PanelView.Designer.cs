@@ -37,8 +37,8 @@
             this.mPaste = new System.Windows.Forms.ToolStripMenuItem();
             this.mDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.mAfterDelete = new System.Windows.Forms.ToolStripSeparator();
-            this.LV = new LanExchange.UI.ListViewer();
-            this.pFilter = new LanExchange.UI.FilterView();
+            this.LV = new LanExchange.UI.WinForms.ListViewer();
+            this.pFilter = new LanExchange.UI.WinForms.FilterView();
             this.popComps.SuspendLayout();
             this.SuspendLayout();
             // 

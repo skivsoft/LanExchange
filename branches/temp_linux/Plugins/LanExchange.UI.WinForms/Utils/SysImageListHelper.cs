@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace LanExchange.Utils
+namespace LanExchange.UI.WinForms.Utils
 {
     /// <summary>
     /// Helper Methods for Connecting SysImageList to Common Controls

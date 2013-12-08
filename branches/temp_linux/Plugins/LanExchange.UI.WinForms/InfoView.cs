@@ -11,6 +11,7 @@ namespace LanExchange.UI.WinForms
     {
         private int m_NumLines;
         private readonly IList<Label> m_Lines;
+        private PanelItemBase m_CurrentItem;
         
         public InfoView()
         {
@@ -91,6 +92,15 @@ namespace LanExchange.UI.WinForms
             }
         }
 
-        public PanelItemBase CurrentItem { get; set; }
+        public PanelItemBase CurrentItem
+        {
+            get { return m_CurrentItem; }
+            set
+            {
+                m_CurrentItem = value;
+                Picture.Image = App.Images.GetLargeImage(m_CurrentItem.ImageName);
+                App.MainView.SetToolTip(Picture, m_CurrentItem.ImageLegendText);
+            }
+        }
     }
 }

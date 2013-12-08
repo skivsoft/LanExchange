@@ -5,7 +5,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Drawing;
 
-namespace LanExchange.Utils
+namespace LanExchange.SDK
 {
     public static class SerializeUtils
     {

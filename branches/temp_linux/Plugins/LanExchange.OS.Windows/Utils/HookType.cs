@@ -1,4 +1,4 @@
-namespace LanExchange.Utils
+namespace LanExchange.OS.Windows.Utils
 {
     public enum HookType : int
     {

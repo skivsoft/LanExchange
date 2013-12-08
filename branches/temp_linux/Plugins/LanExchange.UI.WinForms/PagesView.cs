@@ -182,9 +182,9 @@ namespace LanExchange.UI.WinForms
             }
             else
                 m_Opened = false;
-            mReRead.Enabled = App.Presenter.IsActionEnabled<ActionReRead>();
-            mCloseTab.Enabled = App.Presenter.IsActionEnabled<ActionCloseTab>();
-            mCloseOther.Enabled = App.Presenter.IsActionEnabled<ActionCloseOther>();
+            mReRead.Enabled = App.Presenter.IsActionEnabled("ActionReRead");
+            mCloseTab.Enabled = App.Presenter.IsActionEnabled("ActionCloseTab");
+            mCloseOther.Enabled = App.Presenter.IsActionEnabled("ActionCloseOther");
             //logger.Info("Opened={0}", bOpened);
         }
 
@@ -259,17 +259,17 @@ namespace LanExchange.UI.WinForms
 
         private void mReRead_Click(object sender, EventArgs e)
         {
-            App.Presenter.ExecuteAction<ActionReRead>();
+            App.Presenter.ExecuteAction("ActionReRead");
         }
 
         private void mCloseTab_Click(object sender, EventArgs e)
         {
-            App.Presenter.ExecuteAction<ActionCloseTab>();
+            App.Presenter.ExecuteAction("ActionCloseTab");
         }
 
         private void mCloseOther_Click(object sender, EventArgs e)
         {
-            App.Presenter.ExecuteAction<ActionCloseOther>();
+            App.Presenter.ExecuteAction("ActionCloseOther");
         }
     }
 }

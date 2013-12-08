@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using LanExchange.SDK;
 
-namespace LanExchange.UI.WinForms
+namespace LanExchange.SDK
 {
     [Serializable]
     public class PanelItemBaseHolder : List<PanelItemBase>

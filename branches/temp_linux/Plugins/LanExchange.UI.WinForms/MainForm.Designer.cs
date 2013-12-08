@@ -47,7 +47,7 @@ namespace LanExchange.UI.WinForms
             this.lUserName = new System.Windows.Forms.ToolStripStatusLabel();
             this.tipComps = new System.Windows.Forms.ToolTip(this.components);
             this.popTop = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.pInfo = new LanExchange.UI.InfoView();
+            this.pInfo = new LanExchange.UI.WinForms.InfoView();
             this.MainMenu = new System.Windows.Forms.MainMenu(this.components);
             this.mPanel = new System.Windows.Forms.MenuItem();
             this.mReRead = new System.Windows.Forms.MenuItem();

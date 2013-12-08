@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using System.Security;
 
-namespace LanExchange.Utils
+namespace LanExchange.OS.Windows.Utils
 {
     [SuppressUnmanagedCodeSecurity]
     internal static class UnsafeNativeMethods

@@ -16,5 +16,7 @@
         int NumLines { get; set; }
         string GetLine(int index);
         void SetLine(int index, string text);
+
+        PanelItemBase CurrentItem { get; set; }
     }
 }

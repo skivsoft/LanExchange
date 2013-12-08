@@ -1,6 +1,6 @@
 using System;
 
-namespace LanExchange.Utils
+namespace LanExchange.UI.WinForms.Utils
 {
     /// <summary>
     /// Enumeration containing XP ImageList Draw State options

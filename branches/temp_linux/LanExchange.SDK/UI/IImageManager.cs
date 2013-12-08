@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace LanExchange.SDK
+namespace LanExchange.SDK.UI
 {
     /// <summary>
     /// LanExchange panel image manager.

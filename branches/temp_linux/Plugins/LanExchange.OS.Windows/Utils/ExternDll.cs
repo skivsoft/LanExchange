@@ -1,4 +1,4 @@
-﻿namespace LanExchange.UI.WinForms
+﻿namespace LanExchange.OS.Windows.Utils
 {
     internal static class ExternDll
     {

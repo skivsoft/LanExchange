@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Security.Permissions;
 
-namespace LanExchange.Utils
+namespace LanExchange.OS.Windows.Utils
 {
 
     /// <summary>
@@ -50,13 +50,13 @@ namespace LanExchange.Utils
         }
 
         [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
-        static public void Check()
+        internal static bool CheckExists(string unicalName)
         {
             // http://snipplr.com/view/19272/ - C#, single-instance-check using mutex
             // http://iridescence.no/post/CreatingaSingleInstanceApplicationinC.aspx
             bool isOwnedHere;
-            m_AppStartMutex = new Mutex(true, "LanExchange", out isOwnedHere);
-            if (isOwnedHere) return; 
+            m_AppStartMutex = new Mutex(true, unicalName, out isOwnedHere);
+            if (isOwnedHere) return false; 
 
             Process me = Process.GetCurrentProcess();
             Process[] procList = Process.GetProcessesByName(me.ProcessName);
@@ -79,7 +79,7 @@ namespace LanExchange.Utils
                     break;
                 }
             }
-            Environment.Exit(0); // This will kill my instance.
+            return true;
         }
 
         // volatile is intended to prevent GC. Otherwise, GC.KeepAlive(appStartMutex) might be needed.

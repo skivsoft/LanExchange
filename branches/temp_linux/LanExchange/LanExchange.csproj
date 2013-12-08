@@ -85,6 +85,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
@@ -108,7 +109,6 @@
     <Compile Include="Presenter\Action\ActionShortcutKeys.cs" />
     <Compile Include="Presenter\Action\ShortcutPanelItem.cs" />
     <Compile Include="Misc\CmdLineProcessor.cs" />
-    <Compile Include="Misc\Impl\ImageManagerImpl.cs" />
     <Compile Include="Intf\IPluginManager.cs" />
     <Compile Include="Misc\Impl\PanelColumnManagerImpl.cs" />
     <Compile Include="Misc\Impl\PanelFillerManagerImpl.cs" />
@@ -123,13 +123,12 @@
     <Compile Include="Model\PanelModel.cs" />
     <Compile Include="Misc\Phrase.cs" />
     <Compile Include="Presenter\MainPresenter.cs" />
-    <Compile Include="Utils\HookEventArgs.cs" />
-    <Compile Include="Utils\HookType.cs" />
-    <Compile Include="Utils\ImageListDrawItemConstants.cs" />
-    <Compile Include="Utils\ImageListDrawStateConstants.cs" />
-    <Compile Include="Utils\LocalWindowsHook.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Utils\PingUtils.cs" />
-    <Compile Include="Intf\IPuntoSwitcherService.cs" />
     <Compile Include="Misc\PuntoSwitcherServiceEngRus.cs" />
     <Compile Include="Model\ConfigModel.cs" />
     <Compile Include="Model\AboutModel.cs" />
@@ -142,28 +141,11 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\ReflectionUtils.cs" />
-    <Compile Include="Utils\ShellContextMenuException.cs" />
-    <Compile Include="Utils\ShellIconStateConstants.cs" />
-    <Compile Include="Utils\SysImageList.cs" />
-    <Compile Include="Utils\BitmapUtils.cs" />
-    <Compile Include="Utils\SafeNativeMethods.cs" />
-    <Compile Include="Utils\SerializeUtils.cs" />
-    <Compile Include="Utils\ShellAPI.cs" />
-    <Compile Include="Utils\ShellContextMenu.cs" />
-    <Compile Include="Utils\SingleInstanceCheck.cs" />
-    <Compile Include="Utils\SysImageListHelper.cs" />
-    <Compile Include="Utils\SysImageListSize.cs" />
-    <Compile Include="Utils\UnsafeNativeMethods.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Addons\Users.xml">
@@ -183,7 +165,6 @@
     <Content Include="Addons\NetworkRadmin.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Resources\twitter-icon-v2.png" />
     <None Include="..\Common\LanExchange.snk">
       <Link>LanExchange.snk</Link>
     </None>
@@ -246,7 +227,6 @@
     <None Include="Resources\input-keyboard-6.png" />
     <None Include="Resources\email-icon-v2.png" />
     <Content Include="Resources\LanExchange_16x16.ico" />
-    <None Include="Resources\LanExchange_48x48.png" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

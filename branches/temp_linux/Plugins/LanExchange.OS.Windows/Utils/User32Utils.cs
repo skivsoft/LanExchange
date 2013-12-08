@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using LanExchange.SDK.OS;
 
-namespace LanExchange.OS.Windows
+namespace LanExchange.OS.Windows.Utils
 {
-    internal class ListViewService : IListViewService
+    internal class User32Utils
     {
         private const int LVM_FIRST = 0x1000;
         private const int LVM_SETITEMSTATE = LVM_FIRST + 43;
@@ -36,7 +35,7 @@ namespace LanExchange.OS.Windows
         /// Select all rows on the given listview
         /// </summary>
         /// <param name="list">The listview whose items are to be selected</param>
-        public void SelectAllItems(IntPtr list)
+        public static void SelectAllItems(IntPtr list)
         {
             SetItemState(list, -1, 2, 2);
         }

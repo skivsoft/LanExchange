@@ -1,6 +1,6 @@
 using System;
 
-namespace LanExchange.Utils
+namespace LanExchange.UI.WinForms.Utils
 {
     /// <summary>
     /// Flags specifying the state of the icon to draw from the Shell

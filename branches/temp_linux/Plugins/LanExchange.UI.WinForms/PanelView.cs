@@ -6,7 +6,9 @@ using System.Text;
 using System.Windows.Forms;
 using LanExchange.Properties;
 using LanExchange.SDK;
+using LanExchange.SDK.OS;
 using LanExchange.SDK.UI;
+using LanExchange.UI.WinForms.Utils;
 
 namespace LanExchange.UI.WinForms
 {
@@ -258,7 +260,7 @@ namespace LanExchange.UI.WinForms
             // Ctrl+A - Select all items
             if (e.Control && e.KeyCode == Keys.A)
             {
-                User32Utils.SelectAllItems((sender as ListView));
+                App.Resolve<IUser32Service>().SelectAllItems((sender as ListView).Handle);
                 e.Handled = true;
             }
             // Backspace - Go level up

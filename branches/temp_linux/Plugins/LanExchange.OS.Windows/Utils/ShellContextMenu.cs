@@ -1,12 +1,11 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 
-namespace LanExchange.Utils
+namespace LanExchange.OS.Windows.Utils
 {
     /// <summary>
     /// "Stand-alone" shell context menu
@@ -477,7 +476,8 @@ namespace LanExchange.Utils
 
                 if (nSelected != 0)
                 {
-                    InvokeCommand(_oContextMenu, nSelected, _strParentFolder, pointScreen);
+                    var strParentFolder = string.Empty;
+                    InvokeCommand(_oContextMenu, nSelected, strParentFolder, pointScreen);
                 }
             }
             catch
@@ -535,7 +535,7 @@ namespace LanExchange.Utils
         private IShellFolder _oDesktopFolder;
         private IShellFolder _oParentFolder;
         private IntPtr[] _arrPIDLs;
-        private string _strParentFolder;
+        //private string _strParentFolder;
         #endregion
 
         #region Variables and Constants

@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using LanExchange.OS.Windows.Utils;
 using LanExchange.SDK.OS;
 
 namespace LanExchange.OS.Windows

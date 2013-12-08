@@ -3,9 +3,11 @@ using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.Properties;
 using LanExchange.SDK;
-using LanExchange.Utils;
+using LanExchange.SDK.OS;
+using LanExchange.SDK.UI;
+using LanExchange.UI.WinForms.Utils;
 
-namespace LanExchange.Misc.Impl
+namespace LanExchange.UI.WinForms
 {
     public class ImageManagerImpl : IImageManager
     {
@@ -25,7 +27,7 @@ namespace LanExchange.Misc.Impl
         {
             m_NamesMap = new Dictionary<string, int>();
             // init system images
-            ShellAPI.FileIconInit(true);
+            App.Resolve<IShell32Service>().FileIconInit(true);
             var small = new SysImageList(SysImageListSize.SmallIcons);
             var large = new SysImageList(SysImageListSize.LargeIcons);
             // init image lists

@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using LanExchange.SDK;
 using LanExchange.SDK.Addon;
 using LanExchange.SDK.UI;
+using LanExchange.UI.WinForms.Utils;
 
 namespace LanExchange.UI.WinForms
 {
@@ -220,14 +221,15 @@ namespace LanExchange.UI.WinForms
         public void ProcessKeyDown(object args)
         {
             var pv = App.MainPages.View.ActivePanelView;
-            if (pv == null) return;
+            var e = args as KeyEventArgs;
+            if (pv == null || e == null) return;
             var panelItem = pv.Presenter.GetFocusedPanelItem(false, true);
             if (panelItem == null) return;
             var typeId = panelItem.GetType().Name;
             if (!PanelItems.ContainsKey(typeId))
                 return;
             var item = PanelItems[typeId];
-            var shortcut = KeyboardUtils.KeyEventToString(args as KeyEventArgs);
+            var shortcut = KeyboardUtils.KeyEventToString(e);
             foreach (var menuItem in item.ContextMenuStrip)
                 if (menuItem.ShortcutPresent && menuItem.ShortcutKeys.Equals(shortcut))
                 {

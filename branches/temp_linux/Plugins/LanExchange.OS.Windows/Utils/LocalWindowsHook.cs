@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-namespace LanExchange.Utils
+namespace LanExchange.OS.Windows.Utils
 {
     [Localizable(false)]
     public class LocalWindowsHook

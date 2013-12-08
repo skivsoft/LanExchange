@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace LanExchange.Utils
+namespace LanExchange.UI.WinForms.Utils
 {
 	/// <summary>
 	/// Summary description for SysImageList.

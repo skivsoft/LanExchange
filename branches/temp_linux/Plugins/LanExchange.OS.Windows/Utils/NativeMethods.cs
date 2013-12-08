@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace LanExchange.UI.WinForms
+namespace LanExchange.OS.Windows.Utils
 {
     [Localizable(false)]
     internal static class NativeMethods

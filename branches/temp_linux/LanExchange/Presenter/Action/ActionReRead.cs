@@ -1,5 +1,4 @@
-﻿using LanExchange.Intf;
-using LanExchange.SDK;
+﻿using LanExchange.SDK;
 
 namespace LanExchange.Presenter.Action
 {

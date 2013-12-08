@@ -21,6 +21,12 @@ namespace LanExchange.UI.WinForms
         public MainForm()
         {
             InitializeComponent();
+            // show computer name
+            lCompName.Text = SystemInformation.ComputerName;
+            lCompName.ImageIndex = App.Images.IndexOf(PanelImageNames.ComputerNormal);
+            // show current user
+            lUserName.Text = SystemInformation.UserName;
+            lUserName.ImageIndex = App.Images.IndexOf(PanelImageNames.UserNormal);
             // set hotkey for activate: Ctrl+Win+X
             m_Hotkeys = App.Resolve<IHotkeysService>();
             App.Resolve<IDisposableManager>().RegisterInstance(m_Hotkeys);
@@ -50,6 +56,20 @@ namespace LanExchange.UI.WinForms
             }
         }
 
+        public void SetupPages()
+        {
+            // init Pages presenter
+            Pages = (PagesView)App.Resolve<IPagesView>();
+            Pages.Dock = DockStyle.Fill;
+            Controls.Add(Pages);
+            Pages.BringToFront();
+            // setup images
+            App.Images.SetImagesTo(Pages.Pages);
+            App.Images.SetImagesTo(Status);
+            // load saved pages from config
+            Pages.SetupContextMenu();
+        }
+
         private void MarkCurrentLanguage()
         {
             foreach (MenuItem menuItem in mLanguage.MenuItems)
@@ -76,7 +96,7 @@ namespace LanExchange.UI.WinForms
             // addons context menu will refresh later
             popTop.Tag = null;
             // refresh shortcut panel if present
-            var foundIndex = ActionShortcutKeys.FindPanelIndex();
+            var foundIndex = App.Presenter.FindShortcutKeysPanelIndex();
             if (foundIndex != -1)
             {
                 App.MainPages.RenameTab(foundIndex, Resources.mHelpKeys_Text);
@@ -193,7 +213,7 @@ namespace LanExchange.UI.WinForms
 
         private void mHelpAbout_Click(object sender, EventArgs e)
         {
-            App.Presenter.ExecuteAction<ActionAbout>();
+            App.Presenter.ExecuteAction("ActionAbout");
         }
         
         private void lItemsCount_MouseUp(object sender, MouseEventArgs e)
@@ -203,41 +223,6 @@ namespace LanExchange.UI.WinForms
                 var point = Status.PointToScreen(e.Location);
                 popTray.Show(point);
             }
-        }
-
-        /// <summary>
-        /// This event fires when focused item of PanelView has been changed.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Pages_PanelViewFocusedItemChanged(object sender, EventArgs e)
-        {
-            // get focused item from current PanelView
-            var pv = sender as PanelView;
-            if (pv == null) return;
-            var panelItem = pv.Presenter.GetFocusedPanelItem(false, true);
-            // check if parent item more informative than current panel item
-            while (panelItem != null &&
-                   panelItem.Parent != PanelItemRoot.ROOT_OF_USERITEMS &&
-                   !App.PanelItemTypes.DefaultRoots.Contains(panelItem) &&
-                   !App.PanelItemTypes.DefaultRoots.Contains(panelItem.Parent))
-                panelItem = panelItem.Parent;
-            if (panelItem == null) return;
-            pInfo.CurrentItem = panelItem;
-            // update info panel at top of the form
-            pInfo.Picture.Image = App.Images.GetLargeImage(panelItem.ImageName);
-            SetToolTip(pInfo.Picture, panelItem.ImageLegendText);
-            var helper = new PanelModelCopyHelper(null);
-            helper.CurrentItem = panelItem;
-            int index = 0;
-            foreach (var column in helper.Columns)
-            {
-                pInfo.SetLine(index, helper.GetColumnValue(column.Index));
-                ++index;
-                if (index >= pInfo.NumLines) break;
-            }
-            for (int i = index; i < pInfo.NumLines; i++)
-                pInfo.SetLine(i, string.Empty);
         }
 
         public void ClearInfoPanel()
@@ -310,7 +295,7 @@ namespace LanExchange.UI.WinForms
 
         private void mReRead_Click(object sender, EventArgs e)
         {
-            App.Presenter.ExecuteAction<ActionReRead>();
+            App.Presenter.ExecuteAction("ActionReRead");
             popTop.Tag = null;
         }
 
@@ -318,15 +303,14 @@ namespace LanExchange.UI.WinForms
         {
             if (e.Button == MouseButtons.Right)
             {
-                var scm = new ShellContextMenu();
-                scm.ShowContextMenuForCSIDL(Handle, ShellAPI.CSIDL.DRIVES, Cursor.Position);
+                App.Resolve<IShell32Service>().ShowMyComputerContextMenu(Handle);
             }
         }
 
         private void Status_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
-                Process.Start("explorer.exe", "/n,::{20D04FE0-3AEA-1069-A2D8-08002B30309D}");
+                App.Resolve<IShell32Service>().OpenMyComputer();
         }
 
         private void UpdatePanelRelatedMenu()
@@ -403,7 +387,7 @@ namespace LanExchange.UI.WinForms
 
         private void mHelpKeys_Click(object sender, EventArgs e)
         {
-            App.Presenter.ExecuteAction<ActionShortcutKeys>();
+            App.Presenter.ExecuteAction("ActionShortcutKeys");
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -454,19 +438,19 @@ namespace LanExchange.UI.WinForms
 
         private void mPanel_Popup(object sender, EventArgs e)
         {
-            mReRead.Enabled = App.Presenter.IsActionEnabled<ActionReRead>();
-            mCloseTab.Enabled = App.Presenter.IsActionEnabled<ActionCloseTab>();
-            mCloseOther.Enabled = App.Presenter.IsActionEnabled<ActionCloseOther>();
+            mReRead.Enabled = App.Presenter.IsActionEnabled("ActionReRead");
+            mCloseTab.Enabled = App.Presenter.IsActionEnabled("ActionCloseTab");
+            mCloseOther.Enabled = App.Presenter.IsActionEnabled("ActionCloseOther");
         }
 
         private void mCloseTab_Click(object sender, EventArgs e)
         {
-            App.Presenter.ExecuteAction<ActionCloseTab>();
+            App.Presenter.ExecuteAction("ActionCloseTab");
         }
 
         private void mCloseOther_Click(object sender, EventArgs e)
         {
-            App.Presenter.ExecuteAction<ActionCloseOther>();
+            App.Presenter.ExecuteAction("ActionCloseOther");
         }
 
         private void mViewInfo_Click(object sender, EventArgs e)
@@ -491,6 +475,17 @@ namespace LanExchange.UI.WinForms
             set { pInfo.NumLines = value; }
         }
 
+        public string TrayText
+        {
+            get { return TrayIcon.Text; }
+            set { TrayIcon.Text = value; }
+        }
+
+        public bool TrayVisible
+        {
+            get { return TrayIcon.Visible; }
+            set { TrayIcon.Visible = value; }
+        }
 
         public void Invoke(Delegate method, object sender)
         {
