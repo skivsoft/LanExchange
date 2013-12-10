@@ -19,7 +19,6 @@
     <ManifestKeyFile>
     </ManifestKeyFile>
     <SignManifests>false</SignManifests>
-    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -44,7 +43,7 @@
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugType>none</DebugType>
+    <DebugType>full</DebugType>
     <Optimize>False</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -56,6 +55,7 @@
     <DocumentationFile>
     </DocumentationFile>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -77,6 +77,11 @@
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\Common\LanExchange.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
@@ -87,8 +92,10 @@
     <Compile Include="..\Common\AnyAssemblyInfo.cs">
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Misc\AnimationHelper.cs" />
     <Compile Include="Misc\ContainerBuilder.cs" />
     <Compile Include="Misc\GenerateEnglish.cs" />
+    <Compile Include="Misc\Impl\WaitingServiceImpl.cs" />
     <Compile Include="Misc\TypeNotRegisteredException.cs" />
     <Compile Include="Misc\Impl\DisposableManagerImpl.cs" />
     <Compile Include="Misc\PluginInternal.cs" />
@@ -157,10 +164,10 @@
     <Content Include="Addons\NetworkRadmin.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\process-working.png" />
     <None Include="..\Common\LanExchange.snk">
       <Link>LanExchange.snk</Link>
     </None>
-    <None Include="app.config" />
     <None Include="Languages\Esperanto.po" />
     <None Include="Languages\Kazakh.po">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

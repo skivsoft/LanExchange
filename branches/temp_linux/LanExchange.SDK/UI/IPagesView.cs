@@ -60,5 +60,7 @@ namespace LanExchange.SDK.UI
         IPagesPresenter Presenter { get; }
         void SetupContextMenu();
         void SetTabText(int index, string title);
+
+        void SetTabImageIndex(int index, int imageIndex);
     }
 }

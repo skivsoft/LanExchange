@@ -31,6 +31,8 @@ namespace LanExchange.UI.WinForms
 
         public PagesView(IPagesPresenter presenter)
         {
+            //if (!SystemInformation.TerminalServerSession)
+            //    SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
             InitializeComponent();
             m_Presenter = presenter;
             m_Presenter.View = this;
@@ -102,6 +104,14 @@ namespace LanExchange.UI.WinForms
             if (index < 0 || index > Pages.TabCount - 1)
                 return;
             Pages.TabPages[index].Text = title;
+        }
+
+        public void SetTabImageIndex(int index, int imageIndex)
+        {
+            var tabPage = Pages.TabPages[index];
+            tabPage.ImageIndex = imageIndex;
+            //tabPage.Invalidate(true);
+            tabPage.Refresh();
         }
 
         public void RemoveTabAt(int index)
@@ -248,6 +258,15 @@ namespace LanExchange.UI.WinForms
         public TabPage CreateTabPageFromModel(IPanelModel model)
         {
             var tabPage = new TabPage();
+            //if (!SystemInformation.TerminalServerSession)
+            //{
+            //    System.Reflection.PropertyInfo aProp =
+            //        typeof (Control).GetProperty("DoubleBuffered", 
+            //            System.Reflection.BindingFlags.NonPublic |
+            //            System.Reflection.BindingFlags.Instance);
+            //    aProp.SetValue(tabPage, true, null);
+            //}
+
             tabPage.Padding = new Padding(0);
             tabPage.Text = model.TabName;
             tabPage.ImageIndex = App.Images.IndexOf(model.CurrentPath.Item[0].GetTabImageName());

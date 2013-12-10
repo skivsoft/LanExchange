@@ -125,7 +125,9 @@ namespace LanExchange.Model
         {
             if (index >= 0 && index < m_List.Count)
             {
+                var model = m_List[index];
                 m_List.RemoveAt(index);
+                model.Dispose();
                 m_SelectedIndex = m_List.Count - 1;
                 DoIndexChanged(m_SelectedIndex);
                 DoAfterRemove(index);
@@ -204,6 +206,16 @@ namespace LanExchange.Model
                 if (string.Compare(itemList.TabName, tabName, StringComparison.CurrentCultureIgnoreCase) == 0)
                     return true;
             return false;
+        }
+
+        public void Dispose()
+        {
+            for (int i = m_List.Count - 1; i >= 0; i--)
+            {
+                var model = m_List[i];
+                m_List.RemoveAt(i);
+                model.Dispose();
+            }
         }
     }
 }

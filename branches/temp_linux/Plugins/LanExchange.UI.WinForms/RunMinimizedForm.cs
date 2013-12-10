@@ -50,7 +50,7 @@ namespace LanExchange.UI.WinForms
             m_RunMinimized = value;
         }
 
-        public void ApplicationExit()
+        public virtual void ApplicationExit()
         {
             m_AllowClose = true;
             Application.Exit();

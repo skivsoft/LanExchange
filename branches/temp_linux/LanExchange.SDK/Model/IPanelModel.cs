@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace LanExchange.SDK.Model
 {
     /// <summary>
     /// LanExchange panel model.
     /// </summary>
-    public interface IPanelModel : IFilterModel, IEquatable<IPanelModel>
+    public interface IPanelModel : IFilterModel, IEquatable<IPanelModel>, IDisposable
     {
         event EventHandler Changed;
+
+        Thread AnimationThread { get; set; }
         /// <summary>
         /// Gets or sets the name of the tab.
         /// </summary>

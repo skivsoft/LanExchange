@@ -4,6 +4,7 @@ using LanExchange.Misc;
 using LanExchange.Plugin.Network;
 using LanExchange.Presenter;
 using LanExchange.SDK;
+using LanExchange.SDK.Model;
 using Moq;
 using NUnit.Framework;
 using LanExchange.Intf;

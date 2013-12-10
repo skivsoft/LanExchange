@@ -45,5 +45,7 @@ namespace LanExchange.SDK.Presenter
         void CommanCloseOtherTabs();
 
         void RenameTab(int index, string tabName);
+
+        void AsyncRetrieveData(IPanelModel panelModel);
     }
 }

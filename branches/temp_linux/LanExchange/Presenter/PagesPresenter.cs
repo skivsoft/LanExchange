@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Threading;
 using System.Windows.Forms;
 using LanExchange.Intf;
+using LanExchange.Misc;
 using LanExchange.Model;
 using LanExchange.SDK;
 using LanExchange.SDK.Model;
@@ -19,6 +21,7 @@ namespace LanExchange.Presenter
         public PagesPresenter(IPagesModel model)
         {
             m_Model = model;
+            App.Resolve<IDisposableManager>().RegisterInstance(model);
             m_Model.AfterAppendTab += Model_AfterAppendTab;
             m_Model.AfterRemove += Model_AfterRemove;
             m_Model.AfterRename += Model_AfterRename;
@@ -153,6 +156,39 @@ namespace LanExchange.Presenter
             m_Model.RenameTab(index, tabName);
         }
 
+        public void AsyncRetrieveData(IPanelModel panelModel)
+        {
+            if (panelModel.AnimationThread != null) return;
+            var thread = new Thread(Async_Start);
+            panelModel.AnimationThread = thread;
+            thread.Start(panelModel);
+        }
+
+        private void Async_Start(object argument)
+        {
+            var model = argument as IPanelModel;
+            var helper = new AnimationHelper(AnimationHelper.WORKING);
+            while(true)
+            {
+                var imageIndex = helper.GetNextStageIndex();
+                App.MainView.Invoke(UpdateStage, model, imageIndex);
+                Thread.Sleep(AnimationHelper.DELAY);
+            }
+        }
+
+        private void UpdateStage(IPanelModel model, int imageIndex)
+        {
+            if (model == null) return;
+            var pagesPresenter = App.MainPages;
+            for (int i = 0; i < pagesPresenter.Count; i++)
+                if (pagesPresenter.GetItem(i) == model)
+                {
+                    pagesPresenter.View.SetTabImageIndex(i, imageIndex);
+                    break;
+                }
+        }
+
+
         public void Model_AfterAppendTab(object sender, PanelModelEventArgs e)
         {
             // create panel
@@ -252,5 +288,6 @@ namespace LanExchange.Presenter
         {
             return m_Model.AddTab(info);
         }
+
     }
 }

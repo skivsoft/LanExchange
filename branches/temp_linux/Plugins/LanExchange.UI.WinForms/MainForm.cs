@@ -489,9 +489,28 @@ namespace LanExchange.UI.WinForms
             set { TrayIcon.Visible = value; }
         }
 
-        public void Invoke(Delegate method, object sender)
+        public void Invoke(UpdateTabImageDelegate method, params object[] args)
         {
-            base.Invoke(method, sender);
+            base.Invoke(method, args);
         }
+
+        public override void ApplicationExit()
+        {
+            base.ApplicationExit();
+            App.Resolve<IDisposableManager>().Dispose();
+        }
+
+        ///// <summary>
+        ///// This params needs for omit flickering when tab's image changed.
+        ///// </summary>
+    //    protected override CreateParams CreateParams
+    //    {
+    //        get
+    //        {
+    //            CreateParams cp = base.CreateParams;
+    //            cp.ExStyle |= 0x02000000;  // Turn on WS_EX_COMPOSITED
+    //            return cp;
+    //        }
+    //    } 
     }
 }

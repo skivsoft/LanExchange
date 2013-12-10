@@ -2,6 +2,7 @@
 using System.IO;
 using LanExchange.Core;
 using LanExchange.SDK;
+using LanExchange.SDK.Model;
 using NUnit.Framework;
 using LanExchange.Intf;
 

@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using LanExchange.SDK;
 using LanExchange.UI.WinForms.Properties;
 
 namespace LanExchange.UI.WinForms

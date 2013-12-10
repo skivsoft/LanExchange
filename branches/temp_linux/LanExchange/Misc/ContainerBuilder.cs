@@ -1,6 +1,6 @@
 using System;
+using LanExchange.Core;
 using LanExchange.Intf;
-using LanExchange.Misc;
 using LanExchange.Misc.Impl;
 using LanExchange.Model;
 using LanExchange.Presenter;
@@ -9,7 +9,7 @@ using LanExchange.SDK.Model;
 using LanExchange.SDK.Presenter;
 using LanExchange.SDK.UI;
 
-namespace LanExchange.Core
+namespace LanExchange.Misc
 {
     public static class ContainerBuilder
     {
@@ -30,6 +30,7 @@ namespace LanExchange.Core
             container.Register<IPuntoSwitcherService, PuntoSwitcherServiceEngRus>();
             container.Register<ITranslationService, TranslationServiceImpl>();
             container.Register<IDisposableManager, DisposableManagerImpl>();
+            container.Register<IWaitingService, WaitingServiceImpl>();
             // models
             container.Register<IAboutModel, AboutModel>();
             container.Register<IConfigModel, ConfigModel>();

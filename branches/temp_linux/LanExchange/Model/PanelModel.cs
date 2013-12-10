@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Threading;
 using System.Xml.Serialization;
 using LanExchange.Intf;
 using LanExchange.SDK;
@@ -254,6 +255,18 @@ namespace LanExchange.Model
             if (root.Parent != null)
                 SetDefaultRoot(root.Parent);
             CurrentPath.Push(root);
+        }
+
+
+        public Thread AnimationThread { get; set; }
+
+        public void Dispose()
+        {
+            if (AnimationThread != null)
+            {
+                AnimationThread.Abort();
+                AnimationThread = null;
+            }
         }
     }
 }

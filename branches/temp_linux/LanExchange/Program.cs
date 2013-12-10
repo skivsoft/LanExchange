@@ -95,6 +95,7 @@ namespace LanExchange
             App.Addons = App.Resolve<IAddonManager>();
             plugins.LoadPlugins(PluginType.Regular);
             (new PluginInternal()).Initialize(App.Resolve<IServiceProvider>());
+            AnimationHelper.Register(AnimationHelper.WORKING, Resources.process_working, 16, 16);
             // process cmdline params
             CmdLineProcessor.Processing();
             // load settings from cfg-file (must be loaded before plugins)

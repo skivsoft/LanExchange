@@ -1,5 +1,8 @@
 ﻿using System;
+using LanExchange.Core;
+using LanExchange.SDK;
 using LanExchange.SDK.Addon;
+using LanExchange.UI.WinForms.Impl;
 using NUnit.Framework;
 
 namespace LanExchange.Misc.Impl
@@ -24,6 +27,7 @@ namespace LanExchange.Misc.Impl
         [Test, ExpectedException(typeof(ArgumentException))]
         public void DuplicateProgramKeyException()
         {
+            App.SetContainer(ContainerBuilder.Build());
             m_Manager.Programs.Add("calc", new AddonProgram("calc", @"%SystemRoot%\system32\calc.exe"));
             m_Manager.Programs.Add("calc", new AddonProgram("notepad", @"%SystemRoot%\system32\notepad.exe"));
         }
