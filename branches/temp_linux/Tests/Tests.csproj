@@ -12,7 +12,6 @@
     <AssemblyName>Tests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -86,14 +85,6 @@
     <ProjectReference Include="..\LanExchange\LanExchange.csproj">
       <Project>{CC938630-E3FC-426E-A8A7-06EB22ABC703}</Project>
       <Name>LanExchange</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Plugins\LanExchange.Plugin.Network\LanExchange.Plugin.Network.csproj">
-      <Project>{18971728-B208-45D9-B4BB-4BB6020963E7}</Project>
-      <Name>LanExchange.Plugin.Network</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Plugins\LanExchange.Plugin.Users\LanExchange.Plugin.Users.csproj">
-      <Project>{064D3413-8F0B-4511-85F3-4919AC1D5A98}</Project>
-      <Name>LanExchange.Plugin.Users</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

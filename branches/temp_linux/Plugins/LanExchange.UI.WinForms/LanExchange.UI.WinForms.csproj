@@ -10,8 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LanExchange.UI.WinForms</RootNamespace>
     <AssemblyName>LanExchange.UI.WinForms</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,11 +41,9 @@
   <ItemGroup>
     <Compile Include="Impl\AddonManagerImpl.cs" />
     <Compile Include="Utils\BitmapUtils.cs" />
-    <Compile Include="Utils\ExternDll.cs" />
     <Compile Include="Impl\ImageManagerImpl.cs" />
     <Compile Include="Utils\KeyboardUtils.cs" />
     <Compile Include="MacroHelper.cs" />
-    <Compile Include="Utils\NativeMethods.cs" />
     <Compile Include="PluginWinForms.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

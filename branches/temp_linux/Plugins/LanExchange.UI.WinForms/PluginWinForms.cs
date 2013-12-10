@@ -28,6 +28,8 @@ namespace LanExchange.UI.WinForms
             if (container == null) return;
 
             App.SetContainer(container);
+            container.Register<IAddonManager, AddonManagerImpl>();
+            container.Register<IImageManager, ImageManagerImpl>();
             container.Register<IAppPresenter, AppPresenter>();
             container.Register<IAboutView, AboutForm>(LifeCycle.Transient);
             container.Register<IFilterView, FilterView>(LifeCycle.Transient);
@@ -36,8 +38,6 @@ namespace LanExchange.UI.WinForms
             container.Register<IMainView, MainForm>();
             container.Register<IPagesView, PagesView>();
             container.Register<IWaitingService, WaitingServiceImpl>();
-            container.Register<IAddonManager, AddonManagerImpl>();
-            container.Register<IImageManager, ImageManagerImpl>();
         }
     }
 }

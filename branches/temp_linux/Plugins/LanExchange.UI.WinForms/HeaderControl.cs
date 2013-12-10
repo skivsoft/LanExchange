@@ -2,6 +2,8 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.UI.WinForms.Utils;
+using LanExchange.SDK.OS;
+using LanExchange.SDK;
 
 namespace LanExchange.UI.WinForms
 {
@@ -17,7 +19,10 @@ namespace LanExchange.UI.WinForms
         /// <param name="olv"></param>
         public HeaderControl(ListViewer olv) {
             ListView = olv;
-            AssignHandle(NativeMethods.GetHeaderControl(olv));
+			var handle = App.Resolve<IUser32Service>().GetHeaderControl(olv.Handle);
+			if (handle != IntPtr.Zero)
+				AssignHandle(handle);
+            //AssignHandle(NativeMethods.GetHeaderControl(olv));
         }
 
         /// <summary>
@@ -28,8 +33,12 @@ namespace LanExchange.UI.WinForms
         public int ColumnIndexUnderCursor {
             get {
                 Point pt = ListView.PointToClient(Cursor.Position);
-                pt.X += NativeMethods.GetScrollPosition(ListView, true);
-                return NativeMethods.GetColumnUnderPoint(Handle, pt);
+
+				var service = App.Resolve<IUser32Service>();
+				pt.X += service.GetScrollPosition(ListView.Handle, true);
+				return service.GetColumnUnderPoint(Handle, pt);
+                //pt.X += NativeMethods.GetScrollPosition(ListView, true);
+                //return NativeMethods.GetColumnUnderPoint(Handle, pt);
             }
         }
 
@@ -45,7 +54,7 @@ namespace LanExchange.UI.WinForms
         /// </remarks>
         public new IntPtr Handle
         {
-            get { return NativeMethods.GetHeaderControl(ListView); }
+            get { return App.Resolve<IUser32Service>().GetHeaderControl(ListView.Handle); }
         }
 
         /// <summary>

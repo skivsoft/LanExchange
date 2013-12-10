@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using LanExchange.OS.Windows.Utils;
 using LanExchange.SDK.OS;
 
@@ -10,5 +11,25 @@ namespace LanExchange.OS.Windows
         {
             User32Utils.SelectAllItems(handle);
         }
+
+		public IntPtr GetHeaderControl (IntPtr listViewHandle)
+		{
+			return NativeMethods.GetHeaderControl(listViewHandle);
+		}
+
+		public int GetScrollPosition (IntPtr listViewHandle, bool horizontalBar)
+		{
+			return NativeMethods.GetScrollPosition(listViewHandle, horizontalBar);
+		}
+
+		public int GetColumnUnderPoint (IntPtr handle, Point pt)
+		{
+			return GetColumnUnderPoint(handle, pt);
+		}
+
+		public void SetColumnImage (IntPtr listViewHandle, int columnIndex, int order, int imageIndex)
+		{
+			NativeMethods.SetColumnImage(listViewHandle, columnIndex, order, imageIndex);
+		}
     }
 }

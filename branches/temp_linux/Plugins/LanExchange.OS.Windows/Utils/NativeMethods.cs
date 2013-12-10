@@ -201,9 +201,9 @@ namespace LanExchange.OS.Windows.Utils
         /// </summary>
         /// <param name="list">The listview whose header control is to be returned</param>
         /// <returns>The handle to the header control</returns>
-        public static IntPtr GetHeaderControl(ListView list)
+        public static IntPtr GetHeaderControl(IntPtr listViewHandle)
         {
-            return SendMessage(list.Handle, LVM_GETHEADER, 0, 0);
+            return SendMessage(listViewHandle, LVM_GETHEADER, 0, 0);
         }
 
         /// <summary>
@@ -214,9 +214,9 @@ namespace LanExchange.OS.Windows.Utils
         /// <param name="columnIndex">Index of the column to modifiy</param>
         /// <param name="order"></param>
         /// <param name="imageIndex">Index into the small image list</param>
-        public static void SetColumnImage(ListView list, int columnIndex, SortOrder order, int imageIndex)
+        public static void SetColumnImage(IntPtr listViewHandle, int columnIndex, int order, int imageIndex)
         {
-            IntPtr hdrCntl = NativeMethods.GetHeaderControl(list);
+            IntPtr hdrCntl = NativeMethods.GetHeaderControl(listViewHandle);
             if (hdrCntl.ToInt32() == 0)
                 return;
 
@@ -228,9 +228,9 @@ namespace LanExchange.OS.Windows.Utils
 
             //if (NativeMethods.HasBuiltinSortIndicators())
             {
-                if (order == SortOrder.Ascending)
+                if (order == 1) // ascending
                     item.fmt |= HDF_SORTUP;
-                if (order == SortOrder.Descending)
+                if (order == 2) // descending
                     item.fmt |= HDF_SORTDOWN;
             }
             //else
@@ -249,13 +249,13 @@ namespace LanExchange.OS.Windows.Utils
         /// <param name="lv"></param>
         /// <param name="horizontalBar"></param>
         /// <returns></returns>
-        public static int GetScrollPosition(ListView lv, bool horizontalBar)
+        public static int GetScrollPosition(IntPtr listViewHandle, bool horizontalBar)
         {
             int fnBar = (horizontalBar ? SB_HORZ : SB_VERT);
 
             SCROLLINFO scrollInfo = new SCROLLINFO();
             scrollInfo.fMask = SIF_POS;
-            if (GetScrollInfo(lv.Handle, fnBar, scrollInfo))
+            if (GetScrollInfo(listViewHandle, fnBar, scrollInfo))
                 return scrollInfo.nPos;
             else
                 return -1;

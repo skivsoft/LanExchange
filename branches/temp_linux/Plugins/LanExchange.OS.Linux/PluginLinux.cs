@@ -11,8 +11,8 @@ namespace LanExchange.OS.Linux
         public void Initialize(IServiceProvider serviceProvider)
         {
             // load plugin if only mono runtime present
-            if (!EnvironmentUtils.IsRunningOnMono())
-                return;
+            //if (!EnvironmentUtils.IsRunningOnMono())
+            //    return;
 
             m_Provider = serviceProvider;
 
@@ -27,7 +27,7 @@ namespace LanExchange.OS.Linux
 
             container.Register<IHotkeysService, HotkeysService>();
             container.Register<ISingleInstanceService, SingleInstanceService>(); 
-            container.Register<ISysImageListService, ISysImageListService>(LifeCycle.Transient);
+            container.Register<ISysImageListService, SysImageListService>(LifeCycle.Transient);
         }
     }
 }

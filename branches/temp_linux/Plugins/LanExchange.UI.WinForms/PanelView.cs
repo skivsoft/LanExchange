@@ -388,7 +388,9 @@ namespace LanExchange.UI.WinForms
 
         public void SetColumnMarker(int columnIndex, PanelSortOrder sortOrder)
         {
-            NativeMethods.SetColumnImage(LV, columnIndex, (SortOrder)sortOrder, -1);
+			var service = App.Resolve<IUser32Service>();
+			service.SetColumnImage(LV.Handle, columnIndex, (int)sortOrder, -1);
+            //NativeMethods.SetColumnImage(LV, columnIndex, (SortOrder)sortOrder, -1);
             m_SortColumn = columnIndex;
         }
 
