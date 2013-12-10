@@ -3,9 +3,33 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:my="clr-namespace:LanExchange.UI.WPF"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <Window.CommandBindings>
+        <CommandBinding Command="my:AllCommands.cmdKeys"  Executed="KeysCommand_Executed" />
+        <CommandBinding Command="my:AllCommands.cmdExit"  Executed="ExitCommand_Executed" />
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding  Gesture="F1" Command="my:AllCommands.cmdKeys"/>
+        <KeyBinding  Gesture="F10" Command="my:AllCommands.cmdExit"/>
+    </Window.InputBindings>
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Menu d:Height="64" VerticalAlignment="Top">
+            <MenuItem Header="_Panel">
+                <MenuItem Header="_Exit" Command="my:AllCommands.cmdExit" InputGestureText="F10"/>
+            </MenuItem>
+            <MenuItem Header="_View"/>
+            <MenuItem x:Name="mLanguages" Header="Languages"/>
+            <MenuItem Header="_Help">
+                <MenuItem Header="Shortcut keys" Command="my:AllCommands.cmdKeys" InputGestureText="F1" ></MenuItem>
+            </MenuItem>
+
+        </Menu>
+        <Border Background="Aqua" HorizontalAlignment="Stretch"  x:Name="PageContainer" Grid.Row="1" Grid.RowSpan="1" />
     </Grid>
 </Window>

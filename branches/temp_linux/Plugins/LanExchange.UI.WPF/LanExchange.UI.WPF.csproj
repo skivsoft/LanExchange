@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,7 +45,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="App.xaml">
+    <Page Include="AppPresenter.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -52,14 +53,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
+    <Compile Include="AllCommands.cs" />
+    <Compile Include="AppPresenter.xaml.cs">
+      <DependentUpon>AppPresenter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Impl\AddonManagerImpl.cs" />
+    <Compile Include="Impl\ImageManagerImpl.cs" />
+    <Compile Include="PagesView.xaml.cs">
+      <DependentUpon>PagesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PanelView.xaml.cs">
+      <DependentUpon>PanelView.xaml</DependentUpon>
     </Compile>
     <Compile Include="PluginWPF.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PagesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PanelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

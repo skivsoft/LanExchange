@@ -68,7 +68,8 @@ namespace LanExchange.Presenter
                 var index = Objects.IndexOf(currentItemList.FocusedItem);
                 View.FocusedItemIndex = index;
             }
-            View.Filter.UpdateFromModel(Objects);
+            if (View.Filter != null)
+                View.Filter.UpdateFromModel(Objects);
         }
 
         private void CurrentPath_Changed(object sender, EventArgs e)
@@ -87,7 +88,8 @@ namespace LanExchange.Presenter
                 m_Objects = value;
                 if (m_Objects != null)
                     m_Objects.CurrentPath.Changed += CurrentPath_Changed;
-                View.Filter.Presenter.SetModel(value);
+                if (View.Filter != null)
+                    View.Filter.Presenter.SetModel(value);
             }
         }
 

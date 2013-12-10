@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
 using LanExchange.SDK.UI;
+using LanExchange.SDK;
+using System.Windows.Input;
 
 namespace LanExchange.UI.WPF
 {
@@ -77,19 +79,50 @@ namespace LanExchange.UI.WPF
 
         public void SetBounds(int left, int top, int width, int height)
         {
+            Visibility = Visibility.Collapsed;
+            Width = width;
+            Height = height;
+            Left = left;
+            Top = top;
+            Visibility = Visibility.Visible;
         }
 
         public void SetupPages()
         {
+        /*     // init Pages presenter
+            Pages = (PagesView)App.Resolve<IPagesView>();
+            Pages.Dock = DockStyle.Fill;
+            Controls.Add(Pages);
+            Pages.BringToFront();
+            // setup images
+            App.Images.SetImagesTo(Pages.Pages);
+            App.Images.SetImagesTo(Status);
+            // load saved pages from config
+            Pages.SetupContextMenu();*/
+            var Pages = (PagesView)App.Resolve<IPagesView>();
+            PageContainer.Child=Pages;
         }
 
 
         public string Text
         {
-            get { return string.Empty; }
+            get { return Title; }
             set
             {
+                Title = value;
             }
         }
+
+
+        private void KeysCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            App.Presenter.ExecuteAction("ActionShortcutKeys");
+        }
+
+        private void ExitCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            Close();
+        }
+
     }
 }
