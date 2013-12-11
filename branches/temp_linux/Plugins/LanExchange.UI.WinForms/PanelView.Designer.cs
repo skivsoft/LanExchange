@@ -171,7 +171,7 @@ namespace LanExchange.UI.WinForms
 
         #endregion
 
-        private LanExchange.UI.WinForms.ListViewer LV;
+        private ListViewer LV;
         public System.Windows.Forms.ContextMenuStrip popComps;
         public System.Windows.Forms.ToolStripMenuItem mComp;
         private System.Windows.Forms.ToolStripSeparator mAfterComp;

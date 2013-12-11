@@ -1,8 +1,7 @@
 using System;
-using LanExchange.Intf;
 using LanExchange.SDK;
 
-namespace LanExchange.Core
+namespace LanExchange.Misc
 {
     public class RegisteredObject
     {

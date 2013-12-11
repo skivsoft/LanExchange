@@ -1,8 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using LanExchange.SDK.OS;
+using LanExchange.SDK;
 
 namespace LanExchange.OS.Windows.Utils
 {
@@ -41,7 +40,7 @@ namespace LanExchange.OS.Windows.Utils
         /// <param name="sysImageList">System Image List to associate</param>
         /// <param name="forStateImages">Whether to add ImageList as StateImageList</param>
         public static void SetListViewImageList(
-            ListView listView,
+            IntPtr listView,
             SysImageList sysImageList,
             bool forStateImages
             )
@@ -56,7 +55,7 @@ namespace LanExchange.OS.Windows.Utils
                 wParam = (IntPtr)LVSIL_STATE;
             }
             SendMessage(
-                listView.Handle,
+                listView,
                 LVM_SETIMAGELIST,
                 wParam,
                 sysImageList.Handle);	
@@ -69,7 +68,7 @@ namespace LanExchange.OS.Windows.Utils
         /// <param name="sysImageList">System Image List to associate</param>
         /// <param name="forStateImages">Whether to add ImageList as StateImageList</param>
         public static void SetTreeViewImageList(
-            TreeView treeView,
+            IntPtr treeView,
             SysImageList sysImageList,
             bool forStateImages
             )
@@ -80,7 +79,7 @@ namespace LanExchange.OS.Windows.Utils
             else
                 wParam = (IntPtr)TVSIL_NORMAL;
             SendMessage(
-                treeView.Handle,
+                treeView,
                 TVM_SETIMAGELIST,
                 wParam,
                 sysImageList.Handle);

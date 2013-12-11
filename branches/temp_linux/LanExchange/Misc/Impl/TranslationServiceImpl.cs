@@ -5,17 +5,15 @@ using System.Globalization;
 using System.IO;
 using System.Resources;
 using System.Text;
-using LanExchange.Intf;
 using LanExchange.SDK;
-using LanExchange.Utils;
 
 namespace LanExchange.Misc.Impl
 {
     [Localizable(false)]
     public class TranslationServiceImpl : ITranslationService
     {
-        private string LANGUAGE_NAME = "@LANGUAGE_NAME";
-        private string AUTHOR = "@AUTHOR";
+        private const string LANGUAGE_NAME = "@LANGUAGE_NAME";
+        private const string AUTHOR = "@AUTHOR";
 
         private readonly IList<string> m_CurrentLanguageLines;
         private string m_CurrentLanguage;

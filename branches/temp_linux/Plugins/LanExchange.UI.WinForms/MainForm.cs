@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
@@ -399,7 +398,7 @@ namespace LanExchange.UI.WinForms
 
         public void OnDataReady(object sender, DataReadyArgs args)
         {
-            BeginInvoke(new WaitCallback(MainForm_RefreshItem), new object[1] { args.Item });
+            BeginInvoke(new WaitCallback(MainForm_RefreshItem), args.Item);
         }
 
         private void MainForm_RefreshItem(object item)

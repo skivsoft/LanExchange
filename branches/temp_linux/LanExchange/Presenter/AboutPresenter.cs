@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
-using LanExchange.Intf;
 using LanExchange.Properties;
 using LanExchange.SDK;
 using LanExchange.SDK.Model;

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
-using System.Windows.Forms;
 using LanExchange.Misc;
 using LanExchange.Presenter.Action;
 using LanExchange.SDK;
@@ -150,10 +149,10 @@ namespace LanExchange.Presenter
             }
         }
 
-        private int GetDefaultWidth()
+        private int GetDefaultWidth(IScreenService screen)
         {
             const double phi2 = 0.6180339887498949;
-            return (int)(Screen.PrimaryScreen.WorkingArea.Width * phi2 * phi2);
+            return (int)(screen.PrimaryScreenWorkingArea.Width * phi2 * phi2);
         }
 
         public Rectangle SettingsGetBounds()
@@ -163,15 +162,16 @@ namespace LanExchange.Presenter
             // correct width and height
             bool boundsIsNotSet = mainFormWidth == 0;
             Rectangle workingArea;
+            var screen = App.Resolve<IScreenService>();
             if (boundsIsNotSet)
-                workingArea = Screen.PrimaryScreen.WorkingArea;
+                workingArea = screen.PrimaryScreenWorkingArea;
             else
-                workingArea = Screen.GetWorkingArea(new Point(mainFormX + mainFormWidth / 2, 0));
+                workingArea = screen.GetWorkingArea(new Point(mainFormX + mainFormWidth / 2, 0));
             var rect = new Rectangle();
             rect.X = mainFormX;
             rect.Y = workingArea.Top;
-            rect.Width = Math.Min(Math.Max(GetDefaultWidth(), mainFormWidth), workingArea.Width);
-            rect.Height = workingArea.Height - SystemInformation.MenuHeight;
+            rect.Width = Math.Min(Math.Max(GetDefaultWidth(screen), mainFormWidth), workingArea.Width);
+            rect.Height = workingArea.Height; // ... - SystemInformation.MenuHeight;
             // determination side to snap right or left
             int centerX = (rect.Left + rect.Right) >> 1;
             int workingAreaCenterX = (workingArea.Left + workingArea.Right) >> 1;
@@ -186,7 +186,8 @@ namespace LanExchange.Presenter
 
         public void SettingsSetBounds(Rectangle rect)
         {
-            Rectangle workingArea = Screen.GetWorkingArea(rect);
+            var screen = App.Resolve<IScreenService>();
+            Rectangle workingArea = screen.GetWorkingArea(rect);
             // shift rect into working area
             if (rect.Left < workingArea.Left) rect.X = workingArea.Left;
             if (rect.Top < workingArea.Top) rect.Y = workingArea.Top;

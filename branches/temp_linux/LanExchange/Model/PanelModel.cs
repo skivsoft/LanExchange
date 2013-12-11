@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Xml.Serialization;
 using LanExchange.SDK;
@@ -56,6 +57,7 @@ namespace LanExchange.Model
         /// <value>
         /// The name of the tab.
         /// </value>
+        [Localizable(false)]
         [XmlAttribute("Name")]
         public string TabName
         {
@@ -75,9 +77,11 @@ namespace LanExchange.Model
         [XmlAttribute]
         public string DataType { get; set; }
 
+        [Localizable(false)]
         [XmlAttribute("View")]
         public PanelViewMode CurrentView { get; set; }
 
+        [Localizable(false)]
         [XmlAttribute("Filter")]
         public string FilterText { get; set; }
 

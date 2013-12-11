@@ -30,10 +30,19 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>LanExchange.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Common\AnyAssemblyInfo.cs">
+      <Link>AnyAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="MessageEventArgs.cs" />
     <Compile Include="PluginNotify.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -46,7 +55,9 @@
       <Name>LanExchange.SDK</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="LanExchange.snk" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>rem echo Y|copy $(TargetPath) $(SolutionDir)LanExchange\$(OutDir)</PostBuildEvent>

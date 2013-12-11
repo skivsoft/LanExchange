@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Globalization;
 using LanExchange.SDK;
 
-namespace LanExchange.Core
+namespace LanExchange.Misc
 {
     public class SimpleIocContainer : IIoCContainer
     {

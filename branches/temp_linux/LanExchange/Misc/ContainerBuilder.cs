@@ -1,13 +1,10 @@
 using System;
-using LanExchange.Core;
-using LanExchange.Intf;
 using LanExchange.Misc.Impl;
 using LanExchange.Model;
 using LanExchange.Presenter;
 using LanExchange.SDK;
 using LanExchange.SDK.Model;
 using LanExchange.SDK.Presenter;
-using LanExchange.SDK.UI;
 
 namespace LanExchange.Misc
 {
@@ -30,7 +27,6 @@ namespace LanExchange.Misc
             container.Register<IPuntoSwitcherService, PuntoSwitcherServiceEngRus>();
             container.Register<ITranslationService, TranslationServiceImpl>();
             container.Register<IDisposableManager, DisposableManagerImpl>();
-            container.Register<IWaitingService, WaitingServiceImpl>();
             // updater
             container.Register<IPanelUpdater, PanelUpdaterImpl>(LifeCycle.Transient);
             // models

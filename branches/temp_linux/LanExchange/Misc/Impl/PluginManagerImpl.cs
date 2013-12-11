@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using LanExchange.Intf;
 using LanExchange.SDK;
 
 namespace LanExchange.Misc.Impl

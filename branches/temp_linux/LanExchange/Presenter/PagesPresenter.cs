@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Threading;
-using System.Windows.Forms;
-using LanExchange.Intf;
-using LanExchange.Misc;
-using LanExchange.Model;
 using LanExchange.SDK;
 using LanExchange.SDK.Model;
 using LanExchange.SDK.Presenter;
@@ -72,7 +67,8 @@ namespace LanExchange.Presenter
         {
             if (View.ActivePanelView == null)
                 return false;
-            var obj = Clipboard.GetDataObject();
+            var clipboard = App.Resolve<IClipboardService>();
+            var obj = clipboard.GetDataObject();
             if (obj == null)
                 return false;
             if (!obj.GetDataPresent(typeof(PanelItemBaseHolder)))
@@ -86,7 +82,8 @@ namespace LanExchange.Presenter
         public void CommandPasteItems()
         {
             if (!CanPasteItems()) return;
-            var obj = Clipboard.GetDataObject();
+            var clipboard = App.Resolve<IClipboardService>();
+            var obj = clipboard.GetDataObject();
             if (obj == null) return;
             var items = (PanelItemBaseHolder)obj.GetData(typeof(PanelItemBaseHolder));
             var destObjects = m_Model.GetItem(m_Model.SelectedIndex);
@@ -253,10 +250,10 @@ namespace LanExchange.Presenter
             return m_Model.GetTabName(index);
         }
 
-        public void SetupPanelViewEvents(IPanelView PV)
+        public void SetupPanelViewEvents(IPanelView panelView)
         {
-            PV.FocusedItemChanged += DoPanelViewFocusedItemChanged;
-            PV.FilterTextChanged += DoPanelViewFilterTextChanged;
+            panelView.FocusedItemChanged += DoPanelViewFocusedItemChanged;
+            panelView.FilterTextChanged += DoPanelViewFilterTextChanged;
         }
 
         public IPanelModel GetItem(int index)

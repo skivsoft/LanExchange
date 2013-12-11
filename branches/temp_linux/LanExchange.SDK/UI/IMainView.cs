@@ -1,7 +1,4 @@
-﻿using System;
-using LanExchange.SDK.Model;
-
-namespace LanExchange.SDK.UI
+﻿namespace LanExchange.SDK.UI
 {
     public interface IMainView : IView
     {

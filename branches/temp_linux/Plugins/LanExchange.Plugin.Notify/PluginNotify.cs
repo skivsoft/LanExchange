@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Text;
 using LanExchange.SDK;
-using LanExchange.SDK.Model;
 using LanExchange.SDK.Presenter;
 using LanExchange.SDK.UI;
 
@@ -54,18 +53,10 @@ namespace LanExchange.Plugin.Notify
                     if (parent.GetType().Name.Equals(typeName))
                         if (parent.IsRereadAccepted(subject))
                         {
-                            //mainView.Invoke(new UpdateUIProc(UpdateProc), model);
-                            model.AsyncRetrieveData();
+                            model.AsyncRetrieveData(false);
                             break;
                         }
                 }
-        }
-
-        private void UpdateProc(object sender)
-        {
-            var model = sender as IPanelModel;
-            if (model != null)
-                model.SyncRetrieveData();
         }
     }
 }

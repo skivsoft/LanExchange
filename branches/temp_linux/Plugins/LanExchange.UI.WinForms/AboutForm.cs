@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using System.Windows.Forms;
 using LanExchange.SDK.Presenter;
 using LanExchange.UI.WinForms.Properties;

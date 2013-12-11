@@ -261,7 +261,9 @@ namespace LanExchange.UI.WinForms
             // Ctrl+A - Select all items
             if (e.Control && e.KeyCode == Keys.A)
             {
-                App.Resolve<IUser32Service>().SelectAllItems((sender as ListView).Handle);
+                var listView = sender as ListView;
+                if (listView != null)
+                    App.Resolve<IUser32Service>().SelectAllItems(listView.Handle);
                 e.Handled = true;
             }
             // Backspace - Go level up

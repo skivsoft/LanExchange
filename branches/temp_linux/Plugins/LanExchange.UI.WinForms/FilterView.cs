@@ -6,7 +6,6 @@ using System.Windows.Forms;
 using LanExchange.SDK.Model;
 using LanExchange.SDK.Presenter;
 using LanExchange.UI.WinForms.Properties;
-using LanExchange.SDK;
 using LanExchange.SDK.UI;
 
 namespace LanExchange.UI.WinForms

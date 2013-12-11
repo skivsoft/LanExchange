@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Globalization;
-using System.Windows.Forms;
 using LanExchange.Misc;
 using LanExchange.Properties;
 using LanExchange.SDK;
@@ -37,7 +35,7 @@ namespace LanExchange.Presenter
         public void ResetSortOrder()
         {
             m_Objects.Comparer.ColumnIndex = 0;
-            m_Objects.Comparer.SortOrder = (PanelSortOrder)SortOrder.Ascending;
+            m_Objects.Comparer.SortOrder = PanelSortOrder.Ascending;
         }
 
         public void UpdateItemsAndStatus()
@@ -105,11 +103,11 @@ namespace LanExchange.Presenter
                 }
                 if (!isReachable)
                 {
-                    var result = MessageBox.Show(
-                        String.Format(CultureInfo.CurrentCulture, Resources.PanelPresenter_UnreachableMsg, panelItem.Name), 
+                    var messageBox = App.Resolve<IMessageBoxService>();
+                    var result = messageBox.AskQuestionFmt(
                         Resources.PanelPresenter_Query,
-                        MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-                    if (result != DialogResult.Yes)
+                        Resources.PanelPresenter_UnreachableMsg, panelItem.Name);
+                    if (!messageBox.IsYes(result))
                         panelItem = null;
                 }
             }

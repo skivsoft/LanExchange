@@ -83,7 +83,7 @@
     <Compile Include="OS\ISingleInstanceService.cs" />
     <Compile Include="OS\ISysImageListService.cs" />
     <Compile Include="OS\IUser32Service.cs" />
-    <Compile Include="OS\SysImageListSize.cs" />
+    <Compile Include="SysImageListSize.cs" />
     <Compile Include="PanelItemBaseHolder.cs" />
     <Compile Include="PanelModelCopyHelper.cs" />
     <Compile Include="PluginType.cs" />
@@ -106,6 +106,8 @@
     <Compile Include="IDisposableManager.cs" />
     <Compile Include="Model\IFilterModel.cs" />
     <Compile Include="Presenter\IFilterPresenter.cs" />
+    <Compile Include="UI\IClipboardDataObject.cs" />
+    <Compile Include="UI\IClipboardService.cs" />
     <Compile Include="UI\IFilterView.cs" />
     <Compile Include="IFolderManager.cs" />
     <Compile Include="IIoCContainer.cs" />
@@ -113,6 +115,7 @@
     <Compile Include="UI\IMainView.cs" />
     <Compile Include="IModel.cs" />
     <Compile Include="Presenter\IPagesPresenter.cs" />
+    <Compile Include="UI\IMessageBoxService.cs" />
     <Compile Include="UI\IPagesView.cs" />
     <Compile Include="IPanelColumnManager.cs" />
     <Compile Include="IPanelFillerManager.cs" />
@@ -125,6 +128,7 @@
     <Compile Include="IPresenter.cs" />
     <Compile Include="ITranslationService.cs" />
     <Compile Include="IView.cs" />
+    <Compile Include="UI\IScreenService.cs" />
     <Compile Include="UI\IWaitingService.cs" />
     <Compile Include="LifeCycle.cs" />
     <Compile Include="ObjectPath.cs" />

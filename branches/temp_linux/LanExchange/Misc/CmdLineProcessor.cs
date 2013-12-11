@@ -1,9 +1,7 @@
 using System;
 using System.ComponentModel;
-using LanExchange.Intf;
 using LanExchange.SDK;
 using LanExchange.SDK.OS;
-using LanExchange.Utils;
 
 namespace LanExchange.Misc
 {

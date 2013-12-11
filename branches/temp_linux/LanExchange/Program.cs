@@ -69,8 +69,6 @@
 
 using System;
 using System.ComponentModel;
-using LanExchange.Core;
-using LanExchange.Intf;
 using LanExchange.Misc;
 using LanExchange.Properties;
 using LanExchange.SDK;

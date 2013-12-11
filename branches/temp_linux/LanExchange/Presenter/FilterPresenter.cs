@@ -1,6 +1,4 @@
 ﻿using System;
-using LanExchange.Intf;
-using LanExchange.SDK;
 using LanExchange.SDK.Model;
 using LanExchange.SDK.Presenter;
 using LanExchange.SDK.UI;

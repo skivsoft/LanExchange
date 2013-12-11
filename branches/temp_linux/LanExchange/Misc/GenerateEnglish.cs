@@ -8,10 +8,8 @@ using System.IO;
 using System.Reflection;
 using System.Resources;
 using System.Text;
-using LanExchange.Intf;
 using LanExchange.SDK;
 using LanExchange.SDK.Addon;
-using LanExchange.Utils;
 
 namespace LanExchange.Misc
 {
@@ -98,9 +96,9 @@ namespace LanExchange.Misc
             var context = Path.GetFileName(fileName);
             foreach (DictionaryEntry entry in resourceSet)
             {
-                if (entry.Value != null && entry.Value is string)
+                var value = entry.Value as string;
+                if (value != null)
                 {
-                    var value = (string)entry.Value;
                     Phrase found;
                     if (!s_Dict.TryGetValue(value, out found))
                         s_Dict.Add(value, new Phrase(context, value));

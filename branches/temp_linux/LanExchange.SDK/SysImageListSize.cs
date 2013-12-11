@@ -1,4 +1,4 @@
-namespace LanExchange.SDK.OS
+namespace LanExchange.SDK
 {
     /// <summary>
     /// Available system image list sizes

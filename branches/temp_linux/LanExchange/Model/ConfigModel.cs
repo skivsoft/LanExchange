@@ -3,10 +3,9 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
-using LanExchange.Intf;
+using LanExchange.Misc;
 using LanExchange.SDK;
 using LanExchange.SDK.Model;
-using LanExchange.Utils;
 
 namespace LanExchange.Model
 {

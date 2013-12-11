@@ -28,16 +28,21 @@ namespace LanExchange.UI.WinForms
             if (container == null) return;
 
             App.SetContainer(container);
-            container.Register<IAddonManager, AddonManagerImpl>();
-            container.Register<IImageManager, ImageManagerImpl>();
-            container.Register<IAppPresenter, AppPresenter>();
+            // views
             container.Register<IAboutView, AboutForm>(LifeCycle.Transient);
             container.Register<IFilterView, FilterView>(LifeCycle.Transient);
             container.Register<IPanelView, PanelView>(LifeCycle.Transient);
             container.Register<IInfoView, InfoView>();
             container.Register<IMainView, MainForm>();
             container.Register<IPagesView, PagesView>();
+            // other
+            container.Register<IAddonManager, AddonManagerImpl>();
+            container.Register<IImageManager, ImageManagerImpl>();
+            container.Register<IAppPresenter, AppPresenter>();
             container.Register<IWaitingService, WaitingServiceImpl>();
+            container.Register<IClipboardService, ClipboardServiceImpl>();
+            container.Register<IScreenService, ScreenImpl>();
+            container.Register<IMessageBoxService, MessageBoxServiceImpl>();
         }
     }
 }

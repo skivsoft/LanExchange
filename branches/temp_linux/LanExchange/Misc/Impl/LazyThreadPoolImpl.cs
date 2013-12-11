@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
-using LanExchange.Intf;
 using LanExchange.SDK;
 using ThreadState = System.Threading.ThreadState;
 
@@ -13,7 +12,7 @@ namespace LanExchange.Misc.Impl
         private const int NUM_CYCLES_IN_THREAD = 10;
 
         private readonly LinkedList<PanelItemBase> m_AsyncQueue;
-        private List<Thread> m_Threads;
+        private readonly List<Thread> m_Threads;
         private long m_NumThreads;
 
         public event EventHandler<DataReadyArgs> DataReady;
@@ -72,9 +71,9 @@ namespace LanExchange.Misc.Impl
             int number = 0;
             while (m_AsyncQueue.Count > 0 && number < NUM_CYCLES_IN_THREAD)
             {
-                PanelItemBase item = null;
                 try
                 {
+                    PanelItemBase item;
                     lock (m_AsyncQueue)
                     {
                         item = m_AsyncQueue.First.Value;

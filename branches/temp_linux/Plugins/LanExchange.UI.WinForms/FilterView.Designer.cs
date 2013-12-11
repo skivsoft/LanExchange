@@ -78,7 +78,7 @@ namespace LanExchange.UI.WinForms
 
         #endregion
 
-        private System.Windows.Forms.PictureBox imgClear;
+        private PictureBox imgClear;
         public TextBox eFilter;
     }
 }

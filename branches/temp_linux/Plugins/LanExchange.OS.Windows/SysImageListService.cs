@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using LanExchange.OS.Windows.Utils;
+using LanExchange.SDK;
 using LanExchange.SDK.OS;
 
 namespace LanExchange.OS.Windows

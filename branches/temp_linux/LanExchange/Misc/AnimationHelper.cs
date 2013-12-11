@@ -55,7 +55,7 @@ namespace LanExchange.Misc
         {
             m_Stage = (m_Stage + 1) % m_NumStages;
             if (m_Stage == 0) m_Stage++;
-            return Prefix + m_Stage.ToString();
+            return Prefix + m_Stage.ToString(CultureInfo.InvariantCulture);
         }
     }
 }

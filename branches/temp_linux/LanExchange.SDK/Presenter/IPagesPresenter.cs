@@ -19,7 +19,7 @@ namespace LanExchange.SDK.Presenter
 
         string GetTabName(int index);
 
-        void SetupPanelViewEvents(IPanelView PV);
+        void SetupPanelViewEvents(IPanelView panelView);
 
         void LoadSettings();
 

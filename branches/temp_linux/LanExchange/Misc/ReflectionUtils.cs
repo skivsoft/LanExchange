@@ -1,19 +1,13 @@
 using System;
 using System.Reflection;
 
-namespace LanExchange.Utils
+namespace LanExchange.Misc
 {
     /// <summary>
     /// Several useful reflection utils.
     /// </summary>
     public static class ReflectionUtils
     {
-        /// <summary>
-        /// Sets the class field.
-        /// </summary>
-        /// <param name="type">The type.</param>
-        /// <param name="name">The name.</param>
-        /// <param name="value">The value.</param>
         public static void SetClassPrivateField<TClass,TFieldType>(string name, TFieldType value) where TClass : class
         {
             var fieldInfo = typeof (TClass).GetField(name, BindingFlags.Static | BindingFlags.NonPublic);

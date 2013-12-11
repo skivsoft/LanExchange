@@ -175,14 +175,8 @@
   <data name="mTrayOpen_Text" xml:space="preserve">
     <value>Open</value>
   </data>
-  <data name="PanelPresenter_Items2" xml:space="preserve">
-    <value>Items: {0} of {1}</value>
-  </data>
   <data name="Program_Error" xml:space="preserve">
     <value>Error</value>
-  </data>
-  <data name="PanelPresenter_Items1" xml:space="preserve">
-    <value>Items: {0}</value>
   </data>
   <data name="KeyCtrlW__" xml:space="preserve">
     <value>Close current tab.</value>
@@ -259,9 +253,6 @@
   <data name="KeyCtrlUp" xml:space="preserve">
     <value>Ctrl+Up</value>
   </data>
-  <data name="AboutInfo_Build" xml:space="preserve">
-    <value> (build {0})</value>
-  </data>
   <data name="KeyAnyChar" xml:space="preserve">
     <value>Any char</value>
   </data>
@@ -270,9 +261,6 @@
   </data>
   <data name="KeyBackspace" xml:space="preserve">
     <value>Backspace</value>
-  </data>
-  <data name="Action" xml:space="preserve">
-    <value>Action</value>
   </data>
   <data name="KeyCtrlC__" xml:space="preserve">
     <value>Copy selected item(s) to clipboard.</value>
@@ -350,9 +338,6 @@
   <data name="PanelView_CopySelectedPlural" xml:space="preserve">
     <value>Copy {0} selected items</value>
   </data>
-  <data name="Context" xml:space="preserve">
-    <value>Context</value>
-  </data>
   <data name="AboutForm_Copyright" xml:space="preserve">
     <value>Copyright</value>
   </data>
@@ -389,21 +374,11 @@
   <data name="KeyCtrlIns__" xml:space="preserve">
     <value>Copy column on which the ordered item(s) to clipboard.</value>
   </data>
-  <data name="PanelPresenter_UnreachableMsg" xml:space="preserve">
-    <value>Resource «{0}» not reachable.
-Continue anyway?</value>
-  </data>
   <data name="user_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\user_32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="mHelpKeys_Text" xml:space="preserve">
     <value>Shortcut Keys</value>
-  </data>
-  <data name="AboutForm_Translations" xml:space="preserve">
-    <value>Translations:</value>
-  </data>
-  <data name="AboutForm_Plugins" xml:space="preserve">
-    <value>Plugins:</value>
   </data>
   <data name="twitter_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\twitter-icon-v2.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -414,14 +389,8 @@ Continue anyway?</value>
   <data name="mViewGrid_Text" xml:space="preserve">
     <value>Grid lines</value>
   </data>
-  <data name="PanelPresenter_Query" xml:space="preserve">
-    <value>Query</value>
-  </data>
   <data name="mHelpFeedback_Text" xml:space="preserve">
     <value>Send Feedback...</value>
-  </data>
-  <data name="AboutModel_FeedbackFmt" xml:space="preserve">
-    <value>{0} {1} Feedback</value>
   </data>
   <data name="Terminal" xml:space="preserve">
     <value>Terminal</value>

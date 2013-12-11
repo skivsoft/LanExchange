@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 using LanExchange.UI.WinForms.Properties;
-using LanExchange.UI.WinForms;
 
 namespace LanExchange.UI.WinForms
 {

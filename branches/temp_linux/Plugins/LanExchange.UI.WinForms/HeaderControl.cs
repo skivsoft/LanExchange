@@ -1,7 +1,6 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using LanExchange.UI.WinForms.Utils;
 using LanExchange.SDK.OS;
 using LanExchange.SDK;
 
