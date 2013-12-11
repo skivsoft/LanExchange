@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
@@ -16,6 +17,7 @@ namespace LanExchange.Plugin.Network
         {
             if (parent == null)
                 throw new ArgumentNullException("parent");
+            //Thread.Sleep(5000);
             //result.Add(new PanelItemDoubleDot(parent));
             // get server list via OS api
             foreach (var item in NetApi32Utils.NetServerEnum(parent.Name, NativeMethods.SV_101_TYPES.SV_TYPE_ALL))

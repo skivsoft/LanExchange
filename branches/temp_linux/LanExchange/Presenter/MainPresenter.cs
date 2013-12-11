@@ -4,9 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
-using LanExchange.Intf;
 using LanExchange.Misc;
-using LanExchange.Model;
 using LanExchange.Presenter.Action;
 using LanExchange.SDK;
 using LanExchange.SDK.Model;
@@ -107,6 +105,7 @@ namespace LanExchange.Presenter
             if (panelItem == null) return;
             var pInfo = App.Resolve<IInfoView>();
             pInfo.CurrentItem = panelItem;
+            pInfo.NumLines = App.Config.NumInfoLines;
             var helper = new PanelModelCopyHelper(null);
             helper.CurrentItem = panelItem;
             int index = 0;

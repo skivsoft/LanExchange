@@ -68,9 +68,11 @@
     <Compile Include="ConfigChangedArgs.cs" />
     <Compile Include="ConfigNames.cs" />
     <Compile Include="DataReadyArgs.cs" />
+    <Compile Include="Delegates.cs" />
     <Compile Include="EnvironmentUtils.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IAction.cs" />
+    <Compile Include="IPanelUpdater.cs" />
     <Compile Include="IPluginManager.cs" />
     <Compile Include="IPuntoSwitcherService.cs" />
     <Compile Include="Model\IPagesModel.cs" />
@@ -91,6 +93,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="RetrieveMode.cs" />
     <Compile Include="SerializeUtils.cs" />
     <Compile Include="UI\IAddonManager.cs" />
     <Compile Include="Model\IConfigModel.cs" />

@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Net.NetworkInformation;
 
-namespace LanExchange.Utils
+namespace LanExchange.Misc
 {
     public class PingUtils
     {

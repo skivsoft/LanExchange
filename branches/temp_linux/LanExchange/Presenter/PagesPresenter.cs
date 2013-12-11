@@ -102,7 +102,7 @@ namespace LanExchange.Presenter
                     newItem.Parent = PanelItemRoot.ROOT_OF_USERITEMS;
                     destObjects.Items.Add(newItem);
                 }
-            destObjects.SyncRetrieveData(true);
+            destObjects.AsyncRetrieveData(true);
             //m_View.ActivePanelView.Presenter.UpdateItemsAndStatus();
         }
 
@@ -132,7 +132,7 @@ namespace LanExchange.Presenter
                     firstIndex = panelView.Presenter.Objects.FilterCount - 1;
                 if (firstIndex >= 0)
                     panelView.Presenter.Objects.FocusedItem = panelView.Presenter.Objects.GetItemAt(firstIndex);
-                panelView.Presenter.Objects.SyncRetrieveData();
+                panelView.Presenter.Objects.AsyncRetrieveData(false);
             }
         }
 
@@ -156,38 +156,15 @@ namespace LanExchange.Presenter
             m_Model.RenameTab(index, tabName);
         }
 
-        public void AsyncRetrieveData(IPanelModel panelModel)
+        public int IndexOf(IPanelModel model)
         {
-            if (panelModel.AnimationThread != null) return;
-            var thread = new Thread(Async_Start);
-            panelModel.AnimationThread = thread;
-            thread.Start(panelModel);
+            if (model == null)
+                return -1;
+            for (int index = 0; index < m_Model.Count; index++)
+                if (m_Model.GetItem(index) == model)
+                    return index;
+            return -1;
         }
-
-        private void Async_Start(object argument)
-        {
-            var model = argument as IPanelModel;
-            var helper = new AnimationHelper(AnimationHelper.WORKING);
-            while(true)
-            {
-                var imageIndex = helper.GetNextStageIndex();
-                App.MainView.Invoke(UpdateStage, model, imageIndex);
-                Thread.Sleep(AnimationHelper.DELAY);
-            }
-        }
-
-        private void UpdateStage(IPanelModel model, int imageIndex)
-        {
-            if (model == null) return;
-            var pagesPresenter = App.MainPages;
-            for (int i = 0; i < pagesPresenter.Count; i++)
-                if (pagesPresenter.GetItem(i) == model)
-                {
-                    pagesPresenter.View.SetTabImageIndex(i, imageIndex);
-                    break;
-                }
-        }
-
 
         public void Model_AfterAppendTab(object sender, PanelModelEventArgs e)
         {
@@ -198,11 +175,21 @@ namespace LanExchange.Presenter
             presenter.Objects = e.Info;
             //m_View.SelectedIndex = m_View.TabPagesCount - 1;
             e.Info.Changed += (o, args) => presenter.UpdateItemsAndStatus();
+            e.Info.TabNameChanged += InfoOnTabNameChanged;
             //e.Info.SubscriptionChanged += Item_SubscriptionChanged;
             // update items
             //e.Info.DataChanged(null, ConcreteSubject.s_UserItems);
             panelView.Presenter.ResetSortOrder();
-            e.Info.SyncRetrieveData();
+            e.Info.AsyncRetrieveData(false);
+        }
+
+        private void InfoOnTabNameChanged(object sender, EventArgs eventArgs)
+        {
+            var model = sender as IPanelModel;
+            if (model == null) return;
+            var index = IndexOf(model);
+            if (index != -1)
+                View.SetTabText(index, model.TabName);
         }
 
         public void Model_AfterRemove(object sender, PanelIndexEventArgs e)

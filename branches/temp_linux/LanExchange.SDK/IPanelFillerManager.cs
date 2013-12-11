@@ -6,7 +6,7 @@ namespace LanExchange.SDK
     {
         void RegisterFiller<TPanelItem>(PanelFillerBase filler) where TPanelItem : PanelItemBase;
         Type GetFillType(PanelItemBase parent);
-        PanelFillerResult RetrievePanelItems(PanelItemBase parent);
+        PanelFillerResult RetrievePanelItems(PanelItemBase parent, RetrieveMode mode);
         bool FillerExists(PanelItemBase panelItem);
     }
 }

@@ -95,6 +95,7 @@
     <Compile Include="Misc\AnimationHelper.cs" />
     <Compile Include="Misc\ContainerBuilder.cs" />
     <Compile Include="Misc\GenerateEnglish.cs" />
+    <Compile Include="Misc\Impl\PanelUpdaterImpl.cs" />
     <Compile Include="Misc\Impl\WaitingServiceImpl.cs" />
     <Compile Include="Misc\TypeNotRegisteredException.cs" />
     <Compile Include="Misc\Impl\DisposableManagerImpl.cs" />

@@ -106,7 +106,7 @@ namespace LanExchange.UI.WinForms
             Pages.TabPages[index].Text = title;
         }
 
-        public void SetTabImageIndex(int index, int imageIndex)
+        public void SetTabImage(int index, int imageIndex)
         {
             var tabPage = Pages.TabPages[index];
             tabPage.ImageIndex = imageIndex;

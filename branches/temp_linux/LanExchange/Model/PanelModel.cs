@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Threading;
 using System.Xml.Serialization;
-using LanExchange.Intf;
 using LanExchange.SDK;
 using LanExchange.SDK.Model;
 
@@ -24,8 +22,13 @@ namespace LanExchange.Model
         private readonly ColumnComparer m_Comparer;
         // punto switcher service
         private readonly IPuntoSwitcherService m_Punto;
+        // panel updater
+        private readonly IPanelUpdater m_Updater;
+        // tab name
+        private string m_TabName;
 
         public event EventHandler Changed;
+        public event EventHandler TabNameChanged;
         
         /// <summary>
         /// Parameterless constructor for xml serialization.
@@ -33,12 +36,18 @@ namespace LanExchange.Model
         public PanelModel()
         {
             m_Punto = App.Resolve<IPuntoSwitcherService>();
+            m_Updater = App.Resolve<IPanelUpdater>();
             m_Items = new List<PanelItemBase>();
             m_Data = new List<PanelItemBase>();
             m_Keys = new List<PanelItemBase>();
             m_CurrentPath = new ObjectPath<PanelItemBase>();
             m_Comparer = new ColumnComparer(0, PanelSortOrder.Ascending);
             CurrentView = PanelViewMode.Details;
+        }
+
+        public void Dispose()
+        {
+            m_Updater.Dispose();
         }
 
         /// <summary>
@@ -48,7 +57,20 @@ namespace LanExchange.Model
         /// The name of the tab.
         /// </value>
         [XmlAttribute("Name")]
-        public string TabName { get; set; }
+        public string TabName
+        {
+            get { return m_TabName; }
+            set { 
+                m_TabName = value;
+                OnTabNameChanged();
+            }
+        }
+
+        public void AsyncRetrieveData(bool clearFilter)
+        {
+            m_Updater.Stop();
+            m_Updater.Start(this, clearFilter);
+        }
 
         [XmlAttribute]
         public string DataType { get; set; }
@@ -184,17 +206,15 @@ namespace LanExchange.Model
         /// <summary>
         /// Sync retrieving panel items using appropriate filler strategy.
         /// </summary>
-        public void SyncRetrieveData(bool clearFilter = false)
+        public PanelFillerResult RetrieveData(RetrieveMode mode, bool clearFilter)
         {
             // get parent
             var parent = m_CurrentPath.IsEmpty ? null : m_CurrentPath.Peek();
             // retrieve items
-            var items = App.PanelFillers.RetrievePanelItems(parent);
-            // set items
-            InternalSetData(items, clearFilter);
+            return App.PanelFillers.RetrievePanelItems(parent, mode);
         }
 
-        private void InternalSetData(PanelFillerResult fillerResult, bool clearFilter)
+        public void SetFillerResult(PanelFillerResult fillerResult, bool clearFilter)
         {
             lock (m_Data)
             {
@@ -224,6 +244,12 @@ namespace LanExchange.Model
         {
             if (Changed != null)
                 Changed(this, EventArgs.Empty);
+        }
+
+        private void OnTabNameChanged()
+        {
+            if (TabNameChanged != null)
+                TabNameChanged(this, EventArgs.Empty);
         }
 
         public bool Equals(IPanelModel other)
@@ -258,15 +284,6 @@ namespace LanExchange.Model
         }
 
 
-        public Thread AnimationThread { get; set; }
-
-        public void Dispose()
-        {
-            if (AnimationThread != null)
-            {
-                AnimationThread.Abort();
-                AnimationThread = null;
-            }
-        }
+        public string TabImageName { get; set; }
     }
 }

@@ -46,6 +46,6 @@ namespace LanExchange.SDK.Presenter
 
         void RenameTab(int index, string tabName);
 
-        void AsyncRetrieveData(IPanelModel panelModel);
+        int IndexOf(IPanelModel model);
     }
 }

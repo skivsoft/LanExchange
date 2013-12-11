@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Forms;
-using LanExchange.Intf;
+using LanExchange.Misc;
 using LanExchange.Properties;
 using LanExchange.SDK;
 using LanExchange.SDK.Model;
 using LanExchange.SDK.Presenter;
 using LanExchange.SDK.UI;
-using LanExchange.Utils;
 
 namespace LanExchange.Presenter
 {
@@ -46,8 +45,8 @@ namespace LanExchange.Presenter
             if (m_Objects == null) return;
             // refresh only for current page
             var presenter = App.MainPages;
-            var currentItemList = presenter.GetItem(presenter.SelectedIndex);
-            if (currentItemList == null || !m_Objects.Equals(currentItemList)) 
+            var panelModel = presenter.GetItem(presenter.SelectedIndex);
+            if (panelModel == null || !m_Objects.Equals(panelModel)) 
                 return;
             // get number of visible items (filtered) and number of total items
             var showCount = m_Objects.FilterCount;
@@ -65,7 +64,7 @@ namespace LanExchange.Presenter
             View.SetVirtualListSize(m_Objects.FilterCount);
             if (m_Objects.FilterCount > 0)
             {
-                var index = Objects.IndexOf(currentItemList.FocusedItem);
+                var index = Objects.IndexOf(panelModel.FocusedItem);
                 View.FocusedItemIndex = index;
             }
             if (View.Filter != null)
@@ -126,16 +125,17 @@ namespace LanExchange.Presenter
                 return false;
             if (panelItem is PanelItemDoubleDot)
                 return CommandLevelUp();
-            var result = App.PanelFillers.FillerExists(panelItem);
-            if (result)
-            {
-                Objects.FocusedItem = new PanelItemDoubleDot(panelItem);
-                Objects.CurrentPath.Push(panelItem);
-                ResetSortOrder();
-                Objects.SyncRetrieveData(true);
-                View.Filter.SetFilterText(string.Empty);
-            }
-            return result;
+            if (!App.PanelFillers.FillerExists(panelItem)) return false;
+            Objects.FocusedItem = new PanelItemDoubleDot(panelItem);
+            Objects.CurrentPath.Push(panelItem);
+            Objects.TabName = panelItem.Name;
+            Objects.TabImageName = panelItem.ImageName;
+            ResetSortOrder();
+            var syncResult = Objects.RetrieveData(RetrieveMode.Sync, true);
+            Objects.SetFillerResult(syncResult, true);
+            View.Filter.SetFilterText(string.Empty);
+            Objects.AsyncRetrieveData(true);
+            return true;
         }
 
         public bool CommandLevelUp()
@@ -145,16 +145,24 @@ namespace LanExchange.Presenter
             var panelItem = Objects.CurrentPath.Peek();
             if (panelItem == null || panelItem is PanelItemRoot) 
                 return false;
-            var result = App.PanelFillers.FillerExists(panelItem);
-            if (result)
+            if (!App.PanelFillers.FillerExists(panelItem)) return false;
+            Objects.FocusedItem = panelItem;
+            Objects.CurrentPath.Pop();
+            if (panelItem.Parent != null)
             {
-                Objects.FocusedItem = panelItem;
-                Objects.CurrentPath.Pop();
-                ResetSortOrder();
-                Objects.SyncRetrieveData(true);
-                View.Filter.SetFilterText(string.Empty);
+                Objects.TabName = panelItem.Parent.Name;
+                Objects.TabImageName = panelItem.Parent.ImageName;
+            } else
+            {
+                Objects.TabName = panelItem.Name;
+                Objects.TabImageName = panelItem.ImageName;
             }
-            return result;
+            ResetSortOrder();
+            var syncResult = Objects.RetrieveData(RetrieveMode.Sync, true);
+            Objects.SetFillerResult(syncResult, true);
+            View.Filter.SetFilterText(string.Empty);
+            Objects.AsyncRetrieveData(true);
+            return true;
         }
 
         public void ColumnClick(int index)

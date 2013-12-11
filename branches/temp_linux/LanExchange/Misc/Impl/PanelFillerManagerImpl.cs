@@ -27,7 +27,7 @@ namespace LanExchange.Misc.Impl
             return null;
         }
 
-        public PanelFillerResult RetrievePanelItems(PanelItemBase parent)
+        public PanelFillerResult RetrievePanelItems(PanelItemBase parent, RetrieveMode mode)
         {
             if (parent == null)
                 throw new ArgumentNullException("parent");
@@ -39,7 +39,10 @@ namespace LanExchange.Misc.Impl
                         result.ItemsType = pair.Key;
                     try
                     {
-                        pair.Value.Fill(parent, result.Items);
+                        if (mode == RetrieveMode.Sync)
+                            pair.Value.SyncFill(parent, result.Items);
+                        else
+                            pair.Value.Fill(parent, result.Items);
                     }
                     catch (Exception ex)
                     {

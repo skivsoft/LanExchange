@@ -3,8 +3,6 @@ using LanExchange.SDK.Model;
 
 namespace LanExchange.SDK.UI
 {
-    public delegate void UpdateTabImageDelegate(IPanelModel model, int imageIndex);
-
     public interface IMainView : IView
     {
         bool ShowInfoPanel { get; set; }
@@ -16,7 +14,7 @@ namespace LanExchange.SDK.UI
         void ShowStatusText(string format, params object[] args);
         void SetToolTip(object control, string tipText);
         void ClearInfoPanel();
-        void Invoke(UpdateTabImageDelegate method, params object[] args);
+        //object Invoke(Delegate method, params object[] args);
 
         void SetRunMinimized(bool minimized);
         void SetupMenuLanguages();

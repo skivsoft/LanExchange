@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 
 namespace LanExchange.SDK.Model
 {
@@ -10,8 +9,8 @@ namespace LanExchange.SDK.Model
     public interface IPanelModel : IFilterModel, IEquatable<IPanelModel>, IDisposable
     {
         event EventHandler Changed;
+        event EventHandler TabNameChanged;
 
-        Thread AnimationThread { get; set; }
         /// <summary>
         /// Gets or sets the name of the tab.
         /// </summary>
@@ -19,6 +18,13 @@ namespace LanExchange.SDK.Model
         /// The name of the tab.
         /// </value>
         string TabName { get; set; }
+        /// <summary>
+        /// Gets or sets the name of the tab's image.
+        /// </summary>
+        /// <value>
+        /// The name of the tab's image.
+        /// </value>
+        string TabImageName { get; set; }
         /// <summary>
         /// Gets or sets the current view.
         /// </summary>
@@ -75,7 +81,7 @@ namespace LanExchange.SDK.Model
         int IndexOf(PanelItemBase key);
 
         PanelItemFactoryBase ItemFactory { get; set; }
-        void SyncRetrieveData(bool clearFilter = false);
+        void AsyncRetrieveData(bool clearFilter);
         string DataType { get; set; }
         ColumnComparer Comparer { get; }
         void Sort(IComparer<PanelItemBase> sorter);
@@ -83,5 +89,7 @@ namespace LanExchange.SDK.Model
         bool Contains(PanelItemBase panelItem);
 
         void SetDefaultRoot(PanelItemBase root);
+        PanelFillerResult RetrieveData(RetrieveMode mode, bool clearFilter);
+        void SetFillerResult(PanelFillerResult fillerResult, bool clearFilter);
     }
 }

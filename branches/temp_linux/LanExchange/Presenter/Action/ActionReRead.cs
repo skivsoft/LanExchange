@@ -13,8 +13,7 @@ namespace LanExchange.Presenter.Action
                 foreach (var column in App.PanelColumns.GetColumns(pageModel.DataType))
                     if (column.Callback != null && column.Refreshable)
                         column.LazyDict.Clear();
-            App.MainPages.AsyncRetrieveData(pageModel);
-            //pageModel.SyncRetrieveData();
+            pageModel.AsyncRetrieveData(false);
         }
 
         public bool Enabled

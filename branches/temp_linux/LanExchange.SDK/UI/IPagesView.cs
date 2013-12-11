@@ -1,4 +1,5 @@
-﻿using LanExchange.SDK.Model;
+﻿using System;
+using LanExchange.SDK.Model;
 using LanExchange.SDK.Presenter;
 
 namespace LanExchange.SDK.UI
@@ -61,6 +62,7 @@ namespace LanExchange.SDK.UI
         void SetupContextMenu();
         void SetTabText(int index, string title);
 
-        void SetTabImageIndex(int index, int imageIndex);
+        void SetTabImage(int index, int imageIndex);
+        object Invoke(Delegate method, params object[] args);
     }
 }

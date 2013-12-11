@@ -31,6 +31,8 @@ namespace LanExchange.Misc
             container.Register<ITranslationService, TranslationServiceImpl>();
             container.Register<IDisposableManager, DisposableManagerImpl>();
             container.Register<IWaitingService, WaitingServiceImpl>();
+            // updater
+            container.Register<IPanelUpdater, PanelUpdaterImpl>(LifeCycle.Transient);
             // models
             container.Register<IAboutModel, AboutModel>();
             container.Register<IConfigModel, ConfigModel>();

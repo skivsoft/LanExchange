@@ -103,7 +103,7 @@ namespace LanExchange.UI.WinForms
             {
                 App.MainPages.RenameTab(foundIndex, Resources.mHelpKeys_Text);
                 var model = App.MainPages.GetItem(foundIndex);
-                model.SyncRetrieveData();
+                model.AsyncRetrieveData(false);
             }
         }
 
@@ -489,15 +489,9 @@ namespace LanExchange.UI.WinForms
             set { TrayIcon.Visible = value; }
         }
 
-        public void Invoke(UpdateTabImageDelegate method, params object[] args)
-        {
-            base.Invoke(method, args);
-        }
-
         public override void ApplicationExit()
         {
             base.ApplicationExit();
-            App.Resolve<IDisposableManager>().Dispose();
         }
 
         ///// <summary>

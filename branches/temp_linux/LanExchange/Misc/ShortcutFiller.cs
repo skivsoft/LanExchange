@@ -23,9 +23,6 @@ namespace LanExchange.Misc
 
         public override void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
-#if DEBUG
-            Thread.Sleep(5000);
-#endif
             result.Add(new ShortcutPanelItem(parent, Resources.KeyF1, Resources.KeyF1__));
             result.Add(new ShortcutPanelItem(parent, Resources.KeyF10, Resources.KeyF10__));
             result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlW, Resources.KeyCtrlW__));

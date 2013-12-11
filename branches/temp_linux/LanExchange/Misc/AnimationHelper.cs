@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
+using System.Globalization;
 using LanExchange.SDK;
 
 namespace LanExchange.Misc
@@ -11,7 +10,7 @@ namespace LanExchange.Misc
         /// <summary>
         /// 100ms delay between stages.
         /// </summary>
-        public const int DELAY = 100;
+        public const int DELAY = 250;
 
         public const string WORKING = "working";
 
@@ -38,7 +37,7 @@ namespace LanExchange.Misc
                     var rect = new Rectangle(col*width, row*height, width, height);
                     var cropped = picture.Clone(rect, picture.PixelFormat);
                     var index = row * cols + col;
-                    App.Images.RegisterImage(prefix+index.ToString(), cropped, null);
+                    App.Images.RegisterImage(prefix+index.ToString(CultureInfo.InvariantCulture), cropped, null);
                 }
         }
 
@@ -52,11 +51,11 @@ namespace LanExchange.Misc
 
         public string Prefix { get; private set; }
 
-        public int GetNextStageIndex()
+        public string GetNextImageName()
         {
             m_Stage = (m_Stage + 1) % m_NumStages;
             if (m_Stage == 0) m_Stage++;
-            return App.Images.IndexOf(Prefix + m_Stage.ToString());
+            return Prefix + m_Stage.ToString();
         }
     }
 }
