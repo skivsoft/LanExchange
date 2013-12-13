@@ -10,7 +10,7 @@ namespace LanExchange.SDK
         public void TestCtor()
         {
             var dot = new PanelItemDoubleDot(null);
-            Assert.AreEqual(PanelImageNames.DoubleDot, dot.ImageName);
+            Assert.AreEqual(PanelImageNames.DOUBLEDOT, dot.ImageName);
             var item = new CustomPanelItem(null, "TEST");
             Assert.AreEqual(-1, dot.CompareTo(item));
             Assert.AreEqual(1, dot.CompareTo(null));

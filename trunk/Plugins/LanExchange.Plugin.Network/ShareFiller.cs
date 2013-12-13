@@ -12,7 +12,7 @@ namespace LanExchange.Plugin.Network
         public override bool IsParentAccepted(PanelItemBase parent)
         {
             // parent for share can be only computer
-            return (parent != null) && (parent != PluginNetwork.ROOT_OF_DOMAINS) && (parent is ComputerPanelItem);
+            return parent is ComputerPanelItem;
         }
 
         public override void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)

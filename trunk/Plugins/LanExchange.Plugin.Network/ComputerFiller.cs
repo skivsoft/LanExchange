@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
@@ -10,7 +9,7 @@ namespace LanExchange.Plugin.Network
         public override bool IsParentAccepted(PanelItemBase parent)
         {
             // computers can be only into domains
-            return (parent != null) && (parent != PluginNetwork.ROOT_OF_DOMAINS) && (parent is DomainPanelItem);
+            return parent is DomainPanelItem;
         }
 
         public override void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)

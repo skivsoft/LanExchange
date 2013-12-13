@@ -9,7 +9,7 @@ namespace LanExchange.SDK
     public interface IPanelModel : IFilterModel, IEquatable<IPanelModel>, IDisposable
     {
         event EventHandler Changed;
-        event EventHandler TabNameChanged;
+        event EventHandler TabNameUpdated;
 
         /// <summary>
         /// Gets or sets the name of the tab.
@@ -17,14 +17,14 @@ namespace LanExchange.SDK
         /// <value>
         /// The name of the tab.
         /// </value>
-        string TabName { get; set; }
+        string TabName { get; }
         /// <summary>
         /// Gets or sets the name of the tab's image.
         /// </summary>
         /// <value>
         /// The name of the tab's image.
         /// </value>
-        string TabImageName { get; set; }
+        string ImageName { get; }
         /// <summary>
         /// Gets or sets the current view.
         /// </summary>
@@ -91,5 +91,6 @@ namespace LanExchange.SDK
         void SetDefaultRoot(PanelItemBase root);
         PanelFillerResult RetrieveData(RetrieveMode mode, bool clearFilter);
         void SetFillerResult(PanelFillerResult fillerResult, bool clearFilter);
+        void OnTabNameUpdated();
     }
 }

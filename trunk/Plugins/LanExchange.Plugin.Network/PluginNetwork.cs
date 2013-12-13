@@ -6,7 +6,6 @@ namespace LanExchange.Plugin.Network
 {
     public sealed class PluginNetwork : IPlugin
     {
-        public static readonly PanelItemRoot ROOT_OF_DOMAINS = new PanelItemRoot();
         private IServiceProvider m_Provider;
 
         public void Initialize(IServiceProvider serviceProvider)
@@ -25,6 +24,7 @@ namespace LanExchange.Plugin.Network
             var factoryManager = (IPanelItemFactoryManager)m_Provider.GetService(typeof (IPanelItemFactoryManager));
             if (factoryManager != null)
             {
+                factoryManager.RegisterFactory<DomainRoot>(new PanelItemRootFactory<DomainRoot>());
                 factoryManager.RegisterFactory<DomainPanelItem>(new DomainFactory());
                 factoryManager.RegisterFactory<ComputerPanelItem>(new ComputerFactory());
                 factoryManager.RegisterFactory<SharePanelItem>(new ShareFactory());

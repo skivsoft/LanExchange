@@ -24,11 +24,9 @@ namespace LanExchange.Model
         private readonly IPuntoSwitcherService m_Punto;
         // panel updater
         private readonly IPanelUpdater m_Updater;
-        // tab name
-        private string m_TabName;
 
         public event EventHandler Changed;
-        public event EventHandler TabNameChanged;
+        public event EventHandler TabNameUpdated;
         
         /// <summary>
         /// Parameterless constructor for xml serialization.
@@ -57,13 +55,29 @@ namespace LanExchange.Model
         /// The name of the tab.
         /// </value>
         [Localizable(false)]
-        [XmlAttribute("Name")]
+        //[XmlAttribute("Name")]
+        [XmlIgnore]
         public string TabName
         {
-            get { return m_TabName; }
-            set { 
-                m_TabName = value;
-                OnTabNameChanged();
+            get
+            {
+                var parent = m_CurrentPath.Peek();
+                return parent.Name;
+            }
+        }
+
+        public void OnTabNameUpdated()
+        {
+            if (TabNameUpdated != null)
+                TabNameUpdated(this, EventArgs.Empty);
+        }
+
+        public string ImageName
+        {
+            get 
+            { 
+                var parent = m_CurrentPath.Peek();
+                return parent.ImageName;
             }
         }
 
@@ -249,12 +263,6 @@ namespace LanExchange.Model
                 Changed(this, EventArgs.Empty);
         }
 
-        private void OnTabNameChanged()
-        {
-            if (TabNameChanged != null)
-                TabNameChanged(this, EventArgs.Empty);
-        }
-
         public bool Equals(IPanelModel other)
         {
             return String.Compare(TabName, other.TabName, StringComparison.OrdinalIgnoreCase) == 0;
@@ -285,8 +293,5 @@ namespace LanExchange.Model
                 SetDefaultRoot(root.Parent);
             CurrentPath.Push(root);
         }
-
-
-        public string TabImageName { get; set; }
     }
 }

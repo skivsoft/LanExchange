@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Globalization;
-using System.Threading;
-using LanExchange.Misc;
 using LanExchange.Properties;
 using LanExchange.SDK;
 
@@ -13,17 +10,13 @@ namespace LanExchange.Action
     {
         private const string PANEL_ITEM_SUFFIX = "PanelItem";
 
-        [Localizable(false)]
-        public static PanelItemRoot ROOT_OF_SHORTCUTS = new PanelItemRoot("ShortcutPanelItem");
-
         public override bool IsParentAccepted(PanelItemBase parent)
         {
-            return (parent is PanelItemRoot) && (parent.Name.Equals(ROOT_OF_SHORTCUTS.Name));
+            return parent is ShortcutRoot;
         }
 
         public override void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
-            Thread.Sleep(5000);
             result.Add(new ShortcutPanelItem(parent, Resources.KeyF1, Resources.KeyF1__));
             result.Add(new ShortcutPanelItem(parent, Resources.KeyF10, Resources.KeyF10__));
             result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlW, Resources.KeyCtrlW__));

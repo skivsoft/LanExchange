@@ -6,7 +6,6 @@ namespace LanExchange.Plugin.Users
 {
     public sealed class PluginUsers : IPlugin
     {
-        public static readonly PanelItemRoot ROOT_OF_DNS = new PanelItemRoot();
         public const string LDAP_PREFIX = "LDAP://";
 
         private IServiceProvider m_Provider;
@@ -24,6 +23,7 @@ namespace LanExchange.Plugin.Users
             var factoryManager = (IPanelItemFactoryManager)m_Provider.GetService(typeof(IPanelItemFactoryManager));
             if (factoryManager != null)
             {
+                factoryManager.RegisterFactory<UserRoot>(new PanelItemRootFactory<UserRoot>());
                 factoryManager.RegisterFactory<UserPanelItem>(new UserFactory());
             }
 

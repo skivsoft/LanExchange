@@ -18,7 +18,6 @@ namespace LanExchange.Model
         {
             App.SetContainer(ContainerBuilder.Build());
             m_Objects = new PanelModel();
-            m_Objects.TabName = "MyTab";
         }
 
         [TearDown]
@@ -43,8 +42,8 @@ namespace LanExchange.Model
 
         private void RetrieveTwoComps()
         {
-            var domain = new DomainPanelItem(PluginNetwork.ROOT_OF_DOMAINS, "TEST");
-            m_Objects.CurrentPath.Push(PluginNetwork.ROOT_OF_DOMAINS);
+            var domain = new DomainPanelItem(new DomainRoot(), "TEST");
+            m_Objects.CurrentPath.Push(new DomainRoot());
             m_Objects.CurrentPath.Push(domain);
             var filler = new Mock<IPanelFillerManager>();
             var result = new PanelFillerResult();
@@ -59,24 +58,6 @@ namespace LanExchange.Model
             m_Objects.SetFillerResult(fillerResult, true);
             Assert.AreEqual(3, m_Objects.Count);
         }
-
-        [Test]
-        public void TestIndexOf()
-        {
-            m_Objects.CurrentPath.Push(PluginNetwork.ROOT_OF_DOMAINS);
-            var filler = new Mock<IPanelFillerManager>();
-            var result = new PanelFillerResult();
-            var domain = new DomainPanelItem(PluginNetwork.ROOT_OF_DOMAINS, "TEST");
-            result.Items.Add(domain);
-            result.ItemsType = typeof (DomainPanelItem);
-            filler.Setup(f => f.RetrievePanelItems(PluginNetwork.ROOT_OF_DOMAINS, RetrieveMode.Sync)).Returns(result);
-            App.PanelFillers = filler.Object;
-            var fillerResult = m_Objects.RetrieveData(RetrieveMode.Sync, true);
-            m_Objects.SetFillerResult(fillerResult, true);
-            Assert.AreEqual(1, m_Objects.Count);
-            Assert.AreEqual(0, m_Objects.IndexOf(domain));
-        }
-
 
         [Test]
         public void TestIndexOfDots()

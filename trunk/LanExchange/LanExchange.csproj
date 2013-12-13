@@ -91,6 +91,7 @@
     <Compile Include="..\Common\AnyAssemblyInfo.cs">
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Action\ShortcutRoot.cs" />
     <Compile Include="Misc\AnimationHelper.cs" />
     <Compile Include="ContainerBuilder.cs" />
     <Compile Include="Misc\GenerateEnglish.cs" />

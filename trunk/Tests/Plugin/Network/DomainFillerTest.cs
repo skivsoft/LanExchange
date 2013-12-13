@@ -10,7 +10,7 @@ namespace LanExchange.Plugin.Network
         public void TestIsSubjectAccepted()
         {
             var strategy = new DomainFiller();
-            Assert.IsTrue(strategy.IsParentAccepted(PluginNetwork.ROOT_OF_DOMAINS));
+            Assert.IsTrue(strategy.IsParentAccepted(new DomainRoot()));
             Assert.IsFalse(strategy.IsParentAccepted(new ComputerPanelItem(null, "COMP01")));
         }
 

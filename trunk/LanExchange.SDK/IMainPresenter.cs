@@ -14,5 +14,6 @@ namespace LanExchange.SDK
         void ConfigOnChanged(object sender, ConfigChangedArgs e);
         void PrepareForm();
         int FindShortcutKeysPanelIndex();
+        void GlobalTranslateUI();
     }
 }

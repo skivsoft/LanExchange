@@ -24,7 +24,7 @@ namespace LanExchange.OS.Windows
 
 		public int GetColumnUnderPoint (IntPtr handle, Point pt)
 		{
-			return GetColumnUnderPoint(handle, pt);
+			return NativeMethods.GetColumnUnderPoint(handle, pt);
 		}
 
 		public void SetColumnImage (IntPtr listViewHandle, int columnIndex, int order, int imageIndex)

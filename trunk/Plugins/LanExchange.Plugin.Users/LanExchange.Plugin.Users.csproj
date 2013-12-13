@@ -61,6 +61,7 @@
     <Compile Include="UserFiller.cs" />
     <Compile Include="UserPanelItem.cs" />
     <Compile Include="PluginUsers.cs" />
+    <Compile Include="UserRoot.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\LanExchange.SDK\LanExchange.SDK.csproj">

@@ -83,6 +83,7 @@
     <Compile Include="ISysImageListService.cs" />
     <Compile Include="IUser32Service.cs" />
     <Compile Include="ProtocolHelper.cs" />
+    <Compile Include="PanelItemRootFactory.cs" />
     <Compile Include="SysImageListSize.cs" />
     <Compile Include="PanelItemBaseHolder.cs" />
     <Compile Include="PanelModelCopyHelper.cs" />
@@ -136,7 +137,7 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="PanelItemDoubleDot.cs" />
     <Compile Include="PanelItemFactoryBase.cs" />
-    <Compile Include="PanelItemRoot.cs" />
+    <Compile Include="PanelItemRootBase.cs" />
     <Compile Include="PanelModelEventArgs.cs" />
     <Compile Include="PanelSortOrder.cs" />
     <Compile Include="PanelViewMode.cs" />

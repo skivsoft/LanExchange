@@ -93,7 +93,6 @@ namespace LanExchange.Presenter
             var panelItem = pv.Presenter.GetFocusedPanelItem(false, true);
             // check if parent item more informative than current panel item
             while (panelItem != null &&
-                   panelItem.Parent != PanelItemRoot.ROOT_OF_USERITEMS &&
                    !App.PanelItemTypes.DefaultRoots.Contains(panelItem) &&
                    !App.PanelItemTypes.DefaultRoots.Contains(panelItem.Parent))
                 panelItem = panelItem.Parent;
@@ -115,7 +114,7 @@ namespace LanExchange.Presenter
         }
 
 
-        private void GlobalTranslateUI()
+        public void GlobalTranslateUI()
         {
             var service = App.Resolve<IWaitingService>();
             service.BeginWait();

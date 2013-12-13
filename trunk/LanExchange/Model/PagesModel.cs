@@ -16,7 +16,6 @@ namespace LanExchange.Model
 
         public event EventHandler<PanelModelEventArgs> AfterAppendTab;
         public event EventHandler<PanelIndexEventArgs> AfterRemove;
-        public event EventHandler<PanelIndexEventArgs> AfterRename;
         public event EventHandler<PanelIndexEventArgs> IndexChanged;
 
         public PagesModel()
@@ -92,12 +91,6 @@ namespace LanExchange.Model
                 AfterRemove(this, new PanelIndexEventArgs(index));
         }
 
-        private void DoAfterRename(int index)
-        {
-            if (AfterRename != null)
-                AfterRename(this, new PanelIndexEventArgs(index));
-        }
-
         private void DoIndexChanged(int index)
         {
             if (IndexChanged != null)
@@ -129,13 +122,6 @@ namespace LanExchange.Model
             }
         }
 
-        public void RenameTab(int index, string newTabName)
-        {
-            var info = m_List[index];
-            info.TabName = newTabName;
-            DoAfterRename(index);
-        }
-
         public string GetTabName(int index)
         {
             return index >= 0 && index <= Count - 1 ? m_List[index].TabName : null;
@@ -165,7 +151,10 @@ namespace LanExchange.Model
             {
                 // add loaded tabs if present
                 for (int index = 0; index < model.Count; index++)
-                    AddTab(model.GetItem(index));
+                {
+                    var panelModel = model.GetItem(index);
+                    AddTab(panelModel);
+                }
                 if (model.SelectedIndex != -1)
                     SelectedIndex = model.SelectedIndex;
             }
@@ -175,7 +164,6 @@ namespace LanExchange.Model
                 if (root == null) return;
                 // create default tab
                 var info = App.Resolve<IPanelModel>();
-                info.TabName = root.Name;
                 info.SetDefaultRoot(root);
                 info.DataType = App.PanelFillers.GetFillType(root).Name;
                 AddTab(info);
@@ -186,8 +174,7 @@ namespace LanExchange.Model
         {
             try
             {
-                SerializeUtils.SerializeObjectToXMLFile(App.FolderManager.TabsConfigFileName, this,
-                                                        App.PanelItemTypes.ToArray());
+                SerializeUtils.SerializeObjectToXMLFile(App.FolderManager.TabsConfigFileName, this, App.PanelItemTypes.ToArray());
             }
             catch(Exception ex)
             {

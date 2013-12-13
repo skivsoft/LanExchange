@@ -52,7 +52,7 @@ namespace LanExchange.Plugin.Network
         [Test]
         public void TestImageName()
         {
-            Assert.AreEqual(PanelImageNames.Workgroup, m_Domain.ImageName);
+            Assert.AreEqual(PanelImageNames.DOMAIN, m_Domain.ImageName);
         }
 
         [Test]

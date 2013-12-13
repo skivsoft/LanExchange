@@ -27,9 +27,9 @@ namespace LanExchange.Misc
                 GenerateEnglish.Generate();
                 Environment.Exit(0);
             }
-            if (GetIfPresent("/new") == null)
-                if (App.Resolve<ISingleInstanceService>().CheckExists("LanExchange"))
-                    Environment.Exit(1);
+            //if (GetIfPresent("/new") == null)
+            //    if (App.Resolve<ISingleInstanceService>().CheckExists("LanExchange"))
+            //        Environment.Exit(1);
             var lang = GetIfPresent("/lang:");
             if (lang == null)
                 lang = App.Config.Language;

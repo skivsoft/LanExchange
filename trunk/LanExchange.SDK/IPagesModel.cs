@@ -6,7 +6,6 @@ namespace LanExchange.SDK
     {
         event EventHandler<PanelModelEventArgs> AfterAppendTab;
         event EventHandler<PanelIndexEventArgs> AfterRemove;
-        event EventHandler<PanelIndexEventArgs> AfterRename;
         event EventHandler<PanelIndexEventArgs> IndexChanged;
 
         bool AddTab(IPanelModel model);
@@ -18,7 +17,6 @@ namespace LanExchange.SDK
         int Count { get; }
         int SelectedIndex { get; set; }
         IPanelModel GetItem(int index);
-        void RenameTab(int index, string newTabName);
         string GetTabName(int index);
 
         void SaveSettings();

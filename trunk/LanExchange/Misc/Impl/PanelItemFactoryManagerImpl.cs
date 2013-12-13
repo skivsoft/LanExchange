@@ -71,7 +71,7 @@ namespace LanExchange.Misc.Impl
             int i = 0;
             foreach (var key in m_Types.Keys)
                 result[i++] = key;
-            result[m_Types.Count] = typeof (PanelItemRoot);
+            result[m_Types.Count] = typeof (PanelItemRootBase);
             result[m_Types.Count + 1] = typeof (PanelItemDoubleDot);
             return result;
         }
