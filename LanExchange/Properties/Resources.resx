@@ -117,28 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AboutForm_MIT" xml:space="preserve">
-    <value>Released under the MIT license.</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="keyboard_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\input-keyboard-6.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="mTrayExit_Text" xml:space="preserve">
-    <value>Exit</value>
-  </data>
-  <data name="mPanel_Text" xml:space="preserve">
-    <value>&amp;Panel</value>
-  </data>
-  <data name="EmptyText" xml:space="preserve">
-    <value>    </value>
-  </data>
-  <data name="mViewSmall_Text" xml:space="preserve">
-    <value>Small icons</value>
-  </data>
-  <data name="clear_normal" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\clear_normal.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="KeyCtrlV" xml:space="preserve">
     <value>Ctrl+V</value>
   </data>
@@ -148,53 +126,17 @@
   <data name="KeyF10" xml:space="preserve">
     <value>F10</value>
   </data>
-  <data name="MainForm_Information" xml:space="preserve">
-    <value>Information</value>
-  </data>
-  <data name="AboutForm_Version" xml:space="preserve">
-    <value>Version</value>
-  </data>
   <data name="KeyF9" xml:space="preserve">
     <value>F9</value>
-  </data>
-  <data name="mReRead_Text" xml:space="preserve">
-    <value>Re-read</value>
-  </data>
-  <data name="user_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\user_16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="KeyAnyChar__" xml:space="preserve">
     <value>Filter panel items by all columns.</value>
   </data>
-  <data name="PanelView_CopySelected" xml:space="preserve">
-    <value>Copy selected item</value>
-  </data>
-  <data name="mHelpLangs_Text" xml:space="preserve">
-    <value>Localization Webpage</value>
-  </data>
   <data name="KeyCtrlR__" xml:space="preserve">
     <value>Re-read panel.</value>
   </data>
-  <data name="mTrayOpen_Text" xml:space="preserve">
-    <value>Open</value>
-  </data>
-  <data name="PanelPresenter_Items2" xml:space="preserve">
-    <value>Items: {0} of {1}</value>
-  </data>
-  <data name="Program_Error" xml:space="preserve">
-    <value>Error</value>
-  </data>
-  <data name="PanelPresenter_Items1" xml:space="preserve">
-    <value>Items: {0}</value>
-  </data>
   <data name="KeyCtrlW__" xml:space="preserve">
     <value>Close current tab.</value>
-  </data>
-  <data name="mDelete_Text" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="back_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\back_32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="KeyEsc" xml:space="preserve">
     <value>Esc</value>
@@ -214,9 +156,6 @@
   <data name="KeyCtrlA" xml:space="preserve">
     <value>Ctrl+A</value>
   </data>
-  <data name="mHelpAbout_Text" xml:space="preserve">
-    <value>About</value>
-  </data>
   <data name="KeyCtrlAltIns" xml:space="preserve">
     <value>Ctrl+Alt+Ins</value>
   </data>
@@ -226,44 +165,11 @@
   <data name="KeyCtrlW_" xml:space="preserve">
     <value>Close tab</value>
   </data>
-  <data name="PanelView_CopyPathTo" xml:space="preserve">
-    <value>Copy path to «{0}»</value>
-  </data>
-  <data name="LanExchange_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\LanExchange_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="mHelp_Text" xml:space="preserve">
-    <value>&amp;Help</value>
-  </data>
   <data name="KeyCtrlDown" xml:space="preserve">
     <value>Ctrl+Down</value>
   </data>
-  <data name="ShowDetails" xml:space="preserve">
-    <value>Show Details</value>
-  </data>
-  <data name="mViewDetails_Text" xml:space="preserve">
-    <value>Details</value>
-  </data>
-  <data name="clear_hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\clear_hover.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="mExit_Text" xml:space="preserve">
-    <value>Exit</value>
-  </data>
-  <data name="mCopyMenu_Text" xml:space="preserve">
-    <value>Copy</value>
-  </data>
-  <data name="AboutForm_Webpage" xml:space="preserve">
-    <value>Webpage</value>
-  </data>
-  <data name="mCloseOther_Text" xml:space="preserve">
-    <value>Close other tabs</value>
-  </data>
   <data name="KeyCtrlUp" xml:space="preserve">
     <value>Ctrl+Up</value>
-  </data>
-  <data name="AboutInfo_Build" xml:space="preserve">
-    <value> (build {0})</value>
   </data>
   <data name="KeyAnyChar" xml:space="preserve">
     <value>Any char</value>
@@ -274,54 +180,17 @@
   <data name="KeyBackspace" xml:space="preserve">
     <value>Backspace</value>
   </data>
-  <data name="Action" xml:space="preserve">
-    <value>Action</value>
-  </data>
   <data name="KeyCtrlC__" xml:space="preserve">
     <value>Copy selected item(s) to clipboard.</value>
-  </data>
-  <data name="PanelView_CopyColumn" xml:space="preserve">
-    <value>Copy «{0}»</value>
-  </data>
-  <data name="HideDetails" xml:space="preserve">
-    <value>Hide Details</value>
   </data>
   <data name="KeyCtrlV__" xml:space="preserve">
     <value>Paste items from clipboard.</value>
   </data>
-  <data name="MainForm_Legend" xml:space="preserve">
-    <value>Legend</value>
-  </data>
-  <data name="mLanguage_Text" xml:space="preserve">
-    <value>&amp;Language</value>
-  </data>
   <data name="KeyCtrlR" xml:space="preserve">
     <value>Ctrl+R</value>
   </data>
-  <data name="back_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\back_16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PagesView_OpenTab" xml:space="preserve">
-    <value>Open tab «{0}»</value>
-  </data>
-  <data name="mView_Text" xml:space="preserve">
-    <value>&amp;View</value>
-  </data>
   <data name="KeyCtrlWinX__" xml:space="preserve">
     <value>Show/hide main window.</value>
-  </data>
-  <data name="PanelView_RunCmdErrorMsg" xml:space="preserve">
-    <value>Unable to execute command line:
-{0}</value>
-  </data>
-  <data name="mHelpBugs_Text" xml:space="preserve">
-    <value>BugTracker Webpage</value>
-  </data>
-  <data name="mCloseTab_Text" xml:space="preserve">
-    <value>Close tab</value>
-  </data>
-  <data name="MainForm_Close" xml:space="preserve">
-    <value>Close</value>
   </data>
   <data name="KeyDel" xml:space="preserve">
     <value>Del</value>
@@ -329,14 +198,8 @@
   <data name="KeyEsc__" xml:space="preserve">
     <value>Clear filter OR go level up OR hide main window.</value>
   </data>
-  <data name="mTrayAbout_Text" xml:space="preserve">
-    <value>About</value>
-  </data>
   <data name="KeyCtrlWinX" xml:space="preserve">
     <value>Ctrl+Win+X</value>
-  </data>
-  <data name="mPaste_Text" xml:space="preserve">
-    <value>Paste</value>
   </data>
   <data name="KeyCtrlA__" xml:space="preserve">
     <value>Select all items in panel.</value>
@@ -344,32 +207,11 @@
   <data name="KeyCtrlW" xml:space="preserve">
     <value>Ctrl+W</value>
   </data>
-  <data name="AboutForm_Title" xml:space="preserve">
-    <value>About «{0}»</value>
-  </data>
   <data name="KeyEscLong__" xml:space="preserve">
     <value>Hide main window.</value>
   </data>
-  <data name="PanelView_CopySelectedPlural" xml:space="preserve">
-    <value>Copy {0} selected items</value>
-  </data>
-  <data name="Context" xml:space="preserve">
-    <value>Context</value>
-  </data>
-  <data name="AboutForm_Copyright" xml:space="preserve">
-    <value>Copyright</value>
-  </data>
   <data name="KeyCtrlAltIns__" xml:space="preserve">
     <value>Copy full path of selected item(s) to clipboard.</value>
-  </data>
-  <data name="PanelView_RunCmdErrorCaption" xml:space="preserve">
-    <value>Execution error</value>
-  </data>
-  <data name="mHelpWeb_Text" xml:space="preserve">
-    <value>LanExchange Webpage</value>
-  </data>
-  <data name="AboutForm_License" xml:space="preserve">
-    <value>License</value>
   </data>
   <data name="KeyDel__" xml:space="preserve">
     <value>Delete selected item(s) which was created by user.</value>
@@ -380,53 +222,51 @@
   <data name="KeyCtrlDown__" xml:space="preserve">
     <value>Increase height of info panel or show it.</value>
   </data>
-  <data name="mViewLarge_Text" xml:space="preserve">
-    <value>Large icons</value>
-  </data>
   <data name="KeyF1__" xml:space="preserve">
     <value>This help on shortcuts.</value>
   </data>
-  <data name="mViewList_Text" xml:space="preserve">
-    <value>List</value>
-  </data>
   <data name="KeyCtrlIns__" xml:space="preserve">
     <value>Copy column on which the ordered item(s) to clipboard.</value>
+  </data>
+  <data name="AboutForm_Plugins" xml:space="preserve">
+    <value>Plugins:</value>
+  </data>
+  <data name="AboutForm_Translations" xml:space="preserve">
+    <value>Translations:</value>
+  </data>
+  <data name="AboutInfo_Build" xml:space="preserve">
+    <value> (build {0})</value>
+  </data>
+  <data name="AboutModel_FeedbackFmt" xml:space="preserve">
+    <value>{0} {1} Feedback</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="Context" xml:space="preserve">
+    <value>Context</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="keyboard_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\keyboard_16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mHelpKeys_Text" xml:space="preserve">
+    <value>Shortcut Keys</value>
+  </data>
+  <data name="PanelPresenter_Items1" xml:space="preserve">
+    <value>Items: {0}</value>
+  </data>
+  <data name="PanelPresenter_Items2" xml:space="preserve">
+    <value>Items: {0} of {1}</value>
+  </data>
+  <data name="PanelPresenter_Query" xml:space="preserve">
+    <value>Query</value>
   </data>
   <data name="PanelPresenter_UnreachableMsg" xml:space="preserve">
     <value>Resource «{0}» not reachable.
 Continue anyway?</value>
   </data>
-  <data name="user_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\user_32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="mHelpKeys_Text" xml:space="preserve">
-    <value>Shortcut Keys</value>
-  </data>
-  <data name="AboutForm_Translations" xml:space="preserve">
-    <value>Translations:</value>
-  </data>
-  <data name="AboutForm_Plugins" xml:space="preserve">
-    <value>Plugins:</value>
-  </data>
-  <data name="twitter_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\twitter-icon-v2.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="mViewInfo_Text" xml:space="preserve">
-    <value>Info panel</value>
-  </data>
-  <data name="mViewGrid_Text" xml:space="preserve">
-    <value>Grid lines</value>
-  </data>
-  <data name="PanelPresenter_Query" xml:space="preserve">
-    <value>Query</value>
-  </data>
-  <data name="mHelpFeedback_Text" xml:space="preserve">
-    <value>Send Feedback...</value>
-  </data>
-  <data name="AboutModel_FeedbackFmt" xml:space="preserve">
-    <value>{0} {1} Feedback</value>
-  </data>
-  <data name="Terminal">
-    <value xml:space="preserve">Terminal</value>
+  <data name="process_working" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\process_working.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

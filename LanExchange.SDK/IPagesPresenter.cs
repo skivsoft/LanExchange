@@ -17,7 +17,7 @@ namespace LanExchange.SDK
 
         string GetTabName(int index);
 
-        void SetupPanelViewEvents(IPanelView PV);
+        void SetupPanelViewEvents(IPanelView panelView);
 
         void LoadSettings();
 
@@ -43,5 +43,7 @@ namespace LanExchange.SDK
         void CommanCloseOtherTabs();
 
         void RenameTab(int index, string tabName);
+
+        int IndexOf(IPanelModel model);
     }
 }

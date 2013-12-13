@@ -12,7 +12,6 @@
     <AssemblyName>LanExchange.Plugin.Users</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,7 +41,7 @@
     <Reference Include="System" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.XML" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Common\AnyAssemblyInfo.cs">
@@ -64,7 +63,7 @@
     <Compile Include="PluginUsers.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\LanExchange.Sdk\LanExchange.SDK.csproj">
+    <ProjectReference Include="..\..\LanExchange.SDK\LanExchange.SDK.csproj">
       <Project>{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}</Project>
       <Name>LanExchange.SDK</Name>
     </ProjectReference>

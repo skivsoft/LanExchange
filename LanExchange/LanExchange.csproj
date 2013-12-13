@@ -10,7 +10,6 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LanExchange</RootNamespace>
     <AssemblyName>LanExchange</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <ApplicationIcon>LanExchange.ico</ApplicationIcon>
@@ -20,14 +19,11 @@
     <ManifestKeyFile>
     </ManifestKeyFile>
     <SignManifests>false</SignManifests>
-    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
     <PublishUrl>publish\</PublishUrl>
     <Install>false</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -43,11 +39,12 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>false</BootstrapperEnabled>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>false</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -57,102 +54,75 @@
     <CodeAnalysisRuleSet>GlobalizationRules.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>
     </DocumentationFile>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>
-    </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <DebugSymbols>false</DebugSymbols>
-    <NoStdLib>false</NoStdLib>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>LanExchange.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>True</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\Common\LanExchange.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.XML" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Common\AnyAssemblyInfo.cs">
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Core\ContainerBuilder.cs" />
-    <Compile Include="Intf\IPagesModel.cs" />
-    <Compile Include="Intf\ITranslationable.cs" />
+    <Compile Include="Misc\AnimationHelper.cs" />
+    <Compile Include="ContainerBuilder.cs" />
     <Compile Include="Misc\GenerateEnglish.cs" />
-    <Compile Include="Core\TypeNotRegisteredException.cs" />
-    <Compile Include="Intf\Addon\ProtocolHelper.cs" />
-    <Compile Include="Intf\DataReadyArgs.cs" />
-    <Compile Include="Intf\PresenterBase.cs" />
-    <Compile Include="Intf\IConfigModel.cs" />
+    <Compile Include="Misc\Impl\PanelUpdaterImpl.cs" />
+    <Compile Include="Misc\TypeNotRegisteredException.cs" />
     <Compile Include="Misc\Impl\DisposableManagerImpl.cs" />
-    <Compile Include="Misc\Impl\WaitingServiceImpl.cs" />
+    <Compile Include="Action\PluginInternal.cs" />
     <Compile Include="Misc\TranslationResourceManager.cs" />
-    <Compile Include="Presenter\Action\ActionAbout.cs" />
-    <Compile Include="Presenter\Action\ActionCloseTab.cs" />
-    <Compile Include="Presenter\Action\ActionCloseOther.cs" />
-    <Compile Include="Presenter\Action\ActionReRead.cs" />
-    <Compile Include="Presenter\Action\ShortcutFactory.cs" />
-    <Compile Include="Presenter\Action\ShortcutFiller.cs" />
-    <Compile Include="Presenter\Action\ActionShortcutKeys.cs" />
-    <Compile Include="Intf\IAddonManager.cs" />
-    <Compile Include="Presenter\Action\ShortcutPanelItem.cs" />
-    <Compile Include="Intf\App.cs" />
-    <Compile Include="Intf\ILazyThreadPool.cs" />
+    <Compile Include="Action\ActionAbout.cs" />
+    <Compile Include="Action\ActionCloseTab.cs" />
+    <Compile Include="Action\ActionCloseOther.cs" />
+    <Compile Include="Action\ActionReRead.cs" />
+    <Compile Include="Action\ShortcutFactory.cs" />
+    <Compile Include="Action\ShortcutFiller.cs" />
+    <Compile Include="Action\ActionShortcutKeys.cs" />
+    <Compile Include="Action\ShortcutPanelItem.cs" />
     <Compile Include="Misc\CmdLineProcessor.cs" />
-    <Compile Include="Misc\Impl\ImageManagerImpl.cs" />
-    <Compile Include="Intf\IPluginManager.cs" />
-    <Compile Include="Misc\Impl\MacroHelper.cs" />
     <Compile Include="Misc\Impl\PanelColumnManagerImpl.cs" />
     <Compile Include="Misc\Impl\PanelFillerManagerImpl.cs" />
     <Compile Include="Misc\Impl\PanelItemFactoryManagerImpl.cs" />
     <Compile Include="Misc\Impl\ServiceProviderImpl.cs" />
     <Compile Include="Misc\Impl\TranslationServiceImpl.cs" />
-    <Compile Include="Model\PanelItemBaseHolder.cs" />
-    <Compile Include="Intf\IAboutModel.cs" />
-    <Compile Include="Intf\IAboutPresenter.cs" />
-    <Compile Include="Core\RegisteredObject.cs" />
-    <Compile Include="Core\SimpleIocContainer.cs" />
-    <Compile Include="Intf\IAboutView.cs" />
-    <Compile Include="Intf\IInfoView.cs" />
-    <Compile Include="Intf\Addon\Addon.cs" />
-    <Compile Include="Intf\Addon\AddonItemTypeRef.cs" />
-    <Compile Include="Misc\Impl\AddonManagerImpl.cs" />
-    <Compile Include="Intf\Addon\AddonMenuItem.cs" />
-    <Compile Include="Intf\Addon\AddonObjectId.cs" />
-    <Compile Include="Intf\Addon\AddonProgram.cs" />
+    <Compile Include="Misc\RegisteredObject.cs" />
+    <Compile Include="Misc\SimpleIocContainer.cs" />
     <Compile Include="Misc\CustomPanelItem.cs" />
     <Compile Include="Misc\Impl\FolderManagerImpl.cs" />
     <Compile Include="Model\PagesModel.cs" />
     <Compile Include="Model\PanelModel.cs" />
-    <Compile Include="Model\PanelModelCopyHelper.cs" />
     <Compile Include="Misc\Phrase.cs" />
     <Compile Include="Presenter\MainPresenter.cs" />
-    <Compile Include="UI\IListViewItemGetter.cs" />
-    <Compile Include="Utils\HookEventArgs.cs" />
-    <Compile Include="Utils\HookType.cs" />
-    <Compile Include="Utils\ImageListDrawItemConstants.cs" />
-    <Compile Include="Utils\ImageListDrawStateConstants.cs" />
-    <Compile Include="Utils\LocalWindowsHook.cs" />
     <Compile Include="Utils\PingUtils.cs" />
-    <Compile Include="Intf\IPuntoSwitcherService.cs" />
-    <Compile Include="Misc\PuntoSwitcherServiceEngRus.cs" />
+    <Compile Include="Misc\Impl\PuntoSwitcherServiceEngRus.cs" />
     <Compile Include="Model\ConfigModel.cs" />
     <Compile Include="Model\AboutModel.cs" />
     <Compile Include="Presenter\AboutPresenter.cs" />
@@ -163,103 +133,16 @@
     <Compile Include="Misc\Impl\PluginManagerImpl.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI\AboutForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\AboutForm.Designer.cs">
-      <DependentUpon>AboutForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\AppView.cs" />
-    <Compile Include="UI\EscapeForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\EscapeForm.Designer.cs">
-      <DependentUpon>EscapeForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\FilterView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\FilterView.Designer.cs">
-      <DependentUpon>FilterView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\FormPlacement.cs" />
-    <Compile Include="UI\HeaderControl.cs" />
-    <Compile Include="UI\InfoView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\InfoView.Designer.cs">
-      <DependentUpon>InfoView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\ListViewer.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\ListViewItemCache.cs" />
-    <Compile Include="UI\MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\PagesView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\PagesView.Designer.cs">
-      <DependentUpon>PagesView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\PanelView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\PanelView.Designer.cs">
-      <DependentUpon>PanelView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\RunMinimizedForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Utils\ReflectionUtils.cs" />
-    <Compile Include="Utils\ShellContextMenuException.cs" />
-    <Compile Include="Utils\ShellIconStateConstants.cs" />
-    <Compile Include="Utils\SysImageList.cs" />
-    <Compile Include="UI\User32Utils.cs" />
-    <Compile Include="Utils\BitmapUtils.cs" />
-    <Compile Include="Utils\ExternDll.cs" />
-    <Compile Include="Utils\GlobalHotkeys.cs" />
-    <Compile Include="Utils\EnvironmentUtils.cs" />
-    <Compile Include="Utils\KeyboardUtils.cs" />
-    <Compile Include="Utils\NativeMethods.cs" />
-    <Compile Include="Utils\SafeNativeMethods.cs" />
-    <Compile Include="Utils\SerializeUtils.cs" />
-    <Compile Include="Utils\ShellAPI.cs" />
-    <Compile Include="Utils\ShellContextMenu.cs" />
-    <Compile Include="Utils\SingleInstanceCheck.cs" />
-    <Compile Include="Utils\SysImageListHelper.cs" />
-    <Compile Include="Utils\SysImageListSize.cs" />
-    <Compile Include="Utils\TranslationUtils.cs" />
-    <Compile Include="Utils\UnsafeNativeMethods.cs" />
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="UI\AboutForm.resx">
-      <DependentUpon>AboutForm.cs</DependentUpon>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\InfoView.resx">
-      <DependentUpon>InfoView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\PagesView.resx">
-      <DependentUpon>PagesView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\PanelView.resx">
-      <DependentUpon>PanelView.cs</DependentUpon>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -280,7 +163,8 @@
     <Content Include="Addons\NetworkRadmin.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Resources\twitter-icon-v2.png" />
+    <None Include="Resources\process_working.png" />
+    <None Include="Resources\keyboard_16.png" />
     <None Include="..\Common\LanExchange.snk">
       <Link>LanExchange.snk</Link>
     </None>
@@ -294,7 +178,6 @@
     <None Include="Properties\app.manifest">
       <SubType>Designer</SubType>
     </None>
-    <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -331,23 +214,13 @@
   <ItemGroup>
     <Content Include="History.txt" />
     <Content Include="LanExchange.ico" />
-    <None Include="Resources\user_32.png" />
-    <None Include="Resources\user_16.png" />
-    <None Include="Resources\back_16.png" />
-    <None Include="Resources\back_32.png" />
-    <None Include="Resources\clear_hover.png" />
-    <None Include="Resources\clear_normal.png" />
-    <Content Include="Core\MVP.gif" />
+    <Content Include="Misc\MVP.gif" />
     <Content Include="Languages\!Readme.txt" />
     <Content Include="Presenter\!Readme.txt" />
-    <None Include="Resources\input-keyboard-6.png" />
-    <None Include="Resources\email-icon-v2.png" />
-    <Content Include="Resources\LanExchange_16x16.ico" />
-    <None Include="Resources\LanExchange_48x48.png" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\LanExchange.Sdk\LanExchange.SDK.csproj">
+    <ProjectReference Include="..\LanExchange.SDK\LanExchange.SDK.csproj">
       <Project>{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}</Project>
       <Name>LanExchange.SDK</Name>
     </ProjectReference>

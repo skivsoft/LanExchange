@@ -1,4 +1,6 @@
-﻿namespace LanExchange.SDK
+﻿using System;
+
+namespace LanExchange.SDK
 {
     /// <summary>
     /// LanExchange main TabControl View interface.
@@ -57,5 +59,8 @@
         IPagesPresenter Presenter { get; }
         void SetupContextMenu();
         void SetTabText(int index, string title);
+
+        void SetTabImage(int index, int imageIndex);
+        object Invoke(Delegate method, params object[] args);
     }
 }
