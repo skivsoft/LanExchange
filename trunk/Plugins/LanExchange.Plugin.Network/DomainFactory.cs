@@ -19,7 +19,10 @@ namespace LanExchange.Plugin.Network
         public override PanelItemBase CreateDefaultRoot()
         {
             var domain = NetApi32Utils.GetMachineNetBiosDomain(null);
-            return new DomainPanelItem(PluginNetwork.ROOT_OF_DOMAINS, domain);
+            var root = PluginNetwork.ROOT_OF_DOMAINS;
+            root.Name = Resources.Network;
+            root.SetImageName(PanelImageNames.DOMAIN);
+            return new DomainPanelItem(root, domain);
         }
 
         public override void RegisterColumns(IPanelColumnManager columnManager)

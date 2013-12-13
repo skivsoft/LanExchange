@@ -14,6 +14,4 @@ namespace LanExchange.SDK
 
         bool ReorderColumns(string typeName, int oldIndex, int newIndex);
     }
-
-    public delegate IComparable LazyCallback(PanelItemBase item);
 }

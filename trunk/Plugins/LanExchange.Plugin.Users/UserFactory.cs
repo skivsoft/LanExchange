@@ -17,6 +17,7 @@ namespace LanExchange.Plugin.Users
             startPath = LdapUtils.GetDCNameFromPath(startPath, 2);
             var root = PluginUsers.ROOT_OF_DNS;
             root.Name = LdapUtils.GetLdapValue(startPath);
+            root.SetImageName(PanelImageNames.USER);
             return root;
         }
 

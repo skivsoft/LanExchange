@@ -2,7 +2,7 @@
 
 namespace LanExchange.SDK
 {
-    public class ConfigChangedArgs : EventArgs
+    public sealed class ConfigChangedArgs : EventArgs
     {
         public ConfigChangedArgs(ConfigNames name)
         {

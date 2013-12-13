@@ -1,12 +1,8 @@
 ﻿using System;
-using LanExchange.Core;
-using LanExchange.Misc;
 using LanExchange.Plugin.Network;
-using LanExchange.Presenter;
 using LanExchange.SDK;
 using Moq;
 using NUnit.Framework;
-using LanExchange.Intf;
 
 namespace LanExchange.Model
 {
@@ -57,9 +53,10 @@ namespace LanExchange.Model
             result.Items.Add(m_Comp01);
             result.Items.Add(m_Comp02);
             result.ItemsType = typeof(ComputerPanelItem);
-            filler.Setup(f => f.RetrievePanelItems(domain)).Returns(result);
+            filler.Setup(f => f.RetrievePanelItems(domain, RetrieveMode.Sync)).Returns(result);
             App.PanelFillers = filler.Object;
-            m_Objects.SyncRetrieveData();
+            var fillerResult = m_Objects.RetrieveData(RetrieveMode.Sync, true);
+            m_Objects.SetFillerResult(fillerResult, true);
             Assert.AreEqual(3, m_Objects.Count);
         }
 
@@ -72,9 +69,10 @@ namespace LanExchange.Model
             var domain = new DomainPanelItem(PluginNetwork.ROOT_OF_DOMAINS, "TEST");
             result.Items.Add(domain);
             result.ItemsType = typeof (DomainPanelItem);
-            filler.Setup(f => f.RetrievePanelItems(PluginNetwork.ROOT_OF_DOMAINS)).Returns(result);
+            filler.Setup(f => f.RetrievePanelItems(PluginNetwork.ROOT_OF_DOMAINS, RetrieveMode.Sync)).Returns(result);
             App.PanelFillers = filler.Object;
-            m_Objects.SyncRetrieveData();
+            var fillerResult = m_Objects.RetrieveData(RetrieveMode.Sync, true);
+            m_Objects.SetFillerResult(fillerResult, true);
             Assert.AreEqual(1, m_Objects.Count);
             Assert.AreEqual(0, m_Objects.IndexOf(domain));
         }

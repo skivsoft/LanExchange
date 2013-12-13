@@ -20,7 +20,7 @@ namespace LanExchange.SDK
 
         public override string ImageName
         {
-            get { return PanelImageNames.DoubleDot; }
+            get { return PanelImageNames.DOUBLEDOT; }
         }
 
         public override string ImageLegendText

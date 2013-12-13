@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using LanExchange.Intf;
 using LanExchange.SDK;
 
 namespace LanExchange.Misc.Impl
 {
     public class PluginManagerImpl : IPluginManager
     {
-        private const string PLUGIN_MASK = "LanExchange.Plugin.*.dll";
+        private const string OS_PLUGIN_MASK = "LanExchange.OS.*.dll";
+        private const string UI_PLUGIN_MASK = "LanExchange.UI.*.dll";
+        private const string REGULAR_PLUGIN_MASK = "LanExchange.Plugin.*.dll";
         private const string IPLUGIN_INTERFACE = "LanExchange.SDK.IPlugin";
         private readonly IList<IPlugin> m_Plugins;
         private readonly IDictionary<string, string> m_PluginsAuthors;
@@ -21,9 +22,22 @@ namespace LanExchange.Misc.Impl
             m_PluginsAuthors = new Dictionary<string, string>();
         }
 
-        public void LoadPlugins()
+        public void LoadPlugins(PluginType type)
         {
-            var files = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, PLUGIN_MASK, SearchOption.TopDirectoryOnly);
+            string mask;
+            switch (type)
+            {
+                case PluginType.OS:
+                    mask = OS_PLUGIN_MASK;
+                    break;
+                case PluginType.UI:
+                    mask = UI_PLUGIN_MASK;
+                    break;
+                default:
+                    mask = REGULAR_PLUGIN_MASK;
+                    break;
+            }
+            var files = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, mask, SearchOption.TopDirectoryOnly);
             foreach (var fileName in files)
                 try
                 {

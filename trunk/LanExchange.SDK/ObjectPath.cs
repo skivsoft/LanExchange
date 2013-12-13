@@ -8,7 +8,7 @@ namespace LanExchange.SDK
     /// <summary>
     /// Path to nested object.
     /// </summary>
-    public class ObjectPath<TPanelItemBase> where TPanelItemBase : PanelItemBase
+    public sealed class ObjectPath<TPanelItemBase> where TPanelItemBase : PanelItemBase
     {
         private readonly Stack<TPanelItemBase> m_Path;
 

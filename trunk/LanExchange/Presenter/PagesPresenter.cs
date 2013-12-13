@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Windows.Forms;
-using LanExchange.Intf;
-using LanExchange.Model;
 using LanExchange.SDK;
 
 namespace LanExchange.Presenter
 {
-    public class PagesPresenter : PresenterBase<IPagesView>, IPagesPresenter
+    public class PagesPresenter : PresenterBase<IPagesView>, IPagesPresenter, IDisposable
     {
         private readonly IPagesModel m_Model;
 
@@ -15,11 +12,19 @@ namespace LanExchange.Presenter
 
         public PagesPresenter(IPagesModel model)
         {
+            if (model == null)
+                throw new ArgumentNullException("model");
             m_Model = model;
+            App.Resolve<IDisposableManager>().RegisterInstance(this);
             m_Model.AfterAppendTab += Model_AfterAppendTab;
             m_Model.AfterRemove += Model_AfterRemove;
             m_Model.AfterRename += Model_AfterRename;
             m_Model.IndexChanged += Model_IndexChanged;
+        }
+
+        public void Dispose()
+        {
+            m_Model.Dispose();
         }
 
         public bool CanSendToNewTab()
@@ -66,7 +71,8 @@ namespace LanExchange.Presenter
         {
             if (View.ActivePanelView == null)
                 return false;
-            var obj = Clipboard.GetDataObject();
+            var clipboard = App.Resolve<IClipboardService>();
+            var obj = clipboard.GetDataObject();
             if (obj == null)
                 return false;
             if (!obj.GetDataPresent(typeof(PanelItemBaseHolder)))
@@ -80,7 +86,8 @@ namespace LanExchange.Presenter
         public void CommandPasteItems()
         {
             if (!CanPasteItems()) return;
-            var obj = Clipboard.GetDataObject();
+            var clipboard = App.Resolve<IClipboardService>();
+            var obj = clipboard.GetDataObject();
             if (obj == null) return;
             var items = (PanelItemBaseHolder)obj.GetData(typeof(PanelItemBaseHolder));
             var destObjects = m_Model.GetItem(m_Model.SelectedIndex);
@@ -96,7 +103,7 @@ namespace LanExchange.Presenter
                     newItem.Parent = PanelItemRoot.ROOT_OF_USERITEMS;
                     destObjects.Items.Add(newItem);
                 }
-            destObjects.SyncRetrieveData(true);
+            destObjects.AsyncRetrieveData(true);
             //m_View.ActivePanelView.Presenter.UpdateItemsAndStatus();
         }
 
@@ -126,7 +133,7 @@ namespace LanExchange.Presenter
                     firstIndex = panelView.Presenter.Objects.FilterCount - 1;
                 if (firstIndex >= 0)
                     panelView.Presenter.Objects.FocusedItem = panelView.Presenter.Objects.GetItemAt(firstIndex);
-                panelView.Presenter.Objects.SyncRetrieveData();
+                panelView.Presenter.Objects.AsyncRetrieveData(false);
             }
         }
 
@@ -150,6 +157,16 @@ namespace LanExchange.Presenter
             m_Model.RenameTab(index, tabName);
         }
 
+        public int IndexOf(IPanelModel model)
+        {
+            if (model == null)
+                return -1;
+            for (int index = 0; index < m_Model.Count; index++)
+                if (m_Model.GetItem(index) == model)
+                    return index;
+            return -1;
+        }
+
         public void Model_AfterAppendTab(object sender, PanelModelEventArgs e)
         {
             // create panel
@@ -159,11 +176,21 @@ namespace LanExchange.Presenter
             presenter.Objects = e.Info;
             //m_View.SelectedIndex = m_View.TabPagesCount - 1;
             e.Info.Changed += (o, args) => presenter.UpdateItemsAndStatus();
+            e.Info.TabNameChanged += InfoOnTabNameChanged;
             //e.Info.SubscriptionChanged += Item_SubscriptionChanged;
             // update items
             //e.Info.DataChanged(null, ConcreteSubject.s_UserItems);
             panelView.Presenter.ResetSortOrder();
-            e.Info.SyncRetrieveData();
+            e.Info.AsyncRetrieveData(false);
+        }
+
+        private void InfoOnTabNameChanged(object sender, EventArgs eventArgs)
+        {
+            var model = sender as IPanelModel;
+            if (model == null) return;
+            var index = IndexOf(model);
+            if (index != -1)
+                View.SetTabText(index, model.TabName);
         }
 
         public void Model_AfterRemove(object sender, PanelIndexEventArgs e)
@@ -227,10 +254,10 @@ namespace LanExchange.Presenter
             return m_Model.GetTabName(index);
         }
 
-        public void SetupPanelViewEvents(IPanelView PV)
+        public void SetupPanelViewEvents(IPanelView panelView)
         {
-            PV.FocusedItemChanged += DoPanelViewFocusedItemChanged;
-            PV.FilterTextChanged += DoPanelViewFilterTextChanged;
+            panelView.FocusedItemChanged += DoPanelViewFocusedItemChanged;
+            panelView.FilterTextChanged += DoPanelViewFilterTextChanged;
         }
 
         public IPanelModel GetItem(int index)

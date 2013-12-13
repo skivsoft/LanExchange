@@ -6,9 +6,11 @@ namespace LanExchange.SDK
     /// <summary>
     /// LanExchange panel model.
     /// </summary>
-    public interface IPanelModel : IFilterModel, IEquatable<IPanelModel>
+    public interface IPanelModel : IFilterModel, IEquatable<IPanelModel>, IDisposable
     {
         event EventHandler Changed;
+        event EventHandler TabNameChanged;
+
         /// <summary>
         /// Gets or sets the name of the tab.
         /// </summary>
@@ -16,6 +18,13 @@ namespace LanExchange.SDK
         /// The name of the tab.
         /// </value>
         string TabName { get; set; }
+        /// <summary>
+        /// Gets or sets the name of the tab's image.
+        /// </summary>
+        /// <value>
+        /// The name of the tab's image.
+        /// </value>
+        string TabImageName { get; set; }
         /// <summary>
         /// Gets or sets the current view.
         /// </summary>
@@ -72,7 +81,7 @@ namespace LanExchange.SDK
         int IndexOf(PanelItemBase key);
 
         PanelItemFactoryBase ItemFactory { get; set; }
-        void SyncRetrieveData(bool clearFilter = false);
+        void AsyncRetrieveData(bool clearFilter);
         string DataType { get; set; }
         ColumnComparer Comparer { get; }
         void Sort(IComparer<PanelItemBase> sorter);
@@ -80,5 +89,7 @@ namespace LanExchange.SDK
         bool Contains(PanelItemBase panelItem);
 
         void SetDefaultRoot(PanelItemBase root);
+        PanelFillerResult RetrieveData(RetrieveMode mode, bool clearFilter);
+        void SetFillerResult(PanelFillerResult fillerResult, bool clearFilter);
     }
 }

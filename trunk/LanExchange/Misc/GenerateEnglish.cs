@@ -8,9 +8,7 @@ using System.IO;
 using System.Reflection;
 using System.Resources;
 using System.Text;
-using LanExchange.Intf;
-using LanExchange.Intf.Addon;
-using LanExchange.Utils;
+using LanExchange.SDK;
 
 namespace LanExchange.Misc
 {
@@ -55,7 +53,7 @@ namespace LanExchange.Misc
         private static void ProcessAddon(string fileName)
         {
             // load addon from xml
-            var addon = (Addon)SerializeUtils.DeserializeObjectFromXMLFile(fileName, typeof(Addon));
+            var addon = (SDK.Addon)SerializeUtils.DeserializeObjectFromXMLFile(fileName, typeof(SDK.Addon));
             var context = Path.GetFileName(fileName);
             foreach (var panelItem in addon.PanelItemTypes)
             {
@@ -97,9 +95,9 @@ namespace LanExchange.Misc
             var context = Path.GetFileName(fileName);
             foreach (DictionaryEntry entry in resourceSet)
             {
-                if (entry.Value != null && entry.Value is string)
+                var value = entry.Value as string;
+                if (value != null)
                 {
-                    var value = (string)entry.Value;
                     Phrase found;
                     if (!s_Dict.TryGetValue(value, out found))
                         s_Dict.Add(value, new Phrase(context, value));

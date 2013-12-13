@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using LanExchange.Intf;
 using LanExchange.SDK;
 
 namespace LanExchange.Misc.Impl

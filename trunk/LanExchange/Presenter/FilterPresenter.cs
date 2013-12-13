@@ -1,5 +1,4 @@
 ﻿using System;
-using LanExchange.Intf;
 using LanExchange.SDK;
 
 namespace LanExchange.Presenter

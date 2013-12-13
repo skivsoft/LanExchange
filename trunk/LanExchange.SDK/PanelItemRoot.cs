@@ -11,6 +11,8 @@ namespace LanExchange.SDK
     {
         public static readonly PanelItemBase ROOT_OF_USERITEMS = new PanelItemRoot("USERITEMS");
 
+        private string m_ImageName;
+
         public PanelItemRoot()
         {
         }
@@ -30,7 +32,12 @@ namespace LanExchange.SDK
 
         public override string ImageName
         {
-            get { return string.Empty; }
+            get { return m_ImageName; }
+        }
+
+        public void SetImageName(string value)
+        {
+            m_ImageName = value;
         }
 
         public override string ImageLegendText

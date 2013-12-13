@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace LanExchange.SDK
 {
-    public class ColumnComparer : IComparer<PanelItemBase>
+    public sealed class ColumnComparer : IComparer<PanelItemBase>
     {
         public ColumnComparer(int index, PanelSortOrder sortOrder)
         {

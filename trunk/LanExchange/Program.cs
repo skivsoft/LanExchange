@@ -31,8 +31,9 @@
 // RELEASE 2.12 (Dec, 2013)
 //   DONE  Changing language without restart program
 //   TODO  Network: ping computer before performing action on it
-//   TODO  Network: set tab name after changing domain/group
-//   TODO  Async enum items and cache items
+//   DONE  Network: set tab name after changing domain/group
+//   DONE  Async enum items 
+//   TODO  Cache items
 //   TODO  Manual creation of computer items
 //   TODO  Recently used items must appears when Tray.onMouseOver event fired
 //
@@ -68,10 +69,9 @@
 
 using System;
 using System.ComponentModel;
-using LanExchange.Core;
-using LanExchange.Intf;
+using LanExchange.Action;
 using LanExchange.Misc;
-using LanExchange.Presenter.Action;
+using LanExchange.Properties;
 using LanExchange.SDK;
 
 namespace LanExchange
@@ -84,18 +84,52 @@ namespace LanExchange
         {
             // global map interfaces to classes
             App.SetContainer(ContainerBuilder.Build());
+            App.TR.SetResourceManagerTo<Resources>();
+            // load plugins
+            LoadPlugins();
+            // load settings from cfg-file (must be loaded before plugins)
+            App.Config.Load();
+            App.Config.Changed += App.Presenter.ConfigOnChanged;
+            // load addons
+            App.Addons.LoadAddons();
+            // init application
+            var application = App.Resolve<IAppPresenter>();
+            application.Init();
+            // create main form
+            App.MainView = App.Resolve<IMainView>();
+            App.Presenter.View = App.MainView;
+            App.Presenter.PrepareForm();
+            // run application
+            application.Run(App.MainView);
+        }
+
+        private static void LoadPlugins()
+        {
+            var plugins = App.Resolve<IPluginManager>();
+            // load os plugins
+            plugins.LoadPlugins(PluginType.OS);
             // process cmdline params
             CmdLineProcessor.Processing();
-            // load settings from cfg-file (must be loaded before plugins)
-            App.Config.Changed += App.Presenter.ConfigOnChanged;
-            App.Config.Load();
-            App.Resolve<IPluginManager>().LoadPlugins();
-            App.Addons.LoadAddons();
-            // register ShortcutPanelItem
-            App.PanelItemTypes.RegisterFactory<ShortcutPanelItem>(new ShortcutFactory());
-            App.PanelFillers.RegisterFiller<ShortcutPanelItem>(new ShortcutFiller());
-            // run
-            App.Resolve<IAppView>().ApplicationRun();
+            // load ui plugins
+            plugins.LoadPlugins(PluginType.UI);
+            var loaded = true;
+            try
+            {
+                App.Images = App.Resolve<IImageManager>();
+                App.Addons = App.Resolve<IAddonManager>();
+            }
+            catch
+            {
+                loaded = false;
+            }
+            // exit with exit code 1 if either IImageManager or IAddonManager is not implemented in plugins
+            if (!loaded)
+                Environment.Exit(1);
+            plugins.LoadPlugins(PluginType.Regular);
+            // init internal plugin
+            (new PluginInternal()).Initialize(App.Resolve<IServiceProvider>());
+            // register stage images for icon animation
+            AnimationHelper.Register(AnimationHelper.WORKING, Resources.process_working, 16, 16);
         }
     }
 }

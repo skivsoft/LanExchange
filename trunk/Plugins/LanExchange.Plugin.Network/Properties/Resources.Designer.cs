@@ -115,6 +115,15 @@ namespace LanExchange.Plugin.Network.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Network.
+        /// </summary>
+        internal static string Network {
+            get {
+                return ResourceManager.GetString("Network", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Network name.
         /// </summary>
         internal static string NetworkName {

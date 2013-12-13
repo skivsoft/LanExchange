@@ -153,4 +153,7 @@
   <data name="ResourceName" xml:space="preserve">
     <value>Resource name</value>
   </data>
+  <data name="Network">
+    <value xml:space="preserve">Network</value>
+  </data>
 </root>

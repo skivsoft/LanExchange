@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using System.Xml.Serialization;
 
 namespace LanExchange.SDK
@@ -191,18 +190,6 @@ namespace LanExchange.SDK
         public virtual bool IsRereadAccepted(string subject)
         {
             return false;
-        }
-
-        public string GetTabImageName()
-        {
-            var item = this;
-            while (item.Parent != null)
-            {
-                if (item.Parent is PanelItemRoot)
-                    return item.ImageName;
-                item = Parent;
-            }
-            return item.GetType().Name + PanelImageNames.NORMAL_POSTFIX;
         }
     }
 }

@@ -1,21 +1,20 @@
 ﻿using System;
-using System.Globalization;
-using System.Windows.Forms;
-using LanExchange.Core;
-using LanExchange.Intf;
-using LanExchange.Model;
 using LanExchange.Properties;
 using LanExchange.SDK;
-using LanExchange.UI;
 using LanExchange.Utils;
 
 namespace LanExchange.Presenter
 {
-    public class PanelPresenter : PresenterBase<IPanelView>, IPanelPresenter
+    public class PanelPresenter : PresenterBase<IPanelView>, IPanelPresenter, IDisposable
     {
         private IPanelModel m_Objects;
 
         public event EventHandler CurrentPathChanged;
+
+        public void Dispose()
+        {
+            
+        }
 
         public void SetupColumns()
         {
@@ -38,7 +37,7 @@ namespace LanExchange.Presenter
         public void ResetSortOrder()
         {
             m_Objects.Comparer.ColumnIndex = 0;
-            m_Objects.Comparer.SortOrder = (PanelSortOrder)SortOrder.Ascending;
+            m_Objects.Comparer.SortOrder = PanelSortOrder.Ascending;
         }
 
         public void UpdateItemsAndStatus()
@@ -46,8 +45,8 @@ namespace LanExchange.Presenter
             if (m_Objects == null) return;
             // refresh only for current page
             var presenter = App.MainPages;
-            var currentItemList = presenter.GetItem(presenter.SelectedIndex);
-            if (currentItemList == null || !m_Objects.Equals(currentItemList)) 
+            var panelModel = presenter.GetItem(presenter.SelectedIndex);
+            if (panelModel == null || !m_Objects.Equals(panelModel)) 
                 return;
             // get number of visible items (filtered) and number of total items
             var showCount = m_Objects.FilterCount;
@@ -65,10 +64,11 @@ namespace LanExchange.Presenter
             View.SetVirtualListSize(m_Objects.FilterCount);
             if (m_Objects.FilterCount > 0)
             {
-                var index = Objects.IndexOf(currentItemList.FocusedItem);
+                var index = Objects.IndexOf(panelModel.FocusedItem);
                 View.FocusedItemIndex = index;
             }
-            View.Filter.UpdateFromModel(Objects);
+            if (View.Filter != null)
+                View.Filter.UpdateFromModel(Objects);
         }
 
         private void CurrentPath_Changed(object sender, EventArgs e)
@@ -87,7 +87,8 @@ namespace LanExchange.Presenter
                 m_Objects = value;
                 if (m_Objects != null)
                     m_Objects.CurrentPath.Changed += CurrentPath_Changed;
-                View.Filter.Presenter.SetModel(value);
+                if (View.Filter != null)
+                    View.Filter.Presenter.SetModel(value);
             }
         }
 
@@ -104,11 +105,11 @@ namespace LanExchange.Presenter
                 }
                 if (!isReachable)
                 {
-                    var result = MessageBox.Show(
-                        String.Format(CultureInfo.CurrentCulture, Resources.PanelPresenter_UnreachableMsg, panelItem.Name), 
+                    var messageBox = App.Resolve<IMessageBoxService>();
+                    var result = messageBox.AskQuestionFmt(
                         Resources.PanelPresenter_Query,
-                        MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-                    if (result != DialogResult.Yes)
+                        Resources.PanelPresenter_UnreachableMsg, panelItem.Name);
+                    if (!messageBox.IsYes(result))
                         panelItem = null;
                 }
             }
@@ -124,16 +125,17 @@ namespace LanExchange.Presenter
                 return false;
             if (panelItem is PanelItemDoubleDot)
                 return CommandLevelUp();
-            var result = App.PanelFillers.FillerExists(panelItem);
-            if (result)
-            {
-                Objects.FocusedItem = new PanelItemDoubleDot(panelItem);
-                Objects.CurrentPath.Push(panelItem);
-                ResetSortOrder();
-                Objects.SyncRetrieveData(true);
-                View.Filter.SetFilterText(string.Empty);
-            }
-            return result;
+            if (!App.PanelFillers.FillerExists(panelItem)) return false;
+            Objects.FocusedItem = new PanelItemDoubleDot(panelItem);
+            Objects.CurrentPath.Push(panelItem);
+            Objects.TabName = panelItem.Name;
+            Objects.TabImageName = panelItem.ImageName;
+            ResetSortOrder();
+            var syncResult = Objects.RetrieveData(RetrieveMode.Sync, true);
+            Objects.SetFillerResult(syncResult, true);
+            View.Filter.SetFilterText(string.Empty);
+            Objects.AsyncRetrieveData(true);
+            return true;
         }
 
         public bool CommandLevelUp()
@@ -143,16 +145,24 @@ namespace LanExchange.Presenter
             var panelItem = Objects.CurrentPath.Peek();
             if (panelItem == null || panelItem is PanelItemRoot) 
                 return false;
-            var result = App.PanelFillers.FillerExists(panelItem);
-            if (result)
+            if (!App.PanelFillers.FillerExists(panelItem)) return false;
+            Objects.FocusedItem = panelItem;
+            Objects.CurrentPath.Pop();
+            if (panelItem.Parent != null)
             {
-                Objects.FocusedItem = panelItem;
-                Objects.CurrentPath.Pop();
-                ResetSortOrder();
-                Objects.SyncRetrieveData(true);
-                View.Filter.SetFilterText(string.Empty);
+                Objects.TabName = panelItem.Parent.Name;
+                Objects.TabImageName = panelItem.Parent.ImageName;
+            } else
+            {
+                Objects.TabName = panelItem.Name;
+                Objects.TabImageName = panelItem.ImageName;
             }
-            return result;
+            ResetSortOrder();
+            var syncResult = Objects.RetrieveData(RetrieveMode.Sync, true);
+            Objects.SetFillerResult(syncResult, true);
+            View.Filter.SetFilterText(string.Empty);
+            Objects.AsyncRetrieveData(true);
+            return true;
         }
 
         public void ColumnClick(int index)

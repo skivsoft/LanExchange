@@ -2,7 +2,7 @@
 
 namespace LanExchange.SDK
 {
-    public class PanelIndexEventArgs : EventArgs
+    public sealed class PanelIndexEventArgs : EventArgs
     {
         private readonly int m_Index;
 
