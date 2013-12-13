@@ -57,12 +57,11 @@
     <Compile Include="..\Common\AnyAssemblyInfo.cs">
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Addon\Addon.cs" />
-    <Compile Include="Addon\AddonItemTypeRef.cs" />
-    <Compile Include="Addon\AddonMenuItem.cs" />
-    <Compile Include="Addon\AddonObjectId.cs" />
-    <Compile Include="Addon\AddonProgram.cs" />
-    <Compile Include="Addon\ProtocolHelper.cs" />
+    <Compile Include="Addon.cs" />
+    <Compile Include="AddonItemTypeRef.cs" />
+    <Compile Include="AddonMenuItem.cs" />
+    <Compile Include="AddonObjectId.cs" />
+    <Compile Include="AddonProgram.cs" />
     <Compile Include="App.cs" />
     <Compile Include="ColumnComparer.cs" />
     <Compile Include="ConfigChangedArgs.cs" />
@@ -75,61 +74,57 @@
     <Compile Include="IPanelUpdater.cs" />
     <Compile Include="IPluginManager.cs" />
     <Compile Include="IPuntoSwitcherService.cs" />
-    <Compile Include="Model\IPagesModel.cs" />
-    <Compile Include="OS\IComctl32Service.cs" />
-    <Compile Include="OS\IKernel32Service.cs" />
-    <Compile Include="OS\IOle32Service.cs" />
-    <Compile Include="OS\IShell32Service.cs" />
-    <Compile Include="OS\ISingleInstanceService.cs" />
-    <Compile Include="OS\ISysImageListService.cs" />
-    <Compile Include="OS\IUser32Service.cs" />
+    <Compile Include="IPagesModel.cs" />
+    <Compile Include="IComctl32Service.cs" />
+    <Compile Include="IKernel32Service.cs" />
+    <Compile Include="IOle32Service.cs" />
+    <Compile Include="IShell32Service.cs" />
+    <Compile Include="ISingleInstanceService.cs" />
+    <Compile Include="ISysImageListService.cs" />
+    <Compile Include="IUser32Service.cs" />
+    <Compile Include="ProtocolHelper.cs" />
     <Compile Include="SysImageListSize.cs" />
     <Compile Include="PanelItemBaseHolder.cs" />
     <Compile Include="PanelModelCopyHelper.cs" />
     <Compile Include="PluginType.cs" />
-    <Compile Include="Presenter\PresenterBase.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
+    <Compile Include="PresenterBase.cs" />
     <Compile Include="RetrieveMode.cs" />
     <Compile Include="SerializeUtils.cs" />
-    <Compile Include="UI\IAddonManager.cs" />
-    <Compile Include="Model\IConfigModel.cs" />
+    <Compile Include="IAddonManager.cs" />
+    <Compile Include="IConfigModel.cs" />
     <Compile Include="ILazyThreadPool.cs" />
     <Compile Include="ITranslationable.cs" />
-    <Compile Include="OS\IHotkeysService.cs" />
-    <Compile Include="Model\IAboutModel.cs" />
-    <Compile Include="Presenter\IAboutPresenter.cs" />
-    <Compile Include="Presenter\IAppPresenter.cs" />
+    <Compile Include="IHotkeysService.cs" />
+    <Compile Include="IAboutModel.cs" />
+    <Compile Include="IAboutPresenter.cs" />
+    <Compile Include="IAppPresenter.cs" />
     <Compile Include="IDisposableManager.cs" />
-    <Compile Include="Model\IFilterModel.cs" />
-    <Compile Include="Presenter\IFilterPresenter.cs" />
-    <Compile Include="UI\IClipboardDataObject.cs" />
-    <Compile Include="UI\IClipboardService.cs" />
-    <Compile Include="UI\IFilterView.cs" />
+    <Compile Include="IFilterModel.cs" />
+    <Compile Include="IFilterPresenter.cs" />
+    <Compile Include="IClipboardDataObject.cs" />
+    <Compile Include="IClipboardService.cs" />
+    <Compile Include="IFilterView.cs" />
     <Compile Include="IFolderManager.cs" />
     <Compile Include="IIoCContainer.cs" />
-    <Compile Include="Presenter\IMainPresenter.cs" />
-    <Compile Include="UI\IMainView.cs" />
+    <Compile Include="IMainPresenter.cs" />
+    <Compile Include="IMainView.cs" />
     <Compile Include="IModel.cs" />
-    <Compile Include="Presenter\IPagesPresenter.cs" />
-    <Compile Include="UI\IMessageBoxService.cs" />
-    <Compile Include="UI\IPagesView.cs" />
+    <Compile Include="IPagesPresenter.cs" />
+    <Compile Include="IMessageBoxService.cs" />
+    <Compile Include="IPagesView.cs" />
     <Compile Include="IPanelColumnManager.cs" />
     <Compile Include="IPanelFillerManager.cs" />
-    <Compile Include="UI\IImageManager.cs" />
+    <Compile Include="IImageManager.cs" />
     <Compile Include="IPanelItemFactoryManager.cs" />
-    <Compile Include="Model\IPanelModel.cs" />
-    <Compile Include="Presenter\IPanelPresenter.cs" />
-    <Compile Include="UI\IPanelView.cs" />
+    <Compile Include="IPanelModel.cs" />
+    <Compile Include="IPanelPresenter.cs" />
+    <Compile Include="IPanelView.cs" />
     <Compile Include="IPlugin.cs" />
     <Compile Include="IPresenter.cs" />
     <Compile Include="ITranslationService.cs" />
     <Compile Include="IView.cs" />
-    <Compile Include="UI\IScreenService.cs" />
-    <Compile Include="UI\IWaitingService.cs" />
+    <Compile Include="IScreenService.cs" />
+    <Compile Include="IWaitingService.cs" />
     <Compile Include="LifeCycle.cs" />
     <Compile Include="ObjectPath.cs" />
     <Compile Include="PanelColumnHeader.cs" />
@@ -145,20 +140,16 @@
     <Compile Include="PanelModelEventArgs.cs" />
     <Compile Include="PanelSortOrder.cs" />
     <Compile Include="PanelViewMode.cs" />
-    <Compile Include="UI\IAboutView.cs" />
-    <Compile Include="UI\IInfoView.cs" />
+    <Compile Include="IAboutView.cs" />
+    <Compile Include="IInfoView.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="..\Common\LanExchange.snk">
       <Link>LanExchange.snk</Link>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

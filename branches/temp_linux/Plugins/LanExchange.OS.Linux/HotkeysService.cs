@@ -1,6 +1,6 @@
 using System;
 using System.ComponentModel;
-using LanExchange.SDK.OS;
+using LanExchange.SDK;
 
 namespace LanExchange.OS.Linux
 {

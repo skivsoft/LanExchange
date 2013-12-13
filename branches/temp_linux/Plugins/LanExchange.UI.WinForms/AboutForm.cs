@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
-using LanExchange.SDK.Presenter;
 using LanExchange.UI.WinForms.Properties;
 using LanExchange.SDK;
-using LanExchange.SDK.UI;
+
 //using System.ComponentModel;
 
 namespace LanExchange.UI.WinForms

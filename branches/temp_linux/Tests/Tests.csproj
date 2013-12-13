@@ -42,7 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\SimpleIocContainerTests.cs" />
+    <Compile Include="Misc\SimpleIocContainerTests.cs" />
     <Compile Include="Misc\Impl\AddonManagerImplTest.cs" />
     <Compile Include="Model\FolderManagerTest.cs" />
     <Compile Include="Model\PagesModelTest.cs" />
@@ -71,8 +71,8 @@
     <Compile Include="SDK\ObjectPathTest.cs" />
     <Compile Include="SDK\PanelItemDoubleDotTest.cs" />
     <Compile Include="SDK\XmlSerializeTest.cs" />
-    <Compile Include="Misc\Service\PuntoSwitcherServiceEngRusTest.cs" />
-    <Compile Include="Misc\Service\PuntoSwitcherServiceFactoryTest.cs" />
+    <Compile Include="Misc\Impl\PuntoSwitcherServiceEngRusTest.cs" />
+    <Compile Include="Misc\Impl\PuntoSwitcherServiceFactoryTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -100,6 +100,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Misc\Service\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

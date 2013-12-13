@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
-using LanExchange.Misc;
-using LanExchange.Presenter.Action;
+using LanExchange.Action;
 using LanExchange.SDK;
-using LanExchange.SDK.Model;
-using LanExchange.SDK.Presenter;
-using LanExchange.SDK.UI;
 
 namespace LanExchange.Presenter
 {

@@ -121,8 +121,8 @@ namespace LanExchange.Plugin.Network
             get
             {
                 if (Parent == null)
-                    return PanelImageNames.ComputerCustom;
-                return IsReachable ? PanelImageNames.ComputerNormal : PanelImageNames.ComputerUnreachable;
+                    return PanelImageNames.COMPUTER + PanelImageNames.GREEN_POSTFIX;
+                return IsReachable ? PanelImageNames.COMPUTER : PanelImageNames.COMPUTER + PanelImageNames.RED_POSTFIX;
             }
         }
 
@@ -132,9 +132,9 @@ namespace LanExchange.Plugin.Network
             {
                 switch (ImageName)
                 {
-                    case PanelImageNames.ComputerNormal:
+                    case PanelImageNames.COMPUTER:
                         return Resources.ImageLegendText_ComputerNormal;
-                    case PanelImageNames.ComputerDisabled:
+                    case PanelImageNames.COMPUTER + PanelImageNames.HIDDEN_POSTFIX:
                         return Resources.ImageLegendText_ComputerDisabled;
                     default:
                         return string.Empty;

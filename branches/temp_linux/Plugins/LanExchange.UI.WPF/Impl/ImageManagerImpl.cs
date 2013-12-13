@@ -2,8 +2,6 @@
 using System.Drawing;
 using LanExchange.UI.WPF.Properties;
 using LanExchange.SDK;
-using LanExchange.SDK.OS;
-using LanExchange.SDK.UI;
 
 namespace LanExchange.UI.WPF.Impl
 {

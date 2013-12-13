@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using LanExchange.SDK;
-using LanExchange.SDK.Model;
 
 namespace LanExchange.Misc.Impl
 {
@@ -67,7 +66,10 @@ namespace LanExchange.Misc.Impl
             {
                 
             }
-            App.MainPages.View.Invoke(new SetTabImageDelegate(SetTabImageInvoked), model, null);
+            var parent = model.CurrentPath.Item[0];
+            if (parent.Parent != null)
+                parent = parent.Parent;
+            App.MainPages.View.Invoke(new SetTabImageDelegate(SetTabImageInvoked), model, parent.ImageName);
         }
 
         private static void SetTabImageInvoked(IPanelModel model, string imageName)

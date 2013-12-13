@@ -39,8 +39,8 @@ namespace LanExchange.Plugin.Network
             get
             {
                 if (SHI.IsPrinter)
-                    return PanelImageNames.SharePrinter;
-                return SHI.IsHidden ? PanelImageNames.ShareHidden : PanelImageNames.ShareNormal;
+                    return string.Empty;
+                return SHI.IsHidden ? PanelImageNames.FOLDER + PanelImageNames.HIDDEN_POSTFIX : PanelImageNames.FOLDER;
             }
         }
 

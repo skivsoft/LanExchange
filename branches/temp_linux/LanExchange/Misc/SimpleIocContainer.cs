@@ -61,7 +61,7 @@ namespace LanExchange.Misc
             var constructors =
                 registeredObject.ConcreteType.GetConstructors();
             if (constructors.Length == 0)
-                throw new NotImplementedException("Constructor is not implemented or non-public in class " + registeredObject.ConcreteType.Name);
+                throw new ApplicationException("Constructor is not implemented or non-public in class " + registeredObject.ConcreteType.Name);
             var constructorInfo = constructors[0];
             foreach(var parameter in constructorInfo.GetParameters())
                 yield return Resolve(parameter.ParameterType);

@@ -1,6 +1,5 @@
 ﻿using System;
 using LanExchange.SDK;
-using LanExchange.SDK.OS;
 
 namespace LanExchange.OS.Linux
 {

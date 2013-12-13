@@ -11,9 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using LanExchange.SDK.UI;
 using LanExchange.SDK;
-using LanExchange.SDK.Presenter;
 
 namespace LanExchange.UI.WPF
 {
@@ -64,7 +62,7 @@ namespace LanExchange.UI.WPF
             }
         }
 
-        public SDK.Presenter.IPanelPresenter Presenter
+        public IPanelPresenter Presenter
         {
             get { return m_Presenter; }
         }

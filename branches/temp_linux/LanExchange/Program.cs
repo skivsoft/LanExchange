@@ -69,11 +69,10 @@
 
 using System;
 using System.ComponentModel;
+using LanExchange.Action;
 using LanExchange.Misc;
 using LanExchange.Properties;
 using LanExchange.SDK;
-using LanExchange.SDK.Presenter;
-using LanExchange.SDK.UI;
 
 namespace LanExchange
 {
@@ -87,19 +86,10 @@ namespace LanExchange
             App.SetContainer(ContainerBuilder.Build());
             App.TR.SetResourceManagerTo<Resources>();
             // load plugins
-            var plugins = App.Resolve<IPluginManager>();
-            plugins.LoadPlugins(PluginType.OS);
-            plugins.LoadPlugins(PluginType.UI);
-            App.Images = App.Resolve<IImageManager>();
-            App.Addons = App.Resolve<IAddonManager>();
-            plugins.LoadPlugins(PluginType.Regular);
-            (new PluginInternal()).Initialize(App.Resolve<IServiceProvider>());
-            AnimationHelper.Register(AnimationHelper.WORKING, Resources.process_working, 16, 16);
-            // process cmdline params
-            CmdLineProcessor.Processing();
+            LoadPlugins();
             // load settings from cfg-file (must be loaded before plugins)
-            App.Config.Changed += App.Presenter.ConfigOnChanged;
             App.Config.Load();
+            App.Config.Changed += App.Presenter.ConfigOnChanged;
             // load addons
             App.Addons.LoadAddons();
             // init application
@@ -111,6 +101,35 @@ namespace LanExchange
             App.Presenter.PrepareForm();
             // run application
             application.Run(App.MainView);
+        }
+
+        private static void LoadPlugins()
+        {
+            var plugins = App.Resolve<IPluginManager>();
+            // load os plugins
+            plugins.LoadPlugins(PluginType.OS);
+            // process cmdline params
+            CmdLineProcessor.Processing();
+            // load ui plugins
+            plugins.LoadPlugins(PluginType.UI);
+            var loaded = true;
+            try
+            {
+                App.Images = App.Resolve<IImageManager>();
+                App.Addons = App.Resolve<IAddonManager>();
+            }
+            catch
+            {
+                loaded = false;
+            }
+            // exit with exit code 1 if either IImageManager or IAddonManager is not implemented in plugins
+            if (!loaded)
+                Environment.Exit(1);
+            plugins.LoadPlugins(PluginType.Regular);
+            // init internal plugin
+            (new PluginInternal()).Initialize(App.Resolve<IServiceProvider>());
+            // register stage images for icon animation
+            AnimationHelper.Register(AnimationHelper.WORKING, Resources.process_working, 16, 16);
         }
     }
 }

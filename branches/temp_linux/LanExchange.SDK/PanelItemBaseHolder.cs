@@ -4,9 +4,15 @@ using System.Collections.Generic;
 namespace LanExchange.SDK
 {
     [Serializable]
-    public class PanelItemBaseHolder : List<PanelItemBase>
+    public sealed class PanelItemBaseHolder : List<PanelItemBase>
     {
-        public string Context;
-        public string DataType;
+        public PanelItemBaseHolder(string context, string dataType)
+        {
+            Context = context;
+            DataType = dataType;
+        }
+
+        public string Context { get; private set; }
+        public string DataType { get; private set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using LanExchange.OS.Windows.Utils;
-using LanExchange.SDK.OS;
+using LanExchange.SDK;
 
 namespace LanExchange.OS.Windows
 {

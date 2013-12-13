@@ -7,8 +7,6 @@
 
 using System;
 using LanExchange.SDK;
-using LanExchange.SDK.UI;
-using LanExchange.SDK.Presenter;
 using LanExchange.UI.WPF.Impl;
 
 namespace LanExchange.UI.WPF

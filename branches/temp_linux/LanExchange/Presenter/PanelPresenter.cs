@@ -1,18 +1,20 @@
 ﻿using System;
-using LanExchange.Misc;
 using LanExchange.Properties;
 using LanExchange.SDK;
-using LanExchange.SDK.Model;
-using LanExchange.SDK.Presenter;
-using LanExchange.SDK.UI;
+using LanExchange.Utils;
 
 namespace LanExchange.Presenter
 {
-    public class PanelPresenter : PresenterBase<IPanelView>, IPanelPresenter
+    public class PanelPresenter : PresenterBase<IPanelView>, IPanelPresenter, IDisposable
     {
         private IPanelModel m_Objects;
 
         public event EventHandler CurrentPathChanged;
+
+        public void Dispose()
+        {
+            
+        }
 
         public void SetupColumns()
         {

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using LanExchange.SDK;
-using LanExchange.SDK.Presenter;
-using LanExchange.SDK.UI;
 
 namespace LanExchange.Misc.Impl
 {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
-using LanExchange.SDK.UI;
-using LanExchange.SDK.Presenter;
+using LanExchange.SDK;
 
 namespace LanExchange.UI.WPF
 {

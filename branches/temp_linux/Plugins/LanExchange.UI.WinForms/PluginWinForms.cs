@@ -4,9 +4,6 @@
 
 using System;
 using LanExchange.SDK;
-using LanExchange.SDK.Presenter;
-using LanExchange.SDK.UI;
-using LanExchange.UI.WinForms.Impl;
 using LanExchange.UI.WinForms.Properties;
 
 namespace LanExchange.UI.WinForms

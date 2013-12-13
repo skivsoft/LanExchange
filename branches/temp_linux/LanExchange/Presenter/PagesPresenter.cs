@@ -1,12 +1,9 @@
 ﻿using System;
 using LanExchange.SDK;
-using LanExchange.SDK.Model;
-using LanExchange.SDK.Presenter;
-using LanExchange.SDK.UI;
 
 namespace LanExchange.Presenter
 {
-    public class PagesPresenter : PresenterBase<IPagesView>, IPagesPresenter
+    public class PagesPresenter : PresenterBase<IPagesView>, IPagesPresenter, IDisposable
     {
         private readonly IPagesModel m_Model;
 
@@ -15,12 +12,19 @@ namespace LanExchange.Presenter
 
         public PagesPresenter(IPagesModel model)
         {
+            if (model == null)
+                throw new ArgumentNullException("model");
             m_Model = model;
-            App.Resolve<IDisposableManager>().RegisterInstance(model);
+            App.Resolve<IDisposableManager>().RegisterInstance(this);
             m_Model.AfterAppendTab += Model_AfterAppendTab;
             m_Model.AfterRemove += Model_AfterRemove;
             m_Model.AfterRename += Model_AfterRename;
             m_Model.IndexChanged += Model_IndexChanged;
+        }
+
+        public void Dispose()
+        {
+            m_Model.Dispose();
         }
 
         public bool CanSendToNewTab()
@@ -272,6 +276,5 @@ namespace LanExchange.Presenter
         {
             return m_Model.AddTab(info);
         }
-
     }
 }

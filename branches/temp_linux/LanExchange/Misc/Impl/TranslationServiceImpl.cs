@@ -6,6 +6,7 @@ using System.IO;
 using System.Resources;
 using System.Text;
 using LanExchange.SDK;
+using LanExchange.Utils;
 
 namespace LanExchange.Misc.Impl
 {

@@ -199,6 +199,6 @@ Global
 		{1E99C2AE-DEDE-4D80-801A-B02B712031F3} = {FB4F7079-13D6-4D51-9B1F-FB78F5F26B2D}
 	EndGlobalSection
 	GlobalSection(NDepend) = preSolution
-		Project = ""
+		Project = "..\..\..\NDependProject.ndproj"
 	EndGlobalSection
 EndGlobal

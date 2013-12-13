@@ -1,8 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using LanExchange.SDK.Model;
-using LanExchange.SDK.Presenter;
-using LanExchange.SDK.UI;
 
 namespace LanExchange.SDK
 {
@@ -12,24 +9,23 @@ namespace LanExchange.SDK
         /// The IoC container.
         /// </summary>
         private static IIoCContainer s_Ioc;
-        /// <summary>
-        /// This value has been intialized in MainForm.
-        /// </summary>
-        public static IMainView MainView;
+
+        // public setters
+        public static IMainView MainView { get; set; }
+        public static IImageManager Images { get; set; }
+        public static IAddonManager Addons { get; set; }
+        public static IPanelFillerManager PanelFillers { get; set; }
         // managers
-        public static IPanelItemFactoryManager PanelItemTypes;
-        public static IPanelFillerManager PanelFillers;
-        public static IPanelColumnManager PanelColumns;
-        public static IFolderManager FolderManager;
-        public static IImageManager Images;
-        public static IAddonManager Addons;
+        public static IPanelItemFactoryManager PanelItemTypes { get; private set; }
+        public static IPanelColumnManager PanelColumns { get; private set; }
+        public static IFolderManager FolderManager { get; private set; }
         // presenters
-        public static IPagesPresenter MainPages;
-        public static IMainPresenter Presenter;
+        public static IPagesPresenter MainPages { get; private set; }
+        public static IMainPresenter Presenter { get; private set; }
         // other
-        public static IConfigModel Config;
-        public static ILazyThreadPool Threads;
-        public static ITranslationService TR;
+        public static IConfigModel Config { get; private set; }
+        public static ILazyThreadPool Threads { get; private set; }
+        public static ITranslationService TR { get; private set; }
 
         [Localizable(false)]
         public static void SetContainer(IIoCContainer container)

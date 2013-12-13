@@ -4,11 +4,8 @@ using System.Threading;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Security.Permissions;
-using LanExchange.SDK.Presenter;
 using LanExchange.UI.WinForms.Properties;
 using LanExchange.SDK;
-using LanExchange.SDK.OS;
-using LanExchange.SDK.UI;
 using LanExchange.UI.WinForms.Utils;
 
 namespace LanExchange.UI.WinForms
@@ -24,10 +21,10 @@ namespace LanExchange.UI.WinForms
             InitializeComponent();
             // show computer name
             lCompName.Text = SystemInformation.ComputerName;
-            lCompName.ImageIndex = App.Images.IndexOf(PanelImageNames.ComputerNormal);
+            lCompName.ImageIndex = App.Images.IndexOf(PanelImageNames.COMPUTER);
             // show current user
             lUserName.Text = SystemInformation.UserName;
-            lUserName.ImageIndex = App.Images.IndexOf(PanelImageNames.UserNormal);
+            lUserName.ImageIndex = App.Images.IndexOf(PanelImageNames.USER);
             // set hotkey for activate: Ctrl+Win+X
             m_Hotkeys = App.Resolve<IHotkeysService>();
             App.Resolve<IDisposableManager>().RegisterInstance(m_Hotkeys);

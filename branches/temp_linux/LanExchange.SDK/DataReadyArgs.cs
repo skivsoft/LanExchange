@@ -2,7 +2,7 @@
 
 namespace LanExchange.SDK
 {
-    public class DataReadyArgs : EventArgs
+    public sealed class DataReadyArgs : EventArgs
     {
         public DataReadyArgs(PanelItemBase item)
         {

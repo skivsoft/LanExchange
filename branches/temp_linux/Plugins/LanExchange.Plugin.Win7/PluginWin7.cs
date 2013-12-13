@@ -1,6 +1,5 @@
 ﻿using System;
 using LanExchange.SDK;
-using LanExchange.SDK.UI;
 using Microsoft.WindowsAPICodePack.Taskbar;
 
 namespace LanExchange.Plugin.Win7

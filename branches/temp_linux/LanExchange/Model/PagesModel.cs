@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
 using LanExchange.SDK;
-using LanExchange.SDK.Model;
 
 namespace LanExchange.Model
 {

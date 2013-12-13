@@ -1,7 +1,5 @@
 ﻿using System;
-using LanExchange.SDK.Model;
-using LanExchange.SDK.Presenter;
-using LanExchange.SDK.UI;
+using LanExchange.SDK;
 
 namespace LanExchange.Presenter
 {

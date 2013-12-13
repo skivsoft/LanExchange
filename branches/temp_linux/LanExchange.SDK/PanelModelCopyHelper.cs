@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
-using LanExchange.SDK.Model;
 
 namespace LanExchange.SDK
 {  
-    public class PanelModelCopyHelper
+    public sealed class PanelModelCopyHelper : IDisposable
     {
         private readonly IPanelModel m_Model;
         private readonly List<int> m_Indexes;
@@ -19,6 +18,12 @@ namespace LanExchange.SDK
             m_Indexes = new List<int>();
         }
 
+        public void Dispose()
+        {
+            if (m_Model != null)
+                m_Model.Dispose();
+        }
+ 
         public IPanelModel Model
         {
             get { return m_Model; }
@@ -119,14 +124,12 @@ namespace LanExchange.SDK
     
         public PanelItemBaseHolder GetItems()
         {
-            var result = new PanelItemBaseHolder();
+            var result = new PanelItemBaseHolder(m_Model.TabName, m_Model.DataType);
             for (int index = 0; index < m_Indexes.Count; index++)
             {
                 MoveTo(index);
                 result.Add(CurrentItem);
             }
-            result.Context = m_Model.TabName;
-            result.DataType = m_Model.DataType;
             return result;
         }
     }

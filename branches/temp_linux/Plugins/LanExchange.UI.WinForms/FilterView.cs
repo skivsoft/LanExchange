@@ -3,10 +3,8 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
-using LanExchange.SDK.Model;
-using LanExchange.SDK.Presenter;
+using LanExchange.SDK;
 using LanExchange.UI.WinForms.Properties;
-using LanExchange.SDK.UI;
 
 namespace LanExchange.UI.WinForms
 {

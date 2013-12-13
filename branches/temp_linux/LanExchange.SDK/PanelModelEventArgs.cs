@@ -1,20 +1,18 @@
 ﻿using System;
-using LanExchange.SDK.Model;
 
 namespace LanExchange.SDK
 {
-    public class PanelModelEventArgs : EventArgs
+    public sealed class PanelModelEventArgs : EventArgs, IDisposable
     {
-        private readonly IPanelModel m_Info;
-
         public PanelModelEventArgs(IPanelModel info)
         {
-            m_Info = info;
+            Info = info;
         }
 
-        public IPanelModel Info
+        public IPanelModel Info { get; private set; }
+
+        public void Dispose()
         {
-            get { return m_Info; }
         }
     }
 }

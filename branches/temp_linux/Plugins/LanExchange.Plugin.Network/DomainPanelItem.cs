@@ -39,7 +39,7 @@ namespace LanExchange.Plugin.Network
 
         public override string ImageName
         {
-            get { return PanelImageNames.Workgroup; }
+            get { return PanelImageNames.DOMAIN; }
         }
 
         public override object Clone()

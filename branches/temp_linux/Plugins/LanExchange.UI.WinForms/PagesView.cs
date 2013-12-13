@@ -2,11 +2,8 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using LanExchange.SDK.Model;
-using LanExchange.SDK.Presenter;
 using LanExchange.UI.WinForms.Properties;
 using LanExchange.SDK;
-using LanExchange.SDK.UI;
 using LanExchange.UI.WinForms.Utils;
 
 namespace LanExchange.UI.WinForms
@@ -65,7 +62,7 @@ namespace LanExchange.UI.WinForms
             {
                 var menuItem = new ToolStripMenuItem(string.Format(Resources.PagesView_OpenTab, root.Name));
                 menuItem.Tag = root;
-                menuItem.ImageIndex = App.Images.IndexOf(root.GetTabImageName());
+                menuItem.ImageIndex = App.Images.IndexOf(root.ImageName);
                 menuItem.Click += PluginOnClick;
                 items.Insert(index, menuItem);
                 index++;
@@ -111,7 +108,7 @@ namespace LanExchange.UI.WinForms
             var tabPage = Pages.TabPages[index];
             tabPage.ImageIndex = imageIndex;
             //tabPage.Invalidate(true);
-            tabPage.Refresh();
+            //tabPage.Refresh();
         }
 
         public void RemoveTabAt(int index)
@@ -269,7 +266,7 @@ namespace LanExchange.UI.WinForms
 
             tabPage.Padding = new Padding(0);
             tabPage.Text = model.TabName;
-            tabPage.ImageIndex = App.Images.IndexOf(model.CurrentPath.Item[0].GetTabImageName());
+            tabPage.ImageIndex = App.Images.IndexOf(model.CurrentPath.Item[0].ImageName);
             tabPage.ToolTipText = model.ToolTipText;
             return tabPage;
         }

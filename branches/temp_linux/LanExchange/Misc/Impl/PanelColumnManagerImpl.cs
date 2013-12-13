@@ -34,11 +34,6 @@ namespace LanExchange.Misc.Impl
             m_Types.Remove(typeName);
         }
 
-        public IList<PanelColumnHeader> GetColumns(Type type)
-        {
-            return GetColumns(type.Name);
-        }
-
         public IList<PanelColumnHeader> GetColumns(string typeName)
         {
             IList<PanelColumnHeader> result;

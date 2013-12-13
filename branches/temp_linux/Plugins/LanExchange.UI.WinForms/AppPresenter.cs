@@ -4,8 +4,6 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
 using LanExchange.SDK;
-using LanExchange.SDK.Presenter;
-using LanExchange.SDK.UI;
 
 namespace LanExchange.UI.WinForms
 {

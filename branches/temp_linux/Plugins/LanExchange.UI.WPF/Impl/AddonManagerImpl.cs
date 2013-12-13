@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using LanExchange.SDK;
-using LanExchange.SDK.UI;
 
 
 namespace LanExchange.UI.WPF.Impl
@@ -11,12 +8,12 @@ namespace LanExchange.UI.WPF.Impl
     class AddonManagerImpl : IAddonManager
     {
 
-        public IDictionary<string, SDK.Addon.AddonProgram> Programs
+        public IDictionary<string, AddonProgram> Programs
         {
             get { return null; }
         }
 
-        public IDictionary<string, SDK.Addon.AddonItemTypeRef> PanelItems
+        public IDictionary<string, AddonItemTypeRef> PanelItems
         {
             get { return null; }
         }

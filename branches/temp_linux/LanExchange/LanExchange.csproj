@@ -92,21 +92,21 @@
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Misc\AnimationHelper.cs" />
-    <Compile Include="Misc\ContainerBuilder.cs" />
+    <Compile Include="ContainerBuilder.cs" />
     <Compile Include="Misc\GenerateEnglish.cs" />
     <Compile Include="Misc\Impl\PanelUpdaterImpl.cs" />
     <Compile Include="Misc\TypeNotRegisteredException.cs" />
     <Compile Include="Misc\Impl\DisposableManagerImpl.cs" />
-    <Compile Include="Misc\PluginInternal.cs" />
+    <Compile Include="Action\PluginInternal.cs" />
     <Compile Include="Misc\TranslationResourceManager.cs" />
-    <Compile Include="Presenter\Action\ActionAbout.cs" />
-    <Compile Include="Presenter\Action\ActionCloseTab.cs" />
-    <Compile Include="Presenter\Action\ActionCloseOther.cs" />
-    <Compile Include="Presenter\Action\ActionReRead.cs" />
-    <Compile Include="Misc\ShortcutFactory.cs" />
-    <Compile Include="Misc\ShortcutFiller.cs" />
-    <Compile Include="Presenter\Action\ActionShortcutKeys.cs" />
-    <Compile Include="Misc\ShortcutPanelItem.cs" />
+    <Compile Include="Action\ActionAbout.cs" />
+    <Compile Include="Action\ActionCloseTab.cs" />
+    <Compile Include="Action\ActionCloseOther.cs" />
+    <Compile Include="Action\ActionReRead.cs" />
+    <Compile Include="Action\ShortcutFactory.cs" />
+    <Compile Include="Action\ShortcutFiller.cs" />
+    <Compile Include="Action\ActionShortcutKeys.cs" />
+    <Compile Include="Action\ShortcutPanelItem.cs" />
     <Compile Include="Misc\CmdLineProcessor.cs" />
     <Compile Include="Misc\Impl\PanelColumnManagerImpl.cs" />
     <Compile Include="Misc\Impl\PanelFillerManagerImpl.cs" />
@@ -121,7 +121,7 @@
     <Compile Include="Model\PanelModel.cs" />
     <Compile Include="Misc\Phrase.cs" />
     <Compile Include="Presenter\MainPresenter.cs" />
-    <Compile Include="Misc\PingUtils.cs" />
+    <Compile Include="Utils\PingUtils.cs" />
     <Compile Include="Misc\Impl\PuntoSwitcherServiceEngRus.cs" />
     <Compile Include="Model\ConfigModel.cs" />
     <Compile Include="Model\AboutModel.cs" />
@@ -133,7 +133,7 @@
     <Compile Include="Misc\Impl\PluginManagerImpl.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Misc\ReflectionUtils.cs" />
+    <Compile Include="Utils\ReflectionUtils.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

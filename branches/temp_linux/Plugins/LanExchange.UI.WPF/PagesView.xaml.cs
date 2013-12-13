@@ -11,8 +11,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using LanExchange.SDK.UI;
-using LanExchange.SDK.Presenter;
 using LanExchange.SDK;
 
 namespace LanExchange.UI.WPF
@@ -75,7 +73,7 @@ namespace LanExchange.UI.WPF
             
         }
 
-        public IPanelView CreatePanelView(SDK.Model.IPanelModel info)
+        public IPanelView CreatePanelView(IPanelModel info)
         {
             var panelView = (PanelView)App.Resolve<IPanelView>();
             panelView.GridLines = App.Config.ShowGridLines;
@@ -97,7 +95,7 @@ namespace LanExchange.UI.WPF
             return panelView;
         }
 
-        public SDK.Presenter.IPagesPresenter Presenter
+        public IPagesPresenter Presenter
         {
             get { return m_Presenter; }
         }

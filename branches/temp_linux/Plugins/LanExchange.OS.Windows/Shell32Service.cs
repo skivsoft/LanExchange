@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Forms;
 using LanExchange.OS.Windows.Utils;
-using LanExchange.SDK.OS;
+using LanExchange.SDK;
 
 namespace LanExchange.OS.Windows
 {
