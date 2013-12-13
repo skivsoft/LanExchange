@@ -34,12 +34,12 @@ namespace LanExchange.Plugin.Network
         {
             m_Share.ShareType = (uint) NativeMethods.SHARE_TYPE.STYPE_PRINTQ;
             m_Share.Name = "HP";
-            Assert.AreEqual(PanelImageNames.SharePrinter, m_Share.ImageName);
+            Assert.AreEqual(string.Empty, m_Share.ImageName);
             m_Share.ShareType = (uint) NativeMethods.SHARE_TYPE.STYPE_DEVICE;
             Assert.AreEqual((uint)NativeMethods.SHARE_TYPE.STYPE_DEVICE, m_Share.SHI.ShareType);
-            Assert.AreEqual(PanelImageNames.ShareNormal, m_Share.ImageName);
+            Assert.AreEqual(PanelImageNames.FOLDER, m_Share.ImageName);
             m_Share.Name = "C$";
-            Assert.AreEqual(PanelImageNames.ShareHidden, m_Share.ImageName);
+            Assert.AreEqual(PanelImageNames.FOLDER + PanelImageNames.HIDDEN_POSTFIX, m_Share.ImageName);
         }
 
         [Test, ExpectedException(typeof(ArgumentOutOfRangeException))]

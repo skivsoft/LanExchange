@@ -1,5 +1,4 @@
-﻿using LanExchange.Properties;
-using LanExchange.SDK;
+﻿using LanExchange.SDK;
 
 namespace LanExchange.Action
 {
@@ -12,13 +11,13 @@ namespace LanExchange.Action
             if (foundIndex == -1)
             {
                 var model = App.Resolve<IPanelModel>();
-                model.TabName = Resources.mHelpKeys_Text;
+                var root = new ShortcutRoot();
                 model.DataType = typeof (ShortcutPanelItem).Name;
-                model.CurrentPath.Push(ShortcutFiller.ROOT_OF_SHORTCUTS);
+                model.CurrentPath.Push(root);
                 presenter.AddTab(model);
+                foundIndex = presenter.Count - 1;
             }
-            else
-                presenter.SelectedIndex = foundIndex;
+            presenter.SelectedIndex = foundIndex;
         }
 
         public bool Enabled

@@ -13,12 +13,7 @@ namespace LanExchange.Plugin.Users
 
         public override PanelItemBase CreateDefaultRoot()
         {
-            var startPath = LdapUtils.GetUserPath(SystemInformation.UserName);
-            startPath = LdapUtils.GetDCNameFromPath(startPath, 2);
-            var root = PluginUsers.ROOT_OF_DNS;
-            root.Name = LdapUtils.GetLdapValue(startPath);
-            root.SetImageName(PanelImageNames.USER);
-            return root;
+            return new UserRoot();
         }
 
         public override void RegisterColumns(IPanelColumnManager columnManager)

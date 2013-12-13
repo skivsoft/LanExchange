@@ -82,7 +82,6 @@ namespace LanExchange.UI.WinForms
             if (!m_Presenter.SelectTabByName(root.Name))
             {
                 var info = App.Resolve<IPanelModel>();
-                info.TabName = root.Name;
                 info.SetDefaultRoot(root);
                 info.DataType = App.PanelFillers.GetFillType(root).Name;
                 m_Presenter.AddTab(info);

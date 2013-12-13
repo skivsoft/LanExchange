@@ -106,7 +106,7 @@ namespace LanExchange.SDK
             get
             {
                 var parent = m_Path.Count == 0 ? null : Peek();
-                return (parent == null) || (parent is PanelItemRoot);
+                return (parent == null) || (parent is PanelItemRootBase);
             }
         }
     }

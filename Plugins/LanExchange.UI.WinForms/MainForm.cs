@@ -93,13 +93,15 @@ namespace LanExchange.UI.WinForms
             TranslationUtils.TranslateControls(Controls);
             // addons context menu will refresh later
             popTop.Tag = null;
-            // refresh shortcut panel if present
-            var foundIndex = App.Presenter.FindShortcutKeysPanelIndex();
-            if (foundIndex != -1)
+            // refresh tab names
+            var pages = App.MainPages;
+            var shortcutIndex = App.Presenter.FindShortcutKeysPanelIndex();
+            for (int index = 0; index < pages.Count; index++ )
             {
-                App.MainPages.RenameTab(foundIndex, Resources.mHelpKeys_Text);
-                var model = App.MainPages.GetItem(foundIndex);
-                model.AsyncRetrieveData(false);
+                var model = pages.GetItem(index);
+                App.MainPages.UpdateTabName(index);
+                if (index == shortcutIndex)
+                    model.AsyncRetrieveData(false);
             }
         }
 

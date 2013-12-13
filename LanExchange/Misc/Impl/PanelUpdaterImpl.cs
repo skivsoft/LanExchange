@@ -38,8 +38,8 @@ namespace LanExchange.Misc.Impl
         {
             m_SetTabImageThread = new Thread(SetTabImageThread);
             m_UpdateThread = new Thread(UpdateThread);
-            m_SetTabImageThread.Start(model);
             m_ClearFilter = clearFilter;
+            m_SetTabImageThread.Start(model);
             m_UpdateThread.Start(model);
         }
 
@@ -66,10 +66,7 @@ namespace LanExchange.Misc.Impl
             {
                 
             }
-            var parent = model.CurrentPath.Item[0];
-            if (parent.Parent != null)
-                parent = parent.Parent;
-            App.MainPages.View.Invoke(new SetTabImageDelegate(SetTabImageInvoked), model, parent.ImageName);
+            App.MainPages.View.Invoke(new SetTabImageDelegate(SetTabImageInvoked), model, model.ImageName);
         }
 
         private static void SetTabImageInvoked(IPanelModel model, string imageName)
@@ -78,10 +75,7 @@ namespace LanExchange.Misc.Impl
             var pagesPresenter = App.MainPages;
             var index = pagesPresenter.IndexOf(model);
             if (index != -1)
-                lock (App.Images)
-                {
-                    pagesPresenter.View.SetTabImage(index, App.Images.IndexOf(imageName));
-                }
+                pagesPresenter.View.SetTabImage(index, App.Images.IndexOf(imageName));
         }
 
         private void UpdateThread(object argument)

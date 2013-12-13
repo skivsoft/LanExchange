@@ -68,6 +68,7 @@
     <Compile Include="IPAddressComparable.cs" />
     <Compile Include="IPAddressArray.cs" />
     <Compile Include="NativeMethods.cs" />
+    <Compile Include="DomainRoot.cs" />
     <Compile Include="PluginNetwork.cs" />
     <Compile Include="OSVersion.cs" />
     <Compile Include="ComputerFiller.cs" />

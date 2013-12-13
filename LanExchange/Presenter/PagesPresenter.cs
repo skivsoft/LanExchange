@@ -18,7 +18,6 @@ namespace LanExchange.Presenter
             App.Resolve<IDisposableManager>().RegisterInstance(this);
             m_Model.AfterAppendTab += Model_AfterAppendTab;
             m_Model.AfterRemove += Model_AfterRemove;
-            m_Model.AfterRename += Model_AfterRename;
             m_Model.IndexChanged += Model_IndexChanged;
         }
 
@@ -100,7 +99,7 @@ namespace LanExchange.Presenter
                         continue;
                     // add item to new panel
                     var newItem = (PanelItemBase) panelItem.Clone();
-                    newItem.Parent = PanelItemRoot.ROOT_OF_USERITEMS;
+                    //newItem.Parent = PanelItemRootBase.ROOT_OF_USERITEMS;
                     destObjects.Items.Add(newItem);
                 }
             destObjects.AsyncRetrieveData(true);
@@ -118,7 +117,7 @@ namespace LanExchange.Presenter
             foreach (int index in panelView.SelectedIndexes)
             {
                 var comp = panelView.Presenter.Objects.GetItemAt(index);
-                if (comp.Parent == PanelItemRoot.ROOT_OF_USERITEMS)
+                if (comp.ImageName.Contains(PanelImageNames.GREEN_POSTFIX) || comp.ImageName.Contains(PanelImageNames.HIDDEN_POSTFIX))
                 {
                     if (firstIndex == -1)
                         firstIndex = index-1;
@@ -152,11 +151,6 @@ namespace LanExchange.Presenter
             m_Model.SelectedIndex = 0;
         }
 
-        public void RenameTab(int index, string tabName)
-        {
-            m_Model.RenameTab(index, tabName);
-        }
-
         public int IndexOf(IPanelModel model)
         {
             if (model == null)
@@ -176,7 +170,8 @@ namespace LanExchange.Presenter
             presenter.Objects = e.Info;
             //m_View.SelectedIndex = m_View.TabPagesCount - 1;
             e.Info.Changed += (o, args) => presenter.UpdateItemsAndStatus();
-            e.Info.TabNameChanged += InfoOnTabNameChanged;
+            e.Info.TabNameUpdated += InfoOnTabNameUpdated;
+            e.Info.OnTabNameUpdated();
             //e.Info.SubscriptionChanged += Item_SubscriptionChanged;
             // update items
             //e.Info.DataChanged(null, ConcreteSubject.s_UserItems);
@@ -184,13 +179,16 @@ namespace LanExchange.Presenter
             e.Info.AsyncRetrieveData(false);
         }
 
-        private void InfoOnTabNameChanged(object sender, EventArgs eventArgs)
+        private void InfoOnTabNameUpdated(object sender, EventArgs eventArgs)
         {
             var model = sender as IPanelModel;
             if (model == null) return;
             var index = IndexOf(model);
             if (index != -1)
+            {
                 View.SetTabText(index, model.TabName);
+                View.SetTabImage(index, App.Images.IndexOf(model.ImageName));
+            }
         }
 
         public void Model_AfterRemove(object sender, PanelIndexEventArgs e)
@@ -275,6 +273,13 @@ namespace LanExchange.Presenter
         public bool AddTab(IPanelModel info)
         {
             return m_Model.AddTab(info);
+        }
+
+        public void UpdateTabName(int index)
+        {
+            var model = m_Model.GetItem(index);
+            if (model != null)
+                View.SetTabText(index, model.TabName);
         }
     }
 }

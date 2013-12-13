@@ -25,10 +25,10 @@ namespace LanExchange.Plugin.Users
 
         public override bool IsParentAccepted(PanelItemBase parent)
         {
-            return (parent is PanelItemRoot) && (parent.Name == PluginUsers.ROOT_OF_DNS.Name);
+            return parent is UserRoot;
         }
 
-        private string SearchResult_GetString(SearchResult sr, string index)
+        private static string SearchResult_GetString(SearchResult sr, string index)
         {
             string result = string.Empty;
             try

@@ -42,8 +42,8 @@ namespace LanExchange.SDK
 
         void CommanCloseOtherTabs();
 
-        void RenameTab(int index, string tabName);
-
         int IndexOf(IPanelModel model);
+
+        void UpdateTabName(int index);
     }
 }

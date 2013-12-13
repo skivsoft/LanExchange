@@ -626,3 +626,5 @@ msgctxt "LanExchange.Plugin.Users.dll"
 msgid "User account found in Active Directory."
 msgstr "Учетная запись пользователя в службе каталогов Active Directory."
 
+msgid "Network"
+msgstr "Сеть"

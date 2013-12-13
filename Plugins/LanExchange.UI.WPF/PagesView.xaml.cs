@@ -18,7 +18,7 @@ namespace LanExchange.UI.WPF
     /// <summary>
     /// Логика взаимодействия для PagesView.xaml
     /// </summary>
-    public partial class PagesView : UserControl,IPagesView
+    public partial class PagesView : UserControl, IPagesView
     {
         private readonly IPagesPresenter m_Presenter;
         
@@ -108,6 +108,11 @@ namespace LanExchange.UI.WPF
         public void SetTabText(int index, string title)
         {
             
+        }
+
+        public void SetTabImage(int index, int imageIndex)
+        {
+            throw new NotImplementedException();
         }
     }
 }

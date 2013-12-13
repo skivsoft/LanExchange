@@ -98,6 +98,7 @@ namespace LanExchange
             // create main form
             App.MainView = App.Resolve<IMainView>();
             App.Presenter.View = App.MainView;
+            App.Presenter.GlobalTranslateUI();
             App.Presenter.PrepareForm();
             // run application
             application.Run(App.MainView);

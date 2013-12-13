@@ -128,8 +128,7 @@ namespace LanExchange.Presenter
             if (!App.PanelFillers.FillerExists(panelItem)) return false;
             Objects.FocusedItem = new PanelItemDoubleDot(panelItem);
             Objects.CurrentPath.Push(panelItem);
-            Objects.TabName = panelItem.Name;
-            Objects.TabImageName = panelItem.ImageName;
+            Objects.OnTabNameUpdated();
             ResetSortOrder();
             var syncResult = Objects.RetrieveData(RetrieveMode.Sync, true);
             Objects.SetFillerResult(syncResult, true);
@@ -143,20 +142,12 @@ namespace LanExchange.Presenter
             if (Objects == null || Objects.CurrentPath.IsEmptyOrRoot) 
                 return false;
             var panelItem = Objects.CurrentPath.Peek();
-            if (panelItem == null || panelItem is PanelItemRoot) 
+            if (panelItem == null || panelItem is PanelItemRootBase) 
                 return false;
             if (!App.PanelFillers.FillerExists(panelItem)) return false;
             Objects.FocusedItem = panelItem;
             Objects.CurrentPath.Pop();
-            if (panelItem.Parent != null)
-            {
-                Objects.TabName = panelItem.Parent.Name;
-                Objects.TabImageName = panelItem.Parent.ImageName;
-            } else
-            {
-                Objects.TabName = panelItem.Name;
-                Objects.TabImageName = panelItem.ImageName;
-            }
+            Objects.OnTabNameUpdated();
             ResetSortOrder();
             var syncResult = Objects.RetrieveData(RetrieveMode.Sync, true);
             Objects.SetFillerResult(syncResult, true);
