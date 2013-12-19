@@ -487,11 +487,6 @@ namespace LanExchange.UI.WinForms
             set { TrayIcon.Visible = value; }
         }
 
-        public override void ApplicationExit()
-        {
-            base.ApplicationExit();
-        }
-
         ///// <summary>
         ///// This params needs for omit flickering when tab's image changed.
         ///// </summary>
@@ -504,5 +499,11 @@ namespace LanExchange.UI.WinForms
     //            return cp;
     //        }
     //    } 
+
+
+        public IInfoView Info
+        {
+            get { return pInfo; }
+        }
     }
 }
