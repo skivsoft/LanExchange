@@ -39,8 +39,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Common\AnyAssemblyInfo.cs">
@@ -49,6 +51,12 @@
     <Compile Include="AddonManagerImpl.cs" />
     <Compile Include="ClipboardDataObjectImpl.cs" />
     <Compile Include="ClipboardServiceImpl.cs" />
+    <Compile Include="EditItemForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditItemForm.Designer.cs">
+      <DependentUpon>EditItemForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MessageBoxServiceImpl.cs" />
     <Compile Include="ScreenImpl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -124,6 +132,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="EditItemForm.resx">
+      <DependentUpon>EditItemForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

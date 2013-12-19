@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-using LanExchange.SDK;
+﻿using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Users
 {
@@ -12,7 +8,7 @@ namespace LanExchange.Plugin.Users
 
         public UserRoot()
         {
-            m_StartPath = LdapUtils.GetUserPath(SystemInformation.UserName);
+            m_StartPath = LdapUtils.GetUserPath(App.Resolve<IScreenService>().UserName);
             m_StartPath = LdapUtils.GetDCNameFromPath(m_StartPath, 2);
         }
 

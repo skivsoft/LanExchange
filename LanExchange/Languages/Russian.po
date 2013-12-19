@@ -580,11 +580,11 @@ msgstr "Пинг"
 
 msgctxt "LanExchange.Plugin.Users.dll"
 msgid "Work phone"
-msgstr "Рабочий телефон"
+msgstr "Служебный телефон"
 
 msgctxt "LanExchange.Plugin.Users.dll"
 msgid "Office"
-msgstr "Кабинет"
+msgstr "Размещение"
 
 msgctxt "LanExchange.Plugin.Users.dll"
 msgid "Pre-Win2000 Logon"
@@ -604,7 +604,7 @@ msgstr "Учетная запись пользователя была отклю
 
 msgctxt "LanExchange.Plugin.Users.dll"
 msgid "Email"
-msgstr "Электронная почта"
+msgstr "Адрес электронной почты"
 
 msgctxt "LanExchange.Plugin.Users.dll"
 msgid "Title"
@@ -620,11 +620,9 @@ msgstr "Организационная единица"
 
 msgctxt "LanExchange.Plugin.Users.dll"
 msgid "Department"
-msgstr "Подразделение"
+msgstr "Отдел"
 
 msgctxt "LanExchange.Plugin.Users.dll"
 msgid "User account found in Active Directory."
 msgstr "Учетная запись пользователя в службе каталогов Active Directory."
 
-msgid "Network"
-msgstr "Сеть"

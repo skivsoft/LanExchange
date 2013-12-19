@@ -11,5 +11,7 @@ namespace LanExchange.SDK
         Rectangle GetWorkingArea(Rectangle rect);
 
         int MenuHeight { get; }
+
+        string UserName { get; }
     }
 }

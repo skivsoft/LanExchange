@@ -34,6 +34,8 @@ namespace LanExchange.UI.WinForms
             this.popComps = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mComp = new System.Windows.Forms.ToolStripMenuItem();
             this.mAfterComp = new System.Windows.Forms.ToolStripSeparator();
+            this.mNewItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mBeforeCopy = new System.Windows.Forms.ToolStripSeparator();
             this.mCopyMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.mCopySelected = new System.Windows.Forms.ToolStripMenuItem();
             this.mPaste = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,12 +51,14 @@ namespace LanExchange.UI.WinForms
             this.popComps.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mComp,
             this.mAfterComp,
+            this.mNewItem,
+            this.mBeforeCopy,
             this.mCopyMenu,
             this.mPaste,
             this.mDelete,
             this.mAfterDelete});
             this.popComps.Name = "popComps";
-            this.popComps.Size = new System.Drawing.Size(153, 126);
+            this.popComps.Size = new System.Drawing.Size(153, 154);
             this.popComps.Opening += new System.ComponentModel.CancelEventHandler(this.popComps_Opening);
             // 
             // mComp
@@ -69,21 +73,34 @@ namespace LanExchange.UI.WinForms
             this.mAfterComp.Name = "mAfterComp";
             this.mAfterComp.Size = new System.Drawing.Size(149, 6);
             // 
+            // mNewItem
+            // 
+            this.mNewItem.Name = "mNewItem";
+            this.mNewItem.ShortcutKeys = System.Windows.Forms.Keys.Insert;
+            this.mNewItem.Size = new System.Drawing.Size(152, 22);
+            this.mNewItem.Text = "New item";
+            this.mNewItem.Click += new System.EventHandler(this.mNewItem_Click);
+            // 
+            // mBeforeCopy
+            // 
+            this.mBeforeCopy.Name = "mBeforeCopy";
+            this.mBeforeCopy.Size = new System.Drawing.Size(149, 6);
+            // 
             // mCopyMenu
             // 
             this.mCopyMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mCopySelected});
             this.mCopyMenu.Name = "mCopyMenu";
             this.mCopyMenu.Size = new System.Drawing.Size(152, 22);
-            this.mCopyMenu.Text = Resources.mCopyMenu_Text;
+            this.mCopyMenu.Text = global::LanExchange.UI.WinForms.Properties.Resources.mCopyMenu_Text;
             this.mCopyMenu.DropDownOpening += new System.EventHandler(this.mCopyMenu_DropDownOpening);
             // 
             // mCopySelected
             // 
             this.mCopySelected.Name = "mCopySelected";
-            this.mCopySelected.ShortcutKeyDisplayString = Resources.KeyCtrlC;
+            this.mCopySelected.ShortcutKeyDisplayString = global::LanExchange.UI.WinForms.Properties.Resources.KeyCtrlC;
             this.mCopySelected.Size = new System.Drawing.Size(209, 22);
-            this.mCopySelected.Text = Resources.KeyCtrlC_;
+            this.mCopySelected.Text = global::LanExchange.UI.WinForms.Properties.Resources.KeyCtrlC_;
             this.mCopySelected.Click += new System.EventHandler(this.CopySelectedOnClick);
             // 
             // mPaste
@@ -91,15 +108,15 @@ namespace LanExchange.UI.WinForms
             this.mPaste.Name = "mPaste";
             this.mPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
             this.mPaste.Size = new System.Drawing.Size(152, 22);
-            this.mPaste.Text = Resources.mPaste_Text;
+            this.mPaste.Text = global::LanExchange.UI.WinForms.Properties.Resources.mPaste_Text;
             this.mPaste.Click += new System.EventHandler(this.mPaste_Click);
             // 
             // mDelete
             // 
             this.mDelete.Name = "mDelete";
-            this.mDelete.ShortcutKeyDisplayString = Resources.KeyDel;
+            this.mDelete.ShortcutKeyDisplayString = global::LanExchange.UI.WinForms.Properties.Resources.KeyDel;
             this.mDelete.Size = new System.Drawing.Size(152, 22);
-            this.mDelete.Text = Resources.mDelete_Text;
+            this.mDelete.Text = global::LanExchange.UI.WinForms.Properties.Resources.mDelete_Text;
             this.mDelete.Click += new System.EventHandler(this.mDelete_Click);
             // 
             // mAfterDelete
@@ -181,5 +198,7 @@ namespace LanExchange.UI.WinForms
         private System.Windows.Forms.ToolStripMenuItem mCopySelected;
         private System.Windows.Forms.ToolStripMenuItem mPaste;
         private System.Windows.Forms.ToolStripMenuItem mDelete;
+        private System.Windows.Forms.ToolStripMenuItem mNewItem;
+        private System.Windows.Forms.ToolStripSeparator mBeforeCopy;
     }
 }

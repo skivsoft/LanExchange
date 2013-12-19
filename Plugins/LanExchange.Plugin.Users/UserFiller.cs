@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.DirectoryServices;
-using System.Windows.Forms;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Users
@@ -46,7 +45,7 @@ namespace LanExchange.Plugin.Users
         [Localizable(false)]
         public override void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
-            var startPath = LdapUtils.GetUserPath(SystemInformation.UserName); // "u770503350189"
+            var startPath = LdapUtils.GetUserPath(App.Resolve<IScreenService>().UserName); // "u770503350189"
             
             startPath = LdapUtils.GetDCNameFromPath(startPath, 2);
             using (var searcher = new DirectorySearcher())
