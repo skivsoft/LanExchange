@@ -494,5 +494,13 @@ namespace LanExchange.UI.WinForms
         {
             App.Presenter.ExecuteAction("ActionNewItem");
         }
+
+
+        public object SafeInvoke(Delegate method, params object[] args)
+        {
+            if (IsHandleCreated)
+                return Invoke(method, args);
+            return null;
+        }
     }
 }

@@ -48,7 +48,6 @@ namespace LanExchange.Presenter
         {
             //App.MainPages.View.SetupContextMenu();
             App.MainPages.PanelViewFocusedItemChanged += Pages_PanelViewFocusedItemChanged;
-            App.MainPages.LoadSettings();
             // set mainform bounds
             var rect = App.Presenter.SettingsGetBounds();
             View.SetBounds(rect.Left, rect.Top, rect.Width, rect.Height);
@@ -89,7 +88,7 @@ namespace LanExchange.Presenter
 
         public void OnDataReady(object sender, DataReadyArgs args)
         {
-            View.Invoke(new WaitCallback(MainForm_RefreshItem), args.Item);
+            View.SafeInvoke(new WaitCallback(MainForm_RefreshItem), args.Item);
         }
 
         private void MainForm_RefreshItem(object item)

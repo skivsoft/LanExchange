@@ -39,6 +39,7 @@ namespace LanExchange
             container.Register<IPagesPresenter, PagesPresenter>();
             container.Register<IFilterPresenter, FilterPresenter>(LifeCycle.Transient);
             container.Register<IPanelPresenter, PanelPresenter>(LifeCycle.Transient);
+            container.Register<IEditPresenter, EditPresenter>(LifeCycle.Transient);
             return container;
         }
     }

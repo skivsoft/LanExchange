@@ -100,6 +100,7 @@ namespace LanExchange
             App.Presenter.View = App.MainView;
             App.Presenter.GlobalTranslateUI();
             App.Presenter.PrepareForm();
+            App.MainPages.LoadSettings();
             // run application
             application.Run(App.MainView);
         }

@@ -56,7 +56,7 @@ namespace LanExchange.Misc.Impl
                     if (count >= NODISPLAY_DELAY / AnimationHelper.DELAY)
                     {
                         var imageName = helper.GetNextImageName();
-                        App.MainPages.View.Invoke(new SetTabImageDelegate(SetTabImageInvoked), model, imageName);
+                        App.MainView.SafeInvoke(new SetTabImageDelegate(SetTabImageInvoked), model, imageName);
                     }
                     Thread.Sleep(AnimationHelper.DELAY);
                     count++;
@@ -66,7 +66,7 @@ namespace LanExchange.Misc.Impl
             {
                 
             }
-            App.MainPages.View.Invoke(new SetTabImageDelegate(SetTabImageInvoked), model, model.ImageName);
+            App.MainView.SafeInvoke(new SetTabImageDelegate(SetTabImageInvoked), model, model.ImageName);
         }
 
         private static void SetTabImageInvoked(IPanelModel model, string imageName)
@@ -83,7 +83,7 @@ namespace LanExchange.Misc.Impl
             var model = argument as IPanelModel;
             if (model == null) return;
             var fillerResult = model.RetrieveData(RetrieveMode.Async, m_ClearFilter);
-            App.MainPages.View.Invoke(new SetFillerResultDelegate(UpdateThreadInvoked), model, fillerResult);
+            App.MainView.SafeInvoke(new SetFillerResultDelegate(UpdateThreadInvoked), model, fillerResult);
             m_SetTabImageThread.Interrupt();
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using LanExchange.Properties;
 using LanExchange.SDK;
 
 namespace LanExchange.Action
@@ -9,7 +10,10 @@ namespace LanExchange.Action
     {
         public void Execute()
         {
-            var form = App.Resolve<IEditItemView>();
+            var model = App.MainPages.GetItem(App.MainPages.SelectedIndex);
+            if (model == null) return;
+            var form = App.Resolve<IEditView>();
+            form.Presenter.SetDataType(model.DataType);
             form.Show();
         }
 
