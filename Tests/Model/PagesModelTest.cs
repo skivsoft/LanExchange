@@ -87,18 +87,6 @@ namespace LanExchange.Model
         }
 
         [Test]
-        public void TestRenameTab()
-        {
-            m_Model.AddTab(NewPanelModel("MyTab"));
-            Assert.IsFalse(m_EventFired);
-            m_Model.RenameTab(0, "YourTab");
-            Assert.AreEqual("YourTab", m_Model.GetTabName(0));
-            m_Model.AfterRename += Model_AfterRemove;
-            m_Model.RenameTab(0, "MyTab");
-            Assert.IsTrue(m_EventFired);
-        }
-
-        [Test]
         public void TestIndexChanged()
         {
             m_Model.AddTab(NewPanelModel("MyTab"));

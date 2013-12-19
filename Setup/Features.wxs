@@ -5,6 +5,8 @@
     <Feature Id="LanExchange" Level="1" Title="$(var.Product)" Display="expand" Absent="disallow" AllowAdvertise="no" ConfigurableDirectory="INSTALLDIR">
       <ComponentRef Id="LanExchange.exe"/>
       <ComponentRef Id="LanExchange.SDK.dll"/>
+      <ComponentRef Id="LanExchange.OS.Windows.dll"/>
+      <ComponentRef Id="LanExchange.UI.WinForms.dll"/>
       <ComponentRef Id="LanExchangeShortcut"/>
       <ComponentRef Id="Russian.po"/>
       <ComponentRef Id="Kazakh.po"/>

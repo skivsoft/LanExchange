@@ -92,25 +92,22 @@ namespace LanExchange.Presenter
             if (pv == null) return;
             var panelItem = pv.Presenter.GetFocusedPanelItem(false, true);
             // check if parent item more informative than current panel item
-            while (panelItem != null &&
-                   !App.PanelItemTypes.DefaultRoots.Contains(panelItem) &&
-                   !App.PanelItemTypes.DefaultRoots.Contains(panelItem.Parent))
+            while (panelItem != null && !(panelItem.Parent is PanelItemRootBase) && !(panelItem.Parent.Parent is PanelItemRootBase))
                 panelItem = panelItem.Parent;
-            if (panelItem == null) return;
-            var pInfo = App.Resolve<IInfoView>();
-            pInfo.CurrentItem = panelItem;
-            pInfo.NumLines = App.Config.NumInfoLines;
+            if (panelItem == null || View.Info == null) return;
+            View.Info.CurrentItem = panelItem;
+            View.Info.NumLines = App.Config.NumInfoLines;
             var helper = new PanelModelCopyHelper(null);
             helper.CurrentItem = panelItem;
             int index = 0;
             foreach (var column in helper.Columns)
             {
-                pInfo.SetLine(index, helper.GetColumnValue(column.Index));
+                View.Info.SetLine(index, helper.GetColumnValue(column.Index));
                 ++index;
-                if (index >= pInfo.NumLines) break;
+                if (index >= View.Info.NumLines) break;
             }
-            for (int i = index; i < pInfo.NumLines; i++)
-                pInfo.SetLine(i, string.Empty);
+            for (int i = index; i < View.Info.NumLines; i++)
+                View.Info.SetLine(i, string.Empty);
         }
 
 

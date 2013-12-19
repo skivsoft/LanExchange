@@ -7,6 +7,8 @@
         string Text { get; set; }
         string TrayText { get; set; }
         bool TrayVisible { get; set; }
+        IInfoView Info { get; }
+
         void ApplicationExit();
         void ShowStatusText(string format, params object[] args);
         void SetToolTip(object control, string tipText);

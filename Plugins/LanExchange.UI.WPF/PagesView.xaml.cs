@@ -112,7 +112,12 @@ namespace LanExchange.UI.WPF
 
         public void SetTabImage(int index, int imageIndex)
         {
-            throw new NotImplementedException();
+        }
+
+
+        public object Invoke(Delegate method, params object[] args)
+        {
+            return null;
         }
     }
 }
