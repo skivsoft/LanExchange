@@ -5,7 +5,7 @@ namespace LanExchange.SDK
     /// <summary>
     /// View for AboutForm.
     /// </summary>
-    public interface IAboutView : IView
+    public interface IAboutView : IWindow
     {
         event EventHandler ViewClosed;
 
@@ -23,10 +23,5 @@ namespace LanExchange.SDK
         string VersionText { get; set; }
 
         string CopyrightText { get; set; }
-        string Text { get; set; }
-
-        void Show();
-
-        void Activate();
     }
 }

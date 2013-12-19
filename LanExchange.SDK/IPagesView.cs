@@ -61,6 +61,5 @@ namespace LanExchange.SDK
         void SetTabText(int index, string title);
 
         void SetTabImage(int index, int imageIndex);
-        object Invoke(Delegate method, params object[] args);
     }
 }

@@ -29,7 +29,7 @@ namespace LanExchange.UI.WinForms
             container.Register<IAboutView, AboutForm>(LifeCycle.Transient);
             container.Register<IFilterView, FilterView>(LifeCycle.Transient);
             container.Register<IPanelView, PanelView>(LifeCycle.Transient);
-            container.Register<IEditItemView, EditItemForm>(LifeCycle.Transient);
+            container.Register<IEditView, EditForm>(LifeCycle.Transient);
             container.Register<IMainView, MainForm>();
             container.Register<IPagesView, PagesView>();
             // other

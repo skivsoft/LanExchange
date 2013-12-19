@@ -122,6 +122,7 @@
     <Compile Include="Model\PagesModel.cs" />
     <Compile Include="Model\PanelModel.cs" />
     <Compile Include="Misc\Phrase.cs" />
+    <Compile Include="Presenter\EditPresenter.cs" />
     <Compile Include="Presenter\MainPresenter.cs" />
     <Compile Include="Utils\PingUtils.cs" />
     <Compile Include="Misc\Impl\PuntoSwitcherServiceEngRus.cs" />
@@ -165,9 +166,6 @@
     <Content Include="Addons\NetworkRadmin.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Languages\Arabic.po">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Resources\process_working.png" />
     <None Include="Resources\keyboard_16.png" />
     <None Include="..\Common\LanExchange.snk">
