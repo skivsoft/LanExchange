@@ -15,5 +15,7 @@ namespace LanExchange.SDK
         void PrepareForm();
         int FindShortcutKeysPanelIndex();
         void GlobalTranslateUI();
+
+        bool IsHotKey(short id);
     }
 }

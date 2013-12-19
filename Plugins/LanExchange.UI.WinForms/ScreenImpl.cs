@@ -20,5 +20,10 @@ namespace LanExchange.UI.WinForms
         {
             return Screen.GetWorkingArea(rect);
         }
+
+        public int MenuHeight
+        {
+            get { return SystemInformation.MenuHeight; }
+        }
     }
 }

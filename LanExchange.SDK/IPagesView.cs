@@ -56,7 +56,7 @@ namespace LanExchange.SDK
         /// <param name="info">The info.</param>
         /// <returns></returns>
         IPanelView CreatePanelView(IPanelModel info);
-        IPagesPresenter Presenter { get; }
+
         void SetupContextMenu();
         void SetTabText(int index, string title);
 

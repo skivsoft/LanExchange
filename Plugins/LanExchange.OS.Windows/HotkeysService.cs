@@ -48,20 +48,10 @@ namespace LanExchange.OS.Windows
         {
             UnregisterGlobalHotKey();
             Handle = handle;
-            return RegisterGlobalHotKey(hotkey, modifiers);
-        }
-
-        /// <summary>Register the hotkey</summary>
-        public bool RegisterGlobalHotKey(int hotkey, int modifiers)
-        {
-            UnregisterGlobalHotKey();
             // use the GlobalAddAtom API to get a unique ID (as suggested by MSDN)
-            string atomName = Handle.ToInt32().ToString("X8", CultureInfo.InvariantCulture) + GetType().FullName;
+            var atomName = Handle.ToInt32().ToString("X8", CultureInfo.InvariantCulture) + GetType().FullName;
             HotkeyID = GlobalAddAtom(atomName);
-            if (HotkeyID == 0)
-                return false;
-            // register the hotkey, throw if any error
-            return RegisterHotKey(Handle, HotkeyID, (uint) modifiers, (uint) hotkey);
+            return HotkeyID != 0 && RegisterHotKey(Handle, HotkeyID, (uint) modifiers, (uint) hotkey);
         }
 
         /// <summary>Unregister the hotkey</summary>
@@ -88,7 +78,7 @@ namespace LanExchange.OS.Windows
 
         public bool RegisterShowWindowKey(IntPtr handle)
         {
-            return RegisterGlobalHotKey(KeyX, MOD_CONTROL + MOD_WIN, Handle);
+            return RegisterGlobalHotKey(KeyX, MOD_CONTROL + MOD_WIN, handle);
         }
     }
 }
