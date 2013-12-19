@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.DirectoryServices;
-using System.Security.Principal;
 
 namespace LanExchange.Plugin.Users
 {

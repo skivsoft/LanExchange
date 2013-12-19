@@ -25,5 +25,10 @@ namespace LanExchange.UI.WinForms
         {
             get { return SystemInformation.MenuHeight; }
         }
+
+        public string UserName
+        {
+            get { return SystemInformation.UserName; }
+        }
     }
 }

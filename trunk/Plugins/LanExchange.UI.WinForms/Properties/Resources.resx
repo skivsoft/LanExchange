@@ -395,4 +395,7 @@
   <data name="Terminal" xml:space="preserve">
     <value>Terminal</value>
   </data>
+  <data name="mNewItem_Text">
+    <value xml:space="preserve">New item</value>
+  </data>
 </root>

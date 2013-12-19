@@ -489,5 +489,10 @@ namespace LanExchange.UI.WinForms
             get { return mTrayOpen.ShortcutKeyDisplayString; }
             set { mTrayOpen.ShortcutKeyDisplayString = value; }
         }
+
+        private void mNewItem_Click(object sender, EventArgs e)
+        {
+            App.Presenter.ExecuteAction("ActionNewItem");
+        }
     }
 }

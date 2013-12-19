@@ -671,5 +671,10 @@ namespace LanExchange.UI.WinForms
             if (panelView == this)
                 m_Presenter.UpdateItemsAndStatus();
         }
+
+        private void mNewItem_Click(object sender, EventArgs e)
+        {
+            App.Presenter.ExecuteAction("ActionNewItem");
+        }
     }
 }

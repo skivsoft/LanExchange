@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using LanExchange.UI.WinForms.Properties;
 
 namespace LanExchange.UI.WinForms
 {
@@ -50,6 +51,8 @@ namespace LanExchange.UI.WinForms
             this.pInfo = new LanExchange.UI.WinForms.InfoView();
             this.MainMenu = new System.Windows.Forms.MainMenu(this.components);
             this.mPanel = new System.Windows.Forms.MenuItem();
+            this.mNewItem = new System.Windows.Forms.MenuItem();
+            this.menuItem3 = new System.Windows.Forms.MenuItem();
             this.mReRead = new System.Windows.Forms.MenuItem();
             this.mPanelSep2 = new System.Windows.Forms.MenuItem();
             this.mCloseTab = new System.Windows.Forms.MenuItem();
@@ -224,6 +227,8 @@ namespace LanExchange.UI.WinForms
             // 
             this.mPanel.Index = 0;
             this.mPanel.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mNewItem,
+            this.menuItem3,
             this.mReRead,
             this.mPanelSep2,
             this.mCloseTab,
@@ -233,39 +238,51 @@ namespace LanExchange.UI.WinForms
             this.mPanel.Text = global::LanExchange.UI.WinForms.Properties.Resources.mPanel_Text;
             this.mPanel.Popup += new System.EventHandler(this.mPanel_Popup);
             // 
+            // mNewItem
+            // 
+            this.mNewItem.Index = 0;
+            this.mNewItem.Shortcut = System.Windows.Forms.Shortcut.Ins;
+            this.mNewItem.Text = global::LanExchange.UI.WinForms.Properties.Resources.mNewItem_Text;
+            this.mNewItem.Click += new System.EventHandler(this.mNewItem_Click);
+            // 
+            // menuItem3
+            // 
+            this.menuItem3.Index = 1;
+            this.menuItem3.Text = "-";
+            // 
             // mReRead
             // 
-            this.mReRead.Index = 0;
+            this.mReRead.Index = 2;
             this.mReRead.Shortcut = System.Windows.Forms.Shortcut.CtrlR;
             this.mReRead.Text = global::LanExchange.UI.WinForms.Properties.Resources.mReRead_Text;
             this.mReRead.Click += new System.EventHandler(this.mReRead_Click);
             // 
             // mPanelSep2
             // 
-            this.mPanelSep2.Index = 1;
+            this.mPanelSep2.Index = 3;
             this.mPanelSep2.Text = "-";
             // 
             // mCloseTab
             // 
-            this.mCloseTab.Index = 2;
+            this.mCloseTab.Index = 4;
             this.mCloseTab.Shortcut = System.Windows.Forms.Shortcut.CtrlW;
             this.mCloseTab.Text = global::LanExchange.UI.WinForms.Properties.Resources.mCloseTab_Text;
             this.mCloseTab.Click += new System.EventHandler(this.mCloseTab_Click);
             // 
             // mCloseOther
             // 
-            this.mCloseOther.Index = 3;
+            this.mCloseOther.Index = 5;
             this.mCloseOther.Text = global::LanExchange.UI.WinForms.Properties.Resources.mCloseOther_Text;
             this.mCloseOther.Click += new System.EventHandler(this.mCloseOther_Click);
             // 
             // mPanelSep3
             // 
-            this.mPanelSep3.Index = 4;
+            this.mPanelSep3.Index = 6;
             this.mPanelSep3.Text = "-";
             // 
             // mExit
             // 
-            this.mExit.Index = 5;
+            this.mExit.Index = 7;
             this.mExit.Shortcut = System.Windows.Forms.Shortcut.F10;
             this.mExit.Text = global::LanExchange.UI.WinForms.Properties.Resources.mExit_Text;
             this.mExit.Click += new System.EventHandler(this.mTrayExit_Click);
@@ -478,6 +495,8 @@ namespace LanExchange.UI.WinForms
         private MenuItem mHelpSep2;
         private MenuItem mHelpFeedback;
         private MenuItem menuItem1;
+        private MenuItem mNewItem;
+        private MenuItem menuItem3;
     }
 }
 

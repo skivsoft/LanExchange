@@ -22,6 +22,7 @@ namespace LanExchange.Presenter
             RegisterAction(new ActionCloseTab());
             RegisterAction(new ActionCloseOther());
             RegisterAction(new ActionShortcutKeys());
+            RegisterAction(new ActionNewItem());
         }
 
         public void PrepareForm()

@@ -91,6 +91,7 @@
     <Compile Include="..\Common\AnyAssemblyInfo.cs">
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Action\ActionNewItem.cs" />
     <Compile Include="Action\ShortcutRoot.cs" />
     <Compile Include="Misc\AnimationHelper.cs" />
     <Compile Include="ContainerBuilder.cs" />
@@ -164,6 +165,9 @@
     <Content Include="Addons\NetworkRadmin.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Languages\Arabic.po">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\process_working.png" />
     <None Include="Resources\keyboard_16.png" />
     <None Include="..\Common\LanExchange.snk">

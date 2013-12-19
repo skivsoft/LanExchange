@@ -71,6 +71,7 @@
     <Compile Include="EnvironmentUtils.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IAction.cs" />
+    <Compile Include="IEditItemView.cs" />
     <Compile Include="IPanelUpdater.cs" />
     <Compile Include="IPluginManager.cs" />
     <Compile Include="IPuntoSwitcherService.cs" />
