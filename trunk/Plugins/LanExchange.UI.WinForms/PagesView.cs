@@ -28,12 +28,11 @@ namespace LanExchange.UI.WinForms
 
         public PagesView(IPagesPresenter presenter)
         {
-            //if (!SystemInformation.TerminalServerSession)
-            //    SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
             InitializeComponent();
             m_Presenter = presenter;
             m_Presenter.View = this;
-            App.Images.SetImagesTo(popPages);
+            if (App.Images != null)
+                App.Images.SetImagesTo(popPages);
         }
 
         public void TranslateUI()
@@ -268,11 +267,6 @@ namespace LanExchange.UI.WinForms
             tabPage.ImageIndex = App.Images.IndexOf(model.CurrentPath.Item[0].ImageName);
             tabPage.ToolTipText = model.ToolTipText;
             return tabPage;
-        }
-
-        public IPagesPresenter Presenter
-        {
-            get { return m_Presenter; }
         }
 
         private void mReRead_Click(object sender, EventArgs e)

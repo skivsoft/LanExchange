@@ -94,34 +94,34 @@ namespace LanExchange.UI.WinForms
             this.mTrayAbout,
             this.mTrayExit});
             this.popTray.Name = "popTray";
-            this.popTray.Size = new System.Drawing.Size(178, 76);
+            this.popTray.Size = new System.Drawing.Size(153, 98);
             this.popTray.Opening += new System.ComponentModel.CancelEventHandler(this.popTray_Opening);
             // 
             // mTrayOpen
             // 
             this.mTrayOpen.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.mTrayOpen.Name = "mTrayOpen";
-            this.mTrayOpen.ShortcutKeyDisplayString = global::LanExchange.UI.WinForms.Properties.Resources.KeyCtrlWinX;
-            this.mTrayOpen.Size = new System.Drawing.Size(177, 22);
+            this.mTrayOpen.ShortcutKeyDisplayString = "";
+            this.mTrayOpen.Size = new System.Drawing.Size(152, 22);
             this.mTrayOpen.Text = global::LanExchange.UI.WinForms.Properties.Resources.mTrayOpen_Text;
             this.mTrayOpen.Click += new System.EventHandler(this.mOpen_Click);
             // 
             // mTraySep1
             // 
             this.mTraySep1.Name = "mTraySep1";
-            this.mTraySep1.Size = new System.Drawing.Size(174, 6);
+            this.mTraySep1.Size = new System.Drawing.Size(149, 6);
             // 
             // mTrayAbout
             // 
             this.mTrayAbout.Name = "mTrayAbout";
-            this.mTrayAbout.Size = new System.Drawing.Size(177, 22);
+            this.mTrayAbout.Size = new System.Drawing.Size(152, 22);
             this.mTrayAbout.Text = global::LanExchange.UI.WinForms.Properties.Resources.mTrayAbout_Text;
             this.mTrayAbout.Click += new System.EventHandler(this.mHelpAbout_Click);
             // 
             // mTrayExit
             // 
             this.mTrayExit.Name = "mTrayExit";
-            this.mTrayExit.Size = new System.Drawing.Size(177, 22);
+            this.mTrayExit.Size = new System.Drawing.Size(152, 22);
             this.mTrayExit.Text = global::LanExchange.UI.WinForms.Properties.Resources.mTrayExit_Text;
             this.mTrayExit.Click += new System.EventHandler(this.mTrayExit_Click);
             // 
@@ -418,7 +418,6 @@ namespace LanExchange.UI.WinForms
             this.Controls.Add(this.Status);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Menu = this.MainMenu;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Activated += new System.EventHandler(this.MainForm_Activated);

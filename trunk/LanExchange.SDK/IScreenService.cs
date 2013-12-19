@@ -9,5 +9,7 @@ namespace LanExchange.SDK
         Rectangle GetWorkingArea(Point pt);
 
         Rectangle GetWorkingArea(Rectangle rect);
+
+        int MenuHeight { get; }
     }
 }

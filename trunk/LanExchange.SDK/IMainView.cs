@@ -1,4 +1,6 @@
-﻿namespace LanExchange.SDK
+﻿using System;
+
+namespace LanExchange.SDK
 {
     public interface IMainView : IView
     {
@@ -8,6 +10,7 @@
         string TrayText { get; set; }
         bool TrayVisible { get; set; }
         IInfoView Info { get; }
+        string ShowWindowKey { get; set; }
 
         void ApplicationExit();
         void ShowStatusText(string format, params object[] args);
@@ -21,5 +24,6 @@
         void SetBounds(int left, int top, int width, int height);
 
         void SetupPages();
+        object Invoke(Delegate method, params object[] args);
     }
 }

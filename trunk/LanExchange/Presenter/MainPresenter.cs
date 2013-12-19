@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
+using System.Threading;
 using LanExchange.Action;
 using LanExchange.SDK;
 
@@ -11,6 +12,7 @@ namespace LanExchange.Presenter
     public class MainPresenter : PresenterBase<IMainView>, IMainPresenter
     {
         private readonly Dictionary<string, IAction> m_Actions;
+        private IHotkeysService m_Hotkeys;
 
         public MainPresenter()
         {
@@ -30,9 +32,13 @@ namespace LanExchange.Presenter
             // init main form
             View.SetupPages();
             SetupForm();
+            // set hotkey for activate: Ctrl+Win+X
+            m_Hotkeys = App.Resolve<IHotkeysService>();
+            App.Resolve<IDisposableManager>().RegisterInstance(m_Hotkeys);
+            if (m_Hotkeys.RegisterShowWindowKey(View.Handle))
+                View.ShowWindowKey = m_Hotkeys.ShowWindowKey;
             // set lazy events
-            // TODO !!! NEED UNCOMMENT
-            //App.Threads.DataReady += OnDataReady;
+            App.Threads.DataReady += OnDataReady;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Windows.Forms.Control.set_Text(System.String)")]
@@ -77,6 +83,22 @@ namespace LanExchange.Presenter
                     App.TR.CurrentLanguage = config.Language;
                     GlobalTranslateUI();
                     break;
+            }
+        }
+
+        public void OnDataReady(object sender, DataReadyArgs args)
+        {
+            View.Invoke(new WaitCallback(MainForm_RefreshItem), args.Item);
+        }
+
+        private void MainForm_RefreshItem(object item)
+        {
+            var pv = App.Resolve<IPagesView>().ActivePanelView;
+            if (pv != null)
+            {
+                var index = pv.Presenter.Objects.IndexOf(item as PanelItemBase);
+                if (index >= 0)
+                    pv.RedrawItem(index);
             }
         }
 
@@ -128,6 +150,11 @@ namespace LanExchange.Presenter
             }
         }
 
+        public bool IsHotKey(short id)
+        {
+            return id == m_Hotkeys.HotkeyID;
+        }
+
         private void GlobalTranslateColumns()
         {
             var columnManager = App.Resolve<IPanelColumnManager>();
@@ -163,7 +190,7 @@ namespace LanExchange.Presenter
             rect.X = mainFormX;
             rect.Y = workingArea.Top;
             rect.Width = Math.Min(Math.Max(GetDefaultWidth(screen), mainFormWidth), workingArea.Width);
-            rect.Height = workingArea.Height; // ... - SystemInformation.MenuHeight;
+            rect.Height = workingArea.Height - screen.MenuHeight;
             // determination side to snap right or left
             int centerX = (rect.Left + rect.Right) >> 1;
             int workingAreaCenterX = (workingArea.Left + workingArea.Right) >> 1;

@@ -14,24 +14,17 @@ namespace LanExchange.UI.WinForms
     {
         public const int WAIT_FOR_KEYUP_MS = 500;
         public PagesView Pages;
-        private readonly IHotkeysService m_Hotkeys;
 
         public MainForm()
         {
             InitializeComponent();
+            Menu = MainMenu;
             // show computer name
             lCompName.Text = SystemInformation.ComputerName;
             lCompName.ImageIndex = App.Images.IndexOf(PanelImageNames.COMPUTER);
             // show current user
             lUserName.Text = SystemInformation.UserName;
             lUserName.ImageIndex = App.Images.IndexOf(PanelImageNames.USER);
-            // set hotkey for activate: Ctrl+Win+X
-            m_Hotkeys = App.Resolve<IHotkeysService>();
-            App.Resolve<IDisposableManager>().RegisterInstance(m_Hotkeys);
-            if (m_Hotkeys.RegisterShowWindowKey(Handle))
-                mTrayOpen.ShortcutKeyDisplayString = m_Hotkeys.ShowWindowKey;
-            else
-                mTrayOpen.ShortcutKeyDisplayString = string.Empty;
         }
 
         public void SetupMenuLanguages()
@@ -56,7 +49,7 @@ namespace LanExchange.UI.WinForms
 
         public void SetupPages()
         {
-            // init Pages presenter
+            //// init Pages presenter
             Pages = (PagesView)App.Resolve<IPagesView>();
             Pages.Dock = DockStyle.Fill;
             Controls.Add(Pages);
@@ -265,7 +258,7 @@ namespace LanExchange.UI.WinForms
             switch (m.Msg)
             {
                 case WM_HOTKEY:
-                    if ((short)m.WParam == m_Hotkeys.HotkeyID)
+                    if (App.Presenter.IsHotKey((short)m.WParam))
                     {
                         ToggleVisible();
                         m.Result = new IntPtr(1);
@@ -395,22 +388,6 @@ namespace LanExchange.UI.WinForms
             App.Threads.Dispose();
         }
 
-        public void OnDataReady(object sender, DataReadyArgs args)
-        {
-            BeginInvoke(new WaitCallback(MainForm_RefreshItem), args.Item);
-        }
-
-        private void MainForm_RefreshItem(object item)
-        {
-            var pv = Pages.ActivePanelView;
-            if (pv != null)
-            {
-                var index = pv.Presenter.Objects.IndexOf(item as PanelItemBase);
-                if (index >= 0)
-                    pv.RedrawItem(index);
-            }
-        }
-
         private void lCompName_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left && e.Clicks == 1)
@@ -504,6 +481,13 @@ namespace LanExchange.UI.WinForms
         public IInfoView Info
         {
             get { return pInfo; }
+        }
+
+
+        public string ShowWindowKey
+        {
+            get { return mTrayOpen.ShortcutKeyDisplayString; }
+            set { mTrayOpen.ShortcutKeyDisplayString = value; }
         }
     }
 }
