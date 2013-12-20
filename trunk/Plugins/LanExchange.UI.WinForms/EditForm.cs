@@ -28,13 +28,12 @@ namespace LanExchange.UI.WinForms
         [Localizable(false)]
         public void SetColumns(IList<PanelColumnHeader> columns)
         {
-            const int START_TOP = 20;
-            const int START_LEFT = 20;
+            const int SPACE = 20;
             const int LINE_DELTA = 30;
             const int EDIT_WIDTH = 300;
             const int START_TABINDEX = 2;
 
-            var top = START_TOP;
+            var top = SPACE;
             var maxWidth = 0;
             var labelHeight = 0;
             for (int index = 0; index < columns.Count; index++)
@@ -44,7 +43,7 @@ namespace LanExchange.UI.WinForms
                 label.UseMnemonic = true;
                 label.Text = "&" + columns[index].Text + ":";
                 label.TabIndex = START_TABINDEX + index*2;
-                label.SetBounds(START_LEFT, top, 0, 0);
+                label.SetBounds(SPACE, top, 0, 0);
                 Controls.Add(label);
                 if (label.Width > maxWidth)
                 {
@@ -53,13 +52,13 @@ namespace LanExchange.UI.WinForms
                 }
                 top += LINE_DELTA;
             }
-            Width = START_LEFT*4 + maxWidth + EDIT_WIDTH;
+            Width = SPACE*3 + maxWidth + EDIT_WIDTH + SystemInformation.FixedFrameBorderSize.Width * 2;
             Height = top + 100;
-            top = START_TOP;
+            top = SPACE;
             for (int index = 0; index < columns.Count; index++)
             {
                 var edit = new TextBox();
-                edit.SetBounds(START_LEFT*2 + maxWidth, top-(20-labelHeight)/2, EDIT_WIDTH, 20);
+                edit.SetBounds(SPACE*2 + maxWidth, top-(20-labelHeight)/2, EDIT_WIDTH, 20);
                 edit.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
                 edit.TabIndex = START_TABINDEX + index * 2 + 1;
                 Controls.Add(edit);

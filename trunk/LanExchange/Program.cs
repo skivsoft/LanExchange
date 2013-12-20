@@ -96,9 +96,9 @@ namespace LanExchange
             var application = App.Resolve<IAppPresenter>();
             application.Init();
             // create main form
+            App.Presenter.ConfigOnChanged(App.Config, new ConfigChangedArgs(ConfigNames.Language));
             App.MainView = App.Resolve<IMainView>();
             App.Presenter.View = App.MainView;
-            App.Presenter.GlobalTranslateUI();
             App.Presenter.PrepareForm();
             App.MainPages.LoadSettings();
             // run application
