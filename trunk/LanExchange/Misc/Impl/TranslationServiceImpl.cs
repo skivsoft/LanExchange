@@ -13,15 +13,22 @@ namespace LanExchange.Misc.Impl
     [Localizable(false)]
     public class TranslationServiceImpl : ITranslationService
     {
-        private const string LANGUAGE_NAME = "@LANGUAGE_NAME";
-        private const string AUTHOR = "@AUTHOR";
+        private const string ID_LANGUAGE = "@LANGUAGE_NAME";
+        private const string ID_AUTHOR   = "@AUTHOR";
+        private const string ID_BASE     = "@BASE";
+        private const string ID_TRANSLIT = "@TRANSLIT";
+        private const string ID_RTL      = "@RTL";
+        private const string TRUE        = "true";
 
         private readonly IList<string> m_CurrentLanguageLines;
+        private readonly IDictionary<string, Type> m_Translits;
         private string m_CurrentLanguage;
+        private ITranslitStrategy m_CurrentTranslit;
 
         public TranslationServiceImpl()
         {
             m_CurrentLanguageLines = new List<string>();
+            m_Translits = new Dictionary<string, Type>();
             CurrentLanguage = SourceLanguage;
             //CurrentLanguage = "Russian";
         }
@@ -52,8 +59,10 @@ namespace LanExchange.Misc.Impl
                         var lang = Path.GetFileNameWithoutExtension(fileName);
                         if (lang != null && String.Compare(lang, value, StringComparison.OrdinalIgnoreCase) == 0)
                         {
+                            RightToLeft = TranslateFromPO(fileName, ID_RTL).Equals(TRUE);
+                            var fname = GetBaseFileName(fileName);
                             m_CurrentLanguageLines.Clear();
-                            foreach(var line in ReadAllLines(fileName))
+                            foreach(var line in ReadAllLines(fname))
                                 m_CurrentLanguageLines.Add(line);
                             m_CurrentLanguage = value;
                             break;
@@ -61,6 +70,36 @@ namespace LanExchange.Misc.Impl
                     }
             }
         }
+
+        private string GetBaseFileName(string fileName)
+        {
+            m_CurrentTranslit = null;
+            var baseLanguage = TranslateFromPO(fileName, ID_BASE);
+            if (!string.IsNullOrEmpty(baseLanguage))
+            {
+                var dirName = Path.GetDirectoryName(fileName);
+                if (dirName != null)
+                {
+                    var fname = Path.Combine(dirName, baseLanguage);
+                    if (File.Exists(fname))
+                    {
+                        SetupLanguage(fileName);
+                        return fname;
+                    }
+                }
+            }
+            return fileName;
+        }
+
+        private void SetupLanguage(string fileName)
+        {
+            Type tp;
+            var translit = TranslateFromPO(fileName, ID_TRANSLIT);
+            if (m_Translits.TryGetValue(translit, out tp))
+                m_CurrentTranslit = (ITranslitStrategy) Activator.CreateInstance(tp);
+        }
+
+        public bool RightToLeft { get; private set; }
 
         public IDictionary<string, string> GetLanguagesNames()
         {
@@ -72,7 +111,9 @@ namespace LanExchange.Misc.Impl
                 if (lang == null) continue;
                 try
                 {
-                    sorted.Add(TranslateFromPO(fileName, LANGUAGE_NAME), lang);
+                    var langName = TranslateFromPO(fileName, ID_LANGUAGE);
+                    if (!string.IsNullOrEmpty(langName))
+                        sorted.Add(langName, lang);
                 }
                 catch(ArgumentException)
                 {
@@ -93,7 +134,9 @@ namespace LanExchange.Misc.Impl
                 if (lang == null) continue;
                 try
                 {
-                    result.Add(lang, TranslateFromPO(fileName, AUTHOR));
+                    var author = TranslateFromPO(fileName, ID_AUTHOR);
+                    if (!string.IsNullOrEmpty(author))
+                        result.Add(lang, author);
                 }
                 catch (ArgumentException)
                 {
@@ -121,7 +164,7 @@ namespace LanExchange.Misc.Impl
                     return result;
                 }
             }
-            return id;
+            return id.StartsWith("@") ? string.Empty : id;
         }
 
         private string TranslateFromPO(string fileName, string id)
@@ -133,7 +176,10 @@ namespace LanExchange.Misc.Impl
         {
             if (SourceLanguage.Equals(CurrentLanguage))
                 return id;
-            return InternalTranslate(m_CurrentLanguageLines, id);
+            var result = InternalTranslate(m_CurrentLanguageLines, id);
+            if (m_CurrentTranslit != null)
+                result = m_CurrentTranslit.Transliterate(result);
+            return result;
         }
 
         public string PluralForm(string forms, int num)
@@ -176,6 +222,11 @@ namespace LanExchange.Misc.Impl
         {
             var resourceMan = new TranslationResourceManager(typeof (TClass).FullName, typeof (TClass).Assembly);
             ReflectionUtils.SetClassPrivateField<TClass, ResourceManager>("resourceMan", resourceMan);
+        }
+
+        public void RegisterTranslit<TTranslit>() where TTranslit : ITranslitStrategy
+        {
+            m_Translits.Add(typeof(TTranslit).Name, typeof(TTranslit));
         }
     }
 }

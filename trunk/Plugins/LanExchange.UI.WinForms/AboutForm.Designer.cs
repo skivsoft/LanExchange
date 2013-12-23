@@ -219,6 +219,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.AboutForm_Load);
+            this.RightToLeftChanged += new System.EventHandler(this.AboutForm_RightToLeftChanged);
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picTwitter)).EndInit();
             this.ResumeLayout(false);

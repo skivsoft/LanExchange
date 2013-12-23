@@ -283,5 +283,10 @@ namespace LanExchange.UI.WinForms
         {
             App.Presenter.ExecuteAction("ActionCloseOther");
         }
+
+        private void PagesView_RightToLeftChanged(object sender, EventArgs e)
+        {
+            Pages.RightToLeftLayout = RightToLeft == RightToLeft.Yes;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.SDK;
@@ -44,6 +45,11 @@ namespace LanExchange.UI.WinForms
             }
         }
 
+        private int GetLocationX()
+        {
+            return RightToLeft == RightToLeft.No ? 50 : Width - 50;
+        }
+
         private int GetLocationY(int index)
         {
             return 8 + index * 16;
@@ -67,7 +73,7 @@ namespace LanExchange.UI.WinForms
         {
             var control = new Label();
             control.AutoSize = true;
-            control.Location = new Point(50, GetLocationY(index));
+            control.Location = new Point(GetLocationX(), GetLocationY(index));
             if (index == 0)
                 control.Font = new Font(control.Font, FontStyle.Bold);
             control.MouseDown += ControlOnMouseDown;
@@ -102,6 +108,15 @@ namespace LanExchange.UI.WinForms
                     App.MainView.SetToolTip(Picture, m_CurrentItem.ImageLegendText);
                 }
             }
+        }
+
+        private void InfoView_RightToLeftChanged(object sender, EventArgs e)
+        {
+            //for (int index = 0; index < m_Lines.Count - 1; index++ )
+            //{
+            //    m_Lines[index].RightToLeft = RightToLeft;
+            //    m_Lines[index].Location = new Point(GetLocationX(), GetLocationY(index));
+            //}
         }
     }
 }

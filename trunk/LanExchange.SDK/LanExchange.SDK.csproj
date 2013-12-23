@@ -83,6 +83,7 @@
     <Compile Include="IShell32Service.cs" />
     <Compile Include="ISingleInstanceService.cs" />
     <Compile Include="ISysImageListService.cs" />
+    <Compile Include="ITranslitStrategy.cs" />
     <Compile Include="IUser32Service.cs" />
     <Compile Include="IWindow.cs" />
     <Compile Include="ProtocolHelper.cs" />

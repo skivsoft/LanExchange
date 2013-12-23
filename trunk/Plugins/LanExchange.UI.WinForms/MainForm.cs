@@ -10,7 +10,7 @@ using LanExchange.UI.WinForms.Utils;
 
 namespace LanExchange.UI.WinForms
 {
-    public partial class MainForm : RunMinimizedForm, IMainView, ITranslationable
+    public sealed partial class MainForm : RunMinimizedForm, IMainView, ITranslationable
     {
         public const int WAIT_FOR_KEYUP_MS = 500;
         public PagesView Pages;
@@ -18,6 +18,11 @@ namespace LanExchange.UI.WinForms
         public MainForm()
         {
             InitializeComponent();
+            if (App.TR.RightToLeft)
+            {
+                RightToLeftLayout = true;
+                RightToLeft = RightToLeft.Yes;
+            }
             Menu = MainMenu;
             // show computer name
             lCompName.Text = SystemInformation.ComputerName;
@@ -81,6 +86,7 @@ namespace LanExchange.UI.WinForms
 
         public void TranslateUI()
         {
+            // translate sub-components
             TranslationUtils.TranslateComponents(Resources.ResourceManager, this, components);
             mTrayOpen_TranslateUI();
             TranslationUtils.TranslateControls(Controls);
@@ -501,6 +507,12 @@ namespace LanExchange.UI.WinForms
             if (IsHandleCreated)
                 return Invoke(method, args);
             return null;
+        }
+
+        private void MainForm_RightToLeftChanged(object sender, EventArgs e)
+        {
+            popTray.RightToLeft = RightToLeft;
+            Status.SizingGrip = RightToLeft == RightToLeft.No;
         }
     }
 }

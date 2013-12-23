@@ -48,37 +48,37 @@ namespace LanExchange.UI.WinForms
             this.mCloseTab,
             this.mCloseOther});
             this.popPages.Name = "popPages";
-            this.popPages.Size = new System.Drawing.Size(162, 98);
+            this.popPages.Size = new System.Drawing.Size(169, 76);
             this.popPages.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.popPages_Closed);
             this.popPages.Opened += new System.EventHandler(this.popPages_Opened);
             this.popPages.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.popPages_ItemClicked);
             // 
-            // mReread
+            // mReRead
             // 
             this.mReRead.Name = "mReRead";
             this.mReRead.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.mReRead.Size = new System.Drawing.Size(161, 22);
-            this.mReRead.Text = Resources.mReRead_Text;
+            this.mReRead.Size = new System.Drawing.Size(168, 22);
+            this.mReRead.Text = global::LanExchange.UI.WinForms.Properties.Resources.mReRead_Text;
             this.mReRead.Click += new System.EventHandler(this.mReRead_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(158, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(165, 6);
             // 
             // mCloseTab
             // 
             this.mCloseTab.Name = "mCloseTab";
             this.mCloseTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
-            this.mCloseTab.Size = new System.Drawing.Size(161, 22);
-            this.mCloseTab.Text = Resources.mCloseTab_Text;
+            this.mCloseTab.Size = new System.Drawing.Size(168, 22);
+            this.mCloseTab.Text = global::LanExchange.UI.WinForms.Properties.Resources.mCloseTab_Text;
             this.mCloseTab.Click += new System.EventHandler(this.mCloseTab_Click);
             // 
             // mCloseOther
             // 
             this.mCloseOther.Name = "mCloseOther";
-            this.mCloseOther.Size = new System.Drawing.Size(161, 22);
-            this.mCloseOther.Text = Resources.mCloseOther_Text;
+            this.mCloseOther.Size = new System.Drawing.Size(168, 22);
+            this.mCloseOther.Text = global::LanExchange.UI.WinForms.Properties.Resources.mCloseOther_Text;
             this.mCloseOther.Click += new System.EventHandler(this.mCloseOther_Click);
             // 
             // Pages
@@ -103,6 +103,7 @@ namespace LanExchange.UI.WinForms
             this.Controls.Add(this.Pages);
             this.Name = "PagesView";
             this.Size = new System.Drawing.Size(484, 621);
+            this.RightToLeftChanged += new System.EventHandler(this.PagesView_RightToLeftChanged);
             this.popPages.ResumeLayout(false);
             this.ResumeLayout(false);
 

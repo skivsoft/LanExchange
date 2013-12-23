@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using LanExchange.SDK;
 
 namespace LanExchange.UI.WinForms
 {
@@ -7,6 +8,16 @@ namespace LanExchange.UI.WinForms
         public EscapeForm()
         {
             InitializeComponent();
+            SetupRtl();
+        }
+
+        private void SetupRtl()
+        {
+            if (App.TR.RightToLeft)
+            {
+                RightToLeftLayout = true;
+                RightToLeft = RightToLeft.Yes;
+            }
         }
 
         private void EscapeForm_KeyDown(object sender, KeyEventArgs e)

@@ -83,7 +83,6 @@ namespace LanExchange.UI.WinForms
             this.Name = "EditForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "New item";
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EditItemForm_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
