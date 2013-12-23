@@ -403,6 +403,7 @@ namespace LanExchange.UI.WinForms
         public void ShowHeaderMenu(IList<PanelColumnHeader> columns)
         {
             var strip = new ContextMenuStrip();
+            strip.RightToLeft = RightToLeft;
             for (int i = 0; i < columns.Count; i++)
             {
                 var menuItem = new ToolStripMenuItem(columns[i].Text);
@@ -675,6 +676,11 @@ namespace LanExchange.UI.WinForms
         private void mNewItem_Click(object sender, EventArgs e)
         {
             App.Presenter.ExecuteAction("ActionNewItem");
+        }
+
+        private void PanelView_RightToLeftChanged(object sender, EventArgs e)
+        {
+            LV.RightToLeftLayout = RightToLeft == RightToLeft.Yes;
         }
     }
 }

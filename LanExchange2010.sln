@@ -42,6 +42,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Notify",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extra", "Extra", "{72C30538-5766-4EDF-9B95-4736C6EE73DA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Translit", "plugins\LanExchange.Plugin.Translit\LanExchange.Plugin.Translit.csproj", "{2819AF34-74B9-49B7-AEF1-4E958C563E94}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = LanExchange2010.vsmdi
@@ -185,15 +187,25 @@ Global
 		{1E99C2AE-DEDE-4D80-801A-B02B712031F3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{1E99C2AE-DEDE-4D80-801A-B02B712031F3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1E99C2AE-DEDE-4D80-801A-B02B712031F3}.Release|x86.ActiveCfg = Release|Any CPU
+		{2819AF34-74B9-49B7-AEF1-4E958C563E94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2819AF34-74B9-49B7-AEF1-4E958C563E94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2819AF34-74B9-49B7-AEF1-4E958C563E94}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2819AF34-74B9-49B7-AEF1-4E958C563E94}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2819AF34-74B9-49B7-AEF1-4E958C563E94}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2819AF34-74B9-49B7-AEF1-4E958C563E94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2819AF34-74B9-49B7-AEF1-4E958C563E94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2819AF34-74B9-49B7-AEF1-4E958C563E94}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2819AF34-74B9-49B7-AEF1-4E958C563E94}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{2819AF34-74B9-49B7-AEF1-4E958C563E94}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{9B9EBF04-BB88-445A-A562-EFB308D8D0A9} = {72C30538-5766-4EDF-9B95-4736C6EE73DA}
 		{5BE1B038-07CC-41DC-8E97-BC308C5F9CB3} = {72C30538-5766-4EDF-9B95-4736C6EE73DA}
 		{1E99C2AE-DEDE-4D80-801A-B02B712031F3} = {72C30538-5766-4EDF-9B95-4736C6EE73DA}
 		{26D53677-B560-4697-9C4E-E54ECBD4C048} = {72C30538-5766-4EDF-9B95-4736C6EE73DA}
-		{9B9EBF04-BB88-445A-A562-EFB308D8D0A9} = {72C30538-5766-4EDF-9B95-4736C6EE73DA}
 	EndGlobalSection
 	GlobalSection(NDepend) = preSolution
 		Project = "..\..\..\NDependProject.ndproj"

@@ -97,7 +97,7 @@ namespace LanExchange.UI.WinForms
             this.mTrayAbout,
             this.mTrayExit});
             this.popTray.Name = "popTray";
-            this.popTray.Size = new System.Drawing.Size(153, 98);
+            this.popTray.Size = new System.Drawing.Size(108, 76);
             this.popTray.Opening += new System.ComponentModel.CancelEventHandler(this.popTray_Opening);
             // 
             // mTrayOpen
@@ -105,26 +105,26 @@ namespace LanExchange.UI.WinForms
             this.mTrayOpen.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.mTrayOpen.Name = "mTrayOpen";
             this.mTrayOpen.ShortcutKeyDisplayString = "";
-            this.mTrayOpen.Size = new System.Drawing.Size(152, 22);
+            this.mTrayOpen.Size = new System.Drawing.Size(107, 22);
             this.mTrayOpen.Text = global::LanExchange.UI.WinForms.Properties.Resources.mTrayOpen_Text;
             this.mTrayOpen.Click += new System.EventHandler(this.mOpen_Click);
             // 
             // mTraySep1
             // 
             this.mTraySep1.Name = "mTraySep1";
-            this.mTraySep1.Size = new System.Drawing.Size(149, 6);
+            this.mTraySep1.Size = new System.Drawing.Size(104, 6);
             // 
             // mTrayAbout
             // 
             this.mTrayAbout.Name = "mTrayAbout";
-            this.mTrayAbout.Size = new System.Drawing.Size(152, 22);
+            this.mTrayAbout.Size = new System.Drawing.Size(107, 22);
             this.mTrayAbout.Text = global::LanExchange.UI.WinForms.Properties.Resources.mTrayAbout_Text;
             this.mTrayAbout.Click += new System.EventHandler(this.mHelpAbout_Click);
             // 
             // mTrayExit
             // 
             this.mTrayExit.Name = "mTrayExit";
-            this.mTrayExit.Size = new System.Drawing.Size(152, 22);
+            this.mTrayExit.Size = new System.Drawing.Size(107, 22);
             this.mTrayExit.Text = global::LanExchange.UI.WinForms.Properties.Resources.mTrayExit_Text;
             this.mTrayExit.Click += new System.EventHandler(this.mTrayExit_Click);
             // 
@@ -151,7 +151,7 @@ namespace LanExchange.UI.WinForms
             // lItemsCount
             // 
             this.lItemsCount.Name = "lItemsCount";
-            this.lItemsCount.Size = new System.Drawing.Size(503, 17);
+            this.lItemsCount.Size = new System.Drawing.Size(472, 17);
             this.lItemsCount.Spring = true;
             this.lItemsCount.Text = global::LanExchange.UI.WinForms.Properties.Resources.EmptyText;
             this.lItemsCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -431,8 +431,8 @@ namespace LanExchange.UI.WinForms
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(564, 542);
-            this.Controls.Add(this.pInfo);
             this.Controls.Add(this.Status);
+            this.Controls.Add(this.pInfo);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "MainForm";
@@ -440,6 +440,7 @@ namespace LanExchange.UI.WinForms
             this.Activated += new System.EventHandler(this.MainForm_Activated);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.ResizeEnd += new System.EventHandler(this.MainForm_ResizeEnd);
+            this.RightToLeftChanged += new System.EventHandler(this.MainForm_RightToLeftChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyUp);
             this.popTray.ResumeLayout(false);

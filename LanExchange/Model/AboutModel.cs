@@ -10,7 +10,7 @@ namespace LanExchange.Model
 {
     public class AboutModel : IAboutModel
     {
-        private const string HOME_LINK = "https://code.google.com/p/lanexchange/";
+        private const string HOME_LINK = "https://code.google.com/p/lanexchange";
         private const string LOCALIZATION_LINK = "https://crowdin.net/project/lanexchange";
         private const string BUGTRACKER_LINK = "https://code.google.com/p/lanexchange/issues/list";
         private const string TWITTER = "TheLanExchange";

@@ -166,12 +166,23 @@
     <Content Include="Addons\NetworkRadmin.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Languages\Russain-game.po">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Languages\Kazakh-arabic.po">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Languages\Russain-latin.po">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\process_working.png" />
     <None Include="Resources\keyboard_16.png" />
     <None Include="..\Common\LanExchange.snk">
       <Link>LanExchange.snk</Link>
     </None>
-    <None Include="Languages\Esperanto.po" />
+    <None Include="Languages\Esperanto.po">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Languages\Kazakh.po">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -217,6 +228,9 @@
   <ItemGroup>
     <Content Include="History.txt" />
     <Content Include="LanExchange.ico" />
+    <None Include="Languages\Kazakh-latin.po">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Content Include="Misc\MVP.gif" />
     <Content Include="Languages\!Readme.txt" />
     <Content Include="Presenter\!Readme.txt" />

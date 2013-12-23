@@ -49,6 +49,7 @@
             this.MinimumSize = new System.Drawing.Size(0, 64);
             this.Name = "InfoView";
             this.Size = new System.Drawing.Size(486, 64);
+            this.RightToLeftChanged += new System.EventHandler(this.InfoView_RightToLeftChanged);
             ((System.ComponentModel.ISupportInitialize)(this.imgInfo)).EndInit();
             this.ResumeLayout(false);
 

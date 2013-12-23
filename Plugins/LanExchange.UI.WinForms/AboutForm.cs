@@ -58,6 +58,7 @@ namespace LanExchange.UI.WinForms
             var rect = ClientRectangle;
             m_BoxDetails.SetBounds(rect.Left+16, rect.Top+16, rect.Width-32, rect.Height-bShowDetails.Height-32);
             m_BoxDetails.Visible = false;
+            m_BoxDetails.RightToLeft = RightToLeft;
             m_BoxDetails.ReadOnly = true;
             m_BoxDetails.BorderStyle = BorderStyle.None;
             m_BoxDetails.Rtf = m_Presenter.GetDetailsRtf();
@@ -135,6 +136,12 @@ namespace LanExchange.UI.WinForms
         private void picTwitter_Click(object sender, EventArgs e)
         {
             m_Presenter.OpenTwitterLink();
+        }
+
+        private void AboutForm_RightToLeftChanged(object sender, EventArgs e)
+        {
+            if (m_BoxDetails != null)
+                m_BoxDetails.RightToLeft = RightToLeft;
         }
     }
 }

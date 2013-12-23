@@ -34,12 +34,12 @@ namespace LanExchange.UI.WinForms
             this.popComps = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mComp = new System.Windows.Forms.ToolStripMenuItem();
             this.mAfterComp = new System.Windows.Forms.ToolStripSeparator();
-            this.mNewItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mCopyMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.mCopySelected = new System.Windows.Forms.ToolStripMenuItem();
             this.mPaste = new System.Windows.Forms.ToolStripMenuItem();
             this.mDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.mAfterDelete = new System.Windows.Forms.ToolStripSeparator();
+            this.mNewItem = new System.Windows.Forms.ToolStripMenuItem();
             this.LV = new LanExchange.UI.WinForms.ListViewer();
             this.pFilter = new LanExchange.UI.WinForms.FilterView();
             this.popComps.SuspendLayout();
@@ -56,35 +56,27 @@ namespace LanExchange.UI.WinForms
             this.mAfterDelete,
             this.mNewItem});
             this.popComps.Name = "popComps";
-            this.popComps.Size = new System.Drawing.Size(153, 148);
+            this.popComps.Size = new System.Drawing.Size(148, 126);
             this.popComps.Opening += new System.ComponentModel.CancelEventHandler(this.popComps_Opening);
             // 
             // mComp
             // 
             this.mComp.Enabled = false;
             this.mComp.Name = "mComp";
-            this.mComp.Size = new System.Drawing.Size(152, 22);
+            this.mComp.Size = new System.Drawing.Size(147, 22);
             this.mComp.Tag = "";
             // 
             // mAfterComp
             // 
             this.mAfterComp.Name = "mAfterComp";
-            this.mAfterComp.Size = new System.Drawing.Size(149, 6);
-            // 
-            // mNewItem
-            // 
-            this.mNewItem.Name = "mNewItem";
-            this.mNewItem.ShortcutKeys = System.Windows.Forms.Keys.Insert;
-            this.mNewItem.Size = new System.Drawing.Size(152, 22);
-            this.mNewItem.Text = "New item";
-            this.mNewItem.Click += new System.EventHandler(this.mNewItem_Click);
+            this.mAfterComp.Size = new System.Drawing.Size(144, 6);
             // 
             // mCopyMenu
             // 
             this.mCopyMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mCopySelected});
             this.mCopyMenu.Name = "mCopyMenu";
-            this.mCopyMenu.Size = new System.Drawing.Size(152, 22);
+            this.mCopyMenu.Size = new System.Drawing.Size(147, 22);
             this.mCopyMenu.Text = global::LanExchange.UI.WinForms.Properties.Resources.mCopyMenu_Text;
             this.mCopyMenu.DropDownOpening += new System.EventHandler(this.mCopyMenu_DropDownOpening);
             // 
@@ -100,7 +92,7 @@ namespace LanExchange.UI.WinForms
             // 
             this.mPaste.Name = "mPaste";
             this.mPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.mPaste.Size = new System.Drawing.Size(152, 22);
+            this.mPaste.Size = new System.Drawing.Size(147, 22);
             this.mPaste.Text = global::LanExchange.UI.WinForms.Properties.Resources.mPaste_Text;
             this.mPaste.Click += new System.EventHandler(this.mPaste_Click);
             // 
@@ -108,14 +100,22 @@ namespace LanExchange.UI.WinForms
             // 
             this.mDelete.Name = "mDelete";
             this.mDelete.ShortcutKeyDisplayString = global::LanExchange.UI.WinForms.Properties.Resources.KeyDel;
-            this.mDelete.Size = new System.Drawing.Size(152, 22);
+            this.mDelete.Size = new System.Drawing.Size(147, 22);
             this.mDelete.Text = global::LanExchange.UI.WinForms.Properties.Resources.mDelete_Text;
             this.mDelete.Click += new System.EventHandler(this.mDelete_Click);
             // 
             // mAfterDelete
             // 
             this.mAfterDelete.Name = "mAfterDelete";
-            this.mAfterDelete.Size = new System.Drawing.Size(149, 6);
+            this.mAfterDelete.Size = new System.Drawing.Size(144, 6);
+            // 
+            // mNewItem
+            // 
+            this.mNewItem.Name = "mNewItem";
+            this.mNewItem.ShortcutKeys = System.Windows.Forms.Keys.Insert;
+            this.mNewItem.Size = new System.Drawing.Size(147, 22);
+            this.mNewItem.Text = "New item";
+            this.mNewItem.Click += new System.EventHandler(this.mNewItem_Click);
             // 
             // LV
             // 
@@ -173,6 +173,7 @@ namespace LanExchange.UI.WinForms
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "PanelView";
             this.Size = new System.Drawing.Size(423, 398);
+            this.RightToLeftChanged += new System.EventHandler(this.PanelView_RightToLeftChanged);
             this.popComps.ResumeLayout(false);
             this.ResumeLayout(false);
 

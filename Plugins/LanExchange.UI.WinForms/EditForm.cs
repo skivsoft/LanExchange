@@ -9,7 +9,7 @@ using LanExchange.SDK;
 
 namespace LanExchange.UI.WinForms
 {
-    public partial class EditForm : Form, IEditView
+    public partial class EditForm : EscapeForm, IEditView
     {
         private readonly IEditPresenter m_Presenter;
 
@@ -65,15 +65,6 @@ namespace LanExchange.UI.WinForms
                 if (ActiveControl == null)
                     ActiveControl = edit;
                 top += LINE_DELTA;
-            }
-        }
-
-        private void EditItemForm_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Escape)
-            {
-                Close();
-                e.Handled = true;
             }
         }
 

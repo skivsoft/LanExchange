@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows.Forms;
@@ -49,9 +50,32 @@ namespace LanExchange.UI.WinForms
 
         public void TranslateOpenForms()
         {
-            foreach (var form in Application.OpenForms)
+            // need for changing rtl
+            var forms = new List<Form>();
+            foreach(Form form in Application.OpenForms)
+                forms.Add(form);
+            // enum opened forms
+            foreach (var form in forms)
                 if (form is ITranslationable)
+                {
+                    // set rtl
+                    var rtlChanged = App.TR.RightToLeft != form.RightToLeftLayout;
+                    if (rtlChanged)
+                        form.Hide();
+                    if (App.TR.RightToLeft)
+                    {
+                        form.RightToLeftLayout = true;
+                        form.RightToLeft = RightToLeft.Yes;
+                    }
+                    else
+                    {
+                        form.RightToLeftLayout = false;
+                        form.RightToLeft = RightToLeft.No;
+                    }
                     (form as ITranslationable).TranslateUI();
+                    if (rtlChanged)
+                        form.Show();
+                }
         }
     }
 }
