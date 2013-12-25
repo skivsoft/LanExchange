@@ -40,6 +40,8 @@ namespace LanExchange.Plugin.Network
             {
                 if (SHI.IsPrinter)
                     return string.Empty;
+                if (SHI.ShareType == 100)
+                    return PanelImageNames.USER;
                 return SHI.IsHidden ? PanelImageNames.FOLDER + PanelImageNames.HIDDEN_POSTFIX : PanelImageNames.FOLDER;
             }
         }

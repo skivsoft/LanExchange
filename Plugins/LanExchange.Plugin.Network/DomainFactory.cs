@@ -18,13 +18,13 @@ namespace LanExchange.Plugin.Network
         [EnvironmentPermissionAttribute(SecurityAction.LinkDemand, Unrestricted = true)]
         public override PanelItemBase CreateDefaultRoot()
         {
-            var domain = NetApi32Utils.GetMachineNetBiosDomain(null);
+            var domain = NetApi32Utils.NetWkstaGetInfo(null);
             return new DomainPanelItem(new DomainRoot(), domain);
         }
 
         public override void RegisterColumns(IPanelColumnManager columnManager)
         {
-            columnManager.RegisterColumn<DomainPanelItem>(new PanelColumnHeader(Resources.DomainName));
+            columnManager.RegisterColumn<DomainPanelItem>(new PanelColumnHeader(Resources.DomainName, 200));
         }
     }
 }

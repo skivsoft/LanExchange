@@ -106,6 +106,15 @@ namespace LanExchange.Plugin.Network.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Logged users.
+        /// </summary>
+        internal static string LoggedUsers {
+            get {
+                return ResourceManager.GetString("LoggedUsers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MAC address.
         /// </summary>
         internal static string MACAddress {

@@ -17,7 +17,7 @@ namespace LanExchange.Plugin.Network
 
         public override void RegisterColumns(IPanelColumnManager columnManager)
         {
-            columnManager.RegisterColumn<SharePanelItem>(new PanelColumnHeader(Resources.ResourceName));
+            columnManager.RegisterColumn<SharePanelItem>(new PanelColumnHeader(Resources.ResourceName, 200));
             columnManager.RegisterColumn<SharePanelItem>(new PanelColumnHeader(Resources.Description));
         }
     }
