@@ -47,9 +47,13 @@
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="IPHLPAPISerivce.cs" />
+    <Compile Include="IPHLPAPI\NativeMethods.cs" />
+    <Compile Include="NetApi32Service.cs" />
+    <Compile Include="NetApi32\NativeMethods.cs" />
     <Compile Include="SingleInstanceService.cs" />
     <Compile Include="SysImageListService.cs" />
-    <Compile Include="Utils\ExternDll.cs" />
+    <Compile Include="ExternDll.cs" />
     <Compile Include="HotkeysService.cs" />
     <Compile Include="Comctl32Service.cs" />
     <Compile Include="Kernel32Service.cs" />

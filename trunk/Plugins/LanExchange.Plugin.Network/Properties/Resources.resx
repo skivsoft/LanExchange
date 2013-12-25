@@ -156,4 +156,7 @@
   <data name="Network">
     <value xml:space="preserve">Network</value>
   </data>
+  <data name="LoggedUsers">
+    <value xml:space="preserve">Logged users</value>
+  </data>
 </root>

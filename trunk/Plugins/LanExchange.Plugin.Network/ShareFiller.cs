@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
@@ -15,6 +17,7 @@ namespace LanExchange.Plugin.Network
             return parent is ComputerPanelItem;
         }
 
+        [Localizable(false)]
         public override void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
             if (parent == null)
@@ -29,6 +32,14 @@ namespace LanExchange.Plugin.Network
                 //    continue;
                 if (!ShowHiddenShares && si.IsHidden || !ShowPrinters && si.IsPrinter)
                     continue;
+                result.Add(new SharePanelItem(parent, si));
+            }
+            // enum logged users
+            foreach(var item in NetApi32Utils.NetWkstaUserEnumNames(parent.Name))
+            {
+                var si = new ShareInfo();
+                si.Name = item;
+                si.ShareType = 100;
                 result.Add(new SharePanelItem(parent, si));
             }
         }

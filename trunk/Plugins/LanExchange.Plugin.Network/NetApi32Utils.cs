@@ -14,24 +14,24 @@ namespace LanExchange.Plugin.Network
         /// <param name="server"></param>
         /// <returns></returns>
         [EnvironmentPermissionAttribute(SecurityAction.LinkDemand, Unrestricted = true)]
-        public static string GetMachineNetBiosDomain(string server)
+        public static string NetWkstaGetInfo(string server)
         {
-            IntPtr pBuffer;
-
-            var retval = NativeMethods.NetWkstaGetInfo(server, 100, out pBuffer);
+            if (PluginNetwork.NETAPI32 == null)
+                return string.Empty;
+            IntPtr buffer;
+            NativeMethods.WKSTA_INFO_100 result;
+            var retval = PluginNetwork.NETAPI32.NetWkstaGetInfo(server, 102, out buffer);
             if (retval != 0)
                 throw new Win32Exception(retval);
-            string domainName;
             try
             {
-                var info = (NativeMethods.WKSTA_INFO_100)Marshal.PtrToStructure(pBuffer, typeof(NativeMethods.WKSTA_INFO_100));
-                domainName = info.wki100_langroup;
+                result = (NativeMethods.WKSTA_INFO_100)Marshal.PtrToStructure(buffer, typeof(NativeMethods.WKSTA_INFO_100));
             }
             finally
             {
-                NativeMethods.NetApiBufferFree(pBuffer);
+                NativeMethods.NetApiBufferFree(buffer);
             }
-            return domainName;
+            return result.wki100_langroup;
         }
 
         /// <summary>
@@ -91,6 +91,53 @@ namespace LanExchange.Plugin.Network
                     if (pInfo != IntPtr.Zero)
                         NativeMethods.NetApiBufferFree(pInfo);
                 }
+        }
+
+        public static IEnumerable<NativeMethods.WKSTA_USER_INFO_1> NetWkstaUserEnum(string computer)
+        {
+            IntPtr pInfo;
+            uint entriesread = 0;
+            uint totalentries = 0;
+            uint resumehandle = 0;
+
+            var err = NativeMethods.NetWkstaUserEnum(computer, 1, out pInfo, NativeMethods.MAX_PREFERRED_LENGTH, ref entriesread, ref totalentries, ref resumehandle);
+            if ((err == NativeMethods.NERR.NERR_SUCCESS || err == NativeMethods.NERR.ERROR_MORE_DATA) && (pInfo != IntPtr.Zero))
+            try
+            {
+                int ptr = pInfo.ToInt32();
+                for (int i = 0; i < entriesread; i++)
+                {
+                    var item =
+                        (NativeMethods.WKSTA_USER_INFO_1)
+                        Marshal.PtrToStructure(new IntPtr(ptr), typeof (NativeMethods.WKSTA_USER_INFO_1));
+                    yield return item;
+                    ptr += Marshal.SizeOf(typeof (NativeMethods.WKSTA_USER_INFO_1));
+                }
+            }
+            finally
+            {
+                NativeMethods.NetApiBufferFree(pInfo);
+            }
+        }
+
+        [Localizable(false)]
+        public static string[] NetWkstaUserEnumNames(string computer)
+        {
+            var users = new List<string>();
+            var domain = NetWkstaGetInfo(null);
+            foreach (var item in NetWkstaUserEnum(computer))
+            {
+                if (item.wkui1_username.EndsWith("$")) continue;
+                string name;
+                if (domain != item.wkui1_logon_domain)
+                    name = string.Format(@"{0}\{1}", item.wkui1_logon_domain, item.wkui1_username);
+                else
+                    name = item.wkui1_username;
+                if (!users.Contains(name))
+                    users.Add(name);
+            }
+            users.Sort();
+            return users.ToArray();
         }
     }
 }

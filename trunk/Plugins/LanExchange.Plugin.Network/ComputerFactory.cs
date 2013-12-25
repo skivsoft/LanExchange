@@ -28,6 +28,7 @@ namespace LanExchange.Plugin.Network
             columnManager.RegisterColumn<ComputerPanelItem>(new PanelColumnHeader(Resources.Ping, 110) { Callback = GetReachable, Visible = false, Refreshable = true });
             columnManager.RegisterColumn<ComputerPanelItem>(new PanelColumnHeader(Resources.IPAddress, 80) { Callback = GetIPAddress, Visible = false});
             columnManager.RegisterColumn<ComputerPanelItem>(new PanelColumnHeader(Resources.MACAddress, 110) { Callback = GetMACAddress, Visible = false});
+            columnManager.RegisterColumn<ComputerPanelItem>(new PanelColumnHeader(Resources.LoggedUsers, 300) {Callback = GetLoggedUsers, Visible = false} );
         }
 
         [Localizable(false)]
@@ -75,16 +76,28 @@ namespace LanExchange.Plugin.Network
         /// <returns>MAC-address string.</returns>
         public static IComparable GetMACAddress(PanelItemBase item)
         {
+            if (PluginNetwork.IPHLPAPI == null)
+                return null;
             var ipAddr = InternalGetIPAddress(item.Name);
             var mac = new byte[6];
             var len = (uint)mac.Length;
-            NativeMethods.SendARP(ipAddr.GetHashCode(), 0, mac, ref len);
+            if (0 != PluginNetwork.IPHLPAPI.SendARP(ipAddr.GetHashCode(), 0, mac, ref len))
+            {
+                item.IsReachable = false;
+                return string.Empty;
+            }
             return BitConverter.ToString(mac, 0, 6);
         }
 
         private static IPAddress InternalGetIPAddress(string computerName)
         {
             return Dns.GetHostEntry(computerName).AddressList[0];
+        }
+
+        public static IComparable GetLoggedUsers(PanelItemBase item)
+        {
+            var list = NetApi32Utils.NetWkstaUserEnumNames(item.Name);
+            return string.Join(" ", list);
         }
     }
 }

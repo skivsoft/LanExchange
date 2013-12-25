@@ -7,6 +7,8 @@ namespace LanExchange.Plugin.Network
     public sealed class PluginNetwork : IPlugin
     {
         private IServiceProvider m_Provider;
+        public static IIPHLPAPISerivice IPHLPAPI { get; private set; }
+        public static INetApi32Service NETAPI32 { get; private set; }
 
         public void Initialize(IServiceProvider serviceProvider)
         {
@@ -38,6 +40,9 @@ namespace LanExchange.Plugin.Network
                 fillerManager.RegisterFiller<ComputerPanelItem>(new ComputerFiller());
                 fillerManager.RegisterFiller<SharePanelItem>(new ShareFiller());
             }
+
+            IPHLPAPI = (IIPHLPAPISerivice)m_Provider.GetService(typeof (IIPHLPAPISerivice));
+            NETAPI32 = (INetApi32Service) m_Provider.GetService(typeof (INetApi32Service));
         }
     }
 }

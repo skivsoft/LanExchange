@@ -19,7 +19,7 @@ namespace LanExchange.Plugin.Network
 
         public override int CountColumns
         {
-            get { return base.CountColumns + 5; }
+            get { return base.CountColumns + 6; }
         }
 
         /// <summary>
@@ -102,6 +102,9 @@ namespace LanExchange.Plugin.Network
             set { m_SI.Comment = value; }
         }
 
+        [XmlIgnore]
+        public string LoggedUsers { get; set; }
+
         public override IComparable GetValue(int index)
         {
             switch (index)
@@ -111,6 +114,7 @@ namespace LanExchange.Plugin.Network
                 case 3: return string.Empty;
                 case 4: return string.Empty;
                 case 5: return string.Empty;
+                case 6: return string.Empty;
                 default:
                     return base.GetValue(index);
             }

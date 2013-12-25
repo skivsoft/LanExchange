@@ -6,19 +6,10 @@ namespace LanExchange.Plugin.Network
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "CLASS")]
     public static class NativeMethods
     {
-        internal const string IPHLPAPI = "iphlpapi.dll";
         internal const string NETAPI32 = "netapi32.dll";
 
-        [DllImport(IPHLPAPI, ExactSpelling = true)]
-        internal static extern int SendARP(int destIP, int srcIP, [Out] byte[] pMacAddr, ref uint physAddrLen);
-
-        #region WinApi: NetWkstaGetInfo
-        [DllImport(NETAPI32, CharSet = CharSet.Unicode)]
-        [System.Security.SuppressUnmanagedCodeSecurity]
-        internal static extern int NetWkstaGetInfo(string server, int level, out IntPtr info);
-
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-        internal struct WKSTA_INFO_100
+        public struct WKSTA_INFO_100
         {
             public uint wki100_platform_id;
             [MarshalAs(UnmanagedType.LPWStr)]
@@ -28,20 +19,21 @@ namespace LanExchange.Plugin.Network
             public uint wki100_ver_major;
             public uint wki100_ver_minor;
         }
-        #endregion
 
         #region WinApi: NetServerEnum
-        [DllImport(NETAPI32, EntryPoint = "NetServerEnum")]
+        [DllImport(NETAPI32, CharSet = CharSet.Unicode)]
         [System.Security.SuppressUnmanagedCodeSecurity]
         internal static extern NERR NetServerEnum(
-             [MarshalAs(UnmanagedType.LPWStr)]string ServerName,
+             [MarshalAs(UnmanagedType.LPWStr)]
+             string ServerName,
              uint Level,
              out IntPtr BufPtr,
              uint PrefMaxLen,
              ref uint EntriesRead,
              ref uint TotalEntries,
              SV_101_TYPES ServerType,
-             [MarshalAs(UnmanagedType.LPWStr)] string Domain,
+             [MarshalAs(UnmanagedType.LPWStr)] 
+             string Domain,
              uint ResumeHandle);
 
         [Serializable]
@@ -175,5 +167,32 @@ namespace LanExchange.Plugin.Network
             STYPE_SPECIAL = 0x80000000,
         }
         #endregion
+
+        #region WinApi: NetWstaUserEnum
+        [DllImport(NETAPI32, CharSet = CharSet.Unicode)]
+        [System.Security.SuppressUnmanagedCodeSecurity]
+        internal static extern NERR NetWkstaUserEnum(
+            string serverName,
+            uint level,
+            out IntPtr bufPtr,
+            uint prefMaxLen,
+            ref uint entriesRead,
+            ref uint totalEntries,
+            ref uint resumeHandle);
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        public struct WKSTA_USER_INFO_1
+        {
+            [MarshalAs(UnmanagedType.LPWStr)]
+            public string wkui1_username;
+            [MarshalAs(UnmanagedType.LPWStr)]
+            public string wkui1_logon_domain;
+            [MarshalAs(UnmanagedType.LPWStr)]
+            public string wkui1_oth_domains;
+            [MarshalAs(UnmanagedType.LPWStr)]
+            public string wkui1_logon_server;
+        }
+        #endregion
+
     }
 }
