@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace LanExchange.SDK
 {
@@ -34,5 +35,8 @@ namespace LanExchange.SDK
         public LazyCallback Callback { get; set; }
 
         public int Index { get; set; }
+
+        [DefaultValue(HorizontalAlignment.Left)]
+        public HorizontalAlignment TextAlign { get; set; }
     }
 }

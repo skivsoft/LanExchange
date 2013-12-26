@@ -438,6 +438,7 @@ namespace LanExchange.UI.WinForms
         public void AddColumn(PanelColumnHeader header)
         {
             var column = LV.Columns.Add(header.Text, header.Width);
+            column.TextAlign = (System.Windows.Forms.HorizontalAlignment)header.TextAlign;
             column.Tag = header;
         }
 
