@@ -94,10 +94,11 @@ namespace LanExchange.Plugin.Network
             return Dns.GetHostEntry(computerName).AddressList[0];
         }
 
+        [Localizable(false)]
         public static IComparable GetLoggedUsers(PanelItemBase item)
         {
             var list = NetApi32Utils.NetWkstaUserEnumNames(item.Name);
-            return string.Join(" ", list);
+            return string.Join(", ", list);
         }
     }
 }

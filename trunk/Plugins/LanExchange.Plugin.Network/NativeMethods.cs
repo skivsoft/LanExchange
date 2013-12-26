@@ -6,8 +6,6 @@ namespace LanExchange.Plugin.Network
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "CLASS")]
     public static class NativeMethods
     {
-        internal const string NETAPI32 = "netapi32.dll";
-
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         public struct WKSTA_INFO_100
         {
@@ -19,22 +17,6 @@ namespace LanExchange.Plugin.Network
             public uint wki100_ver_major;
             public uint wki100_ver_minor;
         }
-
-        #region WinApi: NetServerEnum
-        [DllImport(NETAPI32, CharSet = CharSet.Unicode)]
-        [System.Security.SuppressUnmanagedCodeSecurity]
-        internal static extern NERR NetServerEnum(
-             [MarshalAs(UnmanagedType.LPWStr)]
-             string ServerName,
-             uint Level,
-             out IntPtr BufPtr,
-             uint PrefMaxLen,
-             ref uint EntriesRead,
-             ref uint TotalEntries,
-             SV_101_TYPES ServerType,
-             [MarshalAs(UnmanagedType.LPWStr)] 
-             string Domain,
-             uint ResumeHandle);
 
         [Serializable]
         [StructLayout(LayoutKind.Sequential)]
@@ -116,26 +98,6 @@ namespace LanExchange.Plugin.Network
             PLATFORM_ID_OSF = 600,
             PLATFORM_ID_VMS = 700,
         }
-        #endregion
-
-        #region WinApi: NetApiBufferFree
-        [DllImport(NETAPI32, SetLastError = true)]
-        [System.Security.SuppressUnmanagedCodeSecurity]
-        internal static extern int NetApiBufferFree(IntPtr Buffer);
-        #endregion
-
-        #region WinApi: NetShareEnum
-        [DllImport(NETAPI32, CharSet = CharSet.Unicode)]
-        [System.Security.SuppressUnmanagedCodeSecurity]
-        internal static extern NERR NetShareEnum(
-             string ServerName,
-             int level,
-             out IntPtr bufPtr,
-             uint prefmaxlen,
-             ref int entriesread,
-             ref int totalentries,
-             int resumeHandle
-             );
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         public struct SHARE_INFO_1
@@ -166,19 +128,6 @@ namespace LanExchange.Plugin.Network
             STYPE_IPC = 3,
             STYPE_SPECIAL = 0x80000000,
         }
-        #endregion
-
-        #region WinApi: NetWstaUserEnum
-        [DllImport(NETAPI32, CharSet = CharSet.Unicode)]
-        [System.Security.SuppressUnmanagedCodeSecurity]
-        internal static extern NERR NetWkstaUserEnum(
-            string serverName,
-            uint level,
-            out IntPtr bufPtr,
-            uint prefMaxLen,
-            ref uint entriesRead,
-            ref uint totalEntries,
-            ref uint resumeHandle);
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         public struct WKSTA_USER_INFO_1
@@ -192,7 +141,5 @@ namespace LanExchange.Plugin.Network
             [MarshalAs(UnmanagedType.LPWStr)]
             public string wkui1_logon_server;
         }
-        #endregion
-
     }
 }

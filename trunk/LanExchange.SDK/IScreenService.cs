@@ -13,5 +13,7 @@ namespace LanExchange.SDK
         int MenuHeight { get; }
 
         string UserName { get; }
+
+        string ComputerName { get; }
     }
 }
