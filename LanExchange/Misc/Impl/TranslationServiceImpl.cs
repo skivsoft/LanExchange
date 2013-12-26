@@ -112,8 +112,10 @@ namespace LanExchange.Misc.Impl
                 try
                 {
                     var langName = TranslateFromPO(fileName, ID_LANGUAGE);
+                    var translit = TranslateFromPO(fileName, ID_TRANSLIT);
                     if (!string.IsNullOrEmpty(langName))
-                        sorted.Add(langName, lang);
+                        if (string.IsNullOrEmpty(translit) || m_Translits.ContainsKey(translit))
+                            sorted.Add(langName, lang);
                 }
                 catch(ArgumentException)
                 {

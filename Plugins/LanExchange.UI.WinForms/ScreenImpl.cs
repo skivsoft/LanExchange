@@ -30,5 +30,10 @@ namespace LanExchange.UI.WinForms
         {
             get { return SystemInformation.UserName; }
         }
+
+        public string ComputerName
+        {
+            get { return SystemInformation.ComputerName; }
+        }
     }
 }

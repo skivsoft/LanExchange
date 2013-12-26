@@ -6,15 +6,17 @@ using System.Security.Permissions;
 
 namespace LanExchange.Plugin.Network
 {
-    public static class NetApi32Utils
+    internal static class NetApi32Utils
     {
+        private const uint API_BUFFER_SIZE = 32768; // 128 
+
         /// <summary>
         /// Get domain name for specified machine.
         /// </summary>
         /// <param name="server"></param>
         /// <returns></returns>
         [EnvironmentPermissionAttribute(SecurityAction.LinkDemand, Unrestricted = true)]
-        public static string NetWkstaGetInfo(string server)
+        internal static string NetWkstaGetInfo(string server)
         {
             if (PluginNetwork.NETAPI32 == null)
                 return string.Empty;
@@ -29,7 +31,7 @@ namespace LanExchange.Plugin.Network
             }
             finally
             {
-                NativeMethods.NetApiBufferFree(buffer);
+                PluginNetwork.NETAPI32.NetApiBufferFree(buffer);
             }
             return result.wki100_langroup;
         }
@@ -40,88 +42,102 @@ namespace LanExchange.Plugin.Network
         /// <param name="domain"></param>
         /// <param name="types"></param>
         /// <returns></returns>
-        public static IEnumerable<NativeMethods.SERVER_INFO_101> NetServerEnum(string domain, NativeMethods.SV_101_TYPES types)
+        internal static IEnumerable<NativeMethods.SERVER_INFO_101> NetServerEnum(string domain, NativeMethods.SV_101_TYPES types)
         {
-            IntPtr pInfo;
-            uint entriesread = 0;
-            uint totalentries = 0;
-            NativeMethods.NERR err;
-            unchecked
+            if (PluginNetwork.NETAPI32 == null)
+                yield break;
+
+            uint resumeHandle = 0;
+            int result;
+            var itemType = typeof (NativeMethods.SERVER_INFO_101);
+            var itemSize = Marshal.SizeOf(itemType);
+
+            do
             {
-                err = NativeMethods.NetServerEnum(null, 101, out pInfo, (uint)-1, ref entriesread, ref totalentries, types, domain, 0);
-            }
-            if ((err == NativeMethods.NERR.NERR_SUCCESS || err == NativeMethods.NERR.ERROR_MORE_DATA) && pInfo != IntPtr.Zero)
-                try
+                IntPtr bufPtr;
+                uint entriesread;
+                uint totalentries;
+                result = PluginNetwork.NETAPI32.NetServerEnum(null, 101, out bufPtr, API_BUFFER_SIZE,
+                    out entriesread, out totalentries, (uint) types, domain, ref resumeHandle);
+                if (result == (int) NativeMethods.NERR.NERR_SUCCESS || result == (int) NativeMethods.NERR.ERROR_MORE_DATA)
                 {
-                    int ptr = pInfo.ToInt32();
+                    var ptr = bufPtr;
                     for (int i = 0; i < entriesread; i++)
                     {
-                        yield return (NativeMethods.SERVER_INFO_101)Marshal.PtrToStructure(new IntPtr(ptr), typeof(NativeMethods.SERVER_INFO_101));
-                        ptr += Marshal.SizeOf(typeof (NativeMethods.SERVER_INFO_101));
+                        yield return (NativeMethods.SERVER_INFO_101) Marshal.PtrToStructure(ptr, itemType);
+                        ptr = (IntPtr) (ptr.ToInt32() + itemSize);
                     }
+                    PluginNetwork.NETAPI32.NetApiBufferFree(bufPtr);
                 }
-                finally
-                {
-                    if (pInfo != IntPtr.Zero)
-                        NativeMethods.NetApiBufferFree(pInfo);
-                }
+            } while (result == (int) NativeMethods.NERR.ERROR_MORE_DATA);
         }
 
-        public static IEnumerable<NativeMethods.SHARE_INFO_1> NetShareEnum(string computer)
+        internal static IEnumerable<NativeMethods.SHARE_INFO_1> NetShareEnum(string computer)
         {
-            IntPtr pInfo;
-            int entriesread = 0;
-            int totalentries = 0;
-            NativeMethods.NERR err = NativeMethods.NetShareEnum(computer, 1, out pInfo, NativeMethods.MAX_PREFERRED_LENGTH, ref entriesread, ref totalentries, 0);
-            if ((err == NativeMethods.NERR.NERR_SUCCESS || err == NativeMethods.NERR.ERROR_MORE_DATA) && pInfo != IntPtr.Zero)
-                try
+            if (PluginNetwork.NETAPI32 == null)
+                yield break;
+
+            const uint stypeIPC = (uint)NativeMethods.SHARE_TYPE.STYPE_IPC;
+            uint resumeHandle = 0;
+            int result;
+            var itemType = typeof (NativeMethods.SHARE_INFO_1);
+            var itemSize = Marshal.SizeOf(itemType);
+
+            do
+            {
+                IntPtr bufPtr;
+                uint entriesread;
+                uint totalentries;
+                result = PluginNetwork.NETAPI32.NetShareEnum(computer, 1, out bufPtr, API_BUFFER_SIZE,
+                    out entriesread, out totalentries, ref resumeHandle);
+                if (result == (int) NativeMethods.NERR.NERR_SUCCESS || result == (int) NativeMethods.NERR.ERROR_MORE_DATA)
                 {
-                    const uint stypeIPC = (uint)NativeMethods.SHARE_TYPE.STYPE_IPC;
-                    int ptr = pInfo.ToInt32();
+                    var ptr = bufPtr;
                     for (int i = 0; i < entriesread; i++)
                     {
-                        var shi1 = (NativeMethods.SHARE_INFO_1)Marshal.PtrToStructure(new IntPtr(ptr), typeof (NativeMethods.SHARE_INFO_1));
+                        var shi1 = (NativeMethods.SHARE_INFO_1)Marshal.PtrToStructure(ptr, itemType);
                         if ((shi1.shi1_type & stypeIPC) != stypeIPC)
                             yield return shi1;
-                        ptr += Marshal.SizeOf(typeof (NativeMethods.SHARE_INFO_1));
+                        ptr = (IntPtr)(ptr.ToInt32() + itemSize);
                     }
+                    PluginNetwork.NETAPI32.NetApiBufferFree(bufPtr);
                 }
-                finally
-                {
-                    if (pInfo != IntPtr.Zero)
-                        NativeMethods.NetApiBufferFree(pInfo);
-                }
+            } while (result == (int) NativeMethods.NERR.ERROR_MORE_DATA);
         }
 
-        public static IEnumerable<NativeMethods.WKSTA_USER_INFO_1> NetWkstaUserEnum(string computer)
+        internal static IEnumerable<NativeMethods.WKSTA_USER_INFO_1> NetWkstaUserEnum(string computer)
         {
-            IntPtr pInfo;
-            uint entriesread = 0;
-            uint totalentries = 0;
-            uint resumehandle = 0;
+            if (PluginNetwork.NETAPI32 == null)
+                yield break;
 
-            var err = NativeMethods.NetWkstaUserEnum(computer, 1, out pInfo, NativeMethods.MAX_PREFERRED_LENGTH, ref entriesread, ref totalentries, ref resumehandle);
-            if ((err == NativeMethods.NERR.NERR_SUCCESS || err == NativeMethods.NERR.ERROR_MORE_DATA) && (pInfo != IntPtr.Zero))
-            try
+            uint resumehandle = 0;
+            int result;
+            var itemType = typeof (NativeMethods.WKSTA_USER_INFO_1);
+            var itemSize = Marshal.SizeOf(itemType);
+
+            do
             {
-                int ptr = pInfo.ToInt32();
-                for (int i = 0; i < entriesread; i++)
+                IntPtr bufPtr;
+                uint entriesread;
+                uint totalentries;
+                result = PluginNetwork.NETAPI32.NetWkstaUserEnum(computer, 1, out bufPtr, API_BUFFER_SIZE, 
+                    out entriesread, out totalentries, ref resumehandle);
+                if (result == (int) NativeMethods.NERR.NERR_SUCCESS || result == (int) NativeMethods.NERR.ERROR_MORE_DATA)
                 {
-                    var item =
-                        (NativeMethods.WKSTA_USER_INFO_1)
-                        Marshal.PtrToStructure(new IntPtr(ptr), typeof (NativeMethods.WKSTA_USER_INFO_1));
-                    yield return item;
-                    ptr += Marshal.SizeOf(typeof (NativeMethods.WKSTA_USER_INFO_1));
+                    var ptr = bufPtr;
+                    for (int i = 0; i < entriesread; i++)
+                    {
+                        var item = (NativeMethods.WKSTA_USER_INFO_1)Marshal.PtrToStructure(ptr, itemType);
+                        yield return item;
+                        ptr = (IntPtr) (ptr.ToInt32() + itemSize);
+                    }
+                    PluginNetwork.NETAPI32.NetApiBufferFree(bufPtr);
                 }
-            }
-            finally
-            {
-                NativeMethods.NetApiBufferFree(pInfo);
-            }
+            } while (result == (int)NativeMethods.NERR.ERROR_MORE_DATA);
         }
 
         [Localizable(false)]
-        public static string[] NetWkstaUserEnumNames(string computer)
+        internal static string[] NetWkstaUserEnumNames(string computer)
         {
             var users = new List<string>();
             var domain = NetWkstaGetInfo(null);
@@ -130,7 +146,7 @@ namespace LanExchange.Plugin.Network
                 if (item.wkui1_username.EndsWith("$")) continue;
                 string name;
                 if (domain != item.wkui1_logon_domain)
-                    name = string.Format(@"{0}\{1}", item.wkui1_logon_domain, item.wkui1_username);
+                    name = string.Format(@"{0}\{1}", item.wkui1_logon_domain.ToUpper(), item.wkui1_username);
                 else
                     name = item.wkui1_username;
                 if (!users.Contains(name))
