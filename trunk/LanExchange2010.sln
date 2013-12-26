@@ -42,7 +42,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Notify",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extra", "Extra", "{72C30538-5766-4EDF-9B95-4736C6EE73DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Translit", "plugins\LanExchange.Plugin.Translit\LanExchange.Plugin.Translit.csproj", "{2819AF34-74B9-49B7-AEF1-4E958C563E94}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Translit", "Plugins\LanExchange.Plugin.Translit\LanExchange.Plugin.Translit.csproj", "{2819AF34-74B9-49B7-AEF1-4E958C563E94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.FileSystem", "plugins\LanExchange.Plugin.FileSystem\LanExchange.Plugin.FileSystem.csproj", "{7380DF5F-5E0A-4080-97F4-B955C250B700}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -197,6 +199,16 @@ Global
 		{2819AF34-74B9-49B7-AEF1-4E958C563E94}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{2819AF34-74B9-49B7-AEF1-4E958C563E94}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{2819AF34-74B9-49B7-AEF1-4E958C563E94}.Release|x86.ActiveCfg = Release|Any CPU
+		{7380DF5F-5E0A-4080-97F4-B955C250B700}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7380DF5F-5E0A-4080-97F4-B955C250B700}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7380DF5F-5E0A-4080-97F4-B955C250B700}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7380DF5F-5E0A-4080-97F4-B955C250B700}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7380DF5F-5E0A-4080-97F4-B955C250B700}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7380DF5F-5E0A-4080-97F4-B955C250B700}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7380DF5F-5E0A-4080-97F4-B955C250B700}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7380DF5F-5E0A-4080-97F4-B955C250B700}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{7380DF5F-5E0A-4080-97F4-B955C250B700}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{7380DF5F-5E0A-4080-97F4-B955C250B700}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

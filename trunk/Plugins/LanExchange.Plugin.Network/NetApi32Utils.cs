@@ -6,9 +6,9 @@ using System.Security.Permissions;
 
 namespace LanExchange.Plugin.Network
 {
-    internal static class NetApi32Utils
+    public static class NetApi32Utils
     {
-        private const uint API_BUFFER_SIZE = 32768; // 128 
+        private const uint API_BUFFER_SIZE = 32768;
 
         /// <summary>
         /// Get domain name for specified machine.
@@ -16,7 +16,7 @@ namespace LanExchange.Plugin.Network
         /// <param name="server"></param>
         /// <returns></returns>
         [EnvironmentPermissionAttribute(SecurityAction.LinkDemand, Unrestricted = true)]
-        internal static string NetWkstaGetInfo(string server)
+        public static string GetMachineNetBiosDomain(string server)
         {
             if (PluginNetwork.NETAPI32 == null)
                 return string.Empty;
@@ -42,7 +42,7 @@ namespace LanExchange.Plugin.Network
         /// <param name="domain"></param>
         /// <param name="types"></param>
         /// <returns></returns>
-        internal static IEnumerable<NativeMethods.SERVER_INFO_101> NetServerEnum(string domain, NativeMethods.SV_101_TYPES types)
+        public static IEnumerable<NativeMethods.SERVER_INFO_101> NetServerEnum(string domain, NativeMethods.SV_101_TYPES types)
         {
             if (PluginNetwork.NETAPI32 == null)
                 yield break;
@@ -57,7 +57,7 @@ namespace LanExchange.Plugin.Network
                 IntPtr bufPtr;
                 uint entriesread;
                 uint totalentries;
-                result = PluginNetwork.NETAPI32.NetServerEnum(null, 101, out bufPtr, API_BUFFER_SIZE,
+                result = PluginNetwork.NETAPI32.NetServerEnum(null, 101, out bufPtr, NativeMethods.MAX_PREFERRED_LENGTH,
                     out entriesread, out totalentries, (uint) types, domain, ref resumeHandle);
                 if (result == (int) NativeMethods.NERR.NERR_SUCCESS || result == (int) NativeMethods.NERR.ERROR_MORE_DATA)
                 {
@@ -72,7 +72,7 @@ namespace LanExchange.Plugin.Network
             } while (result == (int) NativeMethods.NERR.ERROR_MORE_DATA);
         }
 
-        internal static IEnumerable<NativeMethods.SHARE_INFO_1> NetShareEnum(string computer)
+        public static IEnumerable<NativeMethods.SHARE_INFO_1> NetShareEnum(string computer)
         {
             if (PluginNetwork.NETAPI32 == null)
                 yield break;
@@ -140,7 +140,7 @@ namespace LanExchange.Plugin.Network
         internal static string[] NetWkstaUserEnumNames(string computer)
         {
             var users = new List<string>();
-            var domain = NetWkstaGetInfo(null);
+            var domain = GetMachineNetBiosDomain(null);
             foreach (var item in NetWkstaUserEnum(computer))
             {
                 if (item.wkui1_username.EndsWith("$")) continue;
