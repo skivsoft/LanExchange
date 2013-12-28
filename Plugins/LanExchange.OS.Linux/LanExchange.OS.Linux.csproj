@@ -11,6 +11,7 @@
     <RootNamespace>LanExchange.OS.Linux</RootNamespace>
     <AssemblyName>LanExchange.OS.Linux</AssemblyName>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,6 +45,8 @@
     <Compile Include="SingleInstanceService.cs" />
     <Compile Include="SysImageListService.cs" />
     <Compile Include="User32Service.cs" />
+    <Compile Include="IPHLPAPISerivce.cs" />
+    <Compile Include="NetApi32Service.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\LanExchange.SDK\LanExchange.SDK.csproj">

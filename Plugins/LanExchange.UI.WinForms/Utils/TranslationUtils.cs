@@ -75,7 +75,6 @@ namespace LanExchange.UI.WinForms.Utils
         [Localizable(false)]
         private static void ProcessMenuItems(ResourceManager resources, Menu.MenuItemCollection menuItems)
         {
-            var translationService = App.Resolve<ITranslationService>();
             foreach (MenuItem menuItem in menuItems)
                 if (menuItem.Text != "-")
                 {

@@ -23,7 +23,10 @@ namespace LanExchange.UI.WinForms
 
         public int MenuHeight
         {
-            get { return SystemInformation.MenuHeight; }
+            get 
+			{ 
+				return EnvironmentUtils.IsRunningOnMono() ? 0 : SystemInformation.MenuHeight; 
+			}
         }
 
         public string UserName
