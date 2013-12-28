@@ -23,6 +23,8 @@ namespace LanExchange.OS.Linux
             container.Register<IKernel32Service, Kernel32Service>();
             container.Register<IComctl32Service, Comctl32Service>();
             container.Register<IOle32Service, Ole32Service>();
+            container.Register<IIPHLPAPISerivice, IPHLPAPISerivce>();
+            container.Register<INetApi32Service, NetApi32Service>();
 
             container.Register<IHotkeysService, HotkeysService>();
             container.Register<ISingleInstanceService, SingleInstanceService>(); 

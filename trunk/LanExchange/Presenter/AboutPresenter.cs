@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
@@ -60,7 +61,7 @@ namespace LanExchange.Presenter
         {
             var sb = new StringBuilder();
             //sb.Append(@"{\rtf1\ansi");
-            sb.Append(@"{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset204 Microsoft Sans Serif;}}");
+            sb.Append(@"{\rtf1\ansi\deff0{\fonttbl{\f0 Microsoft Sans Serif;}}"); // \fnil\fcharset204
             sb.Append(@"\viewkind4\uc1\pard\f0\fs17 ");
             var plugins = App.Resolve<IPluginManager>().PluginsAuthors;
             if (plugins.Count > 0)
@@ -88,7 +89,7 @@ namespace LanExchange.Presenter
                 }
             }
             sb.Append("}");
-            return sb.ToString().Replace("\r\n", @"\line ");
+            return sb.ToString().Replace(Environment.NewLine, @"\line ");
         }
 
     }

@@ -27,7 +27,7 @@ namespace LanExchange.Misc
         /// <param name="height"></param>
         public static void Register(string prefix, Bitmap picture, int width, int height)
         {
-            if (App.Images == null) return;
+            if (App.Images == null || picture == null) return;
             var cols = picture.Width/width;
             var rows = picture.Height/height;
             s_Animations.Add(prefix, cols * rows);

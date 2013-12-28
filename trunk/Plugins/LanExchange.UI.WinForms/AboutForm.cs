@@ -56,6 +56,7 @@ namespace LanExchange.UI.WinForms
             if (m_BoxDetails != null) return;
             m_BoxDetails = new RichTextBox();
             var rect = ClientRectangle;
+			m_BoxDetails.Font = this.Font;
             m_BoxDetails.SetBounds(rect.Left+16, rect.Top+16, rect.Width-32, rect.Height-bShowDetails.Height-32);
             m_BoxDetails.Visible = false;
             m_BoxDetails.RightToLeft = RightToLeft;
