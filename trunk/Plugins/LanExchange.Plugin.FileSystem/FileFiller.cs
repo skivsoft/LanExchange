@@ -12,7 +12,9 @@ namespace LanExchange.Plugin.FileSystem
         public override bool IsParentAccepted(PanelItemBase parent)
         {
             var folder = parent as FilePanelItem;
-            return parent.GetType().Name.Equals(SHARE_TYPE_NAME) || (folder != null && folder.IsDirectory);
+            return (parent is DrivePanelItem) || 
+                   parent.GetType().Name.Equals(SHARE_TYPE_NAME) || 
+                   (folder != null && folder.IsDirectory);
         }
 
         public override void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)

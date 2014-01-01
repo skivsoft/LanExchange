@@ -9,5 +9,7 @@ namespace LanExchange.SDK
         IEditPresenter Presenter { get; }
 
         void SetColumns(IList<PanelColumnHeader> columns);
+
+        bool ShowModal();
     }
 }

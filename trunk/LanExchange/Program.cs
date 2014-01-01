@@ -30,14 +30,21 @@
 //
 // RELEASE 2.12 (Dec, 2013)
 //   DONE  Changing language without restart program
-//   TODO  Network: ping computer before performing action on it
 //   DONE  Network: set tab name after changing domain/group
 //   DONE  Async enum items 
+//
+// RELEASE 3.1 (Jan, 2014)
+//   DONE  FileSystem: enumerate drives
+//   TODO  FileSystem: System context menu on files
+//   TODO  FileSystem: Execute file
+//   TODO  FileSystem: Drag&Drop files
+//   TODO  Esperanto translation
+//
+// RELEASE 3.x
 //   TODO  Cache items
 //   TODO  Manual creation of computer items
 //   TODO  Recently used items must appears when Tray.onMouseOver event fired
-//
-// RELEASE 2.x
+//   TODO  Network: ping computer before performing action on it
 //   TODO  Network: Show several ip addresses if present
 //   TODO  Users: Address books as root for users
 //   TODO  Users: use fields from ldap in addons like $(AD.employeeID)
@@ -51,7 +58,7 @@
 //   TODO  Enum files and folders (FS plugin)
 //   TODO  Addons editor
 //
-// RELEASE 2.x
+// RELEASE 3.x
 //   TODO  Unit-tests coverage at least 50%
 //   TODO  Multi-langual support (Russian, Engligh)
 //   TODO  Internal language editor

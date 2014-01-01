@@ -13,7 +13,7 @@ namespace LanExchange.UI.WinForms
 
         private void SetupRtl()
         {
-            if (App.TR.RightToLeft)
+            if (App.TR != null && App.TR.RightToLeft)
             {
                 RightToLeftLayout = true;
                 RightToLeft = RightToLeft.Yes;

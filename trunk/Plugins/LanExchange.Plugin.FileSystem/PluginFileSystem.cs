@@ -23,6 +23,7 @@ namespace LanExchange.Plugin.FileSystem
             if (factoryManager != null)
             {
                 factoryManager.RegisterFactory<FileRoot>(new PanelItemRootFactory<FileRoot>());
+                factoryManager.RegisterFactory<DrivePanelItem>(new DriveFactory());
                 factoryManager.RegisterFactory<FilePanelItem>(new FileFactory());
             }
 
@@ -30,6 +31,7 @@ namespace LanExchange.Plugin.FileSystem
             var fillerManager = (IPanelFillerManager)m_Provider.GetService(typeof(IPanelFillerManager));
             if (fillerManager != null)
             {
+                fillerManager.RegisterFiller<DrivePanelItem>(new DriveFiller());
                 fillerManager.RegisterFiller<FilePanelItem>(new FileFiller());
             }
         }

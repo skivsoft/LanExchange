@@ -9,7 +9,7 @@ namespace LanExchange.Plugin.FileSystem
     {
         protected override string GetName()
         {
-            return "Local files";
+            return "Computer";
         }
 
         public override string ImageName
