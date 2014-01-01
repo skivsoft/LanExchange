@@ -14,7 +14,7 @@ namespace LanExchange.UI.WPF.Impl
         //private readonly ImageList m_SmallImageList;
         //private readonly ImageList m_LargeImageList;
         private readonly Dictionary<string, int> m_NamesMap;
-        private int m_LastIndex;
+        //private int m_LastIndex;
 
         private static readonly Bitmap SmallEmpty = new Bitmap(16, 16);
         private static readonly Bitmap LargeEmpty = new Bitmap(32, 32);

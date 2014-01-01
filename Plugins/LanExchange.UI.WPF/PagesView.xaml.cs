@@ -119,5 +119,10 @@ namespace LanExchange.UI.WPF
         {
             return null;
         }
+
+        public IntPtr Handle
+        {
+            get { return IntPtr.Zero; }
+        }
     }
 }
