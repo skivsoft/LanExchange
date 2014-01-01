@@ -34,6 +34,10 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColumnDrive.cs" />
+    <Compile Include="DriveFactory.cs" />
+    <Compile Include="DriveFiller.cs" />
+    <Compile Include="DrivePanelItem.cs" />
     <Compile Include="FileFactory.cs" />
     <Compile Include="FileFiller.cs" />
     <Compile Include="ColumnName.cs" />

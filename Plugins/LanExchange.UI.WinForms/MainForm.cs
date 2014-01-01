@@ -421,6 +421,7 @@ namespace LanExchange.UI.WinForms
 
         private void mPanel_Popup(object sender, EventArgs e)
         {
+            mNewItem.Enabled = App.Presenter.IsActionEnabled("ActionNewItem");
             mReRead.Enabled = App.Presenter.IsActionEnabled("ActionReRead");
             mCloseTab.Enabled = App.Presenter.IsActionEnabled("ActionCloseTab");
             mCloseOther.Enabled = App.Presenter.IsActionEnabled("ActionCloseOther");

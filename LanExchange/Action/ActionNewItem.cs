@@ -14,12 +14,16 @@ namespace LanExchange.Action
             if (model == null) return;
             var form = App.Resolve<IEditView>();
             form.Presenter.SetDataType(model.DataType);
-            form.Show();
+            form.ShowModal();
         }
 
         public bool Enabled
         {
-            get { return true; }
+            get
+            {
+                var model = App.MainPages.GetItem(App.MainPages.SelectedIndex);
+                return model != null;
+            }
         }
     }
 }

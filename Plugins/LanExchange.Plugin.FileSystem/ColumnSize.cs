@@ -54,7 +54,7 @@ namespace LanExchange.Plugin.FileSystem
 
         public override string ToString()
         {
-            return m_IsDirectory && m_Value == 0 ? string.Empty : m_Value.ToString(CultureInfo.InvariantCulture);
+            return m_IsDirectory && m_Value == 0 ? string.Empty : m_Value.ToString("N0", CultureInfo.CurrentCulture);
         }
     }
 }

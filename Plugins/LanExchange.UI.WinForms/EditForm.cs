@@ -68,6 +68,11 @@ namespace LanExchange.UI.WinForms
             }
         }
 
+        public bool ShowModal()
+        {
+            return ShowDialog() == DialogResult.OK;
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
             Close();

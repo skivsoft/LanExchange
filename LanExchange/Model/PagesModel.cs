@@ -48,6 +48,8 @@ namespace LanExchange.Model
 
         public IPanelModel GetItem(int index)
         {
+            if (index < 0 || index > m_List.Count - 1)
+                return null;
             return m_List[index];
         }
 

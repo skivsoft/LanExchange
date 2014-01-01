@@ -32,7 +32,6 @@ namespace LanExchange.UI.WinForms
         {
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.checkAdd = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // buttonOK
@@ -52,20 +51,9 @@ namespace LanExchange.UI.WinForms
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 1;
-            this.buttonCancel.Text = "Cancel";
+            this.buttonCancel.Text = "Close";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // checkAdd
-            // 
-            this.checkAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.checkAdd.AutoSize = true;
-            this.checkAdd.Location = new System.Drawing.Point(20, 385);
-            this.checkAdd.Name = "checkAdd";
-            this.checkAdd.Size = new System.Drawing.Size(98, 17);
-            this.checkAdd.TabIndex = 2;
-            this.checkAdd.Text = "Add more items";
-            this.checkAdd.UseVisualStyleBackColor = true;
             // 
             // EditForm
             // 
@@ -73,7 +61,6 @@ namespace LanExchange.UI.WinForms
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(556, 426);
-            this.Controls.Add(this.checkAdd);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -84,7 +71,6 @@ namespace LanExchange.UI.WinForms
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "New item";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -92,6 +78,5 @@ namespace LanExchange.UI.WinForms
 
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.Button buttonCancel;
-        private System.Windows.Forms.CheckBox checkAdd;
     }
 }
