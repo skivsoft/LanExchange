@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Setup", "Setup\Setup.wixproj", "{6452745F-D8FC-4B4B-ABF8-A5A3B70135C4}"
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Setup", "..\..\Setup\Setup.wixproj", "{6452745F-D8FC-4B4B-ABF8-A5A3B70135C4}"
 	ProjectSection(ProjectDependencies) = postProject
 		{064D3413-8F0B-4511-85F3-4919AC1D5A98} = {064D3413-8F0B-4511-85F3-4919AC1D5A98}
 		{18971728-B208-45D9-B4BB-4BB6020963E7} = {18971728-B208-45D9-B4BB-4BB6020963E7}
@@ -11,40 +11,40 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Setup", "Setup\Setup.wixpro
 		{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1} = {9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange", "LanExchange\LanExchange.csproj", "{CC938630-E3FC-426E-A8A7-06EB22ABC703}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange", "..\..\LanExchange\LanExchange.csproj", "{CC938630-E3FC-426E-A8A7-06EB22ABC703}"
 	ProjectSection(ProjectDependencies) = postProject
 		{18971728-B208-45D9-B4BB-4BB6020963E7} = {18971728-B208-45D9-B4BB-4BB6020963E7}
 		{944D4DA4-F7EF-4226-A99A-2910A3B2E957} = {944D4DA4-F7EF-4226-A99A-2910A3B2E957}
 		{C55CD3A5-6762-4152-8231-E27FB3399067} = {C55CD3A5-6762-4152-8231-E27FB3399067}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.SDK", "LanExchange.SDK\LanExchange.SDK.csproj", "{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.SDK", "..\..\LanExchange.SDK\LanExchange.SDK.csproj", "{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Network", "Plugins\LanExchange.Plugin.Network\LanExchange.Plugin.Network.csproj", "{18971728-B208-45D9-B4BB-4BB6020963E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Network", "..\..\Plugins\LanExchange.Plugin.Network\LanExchange.Plugin.Network.csproj", "{18971728-B208-45D9-B4BB-4BB6020963E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Users", "Plugins\LanExchange.Plugin.Users\LanExchange.Plugin.Users.csproj", "{064D3413-8F0B-4511-85F3-4919AC1D5A98}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Users", "..\..\Plugins\LanExchange.Plugin.Users\LanExchange.Plugin.Users.csproj", "{064D3413-8F0B-4511-85F3-4919AC1D5A98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Win7", "Plugins\LanExchange.Plugin.Win7\LanExchange.Plugin.Win7.csproj", "{26D53677-B560-4697-9C4E-E54ECBD4C048}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Win7", "..\..\Plugins\LanExchange.Plugin.Win7\LanExchange.Plugin.Win7.csproj", "{26D53677-B560-4697-9C4E-E54ECBD4C048}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMIViewer", "WMIViewer\WMIViewer.csproj", "{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "..\..\Tests\Tests.csproj", "{21D3F599-1FA0-423A-8380-8B1041B353AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{21D3F599-1FA0-423A-8380-8B1041B353AC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.UI.WPF", "..\..\Plugins\LanExchange.UI.WPF\LanExchange.UI.WPF.csproj", "{9B9EBF04-BB88-445A-A562-EFB308D8D0A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.UI.WPF", "Plugins\LanExchange.UI.WPF\LanExchange.UI.WPF.csproj", "{9B9EBF04-BB88-445A-A562-EFB308D8D0A9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.UI.WinForms", "..\..\Plugins\LanExchange.UI.WinForms\LanExchange.UI.WinForms.csproj", "{944D4DA4-F7EF-4226-A99A-2910A3B2E957}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.UI.WinForms", "Plugins\LanExchange.UI.WinForms\LanExchange.UI.WinForms.csproj", "{944D4DA4-F7EF-4226-A99A-2910A3B2E957}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.OS.Windows", "..\..\Plugins\LanExchange.OS.Windows\LanExchange.OS.Windows.csproj", "{C55CD3A5-6762-4152-8231-E27FB3399067}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.OS.Windows", "Plugins\LanExchange.OS.Windows\LanExchange.OS.Windows.csproj", "{C55CD3A5-6762-4152-8231-E27FB3399067}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.OS.Linux", "..\..\Plugins\LanExchange.OS.Linux\LanExchange.OS.Linux.csproj", "{5BE1B038-07CC-41DC-8E97-BC308C5F9CB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.OS.Linux", "Plugins\LanExchange.OS.Linux\LanExchange.OS.Linux.csproj", "{5BE1B038-07CC-41DC-8E97-BC308C5F9CB3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Notify", "Plugins\LanExchange.Plugin.Notify\LanExchange.Plugin.Notify.csproj", "{1E99C2AE-DEDE-4D80-801A-B02B712031F3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Notify", "..\..\Plugins\LanExchange.Plugin.Notify\LanExchange.Plugin.Notify.csproj", "{1E99C2AE-DEDE-4D80-801A-B02B712031F3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extra", "Extra", "{72C30538-5766-4EDF-9B95-4736C6EE73DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Translit", "Plugins\LanExchange.Plugin.Translit\LanExchange.Plugin.Translit.csproj", "{2819AF34-74B9-49B7-AEF1-4E958C563E94}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Translit", "..\..\Plugins\LanExchange.Plugin.Translit\LanExchange.Plugin.Translit.csproj", "{2819AF34-74B9-49B7-AEF1-4E958C563E94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.FileSystem", "plugins\LanExchange.Plugin.FileSystem\LanExchange.Plugin.FileSystem.csproj", "{7380DF5F-5E0A-4080-97F4-B955C250B700}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.FileSystem", "..\..\Plugins\LanExchange.Plugin.FileSystem\LanExchange.Plugin.FileSystem.csproj", "{7380DF5F-5E0A-4080-97F4-B955C250B700}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMIViewer", "..\..\WMIViewer\WMIViewer.csproj", "{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -119,16 +119,6 @@ Global
 		{26D53677-B560-4697-9C4E-E54ECBD4C048}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{26D53677-B560-4697-9C4E-E54ECBD4C048}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{26D53677-B560-4697-9C4E-E54ECBD4C048}.Release|x86.ActiveCfg = Release|Any CPU
-		{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}.Debug|x86.ActiveCfg = Debug|x86
-		{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}.Debug|x86.Build.0 = Debug|x86
-		{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}.Release|Any CPU.ActiveCfg = Release|x86
-		{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}.Release|Mixed Platforms.Build.0 = Release|x86
-		{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}.Release|x86.ActiveCfg = Release|x86
-		{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}.Release|x86.Build.0 = Release|x86
 		{21D3F599-1FA0-423A-8380-8B1041B353AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{21D3F599-1FA0-423A-8380-8B1041B353AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21D3F599-1FA0-423A-8380-8B1041B353AC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -209,6 +199,16 @@ Global
 		{7380DF5F-5E0A-4080-97F4-B955C250B700}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{7380DF5F-5E0A-4080-97F4-B955C250B700}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{7380DF5F-5E0A-4080-97F4-B955C250B700}.Release|x86.ActiveCfg = Release|Any CPU
+		{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}.Debug|x86.ActiveCfg = Debug|x86
+		{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}.Debug|x86.Build.0 = Debug|x86
+		{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}.Release|Any CPU.ActiveCfg = Release|x86
+		{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}.Release|Mixed Platforms.Build.0 = Release|x86
+		{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}.Release|x86.ActiveCfg = Release|x86
+		{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -218,8 +218,5 @@ Global
 		{5BE1B038-07CC-41DC-8E97-BC308C5F9CB3} = {72C30538-5766-4EDF-9B95-4736C6EE73DA}
 		{1E99C2AE-DEDE-4D80-801A-B02B712031F3} = {72C30538-5766-4EDF-9B95-4736C6EE73DA}
 		{26D53677-B560-4697-9C4E-E54ECBD4C048} = {72C30538-5766-4EDF-9B95-4736C6EE73DA}
-	EndGlobalSection
-	GlobalSection(NDepend) = preSolution
-		Project = "..\..\..\NDependProject.ndproj"
 	EndGlobalSection
 EndGlobal

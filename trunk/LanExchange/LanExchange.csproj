@@ -146,7 +146,6 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="res.resources" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Addons\Users.xml">
@@ -166,13 +165,13 @@
     <Content Include="Addons\NetworkRadmin.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Languages\Russain-game.po">
+    <None Include="Languages\Russian_game.po">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Languages\Kazakh-arabic.po">
+    <None Include="Languages\Kazakh_arabic.po">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Languages\Russain-latin.po">
+    <None Include="Languages\Russian_latin.po">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Resources\process_working.png" />
@@ -228,7 +227,7 @@
   <ItemGroup>
     <Content Include="History.txt" />
     <Content Include="LanExchange.ico" />
-    <None Include="Languages\Kazakh-latin.po">
+    <None Include="Languages\Kazakh_latin.po">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="Misc\MVP.gif" />

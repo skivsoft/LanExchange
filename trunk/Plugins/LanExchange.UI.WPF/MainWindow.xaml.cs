@@ -123,5 +123,34 @@ namespace LanExchange.UI.WPF
             Close();
         }
 
+
+
+        public IInfoView Info
+        {
+            get { return null; }
+        }
+
+        public string ShowWindowKey
+        {
+            get { return string.Empty; }
+            set
+            {
+            }
+        }
+
+        public object SafeInvoke(Delegate method, params object[] args)
+        {
+            return null;
+        }
+
+
+        public new void Activate()
+        {
+        }
+
+        public IntPtr Handle
+        {
+            get { return IntPtr.Zero; }
+        }
     }
 }
