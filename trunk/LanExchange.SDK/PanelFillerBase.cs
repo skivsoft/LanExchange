@@ -2,31 +2,23 @@
 
 namespace LanExchange.SDK
 {
-    public class PanelFillerBase
+    public abstract class PanelFillerBase
     {
-        public virtual bool IsParentAccepted(PanelItemBase parent)
-        {
-            return false;
-        }
+        public abstract bool IsParentAccepted(PanelItemBase parent);
 
         /// <summary>
         /// This method should return known items instantly.
-        /// For filling items from remote source use <see cref="Fill"/>.
+        /// For filling items from remote source use <see cref="AsyncFill"/>.
         /// </summary>
         /// <param name="parent"></param>
         /// <param name="result"></param>
-        public virtual void SyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
-        {
-        }
+        public abstract void SyncFill(PanelItemBase parent, ICollection<PanelItemBase> result);
 
         /// <summary>
         /// This method will be called asynchronous and can get items from remote source.
         /// </summary>
         /// <param name="parent"></param>
         /// <param name="result"></param>
-        public virtual void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
-        {
-
-        }
+        public abstract void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result);
     }
 }

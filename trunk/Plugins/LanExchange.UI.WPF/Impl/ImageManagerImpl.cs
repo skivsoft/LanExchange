@@ -214,5 +214,10 @@ namespace LanExchange.UI.WPF.Impl
             //}
         }
 
+
+        public Image GetLargeImageOfFileName(string fileName)
+        {
+            return null;
+        }
     }
 }

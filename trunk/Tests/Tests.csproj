@@ -50,6 +50,9 @@
     <Compile Include="Model\PagesModelTest.cs" />
     <Compile Include="Model\PanelIndexEvenArgsTest.cs" />
     <Compile Include="Model\CustomPanelItemTest.cs" />
+    <Compile Include="Plugin\FileSystem\FilePanelItemTest.cs" />
+    <Compile Include="Plugin\FileSystem\DrivePanelItemTest.cs" />
+    <Compile Include="Plugin\FileSystem\FileRootTest.cs" />
     <Compile Include="Plugin\Network\OSVersionTest.cs" />
     <Compile Include="SDK\PanelFillerResultTest.cs" />
     <Compile Include="SDK\PanelItemBaseTest.cs" />
@@ -84,6 +87,10 @@
     <ProjectReference Include="..\LanExchange\LanExchange.csproj">
       <Project>{CC938630-E3FC-426E-A8A7-06EB22ABC703}</Project>
       <Name>LanExchange</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\LanExchange.Plugin.FileSystem\LanExchange.Plugin.FileSystem.csproj">
+      <Project>{7380DF5F-5E0A-4080-97F4-B955C250B700}</Project>
+      <Name>LanExchange.Plugin.FileSystem</Name>
     </ProjectReference>
     <ProjectReference Include="..\Plugins\LanExchange.Plugin.Network\LanExchange.Plugin.Network.csproj">
       <Project>{18971728-B208-45D9-B4BB-4BB6020963E7}</Project>

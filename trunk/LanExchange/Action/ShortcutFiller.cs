@@ -15,7 +15,11 @@ namespace LanExchange.Action
             return parent is ShortcutRoot;
         }
 
-        public override void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
+        public override void SyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
+        {
+        }
+
+        public override void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
             result.Add(new ShortcutPanelItem(parent, Resources.KeyF1, Resources.KeyF1__));
             result.Add(new ShortcutPanelItem(parent, Resources.KeyF10, Resources.KeyF10__));

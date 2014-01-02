@@ -114,8 +114,14 @@ namespace LanExchange.Presenter
             if (pv == null) return;
             var panelItem = pv.Presenter.GetFocusedPanelItem(false, true);
             // check if parent item more informative than current panel item
-            while (panelItem != null && !(panelItem.Parent is PanelItemRootBase) && !(panelItem.Parent.Parent is PanelItemRootBase))
+            while (panelItem != null)
+            {
+                if (panelItem.Parent is PanelItemRootBase) 
+                    break;
+                if (panelItem.Parent != null && (panelItem.Parent.Parent is PanelItemRootBase))
+                    break;
                 panelItem = panelItem.Parent;
+            }
             if (panelItem == null || View.Info == null) return;
             View.Info.CurrentItem = panelItem;
             View.Info.NumLines = App.Config.NumInfoLines;
@@ -136,7 +142,8 @@ namespace LanExchange.Presenter
         public void GlobalTranslateUI()
         {
             var service = App.Resolve<IWaitingService>();
-            service.BeginWait();
+            if (App.MainView != null)
+                service.BeginWait();
             try
             {
                 // recreate all columns
@@ -146,7 +153,8 @@ namespace LanExchange.Presenter
             }
             finally
             {
-                service.EndWait();
+                if (App.MainView != null)
+                    service.EndWait();
             }
         }
 
@@ -170,8 +178,7 @@ namespace LanExchange.Presenter
 
         private int GetDefaultWidth(IScreenService screen)
         {
-            const double phi2 = 0.6180339887498949;
-            return (int)(screen.PrimaryScreenWorkingArea.Width * phi2 * phi2);
+            return 500;
         }
 
         public Rectangle SettingsGetBounds()

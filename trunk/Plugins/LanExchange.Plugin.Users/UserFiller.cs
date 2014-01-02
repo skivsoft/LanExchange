@@ -43,7 +43,7 @@ namespace LanExchange.Plugin.Users
         }
 
         [Localizable(false)]
-        public override void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
+        public override void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
             var startPath = LdapUtils.GetUserPath(App.Resolve<IScreenService>().UserName); // "u770503350189"
             
@@ -103,6 +103,10 @@ namespace LanExchange.Plugin.Users
                     Debug.Print(ex.Message);
                 }
             }
+        }
+
+        public override void SyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
+        {
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using LanExchange.Plugin.FileSystem.Properties;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.FileSystem
@@ -17,7 +18,11 @@ namespace LanExchange.Plugin.FileSystem
 
         public override void RegisterColumns(IPanelColumnManager columnManager)
         {
-            columnManager.RegisterColumn<DrivePanelItem>(new PanelColumnHeader("Name", 200));
+            columnManager.RegisterColumn<DrivePanelItem>(new PanelColumnHeader(Resources.Name, 150));
+            columnManager.RegisterColumn<DrivePanelItem>(new PanelColumnHeader(Resources.Type, 80));
+            columnManager.RegisterColumn<DrivePanelItem>(new PanelColumnHeader(Resources.TotalSize, 100) { TextAlign = HorizontalAlignment.Right });
+            columnManager.RegisterColumn<DrivePanelItem>(new PanelColumnHeader(Resources.FreeSpace, 100) { TextAlign = HorizontalAlignment.Right });
+            columnManager.RegisterColumn<DrivePanelItem>(new PanelColumnHeader(Resources.FileSystem, 80) { Visible = false });
         }
     }
 }

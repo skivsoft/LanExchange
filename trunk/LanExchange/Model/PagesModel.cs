@@ -10,7 +10,8 @@ namespace LanExchange.Model
     [XmlType("LanExchangeTabs")]
     public class PagesModel : IPagesModel
     {
-        private const string DEFAULT_PANELITEMTYPE = "DomainPanelItem";
+        private const string DEFAULT1_PANELITEMTYPE = "DomainPanelItem";
+        private const string DEFAULT2_PANELITEMTYPE = "DrivePanelItem";
         private readonly List<IPanelModel> m_List;
         private int m_SelectedIndex;
 
@@ -162,7 +163,9 @@ namespace LanExchange.Model
             }
             if (Count == 0)
             {
-                var root = App.PanelItemTypes.CreateDefaultRoot(DEFAULT_PANELITEMTYPE);
+                var root = App.PanelItemTypes.CreateDefaultRoot(DEFAULT1_PANELITEMTYPE);
+                if (root == null)
+                    root = App.PanelItemTypes.CreateDefaultRoot(DEFAULT2_PANELITEMTYPE);
                 if (root == null) return;
                 // create default tab
                 var info = App.Resolve<IPanelModel>();

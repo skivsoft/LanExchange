@@ -12,7 +12,11 @@ namespace LanExchange.Plugin.Network
             return parent is DomainPanelItem;
         }
 
-        public override void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
+        public override void SyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
+        {
+        }
+
+        public override void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
             if (parent == null)
                 throw new ArgumentNullException("parent");

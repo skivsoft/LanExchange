@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
+using System.Xml.Serialization;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.FileSystem
@@ -20,7 +21,8 @@ namespace LanExchange.Plugin.FileSystem
             FileName = fileName;
         }
 
-        public override sealed string Name { get; set; }
+        [XmlAttribute]
+        public override string Name { get; set; }
 
         public string FileName
         {
@@ -55,7 +57,7 @@ namespace LanExchange.Plugin.FileSystem
                     return (m_FI.Attributes & (FileAttributes.Hidden | FileAttributes.System)) != 0
                                ? PanelImageNames.FOLDER + PanelImageNames.HIDDEN_POSTFIX
                                : PanelImageNames.FOLDER;
-                return string.Empty;
+                return FullName;
             }
         }
 

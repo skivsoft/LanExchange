@@ -8,6 +8,7 @@ namespace LanExchange.Plugin.FileSystem
     internal class FileFiller : PanelFillerBase
     {
         private const string SHARE_TYPE_NAME = "SharePanelItem";
+        private string m_PathExt;
 
         public override bool IsParentAccepted(PanelItemBase parent)
         {
@@ -17,12 +18,30 @@ namespace LanExchange.Plugin.FileSystem
                    (folder != null && folder.IsDirectory);
         }
 
-        public override void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
+        public override void SyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
+        {
+        }
+
+        public override void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
             var path = parent.FullName;
             var files = Directory.GetFileSystemEntries(path, "*.*");
+            m_PathExt = Environment.GetEnvironmentVariable("PATHEXT") + ";";
+            m_PathExt = m_PathExt.ToUpper();
             foreach (var fname in files)
-                result.Add(new FilePanelItem(parent, fname));
+            {
+                var file = new FilePanelItem(parent, fname);
+                result.Add(file);
+                //if (!file.IsDirectory && IsExecutable(fname))
+                //    PluginFileSystem.RegisterImageForFileName(fname);
+            }
+        }
+
+        private bool IsExecutable(string fname)
+        {
+            var ext = Path.GetExtension(fname);
+            if (ext == null) return false;
+            return m_PathExt.Contains(ext.ToUpper() + ";");
         }
     }
 }

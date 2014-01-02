@@ -38,7 +38,10 @@
 //   TODO  FileSystem: System context menu on files
 //   TODO  FileSystem: Execute file
 //   TODO  FileSystem: Drag&Drop files
+//   TODO  FileSystem: Directories always first on sorting
 //   TODO  Esperanto translation
+//   TODO  Re-order tabs
+//   TODO  Bug: wrong main window position on start when MainFormX is 0
 //
 // RELEASE 3.x
 //   TODO  Cache items
@@ -76,6 +79,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using LanExchange.Action;
 using LanExchange.Misc;
 using LanExchange.Properties;
@@ -85,6 +89,8 @@ namespace LanExchange
 {
     internal static class Program
     {
+        public static long LoadPluginsMS;
+
         [STAThread]
         [Localizable(false)]
         static void Main()
@@ -114,6 +120,8 @@ namespace LanExchange
 
         private static void LoadPlugins()
         {
+            var sw = new Stopwatch();
+            sw.Start();
             var plugins = App.Resolve<IPluginManager>();
             // load os plugins
             plugins.LoadPlugins(PluginType.OS);
@@ -139,6 +147,7 @@ namespace LanExchange
             (new PluginInternal()).Initialize(App.Resolve<IServiceProvider>());
             // register stage images for icon animation
             AnimationHelper.Register(AnimationHelper.WORKING, Resources.process_working, 16, 16);
+            LoadPluginsMS = sw.ElapsedMilliseconds;
         }
     }
 }
