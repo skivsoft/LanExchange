@@ -10,8 +10,8 @@ namespace LanExchange.OS.Linux
         public void Initialize(IServiceProvider serviceProvider)
         {
             // load plugin if only mono runtime present
-            //if (!EnvironmentUtils.IsRunningOnMono())
-            //    return;
+            if (!EnvironmentUtils.IsRunningOnMono())
+                return;
 
             m_Provider = serviceProvider;
 

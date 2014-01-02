@@ -196,6 +196,16 @@ namespace LanExchange.UI.WinForms
             }
         }
 
+        public Image GetLargeImageOfFileName(string fileName)
+        {
+            using (var large = App.Resolve<ISysImageListService>())
+            {
+                large.Create(SysImageListSize.LargeIcons);
+                var index = large.GetIconIndex(fileName);
+                return index < 0 ? null : large.GetIcon(index).ToBitmap();
+            }
+        }
+
         public void SetImagesTo(object control)
         {
             if (control is TabControl)

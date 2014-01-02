@@ -13,11 +13,17 @@ namespace LanExchange.Plugin.FileSystem
             return parent is FileRoot;
         }
 
-        public override void Fill(PanelItemBase parent, ICollection<PanelItemBase> result)
+        public override void SyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
+        {
+        }
+
+        public override void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
             foreach (var drive in DriveInfo.GetDrives())
             {
-                var item = new DrivePanelItem(parent, drive.RootDirectory.Name);
+                var fname = drive.RootDirectory.Name;
+                PluginFileSystem.RegisterImageForFileName(fname);
+                var item = new DrivePanelItem(parent, fname);
                 item.Info = drive;
                 result.Add(item);
             }

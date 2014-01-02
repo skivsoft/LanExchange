@@ -42,7 +42,7 @@ namespace LanExchange.Misc.Impl
                         if (mode == RetrieveMode.Sync)
                             pair.Value.SyncFill(parent, result.Items);
                         else
-                            pair.Value.Fill(parent, result.Items);
+                            pair.Value.AsyncFill(parent, result.Items);
                     }
                     catch (Exception ex)
                     {

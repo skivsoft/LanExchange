@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
+using LanExchange.Plugin.FileSystem.Properties;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.FileSystem
@@ -14,9 +16,9 @@ namespace LanExchange.Plugin.FileSystem
             m_Provider = serviceProvider;
 
             // Setup resource manager
-            //var translationService = (ITranslationService)m_Provider.GetService(typeof(ITranslationService));
-            //if (translationService != null)
-            //    translationService.SetResourceManagerTo<Resources>();
+            var translationService = (ITranslationService)m_Provider.GetService(typeof(ITranslationService));
+            if (translationService != null)
+                translationService.SetResourceManagerTo<Resources>();
 
             // Register new panel item types
             var factoryManager = (IPanelItemFactoryManager)m_Provider.GetService(typeof(IPanelItemFactoryManager));
@@ -33,6 +35,20 @@ namespace LanExchange.Plugin.FileSystem
             {
                 fillerManager.RegisterFiller<DrivePanelItem>(new DriveFiller());
                 fillerManager.RegisterFiller<FilePanelItem>(new FileFiller());
+            }
+
+            // Register images for disk drives
+            foreach (var drive in DriveInfo.GetDrives())
+                RegisterImageForFileName(drive.RootDirectory.Name);
+        }
+
+        public static void RegisterImageForFileName(string fname)
+        {
+            if (App.Images != null && App.Images.IndexOf(fname) == -1)
+            {
+                var image1 = App.Images.GetSmallImageOfFileName(fname);
+                var image2 = App.Images.GetLargeImageOfFileName(fname);
+                App.Images.RegisterImage(fname, image1, image2);
             }
         }
     }

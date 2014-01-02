@@ -21,7 +21,7 @@ namespace LanExchange.Plugin.Network
         {
             var strategy = new ComputerFiller();
             var result = new Collection<PanelItemBase>();
-            strategy.Fill(null, result);
+            strategy.AsyncFill(null, result);
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace LanExchange.Plugin.Network
             var strategy = new ComputerFiller();
             var result = new Collection<PanelItemBase>();
             var domain = NetApi32Utils.GetMachineNetBiosDomain(null);
-            strategy.Fill(new DomainPanelItem(null, domain), result);
+            strategy.AsyncFill(new DomainPanelItem(null, domain), result);
             Assert.Greater(result.Count, 0);
         }
     }

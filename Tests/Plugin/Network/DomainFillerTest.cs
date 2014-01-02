@@ -19,7 +19,7 @@ namespace LanExchange.Plugin.Network
         {
             var strategy = new DomainFiller();
             var result = new Collection<PanelItemBase>();
-            strategy.Fill(null, result);
+            strategy.AsyncFill(null, result);
             Assert.Greater(result.Count, 0);
         }
     }

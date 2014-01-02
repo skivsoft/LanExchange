@@ -11,7 +11,7 @@ namespace LanExchange.Plugin.FileSystem
         private readonly bool m_IsDirectory;
         private readonly string m_Name;
 
-        public ColumnSize(long value, bool isDirectory, string name )
+        public ColumnSize(long value, bool isDirectory = true, string name = null )
         {
             m_Value = value;
             m_IsDirectory = isDirectory;

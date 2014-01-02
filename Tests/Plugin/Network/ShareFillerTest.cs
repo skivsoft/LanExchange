@@ -21,7 +21,7 @@ namespace LanExchange.Plugin.Network
         {
             var strategy = new ShareFiller();
             var result = new Collection<PanelItemBase>();
-            strategy.Fill(null, result);
+            strategy.AsyncFill(null, result);
         }
 
         [Test]
@@ -32,11 +32,11 @@ namespace LanExchange.Plugin.Network
             var computer = new ComputerPanelItem(new DomainPanelItem(new DomainRoot(), domain), SystemInformation.ComputerName);
             ShareFiller.ShowHiddenShares = true;
             var result = new Collection<PanelItemBase>();
-            strategy.Fill(computer, result);
+            strategy.AsyncFill(computer, result);
             Assert.Greater(result.Count, 0);
             Assert.IsInstanceOf<SharePanelItem>(result[0]);
             ShareFiller.ShowHiddenShares = false;
-            strategy.Fill(computer, result);
+            strategy.AsyncFill(computer, result);
         }
     }
 }
