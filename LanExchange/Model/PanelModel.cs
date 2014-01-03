@@ -61,8 +61,8 @@ namespace LanExchange.Model
         {
             get
             {
-                var parent = m_CurrentPath.Peek();
-                return parent.Name;
+                var parent = m_CurrentPath.IsEmpty ? null : m_CurrentPath.Peek();
+                return parent == null ? string.Empty : parent.Name;
             }
         }
 

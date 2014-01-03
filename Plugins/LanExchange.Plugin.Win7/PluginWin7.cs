@@ -19,7 +19,6 @@ namespace LanExchange.Plugin.Win7
                 container.Unregister<IWaitingService>();
                 container.Register<IWaitingService, Win7WaitingServiceImpl>();
             }
-
         }
     }
 }

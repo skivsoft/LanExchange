@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Action\ShortcutPanelItemTest.cs" />
+    <Compile Include="Action\ShortcutRootTest.cs" />
     <Compile Include="Misc\SimpleIocContainerTests.cs" />
     <Compile Include="Misc\Impl\AddonManagerImplTest.cs" />
     <Compile Include="Model\FolderManagerTest.cs" />
@@ -54,6 +56,7 @@
     <Compile Include="Plugin\FileSystem\DrivePanelItemTest.cs" />
     <Compile Include="Plugin\FileSystem\FileRootTest.cs" />
     <Compile Include="Plugin\Network\OSVersionTest.cs" />
+    <Compile Include="Plugin\Network\Utils.cs" />
     <Compile Include="SDK\PanelFillerResultTest.cs" />
     <Compile Include="SDK\PanelItemBaseTest.cs" />
     <Compile Include="Model\PanelItemListEventArgsTest.cs" />
@@ -88,6 +91,10 @@
       <Project>{CC938630-E3FC-426E-A8A7-06EB22ABC703}</Project>
       <Name>LanExchange</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Plugins\LanExchange.OS.Windows\LanExchange.OS.Windows.csproj">
+      <Project>{C55CD3A5-6762-4152-8231-E27FB3399067}</Project>
+      <Name>LanExchange.OS.Windows</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Plugins\LanExchange.Plugin.FileSystem\LanExchange.Plugin.FileSystem.csproj">
       <Project>{7380DF5F-5E0A-4080-97F4-B955C250B700}</Project>
       <Name>LanExchange.Plugin.FileSystem</Name>
@@ -106,7 +113,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Misc\Service\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange", "..\..\LanExc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Users", "..\..\Plugins\LanExchange.Plugin.Users\LanExchange.Plugin.Users.csproj", "{064D3413-8F0B-4511-85F3-4919AC1D5A98}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.UI.GtkSharp", "..\..\Plugins\LanExchange.UI.GtkSharp\LanExchange.UI.GtkSharp.csproj", "{33F37437-C463-4DCA-B8EE-2D3039826E8B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -21,6 +23,10 @@ Global
 		{064D3413-8F0B-4511-85F3-4919AC1D5A98}.Debug|x86.Build.0 = Debug|Any CPU
 		{064D3413-8F0B-4511-85F3-4919AC1D5A98}.Release|x86.ActiveCfg = Release|Any CPU
 		{064D3413-8F0B-4511-85F3-4919AC1D5A98}.Release|x86.Build.0 = Release|Any CPU
+		{33F37437-C463-4DCA-B8EE-2D3039826E8B}.Debug|x86.ActiveCfg = Debug|x86
+		{33F37437-C463-4DCA-B8EE-2D3039826E8B}.Debug|x86.Build.0 = Debug|x86
+		{33F37437-C463-4DCA-B8EE-2D3039826E8B}.Release|x86.ActiveCfg = Release|x86
+		{33F37437-C463-4DCA-B8EE-2D3039826E8B}.Release|x86.Build.0 = Release|x86
 		{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}.Debug|x86.Build.0 = Debug|Any CPU
 		{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}.Release|x86.ActiveCfg = Release|Any CPU

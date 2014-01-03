@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LanExchange.SDK
+﻿namespace LanExchange.SDK
 {
     /// <summary>
     /// LanExchange main TabControl View interface.

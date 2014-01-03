@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
@@ -178,49 +179,49 @@ namespace LanExchange.OS.Windows.Utils
         /// </summary>
         /// <param name="folderName">Folder path</param>
         /// <returns>IShellFolder for the folder (relative from the desktop)</returns>
-        //private IShellFolder GetParentFolder(string folderName)
-        //{
-        //    if (null == _oParentFolder)
-        //    {
-        //        IShellFolder oDesktopFolder = GetDesktopFolder();
-        //        if (null == oDesktopFolder)
-        //        {
-        //            return null;
-        //        }
+        private IShellFolder GetParentFolder(string folderName)
+        {
+            if (null == _oParentFolder)
+            {
+                IShellFolder oDesktopFolder = GetDesktopFolder();
+                if (null == oDesktopFolder)
+                {
+                    return null;
+                }
 
-        //        // Get the PIDL for the folder file is in
-        //        IntPtr pPIDL = IntPtr.Zero;
-        //        uint pchEaten = 0;
-        //        SFGAO pdwAttributes = 0;
-        //        int nResult = oDesktopFolder.ParseDisplayName(IntPtr.Zero, IntPtr.Zero, folderName, ref pchEaten, out pPIDL, ref pdwAttributes);
-        //        if (S_OK != nResult)
-        //        {
-        //            return null;
-        //        }
+                // Get the PIDL for the folder file is in
+                IntPtr pPIDL = IntPtr.Zero;
+                uint pchEaten = 0;
+                SFGAO pdwAttributes = 0;
+                int nResult = oDesktopFolder.ParseDisplayName(IntPtr.Zero, IntPtr.Zero, folderName, ref pchEaten, out pPIDL, ref pdwAttributes);
+                if (S_OK != nResult)
+                {
+                    return null;
+                }
 
-        //        IntPtr pStrRet = Marshal.AllocCoTaskMem(MAX_PATH * 2 + 4);
-        //        Marshal.WriteInt32(pStrRet, 0, 0);
-        //        nResult = _oDesktopFolder.GetDisplayNameOf(pPIDL, SHGNO.FORPARSING, pStrRet);
-        //        StringBuilder strFolder = new StringBuilder(MAX_PATH);
-        //        StrRetToBuf(pStrRet, pPIDL, strFolder, MAX_PATH);
-        //        Marshal.FreeCoTaskMem(pStrRet);
-        //        pStrRet = IntPtr.Zero;
-        //        _strParentFolder = strFolder.ToString();
+                IntPtr pStrRet = Marshal.AllocCoTaskMem(MAX_PATH * 2 + 4);
+                Marshal.WriteInt32(pStrRet, 0, 0);
+                nResult = _oDesktopFolder.GetDisplayNameOf(pPIDL, SHGNO.FORPARSING, pStrRet);
+                StringBuilder strFolder = new StringBuilder(MAX_PATH);
+                StrRetToBuf(pStrRet, pPIDL, strFolder, MAX_PATH);
+                Marshal.FreeCoTaskMem(pStrRet);
+                pStrRet = IntPtr.Zero;
+                _strParentFolder = strFolder.ToString();
 
-        //        // Get the IShellFolder for folder
-        //        IntPtr pUnknownParentFolder = IntPtr.Zero;
-        //        nResult = oDesktopFolder.BindToObject(pPIDL, IntPtr.Zero, ref IID_IShellFolder, out pUnknownParentFolder);
-        //        // Free the PIDL first
-        //        Marshal.FreeCoTaskMem(pPIDL);
-        //        if (S_OK != nResult)
-        //        {
-        //            return null;
-        //        }
-        //        _oParentFolder = (IShellFolder)Marshal.GetTypedObjectForIUnknown(pUnknownParentFolder, typeof(IShellFolder));
-        //    }
+                // Get the IShellFolder for folder
+                IntPtr pUnknownParentFolder = IntPtr.Zero;
+                nResult = oDesktopFolder.BindToObject(pPIDL, IntPtr.Zero, ref IID_IShellFolder, out pUnknownParentFolder);
+                // Free the PIDL first
+                Marshal.FreeCoTaskMem(pPIDL);
+                if (S_OK != nResult)
+                {
+                    return null;
+                }
+                _oParentFolder = (IShellFolder)Marshal.GetTypedObjectForIUnknown(pUnknownParentFolder, typeof(IShellFolder));
+            }
 
-        //    return _oParentFolder;
-        //}
+            return _oParentFolder;
+        }
         #endregion
 
         #region GetPIDLs()
@@ -229,39 +230,39 @@ namespace LanExchange.OS.Windows.Utils
         /// </summary>
         /// <param name="arrFI">Array of FileInfo</param>
         /// <returns>Array of PIDLs</returns>
-        //protected IntPtr[] GetPIDLs(FileInfo[] arrFI)
-        //{
-        //    if (null == arrFI || 0 == arrFI.Length)
-        //    {
-        //        return null;
-        //    }
+        protected IntPtr[] GetPIDLs(FileInfo[] arrFI)
+        {
+            if (null == arrFI || 0 == arrFI.Length)
+            {
+                return null;
+            }
 
-        //    IShellFolder oParentFolder = GetParentFolder(arrFI[0].DirectoryName);
-        //    if (null == oParentFolder)
-        //    {
-        //        return null;
-        //    }
+            IShellFolder oParentFolder = GetParentFolder(arrFI[0].DirectoryName);
+            if (null == oParentFolder)
+            {
+                return null;
+            }
 
-        //    IntPtr[] arrPIDLs = new IntPtr[arrFI.Length];
-        //    int n = 0;
-        //    foreach (FileInfo fi in arrFI)
-        //    {
-        //        // Get the file relative to folder
-        //        uint pchEaten = 0;
-        //        SFGAO pdwAttributes = 0;
-        //        IntPtr pPIDL = IntPtr.Zero;
-        //        int nResult = oParentFolder.ParseDisplayName(IntPtr.Zero, IntPtr.Zero, fi.Name, ref pchEaten, out pPIDL, ref pdwAttributes);
-        //        if (S_OK != nResult)
-        //        {
-        //            FreePIDLs(arrPIDLs);
-        //            return null;
-        //        }
-        //        arrPIDLs[n] = pPIDL;
-        //        n++;
-        //    }
+            IntPtr[] arrPIDLs = new IntPtr[arrFI.Length];
+            int n = 0;
+            foreach (FileInfo fi in arrFI)
+            {
+                // Get the file relative to folder
+                uint pchEaten = 0;
+                SFGAO pdwAttributes = 0;
+                IntPtr pPIDL = IntPtr.Zero;
+                int nResult = oParentFolder.ParseDisplayName(IntPtr.Zero, IntPtr.Zero, fi.Name, ref pchEaten, out pPIDL, ref pdwAttributes);
+                if (S_OK != nResult)
+                {
+                    FreePIDLs(arrPIDLs);
+                    return null;
+                }
+                arrPIDLs[n] = pPIDL;
+                n++;
+            }
 
-        //    return arrPIDLs;
-        //}
+            return arrPIDLs;
+        }
         #endregion
 
         #region FreePIDLs()
@@ -349,75 +350,75 @@ namespace LanExchange.OS.Windows.Utils
         /// <param name="handleOwner">Window that will get messages</param>
         /// <param name="arrFI">FileInfos (should all be in same directory)</param>
         /// <param name="pointScreen">Where to show the menu</param>
-        //public void ShowContextMenu(IntPtr handleOwner, FileInfo[] arrFI, Point pointScreen)
-        //{
-        //    // Release all resources first.
-        //    ReleaseAll();
+        public void ShowContextMenu(IntPtr handleOwner, FileInfo[] arrFI, Point pointScreen)
+        {
+            // Release all resources first.
+            ReleaseAll();
 
-        //    IntPtr pMenu = IntPtr.Zero;
-        //    LocalWindowsHook hook = new LocalWindowsHook(HookType.WH_CALLWNDPROC);
-        //    hook.HookInvoked += new LocalWindowsHook.HookEventHandler(WindowsHookInvoked);
+            IntPtr pMenu = IntPtr.Zero;
+            LocalWindowsHook hook = new LocalWindowsHook(HookType.WH_CALLWNDPROC);
+            hook.HookInvoked += new LocalWindowsHook.HookEventHandler(WindowsHookInvoked);
 
-        //    try
-        //    {
-        //        //Application.AddMessageFilter(this);
+            try
+            {
+                //Application.AddMessageFilter(this);
 
-        //        _arrPIDLs = GetPIDLs(arrFI);
-        //        if (null == _arrPIDLs)
-        //        {
-        //            ReleaseAll();
-        //            return;
-        //        }
+                _arrPIDLs = GetPIDLs(arrFI);
+                if (null == _arrPIDLs)
+                {
+                    ReleaseAll();
+                    return;
+                }
 
-        //        if (false == GetContextMenuInterfaces(_oParentFolder, _arrPIDLs))
-        //        {
-        //            ReleaseAll();
-        //            return;
-        //        }
-                
-        //        pMenu = CreatePopupMenu();
+                if (false == GetContextMenuInterfaces(_oParentFolder, _arrPIDLs))
+                {
+                    ReleaseAll();
+                    return;
+                }
 
-        //        int nResult = _oContextMenu.QueryContextMenu(
-        //            pMenu,
-        //            0,
-        //            CMD_FIRST,
-        //            CMD_LAST,
-        //            CMF.EXPLORE |
-        //            CMF.NORMAL |
-        //            ((Control.ModifierKeys & Keys.Shift) != 0 ? CMF.EXTENDEDVERBS : 0));
+                pMenu = CreatePopupMenu();
 
-        //        hook.Install();
+                int nResult = _oContextMenu.QueryContextMenu(
+                    pMenu,
+                    0,
+                    CMD_FIRST,
+                    CMD_LAST,
+                    CMF.EXPLORE |
+                    CMF.NORMAL |
+                    ((Control.ModifierKeys & Keys.Shift) != 0 ? CMF.EXTENDEDVERBS : 0));
 
-        //        uint nSelected = TrackPopupMenuEx(
-        //            pMenu,
-        //            TPM.RETURNCMD,
-        //            pointScreen.X,
-        //            pointScreen.Y,
-        //            handleOwner,
-        //            IntPtr.Zero);
+                hook.Install();
 
-        //        DestroyMenu(pMenu);
-        //        pMenu = IntPtr.Zero;
+                uint nSelected = TrackPopupMenuEx(
+                    pMenu,
+                    TPM.RETURNCMD,
+                    pointScreen.X,
+                    pointScreen.Y,
+                    handleOwner,
+                    IntPtr.Zero);
 
-        //        if (nSelected != 0)
-        //        {
-        //            InvokeCommand(_oContextMenu, nSelected, _strParentFolder, pointScreen);
-        //        }
-        //    }
-        //    catch
-        //    {
-        //        throw;
-        //    }
-        //    finally
-        //    {
-        //        hook.Uninstall();
-        //        if (pMenu != IntPtr.Zero)
-        //        {
-        //            DestroyMenu(pMenu);
-        //        }
-        //        ReleaseAll();
-        //    }
-        //}
+                DestroyMenu(pMenu);
+                pMenu = IntPtr.Zero;
+
+                if (nSelected != 0)
+                {
+                    InvokeCommand(_oContextMenu, nSelected, _strParentFolder, pointScreen);
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                hook.Uninstall();
+                if (pMenu != IntPtr.Zero)
+                {
+                    DestroyMenu(pMenu);
+                }
+                ReleaseAll();
+            }
+        }
         #endregion
 
         #region ShowContextMenuForCSIDL
@@ -535,7 +536,7 @@ namespace LanExchange.OS.Windows.Utils
         private IShellFolder _oDesktopFolder;
         private IShellFolder _oParentFolder;
         private IntPtr[] _arrPIDLs;
-        //private string _strParentFolder;
+        private string _strParentFolder;
         #endregion
 
         #region Variables and Constants
@@ -559,8 +560,8 @@ namespace LanExchange.OS.Windows.Utils
         private static extern Int32 SHGetDesktopFolder(out IntPtr ppshf);
 
         // Takes a STRRET structure returned by IShellFolder::GetDisplayNameOf, converts it to a string, and places the result in a buffer. 
-        //[DllImport("shlwapi.dll", EntryPoint = "StrRetToBuf", ExactSpelling = false, CharSet = CharSet.Auto, SetLastError = true)]
-        //private static extern Int32 StrRetToBuf(IntPtr pstr, IntPtr pidl, StringBuilder pszBuf, int cchBuf);
+        [DllImport(ExternDll.SHLWAPI, EntryPoint = "StrRetToBuf", ExactSpelling = false, CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern Int32 StrRetToBuf(IntPtr pstr, IntPtr pidl, StringBuilder pszBuf, int cchBuf);
 
         // The TrackPopupMenuEx function displays a shortcut menu at the specified location and tracks the selection of items on the shortcut menu. The shortcut menu can appear anywhere on the screen.
         [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]

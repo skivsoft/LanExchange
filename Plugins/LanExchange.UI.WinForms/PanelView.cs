@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Globalization;
 using System.Text;
 using System.Windows.Forms;
 using LanExchange.UI.WinForms.Properties;
 using LanExchange.SDK;
-using LanExchange.UI.WinForms.Utils;
 
 namespace LanExchange.UI.WinForms
 {

@@ -1,11 +1,17 @@
 ﻿using System;
+using System.Drawing;
+using System.IO;
 using LanExchange.SDK;
 
 namespace LanExchange.OS.Linux
 {
     internal class Shell32Service : IShell32Service
     {
-        public void ShowMyComputerContextMenu(IntPtr handle)
+        public void ShowContextMenu(IntPtr handle, FileInfo[] files, Point position)
+        {
+        }
+
+        public void ShowMyComputerContextMenu(IntPtr handle, Point position)
         {
         }
 

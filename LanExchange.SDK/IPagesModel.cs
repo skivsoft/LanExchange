@@ -10,8 +10,6 @@ namespace LanExchange.SDK
 
         bool AddTab(IPanelModel model);
 
-        bool TabNameExists(string tabName);
-
         void DelTab(int index);
 
         int Count { get; }

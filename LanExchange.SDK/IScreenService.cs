@@ -15,5 +15,7 @@ namespace LanExchange.SDK
         string UserName { get; }
 
         string ComputerName { get; }
+
+        Point CursorPosition { get; }
     }
 }

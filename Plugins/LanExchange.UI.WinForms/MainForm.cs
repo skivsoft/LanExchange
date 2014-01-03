@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.Security.Permissions;
 using LanExchange.UI.WinForms.Properties;
 using LanExchange.SDK;
-using LanExchange.UI.WinForms.Utils;
 
 namespace LanExchange.UI.WinForms
 {
@@ -302,7 +301,8 @@ namespace LanExchange.UI.WinForms
         {
             if (e.Button == MouseButtons.Right)
             {
-                App.Resolve<IShell32Service>().ShowMyComputerContextMenu(Handle);
+                var position = App.Resolve<IScreenService>().CursorPosition;
+                App.Resolve<IShell32Service>().ShowMyComputerContextMenu(Handle, position);
             }
         }
 

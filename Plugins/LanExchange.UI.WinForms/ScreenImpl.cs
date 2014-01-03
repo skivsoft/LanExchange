@@ -38,5 +38,10 @@ namespace LanExchange.UI.WinForms
         {
             get { return SystemInformation.ComputerName; }
         }
+
+        public Point CursorPosition
+        {
+            get { return Cursor.Position; }
+        }
     }
 }

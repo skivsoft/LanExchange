@@ -40,8 +40,9 @@ namespace LanExchange.Model
             m_EventFired = true;
         }
 
-        private PanelModel NewPanelModel(string name)
+        private PanelModel NewPanelModel()
         {
+            App.SetContainer(ContainerBuilder.Build());
             var tab = new PanelModel();
             return tab;
         }
@@ -49,11 +50,11 @@ namespace LanExchange.Model
         [Test]
         public void TestDelTab()
         {
-            m_Model.AddTab(NewPanelModel("MyTab"));
+            m_Model.AddTab(NewPanelModel());
             m_Model.DelTab(0);
             Assert.AreEqual(0, m_Model.Count);
             Assert.IsFalse(m_EventFired);
-            m_Model.AddTab(NewPanelModel("MyTab"));
+            m_Model.AddTab(NewPanelModel());
             m_Model.AfterRemove += Model_AfterRemove;
             m_Model.DelTab(0);
             Assert.IsTrue(m_EventFired);
@@ -62,15 +63,14 @@ namespace LanExchange.Model
         [Test]
         public void TestAddTab()
         {
-            m_Model.AddTab(NewPanelModel("MyTab"));
+            m_Model.AddTab(NewPanelModel());
             Assert.IsFalse(m_EventFired);
-            Assert.AreEqual("MyTab", m_Model.GetTabName(0));
+            Assert.AreEqual(string.Empty, m_Model.GetTabName(0));
             Assert.AreEqual(null, m_Model.GetTabName(-1));
             Assert.AreEqual(null, m_Model.GetTabName(1));
             m_Model.AfterAppendTab += Model_AfterAppend;
-            m_Model.AddTab(NewPanelModel("YourTab"));
+            m_Model.AddTab(NewPanelModel());
             Assert.IsTrue(m_EventFired);
-            Assert.IsFalse(m_Model.AddTab(NewPanelModel("MyTab")));
         }
 
         /// <summary>
@@ -80,17 +80,17 @@ namespace LanExchange.Model
         public void TestAddTab_Issue2()
         {
             App.SetContainer(ContainerBuilder.Build());
-            m_Model.AddTab(NewPanelModel("MyTab"));
+            m_Model.AddTab(NewPanelModel());
             Assert.AreEqual(0, m_Model.SelectedIndex);
-            m_Model.AddTab(NewPanelModel("YourTab"));
+            m_Model.AddTab(NewPanelModel());
             Assert.AreEqual(0, m_Model.SelectedIndex);
         }
 
         [Test]
         public void TestIndexChanged()
         {
-            m_Model.AddTab(NewPanelModel("MyTab"));
-            m_Model.AddTab(NewPanelModel("YourTab"));
+            m_Model.AddTab(NewPanelModel());
+            m_Model.AddTab(NewPanelModel());
             m_Model.SelectedIndex = 1;
             Assert.IsFalse(m_EventFired);
             Assert.AreEqual(1, m_Model.SelectedIndex);
@@ -99,36 +99,29 @@ namespace LanExchange.Model
             Assert.IsTrue(m_EventFired);
         }
 
-        [Test, ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void ExceptionGetItem()
+        [Test]
+        public void TestGetItemNull()
         {
             var item = m_Model.GetItem(0);
+            Assert.IsNull(item);
         }
 
         [Test]
         public void TestGetItem()
         {
-            m_Model.AddTab(NewPanelModel("MyTab"));
+            m_Model.AddTab(NewPanelModel());
             var item = m_Model.GetItem(0);
             Assert.NotNull(item);
-            Assert.AreEqual("MyTab", item.TabName);
+            Assert.AreEqual(string.Empty, item.TabName);
         }
 
         [Test]
         public void TestGetItemIndex()
         {
-            var info = NewPanelModel("MyTab");
+            var info = NewPanelModel();
             m_Model.AddTab(info);
             Assert.AreEqual(-1, m_Model.GetItemIndex(null));
             Assert.AreEqual(0, m_Model.GetItemIndex(info));
-        }
-
-        [Test]
-        public void TestTabNameExists()
-        {
-            m_Model.AddTab(NewPanelModel("MyTab"));
-            Assert.IsFalse(m_Model.TabNameExists("MaiTab"));
-            Assert.IsTrue(m_Model.TabNameExists("mytAB"));
         }
 
         [Test]

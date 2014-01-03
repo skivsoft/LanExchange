@@ -20,6 +20,8 @@ namespace LanExchange.UI.WinForms
         
         public AboutForm(IAboutPresenter presenter)
         {
+            if (presenter == null)
+                throw new ArgumentNullException("presenter");
             m_Presenter = presenter;
             m_Presenter.View = this;
             InitializeComponent();
