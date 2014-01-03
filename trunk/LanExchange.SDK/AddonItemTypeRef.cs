@@ -4,11 +4,11 @@ using System.Xml.Serialization;
 namespace LanExchange.SDK
 {
     [XmlType("PanelItemTypeRef")]
-    public class AddonItemTypeRef : AddonObjectId
+    public class AddOnItemTypeRef : AddonObjectId
     {
         private readonly List<AddonMenuItem> m_Items;
 
-        public AddonItemTypeRef()
+        public AddOnItemTypeRef()
         {
             m_Items = new List<AddonMenuItem>();
         }

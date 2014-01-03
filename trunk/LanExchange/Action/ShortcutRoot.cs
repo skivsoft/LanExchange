@@ -3,7 +3,7 @@ using LanExchange.SDK;
 
 namespace LanExchange.Action
 {
-    internal class ShortcutRoot : PanelItemRootBase
+    public class ShortcutRoot : PanelItemRootBase
     {
         protected override string GetName()
         {

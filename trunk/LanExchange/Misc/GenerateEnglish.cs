@@ -53,7 +53,7 @@ namespace LanExchange.Misc
         private static void ProcessAddon(string fileName)
         {
             // load addon from xml
-            var addon = (SDK.Addon)SerializeUtils.DeserializeObjectFromXMLFile(fileName, typeof(SDK.Addon));
+            var addon = (SDK.AddOn)SerializeUtils.DeserializeObjectFromXMLFile(fileName, typeof(SDK.AddOn));
             var context = Path.GetFileName(fileName);
             foreach (var panelItem in addon.PanelItemTypes)
             {

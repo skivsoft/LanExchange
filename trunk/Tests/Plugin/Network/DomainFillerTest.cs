@@ -15,8 +15,9 @@ namespace LanExchange.Plugin.Network
         }
 
         [Test]
-        public void TestAlgorithm()
+        public void TestAsyncFill()
         {
+            Utils.InitPlugins();
             var strategy = new DomainFiller();
             var result = new Collection<PanelItemBase>();
             strategy.AsyncFill(null, result);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Windows.Forms;
+using System.Drawing;
+using System.IO;
 using LanExchange.OS.Windows.Utils;
 using LanExchange.SDK;
 
@@ -8,10 +9,21 @@ namespace LanExchange.OS.Windows
 {
     internal class Shell32Service : IShell32Service
     {
-        public void ShowMyComputerContextMenu(IntPtr handle)
+        private readonly ShellContextMenu m_Menu;
+
+        public Shell32Service()
         {
-            var scm = new ShellContextMenu();
-            scm.ShowContextMenuForCSIDL(handle, ShellAPI.CSIDL.DRIVES, Cursor.Position);
+            m_Menu = new ShellContextMenu();
+        }
+
+        public void ShowContextMenu(IntPtr handle, FileInfo[] files, Point position)
+        {
+            m_Menu.ShowContextMenu(handle, files, position);
+        }
+
+        public void ShowMyComputerContextMenu(IntPtr handle, Point position)
+        {
+            m_Menu.ShowContextMenuForCSIDL(handle, ShellAPI.CSIDL.DRIVES, position);
         }
 
         public void OpenMyComputer()

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using LanExchange.Misc.Impl;
+using LanExchange.OS.Windows;
 using LanExchange.SDK;
 using NUnit.Framework;
 
@@ -25,8 +27,9 @@ namespace LanExchange.Plugin.Network
         }
 
         [Test]
-        public void TestAlgorithm()
+        public void TestAsyncFill()
         {
+            Utils.InitPlugins();
             var strategy = new ComputerFiller();
             var result = new Collection<PanelItemBase>();
             var domain = NetApi32Utils.GetMachineNetBiosDomain(null);

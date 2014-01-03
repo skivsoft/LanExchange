@@ -6,7 +6,7 @@ using System.Resources;
 using System.Windows.Forms;
 using LanExchange.SDK;
 
-namespace LanExchange.UI.WinForms.Utils
+namespace LanExchange.UI.WinForms
 {
     internal static class TranslationUtils
     {

@@ -29,7 +29,7 @@ namespace LanExchange.Plugin.FileSystem
             }
             else if (other.IsDirectory)
                 return 1;
-            return String.Compare(Name, other.Name, StringComparison.Ordinal);
+            return string.Compare(Name, other.Name, StringComparison.CurrentCultureIgnoreCase);
         }
 
         public override string ToString()

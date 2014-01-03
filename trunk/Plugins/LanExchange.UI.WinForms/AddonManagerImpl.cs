@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 using LanExchange.SDK;
-using LanExchange.UI.WinForms.Utils;
 
 namespace LanExchange.UI.WinForms
 {
@@ -14,14 +13,14 @@ namespace LanExchange.UI.WinForms
     public class AddonManagerImpl : IAddonManager
     {
         private readonly IDictionary<string, AddonProgram> m_Programs;
-        private readonly IDictionary<string, AddonItemTypeRef> m_PanelItems;
+        private readonly IDictionary<string, AddOnItemTypeRef> m_PanelItems;
 
         private bool m_Loaded;
 
         public AddonManagerImpl()
         {
             m_Programs = new Dictionary<string, AddonProgram>();
-            m_PanelItems = new Dictionary<string, AddonItemTypeRef>();
+            m_PanelItems = new Dictionary<string, AddOnItemTypeRef>();
         }
 
         public IDictionary<string, AddonProgram> Programs 
@@ -33,7 +32,7 @@ namespace LanExchange.UI.WinForms
             }
         }
         
-        public IDictionary<string, AddonItemTypeRef> PanelItems
+        public IDictionary<string, AddOnItemTypeRef> PanelItems
         {
             get
             {
@@ -67,7 +66,7 @@ namespace LanExchange.UI.WinForms
         private void LoadAddon(string fileName)
         {
             // load addon from xml
-            var addon = (Addon)SerializeUtils.DeserializeObjectFromXMLFile(fileName, typeof(Addon));
+            var addon = (AddOn)SerializeUtils.DeserializeObjectFromXMLFile(fileName, typeof(AddOn));
             // process programs
             foreach (var item in addon.Programs)
                 if (!m_Programs.ContainsKey(item.Id))
@@ -87,14 +86,14 @@ namespace LanExchange.UI.WinForms
             // process menu items
             foreach (var item in addon.PanelItemTypes)
             {
-                AddonItemTypeRef found;
+                AddOnItemTypeRef found;
                 if (m_PanelItems.ContainsKey(item.Id))
                 {
                     found = m_PanelItems[item.Id];
                     m_PanelItems.Remove(item.Id);
                 }
                 else
-                    found = new AddonItemTypeRef();
+                    found = new AddOnItemTypeRef();
                 if (item.CountVisible == 0) continue;
 
                 // add separator to split item groups
@@ -152,17 +151,17 @@ namespace LanExchange.UI.WinForms
                 defaultItem.Font = new Font(defaultItem.Font, FontStyle.Bold);
         }
 
-        public bool BuildMenuForPanelItemType(object popTop, string Id)
+        public bool BuildMenuForPanelItemType(object popTop, string id)
         {
-            if (!PanelItems.ContainsKey(Id))
+            if (!PanelItems.ContainsKey(id))
                 return false;
             if (popTop is ContextMenuStrip)
             {
                 var popTop1 = popTop as ContextMenuStrip;
-                if (popTop1.Tag == null || !popTop1.Tag.Equals(Id))
+                if (popTop1.Tag == null || !popTop1.Tag.Equals(id))
                 {
-                    InternalBuildMenu(popTop1.Items, Id);
-                    popTop1.Tag = Id;
+                    InternalBuildMenu(popTop1.Items, id);
+                    popTop1.Tag = id;
                 }
                 return popTop1.Items.Count > 0;
             }
@@ -170,10 +169,10 @@ namespace LanExchange.UI.WinForms
             if (popTop is ToolStripMenuItem)
             {
                 var popTop2 = popTop as ToolStripMenuItem;
-                if (popTop2.Tag == null || !popTop2.Tag.Equals(Id))
+                if (popTop2.Tag == null || !popTop2.Tag.Equals(id))
                 {
-                    InternalBuildMenu(popTop2.DropDownItems, Id);
-                    popTop2.Tag = Id;
+                    InternalBuildMenu(popTop2.DropDownItems, id);
+                    popTop2.Tag = id;
                 }
                 return popTop2.DropDownItems.Count > 0;
             }

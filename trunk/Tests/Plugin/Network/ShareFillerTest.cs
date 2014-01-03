@@ -25,8 +25,9 @@ namespace LanExchange.Plugin.Network
         }
 
         [Test]
-        public void TestAlgorithm()
+        public void TestAsyncFill()
         {
+            Utils.InitPlugins();
             var strategy = new ShareFiller();
             var domain = NetApi32Utils.GetMachineNetBiosDomain(null);
             var computer = new ComputerPanelItem(new DomainPanelItem(new DomainRoot(), domain), SystemInformation.ComputerName);

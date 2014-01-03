@@ -7,6 +7,12 @@ namespace LanExchange.Plugin.Network
     [TestFixture]
     class NetApi32UtilsTest
     {
+        [SetUp]
+        public void SetUp()
+        {
+            Utils.InitPlugins();
+        }
+
         [Test, ExpectedException(typeof(Win32Exception))]
         public void ExceptionGetMachineNetBiosDomain()
         {

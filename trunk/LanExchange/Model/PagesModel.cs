@@ -103,8 +103,8 @@ namespace LanExchange.Model
         public bool AddTab(IPanelModel model)
         {
             // ommit duplicates
-            if (m_List.Contains(model))
-                return false;
+            //if (m_List.Contains(model))
+            //    return false;
             m_List.Add(model);
             if (m_SelectedIndex == -1 && m_List.Count == 1)
                 m_SelectedIndex = 0;
@@ -185,14 +185,6 @@ namespace LanExchange.Model
             {
                 Debug.Print(ex.Message);
             }
-        }
-
-        public bool TabNameExists(string tabName)
-        {
-            foreach (var itemList in m_List)
-                if (string.Compare(itemList.TabName, tabName, StringComparison.CurrentCultureIgnoreCase) == 0)
-                    return true;
-            return false;
         }
 
         public void Dispose()

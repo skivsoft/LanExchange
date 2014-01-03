@@ -1,4 +1,6 @@
-﻿namespace LanExchange.UI.WinForms
+﻿using LanExchange.UI.WinForms.Properties;
+
+namespace LanExchange.UI.WinForms
 {
     public sealed partial class AboutForm
     {
@@ -54,7 +56,7 @@
             this.eWeb.Size = new System.Drawing.Size(19, 13);
             this.eWeb.TabIndex = 43;
             this.eWeb.TabStop = true;
-            this.eWeb.Text = "    ";
+            this.eWeb.Text = Resources.EmptyText;
             this.eWeb.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.eWeb_LinkClicked);
             // 
             // lWeb
@@ -68,7 +70,7 @@
             this.lWeb.Name = "lWeb";
             this.lWeb.Size = new System.Drawing.Size(11, 13);
             this.lWeb.TabIndex = 42;
-            this.lWeb.Text = " ";
+            this.lWeb.Text = Resources.EmptyText;
             this.lWeb.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // eVersion
@@ -79,7 +81,7 @@
             this.eVersion.Name = "eVersion";
             this.eVersion.Size = new System.Drawing.Size(10, 13);
             this.eVersion.TabIndex = 41;
-            this.eVersion.Text = " ";
+            this.eVersion.Text = Resources.EmptyText;
             // 
             // bClose
             // 
@@ -115,7 +117,7 @@
             this.lCopyright.Name = "lCopyright";
             this.lCopyright.Size = new System.Drawing.Size(11, 13);
             this.lCopyright.TabIndex = 34;
-            this.lCopyright.Text = " ";
+            this.lCopyright.Text = Resources.EmptyText;
             this.lCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // eLicense
@@ -127,7 +129,7 @@
             this.eLicense.Size = new System.Drawing.Size(7, 17);
             this.eLicense.TabIndex = 33;
             this.eLicense.TabStop = true;
-            this.eLicense.Text = " ";
+            this.eLicense.Text = Resources.EmptyText;
             this.eLicense.UseCompatibleTextRendering = true;
             // 
             // lLicense
@@ -141,7 +143,7 @@
             this.lLicense.Name = "lLicense";
             this.lLicense.Size = new System.Drawing.Size(11, 13);
             this.lLicense.TabIndex = 31;
-            this.lLicense.Text = " ";
+            this.lLicense.Text = Resources.EmptyText;
             this.lLicense.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lVersion
@@ -155,7 +157,7 @@
             this.lVersion.Name = "lVersion";
             this.lVersion.Size = new System.Drawing.Size(11, 13);
             this.lVersion.TabIndex = 19;
-            this.lVersion.Text = " ";
+            this.lVersion.Text = Resources.EmptyText;
             this.lVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // eCopyright
@@ -166,7 +168,7 @@
             this.eCopyright.Name = "eCopyright";
             this.eCopyright.Size = new System.Drawing.Size(19, 13);
             this.eCopyright.TabIndex = 28;
-            this.eCopyright.Text = "    ";
+            this.eCopyright.Text = Resources.EmptyText;
             // 
             // logoPictureBox
             // 
