@@ -1,8 +1,8 @@
 ﻿using WMIViewer.Properties;
 
-namespace WMIViewer
+namespace WMIViewer.UI
 {
-    partial class MethodForm
+    internal partial class MethodForm
     {
         /// <summary>
         /// Required designer variable.

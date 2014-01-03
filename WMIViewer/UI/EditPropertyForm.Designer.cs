@@ -1,8 +1,8 @@
 ﻿using WMIViewer.Properties;
 
-namespace WMIViewer
+namespace WMIViewer.UI
 {
-    partial class EditPropertyForm
+    internal partial class EditPropertyForm
     {
         /// <summary>
         /// Required designer variable.

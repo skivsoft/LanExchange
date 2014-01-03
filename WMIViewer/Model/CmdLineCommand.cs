@@ -1,6 +1,6 @@
-﻿namespace WMIViewer
+﻿namespace WMIViewer.Model
 {
-    public enum CmdLineCommand
+    internal enum CmdLineCommand
     {
         None,
         EditProperty,

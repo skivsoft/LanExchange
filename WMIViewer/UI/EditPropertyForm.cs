@@ -2,11 +2,13 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Forms;
+using WMIViewer.Model;
+using WMIViewer.Presenter;
 using WMIViewer.Properties;
 
-namespace WMIViewer
+namespace WMIViewer.UI
 {
-    public sealed partial class EditPropertyForm : Form
+    internal sealed partial class EditPropertyForm : Form
     {
         private readonly WmiPresenter m_Presenter;
         private readonly CmdLineArgs m_Args;

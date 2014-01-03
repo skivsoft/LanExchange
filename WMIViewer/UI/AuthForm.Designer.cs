@@ -1,6 +1,6 @@
 ﻿using WMIViewer.Properties;
 
-namespace WMIViewer
+namespace WMIViewer.UI
 {
     partial class AuthForm
     {

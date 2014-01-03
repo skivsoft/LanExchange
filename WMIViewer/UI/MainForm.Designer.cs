@@ -1,8 +1,8 @@
 ﻿using WMIViewer.Properties;
 
-namespace WMIViewer
+namespace WMIViewer.UI
 {
-    partial class MainForm
+    internal partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -210,7 +210,7 @@ namespace WMIViewer
             this.lDescription.Name = "lDescription";
             this.lDescription.Size = new System.Drawing.Size(768, 56);
             this.lDescription.TabIndex = 1;
-            this.lDescription.Text = "    ";
+            this.lDescription.Text = Resources.EmptyText;
             // 
             // lClassName
             // 

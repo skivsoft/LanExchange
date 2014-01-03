@@ -1,14 +1,13 @@
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
-using System.Globalization;
 
 namespace WMIViewer
 {
     [Localizable(false)]
     public sealed class DynamicObject : ICustomTypeDescriptor
 	{
-        private string m_Filter = string.Empty;
+        private readonly string m_Filter = string.Empty;
         private readonly PropertyDescriptorCollection m_FilteredPropertyDescriptors = new PropertyDescriptorCollection(null);
         private readonly PropertyDescriptorCollection m_FullPropertyDescriptors = new PropertyDescriptorCollection(null);
 

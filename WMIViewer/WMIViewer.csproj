@@ -13,26 +13,6 @@
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\LanExchange\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>ExtendedDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
@@ -41,6 +21,17 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>WMIViewer.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>..\LanExchange\bin\Debug\</OutputPath>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <DefineConstants>DEBUG</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -56,42 +47,42 @@
     <Compile Include="GenericPropertyDescriptor.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MethodDataExt.cs" />
+    <Compile Include="Model\QualifiersInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PropertyDataExt.cs" />
-    <Compile Include="RightToLeft.cs" />
+    <Compile Include="Model\PropertyDataExt.cs" />
     <Compile Include="ParameterType.cs" />
     <Compile Include="RequiredArgException.cs" />
-    <Compile Include="AuthForm.cs">
+    <Compile Include="UI\AuthForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AuthForm.Designer.cs">
+    <Compile Include="UI\AuthForm.Designer.cs">
       <DependentUpon>AuthForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="WmiClassList.cs" />
-    <Compile Include="CmdLineArgs.cs" />
-    <Compile Include="EditPropertyForm.cs">
+    <Compile Include="Model\WmiClassList.cs" />
+    <Compile Include="Model\CmdLineArgs.cs" />
+    <Compile Include="UI\EditPropertyForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EditPropertyForm.Designer.cs">
+    <Compile Include="UI\EditPropertyForm.Designer.cs">
       <DependentUpon>EditPropertyForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="UI\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="UI\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MethodForm.cs">
+    <Compile Include="UI\MethodForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MethodForm.Designer.cs">
+    <Compile Include="UI\MethodForm.Designer.cs">
       <DependentUpon>MethodForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ObjectNotFoundException.cs" />
-    <Compile Include="WmiPresenter.cs" />
-    <Compile Include="CmdLineCommand.cs" />
-    <Compile Include="WmiHelper.cs" />
+    <Compile Include="Presenter\WmiPresenter.cs" />
+    <Compile Include="Model\CmdLineCommand.cs" />
+    <Compile Include="Model\WmiHelper.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -102,17 +93,17 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="AuthForm.resx">
+    <EmbeddedResource Include="UI\AuthForm.resx">
       <DependentUpon>AuthForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EditPropertyForm.resx">
+    <EmbeddedResource Include="UI\EditPropertyForm.resx">
       <DependentUpon>EditPropertyForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="UI\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="MethodForm.resx">
+    <EmbeddedResource Include="UI\MethodForm.resx">
       <DependentUpon>MethodForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -124,6 +115,7 @@
     <Content Include="WMIViewer.ico" />
     <None Include="WMIViewer16.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
