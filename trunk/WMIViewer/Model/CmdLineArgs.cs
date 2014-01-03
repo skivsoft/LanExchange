@@ -4,9 +4,9 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Forms;
 
-namespace WMIViewer
+namespace WMIViewer.Model
 {
-    public sealed class CmdLineArgs
+    internal sealed class CmdLineArgs
     {
         public const string DefaultNamespaceName = @"ROOT\CIMV2";
 

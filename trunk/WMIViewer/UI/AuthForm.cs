@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Windows.Forms;
 using WMIViewer.Properties;
 
-namespace WMIViewer
+namespace WMIViewer.UI
 {
     public sealed partial class AuthForm : Form
     {

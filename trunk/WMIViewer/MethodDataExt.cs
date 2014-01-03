@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Management;
 using System.Collections.Generic;
 using System.Text;
+using WMIViewer.Model;
 
 namespace WMIViewer
 {

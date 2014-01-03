@@ -5,11 +5,13 @@ using System.Management;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.ComponentModel;
+using WMIViewer.Model;
+using WMIViewer.Presenter;
 using WMIViewer.Properties;
 
-namespace WMIViewer
+namespace WMIViewer.UI
 {
-    public sealed partial class MethodForm : Form
+    internal sealed partial class MethodForm : Form
     {
         const string METHOD_FAIL_FMT = "[{0}] {1}";
 
@@ -182,6 +184,7 @@ namespace WMIViewer
             m_ExecuteOK = false;
         }
 
+        [Localizable(false)]
         private void RunTheMethod()
         {
             if (WmiObject == null || WmiMethod == null) return;

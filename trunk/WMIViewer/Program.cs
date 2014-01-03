@@ -3,6 +3,9 @@ using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
 using System.Reflection;
+using WMIViewer.Model;
+using WMIViewer.Presenter;
+using WMIViewer.UI;
 
 namespace WMIViewer
 {
@@ -19,7 +22,7 @@ namespace WMIViewer
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message, GetProgramTitle(), MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, RightToLeft.Options);
+                MessageBox.Show(ex.Message, GetProgramTitle(), MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
             }
             using (var presenter = new WmiPresenter(wmiArgs))
                 if (wmiArgs != null && presenter.ConnectToComputer())

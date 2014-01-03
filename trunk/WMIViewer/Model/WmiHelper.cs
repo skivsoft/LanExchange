@@ -1,13 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.Management;
 
-namespace WMIViewer
+namespace WMIViewer.Model
 {
     [Localizable(false)]
-    public static class WmiHelper
+    internal static class WmiHelper
     {
-        public static DateTime ToDateTime(string wmiDate)
+        internal static DateTime ToDateTime(string wmiDate)
         {
             var initializer = DateTime.MinValue;
             int year = initializer.Year;
@@ -107,47 +108,56 @@ namespace WMIViewer
             return datetime;
         }
 
-        public static string ToWmiDateTime(DateTime date)
+        //internal static string ToWmiDateTime(DateTime date)
+        //{
+        //    string utcString;
+        //    var tickOffset = TimeZone.CurrentTimeZone.GetUtcOffset(date);
+        //    long offsetMins = tickOffset.Ticks / TimeSpan.TicksPerMinute;
+        //    if ((Math.Abs(offsetMins) > 999))
+        //    {
+        //        date = date.ToUniversalTime();
+        //        utcString = "+000";
+        //    }
+        //    else
+        //    {
+        //        if ((tickOffset.Ticks >= 0))
+        //        {
+        //            utcString = string.Concat("+", (tickOffset.Ticks / TimeSpan.TicksPerMinute).ToString(CultureInfo.InvariantCulture).PadLeft(3, '0'));
+        //        }
+        //        else
+        //        {
+        //            string strTemp = offsetMins.ToString(CultureInfo.InvariantCulture);
+        //            utcString = string.Concat("-", strTemp.Substring(1, (strTemp.Length - 1)).PadLeft(3, '0'));
+        //        }
+        //    }
+        //    string dmtfDateTime = date.Year.ToString(CultureInfo.InvariantCulture).PadLeft(4, '0');
+        //    dmtfDateTime = string.Concat(dmtfDateTime, date.Month.ToString(CultureInfo.InvariantCulture).PadLeft(2, '0'));
+        //    dmtfDateTime = string.Concat(dmtfDateTime, date.Day.ToString(CultureInfo.InvariantCulture).PadLeft(2, '0'));
+        //    dmtfDateTime = string.Concat(dmtfDateTime, date.Hour.ToString(CultureInfo.InvariantCulture).PadLeft(2, '0'));
+        //    dmtfDateTime = string.Concat(dmtfDateTime, date.Minute.ToString(CultureInfo.InvariantCulture).PadLeft(2, '0'));
+        //    dmtfDateTime = string.Concat(dmtfDateTime, date.Second.ToString(CultureInfo.InvariantCulture).PadLeft(2, '0'));
+        //    dmtfDateTime = string.Concat(dmtfDateTime, ".");
+        //    var dtTemp = new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, 0);
+        //    long microsec = ((date.Ticks - dtTemp.Ticks)
+        //                     * 1000)
+        //                    / TimeSpan.TicksPerMillisecond;
+        //    string strMicrosec = microsec.ToString(CultureInfo.InvariantCulture);
+        //    if ((strMicrosec.Length > 6))
+        //    {
+        //        strMicrosec = strMicrosec.Substring(0, 6);
+        //    }
+        //    dmtfDateTime = string.Concat(dmtfDateTime, strMicrosec.PadLeft(6, '0'));
+        //    dmtfDateTime = string.Concat(dmtfDateTime, utcString);
+        //    return dmtfDateTime;
+        //}
+
+        internal static bool HasImplementedMethod(ManagementClass wmiClass)
         {
-            string utcString;
-            var tickOffset = TimeZone.CurrentTimeZone.GetUtcOffset(date);
-            long offsetMins = tickOffset.Ticks / TimeSpan.TicksPerMinute;
-            if ((Math.Abs(offsetMins) > 999))
-            {
-                date = date.ToUniversalTime();
-                utcString = "+000";
-            }
-            else
-            {
-                if ((tickOffset.Ticks >= 0))
-                {
-                    utcString = string.Concat("+", (tickOffset.Ticks / TimeSpan.TicksPerMinute).ToString(CultureInfo.InvariantCulture).PadLeft(3, '0'));
-                }
-                else
-                {
-                    string strTemp = offsetMins.ToString(CultureInfo.InvariantCulture);
-                    utcString = string.Concat("-", strTemp.Substring(1, (strTemp.Length - 1)).PadLeft(3, '0'));
-                }
-            }
-            string dmtfDateTime = date.Year.ToString(CultureInfo.InvariantCulture).PadLeft(4, '0');
-            dmtfDateTime = string.Concat(dmtfDateTime, date.Month.ToString(CultureInfo.InvariantCulture).PadLeft(2, '0'));
-            dmtfDateTime = string.Concat(dmtfDateTime, date.Day.ToString(CultureInfo.InvariantCulture).PadLeft(2, '0'));
-            dmtfDateTime = string.Concat(dmtfDateTime, date.Hour.ToString(CultureInfo.InvariantCulture).PadLeft(2, '0'));
-            dmtfDateTime = string.Concat(dmtfDateTime, date.Minute.ToString(CultureInfo.InvariantCulture).PadLeft(2, '0'));
-            dmtfDateTime = string.Concat(dmtfDateTime, date.Second.ToString(CultureInfo.InvariantCulture).PadLeft(2, '0'));
-            dmtfDateTime = string.Concat(dmtfDateTime, ".");
-            var dtTemp = new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, 0);
-            long microsec = ((date.Ticks - dtTemp.Ticks)
-                             * 1000)
-                            / TimeSpan.TicksPerMillisecond;
-            string strMicrosec = microsec.ToString(CultureInfo.InvariantCulture);
-            if ((strMicrosec.Length > 6))
-            {
-                strMicrosec = strMicrosec.Substring(0, 6);
-            }
-            dmtfDateTime = string.Concat(dmtfDateTime, strMicrosec.PadLeft(6, '0'));
-            dmtfDateTime = string.Concat(dmtfDateTime, utcString);
-            return dmtfDateTime;
+            foreach (var md in wmiClass.Methods)
+                foreach (var qd in md.Qualifiers)
+                    if (qd.Name.Equals("Implemented"))
+                        return true;
+            return false;
         }
     }
 }

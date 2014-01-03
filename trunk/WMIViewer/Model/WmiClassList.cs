@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Globalization;
 using System.Management;
-using System.Text;
 
-namespace WMIViewer
+namespace WMIViewer.Model
 {
     /// <summary>
     /// List of used wmi classes.
     /// </summary>
     [Localizable(false)]
-    public sealed class WmiClassList
+    internal sealed class WmiClassList
     {
         private static WmiClassList s_Instance;
         private bool m_Loaded;
@@ -57,10 +55,10 @@ namespace WMIViewer
             get { return m_IncludeClasses; }
         }
 
-        public IEnumerable<string> AllClasses
-        {
-            get { return m_AllClasses; }
-        }
+        //public IEnumerable<string> AllClasses
+        //{
+        //    get { return m_AllClasses; }
+        //}
 
         public int ClassCount
         {
@@ -98,40 +96,40 @@ namespace WMIViewer
             return m_Namespace.IsConnected;
         }
 
-        public string GetClassQualifiers(ManagementScope scope, string className)
-        {
-            if (scope == null)
-            {
-                if (!ConnectToLocalMachine()) return string.Empty;
-                scope = m_Namespace;
-            }
-            var sb = new StringBuilder();
-            try
-            {
-                // Gets the property qualifiers.
-                var op = new ObjectGetOptions(null, TimeSpan.MaxValue, true);
-                var path = new ManagementPath(className);
-                using (var mc = new ManagementClass(scope, path, op))
-                {
-                    mc.Options.UseAmendedQualifiers = true;
-                    foreach (var qd in mc.Qualifiers)
-                    {
-                        if (qd.Name.Equals("Description"))
-                            continue;
-                        sb.Append(qd.Name);
-                        sb.Append("=");
-                        sb.Append(qd.Value);
-                        sb.Append(", ");
-                    }
-                }
-            }
-            catch(ManagementException ex)
-            {
-                Debug.Print(ex.Message);
-            }
+        //public string GetClassQualifiers(ManagementScope scope, string className)
+        //{
+        //    if (scope == null)
+        //    {
+        //        if (!ConnectToLocalMachine()) return string.Empty;
+        //        scope = m_Namespace;
+        //    }
+        //    var sb = new StringBuilder();
+        //    try
+        //    {
+        //        // Gets the property qualifiers.
+        //        var op = new ObjectGetOptions(null, TimeSpan.MaxValue, true);
+        //        var path = new ManagementPath(className);
+        //        using (var mc = new ManagementClass(scope, path, op))
+        //        {
+        //            mc.Options.UseAmendedQualifiers = true;
+        //            foreach (var qd in mc.Qualifiers)
+        //            {
+        //                if (qd.Name.Equals("Description"))
+        //                    continue;
+        //                sb.Append(qd.Name);
+        //                sb.Append("=");
+        //                sb.Append(qd.Value);
+        //                sb.Append(", ");
+        //            }
+        //        }
+        //    }
+        //    catch(ManagementException ex)
+        //    {
+        //        Debug.Print(ex.Message);
+        //    }
 
-            return sb.ToString();
-        }
+        //    return sb.ToString();
+        //}
 
         public string GetClassDescription(ManagementScope scope, string className)
         {
@@ -307,52 +305,27 @@ namespace WMIViewer
                     // skip WMI events
                     if (wmiClass.Derivation.Contains("__Event")) continue;
                     // skip classes in exclude list
-                    string className = wmiClass["__CLASS"].ToString();
+                    var className = wmiClass["__CLASS"].ToString();
                     if (!className.StartsWith("Win32_", StringComparison.Ordinal)) continue;
                     // skip classes without qualifiers (ex.: Win32_Perf*)
                     if (wmiClass.Qualifiers.Count == 0) continue;
                     //if (m_ExcludeClasses.Contains(ClassName)) continue;
-                    bool isDynamic = false;
-                    //bool IsAbstract = false;
-                    bool isPerf = false;
-                    bool isAssociation = false;
-                    bool isSupportsUpdate = false;
-                    bool isSupportsCreate = false;
-                    bool isSupportsDelete = false;
-                    foreach (var qd in wmiClass.Qualifiers)
-                    {
-                        //if (qd.Name.Equals("Aggregation")) IsAggregation = true;
-                        if (qd.Name.Equals("Association")) isAssociation = true;
-                        if (qd.Name.Equals("dynamic")) isDynamic = true;
-                        //if (qd.Name.Equals("abstract")) IsAbstract = true;
-                        if (qd.Name.ToUpperInvariant().Equals("GENERICPERFCTR")) isPerf = true;
-                        if (qd.Name.Equals("SupportsUpdate")) isSupportsUpdate = true;
-                        if (qd.Name.Equals("SupportsCreate")) isSupportsCreate = true;
-                        if (qd.Name.Equals("SupportsDelete")) isSupportsDelete = true;
-                    }
-                    if (isAssociation || !isDynamic || isPerf) continue;
+                    var info = new QualifiersInfo(wmiClass.Qualifiers);
+                    if (info.IsAssociation || !info.IsDynamic || info.IsPerf) continue;
                     m_AllClasses.Add(className);
-                    bool isInclude = m_IncludeClasses.Contains(className);
-                    if (isInclude || isSupportsUpdate || isSupportsCreate || isSupportsDelete)
-                    {
-                        m_PropCount += wmiClass.Properties.Count;
-                        // count implemented methods
-                        bool foundMethod = false;
-                        foreach (MethodData md in wmiClass.Methods)
-                            foreach (var qd in md.Qualifiers)
-                                if (qd.Name.Equals("Implemented"))
-                                {
-                                    foundMethod = true;
-                                    m_MethodCount++;
-                                    break;
-                                }
-                        if (!isInclude && !foundMethod)
-                            continue;
-                        if (foundMethod)
-                            m_Classes.Add(className);
-                        else
-                            m_ReadOnlyClasses.Add(className);
-                    }
+                    var isInclude = m_IncludeClasses.Contains(className);
+                    if (!isInclude && !info.IsSupportsModify) continue;
+                    m_PropCount += wmiClass.Properties.Count;
+                    // count implemented methods
+                    var foundMethod = WmiHelper.HasImplementedMethod(wmiClass);
+                    if (foundMethod)
+                        m_MethodCount++;
+                    if (!isInclude && !foundMethod)
+                        continue;
+                    if (foundMethod)
+                        m_Classes.Add(className);
+                    else
+                        m_ReadOnlyClasses.Add(className);
                 }
             }
             m_AllClasses.Sort();

@@ -2,10 +2,10 @@
 using System.ComponentModel;
 using System.Management;
 
-namespace WMIViewer
+namespace WMIViewer.Model
 {
     [Localizable(false)]
-    public sealed class PropertyDataExt : IComparable<PropertyDataExt>
+    internal sealed class PropertyDataExt : IComparable<PropertyDataExt>
     {
         private readonly PropertyData m_Data;
         private readonly ParameterType m_ParameterType;
@@ -65,6 +65,42 @@ namespace WMIViewer
             if (other == null)
                 return 1;
             return Id - other.Id;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return CompareTo(obj as PropertyDataExt) == 0;
+        }
+
+        public override int GetHashCode()
+        {
+            return m_Id;
+        }
+
+        public static bool operator ==(PropertyDataExt left, PropertyDataExt right)
+        {
+            if (ReferenceEquals(left, null))
+                return ReferenceEquals(right, null);
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(PropertyDataExt left, PropertyDataExt right)
+        {
+            return !(left == right);
+        }
+
+        public static bool operator <(PropertyDataExt left, PropertyDataExt right)
+        {
+            if (left == null)
+                return true;
+            return left.CompareTo(right) < 0;
+        }
+
+        public static bool operator >(PropertyDataExt left, PropertyDataExt right)
+        {
+            if (left == null)
+                return false;
+            return left.CompareTo(right) > 0;
         }
     }
 }
