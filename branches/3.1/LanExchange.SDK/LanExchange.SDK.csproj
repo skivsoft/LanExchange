@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LanExchange.SDK</RootNamespace>
+    <AssemblyName>LanExchange.SDK</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\Common\LanExchange.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Common\AnyAssemblyInfo.cs">
+      <Link>AnyAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Addon.cs" />
+    <Compile Include="AddonItemTypeRef.cs" />
+    <Compile Include="AddonMenuItem.cs" />
+    <Compile Include="AddonObjectId.cs" />
+    <Compile Include="AddonProgram.cs" />
+    <Compile Include="App.cs" />
+    <Compile Include="ColumnComparer.cs" />
+    <Compile Include="ConfigChangedArgs.cs" />
+    <Compile Include="ConfigNames.cs" />
+    <Compile Include="DataReadyArgs.cs" />
+    <Compile Include="Delegates.cs" />
+    <Compile Include="EnvironmentUtils.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="HorizontalAlignment.cs" />
+    <Compile Include="IAction.cs" />
+    <Compile Include="IEditPresenter.cs" />
+    <Compile Include="IEditView.cs" />
+    <Compile Include="IIPHLPAPISerivice.cs" />
+    <Compile Include="INetApi32Service.cs" />
+    <Compile Include="IPanelUpdater.cs" />
+    <Compile Include="IPluginManager.cs" />
+    <Compile Include="IPuntoSwitcherService.cs" />
+    <Compile Include="IPagesModel.cs" />
+    <Compile Include="IComctl32Service.cs" />
+    <Compile Include="IKernel32Service.cs" />
+    <Compile Include="IOle32Service.cs" />
+    <Compile Include="IShell32Service.cs" />
+    <Compile Include="ISingleInstanceService.cs" />
+    <Compile Include="ISysImageListService.cs" />
+    <Compile Include="ITranslitStrategy.cs" />
+    <Compile Include="IUser32Service.cs" />
+    <Compile Include="IWindow.cs" />
+    <Compile Include="ProtocolHelper.cs" />
+    <Compile Include="PanelItemRootFactory.cs" />
+    <Compile Include="SysImageListSize.cs" />
+    <Compile Include="PanelItemBaseHolder.cs" />
+    <Compile Include="PanelModelCopyHelper.cs" />
+    <Compile Include="PluginType.cs" />
+    <Compile Include="PresenterBase.cs" />
+    <Compile Include="RetrieveMode.cs" />
+    <Compile Include="SerializeUtils.cs" />
+    <Compile Include="IAddonManager.cs" />
+    <Compile Include="IConfigModel.cs" />
+    <Compile Include="ILazyThreadPool.cs" />
+    <Compile Include="ITranslationable.cs" />
+    <Compile Include="IHotkeysService.cs" />
+    <Compile Include="IAboutModel.cs" />
+    <Compile Include="IAboutPresenter.cs" />
+    <Compile Include="IAppPresenter.cs" />
+    <Compile Include="IDisposableManager.cs" />
+    <Compile Include="IFilterModel.cs" />
+    <Compile Include="IFilterPresenter.cs" />
+    <Compile Include="IClipboardDataObject.cs" />
+    <Compile Include="IClipboardService.cs" />
+    <Compile Include="IFilterView.cs" />
+    <Compile Include="IFolderManager.cs" />
+    <Compile Include="IIoCContainer.cs" />
+    <Compile Include="IMainPresenter.cs" />
+    <Compile Include="IMainView.cs" />
+    <Compile Include="IModel.cs" />
+    <Compile Include="IPagesPresenter.cs" />
+    <Compile Include="IMessageBoxService.cs" />
+    <Compile Include="IPagesView.cs" />
+    <Compile Include="IPanelColumnManager.cs" />
+    <Compile Include="IPanelFillerManager.cs" />
+    <Compile Include="IImageManager.cs" />
+    <Compile Include="IPanelItemFactoryManager.cs" />
+    <Compile Include="IPanelModel.cs" />
+    <Compile Include="IPanelPresenter.cs" />
+    <Compile Include="IPanelView.cs" />
+    <Compile Include="IPlugin.cs" />
+    <Compile Include="IPresenter.cs" />
+    <Compile Include="ITranslationService.cs" />
+    <Compile Include="IView.cs" />
+    <Compile Include="IScreenService.cs" />
+    <Compile Include="IWaitingService.cs" />
+    <Compile Include="LifeCycle.cs" />
+    <Compile Include="ObjectPath.cs" />
+    <Compile Include="PanelColumnHeader.cs" />
+    <Compile Include="PanelFillerResult.cs" />
+    <Compile Include="PanelIndexEventArgs.cs" />
+    <Compile Include="PanelItemBase.cs" />
+    <Compile Include="PanelFillerBase.cs" />
+    <Compile Include="PanelImageNames.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="PanelItemDoubleDot.cs" />
+    <Compile Include="PanelItemFactoryBase.cs" />
+    <Compile Include="PanelItemRootBase.cs" />
+    <Compile Include="PanelModelEventArgs.cs" />
+    <Compile Include="PanelSortOrder.cs" />
+    <Compile Include="PanelViewMode.cs" />
+    <Compile Include="IAboutView.cs" />
+    <Compile Include="IInfoView.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Common\LanExchange.snk">
+      <Link>LanExchange.snk</Link>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
