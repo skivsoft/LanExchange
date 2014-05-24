@@ -29,13 +29,16 @@
           <ComponentRef Id="$(var.PluginNetwork).dll" />
           <ComponentRef Id="Network.xml" />
         </Feature>
+        <!--
         <Feature Id="FileSystem" Title="FileSystem" Level="1" AllowAdvertise="no" Description="File system navigator plugin.">
           <ComponentRef Id="$(var.PluginFileSystem).dll" />
         </Feature>
+        -->
         <Feature Id="Users" Title="Users" Level="1" AllowAdvertise="no" Description="Active Directory browser of organization units and users.">
           <ComponentRef Id="$(var.PluginUsers).dll" />
           <ComponentRef Id="Users.xml" />
         </Feature>
+        <!--
         <Feature Id="Translit" Title="Translit" Level="100" AllowAdvertise="no" Description="Additional translations of program user interface.">
           <ComponentRef Id="$(var.PluginTranslit).dll" />
           <ComponentRef Id="Russian_latin.po" />
@@ -43,7 +46,6 @@
           <ComponentRef Id="Kazakh_latin.po" />
           <ComponentRef Id="Kazakh_arabic.po" />
         </Feature>
-        <!--
         <Feature Id="Win7" Title="Win7" Level="100" AllowAdvertise="no" Description="Windows® 7 features support.">
           <ComponentRef Id="$(var.PluginWin7).dll" />
           <ComponentRef Id="Microsoft.WindowsAPICodePack.dll" />

@@ -65,7 +65,7 @@ namespace LanExchange.Plugin.Network
                     for (int i = 0; i < entriesread; i++)
                     {
                         yield return (NativeMethods.SERVER_INFO_101) Marshal.PtrToStructure(ptr, itemType);
-                        ptr = (IntPtr) (ptr.ToInt32() + itemSize);
+                        ptr = (IntPtr) (ptr.ToInt64() + itemSize);
                     }
                     PluginNetwork.NETAPI32.NetApiBufferFree(bufPtr);
                 }
@@ -98,7 +98,7 @@ namespace LanExchange.Plugin.Network
                         var shi1 = (NativeMethods.SHARE_INFO_1)Marshal.PtrToStructure(ptr, itemType);
                         if ((shi1.shi1_type & stypeIPC) != stypeIPC)
                             yield return shi1;
-                        ptr = (IntPtr)(ptr.ToInt32() + itemSize);
+                        ptr = (IntPtr)(ptr.ToInt64() + itemSize);
                     }
                     PluginNetwork.NETAPI32.NetApiBufferFree(bufPtr);
                 }
@@ -129,7 +129,7 @@ namespace LanExchange.Plugin.Network
                     {
                         var item = (NativeMethods.WKSTA_USER_INFO_1)Marshal.PtrToStructure(ptr, itemType);
                         yield return item;
-                        ptr = (IntPtr) (ptr.ToInt32() + itemSize);
+                        ptr = (IntPtr) (ptr.ToInt64() + itemSize);
                     }
                     PluginNetwork.NETAPI32.NetApiBufferFree(bufPtr);
                 }
