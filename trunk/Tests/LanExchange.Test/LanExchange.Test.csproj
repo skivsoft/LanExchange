@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{21D3F599-1FA0-423A-8380-8B1041B353AC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LanExchange</RootNamespace>
+    <AssemblyName>Tests</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\Builds\VS2010\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="nunit.framework">
+      <HintPath>..\Builds\VS2010\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Action\ShortcutPanelItemTest.cs" />
+    <Compile Include="Action\ShortcutRootTest.cs" />
+    <Compile Include="Misc\SimpleIocContainerTests.cs" />
+    <Compile Include="Misc\Impl\AddonManagerImplTest.cs" />
+    <Compile Include="Model\FolderManagerTest.cs" />
+    <Compile Include="Model\PagesModelTest.cs" />
+    <Compile Include="Model\PanelIndexEvenArgsTest.cs" />
+    <Compile Include="Model\CustomPanelItemTest.cs" />
+    <Compile Include="Model\PanelItemListEventArgsTest.cs" />
+    <Compile Include="Misc\Impl\PuntoSwitcherServiceEngRusTest.cs" />
+    <Compile Include="Misc\Impl\PuntoSwitcherServiceFactoryTest.cs" />
+    <Compile Include="SDK\ObjectPathTest.cs" />
+    <Compile Include="SDK\PanelFillerResultTest.cs" />
+    <Compile Include="SDK\PanelItemBaseTest.cs" />
+    <Compile Include="SDK\PanelItemDoubleDotTest.cs" />
+    <Compile Include="SDK\XmlSerializeTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\LanExchange.SDK\LanExchange.SDK.csproj">
+      <Project>{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}</Project>
+      <Name>LanExchange.SDK</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\LanExchange\LanExchange.csproj">
+      <Project>{CC938630-E3FC-426E-A8A7-06EB22ABC703}</Project>
+      <Name>LanExchange</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Plugins\LanExchange.UI.WinForms\LanExchange.UI.WinForms.csproj">
+      <Project>{944D4DA4-F7EF-4226-A99A-2910A3B2E957}</Project>
+      <Name>LanExchange.UI.WinForms</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
