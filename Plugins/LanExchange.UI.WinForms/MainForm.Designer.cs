@@ -151,7 +151,7 @@ namespace LanExchange.UI.WinForms
             // lItemsCount
             // 
             this.lItemsCount.Name = "lItemsCount";
-            this.lItemsCount.Size = new System.Drawing.Size(472, 17);
+            this.lItemsCount.Size = new System.Drawing.Size(503, 17);
             this.lItemsCount.Spring = true;
             this.lItemsCount.Text = global::LanExchange.UI.WinForms.Properties.Resources.EmptyText;
             this.lItemsCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -243,12 +243,14 @@ namespace LanExchange.UI.WinForms
             this.mNewItem.Index = 0;
             this.mNewItem.Shortcut = System.Windows.Forms.Shortcut.Ins;
             this.mNewItem.Text = global::LanExchange.UI.WinForms.Properties.Resources.mNewItem_Text;
+            this.mNewItem.Visible = false;
             this.mNewItem.Click += new System.EventHandler(this.mNewItem_Click);
             // 
             // menuItem3
             // 
             this.menuItem3.Index = 1;
             this.menuItem3.Text = "-";
+            this.menuItem3.Visible = false;
             // 
             // mReRead
             // 

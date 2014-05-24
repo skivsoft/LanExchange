@@ -21,16 +21,16 @@
       <Component Id="$(var.PluginNetwork).dll" Guid="84728A8A-6A8D-4467-8296-A87CBB288667">
         <File Id='$(var.PluginNetwork).dll' KeyPath='yes' Source='$(var.SourceDir)$(var.PluginNetwork).dll'/>
       </Component>
-      <Component Id="$(var.PluginFileSystem).dll" Guid="F6C95C7A-7752-4619-A252-24266D77D0E7">
-        <File Id='$(var.PluginFileSystem).dll' KeyPath='yes' Source='$(var.SourceDir)$(var.PluginFileSystem).dll'/>
-      </Component>
       <Component Id="$(var.PluginUsers).dll" Guid="7671C1F3-76BF-400B-B8F5-D17A27B2E2B1">
         <File Id='$(var.PluginUsers).dll' KeyPath='yes' Source='$(var.SourceDir)$(var.PluginUsers).dll'/>
+      </Component>
+      <!--
+      <Component Id="$(var.PluginFileSystem).dll" Guid="F6C95C7A-7752-4619-A252-24266D77D0E7">
+        <File Id='$(var.PluginFileSystem).dll' KeyPath='yes' Source='$(var.SourceDir)$(var.PluginFileSystem).dll'/>
       </Component>
       <Component Id="$(var.PluginTranslit).dll" Guid="7FBA16AD-4D8B-4FF0-B25C-8F6194F834E7">
         <File Id='$(var.PluginTranslit).dll' KeyPath='yes' Source='$(var.SourceDir)$(var.PluginTranslit).dll'/>
       </Component>
-      <!--
       <Component Id="$(var.PluginWin7).dll" Guid="F800769F-5AAB-4407-9DA2-9B9EFCD91630">
         <File Id='$(var.PluginWin7).dll' KeyPath='yes' Source='$(var.PluginsDir)$(var.PluginWin7)\bin\$(var.Configuration)\$(var.PluginWin7).dll'/>
       </Component>
@@ -69,6 +69,7 @@
           <File Id="Esperanto.po" KeyPath="yes" Source="$(var.SourceDir)Languages\Esperanto.po"/>
         </Component>
         <!-- Extra tranlations -->
+        <!--
         <Component Id="Russian_latin.po" Guid="25B4F58D-630C-43F3-B9F9-D2B2E059EFD7">
           <File Id="Russian_latin.po" KeyPath="yes" Source="$(var.SourceDir)Languages\Russian_latin.po"/>
         </Component>
@@ -81,6 +82,7 @@
         <Component Id="Kazakh_arabic.po" Guid="9999EF65-B4F3-4BE0-8EFF-4CAAEF80C58F">
           <File Id="Kazakh_arabic.po" KeyPath="yes" Source="$(var.SourceDir)Languages\Kazakh_arabic.po"/>
         </Component>
+        -->
       </Directory>
     </DirectoryRef>
   </Fragment>
