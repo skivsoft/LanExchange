@@ -12,8 +12,6 @@
 <?define PluginsDir="$(var.SolutionDir)Plugins\"?>
 <?define PluginNetwork="LanExchange.Plugin.Network"?>
 <?define PluginUsers="LanExchange.Plugin.Users"?>
-<?define PluginWin7="LanExchange.Plugin.Win7"?>
-<?define PluginWPF="LanExchange.UI.WPF"?>
 <?define PluginTranslit="LanExchange.Plugin.Translit"?>
 <?define PluginFileSystem="LanExchange.Plugin.FileSystem"?>
 <?define DefInstallDir="LanExchange" ?>

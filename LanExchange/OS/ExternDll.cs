@@ -1,4 +1,4 @@
-﻿namespace LanExchange.OS.Windows
+﻿namespace LanExchange.OS
 {
     internal static class ExternDll
     {
@@ -8,7 +8,6 @@
         internal const string Comctl32 = "comctl32.dll";
         internal const string Ole32    = "ole32.dll";
         internal const string IPHLPAPI = "iphlpapi.dll";
-        internal const string NetApi32 = "netapi32.dll";
         internal const string SHLWAPI  = "shlwapi.dll";
     }
 }

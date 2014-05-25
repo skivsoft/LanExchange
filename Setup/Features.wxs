@@ -25,6 +25,7 @@
       <Feature Id="Plugins" Level="1" Title="Plugins" Display="expand" Absent="disallow" AllowAdvertise="no" Description="LanExchange plugins.">
         <Feature Id="Network" Title="Network" Level="1" Absent="disallow" AllowAdvertise="no" Description="Local Area Network browser of computers and shares.">
           <ComponentRef Id="$(var.PluginNetwork).dll" />
+          <ComponentRef Id="System.Windows.NetApi.dll" />
           <ComponentRef Id="Network.xml" />
         </Feature>
         <!--

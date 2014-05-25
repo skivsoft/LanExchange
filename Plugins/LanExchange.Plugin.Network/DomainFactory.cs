@@ -1,4 +1,5 @@
 ﻿using System.Security.Permissions;
+using System.Windows.NetApi;
 using LanExchange.Plugin.Network.Properties;
 using LanExchange.SDK;
 
@@ -18,7 +19,7 @@ namespace LanExchange.Plugin.Network
         [EnvironmentPermissionAttribute(SecurityAction.LinkDemand, Unrestricted = true)]
         public override PanelItemBase CreateDefaultRoot()
         {
-            var domain = NetApi32Utils.GetMachineNetBiosDomain(null);
+            var domain = NetApiHelper.GetMachineNetBiosDomain(null);
             return new DomainPanelItem(new DomainRoot(), domain);
         }
 

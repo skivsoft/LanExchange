@@ -1,16 +1,17 @@
 ﻿using System;
+using System.Windows.NetApi;
 
 namespace LanExchange.Plugin.Network
 {
     public sealed class ShareInfo : IComparable<ShareInfo>
     {
-        private NativeMethods.SHARE_INFO_1 m_Info;
+        private SHARE_INFO_1 m_Info;
 
         public ShareInfo()
         {
         }
 
-        public ShareInfo(NativeMethods.SHARE_INFO_1 info)
+        public ShareInfo(SHARE_INFO_1 info)
         {
             m_Info = info;
         }
@@ -35,7 +36,7 @@ namespace LanExchange.Plugin.Network
 
         public bool IsPrinter
         {
-            get { return (m_Info.shi1_type == (uint)NativeMethods.SHARE_TYPE.STYPE_PRINTQ); }
+            get { return (m_Info.shi1_type == (uint)SHARE_TYPE.STYPE_PRINTQ); }
         }
 
         public bool IsHidden

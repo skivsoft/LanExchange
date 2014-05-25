@@ -68,7 +68,6 @@
     </Compile>
     <Compile Include="IPAddressComparable.cs" />
     <Compile Include="IPAddressArray.cs" />
-    <Compile Include="NativeMethods.cs" />
     <Compile Include="DomainRoot.cs" />
     <Compile Include="PluginNetwork.cs" />
     <Compile Include="OSVersion.cs" />
@@ -85,7 +84,6 @@
     </Compile>
     <Compile Include="ShareFactory.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="NetApi32Utils.cs" />
     <Compile Include="ServerInfo.cs" />
     <Compile Include="ShareFiller.cs" />
     <Compile Include="ShareInfo.cs" />
@@ -95,6 +93,10 @@
     <ProjectReference Include="..\..\LanExchange.SDK\LanExchange.SDK.csproj">
       <Project>{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}</Project>
       <Name>LanExchange.SDK</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\System.Windows.NetApi\System.Windows.NetApi.csproj">
+      <Project>{2f0f1c34-96eb-4507-ab24-3c332f848e8a}</Project>
+      <Name>System.Windows.NetApi</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

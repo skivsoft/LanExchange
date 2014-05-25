@@ -8,7 +8,6 @@ namespace LanExchange.Plugin.Network
     {
         private IServiceProvider m_Provider;
         public static IIPHLPAPISerivice IPHLPAPI { get; private set; }
-        public static INetApi32Service NETAPI32 { get; private set; }
 
         public void Initialize(IServiceProvider serviceProvider)
         {
@@ -42,7 +41,6 @@ namespace LanExchange.Plugin.Network
             }
 
             IPHLPAPI = (IIPHLPAPISerivice)m_Provider.GetService(typeof (IIPHLPAPISerivice));
-            NETAPI32 = (INetApi32Service) m_Provider.GetService(typeof (INetApi32Service));
         }
     }
 }

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Text;
-
-//using System.Xml.Serialization;
+using System.Windows.NetApi;
 
 namespace LanExchange.Plugin.Network
 {
@@ -21,7 +20,7 @@ namespace LanExchange.Plugin.Network
         //public ServerInfo()
         //{
         //}
-        public static ServerInfo FromNetApi32(NativeMethods.SERVER_INFO_101 info)
+        public static ServerInfo FromNetApi32(SERVER_INFO_101 info)
         {
             var result = new ServerInfo();
             result.m_Name = info.sv101_name;
