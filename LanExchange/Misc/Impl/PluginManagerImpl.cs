@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -9,9 +10,7 @@ namespace LanExchange.Misc.Impl
 {
     public class PluginManagerImpl : IPluginManager
     {
-        private const string OS_PLUGIN_MASK = "LanExchange.OS.*.dll";
-        private const string UI_PLUGIN_MASK = "LanExchange.UI.*.dll";
-        private const string REGULAR_PLUGIN_MASK = "LanExchange.Plugin.*.dll";
+        private const string PLUGIN_MASK = "LanExchange.Plugin.*.dll";
         private const string IPLUGIN_INTERFACE = "LanExchange.SDK.IPlugin";
         private const string PLUGIN_TYPE_PREFIX = "Plugin";
         private readonly IList<IPlugin> m_Plugins;
@@ -23,22 +22,9 @@ namespace LanExchange.Misc.Impl
             m_PluginsAuthors = new Dictionary<string, string>();
         }
 
-        public void LoadPlugins(PluginType type)
+        public void LoadPlugins()
         {
-            string mask;
-            switch (type)
-            {
-                case PluginType.OS:
-                    mask = OS_PLUGIN_MASK;
-                    break;
-                case PluginType.UI:
-                    mask = UI_PLUGIN_MASK;
-                    break;
-                default:
-                    mask = REGULAR_PLUGIN_MASK;
-                    break;
-            }
-            var files = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, mask, SearchOption.TopDirectoryOnly);
+            var files = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, PLUGIN_MASK, SearchOption.TopDirectoryOnly);
             foreach (var fileName in files)
                 try
                 {
@@ -50,6 +36,7 @@ namespace LanExchange.Misc.Impl
                 }
         }
 
+        [Localizable(false)]
         private void LoadPlugin(string fileName)
         {
             var assembly = Assembly.LoadFile(fileName);
@@ -58,7 +45,6 @@ namespace LanExchange.Misc.Impl
             var attributes = assembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
             var author = attributes.Length == 0 ? "" : ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
             var name = Path.GetFileNameWithoutExtension(fileNameWithoutPath);
-            if (name == null) return;
             var parts = name.Split('.');
             if (parts.Length < 3) return;
             name = name + "." + PLUGIN_TYPE_PREFIX + parts[parts.Length - 1];

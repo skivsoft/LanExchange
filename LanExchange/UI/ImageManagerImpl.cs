@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using LanExchange.UI.WinForms.Properties;
+using LanExchange.Properties;
 using LanExchange.SDK;
 
 namespace LanExchange.UI.WinForms

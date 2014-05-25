@@ -83,6 +83,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -120,8 +121,106 @@
     <Compile Include="Model\PagesModel.cs" />
     <Compile Include="Model\PanelModel.cs" />
     <Compile Include="Misc\Phrase.cs" />
+    <Compile Include="OS\Comctl32Service.cs" />
+    <Compile Include="OS\ExternDll.cs" />
+    <Compile Include="OS\HotkeysService.cs" />
+    <Compile Include="OS\IPHLPAPISerivce.cs" />
+    <Compile Include="OS\IPHLPAPI\NativeMethods.cs" />
+    <Compile Include="OS\Kernel32Service.cs" />
+    <Compile Include="OS\NetApi32Service.cs" />
+    <Compile Include="OS\NetApi32\NativeMethods.cs" />
+    <Compile Include="OS\Ole32Service.cs" />
+    <Compile Include="OS\Shell32Service.cs" />
+    <Compile Include="OS\SingleInstanceService.cs" />
+    <Compile Include="OS\SysImageListService.cs" />
+    <Compile Include="OS\User32Service.cs" />
+    <Compile Include="OS\Utils\HookEventArgs.cs" />
+    <Compile Include="OS\Utils\HookType.cs" />
+    <Compile Include="OS\Utils\ImageListDrawItemConstants.cs" />
+    <Compile Include="OS\Utils\ImageListDrawStateConstants.cs" />
+    <Compile Include="OS\Utils\LocalWindowsHook.cs" />
+    <Compile Include="OS\Utils\NativeMethods.cs" />
+    <Compile Include="OS\Utils\SafeNativeMethods.cs" />
+    <Compile Include="OS\Utils\ShellAPI.cs" />
+    <Compile Include="OS\Utils\ShellContextMenu.cs" />
+    <Compile Include="OS\Utils\ShellContextMenuException.cs" />
+    <Compile Include="OS\Utils\ShellIconStateConstants.cs" />
+    <Compile Include="OS\Utils\SingleInstanceCheck.cs" />
+    <Compile Include="OS\Utils\SysImageList.cs" />
+    <Compile Include="OS\Utils\SysImageListHelper.cs" />
+    <Compile Include="OS\Utils\UnsafeNativeMethods.cs" />
+    <Compile Include="OS\Utils\User32Utils.cs" />
     <Compile Include="Presenter\EditPresenter.cs" />
     <Compile Include="Presenter\MainPresenter.cs" />
+    <Compile Include="UI\Forms\AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\AddonManagerImpl.cs" />
+    <Compile Include="UI\AppPresenter.cs" />
+    <Compile Include="UI\BitmapUtils.cs" />
+    <Compile Include="UI\ClipboardDataObjectImpl.cs" />
+    <Compile Include="UI\ClipboardServiceImpl.cs" />
+    <Compile Include="UI\Forms\EditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\EditForm.Designer.cs">
+      <DependentUpon>EditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\EscapeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\EscapeForm.Designer.cs">
+      <DependentUpon>EscapeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Components\FilterView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Components\FilterView.Designer.cs">
+      <DependentUpon>FilterView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\HeaderControl.cs" />
+    <Compile Include="UI\IListViewItemGetter.cs" />
+    <Compile Include="UI\ImageManagerImpl.cs" />
+    <Compile Include="UI\Components\InfoView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Components\InfoView.Designer.cs">
+      <DependentUpon>InfoView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\KeyboardUtils.cs" />
+    <Compile Include="UI\Components\ListViewer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ListViewItemCache.cs" />
+    <Compile Include="UI\MacroHelper.cs" />
+    <Compile Include="UI\Forms\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MessageBoxServiceImpl.cs" />
+    <Compile Include="UI\Components\PagesView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Components\PagesView.Designer.cs">
+      <DependentUpon>PagesView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Components\PanelView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Components\PanelView.Designer.cs">
+      <DependentUpon>PanelView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\RunMinimizedForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ScreenImpl.cs" />
+    <Compile Include="UI\TranslationUtils.cs" />
+    <Compile Include="UI\WaitingServiceImpl.cs" />
     <Compile Include="Utils\PingUtils.cs" />
     <Compile Include="Misc\Impl\PuntoSwitcherServiceEngRus.cs" />
     <Compile Include="Model\ConfigModel.cs" />
@@ -145,6 +244,25 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\EditForm.resx">
+      <DependentUpon>EditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Components\InfoView.resx">
+      <DependentUpon>InfoView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Components\PagesView.resx">
+      <DependentUpon>PagesView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Components\PanelView.resx">
+      <DependentUpon>PanelView.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Addons\Users.xml">
@@ -164,6 +282,14 @@
     <Content Include="Addons\NetworkRadmin.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\user_32.png" />
+    <None Include="Resources\user_16.png" />
+    <None Include="Resources\twitter-icon-v2.png" />
+    <None Include="Resources\LanExchange_48x48.png" />
+    <None Include="Resources\clear_normal.png" />
+    <None Include="Resources\clear_hover.png" />
+    <None Include="Resources\back_32.png" />
+    <None Include="Resources\back_16.png" />
     <None Include="app.config" />
     <None Include="Resources\process_working.png" />
     <None Include="Resources\keyboard_16.png" />

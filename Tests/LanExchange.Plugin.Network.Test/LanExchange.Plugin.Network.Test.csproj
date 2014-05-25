@@ -72,10 +72,6 @@
       <Project>{cc938630-e3fc-426e-a8a7-06eb22abc703}</Project>
       <Name>LanExchange</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Plugins\LanExchange.OS.Windows\LanExchange.OS.Windows.csproj">
-      <Project>{c55cd3a5-6762-4152-8231-e27fb3399067}</Project>
-      <Name>LanExchange.OS.Windows</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Plugins\LanExchange.Plugin.Network\LanExchange.Plugin.Network.csproj">
       <Project>{18971728-b208-45d9-b4bb-4bb6020963e7}</Project>
       <Name>LanExchange.Plugin.Network</Name>

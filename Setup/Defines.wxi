@@ -13,8 +13,6 @@
 <?define PluginNetwork="LanExchange.Plugin.Network"?>
 <?define PluginUsers="LanExchange.Plugin.Users"?>
 <?define PluginWin7="LanExchange.Plugin.Win7"?>
-<?define PluginWindows="LanExchange.OS.Windows"?>
-<?define PluginWinForms="LanExchange.UI.WinForms"?>
 <?define PluginWPF="LanExchange.UI.WPF"?>
 <?define PluginTranslit="LanExchange.Plugin.Translit"?>
 <?define PluginFileSystem="LanExchange.Plugin.FileSystem"?>

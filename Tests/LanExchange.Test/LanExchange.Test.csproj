@@ -33,8 +33,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\..\Builds\VS2012\packages\Moq.4.2.1402.2112\lib\net35\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>..\Builds\VS2010\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+      <HintPath>..\..\Builds\VS2012\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
@@ -65,10 +68,6 @@
     <ProjectReference Include="..\..\LanExchange\LanExchange.csproj">
       <Project>{CC938630-E3FC-426E-A8A7-06EB22ABC703}</Project>
       <Name>LanExchange</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Plugins\LanExchange.UI.WinForms\LanExchange.UI.WinForms.csproj">
-      <Project>{944D4DA4-F7EF-4226-A99A-2910A3B2E957}</Project>
-      <Name>LanExchange.UI.WinForms</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
