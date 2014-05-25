@@ -87,7 +87,6 @@
     <Compile Include="SysImageListSize.cs" />
     <Compile Include="PanelItemBaseHolder.cs" />
     <Compile Include="PanelModelCopyHelper.cs" />
-    <Compile Include="PluginType.cs" />
     <Compile Include="PresenterBase.cs" />
     <Compile Include="RetrieveMode.cs" />
     <Compile Include="SerializeUtils.cs" />

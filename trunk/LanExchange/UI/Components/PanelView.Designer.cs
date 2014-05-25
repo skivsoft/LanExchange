@@ -1,4 +1,4 @@
-﻿using LanExchange.UI.WinForms.Properties;
+﻿using LanExchange.Properties;
 
 namespace LanExchange.UI.WinForms
 {
@@ -77,15 +77,15 @@ namespace LanExchange.UI.WinForms
             this.mCopySelected});
             this.mCopyMenu.Name = "mCopyMenu";
             this.mCopyMenu.Size = new System.Drawing.Size(152, 22);
-            this.mCopyMenu.Text = global::LanExchange.UI.WinForms.Properties.Resources.mCopyMenu_Text;
+            this.mCopyMenu.Text = global::LanExchange.Properties.Resources.mCopyMenu_Text;
             this.mCopyMenu.DropDownOpening += new System.EventHandler(this.mCopyMenu_DropDownOpening);
             // 
             // mCopySelected
             // 
             this.mCopySelected.Name = "mCopySelected";
-            this.mCopySelected.ShortcutKeyDisplayString = global::LanExchange.UI.WinForms.Properties.Resources.KeyCtrlC;
+            this.mCopySelected.ShortcutKeyDisplayString = global::LanExchange.Properties.Resources.KeyCtrlC;
             this.mCopySelected.Size = new System.Drawing.Size(222, 22);
-            this.mCopySelected.Text = global::LanExchange.UI.WinForms.Properties.Resources.KeyCtrlC_;
+            this.mCopySelected.Text = global::LanExchange.Properties.Resources.KeyCtrlC_;
             this.mCopySelected.Click += new System.EventHandler(this.CopySelectedOnClick);
             // 
             // mPaste
@@ -93,15 +93,15 @@ namespace LanExchange.UI.WinForms
             this.mPaste.Name = "mPaste";
             this.mPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
             this.mPaste.Size = new System.Drawing.Size(152, 22);
-            this.mPaste.Text = global::LanExchange.UI.WinForms.Properties.Resources.mPaste_Text;
+            this.mPaste.Text = global::LanExchange.Properties.Resources.mPaste_Text;
             this.mPaste.Click += new System.EventHandler(this.mPaste_Click);
             // 
             // mDelete
             // 
             this.mDelete.Name = "mDelete";
-            this.mDelete.ShortcutKeyDisplayString = global::LanExchange.UI.WinForms.Properties.Resources.KeyDel;
+            this.mDelete.ShortcutKeyDisplayString = global::LanExchange.Properties.Resources.KeyDel;
             this.mDelete.Size = new System.Drawing.Size(152, 22);
-            this.mDelete.Text = global::LanExchange.UI.WinForms.Properties.Resources.mDelete_Text;
+            this.mDelete.Text = global::LanExchange.Properties.Resources.mDelete_Text;
             this.mDelete.Click += new System.EventHandler(this.mDelete_Click);
             // 
             // mAfterDelete

@@ -2,8 +2,10 @@ using System;
 using LanExchange.Misc;
 using LanExchange.Misc.Impl;
 using LanExchange.Model;
+using LanExchange.OS.Windows;
 using LanExchange.Presenter;
 using LanExchange.SDK;
+using LanExchange.UI.WinForms;
 
 namespace LanExchange
 {
@@ -40,6 +42,31 @@ namespace LanExchange
             container.Register<IFilterPresenter, FilterPresenter>(LifeCycle.Transient);
             container.Register<IPanelPresenter, PanelPresenter>(LifeCycle.Transient);
             container.Register<IEditPresenter, EditPresenter>(LifeCycle.Transient);
+            // OS: Windows
+            container.Register<IUser32Service, User32Service>();
+            container.Register<IShell32Service, Shell32Service>();
+            container.Register<IKernel32Service, Kernel32Service>();
+            container.Register<IComctl32Service, Comctl32Service>();
+            container.Register<IOle32Service, Ole32Service>();
+            container.Register<IIPHLPAPISerivice, IPHLPAPISerivce>();
+            container.Register<INetApi32Service, NetApi32Service>();
+            container.Register<IHotkeysService, HotkeysService>();
+            container.Register<ISingleInstanceService, SingleInstanceService>();
+            container.Register<ISysImageListService, SysImageListService>(LifeCycle.Transient);
+            // UI: WinForms
+            container.Register<IAboutView, AboutForm>(LifeCycle.Transient);
+            container.Register<IFilterView, FilterView>(LifeCycle.Transient);
+            container.Register<IPanelView, PanelView>(LifeCycle.Transient);
+            container.Register<IEditView, EditForm>(LifeCycle.Transient);
+            container.Register<IMainView, MainForm>();
+            container.Register<IPagesView, PagesView>();
+            container.Register<IAddonManager, AddonManagerImpl>();
+            container.Register<IImageManager, ImageManagerImpl>();
+            container.Register<IAppPresenter, AppPresenter>();
+            container.Register<IWaitingService, WaitingServiceImpl>();
+            container.Register<IClipboardService, ClipboardServiceImpl>();
+            container.Register<IScreenService, ScreenImpl>();
+            container.Register<IMessageBoxService, MessageBoxServiceImpl>();
             return container;
         }
     }

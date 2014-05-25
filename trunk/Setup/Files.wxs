@@ -12,12 +12,6 @@
       <Component Id='LanExchange.SDK.dll' Guid="340AE8C6-C70D-49D0-BA91-6F1FFCD422B2">
         <File Id='LanExchange.SDK.dll' KeyPath='yes' Source='$(var.SourceDir)LanExchange.SDK.dll'/>
       </Component>
-      <Component Id='$(var.PluginWindows).dll' Guid="8906C12B-803D-4A90-80D5-9CFB9EF260EF">
-        <File Id="$(var.PluginWindows).dll" KeyPath="yes" Source="$(var.SourceDir)$(var.PluginWindows).dll"/>
-      </Component>
-      <Component Id="$(var.PluginWinForms).dll" Guid="7D1EFCD3-21F1-433D-8A23-9A9056A1FAD0">
-        <File Id="$(var.PluginWinForms).dll" KeyPath="yes" Source="$(var.SourceDir)$(var.PluginWinForms).dll"/>
-      </Component>
       <Component Id="$(var.PluginNetwork).dll" Guid="84728A8A-6A8D-4467-8296-A87CBB288667">
         <File Id='$(var.PluginNetwork).dll' KeyPath='yes' Source='$(var.SourceDir)$(var.PluginNetwork).dll'/>
       </Component>

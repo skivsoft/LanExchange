@@ -1,4 +1,4 @@
-﻿using LanExchange.UI.WinForms.Properties;
+﻿using LanExchange.Properties;
 
 namespace LanExchange.UI.WinForms
 {
@@ -172,7 +172,7 @@ namespace LanExchange.UI.WinForms
             // 
             // logoPictureBox
             // 
-            this.logoPictureBox.Image = global::LanExchange.UI.WinForms.Properties.Resources.LanExchange_48x48;
+            this.logoPictureBox.Image = global::LanExchange.Properties.Resources.LanExchange_48x48;
             this.logoPictureBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.logoPictureBox.Location = new System.Drawing.Point(16, 16);
             this.logoPictureBox.Name = "logoPictureBox";
@@ -186,7 +186,7 @@ namespace LanExchange.UI.WinForms
             this.picTwitter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.picTwitter.BackColor = System.Drawing.SystemColors.Control;
             this.picTwitter.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picTwitter.Image = global::LanExchange.UI.WinForms.Properties.Resources.twitter_icon;
+            this.picTwitter.Image = global::LanExchange.Properties.Resources.twitter_icon_v2;
             this.picTwitter.Location = new System.Drawing.Point(16, 247);
             this.picTwitter.Name = "picTwitter";
             this.picTwitter.Size = new System.Drawing.Size(16, 16);

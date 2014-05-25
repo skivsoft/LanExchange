@@ -1,4 +1,4 @@
-﻿using LanExchange.UI.WinForms.Properties;
+﻿using LanExchange.Properties;
 
 namespace LanExchange.UI.WinForms
 {
@@ -58,7 +58,7 @@ namespace LanExchange.UI.WinForms
             this.mReRead.Name = "mReRead";
             this.mReRead.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
             this.mReRead.Size = new System.Drawing.Size(168, 22);
-            this.mReRead.Text = global::LanExchange.UI.WinForms.Properties.Resources.mReRead_Text;
+            this.mReRead.Text = global::LanExchange.Properties.Resources.mReRead_Text;
             this.mReRead.Click += new System.EventHandler(this.mReRead_Click);
             // 
             // toolStripSeparator2
@@ -71,14 +71,14 @@ namespace LanExchange.UI.WinForms
             this.mCloseTab.Name = "mCloseTab";
             this.mCloseTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
             this.mCloseTab.Size = new System.Drawing.Size(168, 22);
-            this.mCloseTab.Text = global::LanExchange.UI.WinForms.Properties.Resources.mCloseTab_Text;
+            this.mCloseTab.Text = global::LanExchange.Properties.Resources.mCloseTab_Text;
             this.mCloseTab.Click += new System.EventHandler(this.mCloseTab_Click);
             // 
             // mCloseOther
             // 
             this.mCloseOther.Name = "mCloseOther";
             this.mCloseOther.Size = new System.Drawing.Size(168, 22);
-            this.mCloseOther.Text = global::LanExchange.UI.WinForms.Properties.Resources.mCloseOther_Text;
+            this.mCloseOther.Text = global::LanExchange.Properties.Resources.mCloseOther_Text;
             this.mCloseOther.Click += new System.EventHandler(this.mCloseOther_Click);
             // 
             // Pages

@@ -4,7 +4,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Security.Permissions;
-using LanExchange.UI.WinForms.Properties;
+using LanExchange.Properties;
 using LanExchange.SDK;
 
 namespace LanExchange.UI.WinForms

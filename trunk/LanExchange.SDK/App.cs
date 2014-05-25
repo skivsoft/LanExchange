@@ -44,6 +44,8 @@ namespace LanExchange.SDK
             // other
             Config = Resolve<IConfigModel>();
             Threads = Resolve<ILazyThreadPool>();
+            Images = Resolve<IImageManager>();
+            Addons = Resolve<IAddonManager>();
         }
 
         public static IIoCContainer GetContainer()

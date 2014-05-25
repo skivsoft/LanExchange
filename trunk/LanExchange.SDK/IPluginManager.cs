@@ -4,7 +4,7 @@ namespace LanExchange.SDK
 {
     public interface IPluginManager
     {
-        void LoadPlugins(PluginType type);
+        void LoadPlugins();
         IList<IPlugin> Items { get; }
         IDictionary<string, string> PluginsAuthors { get; }
     }
