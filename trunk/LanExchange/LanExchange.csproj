@@ -127,8 +127,6 @@
     <Compile Include="OS\IPHLPAPISerivce.cs" />
     <Compile Include="OS\IPHLPAPI\NativeMethods.cs" />
     <Compile Include="OS\Kernel32Service.cs" />
-    <Compile Include="OS\NetApi32Service.cs" />
-    <Compile Include="OS\NetApi32\NativeMethods.cs" />
     <Compile Include="OS\Ole32Service.cs" />
     <Compile Include="OS\Shell32Service.cs" />
     <Compile Include="OS\SingleInstanceService.cs" />

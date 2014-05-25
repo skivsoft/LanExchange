@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.NetApi;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
@@ -23,7 +24,7 @@ namespace LanExchange.Plugin.Network
             //Thread.Sleep(5000);
             //result.Add(new PanelItemDoubleDot(parent));
             // get server list via OS api
-            foreach (var item in NetApi32Utils.NetServerEnum(parent.Name, NativeMethods.SV_101_TYPES.SV_TYPE_ALL))
+            foreach (var item in NetApiHelper.NetServerEnum(parent.Name, SV_101_TYPES.SV_TYPE_ALL))
             {
                 var si = ServerInfo.FromNetApi32(item);
                 si.ResetUtcUpdated();

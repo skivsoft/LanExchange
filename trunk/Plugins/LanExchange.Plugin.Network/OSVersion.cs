@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Windows.NetApi;
 
 namespace LanExchange.Plugin.Network
 {
@@ -38,57 +39,57 @@ namespace LanExchange.Plugin.Network
         public bool IsDomainController()
         {
             const uint ctrl =
-                (uint)NativeMethods.SV_101_TYPES.SV_TYPE_DOMAIN_CTRL | (uint)NativeMethods.SV_101_TYPES.SV_TYPE_DOMAIN_BAKCTRL;
+                (uint)SV_101_TYPES.SV_TYPE_DOMAIN_CTRL | (uint)SV_101_TYPES.SV_TYPE_DOMAIN_BAKCTRL;
             return (m_Type & ctrl) != 0;
         }
 
         public bool IsServer()
         {
-            const uint srv = (uint)NativeMethods.SV_101_TYPES.SV_TYPE_SERVER;
+            const uint srv = (uint)SV_101_TYPES.SV_TYPE_SERVER;
             const uint ctrl =
-                (uint)NativeMethods.SV_101_TYPES.SV_TYPE_DOMAIN_CTRL | (uint)NativeMethods.SV_101_TYPES.SV_TYPE_DOMAIN_BAKCTRL;
-            const uint noctrl = (uint)NativeMethods.SV_101_TYPES.SV_TYPE_SERVER_NT;
+                (uint)SV_101_TYPES.SV_TYPE_DOMAIN_CTRL | (uint)SV_101_TYPES.SV_TYPE_DOMAIN_BAKCTRL;
+            const uint noctrl = (uint)SV_101_TYPES.SV_TYPE_SERVER_NT;
             return (m_Type & srv) != 0 && (m_Type & (ctrl | noctrl)) != 0;
         }
 
         public bool IsSQLServer()
         {
-            return (m_Type & (uint)NativeMethods.SV_101_TYPES.SV_TYPE_SQLSERVER) != 0;
+            return (m_Type & (uint)SV_101_TYPES.SV_TYPE_SQLSERVER) != 0;
         }
 
         public bool IsTimeSource()
         {
-            return (m_Type & (uint)NativeMethods.SV_101_TYPES.SV_TYPE_TIME_SOURCE) != 0;
+            return (m_Type & (uint)SV_101_TYPES.SV_TYPE_TIME_SOURCE) != 0;
         }
 
         public bool IsPrintServer()
         {
-            return (m_Type & (uint)NativeMethods.SV_101_TYPES.SV_TYPE_PRINTQ_SERVER) != 0;
+            return (m_Type & (uint)SV_101_TYPES.SV_TYPE_PRINTQ_SERVER) != 0;
         }
 
         public bool IsDialInServer()
         {
-            return (m_Type & (uint)NativeMethods.SV_101_TYPES.SV_TYPE_DIALIN_SERVER) != 0;
+            return (m_Type & (uint)SV_101_TYPES.SV_TYPE_DIALIN_SERVER) != 0;
         }
 
         public bool IsPotentialBrowser()
         {
-            return (m_Type & (uint)NativeMethods.SV_101_TYPES.SV_TYPE_POTENTIAL_BROWSER) != 0;
+            return (m_Type & (uint)SV_101_TYPES.SV_TYPE_POTENTIAL_BROWSER) != 0;
         }
 
         public bool IsBackupBrowser()
         {
-            return (m_Type & (uint)NativeMethods.SV_101_TYPES.SV_TYPE_BACKUP_BROWSER) != 0;
+            return (m_Type & (uint)SV_101_TYPES.SV_TYPE_BACKUP_BROWSER) != 0;
         }
 
         public bool IsMasterBrowser()
         {
-            return (m_Type & (uint)NativeMethods.SV_101_TYPES.SV_TYPE_MASTER_BROWSER) != 0;
+            return (m_Type & (uint)SV_101_TYPES.SV_TYPE_MASTER_BROWSER) != 0;
         }
 
         public bool IsDFSRoot()
         {
-            return (m_Type & (uint)NativeMethods.SV_101_TYPES.SV_TYPE_DFS) != 0;
+            return (m_Type & (uint)SV_101_TYPES.SV_TYPE_DFS) != 0;
         }
 
         public int CompareTo(OSVersion other)
@@ -131,16 +132,16 @@ namespace LanExchange.Plugin.Network
         {
             //return String.Format("{0}.{1}.{2}.{3}", platform_id, ver_major, ver_minor, type);
             bool bServer = IsServer();
-            var platform = (NativeMethods.SV_101_PLATFORM) m_PlatformID;
+            var platform = (SV_101_PLATFORM) m_PlatformID;
             // OS2 same as NT
-            if (platform == NativeMethods.SV_101_PLATFORM.PLATFORM_ID_OS2)
-                platform = NativeMethods.SV_101_PLATFORM.PLATFORM_ID_NT;
+            if (platform == SV_101_PLATFORM.PLATFORM_ID_OS2)
+                platform = SV_101_PLATFORM.PLATFORM_ID_NT;
             switch (platform)
             {
-                case NativeMethods.SV_101_PLATFORM.PLATFORM_ID_DOS:
+                case SV_101_PLATFORM.PLATFORM_ID_DOS:
                     return String.Format("MS-DOS {0}.{1}", m_Major, m_Minor);
-                case NativeMethods.SV_101_PLATFORM.PLATFORM_ID_NT:
-                    if ((m_Type & (uint)NativeMethods.SV_101_TYPES.SV_TYPE_XENIX_SERVER) != 0)
+                case SV_101_PLATFORM.PLATFORM_ID_NT:
+                    if ((m_Type & (uint)SV_101_TYPES.SV_TYPE_XENIX_SERVER) != 0)
                         return String.Format("Linux Server {0}.{1}", m_Major, m_Minor);
                     switch (m_Major)
                     {
@@ -187,9 +188,9 @@ namespace LanExchange.Plugin.Network
                         default:
                             return String.Format("Windows NT {0}.{1}", m_Major, m_Minor);
                     }
-                case NativeMethods.SV_101_PLATFORM.PLATFORM_ID_OSF:
+                case SV_101_PLATFORM.PLATFORM_ID_OSF:
                     return String.Format("OSF {0}.{1}", m_Major, m_Minor);
-                case NativeMethods.SV_101_PLATFORM.PLATFORM_ID_VMS:
+                case SV_101_PLATFORM.PLATFORM_ID_VMS:
                     return String.Format("VMS {0}.{1}", m_Major, m_Minor);
                 default:
                     return String.Format("{0} {1}.{2}", m_PlatformID, m_Major, m_Minor);

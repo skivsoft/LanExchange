@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Windows.NetApi;
 using LanExchange.Plugin.Network.Properties;
 using LanExchange.SDK;
 
@@ -97,7 +98,7 @@ namespace LanExchange.Plugin.Network
         [Localizable(false)]
         public static IComparable GetLoggedUsers(PanelItemBase item)
         {
-            var list = NetApi32Utils.NetWkstaUserEnumNames(item.Name);
+            var list = NetApiHelper.NetWkstaUserEnumNames(item.Name);
             return string.Join(", ", list);
         }
     }

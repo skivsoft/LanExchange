@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows.NetApi;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
@@ -27,7 +28,7 @@ namespace LanExchange.Plugin.Network
             if (parent == null)
                 throw new ArgumentNullException("parent");
             //result.Add(new PanelItemDoubleDot(parent));
-            foreach (var item in NetApi32Utils.NetShareEnum(parent.Name))
+            foreach (var item in NetApiHelper.NetShareEnum(parent.Name))
             {
                 var si = new ShareInfo(item);
                 //if (!Settings.Settings.Instance.ShowHiddenShares && SI.IsHidden)
@@ -39,7 +40,7 @@ namespace LanExchange.Plugin.Network
                 result.Add(new SharePanelItem(parent, si));
             }
             // enum logged users
-            foreach(var item in NetApi32Utils.NetWkstaUserEnumNames(parent.Name))
+            foreach(var item in NetApiHelper.NetWkstaUserEnumNames(parent.Name))
             {
                 var si = new ShareInfo();
                 si.Name = item;

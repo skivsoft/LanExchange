@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Windows.NetApi;
 using System.Xml.Serialization;
 using LanExchange.Plugin.Network.Properties;
 using LanExchange.SDK;
@@ -30,7 +31,7 @@ namespace LanExchange.Plugin.Network
 
         public SharePanelItem(PanelItemBase parent, string name) : base(parent)
         {
-            m_SHI = new ShareInfo(new NativeMethods.SHARE_INFO_1 {shi1_netname = name});
+            m_SHI = new ShareInfo(new SHARE_INFO_1 {shi1_netname = name});
             Comment = string.Empty;
         }
 

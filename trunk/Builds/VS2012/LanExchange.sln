@@ -42,6 +42,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Network.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Users.Test", "..\..\Tests\LanExchange.Plugin.Users.Test\LanExchange.Plugin.Users.Test.csproj", "{FB7936EE-CFD6-44AD-AB43-6FA929B7F6F2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Windows.NetApi", "..\..\System.Windows.NetApi\System.Windows.NetApi.csproj", "{2F0F1C34-96EB-4507-AB24-3C332F848E8A}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = LanExchange2010.vsmdi
@@ -185,6 +187,16 @@ Global
 		{FB7936EE-CFD6-44AD-AB43-6FA929B7F6F2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{FB7936EE-CFD6-44AD-AB43-6FA929B7F6F2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{FB7936EE-CFD6-44AD-AB43-6FA929B7F6F2}.Release|x86.ActiveCfg = Release|Any CPU
+		{2F0F1C34-96EB-4507-AB24-3C332F848E8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F0F1C34-96EB-4507-AB24-3C332F848E8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F0F1C34-96EB-4507-AB24-3C332F848E8A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2F0F1C34-96EB-4507-AB24-3C332F848E8A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2F0F1C34-96EB-4507-AB24-3C332F848E8A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2F0F1C34-96EB-4507-AB24-3C332F848E8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F0F1C34-96EB-4507-AB24-3C332F848E8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F0F1C34-96EB-4507-AB24-3C332F848E8A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2F0F1C34-96EB-4507-AB24-3C332F848E8A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{2F0F1C34-96EB-4507-AB24-3C332F848E8A}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

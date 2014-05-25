@@ -68,7 +68,6 @@
     <Compile Include="IEditPresenter.cs" />
     <Compile Include="IEditView.cs" />
     <Compile Include="IIPHLPAPISerivice.cs" />
-    <Compile Include="INetApi32Service.cs" />
     <Compile Include="IPanelUpdater.cs" />
     <Compile Include="IPluginManager.cs" />
     <Compile Include="IPuntoSwitcherService.cs" />
