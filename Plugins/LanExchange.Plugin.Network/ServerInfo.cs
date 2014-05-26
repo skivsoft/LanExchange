@@ -23,12 +23,12 @@ namespace LanExchange.Plugin.Network
         public static ServerInfo FromNetApi32(SERVER_INFO_101 info)
         {
             var result = new ServerInfo();
-            result.m_Name = info.sv101_name;
-            result.m_Version.PlatformID = info.sv101_platform_id;
-            result.m_Version.Major = info.sv101_version_major;
-            result.m_Version.Minor = info.sv101_version_minor;
-            result.m_Version.Type = info.sv101_type;
-            result.m_Comment = info.sv101_comment;
+            result.m_Name = info.name;
+            result.m_Version.PlatformID = info.platform_id;
+            result.m_Version.Major = info.version_major;
+            result.m_Version.Minor = info.version_minor;
+            result.m_Version.Type = info.type;
+            result.m_Comment = info.comment;
             return result;
         }
 

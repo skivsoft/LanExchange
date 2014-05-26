@@ -98,7 +98,7 @@ namespace LanExchange.Plugin.Network
         [Localizable(false)]
         public static IComparable GetLoggedUsers(PanelItemBase item)
         {
-            var list = NetApiHelper.NetWkstaUserEnumNames(item.Name);
+            var list = NetworkHelper.NetWorkstationUserEnumNames(item.Name);
             return string.Join(", ", list);
         }
     }

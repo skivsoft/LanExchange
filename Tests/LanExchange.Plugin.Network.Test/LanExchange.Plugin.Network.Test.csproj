@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LanExchange.Plugin.Network.Test</RootNamespace>
     <AssemblyName>LanExchange.Plugin.Network.Test</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Moq">
-      <HintPath>..\..\Builds\VS2012\packages\Moq.4.2.1402.2112\lib\net35\Moq.dll</HintPath>
+      <HintPath>..\..\Builds\VS2012\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\..\Builds\VS2012\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
@@ -75,6 +76,10 @@
     <ProjectReference Include="..\..\Plugins\LanExchange.Plugin.Network\LanExchange.Plugin.Network.csproj">
       <Project>{18971728-b208-45d9-b4bb-4bb6020963e7}</Project>
       <Name>LanExchange.Plugin.Network</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\System.Windows.NetApi\System.Windows.NetApi.csproj">
+      <Project>{2f0f1c34-96eb-4507-ab24-3c332f848e8a}</Project>
+      <Name>System.Windows.NetApi</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.NetApi;
 using NUnit.Framework;
 
 namespace LanExchange.Plugin.Network
@@ -44,7 +45,7 @@ namespace LanExchange.Plugin.Network
         public void TestSerializeBinary()
         {
             ServerInfo info =
-                ServerInfo.FromNetApi32(new NativeMethods.SERVER_INFO_101 {sv101_name = "QQQ", sv101_comment = "WWW"});
+                ServerInfo.FromNetApi32(new SERVER_INFO_101 {name = "QQQ", comment = "WWW"});
             //SI.Name = "QQQ";
             //SI.Comment = "WWW";
             var stream = new MemoryStream();

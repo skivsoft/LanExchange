@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Windows.NetApi;
 using LanExchange.SDK;
 using NUnit.Framework;
 
-namespace LanExchange.Plugin.Network
+namespace LanExchange.Plugin.Network.Test
 {
     internal class SharePanelItemTest
     {
@@ -11,7 +12,7 @@ namespace LanExchange.Plugin.Network
         [SetUp]
         public void SetUp()
         {
-            var info = new NativeMethods.SHARE_INFO_1();
+            var info = new SHARE_INFO_1();
             m_Share = new SharePanelItem(null, new ShareInfo(info));
         }
 
@@ -32,11 +33,11 @@ namespace LanExchange.Plugin.Network
         [Test]
         public void TestImageName()
         {
-            m_Share.ShareType = (uint) NativeMethods.SHARE_TYPE.STYPE_PRINTQ;
+            m_Share.ShareType = (uint) SHARE_TYPE.STYPE_PRINTQ;
             m_Share.Name = "HP";
             Assert.AreEqual(string.Empty, m_Share.ImageName);
-            m_Share.ShareType = (uint) NativeMethods.SHARE_TYPE.STYPE_DEVICE;
-            Assert.AreEqual((uint) NativeMethods.SHARE_TYPE.STYPE_DEVICE, m_Share.SHI.ShareType);
+            m_Share.ShareType = (uint) SHARE_TYPE.STYPE_DEVICE;
+            Assert.AreEqual((uint) SHARE_TYPE.STYPE_DEVICE, m_Share.SHI.ShareType);
             Assert.AreEqual(PanelImageNames.FOLDER, m_Share.ImageName);
             m_Share.Name = "C$";
             Assert.AreEqual(PanelImageNames.FOLDER + PanelImageNames.HIDDEN_POSTFIX, m_Share.ImageName);

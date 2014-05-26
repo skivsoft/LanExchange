@@ -2,20 +2,22 @@ using System.Runtime.InteropServices;
 
 namespace System.Windows.NetApi
 {
+    [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct SERVER_INFO_101
+    [CLSCompliant(false)]
+    public sealed class SERVER_INFO_101
     {
         [MarshalAs(UnmanagedType.U4)]
-        public uint sv101_platform_id;
+        public uint platform_id;
         [MarshalAs(UnmanagedType.LPWStr)]
-        public string sv101_name;
+        public string name;
         [MarshalAs(UnmanagedType.U4)]
-        public uint sv101_version_major;
+        public uint version_major;
         [MarshalAs(UnmanagedType.U4)]
-        public uint sv101_version_minor;
+        public uint version_minor;
         [MarshalAs(UnmanagedType.U4)]
-        public uint sv101_type;
+        public uint type;
         [MarshalAs(UnmanagedType.LPWStr)]
-        public string sv101_comment;
+        public string comment;
     }
 }

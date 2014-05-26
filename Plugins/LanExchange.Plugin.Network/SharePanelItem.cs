@@ -31,7 +31,7 @@ namespace LanExchange.Plugin.Network
 
         public SharePanelItem(PanelItemBase parent, string name) : base(parent)
         {
-            m_SHI = new ShareInfo(new SHARE_INFO_1 {shi1_netname = name});
+            m_SHI = new ShareInfo(new SHARE_INFO_1 {netname = name});
             Comment = string.Empty;
         }
 

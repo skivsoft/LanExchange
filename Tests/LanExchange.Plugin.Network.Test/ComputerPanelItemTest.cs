@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Windows.NetApi;
 using System.Xml.Serialization;
 using LanExchange.SDK;
 using NUnit.Framework;
@@ -15,7 +16,7 @@ namespace LanExchange.Plugin.Network
             var info = new ServerInfo();
             info.Name = "COMP01";
             info.Comment = "Hello world";
-            info.Version.PlatformID = (uint) NativeMethods.SV_101_PLATFORM.PLATFORM_ID_NT;
+            info.Version.PlatformID = (uint) SV_101_PLATFORM.PLATFORM_ID_NT;
             info.Version.Major = 6;
             info.Version.Minor = 2;
             m_Comp = new ComputerPanelItem(null, info);

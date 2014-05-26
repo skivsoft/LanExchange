@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Windows.NetApi;
 using LanExchange.SDK;
 using NUnit.Framework;
 
@@ -22,7 +23,7 @@ namespace LanExchange.Plugin.Network
             Utils.InitPlugins();
             var strategy = new ComputerFiller();
             var result = new Collection<PanelItemBase>();
-            string domain = NetApi32Utils.GetMachineNetBiosDomain(null);
+            string domain = WorkstationInfo.FromComputer(null).LanGroup;
             strategy.AsyncFill(new DomainPanelItem(null, domain), result);
             Assert.Greater(result.Count, 0);
         }

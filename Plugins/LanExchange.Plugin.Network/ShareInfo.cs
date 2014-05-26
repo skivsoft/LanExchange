@@ -5,10 +5,11 @@ namespace LanExchange.Plugin.Network
 {
     public sealed class ShareInfo : IComparable<ShareInfo>
     {
-        private SHARE_INFO_1 m_Info;
+        private readonly SHARE_INFO_1 m_Info;
 
         public ShareInfo()
         {
+            m_Info = new SHARE_INFO_1();
         }
 
         public ShareInfo(SHARE_INFO_1 info)
@@ -18,33 +19,33 @@ namespace LanExchange.Plugin.Network
 
         public string Name
         {
-            get { return m_Info.shi1_netname; }
-            set { m_Info.shi1_netname = value; }
+            get { return m_Info.netname; }
+            set { m_Info.netname = value; }
         }
 
         public string Comment
         {
-            get { return m_Info.shi1_remark; }
-            set { m_Info.shi1_remark = value; }
+            get { return m_Info.remark; }
+            set { m_Info.remark = value; }
         }
 
         public uint ShareType
         {
-            get { return m_Info.shi1_type; }
-            set { m_Info.shi1_type = value; }
+            get { return m_Info.type; }
+            set { m_Info.type = value; }
         }
 
         public bool IsPrinter
         {
-            get { return (m_Info.shi1_type == (uint)SHARE_TYPE.STYPE_PRINTQ); }
+            get { return (m_Info.type == (uint)SHARE_TYPE.STYPE_PRINTQ); }
         }
 
         public bool IsHidden
         {
             get
             {
-                if (!String.IsNullOrEmpty(m_Info.shi1_netname))
-                    return m_Info.shi1_netname[m_Info.shi1_netname.Length - 1] == '$';
+                if (!String.IsNullOrEmpty(m_Info.netname))
+                    return m_Info.netname[m_Info.netname.Length - 1] == '$';
                 return false;
             }
         }
