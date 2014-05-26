@@ -3,15 +3,15 @@
 namespace System.Windows.NetApi
 {
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    public struct WKSTA_USER_INFO_1
+    public sealed class WKSTA_USER_INFO_1
     {
         [MarshalAs(UnmanagedType.LPWStr)]
-        public string wkui1_username;
+        public string username;
         [MarshalAs(UnmanagedType.LPWStr)]
-        public string wkui1_logon_domain;
+        public string logon_domain;
         [MarshalAs(UnmanagedType.LPWStr)]
-        public string wkui1_oth_domains;
+        public string other_domains;
         [MarshalAs(UnmanagedType.LPWStr)]
-        public string wkui1_logon_server;
+        public string logon_server;
     }
 }

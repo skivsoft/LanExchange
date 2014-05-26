@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows.Forms;
+using System.Windows.NetApi;
 using LanExchange.SDK;
 using NUnit.Framework;
 
@@ -29,7 +30,7 @@ namespace LanExchange.Plugin.Network
         {
             Utils.InitPlugins();
             var strategy = new ShareFiller();
-            string domain = NetApi32Utils.GetMachineNetBiosDomain(null);
+            string domain = WorkstationInfo.FromComputer(null).LanGroup;
             var computer = new ComputerPanelItem(new DomainPanelItem(new DomainRoot(), domain),
                 SystemInformation.ComputerName);
             ShareFiller.ShowHiddenShares = true;

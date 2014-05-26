@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
+using System.Windows.NetApi;
 using NUnit.Framework;
 
 namespace LanExchange.Plugin.Network
@@ -17,24 +18,24 @@ namespace LanExchange.Plugin.Network
         [Test, ExpectedException(typeof (Win32Exception))]
         public void ExceptionGetMachineNetBiosDomain()
         {
-            NetApi32Utils.GetMachineNetBiosDomain("~!@#$%^&");
+            WorkstationInfo.FromComputer("~!@#$%^&");
         }
 
         [Test]
         public void TestGetMachineNetBiosDomain()
         {
-            string value = NetApi32Utils.GetMachineNetBiosDomain(null);
+            string value = WorkstationInfo.FromComputer(null).LanGroup;
             Assert.NotNull(value);
         }
 
         [Test]
         public void TestNetServerEnumComps()
         {
-            string domain = NetApi32Utils.GetMachineNetBiosDomain(null);
-            IEnumerable<NativeMethods.SERVER_INFO_101> list = NetApi32Utils.NetServerEnum(domain,
-                NativeMethods.SV_101_TYPES.SV_TYPE_DOMAIN_ENUM);
+            string domain = WorkstationInfo.FromComputer(null).LanGroup;
+            IEnumerable<SERVER_INFO_101> list = NetApiHelper.NetServerEnum(domain,
+                SV_101_TYPES.SV_TYPE_DOMAIN_ENUM);
             int count = 0;
-            foreach (NativeMethods.SERVER_INFO_101 item in list)
+            foreach (SERVER_INFO_101 item in list)
                 count++;
             Assert.Greater(count, 0);
         }
@@ -42,20 +43,20 @@ namespace LanExchange.Plugin.Network
         [Test]
         public void TestNetServerEnumDomains()
         {
-            IEnumerable<NativeMethods.SERVER_INFO_101> list = NetApi32Utils.NetServerEnum(null,
-                NativeMethods.SV_101_TYPES.SV_TYPE_DOMAIN_ENUM);
-            IEnumerator<NativeMethods.SERVER_INFO_101> enumerator = list.GetEnumerator();
+            IEnumerable<SERVER_INFO_101> list = NetApiHelper.NetServerEnum(null,
+                SV_101_TYPES.SV_TYPE_DOMAIN_ENUM);
+            IEnumerator<SERVER_INFO_101> enumerator = list.GetEnumerator();
             Assert.IsTrue(enumerator.MoveNext());
-            Assert.IsNotEmpty(enumerator.Current.sv101_name);
+            Assert.IsNotEmpty(enumerator.Current.name);
         }
 
         [Test]
         public void TestNetShareEnum()
         {
             string comp = SystemInformation.ComputerName;
-            IEnumerable<NativeMethods.SHARE_INFO_1> list = NetApi32Utils.NetShareEnum(comp);
+            IEnumerable<SHARE_INFO_1> list = NetApiHelper.NetShareEnum(comp);
             int count = 0;
-            foreach (NativeMethods.SHARE_INFO_1 item in list)
+            foreach (SHARE_INFO_1 item in list)
                 count++;
             Assert.Greater(count, 0);
         }

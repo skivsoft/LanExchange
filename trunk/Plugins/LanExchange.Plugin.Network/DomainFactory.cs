@@ -19,7 +19,7 @@ namespace LanExchange.Plugin.Network
         [EnvironmentPermissionAttribute(SecurityAction.LinkDemand, Unrestricted = true)]
         public override PanelItemBase CreateDefaultRoot()
         {
-            var domain = NetApiHelper.GetMachineNetBiosDomain(null);
+            var domain = WorkstationInfo.FromComputer(null).LanGroup;
             return new DomainPanelItem(new DomainRoot(), domain);
         }
 

@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LanExchange.Plugin.Network</RootNamespace>
     <AssemblyName>LanExchange.Plugin.Network</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -69,6 +69,7 @@
     <Compile Include="IPAddressComparable.cs" />
     <Compile Include="IPAddressArray.cs" />
     <Compile Include="DomainRoot.cs" />
+    <Compile Include="NetworkHelper.cs" />
     <Compile Include="PluginNetwork.cs" />
     <Compile Include="OSVersion.cs" />
     <Compile Include="ComputerFiller.cs" />
