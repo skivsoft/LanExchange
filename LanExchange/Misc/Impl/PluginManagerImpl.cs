@@ -24,7 +24,7 @@ namespace LanExchange.Misc.Impl
 
         public void LoadPlugins()
         {
-            var files = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, PLUGIN_MASK, SearchOption.TopDirectoryOnly);
+            var files = Directory.GetFiles(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Lib"), PLUGIN_MASK, SearchOption.TopDirectoryOnly);
             foreach (var fileName in files)
                 try
                 {

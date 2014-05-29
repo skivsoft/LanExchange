@@ -5,6 +5,8 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 using LanExchange.Action;
 using LanExchange.Misc;
 using LanExchange.Properties;
@@ -15,10 +17,35 @@ namespace LanExchange
     internal static class Program
     {
         public static long LoadPluginsMS;
+        private static string s_LibPath;
 
         [STAThread]
         [Localizable(false)]
         static void Main()
+        {
+            SubscribeAssemblyResolver();
+            SubMain();
+        }
+
+        static void SubscribeAssemblyResolver()
+        {
+            s_LibPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            if (s_LibPath != null)
+                s_LibPath = Path.Combine(s_LibPath, "Lib");
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+        }
+
+        [Localizable(false)]
+        static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            var name = args.Name.Substring(0, args.Name.IndexOf(','));
+            if (name.EndsWith(".resources")) return null;
+            if (name.EndsWith(".XmlSerializers")) return null;
+            var filePath = Path.Combine(s_LibPath, name + ".dll");
+            return Assembly.LoadFrom(filePath);
+        }
+
+        static void SubMain()
         {
             // global map interfaces to classes
             App.SetContainer(ContainerBuilder.Build());

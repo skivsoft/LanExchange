@@ -28,11 +28,9 @@
           <ComponentRef Id="System.Windows.NetApi.dll" />
           <ComponentRef Id="Network.xml" />
         </Feature>
-        <!--
         <Feature Id="FileSystem" Title="FileSystem" Level="1" AllowAdvertise="no" Description="File system navigator plugin.">
           <ComponentRef Id="$(var.PluginFileSystem).dll" />
         </Feature>
-        -->
         <Feature Id="Users" Title="Users" Level="1" AllowAdvertise="no" Description="Active Directory browser of organization units and users.">
           <ComponentRef Id="$(var.PluginUsers).dll" />
           <ComponentRef Id="Users.xml" />

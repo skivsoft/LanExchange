@@ -9,75 +9,77 @@
       <Component Id="WMIViewer.exe" Guid="A1CAFBF8-0BE2-4B63-82E4-E407DD851B02">
         <File Id='WMIViewer.exe' Source='$(var.SourceDir)WMIViewer.exe'/>
       </Component>
-      <Component Id='LanExchange.SDK.dll' Guid="340AE8C6-C70D-49D0-BA91-6F1FFCD422B2">
-        <File Id='LanExchange.SDK.dll' KeyPath='yes' Source='$(var.SourceDir)LanExchange.SDK.dll'/>
-      </Component>
-      <Component Id='System.Windows.NetApi.dll' Guid="69B96648-B080-473C-ACBA-3A0566547390">
-        <File Id='System.Windows.NetApi.dll' KeyPath='yes' Source='$(var.SourceDir)System.Windows.NetApi.dll'/>
-      </Component>
-      <Component Id="$(var.PluginNetwork).dll" Guid="84728A8A-6A8D-4467-8296-A87CBB288667">
-        <File Id='$(var.PluginNetwork).dll' KeyPath='yes' Source='$(var.SourceDir)$(var.PluginNetwork).dll'/>
-      </Component>
-      <Component Id="$(var.PluginUsers).dll" Guid="7671C1F3-76BF-400B-B8F5-D17A27B2E2B1">
-        <File Id='$(var.PluginUsers).dll' KeyPath='yes' Source='$(var.SourceDir)$(var.PluginUsers).dll'/>
-      </Component>
-      <!--
-      <Component Id="$(var.PluginFileSystem).dll" Guid="F6C95C7A-7752-4619-A252-24266D77D0E7">
-        <File Id='$(var.PluginFileSystem).dll' KeyPath='yes' Source='$(var.SourceDir)$(var.PluginFileSystem).dll'/>
-      </Component>
-      <Component Id="$(var.PluginTranslit).dll" Guid="7FBA16AD-4D8B-4FF0-B25C-8F6194F834E7">
-        <File Id='$(var.PluginTranslit).dll' KeyPath='yes' Source='$(var.SourceDir)$(var.PluginTranslit).dll'/>
-      </Component>
-      <Component Id="$(var.PluginWin7).dll" Guid="F800769F-5AAB-4407-9DA2-9B9EFCD91630">
-        <File Id='$(var.PluginWin7).dll' KeyPath='yes' Source='$(var.PluginsDir)$(var.PluginWin7)\bin\$(var.Configuration)\$(var.PluginWin7).dll'/>
-      </Component>
-      <Component Id="Microsoft.WindowsAPICodePack.dll" Guid="7D336C44-CC15-4F3D-B0F7-CB77F0532E2B">
-        <File Id='Microsoft.WindowsAPICodePack.dll' KeyPath='yes' Source='$(var.PluginsDir)$(var.PluginWin7)\bin\$(var.Configuration)\Microsoft.WindowsAPICodePack.dll'/>
-      </Component>
-      <Component Id="Microsoft.WindowsAPICodePack.Shell.dll" Guid="84320F78-8FD8-48E8-94A1-DBD2EF916F83">
-        <File Id='Microsoft.WindowsAPICodePack.Shell.dll' KeyPath='yes' Source='$(var.PluginsDir)$(var.PluginWin7)\bin\$(var.Configuration)\Microsoft.WindowsAPICodePack.Shell.dll'/>
-      </Component>
-      -->
+      <Directory Id="Lib" Name="Lib">
+        <Component Id='LanExchange.SDK.dll' Guid="340AE8C6-C70D-49D0-BA91-6F1FFCD422B2">
+          <File Id='LanExchange.SDK.dll' KeyPath='yes' Source='$(var.LibDir)LanExchange.SDK.dll'/>
+        </Component>
+        <Component Id='System.Windows.NetApi.dll' Guid="69B96648-B080-473C-ACBA-3A0566547390">
+          <File Id='System.Windows.NetApi.dll' KeyPath='yes' Source='$(var.LibDir)System.Windows.NetApi.dll'/>
+        </Component>
+        <Component Id="$(var.PluginNetwork).dll" Guid="84728A8A-6A8D-4467-8296-A87CBB288667">
+          <File Id='$(var.PluginNetwork).dll' KeyPath='yes' Source='$(var.LibDir)$(var.PluginNetwork).dll'/>
+        </Component>
+        <Component Id="$(var.PluginUsers).dll" Guid="7671C1F3-76BF-400B-B8F5-D17A27B2E2B1">
+          <File Id='$(var.PluginUsers).dll' KeyPath='yes' Source='$(var.LibDir)$(var.PluginUsers).dll'/>
+        </Component>
+        <Component Id="$(var.PluginFileSystem).dll" Guid="F6C95C7A-7752-4619-A252-24266D77D0E7">
+          <File Id='$(var.PluginFileSystem).dll' KeyPath='yes' Source='$(var.LibDir)$(var.PluginFileSystem).dll'/>
+        </Component>
+        <!--
+        <Component Id="$(var.PluginTranslit).dll" Guid="7FBA16AD-4D8B-4FF0-B25C-8F6194F834E7">
+          <File Id='$(var.PluginTranslit).dll' KeyPath='yes' Source='$(var.SourceDir)$(var.PluginTranslit).dll'/>
+        </Component>
+        <Component Id="$(var.PluginWin7).dll" Guid="F800769F-5AAB-4407-9DA2-9B9EFCD91630">
+          <File Id='$(var.PluginWin7).dll' KeyPath='yes' Source='$(var.PluginsDir)$(var.PluginWin7)\bin\$(var.Configuration)\$(var.PluginWin7).dll'/>
+        </Component>
+        <Component Id="Microsoft.WindowsAPICodePack.dll" Guid="7D336C44-CC15-4F3D-B0F7-CB77F0532E2B">
+          <File Id='Microsoft.WindowsAPICodePack.dll' KeyPath='yes' Source='$(var.PluginsDir)$(var.PluginWin7)\bin\$(var.Configuration)\Microsoft.WindowsAPICodePack.dll'/>
+        </Component>
+        <Component Id="Microsoft.WindowsAPICodePack.Shell.dll" Guid="84320F78-8FD8-48E8-94A1-DBD2EF916F83">
+          <File Id='Microsoft.WindowsAPICodePack.Shell.dll' KeyPath='yes' Source='$(var.PluginsDir)$(var.PluginWin7)\bin\$(var.Configuration)\Microsoft.WindowsAPICodePack.Shell.dll'/>
+        </Component>
+        -->
+      </Directory>
       <Directory Id='Addons' Name='Addons'>
         <Component Id="Network.xml" Guid="75CD74AF-D879-4C07-8450-9A43717E456C">
-          <File Id='Network.xml' KeyPath='yes' Source='$(var.SourceDir)Addons\Network.xml'/>
+          <File Id='Network.xml' KeyPath='yes' Source='$(var.AddonsDir)Network.xml'/>
         </Component>
         <Component Id="NetworkSystem.xml" Guid="B0F2D776-97EF-4CFC-A679-F600F48DEA37">
-          <File Id='NetworkSystem.xml' KeyPath='yes' Source='$(var.SourceDir)Addons\NetworkSystem.xml'/>
+          <File Id='NetworkSystem.xml' KeyPath='yes' Source='$(var.AddonsDir)NetworkSystem.xml'/>
         </Component>
         <Component Id="Users.xml" Guid="EC2AE651-9D91-4DF7-B14F-AB8F72BA695C">
-          <File Id='Users.xml' KeyPath='yes' Source='$(var.SourceDir)Addons\Users.xml'/>
+          <File Id='Users.xml' KeyPath='yes' Source='$(var.AddonsDir)Users.xml'/>
         </Component>
         <Component Id="NetworkRadmin.xml" Guid="D00E2705-5A80-4240-AAE1-3B68CF7C6C4D">
-          <File Id='NetworkRadmin.xml' KeyPath='yes' Source='$(var.SourceDir)Addons\NetworkRadmin.xml'/>
+          <File Id='NetworkRadmin.xml' KeyPath='yes' Source='$(var.AddonsDir)NetworkRadmin.xml'/>
         </Component>
         <Component Id="NetworkWMI.xml" Guid="DAB9A6A5-53B6-442E-85A2-5D4493800962">
-          <File Id='NetworkWMI.xml' KeyPath='yes' Source='$(var.SourceDir)Addons\NetworkWMI.xml'/>
+          <File Id='NetworkWMI.xml' KeyPath='yes' Source='$(var.AddonsDir)NetworkWMI.xml'/>
         </Component>
       </Directory>
       <Directory Id='Languages' Name='Languages'>
         <Component Id="Russian.po" Guid="3219E128-3D2C-4D6C-BD59-0B8FA4940EAB">
-          <File Id="Russian.po" KeyPath="yes" Source="$(var.SourceDir)Languages\Russian.po"/>
+          <File Id="Russian.po" KeyPath="yes" Source="$(var.LangDir)Russian.po"/>
         </Component>
         <Component Id="Kazakh.po" Guid="351088BF-22E4-4114-AA8A-5503367C8894">
-          <File Id="Kazakh.po" KeyPath="yes" Source="$(var.SourceDir)Languages\Kazakh.po"/>
+          <File Id="Kazakh.po" KeyPath="yes" Source="$(var.LangDir)Kazakh.po"/>
         </Component>
         <Component Id="Esperanto.po" Guid="DB0B6820-716D-4F5C-B0FE-BE9CEE871ECD">
-          <File Id="Esperanto.po" KeyPath="yes" Source="$(var.SourceDir)Languages\Esperanto.po"/>
+          <File Id="Esperanto.po" KeyPath="yes" Source="$(var.LangDir)Esperanto.po"/>
         </Component>
         <!-- Extra tranlations -->
         <!--
         <Component Id="Russian_latin.po" Guid="25B4F58D-630C-43F3-B9F9-D2B2E059EFD7">
-          <File Id="Russian_latin.po" KeyPath="yes" Source="$(var.SourceDir)Languages\Russian_latin.po"/>
+          <File Id="Russian_latin.po" KeyPath="yes" Source="$(var.LangDir)Russian_latin.po"/>
         </Component>
         <Component Id="Russian_game.po" Guid="5DF40AE1-17B2-49B6-8717-C7C7D1D075BD">
-          <File Id="Russian_game.po" KeyPath="yes" Source="$(var.SourceDir)Languages\Russian_game.po"/>
+          <File Id="Russian_game.po" KeyPath="yes" Source="$(var.LangDir)Russian_game.po"/>
         </Component>
         <Component Id="Kazakh_latin.po" Guid="D3BB9F94-AA01-4565-9862-0954A4B5C447">
-          <File Id="Kazakh_latin.po" KeyPath="yes" Source="$(var.SourceDir)Languages\Kazakh_latin.po"/>
+          <File Id="Kazakh_latin.po" KeyPath="yes" Source="$(var.LangDir)Kazakh_latin.po"/>
         </Component>
         <Component Id="Kazakh_arabic.po" Guid="9999EF65-B4F3-4BE0-8EFF-4CAAEF80C58F">
-          <File Id="Kazakh_arabic.po" KeyPath="yes" Source="$(var.SourceDir)Languages\Kazakh_arabic.po"/>
+          <File Id="Kazakh_arabic.po" KeyPath="yes" Source="$(var.LangDir)Kazakh_arabic.po"/>
         </Component>
         -->
       </Directory>
