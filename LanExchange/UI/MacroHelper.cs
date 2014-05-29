@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 
-namespace LanExchange.UI.WinForms
+namespace LanExchange.UI
 {
     public static class MacroHelper
     {
@@ -26,9 +27,7 @@ namespace LanExchange.UI.WinForms
 
         public static string ExpandPublicProperties(string value, object obj)
         {
-            foreach (var pair in GetPublicReadProperties(obj))
-                value = value.Replace(pair.Key, pair.Value);
-            return value;
+            return GetPublicReadProperties(obj).Aggregate(value, (current, pair) => current.Replace(pair.Key, pair.Value));
         }
     }
 }

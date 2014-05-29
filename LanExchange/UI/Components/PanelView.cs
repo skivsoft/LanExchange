@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using LanExchange.Properties;
 using LanExchange.SDK;
+using LanExchange.UI.Utils;
 
-namespace LanExchange.UI.WinForms
+namespace LanExchange.UI.Components
 {
     public partial class PanelView : UserControl, IPanelView, IListViewItemGetter, ITranslationable
     {
         #region Class declarations and constructor
 
         private readonly IPanelPresenter m_Presenter;
-        private readonly ListViewItemCache m_Cache;
         private PanelModelCopyHelper m_CopyHelper;
         private int m_SortColumn;
 
@@ -27,9 +28,9 @@ namespace LanExchange.UI.WinForms
             m_Presenter = presenter;
             m_Presenter.View = this;
             // setup items cache
-            m_Cache = new ListViewItemCache(this);
+            var cache = new ListViewItemCache(this);
             //LV.CacheVirtualItems += m_Cache.CacheVirtualItems;
-            LV.RetrieveVirtualItem += m_Cache.RetrieveVirtualItem;
+            LV.RetrieveVirtualItem += cache.RetrieveVirtualItem;
             // set dropdown direction for sub-menus (actual for dual-monitor system)
             //mComp.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
             //mSendToNewTab.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
@@ -118,10 +119,9 @@ namespace LanExchange.UI.WinForms
 
         public IEnumerable<int> SelectedIndexes
         {
-            get
+            get 
             {
-                foreach (var obj in LV.SelectedIndices)
-                    yield return (int)obj;
+                return LV.SelectedIndices.Cast<int>();
             }
         }
 
@@ -422,9 +422,9 @@ namespace LanExchange.UI.WinForms
                 m_Presenter.ColumnClick(header.Index);
         }
 
-        public void ShowRunCmdError(string CmdLine)
+        public void ShowRunCmdError(string cmdLine)
         {
-                MessageBox.Show(String.Format(CultureInfo.CurrentCulture, Resources.PanelView_RunCmdErrorMsg, CmdLine), 
+                MessageBox.Show(String.Format(CultureInfo.CurrentCulture, Resources.PanelView_RunCmdErrorMsg, cmdLine), 
                     Resources.PanelView_RunCmdErrorCaption,
                     MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
         }
@@ -673,6 +673,7 @@ namespace LanExchange.UI.WinForms
                 m_Presenter.UpdateItemsAndStatus();
         }
 
+        [Localizable(false)]
         private void mNewItem_Click(object sender, EventArgs e)
         {
             App.Presenter.ExecuteAction("ActionNewItem");

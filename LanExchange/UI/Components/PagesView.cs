@@ -4,8 +4,9 @@ using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.Properties;
 using LanExchange.SDK;
+using LanExchange.UI.Utils;
 
-namespace LanExchange.UI.WinForms
+namespace LanExchange.UI.Components
 {
     public partial class PagesView : UserControl, IPagesView, ITranslationable
     {
@@ -180,6 +181,7 @@ namespace LanExchange.UI.WinForms
             //logger.Info("Clicked={0}", bClicked);
         }
 
+        [Localizable(false)]
         private void popPages_Opened(object sender, EventArgs e)
         {
             if (m_MouseDown && !m_Opened)
@@ -268,16 +270,19 @@ namespace LanExchange.UI.WinForms
             return tabPage;
         }
 
+        [Localizable(false)]
         private void mReRead_Click(object sender, EventArgs e)
         {
             App.Presenter.ExecuteAction("ActionReRead");
         }
 
+        [Localizable(false)]
         private void mCloseTab_Click(object sender, EventArgs e)
         {
             App.Presenter.ExecuteAction("ActionCloseTab");
         }
 
+        [Localizable(false)]
         private void mCloseOther_Click(object sender, EventArgs e)
         {
             App.Presenter.ExecuteAction("ActionCloseOther");

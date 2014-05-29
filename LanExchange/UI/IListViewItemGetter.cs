@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace LanExchange.UI.WinForms
+namespace LanExchange.UI
 {
     public interface IListViewItemGetter
     {

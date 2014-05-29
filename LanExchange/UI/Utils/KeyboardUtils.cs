@@ -2,7 +2,7 @@
 using System.Text;
 using System.Windows.Forms;
 
-namespace LanExchange.UI.WinForms
+namespace LanExchange.UI.Utils
 {
     [Localizable(false)]
     public static class KeyboardUtils

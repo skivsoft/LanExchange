@@ -9,6 +9,7 @@ using System.IO;
 using System.Reflection;
 using LanExchange.Action;
 using LanExchange.Misc;
+using LanExchange.Plugin;
 using LanExchange.Properties;
 using LanExchange.SDK;
 

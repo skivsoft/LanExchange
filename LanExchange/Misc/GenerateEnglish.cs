@@ -53,7 +53,7 @@ namespace LanExchange.Misc
         private static void ProcessAddon(string fileName)
         {
             // load addon from xml
-            var addon = (SDK.AddOn)SerializeUtils.DeserializeObjectFromXMLFile(fileName, typeof(SDK.AddOn));
+            var addon = (AddOn)SerializeUtils.DeserializeObjectFromXmlFile(fileName, typeof(AddOn));
             var context = Path.GetFileName(fileName);
             foreach (var panelItem in addon.PanelItemTypes)
             {
@@ -128,7 +128,7 @@ namespace LanExchange.Misc
             foreach (var pair in s_Dict)
             {
                 sb.AppendLine(string.Format("msgctxt \"{0}\"", pair.Value.Context));
-                sb.AppendLine("msgid " + FormatGetText(pair.Value.ID));
+                sb.AppendLine("msgid " + FormatGetText(pair.Value.Id));
                 sb.AppendLine("msgstr \"\"");
                 sb.AppendLine();
             }

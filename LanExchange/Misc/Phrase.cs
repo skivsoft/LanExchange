@@ -2,13 +2,14 @@
 {
     public class Phrase
     {
-        public string Context;
-        public string ID;
-
         public Phrase(string context, string id)
         {
             Context = context;
-            ID = id;
+            Id = id;
         }
+
+        public string Context { get; private set; }
+
+        public string Id { get; private set; }
     }
 }

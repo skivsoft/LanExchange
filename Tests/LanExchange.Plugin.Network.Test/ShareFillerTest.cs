@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows.Forms;
-using System.Windows.NetApi;
+using LanExchange.Plugin.Network.NetApi;
 using LanExchange.SDK;
 using NUnit.Framework;
 

@@ -1,4 +1,6 @@
-namespace System.Windows.NetApi
+using System;
+
+namespace LanExchange.Plugin.Network.NetApi
 {
     [CLSCompliant(false)]
     public enum SV_101_PLATFORM : uint

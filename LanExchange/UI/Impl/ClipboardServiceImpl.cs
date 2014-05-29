@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
 using LanExchange.SDK;
 
-namespace LanExchange.UI.WinForms
+namespace LanExchange.UI.Impl
 {
     internal class ClipboardServiceImpl : IClipboardService
     {

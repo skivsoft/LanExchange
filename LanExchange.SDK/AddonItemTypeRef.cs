@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Serialization;
 
 namespace LanExchange.SDK
@@ -22,11 +23,7 @@ namespace LanExchange.SDK
         {
             get
             {
-                var result = 0;
-                foreach (var item in m_Items)
-                    if (item.Visible)
-                        result++;
-                return result;
+                return m_Items.Count(item => item.Visible);
             }
         }
     }

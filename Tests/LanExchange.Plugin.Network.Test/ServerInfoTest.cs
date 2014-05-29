@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Windows.NetApi;
+using LanExchange.Plugin.Network.NetApi;
 using NUnit.Framework;
 
 namespace LanExchange.Plugin.Network

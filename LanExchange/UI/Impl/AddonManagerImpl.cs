@@ -6,8 +6,9 @@ using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 using LanExchange.SDK;
+using LanExchange.UI.Utils;
 
-namespace LanExchange.UI.WinForms
+namespace LanExchange.UI.Impl
 {
     [Localizable(false)]
     public class AddonManagerImpl : IAddonManager
@@ -66,7 +67,7 @@ namespace LanExchange.UI.WinForms
         private void LoadAddon(string fileName)
         {
             // load addon from xml
-            var addon = (AddOn)SerializeUtils.DeserializeObjectFromXMLFile(fileName, typeof(AddOn));
+            var addon = (AddOn)SerializeUtils.DeserializeObjectFromXmlFile(fileName, typeof(AddOn));
             // process programs
             foreach (var item in addon.Programs)
                 if (!m_Programs.ContainsKey(item.Id))
@@ -118,14 +119,14 @@ namespace LanExchange.UI.WinForms
             }
         }
 
-        private void InternalBuildMenu(ToolStripItemCollection Items, string Id)
+        private void InternalBuildMenu(ToolStripItemCollection items, string id)
         {
-            Items.Clear();
+            items.Clear();
             ToolStripMenuItem defaultItem = null;
-            foreach (var item in PanelItems[Id].ContextMenuStrip)
+            foreach (var item in PanelItems[id].ContextMenuStrip)
             {
                 if (item.IsSeparator)
-                    Items.Add(new ToolStripSeparator());
+                    items.Add(new ToolStripSeparator());
                 else
                 {
                     var menuItem = new ToolStripMenuItem();
@@ -144,7 +145,7 @@ namespace LanExchange.UI.WinForms
                     // lookup last default item
                     if (item.Default)
                         defaultItem = menuItem;
-                    Items.Add(menuItem);
+                    items.Add(menuItem);
                 }
             }
             if (defaultItem != null)

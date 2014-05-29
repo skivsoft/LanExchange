@@ -41,7 +41,7 @@ namespace LanExchange.Model
             if (!File.Exists(fileName)) return;
             try
             {
-                var temp = (ConfigModel)SerializeUtils.DeserializeObjectFromXMLFile(fileName, typeof(ConfigModel));
+                var temp = (ConfigModel)SerializeUtils.DeserializeObjectFromXmlFile(fileName, typeof(ConfigModel));
                 if (temp != null)
                     ReflectionUtils.CopyObjectProperties(temp, this);
             }
@@ -57,7 +57,7 @@ namespace LanExchange.Model
             var fileName = App.FolderManager.ConfigFileName;
             try
             {
-                SerializeUtils.SerializeObjectToXMLFile(fileName, this);
+                SerializeUtils.SerializeObjectToXmlFile(fileName, this);
             }
             catch (Exception ex)
             {

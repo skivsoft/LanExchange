@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Windows.NetApi;
+using LanExchange.Plugin.Network.NetApi;
 
 namespace LanExchange.Plugin.Network
 {

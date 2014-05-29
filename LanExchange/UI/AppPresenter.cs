@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
 using LanExchange.SDK;
 
-namespace LanExchange.UI.WinForms
+namespace LanExchange.UI
 {
     public class AppPresenter : IAppPresenter
     {
@@ -51,9 +51,7 @@ namespace LanExchange.UI.WinForms
         public void TranslateOpenForms()
         {
             // need for changing rtl
-            var forms = new List<Form>();
-            foreach(Form form in Application.OpenForms)
-                forms.Add(form);
+            var forms = Application.OpenForms.Cast<Form>().ToList();
             // enum opened forms
             foreach (var form in forms)
                 if (form is ITranslationable)

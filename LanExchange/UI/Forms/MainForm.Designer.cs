@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
-using LanExchange.Properties;
+using LanExchange.UI.Components;
 
-namespace LanExchange.UI.WinForms
+namespace LanExchange.UI.Forms
 {
     partial class MainForm
     {
@@ -48,7 +48,7 @@ namespace LanExchange.UI.WinForms
             this.lUserName = new System.Windows.Forms.ToolStripStatusLabel();
             this.tipComps = new System.Windows.Forms.ToolTip(this.components);
             this.popTop = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.pInfo = new LanExchange.UI.WinForms.InfoView();
+            this.pInfo = new InfoView();
             this.MainMenu = new System.Windows.Forms.MainMenu(this.components);
             this.mPanel = new System.Windows.Forms.MenuItem();
             this.mNewItem = new System.Windows.Forms.MenuItem();

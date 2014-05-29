@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.SDK;
 
-namespace LanExchange.UI.WinForms
+namespace LanExchange.UI.Components
 {
     /// <summary>
     /// Class used to capture window messages for the header of the list view

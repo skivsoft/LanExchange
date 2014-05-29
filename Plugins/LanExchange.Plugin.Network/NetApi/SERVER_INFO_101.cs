@@ -1,6 +1,7 @@
+using System;
 using System.Runtime.InteropServices;
 
-namespace System.Windows.NetApi
+namespace LanExchange.Plugin.Network.NetApi
 {
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]

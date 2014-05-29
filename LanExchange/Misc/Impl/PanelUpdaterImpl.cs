@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using LanExchange.SDK;
 
@@ -10,10 +11,6 @@ namespace LanExchange.Misc.Impl
         private Thread m_SetTabImageThread;
         private Thread m_UpdateThread;
         private bool m_ClearFilter;
-
-        public PanelUpdaterImpl()
-        {
-        }
 
         public void Dispose()
         {
@@ -43,7 +40,7 @@ namespace LanExchange.Misc.Impl
             m_UpdateThread.Start(model);
         }
 
-        private void SetTabImageThread(object argument)
+        private static void SetTabImageThread(object argument)
         {
             var model = argument as IPanelModel;
             if (model == null) return;
@@ -62,9 +59,9 @@ namespace LanExchange.Misc.Impl
                     count++;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                
+                Debug.Print(e.Message);
             }
             App.MainView.SafeInvoke(new SetTabImageDelegate(SetTabImageInvoked), model, model.ImageName);
         }

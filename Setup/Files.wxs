@@ -13,9 +13,6 @@
         <Component Id='LanExchange.SDK.dll' Guid="340AE8C6-C70D-49D0-BA91-6F1FFCD422B2">
           <File Id='LanExchange.SDK.dll' KeyPath='yes' Source='$(var.LibDir)LanExchange.SDK.dll'/>
         </Component>
-        <Component Id='System.Windows.NetApi.dll' Guid="69B96648-B080-473C-ACBA-3A0566547390">
-          <File Id='System.Windows.NetApi.dll' KeyPath='yes' Source='$(var.LibDir)System.Windows.NetApi.dll'/>
-        </Component>
         <Component Id="$(var.PluginNetwork).dll" Guid="84728A8A-6A8D-4467-8296-A87CBB288667">
           <File Id='$(var.PluginNetwork).dll' KeyPath='yes' Source='$(var.LibDir)$(var.PluginNetwork).dll'/>
         </Component>

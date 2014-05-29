@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace System.Windows.NetApi
+namespace LanExchange.Plugin.Network.NetApi
 {
     public static class NetApiHelper
     {

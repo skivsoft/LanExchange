@@ -36,7 +36,7 @@ namespace LanExchange.SDK
             return result;
         }
 
-        public static string SerializeObjectToXML(object obj)
+        public static string SerializeObjectToXml(object obj)
         {
             if (obj == null) return null;
             var ser = new XmlSerializer(obj.GetType());
@@ -47,7 +47,7 @@ namespace LanExchange.SDK
             }
         }
 
-        public static void SerializeObjectToXMLFile(string fileName, object obj)
+        public static void SerializeObjectToXmlFile(string fileName, object obj)
         {
             if (obj == null) return;
             ForceCreatePath(Path.GetDirectoryName(fileName));
@@ -58,7 +58,7 @@ namespace LanExchange.SDK
             }
         }
 
-        public static void SerializeObjectToXMLFile(string fileName, object obj, Type[] extraTypes)
+        public static void SerializeObjectToXmlFile(string fileName, object obj, Type[] extraTypes)
         {
             if (obj == null) return;
             ForceCreatePath(Path.GetDirectoryName(fileName));
@@ -69,7 +69,7 @@ namespace LanExchange.SDK
             }
         }
 
-        public static object DeserializeObjectFromXML(string xml, Type tp)
+        public static object DeserializeObjectFromXml(string xml, Type tp)
         {
             var ser = new XmlSerializer(tp);
             using (TextReader tr = new StringReader(xml))
@@ -79,7 +79,7 @@ namespace LanExchange.SDK
             }
         }
 
-        public static object DeserializeObjectFromXMLFile(string fileName, Type tp, Type[] extraTypes)
+        public static object DeserializeObjectFromXmlFile(string fileName, Type tp, Type[] extraTypes)
         {
             var ser = new XmlSerializer(tp, extraTypes);
             using (var tr = new StreamReader(fileName))
@@ -89,7 +89,7 @@ namespace LanExchange.SDK
             }
         }
 
-        public static object DeserializeObjectFromXMLFile(string fileName, Type tp)
+        public static object DeserializeObjectFromXmlFile(string fileName, Type tp)
         {
             var ser = new XmlSerializer(tp);
             using (var tr = new StreamReader(fileName))

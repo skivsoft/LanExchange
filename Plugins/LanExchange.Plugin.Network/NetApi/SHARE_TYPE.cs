@@ -1,4 +1,6 @@
-namespace System.Windows.NetApi
+using System;
+
+namespace LanExchange.Plugin.Network.NetApi
 {
     [CLSCompliant(false)]
     public enum SHARE_TYPE : uint

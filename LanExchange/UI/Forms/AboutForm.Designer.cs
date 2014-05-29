@@ -1,6 +1,6 @@
 ﻿using LanExchange.Properties;
 
-namespace LanExchange.UI.WinForms
+namespace LanExchange.UI.Forms
 {
     public sealed partial class AboutForm
     {

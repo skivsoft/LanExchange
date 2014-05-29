@@ -6,7 +6,7 @@ using System.Resources;
 using System.Windows.Forms;
 using LanExchange.SDK;
 
-namespace LanExchange.UI.WinForms
+namespace LanExchange.UI.Utils
 {
     internal static class TranslationUtils
     {
@@ -31,7 +31,7 @@ namespace LanExchange.UI.WinForms
         /// Translation of components. Menus mostly.
         /// </summary>
         /// <param name="resources"></param>
-        /// <param name="type"></param>
+        /// <param name="instance"></param>
         /// <param name="components"></param>
         internal static void TranslateComponents(ResourceManager resources, ContainerControl instance, IContainer components)
         {

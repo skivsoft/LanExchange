@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using LanExchange.SDK;
 
-namespace LanExchange.UI.WinForms
+namespace LanExchange.UI.Forms
 {
     public partial class EditForm : EscapeForm, IEditView
     {

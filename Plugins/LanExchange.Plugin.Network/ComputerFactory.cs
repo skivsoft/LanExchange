@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Net;
 using System.Net.NetworkInformation;
-using System.Windows.NetApi;
+using LanExchange.Plugin.Network.NetApi;
 using LanExchange.Plugin.Network.Properties;
 using LanExchange.SDK;
 

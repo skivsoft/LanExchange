@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using LanExchange.SDK;
 using ThreadState = System.Threading.ThreadState;
@@ -128,9 +129,8 @@ namespace LanExchange.Misc.Impl
             {
                 if (!m_Disposed)
                 {
-                    for (int i = 0; i < m_Threads.Count; i++)
-                        if (m_Threads[i].ThreadState == ThreadState.Running)
-                            m_Threads[i].Abort();
+                    foreach (var t in m_Threads.Where(t => t.ThreadState == ThreadState.Running))
+                        t.Abort();
                     m_Disposed = true;
                 }
             }

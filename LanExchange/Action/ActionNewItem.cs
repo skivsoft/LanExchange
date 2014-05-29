@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using LanExchange.Properties;
-using LanExchange.SDK;
+﻿using LanExchange.SDK;
 
 namespace LanExchange.Action
 {
