@@ -1,4 +1,4 @@
-﻿using System.Windows.NetApi;
+﻿using LanExchange.Plugin.Network.NetApi;
 using NUnit.Framework;
 
 namespace LanExchange.Plugin.Network

@@ -1,4 +1,5 @@
-﻿using LanExchange.SDK;
+﻿using LanExchange.Plugin.Shortcut;
+using LanExchange.SDK;
 
 namespace LanExchange.Action
 {

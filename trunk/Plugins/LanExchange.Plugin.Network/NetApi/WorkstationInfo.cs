@@ -1,7 +1,8 @@
+using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 
-namespace System.Windows.NetApi
+namespace LanExchange.Plugin.Network.NetApi
 {
     [StructLayout(LayoutKind.Sequential)]
     public sealed class WorkstationInfo

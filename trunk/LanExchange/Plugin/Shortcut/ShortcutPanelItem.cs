@@ -2,7 +2,7 @@ using System;
 using System.Xml.Serialization;
 using LanExchange.SDK;
 
-namespace LanExchange.Action
+namespace LanExchange.Plugin.Shortcut
 {
     public sealed class ShortcutPanelItem : PanelItemBase
     {

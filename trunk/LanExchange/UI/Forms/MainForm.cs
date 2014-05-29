@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Globalization;
-using System.Threading;
-using System.Windows.Forms;
 using System.ComponentModel;
+using System.Globalization;
 using System.Security.Permissions;
+using System.Windows.Forms;
 using LanExchange.Properties;
 using LanExchange.SDK;
+using LanExchange.UI.Components;
+using LanExchange.UI.Utils;
 
-namespace LanExchange.UI.WinForms
+namespace LanExchange.UI.Forms
 {
     public sealed partial class MainForm : RunMinimizedForm, IMainView, ITranslationable
     {
@@ -209,6 +210,7 @@ namespace LanExchange.UI.WinForms
             tooltip.ToolTipTitle = string.Empty;
         }
 
+        [Localizable(false)]
         private void mHelpAbout_Click(object sender, EventArgs e)
         {
             App.Presenter.ExecuteAction("ActionAbout");
@@ -291,6 +293,7 @@ namespace LanExchange.UI.WinForms
             Pages.FocusPanelView();
         }
 
+        [Localizable(false)]
         private void mReRead_Click(object sender, EventArgs e)
         {
             App.Presenter.ExecuteAction("ActionReRead");
@@ -384,6 +387,7 @@ namespace LanExchange.UI.WinForms
             presenter.OpenEmailLink();
         }
 
+        [Localizable(false)]
         private void mHelpKeys_Click(object sender, EventArgs e)
         {
             App.Presenter.ExecuteAction("ActionShortcutKeys");
@@ -419,6 +423,7 @@ namespace LanExchange.UI.WinForms
             lItemsCount.Text = String.Format(CultureInfo.InvariantCulture, format, args);
         }
 
+        [Localizable(false)]
         private void mPanel_Popup(object sender, EventArgs e)
         {
             mNewItem.Enabled = App.Presenter.IsActionEnabled("ActionNewItem");
@@ -427,11 +432,13 @@ namespace LanExchange.UI.WinForms
             mCloseOther.Enabled = App.Presenter.IsActionEnabled("ActionCloseOther");
         }
 
+        [Localizable(false)]
         private void mCloseTab_Click(object sender, EventArgs e)
         {
             App.Presenter.ExecuteAction("ActionCloseTab");
         }
 
+        [Localizable(false)]
         private void mCloseOther_Click(object sender, EventArgs e)
         {
             App.Presenter.ExecuteAction("ActionCloseOther");
@@ -497,6 +504,7 @@ namespace LanExchange.UI.WinForms
             set { mTrayOpen.ShortcutKeyDisplayString = value; }
         }
 
+        [Localizable(false)]
         private void mNewItem_Click(object sender, EventArgs e)
         {
             App.Presenter.ExecuteAction("ActionNewItem");

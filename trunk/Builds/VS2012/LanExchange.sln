@@ -7,7 +7,6 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Setup", "..\..\Setup\Setup.
 		{18971728-B208-45D9-B4BB-4BB6020963E7} = {18971728-B208-45D9-B4BB-4BB6020963E7}
 		{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D} = {4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}
 		{CC938630-E3FC-426E-A8A7-06EB22ABC703} = {CC938630-E3FC-426E-A8A7-06EB22ABC703}
-		{2F0F1C34-96EB-4507-AB24-3C332F848E8A} = {2F0F1C34-96EB-4507-AB24-3C332F848E8A}
 		{7380DF5F-5E0A-4080-97F4-B955C250B700} = {7380DF5F-5E0A-4080-97F4-B955C250B700}
 		{9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1} = {9135C2B0-CDBB-4578-B7A4-6F8354FEC4A1}
 	EndProjectSection
@@ -42,8 +41,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Network.Test", "..\..\Tests\LanExchange.Plugin.Network.Test\LanExchange.Plugin.Network.Test.csproj", "{3F346FA4-1077-4FF7-86DE-9FFB6BD00E08}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Users.Test", "..\..\Tests\LanExchange.Plugin.Users.Test\LanExchange.Plugin.Users.Test.csproj", "{FB7936EE-CFD6-44AD-AB43-6FA929B7F6F2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Windows.NetApi", "..\..\System.Windows.NetApi\System.Windows.NetApi.csproj", "{2F0F1C34-96EB-4507-AB24-3C332F848E8A}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -188,16 +185,6 @@ Global
 		{FB7936EE-CFD6-44AD-AB43-6FA929B7F6F2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{FB7936EE-CFD6-44AD-AB43-6FA929B7F6F2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{FB7936EE-CFD6-44AD-AB43-6FA929B7F6F2}.Release|x86.ActiveCfg = Release|Any CPU
-		{2F0F1C34-96EB-4507-AB24-3C332F848E8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2F0F1C34-96EB-4507-AB24-3C332F848E8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2F0F1C34-96EB-4507-AB24-3C332F848E8A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{2F0F1C34-96EB-4507-AB24-3C332F848E8A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{2F0F1C34-96EB-4507-AB24-3C332F848E8A}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{2F0F1C34-96EB-4507-AB24-3C332F848E8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2F0F1C34-96EB-4507-AB24-3C332F848E8A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2F0F1C34-96EB-4507-AB24-3C332F848E8A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{2F0F1C34-96EB-4507-AB24-3C332F848E8A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{2F0F1C34-96EB-4507-AB24-3C332F848E8A}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

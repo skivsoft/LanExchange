@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Windows.NetApi;
+using LanExchange.Plugin.Network.NetApi;
 using System.Xml.Serialization;
 using LanExchange.SDK;
 using NUnit.Framework;

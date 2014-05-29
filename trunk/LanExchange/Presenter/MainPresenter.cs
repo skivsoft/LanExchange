@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Threading;
 using LanExchange.Action;
+using LanExchange.Plugin.Shortcut;
 using LanExchange.SDK;
 
 namespace LanExchange.Presenter
@@ -160,7 +161,7 @@ namespace LanExchange.Presenter
 
         public bool IsHotKey(short id)
         {
-            return id == m_Hotkeys.HotkeyID;
+            return id == m_Hotkeys.HotkeyId;
         }
 
         private void GlobalTranslateColumns()

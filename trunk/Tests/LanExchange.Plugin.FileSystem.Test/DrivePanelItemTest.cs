@@ -10,7 +10,7 @@ namespace LanExchange.Plugin.FileSystem
         public void TestSerialize()
         {
             var item = new DrivePanelItem(new FileRoot(), @"C:\");
-            string content = SerializeUtils.SerializeObjectToXML(item);
+            string content = SerializeUtils.SerializeObjectToXml(item);
         }
     }
 }

@@ -77,10 +77,6 @@
       <Project>{18971728-b208-45d9-b4bb-4bb6020963e7}</Project>
       <Name>LanExchange.Plugin.Network</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\System.Windows.NetApi\System.Windows.NetApi.csproj">
-      <Project>{2f0f1c34-96eb-4507-ab24-3c332f848e8a}</Project>
-      <Name>System.Windows.NetApi</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

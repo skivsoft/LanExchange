@@ -5,7 +5,10 @@ using LanExchange.Model;
 using LanExchange.OS.Windows;
 using LanExchange.Presenter;
 using LanExchange.SDK;
-using LanExchange.UI.WinForms;
+using LanExchange.UI.Components;
+using LanExchange.UI.Forms;
+using LanExchange.UI;
+using LanExchange.UI.Impl;
 
 namespace LanExchange
 {

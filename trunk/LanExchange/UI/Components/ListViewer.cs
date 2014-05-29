@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using LanExchange.Properties;
 
-namespace LanExchange.UI.WinForms
+namespace LanExchange.UI.Components
 {
     public class ListViewer : ListView
     {

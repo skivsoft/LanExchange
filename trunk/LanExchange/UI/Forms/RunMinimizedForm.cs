@@ -1,8 +1,8 @@
-﻿using System.Windows.Forms;
-using System;
+﻿using System;
+using System.Windows.Forms;
 using LanExchange.SDK;
 
-namespace LanExchange.UI.WinForms
+namespace LanExchange.UI.Forms
 {
     /// <summary>
     /// We must not use ShowInTaskbar=false for MainForm. 

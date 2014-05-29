@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using LanExchange.Plugin.Shortcut;
+using NUnit.Framework;
 
 namespace LanExchange.Action
 {

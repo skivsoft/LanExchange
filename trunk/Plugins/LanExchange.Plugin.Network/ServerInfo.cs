@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Text;
-using System.Windows.NetApi;
+using LanExchange.Plugin.Network.NetApi;
 
 namespace LanExchange.Plugin.Network
 {

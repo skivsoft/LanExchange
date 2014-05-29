@@ -91,23 +91,23 @@
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Action\ActionNewItem.cs" />
-    <Compile Include="Action\ShortcutRoot.cs" />
+    <Compile Include="Plugin\Shortcut\ShortcutRoot.cs" />
     <Compile Include="Misc\AnimationHelper.cs" />
     <Compile Include="ContainerBuilder.cs" />
     <Compile Include="Misc\GenerateEnglish.cs" />
     <Compile Include="Misc\Impl\PanelUpdaterImpl.cs" />
     <Compile Include="Misc\TypeNotRegisteredException.cs" />
     <Compile Include="Misc\Impl\DisposableManagerImpl.cs" />
-    <Compile Include="Action\PluginInternal.cs" />
+    <Compile Include="Plugin\PluginInternal.cs" />
     <Compile Include="Misc\TranslationResourceManager.cs" />
     <Compile Include="Action\ActionAbout.cs" />
     <Compile Include="Action\ActionCloseTab.cs" />
     <Compile Include="Action\ActionCloseOther.cs" />
     <Compile Include="Action\ActionReRead.cs" />
-    <Compile Include="Action\ShortcutFactory.cs" />
-    <Compile Include="Action\ShortcutFiller.cs" />
+    <Compile Include="Plugin\Shortcut\ShortcutFactory.cs" />
+    <Compile Include="Plugin\Shortcut\ShortcutFiller.cs" />
     <Compile Include="Action\ActionShortcutKeys.cs" />
-    <Compile Include="Action\ShortcutPanelItem.cs" />
+    <Compile Include="Plugin\Shortcut\ShortcutPanelItem.cs" />
     <Compile Include="Misc\CmdLineProcessor.cs" />
     <Compile Include="Misc\Impl\PanelColumnManagerImpl.cs" />
     <Compile Include="Misc\Impl\PanelFillerManagerImpl.cs" />
@@ -156,11 +156,11 @@
     <Compile Include="UI\Forms\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\AddonManagerImpl.cs" />
+    <Compile Include="UI\Impl\AddonManagerImpl.cs" />
     <Compile Include="UI\AppPresenter.cs" />
-    <Compile Include="UI\BitmapUtils.cs" />
-    <Compile Include="UI\ClipboardDataObjectImpl.cs" />
-    <Compile Include="UI\ClipboardServiceImpl.cs" />
+    <Compile Include="UI\Utils\BitmapUtils.cs" />
+    <Compile Include="UI\Impl\ClipboardDataObjectImpl.cs" />
+    <Compile Include="UI\Impl\ClipboardServiceImpl.cs" />
     <Compile Include="UI\Forms\EditForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -179,16 +179,16 @@
     <Compile Include="UI\Components\FilterView.Designer.cs">
       <DependentUpon>FilterView.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\HeaderControl.cs" />
+    <Compile Include="UI\Components\HeaderControl.cs" />
     <Compile Include="UI\IListViewItemGetter.cs" />
-    <Compile Include="UI\ImageManagerImpl.cs" />
+    <Compile Include="UI\Impl\ImageManagerImpl.cs" />
     <Compile Include="UI\Components\InfoView.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\Components\InfoView.Designer.cs">
       <DependentUpon>InfoView.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\KeyboardUtils.cs" />
+    <Compile Include="UI\Utils\KeyboardUtils.cs" />
     <Compile Include="UI\Components\ListViewer.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -200,7 +200,7 @@
     <Compile Include="UI\Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\MessageBoxServiceImpl.cs" />
+    <Compile Include="UI\Impl\MessageBoxServiceImpl.cs" />
     <Compile Include="UI\Components\PagesView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -216,9 +216,9 @@
     <Compile Include="UI\Forms\RunMinimizedForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\ScreenImpl.cs" />
-    <Compile Include="UI\TranslationUtils.cs" />
-    <Compile Include="UI\WaitingServiceImpl.cs" />
+    <Compile Include="UI\Impl\ScreenImpl.cs" />
+    <Compile Include="UI\Utils\TranslationUtils.cs" />
+    <Compile Include="UI\Impl\WaitingServiceImpl.cs" />
     <Compile Include="Utils\PingUtils.cs" />
     <Compile Include="Misc\Impl\PuntoSwitcherServiceEngRus.cs" />
     <Compile Include="Model\ConfigModel.cs" />

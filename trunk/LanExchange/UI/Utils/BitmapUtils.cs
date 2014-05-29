@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 
-namespace LanExchange.UI.WinForms
+namespace LanExchange.UI.Utils
 {
     public static class BitmapUtils
     {
@@ -55,14 +55,13 @@ namespace LanExchange.UI.WinForms
                   "Value must be within a range of 0 - 1.");
             }
 
-            if (0 == saturation)
+            if (saturation < 1E-10) // is equal zero?
             {
                 return Color.FromArgb(alpha, Convert.ToInt32(brightness * 255),
                   Convert.ToInt32(brightness * 255), Convert.ToInt32(brightness * 255));
             }
 
             float fMax, fMid, fMin;
-            int iSextant, iMax, iMid, iMin;
 
             if (0.5 < brightness)
             {
@@ -75,7 +74,7 @@ namespace LanExchange.UI.WinForms
                 fMin = brightness - (brightness * saturation);
             }
 
-            iSextant = (int)Math.Floor(hue / 60f);
+            var iSextant = (int)Math.Floor(hue / 60f);
             if (300f <= hue)
             {
                 hue -= 360f;
@@ -91,9 +90,9 @@ namespace LanExchange.UI.WinForms
                 fMid = fMin - hue * (fMax - fMin);
             }
 
-            iMax = Convert.ToInt32(fMax * 255);
-            iMid = Convert.ToInt32(fMid * 255);
-            iMin = Convert.ToInt32(fMin * 255);
+            var iMax = Convert.ToInt32(fMax * 255);
+            var iMid = Convert.ToInt32(fMid * 255);
+            var iMin = Convert.ToInt32(fMin * 255);
 
             switch (iSextant)
             {

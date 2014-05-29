@@ -3,8 +3,9 @@ using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.Properties;
 using LanExchange.SDK;
+using LanExchange.UI.Utils;
 
-namespace LanExchange.UI.WinForms
+namespace LanExchange.UI.Impl
 {
     public class ImageManagerImpl : IImageManager
     {

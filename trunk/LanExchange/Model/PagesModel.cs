@@ -139,7 +139,7 @@ namespace LanExchange.Model
                 {
                     model =
                         (PagesModel)
-                        SerializeUtils.DeserializeObjectFromXMLFile(fileFName, typeof (PagesModel),
+                        SerializeUtils.DeserializeObjectFromXmlFile(fileFName, typeof (PagesModel),
                                                                     App.PanelItemTypes.ToArray());
                 }
                 catch(Exception ex)
@@ -179,7 +179,7 @@ namespace LanExchange.Model
         {
             try
             {
-                SerializeUtils.SerializeObjectToXMLFile(App.FolderManager.TabsConfigFileName, this, App.PanelItemTypes.ToArray());
+                SerializeUtils.SerializeObjectToXmlFile(App.FolderManager.TabsConfigFileName, this, App.PanelItemTypes.ToArray());
             }
             catch(Exception ex)
             {

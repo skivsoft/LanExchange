@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
-using System.Windows.NetApi;
+using LanExchange.Plugin.Network.NetApi;
 using NUnit.Framework;
 
 namespace LanExchange.Plugin.Network

@@ -4,7 +4,7 @@ namespace LanExchange.SDK
 {
     public interface IHotkeysService : IDisposable
     {
-        short HotkeyID { get; }
+        short HotkeyId { get; }
         string ShowWindowKey { get; }
         bool RegisterShowWindowKey(IntPtr handle);
     }

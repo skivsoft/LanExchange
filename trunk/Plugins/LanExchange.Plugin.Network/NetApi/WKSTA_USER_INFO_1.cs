@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace System.Windows.NetApi
+namespace LanExchange.Plugin.Network.NetApi
 {
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public sealed class WKSTA_USER_INFO_1

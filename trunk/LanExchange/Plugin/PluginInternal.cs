@@ -1,9 +1,10 @@
 ﻿using System;
-using LanExchange.Misc;
+using LanExchange.Action;
+using LanExchange.Plugin.Shortcut;
 using LanExchange.Properties;
 using LanExchange.SDK;
 
-namespace LanExchange.Action
+namespace LanExchange.Plugin
 {
     internal class PluginInternal : IPlugin
     {

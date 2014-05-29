@@ -1,4 +1,4 @@
-namespace System.Windows.NetApi
+namespace LanExchange.Plugin.Network.NetApi
 {
     internal enum NERR
     {

@@ -41,7 +41,7 @@ namespace LanExchange.OS.Windows
         public IntPtr Handle;
 
         /// <summary>The ID for the hotkey</summary>
-        public short HotkeyID { get; private set; }
+        public short HotkeyId { get; private set; }
 
         /// <summary>Register the hotkey</summary>
         public bool RegisterGlobalHotKey(int hotkey, int modifiers, IntPtr handle)
@@ -50,19 +50,19 @@ namespace LanExchange.OS.Windows
             Handle = handle;
             // use the GlobalAddAtom API to get a unique ID (as suggested by MSDN)
             var atomName = Handle.ToInt32().ToString("X8", CultureInfo.InvariantCulture) + GetType().FullName;
-            HotkeyID = GlobalAddAtom(atomName);
-            return HotkeyID != 0 && RegisterHotKey(Handle, HotkeyID, (uint) modifiers, (uint) hotkey);
+            HotkeyId = GlobalAddAtom(atomName);
+            return HotkeyId != 0 && RegisterHotKey(Handle, HotkeyId, (uint) modifiers, (uint) hotkey);
         }
 
         /// <summary>Unregister the hotkey</summary>
         public void UnregisterGlobalHotKey()
         {
-            if (HotkeyID != 0)
+            if (HotkeyId != 0)
             {
-                UnregisterHotKey(Handle, HotkeyID);
+                UnregisterHotKey(Handle, HotkeyId);
                 // clean up the atom list
-                GlobalDeleteAtom(HotkeyID);
-                HotkeyID = 0;
+                GlobalDeleteAtom(HotkeyId);
+                HotkeyId = 0;
             }
         }
 

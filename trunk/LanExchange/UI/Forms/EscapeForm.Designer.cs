@@ -1,4 +1,4 @@
-﻿namespace LanExchange.UI.WinForms
+﻿namespace LanExchange.UI.Forms
 {
     partial class EscapeForm
     {

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Windows.NetApi;
+using LanExchange.Plugin.Network.NetApi;
 using LanExchange.SDK;
 using NUnit.Framework;
 

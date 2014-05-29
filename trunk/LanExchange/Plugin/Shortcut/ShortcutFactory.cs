@@ -1,8 +1,7 @@
-using LanExchange.Misc;
 using LanExchange.Properties;
 using LanExchange.SDK;
 
-namespace LanExchange.Action
+namespace LanExchange.Plugin.Shortcut
 {
     public sealed class ShortcutFactory : PanelItemFactoryBase
     {

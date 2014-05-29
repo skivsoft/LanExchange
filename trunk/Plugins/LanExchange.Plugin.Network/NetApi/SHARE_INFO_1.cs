@@ -1,6 +1,7 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 
-namespace System.Windows.NetApi
+namespace LanExchange.Plugin.Network.NetApi
 {
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     [CLSCompliant(false)]

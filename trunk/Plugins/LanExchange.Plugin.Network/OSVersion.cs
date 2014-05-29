@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Windows.NetApi;
+using LanExchange.Plugin.Network.NetApi;
 
 namespace LanExchange.Plugin.Network
 {

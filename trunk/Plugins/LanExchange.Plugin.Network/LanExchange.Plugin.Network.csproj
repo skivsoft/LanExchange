@@ -69,6 +69,16 @@
     <Compile Include="IPAddressComparable.cs" />
     <Compile Include="IPAddressArray.cs" />
     <Compile Include="DomainRoot.cs" />
+    <Compile Include="NetApi\NERR.cs" />
+    <Compile Include="NetApi\NetApiHelper.cs" />
+    <Compile Include="NetApi\SafeNativeMethods.cs" />
+    <Compile Include="NetApi\SERVER_INFO_101.cs" />
+    <Compile Include="NetApi\SHARE_INFO_1.cs" />
+    <Compile Include="NetApi\SHARE_TYPE.cs" />
+    <Compile Include="NetApi\SV_101_PLATFORM.cs" />
+    <Compile Include="NetApi\SV_101_TYPES.cs" />
+    <Compile Include="NetApi\WKSTA_USER_INFO_1.cs" />
+    <Compile Include="NetApi\WorkstationInfo.cs" />
     <Compile Include="NetworkHelper.cs" />
     <Compile Include="PluginNetwork.cs" />
     <Compile Include="OSVersion.cs" />
@@ -94,11 +104,6 @@
     <ProjectReference Include="..\..\LanExchange.SDK\LanExchange.SDK.csproj">
       <Project>{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}</Project>
       <Name>LanExchange.SDK</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\System.Windows.NetApi\System.Windows.NetApi.csproj">
-      <Project>{2f0f1c34-96eb-4507-ab24-3c332f848e8a}</Project>
-      <Name>System.Windows.NetApi</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>

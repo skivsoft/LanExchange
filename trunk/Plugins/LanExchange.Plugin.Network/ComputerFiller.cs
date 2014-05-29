@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.NetApi;
+using LanExchange.Plugin.Network.NetApi;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
