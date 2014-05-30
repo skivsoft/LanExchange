@@ -1,7 +1,7 @@
 ﻿using System;
 using LanExchange.SDK;
-using LanExchange.UI;
-using LanExchange.UI.Impl;
+using LanExchange.Plugin.WinForms;
+using LanExchange.Plugin.WinForms.Impl;
 using NUnit.Framework;
 
 namespace LanExchange.Misc.Impl

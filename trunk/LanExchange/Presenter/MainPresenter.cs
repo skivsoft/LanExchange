@@ -164,7 +164,7 @@ namespace LanExchange.Presenter
             return id == m_Hotkeys.HotkeyId;
         }
 
-        private void GlobalTranslateColumns()
+        private static void GlobalTranslateColumns()
         {
             var columnManager = App.Resolve<IPanelColumnManager>();
             var factoryManager = App.Resolve<IPanelItemFactoryManager>();
@@ -177,7 +177,7 @@ namespace LanExchange.Presenter
             }
         }
 
-        private int GetDefaultWidth(IScreenService screen)
+        private static int GetDefaultWidth()
         {
             return 500;
         }
@@ -197,7 +197,7 @@ namespace LanExchange.Presenter
             var rect = new Rectangle();
             rect.X = mainFormX;
             rect.Y = workingArea.Top;
-            rect.Width = Math.Min(Math.Max(GetDefaultWidth(screen), mainFormWidth), workingArea.Width);
+            rect.Width = Math.Min(Math.Max(GetDefaultWidth(), mainFormWidth), workingArea.Width);
             rect.Height = workingArea.Height - screen.MenuHeight;
             // determination side to snap right or left
             int centerX = (rect.Left + rect.Right) >> 1;
