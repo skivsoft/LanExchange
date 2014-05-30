@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Linq;
 using LanExchange.SDK;
 
 namespace LanExchange.Misc
@@ -28,13 +29,7 @@ namespace LanExchange.Misc
         [Localizable(false)]
         public object Resolve(Type typeToResolve)
         {
-            RegisteredObject registeredObject = null;
-            foreach(var obj in m_Objects)
-                if (obj.TypeToResolve == typeToResolve)
-                {
-                    registeredObject = obj;
-                    break;
-                }
+            RegisteredObject registeredObject = m_Objects.FirstOrDefault(obj => obj.TypeToResolve == typeToResolve);
             if (registeredObject == null)
             {
                 throw new TypeNotRegisteredException(string.Format(CultureInfo.InvariantCulture, 
@@ -47,10 +42,7 @@ namespace LanExchange.Misc
         {
             if (registeredObject.Instance == null || registeredObject.LifeCycle == LifeCycle.Transient)
             {
-                var list = new List<object>();
-                foreach(var param in ResolveConstructorParameters(registeredObject))
-                    list.Add(param);
-                registeredObject.CreateInstance(list.ToArray());
+                registeredObject.CreateInstance(ResolveConstructorParameters(registeredObject).ToArray());
             }
             return registeredObject.Instance;
         }
@@ -63,8 +55,7 @@ namespace LanExchange.Misc
             if (constructors.Length == 0)
                 throw new ApplicationException("Constructor is not implemented or non-public in class " + registeredObject.ConcreteType.Name);
             var constructorInfo = constructors[0];
-            foreach(var parameter in constructorInfo.GetParameters())
-                yield return Resolve(parameter.ParameterType);
+            return constructorInfo.GetParameters().Select(parameter => Resolve(parameter.ParameterType));
         }
     }
 }

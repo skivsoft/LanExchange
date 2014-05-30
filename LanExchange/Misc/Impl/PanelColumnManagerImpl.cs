@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using LanExchange.SDK;
 
 namespace LanExchange.Misc.Impl
@@ -42,9 +43,7 @@ namespace LanExchange.Misc.Impl
 
         public IEnumerable<PanelColumnHeader> EnumAllColumns()
         {
-            foreach (var pair in m_Types)
-                foreach (var column in pair.Value)
-                    yield return column;
+            return m_Types.SelectMany(pair => pair.Value);
         }
 
         public int MaxColumns

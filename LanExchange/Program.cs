@@ -7,7 +7,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using LanExchange.Action;
 using LanExchange.Misc;
 using LanExchange.Plugin;
 using LanExchange.Properties;

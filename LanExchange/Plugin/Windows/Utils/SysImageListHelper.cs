@@ -1,7 +1,6 @@
 using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
-using LanExchange.OS;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Windows.Utils

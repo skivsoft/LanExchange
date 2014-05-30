@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using LanExchange.OS;
 
 namespace LanExchange.Plugin.Windows.Utils
 {

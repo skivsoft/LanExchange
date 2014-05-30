@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Resources;
 using System.Text;
@@ -76,14 +77,10 @@ namespace LanExchange.Misc
             if (currentDir == null)
                 return new string[] { };
             var files = Directory.GetFiles(currentDir, "*.exe");
-            var result = new List<string>();
+            var result = files.ToList();
             //var origFile = args[0].EndsWith(".vshost.exe") ? args[0].Replace(".vshost.", ".") : "";
-            foreach (var file in files)
-                //if (!file.Equals(args[0]) && !file.Equals(origFile))
-                result.Add(file);
             files = Directory.GetFiles(currentDir, "*.dll");
-            foreach (var file in files)
-                result.Add(file);
+            result.AddRange(files);
             return result.ToArray();
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Resources;
 using System.Text;
 using LanExchange.SDK;
@@ -121,10 +122,7 @@ namespace LanExchange.Misc.Impl
                 {
                 }
             }
-            var result = new Dictionary<string, string>();
-            foreach(var pair in sorted)
-                result.Add(pair.Value, pair.Key);
-            return result;
+            return sorted.ToDictionary(pair => pair.Value, pair => pair.Key);
         }
 
         public IDictionary<string, string> GetTranslations()
