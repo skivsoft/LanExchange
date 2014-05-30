@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using LanExchange.SDK;
 
 namespace LanExchange.Misc.Impl
@@ -54,10 +55,7 @@ namespace LanExchange.Misc.Impl
 
         public bool FillerExists(PanelItemBase parent)
         {
-            foreach (var pair in m_Fillers)
-                if (pair.Value.IsParentAccepted(parent))
-                    return true;
-            return false;
+            return m_Fillers.Any(pair => pair.Value.IsParentAccepted(parent));
         }
     }
 }

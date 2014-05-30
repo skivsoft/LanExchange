@@ -55,7 +55,7 @@ namespace LanExchange.Plugin.Windows.Utils
             // http://snipplr.com/view/19272/ - C#, single-instance-check using mutex
             // http://iridescence.no/post/CreatingaSingleInstanceApplicationinC.aspx
             bool isOwnedHere;
-            m_AppStartMutex = new Mutex(true, unicalName, out isOwnedHere);
+            s_AppStartMutex = new Mutex(true, unicalName, out isOwnedHere);
             if (isOwnedHere) return false; 
 
             Process me = Process.GetCurrentProcess();
@@ -86,7 +86,7 @@ namespace LanExchange.Plugin.Windows.Utils
         // This appears to be a concern in In release builds but not debug builds.
 
         // ReSharper disable NotAccessedField.Local
-        static volatile Mutex m_AppStartMutex;
+        static volatile Mutex s_AppStartMutex;
         // ReSharper restore NotAccessedField.Local
 
     }

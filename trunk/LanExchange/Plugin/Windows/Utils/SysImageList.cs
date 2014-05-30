@@ -2,7 +2,6 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;
-using LanExchange.OS;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Windows.Utils
@@ -101,7 +100,7 @@ namespace LanExchange.Plugin.Windows.Utils
 		private enum SHGetFileInfoConstants
 		{
             //SHGFI_ICON = 0x100,                // get icon 
-            SHGFI_DISPLAYNAME = 0x200,         // get display name 
+            //SHGFI_DISPLAYNAME = 0x200,         // get display name 
             //SHGFI_TYPENAME = 0x400,            // get type name 
             //SHGFI_ATTRIBUTES = 0x800,          // get attributes 
             //SHGFI_ICONLOCATION = 0x1000,       // get icon location 
@@ -123,7 +122,7 @@ namespace LanExchange.Plugin.Windows.Utils
 
 		#region Private ImageList structures
 		[StructLayout(LayoutKind.Sequential)]
-			private struct RECT
+		private struct RECT
 		{
             readonly int left;
             readonly int top;
@@ -132,14 +131,14 @@ namespace LanExchange.Plugin.Windows.Utils
 		}
 
 		[StructLayout(LayoutKind.Sequential)]
-			private struct POINT
+		private struct POINT
 		{
             readonly int x;
             readonly int y;
 		}
 
 		[StructLayout(LayoutKind.Sequential)]
-			private struct IMAGELISTDRAWPARAMS				
+		private struct IMAGELISTDRAWPARAMS				
 		{
 			public int cbSize;
 			public IntPtr himl;
@@ -149,36 +148,36 @@ namespace LanExchange.Plugin.Windows.Utils
 			public int y;
 			public int cx;
 			public int cy;
-			public int xBitmap;        // x offest from the upperleft of bitmap
-			public int yBitmap;        // y offset from the upperleft of bitmap
-			public int rgbBk;
+		    private readonly int xBitmap;        // x offest from the upperleft of bitmap
+		    private readonly int yBitmap;        // y offset from the upperleft of bitmap
+		    private readonly int rgbBk;
 			public int rgbFg;
 			public int fStyle;
-			public int dwRop;
-			public int fState;
-			public int Frame;
-			public int crEffect;
+		    private readonly int dwRop;
+		    private readonly int fState;
+		    private readonly int Frame;
+		    private readonly int crEffect;
 		}
 
 		[StructLayout(LayoutKind.Sequential)]
-			private struct IMAGEINFO
+		private struct IMAGEINFO
 		{
-			public IntPtr hbmImage;
-			public IntPtr hbmMask;
-			public int Unused1;
-			public int Unused2;
-			public RECT rcImage;
+		    private readonly IntPtr hbmImage;
+		    private readonly IntPtr hbmMask;
+		    private readonly int Unused1;
+		    private readonly int Unused2;
+		    private readonly RECT rcImage;
 		}
 		[StructLayout(LayoutKind.Sequential)]
-			private struct SHFILEINFO
+		private struct SHFILEINFO
 		{
-			public IntPtr hIcon;
-			public int iIcon;
-			public int dwAttributes;
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst=MAX_PATH)]
-			public string szDisplayName;
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst=80)]
-			public string szTypeName;
+		    private readonly IntPtr hIcon;
+			public readonly int iIcon;
+		    private readonly int dwAttributes;
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst=MAX_PATH)] 
+            private readonly string szDisplayName;
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst=80)] 
+            private readonly string szTypeName;
 		}
 		#endregion
 
@@ -377,7 +376,7 @@ namespace LanExchange.Plugin.Windows.Utils
 			set
 			{
 				size = value;
-				create();
+				Create();
 			}
 
 		}
@@ -630,7 +629,7 @@ namespace LanExchange.Plugin.Windows.Utils
 		/// or above
 		/// </summary>
 		/// <returns>True if system is running XP or above, False otherwise</returns>
-		private static bool isXpOrAbove()
+		private static bool IsXpOrAbove()
 		{
 			bool ret = false;
 			if (Environment.OSVersion.Version.Major > 5)
@@ -649,12 +648,12 @@ namespace LanExchange.Plugin.Windows.Utils
 		/// <summary>
 		/// Creates the SystemImageList
 		/// </summary>
-		private void create()
+		private void Create()
 		{
 			// forget last image list if any:
 			hIml = IntPtr.Zero;
 
-			if (isXpOrAbove())
+			if (IsXpOrAbove())
 			{
 				// Get the System IImageList object from the Shell:
 				var iidImageList = new Guid("46EB5926-582E-4017-9FDF-E8998DAA0950");
@@ -700,7 +699,7 @@ namespace LanExchange.Plugin.Windows.Utils
 		/// </summary>
 		public SysImageList()
 		{
-			create();
+			Create();
 		}
 		/// <summary>
 		/// Creates a SystemImageList with the specified size
@@ -709,7 +708,7 @@ namespace LanExchange.Plugin.Windows.Utils
 		public SysImageList(SysImageListSize size)
 		{
 			this.size = size;
-			create();
+			Create();
 		}
 
 		/// <summary>

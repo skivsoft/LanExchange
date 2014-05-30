@@ -2,7 +2,6 @@ using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Threading;
-using LanExchange.OS;
 
 namespace LanExchange.Plugin.Windows.Utils
 {
@@ -41,7 +40,7 @@ namespace LanExchange.Plugin.Windows.Utils
         public LocalWindowsHook(HookType hook)
         {
             m_hookType = hook;
-            m_filterFunc = new HookProc(this.CoreHookProc);
+            m_filterFunc = CoreHookProc;
         }
         public LocalWindowsHook(HookType hook, HookProc func)
         {
@@ -60,8 +59,8 @@ namespace LanExchange.Plugin.Windows.Utils
             // Let clients determine what to do
             var e = new HookEventArgs();
             e.HookCode = code;
-            e.wParam = wParam;
-            e.lParam = lParam;
+            e.WParam = wParam;
+            e.LParam = lParam;
             OnHookInvoked(e);
 
             // Yield to the next hook in the chain
@@ -77,7 +76,7 @@ namespace LanExchange.Plugin.Windows.Utils
                 m_hookType,
                 m_filterFunc,
                 IntPtr.Zero,
-                (int)Thread.CurrentThread.ManagedThreadId);
+                Thread.CurrentThread.ManagedThreadId);
         }
         // ************************************************************************
 

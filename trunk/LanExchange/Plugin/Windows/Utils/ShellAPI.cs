@@ -2,7 +2,6 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;
-using LanExchange.OS;
 
 namespace LanExchange.Plugin.Windows.Utils
 {
@@ -27,7 +26,6 @@ namespace LanExchange.Plugin.Windows.Utils
 
         public static int cbFileInfo = Marshal.SizeOf(typeof(SHFILEINFO));
         public static int cbMenuItemInfo = Marshal.SizeOf(typeof(MENUITEMINFO));
-        public static int cbTpmParams = Marshal.SizeOf(typeof(TPMPARAMS));
         public static int cbInvokeCommand = Marshal.SizeOf(typeof(CMINVOKECOMMANDINFOEX));
 
         #endregion
@@ -263,7 +261,7 @@ namespace LanExchange.Plugin.Windows.Utils
             IntPtr hMenu,
             uint uItem,
             bool fByPos,
-            ref ShellAPI.MENUITEMINFO lpmii);
+            ref MENUITEMINFO lpmii);
 
         // Changes information about a menu item.
         [DllImport(ExternDll.User32,
@@ -273,7 +271,7 @@ namespace LanExchange.Plugin.Windows.Utils
             IntPtr hMenu,
             uint uItem,
             bool fByPos,
-            ref ShellAPI.MENUITEMINFO lpmii);
+            ref MENUITEMINFO lpmii);
 
         // Determines the default menu item on the specified menu
         [DllImport(ExternDll.User32,
@@ -300,14 +298,6 @@ namespace LanExchange.Plugin.Windows.Utils
         public static extern IntPtr GetSubMenu(
             IntPtr hMenu,
             int nPos);
-
-        // Retrieves information about the specified combo box
-        [DllImport(ExternDll.User32,
-            SetLastError = true,
-            CharSet = CharSet.Auto)]
-        public static extern bool GetComboBoxInfo(
-            IntPtr hwndCombo,
-            ref COMBOBOXINFO info);
 
         #endregion
 
@@ -526,27 +516,6 @@ namespace LanExchange.Plugin.Windows.Utils
             public IntPtr hbmpItem;
         }
 
-        // Contains extended parameters for the TrackPopupMenuEx function
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-        public struct TPMPARAMS
-        {
-            int cbSize;
-            RECT rcExclude;
-        }
-
-        // Contains combo box status information
-        [StructLayout(LayoutKind.Sequential)]
-        public struct COMBOBOXINFO
-        {
-            public int cbSize;
-            public RECT rcItem;
-            public RECT rcButton;
-            public IntPtr stateButton;
-            public IntPtr hwndCombo;
-            public IntPtr hwndEdit;
-            public IntPtr hwndList;
-        }
-
         // A generalized Clipboard format, it is enhanced to encompass a 
         // target device, the aspect or view of the data, and a storage medium indicator
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
@@ -609,9 +578,9 @@ namespace LanExchange.Plugin.Windows.Utils
             public string pwcsName;
             public STGTY type;
             public long cbSize;
-            public ShellAPI.FILETIME mtime;
-            public ShellAPI.FILETIME ctime;
-            public ShellAPI.FILETIME atime;
+            public FILETIME mtime;
+            public FILETIME ctime;
+            public FILETIME atime;
             public STGM grfMode;
             public LOCKTYPE grfLocksSupported;
             public Guid clsid;
@@ -639,24 +608,6 @@ namespace LanExchange.Plugin.Windows.Utils
 
             public int x;
             public int y;
-        }
-
-        // Defines the coordinates of the upper-left and lower-right corners of a rectangle
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-        public struct RECT
-        {
-            public RECT(Rectangle rect)
-            {
-                left = rect.Left;
-                top = rect.Top;
-                right = rect.Right;
-                bottom = rect.Bottom;
-            }
-
-            int left;
-            int top;
-            int right;
-            int bottom;
         }
 
         // The SIZE structure specifies the width and height of a rectangle
@@ -1456,9 +1407,9 @@ namespace LanExchange.Plugin.Windows.Utils
 
         #region Utility Methods
 
-        public static DateTime FileTimeToDateTime(ShellAPI.FILETIME fileTime)
+        public static DateTime FileTimeToDateTime(FILETIME fileTime)
         {
-            long ticks = (((long)fileTime.dwHighDateTime) << 32) + (long)fileTime.dwLowDateTime;
+            var ticks = (((long)fileTime.dwHighDateTime) << 32) + fileTime.dwLowDateTime;
             return DateTime.FromFileTimeUtc(ticks);
         }
 

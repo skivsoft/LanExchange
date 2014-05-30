@@ -1,4 +1,4 @@
-﻿namespace LanExchange.OS
+﻿namespace LanExchange.Plugin.Windows
 {
     internal static class ExternDll
     {

@@ -5,7 +5,7 @@ namespace LanExchange.Plugin.Windows.Utils
     public class HookEventArgs : EventArgs
     {
         public int HookCode;	// Hook code
-        public IntPtr wParam;	// WPARAM argument
-        public IntPtr lParam;	// LPARAM argument
+        public IntPtr WParam;	// WPARAM argument
+        public IntPtr LParam;	// LPARAM argument
     }
 }
