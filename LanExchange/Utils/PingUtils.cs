@@ -13,13 +13,13 @@ namespace LanExchange.Utils
         public static bool FastPing(string ip)
         {
             var instance = new PingUtils();
-            var thread = new Thread(instance.GO);
+            var thread = new Thread(instance.DoPing);
             thread.Start(ip);
             thread.Join(DELAY_FOR_FAST_PING);
             return instance.m_PingOk;
         }
 
-        void GO(object ip)
+        void DoPing(object ip)
         {
             m_PingOk = false;
             if (ip == null) return;

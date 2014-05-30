@@ -1,5 +1,4 @@
 ﻿using System;
-using LanExchange.Action;
 using LanExchange.Plugin.Shortcut;
 using LanExchange.Properties;
 using LanExchange.SDK;

@@ -2,13 +2,13 @@ using System;
 using LanExchange.Misc;
 using LanExchange.Misc.Impl;
 using LanExchange.Model;
-using LanExchange.OS.Windows;
+using LanExchange.Plugin.Windows;
 using LanExchange.Presenter;
 using LanExchange.SDK;
-using LanExchange.UI.Components;
-using LanExchange.UI.Forms;
-using LanExchange.UI;
-using LanExchange.UI.Impl;
+using LanExchange.Plugin.WinForms.Components;
+using LanExchange.Plugin.WinForms.Forms;
+using LanExchange.Plugin.WinForms;
+using LanExchange.Plugin.WinForms.Impl;
 
 namespace LanExchange
 {
