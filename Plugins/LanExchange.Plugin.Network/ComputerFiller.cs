@@ -5,19 +5,19 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
 {
-    public sealed class ComputerFiller : PanelFillerBase
+    public sealed class ComputerFiller : IPanelFiller
     {
-        public override bool IsParentAccepted(PanelItemBase parent)
+        public bool IsParentAccepted(PanelItemBase parent)
         {
             // computers can be only into domains
             return parent is DomainPanelItem;
         }
 
-        public override void SyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
+        public void SyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
         }
 
-        public override void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
+        public void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
             if (parent == null)
                 throw new ArgumentNullException("parent");

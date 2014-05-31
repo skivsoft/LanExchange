@@ -3,19 +3,19 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Shortcut
 {
-    public sealed class ShortcutFactory : PanelItemFactoryBase
+    public sealed class ShortcutFactory : IPanelItemFactory
     {
-        public override PanelItemBase CreatePanelItem(PanelItemBase parent, string name)
+        public PanelItemBase CreatePanelItem(PanelItemBase parent, string name)
         {
             return new ShortcutPanelItem(parent, name);
         }
 
-        public override PanelItemBase CreateDefaultRoot()
+        public PanelItemBase CreateDefaultRoot()
         {
             return null;
         }
 
-        public override void RegisterColumns(IPanelColumnManager columnManager)
+        public void RegisterColumns(IPanelColumnManager columnManager)
         {
             columnManager.RegisterColumn<ShortcutPanelItem>(new PanelColumnHeader(Resources.mHelpKeys_Text, 100));
             columnManager.RegisterColumn<ShortcutPanelItem>(new PanelColumnHeader(Resources.Action, 280));

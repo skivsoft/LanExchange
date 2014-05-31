@@ -2,9 +2,9 @@
 
 namespace LanExchange.SDK
 {
-    public abstract class PanelFillerBase
+    public interface IPanelFiller
     {
-        public abstract bool IsParentAccepted(PanelItemBase parent);
+        bool IsParentAccepted(PanelItemBase parent);
 
         /// <summary>
         /// This method should return known items instantly.
@@ -12,13 +12,13 @@ namespace LanExchange.SDK
         /// </summary>
         /// <param name="parent"></param>
         /// <param name="result"></param>
-        public abstract void SyncFill(PanelItemBase parent, ICollection<PanelItemBase> result);
+        void SyncFill(PanelItemBase parent, ICollection<PanelItemBase> result);
 
         /// <summary>
         /// This method will be called asynchronous and can get items from remote source.
         /// </summary>
         /// <param name="parent"></param>
         /// <param name="result"></param>
-        public abstract void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result);
+        void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 
 namespace LanExchange.Plugin.FileSystem
@@ -52,6 +53,7 @@ namespace LanExchange.Plugin.FileSystem
             return 0;
         }
 
+        [Localizable(false)]
         public override string ToString()
         {
             return m_IsDirectory && m_Value == 0 ? string.Empty : m_Value.ToString("N0", CultureInfo.CurrentCulture);

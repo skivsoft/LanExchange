@@ -3,19 +3,19 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Users
 {
-    internal sealed class UserFactory : PanelItemFactoryBase
+    internal sealed class UserFactory : IPanelItemFactory
     {
-        public override PanelItemBase CreatePanelItem(PanelItemBase parent, string name)
+        public PanelItemBase CreatePanelItem(PanelItemBase parent, string name)
         {
             return new UserPanelItem(parent, name);
         }
 
-        public override PanelItemBase CreateDefaultRoot()
+        public PanelItemBase CreateDefaultRoot()
         {
             return new UserRoot();
         }
 
-        public override void RegisterColumns(IPanelColumnManager columnManager)
+        public void RegisterColumns(IPanelColumnManager columnManager)
         {
             columnManager.RegisterColumn<UserPanelItem>(new PanelColumnHeader(Resources.UserName, 180));
             columnManager.RegisterColumn<UserPanelItem>(new PanelColumnHeader(Resources.Title));

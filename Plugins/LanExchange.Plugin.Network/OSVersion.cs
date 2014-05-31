@@ -52,7 +52,7 @@ namespace LanExchange.Plugin.Network
             return (m_Type & srv) != 0 && (m_Type & (ctrl | noctrl)) != 0;
         }
 
-        public bool IsSQLServer()
+        public bool IsSqlServer()
         {
             return (m_Type & (uint)SV_101_TYPES.SV_TYPE_SQLSERVER) != 0;
         }
@@ -87,7 +87,7 @@ namespace LanExchange.Plugin.Network
             return (m_Type & (uint)SV_101_TYPES.SV_TYPE_MASTER_BROWSER) != 0;
         }
 
-        public bool IsDFSRoot()
+        public bool IsDfsRoot()
         {
             return (m_Type & (uint)SV_101_TYPES.SV_TYPE_DFS) != 0;
         }

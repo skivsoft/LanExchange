@@ -28,7 +28,7 @@ namespace LanExchange.Plugin.Network.NetApi
             }
             finally
             {
-                retval = SafeNativeMethods.NetApiBufferFree(buffer);
+                SafeNativeMethods.NetApiBufferFree(buffer);
             }
             return result;
         }

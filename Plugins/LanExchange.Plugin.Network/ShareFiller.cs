@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using LanExchange.Plugin.Network.NetApi;
@@ -7,23 +6,23 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
 {
-    public sealed class ShareFiller : PanelFillerBase
+    public sealed class ShareFiller : IPanelFiller
     {
         public static bool ShowHiddenShares = true;
         public static bool ShowPrinters = true;
 
-        public override bool IsParentAccepted(PanelItemBase parent)
+        public bool IsParentAccepted(PanelItemBase parent)
         {
             // parent for share can be only computer
             return parent is ComputerPanelItem;
         }
 
-        public override void SyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
+        public void SyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
         }
 
         [Localizable(false)]
-        public override void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
+        public void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
             if (parent == null)
                 throw new ArgumentNullException("parent");
