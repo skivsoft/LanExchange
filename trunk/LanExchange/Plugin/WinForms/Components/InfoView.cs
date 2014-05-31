@@ -50,7 +50,7 @@ namespace LanExchange.Plugin.WinForms.Components
             return RightToLeft == RightToLeft.No ? 50 : Width - 50;
         }
 
-        private int GetLocationY(int index)
+        private static int GetLocationY(int index)
         {
             return 8 + index * 16;
         }

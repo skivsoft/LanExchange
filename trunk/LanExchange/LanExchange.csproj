@@ -148,6 +148,8 @@
     <Compile Include="Plugin\Windows\Utils\SysImageListHelper.cs" />
     <Compile Include="Plugin\Windows\Utils\UnsafeNativeMethods.cs" />
     <Compile Include="Plugin\Windows\Utils\User32Utils.cs" />
+    <Compile Include="Plugin\WinForms\Impl\SubMenuAdapter.cs" />
+    <Compile Include="Plugin\WinForms\Utils\MessageBoxHelper.cs" />
     <Compile Include="Presenter\EditPresenter.cs" />
     <Compile Include="Presenter\MainPresenter.cs" />
     <Compile Include="Plugin\WinForms\Forms\AboutForm.cs">
@@ -180,7 +182,7 @@
       <DependentUpon>FilterView.cs</DependentUpon>
     </Compile>
     <Compile Include="Plugin\WinForms\Components\HeaderControl.cs" />
-    <Compile Include="Plugin\WinForms\IListViewItemGetter.cs" />
+    <Compile Include="Plugin\WinForms\Interfaces\IListViewItemGetter.cs" />
     <Compile Include="Plugin\WinForms\Impl\ImageManagerImpl.cs" />
     <Compile Include="Plugin\WinForms\Components\InfoView.cs">
       <SubType>UserControl</SubType>
@@ -192,8 +194,8 @@
     <Compile Include="Plugin\WinForms\Components\ListViewer.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Plugin\WinForms\ListViewItemCache.cs" />
-    <Compile Include="Plugin\WinForms\MacroHelper.cs" />
+    <Compile Include="Plugin\WinForms\Interfaces\ListViewItemCache.cs" />
+    <Compile Include="Plugin\WinForms\Utils\MacroHelper.cs" />
     <Compile Include="Plugin\WinForms\Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -340,7 +342,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="History.txt" />
+    <Content Include="ChangeLog.txt" />
     <Content Include="LanExchange.ico" />
     <Content Include="Misc\MVP.gif" />
     <Content Include="Languages\!Readme.txt" />

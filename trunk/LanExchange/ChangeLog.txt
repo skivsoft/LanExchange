@@ -1,4 +1,13 @@
-﻿LanExchange 2.0
+﻿LanExchange 3.1
+===============
+Main
+[Fixed] LAN-1: Wrong current panel item for context menu of info panel
+[Added] LAN-35: Shows cmdline in tooltip of item's context menu
+
+Addons
+[Added] LAN-36: User name in command "Send Email" for current user
+
+LanExchange 2.0
 ===============
 - Drag&Drop labels from info panel to external application
 - Drag&Drop selected items to external application

@@ -97,7 +97,7 @@ namespace LanExchange.Plugin.WinForms.Impl
                     found = new AddOnItemTypeRef();
                 if (item.CountVisible == 0) continue;
 
-                // add separator to split item groups
+                // add separator to split menuItem groups
                 if (found.ContextMenuStrip.Count > 0)
                     found.ContextMenuStrip.Add(new AddonMenuItem());
                 foreach (var menuItem in item.ContextMenuStrip)
@@ -142,7 +142,7 @@ namespace LanExchange.Plugin.WinForms.Impl
                     }
                     else
                         menuItem.Enabled = false;
-                    // lookup last default item
+                    // lookup last default menuItem
                     if (item.Default)
                         defaultItem = menuItem;
                     items.Add(menuItem);
@@ -156,54 +156,76 @@ namespace LanExchange.Plugin.WinForms.Impl
         {
             if (!PanelItems.ContainsKey(id))
                 return false;
-            if (popTop is ContextMenuStrip)
-            {
-                var popTop1 = popTop as ContextMenuStrip;
-                if (popTop1.Tag == null || !popTop1.Tag.Equals(id))
-                {
-                    InternalBuildMenu(popTop1.Items, id);
-                    popTop1.Tag = id;
-                }
-                return popTop1.Items.Count > 0;
-            }
 
-            if (popTop is ToolStripMenuItem)
+            var subMenu = SubMenuAdapter.CreateFrom(popTop);
+            if (subMenu == null)
+                return false;
+
+            var tag = subMenu.Tag;
+            if (tag == null || !tag.Equals(id))
             {
-                var popTop2 = popTop as ToolStripMenuItem;
-                if (popTop2.Tag == null || !popTop2.Tag.Equals(id))
-                {
-                    InternalBuildMenu(popTop2.DropDownItems, id);
-                    popTop2.Tag = id;
-                }
-                return popTop2.DropDownItems.Count > 0;
+                InternalBuildMenu(subMenu.Items, id);
+                subMenu.Tag = id;
             }
-            return false;
+            return subMenu.Items.Count > 0;
         }
 
-        private void InternalRunCmdLine(IPanelView pv, PanelItemBase panelItem, AddonMenuItem item)
+        public void SetupMenuForPanelItem(object popTop, PanelItemBase panelItem)
         {
-            var programFileName = item.ProgramValue.ExpandedFileName;
-            var programArgs = AddonProgram.ExpandCmdLine(item.ProgramArgs);
+            var subMenu = SubMenuAdapter.CreateFrom(popTop);
+            if (subMenu == null) return;
+
+            foreach (var menuItem in subMenu.Items)
+            {
+                var menuItem1 = menuItem as ToolStripMenuItem;
+                if (menuItem1 == null) continue;
+
+                var addonMenuItem = menuItem1.Tag as AddonMenuItem;
+                if (addonMenuItem == null) continue;
+
+                menuItem1.ToolTipText = string.Join(" ", BuildAddonMenuItemCmdLine(panelItem, addonMenuItem));
+            }
+        }
+
+        private static string[] BuildAddonMenuItemCmdLine(PanelItemBase panelItem, AddonMenuItem menuItem)
+        {
+            var programFileName = menuItem.ProgramValue.ExpandedFileName;
+            var programArgs = AddonProgram.ExpandCmdLine(menuItem.ProgramArgs);
             programArgs = MacroHelper.ExpandPublicProperties(programArgs, panelItem);
+            return ProtocolHelper.IsProtocol(menuItem.ProgramRef.Id)
+                ? new[] { menuItem.ProgramRef.Id + programArgs }
+                : new[] { programFileName, programArgs};
+        }
+
+        private static void InternalRunCmdLine(PanelItemBase panelItem, AddonMenuItem menuItem)
+        {
+            if (panelItem == null) return;
+
+            var cmdLine = BuildAddonMenuItemCmdLine(panelItem, menuItem);
             try
             {
-                if (ProtocolHelper.IsProtocol(item.ProgramRef.Id))
-                    Process.Start(item.ProgramRef.Id + programArgs);
-                else
-                    Process.Start(programFileName, programArgs);
+                switch (cmdLine.Length)
+                {
+                    case 1:
+                        Process.Start(cmdLine[0]);
+                        break;
+                    case 2:
+                        Process.Start(cmdLine[0], cmdLine[1]);
+                        break;
+                }
             }
             catch(Exception ex)
             {
-                pv.ShowRunCmdError(string.Format(CultureInfo.InvariantCulture, "{0} {1}\n{2}", programFileName, programArgs, ex.Message));
+                MessageBoxHelper.ShowRunCmdError(string.Format(CultureInfo.InvariantCulture, "{0}\n{1}", cmdLine, ex.Message));
             }
         }
 
         /// <summary>
-        /// Executes external program associated with menu item.
+        /// Executes external program associated with menu menuItem.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="eventArgs"></param>
-        private void MenuItemOnClick(object sender, EventArgs eventArgs)
+        private static void MenuItemOnClick(object sender, EventArgs eventArgs)
         {
             var menuItem = (sender as ToolStripMenuItem);
             if (menuItem == null) return;
@@ -211,9 +233,7 @@ namespace LanExchange.Plugin.WinForms.Impl
             if (item == null || item.ProgramValue == null || !item.ProgramValue.Exists) return;
             var pv = App.MainPages.View.ActivePanelView;
             if (pv == null) return;
-            var panelItem = pv.Presenter.GetFocusedPanelItem(false, true);
-            if (panelItem == null) return;
-            InternalRunCmdLine(pv, panelItem, item);
+            InternalRunCmdLine(App.MainView.Info.CurrentItem, item);
         }
 
         public void ProcessKeyDown(object args)
@@ -231,7 +251,7 @@ namespace LanExchange.Plugin.WinForms.Impl
             foreach (var menuItem in item.ContextMenuStrip)
                 if (menuItem.ShortcutPresent && menuItem.ShortcutKeys.Equals(shortcut))
                 {
-                    InternalRunCmdLine(pv, panelItem, menuItem);
+                    InternalRunCmdLine(panelItem, menuItem);
                     e.Handled = true;
                     break;
                 }
@@ -255,7 +275,7 @@ namespace LanExchange.Plugin.WinForms.Impl
                 if (menuItem.Default)
                     defaultItem = menuItem;
             if (defaultItem != null)
-                InternalRunCmdLine(pv, panelItem, defaultItem);
+                InternalRunCmdLine(panelItem, defaultItem);
         }
     }
 }

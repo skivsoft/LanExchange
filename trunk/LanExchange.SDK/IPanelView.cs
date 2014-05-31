@@ -68,11 +68,6 @@ namespace LanExchange.SDK
         /// Clears the selected.
         /// </summary>
         void ClearSelected();
-        /// <summary>
-        /// Shows the run CMD error.
-        /// </summary>
-        /// <param name="cmdLine">The CMD line.</param>
-        void ShowRunCmdError(string cmdLine);
 
         void ColumnsClear();
         void AddColumn(PanelColumnHeader header);
