@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using Microsoft.Win32;
 
-namespace LanExchange.SDK
+namespace LanExchange.Helpers
 {
     public static class ProtocolHelper
     {

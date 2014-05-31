@@ -3,8 +3,10 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Xml.Serialization;
+using LanExchange.Helpers;
+using LanExchange.SDK;
 
-namespace LanExchange.SDK
+namespace LanExchange.Base
 {
     [Localizable(false)]
     [XmlType("Program")]

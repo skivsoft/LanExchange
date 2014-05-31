@@ -5,7 +5,9 @@ Main
 [Added] LAN-35: Shows cmdline in tooltip of item's context menu
 
 Addons
-[Added] LAN-36: User name in command "Send Email" for current user
+[Added] User name in command "Send Email" for current user
+[Changed] Addons format simplified
+[Added] Ping command
 
 LanExchange 2.0
 ===============

@@ -1,17 +1,17 @@
 ﻿using System.Collections.ObjectModel;
 using System.Xml.Serialization;
 
-namespace LanExchange.SDK
+namespace LanExchange.Base
 {
     [XmlType("LanExchangeAddon")]
     public class AddOn
     {
         private readonly Collection<AddonProgram> m_Programs;
-        private readonly Collection<AddOnItemTypeRef> m_PanelItemTypes;
+        private readonly Collection<AddOnItemTypeRef> m_ItemTypes;
 
         public AddOn()
         {
-            m_PanelItemTypes = new Collection<AddOnItemTypeRef>();
+            m_ItemTypes = new Collection<AddOnItemTypeRef>();
             m_Programs = new Collection<AddonProgram>();
         }
 
@@ -20,9 +20,9 @@ namespace LanExchange.SDK
             get { return m_Programs; }
         }
 
-        public Collection<AddOnItemTypeRef> PanelItemTypes
+        public Collection<AddOnItemTypeRef> ItemTypes
         {
-            get { return m_PanelItemTypes; }
+            get { return m_ItemTypes; }
         }
     }
 }

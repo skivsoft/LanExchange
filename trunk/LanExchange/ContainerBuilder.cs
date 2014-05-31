@@ -1,4 +1,5 @@
 using System;
+using LanExchange.Interfaces;
 using LanExchange.Misc;
 using LanExchange.Misc.Impl;
 using LanExchange.Model;

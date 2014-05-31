@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using LanExchange.Interfaces;
 using LanExchange.Plugin.WinForms.Interfaces;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.Properties;
@@ -17,13 +18,17 @@ namespace LanExchange.Plugin.WinForms.Components
         #region Class declarations and constructor
 
         private readonly IPanelPresenter m_Presenter;
+        private readonly IAddonManager m_AddonManager;
+
         private PanelModelCopyHelper m_CopyHelper;
         private int m_SortColumn;
 
         public event EventHandler FocusedItemChanged;
 
-        public PanelView(IPanelPresenter presenter)
+        public PanelView(IPanelPresenter presenter, IAddonManager addonManager)
         {
+            m_AddonManager = addonManager;
+            
             InitializeComponent();
             // init presenters
             m_Presenter = presenter;
@@ -243,7 +248,7 @@ namespace LanExchange.Plugin.WinForms.Components
         {
             if (m_Presenter.CommandLevelDown())
                 return;
-            App.Addons.RunDefaultCmdLine();
+            m_AddonManager.RunDefaultCmdLine();
         }
 
         private void lvComps_KeyDown(object sender, KeyEventArgs e)
@@ -296,7 +301,7 @@ namespace LanExchange.Plugin.WinForms.Components
             }
             // process KeyDown on addons if KeyDown event not handled yet
             if (!e.Handled)
-                App.Addons.ProcessKeyDown(e);
+                m_AddonManager.ProcessKeyDown(e);
         }
 
         [Localizable(false)]
@@ -578,13 +583,13 @@ namespace LanExchange.Plugin.WinForms.Components
                 mComp.Image = App.Images.GetSmallImage(panelItem.ImageName);
                 mComp.Text = panelItem.Name;
                 var typeId = panelItem.GetType().Name;
-                menuVisible = App.Addons.BuildMenuForPanelItemType(mComp, typeId);
+                menuVisible = m_AddonManager.BuildMenuForPanelItemType(mComp, typeId);
                 if (!menuVisible)
                 {
                     mComp.DropDownItems.Clear();
                     mComp.Tag = null;
                 } else
-                    App.Addons.SetupMenuForPanelItem(mComp, panelItem);
+                    m_AddonManager.SetupMenuForPanelItem(mComp, panelItem);
             }
             mAfterComp.Visible = panelItem != null;
             mComp.Visible = panelItem != null;

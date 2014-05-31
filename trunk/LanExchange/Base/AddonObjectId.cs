@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace LanExchange.SDK
+namespace LanExchange.Base
 {
     public class AddonObjectId
     {

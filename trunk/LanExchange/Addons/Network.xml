@@ -3,24 +3,24 @@
   <Programs>
     <Program Id="explorer" FileName="%SystemRoot%\explorer.exe" />
   </Programs>
-  <PanelItemTypes>
-    <PanelItemTypeRef Id="ComputerPanelItem">
-      <ContextMenuStrip>
-        <ToolStripMenuItem Text="Windows Explorer" Default="true">
+  <ItemTypes>
+    <ItemTypeRef Id="ComputerPanelItem">
+      <ContextMenu>
+        <MenuItem Text="Windows Explorer" Default="true">
           <ShortcutKeys>Shift+Enter</ShortcutKeys>
           <ProgramRef Id="explorer" />
           <ProgramArgs>$(FullName)</ProgramArgs>
-        </ToolStripMenuItem>
-      </ContextMenuStrip>
-    </PanelItemTypeRef>
-    <PanelItemTypeRef Id="SharePanelItem">
-      <ContextMenuStrip>
-        <ToolStripMenuItem Text="Windows Explorer" Default="true">
+        </MenuItem>
+      </ContextMenu>
+    </ItemTypeRef>
+    <ItemTypeRef Id="SharePanelItem">
+      <ContextMenu>
+        <MenuItem Text="Windows Explorer" Default="true">
           <ShortcutKeys>Shift+Enter</ShortcutKeys>
           <ProgramRef Id="explorer" />
           <ProgramArgs>$(FullName)</ProgramArgs>
-        </ToolStripMenuItem>
-      </ContextMenuStrip>
-    </PanelItemTypeRef>
-  </PanelItemTypes>
+        </MenuItem>
+      </ContextMenu>
+    </ItemTypeRef>
+  </ItemTypes>
 </LanExchangeAddon>

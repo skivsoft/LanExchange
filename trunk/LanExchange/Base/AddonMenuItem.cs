@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Xml.Serialization;
 
-namespace LanExchange.SDK
+namespace LanExchange.Base
 {
-    [XmlType("ToolStripMenuItem")]
+    [XmlType("MenuItem")]
     public class AddonMenuItem : IEquatable<AddonMenuItem>, IDisposable
     {
         public AddonMenuItem()
@@ -26,12 +26,21 @@ namespace LanExchange.SDK
         [XmlAttribute]
         public bool Visible { get; set; }
 
+        [XmlAttribute]
+        public bool AllowUnreachable { get; set; }
+
         public string ShortcutKeys  { get; set; }
         
         public AddonObjectId ProgramRef { get; set; }
         
         [XmlIgnore]
         public AddonProgram ProgramValue { get; set; }
+
+        [XmlIgnore]
+        public bool Enabled
+        {
+            get { return ProgramValue != null && ProgramValue.Exists; }
+        }
         
         public string ProgramArgs { get; set; }
 

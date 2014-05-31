@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using LanExchange.Interfaces;
 using LanExchange.Misc;
 using LanExchange.Plugin;
 using LanExchange.Properties;
@@ -56,7 +57,7 @@ namespace LanExchange
             App.Config.Load();
             App.Config.Changed += App.Presenter.ConfigOnChanged;
             // load addons
-            App.Addons.LoadAddons();
+            App.Resolve<IAddonManager>().LoadAddons();
             // init application
             var application = App.Resolve<IAppPresenter>();
             application.Init();
