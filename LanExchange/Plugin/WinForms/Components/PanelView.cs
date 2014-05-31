@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using LanExchange.Plugin.WinForms.Interfaces;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.Properties;
 using LanExchange.SDK;
@@ -422,13 +423,6 @@ namespace LanExchange.Plugin.WinForms.Components
                 m_Presenter.ColumnClick(header.Index);
         }
 
-        public void ShowRunCmdError(string cmdLine)
-        {
-                MessageBox.Show(String.Format(CultureInfo.CurrentCulture, Resources.PanelView_RunCmdErrorMsg, cmdLine), 
-                    Resources.PanelView_RunCmdErrorCaption,
-                    MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
-        }
-
         public void ColumnsClear()
         {
             LV.Columns.Clear();
@@ -589,7 +583,8 @@ namespace LanExchange.Plugin.WinForms.Components
                 {
                     mComp.DropDownItems.Clear();
                     mComp.Tag = null;
-                }
+                } else
+                    App.Addons.SetupMenuForPanelItem(mComp, panelItem);
             }
             mAfterComp.Visible = panelItem != null;
             mComp.Visible = panelItem != null;

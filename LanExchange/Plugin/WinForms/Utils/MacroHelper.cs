@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
-namespace LanExchange.Plugin.WinForms
+namespace LanExchange.Plugin.WinForms.Utils
 {
     public static class MacroHelper
     {

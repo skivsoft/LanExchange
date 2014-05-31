@@ -6,7 +6,7 @@
         <ToolStripMenuItem Text="Send Email" Default="true">
           <ShortcutKeys>Ctrl+Enter</ShortcutKeys>
           <ProgramRef Id="mailto:" />
-          <ProgramArgs>$(Email)</ProgramArgs>
+          <ProgramArgs>$(Name) &lt;$(Email)&gt;</ProgramArgs>
         </ToolStripMenuItem>
       </ContextMenuStrip>
     </PanelItemTypeRef>

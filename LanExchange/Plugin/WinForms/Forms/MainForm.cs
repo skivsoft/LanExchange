@@ -176,17 +176,13 @@ namespace LanExchange.Plugin.WinForms.Forms
         private void popTop_Opening(object sender, CancelEventArgs e)
         {
             var pv = Pages.ActivePanelView as PanelView;
-            if (pv == null)
-            {
-                e.Cancel = true;
-                return;
-            }
-            if (pInfo.CurrentItem == null)
+            if (pv == null || pInfo.CurrentItem == null)
             {
                 e.Cancel = true;
                 return;
             }
             e.Cancel = !App.Addons.BuildMenuForPanelItemType(popTop, pInfo.CurrentItem.GetType().Name);
+            App.Addons.SetupMenuForPanelItem(popTop, pInfo.CurrentItem);
         }
 
         private void tipComps_Popup(object sender, PopupEventArgs e)

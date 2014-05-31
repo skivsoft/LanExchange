@@ -11,5 +11,6 @@ namespace LanExchange.SDK
         bool BuildMenuForPanelItemType(object popTop, string id);
         void RunDefaultCmdLine();
         void ProcessKeyDown(object args);
+        void SetupMenuForPanelItem(object popTop, PanelItemBase currentItem);
     }
 }

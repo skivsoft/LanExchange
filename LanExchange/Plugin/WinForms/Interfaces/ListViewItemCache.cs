@@ -1,8 +1,7 @@
-﻿using System.Windows.Forms;
+﻿//using NLog;
+using System.Windows.Forms;
 
-//using NLog;
-
-namespace LanExchange.Plugin.WinForms
+namespace LanExchange.Plugin.WinForms.Interfaces
 {
     public class ListViewItemCache
     {
