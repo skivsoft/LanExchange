@@ -5,6 +5,9 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
+using LanExchange.Base;
+using LanExchange.Helpers;
+using LanExchange.Interfaces;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.SDK;
 
@@ -76,8 +79,8 @@ namespace LanExchange.Plugin.WinForms.Impl
                     m_Programs.Add(item.Id, item);
                 }
             // process protocols
-            foreach (var item in addon.PanelItemTypes)
-                foreach(var menuItem in item.ContextMenuStrip)
+            foreach (var item in addon.ItemTypes)
+                foreach(var menuItem in item.ContextMenu)
                     if (ProtocolHelper.IsProtocol(menuItem.ProgramRef.Id))
                     {
                         var itemProgram = AddonProgram.CreateFromProtocol(menuItem.ProgramRef.Id);
@@ -85,7 +88,7 @@ namespace LanExchange.Plugin.WinForms.Impl
                             m_Programs.Add(itemProgram.Id, itemProgram);
                     }
             // process menu items
-            foreach (var item in addon.PanelItemTypes)
+            foreach (var item in addon.ItemTypes)
             {
                 AddOnItemTypeRef found;
                 if (m_PanelItems.ContainsKey(item.Id))
@@ -98,21 +101,21 @@ namespace LanExchange.Plugin.WinForms.Impl
                 if (item.CountVisible == 0) continue;
 
                 // add separator to split menuItem groups
-                if (found.ContextMenuStrip.Count > 0)
-                    found.ContextMenuStrip.Add(new AddonMenuItem());
-                foreach (var menuItem in item.ContextMenuStrip)
+                if (found.ContextMenu.Count > 0)
+                    found.ContextMenu.Add(new AddonMenuItem());
+                foreach (var menuItem in item.ContextMenu)
                     if (menuItem.Visible)
                     {
                         if (menuItem.IsSeparator)
-                            found.ContextMenuStrip.Add(menuItem);
+                            found.ContextMenu.Add(menuItem);
                         else
                         {
                             if (m_Programs.ContainsKey(menuItem.ProgramRef.Id))
                                 menuItem.ProgramValue = m_Programs[menuItem.ProgramRef.Id];
-                            if (!found.ContextMenuStrip.Contains(menuItem) && 
+                            if (!found.ContextMenu.Contains(menuItem) && 
                                 menuItem.ProgramRef != null && 
                                 menuItem.ProgramValue != null)
-                                found.ContextMenuStrip.Add(menuItem);
+                                found.ContextMenu.Add(menuItem);
                         }
                     }
                 m_PanelItems.Add(item.Id, found);
@@ -123,7 +126,7 @@ namespace LanExchange.Plugin.WinForms.Impl
         {
             items.Clear();
             ToolStripMenuItem defaultItem = null;
-            foreach (var item in PanelItems[id].ContextMenuStrip)
+            foreach (var item in PanelItems[id].ContextMenu)
             {
                 if (item.IsSeparator)
                     items.Add(new ToolStripSeparator());
@@ -135,13 +138,8 @@ namespace LanExchange.Plugin.WinForms.Impl
                     menuItem.ShortcutKeyDisplayString = item.ShortcutKeys;
                     menuItem.Click += MenuItemOnClick;
                     if (item.ProgramValue != null)
-                    {
-                        if (!item.ProgramValue.Exists)
-                            menuItem.Enabled = false;
                         menuItem.Image = item.ProgramValue.ProgramImage;
-                    }
-                    else
-                        menuItem.Enabled = false;
+                    menuItem.Enabled = item.Enabled;
                     // lookup last default menuItem
                     if (item.Default)
                         defaultItem = menuItem;
@@ -183,40 +181,7 @@ namespace LanExchange.Plugin.WinForms.Impl
                 var addonMenuItem = menuItem1.Tag as AddonMenuItem;
                 if (addonMenuItem == null) continue;
 
-                menuItem1.ToolTipText = string.Join(" ", BuildAddonMenuItemCmdLine(panelItem, addonMenuItem));
-            }
-        }
-
-        private static string[] BuildAddonMenuItemCmdLine(PanelItemBase panelItem, AddonMenuItem menuItem)
-        {
-            var programFileName = menuItem.ProgramValue.ExpandedFileName;
-            var programArgs = AddonProgram.ExpandCmdLine(menuItem.ProgramArgs);
-            programArgs = MacroHelper.ExpandPublicProperties(programArgs, panelItem);
-            return ProtocolHelper.IsProtocol(menuItem.ProgramRef.Id)
-                ? new[] { menuItem.ProgramRef.Id + programArgs }
-                : new[] { programFileName, programArgs};
-        }
-
-        private static void InternalRunCmdLine(PanelItemBase panelItem, AddonMenuItem menuItem)
-        {
-            if (panelItem == null) return;
-
-            var cmdLine = BuildAddonMenuItemCmdLine(panelItem, menuItem);
-            try
-            {
-                switch (cmdLine.Length)
-                {
-                    case 1:
-                        Process.Start(cmdLine[0]);
-                        break;
-                    case 2:
-                        Process.Start(cmdLine[0], cmdLine[1]);
-                        break;
-                }
-            }
-            catch(Exception ex)
-            {
-                MessageBoxHelper.ShowRunCmdError(string.Format(CultureInfo.InvariantCulture, "{0}\n{1}", cmdLine, ex.Message));
+                menuItem1.ToolTipText = string.Join(" ", AddonCommandStarter.BuildCmdLine(panelItem, addonMenuItem));
             }
         }
 
@@ -233,7 +198,7 @@ namespace LanExchange.Plugin.WinForms.Impl
             if (item == null || item.ProgramValue == null || !item.ProgramValue.Exists) return;
             var pv = App.MainPages.View.ActivePanelView;
             if (pv == null) return;
-            InternalRunCmdLine(App.MainView.Info.CurrentItem, item);
+            new AddonCommandStarter(App.MainView.Info.CurrentItem, item).Start();
         }
 
         public void ProcessKeyDown(object args)
@@ -248,10 +213,10 @@ namespace LanExchange.Plugin.WinForms.Impl
                 return;
             var item = PanelItems[typeId];
             var shortcut = KeyboardUtils.KeyEventToString(e);
-            foreach (var menuItem in item.ContextMenuStrip)
-                if (menuItem.ShortcutPresent && menuItem.ShortcutKeys.Equals(shortcut))
+            foreach (var menuItem in item.ContextMenu)
+                if (menuItem.ShortcutPresent && menuItem.ShortcutKeys.Equals(shortcut) && menuItem.Enabled)
                 {
-                    InternalRunCmdLine(panelItem, menuItem);
+                    new AddonCommandStarter(panelItem, menuItem).Start();
                     e.Handled = true;
                     break;
                 }
@@ -271,11 +236,11 @@ namespace LanExchange.Plugin.WinForms.Impl
                 return;
             var item = PanelItems[typeId];
             AddonMenuItem defaultItem = null;
-            foreach (var menuItem in item.ContextMenuStrip)
-                if (menuItem.Default)
+            foreach (var menuItem in item.ContextMenu)
+                if (menuItem.Default && menuItem.Enabled)
                     defaultItem = menuItem;
             if (defaultItem != null)
-                InternalRunCmdLine(panelItem, defaultItem);
+                new AddonCommandStarter(panelItem, defaultItem).Start();
         }
     }
 }

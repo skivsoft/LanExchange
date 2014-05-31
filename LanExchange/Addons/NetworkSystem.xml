@@ -6,33 +6,37 @@
     <Program Id="fsmgmt" FileName="%SystemRoot%\system32\fsmgmt.msc"/>
     <Program Id="lusrmgr" FileName="%SystemRoot%\system32\lusrmgr.msc"/>
     <Program Id="services" FileName="%SystemRoot%\system32\services.msc"/>
-    <Program Id="cmd" FileName="%SystemRoot%\system32\cmd.exe"/>
+    <Program Id="cmd" FileName="%COMSPEC%"/>
   </Programs>
-  <PanelItemTypes>
-    <PanelItemTypeRef Id="ComputerPanelItem">
-      <ContextMenuStrip>
-        <ToolStripMenuItem Text="Remote Desktop Connection">
+  <ItemTypes>
+    <ItemTypeRef Id="ComputerPanelItem">
+      <ContextMenu>
+        <MenuItem Text="Remote Desktop Connection">
           <ProgramRef Id="mstsc" />
           <ProgramArgs>/v:$(Name)</ProgramArgs>
-        </ToolStripMenuItem>
-        <ToolStripMenuItem Text="Computer Management">
+        </MenuItem>
+        <MenuItem Text="Computer Management">
           <ShortcutKeys>Ctrl+F1</ShortcutKeys>
           <ProgramRef Id="compmgmt" />
           <ProgramArgs>/computer:$(Name)</ProgramArgs>
-        </ToolStripMenuItem>
-        <ToolStripMenuItem Text="Shared Folders">
+        </MenuItem>
+        <MenuItem Text="Shared Folders">
           <ProgramRef Id="fsmgmt" />
           <ProgramArgs>/computer:$(Name)</ProgramArgs>
-        </ToolStripMenuItem>
-        <ToolStripMenuItem Text="Local Users and Groups">
+        </MenuItem>
+        <MenuItem Text="Local Users and Groups">
           <ProgramRef Id="lusrmgr" />
           <ProgramArgs>/computer:$(Name)</ProgramArgs>
-        </ToolStripMenuItem>
-        <ToolStripMenuItem Text="Services">
+        </MenuItem>
+        <MenuItem Text="Services">
           <ProgramRef Id="services" />
           <ProgramArgs>/computer:$(Name)</ProgramArgs>
-        </ToolStripMenuItem>
-      </ContextMenuStrip>
-    </PanelItemTypeRef>
-  </PanelItemTypes>
+        </MenuItem>
+        <MenuItem Text="Ping" AllowUnreachable="true">
+          <ProgramRef Id="cmd" />
+          <ProgramArgs>/c ping -t $(Name)</ProgramArgs>
+        </MenuItem>
+      </ContextMenu>
+    </ItemTypeRef>
+  </ItemTypes>
 </LanExchangeAddon>

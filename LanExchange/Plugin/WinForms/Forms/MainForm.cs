@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Security.Permissions;
 using System.Windows.Forms;
+using LanExchange.Interfaces;
 using LanExchange.Plugin.WinForms.Components;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.Properties;
@@ -15,8 +16,12 @@ namespace LanExchange.Plugin.WinForms.Forms
         public const int WAIT_FOR_KEYUP_MS = 500;
         public PagesView Pages;
 
-        public MainForm()
+        private readonly IAddonManager m_AddonManager;
+
+        public MainForm(IAddonManager addonManager)
         {
+            m_AddonManager = addonManager;
+
             InitializeComponent();
             if (App.TR.RightToLeft)
             {
@@ -181,8 +186,8 @@ namespace LanExchange.Plugin.WinForms.Forms
                 e.Cancel = true;
                 return;
             }
-            e.Cancel = !App.Addons.BuildMenuForPanelItemType(popTop, pInfo.CurrentItem.GetType().Name);
-            App.Addons.SetupMenuForPanelItem(popTop, pInfo.CurrentItem);
+            e.Cancel = !m_AddonManager.BuildMenuForPanelItemType(popTop, pInfo.CurrentItem.GetType().Name);
+            m_AddonManager.SetupMenuForPanelItem(popTop, pInfo.CurrentItem);
         }
 
         private void tipComps_Popup(object sender, PopupEventArgs e)
@@ -514,7 +519,7 @@ namespace LanExchange.Plugin.WinForms.Forms
             return null;
         }
 
-        private void MainForm_RightToLeftChanged(object sender, EventArgs e)
+ private void MainForm_RightToLeftChanged(object sender, EventArgs e)
         {
             popTray.RightToLeft = RightToLeft;
             Status.SizingGrip = RightToLeft == RightToLeft.No;

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using LanExchange.Interfaces;
 using LanExchange.Properties;
 using LanExchange.SDK;
 
@@ -38,8 +39,8 @@ namespace LanExchange.Plugin.Shortcut
             result.Add(new ShortcutPanelItem(parent, Resources.KeyBackspace, Resources.KeyBackspace__));
             result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlDown, Resources.KeyCtrlDown__));
             result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlUp, Resources.KeyCtrlUp__));
-            foreach (var pair in App.Addons.PanelItems)
-                foreach (var menuItem in pair.Value.ContextMenuStrip)
+            foreach (var pair in App.Resolve<IAddonManager>().PanelItems)
+                foreach (var menuItem in pair.Value.ContextMenu)
                     if (!string.IsNullOrEmpty(menuItem.ShortcutKeys))
                     {
                         var shortcut = new ShortcutPanelItem(parent, menuItem.ShortcutKeys, App.TR.Translate(menuItem.Text));

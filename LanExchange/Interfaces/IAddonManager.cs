@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using LanExchange.Base;
+using LanExchange.SDK;
 
-namespace LanExchange.SDK
+namespace LanExchange.Interfaces
 {
     public interface IAddonManager
     {

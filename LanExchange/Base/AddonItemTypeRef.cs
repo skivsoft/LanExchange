@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Xml.Serialization;
 
-namespace LanExchange.SDK
+namespace LanExchange.Base
 {
-    [XmlType("PanelItemTypeRef")]
+    [XmlType("ItemTypeRef")]
     public class AddOnItemTypeRef : AddonObjectId
     {
         private readonly List<AddonMenuItem> m_Items;
@@ -14,7 +14,7 @@ namespace LanExchange.SDK
             m_Items = new List<AddonMenuItem>();
         }
 
-        public List<AddonMenuItem> ContextMenuStrip
+        public List<AddonMenuItem> ContextMenu
         {
             get { return m_Items; }
         }

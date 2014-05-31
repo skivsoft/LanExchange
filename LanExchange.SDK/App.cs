@@ -13,7 +13,6 @@ namespace LanExchange.SDK
         // public setters
         public static IMainView MainView { get; set; }
         public static IImageManager Images { get; set; }
-        public static IAddonManager Addons { get; set; }
         public static IPanelFillerManager PanelFillers { get; set; }
         // managers
         public static IPanelItemFactoryManager PanelItemTypes { get; private set; }
@@ -45,7 +44,6 @@ namespace LanExchange.SDK
             Config = Resolve<IConfigModel>();
             Threads = Resolve<ILazyThreadPool>();
             Images = Resolve<IImageManager>();
-            Addons = Resolve<IAddonManager>();
         }
 
         public static IIoCContainer GetContainer()

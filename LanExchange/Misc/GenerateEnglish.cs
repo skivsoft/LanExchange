@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Resources;
 using System.Text;
+using LanExchange.Base;
 using LanExchange.SDK;
 
 namespace LanExchange.Misc
@@ -56,9 +57,9 @@ namespace LanExchange.Misc
             // load addon from xml
             var addon = (AddOn)SerializeUtils.DeserializeObjectFromXmlFile(fileName, typeof(AddOn));
             var context = Path.GetFileName(fileName);
-            foreach (var panelItem in addon.PanelItemTypes)
+            foreach (var panelItem in addon.ItemTypes)
             {
-                foreach(var menuItem in panelItem.ContextMenuStrip)
+                foreach(var menuItem in panelItem.ContextMenu)
                 {
                     if (menuItem.IsSeparator)
                         continue;

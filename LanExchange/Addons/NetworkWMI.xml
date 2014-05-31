@@ -3,27 +3,27 @@
   <Programs>
     <Program Id="wmiviewer" FileName="WMIViewer.exe" />
   </Programs>
-  <PanelItemTypes>
-    <PanelItemTypeRef Id="ComputerPanelItem">
-      <ContextMenuStrip>
-        <ToolStripMenuItem Text="WMI Viewer">
+  <ItemTypes>
+    <ItemTypeRef Id="ComputerPanelItem">
+      <ContextMenu>
+        <MenuItem Text="WMI Viewer">
           <ShortcutKeys>Alt+F1</ShortcutKeys>
           <ProgramRef Id="wmiviewer" />
           <ProgramArgs>/computer:$(Name)</ProgramArgs>
-        </ToolStripMenuItem>
-        <ToolStripMenuItem Text="WMI: Edit Description">
+        </MenuItem>
+        <MenuItem Text="WMI: Edit Description">
           <ProgramRef Id="wmiviewer" />
           <ProgramArgs>/computer:$(Name) /edit /namespace:ROOT\CIMV2 /class:Win32_OperatingSystem /property:Description</ProgramArgs>
-        </ToolStripMenuItem>
-        <ToolStripMenuItem Text="WMI: Reboot" Visible="false">
+        </MenuItem>
+        <MenuItem Text="WMI: Reboot" Visible="false">
           <ProgramRef Id="wmiviewer" />
           <ProgramArgs>/computer:$(Name) /execute /namespace:ROOT\CIMV2 /class:Win32_OperatingSystem /method:Reboot</ProgramArgs>
-        </ToolStripMenuItem>
-        <ToolStripMenuItem Text="WMI: Shutdown" Visible="false">
+        </MenuItem>
+        <MenuItem Text="WMI: Shutdown" Visible="false">
           <ProgramRef Id="wmiviewer" />
           <ProgramArgs>/computer:$(Name) /execute /namespace:ROOT\CIMV2 /class:Win32_OperatingSystem /method:Shutdown</ProgramArgs>
-        </ToolStripMenuItem>
-      </ContextMenuStrip>
-    </PanelItemTypeRef>
-  </PanelItemTypes>
+        </MenuItem>
+      </ContextMenu>
+    </ItemTypeRef>
+  </ItemTypes>
 </LanExchangeAddon>
