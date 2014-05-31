@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Globalization;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Translit
 {
     internal class KazakhCyrillicToArabic : ITranslitStrategy
     {
-        private string TR(char ch, char upper)
+        private static string TR(char ch, char upper)
         {
             switch (upper)
             {
@@ -54,7 +52,7 @@ namespace LanExchange.Plugin.Translit
                 case 'Ю': return "يؤ";
                 case 'Я': return "يا";
                 case ',': return "،";
-                default: return ch.ToString();
+                default: return ch.ToString(CultureInfo.CurrentUICulture);
             }
         }
 

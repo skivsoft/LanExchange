@@ -278,7 +278,7 @@ namespace LanExchange.Model
             get { return false; }
         }
 
-        public PanelItemFactoryBase ItemFactory { get; set; }
+        public IPanelItemFactory ItemFactory { get; set; }
 
         public bool Contains(PanelItemBase panelItem)
         {

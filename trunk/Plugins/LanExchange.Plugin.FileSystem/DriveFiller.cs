@@ -1,23 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.FileSystem
 {
-    public class DriveFiller : PanelFillerBase
+    public class DriveFiller : IPanelFiller
     {
-        public override bool IsParentAccepted(PanelItemBase parent)
+        public bool IsParentAccepted(PanelItemBase parent)
         {
             return parent is FileRoot;
         }
 
-        public override void SyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
+        public void SyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
         }
 
-        public override void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
+        public void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
             foreach (var drive in DriveInfo.GetDrives())
             {

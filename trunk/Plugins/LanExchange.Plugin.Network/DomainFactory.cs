@@ -5,9 +5,9 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
 {
-    public sealed class DomainFactory : PanelItemFactoryBase
+    public sealed class DomainFactory : IPanelItemFactory
     {
-        public override PanelItemBase CreatePanelItem(PanelItemBase parent, string name)
+        public PanelItemBase CreatePanelItem(PanelItemBase parent, string name)
         {
             return new DomainPanelItem(parent, name);
         }
@@ -17,13 +17,13 @@ namespace LanExchange.Plugin.Network
         /// </summary>
         /// <returns></returns>
         [EnvironmentPermissionAttribute(SecurityAction.LinkDemand, Unrestricted = true)]
-        public override PanelItemBase CreateDefaultRoot()
+        public PanelItemBase CreateDefaultRoot()
         {
             var domain = WorkstationInfo.FromComputer(null).LanGroup;
             return new DomainPanelItem(new DomainRoot(), domain);
         }
 
-        public override void RegisterColumns(IPanelColumnManager columnManager)
+        public void RegisterColumns(IPanelColumnManager columnManager)
         {
             columnManager.RegisterColumn<DomainPanelItem>(new PanelColumnHeader(Resources.DomainName, 200));
         }

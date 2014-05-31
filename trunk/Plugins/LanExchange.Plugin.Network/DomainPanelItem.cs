@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Xml.Serialization;
-using LanExchange.Plugin.Network.Properties;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network

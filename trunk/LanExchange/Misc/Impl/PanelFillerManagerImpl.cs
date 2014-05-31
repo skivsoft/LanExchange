@@ -8,14 +8,14 @@ namespace LanExchange.Misc.Impl
 {
     public class PanelFillerManagerImpl : IPanelFillerManager
     {
-        private readonly IDictionary<Type, PanelFillerBase> m_Fillers;
+        private readonly IDictionary<Type, IPanelFiller> m_Fillers;
 
         public PanelFillerManagerImpl()
         {
-            m_Fillers = new Dictionary<Type, PanelFillerBase>();
+            m_Fillers = new Dictionary<Type, IPanelFiller>();
         }
 
-        public void RegisterFiller<TPanelItem>(PanelFillerBase filler) where TPanelItem : PanelItemBase
+        public void RegisterFiller<TPanelItem>(IPanelFiller filler) where TPanelItem : PanelItemBase
         {
             m_Fillers.Add(typeof(TPanelItem), filler);
         }

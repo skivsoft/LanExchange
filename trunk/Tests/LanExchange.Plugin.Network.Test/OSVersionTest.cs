@@ -88,7 +88,7 @@ namespace LanExchange.Plugin.Network
         public void TestIsDFSRoot()
         {
             m_Info.Type = (uint) SV_101_TYPES.SV_TYPE_DFS;
-            Assert.IsTrue(m_Info.IsDFSRoot());
+            Assert.IsTrue(m_Info.IsDfsRoot());
         }
 
         [Test]
@@ -132,7 +132,7 @@ namespace LanExchange.Plugin.Network
         public void TestIsSQLServer()
         {
             m_Info.Type = (uint) SV_101_TYPES.SV_TYPE_SQLSERVER;
-            Assert.IsTrue(m_Info.IsSQLServer());
+            Assert.IsTrue(m_Info.IsSqlServer());
         }
 
         [Test]

@@ -7,19 +7,19 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
 {
-    public sealed class ComputerFactory : PanelItemFactoryBase
+    public sealed class ComputerFactory : IPanelItemFactory
     {
-        public override PanelItemBase CreatePanelItem(PanelItemBase parent, string name)
+        public PanelItemBase CreatePanelItem(PanelItemBase parent, string name)
         {
             return new ComputerPanelItem(parent, name);
         }
 
-        public override PanelItemBase CreateDefaultRoot()
+        public PanelItemBase CreateDefaultRoot()
         {
             return null;
         }
 
-        public override void RegisterColumns(IPanelColumnManager columnManager)
+        public void RegisterColumns(IPanelColumnManager columnManager)
         {
             columnManager.RegisterColumn<ComputerPanelItem>(new PanelColumnHeader(Resources.NetworkName));
             columnManager.RegisterColumn<ComputerPanelItem>(new PanelColumnHeader(Resources.Description, 240));

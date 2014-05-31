@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml.Serialization;
-using LanExchange.Plugin.FileSystem.Properties;
+﻿using LanExchange.Plugin.FileSystem.Properties;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.FileSystem

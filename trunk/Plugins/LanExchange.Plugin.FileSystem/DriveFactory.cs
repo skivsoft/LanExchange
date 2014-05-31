@@ -1,22 +1,21 @@
-﻿using System;
-using LanExchange.Plugin.FileSystem.Properties;
+﻿using LanExchange.Plugin.FileSystem.Properties;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.FileSystem
 {
-    public class DriveFactory : PanelItemFactoryBase
+    public class DriveFactory : IPanelItemFactory
     {
-        public override PanelItemBase CreatePanelItem(PanelItemBase parent, string name)
+        public PanelItemBase CreatePanelItem(PanelItemBase parent, string name)
         {
             return new DrivePanelItem(parent, name);
         }
 
-        public override PanelItemBase CreateDefaultRoot()
+        public PanelItemBase CreateDefaultRoot()
         {
             return new FileRoot();
         }
 
-        public override void RegisterColumns(IPanelColumnManager columnManager)
+        public void RegisterColumns(IPanelColumnManager columnManager)
         {
             columnManager.RegisterColumn<DrivePanelItem>(new PanelColumnHeader(Resources.Name, 150));
             columnManager.RegisterColumn<DrivePanelItem>(new PanelColumnHeader(Resources.Type, 80));

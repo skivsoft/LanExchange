@@ -519,7 +519,7 @@ namespace LanExchange.Plugin.WinForms.Forms
             return null;
         }
 
- private void MainForm_RightToLeftChanged(object sender, EventArgs e)
+        private void MainForm_RightToLeftChanged(object sender, EventArgs e)
         {
             popTray.RightToLeft = RightToLeft;
             Status.SizingGrip = RightToLeft == RightToLeft.No;

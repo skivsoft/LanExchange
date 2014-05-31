@@ -7,20 +7,20 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Shortcut
 {
-    public sealed class ShortcutFiller : PanelFillerBase
+    public sealed class ShortcutFiller : IPanelFiller
     {
         private const string PANEL_ITEM_SUFFIX = "PanelItem";
 
-        public override bool IsParentAccepted(PanelItemBase parent)
+        public bool IsParentAccepted(PanelItemBase parent)
         {
             return parent is ShortcutRoot;
         }
 
-        public override void SyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
+        public void SyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
         }
 
-        public override void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
+        public void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
             result.Add(new ShortcutPanelItem(parent, Resources.KeyF1, Resources.KeyF1__));
             result.Add(new ShortcutPanelItem(parent, Resources.KeyF10, Resources.KeyF10__));

@@ -7,7 +7,7 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Users
 {
-    internal sealed class UserFiller : PanelFillerBase
+    internal sealed class UserFiller : IPanelFiller
     {
         const string CN = "cn";
         const string TITLE = "title";
@@ -22,7 +22,7 @@ namespace LanExchange.Plugin.Users
         const string ACCOUNT_CONTROL = "userAccountControl";
         const string EMPLOYEE_ID = "employeeID";
 
-        public override bool IsParentAccepted(PanelItemBase parent)
+        public bool IsParentAccepted(PanelItemBase parent)
         {
             return parent is UserRoot;
         }
@@ -43,7 +43,7 @@ namespace LanExchange.Plugin.Users
         }
 
         [Localizable(false)]
-        public override void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
+        public void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
             var startPath = LdapUtils.GetUserPath(App.Resolve<IScreenService>().UserName); // "u770503350189"
             
@@ -105,7 +105,7 @@ namespace LanExchange.Plugin.Users
             }
         }
 
-        public override void SyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
+        public void SyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
         }
     }

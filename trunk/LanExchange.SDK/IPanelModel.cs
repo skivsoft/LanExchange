@@ -80,7 +80,7 @@ namespace LanExchange.SDK
         /// <returns></returns>
         int IndexOf(PanelItemBase key);
 
-        PanelItemFactoryBase ItemFactory { get; set; }
+        IPanelItemFactory ItemFactory { get; set; }
         void AsyncRetrieveData(bool clearFilter);
         string DataType { get; set; }
         ColumnComparer Comparer { get; }

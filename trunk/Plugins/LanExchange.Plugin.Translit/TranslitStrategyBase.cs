@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Translit
@@ -27,10 +27,7 @@ namespace LanExchange.Plugin.Translit
 
         public string Transliterate(string text)
         {
-            var result = string.Empty;
-            for (int i = 0; i < text.Length; i++)
-                result += TR(text[i]);
-            return result;
+            return text.Aggregate(string.Empty, (current, t) => current + TR(t));
         }
     }
 }
