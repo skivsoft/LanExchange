@@ -5,21 +5,31 @@
     <Program Id="cmd" FileName="%COMSPEC%" />
   </Programs>
   <ItemTypes>
-    <ItemTypeRef Id="ComputerPanelItem">
+    <ItemTypeRef Id="DrivePanelItem">
       <ContextMenu>
         <MenuItem Text="Windows Explorer" Default="true">
           <ShortcutKeys>Shift+Enter</ShortcutKeys>
           <ProgramRef Id="explorer" />
           <ProgramArgs>$(FullName)</ProgramArgs>
         </MenuItem>
+        <MenuItem Text="Command Prompt">
+          <ShortcutKeys>Ctrl+Alt+P</ShortcutKeys>
+          <ProgramRef Id="cmd" />
+          <WorkingDirectory>$(FullName)</WorkingDirectory>
+        </MenuItem>
       </ContextMenu>
     </ItemTypeRef>
-    <ItemTypeRef Id="SharePanelItem">
+    <ItemTypeRef Id="FilePanelItem">
       <ContextMenu>
         <MenuItem Text="Windows Explorer" Default="true">
           <ShortcutKeys>Shift+Enter</ShortcutKeys>
           <ProgramRef Id="explorer" />
           <ProgramArgs>$(FullName)</ProgramArgs>
+        </MenuItem>
+        <MenuItem Text="Command Prompt">
+          <ShortcutKeys>Ctrl+Alt+P</ShortcutKeys>
+          <ProgramRef Id="cmd" />
+          <WorkingDirectory>$(FullName)</WorkingDirectory>
         </MenuItem>
       </ContextMenu>
     </ItemTypeRef>

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using LanExchange.Base;
 using LanExchange.Helpers;
 using LanExchange.Plugin.WinForms.Forms;
@@ -25,13 +26,13 @@ namespace LanExchange.Plugin.WinForms.Impl
                 : new[] { programFileName, programArgs };
         }
 
-        public AddonCommandStarter(PanelItemBase panelItem, AddonMenuItem menuItem)
+        public AddonCommandStarter(AddonMenuItem menuItem, PanelItemBase panelItem)
         {
-            if (panelItem == null)
-                throw new ArgumentNullException("panelItem");
-
             if (menuItem == null)
                 throw new ArgumentNullException("menuItem");
+
+            if (panelItem == null)
+                throw new ArgumentNullException("panelItem");
 
             m_PanelItem = panelItem;
             m_MenuItem = menuItem;
@@ -52,15 +53,28 @@ namespace LanExchange.Plugin.WinForms.Impl
             var cmdLine = BuildCmdLine(m_PanelItem, m_MenuItem);
             try
             {
+                ProcessStartInfo startInfo;
                 switch (cmdLine.Length)
                 {
                     case 1:
-                        Process.Start(cmdLine[0]);
+                        startInfo = new ProcessStartInfo(cmdLine[0]);
                         break;
                     case 2:
-                        Process.Start(cmdLine[0], cmdLine[1]);
+                        startInfo = new ProcessStartInfo(cmdLine[0], cmdLine[1]);
                         break;
+                    default:
+                        return;
                 }
+                if (!string.IsNullOrEmpty(m_MenuItem.WorkingDirectory))
+                {
+                    var path = MacroHelper.ExpandPublicProperties(m_MenuItem.WorkingDirectory, m_PanelItem);
+                    // get parent directory if file was selected
+                    if (File.Exists(path))
+                        path = Path.GetDirectoryName(path);
+                    if (!string.IsNullOrEmpty(path) && Directory.Exists(path))
+                        startInfo.WorkingDirectory = path;
+                }
+                Process.Start(startInfo);
             }
             catch (Exception ex)
             {

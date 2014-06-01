@@ -38,6 +38,9 @@
         -->
       </Directory>
       <Directory Id='Addons' Name='Addons'>
+        <Component Id="FileSystem.xml" Guid="CB5ADB8A-1A03-4E76-AE68-E969249ECD63">
+          <File Id='FileSystem.xml' KeyPath='yes' Source='$(var.AddonsDir)FileSystem.xml'/>
+        </Component>
         <Component Id="Network.xml" Guid="75CD74AF-D879-4C07-8450-9A43717E456C">
           <File Id='Network.xml' KeyPath='yes' Source='$(var.AddonsDir)Network.xml'/>
         </Component>

@@ -97,6 +97,15 @@ namespace LanExchange.Plugin.FileSystem.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Size.
+        /// </summary>
+        internal static string Size {
+            get {
+                return ResourceManager.GetString("Size", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Total Size.
         /// </summary>
         internal static string TotalSize {

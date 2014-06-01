@@ -182,6 +182,10 @@ namespace LanExchange.Plugin.WinForms.Impl
                 if (addonMenuItem == null) continue;
 
                 menuItem1.ToolTipText = string.Join(" ", AddonCommandStarter.BuildCmdLine(panelItem, addonMenuItem));
+
+                var item = (AddonMenuItem)menuItem1.Tag;
+                if (item != null)
+                    item.CurrentItem = panelItem;
             }
         }
 
@@ -194,11 +198,11 @@ namespace LanExchange.Plugin.WinForms.Impl
         {
             var menuItem = (sender as ToolStripMenuItem);
             if (menuItem == null) return;
+
             var item = (AddonMenuItem) menuItem.Tag;
-            if (item == null || item.ProgramValue == null || !item.ProgramValue.Exists) return;
-            var pv = App.MainPages.View.ActivePanelView;
-            if (pv == null) return;
-            new AddonCommandStarter(App.MainView.Info.CurrentItem, item).Start();
+            if (item == null || !item.Enabled) return;
+
+            new AddonCommandStarter(item, item.CurrentItem).Start();
         }
 
         public void ProcessKeyDown(object args)
@@ -216,7 +220,7 @@ namespace LanExchange.Plugin.WinForms.Impl
             foreach (var menuItem in item.ContextMenu)
                 if (menuItem.ShortcutPresent && menuItem.ShortcutKeys.Equals(shortcut) && menuItem.Enabled)
                 {
-                    new AddonCommandStarter(panelItem, menuItem).Start();
+                    new AddonCommandStarter(menuItem, panelItem).Start();
                     e.Handled = true;
                     break;
                 }
@@ -229,18 +233,22 @@ namespace LanExchange.Plugin.WinForms.Impl
         {
             var pv = App.MainPages.View.ActivePanelView;
             if (pv == null) return;
+
             var panelItem = pv.Presenter.GetFocusedPanelItem(false, true);
             if (panelItem == null) return;
+
             var typeId = panelItem.GetType().Name;
             if (!PanelItems.ContainsKey(typeId))
                 return;
+
             var item = PanelItems[typeId];
             AddonMenuItem defaultItem = null;
             foreach (var menuItem in item.ContextMenu)
                 if (menuItem.Default && menuItem.Enabled)
                     defaultItem = menuItem;
+
             if (defaultItem != null)
-                new AddonCommandStarter(panelItem, defaultItem).Start();
+                new AddonCommandStarter(defaultItem, panelItem).Start();
         }
     }
 }

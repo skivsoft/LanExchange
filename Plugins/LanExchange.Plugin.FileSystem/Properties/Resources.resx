@@ -116,4 +116,7 @@
   <data name="Computer" xml:space="preserve">
     <value>Computer</value>
   </data>
+  <data name="Size" xml:space="preserve">
+    <value>Size</value>
+  </data>
 </root>
