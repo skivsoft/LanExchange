@@ -3,6 +3,7 @@
 Main
 [Fixed] LAN-1: Wrong current panel item for context menu of info panel
 [Added] LAN-35: Shows cmdline in tooltip of item's context menu
+[Added] LAN-14: Check computer availability (via ping) before run external command
 
 Addons
 [Added] User name in command "Send Email" for current user
@@ -10,7 +11,6 @@ Addons
 [Added] Ping command for computers
 [Added] "Command Prompt" for files and directories
 
-FileSystem
 
 LanExchange 2.0
 ===============

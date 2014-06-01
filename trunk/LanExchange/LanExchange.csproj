@@ -91,7 +91,7 @@
     <Compile Include="..\Common\AnyAssemblyInfo.cs">
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Action\ActionNewItem.cs" />
+    <Compile Include="Actions\ActionNewItem.cs" />
     <Compile Include="Base\Addon.cs" />
     <Compile Include="Base\AddonItemTypeRef.cs" />
     <Compile Include="Base\AddonMenuItem.cs" />
@@ -107,13 +107,13 @@
     <Compile Include="Misc\Impl\DisposableManagerImpl.cs" />
     <Compile Include="Plugin\PluginInternal.cs" />
     <Compile Include="Misc\TranslationResourceManager.cs" />
-    <Compile Include="Action\ActionAbout.cs" />
-    <Compile Include="Action\ActionCloseTab.cs" />
-    <Compile Include="Action\ActionCloseOther.cs" />
-    <Compile Include="Action\ActionReRead.cs" />
+    <Compile Include="Actions\ActionAbout.cs" />
+    <Compile Include="Actions\ActionCloseTab.cs" />
+    <Compile Include="Actions\ActionCloseOther.cs" />
+    <Compile Include="Actions\ActionReRead.cs" />
     <Compile Include="Plugin\Shortcut\ShortcutFactory.cs" />
     <Compile Include="Plugin\Shortcut\ShortcutFiller.cs" />
-    <Compile Include="Action\ActionShortcutKeys.cs" />
+    <Compile Include="Actions\ActionShortcutKeys.cs" />
     <Compile Include="Plugin\Shortcut\ShortcutPanelItem.cs" />
     <Compile Include="Misc\CmdLineProcessor.cs" />
     <Compile Include="Misc\Impl\PanelColumnManagerImpl.cs" />
@@ -236,7 +236,6 @@
     <Compile Include="Plugin\WinForms\Impl\ScreenImpl.cs" />
     <Compile Include="Plugin\WinForms\Utils\TranslationUtils.cs" />
     <Compile Include="Plugin\WinForms\Impl\WaitingServiceImpl.cs" />
-    <Compile Include="Utils\PingUtils.cs" />
     <Compile Include="Misc\Impl\PuntoSwitcherServiceEngRus.cs" />
     <Compile Include="Model\ConfigModel.cs" />
     <Compile Include="Model\AboutModel.cs" />
@@ -248,7 +247,7 @@
     <Compile Include="Misc\Impl\PluginManagerImpl.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils\ReflectionUtils.cs" />
+    <Compile Include="Helpers\ReflectionHelper.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

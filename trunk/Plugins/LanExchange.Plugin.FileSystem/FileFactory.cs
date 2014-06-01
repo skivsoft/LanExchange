@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using LanExchange.Plugin.FileSystem.Properties;
 using LanExchange.SDK;
 
@@ -12,6 +13,11 @@ namespace LanExchange.Plugin.FileSystem
         }
 
         public PanelItemBase CreateDefaultRoot()
+        {
+            return null;
+        }
+
+        public Func<PanelItemBase, bool> GetAvailabilityChecker()
         {
             return null;
         }

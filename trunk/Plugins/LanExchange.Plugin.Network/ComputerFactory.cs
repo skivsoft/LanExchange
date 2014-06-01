@@ -19,6 +19,11 @@ namespace LanExchange.Plugin.Network
             return null;
         }
 
+        public Func<PanelItemBase, bool> GetAvailabilityChecker()
+        {
+            return InternalPing;
+        }
+
         public void RegisterColumns(IPanelColumnManager columnManager)
         {
             columnManager.RegisterColumn<ComputerPanelItem>(new PanelColumnHeader(Resources.NetworkName));
@@ -29,6 +34,16 @@ namespace LanExchange.Plugin.Network
             columnManager.RegisterColumn<ComputerPanelItem>(new PanelColumnHeader(Resources.IPAddress, 80) { Callback = GetIPAddress, Visible = false});
             columnManager.RegisterColumn<ComputerPanelItem>(new PanelColumnHeader(Resources.MACAddress, 110) { Callback = GetMACAddress, Visible = false});
             columnManager.RegisterColumn<ComputerPanelItem>(new PanelColumnHeader(Resources.LoggedUsers, 300) {Callback = GetLoggedUsers, Visible = false} );
+        }
+
+        private static bool InternalPing(PanelItemBase item)
+        {
+            var ipAddr = InternalGetIPAddress(item.Name);
+            using (var ping = new Ping())
+            {
+                var pingReply = ping.Send(ipAddr);
+                return pingReply != null && pingReply.Status == IPStatus.Success;
+            }
         }
 
         [Localizable(false)]

@@ -60,7 +60,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="HorizontalAlignment.cs" />
     <Compile Include="IAction.cs" />
-    <Compile Include="ICheckAvailabilityView.cs" />
+    <Compile Include="ICheckAvailabilityWindow.cs" />
     <Compile Include="IEditPresenter.cs" />
     <Compile Include="IEditView.cs" />
     <Compile Include="IIPHLPAPISerivice.cs" />

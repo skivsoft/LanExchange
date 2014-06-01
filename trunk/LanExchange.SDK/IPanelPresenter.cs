@@ -30,10 +30,9 @@ namespace LanExchange.SDK
         /// <summary>
         /// Gets the focused panel item.
         /// </summary>
-        /// <param name="pingAndAsk">if set to <c>true</c> [b ping and ask].</param>
         /// <param name="canReturnParent">if set to <c>true</c> [b can return parent].</param>
         /// <returns></returns>
-        PanelItemBase GetFocusedPanelItem(bool pingAndAsk, bool canReturnParent);
+        PanelItemBase GetFocusedPanelItem(bool canReturnParent);
 
         void ResetSortOrder();
         void ColumnClick(int index);

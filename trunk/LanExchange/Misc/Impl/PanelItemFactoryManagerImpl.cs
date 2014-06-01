@@ -24,6 +24,14 @@ namespace LanExchange.Misc.Impl
             factory.RegisterColumns(App.Resolve<IPanelColumnManager>());
         }
 
+        public Func<PanelItemBase, bool> GetAvailabilityChecker(Type type)
+        {
+            IPanelItemFactory foundFactory;
+            if (m_Types.TryGetValue(type, out foundFactory))
+                return foundFactory.GetAvailabilityChecker();
+            return null;
+        }
+
         public IDictionary<Type, IPanelItemFactory> Types
         {
             get { return m_Types; }

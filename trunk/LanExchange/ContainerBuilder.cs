@@ -57,6 +57,7 @@ namespace LanExchange
             container.Register<ISingleInstanceService, SingleInstanceService>();
             container.Register<ISysImageListService, SysImageListService>(LifeCycle.Transient);
             // UI: WinForms
+            container.Register<ICheckAvailabilityWindow, CheckAvailabilityForm>(LifeCycle.Transient);
             container.Register<IAboutView, AboutForm>(LifeCycle.Transient);
             container.Register<IFilterView, FilterView>(LifeCycle.Transient);
             container.Register<IPanelView, PanelView>(LifeCycle.Transient);

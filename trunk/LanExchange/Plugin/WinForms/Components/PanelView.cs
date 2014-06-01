@@ -19,20 +19,24 @@ namespace LanExchange.Plugin.WinForms.Components
 
         private readonly IPanelPresenter m_Presenter;
         private readonly IAddonManager m_AddonManager;
+        private readonly IPanelItemFactoryManager m_FactoryManager;
 
         private PanelModelCopyHelper m_CopyHelper;
         private int m_SortColumn;
 
         public event EventHandler FocusedItemChanged;
 
-        public PanelView(IPanelPresenter presenter, IAddonManager addonManager)
+        public PanelView(IPanelPresenter presenter, IAddonManager addonManager, IPanelItemFactoryManager factoryManager)
         {
-            m_AddonManager = addonManager;
-            
             InitializeComponent();
             // init presenters
             m_Presenter = presenter;
             m_Presenter.View = this;
+
+            m_AddonManager = addonManager;
+            m_FactoryManager = factoryManager;
+
+
             // setup items cache
             var cache = new ListViewItemCache(this);
             //LV.CacheVirtualItems += m_Cache.CacheVirtualItems;
@@ -273,7 +277,7 @@ namespace LanExchange.Plugin.WinForms.Components
             {
 
                 var parent = m_Presenter.Objects.CurrentPath.IsEmpty ? null : m_Presenter.Objects.CurrentPath.Peek();
-                if (parent != null && !App.PanelItemTypes.DefaultRoots.Contains(parent))
+                if (parent != null && !m_FactoryManager.DefaultRoots.Contains(parent))
                 {
                     m_Presenter.CommandLevelUp();
                     e.Handled = true;
@@ -576,7 +580,7 @@ namespace LanExchange.Plugin.WinForms.Components
                 if (LV.FocusedItem.Selected)
                     DoFocusedItemChanged();
 
-            var panelItem = m_Presenter.GetFocusedPanelItem(false, true);
+            var panelItem = m_Presenter.GetFocusedPanelItem(true);
             var menuVisible = false;
             if (panelItem != null)
             {

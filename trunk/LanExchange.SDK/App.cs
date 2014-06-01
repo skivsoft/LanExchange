@@ -15,7 +15,6 @@ namespace LanExchange.SDK
         public static IImageManager Images { get; set; }
         public static IPanelFillerManager PanelFillers { get; set; }
         // managers
-        public static IPanelItemFactoryManager PanelItemTypes { get; private set; }
         public static IPanelColumnManager PanelColumns { get; private set; }
         public static IFolderManager FolderManager { get; private set; }
         // presenters
@@ -33,7 +32,6 @@ namespace LanExchange.SDK
             // init translation service first and replace global resource manager
             TR = Resolve<ITranslationService>();
             // managers
-            PanelItemTypes = Resolve<IPanelItemFactoryManager>();
             PanelFillers = Resolve<IPanelFillerManager>();
             PanelColumns = Resolve<IPanelColumnManager>();
             FolderManager = Resolve<IFolderManager>();

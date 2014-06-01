@@ -17,21 +17,27 @@ namespace LanExchange.Plugin.WinForms.Forms
         public PagesView Pages;
 
         private readonly IAddonManager m_AddonManager;
+        private readonly IPanelItemFactoryManager m_FactoryManager;
 
-        public MainForm(IAddonManager addonManager)
+        public MainForm(IAddonManager addonManager, IPanelItemFactoryManager factoryManager)
         {
-            m_AddonManager = addonManager;
-
             InitializeComponent();
+
+            m_AddonManager = addonManager;
+            m_FactoryManager = factoryManager;
+
             if (App.TR.RightToLeft)
             {
                 RightToLeftLayout = true;
                 RightToLeft = RightToLeft.Yes;
             }
+
             Menu = MainMenu;
+
             // show computer name
             lCompName.Text = SystemInformation.ComputerName;
             lCompName.ImageIndex = App.Images.IndexOf(PanelImageNames.COMPUTER);
+
             // show current user
             lUserName.Text = SystemInformation.UserName;
             lUserName.ImageIndex = App.Images.IndexOf(PanelImageNames.USER);
@@ -130,7 +136,7 @@ namespace LanExchange.Plugin.WinForms.Forms
                     var parent = pv == null || pv.Presenter.Objects.CurrentPath.IsEmptyOrRoot
                                      ? null
                                      : pv.Presenter.Objects.CurrentPath.Peek();
-                    if ((parent == null) || App.PanelItemTypes.DefaultRoots.Contains(parent))
+                    if ((parent == null) || m_FactoryManager.DefaultRoots.Contains(parent))
                         Hide();
                     else if (!m_EscDown)
                     {

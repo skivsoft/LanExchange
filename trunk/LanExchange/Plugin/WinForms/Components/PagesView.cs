@@ -11,6 +11,9 @@ namespace LanExchange.Plugin.WinForms.Components
     public partial class PagesView : UserControl, IPagesView, ITranslationable
     {
         private readonly IPagesPresenter m_Presenter;
+        private readonly IPanelItemFactoryManager m_FactoryManager;
+        private readonly IImageManager m_ImageManager;
+
         private int m_PopupSelectedIndex = -1;
 
         /// <summary>
@@ -26,13 +29,16 @@ namespace LanExchange.Plugin.WinForms.Components
         /// </summary>
         private bool m_Clicked;
 
-        public PagesView(IPagesPresenter presenter)
+        public PagesView(IPagesPresenter presenter, IPanelItemFactoryManager factoryManager, IImageManager imageManager)
         {
             InitializeComponent();
             m_Presenter = presenter;
             m_Presenter.View = this;
-            if (App.Images != null)
-                App.Images.SetImagesTo(popPages);
+
+            m_FactoryManager = factoryManager;
+            m_ImageManager = imageManager;
+
+            m_ImageManager.SetImagesTo(popPages);
         }
 
         public void TranslateUI()
@@ -55,9 +61,9 @@ namespace LanExchange.Plugin.WinForms.Components
                 items.RemoveAt(0);
                 menuItem.Dispose();
             }
-            App.PanelItemTypes.CreateDefaultRoots();
+            m_FactoryManager.CreateDefaultRoots();
             var index = 0;
-            foreach (var root in App.PanelItemTypes.DefaultRoots)
+            foreach (var root in m_FactoryManager.DefaultRoots)
             {
                 var menuItem = new ToolStripMenuItem(string.Format(Resources.PagesView_OpenTab, root.Name));
                 menuItem.Tag = root;

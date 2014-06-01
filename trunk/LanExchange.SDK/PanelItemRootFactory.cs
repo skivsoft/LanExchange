@@ -1,3 +1,5 @@
+using System;
+
 namespace LanExchange.SDK
 {
     public class PanelItemRootFactory<TRoot> : IPanelItemFactory where TRoot : PanelItemRootBase, new()
@@ -9,6 +11,11 @@ namespace LanExchange.SDK
         }
 
         public PanelItemBase CreateDefaultRoot()
+        {
+            return null;
+        }
+
+        public Func<PanelItemBase, bool> GetAvailabilityChecker()
         {
             return null;
         }

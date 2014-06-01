@@ -1,4 +1,5 @@
-﻿using LanExchange.Plugin.Network.Properties;
+﻿using System;
+using LanExchange.Plugin.Network.Properties;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
@@ -11,6 +12,11 @@ namespace LanExchange.Plugin.Network
         }
 
         public PanelItemBase CreateDefaultRoot()
+        {
+            return null;
+        }
+
+        public Func<PanelItemBase, bool> GetAvailabilityChecker()
         {
             return null;
         }

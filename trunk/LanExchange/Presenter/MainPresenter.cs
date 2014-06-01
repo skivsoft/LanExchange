@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Threading;
-using LanExchange.Action;
+using LanExchange.Actions;
 using LanExchange.Plugin.Shortcut;
 using LanExchange.SDK;
 
@@ -113,7 +113,7 @@ namespace LanExchange.Presenter
             // get focused item from current PanelView
             var pv = sender as IPanelView;
             if (pv == null) return;
-            var panelItem = pv.Presenter.GetFocusedPanelItem(false, true);
+            var panelItem = pv.Presenter.GetFocusedPanelItem(true);
             // check if parent item more informative than current panel item
             while (panelItem != null)
             {
