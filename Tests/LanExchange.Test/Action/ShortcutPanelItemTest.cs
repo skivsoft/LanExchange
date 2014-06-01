@@ -2,7 +2,7 @@
 using LanExchange.SDK;
 using NUnit.Framework;
 
-namespace LanExchange.Action
+namespace LanExchange.Actions
 {
     [TestFixture]
     internal class ShortcutPanelItemTest

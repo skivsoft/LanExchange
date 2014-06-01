@@ -1,6 +1,6 @@
 ﻿using LanExchange.SDK;
 
-namespace LanExchange.Action
+namespace LanExchange.Actions
 {
     class ActionNewItem : IAction
     {

@@ -5,7 +5,6 @@ using System.Globalization;
 using System.IO;
 using LanExchange.Base;
 using LanExchange.Helpers;
-using LanExchange.Plugin.WinForms.Forms;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.SDK;
 
@@ -15,6 +14,7 @@ namespace LanExchange.Plugin.WinForms.Impl
     {
         private readonly PanelItemBase m_PanelItem;
         private readonly AddonMenuItem m_MenuItem;
+        private readonly Func<PanelItemBase, bool> m_Checker;
 
         public static string[] BuildCmdLine(PanelItemBase panelItem, AddonMenuItem menuItem)
         {
@@ -36,15 +36,26 @@ namespace LanExchange.Plugin.WinForms.Impl
 
             m_PanelItem = panelItem;
             m_MenuItem = menuItem;
+
+            var factoryManager = App.Resolve<IPanelItemFactoryManager>();
+            m_Checker = factoryManager.GetAvailabilityChecker(m_PanelItem.GetType());
         }
 
-        private void CheckAvailability()
+        [Localizable(false)]
+        private void ShowCheckAvailabilityWindow()
         {
-            var form = new CheckAvailabilityForm();
+            var form = App.Resolve<ICheckAvailabilityWindow>();
+            form.Text = string.Format("{0} — {1}", m_PanelItem.Name, m_MenuItem.Text);
             form.CurrentItem = m_PanelItem;
-            form.MenuItem = m_MenuItem;
-            form.PrepareForm();
-            form.Show();
+            form.RunText = m_MenuItem.Text;
+            if (m_MenuItem.ProgramValue != null)
+                form.RunImage = m_MenuItem.ProgramValue.ProgramImage;
+            form.CallerControl = this;
+            form.RunAction = InternalStart;
+            form.AvailabilityChecker = m_Checker;
+
+            form.StartChecking();
+            form.WaitAndShow();
         }
 
         [Localizable(false)]
@@ -84,9 +95,10 @@ namespace LanExchange.Plugin.WinForms.Impl
 
         public void Start()
         {
-            if (!m_MenuItem.AllowUnreachable)
-                CheckAvailability();
-            InternalStart();
+            if (!m_MenuItem.AllowUnreachable && m_Checker != null)
+                ShowCheckAvailabilityWindow();
+            else
+                InternalStart();
         }
     }
 }

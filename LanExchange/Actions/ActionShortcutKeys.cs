@@ -1,7 +1,7 @@
 ﻿using LanExchange.Plugin.Shortcut;
 using LanExchange.SDK;
 
-namespace LanExchange.Action
+namespace LanExchange.Actions
 {
     class ActionShortcutKeys : IAction
     {

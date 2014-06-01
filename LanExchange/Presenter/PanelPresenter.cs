@@ -1,7 +1,6 @@
 ﻿using System;
 using LanExchange.Properties;
 using LanExchange.SDK;
-using LanExchange.Utils;
 
 namespace LanExchange.Presenter
 {
@@ -92,27 +91,9 @@ namespace LanExchange.Presenter
             }
         }
 
-        public PanelItemBase GetFocusedPanelItem(bool pingAndAsk, bool canReturnParent)
+        public PanelItemBase GetFocusedPanelItem(bool canReturnParent)
         {
             var panelItem = View.FocusedItem;
-            if (panelItem != null && pingAndAsk)
-            {
-                var isReachable = PingUtils.FastPing(panelItem.Name);
-                if (panelItem.IsReachable != isReachable)
-                {
-                    panelItem.IsReachable = isReachable;
-                    View.RedrawFocusedItem();
-                }
-                if (!isReachable)
-                {
-                    var messageBox = App.Resolve<IMessageBoxService>();
-                    var result = messageBox.AskQuestionFmt(
-                        Resources.PanelPresenter_Query,
-                        Resources.PanelPresenter_UnreachableMsg, panelItem.Name);
-                    if (!messageBox.IsYes(result))
-                        panelItem = null;
-                }
-            }
             if (canReturnParent && panelItem is PanelItemDoubleDot)
                 panelItem = panelItem.Parent;
             return panelItem;
@@ -120,7 +101,7 @@ namespace LanExchange.Presenter
 
         public bool CommandLevelDown()
         {
-            var panelItem = GetFocusedPanelItem(false, false);
+            var panelItem = GetFocusedPanelItem(false);
             if (panelItem == null || Objects == null) 
                 return false;
             if (panelItem is PanelItemDoubleDot)

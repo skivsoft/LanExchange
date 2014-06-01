@@ -6,8 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Resources;
 using System.Text;
+using LanExchange.Helpers;
 using LanExchange.SDK;
-using LanExchange.Utils;
 
 namespace LanExchange.Misc.Impl
 {

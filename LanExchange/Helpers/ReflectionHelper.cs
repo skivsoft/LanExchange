@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace LanExchange.Utils
+namespace LanExchange.Helpers
 {
     /// <summary>
     /// Several useful reflection utils.

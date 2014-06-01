@@ -51,7 +51,7 @@ namespace LanExchange.Plugin.Shortcut
                     }
         }
 
-        private string SuppressPostfix(string value, string postfix)
+        private static string SuppressPostfix(string value, string postfix)
         {
             if (value.EndsWith(postfix, StringComparison.Ordinal))
                 return value.Remove(value.Length - postfix.Length);

@@ -1,4 +1,5 @@
-﻿using LanExchange.Plugin.FileSystem.Properties;
+﻿using System;
+using LanExchange.Plugin.FileSystem.Properties;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.FileSystem
@@ -13,6 +14,11 @@ namespace LanExchange.Plugin.FileSystem
         public PanelItemBase CreateDefaultRoot()
         {
             return new FileRoot();
+        }
+
+        public Func<PanelItemBase, bool> GetAvailabilityChecker()
+        {
+            return null;
         }
 
         public void RegisterColumns(IPanelColumnManager columnManager)

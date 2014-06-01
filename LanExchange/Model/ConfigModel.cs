@@ -3,8 +3,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
+using LanExchange.Helpers;
 using LanExchange.SDK;
-using LanExchange.Utils;
 
 namespace LanExchange.Model
 {

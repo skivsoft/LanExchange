@@ -1,4 +1,5 @@
-﻿using System.Security.Permissions;
+﻿using System;
+using System.Security.Permissions;
 using LanExchange.Plugin.Network.NetApi;
 using LanExchange.Plugin.Network.Properties;
 using LanExchange.SDK;
@@ -21,6 +22,11 @@ namespace LanExchange.Plugin.Network
         {
             var domain = WorkstationInfo.FromComputer(null).LanGroup;
             return new DomainPanelItem(new DomainRoot(), domain);
+        }
+
+        public Func<PanelItemBase, bool> GetAvailabilityChecker()
+        {
+            return null;
         }
 
         public void RegisterColumns(IPanelColumnManager columnManager)

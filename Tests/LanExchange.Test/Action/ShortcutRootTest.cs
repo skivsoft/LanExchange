@@ -1,7 +1,7 @@
 ﻿using LanExchange.Plugin.Shortcut;
 using NUnit.Framework;
 
-namespace LanExchange.Action
+namespace LanExchange.Actions
 {
     [TestFixture]
     internal class ShortcutRootTest

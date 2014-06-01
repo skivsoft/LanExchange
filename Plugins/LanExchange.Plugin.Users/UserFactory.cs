@@ -1,4 +1,5 @@
-﻿using LanExchange.Plugin.Users.Properties;
+﻿using System;
+using LanExchange.Plugin.Users.Properties;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Users
@@ -13,6 +14,11 @@ namespace LanExchange.Plugin.Users
         public PanelItemBase CreateDefaultRoot()
         {
             return new UserRoot();
+        }
+
+        public Func<PanelItemBase, bool> GetAvailabilityChecker()
+        {
+            return null;
         }
 
         public void RegisterColumns(IPanelColumnManager columnManager)

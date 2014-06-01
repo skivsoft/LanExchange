@@ -121,6 +121,7 @@
             this.MinimizeBox = false;
             this.Name = "CheckAvailabilityForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CheckAvailabilityForm_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.picObject)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

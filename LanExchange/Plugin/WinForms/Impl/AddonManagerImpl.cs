@@ -210,7 +210,7 @@ namespace LanExchange.Plugin.WinForms.Impl
             var pv = App.MainPages.View.ActivePanelView;
             var e = args as KeyEventArgs;
             if (pv == null || e == null) return;
-            var panelItem = pv.Presenter.GetFocusedPanelItem(false, true);
+            var panelItem = pv.Presenter.GetFocusedPanelItem(true);
             if (panelItem == null) return;
             var typeId = panelItem.GetType().Name;
             if (!PanelItems.ContainsKey(typeId))
@@ -234,7 +234,7 @@ namespace LanExchange.Plugin.WinForms.Impl
             var pv = App.MainPages.View.ActivePanelView;
             if (pv == null) return;
 
-            var panelItem = pv.Presenter.GetFocusedPanelItem(false, true);
+            var panelItem = pv.Presenter.GetFocusedPanelItem(true);
             if (panelItem == null) return;
 
             var typeId = panelItem.GetType().Name;

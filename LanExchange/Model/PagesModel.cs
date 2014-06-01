@@ -12,6 +12,8 @@ namespace LanExchange.Model
     {
         private const string DEFAULT1_PANELITEMTYPE = "DomainPanelItem";
         private const string DEFAULT2_PANELITEMTYPE = "DrivePanelItem";
+
+        private readonly IPanelItemFactoryManager m_FactoryManager;
         private readonly List<IPanelModel> m_List;
         private int m_SelectedIndex;
 
@@ -21,6 +23,8 @@ namespace LanExchange.Model
 
         public PagesModel()
         {
+            m_FactoryManager = App.Resolve<IPanelItemFactoryManager>();
+
             m_List = new List<IPanelModel>();
             m_SelectedIndex = -1;
         }
@@ -140,7 +144,7 @@ namespace LanExchange.Model
                     model =
                         (PagesModel)
                         SerializeUtils.DeserializeObjectFromXmlFile(fileFName, typeof (PagesModel),
-                                                                    App.PanelItemTypes.ToArray());
+                                                                    m_FactoryManager.ToArray());
                 }
                 catch(Exception ex)
                 {
@@ -163,9 +167,9 @@ namespace LanExchange.Model
             }
             if (Count == 0)
             {
-                var root = App.PanelItemTypes.CreateDefaultRoot(DEFAULT1_PANELITEMTYPE);
+                var root = m_FactoryManager.CreateDefaultRoot(DEFAULT1_PANELITEMTYPE);
                 if (root == null)
-                    root = App.PanelItemTypes.CreateDefaultRoot(DEFAULT2_PANELITEMTYPE);
+                    root = m_FactoryManager.CreateDefaultRoot(DEFAULT2_PANELITEMTYPE);
                 if (root == null) return;
                 // create default tab
                 var info = App.Resolve<IPanelModel>();
@@ -179,7 +183,7 @@ namespace LanExchange.Model
         {
             try
             {
-                SerializeUtils.SerializeObjectToXmlFile(App.FolderManager.TabsConfigFileName, this, App.PanelItemTypes.ToArray());
+                SerializeUtils.SerializeObjectToXmlFile(App.FolderManager.TabsConfigFileName, this, m_FactoryManager.ToArray());
             }
             catch(Exception ex)
             {

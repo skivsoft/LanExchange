@@ -1,18 +1,27 @@
 ﻿using System;
-using System.ComponentModel;
-using LanExchange.Base;
+using System.Diagnostics;
+using System.Drawing;
+using System.Threading;
+using System.Windows.Forms;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.WinForms.Forms
 {
-    public partial class CheckAvailabilityForm : EscapeForm, ICheckAvailabilityView
+    public partial class CheckAvailabilityForm : EscapeForm, ICheckAvailabilityWindow
     {
-        private PanelItemBase m_CurrentItem;
-        private AddonMenuItem m_MenuItem;
+        private const int DELAY_FOR_SHOW = 250;
 
-        public CheckAvailabilityForm()
+        private readonly IImageManager m_ImageManager;
+        private PanelItemBase m_CurrentItem;
+        private readonly Thread m_Thread;
+        private volatile bool m_DoneAndAvailable;
+
+        public CheckAvailabilityForm(IImageManager imageManager)
         {
             InitializeComponent();
+
+            m_ImageManager = imageManager;
+            m_Thread = new Thread(ThreadProc);
         }
 
         public PanelItemBase CurrentItem
@@ -23,40 +32,99 @@ namespace LanExchange.Plugin.WinForms.Forms
                 m_CurrentItem = value;
                 if (m_CurrentItem != null)
                 {
-                    picObject.Image = App.Images.GetSmallImage(m_CurrentItem.ImageName);
-                    Icon = App.Images.GetSmallIcon(m_CurrentItem.ImageName);
+                    picObject.Image = m_ImageManager.GetSmallImage(m_CurrentItem.ImageName);
+                    Icon = m_ImageManager.GetSmallIcon(m_CurrentItem.ImageName);
                     lObject.Text = m_CurrentItem.Name;
                     toolTip.SetToolTip(lObject, m_CurrentItem.FullName);
                 }
             }
         }
 
-        public AddonMenuItem MenuItem
+        public string RunText
         {
-            get { return m_MenuItem; }
-            set
-            {
-                m_MenuItem = value;
-                bRun.Text = m_MenuItem.Text;
-                if (m_MenuItem.ProgramValue != null)
-                    bRun.Image = m_MenuItem.ProgramValue.ProgramImage;
-            }
+            get { return bRun.Text; }
+            set { bRun.Text = value; }
         }
 
-        [Localizable(false)]
-        public void PrepareForm()
+        public Image RunImage
         {
-            Text = string.Format("{0} — {1}", m_CurrentItem.Name, m_MenuItem.Text);
+            get { return bRun.Image; }
+            set { bRun.Image = value; }
+        }
+
+        public Action RunAction { get; set; }
+
+        public Func<PanelItemBase, bool> AvailabilityChecker { get; set; }
+
+        public void StartChecking()
+        {
+            m_Thread.Start(m_CurrentItem);
+        }
+
+        public void WaitAndShow()
+        {
+            var startTime = DateTime.UtcNow;
+            TimeSpan delta;
+            do
+            {
+                delta = DateTime.UtcNow - startTime;
+            } while (!m_DoneAndAvailable && delta.Milliseconds < DELAY_FOR_SHOW);
+            if (!m_DoneAndAvailable)
+                Show();
+        }
+
+        private void ThreadProc(object arg)
+        {
+            if (AvailabilityChecker == null || arg == null)
+                return;
+
+            var panelItem = arg as PanelItemBase;
+            if (panelItem == null) return;
+
+            bool available = false;
+            while (!available) 
+            {
+                try
+                {
+                    //Thread.Sleep(10000);
+                    available = AvailabilityChecker(panelItem);
+                }
+                catch (Exception e)
+                {
+                    Debug.Print(e.Message);
+                }
+            }
+            m_DoneAndAvailable = true;
+            if (RunAction != null)
+                RunAction();
+            if (Visible)
+                Invoke(new Action(Close));
         }
 
         private void bRun_Click(object sender, EventArgs e)
         {
             Close();
+            if (!m_DoneAndAvailable && RunAction != null)
+                RunAction();
         }
 
         private void bCancel_Click(object sender, EventArgs e)
         {
             Close();
         }
+
+        private void CheckAvailabilityForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            m_Thread.Abort();
+        }
+
+
+        public bool DoneAndAvailable
+        {
+            get { return m_DoneAndAvailable; }
+       }
+
+
+        public object CallerControl { get; set; }
     }
 }
