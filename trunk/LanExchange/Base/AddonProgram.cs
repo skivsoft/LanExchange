@@ -48,6 +48,9 @@ namespace LanExchange.Base
 
         public static string ExpandCmdLine(string fileName)
         {
+            if (string.IsNullOrEmpty(fileName))
+                return string.Empty;
+
             var cmdLine = fileName;
             if (!EnvironmentUtils.Is64BitOperatingSystem())
                 cmdLine = cmdLine.Replace("%ProgramFiles(x86)%", "%ProgramFiles%");

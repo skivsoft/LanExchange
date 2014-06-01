@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
+using LanExchange.SDK;
 
 namespace LanExchange.Base
 {
@@ -32,6 +33,8 @@ namespace LanExchange.Base
         public string ShortcutKeys  { get; set; }
         
         public AddonObjectId ProgramRef { get; set; }
+
+        public string WorkingDirectory { get; set; }
         
         [XmlIgnore]
         public AddonProgram ProgramValue { get; set; }
@@ -41,6 +44,9 @@ namespace LanExchange.Base
         {
             get { return ProgramValue != null && ProgramValue.Exists; }
         }
+
+        [XmlIgnore] 
+        public PanelItemBase CurrentItem { get; set; }
         
         public string ProgramArgs { get; set; }
 

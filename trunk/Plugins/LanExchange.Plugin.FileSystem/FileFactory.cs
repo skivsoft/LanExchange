@@ -19,7 +19,7 @@ namespace LanExchange.Plugin.FileSystem
         public void RegisterColumns(IPanelColumnManager columnManager)
         {
             columnManager.RegisterColumn<FilePanelItem>(new PanelColumnHeader(Resources.Name, 200));
-            columnManager.RegisterColumn<FilePanelItem>(new PanelColumnHeader(Resources.TotalSize){TextAlign = HorizontalAlignment.Right});
+            columnManager.RegisterColumn<FilePanelItem>(new PanelColumnHeader(Resources.Size){TextAlign = HorizontalAlignment.Right});
         }
     }
 }

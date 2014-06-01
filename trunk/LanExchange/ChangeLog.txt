@@ -7,7 +7,10 @@ Main
 Addons
 [Added] User name in command "Send Email" for current user
 [Changed] Addons format simplified
-[Added] Ping command
+[Added] Ping command for computers
+[Added] "Command Prompt" for files and directories
+
+FileSystem
 
 LanExchange 2.0
 ===============
