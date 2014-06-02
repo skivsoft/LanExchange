@@ -6,9 +6,13 @@ msgctxt "Variables"
 msgid "@AUTHOR"
 msgstr "Motelnitskiy Petro"
 
-msgctxt "Network.xml"
+msgctxt "FileSystem.xml"
 msgid "Windows Explorer"
-msgstr "Проводник Windows"
+msgstr "Провідник Windows"
+
+msgctxt "FileSystem.xml"
+msgid "Command Prompt"
+msgstr "Командний рядок"
 
 msgctxt "NetworkRadmin.xml"
 msgid "Radmin® Full Control"
@@ -62,6 +66,10 @@ msgctxt "NetworkSystem.xml"
 msgid "Services"
 msgstr "Сервіси"
 
+msgctxt "NetworkSystem.xml"
+msgid "Ping"
+msgstr "Пінг"
+
 msgctxt "NetworkWMI.xml"
 msgid "WMI Viewer"
 msgstr "WMI Viewer"
@@ -101,6 +109,10 @@ msgstr "Перечитати панель."
 msgctxt "LanExchange.exe"
 msgid "Paste items from clipboard."
 msgstr "Вставити елементи з буфера обміну."
+
+msgctxt "LanExchange.exe"
+msgid "Ctrl+Up"
+msgstr "Ctrl+Up"
 
 msgctxt "LanExchange.exe"
 msgid "Ctrl+Ins"
@@ -143,12 +155,24 @@ msgid "Query"
 msgstr "Запит"
 
 msgctxt "LanExchange.exe"
+msgid "Cancel"
+msgstr "Скасувати"
+
+msgctxt "LanExchange.exe"
+msgid "New item"
+msgstr "Новий елемент"
+
+msgctxt "LanExchange.exe"
 msgid "Copy {0} selected items"
 msgstr "Копіювати вибрані елементи: {0}"
 
 msgctxt "LanExchange.exe"
 msgid "Information"
 msgstr "Інформація"
+
+msgctxt "LanExchange.exe"
+msgid "Any char"
+msgstr "Любий символ"
 
 msgctxt "LanExchange.exe"
 msgid "Version"
@@ -335,16 +359,16 @@ msgid "Close tab"
 msgstr "Закрити вкладку"
 
 msgctxt "LanExchange.exe"
-msgid "Ctrl+Up"
-msgstr "Ctrl+Up"
-
-msgctxt "LanExchange.exe"
 msgid "Copy selected items"
 msgstr "Копіювати вибрані елементи"
 
 msgctxt "LanExchange.exe"
 msgid "LanExchange Webpage"
 msgstr "Домашня сторінка"
+
+msgctxt "LanExchange.exe"
+msgid "Checking the availability of the resource..."
+msgstr "Перевірка доступності ресурсу..."
 
 msgctxt "LanExchange.exe"
 msgid "This help on shortcuts."
@@ -423,10 +447,6 @@ msgid " (build {0})"
 msgstr " (збірка {0})"
 
 msgctxt "LanExchange.exe"
-msgid "Any char"
-msgstr "Любий символ"
-
-msgctxt "LanExchange.exe"
 msgid "Translations:"
 msgstr "Переклади:"
 
@@ -453,10 +473,6 @@ msgstr "OK"
 msgctxt "WMIViewer.exe"
 msgid "User name not specified."
 msgstr "Не вказано ім'я користувача."
-
-msgctxt "WMIViewer.exe"
-msgid "Cancel"
-msgstr "Скасувати"
 
 msgctxt "WMIViewer.exe"
 msgid "Command line parameter \"{0}\" not specified."
@@ -504,7 +520,7 @@ msgstr "Виконання [Ctrl + Enter]"
 
 msgctxt "WMIViewer.exe"
 msgid "Computer name: \\{0}\n\nOld value: «{1}»\nNew value: «{2}»"
-msgstr "Ім'я компьютера: \\{0}\n\nСтаре значення: «{1}» \nНове значення: «{2}»"
+msgstr "Ім'я комп'ютера: \\{0}\n\nСтаре значення: «{1}»\nНове значення: «{2}»"
 
 msgctxt "WMIViewer.exe"
 msgid "Classes: {0}"
@@ -534,6 +550,34 @@ msgctxt "WMIViewer.exe"
 msgid "Connect"
 msgstr "Підключення"
 
+msgctxt "LanExchange.Plugin.FileSystem.dll"
+msgid "Total Size"
+msgstr "Загальний розмір"
+
+msgctxt "LanExchange.Plugin.FileSystem.dll"
+msgid "File System"
+msgstr "Файлова система"
+
+msgctxt "LanExchange.Plugin.FileSystem.dll"
+msgid "Free Space"
+msgstr "Вільно"
+
+msgctxt "LanExchange.Plugin.FileSystem.dll"
+msgid "Computer"
+msgstr "Комп'ютер"
+
+msgctxt "LanExchange.Plugin.FileSystem.dll"
+msgid "Name"
+msgstr "Ім’я"
+
+msgctxt "LanExchange.Plugin.FileSystem.dll"
+msgid "Type"
+msgstr "Тип"
+
+msgctxt "LanExchange.Plugin.FileSystem.dll"
+msgid "Size"
+msgstr "Розмір"
+
 msgctxt "LanExchange.Plugin.Network.dll"
 msgid "Network name"
 msgstr "Мережеве ім'я "
@@ -553,6 +597,10 @@ msgstr "Ім'я ресурса"
 msgctxt "LanExchange.Plugin.Network.dll"
 msgid "OS version"
 msgstr "Версія ОС"
+
+msgctxt "LanExchange.Plugin.Network.dll"
+msgid "Network"
+msgstr "Мережа"
 
 msgctxt "LanExchange.Plugin.Network.dll"
 msgid "OK {0}ms"
@@ -575,8 +623,8 @@ msgid "Computer does not reachable via PING."
 msgstr "Комп'ютер не доступний через PING."
 
 msgctxt "LanExchange.Plugin.Network.dll"
-msgid "Ping"
-msgstr "Пінг"
+msgid "Logged users"
+msgstr "Увійшли користувачів"
 
 msgctxt "LanExchange.Plugin.Users.dll"
 msgid "Work phone"
