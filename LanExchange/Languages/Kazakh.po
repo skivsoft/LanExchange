@@ -6,9 +6,13 @@ msgctxt "Variables"
 msgid "@AUTHOR"
 msgstr "Yeltay Nashyn"
 
-msgctxt "Network.xml"
+msgctxt "FileSystem.xml"
 msgid "Windows Explorer"
 msgstr "Windows жетектеушісі"
+
+msgctxt "FileSystem.xml"
+msgid "Command Prompt"
+msgstr "Пәрмен шақыру"
 
 msgctxt "NetworkRadmin.xml"
 msgid "Radmin® Full Control"
@@ -62,6 +66,10 @@ msgctxt "NetworkSystem.xml"
 msgid "Services"
 msgstr "Сервистер"
 
+msgctxt "NetworkSystem.xml"
+msgid "Ping"
+msgstr "Пинг"
+
 msgctxt "NetworkWMI.xml"
 msgid "WMI Viewer"
 msgstr "WMI Viewer"
@@ -101,6 +109,10 @@ msgstr "Панельді қайта оқу."
 msgctxt "LanExchange.exe"
 msgid "Paste items from clipboard."
 msgstr "Элементтерді айырбастау буферінен көшіру."
+
+msgctxt "LanExchange.exe"
+msgid "Ctrl+Up"
+msgstr "Ctrl+Up"
 
 msgctxt "LanExchange.exe"
 msgid "Ctrl+Ins"
@@ -143,12 +155,24 @@ msgid "Query"
 msgstr "Сұрау"
 
 msgctxt "LanExchange.exe"
+msgid "Cancel"
+msgstr "Болдырмау"
+
+msgctxt "LanExchange.exe"
+msgid "New item"
+msgstr "Жаңа элемент"
+
+msgctxt "LanExchange.exe"
 msgid "Copy {0} selected items"
 msgstr "{0} таңдалған элементтерді көшіру"
 
 msgctxt "LanExchange.exe"
 msgid "Information"
 msgstr "Ақпарат"
+
+msgctxt "LanExchange.exe"
+msgid "Any char"
+msgstr "Кез келген түртінді"
 
 msgctxt "LanExchange.exe"
 msgid "Version"
@@ -335,16 +359,16 @@ msgid "Close tab"
 msgstr "Қыстырманы жабу"
 
 msgctxt "LanExchange.exe"
-msgid "Ctrl+Up"
-msgstr "Ctrl+Up"
-
-msgctxt "LanExchange.exe"
 msgid "Copy selected items"
 msgstr "Таңдалған элементтерді көшіру"
 
 msgctxt "LanExchange.exe"
 msgid "LanExchange Webpage"
 msgstr "LanExchange вебсайты"
+
+msgctxt "LanExchange.exe"
+msgid "Checking the availability of the resource..."
+msgstr "Checking the availability of the resource..."
 
 msgctxt "LanExchange.exe"
 msgid "This help on shortcuts."
@@ -423,10 +447,6 @@ msgid " (build {0})"
 msgstr " (құрастыру {0})"
 
 msgctxt "LanExchange.exe"
-msgid "Any char"
-msgstr "Кез келген түртінді"
-
-msgctxt "LanExchange.exe"
 msgid "Translations:"
 msgstr "Аудармалар:"
 
@@ -453,10 +473,6 @@ msgstr "OK"
 msgctxt "WMIViewer.exe"
 msgid "User name not specified."
 msgstr "Пайдаланушының аты көрсетілмеген."
-
-msgctxt "WMIViewer.exe"
-msgid "Cancel"
-msgstr "Болдырмау"
 
 msgctxt "WMIViewer.exe"
 msgid "Command line parameter \"{0}\" not specified."
@@ -534,6 +550,34 @@ msgctxt "WMIViewer.exe"
 msgid "Connect"
 msgstr "Қосылу"
 
+msgctxt "LanExchange.Plugin.FileSystem.dll"
+msgid "Total Size"
+msgstr "Толық өлшем"
+
+msgctxt "LanExchange.Plugin.FileSystem.dll"
+msgid "File System"
+msgstr "Файлдық жүйе"
+
+msgctxt "LanExchange.Plugin.FileSystem.dll"
+msgid "Free Space"
+msgstr "Бос орын"
+
+msgctxt "LanExchange.Plugin.FileSystem.dll"
+msgid "Computer"
+msgstr "Компьютер"
+
+msgctxt "LanExchange.Plugin.FileSystem.dll"
+msgid "Name"
+msgstr "Атау"
+
+msgctxt "LanExchange.Plugin.FileSystem.dll"
+msgid "Type"
+msgstr "Түр"
+
+msgctxt "LanExchange.Plugin.FileSystem.dll"
+msgid "Size"
+msgstr "Өлшем"
+
 msgctxt "LanExchange.Plugin.Network.dll"
 msgid "Network name"
 msgstr "Торлық аты"
@@ -553,6 +597,10 @@ msgstr "Ресурс аты"
 msgctxt "LanExchange.Plugin.Network.dll"
 msgid "OS version"
 msgstr "Операциялық жүйе"
+
+msgctxt "LanExchange.Plugin.Network.dll"
+msgid "Network"
+msgstr "Желі"
 
 msgctxt "LanExchange.Plugin.Network.dll"
 msgid "OK {0}ms"
@@ -575,8 +623,8 @@ msgid "Computer does not reachable via PING."
 msgstr "Компьютер PING арқылы жетімсіз."
 
 msgctxt "LanExchange.Plugin.Network.dll"
-msgid "Ping"
-msgstr "Пинг"
+msgid "Logged users"
+msgstr "Logged users"
 
 msgctxt "LanExchange.Plugin.Users.dll"
 msgid "Work phone"

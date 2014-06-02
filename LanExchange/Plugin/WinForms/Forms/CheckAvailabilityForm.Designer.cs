@@ -1,4 +1,6 @@
-﻿namespace LanExchange.Plugin.WinForms.Forms
+﻿using LanExchange.Properties;
+
+namespace LanExchange.Plugin.WinForms.Forms
 {
     partial class CheckAvailabilityForm
     {
@@ -61,7 +63,7 @@
             this.bCancel.Name = "bCancel";
             this.bCancel.Size = new System.Drawing.Size(75, 23);
             this.bCancel.TabIndex = 2;
-            this.bCancel.Text = "Cancel";
+            this.bCancel.Text = Resources.Cancel;
             this.bCancel.UseVisualStyleBackColor = true;
             this.bCancel.Click += new System.EventHandler(this.bCancel_Click);
             // 
@@ -73,7 +75,7 @@
             this.lObject.Name = "lObject";
             this.lObject.Size = new System.Drawing.Size(31, 13);
             this.lObject.TabIndex = 6;
-            this.lObject.Text = "A    ";
+            this.lObject.Text = Resources.EmptyText;
             // 
             // progressBar1
             // 
@@ -93,7 +95,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(204, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Checking the availability of the resource...";
+            this.label1.Text = Resources.Checking_the_availability;
             // 
             // picObject
             // 

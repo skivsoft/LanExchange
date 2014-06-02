@@ -9,6 +9,9 @@
       <Component Id="WMIViewer.exe" Guid="A1CAFBF8-0BE2-4B63-82E4-E407DD851B02">
         <File Id='WMIViewer.exe' Source='$(var.SourceDir)WMIViewer.exe'/>
       </Component>
+      <Component Id="ChangeLog.txt" Guid="2EA3B674-C8D3-496E-A574-5312AFB185AB">
+        <File Id='ChangeLog.txt' Source='$(var.SourceDir)ChangeLog.txt'/>
+      </Component>
       <Directory Id="Lib" Name="Lib">
         <Component Id='LanExchange.SDK.dll' Guid="340AE8C6-C70D-49D0-BA91-6F1FFCD422B2">
           <File Id='LanExchange.SDK.dll' KeyPath='yes' Source='$(var.LibDir)LanExchange.SDK.dll'/>
@@ -66,6 +69,9 @@
         </Component>
         <Component Id="Esperanto.po" Guid="DB0B6820-716D-4F5C-B0FE-BE9CEE871ECD">
           <File Id="Esperanto.po" KeyPath="yes" Source="$(var.LangDir)Esperanto.po"/>
+        </Component>
+        <Component Id="Ukrainian.po" Guid="3C4EA109-BA26-4C06-8667-F7378E0C2C05">
+          <File Id="Ukrainian.po" KeyPath="yes" Source="$(var.LangDir)Ukrainian.po"/>
         </Component>
         <!-- Extra tranlations -->
         <!--

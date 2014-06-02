@@ -180,6 +180,24 @@ namespace LanExchange.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checking the availability of the resource....
+        /// </summary>
+        internal static string Checking_the_availability {
+            get {
+                return ResourceManager.GetString("Checking_the_availability", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap clear_hover {
@@ -1047,15 +1065,6 @@ namespace LanExchange.Properties {
         internal static string ShowDetails {
             get {
                 return ResourceManager.GetString("ShowDetails", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Terminal.
-        /// </summary>
-        internal static string Terminal {
-            get {
-                return ResourceManager.GetString("Terminal", resourceCulture);
             }
         }
         

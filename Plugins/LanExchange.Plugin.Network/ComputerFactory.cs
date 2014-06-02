@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using LanExchange.Plugin.Network.Properties;
@@ -113,7 +114,7 @@ namespace LanExchange.Plugin.Network
         public static IComparable GetLoggedUsers(PanelItemBase item)
         {
             var list = NetworkHelper.NetWorkstationUserEnumNames(item.Name);
-            return string.Join(", ", list);
+            return string.Join(", ", list.ToArray());
         }
     }
 }
