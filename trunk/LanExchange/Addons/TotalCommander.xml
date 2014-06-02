@@ -1,0 +1,34 @@
+<LanExchangeAddon xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Programs>
+    <Program Id="TC" FileName="C:\totalcmd\TOTALCMD64.EXE"/>
+  </Programs>
+  <ItemTypes>
+    <ItemTypeRef Id="ComputerPanelItem">
+      <ContextMenu>
+        <MenuItem Text="Total Commander">
+          <ShortcutKeys>Ctrl+Alt+T</ShortcutKeys>
+          <ProgramRef Id="TC"/>
+          <ProgramArgs>$(FullName)</ProgramArgs>
+        </MenuItem>
+      </ContextMenu>
+    </ItemTypeRef>
+    <ItemTypeRef Id="SharePanelItem">
+      <ContextMenu>
+        <MenuItem Text="Total Commander">
+          <ShortcutKeys>Ctrl+Alt+T</ShortcutKeys>
+          <ProgramRef Id="TC"/>
+          <ProgramArgs>$(FullName)</ProgramArgs>
+        </MenuItem>
+      </ContextMenu>
+    </ItemTypeRef>
+    <ItemTypeRef Id="FilePanelItem">
+      <ContextMenu>
+        <MenuItem Text="Total Commander">
+          <ShortcutKeys>Ctrl+Alt+T</ShortcutKeys>
+          <ProgramRef Id="TC"/>
+          <ProgramArgs>$(FullName)</ProgramArgs>
+        </MenuItem>
+      </ContextMenu>
+    </ItemTypeRef>
+  </ItemTypes>
+</LanExchangeAddon>

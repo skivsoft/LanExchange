@@ -1,0 +1,34 @@
+<LanExchangeAddon xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Programs>
+    <Program Id="Far" FileName="C:\Program Files\Far Manager\Far.exe"/>
+  </Programs>
+  <ItemTypes>
+    <ItemTypeRef Id="ComputerPanelItem">
+      <ContextMenu>
+        <MenuItem Text="Far Manager">
+          <ShortcutKeys>Ctrl+Alt+F</ShortcutKeys>
+          <ProgramRef Id="Far"/>
+          <ProgramArgs>$(FullName)</ProgramArgs>
+        </MenuItem>
+      </ContextMenu>
+    </ItemTypeRef>
+    <ItemTypeRef Id="SharePanelItem">
+      <ContextMenu>
+        <MenuItem Text="Far Manager">
+          <ShortcutKeys>Ctrl+Alt+F</ShortcutKeys>
+          <ProgramRef Id="Far"/>
+          <ProgramArgs>$(FullName)</ProgramArgs>
+        </MenuItem>
+      </ContextMenu>
+    </ItemTypeRef>
+    <ItemTypeRef Id="FilePanelItem">
+      <ContextMenu>
+        <MenuItem Text="Far Manager">
+          <ShortcutKeys>Ctrl+Alt+F</ShortcutKeys>
+          <ProgramRef Id="Far"/>
+          <ProgramArgs>$(FullName)</ProgramArgs>
+        </MenuItem>
+      </ContextMenu>
+    </ItemTypeRef>
+  </ItemTypes>
+</LanExchangeAddon>
