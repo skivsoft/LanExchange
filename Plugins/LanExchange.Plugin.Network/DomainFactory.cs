@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Permissions;
 using LanExchange.Plugin.Network.NetApi;
 using LanExchange.Plugin.Network.Properties;
 using LanExchange.SDK;
@@ -17,7 +16,6 @@ namespace LanExchange.Plugin.Network
         /// Starts with curent users's workgroup/domain as root.
         /// </summary>
         /// <returns></returns>
-        [EnvironmentPermissionAttribute(SecurityAction.LinkDemand, Unrestricted = true)]
         public PanelItemBase CreateDefaultRoot()
         {
             var domain = WorkstationInfo.FromComputer(null).LanGroup;
