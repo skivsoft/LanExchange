@@ -1,0 +1,11 @@
+﻿msgid "@LANGUAGE_NAME"
+msgstr "قازاق تئلئ"
+
+msgid "@BASE"
+msgstr "Kazakh.po"
+
+msgid "@TRANSLIT"
+msgstr "KazakhCyrillicToArabic"
+
+msgid "@RTL"
+msgstr "true"

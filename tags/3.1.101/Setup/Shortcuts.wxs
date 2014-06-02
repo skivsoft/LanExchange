@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?include Defines.wxi ?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="LanExchangeShortcut" Guid="1C1513B8-2D9C-4FFD-9D6F-401689C9BA08">
+        <Shortcut Id="LanExchangeShortcut" Name="$(var.Product)" Description="$(var.Description)" Target="[INSTALLDIR]LanExchange.exe" WorkingDirectory="INSTALLDIR"/>
+        <Shortcut Id="UninstallProduct" Name="Uninstall" Target="[System64Folder]msiexec.exe" Arguments="/x [ProductCode]"/>
+        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\Microsoft\$(var.Product)" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+      <Component Id="WMIViewerShortcut" Guid="8ECCCAAF-1982-431A-9B79-D425331D529E">
+        <Shortcut Id="WMIViewerShortcut" Name="WMI Viewer" Description="WMI viewer administration tool." Target="[INSTALLDIR]WMIViewer.exe" WorkingDirectory="INSTALLDIR"/>
+        <RegistryValue Root="HKCU" Key="Software\Microsoft\$(var.Product)" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+</Wix>

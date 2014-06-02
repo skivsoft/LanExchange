@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3F346FA4-1077-4FF7-86DE-9FFB6BD00E08}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LanExchange.Plugin.Network.Test</RootNamespace>
+    <AssemblyName>LanExchange.Plugin.Network.Test</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Moq, Version=4.2.1402.2112, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Builds\PRIVATE\packages\Moq.4.2.1402.2112\lib\net35\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\Builds\VS2012\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ComputerFillerTest.cs" />
+    <Compile Include="ComputerPanelItemFactoryTest.cs" />
+    <Compile Include="ComputerPanelItemTest.cs" />
+    <Compile Include="DomainFillerTest.cs" />
+    <Compile Include="DomainPanelItemFactoryTest.cs" />
+    <Compile Include="DomainPanelItemTest.cs" />
+    <Compile Include="Model\PanelItemListTest.cs" />
+    <Compile Include="NetApi32UtilsTest.cs" />
+    <Compile Include="NetworkTest.cs" />
+    <Compile Include="OSVersionTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerInfoTest.cs" />
+    <Compile Include="ShareFillerTest.cs" />
+    <Compile Include="ShareInfoTest.cs" />
+    <Compile Include="SharePanelItemFactory.cs" />
+    <Compile Include="SharePanelItemTest.cs" />
+    <Compile Include="Utils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\LanExchange.SDK\LanExchange.SDK.csproj">
+      <Project>{4ae4e72c-5d7d-42a9-b7fb-577eec0a149d}</Project>
+      <Name>LanExchange.SDK</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\LanExchange\LanExchange.csproj">
+      <Project>{cc938630-e3fc-426e-a8a7-06eb22abc703}</Project>
+      <Name>LanExchange</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Plugins\LanExchange.Plugin.Network\LanExchange.Plugin.Network.csproj">
+      <Project>{18971728-b208-45d9-b4bb-4bb6020963e7}</Project>
+      <Name>LanExchange.Plugin.Network</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

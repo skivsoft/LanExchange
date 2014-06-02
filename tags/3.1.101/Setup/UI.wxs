@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?include defines.wxi ?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <!-- Launch program checkbox after installation -->
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch $(var.Product)" />
+    <Property Id="WixShellExecTarget" Value="[#LanExchange.exe]" />
+    <CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
+
+    <UI Id="WixUI_Mod">
+      <UIRef Id="WixUI_Mondo"/>
+      <Publish Dialog="ExitDialog" Control="Finish" Event="DoAction" Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>
+    </UI>
+  </Fragment>
+</Wix>
