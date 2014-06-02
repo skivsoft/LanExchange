@@ -1,0 +1,628 @@
+msgctxt "Variables"
+msgid "@LANGUAGE_NAME"
+msgstr "Українська"
+
+msgctxt "Variables"
+msgid "@AUTHOR"
+msgstr "Motelnitskiy Petro"
+
+msgctxt "Network.xml"
+msgid "Windows Explorer"
+msgstr "Проводник Windows"
+
+msgctxt "NetworkRadmin.xml"
+msgid "Radmin® Full Control"
+msgstr "Radmin® Управління"
+
+msgctxt "NetworkRadmin.xml"
+msgid "Radmin® View"
+msgstr "Radmin® Перегляд"
+
+msgctxt "NetworkRadmin.xml"
+msgid "Radmin® Telnet"
+msgstr "Radmin® Telnet"
+
+msgctxt "NetworkRadmin.xml"
+msgid "Radmin® File transfer"
+msgstr "Radmin® Передача файлів"
+
+msgctxt "NetworkRadmin.xml"
+msgid "Radmin® Shutdown"
+msgstr "Radmin® Вимкнути"
+
+msgctxt "NetworkRadmin.xml"
+msgid "Radmin® Chat"
+msgstr "Radmin® Текстовий чат"
+
+msgctxt "NetworkRadmin.xml"
+msgid "Radmin® Voice Chat"
+msgstr "Radmin® Голосовий чат"
+
+msgctxt "NetworkRadmin.xml"
+msgid "Radmin® Send Message"
+msgstr "Radmin® Текстове повідомлення"
+
+msgctxt "NetworkSystem.xml"
+msgid "Remote Desktop Connection"
+msgstr "Підключення до віддаленого робочого столу"
+
+msgctxt "NetworkSystem.xml"
+msgid "Computer Management"
+msgstr "Управління комп'ютером"
+
+msgctxt "NetworkSystem.xml"
+msgid "Shared Folders"
+msgstr "Загальні папки"
+
+msgctxt "NetworkSystem.xml"
+msgid "Local Users and Groups"
+msgstr "Локальні користувачі та групи"
+
+msgctxt "NetworkSystem.xml"
+msgid "Services"
+msgstr "Сервіси"
+
+msgctxt "NetworkWMI.xml"
+msgid "WMI Viewer"
+msgstr "WMI Viewer"
+
+msgctxt "NetworkWMI.xml"
+msgid "WMI: Edit Description"
+msgstr "WMI: Змінити опис"
+
+msgctxt "NetworkWMI.xml"
+msgid "WMI: Reboot"
+msgstr "WMI: Перезавантаження"
+
+msgctxt "NetworkWMI.xml"
+msgid "WMI: Shutdown"
+msgstr "WMI: Вивкнути"
+
+msgctxt "Users.xml"
+msgid "Send Email"
+msgstr "Відправити повідомленя"
+
+msgctxt "LanExchange.exe"
+msgid "Backspace"
+msgstr "Backspace"
+
+msgctxt "LanExchange.exe"
+msgid "About"
+msgstr "Про програму"
+
+msgctxt "LanExchange.exe"
+msgid "Close current tab."
+msgstr "Закрити активну вкладку."
+
+msgctxt "LanExchange.exe"
+msgid "Re-read panel."
+msgstr "Перечитати панель."
+
+msgctxt "LanExchange.exe"
+msgid "Paste items from clipboard."
+msgstr "Вставити елементи з буфера обміну."
+
+msgctxt "LanExchange.exe"
+msgid "Ctrl+Ins"
+msgstr "Ctrl+Ins"
+
+msgctxt "LanExchange.exe"
+msgid "Copy selected item(s) to clipboard."
+msgstr "Копіювати вибрані елементи в буфер обміну."
+
+msgctxt "LanExchange.exe"
+msgid "Select all items in panel."
+msgstr "Вибрати всі елементи в панелі."
+
+msgctxt "LanExchange.exe"
+msgid "Copyright"
+msgstr "Авторское право"
+
+msgctxt "LanExchange.exe"
+msgid "Send Feedback..."
+msgstr "Надіслати відгук ..."
+
+msgctxt "LanExchange.exe"
+msgid "Action"
+msgstr "Дія"
+
+msgctxt "LanExchange.exe"
+msgid "    "
+msgstr "    "
+
+msgctxt "LanExchange.exe"
+msgid "Filter panel items by all columns."
+msgstr "Фільтрувати елементи панелі по всіх колонках."
+
+msgctxt "LanExchange.exe"
+msgid "Unable to execute command line:\n{0}"
+msgstr "Не вдалося виконати наступну команду:\n{0}"
+
+msgctxt "LanExchange.exe"
+msgid "Query"
+msgstr "Запит"
+
+msgctxt "LanExchange.exe"
+msgid "Copy {0} selected items"
+msgstr "Копіювати вибрані елементи: {0}"
+
+msgctxt "LanExchange.exe"
+msgid "Information"
+msgstr "Інформація"
+
+msgctxt "LanExchange.exe"
+msgid "Version"
+msgstr "Версія"
+
+msgctxt "LanExchange.exe"
+msgid "F10"
+msgstr "F10"
+
+msgctxt "LanExchange.exe"
+msgid "Esc"
+msgstr "Esc"
+
+msgctxt "LanExchange.exe"
+msgid "Del"
+msgstr "Del"
+
+msgctxt "LanExchange.exe"
+msgid "Grid lines"
+msgstr "Лінії сітки"
+
+msgctxt "LanExchange.exe"
+msgid "Hide Details"
+msgstr "Приховати"
+
+msgctxt "LanExchange.exe"
+msgid "Close other tabs"
+msgstr "Закрити інші вкладки"
+
+msgctxt "LanExchange.exe"
+msgid "Paste"
+msgstr "Вставити"
+
+msgctxt "LanExchange.exe"
+msgid "Exit"
+msgstr "Вихід"
+
+msgctxt "LanExchange.exe"
+msgid "List"
+msgstr "Список"
+
+msgctxt "LanExchange.exe"
+msgid "&Language"
+msgstr "&Мова"
+
+msgctxt "LanExchange.exe"
+msgid "Context"
+msgstr "Контекст"
+
+msgctxt "LanExchange.exe"
+msgid "Copy selected item"
+msgstr "Копіювати вибраний елемент"
+
+msgctxt "LanExchange.exe"
+msgid "Plugins:"
+msgstr "Плагіни:"
+
+msgctxt "LanExchange.exe"
+msgid "Legend"
+msgstr "Легенда"
+
+msgctxt "LanExchange.exe"
+msgid "Copy «{0}»"
+msgstr "Копіювати «{0}»"
+
+msgctxt "LanExchange.exe"
+msgid "Error"
+msgstr "Помилка"
+
+msgctxt "LanExchange.exe"
+msgid "{0} {1} Feedback"
+msgstr "Відгук о {0} {1}"
+
+msgctxt "LanExchange.exe"
+msgid "Ctrl+R"
+msgstr "Ctrl+R"
+
+msgctxt "LanExchange.exe"
+msgid "Ctrl+W"
+msgstr "Ctrl+W"
+
+msgctxt "LanExchange.exe"
+msgid "Ctrl+V"
+msgstr "Ctrl+V"
+
+msgctxt "LanExchange.exe"
+msgid "Ctrl+C"
+msgstr "Ctrl+C"
+
+msgctxt "LanExchange.exe"
+msgid "Ctrl+A"
+msgstr "Ctrl+A"
+
+msgctxt "LanExchange.exe"
+msgid "Quit from LanExchange program."
+msgstr "Вихід з програми LanExchange."
+
+msgctxt "LanExchange.exe"
+msgid "Clear filter OR go level up OR hide main window."
+msgstr "Очистити фільтр АБО повернутися на рівень вище АБО приховати головне вікно."
+
+msgctxt "LanExchange.exe"
+msgid "Delete selected item(s) which was created by user."
+msgstr "Видалення вибраних елементів створених користувачем."
+
+msgctxt "LanExchange.exe"
+msgid "Webpage"
+msgstr "Веб-сайт"
+
+msgctxt "LanExchange.exe"
+msgid "BugTracker Webpage"
+msgstr "Сторінка багтрекера"
+
+msgctxt "LanExchange.exe"
+msgid "Released under the MIT license."
+msgstr "Продукт випущений під ліцензією MIT."
+
+msgctxt "LanExchange.exe"
+msgid "About «{0}»"
+msgstr "Про програму «{0}»"
+
+msgctxt "LanExchange.exe"
+msgid "Copy path to «{0}»"
+msgstr "Копіювати шлях до «{0}»"
+
+msgctxt "LanExchange.exe"
+msgid "Execution error"
+msgstr "Помилка виконання"
+
+msgctxt "LanExchange.exe"
+msgid "F1"
+msgstr "F1"
+
+msgctxt "LanExchange.exe"
+msgid "F9"
+msgstr "F9"
+
+msgctxt "LanExchange.exe"
+msgid "Small icons"
+msgstr "Дрібні значки"
+
+msgctxt "LanExchange.exe"
+msgid "Close"
+msgstr "Закрити"
+
+msgctxt "LanExchange.exe"
+msgid "Details"
+msgstr "Таблица"
+
+msgctxt "LanExchange.exe"
+msgid "Open tab «{0}»"
+msgstr "Відкрити вкладку «{0}»"
+
+msgctxt "LanExchange.exe"
+msgid "Shortcut Keys"
+msgstr "Гарячі клавіши"
+
+msgctxt "LanExchange.exe"
+msgid "Go level up in panel."
+msgstr "Перейти на рівень вище в панелі."
+
+msgctxt "LanExchange.exe"
+msgid "Delete"
+msgstr "Видалити"
+
+msgctxt "LanExchange.exe"
+msgid "Show/hide main window."
+msgstr "Показати / приховати головне вікно."
+
+msgctxt "LanExchange.exe"
+msgid "Large icons"
+msgstr "Звичайні значки"
+
+msgctxt "LanExchange.exe"
+msgid "&View"
+msgstr "&Вид"
+
+msgctxt "LanExchange.exe"
+msgid "Copy full path of selected item(s) to clipboard."
+msgstr "Копіювати повні шляхи для вибраних елементів."
+
+msgctxt "LanExchange.exe"
+msgid "Close tab"
+msgstr "Закрити вкладку"
+
+msgctxt "LanExchange.exe"
+msgid "Ctrl+Up"
+msgstr "Ctrl+Up"
+
+msgctxt "LanExchange.exe"
+msgid "Copy selected items"
+msgstr "Копіювати вибрані елементи"
+
+msgctxt "LanExchange.exe"
+msgid "LanExchange Webpage"
+msgstr "Домашня сторінка"
+
+msgctxt "LanExchange.exe"
+msgid "This help on shortcuts."
+msgstr "Ця довідка по гарячих клавішах."
+
+msgctxt "LanExchange.exe"
+msgid "Open"
+msgstr "Відкрити"
+
+msgctxt "LanExchange.exe"
+msgid "Ctrl+Win+X"
+msgstr "Ctrl+Win+X"
+
+msgctxt "LanExchange.exe"
+msgid "Decrease height of info panel or hide it."
+msgstr "Зменшити висоту інфо-панелі або приховати інфо-панель."
+
+msgctxt "LanExchange.exe"
+msgid "Ctrl+Down"
+msgstr "Ctrl+Down"
+
+msgctxt "LanExchange.exe"
+msgid "Resource «{0}» not reachable.\nContinue anyway?"
+msgstr "Ресурс «{0}» не доступний.\nПродовжити все одно?"
+
+msgctxt "LanExchange.exe"
+msgid "&Help"
+msgstr "&Допомога"
+
+msgctxt "LanExchange.exe"
+msgid "Ctrl+Alt+Ins"
+msgstr "Ctrl+Alt+Ins"
+
+msgctxt "LanExchange.exe"
+msgid "Hide main window."
+msgstr "Приховати головне вікно."
+
+msgctxt "LanExchange.exe"
+msgid "Increase height of info panel or show it."
+msgstr "Збільшити висоту інфо-панелі або показати інфо-панель."
+
+msgctxt "LanExchange.exe"
+msgid "Show Details"
+msgstr "Детальніше"
+
+msgctxt "LanExchange.exe"
+msgid "&Panel"
+msgstr "&Панель"
+
+msgctxt "LanExchange.exe"
+msgid "Info panel"
+msgstr "Інфо-панель"
+
+msgctxt "LanExchange.exe"
+msgid "Copy"
+msgstr "Копіювати"
+
+msgctxt "LanExchange.exe"
+msgid "Copy column on which the ordered item(s) to clipboard."
+msgstr "Копіювання стовпця за яким впорядковані елементи в буфер обміну."
+
+msgctxt "LanExchange.exe"
+msgid "Esc (long press)"
+msgstr "Esc (довге натискання)"
+
+msgctxt "LanExchange.exe"
+msgid "Items: {0} of {1}"
+msgstr "Елементів: {0} из {1}"
+
+msgctxt "LanExchange.exe"
+msgid "Items: {0}"
+msgstr "Елементів: {0}"
+
+msgctxt "LanExchange.exe"
+msgid " (build {0})"
+msgstr " (збірка {0})"
+
+msgctxt "LanExchange.exe"
+msgid "Any char"
+msgstr "Любий символ"
+
+msgctxt "LanExchange.exe"
+msgid "Translations:"
+msgstr "Переклади:"
+
+msgctxt "LanExchange.exe"
+msgid "Re-read"
+msgstr "Перечитати"
+
+msgctxt "LanExchange.exe"
+msgid "Localization Webpage"
+msgstr "Сторінка локалізації"
+
+msgctxt "LanExchange.exe"
+msgid "License"
+msgstr "Ліцензія"
+
+msgctxt "WMIViewer.exe"
+msgid "Unable to connect to computer \\{0}.\n{1}"
+msgstr "Не вдається підключитися до комп'ютера \\{0}.\n{1}"
+
+msgctxt "WMIViewer.exe"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "WMIViewer.exe"
+msgid "User name not specified."
+msgstr "Не вказано ім'я користувача."
+
+msgctxt "WMIViewer.exe"
+msgid "Cancel"
+msgstr "Скасувати"
+
+msgctxt "WMIViewer.exe"
+msgid "Command line parameter \"{0}\" not specified."
+msgstr "Параметр командного рядка «{0}» не заданий."
+
+msgctxt "WMIViewer.exe"
+msgid "[0] Success"
+msgstr "Успіх [0]"
+
+msgctxt "WMIViewer.exe"
+msgid "\n\nProperty {0} successfully changed."
+msgstr "\n\nProperty {0} успішно змінений."
+
+msgctxt "WMIViewer.exe"
+msgid "WMI connection to \\{0}"
+msgstr "WMI-підключення до \\{0}"
+
+msgctxt "WMIViewer.exe"
+msgid "WMI connection error"
+msgstr "Помилка підключення WMI"
+
+msgctxt "WMIViewer.exe"
+msgid "Password:"
+msgstr "Пароль:"
+
+msgctxt "WMIViewer.exe"
+msgid "Cancel\n[Esc]"
+msgstr "Скасувати\n [Esc]"
+
+msgctxt "WMIViewer.exe"
+msgid "Editing property {0}"
+msgstr "редагування властивості {0}"
+
+msgctxt "WMIViewer.exe"
+msgid "Unable to connect under account {0}.\nEnter user name and password to retry the connection."
+msgstr "Неможливо підключитися під обліковим записом {0}. \nВведіте ім'я користувача та пароль, щоб повторити спробу підключення."
+
+msgctxt "WMIViewer.exe"
+msgid "Methods: {0}"
+msgstr "Методів: {0}"
+
+msgctxt "WMIViewer.exe"
+msgid "Execute [Ctrl+Enter]"
+msgstr "Виконання [Ctrl + Enter]"
+
+msgctxt "WMIViewer.exe"
+msgid "Computer name: \\{0}\n\nOld value: «{1}»\nNew value: «{2}»"
+msgstr "Ім'я компьютера: \\{0}\n\nСтаре значення: «{1}» \nНове значення: «{2}»"
+
+msgctxt "WMIViewer.exe"
+msgid "Classes: {0}"
+msgstr "Класів: {0}"
+
+msgctxt "WMIViewer.exe"
+msgid "User:"
+msgstr "Користувач:"
+
+msgctxt "WMIViewer.exe"
+msgid "Properties: {0}"
+msgstr "Властивостей: {0}"
+
+msgctxt "WMIViewer.exe"
+msgid "WMI property \"{0}\" not found."
+msgstr "WMI-Властивість «{0}» не знайдено."
+
+msgctxt "WMIViewer.exe"
+msgid "Executing method: {0}\\{1}.{2}"
+msgstr "Виконання методу: {0} \\ {1}.{2}"
+
+msgctxt "WMIViewer.exe"
+msgid "Unable to connect to computer \\{0}.\nPossible connection has been blocked by firewall."
+msgstr "Не вдається підключитися до комп'ютера\\{0}.\nМожливо підключення було заблоковано брандмауером."
+
+msgctxt "WMIViewer.exe"
+msgid "Connect"
+msgstr "Підключення"
+
+msgctxt "LanExchange.Plugin.Network.dll"
+msgid "Network name"
+msgstr "Мережеве ім'я "
+
+msgctxt "LanExchange.Plugin.Network.dll"
+msgid "Computer was found in local area network."
+msgstr "Комп'ютер був знайдений в локальній мережі."
+
+msgctxt "LanExchange.Plugin.Network.dll"
+msgid "MAC address"
+msgstr "MAC-адреса"
+
+msgctxt "LanExchange.Plugin.Network.dll"
+msgid "Resource name"
+msgstr "Ім'я ресурса"
+
+msgctxt "LanExchange.Plugin.Network.dll"
+msgid "OS version"
+msgstr "Версія ОС"
+
+msgctxt "LanExchange.Plugin.Network.dll"
+msgid "OK {0}ms"
+msgstr "OK {0} мс"
+
+msgctxt "LanExchange.Plugin.Network.dll"
+msgid "IP address"
+msgstr "IP-адрес"
+
+msgctxt "LanExchange.Plugin.Network.dll"
+msgid "Description"
+msgstr "Опис"
+
+msgctxt "LanExchange.Plugin.Network.dll"
+msgid "Domain name"
+msgstr "Ім'я домена"
+
+msgctxt "LanExchange.Plugin.Network.dll"
+msgid "Computer does not reachable via PING."
+msgstr "Комп'ютер не доступний через PING."
+
+msgctxt "LanExchange.Plugin.Network.dll"
+msgid "Ping"
+msgstr "Пінг"
+
+msgctxt "LanExchange.Plugin.Users.dll"
+msgid "Work phone"
+msgstr "Робочий телефон"
+
+msgctxt "LanExchange.Plugin.Users.dll"
+msgid "Office"
+msgstr "Кабінет"
+
+msgctxt "LanExchange.Plugin.Users.dll"
+msgid "Pre-Win2000 Logon"
+msgstr "Ім'я користувача (до Win2000)"
+
+msgctxt "LanExchange.Plugin.Users.dll"
+msgid "Company"
+msgstr "Компанія"
+
+msgctxt "LanExchange.Plugin.Users.dll"
+msgid "Nickname"
+msgstr "Псевдонім"
+
+msgctxt "LanExchange.Plugin.Users.dll"
+msgid "User account have been disabled."
+msgstr "Обліковий запис користувача був відключений."
+
+msgctxt "LanExchange.Plugin.Users.dll"
+msgid "Email"
+msgstr "Електрона пошта"
+
+msgctxt "LanExchange.Plugin.Users.dll"
+msgid "Title"
+msgstr "Посада"
+
+msgctxt "LanExchange.Plugin.Users.dll"
+msgid "User name"
+msgstr "Ім'я користувача"
+
+msgctxt "LanExchange.Plugin.Users.dll"
+msgid "Organization unit"
+msgstr "Прганізаційна одиниця"
+
+msgctxt "LanExchange.Plugin.Users.dll"
+msgid "Department"
+msgstr "підрозділ"
+
+msgctxt "LanExchange.Plugin.Users.dll"
+msgid "User account found in Active Directory."
+msgstr "Обліковий запис користувача в службі каталогів  Active Directory."
+
