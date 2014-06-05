@@ -62,7 +62,7 @@ namespace LanExchange.Model
             get
             {
                 var parent = m_CurrentPath.IsEmpty ? null : m_CurrentPath.Peek();
-                return parent == null ? string.Empty : parent.Name;
+                return parent == null ? string.Empty : parent[0].ToString();
             }
         }
 

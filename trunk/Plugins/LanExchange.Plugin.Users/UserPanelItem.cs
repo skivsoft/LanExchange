@@ -25,9 +25,13 @@ namespace LanExchange.Plugin.Users
         {
             get
             {
-                return "CN=" + base.FullName;
+                //return "CN=" + base.FullName;
+                return AdsPath;
             }
         }
+
+        //[XmlAttribute]
+        public string AdsPath { get; set; }
 
         [XmlAttribute]
         public string Title { get; set; }

@@ -25,6 +25,9 @@ namespace LanExchange.Plugin.Users
             {
                 factoryManager.RegisterFactory<UserRoot>(new PanelItemRootFactory<UserRoot>());
                 factoryManager.RegisterFactory<UserPanelItem>(new UserFactory());
+
+                factoryManager.RegisterFactory<WorkspaceRoot>(new PanelItemRootFactory<WorkspaceRoot>());
+                factoryManager.RegisterFactory<WorkspacePanelItem>(new WorkspaceFactory());
             }
 
             // Register new panel fillers
@@ -32,6 +35,7 @@ namespace LanExchange.Plugin.Users
             if (fillerManager != null)
             {
                 fillerManager.RegisterFiller<UserPanelItem>(new UserFiller());
+                fillerManager.RegisterFiller<WorkspacePanelItem>(new WorkspaceFiller());
             }
         }
     }

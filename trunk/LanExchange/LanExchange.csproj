@@ -52,7 +52,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisRuleSet>GlobalizationRules.ruleset</CodeAnalysisRuleSet>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -283,12 +283,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Addons\TotalCommander.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Addons\FAR.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="Addons\Commanders.xml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Addons\FileSystem.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

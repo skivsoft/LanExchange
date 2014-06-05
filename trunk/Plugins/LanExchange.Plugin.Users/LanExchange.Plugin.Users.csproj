@@ -47,6 +47,7 @@
     <Compile Include="..\..\Common\AnyAssemblyInfo.cs">
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Constants.cs" />
     <Compile Include="LdapUtils.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -62,6 +63,10 @@
     <Compile Include="UserPanelItem.cs" />
     <Compile Include="PluginUsers.cs" />
     <Compile Include="UserRoot.cs" />
+    <Compile Include="WorkspaceFactory.cs" />
+    <Compile Include="WorkspaceFiller.cs" />
+    <Compile Include="WorkspacePanelItem.cs" />
+    <Compile Include="WorkspaceRoot.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\LanExchange.SDK\LanExchange.SDK.csproj">
