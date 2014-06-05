@@ -3,7 +3,7 @@
   <ItemTypes>
     <ItemTypeRef Id="UserPanelItem">
       <ContextMenu>
-        <MenuItem Text="Send Email" Default="true">
+        <MenuItem Text="Send Email">
           <ShortcutKeys>Ctrl+Enter</ShortcutKeys>
           <ProgramRef Id="mailto:" />
           <ProgramArgs>$(Name) &lt;$(Email)&gt;</ProgramArgs>

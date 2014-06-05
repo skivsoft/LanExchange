@@ -1,5 +1,10 @@
-﻿LanExchange 3.1
-===============
+﻿LanExchange 3.1.102
+===================
+Main
+[Changed] LAN-39: Enter key after filtering should activate default action on focused item
+
+LanExchange 3.1.101
+===================
 Main
 [Fixed] LAN-1: Wrong current panel item for context menu of info panel
 [Added] LAN-35: Shows cmdline in tooltip of item's context menu

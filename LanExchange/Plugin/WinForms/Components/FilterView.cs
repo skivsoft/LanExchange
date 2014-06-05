@@ -41,6 +41,7 @@ namespace LanExchange.Plugin.WinForms.Components
                 LinkedControl.Focus();
                 if (!e.Control && e.KeyCode == Keys.Up) SendKeys.SendWait("{UP}");
                 if (e.KeyCode == Keys.Down) SendKeys.SendWait("{DOWN}");
+                if (e.KeyCode == Keys.Enter) SendKeys.SendWait("{ENTER}");
                 e.Handled = true;
             }
         }

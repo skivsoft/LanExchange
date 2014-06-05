@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.DirectoryServices;
 
 namespace LanExchange.Plugin.Users
@@ -31,7 +32,7 @@ namespace LanExchange.Plugin.Users
         }
 
         /// <summary>
-        /// Split distinguished name (DN) to array of string.
+        /// Split distinguished name (AdsPath) to array of string.
         /// This function skips chars after '\'.
         /// </summary>
         /// <param name="path"></param>
@@ -90,6 +91,38 @@ namespace LanExchange.Plugin.Users
         {
             var arr = DNSplit(path);
             var result = arr[0].Split('=')[1];
+            return result;
+        }
+
+        internal static string SearchResult_GetString(SearchResult sr, string index)
+        {
+            string result = string.Empty;
+            try
+            {
+                if (sr.Properties.Contains(index))
+                    result = sr.Properties[index][0].ToString();
+            }
+            catch (Exception ex)
+            {
+                Debug.Print(ex.Message);
+            }
+            return result;
+        }
+
+        internal static string UnescapeName(string name)
+        {
+            string result = string.Empty;
+            bool visible = true;
+            foreach (var ch in name)
+            {
+                if (ch == '\\')
+                {
+                    visible = false;
+                    continue;
+                }
+                result += ch;
+                if (!visible) visible = true;
+            }
             return result;
         }
     }

@@ -156,4 +156,10 @@
   <data name="Nickname" xml:space="preserve">
     <value>Nickname</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Workspace" xml:space="preserve">
+    <value>Workspace</value>
+  </data>
 </root>

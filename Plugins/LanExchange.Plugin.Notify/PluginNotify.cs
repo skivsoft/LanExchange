@@ -6,7 +6,7 @@ namespace LanExchange.Plugin.Notify
 {
     public class PluginNotify : IPlugin
     {
-        private const int LANEX_PORT = 3333;
+        private const int LANEX_PORT = 3003;
         private const string MSG_LANEX_NOTIFY = "LANEX:NOTIFY";
 
         private IServiceProvider m_Provider;

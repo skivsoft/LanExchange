@@ -115,6 +115,15 @@ namespace LanExchange.Plugin.Users.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nickname.
         /// </summary>
         internal static string Nickname {
@@ -174,6 +183,15 @@ namespace LanExchange.Plugin.Users.Properties {
         internal static string WorkPhone {
             get {
                 return ResourceManager.GetString("WorkPhone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Workspace.
+        /// </summary>
+        internal static string Workspace {
+            get {
+                return ResourceManager.GetString("Workspace", resourceCulture);
             }
         }
     }
