@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using LanExchange.Interfaces;
+using LanExchange.Ioc;
 using LanExchange.Misc;
 using LanExchange.Plugin;
 using LanExchange.Properties;

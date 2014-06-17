@@ -2,7 +2,7 @@
 
 namespace LanExchange.SDK
 {
-    public interface IPagesModel : IModel, IDisposable
+    public interface IPagesModel : IDisposable
     {
         event EventHandler<PanelModelEventArgs> AfterAppendTab;
         event EventHandler<PanelIndexEventArgs> AfterRemove;

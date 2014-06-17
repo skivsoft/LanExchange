@@ -97,7 +97,17 @@
     <Compile Include="Base\AddonMenuItem.cs" />
     <Compile Include="Base\AddonObjectId.cs" />
     <Compile Include="Base\AddonProgram.cs" />
+    <Compile Include="Helpers\EnvironmentHelper.cs" />
+    <Compile Include="Helpers\PanelModelCopyHelper.cs" />
+    <Compile Include="App.cs" />
+    <Compile Include="Interfaces\DataReadyArgs.cs" />
     <Compile Include="Interfaces\IAddonManager.cs" />
+    <Compile Include="Interfaces\ILazyThreadPool.cs" />
+    <Compile Include="Ioc\IIocContainer.cs" />
+    <Compile Include="Ioc\LifeCycle.cs" />
+    <Compile Include="Ioc\RegisteredObject.cs" />
+    <Compile Include="Ioc\SimpleIocContainer.cs" />
+    <Compile Include="Model\Comparers\ColumnComparer.cs" />
     <Compile Include="Plugin\Shortcut\ShortcutRoot.cs" />
     <Compile Include="Misc\AnimationHelper.cs" />
     <Compile Include="ContainerBuilder.cs" />
@@ -121,8 +131,6 @@
     <Compile Include="Misc\Impl\PanelItemFactoryManagerImpl.cs" />
     <Compile Include="Misc\Impl\ServiceProviderImpl.cs" />
     <Compile Include="Misc\Impl\TranslationServiceImpl.cs" />
-    <Compile Include="Misc\RegisteredObject.cs" />
-    <Compile Include="Misc\SimpleIocContainer.cs" />
     <Compile Include="Misc\CustomPanelItem.cs" />
     <Compile Include="Misc\Impl\FolderManagerImpl.cs" />
     <Compile Include="Model\PagesModel.cs" />

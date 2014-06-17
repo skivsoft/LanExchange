@@ -7,6 +7,7 @@ using System.Linq;
 using System.Resources;
 using System.Text;
 using LanExchange.Helpers;
+using LanExchange.Ioc;
 using LanExchange.SDK;
 
 namespace LanExchange.Misc.Impl

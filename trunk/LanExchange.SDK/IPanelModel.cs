@@ -82,7 +82,7 @@ namespace LanExchange.SDK
 
         void AsyncRetrieveData(bool clearFilter);
         string DataType { get; set; }
-        ColumnComparer Comparer { get; }
+        IColumnComparer Comparer { get; }
         void Sort(IComparer<PanelItemBase> sorter);
 
         bool Contains(PanelItemBase panelItem);

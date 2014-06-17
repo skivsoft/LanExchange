@@ -1,6 +1,7 @@
 ﻿using System;
+using LanExchange.SDK;
 
-namespace LanExchange.SDK
+namespace LanExchange.Interfaces
 {
     public interface ILazyThreadPool : IDisposable
     {

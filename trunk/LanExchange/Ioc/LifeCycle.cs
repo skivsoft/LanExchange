@@ -1,4 +1,4 @@
-namespace LanExchange.SDK
+namespace LanExchange.Ioc
 {
     public enum LifeCycle
     {

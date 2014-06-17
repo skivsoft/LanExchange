@@ -1,10 +1,10 @@
-﻿using System.ComponentModel;
-using System;
+﻿using System;
+using System.ComponentModel;
 
-namespace LanExchange.SDK
+namespace LanExchange.Helpers
 {
     [Localizable(false)]
-    public static class EnvironmentUtils
+    public static class EnvironmentHelper
     {
         private const string PROCESSOR_ARCHITECTURE = "PROCESSOR_ARCHITECTURE";
 

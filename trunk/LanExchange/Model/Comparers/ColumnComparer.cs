@@ -1,8 +1,8 @@
-using System.Collections.Generic;
+using LanExchange.SDK;
 
-namespace LanExchange.SDK
+namespace LanExchange.Model.Comparers
 {
-    public sealed class ColumnComparer : IComparer<PanelItemBase>
+    public sealed class ColumnComparer : IColumnComparer
     {
         public ColumnComparer(int index, PanelSortOrder sortOrder)
         {

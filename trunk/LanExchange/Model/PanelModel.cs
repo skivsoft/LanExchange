@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Xml.Serialization;
+using LanExchange.Helpers;
+using LanExchange.Ioc;
+using LanExchange.Model.Comparers;
 using LanExchange.SDK;
 
 namespace LanExchange.Model
@@ -19,7 +22,7 @@ namespace LanExchange.Model
         // current path for item list
         private readonly ObjectPath<PanelItemBase> m_CurrentPath;
         // column sorter
-        private readonly ColumnComparer m_Comparer;
+        private readonly IColumnComparer m_Comparer;
         // punto switcher service
         private readonly IPuntoSwitcherService m_Punto;
         // panel updater
@@ -151,7 +154,7 @@ namespace LanExchange.Model
             return false;
         }
 
-        public ColumnComparer Comparer
+        public IColumnComparer Comparer
         {
             get { return m_Comparer; }
         }

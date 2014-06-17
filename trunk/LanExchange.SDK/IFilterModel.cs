@@ -3,7 +3,7 @@
     /// <summary>
     /// Interface for filtering panel items.
     /// </summary>
-    public interface IFilterModel : IModel
+    public interface IFilterModel
     {
         /// <summary>
         /// Gets or sets the filter text.

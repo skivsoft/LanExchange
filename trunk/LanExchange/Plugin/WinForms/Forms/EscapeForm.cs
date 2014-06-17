@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using LanExchange.Ioc;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.WinForms.Forms

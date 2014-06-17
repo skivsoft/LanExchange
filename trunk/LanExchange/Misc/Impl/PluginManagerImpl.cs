@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using LanExchange.Ioc;
 using LanExchange.SDK;
 
 namespace LanExchange.Misc.Impl

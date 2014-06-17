@@ -29,7 +29,7 @@ namespace LanExchange.Plugin.Users
             if (parent is UserPanelItem)
                 startPath = (parent as UserPanelItem).AdsPath;
             else
-                startPath = LdapUtils.GetUserPath(App.Resolve<IScreenService>().UserName);
+                startPath = LdapUtils.GetUserPath(PluginUsers.ScreenService.UserName);
 
             using (var searcher = new DirectorySearcher())
             {

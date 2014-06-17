@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
+using LanExchange.Ioc;
 using LanExchange.SDK;
 
 namespace LanExchange.Model

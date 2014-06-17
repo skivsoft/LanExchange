@@ -1,5 +1,6 @@
 ﻿using System;
 using LanExchange.Base;
+using LanExchange.Ioc;
 using LanExchange.SDK;
 using LanExchange.Plugin.WinForms.Impl;
 using NUnit.Framework;

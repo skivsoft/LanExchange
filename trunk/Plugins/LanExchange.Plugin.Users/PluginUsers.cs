@@ -8,19 +8,21 @@ namespace LanExchange.Plugin.Users
     {
         public const string LDAP_PREFIX = "LDAP://";
 
-        private IServiceProvider m_Provider;
+        public static IScreenService ScreenService;
 
         public void Initialize(IServiceProvider serviceProvider)
         {
-            m_Provider = serviceProvider;
+            var provider = serviceProvider;
+
+            ScreenService = (IScreenService) provider.GetService(typeof (IScreenService));
 
             // Setup resource manager
-            var translationService = (ITranslationService)m_Provider.GetService(typeof(ITranslationService));
+            var translationService = (ITranslationService)provider.GetService(typeof(ITranslationService));
             if (translationService != null)
                 translationService.SetResourceManagerTo<Resources>();
 
             // Register new panel item types
-            var factoryManager = (IPanelItemFactoryManager)m_Provider.GetService(typeof(IPanelItemFactoryManager));
+            var factoryManager = (IPanelItemFactoryManager)provider.GetService(typeof(IPanelItemFactoryManager));
             if (factoryManager != null)
             {
                 factoryManager.RegisterFactory<UserRoot>(new PanelItemRootFactory<UserRoot>());
@@ -31,7 +33,7 @@ namespace LanExchange.Plugin.Users
             }
 
             // Register new panel fillers
-            var fillerManager = (IPanelFillerManager)m_Provider.GetService(typeof(IPanelFillerManager));
+            var fillerManager = (IPanelFillerManager)provider.GetService(typeof(IPanelFillerManager));
             if (fillerManager != null)
             {
                 fillerManager.RegisterFiller<UserPanelItem>(new UserFiller());

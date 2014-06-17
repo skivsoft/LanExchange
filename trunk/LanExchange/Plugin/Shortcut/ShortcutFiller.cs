@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using LanExchange.Interfaces;
+using LanExchange.Ioc;
 using LanExchange.Properties;
 using LanExchange.SDK;
 

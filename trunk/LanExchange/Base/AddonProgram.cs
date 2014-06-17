@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Xml.Serialization;
 using LanExchange.Helpers;
+using LanExchange.Ioc;
 using LanExchange.SDK;
 
 namespace LanExchange.Base
@@ -52,7 +53,7 @@ namespace LanExchange.Base
                 return string.Empty;
 
             var cmdLine = fileName;
-            if (!EnvironmentUtils.Is64BitOperatingSystem())
+            if (!EnvironmentHelper.Is64BitOperatingSystem())
                 cmdLine = cmdLine.Replace("%ProgramFiles(x86)%", "%ProgramFiles%");
             return Environment.ExpandEnvironmentVariables(cmdLine);
         }
