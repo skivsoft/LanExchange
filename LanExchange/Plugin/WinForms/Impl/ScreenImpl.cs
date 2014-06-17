@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
+using LanExchange.Helpers;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.WinForms.Impl
@@ -25,7 +26,7 @@ namespace LanExchange.Plugin.WinForms.Impl
         {
             get 
 			{ 
-				return EnvironmentUtils.IsRunningOnMono() ? 0 : SystemInformation.MenuHeight; 
+				return EnvironmentHelper.IsRunningOnMono() ? 0 : SystemInformation.MenuHeight; 
 			}
         }
 

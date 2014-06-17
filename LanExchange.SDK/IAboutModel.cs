@@ -1,6 +1,6 @@
 ﻿namespace LanExchange.SDK
 {
-    public interface IAboutModel : IModel
+    public interface IAboutModel
     {
         string HomeLink { get; }
 

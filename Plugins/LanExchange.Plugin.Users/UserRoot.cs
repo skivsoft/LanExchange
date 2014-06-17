@@ -8,7 +8,7 @@ namespace LanExchange.Plugin.Users
 
         public UserRoot()
         {
-            m_StartPath = LdapUtils.GetUserPath(App.Resolve<IScreenService>().UserName);
+            m_StartPath = LdapUtils.GetUserPath(PluginUsers.ScreenService.UserName);
             m_StartPath = LdapUtils.GetDCNameFromPath(m_StartPath, 2);
         }
 

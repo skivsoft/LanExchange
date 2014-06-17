@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using LanExchange.Base;
 using LanExchange.Helpers;
+using LanExchange.Ioc;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.SDK;
 

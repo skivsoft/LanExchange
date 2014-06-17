@@ -121,7 +121,7 @@ namespace LanExchange.Plugin.Users
         [Localizable(false)]
         public void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
-            var startPath = LdapUtils.GetDCNameFromPath(LdapUtils.GetUserPath(App.Resolve<IScreenService>().UserName), 2);
+            var startPath = LdapUtils.GetDCNameFromPath(LdapUtils.GetUserPath(PluginUsers.ScreenService.UserName), 2);
             var workspace = parent as WorkspacePanelItem;
             if (workspace != null)
                 FillUsersWithSameGroup(ref parent, ref result, startPath, workspace.AdsPath);

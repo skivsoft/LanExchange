@@ -11,9 +11,6 @@ namespace LanExchange.Plugin.Network
 
         public void Initialize(IServiceProvider serviceProvider)
         {
-            if (EnvironmentUtils.IsRunningOnMono())
-                return;
-            
             m_Provider = serviceProvider;
             
             // Setup resource manager

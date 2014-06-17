@@ -7,19 +7,21 @@ namespace LanExchange.Plugin.FileSystem
 {
     public class PluginFileSystem : IPlugin
     {
-        private IServiceProvider m_Provider;
+        public static IImageManager ImageManager;
 
         public void Initialize(IServiceProvider serviceProvider)
         {
-            m_Provider = serviceProvider;
+            var provider = serviceProvider;
+
+            ImageManager = (IImageManager) provider.GetService(typeof (IImageManager));
 
             // Setup resource manager
-            var translationService = (ITranslationService)m_Provider.GetService(typeof(ITranslationService));
+            var translationService = (ITranslationService)provider.GetService(typeof(ITranslationService));
             if (translationService != null)
                 translationService.SetResourceManagerTo<Resources>();
 
             // Register new panel item types
-            var factoryManager = (IPanelItemFactoryManager)m_Provider.GetService(typeof(IPanelItemFactoryManager));
+            var factoryManager = (IPanelItemFactoryManager)provider.GetService(typeof(IPanelItemFactoryManager));
             if (factoryManager != null)
             {
                 factoryManager.RegisterFactory<FileRoot>(new PanelItemRootFactory<FileRoot>());
@@ -28,7 +30,7 @@ namespace LanExchange.Plugin.FileSystem
             }
 
             // Register new panel fillers
-            var fillerManager = (IPanelFillerManager)m_Provider.GetService(typeof(IPanelFillerManager));
+            var fillerManager = (IPanelFillerManager)provider.GetService(typeof(IPanelFillerManager));
             if (fillerManager != null)
             {
                 fillerManager.RegisterFiller<DrivePanelItem>(new DriveFiller());
@@ -42,11 +44,11 @@ namespace LanExchange.Plugin.FileSystem
 
         public static void RegisterImageForFileName(string fname)
         {
-            if (App.Images != null && App.Images.IndexOf(fname) == -1)
+            if (ImageManager != null && ImageManager.IndexOf(fname) == -1)
             {
-                var image1 = App.Images.GetSmallImageOfFileName(fname);
-                var image2 = App.Images.GetLargeImageOfFileName(fname);
-                App.Images.RegisterImage(fname, image1, image2);
+                var image1 = ImageManager.GetSmallImageOfFileName(fname);
+                var image2 = ImageManager.GetLargeImageOfFileName(fname);
+                ImageManager.RegisterImage(fname, image1, image2);
             }
         }
     }

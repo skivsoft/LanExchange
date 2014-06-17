@@ -1,6 +1,6 @@
 using System;
 using LanExchange.Interfaces;
-using LanExchange.Misc;
+using LanExchange.Ioc;
 using LanExchange.Misc.Impl;
 using LanExchange.Model;
 using LanExchange.Plugin.Windows;
@@ -18,7 +18,7 @@ namespace LanExchange
         /// <summary>
         /// Maps interfaces to concrete implementations.
         /// </summary>
-        public static IIoCContainer Build()
+        public static IIocContainer Build()
         {
             var container = new SimpleIocContainer();
             // core singletons

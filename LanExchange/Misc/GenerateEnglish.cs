@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Resources;
 using System.Text;
 using LanExchange.Base;
+using LanExchange.Ioc;
 using LanExchange.SDK;
 
 namespace LanExchange.Misc

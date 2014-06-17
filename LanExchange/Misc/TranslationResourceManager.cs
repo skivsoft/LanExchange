@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Reflection;
 using System.Resources;
+using LanExchange.Ioc;
 using LanExchange.SDK;
 
 namespace LanExchange.Misc

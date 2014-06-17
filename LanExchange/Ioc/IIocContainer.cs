@@ -1,8 +1,8 @@
 using System;
 
-namespace LanExchange.SDK
+namespace LanExchange.Ioc
 {
-    public interface IIoCContainer
+    public interface IIocContainer
     {
         void Register<TTypeToResolve, TConcrete>(LifeCycle lifeCycle = LifeCycle.Singleton);
         void Unregister<TTypeToResolve>();

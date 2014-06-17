@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Security.AccessControl;
 
 namespace LanExchange.SDK
 {
