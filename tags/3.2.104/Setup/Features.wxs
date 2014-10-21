@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?include defines.wxi ?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <Feature Id="LanExchange" Level="1" Title="$(var.Product)" Display="expand" Absent="disallow" AllowAdvertise="no" ConfigurableDirectory="INSTALLDIR">
+      <ComponentRef Id="LanExchange.exe"/>
+      <ComponentRef Id="LanExchange.SDK.dll"/>
+      <ComponentRef Id="LanExchangeShortcut"/>
+      <ComponentRef Id="Russian.po"/>
+      <ComponentRef Id="Kazakh.po"/>
+      <ComponentRef Id="Esperanto.po"/>
+      <ComponentRef Id="Ukrainian.po"/>
+      <ComponentRef Id="ChangeLog.txt"/>
+      <Feature Id="WMIViewer" Level="100" Title="WMI Viewer" AllowAdvertise="no" Description="WMI viewer administration tool.">
+        <ComponentRef Id="WMIViewer.exe"/>
+        <ComponentRef Id="NetworkWMI.xml" />
+        <ComponentRef Id="WMIViewerShortcut"/>
+        </Feature>
+      <Feature Id="Addons" Level="100" Title="Addons" AllowAdvertise="no" Display="expand">
+        <Feature Id="SystemAddon" Title="System commands" Level="1" AllowAdvertise="no" Description="System commands like Remote Desktop Connection and other system services.">
+          <ComponentRef Id="NetworkSystem.xml" />
+        </Feature>
+        <Feature Id="RadminAddon" Title="Radmin® Viewer" Level="1" AllowAdvertise="no" Description="Radmin® Viewer commands in context menu.">
+          <ComponentRef Id="NetworkRadmin.xml" />
+        </Feature>
+      </Feature>
+      <Feature Id="Plugins" Level="1" Title="Plugins" Display="expand" Absent="disallow" AllowAdvertise="no" Description="LanExchange plugins.">
+        <Feature Id="Network" Title="Network" Level="1" Absent="disallow" AllowAdvertise="no" Description="Local Area Network browser of computers and shares.">
+          <ComponentRef Id="$(var.PluginNetwork).dll" />
+          <ComponentRef Id="Network.xml" />
+        </Feature>
+        <Feature Id="FileSystem" Title="FileSystem" Level="1" AllowAdvertise="no" Description="File system navigator plugin.">
+          <ComponentRef Id="$(var.PluginFileSystem).dll" />
+          <ComponentRef Id="FileSystem.xml" />
+          <ComponentRef Id="Commanders.xml" />
+        </Feature>
+        <Feature Id="Users" Title="Users" Level="1" AllowAdvertise="no" Description="Active Directory browser of organization units and users.">
+          <ComponentRef Id="$(var.PluginUsers).dll" />
+          <ComponentRef Id="Users.xml" />
+        </Feature>
+        <!--
+        <Feature Id="Translit" Title="Translit" Level="100" AllowAdvertise="no" Description="Additional translations of program user interface.">
+          <ComponentRef Id="$(var.PluginTranslit).dll" />
+          <ComponentRef Id="Russian_latin.po" />
+          <ComponentRef Id="Russian_game.po" />
+          <ComponentRef Id="Kazakh_latin.po" />
+          <ComponentRef Id="Kazakh_arabic.po" />
+        </Feature>
+        <Feature Id="Win7" Title="Win7" Level="100" AllowAdvertise="no" Description="Windows® 7 features support.">
+          <ComponentRef Id="$(var.PluginWin7).dll" />
+          <ComponentRef Id="Microsoft.WindowsAPICodePack.dll" />
+          <ComponentRef Id="Microsoft.WindowsAPICodePack.Shell.dll" />
+        </Feature>
+        -->
+      </Feature>
+    </Feature>
+  </Fragment>
+</Wix>
