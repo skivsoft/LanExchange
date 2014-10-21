@@ -1,0 +1,676 @@
+msgctxt "Variables"
+msgid "@LANGUAGE_NAME"
+msgstr "Қазақ тілі"
+
+msgctxt "Variables"
+msgid "@AUTHOR"
+msgstr "Yeltay Nashyn"
+
+msgctxt "FileSystem.xml"
+msgid "Windows Explorer"
+msgstr "Windows жетектеушісі"
+
+msgctxt "FileSystem.xml"
+msgid "Command Prompt"
+msgstr "Пәрмен шақыру"
+
+msgctxt "NetworkRadmin.xml"
+msgid "Radmin® Full Control"
+msgstr "Radmin® Толық басқару"
+
+msgctxt "NetworkRadmin.xml"
+msgid "Radmin® View"
+msgstr "Radmin® Көру"
+
+msgctxt "NetworkRadmin.xml"
+msgid "Radmin® Telnet"
+msgstr "Radmin® Telnet"
+
+msgctxt "NetworkRadmin.xml"
+msgid "Radmin® File transfer"
+msgstr "Radmin® Файл табыстау"
+
+msgctxt "NetworkRadmin.xml"
+msgid "Radmin® Shutdown"
+msgstr "Radmin® Сөндіру"
+
+msgctxt "NetworkRadmin.xml"
+msgid "Radmin® Chat"
+msgstr "Radmin® Мәтін чат"
+
+msgctxt "NetworkRadmin.xml"
+msgid "Radmin® Voice Chat"
+msgstr "Radmin® Дауыс чат"
+
+msgctxt "NetworkRadmin.xml"
+msgid "Radmin® Send Message"
+msgstr "Radmin® Хабар жіберу"
+
+msgctxt "NetworkSystem.xml"
+msgid "Remote Desktop Connection"
+msgstr "Қашықтағы жұмыс үстеліне қосылу"
+
+msgctxt "NetworkSystem.xml"
+msgid "Computer Management"
+msgstr "Компьютерді басқару"
+
+msgctxt "NetworkSystem.xml"
+msgid "Shared Folders"
+msgstr "Ортақ қалта"
+
+msgctxt "NetworkSystem.xml"
+msgid "Local Users and Groups"
+msgstr "Жергілікті пайдаланушылар мен топтар"
+
+msgctxt "NetworkSystem.xml"
+msgid "Services"
+msgstr "Сервистер"
+
+msgctxt "NetworkSystem.xml"
+msgid "Ping"
+msgstr "Пинг"
+
+msgctxt "NetworkWMI.xml"
+msgid "WMI Viewer"
+msgstr "WMI Viewer"
+
+msgctxt "NetworkWMI.xml"
+msgid "WMI: Edit Description"
+msgstr "WMI: Сипаттаманы өзгерту"
+
+msgctxt "NetworkWMI.xml"
+msgid "WMI: Reboot"
+msgstr "WMI: Қайта қотару"
+
+msgctxt "NetworkWMI.xml"
+msgid "WMI: Shutdown"
+msgstr "WMI: Жұмысты аяқтау"
+
+msgctxt "Users.xml"
+msgid "Send Email"
+msgstr "Email жіберу"
+
+msgctxt "LanExchange.exe"
+msgid "Backspace"
+msgstr "Backspace"
+
+msgctxt "LanExchange.exe"
+msgid "About"
+msgstr "Бағдарлама туралы"
+
+msgctxt "LanExchange.exe"
+msgid "Close current tab."
+msgstr "Осы қыстырманы жабу."
+
+msgctxt "LanExchange.exe"
+msgid "Re-read panel."
+msgstr "Панельді қайта оқу."
+
+msgctxt "LanExchange.exe"
+msgid "Paste items from clipboard."
+msgstr "Элементтерді айырбастау буферінен көшіру."
+
+msgctxt "LanExchange.exe"
+msgid "Ctrl+Up"
+msgstr "Ctrl+Up"
+
+msgctxt "LanExchange.exe"
+msgid "Ctrl+Ins"
+msgstr "Ctrl+Ins"
+
+msgctxt "LanExchange.exe"
+msgid "Copy selected item(s) to clipboard."
+msgstr "Таңдалған элементтерді айырбастау буферіне көшіру."
+
+msgctxt "LanExchange.exe"
+msgid "Select all items in panel."
+msgstr "Панельдегі барлық элементтерді таңдау."
+
+msgctxt "LanExchange.exe"
+msgid "Copyright"
+msgstr "Авторлық құқық"
+
+msgctxt "LanExchange.exe"
+msgid "Send Feedback..."
+msgstr "Пікір жіберу..."
+
+msgctxt "LanExchange.exe"
+msgid "Action"
+msgstr "Әрекет"
+
+msgctxt "LanExchange.exe"
+msgid "    "
+msgstr "    "
+
+msgctxt "LanExchange.exe"
+msgid "Filter panel items by all columns."
+msgstr "Панельдегі элементтерді барлық бағаналармен фильтрлеу."
+
+msgctxt "LanExchange.exe"
+msgid "Unable to execute command line:\n{0}"
+msgstr "Келесі команда орындалмады:\n{0}"
+
+msgctxt "LanExchange.exe"
+msgid "Query"
+msgstr "Сұрау"
+
+msgctxt "LanExchange.exe"
+msgid "Cancel"
+msgstr "Болдырмау"
+
+msgctxt "LanExchange.exe"
+msgid "New item"
+msgstr "Жаңа элемент"
+
+msgctxt "LanExchange.exe"
+msgid "Copy {0} selected items"
+msgstr "{0} таңдалған элементтерді көшіру"
+
+msgctxt "LanExchange.exe"
+msgid "Information"
+msgstr "Ақпарат"
+
+msgctxt "LanExchange.exe"
+msgid "Any char"
+msgstr "Кез келген түртінді"
+
+msgctxt "LanExchange.exe"
+msgid "Version"
+msgstr "Нұсқа"
+
+msgctxt "LanExchange.exe"
+msgid "F10"
+msgstr "F10"
+
+msgctxt "LanExchange.exe"
+msgid "Esc"
+msgstr "Esc"
+
+msgctxt "LanExchange.exe"
+msgid "Del"
+msgstr "Del"
+
+msgctxt "LanExchange.exe"
+msgid "Grid lines"
+msgstr "Тор сызықтары"
+
+msgctxt "LanExchange.exe"
+msgid "Hide Details"
+msgstr "Жасыру"
+
+msgctxt "LanExchange.exe"
+msgid "Close other tabs"
+msgstr "Басқа қыстырмаларды жабу"
+
+msgctxt "LanExchange.exe"
+msgid "Paste"
+msgstr "Қою"
+
+msgctxt "LanExchange.exe"
+msgid "Exit"
+msgstr "Шығу"
+
+msgctxt "LanExchange.exe"
+msgid "List"
+msgstr "Тізім"
+
+msgctxt "LanExchange.exe"
+msgid "&Language"
+msgstr "&Тiл"
+
+msgctxt "LanExchange.exe"
+msgid "Context"
+msgstr "Контекст"
+
+msgctxt "LanExchange.exe"
+msgid "Copy selected item"
+msgstr "Таңдалған элементтерді көшіру"
+
+msgctxt "LanExchange.exe"
+msgid "Plugins:"
+msgstr "Плагиндер:"
+
+msgctxt "LanExchange.exe"
+msgid "Legend"
+msgstr "Түсінік сөздер"
+
+msgctxt "LanExchange.exe"
+msgid "Copy «{0}»"
+msgstr "«{0}» көшiрiп алу"
+
+msgctxt "LanExchange.exe"
+msgid "Error"
+msgstr "Қате"
+
+msgctxt "LanExchange.exe"
+msgid "{0} {1} Feedback"
+msgstr "{0} {1} туралы пікір"
+
+msgctxt "LanExchange.exe"
+msgid "Ctrl+R"
+msgstr "Ctrl+R"
+
+msgctxt "LanExchange.exe"
+msgid "Ctrl+W"
+msgstr "Ctrl+W"
+
+msgctxt "LanExchange.exe"
+msgid "Ctrl+V"
+msgstr "Ctrl+V"
+
+msgctxt "LanExchange.exe"
+msgid "Ctrl+C"
+msgstr "Ctrl+C"
+
+msgctxt "LanExchange.exe"
+msgid "Ctrl+A"
+msgstr "Ctrl+A"
+
+msgctxt "LanExchange.exe"
+msgid "Quit from LanExchange program."
+msgstr "LanExchange бағдарламасынан шығу."
+
+msgctxt "LanExchange.exe"
+msgid "Clear filter OR go level up OR hide main window."
+msgstr "Фильтрді тазалау немесе бір деңгей жоғарлау немесе басты терезені жасыру."
+
+msgctxt "LanExchange.exe"
+msgid "Delete selected item(s) which was created by user."
+msgstr "Пайдаланушы жасаған таңдалған элементтерді өшіру."
+
+msgctxt "LanExchange.exe"
+msgid "Webpage"
+msgstr "Вебсайт"
+
+msgctxt "LanExchange.exe"
+msgid "BugTracker Webpage"
+msgstr "Багтрэкер вебсайты"
+
+msgctxt "LanExchange.exe"
+msgid "Released under the MIT license."
+msgstr "MIT лиценциясымен жасалған."
+
+msgctxt "LanExchange.exe"
+msgid "About «{0}»"
+msgstr "Бағдарлама туралы «{0}»"
+
+msgctxt "LanExchange.exe"
+msgid "Copy path to «{0}»"
+msgstr "Жолды «{0}» көшіру"
+
+msgctxt "LanExchange.exe"
+msgid "Execution error"
+msgstr "Орындалу қатесі"
+
+msgctxt "LanExchange.exe"
+msgid "F1"
+msgstr "F1"
+
+msgctxt "LanExchange.exe"
+msgid "F9"
+msgstr "F9"
+
+msgctxt "LanExchange.exe"
+msgid "Small icons"
+msgstr "Кіші белгiшелер"
+
+msgctxt "LanExchange.exe"
+msgid "Close"
+msgstr "Жабу"
+
+msgctxt "LanExchange.exe"
+msgid "Details"
+msgstr "Егжей-тегжейлер"
+
+msgctxt "LanExchange.exe"
+msgid "Open tab «{0}»"
+msgstr "«{0}» қыстырманы ашу"
+
+msgctxt "LanExchange.exe"
+msgid "Shortcut Keys"
+msgstr "Үйлестіру клавиштері"
+
+msgctxt "LanExchange.exe"
+msgid "Go level up in panel."
+msgstr "Панельде бір деңгей жоғары шығу."
+
+msgctxt "LanExchange.exe"
+msgid "Delete"
+msgstr "Жою"
+
+msgctxt "LanExchange.exe"
+msgid "Show/hide main window."
+msgstr "Бас терезені көрсету/жасыру."
+
+msgctxt "LanExchange.exe"
+msgid "Large icons"
+msgstr "Орташа белгішілер"
+
+msgctxt "LanExchange.exe"
+msgid "&View"
+msgstr "&Көрініс"
+
+msgctxt "LanExchange.exe"
+msgid "Copy full path of selected item(s) to clipboard."
+msgstr "Таңдалған элемменттердің толық жолын айырбастау буферіне көшіру."
+
+msgctxt "LanExchange.exe"
+msgid "Close tab"
+msgstr "Қыстырманы жабу"
+
+msgctxt "LanExchange.exe"
+msgid "Copy selected items"
+msgstr "Таңдалған элементтерді көшіру"
+
+msgctxt "LanExchange.exe"
+msgid "LanExchange Webpage"
+msgstr "LanExchange вебсайты"
+
+msgctxt "LanExchange.exe"
+msgid "Checking the availability of the resource..."
+msgstr "Checking the availability of the resource..."
+
+msgctxt "LanExchange.exe"
+msgid "This help on shortcuts."
+msgstr "Бұл үйлестіру клавиштер мәліметі."
+
+msgctxt "LanExchange.exe"
+msgid "Open"
+msgstr "Ашу"
+
+msgctxt "LanExchange.exe"
+msgid "Ctrl+Win+X"
+msgstr "Ctrl+Win+X"
+
+msgctxt "LanExchange.exe"
+msgid "Decrease height of info panel or hide it."
+msgstr "Инфо панельдің биіктігін азайту немесе жасыру."
+
+msgctxt "LanExchange.exe"
+msgid "Ctrl+Down"
+msgstr "Ctrl+Down"
+
+msgctxt "LanExchange.exe"
+msgid "Resource «{0}» not reachable.\nContinue anyway?"
+msgstr "«{0}» ресурсы жетерліксіз.\nБәрібір жалғастырасыз ба?"
+
+msgctxt "LanExchange.exe"
+msgid "&Help"
+msgstr "Кө&мек"
+
+msgctxt "LanExchange.exe"
+msgid "Ctrl+Alt+Ins"
+msgstr "Ctrl+Alt+Ins"
+
+msgctxt "LanExchange.exe"
+msgid "Hide main window."
+msgstr "Бас терезені жасыру."
+
+msgctxt "LanExchange.exe"
+msgid "Increase height of info panel or show it."
+msgstr "Инфо панель биіктігін арттыру немесе көрсету."
+
+msgctxt "LanExchange.exe"
+msgid "Show Details"
+msgstr "Толығырақ"
+
+msgctxt "LanExchange.exe"
+msgid "&Panel"
+msgstr "&Панель"
+
+msgctxt "LanExchange.exe"
+msgid "Info panel"
+msgstr "Инфо-панель"
+
+msgctxt "LanExchange.exe"
+msgid "Copy"
+msgstr "Көшіру"
+
+msgctxt "LanExchange.exe"
+msgid "Copy column on which the ordered item(s) to clipboard."
+msgstr "Қатар бойынша элементтері реттелген қатарды айырбастау буферіне көшіру."
+
+msgctxt "LanExchange.exe"
+msgid "Esc (long press)"
+msgstr "Esc (ұзақ басу)"
+
+msgctxt "LanExchange.exe"
+msgid "Items: {0} of {1}"
+msgstr "Элементтер: {1}-дан {0}|Элементтер: {1}-ден {0}|Элементтер: {1}-нан {0}|Элементтер: {1}-нен {0}|Элементтер: {1}-тан {0}|Элементтер: {1}-тен {0}"
+
+msgctxt "LanExchange.exe"
+msgid "Items: {0}"
+msgstr "{0} элементтер"
+
+msgctxt "LanExchange.exe"
+msgid " (build {0})"
+msgstr " (құрастыру {0})"
+
+msgctxt "LanExchange.exe"
+msgid "Translations:"
+msgstr "Аудармалар:"
+
+msgctxt "LanExchange.exe"
+msgid "Re-read"
+msgstr "Қайта оқу"
+
+msgctxt "LanExchange.exe"
+msgid "Localization Webpage"
+msgstr "Локализация вебсайты"
+
+msgctxt "LanExchange.exe"
+msgid "License"
+msgstr "Лицензия"
+
+msgctxt "WMIViewer.exe"
+msgid "Unable to connect to computer \\{0}.\n{1}"
+msgstr "\\{0}.\n{1} компьютеріне қосылу мүмкін емес"
+
+msgctxt "WMIViewer.exe"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "WMIViewer.exe"
+msgid "User name not specified."
+msgstr "Пайдаланушының аты көрсетілмеген."
+
+msgctxt "WMIViewer.exe"
+msgid "Command line parameter \"{0}\" not specified."
+msgstr "\"{0}\" команда параметрі көрсетілмеген."
+
+msgctxt "WMIViewer.exe"
+msgid "[0] Success"
+msgstr "[0] Табыс"
+
+msgctxt "WMIViewer.exe"
+msgid "\n\nProperty {0} successfully changed."
+msgstr "\n\n{0} сипаты табысты өзгертілді."
+
+msgctxt "WMIViewer.exe"
+msgid "WMI connection to \\{0}"
+msgstr "\\{0} WMI қосылу мүмкін емес"
+
+msgctxt "WMIViewer.exe"
+msgid "WMI connection error"
+msgstr "WMI қосылу қатесі"
+
+msgctxt "WMIViewer.exe"
+msgid "Password:"
+msgstr "Құпия сөз:"
+
+msgctxt "WMIViewer.exe"
+msgid "Cancel\n[Esc]"
+msgstr "Болдырмау\n [Esc]"
+
+msgctxt "WMIViewer.exe"
+msgid "Editing property {0}"
+msgstr "{0} сипатын редакциялау"
+
+msgctxt "WMIViewer.exe"
+msgid "Unable to connect under account {0}.\nEnter user name and password to retry the connection."
+msgstr "{0} есеп жазбасымен қосылу мүмкін емес.\nҚосылуды қайталау үшін пайдаланушы аты мен құпия сөзді енгізіңіз."
+
+msgctxt "WMIViewer.exe"
+msgid "Methods: {0}"
+msgstr "Амалдар: {0}"
+
+msgctxt "WMIViewer.exe"
+msgid "Execute [Ctrl+Enter]"
+msgstr "Орындау [Ctrl+Enter]"
+
+msgctxt "WMIViewer.exe"
+msgid "Computer name: \\{0}\n\nOld value: «{1}»\nNew value: «{2}»"
+msgstr "Компьютер аты:  \\{0}\n\nБұрынғы мағына: «{1}»\nЖаңа мағна: «{2}»"
+
+msgctxt "WMIViewer.exe"
+msgid "Classes: {0}"
+msgstr "Жіктелімдер: {0}"
+
+msgctxt "WMIViewer.exe"
+msgid "User:"
+msgstr "Пайдаланушы:"
+
+msgctxt "WMIViewer.exe"
+msgid "Properties: {0}"
+msgstr "Сипаттары: {0}"
+
+msgctxt "WMIViewer.exe"
+msgid "WMI property \"{0}\" not found."
+msgstr "«{0}» WMI сипаты табылмады."
+
+msgctxt "WMIViewer.exe"
+msgid "Executing method: {0}\\{1}.{2}"
+msgstr "Орындау әдісі: {0}\\{1}.{2}"
+
+msgctxt "WMIViewer.exe"
+msgid "Unable to connect to computer \\{0}.\nPossible connection has been blocked by firewall."
+msgstr "\\{0} компьютеріне қосылу мүмкін емес.\nҚосылу мүмкіндігін брандмауэр тойтарды."
+
+msgctxt "WMIViewer.exe"
+msgid "Connect"
+msgstr "Қосылу"
+
+msgctxt "LanExchange.Plugin.FileSystem.dll"
+msgid "Total Size"
+msgstr "Толық өлшем"
+
+msgctxt "LanExchange.Plugin.FileSystem.dll"
+msgid "File System"
+msgstr "Файлдық жүйе"
+
+msgctxt "LanExchange.Plugin.FileSystem.dll"
+msgid "Free Space"
+msgstr "Бос орын"
+
+msgctxt "LanExchange.Plugin.FileSystem.dll"
+msgid "Computer"
+msgstr "Компьютер"
+
+msgctxt "LanExchange.Plugin.FileSystem.dll"
+msgid "Name"
+msgstr "Атау"
+
+msgctxt "LanExchange.Plugin.FileSystem.dll"
+msgid "Type"
+msgstr "Түр"
+
+msgctxt "LanExchange.Plugin.FileSystem.dll"
+msgid "Size"
+msgstr "Өлшем"
+
+msgctxt "LanExchange.Plugin.Network.dll"
+msgid "Network name"
+msgstr "Торлық аты"
+
+msgctxt "LanExchange.Plugin.Network.dll"
+msgid "Computer was found in local area network."
+msgstr "Компьютер жергілікті торапта табылмады."
+
+msgctxt "LanExchange.Plugin.Network.dll"
+msgid "MAC address"
+msgstr "MAC адрес"
+
+msgctxt "LanExchange.Plugin.Network.dll"
+msgid "Resource name"
+msgstr "Ресурс аты"
+
+msgctxt "LanExchange.Plugin.Network.dll"
+msgid "OS version"
+msgstr "Операциялық жүйе"
+
+msgctxt "LanExchange.Plugin.Network.dll"
+msgid "Network"
+msgstr "Желі"
+
+msgctxt "LanExchange.Plugin.Network.dll"
+msgid "OK {0}ms"
+msgstr "OK {0}мс"
+
+msgctxt "LanExchange.Plugin.Network.dll"
+msgid "IP address"
+msgstr "IP адрес"
+
+msgctxt "LanExchange.Plugin.Network.dll"
+msgid "Description"
+msgstr "Сипаттама"
+
+msgctxt "LanExchange.Plugin.Network.dll"
+msgid "Domain name"
+msgstr "Домен аты"
+
+msgctxt "LanExchange.Plugin.Network.dll"
+msgid "Computer does not reachable via PING."
+msgstr "Компьютер PING арқылы жетімсіз."
+
+msgctxt "LanExchange.Plugin.Network.dll"
+msgid "Logged users"
+msgstr "Logged users"
+
+msgctxt "LanExchange.Plugin.Users.dll"
+msgid "Work phone"
+msgstr "Жұмыс телефоны"
+
+msgctxt "LanExchange.Plugin.Users.dll"
+msgid "Office"
+msgstr "Кеңсе"
+
+msgctxt "LanExchange.Plugin.Users.dll"
+msgid "Pre-Win2000 Logon"
+msgstr "Win2000 дейінгі жүйеге кіру"
+
+msgctxt "LanExchange.Plugin.Users.dll"
+msgid "Company"
+msgstr "Компания"
+
+msgctxt "LanExchange.Plugin.Users.dll"
+msgid "Nickname"
+msgstr "Лақап"
+
+msgctxt "LanExchange.Plugin.Users.dll"
+msgid "User account have been disabled."
+msgstr "Пайдаланушы есеп жазбасы үзілген."
+
+msgctxt "LanExchange.Plugin.Users.dll"
+msgid "Email"
+msgstr "Email"
+
+msgctxt "LanExchange.Plugin.Users.dll"
+msgid "Title"
+msgstr "Бастама"
+
+msgctxt "LanExchange.Plugin.Users.dll"
+msgid "User name"
+msgstr "Пайдаланушы аты"
+
+msgctxt "LanExchange.Plugin.Users.dll"
+msgid "Organization unit"
+msgstr "Ұйым бірлігі"
+
+msgctxt "LanExchange.Plugin.Users.dll"
+msgid "Department"
+msgstr "Департамент"
+
+msgctxt "LanExchange.Plugin.Users.dll"
+msgid "User account found in Active Directory."
+msgstr "Active Directory-де пайдаланушы есеп жазбасы табылмады."
+

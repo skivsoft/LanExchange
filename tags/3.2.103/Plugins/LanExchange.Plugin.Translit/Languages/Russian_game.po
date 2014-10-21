@@ -1,0 +1,8 @@
+﻿msgid "@LANGUAGE_NAME"
+msgstr "pycckuu'"
+
+msgid "@BASE"
+msgstr "Russian.po"
+
+msgid "@TRANSLIT"
+msgstr "RussianCyrillicToGame"

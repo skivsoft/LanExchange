@@ -1,0 +1,37 @@
+﻿LanExchange 3.2.103
+===================
+[Fixed] #3: Conflict with October 2014 Windows patches
+[Added] Windows 10 detection
+
+LanExchange 3.1.102
+===================
+[Changed] Enter key after filtering should activate default action on focused item
+
+LanExchange 3.1.101
+===================
+Main
+[Fixed] Wrong current panel item for context menu of info panel
+[Added] Shows cmdline in tooltip of item's context menu
+[Added] Check computer availability (via ping) before run external command
+[Added] Ukrainian translation
+
+Addons
+[Added] User name in command "Send Email" for current user
+[Changed] Addons format simplified
+[Added] Ping command for computers
+[Added] "Command Prompt" for files and directories
+
+
+LanExchange 2.0
+===============
+- Drag&Drop labels from info panel to external application
+- Drag&Drop selected items to external application
+- Copy column values of selected items to clipboard from context menu
+- Optional command line parameter added for setting language /LANG:ll-cc
+- Hot key for showing/hiding main form changed from 'Win+X' to 'Ctrl+Win+X' cause 'Win+X' used by Windows 8.
+- Settings form removed
+- License information in about box added.
+- About form not modal now
+- Default language is English.
+- All logging code was removed.
+- Autoupdater removed from about box.
