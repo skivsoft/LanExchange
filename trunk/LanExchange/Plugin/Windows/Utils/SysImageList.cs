@@ -14,6 +14,7 @@ namespace LanExchange.Plugin.Windows.Utils
 	{
 		#region UnmanagedCode
 		private const int MAX_PATH = 260;
+	    private const int MAX_TYPE = 80;
 		
 		[DllImport(ExternDll.Shell32, CharSet = CharSet.Unicode)]
 		private static extern IntPtr SHGetFileInfo (
@@ -168,7 +169,7 @@ namespace LanExchange.Plugin.Windows.Utils
 		    private readonly int Unused2;
 		    private readonly RECT rcImage;
 		}
-		[StructLayout(LayoutKind.Sequential)]
+		[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
 		private struct SHFILEINFO
 		{
 		    private readonly IntPtr hIcon;
@@ -176,7 +177,7 @@ namespace LanExchange.Plugin.Windows.Utils
 		    private readonly int dwAttributes;
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst=MAX_PATH)] 
             private readonly string szDisplayName;
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst=80)] 
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst=MAX_TYPE)] 
             private readonly string szTypeName;
 		}
 		#endregion

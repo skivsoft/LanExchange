@@ -182,6 +182,8 @@ namespace LanExchange.Plugin.Network
                                     return bServer ? "Windows Server 2012" : "Windows 8";
                                 case 3:
                                     return bServer ? "Windows Server 2012 R2" : "Windows 8.1";
+                                case 4:
+                                    return bServer ? "Windows 10 Server" : "Windows 10";
                                 default:
                                     return String.Format("Windows NT {0}.{1}", m_Major, m_Minor);
                             }

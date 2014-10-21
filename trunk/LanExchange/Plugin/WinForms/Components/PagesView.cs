@@ -89,7 +89,8 @@ namespace LanExchange.Plugin.WinForms.Components
             {
                 var info = App.Resolve<IPanelModel>();
                 info.SetDefaultRoot(root);
-                info.DataType = App.PanelFillers.GetFillType(root).Name;
+                var type = App.PanelFillers.GetFillType(root);
+                info.DataType = type != null ? Name : string.Empty;
                 m_Presenter.AddTab(info);
             }
         }
