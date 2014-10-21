@@ -1,7 +1,12 @@
-﻿LanExchange 3.2.103
+﻿LanExchange 3.2.104
 ===================
+Main
 [Fixed] #3: Conflict with October 2014 Windows patches
 [Added] Windows 10 detection
+
+Addons
+[Added] Far Manager command for files and directories
+[Added] Total Commander command for files and directories
 
 LanExchange 3.1.102
 ===================

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <?define VerMajor="3"?>
 <?define VerMinor="2"?>
-<?define VerBuild="103"?>
+<?define VerBuild="104"?>
 <?define Product="LanExchange $(var.VerMajor).$(var.VerMinor)" ?>
 <?define Version="$(var.VerMajor).$(var.VerMinor).$(var.VerBuild).0" ?>
 <?define ProductCode="34A68278-141B-4C52-97FD-9C08C11091D1"?>
