@@ -1,14 +1,18 @@
-﻿LanExchange 3.1.102
+﻿LanExchange 3.2.103
 ===================
-Main
-[Changed] LAN-39: Enter key after filtering should activate default action on focused item
+[Fixed] #3: Conflict with October 2014 Windows patches
+[Added] Windows 10 detection
+
+LanExchange 3.1.102
+===================
+[Changed] Enter key after filtering should activate default action on focused item
 
 LanExchange 3.1.101
 ===================
 Main
-[Fixed] LAN-1: Wrong current panel item for context menu of info panel
-[Added] LAN-35: Shows cmdline in tooltip of item's context menu
-[Added] LAN-14: Check computer availability (via ping) before run external command
+[Fixed] Wrong current panel item for context menu of info panel
+[Added] Shows cmdline in tooltip of item's context menu
+[Added] Check computer availability (via ping) before run external command
 [Added] Ukrainian translation
 
 Addons

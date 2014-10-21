@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace LanExchange.Plugin.Network.NetApi
 {
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     public sealed class WorkstationInfo
     {
         private readonly int m_Id;
