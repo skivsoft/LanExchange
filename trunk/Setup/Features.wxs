@@ -32,6 +32,7 @@
         <Feature Id="FileSystem" Title="FileSystem" Level="1" AllowAdvertise="no" Description="File system navigator plugin.">
           <ComponentRef Id="$(var.PluginFileSystem).dll" />
           <ComponentRef Id="FileSystem.xml" />
+          <ComponentRef Id="Commanders.xml" />
         </Feature>
         <Feature Id="Users" Title="Users" Level="1" AllowAdvertise="no" Description="Active Directory browser of organization units and users.">
           <ComponentRef Id="$(var.PluginUsers).dll" />
