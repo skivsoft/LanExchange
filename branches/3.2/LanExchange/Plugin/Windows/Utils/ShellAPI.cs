@@ -455,7 +455,7 @@ namespace LanExchange.Plugin.Windows.Utils
         }
 
         // Contains extended information about a shortcut menu command
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         public struct CMINVOKECOMMANDINFOEX
         {
             public int cbSize;
@@ -555,7 +555,7 @@ namespace LanExchange.Plugin.Windows.Utils
         }
 
         // Contains and receives information for change notifications
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+        [StructLayout(LayoutKind.Sequential)]
         public struct SHChangeNotifyEntry
         {
             public IntPtr pIdl;
@@ -571,22 +571,22 @@ namespace LanExchange.Plugin.Windows.Utils
         }
 
         // Contains statistical data about an open storage, stream, or byte-array object
-        [StructLayout(LayoutKind.Sequential)]
-        public struct STATSTG
-        {
-            [MarshalAs(UnmanagedType.LPWStr)]
-            public string pwcsName;
-            public STGTY type;
-            public long cbSize;
-            public FILETIME mtime;
-            public FILETIME ctime;
-            public FILETIME atime;
-            public STGM grfMode;
-            public LOCKTYPE grfLocksSupported;
-            public Guid clsid;
-            public int grfStateBits;
-            public int reserved;
-        }
+        //[StructLayout(LayoutKind.Sequential)]
+        //public struct STATSTG
+        //{
+        //    [MarshalAs(UnmanagedType.LPWStr)]
+        //    public string pwcsName;
+        //    public STGTY type;
+        //    public long cbSize;
+        //    public FILETIME mtime;
+        //    public FILETIME ctime;
+        //    public FILETIME atime;
+        //    public STGM grfMode;
+        //    public LOCKTYPE grfLocksSupported;
+        //    public Guid clsid;
+        //    public int grfStateBits;
+        //    public int reserved;
+        //}
 
         // Represents the number of 100-nanosecond intervals since January 1, 1601
         [StructLayout(LayoutKind.Sequential)]
@@ -597,7 +597,7 @@ namespace LanExchange.Plugin.Windows.Utils
         }
 
         // Defines the x- and y-coordinates of a point
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+        [StructLayout(LayoutKind.Sequential)]
         public struct POINT
         {
             public POINT(int x, int y)
@@ -611,7 +611,7 @@ namespace LanExchange.Plugin.Windows.Utils
         }
 
         // The SIZE structure specifies the width and height of a rectangle
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+        [StructLayout(LayoutKind.Sequential)]
         public struct SIZE 
         { 
           public int cx; 

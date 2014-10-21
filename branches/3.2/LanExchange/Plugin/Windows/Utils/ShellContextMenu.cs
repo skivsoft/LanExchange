@@ -575,7 +575,7 @@ namespace LanExchange.Plugin.Windows.Utils
         }
 
         // Contains extended information about a shortcut menu command
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         private struct CMINVOKECOMMANDINFOEX
         {
             public int cbSize;

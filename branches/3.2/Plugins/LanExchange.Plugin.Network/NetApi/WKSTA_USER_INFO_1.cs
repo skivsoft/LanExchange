@@ -2,7 +2,7 @@
 
 namespace LanExchange.Plugin.Network.NetApi
 {
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     public sealed class WKSTA_USER_INFO_1
     {
         [MarshalAs(UnmanagedType.LPWStr)]

@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace LanExchange.Plugin.Network.NetApi
 {
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     [CLSCompliant(false)]
     public sealed class SHARE_INFO_1
     {

@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace LanExchange.Plugin.Network.NetApi
 {
     [Serializable]
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     [CLSCompliant(false)]
     public sealed class SERVER_INFO_101
     {

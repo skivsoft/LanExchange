@@ -21,7 +21,7 @@ namespace LanExchange.Plugin.Windows
 
         public Size Size
         {
-            get { return m_ImageList == null ? new Size(0, 0) : m_ImageList.Size; }
+            get { return m_ImageList == null ? Size.Empty : m_ImageList.Size; }
         }
 
         public Icon GetIcon(int index)
