@@ -17,14 +17,8 @@ namespace LanExchange.Plugin.FileSystem
 
         public void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
-            foreach (var drive in DriveInfo.GetDrives())
-            {
-                var fname = drive.RootDirectory.Name;
-                PluginFileSystem.RegisterImageForFileName(fname);
-                var item = new DrivePanelItem(parent, fname);
-                item.Info = drive;
-                result.Add(item);
-            }
+            foreach (var driveName in Directory.GetLogicalDrives())
+                result.Add(new DrivePanelItem(parent, driveName));
         }
     }
 }

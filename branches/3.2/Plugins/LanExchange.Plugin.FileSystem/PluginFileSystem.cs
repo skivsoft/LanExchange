@@ -8,6 +8,7 @@ namespace LanExchange.Plugin.FileSystem
     public class PluginFileSystem : IPlugin
     {
         public static IImageManager ImageManager;
+        public static ColumnSizeFormat SizeFormat = ColumnSizeFormat.Kilobyte;
 
         public void Initialize(IServiceProvider serviceProvider)
         {
@@ -36,20 +37,20 @@ namespace LanExchange.Plugin.FileSystem
                 fillerManager.RegisterFiller<DrivePanelItem>(new DriveFiller());
                 fillerManager.RegisterFiller<FilePanelItem>(new FileFiller());
             }
-
-            // Register images for disk drives
-            foreach (var drive in DriveInfo.GetDrives())
-                RegisterImageForFileName(drive.RootDirectory.Name);
         }
 
+        /// <summary>
+        /// Register image in ImageManager for specified fname unless if it already registered.
+        /// </summary>
+        /// <param name="fname"></param>
         public static void RegisterImageForFileName(string fname)
         {
-            if (ImageManager != null && ImageManager.IndexOf(fname) == -1)
-            {
-                var image1 = ImageManager.GetSmallImageOfFileName(fname);
-                var image2 = ImageManager.GetLargeImageOfFileName(fname);
-                ImageManager.RegisterImage(fname, image1, image2);
-            }
+            if (ImageManager == null || ImageManager.IndexOf(fname) != -1)
+                return;
+
+            var image1 = ImageManager.GetSmallImageOfFileName(fname);
+            var image2 = ImageManager.GetLargeImageOfFileName(fname);
+            ImageManager.RegisterImage(fname, image1, image2);
         }
     }
 }

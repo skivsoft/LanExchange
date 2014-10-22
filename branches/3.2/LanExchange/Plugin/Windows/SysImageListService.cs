@@ -33,7 +33,7 @@ namespace LanExchange.Plugin.Windows
 
         public int GetIconIndex(string fileName)
         {
-            return m_ImageList == null ? -1 : m_ImageList.IconIndex(fileName);
+            return m_ImageList == null ? -1 : m_ImageList.IconIndex(fileName, false);
         }
     }
 }

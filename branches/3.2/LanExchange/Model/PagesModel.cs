@@ -132,7 +132,11 @@ namespace LanExchange.Model
 
         public string GetTabName(int index)
         {
-            return index >= 0 && index <= Count - 1 ? m_List[index].TabName : null;
+            if (index < 0 || index > Count - 1)
+                return string.Empty;
+
+            var result = m_List[index].TabName;
+            return result ?? string.Empty;
         }
 
         public void LoadSettings(out IPagesModel model)

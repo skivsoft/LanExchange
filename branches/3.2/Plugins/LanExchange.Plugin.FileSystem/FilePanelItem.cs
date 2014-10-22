@@ -69,7 +69,7 @@ namespace LanExchange.Plugin.FileSystem
                 case 1:
                     if (IsDirectory)
                         return ColumnSize.Zero;
-                    return new ColumnSize(m_FI.Length, false, string.Empty);
+                    return new ColumnSize(m_FI.Length, false);
                 default:
                     return base.GetValue(index);
             }

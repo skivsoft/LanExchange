@@ -4,19 +4,17 @@ using System.Globalization;
 
 namespace LanExchange.Plugin.FileSystem
 {
-    internal class ColumnSize : IComparable<ColumnSize>, IComparable
+    public class ColumnSize : IComparable<ColumnSize>, IComparable
     {
-        public static ColumnSize Zero = new ColumnSize(0, true, string.Empty);
+        public static ColumnSize Zero = new ColumnSize(0, true);
 
         private readonly long m_Value;
         private readonly bool m_IsDirectory;
-        private readonly string m_Name;
 
-        public ColumnSize(long value, bool isDirectory = true, string name = null )
+        public ColumnSize(long value, bool isDirectory)
         {
             m_Value = value;
             m_IsDirectory = isDirectory;
-            m_Name = name;
         }
 
         public long Value
@@ -27,11 +25,6 @@ namespace LanExchange.Plugin.FileSystem
         public bool IsDirectory
         {
             get { return m_IsDirectory; }
-        }
-
-        public string Name
-        {
-            get { return m_Name; }
         }
 
         public int CompareTo(object obj)
@@ -45,7 +38,7 @@ namespace LanExchange.Plugin.FileSystem
             {
                 if (!other.IsDirectory)
                     return -1;
-                return string.Compare(Name, other.Name, StringComparison.Ordinal);
+                return 0;
             }
             if (other.IsDirectory) return 1;
             if (Value < other.Value) return -1;
@@ -56,7 +49,38 @@ namespace LanExchange.Plugin.FileSystem
         [Localizable(false)]
         public override string ToString()
         {
-            return m_IsDirectory && m_Value == 0 ? string.Empty : m_Value.ToString("N0", CultureInfo.CurrentCulture);
+            if (m_IsDirectory && m_Value == 0)
+                return string.Empty;
+
+            switch (PluginFileSystem.SizeFormat)
+            {
+                case ColumnSizeFormat.Byte:
+                    return FormatSize(m_Value, long.MaxValue, null);
+                case ColumnSizeFormat.Kilobyte:
+                    return FormatSize(m_Value, 1000, new[] {string.Empty, "KB", "MB", "GB", "TB", "PB", "EB"});
+                case ColumnSizeFormat.Kibibyte:
+                    return FormatSize(m_Value, 1024, new[] {string.Empty, "KiB", "MiB", "GiB", "TiB", "PiB", "EiB"});
+                default:
+                    return string.Empty;
+            }
+        }
+
+        [Localizable(false)]
+        private static string FormatSize(long size, double divide, string[] names)
+        {
+            if (size < divide)
+                return size.ToString("N0", CultureInfo.CurrentCulture);
+
+            double value = size;
+            var count = names.Length;
+            var index = 0;
+            while (index < count-1 && value > divide)
+            {
+                value /= divide;
+                index++;
+            }
+            size = (long) Math.Round(value);
+            return size.ToString("N0", CultureInfo.CurrentCulture) + " " + names[index];
         }
     }
 }

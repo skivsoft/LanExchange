@@ -30,10 +30,10 @@ namespace LanExchange.Plugin.FileSystem
             var files = Directory.GetFileSystemEntries(path, "*.*");
             m_PathExt = Environment.GetEnvironmentVariable("PATHEXT") + ";";
             m_PathExt = m_PathExt.ToUpper();
-            foreach (var fname in files)
+            foreach (var fileName in files)
             {
-                var file = new FilePanelItem(parent, fname);
-                result.Add(file);
+                PluginFileSystem.RegisterImageForFileName(fileName);
+                result.Add(new FilePanelItem(parent, fileName));
                 //if (!file.IsDirectory && IsExecutable(fname))
                 //    PluginFileSystem.RegisterImageForFileName(fname);
             }

@@ -8,36 +8,55 @@ namespace LanExchange.Plugin.FileSystem
 {
     public sealed class DrivePanelItem : PanelItemBase
     {
-        private DriveInfo m_Info;
-        private string m_DisplayName;
+        private string m_Name;
+        private ColumnDrive m_Drive;
+        private DriveType m_DriveType;
+        private ColumnSize m_TotalSize;
+        private ColumnSize m_TotalFreeSpace;
+        private string m_DriveFormat;
 
         public DrivePanelItem()
         {
         }
 
-        public DrivePanelItem(PanelItemBase parent, string name) : base(parent)
+        [Localizable(false)]
+        public DrivePanelItem(PanelItemBase parent, string name)
+            : base(parent)
         {
             Name = name;
         }
 
+        [XmlAttribute]
         [Localizable(false)]
-        [XmlIgnore]
-        public DriveInfo Info
+        public override string Name
         {
-            get { return m_Info; }
+            get { return m_Name; }
             set
             {
-                m_Info = value;
-                if (m_Info != null)
+                var drive = new DriveInfo(value);
+                m_Name = drive.RootDirectory.Name;
+                PluginFileSystem.RegisterImageForFileName(m_Name);
+                
+                m_DriveType = drive.DriveType;
+                var volumeLabel = string.Empty;
+                if (drive.IsReady)
                 {
-                    var root = m_Info.RootDirectory.Name;
-                    m_DisplayName = string.Format("{0} ({1})", m_Info.VolumeLabel, root.Substring(0, 2));
+                    volumeLabel = drive.VolumeLabel;
+                    m_TotalSize = new ColumnSize(drive.TotalSize, true);
+                    m_TotalFreeSpace = new ColumnSize(drive.TotalFreeSpace, true);
+                    m_DriveFormat = drive.DriveFormat;
                 }
+                else
+                {
+                    m_TotalSize = ColumnSize.Zero;
+                    m_TotalFreeSpace = ColumnSize.Zero;
+                }
+                if (string.IsNullOrEmpty(volumeLabel))
+                    m_Drive = new ColumnDrive(Name, Name);
+                else
+                    m_Drive = new ColumnDrive(Name, string.Format("{0} ({1})", volumeLabel, Name));
             }
         }
-
-        [XmlAttribute]
-        public override string Name { get; set; }
 
         public override string FullName
         {
@@ -66,16 +85,11 @@ namespace LanExchange.Plugin.FileSystem
         {
             switch (index)
             {
-                case 0:
-                    return new ColumnDrive(Name, m_DisplayName);
-                case 1:
-                    return m_Info != null ? m_Info.DriveType.ToString() : string.Empty;
-                case 2:
-                    return m_Info != null ? new ColumnSize(m_Info.TotalSize) : ColumnSize.Zero;
-                case 3:
-                    return m_Info != null ? new ColumnSize(m_Info.TotalFreeSpace) : ColumnSize.Zero; 
-                case 4:
-                    return m_Info != null ? m_Info.DriveFormat : string.Empty;
+                case 0: return m_Drive;
+                case 1: return m_DriveType;
+                case 2: return m_TotalSize;
+                case 3: return m_TotalFreeSpace;
+                case 4: return m_DriveFormat;
                 default:
                     return base.GetValue(index);
             }
@@ -84,7 +98,11 @@ namespace LanExchange.Plugin.FileSystem
         public override object Clone()
         {
             var result = new DrivePanelItem(Parent, Name);
-            result.Info = Info;
+            result.m_Drive = m_Drive;
+            result.m_DriveType = m_DriveType;
+            result.m_TotalSize = m_TotalSize;
+            result.m_TotalFreeSpace = m_TotalFreeSpace;
+            result.m_DriveFormat = m_DriveFormat;
             return result;
         }
     }
