@@ -23,6 +23,9 @@ namespace LanExchange.Plugin.FileSystem
 
         public void RegisterColumns(IPanelColumnManager columnManager)
         {
+            if (columnManager == null)
+                throw new ArgumentNullException("columnManager");
+
             columnManager.RegisterColumn<DrivePanelItem>(new PanelColumnHeader(Resources.Name, 150));
             columnManager.RegisterColumn<DrivePanelItem>(new PanelColumnHeader(Resources.Type, 80));
             columnManager.RegisterColumn<DrivePanelItem>(new PanelColumnHeader(Resources.TotalSize, 100) { TextAlign = HorizontalAlignment.Right });

@@ -9,10 +9,12 @@ namespace LanExchange.Plugin.FileSystem
     internal class FileFiller : IPanelFiller
     {
         private const string SHARE_TYPE_NAME = "SharePanelItem";
-        private string m_PathExt;
+        //private string m_PathExt;
 
         public bool IsParentAccepted(PanelItemBase parent)
         {
+            if (parent == null) return false;
+
             var folder = parent as FilePanelItem;
             return (parent is DrivePanelItem) || 
                    parent.GetType().Name.Equals(SHARE_TYPE_NAME) || 
@@ -26,10 +28,15 @@ namespace LanExchange.Plugin.FileSystem
         [Localizable(false)]
         public void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
+            if (parent == null)
+                throw new ArgumentNullException("parent");
+            if (result == null)
+                throw new ArgumentNullException("result");
+
             var path = parent.FullName;
             var files = Directory.GetFileSystemEntries(path, "*.*");
-            m_PathExt = Environment.GetEnvironmentVariable("PATHEXT") + ";";
-            m_PathExt = m_PathExt.ToUpper();
+            //m_PathExt = Environment.GetEnvironmentVariable("PATHEXT") + ";";
+            //m_PathExt = m_PathExt.ToUpper();
             foreach (var fileName in files)
             {
                 PluginFileSystem.RegisterImageForFileName(fileName);

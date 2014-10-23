@@ -25,6 +25,9 @@ namespace LanExchange.Plugin.FileSystem
 
         public int CompareTo(ColumnDrive other)
         {
+            if (other == null)
+                throw new ArgumentNullException("other");
+
             return String.Compare(Name, other.Name, StringComparison.CurrentCulture);
         }
 

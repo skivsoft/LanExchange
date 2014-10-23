@@ -22,6 +22,9 @@ namespace LanExchange.Plugin.FileSystem
 
         public int CompareTo(ColumnName other)
         {
+            if (other == null)
+                throw new ArgumentNullException("other");
+
             if (IsDirectory)
             {
                 if (!other.IsDirectory)

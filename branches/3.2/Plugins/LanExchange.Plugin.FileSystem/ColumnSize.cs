@@ -4,12 +4,47 @@ using System.Globalization;
 
 namespace LanExchange.Plugin.FileSystem
 {
+    /// <summary>
+    /// Formatted column 'Size'.
+    /// </summary>
     public class ColumnSize : IComparable<ColumnSize>, IComparable
     {
-        public static ColumnSize Zero = new ColumnSize(0, true);
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
+        public static readonly ColumnSize Zero = new ColumnSize(0, true);
 
         private readonly long m_Value;
         private readonly bool m_IsDirectory;
+
+        public static int Compare(ColumnSize left, ColumnSize right)
+        {
+            if (ReferenceEquals(left, right))
+                return 0;
+            if (ReferenceEquals(left, null))
+                return -1;
+            return left.CompareTo(right);
+        }
+
+        public static bool operator <(ColumnSize left, ColumnSize right)
+        {
+            return Compare(left, right) < 0;
+        }
+
+        public static bool operator >(ColumnSize left, ColumnSize right)
+        {
+            return Compare(left, right) > 0;
+        }
+
+        public static bool operator ==(ColumnSize left, ColumnSize right)
+        {
+            if (ReferenceEquals(left, null))
+                return ReferenceEquals(right, null);
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(ColumnSize left, ColumnSize right)
+        {
+            return !(left == right);
+        }
 
         public ColumnSize(long value, bool isDirectory)
         {
@@ -27,6 +62,19 @@ namespace LanExchange.Plugin.FileSystem
             get { return m_IsDirectory; }
         }
 
+        public override bool Equals(object obj)
+        {
+            var other = obj as ColumnSize;
+            if (ReferenceEquals(other, null))
+                return false;
+            return CompareTo(other) == 0;
+        }
+
+        public override int GetHashCode()
+        {
+            return m_Value.GetHashCode();
+        }
+
         public int CompareTo(object obj)
         {
             return CompareTo(obj as ColumnSize);
@@ -34,6 +82,9 @@ namespace LanExchange.Plugin.FileSystem
 
         public int CompareTo(ColumnSize other)
         {
+            if (ReferenceEquals(other, null))
+                return 1;
+
             if (IsDirectory)
             {
                 if (!other.IsDirectory)

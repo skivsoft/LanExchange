@@ -5,7 +5,7 @@ using LanExchange.SDK;
 
 namespace LanExchange.Plugin.FileSystem
 {
-    public class FilePanelItem : PanelItemBase
+    public sealed class FilePanelItem : PanelItemBase
     {
 
         private string m_FileName;

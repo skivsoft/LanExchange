@@ -9,6 +9,9 @@ namespace LanExchange.Plugin.FileSystem
     {
         public PanelItemBase CreatePanelItem(PanelItemBase parent, string name)
         {
+            if (parent == null)
+                throw new ArgumentNullException("parent");
+
             return new FilePanelItem(parent, Path.Combine(parent.FullName, name));
         }
 
@@ -24,6 +27,9 @@ namespace LanExchange.Plugin.FileSystem
 
         public void RegisterColumns(IPanelColumnManager columnManager)
         {
+            if (columnManager == null)
+                throw new ArgumentNullException("columnManager");
+
             columnManager.RegisterColumn<FilePanelItem>(new PanelColumnHeader(Resources.Name, 200));
             columnManager.RegisterColumn<FilePanelItem>(new PanelColumnHeader(Resources.Size){TextAlign = HorizontalAlignment.Right});
         }

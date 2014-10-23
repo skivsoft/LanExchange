@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using LanExchange.SDK;
 
@@ -17,6 +18,9 @@ namespace LanExchange.Plugin.FileSystem
 
         public void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
+            if (result == null)
+                throw new ArgumentNullException("result");
+
             foreach (var driveName in Directory.GetLogicalDrives())
                 result.Add(new DrivePanelItem(parent, driveName));
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Xml.Serialization;
 using LanExchange.SDK;
@@ -54,7 +55,7 @@ namespace LanExchange.Plugin.FileSystem
                 if (string.IsNullOrEmpty(volumeLabel))
                     m_Drive = new ColumnDrive(Name, Name);
                 else
-                    m_Drive = new ColumnDrive(Name, string.Format("{0} ({1})", volumeLabel, Name));
+                    m_Drive = new ColumnDrive(Name, string.Format(CultureInfo.CurrentCulture, "{0} ({1})", volumeLabel, Name));
             }
         }
 

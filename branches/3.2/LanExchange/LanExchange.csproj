@@ -81,6 +81,9 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.WindowsAPICodePack">
+      <HintPath>..\Builds\VS2012\packages\WindowsAPICodePack-Core.1.1\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -318,6 +321,7 @@
     <None Include="Languages\Ukrainian.po">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
     <None Include="Resources\user_32.png" />
     <None Include="Resources\user_16.png" />
     <None Include="Resources\twitter-icon-v2.png" />

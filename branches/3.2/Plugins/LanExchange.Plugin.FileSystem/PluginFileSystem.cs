@@ -7,14 +7,16 @@ namespace LanExchange.Plugin.FileSystem
 {
     public class PluginFileSystem : IPlugin
     {
-        public static IImageManager ImageManager;
+        private static IImageManager s_ImageManager;
         public static ColumnSizeFormat SizeFormat = ColumnSizeFormat.Kilobyte;
 
         public void Initialize(IServiceProvider serviceProvider)
         {
+            if (serviceProvider == null) return;
+
             var provider = serviceProvider;
 
-            ImageManager = (IImageManager) provider.GetService(typeof (IImageManager));
+            s_ImageManager = (IImageManager) provider.GetService(typeof (IImageManager));
 
             // Setup resource manager
             var translationService = (ITranslationService)provider.GetService(typeof(ITranslationService));
@@ -42,15 +44,15 @@ namespace LanExchange.Plugin.FileSystem
         /// <summary>
         /// Register image in ImageManager for specified fname unless if it already registered.
         /// </summary>
-        /// <param name="fname"></param>
-        public static void RegisterImageForFileName(string fname)
+        /// <param name="fileName"></param>
+        public static void RegisterImageForFileName(string fileName)
         {
-            if (ImageManager == null || ImageManager.IndexOf(fname) != -1)
+            if (s_ImageManager == null || s_ImageManager.IndexOf(fileName) != -1)
                 return;
 
-            var image1 = ImageManager.GetSmallImageOfFileName(fname);
-            var image2 = ImageManager.GetLargeImageOfFileName(fname);
-            ImageManager.RegisterImage(fname, image1, image2);
+            var image1 = s_ImageManager.GetSmallImageOfFileName(fileName);
+            var image2 = s_ImageManager.GetLargeImageOfFileName(fileName);
+            s_ImageManager.RegisterImage(fileName, image1, image2);
         }
     }
 }
