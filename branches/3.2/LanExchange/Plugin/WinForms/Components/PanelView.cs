@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using LanExchange.Helpers;
 using LanExchange.Interfaces;
 using LanExchange.Ioc;
+using LanExchange.Plugin.WinForms.Forms;
 using LanExchange.Plugin.WinForms.Interfaces;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.Properties;
@@ -28,9 +30,15 @@ namespace LanExchange.Plugin.WinForms.Components
 
         public event EventHandler FocusedItemChanged;
 
+        [DllImport("uxtheme.dll", ExactSpelling = true, CharSet = CharSet.Unicode)]
+        private static extern int SetWindowTheme(IntPtr hwnd, string pszSubAppName, string pszSubIdList);
+
         public PanelView(IPanelPresenter presenter, IAddonManager addonManager, IPanelItemFactoryManager factoryManager)
         {
             InitializeComponent();
+
+            SetWindowTheme(LV.Handle, "explorer", null);
+
             // init presenters
             m_Presenter = presenter;
             m_Presenter.View = this;

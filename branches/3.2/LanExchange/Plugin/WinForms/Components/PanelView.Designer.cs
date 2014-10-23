@@ -38,8 +38,8 @@
             this.mDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.mAfterDelete = new System.Windows.Forms.ToolStripSeparator();
             this.mNewItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.LV = new ListViewer();
-            this.pFilter = new FilterView();
+            this.LV = new LanExchange.Plugin.WinForms.Components.ListViewer();
+            this.pFilter = new LanExchange.Plugin.WinForms.Components.FilterView();
             this.popComps.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,27 +54,27 @@
             this.mAfterDelete,
             this.mNewItem});
             this.popComps.Name = "popComps";
-            this.popComps.Size = new System.Drawing.Size(153, 148);
+            this.popComps.Size = new System.Drawing.Size(148, 126);
             this.popComps.Opening += new System.ComponentModel.CancelEventHandler(this.popComps_Opening);
             // 
             // mComp
             // 
             this.mComp.Enabled = false;
             this.mComp.Name = "mComp";
-            this.mComp.Size = new System.Drawing.Size(152, 22);
+            this.mComp.Size = new System.Drawing.Size(147, 22);
             this.mComp.Tag = "";
             // 
             // mAfterComp
             // 
             this.mAfterComp.Name = "mAfterComp";
-            this.mAfterComp.Size = new System.Drawing.Size(149, 6);
+            this.mAfterComp.Size = new System.Drawing.Size(144, 6);
             // 
             // mCopyMenu
             // 
             this.mCopyMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mCopySelected});
             this.mCopyMenu.Name = "mCopyMenu";
-            this.mCopyMenu.Size = new System.Drawing.Size(152, 22);
+            this.mCopyMenu.Size = new System.Drawing.Size(147, 22);
             this.mCopyMenu.Text = global::LanExchange.Properties.Resources.mCopyMenu_Text;
             this.mCopyMenu.DropDownOpening += new System.EventHandler(this.mCopyMenu_DropDownOpening);
             // 
@@ -90,7 +90,7 @@
             // 
             this.mPaste.Name = "mPaste";
             this.mPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.mPaste.Size = new System.Drawing.Size(152, 22);
+            this.mPaste.Size = new System.Drawing.Size(147, 22);
             this.mPaste.Text = global::LanExchange.Properties.Resources.mPaste_Text;
             this.mPaste.Click += new System.EventHandler(this.mPaste_Click);
             // 
@@ -98,21 +98,21 @@
             // 
             this.mDelete.Name = "mDelete";
             this.mDelete.ShortcutKeyDisplayString = global::LanExchange.Properties.Resources.KeyDel;
-            this.mDelete.Size = new System.Drawing.Size(152, 22);
+            this.mDelete.Size = new System.Drawing.Size(147, 22);
             this.mDelete.Text = global::LanExchange.Properties.Resources.mDelete_Text;
             this.mDelete.Click += new System.EventHandler(this.mDelete_Click);
             // 
             // mAfterDelete
             // 
             this.mAfterDelete.Name = "mAfterDelete";
-            this.mAfterDelete.Size = new System.Drawing.Size(149, 6);
+            this.mAfterDelete.Size = new System.Drawing.Size(144, 6);
             this.mAfterDelete.Visible = false;
             // 
             // mNewItem
             // 
             this.mNewItem.Name = "mNewItem";
             this.mNewItem.ShortcutKeys = System.Windows.Forms.Keys.Insert;
-            this.mNewItem.Size = new System.Drawing.Size(152, 22);
+            this.mNewItem.Size = new System.Drawing.Size(147, 22);
             this.mNewItem.Text = "New item";
             this.mNewItem.Visible = false;
             this.mNewItem.Click += new System.EventHandler(this.mNewItem_Click);
@@ -123,7 +123,7 @@
             this.LV.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.LV.ContextMenuStrip = this.popComps;
             this.LV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LV.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.LV.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.LV.ForeColor = System.Drawing.SystemColors.WindowText;
             this.LV.FullRowSelect = true;
             this.LV.GridLines = true;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using LanExchange.Properties;
 
@@ -14,7 +15,7 @@ namespace LanExchange.Plugin.WinForms.Components
         {
             if (!SystemInformation.TerminalServerSession)
                 // switch off flikering only if not terminal session
-                SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);    
+                SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
         }
 
         protected override void WndProc(ref Message m)

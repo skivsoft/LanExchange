@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.Ioc;
@@ -100,6 +101,27 @@ namespace LanExchange.Plugin.WinForms.Impl
             return -1;
         }
 
+        private void AddImageToCollection(ImageList imageList, Image image)
+        {
+            if (imageList == null) return;
+
+            if (imageList.ImageSize == image.Size)
+            {
+                imageList.Images.Add(image);
+                return;
+            }
+
+            Bitmap bm = new Bitmap(imageList.ImageSize.Width, imageList.ImageSize.Height);
+            Graphics g = Graphics.FromImage(bm);
+            g.Clear(imageList.TransparentColor);
+            Size size = image.Size;
+            int x = Math.Max(0, (bm.Size.Width - size.Width) / 2);
+            int y = Math.Max(0, (bm.Size.Height - size.Height) / 2);
+            g.DrawImage(image, x, y, size.Width, size.Height);
+            imageList.Images.Add(bm);
+        }
+
+
         public void RegisterImage(string name, Image imageSmall, Image imageLarge)
         {
             int index;
@@ -113,7 +135,8 @@ namespace LanExchange.Plugin.WinForms.Impl
             else
             {
                 m_NamesMap.Add(name, m_LastIndex);
-                m_SmallImageList.Images.Add(imageSmall);
+                AddImageToCollection(m_SmallImageList, imageSmall);
+                //m_SmallImageList.Images.Add(imageSmall);
                 m_LargeImageList.Images.Add(imageLarge);
                 m_LastIndex++;
             }
