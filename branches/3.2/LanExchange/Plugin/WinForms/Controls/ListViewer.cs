@@ -1,20 +1,20 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using LanExchange.Properties;
 
-namespace LanExchange.Plugin.WinForms.Components
+namespace LanExchange.Plugin.WinForms.Controls
 {
     public class ListViewer : ListView
     {
         private ToolTip m_ToolTip;
         public event EventHandler<ColumnClickEventArgs> ColumnRightClick;
 
+
         public ListViewer()
         {
+            // switch off flikering only if not terminal session
             if (!SystemInformation.TerminalServerSession)
-                // switch off flikering only if not terminal session
                 SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
         }
 

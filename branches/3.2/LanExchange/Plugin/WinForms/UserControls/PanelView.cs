@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using LanExchange.Helpers;
 using LanExchange.Interfaces;
-using LanExchange.Ioc;
-using LanExchange.Plugin.WinForms.Forms;
+using LanExchange.Plugin.Windows.UXTHEME;
 using LanExchange.Plugin.WinForms.Interfaces;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.Properties;
 using LanExchange.SDK;
 
-namespace LanExchange.Plugin.WinForms.Components
+namespace LanExchange.Plugin.WinForms.UserControls
 {
     public partial class PanelView : UserControl, IPanelView, IListViewItemGetter, ITranslationable
     {
@@ -30,14 +28,12 @@ namespace LanExchange.Plugin.WinForms.Components
 
         public event EventHandler FocusedItemChanged;
 
-        [DllImport("uxtheme.dll", ExactSpelling = true, CharSet = CharSet.Unicode)]
-        private static extern int SetWindowTheme(IntPtr hwnd, string pszSubAppName, string pszSubIdList);
-
+        [Localizable(false)]
         public PanelView(IPanelPresenter presenter, IAddonManager addonManager, IPanelItemFactoryManager factoryManager)
         {
             InitializeComponent();
 
-            SetWindowTheme(LV.Handle, "explorer", null);
+            NativeMethods.SetWindowTheme(LV.Handle, "explorer", null);
 
             // init presenters
             m_Presenter = presenter;

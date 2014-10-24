@@ -1,13 +1,13 @@
 ﻿using System;
+using System.Drawing;
 using System.Globalization;
-using System.Xml.Serialization;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Drawing;
+using System.Xml.Serialization;
 
-namespace LanExchange.SDK
+namespace LanExchange.Helpers
 {
-    public static class SerializeUtils
+    public static class SerializeHelper
     {
         public static void ForceCreatePath(string path)
         {

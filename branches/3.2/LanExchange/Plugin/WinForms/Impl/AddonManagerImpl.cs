@@ -8,7 +8,6 @@ using System.Windows.Forms;
 using LanExchange.Base;
 using LanExchange.Helpers;
 using LanExchange.Interfaces;
-using LanExchange.Ioc;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.SDK;
 
@@ -71,7 +70,7 @@ namespace LanExchange.Plugin.WinForms.Impl
         private void LoadAddon(string fileName)
         {
             // load addon from xml
-            var addon = (AddOn)SerializeUtils.DeserializeObjectFromXmlFile(fileName, typeof(AddOn));
+            var addon = (AddOn)SerializeHelper.DeserializeObjectFromXmlFile(fileName, typeof(AddOn));
             // process programs
             foreach (var item in addon.Programs)
                 if (!m_Programs.ContainsKey(item.Id))

@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
 using LanExchange.Helpers;
-using LanExchange.Ioc;
 using LanExchange.SDK;
 
 namespace LanExchange.Model
@@ -42,7 +41,7 @@ namespace LanExchange.Model
             if (!File.Exists(fileName)) return;
             try
             {
-                var temp = (ConfigModel)SerializeUtils.DeserializeObjectFromXmlFile(fileName, typeof(ConfigModel));
+                var temp = (ConfigModel)SerializeHelper.DeserializeObjectFromXmlFile(fileName, typeof(ConfigModel));
                 if (temp != null)
                     ReflectionUtils.CopyObjectProperties(temp, this);
             }
@@ -58,7 +57,7 @@ namespace LanExchange.Model
             var fileName = App.FolderManager.ConfigFileName;
             try
             {
-                SerializeUtils.SerializeObjectToXmlFile(fileName, this);
+                SerializeHelper.SerializeObjectToXmlFile(fileName, this);
             }
             catch (Exception ex)
             {

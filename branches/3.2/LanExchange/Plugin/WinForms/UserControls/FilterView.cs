@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using LanExchange.Properties;
 using LanExchange.SDK;
 
-namespace LanExchange.Plugin.WinForms.Components
+namespace LanExchange.Plugin.WinForms.UserControls
 {
     public partial class FilterView : UserControl, IFilterView
     {

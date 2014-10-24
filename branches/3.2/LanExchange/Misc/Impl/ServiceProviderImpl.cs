@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using LanExchange.Ioc;
-using LanExchange.SDK;
 
 namespace LanExchange.Misc.Impl
 {

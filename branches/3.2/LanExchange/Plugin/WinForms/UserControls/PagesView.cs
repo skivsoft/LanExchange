@@ -2,18 +2,16 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using LanExchange.Ioc;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.Properties;
 using LanExchange.SDK;
 
-namespace LanExchange.Plugin.WinForms.Components
+namespace LanExchange.Plugin.WinForms.UserControls
 {
     public partial class PagesView : UserControl, IPagesView, ITranslationable
     {
         private readonly IPagesPresenter m_Presenter;
         private readonly IPanelItemFactoryManager m_FactoryManager;
-        private readonly IImageManager m_ImageManager;
 
         private int m_PopupSelectedIndex = -1;
 
@@ -37,9 +35,8 @@ namespace LanExchange.Plugin.WinForms.Components
             m_Presenter.View = this;
 
             m_FactoryManager = factoryManager;
-            m_ImageManager = imageManager;
 
-            m_ImageManager.SetImagesTo(popPages);
+            imageManager.SetImagesTo(popPages);
         }
 
         public void TranslateUI()

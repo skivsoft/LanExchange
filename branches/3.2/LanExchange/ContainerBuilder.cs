@@ -4,9 +4,9 @@ using LanExchange.Ioc;
 using LanExchange.Misc.Impl;
 using LanExchange.Model;
 using LanExchange.Plugin.Windows;
+using LanExchange.Plugin.WinForms.UserControls;
 using LanExchange.Presenter;
 using LanExchange.SDK;
-using LanExchange.Plugin.WinForms.Components;
 using LanExchange.Plugin.WinForms.Forms;
 using LanExchange.Plugin.WinForms;
 using LanExchange.Plugin.WinForms.Impl;
@@ -49,9 +49,6 @@ namespace LanExchange
             // OS: Windows
             container.Register<IUser32Service, User32Service>();
             container.Register<IShell32Service, Shell32Service>();
-            container.Register<IKernel32Service, Kernel32Service>();
-            container.Register<IComctl32Service, Comctl32Service>();
-            container.Register<IOle32Service, Ole32Service>();
             container.Register<IIPHLPAPISerivice, IPHLPAPISerivce>();
             container.Register<IHotkeysService, HotkeysService>();
             container.Register<ISingleInstanceService, SingleInstanceService>();

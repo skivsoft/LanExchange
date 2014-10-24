@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
 using LanExchange.Properties;
 
-namespace LanExchange.Plugin.WinForms.Components
+namespace LanExchange.Plugin.WinForms.UserControls
 {
     partial class FilterView
     {

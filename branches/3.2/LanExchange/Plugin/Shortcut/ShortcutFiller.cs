@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using LanExchange.Interfaces;
-using LanExchange.Ioc;
 using LanExchange.Properties;
 using LanExchange.SDK;
 
@@ -44,10 +43,12 @@ namespace LanExchange.Plugin.Shortcut
                 foreach (var menuItem in pair.Value.ContextMenu)
                     if (!string.IsNullOrEmpty(menuItem.ShortcutKeys))
                     {
-                        var shortcut = new ShortcutPanelItem(parent, menuItem.ShortcutKeys, App.TR.Translate(menuItem.Text));
+                        var shortcut = new ShortcutPanelItem(parent, menuItem.ShortcutKeys,
+                            App.TR.Translate(menuItem.Text));
                         shortcut.Context = SuppressPostfix(pair.Key, PANEL_ITEM_SUFFIX);
                         if (menuItem.ProgramValue != null)
-                            shortcut.CustomImageName = string.Format(CultureInfo.InvariantCulture, PanelImageNames.ADDON_FMT, menuItem.ProgramValue.Id);
+                            shortcut.CustomImageName = string.Format(CultureInfo.InvariantCulture,
+                                PanelImageNames.ADDON_FMT, menuItem.ProgramValue.Id);
                         result.Add(shortcut);
                     }
         }

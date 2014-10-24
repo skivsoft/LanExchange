@@ -1,10 +1,9 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using LanExchange.Ioc;
 using LanExchange.SDK;
 
-namespace LanExchange.Plugin.WinForms.Components
+namespace LanExchange.Plugin.WinForms.Controls
 {
     /// <summary>
     /// Class used to capture window messages for the header of the list view

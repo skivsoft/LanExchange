@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
-using LanExchange.Ioc;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.WinForms

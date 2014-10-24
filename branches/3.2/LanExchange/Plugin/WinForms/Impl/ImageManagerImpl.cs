@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using LanExchange.Ioc;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.Properties;
 using LanExchange.SDK;
@@ -101,7 +100,7 @@ namespace LanExchange.Plugin.WinForms.Impl
             return -1;
         }
 
-        private void AddImageToCollection(ImageList imageList, Image image)
+        private static void AddImageToCollection(ImageList imageList, Image image)
         {
             if (imageList == null) return;
 
@@ -111,10 +110,10 @@ namespace LanExchange.Plugin.WinForms.Impl
                 return;
             }
 
-            Bitmap bm = new Bitmap(imageList.ImageSize.Width, imageList.ImageSize.Height);
-            Graphics g = Graphics.FromImage(bm);
+            var bm = new Bitmap(imageList.ImageSize.Width, imageList.ImageSize.Height);
+            var g = Graphics.FromImage(bm);
             g.Clear(imageList.TransparentColor);
-            Size size = image.Size;
+            var size = image.Size;
             int x = Math.Max(0, (bm.Size.Width - size.Width) / 2);
             int y = Math.Max(0, (bm.Size.Height - size.Height) / 2);
             g.DrawImage(image, x, y, size.Width, size.Height);

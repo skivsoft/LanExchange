@@ -103,6 +103,7 @@
     <Compile Include="Helpers\EnvironmentHelper.cs" />
     <Compile Include="Helpers\PanelModelCopyHelper.cs" />
     <Compile Include="App.cs" />
+    <Compile Include="Helpers\SerializeHelper.cs" />
     <Compile Include="Interfaces\DataReadyArgs.cs" />
     <Compile Include="Interfaces\IAddonManager.cs" />
     <Compile Include="Interfaces\ILazyThreadPool.cs" />
@@ -139,13 +140,10 @@
     <Compile Include="Model\PagesModel.cs" />
     <Compile Include="Model\PanelModel.cs" />
     <Compile Include="Misc\Phrase.cs" />
-    <Compile Include="Plugin\Windows\Comctl32Service.cs" />
     <Compile Include="Plugin\Windows\ExternDll.cs" />
     <Compile Include="Plugin\Windows\HotkeysService.cs" />
     <Compile Include="Plugin\Windows\IPHLPAPISerivce.cs" />
     <Compile Include="Plugin\Windows\IPHLPAPI\NativeMethods.cs" />
-    <Compile Include="Plugin\Windows\Kernel32Service.cs" />
-    <Compile Include="Plugin\Windows\Ole32Service.cs" />
     <Compile Include="Plugin\Windows\Shell32Service.cs" />
     <Compile Include="Plugin\Windows\SingleInstanceService.cs" />
     <Compile Include="Plugin\Windows\SysImageListService.cs" />
@@ -166,6 +164,7 @@
     <Compile Include="Plugin\Windows\Utils\SysImageListHelper.cs" />
     <Compile Include="Plugin\Windows\Utils\UnsafeNativeMethods.cs" />
     <Compile Include="Plugin\Windows\Utils\User32Utils.cs" />
+    <Compile Include="Plugin\Windows\UXTHEME\NativeMethods.cs" />
     <Compile Include="Plugin\WinForms\Forms\CheckAvailabilityForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -201,23 +200,23 @@
     <Compile Include="Plugin\WinForms\Forms\EscapeForm.Designer.cs">
       <DependentUpon>EscapeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Plugin\WinForms\Components\FilterView.cs">
+    <Compile Include="Plugin\WinForms\UserControls\FilterView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Plugin\WinForms\Components\FilterView.Designer.cs">
+    <Compile Include="Plugin\WinForms\UserControls\FilterView.Designer.cs">
       <DependentUpon>FilterView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Plugin\WinForms\Components\HeaderControl.cs" />
+    <Compile Include="Plugin\WinForms\Controls\HeaderControl.cs" />
     <Compile Include="Plugin\WinForms\Interfaces\IListViewItemGetter.cs" />
     <Compile Include="Plugin\WinForms\Impl\ImageManagerImpl.cs" />
-    <Compile Include="Plugin\WinForms\Components\InfoView.cs">
+    <Compile Include="Plugin\WinForms\UserControls\InfoView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Plugin\WinForms\Components\InfoView.Designer.cs">
+    <Compile Include="Plugin\WinForms\UserControls\InfoView.Designer.cs">
       <DependentUpon>InfoView.cs</DependentUpon>
     </Compile>
     <Compile Include="Plugin\WinForms\Utils\KeyboardUtils.cs" />
-    <Compile Include="Plugin\WinForms\Components\ListViewer.cs">
+    <Compile Include="Plugin\WinForms\Controls\ListViewer.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Plugin\WinForms\Interfaces\ListViewItemCache.cs" />
@@ -229,16 +228,16 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Plugin\WinForms\Impl\MessageBoxServiceImpl.cs" />
-    <Compile Include="Plugin\WinForms\Components\PagesView.cs">
+    <Compile Include="Plugin\WinForms\UserControls\PagesView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Plugin\WinForms\Components\PagesView.Designer.cs">
+    <Compile Include="Plugin\WinForms\UserControls\PagesView.Designer.cs">
       <DependentUpon>PagesView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Plugin\WinForms\Components\PanelView.cs">
+    <Compile Include="Plugin\WinForms\UserControls\PanelView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Plugin\WinForms\Components\PanelView.Designer.cs">
+    <Compile Include="Plugin\WinForms\UserControls\PanelView.Designer.cs">
       <DependentUpon>PanelView.cs</DependentUpon>
     </Compile>
     <Compile Include="Plugin\WinForms\Forms\RunMinimizedForm.cs">
@@ -280,16 +279,16 @@
     <EmbeddedResource Include="Plugin\WinForms\Forms\EditForm.resx">
       <DependentUpon>EditForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Plugin\WinForms\Components\InfoView.resx">
+    <EmbeddedResource Include="Plugin\WinForms\UserControls\InfoView.resx">
       <DependentUpon>InfoView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Plugin\WinForms\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Plugin\WinForms\Components\PagesView.resx">
+    <EmbeddedResource Include="Plugin\WinForms\UserControls\PagesView.resx">
       <DependentUpon>PagesView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Plugin\WinForms\Components\PanelView.resx">
+    <EmbeddedResource Include="Plugin\WinForms\UserControls\PanelView.resx">
       <DependentUpon>PanelView.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

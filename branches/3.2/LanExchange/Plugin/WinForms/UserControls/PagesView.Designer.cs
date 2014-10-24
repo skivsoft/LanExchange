@@ -1,4 +1,4 @@
-﻿namespace LanExchange.Plugin.WinForms.Components
+﻿namespace LanExchange.Plugin.WinForms.UserControls
 {
     partial class PagesView
     {

@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using LanExchange.Ioc;
 using LanExchange.SDK;
 
-namespace LanExchange.Plugin.WinForms.Components
+namespace LanExchange.Plugin.WinForms.UserControls
 {
     public partial class InfoView : UserControl, IInfoView
     {

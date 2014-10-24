@@ -1,4 +1,6 @@
-﻿namespace LanExchange.Plugin.WinForms.Components
+﻿using LanExchange.Plugin.WinForms.Controls;
+
+namespace LanExchange.Plugin.WinForms.UserControls
 {
     partial class PanelView
     {
@@ -38,8 +40,8 @@
             this.mDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.mAfterDelete = new System.Windows.Forms.ToolStripSeparator();
             this.mNewItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.LV = new LanExchange.Plugin.WinForms.Components.ListViewer();
-            this.pFilter = new LanExchange.Plugin.WinForms.Components.FilterView();
+            this.LV = new ListViewer();
+            this.pFilter = new FilterView();
             this.popComps.SuspendLayout();
             this.SuspendLayout();
             // 

@@ -10,8 +10,7 @@ using System.Reflection;
 using System.Resources;
 using System.Text;
 using LanExchange.Base;
-using LanExchange.Ioc;
-using LanExchange.SDK;
+using LanExchange.Helpers;
 
 namespace LanExchange.Misc
 {
@@ -56,7 +55,7 @@ namespace LanExchange.Misc
         private static void ProcessAddon(string fileName)
         {
             // load addon from xml
-            var addon = (AddOn)SerializeUtils.DeserializeObjectFromXmlFile(fileName, typeof(AddOn));
+            var addon = (AddOn)SerializeHelper.DeserializeObjectFromXmlFile(fileName, typeof(AddOn));
             var context = Path.GetFileName(fileName);
             foreach (var panelItem in addon.ItemTypes)
             {

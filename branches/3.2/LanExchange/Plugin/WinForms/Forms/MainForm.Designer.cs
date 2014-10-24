@@ -1,5 +1,5 @@
 ﻿using System.Windows.Forms;
-using LanExchange.Plugin.WinForms.Components;
+using LanExchange.Plugin.WinForms.UserControls;
 
 namespace LanExchange.Plugin.WinForms.Forms
 {

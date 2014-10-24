@@ -65,9 +65,6 @@
     <Compile Include="IPluginManager.cs" />
     <Compile Include="IPuntoSwitcherService.cs" />
     <Compile Include="IPagesModel.cs" />
-    <Compile Include="IComctl32Service.cs" />
-    <Compile Include="IKernel32Service.cs" />
-    <Compile Include="IOle32Service.cs" />
     <Compile Include="IShell32Service.cs" />
     <Compile Include="ISingleInstanceService.cs" />
     <Compile Include="ISysImageListService.cs" />
@@ -98,7 +95,6 @@
     <Compile Include="SysImageListSize.cs" />
     <Compile Include="PanelItemBaseHolder.cs" />
     <Compile Include="RetrieveMode.cs" />
-    <Compile Include="SerializeUtils.cs" />
     <Compile Include="IConfigModel.cs" />
     <Compile Include="ITranslationable.cs" />
     <Compile Include="IHotkeysService.cs" />

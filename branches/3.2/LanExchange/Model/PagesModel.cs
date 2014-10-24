@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
-using LanExchange.Ioc;
+using LanExchange.Helpers;
 using LanExchange.SDK;
 
 namespace LanExchange.Model
@@ -148,7 +148,7 @@ namespace LanExchange.Model
                 {
                     model =
                         (PagesModel)
-                        SerializeUtils.DeserializeObjectFromXmlFile(fileFName, typeof (PagesModel),
+                        SerializeHelper.DeserializeObjectFromXmlFile(fileFName, typeof (PagesModel),
                                                                     m_FactoryManager.ToArray());
                 }
                 catch(Exception ex)
@@ -188,7 +188,7 @@ namespace LanExchange.Model
         {
             try
             {
-                SerializeUtils.SerializeObjectToXmlFile(App.FolderManager.TabsConfigFileName, this, m_FactoryManager.ToArray());
+                SerializeHelper.SerializeObjectToXmlFile(App.FolderManager.TabsConfigFileName, this, m_FactoryManager.ToArray());
             }
             catch(Exception ex)
             {

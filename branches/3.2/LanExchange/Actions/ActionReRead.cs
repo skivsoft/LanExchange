@@ -1,5 +1,4 @@
-﻿using LanExchange.Ioc;
-using LanExchange.SDK;
+﻿using LanExchange.SDK;
 
 namespace LanExchange.Actions
 {
