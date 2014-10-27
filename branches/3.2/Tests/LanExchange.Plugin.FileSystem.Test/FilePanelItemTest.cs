@@ -1,4 +1,5 @@
-﻿using LanExchange.SDK;
+﻿using LanExchange.Helpers;
+using LanExchange.SDK;
 using NUnit.Framework;
 
 namespace LanExchange.Plugin.FileSystem
@@ -11,7 +12,7 @@ namespace LanExchange.Plugin.FileSystem
         {
             var drive = new DrivePanelItem(new FileRoot(), @"C:\");
             var item = new FilePanelItem(drive, @"c:\windows");
-            string content = SerializeUtils.SerializeObjectToXml(item);
+            string content = SerializeHelper.SerializeObjectToXml(item);
         }
     }
 }

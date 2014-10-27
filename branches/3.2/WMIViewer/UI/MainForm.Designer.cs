@@ -48,8 +48,8 @@ namespace WMIViewer.UI
             this.pTop = new System.Windows.Forms.Panel();
             this.menuClasses = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.wMIItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lDescription = new System.Windows.Forms.Label();
             this.lClassName = new System.Windows.Forms.ToolStripDropDownButton();
+            this.lDescription = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.Status.SuspendLayout();
             this.pLeft.SuspendLayout();
@@ -201,17 +201,6 @@ namespace WMIViewer.UI
             this.wMIItemToolStripMenuItem.Name = "wMIItemToolStripMenuItem";
             this.wMIItemToolStripMenuItem.Size = new System.Drawing.Size(67, 22);
             // 
-            // lDescription
-            // 
-            this.lDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lDescription.Location = new System.Drawing.Point(12, 10);
-            this.lDescription.Name = "lDescription";
-            this.lDescription.Size = new System.Drawing.Size(768, 56);
-            this.lDescription.TabIndex = 1;
-            this.lDescription.Text = Resources.EmptyText;
-            // 
             // lClassName
             // 
             this.lClassName.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -221,6 +210,17 @@ namespace WMIViewer.UI
             this.lClassName.Name = "lClassName";
             this.lClassName.Size = new System.Drawing.Size(32, 22);
             this.lClassName.Text = global::WMIViewer.Properties.Resources.EmptyText;
+            // 
+            // lDescription
+            // 
+            this.lDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lDescription.Location = new System.Drawing.Point(12, 10);
+            this.lDescription.Name = "lDescription";
+            this.lDescription.Size = new System.Drawing.Size(768, 56);
+            this.lDescription.TabIndex = 1;
+            this.lDescription.Text = "    ";
             // 
             // toolStrip1
             // 

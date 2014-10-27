@@ -26,9 +26,11 @@ namespace LanExchange.Plugin.Windows.Utils
     /// </example>
     public static class SingleInstanceCheck
     {
+        private const int SW_NORMAL = 1;
 
         static bool FindInvisibleWindow(IntPtr hWnd, IntPtr lParam)
         {
+
             var wndRef = new HandleRef(lParam, hWnd);
             // skip visible windows
             if (SafeNativeMethods.IsWindowVisible(wndRef))
@@ -42,7 +44,7 @@ namespace LanExchange.Plugin.Windows.Utils
             // we found or not
             if (procId == lParam.ToInt32())
             {
-                UnsafeNativeMethods.ShowWindowAsync(wndRef, NativeMethods.SW_NORMAL);
+                UnsafeNativeMethods.ShowWindowAsync(wndRef, SW_NORMAL);
                 UnsafeNativeMethods.SetForegroundWindow(wndRef);
                 return false;
             }
@@ -67,7 +69,7 @@ namespace LanExchange.Plugin.Windows.Utils
                     if (process.MainWindowHandle != IntPtr.Zero)
                     {
                         var wndRef = new HandleRef(process, process.MainWindowHandle);
-                        UnsafeNativeMethods.ShowWindowAsync(wndRef, NativeMethods.SW_NORMAL);
+                        UnsafeNativeMethods.ShowWindowAsync(wndRef, SW_NORMAL);
                         UnsafeNativeMethods.SetForegroundWindow(wndRef);
                     }
                     else

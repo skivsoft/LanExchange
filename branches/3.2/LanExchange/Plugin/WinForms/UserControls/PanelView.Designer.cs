@@ -1,4 +1,4 @@
-﻿using LanExchange.Plugin.WinForms.Controls;
+﻿using LanExchange.Controls;
 
 namespace LanExchange.Plugin.WinForms.UserControls
 {
@@ -40,8 +40,8 @@ namespace LanExchange.Plugin.WinForms.UserControls
             this.mDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.mAfterDelete = new System.Windows.Forms.ToolStripSeparator();
             this.mNewItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.LV = new ListViewer();
-            this.pFilter = new FilterView();
+            this.LV = new LanExchange.Controls.LanExchangeListView();
+            this.pFilter = new LanExchange.Plugin.WinForms.UserControls.FilterView();
             this.popComps.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -128,7 +128,6 @@ namespace LanExchange.Plugin.WinForms.UserControls
             this.LV.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.LV.ForeColor = System.Drawing.SystemColors.WindowText;
             this.LV.FullRowSelect = true;
-            this.LV.GridLines = true;
             this.LV.HideSelection = false;
             this.LV.Location = new System.Drawing.Point(0, 0);
             this.LV.Margin = new System.Windows.Forms.Padding(0);
@@ -136,8 +135,8 @@ namespace LanExchange.Plugin.WinForms.UserControls
             this.LV.ShowItemToolTips = true;
             this.LV.Size = new System.Drawing.Size(423, 368);
             this.LV.TabIndex = 26;
-            this.LV.ToolTipActive = false;
             this.LV.UseCompatibleStateImageBehavior = false;
+            this.LV.UseExplorerTheme = true;
             this.LV.View = System.Windows.Forms.View.Details;
             this.LV.VirtualMode = true;
             this.LV.ColumnRightClick += new System.EventHandler<System.Windows.Forms.ColumnClickEventArgs>(this.LV_ColumnRightClick);
@@ -183,7 +182,7 @@ namespace LanExchange.Plugin.WinForms.UserControls
 
         #endregion
 
-        private ListViewer LV;
+        private LanExchangeListView LV;
         public System.Windows.Forms.ContextMenuStrip popComps;
         public System.Windows.Forms.ToolStripMenuItem mComp;
         private System.Windows.Forms.ToolStripSeparator mAfterComp;

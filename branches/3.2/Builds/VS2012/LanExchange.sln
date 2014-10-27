@@ -46,6 +46,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Users.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QSharp", "..\..\QSharp\QSharp.csproj", "{95AE6ECB-D0EF-4493-83B8-994D4BC80797}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Controls", "..\..\LanExchange.Controls\LanExchange.Controls.csproj", "{49CAC51B-9566-4FED-B03A-6C0A66D2455D}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = LanExchange2010.vsmdi
@@ -199,6 +201,16 @@ Global
 		{95AE6ECB-D0EF-4493-83B8-994D4BC80797}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{95AE6ECB-D0EF-4493-83B8-994D4BC80797}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{95AE6ECB-D0EF-4493-83B8-994D4BC80797}.Release|x86.ActiveCfg = Release|Any CPU
+		{49CAC51B-9566-4FED-B03A-6C0A66D2455D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49CAC51B-9566-4FED-B03A-6C0A66D2455D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49CAC51B-9566-4FED-B03A-6C0A66D2455D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{49CAC51B-9566-4FED-B03A-6C0A66D2455D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{49CAC51B-9566-4FED-B03A-6C0A66D2455D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{49CAC51B-9566-4FED-B03A-6C0A66D2455D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49CAC51B-9566-4FED-B03A-6C0A66D2455D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49CAC51B-9566-4FED-B03A-6C0A66D2455D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{49CAC51B-9566-4FED-B03A-6C0A66D2455D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{49CAC51B-9566-4FED-B03A-6C0A66D2455D}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

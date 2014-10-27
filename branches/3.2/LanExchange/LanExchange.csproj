@@ -24,6 +24,8 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>false</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -39,8 +41,6 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>false</BootstrapperEnabled>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -81,9 +81,6 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.WindowsAPICodePack">
-      <HintPath>..\Builds\VS2012\packages\WindowsAPICodePack-Core.1.1\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -147,13 +144,11 @@
     <Compile Include="Plugin\Windows\Shell32Service.cs" />
     <Compile Include="Plugin\Windows\SingleInstanceService.cs" />
     <Compile Include="Plugin\Windows\SysImageListService.cs" />
-    <Compile Include="Plugin\Windows\User32Service.cs" />
     <Compile Include="Plugin\Windows\Utils\HookEventArgs.cs" />
     <Compile Include="Plugin\Windows\Utils\HookType.cs" />
     <Compile Include="Plugin\Windows\Utils\ImageListDrawItemConstants.cs" />
     <Compile Include="Plugin\Windows\Utils\ImageListDrawStateConstants.cs" />
     <Compile Include="Plugin\Windows\Utils\LocalWindowsHook.cs" />
-    <Compile Include="Plugin\Windows\Utils\NativeMethods.cs" />
     <Compile Include="Plugin\Windows\Utils\SafeNativeMethods.cs" />
     <Compile Include="Plugin\Windows\Utils\ShellAPI.cs" />
     <Compile Include="Plugin\Windows\Utils\ShellContextMenu.cs" />
@@ -163,8 +158,6 @@
     <Compile Include="Plugin\Windows\Utils\SysImageList.cs" />
     <Compile Include="Plugin\Windows\Utils\SysImageListHelper.cs" />
     <Compile Include="Plugin\Windows\Utils\UnsafeNativeMethods.cs" />
-    <Compile Include="Plugin\Windows\Utils\User32Utils.cs" />
-    <Compile Include="Plugin\Windows\UXTHEME\NativeMethods.cs" />
     <Compile Include="Plugin\WinForms\Forms\CheckAvailabilityForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -206,7 +199,6 @@
     <Compile Include="Plugin\WinForms\UserControls\FilterView.Designer.cs">
       <DependentUpon>FilterView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Plugin\WinForms\Controls\HeaderControl.cs" />
     <Compile Include="Plugin\WinForms\Interfaces\IListViewItemGetter.cs" />
     <Compile Include="Plugin\WinForms\Impl\ImageManagerImpl.cs" />
     <Compile Include="Plugin\WinForms\UserControls\InfoView.cs">
@@ -216,9 +208,6 @@
       <DependentUpon>InfoView.cs</DependentUpon>
     </Compile>
     <Compile Include="Plugin\WinForms\Utils\KeyboardUtils.cs" />
-    <Compile Include="Plugin\WinForms\Controls\ListViewer.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Plugin\WinForms\Interfaces\ListViewItemCache.cs" />
     <Compile Include="Plugin\WinForms\Utils\MacroHelper.cs" />
     <Compile Include="Plugin\WinForms\Forms\MainForm.cs">
@@ -391,6 +380,11 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\LanExchange.Controls\LanExchange.Controls.csproj">
+      <Project>{49cac51b-9566-4fed-b03a-6c0a66d2455d}</Project>
+      <Name>LanExchange.Controls</Name>
+      <Private>False</Private>
+    </ProjectReference>
     <ProjectReference Include="..\LanExchange.SDK\LanExchange.SDK.csproj">
       <Project>{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}</Project>
       <Name>LanExchange.SDK</Name>

@@ -1,4 +1,6 @@
-﻿namespace LanExchange.SDK
+﻿using LanExchange.SDK.Presenter.View;
+
+namespace LanExchange.SDK
 {
     /// <summary>
     /// View for filter panel.

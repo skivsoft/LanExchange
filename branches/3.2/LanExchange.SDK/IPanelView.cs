@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using LanExchange.SDK.Presenter.View;
 
 namespace LanExchange.SDK
 {

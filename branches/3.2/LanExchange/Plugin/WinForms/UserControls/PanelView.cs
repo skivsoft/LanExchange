@@ -5,9 +5,9 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using LanExchange.Controls;
 using LanExchange.Helpers;
 using LanExchange.Interfaces;
-using LanExchange.Plugin.Windows.UXTHEME;
 using LanExchange.Plugin.WinForms.Interfaces;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.Properties;
@@ -32,8 +32,6 @@ namespace LanExchange.Plugin.WinForms.UserControls
         public PanelView(IPanelPresenter presenter, IAddonManager addonManager, IPanelItemFactoryManager factoryManager)
         {
             InitializeComponent();
-
-            NativeMethods.SetWindowTheme(LV.Handle, "explorer", null);
 
             // init presenters
             m_Presenter = presenter;
@@ -270,14 +268,6 @@ namespace LanExchange.Plugin.WinForms.UserControls
                     pFilter.FocusMe();
                 e.Handled = true;
             }
-            // Ctrl+A - Select all items
-            if (e.Control && e.KeyCode == Keys.A)
-            {
-                var listView = sender as ListView;
-                if (listView != null)
-                    App.Resolve<IUser32Service>().SelectAllItems(listView.Handle);
-                e.Handled = true;
-            }
             // Backspace - Go level up
             if (e.KeyCode == Keys.Back)
             {
@@ -402,9 +392,7 @@ namespace LanExchange.Plugin.WinForms.UserControls
 
         public void SetColumnMarker(int columnIndex, PanelSortOrder sortOrder)
         {
-			var service = App.Resolve<IUser32Service>();
-			service.SetColumnImage(LV.Handle, columnIndex, (int)sortOrder, -1);
-            //NativeMethods.SetColumnImage(LV, columnIndex, (SortOrder)sortOrder, -1);
+            LV.SetColumnImage(columnIndex, (int)sortOrder);
             m_SortColumn = columnIndex;
         }
 

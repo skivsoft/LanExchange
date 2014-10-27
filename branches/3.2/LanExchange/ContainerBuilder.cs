@@ -47,7 +47,6 @@ namespace LanExchange
             container.Register<IPanelPresenter, PanelPresenter>(LifeCycle.Transient);
             container.Register<IEditPresenter, EditPresenter>(LifeCycle.Transient);
             // OS: Windows
-            container.Register<IUser32Service, User32Service>();
             container.Register<IShell32Service, Shell32Service>();
             container.Register<IIPHLPAPISerivice, IPHLPAPISerivce>();
             container.Register<IHotkeysService, HotkeysService>();

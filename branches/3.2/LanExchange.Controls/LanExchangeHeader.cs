@@ -1,26 +1,29 @@
 using System;
-using System.Drawing;
 using System.Windows.Forms;
-using LanExchange.SDK;
+using LanExchange.Controls.Implementation;
 
-namespace LanExchange.Plugin.WinForms.Controls
+namespace LanExchange.Controls
 {
     /// <summary>
     /// Class used to capture window messages for the header of the list view
     /// control.
     /// </summary>
-    public class HeaderControl : NativeWindow
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Lan")]
+    public class LanExchangeHeader : NativeWindow
     {
         /// <summary>
         /// Create a header control for the given ObjectListView.
         /// </summary>
-        /// <param name="olv"></param>
-        public HeaderControl(ListViewer olv) {
-            ListView = olv;
-			var handle = App.Resolve<IUser32Service>().GetHeaderControl(olv.Handle);
+        /// <param name="listView"></param>
+        public LanExchangeHeader(LanExchangeListView listView) 
+        {
+            if (listView == null)
+                throw new ArgumentNullException("listView");
+
+            ListView = listView;
+			var handle = NativeMethods.GetHeaderControl(listView.Handle);
 			if (handle != IntPtr.Zero)
 				AssignHandle(handle);
-            //AssignHandle(NativeMethods.GetHeaderControl(olv));
         }
 
         /// <summary>
@@ -28,15 +31,13 @@ namespace LanExchange.Plugin.WinForms.Controls
         /// or -1 if the cursor is not over a column
         /// </summary>
         /// <returns>Index of the column under the cursor, or -1</returns>
-        public int ColumnIndexUnderCursor {
+        public int ColumnIndexUnderCursor 
+        {
             get {
-                Point pt = ListView.PointToClient(Cursor.Position);
+                var pt = ListView.PointToClient(Cursor.Position);
 
-				var service = App.Resolve<IUser32Service>();
-				pt.X += service.GetScrollPosition(ListView.Handle, true);
-				return service.GetColumnUnderPoint(Handle, pt);
-                //pt.X += NativeMethods.GetScrollPosition(ListView, true);
-                //return NativeMethods.GetColumnUnderPoint(Handle, pt);
+				pt.X += NativeMethods.GetScrollPosition(ListView.Handle, true);
+				return NativeMethods.GetColumnUnderPoint(Handle, pt);
             }
         }
 
@@ -52,12 +53,15 @@ namespace LanExchange.Plugin.WinForms.Controls
         /// </remarks>
         public new IntPtr Handle
         {
-            get { return App.Resolve<IUser32Service>().GetHeaderControl(ListView.Handle); }
+            get
+            {
+                return NativeMethods.GetHeaderControl(ListView.Handle);
+            }
         }
 
         /// <summary>
         /// Gets or sets the listview that this header belongs to
         /// </summary>
-        protected ListViewer ListView { get; set; }
+        protected LanExchangeListView ListView { get; set; }
     }
 }

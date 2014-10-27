@@ -3,6 +3,8 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 
+[assembly: AssemblyVersion("3.2.105.0")]
+
 [assembly: AssemblyTitle("LanExchange")]
 [assembly: AssemblyDescription("User-friendly browser of computers for local area network.")]
 [assembly: AssemblyCopyright("© 2012—2014 Kostya Mikhailyuk")]

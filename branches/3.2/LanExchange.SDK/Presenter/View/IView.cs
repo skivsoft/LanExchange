@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LanExchange.SDK
+namespace LanExchange.SDK.Presenter.View
 {
     /// <summary>
     /// Base interface for any View interface.

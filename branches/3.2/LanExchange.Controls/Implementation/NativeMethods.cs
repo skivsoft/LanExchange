@@ -3,13 +3,11 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace LanExchange.Plugin.Windows.Utils
+namespace LanExchange.Controls.Implementation
 {
     [Localizable(false)]
     internal static class NativeMethods
     {
-        public static HandleRef NullHandleRef = new HandleRef(null, IntPtr.Zero);
-
         public const int
             WM_QUERYENDSESSION = 0x0011,
             WM_ENDSESSION = 0x0016,
@@ -108,15 +106,16 @@ namespace LanExchange.Plugin.Windows.Utils
         #region Entry points
 
         [DllImport(ExternDll.User32, CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
+        public static extern IntPtr SendMessage(IntPtr hWnd, UInt32 msg, IntPtr wParam, IntPtr lParam);
 
         [DllImport(ExternDll.User32, EntryPoint = "SendMessage", CharSet = CharSet.Auto)]
-        private static extern IntPtr SendMessageHDItem(IntPtr hWnd, int msg, int wParam, ref HDITEM hdi);
+        private static extern IntPtr SendMessageHDItem(IntPtr hWnd, UInt32 msg, IntPtr wParam, ref HDITEM hdi);
 
         [DllImport(ExternDll.User32, EntryPoint = "SendMessage", CharSet = CharSet.Auto)]
         public static extern IntPtr SendMessageHDHITTESTINFO(IntPtr hWnd, int msg, IntPtr wParam, [In, Out] HDHITTESTINFO lParam);
 
         [DllImport(ExternDll.User32, CharSet = CharSet.Auto, ExactSpelling = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool GetScrollInfo(IntPtr hWnd, int fnBar, SCROLLINFO scrollInfo);
 
         #endregion
@@ -128,7 +127,7 @@ namespace LanExchange.Plugin.Windows.Utils
         /// <returns>The handle to the header control</returns>
         public static IntPtr GetHeaderControl(IntPtr listViewHandle)
         {
-            return SendMessage(listViewHandle, LVM_GETHEADER, 0, 0);
+            return SendMessage(listViewHandle, LVM_GETHEADER, IntPtr.Zero, IntPtr.Zero);
         }
 
         /// <summary>
@@ -138,8 +137,7 @@ namespace LanExchange.Plugin.Windows.Utils
         /// <param name="listViewHandle">The listview to send a m to</param>
         /// <param name="columnIndex">Index of the column to modifiy</param>
         /// <param name="order"></param>
-        /// <param name="imageIndex">Index into the small image list</param>
-        public static void SetColumnImage(IntPtr listViewHandle, int columnIndex, int order, int imageIndex)
+        public static void SetColumnImage(IntPtr listViewHandle, int columnIndex, int order) // , int imageIndex
         {
             IntPtr hdrCntl = GetHeaderControl(listViewHandle);
             if (hdrCntl.ToInt32() == 0)
@@ -147,7 +145,7 @@ namespace LanExchange.Plugin.Windows.Utils
 
             var item = new HDITEM();
             item.mask = HDI_FORMAT;
-            SendMessageHDItem(hdrCntl, HDM_GETITEM, columnIndex, ref item);
+            SendMessageHDItem(hdrCntl, HDM_GETITEM, new IntPtr(columnIndex), ref item);
 
             item.fmt &= ~(HDF_SORTUP | HDF_SORTDOWN | HDF_IMAGE | HDF_BITMAP_ON_RIGHT);
 
@@ -165,7 +163,7 @@ namespace LanExchange.Plugin.Windows.Utils
             //    item.iImage = imageIndex;
             //}
 
-            SendMessageHDItem(hdrCntl, HDM_SETITEM, columnIndex, ref item);
+            SendMessageHDItem(hdrCntl, HDM_SETITEM, new IntPtr(columnIndex), ref item);
         }
 
         /// <summary>
@@ -209,6 +207,49 @@ namespace LanExchange.Plugin.Windows.Utils
                 return testInfo.iItem;
             return -1;
         }
+
+        [DllImport(ExternDll.UXTHEME, ExactSpelling = true, CharSet = CharSet.Auto)]
+        internal static extern int SetWindowTheme(
+            [In] IntPtr hwnd,
+            [In, MarshalAs(UnmanagedType.LPWStr)] string pszSubAppName,
+            [In, MarshalAs(UnmanagedType.LPWStr)] string pszSubIdList);
+
+        internal const int LVM_SETITEMSTATE = LVM_FIRST + 43;
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+        public struct LVITEM
+        {
+            public int mask;
+            public int iItem;
+            public int iSubItem;
+            public int state;
+            public int stateMask;
+            [MarshalAs(UnmanagedType.LPTStr)]
+            public string pszText;
+            public int cchTextMax;
+            public int iImage;
+            public IntPtr lParam;
+            public int iIndent;
+            public int iGroupId;
+            public int cColumns;
+            public IntPtr puColumns;
+        };
+
+        [DllImport(ExternDll.User32, EntryPoint = "SendMessage", CharSet = CharSet.Auto)]
+        public static extern IntPtr SendMessageLVItem(IntPtr hWnd, UInt32 msg, IntPtr wParam, ref LVITEM lvi);
+
+        /// <summary>
+        /// Set the item state on the given item
+        /// </summary>
+        /// <param name="list">The listview whose item's state is to be changed</param>
+        /// <param name="itemIndex">The index of the item to be changed</param>
+        /// <param name="mask">Which bits of the value are to be set?</param>
+        /// <param name="value">The value to be set</param>
+        internal static void SetItemState(IntPtr list, int itemIndex, int mask, int value)
+        {
+            var lvItem = new LVITEM { stateMask = mask, state = value };
+            SendMessageLVItem(list, LVM_SETITEMSTATE, new IntPtr(itemIndex), ref lvItem);
+        }        
 
     }
 }

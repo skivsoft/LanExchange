@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D93AD45C-FE6D-4090-979A-AE80DFBFE8F3}</ProjectGuid>
+    <ProjectGuid>{49CAC51B-9566-4FED-B03A-6C0A66D2455D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LanExchange.Plugin.FileSystem.Test</RootNamespace>
-    <AssemblyName>LanExchange.Plugin.FileSystem.Test</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <RootNamespace>LanExchange.Controls</RootNamespace>
+    <AssemblyName>LanExchange.Controls</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -17,47 +17,51 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\bin\Debug\Lib\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <DocumentationFile>..\bin\Debug\Lib\LanExchange.Controls.XML</DocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\bin\Release\Lib\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\Common\LanExchange.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
-      <HintPath>..\..\Builds\VS2012\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DrivePanelItemTest.cs" />
-    <Compile Include="FilePanelItemTest.cs" />
-    <Compile Include="FileRootTest.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="ListViewExtensions.cs" />
+    <Compile Include="Implementation\ExternDll.cs" />
+    <Compile Include="LanExchangeHeader.cs" />
+    <Compile Include="LanExchangeListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Implementation\NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\LanExchange.SDK\LanExchange.SDK.csproj">
-      <Project>{4ae4e72c-5d7d-42a9-b7fb-577eec0a149d}</Project>
-      <Name>LanExchange.SDK</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\LanExchange\LanExchange.csproj">
-      <Project>{cc938630-e3fc-426e-a8a7-06eb22abc703}</Project>
-      <Name>LanExchange</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Plugins\LanExchange.Plugin.FileSystem\LanExchange.Plugin.FileSystem.csproj">
-      <Project>{7380df5f-5e0a-4080-97f4-b955c250b700}</Project>
-      <Name>LanExchange.Plugin.FileSystem</Name>
-    </ProjectReference>
+    <None Include="..\Common\LanExchange.snk">
+      <Link>LanExchange.snk</Link>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

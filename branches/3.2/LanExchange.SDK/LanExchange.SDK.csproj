@@ -69,7 +69,6 @@
     <Compile Include="ISingleInstanceService.cs" />
     <Compile Include="ISysImageListService.cs" />
     <Compile Include="ITranslitStrategy.cs" />
-    <Compile Include="IUser32Service.cs" />
     <Compile Include="PanelItemRootFactory.cs" />
     <Compile Include="IAboutModel.cs" />
     <Compile Include="IAboutPresenter.cs" />
@@ -89,9 +88,14 @@
     <Compile Include="IPanelPresenter.cs" />
     <Compile Include="IPanelView.cs" />
     <Compile Include="IPresenter.cs" />
-    <Compile Include="IView.cs" />
+    <Compile Include="Presenter\View\CommanderPanelPos.cs" />
+    <Compile Include="Presenter\View\ICommanderPanelView.cs" />
+    <Compile Include="Presenter\View\IView.cs" />
     <Compile Include="IWindow.cs" />
     <Compile Include="PresenterBase.cs" />
+    <Compile Include="Presenter\ICommanderPresenter.cs" />
+    <Compile Include="Presenter\Model\ICommanderPanelModel.cs" />
+    <Compile Include="Presenter\View\ICommanderView.cs" />
     <Compile Include="SysImageListSize.cs" />
     <Compile Include="PanelItemBaseHolder.cs" />
     <Compile Include="RetrieveMode.cs" />
