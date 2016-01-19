@@ -16,10 +16,11 @@ namespace LanExchange.Plugin.Network.Test
             m_Share = new SharePanelItem(null, new ShareInfo(info));
         }
 
-        [Test, ExpectedException(typeof (ArgumentNullException))]
+        [Test]
         public void ExceptionSharePanelItem()
         {
-            var share = new SharePanelItem(null, (ShareInfo) null);
+            SharePanelItem share;
+            Assert.Throws<ArgumentNullException>(() => share = new SharePanelItem(null, (ShareInfo)null));
         }
 
         [Test]
@@ -43,10 +44,11 @@ namespace LanExchange.Plugin.Network.Test
             Assert.AreEqual(PanelImageNames.FOLDER + PanelImageNames.HIDDEN_POSTFIX, m_Share.ImageName);
         }
 
-        [Test, ExpectedException(typeof (ArgumentOutOfRangeException))]
+        [Test]
         public void ExceptionThis()
         {
-            IComparable value = m_Share[m_Share.CountColumns];
+            IComparable value;
+            Assert.Throws<ArgumentOutOfRangeException>(() => value = m_Share[m_Share.CountColumns]);
         }
 
         [Test]

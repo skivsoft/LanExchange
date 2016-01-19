@@ -10,7 +10,7 @@
       <ComponentRef Id="Kazakh.po"/>
       <ComponentRef Id="Esperanto.po"/>
       <ComponentRef Id="Ukrainian.po"/>
-      <ComponentRef Id="ChangeLog.txt"/>
+      <ComponentRef Id="ChangeLog.md"/>
       <Feature Id="WMIViewer" Level="100" Title="WMI Viewer" AllowAdvertise="no" Description="WMI viewer administration tool.">
         <ComponentRef Id="WMIViewer.exe"/>
         <ComponentRef Id="NetworkWMI.xml" />

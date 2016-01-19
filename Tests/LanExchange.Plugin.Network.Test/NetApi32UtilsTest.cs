@@ -15,10 +15,10 @@ namespace LanExchange.Plugin.Network
             Utils.InitPlugins();
         }
 
-        [Test, ExpectedException(typeof (Win32Exception))]
+        [Test]
         public void ExceptionGetMachineNetBiosDomain()
         {
-            WorkstationInfo.FromComputer("~!@#$%^&");
+            Assert.Throws<Win32Exception>(() => WorkstationInfo.FromComputer("~!@#$%^&"));
         }
 
         [Test]

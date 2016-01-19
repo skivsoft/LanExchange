@@ -56,11 +56,11 @@ namespace LanExchange.Misc
             Assert.IsInstanceOf<ConcreteTypeWithConstructorParams>(instance);
         }
 
-        [Test, ExpectedException(typeof (TypeNotRegisteredException))]
+        [Test]
         public void should_throw_exception_if_type_not_registered()
         {
             var container = new SimpleIocContainer();
-            container.Resolve(typeof (ITypeToResolve));
+            Assert.Throws<TypeNotRegisteredException>(() => container.Resolve(typeof(ITypeToResolve)));
         }
     }
 

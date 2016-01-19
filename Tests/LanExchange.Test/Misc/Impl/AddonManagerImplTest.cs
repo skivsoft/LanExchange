@@ -32,12 +32,12 @@ namespace LanExchange.Misc.Impl
             //m_Manager.Programs.Add("calc1", addon1);
         }
 
-        [Test, ExpectedException(typeof (ArgumentException))]
+        [Test]
         public void DuplicateProgramKeyException()
         {
             App.SetContainer(ContainerBuilder.Build());
             m_Manager.Programs.Add("calc", new AddonProgram("calc", @"%SystemRoot%\system32\calc.exe"));
-            m_Manager.Programs.Add("calc", new AddonProgram("notepad", @"%SystemRoot%\system32\notepad.exe"));
+            Assert.Throws<ArgumentException>(() => m_Manager.Programs.Add("calc", new AddonProgram("notepad", @"%SystemRoot%\system32\notepad.exe")));
         }
     }
 }

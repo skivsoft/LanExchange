@@ -23,10 +23,11 @@ namespace LanExchange.Plugin.Network
 
         private DomainPanelItem m_Domain;
 
-        [Test, ExpectedException(typeof (ArgumentOutOfRangeException))]
+        [Test]
         public void ExceptionThis()
         {
-            IComparable value = m_Domain[m_Domain.CountColumns];
+            IComparable value;
+            Assert.Throws<ArgumentOutOfRangeException>(() => value = m_Domain[m_Domain.CountColumns]);
         }
 
         [Test]

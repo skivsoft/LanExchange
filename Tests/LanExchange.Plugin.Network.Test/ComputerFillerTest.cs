@@ -9,12 +9,12 @@ namespace LanExchange.Plugin.Network
     [TestFixture]
     internal class ComputerFillerTest
     {
-        [Test, ExpectedException(typeof (ArgumentNullException))]
+        [Test]
         public void ExceptionAlgorithm()
         {
             var strategy = new ComputerFiller();
             var result = new Collection<PanelItemBase>();
-            strategy.AsyncFill(null, result);
+            Assert.Throws<ArgumentNullException>(() => strategy.AsyncFill(null, result));
         }
 
         [Test]

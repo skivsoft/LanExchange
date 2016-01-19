@@ -9,8 +9,8 @@
       <Component Id="WMIViewer.exe" Guid="A1CAFBF8-0BE2-4B63-82E4-E407DD851B02">
         <File Id='WMIViewer.exe' Source='$(var.SourceDir)WMIViewer.exe'/>
       </Component>
-      <Component Id="ChangeLog.txt" Guid="2EA3B674-C8D3-496E-A574-5312AFB185AB">
-        <File Id='ChangeLog.txt' Source='$(var.SourceDir)ChangeLog.txt'/>
+      <Component Id="ChangeLog.md" Guid="2EA3B674-C8D3-496E-A574-5312AFB185AB">
+        <File Id='ChangeLog.md' Source='$(var.SolutionDir)..\ChangeLog.md'/>
       </Component>
       <Directory Id="Lib" Name="Lib">
         <Component Id='LanExchange.SDK.dll' Guid="340AE8C6-C70D-49D0-BA91-6F1FFCD422B2">

@@ -103,10 +103,11 @@ namespace LanExchange.Plugin.Network
             Assert.AreEqual("WWW", ((ComputerPanelItem) result).Comment);
         }
 
-        [Test, ExpectedException(typeof (ArgumentOutOfRangeException))]
+        [Test]
         public void ExceptionThis()
         {
-            IComparable value = m_Comp[m_Comp.CountColumns];
+            IComparable value;
+            Assert.Throws<ArgumentOutOfRangeException>(() => value = m_Comp[m_Comp.CountColumns]);
         }
 
         [Test]

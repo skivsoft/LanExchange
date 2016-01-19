@@ -42,7 +42,9 @@ namespace LanExchange.Misc.Impl
         public static AggregateCatalog GetMefCatalogs()
         {
             var catalog = new AggregateCatalog();
-                return catalog;
+            catalog.Catalogs.Add(new AssemblyCatalog(Assembly.GetExecutingAssembly()));
+            catalog.Catalogs.Add(new DirectoryCatalog(".", PLUGIN_MASK));
+            return catalog;
             }
         public IList<IPlugin> Items
         {

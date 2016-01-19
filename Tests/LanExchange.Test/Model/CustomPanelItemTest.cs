@@ -21,10 +21,11 @@ namespace LanExchange.Model
 
         private CustomPanelItem m_Custom;
 
-        [Test, ExpectedException(typeof (ArgumentOutOfRangeException))]
+        [Test]
         public void ExceptionThis()
         {
-            IComparable value = m_Custom[m_Custom.CountColumns];
+            IComparable value;
+            Assert.Throws<ArgumentOutOfRangeException>(() => value = m_Custom[m_Custom.CountColumns]);
         }
 
         [Test]

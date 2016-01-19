@@ -17,12 +17,12 @@ namespace LanExchange.Plugin.Network
             Assert.IsTrue(strategy.IsParentAccepted(new ComputerPanelItem(null, SystemInformation.ComputerName)));
         }
 
-        [Test, ExpectedException(typeof (ArgumentNullException))]
+        [Test]
         public void ExceptionAlgorithm()
         {
             var strategy = new ShareFiller();
             var result = new Collection<PanelItemBase>();
-            strategy.AsyncFill(null, result);
+            Assert.Throws<ArgumentNullException>(() => strategy.AsyncFill(null, result));
         }
 
         [Test]
