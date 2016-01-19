@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{CC938630-E3FC-426E-A8A7-06EB22ABC703}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LanExchange</RootNamespace>
     <AssemblyName>LanExchange</AssemblyName>
@@ -45,7 +45,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\bin\Debug\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -54,20 +54,23 @@
     <CodeAnalysisRuleSet>GlobalizationRules.ruleset</CodeAnalysisRuleSet>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <DebugSymbols>true</DebugSymbols>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\bin\Release\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>LanExchange.Program</StartupObject>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -77,11 +80,10 @@
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup />
-  <PropertyGroup>
-    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
-  </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -107,24 +109,20 @@
     <Compile Include="Ioc\LifeCycle.cs" />
     <Compile Include="Ioc\RegisteredObject.cs" />
     <Compile Include="Ioc\SimpleIocContainer.cs" />
+    <Compile Include="LanExchangeApp.cs" />
     <Compile Include="Model\Comparers\ColumnComparer.cs" />
-    <Compile Include="Plugin\Shortcut\ShortcutRoot.cs" />
     <Compile Include="Misc\AnimationHelper.cs" />
     <Compile Include="ContainerBuilder.cs" />
     <Compile Include="Misc\GenerateEnglish.cs" />
     <Compile Include="Misc\Impl\PanelUpdaterImpl.cs" />
     <Compile Include="Misc\TypeNotRegisteredException.cs" />
     <Compile Include="Misc\Impl\DisposableManagerImpl.cs" />
-    <Compile Include="Plugin\PluginInternal.cs" />
     <Compile Include="Misc\TranslationResourceManager.cs" />
     <Compile Include="Actions\ActionAbout.cs" />
     <Compile Include="Actions\ActionCloseTab.cs" />
     <Compile Include="Actions\ActionCloseOther.cs" />
     <Compile Include="Actions\ActionReRead.cs" />
-    <Compile Include="Plugin\Shortcut\ShortcutFactory.cs" />
-    <Compile Include="Plugin\Shortcut\ShortcutFiller.cs" />
     <Compile Include="Actions\ActionShortcutKeys.cs" />
-    <Compile Include="Plugin\Shortcut\ShortcutPanelItem.cs" />
     <Compile Include="Misc\CmdLineProcessor.cs" />
     <Compile Include="Misc\Impl\PanelColumnManagerImpl.cs" />
     <Compile Include="Misc\Impl\PanelFillerManagerImpl.cs" />
@@ -136,6 +134,11 @@
     <Compile Include="Model\PagesModel.cs" />
     <Compile Include="Model\PanelModel.cs" />
     <Compile Include="Misc\Phrase.cs" />
+    <Compile Include="Plugin\PluginInternal.cs" />
+    <Compile Include="Plugin\Shortcut\ShortcutFactory.cs" />
+    <Compile Include="Plugin\Shortcut\ShortcutFiller.cs" />
+    <Compile Include="Plugin\Shortcut\ShortcutPanelItem.cs" />
+    <Compile Include="Plugin\Shortcut\ShortcutRoot.cs" />
     <Compile Include="Plugin\Windows\Comctl32Service.cs" />
     <Compile Include="Plugin\Windows\ExternDll.cs" />
     <Compile Include="Plugin\Windows\HotkeysService.cs" />
@@ -253,7 +256,6 @@
     <Compile Include="Presenter\PagesPresenter.cs" />
     <Compile Include="Presenter\PanelPresenter.cs" />
     <Compile Include="Misc\Impl\PluginManagerImpl.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\ReflectionHelper.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -318,6 +320,7 @@
     <None Include="Languages\Ukrainian.po">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
     <None Include="Resources\user_32.png" />
     <None Include="Resources\user_16.png" />
     <None Include="Resources\twitter-icon-v2.png" />
@@ -326,7 +329,6 @@
     <None Include="Resources\clear_hover.png" />
     <None Include="Resources\back_32.png" />
     <None Include="Resources\back_16.png" />
-    <None Include="app.config" />
     <None Include="Resources\process_working.png" />
     <None Include="Resources\keyboard_16.png" />
     <None Include="..\Common\LanExchange.snk">
@@ -378,9 +380,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ChangeLog.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="LanExchange.ico" />
     <Content Include="Misc\MVP.gif" />
     <Content Include="Languages\!Readme.txt" />

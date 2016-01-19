@@ -376,13 +376,6 @@ namespace LanExchange.Plugin.WinForms.Forms
             this.mHelpAbout});
             this.mHelp.Text = global::LanExchange.Properties.Resources.mHelp_Text;
             // 
-            // mHelpKeys
-            // 
-            this.mHelpKeys.Index = 0;
-            this.mHelpKeys.Shortcut = System.Windows.Forms.Shortcut.F1;
-            this.mHelpKeys.Text = global::LanExchange.Properties.Resources.mHelpKeys_Text;
-            this.mHelpKeys.Click += new System.EventHandler(this.mHelpKeys_Click);
-            // 
             // mHelpSep1
             // 
             this.mHelpSep1.Index = 1;
