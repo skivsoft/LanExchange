@@ -2,9 +2,11 @@
 using System.IO;
 using LanExchange.Plugin.FileSystem.Properties;
 using LanExchange.SDK;
+using System.ComponentModel.Composition;
 
 namespace LanExchange.Plugin.FileSystem
 {
+    [Export(typeof(IPlugin))]
     public class PluginFileSystem : IPlugin
     {
         public static IImageManager ImageManager;

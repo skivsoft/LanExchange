@@ -8,33 +8,39 @@ using LanExchange.SDK;
 using System;
 using System.Windows.Forms;
 
+using LanExchange.Misc;
+
 namespace LanExchange
 {
     public class LanExchangeApp : IDisposable
     {
-        public LanExchangeApp()
-        {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-        }
+        private readonly IAppPresenter application;
 
-        public void Run()
+        public LanExchangeApp()
         {
             // global map interfaces to classes
             App.SetContainer(ContainerBuilder.Build());
             App.TR.SetResourceManagerTo<Resources>();
             // load plugins
+            LoadPlugins();
             // load settings from cfg-file (must be loaded before plugins)
             App.Config.Load();
             App.Config.Changed += App.Presenter.ConfigOnChanged;
             // load addons
             App.Resolve<IAddonManager>().LoadAddons();
             // init application
-            var application = App.Resolve<IAppPresenter>();
+            application = App.Resolve<IAppPresenter>();
             application.Init();
-           
+        }
+
+        public void Dispose()
+        {
+        }
+
+        public void Run()
+        {
             // create main form
-            App.Presenter.ConfigOnChanged(App.Config, new ConfigChangedArgs(ConfigNames.Language));
+            //App.Presenter.ConfigOnChanged(App.Config, new ConfigChangedArgs(ConfigNames.Language));
             App.MainView = App.Resolve<IMainView>();
             App.Presenter.View = App.MainView;
             App.Presenter.PrepareForm();
@@ -43,8 +49,13 @@ namespace LanExchange
             application.Run(App.MainView);
         }
 
-        public void Dispose()
+        private static void LoadPlugins()
         {
+            var plugins = App.Resolve<IPluginManager>();
+            plugins.LoadPlugins();
+            // register stage images for icon animation
+            AnimationHelper.Register(AnimationHelper.WORKING, Resources.process_working, 16, 16);
         }
+
     }
 }

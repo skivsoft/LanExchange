@@ -35,10 +35,11 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>LanExchange.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\LanExchange.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\AnyAssemblyInfo.cs">
@@ -56,11 +57,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="LanExchange.snk" />
+    <None Include="..\..\LanExchange.snk">
+      <Link>LanExchange.snk</Link>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>rem echo Y|copy $(TargetPath) $(SolutionDir)LanExchange\$(OutDir)</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

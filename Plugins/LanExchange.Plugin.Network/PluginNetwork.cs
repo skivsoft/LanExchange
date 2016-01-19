@@ -1,9 +1,12 @@
 ﻿using System;
+using System.ComponentModel.Composition;
+
 using LanExchange.Plugin.Network.Properties;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
 {
+    [Export(typeof(IPlugin))]
     public sealed class PluginNetwork : IPlugin
     {
         private IServiceProvider m_Provider;

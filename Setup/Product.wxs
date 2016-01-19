@@ -8,8 +8,8 @@
     <Icon Id="LanExchange.ico" SourceFile="LanExchange.ico"/>
     <Property Id="ARPPRODUCTICON" Value="LanExchange.ico" />
     <!--<Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR"/>-->
-    <Property Id="ARPHELPLINK" Value="https://code.google.com/p/lanexchange/" />
-    <Property Id="ARPURLINFOABOUT" Value="https://code.google.com/p/lanexchange/" />
+    <Property Id="ARPHELPLINK" Value="https://github.com/LanExchange/LanExchange" />
+    <Property Id="ARPURLINFOABOUT" Value="https://github.com/LanExchange/LanExchange" />
     <Property Id="ARPURLUPDATEINFO" Value="https://code.google.com/p/lanexchange/downloads/list" />
     <Property Id="ARPCONTACT" Value="skivsoft@gmail.com"/>
     <Property Id="ARPCOMMENTS" Value="User-friendly browser of computers for local area network."/>

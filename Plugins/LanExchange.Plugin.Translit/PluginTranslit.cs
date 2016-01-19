@@ -1,8 +1,11 @@
 ﻿using System;
+using System.ComponentModel.Composition;
+
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Translit
 {
+    [Export(typeof(IPlugin))]
     public sealed class PluginTranslit : IPlugin
     {
         private IServiceProvider m_Provider;

@@ -1,25 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
 using System.Reflection;
-using LanExchange.Ioc;
+
 using LanExchange.SDK;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.Diagnostics;
 
 namespace LanExchange.Misc.Impl
 {
     public class PluginManagerImpl : IPluginManager
     {
         private const string PLUGIN_MASK = "LanExchange.Plugin.*.dll";
-        private const string IPLUGIN_INTERFACE = "LanExchange.SDK.IPlugin";
-        private const string PLUGIN_TYPE_PREFIX = "Plugin";
 
 
         [ImportMany]
-        private IList<IPlugin> m_Plugins;
+        private IEnumerable<IPlugin> m_Plugins;
 
         CompositionContainer compContainer;
 
@@ -37,6 +33,16 @@ namespace LanExchange.Misc.Impl
             var catalog = GetMefCatalogs();
             compContainer = new CompositionContainer(catalog);
             AttributedModelServices.ComposeParts(compContainer, this);
+
+            foreach(var plugin in m_Plugins)
+            try
+            {
+                plugin.Initialize(App.Resolve<IServiceProvider>());
+            }
+            catch (Exception ex)
+            {
+                Debug.Print(ex.Message);
+            }
         }
 
         public static AggregateCatalog GetMefCatalogs()
@@ -45,8 +51,9 @@ namespace LanExchange.Misc.Impl
             catalog.Catalogs.Add(new AssemblyCatalog(Assembly.GetExecutingAssembly()));
             catalog.Catalogs.Add(new DirectoryCatalog(".", PLUGIN_MASK));
             return catalog;
-            }
-        public IList<IPlugin> Items
+        }
+
+        public IEnumerable<IPlugin> Items
         {
             get { return m_Plugins; }
         }

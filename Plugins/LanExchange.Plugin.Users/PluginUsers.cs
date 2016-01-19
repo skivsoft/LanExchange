@@ -1,9 +1,12 @@
 ﻿using System;
+using System.ComponentModel.Composition;
+
 using LanExchange.Plugin.Users.Properties;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Users
 {
+    [Export(typeof(IPlugin))]
     public sealed class PluginUsers : IPlugin
     {
         public const string LDAP_PREFIX = "LDAP://";

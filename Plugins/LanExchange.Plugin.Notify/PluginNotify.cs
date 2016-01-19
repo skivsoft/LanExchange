@@ -1,9 +1,11 @@
 ﻿using System;
+using System.ComponentModel.Composition;
 using System.Text;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Notify
 {
+    [Export(typeof(IPlugin))]
     public class PluginNotify : IPlugin
     {
         private const int LANEX_PORT = 3003;

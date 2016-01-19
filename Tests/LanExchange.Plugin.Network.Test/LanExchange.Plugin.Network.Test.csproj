@@ -69,7 +69,7 @@
       <Name>LanExchange.SDK</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\LanExchange\LanExchange.csproj">
-      <Project>{cc938630-e3fc-426e-a8a7-06eb22abc703}</Project>
+      <Project>{abd7f255-097f-4081-b5b5-1f2dd67b9db6}</Project>
       <Name>LanExchange</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Plugins\LanExchange.Plugin.Network\LanExchange.Plugin.Network.csproj">

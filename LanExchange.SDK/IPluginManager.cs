@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace LanExchange.SDK
@@ -5,7 +6,7 @@ namespace LanExchange.SDK
     public interface IPluginManager
     {
         void LoadPlugins();
-        IList<IPlugin> Items { get; }
+        IEnumerable<IPlugin> Items { get; }
         IDictionary<string, string> PluginsAuthors { get; }
     }
 }

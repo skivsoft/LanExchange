@@ -48,7 +48,7 @@ namespace LanExchange.Plugin.WinForms.Forms
             this.lUserName = new System.Windows.Forms.ToolStripStatusLabel();
             this.tipComps = new System.Windows.Forms.ToolTip(this.components);
             this.popTop = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.pInfo = new InfoView();
+            this.pInfo = new LanExchange.Plugin.WinForms.Components.InfoView();
             this.MainMenu = new System.Windows.Forms.MainMenu(this.components);
             this.mPanel = new System.Windows.Forms.MenuItem();
             this.mNewItem = new System.Windows.Forms.MenuItem();
@@ -69,8 +69,6 @@ namespace LanExchange.Plugin.WinForms.Forms
             this.mViewDetails = new System.Windows.Forms.MenuItem();
             this.mLanguage = new System.Windows.Forms.MenuItem();
             this.mHelp = new System.Windows.Forms.MenuItem();
-            this.mHelpKeys = new System.Windows.Forms.MenuItem();
-            this.mHelpSep1 = new System.Windows.Forms.MenuItem();
             this.mHelpWeb = new System.Windows.Forms.MenuItem();
             this.mHelpBugs = new System.Windows.Forms.MenuItem();
             this.mHelpLangs = new System.Windows.Forms.MenuItem();
@@ -365,8 +363,6 @@ namespace LanExchange.Plugin.WinForms.Forms
             // 
             this.mHelp.Index = 3;
             this.mHelp.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.mHelpKeys,
-            this.mHelpSep1,
             this.mHelpWeb,
             this.mHelpBugs,
             this.mHelpLangs,
@@ -376,48 +372,43 @@ namespace LanExchange.Plugin.WinForms.Forms
             this.mHelpAbout});
             this.mHelp.Text = global::LanExchange.Properties.Resources.mHelp_Text;
             // 
-            // mHelpSep1
-            // 
-            this.mHelpSep1.Index = 1;
-            this.mHelpSep1.Text = "-";
-            // 
             // mHelpWeb
             // 
-            this.mHelpWeb.Index = 2;
+            this.mHelpWeb.Index = 0;
             this.mHelpWeb.Text = global::LanExchange.Properties.Resources.mHelpWeb_Text;
             this.mHelpWeb.Click += new System.EventHandler(this.mWebPage_Click);
             // 
             // mHelpBugs
             // 
-            this.mHelpBugs.Index = 3;
+            this.mHelpBugs.Index = 1;
             this.mHelpBugs.Text = global::LanExchange.Properties.Resources.mHelpBugs_Text;
             this.mHelpBugs.Click += new System.EventHandler(this.mHelpBugs_Click);
             // 
             // mHelpLangs
             // 
-            this.mHelpLangs.Index = 4;
+            this.mHelpLangs.Index = 2;
             this.mHelpLangs.Text = global::LanExchange.Properties.Resources.mHelpLangs_Text;
             this.mHelpLangs.Click += new System.EventHandler(this.mHelpLangs_Click);
             // 
             // menuItem1
             // 
-            this.menuItem1.Index = 5;
+            this.menuItem1.Index = 3;
             this.menuItem1.Text = "-";
             // 
             // mHelpFeedback
             // 
-            this.mHelpFeedback.Index = 6;
+            this.mHelpFeedback.Index = 4;
             this.mHelpFeedback.Text = global::LanExchange.Properties.Resources.mHelpFeedback_Text;
             this.mHelpFeedback.Click += new System.EventHandler(this.mHelpFeedback_Click);
             // 
             // mHelpSep2
             // 
-            this.mHelpSep2.Index = 7;
+            this.mHelpSep2.Index = 5;
             this.mHelpSep2.Text = "-";
             // 
             // mHelpAbout
             // 
-            this.mHelpAbout.Index = 8;
+            this.mHelpAbout.Index = 6;
             this.mHelpAbout.Text = global::LanExchange.Properties.Resources.mHelpAbout_Text;
             this.mHelpAbout.Click += new System.EventHandler(this.mHelpAbout_Click);
             // 
@@ -472,7 +463,6 @@ namespace LanExchange.Plugin.WinForms.Forms
         private System.Windows.Forms.MenuItem mHelpWeb;
         private System.Windows.Forms.MenuItem mPanelSep3;
         private System.Windows.Forms.MenuItem mExit;
-        private System.Windows.Forms.MenuItem mHelpKeys;
         private System.Windows.Forms.MenuItem mLanguage;
         private System.Windows.Forms.MenuItem mHelpLangs;
         private System.Windows.Forms.MenuItem mHelpBugs;
@@ -487,7 +477,6 @@ namespace LanExchange.Plugin.WinForms.Forms
         private System.Windows.Forms.MenuItem mViewInfo;
         private System.Windows.Forms.MenuItem mViewGrid;
         private System.Windows.Forms.MenuItem mViewSep1;
-        private MenuItem mHelpSep1;
         private MenuItem mHelpSep2;
         private MenuItem mHelpFeedback;
         private MenuItem menuItem1;
