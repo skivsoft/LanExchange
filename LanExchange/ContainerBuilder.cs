@@ -10,15 +10,20 @@ using LanExchange.Plugin.WinForms.Forms;
 using LanExchange.Plugin.WinForms;
 using LanExchange.Plugin.WinForms.Impl;
 using SimpleInjector;
+using LanExchange.Interfaces.Services;
+using LanExchange.Implementations.Services;
 
 namespace LanExchange
 {
+    /// <summary>
+    /// Internal application DI-container builder.
+    /// </summary>
     internal sealed class ContainerBuilder
     {
         private Container container;
 
         /// <summary>
-        /// Maps interfaces to concrete implementations.
+        /// Maps interfaces to concrete implementations in DI-container.
         /// </summary>
         public IServiceProvider Build()
         {
@@ -29,6 +34,7 @@ namespace LanExchange
             RegisterPresenters();
             RegisterOSWindows();
             RegisterWinForms();
+            RegisterServices();
             return container;
         }
 
@@ -55,7 +61,6 @@ namespace LanExchange
         private void RegisterModels()
         {
             container.RegisterSingleton<IAboutModel, AboutModel>();
-            container.RegisterSingleton<IConfigModel, ConfigModel>();
             container.RegisterSingleton<IPagesModel, PagesModel>();
             container.Register<IPanelModel, PanelModel>();
         }
@@ -99,6 +104,11 @@ namespace LanExchange
             container.RegisterSingleton<IClipboardService, ClipboardServiceImpl>();
             container.RegisterSingleton<IScreenService, ScreenImpl>();
             container.RegisterSingleton<IMessageBoxService, MessageBoxServiceImpl>();
+        }
+
+        private void RegisterServices()
+        {
+            container.Register<IConfigPersistenceService, ConfigPersistenceService>();
         }
     }
 }

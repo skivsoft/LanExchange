@@ -1,10 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
 using System.Xml.Serialization;
-using LanExchange.Helpers;
-using LanExchange.SDK;
 
 namespace LanExchange.Model
 {
@@ -12,18 +8,19 @@ namespace LanExchange.Model
     /// Program settings. Implemented as Singleton.
     /// </summary>
     [XmlType("LanExchangeConfig")]
-    public class ConfigModel : IConfigModel
+    public class ConfigModel : INotifyPropertyChanged
     {
         private const int MIN_INFO_LINES = 3;
-        public event EventHandler<ConfigChangedArgs> Changed;
-        private bool m_ShowInfoPanel;
-        private bool m_RunMinimized;
-        private bool m_AdvancedMode;
-        private int m_NumInfoLines;
-        private string m_Language;
-        private int m_MainFormX;
-        private int m_MainFormWidth;
-        private bool m_ShowGridLines;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private bool showInfoPanel;
+        private bool runMinimized;
+        private bool advancedMode;
+        private int numInfoLines;
+        private string language;
+        private int mainFormX;
+        private int mainFormWidth;
+        private bool showGridLines;
 
         [Localizable(false)]
         public ConfigModel()
@@ -35,52 +32,21 @@ namespace LanExchange.Model
             ShowGridLines = true;
         }
 
-        public void Load()
+        private void OnChanged(string propertyName)
         {
-            var fileName = App.FolderManager.ConfigFileName;
-            if (!File.Exists(fileName)) return;
-            try
-            {
-                var temp = (ConfigModel)SerializeUtils.DeserializeObjectFromXmlFile(fileName, typeof(ConfigModel));
-                if (temp != null)
-                    ReflectionUtils.CopyObjectProperties(temp, this);
-            }
-            catch (Exception ex)
-            {
-                Debug.Print(ex.Message);
-            }
-        }
-
-
-        public void Save()
-        {
-            var fileName = App.FolderManager.ConfigFileName;
-            try
-            {
-                SerializeUtils.SerializeObjectToXmlFile(fileName, this);
-            }
-            catch (Exception ex)
-            {
-                Debug.Print(ex.Message);
-            }
-        }
-
-        private void OnChanged(ConfigNames name)
-        {
-            if (Changed != null)
-                Changed(this, new ConfigChangedArgs(name));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         [DefaultValue(true)]
         public bool ShowInfoPanel
         {
-            get { return m_ShowInfoPanel; } 
+            get { return showInfoPanel; } 
             set
             {
-                if (m_ShowInfoPanel != value)
+                if (showInfoPanel != value)
                 {
-                    m_ShowInfoPanel = value;
-                    OnChanged(ConfigNames.ShowInfoPanel);
+                    showInfoPanel = value;
+                    OnChanged(nameof(ShowInfoPanel));
                 }
             }
         }
@@ -88,26 +54,26 @@ namespace LanExchange.Model
         [DefaultValue(true)]
         public bool RunMinimized
         {
-            get { return m_RunMinimized; }
+            get { return runMinimized; }
             set
             {
-                if (m_RunMinimized != value)
+                if (runMinimized != value)
                 {
-                    m_RunMinimized = value;
-                    OnChanged(ConfigNames.RunMinimized);
+                    runMinimized = value;
+                    OnChanged(nameof(RunMinimized));
                 }
             }
         }
 
         public bool AdvancedMode
         {
-            get { return m_AdvancedMode; }
+            get { return advancedMode; }
             set
             {
-                if (m_AdvancedMode != value)
+                if (advancedMode != value)
                 {
-                    m_AdvancedMode = value;
-                    OnChanged(ConfigNames.AdvancedMode);
+                    advancedMode = value;
+                    OnChanged(nameof(AdvancedMode));
                 }
             }
         }
@@ -115,7 +81,7 @@ namespace LanExchange.Model
         [DefaultValue(MIN_INFO_LINES)]
         public int NumInfoLines
         {
-            get { return m_NumInfoLines; }
+            get { return numInfoLines; }
             set
             {
                 if (value < MIN_INFO_LINES)
@@ -126,10 +92,10 @@ namespace LanExchange.Model
                     if (value > maxColumns)
                         value = maxColumns;
                 }
-                if (m_NumInfoLines != value)
+                if (numInfoLines != value)
                 {
-                    m_NumInfoLines = value;
-                    OnChanged(ConfigNames.NumInfoLines);
+                    numInfoLines = value;
+                    OnChanged(nameof(NumInfoLines));
                 }
             }
         }
@@ -137,39 +103,39 @@ namespace LanExchange.Model
         [DefaultValue("English")]
         public string Language
         {
-            get { return m_Language; }
+            get { return language; }
             set
             {
-                if (m_Language != value)
+                if (language != value)
                 {
-                    m_Language = value;
-                    OnChanged(ConfigNames.Language);
+                    language = value;
+                    OnChanged(nameof(Language));
                 }
             }
         }
 
         public int MainFormX
         {
-            get { return m_MainFormX; }
+            get { return mainFormX; }
             set
             {
-                if (m_MainFormX != value)
+                if (mainFormX != value)
                 {
-                    m_MainFormX = value;
-                    OnChanged(ConfigNames.MainFormX);
+                    mainFormX = value;
+                    OnChanged(nameof(MainFormX));
                 }
             }
         }
 
         public int MainFormWidth
         {
-            get { return m_MainFormWidth; }
+            get { return mainFormWidth; }
             set
             {
-                if (m_MainFormWidth != value)
+                if (mainFormWidth != value)
                 {
-                    m_MainFormWidth = value;
-                    OnChanged(ConfigNames.MainFormWidth);
+                    mainFormWidth = value;
+                    OnChanged(nameof(MainFormWidth));
                 }
             }
         }
@@ -177,13 +143,13 @@ namespace LanExchange.Model
         [DefaultValue(true)]
         public bool ShowGridLines
         {
-            get { return m_ShowGridLines; }
+            get { return showGridLines; }
             set
             {
-                if (m_ShowGridLines != value)
+                if (showGridLines != value)
                 {
-                    m_ShowGridLines = value;
-                    OnChanged(ConfigNames.ShowGridLines);
+                    showGridLines = value;
+                    OnChanged(nameof(ShowGridLines));
                 }
             }
         }

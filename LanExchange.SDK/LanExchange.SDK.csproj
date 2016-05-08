@@ -44,8 +44,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="ConfigChangedArgs.cs" />
-    <Compile Include="ConfigNames.cs" />
     <Compile Include="Delegates.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="HorizontalAlignment.cs" />
@@ -59,7 +57,6 @@
     <Compile Include="IClipboardService.cs" />
     <Compile Include="IColumnComparer.cs" />
     <Compile Include="IComctl32Service.cs" />
-    <Compile Include="IConfigModel.cs" />
     <Compile Include="IDisposableManager.cs" />
     <Compile Include="IEditPresenter.cs" />
     <Compile Include="IEditView.cs" />

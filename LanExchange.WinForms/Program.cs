@@ -2,6 +2,7 @@
 // START DATE: Jan 22, 2012
 // *****************************************************************************
 
+using LanExchange.Extensions;
 using System;
 
 namespace LanExchange
@@ -14,11 +15,9 @@ namespace LanExchange
         [STAThread]
         static void Main()
         {
-            var container = CoreFacade.InitializeIoCContainer();
-            using (var application = (LanExchangeApp)container.GetService(typeof(LanExchangeApp)))
-            {
-                application.Run();
-            }
+            CoreFacade.InitializeDIContainer()
+                .Resolve<LanExchangeApp>()
+                .Run();
         }
     }
 }

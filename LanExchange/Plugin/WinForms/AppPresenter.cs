@@ -5,11 +5,21 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
 using LanExchange.SDK;
+using LanExchange.Interfaces.Services;
 
 namespace LanExchange.Plugin.WinForms
 {
     public class AppPresenter : IAppPresenter
     {
+        private readonly IConfigPersistenceService configService;
+
+        public AppPresenter(IConfigPersistenceService configService)
+        {
+            if (configService == null) throw new ArgumentNullException(nameof(configService));
+
+            this.configService = configService;
+        }
+
         public void Init()
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
@@ -40,10 +50,10 @@ namespace LanExchange.Plugin.WinForms
             #endif
         }
 
-        private static void ApplicationOnThreadExit(object sender, EventArgs e)
+        private void ApplicationOnThreadExit(object sender, EventArgs e)
         {
             App.MainPages.SaveInstant();
-            App.Config.Save();
+            configService.Save(App.Config);
             // dispose instances registered in plugins
             App.Resolve<IDisposableManager>().Dispose();
         }

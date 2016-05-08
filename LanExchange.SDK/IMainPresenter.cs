@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.ComponentModel;
+using System.Drawing;
 
 namespace LanExchange.SDK
 {
@@ -11,7 +12,7 @@ namespace LanExchange.SDK
         void ExecuteAction(string actionName);
         bool IsActionEnabled<T>() where T : IAction;
         bool IsActionEnabled(string actionName);
-        void ConfigOnChanged(object sender, ConfigChangedArgs e);
+        void ConfigOnChanged(object sender, PropertyChangedEventArgs e);
         void PrepareForm();
         int FindShortcutKeysPanelIndex();
         void GlobalTranslateUI();

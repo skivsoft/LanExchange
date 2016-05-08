@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using LanExchange.Interfaces;
 using LanExchange.SDK;
+using LanExchange.Extensions;
+using LanExchange.Model;
 
 namespace LanExchange
 {
@@ -23,7 +25,7 @@ namespace LanExchange
         public static IPagesPresenter MainPages { get; private set; }
         public static IMainPresenter Presenter { get; private set; }
         // other
-        public static IConfigModel Config { get; private set; }
+        public static ConfigModel Config { get; set; }
         public static ILazyThreadPool Threads { get; private set; }
         public static ITranslationService TR { get; private set; }
 
@@ -41,19 +43,13 @@ namespace LanExchange
             Presenter = Resolve<IMainPresenter>();
             MainPages = Resolve<IPagesPresenter>();
             // other
-            Config = Resolve<IConfigModel>();
             Threads = Resolve<ILazyThreadPool>();
             Images = Resolve<IImageManager>();
         }
 
         public static TTypeToResolve Resolve<TTypeToResolve>()
         {
-            return (TTypeToResolve)s_Ioc.GetService(typeof(TTypeToResolve));
-        }
-
-        public static object Resolve(Type typeToResolve)
-        {
-            return s_Ioc.GetService(typeToResolve);
+            return s_Ioc.Resolve<TTypeToResolve>();
         }
     }
 }

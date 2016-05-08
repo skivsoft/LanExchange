@@ -8,10 +8,10 @@ namespace LanExchange
     public static class CoreFacade
     {
         /// <summary>
-        /// Initializes the IoC-container.
+        /// Initializes the DI-container.
         /// </summary>
-        /// <returns></returns>
-        public static IServiceProvider InitializeIoCContainer()
+        /// <returns>The <see cref="IServiceProvider"/> instance.</returns>
+        public static IServiceProvider InitializeDIContainer()
         {
             var container = new ContainerBuilder().Build();
             App.SetContainer(container);

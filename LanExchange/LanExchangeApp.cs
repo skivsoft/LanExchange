@@ -1,38 +1,35 @@
-﻿// *****************************************************************************
-// START DATE: Jan 22, 2012
-// *****************************************************************************
-
-using LanExchange.Properties;
+﻿using LanExchange.Properties;
 using LanExchange.Interfaces;
 using LanExchange.SDK;
 using System;
 
 using LanExchange.Misc;
+using LanExchange.Interfaces.Services;
+using LanExchange.Model;
 
 namespace LanExchange
 {
-    public class LanExchangeApp : IDisposable
+    public class LanExchangeApp
     {
         private readonly IAppPresenter application;
 
-        public LanExchangeApp()
+        public LanExchangeApp(IConfigPersistenceService configService)
         {
+            if (configService == null) throw new ArgumentNullException(nameof(configService));
+
             // global map interfaces to classes
             App.TR.SetResourceManagerTo<Resources>();
             // load plugins
             LoadPlugins();
+
             // load settings from cfg-file (must be loaded before plugins)
-            App.Config.Load();
-            App.Config.Changed += App.Presenter.ConfigOnChanged;
+            App.Config = configService.Load<ConfigModel>();
+            App.Config.PropertyChanged += App.Presenter.ConfigOnChanged;
             // load addons
             App.Resolve<IAddonManager>().LoadAddons();
             // init application
             application = App.Resolve<IAppPresenter>();
             application.Init();
-        }
-
-        public void Dispose()
-        {
         }
 
         public void Run()

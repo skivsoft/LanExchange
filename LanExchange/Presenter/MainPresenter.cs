@@ -9,6 +9,7 @@ using LanExchange.Helpers;
 using LanExchange.Interfaces;
 using LanExchange.Plugin.Shortcut;
 using LanExchange.SDK;
+using LanExchange.Model;
 
 namespace LanExchange.Presenter
 {
@@ -64,25 +65,25 @@ namespace LanExchange.Presenter
         }
 
         [Localizable(false)]
-        public void ConfigOnChanged(object sender, ConfigChangedArgs e)
+        public void ConfigOnChanged(object sender, PropertyChangedEventArgs e)
         {
-            var config = sender as IConfigModel;
+            var config = sender as ConfigModel;
             if (config == null) return;
-            switch (e.Name)
+            switch (e.PropertyName)
             {
-                case ConfigNames.ShowInfoPanel:
+                case nameof(config.ShowInfoPanel):
                     App.MainView.ShowInfoPanel = config.ShowInfoPanel;
                     break;
-                case ConfigNames.ShowGridLines:
+                case nameof(config.ShowGridLines):
                     var panelView = App.MainPages.View.ActivePanelView;
                     if (panelView != null)
                         panelView.GridLines = config.ShowGridLines;
                     break;
-                case ConfigNames.NumInfoLines:
+                case nameof(config.NumInfoLines):
                     App.MainView.NumInfoLines = config.NumInfoLines;
                     App.MainPages.DoPanelViewFocusedItemChanged(App.MainPages.View.ActivePanelView, EventArgs.Empty);
                     break;
-                case ConfigNames.Language:
+                case nameof(config.Language):
                     App.TR.CurrentLanguage = config.Language;
                     GlobalTranslateUI();
                     break;
