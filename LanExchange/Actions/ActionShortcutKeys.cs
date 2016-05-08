@@ -1,5 +1,4 @@
-﻿using LanExchange.Ioc;
-using LanExchange.Plugin.Shortcut;
+﻿using LanExchange.Plugin.Shortcut;
 using LanExchange.SDK;
 
 namespace LanExchange.Actions

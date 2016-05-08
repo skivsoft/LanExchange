@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using LanExchange.Interfaces;
 using LanExchange.Properties;
 using LanExchange.SDK;
 

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
-using LanExchange.Ioc;
 using LanExchange.SDK;
 
 namespace LanExchange.Helpers

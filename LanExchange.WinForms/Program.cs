@@ -14,7 +14,8 @@ namespace LanExchange
         [STAThread]
         static void Main()
         {
-            using (var application = new LanExchangeApp())
+            var container = CoreFacade.InitializeIoCContainer();
+            using (var application = (LanExchangeApp)container.GetService(typeof(LanExchangeApp)))
             {
                 application.Run();
             }

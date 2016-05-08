@@ -44,7 +44,6 @@
   <ItemGroup>
     <Compile Include="Action\ShortcutPanelItemTest.cs" />
     <Compile Include="Action\ShortcutRootTest.cs" />
-    <Compile Include="Misc\SimpleIocContainerTests.cs" />
     <Compile Include="Misc\Impl\AddonManagerImplTest.cs" />
     <Compile Include="Model\FolderManagerTest.cs" />
     <Compile Include="Model\PagesModelTest.cs" />

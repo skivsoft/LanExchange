@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Xml.Serialization;
 using LanExchange.Helpers;
-using LanExchange.Ioc;
 using LanExchange.Model.Comparers;
 using LanExchange.SDK;
 

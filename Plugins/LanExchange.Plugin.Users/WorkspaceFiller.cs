@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.DirectoryServices;
-using System.Linq;
-using System.Text;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Users

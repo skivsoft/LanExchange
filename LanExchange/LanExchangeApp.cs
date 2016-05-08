@@ -6,7 +6,6 @@ using LanExchange.Properties;
 using LanExchange.Interfaces;
 using LanExchange.SDK;
 using System;
-using System.Windows.Forms;
 
 using LanExchange.Misc;
 
@@ -19,7 +18,6 @@ namespace LanExchange
         public LanExchangeApp()
         {
             // global map interfaces to classes
-            App.SetContainer(ContainerBuilder.Build());
             App.TR.SetResourceManagerTo<Resources>();
             // load plugins
             LoadPlugins();

@@ -4,8 +4,6 @@ using System.Drawing;
 using System.IO;
 using System.Xml.Serialization;
 using LanExchange.Helpers;
-using LanExchange.Ioc;
-using LanExchange.SDK;
 
 namespace LanExchange.Base
 {

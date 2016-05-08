@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Security.Permissions;
 using System.Windows.Forms;
 using LanExchange.Interfaces;
-using LanExchange.Ioc;
 using LanExchange.Plugin.WinForms.Components;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.Properties;

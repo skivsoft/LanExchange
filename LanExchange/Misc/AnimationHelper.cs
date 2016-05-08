@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
-using LanExchange.Ioc;
-using LanExchange.SDK;
 
 namespace LanExchange.Misc
 {

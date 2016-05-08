@@ -7,7 +7,6 @@ using System.Threading;
 using LanExchange.Actions;
 using LanExchange.Helpers;
 using LanExchange.Interfaces;
-using LanExchange.Ioc;
 using LanExchange.Plugin.Shortcut;
 using LanExchange.SDK;
 

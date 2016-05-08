@@ -1,6 +1,5 @@
 using System;
 using LanExchange.Interfaces;
-using LanExchange.Ioc;
 using LanExchange.Misc.Impl;
 using LanExchange.Model;
 using LanExchange.Plugin.Windows;
@@ -10,68 +9,96 @@ using LanExchange.Plugin.WinForms.Components;
 using LanExchange.Plugin.WinForms.Forms;
 using LanExchange.Plugin.WinForms;
 using LanExchange.Plugin.WinForms.Impl;
+using SimpleInjector;
 
 namespace LanExchange
 {
-    public static class ContainerBuilder
+    internal sealed class ContainerBuilder
     {
+        private Container container;
+
         /// <summary>
         /// Maps interfaces to concrete implementations.
         /// </summary>
-        public static IIocContainer Build()
+        public IServiceProvider Build()
         {
-            var container = new SimpleIocContainer();
-            // core singletons
-            container.Register<IPanelItemFactoryManager, PanelItemFactoryManagerImpl>();
-            container.Register<IPanelFillerManager, PanelFillerManagerImpl>();
-            container.Register<IPanelColumnManager, PanelColumnManagerImpl>();
-            container.Register<IFolderManager, FolderManagerImpl>();
-            container.Register<IPluginManager, PluginManagerImpl>();
-            container.Register<IServiceProvider, ServiceProviderImpl>();
-            container.Register<ILazyThreadPool, LazyThreadPoolImpl>();
-            container.Register<IPuntoSwitcherService, PuntoSwitcherServiceEngRus>();
-            container.Register<ITranslationService, TranslationServiceImpl>();
-            container.Register<IDisposableManager, DisposableManagerImpl>();
-            // updater
-            container.Register<IPanelUpdater, PanelUpdaterImpl>(LifeCycle.Transient);
-            // models
-            container.Register<IAboutModel, AboutModel>();
-            container.Register<IConfigModel, ConfigModel>();
-            container.Register<IPagesModel, PagesModel>(LifeCycle.Transient);
-            container.Register<IPanelModel, PanelModel>(LifeCycle.Transient);
-            // presenters
-            container.Register<IMainPresenter, MainPresenter>();
-            container.Register<IAboutPresenter, AboutPresenter>();
-            container.Register<IPagesPresenter, PagesPresenter>();
-            container.Register<IFilterPresenter, FilterPresenter>(LifeCycle.Transient);
-            container.Register<IPanelPresenter, PanelPresenter>(LifeCycle.Transient);
-            container.Register<IEditPresenter, EditPresenter>(LifeCycle.Transient);
-            // OS: Windows
-            container.Register<IUser32Service, User32Service>();
-            container.Register<IShell32Service, Shell32Service>();
-            container.Register<IKernel32Service, Kernel32Service>();
-            container.Register<IComctl32Service, Comctl32Service>();
-            container.Register<IOle32Service, Ole32Service>();
-            container.Register<IIPHLPAPISerivice, IPHLPAPISerivce>();
-            container.Register<IHotkeysService, HotkeysService>();
-            container.Register<ISingleInstanceService, SingleInstanceService>();
-            container.Register<ISysImageListService, SysImageListService>(LifeCycle.Transient);
-            // UI: WinForms
-            container.Register<ICheckAvailabilityWindow, CheckAvailabilityForm>(LifeCycle.Transient);
-            container.Register<IAboutView, AboutForm>(LifeCycle.Transient);
-            container.Register<IFilterView, FilterView>(LifeCycle.Transient);
-            container.Register<IPanelView, PanelView>(LifeCycle.Transient);
-            container.Register<IEditView, EditForm>(LifeCycle.Transient);
-            container.Register<IMainView, MainForm>();
-            container.Register<IPagesView, PagesView>();
-            container.Register<IAddonManager, AddonManagerImpl>();
-            container.Register<IImageManager, ImageManagerImpl>();
-            container.Register<IAppPresenter, AppPresenter>();
-            container.Register<IWaitingService, WaitingServiceImpl>();
-            container.Register<IClipboardService, ClipboardServiceImpl>();
-            container.Register<IScreenService, ScreenImpl>();
-            container.Register<IMessageBoxService, MessageBoxServiceImpl>();
+            container = new Container();
+            RegisterCoreSingletons();
+            RegisterPanelUpdater();
+            RegisterModels();
+            RegisterPresenters();
+            RegisterOSWindows();
+            RegisterWinForms();
             return container;
+        }
+
+        private void RegisterCoreSingletons()
+        {
+            container.RegisterSingleton<IServiceProvider>(container);
+            container.RegisterSingleton<LanExchangeApp>();
+            container.RegisterSingleton<IPanelItemFactoryManager, PanelItemFactoryManagerImpl>();
+            container.RegisterSingleton<IPanelFillerManager, PanelFillerManagerImpl>();
+            container.RegisterSingleton<IPanelColumnManager, PanelColumnManagerImpl>();
+            container.RegisterSingleton<IFolderManager, FolderManagerImpl>();
+            container.RegisterSingleton<IPluginManager, PluginManagerImpl>();
+            container.RegisterSingleton<ILazyThreadPool, LazyThreadPoolImpl>();
+            container.RegisterSingleton<IPuntoSwitcherService, PuntoSwitcherServiceEngRus>();
+            container.RegisterSingleton<ITranslationService, TranslationServiceImpl>();
+            container.RegisterSingleton<IDisposableManager, DisposableManagerImpl>();
+        }
+
+        private void RegisterPanelUpdater()
+        {
+            container.Register<IPanelUpdater, PanelUpdaterImpl>();
+        }
+
+        private void RegisterModels()
+        {
+            container.RegisterSingleton<IAboutModel, AboutModel>();
+            container.RegisterSingleton<IConfigModel, ConfigModel>();
+            container.RegisterSingleton<IPagesModel, PagesModel>();
+            container.Register<IPanelModel, PanelModel>();
+        }
+
+        private void RegisterPresenters()
+        {
+            container.RegisterSingleton<IMainPresenter, MainPresenter>();
+            container.RegisterSingleton<IAboutPresenter, AboutPresenter>();
+            container.RegisterSingleton<IPagesPresenter, PagesPresenter>();
+            container.Register<IFilterPresenter, FilterPresenter>();
+            container.Register<IPanelPresenter, PanelPresenter>();
+            container.Register<IEditPresenter, EditPresenter>();
+        }
+
+        private void RegisterOSWindows()
+        {
+            container.RegisterSingleton<IUser32Service, User32Service>();
+            container.RegisterSingleton<IShell32Service, Shell32Service>();
+            container.RegisterSingleton<IKernel32Service, Kernel32Service>();
+            container.RegisterSingleton<IComctl32Service, Comctl32Service>();
+            container.RegisterSingleton<IOle32Service, Ole32Service>();
+            container.RegisterSingleton<IIPHLPAPISerivice, IPHLPAPISerivce>();
+            container.RegisterSingleton<IHotkeysService, HotkeysService>();
+            container.RegisterSingleton<ISingleInstanceService, SingleInstanceService>();
+            container.Register<ISysImageListService, SysImageListService>();
+        }
+
+        private void RegisterWinForms()
+        {
+            container.Register<ICheckAvailabilityWindow, CheckAvailabilityForm>();
+            container.Register<IAboutView, AboutForm>();
+            container.Register<IFilterView, FilterView>();
+            container.Register<IPanelView, PanelView>();
+            container.Register<IEditView, EditForm>();
+            container.RegisterSingleton<IMainView, MainForm>();
+            container.RegisterSingleton<IPagesView, PagesView>();
+            container.RegisterSingleton<IAddonManager, AddonManagerImpl>();
+            container.RegisterSingleton<IImageManager, ImageManagerImpl>();
+            container.RegisterSingleton<IAppPresenter, AppPresenter>();
+            container.RegisterSingleton<IWaitingService, WaitingServiceImpl>();
+            container.RegisterSingleton<IClipboardService, ClipboardServiceImpl>();
+            container.RegisterSingleton<IScreenService, ScreenImpl>();
+            container.RegisterSingleton<IMessageBoxService, MessageBoxServiceImpl>();
         }
     }
 }

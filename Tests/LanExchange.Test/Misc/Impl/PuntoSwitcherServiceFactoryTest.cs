@@ -1,5 +1,4 @@
-﻿using LanExchange.Ioc;
-using LanExchange.SDK;
+﻿using LanExchange.SDK;
 using NUnit.Framework;
 
 namespace LanExchange.Misc.Impl

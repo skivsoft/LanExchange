@@ -1,5 +1,4 @@
-﻿using LanExchange.Ioc;
-using LanExchange.Plugin.Network;
+﻿using LanExchange.Plugin.Network;
 using LanExchange.SDK;
 using Moq;
 using NUnit.Framework;

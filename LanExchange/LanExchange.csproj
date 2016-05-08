@@ -43,6 +43,10 @@
   <PropertyGroup />
   <PropertyGroup />
   <ItemGroup>
+    <Reference Include="SimpleInjector, Version=3.1.4.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\Solution\packages\SimpleInjector.3.1.4\lib\net40-client\SimpleInjector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
@@ -55,28 +59,24 @@
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Actions\ActionNewItem.cs" />
+    <Compile Include="App.cs" />
     <Compile Include="Base\Addon.cs" />
     <Compile Include="Base\AddonItemTypeRef.cs" />
     <Compile Include="Base\AddonMenuItem.cs" />
     <Compile Include="Base\AddonObjectId.cs" />
     <Compile Include="Base\AddonProgram.cs" />
+    <Compile Include="CoreFacade.cs" />
     <Compile Include="Helpers\EnvironmentHelper.cs" />
     <Compile Include="Helpers\PanelModelCopyHelper.cs" />
-    <Compile Include="App.cs" />
     <Compile Include="Interfaces\DataReadyArgs.cs" />
     <Compile Include="Interfaces\IAddonManager.cs" />
     <Compile Include="Interfaces\ILazyThreadPool.cs" />
-    <Compile Include="Ioc\IIocContainer.cs" />
-    <Compile Include="Ioc\LifeCycle.cs" />
-    <Compile Include="Ioc\RegisteredObject.cs" />
-    <Compile Include="Ioc\SimpleIocContainer.cs" />
     <Compile Include="LanExchangeApp.cs" />
     <Compile Include="Model\Comparers\ColumnComparer.cs" />
     <Compile Include="Misc\AnimationHelper.cs" />
     <Compile Include="ContainerBuilder.cs" />
     <Compile Include="Misc\GenerateEnglish.cs" />
     <Compile Include="Misc\Impl\PanelUpdaterImpl.cs" />
-    <Compile Include="Misc\TypeNotRegisteredException.cs" />
     <Compile Include="Misc\Impl\DisposableManagerImpl.cs" />
     <Compile Include="Misc\TranslationResourceManager.cs" />
     <Compile Include="Actions\ActionAbout.cs" />
@@ -88,7 +88,6 @@
     <Compile Include="Misc\Impl\PanelColumnManagerImpl.cs" />
     <Compile Include="Misc\Impl\PanelFillerManagerImpl.cs" />
     <Compile Include="Misc\Impl\PanelItemFactoryManagerImpl.cs" />
-    <Compile Include="Misc\Impl\ServiceProviderImpl.cs" />
     <Compile Include="Misc\Impl\TranslationServiceImpl.cs" />
     <Compile Include="Misc\CustomPanelItem.cs" />
     <Compile Include="Misc\Impl\FolderManagerImpl.cs" />
@@ -281,6 +280,7 @@
     <None Include="Languages\Ukrainian.po">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
     <None Include="Resources\user_32.png" />
     <None Include="Resources\user_16.png" />
     <None Include="Resources\twitter-icon-v2.png" />

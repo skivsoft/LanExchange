@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using LanExchange.Ioc;
 using LanExchange.SDK;
 
 namespace LanExchange.Presenter

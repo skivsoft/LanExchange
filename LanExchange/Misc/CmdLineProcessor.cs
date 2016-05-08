@@ -1,7 +1,5 @@
 using System;
 using System.ComponentModel;
-using LanExchange.Ioc;
-using LanExchange.SDK;
 
 namespace LanExchange.Misc
 {

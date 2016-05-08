@@ -3,8 +3,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
-using LanExchange.Interfaces;
-using LanExchange.Ioc;
 using LanExchange.Properties;
 using LanExchange.SDK;
 

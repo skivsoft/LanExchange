@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using LanExchange.Ioc;
 using LanExchange.SDK;
 
 namespace LanExchange.Misc.Impl

@@ -1,6 +1,4 @@
 ﻿using System;
-using LanExchange.Ioc;
-using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
 {

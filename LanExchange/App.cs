@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using LanExchange.Interfaces;
-using LanExchange.Ioc;
 using LanExchange.SDK;
 
 namespace LanExchange
@@ -11,7 +10,7 @@ namespace LanExchange
         /// <summary>
         /// The IoC container.
         /// </summary>
-        private static IIocContainer s_Ioc;
+        private static IServiceProvider s_Ioc;
 
         // public setters
         public static IMainView MainView { get; set; }
@@ -29,7 +28,7 @@ namespace LanExchange
         public static ITranslationService TR { get; private set; }
 
         [Localizable(false)]
-        public static void SetContainer(IIocContainer container)
+        public static void SetContainer(IServiceProvider container)
         {
             s_Ioc = container;
             // init translation service first and replace global resource manager
@@ -47,19 +46,14 @@ namespace LanExchange
             Images = Resolve<IImageManager>();
         }
 
-        public static IIocContainer GetContainer()
-        {
-            return s_Ioc;
-        }
-
         public static TTypeToResolve Resolve<TTypeToResolve>()
         {
-            return (TTypeToResolve)s_Ioc.Resolve(typeof(TTypeToResolve));
+            return (TTypeToResolve)s_Ioc.GetService(typeof(TTypeToResolve));
         }
 
         public static object Resolve(Type typeToResolve)
         {
-            return s_Ioc.Resolve(typeToResolve);
+            return s_Ioc.GetService(typeToResolve);
         }
     }
 }

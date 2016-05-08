@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using LanExchange.Ioc;
 using LanExchange.SDK;
 using NUnit.Framework;
 

@@ -7,7 +7,6 @@ using System.Text;
 using System.Windows.Forms;
 using LanExchange.Helpers;
 using LanExchange.Interfaces;
-using LanExchange.Ioc;
 using LanExchange.Plugin.WinForms.Interfaces;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.Properties;
