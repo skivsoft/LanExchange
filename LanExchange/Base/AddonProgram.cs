@@ -4,23 +4,16 @@ using System.Drawing;
 using System.IO;
 using System.Xml.Serialization;
 using LanExchange.Helpers;
+using LanExchange.Interfaces.Factories;
 
 namespace LanExchange.Base
 {
     [Localizable(false)]
     [XmlType("Program")]
-    public class AddonProgram : AddonObjectId, IDisposable
+    public class AddonProgram : AddonObjectId
     {
-        private Image m_Image;
-
         public AddonProgram()
         {
-        }
-
-        public void Dispose()
-        {
-            if (m_Image != null)
-                m_Image.Dispose();
         }
 
         public AddonProgram(string id, string fileName)
@@ -37,43 +30,19 @@ namespace LanExchange.Base
             get { return File.Exists(ExpandedFileName); } 
         }
 
-        public Image ProgramImage
+        [XmlIgnore]
+        public AddonProgramInfo Info { get; set; }
+
+        [XmlIgnore]
+        public string ExpandedFileName
         {
-            get { return m_Image; }
+            get { return Info.ExpandedFileName; }
         }
 
         [XmlIgnore]
-        public string ExpandedFileName { get; set; }
-
-        public static string ExpandCmdLine(string fileName)
+        public Image ProgramImage
         {
-            if (string.IsNullOrEmpty(fileName))
-                return string.Empty;
-
-            var cmdLine = fileName;
-            if (!EnvironmentHelper.Is64BitOperatingSystem())
-                cmdLine = cmdLine.Replace("%ProgramFiles(x86)%", "%ProgramFiles%");
-            return Environment.ExpandEnvironmentVariables(cmdLine);
-        }
-
-        public void PrepareFileNameAndIcon()
-        {
-            var fileName = ExpandCmdLine(FileName);
-            if (fileName.Equals(Path.GetFileName(fileName)))
-                fileName = Path.Combine(App.FolderManager.CurrentPath, fileName);
-            ExpandedFileName = fileName;
-            m_Image = App.Images.GetSmallImageOfFileName(fileName);
-        }
-
-        public static AddonProgram CreateFromProtocol(string protocol)
-        {
-            string fileName;
-            int iconIndex;
-            if (!ProtocolHelper.LookupInRegistry(protocol, out fileName, out iconIndex))
-                return null;
-            var result = new AddonProgram(protocol, fileName);
-            result.PrepareFileNameAndIcon();
-            return result;
+            get { return Info.ProgramImage; }
         }
     }
 }

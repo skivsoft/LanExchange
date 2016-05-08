@@ -1,20 +1,25 @@
 ﻿using System;
 using LanExchange.SDK;
+using LanExchange.Interfaces.Services;
 
 namespace LanExchange.Presenter
 {
     public class PagesPresenter : PresenterBase<IPagesView>, IPagesPresenter, IDisposable
     {
         private readonly IPagesModel m_Model;
+        private readonly IPagesPersistenceService pagesService;
 
         public event EventHandler PanelViewFocusedItemChanged;
         public event EventHandler PanelViewFilterTextChanged;
 
-        public PagesPresenter(IPagesModel model)
+        public PagesPresenter(IPagesModel model, IPagesPersistenceService pagesService)
         {
-            if (model == null)
-                throw new ArgumentNullException("model");
+            if (model == null) throw new ArgumentNullException(nameof(model));
+            if (pagesService == null) throw new ArgumentNullException(nameof(pagesService));
+
             m_Model = model;
+            this.pagesService = pagesService;
+
             App.Resolve<IDisposableManager>().RegisterInstance(this);
             m_Model.AfterAppendTab += Model_AfterAppendTab;
             m_Model.AfterRemove += Model_AfterRemove;
@@ -210,14 +215,12 @@ namespace LanExchange.Presenter
 
         public void DoPanelViewFocusedItemChanged(object sender, EventArgs e)
         {
-            if (PanelViewFocusedItemChanged != null)
-                PanelViewFocusedItemChanged(sender, e);
+            PanelViewFocusedItemChanged?.Invoke(sender, e);
         }
 
         public void DoPanelViewFilterTextChanged(object sender, EventArgs e)
         {
-            if (PanelViewFilterTextChanged != null)
-                PanelViewFilterTextChanged(sender, e);
+            PanelViewFilterTextChanged?.Invoke(sender, e);
         }
 
         public bool SelectTabByName(string tabName)
@@ -244,7 +247,7 @@ namespace LanExchange.Presenter
 
         public void SaveInstant()
         {
-            m_Model.SaveSettings();
+            pagesService.SaveSettings(m_Model);
         }
 
         public string GetTabName(int index)
@@ -266,7 +269,7 @@ namespace LanExchange.Presenter
         public void LoadSettings()
         {
             IPagesModel model;
-            m_Model.LoadSettings(out model);
+            pagesService.LoadSettings(out model);
             m_Model.SetLoadedModel(model);
         }
 

@@ -12,6 +12,10 @@ using LanExchange.Plugin.WinForms.Impl;
 using SimpleInjector;
 using LanExchange.Interfaces.Services;
 using LanExchange.Implementations.Services;
+using LanExchange.Interfaces.Processes;
+using LanExchange.Implementations.Processes;
+using LanExchange.Interfaces.Factories;
+using LanExchange.Implementations.Factories;
 
 namespace LanExchange
 {
@@ -35,6 +39,8 @@ namespace LanExchange
             RegisterOSWindows();
             RegisterWinForms();
             RegisterServices();
+            RegisterProcesses();
+            RegisterFactories();
             return container;
         }
 
@@ -109,6 +115,18 @@ namespace LanExchange
         private void RegisterServices()
         {
             container.Register<IConfigPersistenceService, ConfigPersistenceService>();
+            container.Register<IPagesPersistenceService, PagesPersistenceService>();
+        }
+
+        private void RegisterProcesses()
+        {
+            container.Register<ICmdLineProcessor, CmdLineProcessor>();
+            container.Register<IGenerateEnglishProcess, GenerateEnglishProcess>();
+        }
+
+        private void RegisterFactories()
+        {
+            container.RegisterSingleton<IAddonProgramFactory, AddonProgramFactory>();
         }
     }
 }

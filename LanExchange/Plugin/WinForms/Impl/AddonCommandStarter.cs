@@ -19,7 +19,7 @@ namespace LanExchange.Plugin.WinForms.Impl
         public static string[] BuildCmdLine(PanelItemBase panelItem, AddonMenuItem menuItem)
         {
             var programFileName = menuItem.ProgramValue.ExpandedFileName;
-            var programArgs = AddonProgram.ExpandCmdLine(menuItem.ProgramArgs);
+            var programArgs = EnvironmentHelper.ExpandCmdLine(menuItem.ProgramArgs);
             programArgs = MacroHelper.ExpandPublicProperties(programArgs, panelItem);
             return ProtocolHelper.IsProtocol(menuItem.ProgramRef.Id)
                 ? new[] { menuItem.ProgramRef.Id + programArgs }

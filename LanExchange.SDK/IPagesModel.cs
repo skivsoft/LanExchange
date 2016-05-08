@@ -17,9 +17,6 @@ namespace LanExchange.SDK
         IPanelModel GetItem(int index);
         string GetTabName(int index);
 
-        void SaveSettings();
-        void LoadSettings(out IPagesModel model);
-
         void SetLoadedModel(IPagesModel model);
     }
 }

@@ -19,5 +19,16 @@ namespace LanExchange.Helpers
         {
             return Type.GetType("Mono.Runtime") != null;
         }
+
+        public static string ExpandCmdLine(string fileName)
+        {
+            if (string.IsNullOrEmpty(fileName))
+                return string.Empty;
+
+            var cmdLine = fileName;
+            if (!EnvironmentHelper.Is64BitOperatingSystem())
+                cmdLine = cmdLine.Replace("%ProgramFiles(x86)%", "%ProgramFiles%");
+            return Environment.ExpandEnvironmentVariables(cmdLine);
+        }
     }
 }

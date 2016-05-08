@@ -5,19 +5,13 @@ using LanExchange.SDK;
 namespace LanExchange.Base
 {
     [XmlType("MenuItem")]
-    public class AddonMenuItem : IEquatable<AddonMenuItem>, IDisposable
+    public class AddonMenuItem : IEquatable<AddonMenuItem>
     {
         public AddonMenuItem()
         {
             Visible = true;
         }
         
-        public void Dispose()
-        {
-            if (ProgramValue != null)
-                ProgramValue.Dispose();
-        }
-
         [XmlAttribute]
         public string Text { get; set; }
 

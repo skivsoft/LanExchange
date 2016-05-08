@@ -13,23 +13,25 @@ namespace LanExchange.Model
         private const string DEFAULT1_PANELITEMTYPE = "DomainPanelItem";
         private const string DEFAULT2_PANELITEMTYPE = "DrivePanelItem";
 
-        private readonly IPanelItemFactoryManager m_FactoryManager;
-        private readonly List<IPanelModel> m_List;
-        private int m_SelectedIndex;
+        private readonly IPanelItemFactoryManager factoryManager;
+        private readonly List<IPanelModel> panels;
+        private int selectedIndex;
 
         public event EventHandler<PanelModelEventArgs> AfterAppendTab;
         public event EventHandler<PanelIndexEventArgs> AfterRemove;
         public event EventHandler<PanelIndexEventArgs> IndexChanged;
 
-        public PagesModel()
+        public PagesModel(IPanelItemFactoryManager factoryManager)
         {
-            m_FactoryManager = App.Resolve<IPanelItemFactoryManager>();
+            if (factoryManager == null) throw new ArgumentNullException(nameof(factoryManager));
 
-            m_List = new List<IPanelModel>();
-            m_SelectedIndex = -1;
+            this.factoryManager = factoryManager;
+
+            panels = new List<IPanelModel>();
+            selectedIndex = -1;
         }
 
-        public int Count { get { return m_List.Count; }  }
+        public int Count { get { return panels.Count; }  }
 
         private int m_LockCount;
 
@@ -37,11 +39,11 @@ namespace LanExchange.Model
         {
             get
             {
-                return m_SelectedIndex;
+                return selectedIndex;
             }
             set
             {
-                m_SelectedIndex = value;
+                selectedIndex = value;
                 if (m_LockCount == 0)
                 {
                     m_LockCount++;
@@ -53,9 +55,9 @@ namespace LanExchange.Model
 
         public IPanelModel GetItem(int index)
         {
-            if (index < 0 || index > m_List.Count - 1)
+            if (index < 0 || index > panels.Count - 1)
                 return null;
-            return m_List[index];
+            return panels[index];
         }
 
         /// <summary>
@@ -68,14 +70,14 @@ namespace LanExchange.Model
         {
             get
             {
-                var result = new PanelModel[m_List.Count];
-                for (int index = 0; index < m_List.Count; index++)
-                    result[index] = (PanelModel)m_List[index];
+                var result = new PanelModel[panels.Count];
+                for (int index = 0; index < panels.Count; index++)
+                    result[index] = (PanelModel)panels[index];
                 return result;
             }
             set
             {
-                m_List.Clear();
+                panels.Clear();
                 foreach (var tab in value)
                     AddTab(tab);
             }
@@ -83,7 +85,7 @@ namespace LanExchange.Model
 
         public int GetItemIndex(IPanelModel item)
         {
-            return m_List.IndexOf(item);
+            return panels.IndexOf(item);
         }
 
         private void DoAfterAppendTab(IPanelModel info)
@@ -109,47 +111,29 @@ namespace LanExchange.Model
             // ommit duplicates
             //if (m_List.Contains(model))
             //    return false;
-            m_List.Add(model);
-            if (m_SelectedIndex == -1 && m_List.Count == 1)
-                m_SelectedIndex = 0;
+            panels.Add(model);
+            if (selectedIndex == -1 && panels.Count == 1)
+                selectedIndex = 0;
             DoAfterAppendTab(model);
             return true;
         }
 
         public void DelTab(int index)
         {
-            if (index >= 0 && index < m_List.Count)
+            if (index >= 0 && index < panels.Count)
             {
-                var model = m_List[index];
-                m_List.RemoveAt(index);
+                var model = panels[index];
+                panels.RemoveAt(index);
                 model.Dispose();
-                m_SelectedIndex = m_List.Count - 1;
-                DoIndexChanged(m_SelectedIndex);
+                selectedIndex = panels.Count - 1;
+                DoIndexChanged(selectedIndex);
                 DoAfterRemove(index);
             }
         }
 
         public string GetTabName(int index)
         {
-            return index >= 0 && index <= Count - 1 ? m_List[index].TabName : null;
-        }
-
-        public void LoadSettings(out IPagesModel model)
-        {
-            var fileFName = App.FolderManager.TabsConfigFileName;
-            model = null;
-            if (File.Exists(fileFName))
-                try
-                {
-                    model =
-                        (PagesModel)
-                        SerializeUtils.DeserializeObjectFromXmlFile(fileFName, typeof (PagesModel),
-                                                                    m_FactoryManager.ToArray());
-                }
-                catch(Exception ex)
-                {
-                    Debug.Print(ex.Message);
-                }
+            return index >= 0 && index <= Count - 1 ? panels[index].TabName : null;
         }
 
         public void SetLoadedModel(IPagesModel model)
@@ -167,9 +151,9 @@ namespace LanExchange.Model
             }
             if (Count == 0)
             {
-                var root = m_FactoryManager.CreateDefaultRoot(DEFAULT1_PANELITEMTYPE);
+                var root = factoryManager.CreateDefaultRoot(DEFAULT1_PANELITEMTYPE);
                 if (root == null)
-                    root = m_FactoryManager.CreateDefaultRoot(DEFAULT2_PANELITEMTYPE);
+                    root = factoryManager.CreateDefaultRoot(DEFAULT2_PANELITEMTYPE);
                 if (root == null) return;
                 // create default tab
                 var info = App.Resolve<IPanelModel>();
@@ -179,24 +163,12 @@ namespace LanExchange.Model
             }
         }
 
-        public void SaveSettings()
-        {
-            try
-            {
-                SerializeUtils.SerializeObjectToXmlFile(App.FolderManager.TabsConfigFileName, this, m_FactoryManager.ToArray());
-            }
-            catch(Exception ex)
-            {
-                Debug.Print(ex.Message);
-            }
-        }
-
         public void Dispose()
         {
-            for (int i = m_List.Count - 1; i >= 0; i--)
+            for (int i = panels.Count - 1; i >= 0; i--)
             {
-                var model = m_List[i];
-                m_List.RemoveAt(i);
+                var model = panels[i];
+                panels.RemoveAt(i);
                 model.Dispose();
             }
         }

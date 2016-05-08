@@ -20,7 +20,6 @@ namespace LanExchange
         public static IPanelFillerManager PanelFillers { get; set; }
         // managers
         public static IPanelColumnManager PanelColumns { get; private set; }
-        public static IFolderManager FolderManager { get; private set; }
         // presenters
         public static IPagesPresenter MainPages { get; private set; }
         public static IMainPresenter Presenter { get; private set; }
@@ -38,7 +37,6 @@ namespace LanExchange
             // managers
             PanelFillers = Resolve<IPanelFillerManager>();
             PanelColumns = Resolve<IPanelColumnManager>();
-            FolderManager = Resolve<IFolderManager>();
             // presenters
             Presenter = Resolve<IMainPresenter>();
             MainPages = Resolve<IPagesPresenter>();

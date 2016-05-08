@@ -10,6 +10,7 @@ using LanExchange.Helpers;
 using LanExchange.Interfaces;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.SDK;
+using LanExchange.Interfaces.Factories;
 
 namespace LanExchange.Plugin.WinForms.Impl
 {
@@ -18,11 +19,19 @@ namespace LanExchange.Plugin.WinForms.Impl
     {
         private readonly IDictionary<string, AddonProgram> m_Programs;
         private readonly IDictionary<string, AddOnItemTypeRef> m_PanelItems;
+        private readonly IFolderManager folderManager;
+        private readonly IAddonProgramFactory programFactory;
 
         private bool m_Loaded;
 
-        public AddonManagerImpl()
+        public AddonManagerImpl(IFolderManager folderManager, IAddonProgramFactory programFactory)
         {
+            if (folderManager == null) throw new ArgumentNullException(nameof(folderManager));
+            if (programFactory == null) throw new ArgumentNullException(nameof(programFactory));
+
+            this.folderManager = folderManager;
+            this.programFactory = programFactory;
+
             m_Programs = new Dictionary<string, AddonProgram>();
             m_PanelItems = new Dictionary<string, AddOnItemTypeRef>();
         }
@@ -48,7 +57,7 @@ namespace LanExchange.Plugin.WinForms.Impl
         public void LoadAddons()
         {
             if (m_Loaded) return;
-            foreach (var fileName in App.FolderManager.GetAddonsFiles())
+            foreach (var fileName in folderManager.GetAddonsFiles())
                 try
                 {
                     LoadAddon(fileName);
@@ -75,7 +84,7 @@ namespace LanExchange.Plugin.WinForms.Impl
             foreach (var item in addon.Programs)
                 if (!m_Programs.ContainsKey(item.Id))
                 {
-                    item.PrepareFileNameAndIcon();
+                    item.Info = programFactory.CreateAddonProgramInfo(item);
                     m_Programs.Add(item.Id, item);
                 }
             // process protocols
@@ -83,7 +92,7 @@ namespace LanExchange.Plugin.WinForms.Impl
                 foreach(var menuItem in item.ContextMenu)
                     if (ProtocolHelper.IsProtocol(menuItem.ProgramRef.Id))
                     {
-                        var itemProgram = AddonProgram.CreateFromProtocol(menuItem.ProgramRef.Id);
+                        var itemProgram = programFactory.CreateFromProtocol(menuItem.ProgramRef.Id);
                         if (itemProgram != null)
                             m_Programs.Add(itemProgram.Id, itemProgram);
                     }

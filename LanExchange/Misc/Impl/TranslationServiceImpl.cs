@@ -21,13 +21,18 @@ namespace LanExchange.Misc.Impl
         private const string ID_RTL      = "@RTL";
         private const string TRUE        = "true";
 
+        private readonly IFolderManager folderManager;
         private readonly IList<string> m_CurrentLanguageLines;
         private readonly IDictionary<string, Type> m_Translits;
         private string m_CurrentLanguage;
         private ITranslitStrategy m_CurrentTranslit;
 
-        public TranslationServiceImpl()
+        public TranslationServiceImpl(IFolderManager folderManager)
         {
+            if (folderManager == null) throw new ArgumentNullException(nameof(folderManager));
+
+            this.folderManager = folderManager;
+
             m_CurrentLanguageLines = new List<string>();
             m_Translits = new Dictionary<string, Type>();
             CurrentLanguage = SourceLanguage;
@@ -55,7 +60,7 @@ namespace LanExchange.Misc.Impl
                 if (String.Compare(SourceLanguage, value, StringComparison.OrdinalIgnoreCase) == 0)
                     m_CurrentLanguage = value;
                 else
-                    foreach(var fileName in App.FolderManager.GetLanguagesFiles())
+                    foreach(var fileName in folderManager.GetLanguagesFiles())
                     {
                         var lang = Path.GetFileNameWithoutExtension(fileName);
                         if (lang != null && String.Compare(lang, value, StringComparison.OrdinalIgnoreCase) == 0)
@@ -106,7 +111,7 @@ namespace LanExchange.Misc.Impl
         {
             var sorted = new SortedDictionary<string, string>();
             sorted.Add(SourceLanguage, SourceLanguage);
-            foreach (var fileName in App.FolderManager.GetLanguagesFiles())
+            foreach (var fileName in folderManager.GetLanguagesFiles())
             {
                 var lang = Path.GetFileNameWithoutExtension(fileName);
                 if (lang == null) continue;
@@ -128,7 +133,7 @@ namespace LanExchange.Misc.Impl
         public IDictionary<string, string> GetTranslations()
         {
             var result = new SortedDictionary<string, string>();
-            foreach (var fileName in App.FolderManager.GetLanguagesFiles())
+            foreach (var fileName in folderManager.GetLanguagesFiles())
             {
                 var lang = Path.GetFileNameWithoutExtension(fileName);
                 if (lang == null) continue;
