@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LanExchange.SDK;
+using System;
 using System.ComponentModel;
 using System.Xml.Serialization;
 
@@ -8,10 +9,9 @@ namespace LanExchange.Model
     /// Program settings. Implemented as Singleton.
     /// </summary>
     [XmlType("LanExchangeConfig")]
-    public class ConfigModel : INotifyPropertyChanged
+    public class ConfigModel : ConfigBase
     {
         private const int MIN_INFO_LINES = 3;
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private bool showInfoPanel;
         private bool runMinimized;
@@ -30,11 +30,6 @@ namespace LanExchange.Model
             NumInfoLines = 3;
             Language = "English";
             ShowGridLines = true;
-        }
-
-        private void OnChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         [DefaultValue(true)]

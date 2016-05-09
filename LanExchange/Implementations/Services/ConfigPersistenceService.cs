@@ -16,26 +16,26 @@ namespace LanExchange.Implementations.Services
             this.folderManager = folderManager;
         }
 
-        public TConfig Load<TConfig>() where TConfig : class
+        public TConfig Load<TConfig>() where TConfig : ConfigBase, new()
         {
+            var result = new TConfig();
             var fileName = folderManager.ConfigFileName;
-            if (!File.Exists(fileName)) return default(TConfig);
+            if (!File.Exists(fileName)) return result;
 
-            var temp = default(TConfig);
             try
             {
                 var loaded = (TConfig)SerializeUtils.DeserializeObjectFromXmlFile(fileName, typeof(TConfig));
                 if (loaded != null)
-                    ReflectionUtils.CopyObjectProperties(loaded, temp);
+                    ReflectionUtils.CopyObjectProperties(loaded, result);
             }
             catch (Exception ex)
             {
                 Debug.Print(ex.Message);
             }
-            return temp;
+            return result;
         }
 
-        public void Save<TConfig>(TConfig config) where TConfig : class
+        public void Save<TConfig>(TConfig config) where TConfig : ConfigBase
         {
             var fileName = folderManager.ConfigFileName;
             try

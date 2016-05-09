@@ -114,8 +114,8 @@ namespace LanExchange
 
         private void RegisterServices()
         {
-            container.Register<IConfigPersistenceService, ConfigPersistenceService>();
-            container.Register<IPagesPersistenceService, PagesPersistenceService>();
+            container.RegisterSingleton<IConfigPersistenceService, ConfigPersistenceService>();
+            container.RegisterSingleton<IPagesPersistenceService, PagesPersistenceService>();
         }
 
         private void RegisterProcesses()

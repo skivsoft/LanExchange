@@ -1,8 +1,10 @@
-﻿namespace LanExchange.Interfaces.Services
+﻿using LanExchange.SDK;
+
+namespace LanExchange.Interfaces.Services
 {
     public interface IConfigPersistenceService
     {
-        TConfig Load<TConfig>() where TConfig : class;
-        void Save<TConfig>(TConfig config) where TConfig : class;
+        TConfig Load<TConfig>() where TConfig : ConfigBase, new();
+        void Save<TConfig>(TConfig config) where TConfig : ConfigBase;
     }
 }
