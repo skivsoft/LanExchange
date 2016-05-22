@@ -5,7 +5,7 @@ namespace LanExchange.Extensions
     /// <summary>
     /// Extensions method for the <see cref="IServiceProvider"/>.
     /// </summary>
-    public static class ServiceProviderExtension
+    public static class IServiceProviderExtension
     {
         /// <summary>
         /// Resolves the specified type. 

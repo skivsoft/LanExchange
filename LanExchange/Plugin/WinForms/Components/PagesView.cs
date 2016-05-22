@@ -79,7 +79,7 @@ namespace LanExchange.Plugin.WinForms.Components
             {
                 var menuItem = new ToolStripMenuItem(string.Format(Resources.PagesView_OpenTab, root.Name));
                 menuItem.Tag = root;
-                menuItem.ImageIndex = App.Images.IndexOf(root.ImageName);
+                menuItem.ImageIndex = imageManager.IndexOf(root.ImageName);
                 menuItem.Click += PluginOnClick;
                 items.Insert(index, menuItem);
                 index++;
@@ -258,7 +258,7 @@ namespace LanExchange.Plugin.WinForms.Components
             var listView = panelView.Controls[0] as ListView;
             if (listView != null)
             {
-                App.Images.SetImagesTo(listView);
+                imageManager.SetImagesTo(listView);
                 listView.View = (View) info.CurrentView;
             }
             presenter.SetupPanelViewEvents(panelView);
@@ -284,7 +284,7 @@ namespace LanExchange.Plugin.WinForms.Components
 
             tabPage.Padding = new Padding(0);
             tabPage.Text = model.TabName;
-            tabPage.ImageIndex = App.Images.IndexOf(model.CurrentPath.Item[0].ImageName);
+            tabPage.ImageIndex = imageManager.IndexOf(model.CurrentPath.Item[0].ImageName);
             tabPage.ToolTipText = model.ToolTipText;
             return tabPage;
         }

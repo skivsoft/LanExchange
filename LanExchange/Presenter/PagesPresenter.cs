@@ -1,34 +1,41 @@
 ﻿using System;
 using LanExchange.SDK;
 using LanExchange.Interfaces.Services;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange.Presenter
 {
     public class PagesPresenter : PresenterBase<IPagesView>, IPagesPresenter, IDisposable
     {
-        private readonly IPagesModel m_Model;
+        private readonly IPagesModel model;
         private readonly IPagesPersistenceService pagesService;
+        private readonly IImageManager imageManager;
 
         public event EventHandler PanelViewFocusedItemChanged;
         public event EventHandler PanelViewFilterTextChanged;
 
-        public PagesPresenter(IPagesModel model, IPagesPersistenceService pagesService)
+        public PagesPresenter(
+            IPagesModel model, 
+            IPagesPersistenceService pagesService,
+            IImageManager imageManager)
         {
-            if (model == null) throw new ArgumentNullException(nameof(model));
-            if (pagesService == null) throw new ArgumentNullException(nameof(pagesService));
+            Contract.Requires<ArgumentNullException>(model != null);
+            Contract.Requires<ArgumentNullException>(pagesService != null);
+            Contract.Requires<ArgumentNullException>(imageManager != null);
 
-            m_Model = model;
+            this.model = model;
             this.pagesService = pagesService;
+            this.imageManager = imageManager;
 
             App.Resolve<IDisposableManager>().RegisterInstance(this);
-            m_Model.AfterAppendTab += Model_AfterAppendTab;
-            m_Model.AfterRemove += Model_AfterRemove;
-            m_Model.IndexChanged += Model_IndexChanged;
+            this.model.AfterAppendTab += Model_AfterAppendTab;
+            this.model.AfterRemove += Model_AfterRemove;
+            this.model.IndexChanged += Model_IndexChanged;
         }
 
         public void Dispose()
         {
-            m_Model.Dispose();
+            model.Dispose();
         }
 
         public bool CanSendToNewTab()
@@ -94,7 +101,7 @@ namespace LanExchange.Presenter
             var obj = clipboard.GetDataObject();
             if (obj == null) return;
             var items = (PanelItemBaseHolder)obj.GetData(typeof(PanelItemBaseHolder));
-            var destObjects = m_Model.GetItem(m_Model.SelectedIndex);
+            var destObjects = model.GetItem(model.SelectedIndex);
             destObjects.DataType = items.DataType;
             //destObjects.CurrentPath.Push(PanelItemRoot.ROOT_OF_USERITEMS);
             foreach (var panelItem in items)
@@ -144,24 +151,24 @@ namespace LanExchange.Presenter
         public void CommandCloseTab()
         {
             var index = View.PopupSelectedIndex;
-            m_Model.DelTab(index);
+            model.DelTab(index);
         }
 
         public void CommanCloseOtherTabs()
         {
             var popupIndex = View.PopupSelectedIndex;
-            for (int index = m_Model.Count - 1; index >= 0; index--)
+            for (int index = model.Count - 1; index >= 0; index--)
                 if (index != popupIndex)
-                    m_Model.DelTab(index);
-            m_Model.SelectedIndex = 0;
+                    model.DelTab(index);
+            model.SelectedIndex = 0;
         }
 
         public int IndexOf(IPanelModel model)
         {
             if (model == null)
                 return -1;
-            for (int index = 0; index < m_Model.Count; index++)
-                if (m_Model.GetItem(index) == model)
+            for (int index = 0; index < this.model.Count; index++)
+                if (this.model.GetItem(index) == model)
                     return index;
             return -1;
         }
@@ -192,7 +199,7 @@ namespace LanExchange.Presenter
             if (index != -1)
             {
                 View.SetTabText(index, model.TabName);
-                View.SetTabImage(index, App.Images.IndexOf(model.ImageName));
+                View.SetTabImage(index, imageManager.IndexOf(model.ImageName));
             }
         }
 
@@ -203,7 +210,7 @@ namespace LanExchange.Presenter
 
         public void Model_AfterRename(object sender, PanelIndexEventArgs e)
         {
-            var model = m_Model.GetItem(e.Index);
+            var model = this.model.GetItem(e.Index);
             View.SetTabText(e.Index, model.TabName);
         }
 
@@ -225,8 +232,8 @@ namespace LanExchange.Presenter
 
         public bool SelectTabByName(string tabName)
         {
-            for (int index = 0; index < m_Model.Count; index++ )
-                if (m_Model.GetTabName(index).Equals(tabName))
+            for (int index = 0; index < model.Count; index++ )
+                if (model.GetTabName(index).Equals(tabName))
                 {
                     SelectedIndex = index;
                     return true;
@@ -236,23 +243,23 @@ namespace LanExchange.Presenter
 
         public int Count
         {
-            get { return m_Model.Count; }
+            get { return model.Count; }
         }
 
         public int SelectedIndex
         {
-            get { return m_Model.SelectedIndex; }
-            set { m_Model.SelectedIndex = value; }
+            get { return model.SelectedIndex; }
+            set { model.SelectedIndex = value; }
         }
 
         public void SaveInstant()
         {
-            pagesService.SaveSettings(m_Model);
+            pagesService.SaveSettings(model);
         }
 
         public string GetTabName(int index)
         {
-            return m_Model.GetTabName(index);
+            return model.GetTabName(index);
         }
 
         public void SetupPanelViewEvents(IPanelView panelView)
@@ -263,24 +270,24 @@ namespace LanExchange.Presenter
 
         public IPanelModel GetItem(int index)
         {
-            return m_Model.GetItem(index);
+            return model.GetItem(index);
         }
 
         public void LoadSettings()
         {
             IPagesModel model;
             pagesService.LoadSettings(out model);
-            m_Model.SetLoadedModel(model);
+            this.model.SetLoadedModel(model);
         }
 
         public bool AddTab(IPanelModel info)
         {
-            return m_Model.AddTab(info);
+            return model.AddTab(info);
         }
 
         public void UpdateTabName(int index)
         {
-            var model = m_Model.GetItem(index);
+            var model = this.model.GetItem(index);
             if (model != null)
                 View.SetTabText(index, model.TabName);
         }

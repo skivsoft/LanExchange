@@ -11,29 +11,36 @@ using LanExchange.Interfaces;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.SDK;
 using LanExchange.Interfaces.Factories;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange.Plugin.WinForms.Impl
 {
     [Localizable(false)]
     public class AddonManagerImpl : IAddonManager
     {
-        private readonly IDictionary<string, AddonProgram> m_Programs;
-        private readonly IDictionary<string, AddOnItemTypeRef> m_PanelItems;
+        private readonly IDictionary<string, AddonProgram> programs;
+        private readonly IDictionary<string, AddOnItemTypeRef> panelItems;
         private readonly IFolderManager folderManager;
         private readonly IAddonProgramFactory programFactory;
+        private readonly IImageManager imageManager;
 
-        private bool m_Loaded;
+        private bool isLoaded;
 
-        public AddonManagerImpl(IFolderManager folderManager, IAddonProgramFactory programFactory)
+        public AddonManagerImpl(
+            IFolderManager folderManager, 
+            IAddonProgramFactory programFactory,
+            IImageManager imageManager)
         {
-            if (folderManager == null) throw new ArgumentNullException(nameof(folderManager));
-            if (programFactory == null) throw new ArgumentNullException(nameof(programFactory));
+            Contract.Requires<ArgumentNullException>(folderManager != null);
+            Contract.Requires<ArgumentNullException>(programFactory != null);
+            Contract.Requires<ArgumentNullException>(imageManager != null);
 
             this.folderManager = folderManager;
             this.programFactory = programFactory;
+            this.imageManager = imageManager;
 
-            m_Programs = new Dictionary<string, AddonProgram>();
-            m_PanelItems = new Dictionary<string, AddOnItemTypeRef>();
+            programs = new Dictionary<string, AddonProgram>();
+            panelItems = new Dictionary<string, AddOnItemTypeRef>();
         }
 
         public IDictionary<string, AddonProgram> Programs 
@@ -41,7 +48,7 @@ namespace LanExchange.Plugin.WinForms.Impl
             get
             {
                 LoadAddons();
-                return m_Programs;
+                return programs;
             }
         }
         
@@ -50,13 +57,13 @@ namespace LanExchange.Plugin.WinForms.Impl
             get
             {
                 LoadAddons();
-                return m_PanelItems;
+                return panelItems;
             }
         }
 
         public void LoadAddons()
         {
-            if (m_Loaded) return;
+            if (isLoaded) return;
             foreach (var fileName in folderManager.GetAddonsFiles())
                 try
                 {
@@ -67,13 +74,13 @@ namespace LanExchange.Plugin.WinForms.Impl
                     Debug.Print(ex.Message);
                 }
             // register programs images
-            foreach (var pair in m_Programs)
+            foreach (var pair in programs)
                 if (pair.Value.ProgramImage != null)
                 {
                     var imageName = string.Format(CultureInfo.InvariantCulture, PanelImageNames.ADDON_FMT, pair.Key);
-                    App.Images.RegisterImage(imageName, pair.Value.ProgramImage, pair.Value.ProgramImage);
+                    imageManager.RegisterImage(imageName, pair.Value.ProgramImage, pair.Value.ProgramImage);
                 }
-            m_Loaded = true;
+            isLoaded = true;
         }
 
         private void LoadAddon(string fileName)
@@ -82,10 +89,10 @@ namespace LanExchange.Plugin.WinForms.Impl
             var addon = (AddOn)SerializeUtils.DeserializeObjectFromXmlFile(fileName, typeof(AddOn));
             // process programs
             foreach (var item in addon.Programs)
-                if (!m_Programs.ContainsKey(item.Id))
+                if (!programs.ContainsKey(item.Id))
                 {
                     item.Info = programFactory.CreateAddonProgramInfo(item);
-                    m_Programs.Add(item.Id, item);
+                    programs.Add(item.Id, item);
                 }
             // process protocols
             foreach (var item in addon.ItemTypes)
@@ -94,16 +101,16 @@ namespace LanExchange.Plugin.WinForms.Impl
                     {
                         var itemProgram = programFactory.CreateFromProtocol(menuItem.ProgramRef.Id);
                         if (itemProgram != null)
-                            m_Programs.Add(itemProgram.Id, itemProgram);
+                            programs.Add(itemProgram.Id, itemProgram);
                     }
             // process menu items
             foreach (var item in addon.ItemTypes)
             {
                 AddOnItemTypeRef found;
-                if (m_PanelItems.ContainsKey(item.Id))
+                if (panelItems.ContainsKey(item.Id))
                 {
-                    found = m_PanelItems[item.Id];
-                    m_PanelItems.Remove(item.Id);
+                    found = panelItems[item.Id];
+                    panelItems.Remove(item.Id);
                 }
                 else
                     found = new AddOnItemTypeRef();
@@ -119,15 +126,15 @@ namespace LanExchange.Plugin.WinForms.Impl
                             found.ContextMenu.Add(menuItem);
                         else
                         {
-                            if (m_Programs.ContainsKey(menuItem.ProgramRef.Id))
-                                menuItem.ProgramValue = m_Programs[menuItem.ProgramRef.Id];
+                            if (programs.ContainsKey(menuItem.ProgramRef.Id))
+                                menuItem.ProgramValue = programs[menuItem.ProgramRef.Id];
                             if (!found.ContextMenu.Contains(menuItem) && 
                                 menuItem.ProgramRef != null && 
                                 menuItem.ProgramValue != null)
                                 found.ContextMenu.Add(menuItem);
                         }
                     }
-                m_PanelItems.Add(item.Id, found);
+                panelItems.Add(item.Id, found);
             }
         }
 

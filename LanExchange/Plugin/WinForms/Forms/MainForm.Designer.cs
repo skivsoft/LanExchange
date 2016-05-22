@@ -48,7 +48,7 @@ namespace LanExchange.Plugin.WinForms.Forms
             this.lUserName = new System.Windows.Forms.ToolStripStatusLabel();
             this.tipComps = new System.Windows.Forms.ToolTip(this.components);
             this.popTop = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.pInfo = new LanExchange.Plugin.WinForms.Components.InfoView();
+            this.pInfo = new LanExchange.Plugin.WinForms.Components.InfoView(imageManager);
             this.MainMenu = new System.Windows.Forms.MainMenu(this.components);
             this.mPanel = new System.Windows.Forms.MenuItem();
             this.mNewItem = new System.Windows.Forms.MenuItem();

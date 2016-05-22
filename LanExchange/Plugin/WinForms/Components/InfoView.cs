@@ -3,19 +3,26 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.SDK;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange.Plugin.WinForms.Components
 {
     public partial class InfoView : UserControl, IInfoView
     {
-        private int m_NumLines;
-        private readonly IList<Label> m_Lines;
-        private PanelItemBase m_CurrentItem;
+        private readonly IImageManager imageManager;
+
+        private int numLines;
+        private readonly IList<Label> lines;
+        private PanelItemBase currentItem;
         
-        public InfoView()
+        public InfoView(IImageManager imageManager)
         {
+            Contract.Requires<ArgumentNullException>(imageManager != null);
+
+            this.imageManager = imageManager;
+
             InitializeComponent();
-            m_Lines = new List<Label>();
+            lines = new List<Label>();
         }
 
         public PictureBox Picture
@@ -25,21 +32,21 @@ namespace LanExchange.Plugin.WinForms.Components
 
         public int NumLines
         {
-            get { return m_NumLines; }
+            get { return numLines; }
             set
             {
-                m_NumLines = value;
-                Height = GetLocationY(m_NumLines) + 8;
-                for (int i = m_Lines.Count; i < m_NumLines; i++ )
+                numLines = value;
+                Height = GetLocationY(numLines) + 8;
+                for (int i = lines.Count; i < numLines; i++ )
                 {
                     var control = CreateLabelControl(i);
                     Controls.Add(control);
-                    m_Lines.Add(control);
+                    lines.Add(control);
                 }
-                for (int i = m_Lines.Count - 1; i > m_NumLines - 1; i--)
+                for (int i = lines.Count - 1; i > numLines - 1; i--)
                 {
-                    var label = m_Lines[i];
-                    m_Lines.RemoveAt(i);
+                    var label = lines[i];
+                    lines.RemoveAt(i);
                     label.Dispose();
                 }
             }
@@ -57,16 +64,16 @@ namespace LanExchange.Plugin.WinForms.Components
 
         public string GetLine(int index)
         {
-            if (index < 0 || index > m_NumLines - 1)
+            if (index < 0 || index > numLines - 1)
                 return string.Empty;
-            return m_Lines[index].Text;
+            return lines[index].Text;
         }
 
         public void SetLine(int index, string text)
         {
-            if (index < 0 || index > m_NumLines - 1)
+            if (index < 0 || index > numLines - 1)
                 return;
-            m_Lines[index].Text = text;
+            lines[index].Text = text;
         }
 
         private Label CreateLabelControl(int index)
@@ -98,14 +105,14 @@ namespace LanExchange.Plugin.WinForms.Components
 
         public PanelItemBase CurrentItem
         {
-            get { return m_CurrentItem; }
+            get { return currentItem; }
             set
             {
-                m_CurrentItem = value;
-                if (m_CurrentItem != null)
+                currentItem = value;
+                if (currentItem != null)
                 {
-                    Picture.Image = App.Images.GetLargeImage(m_CurrentItem.ImageName);
-                    App.MainView.SetToolTip(Picture, m_CurrentItem.ImageLegendText);
+                    Picture.Image = imageManager.GetLargeImage(currentItem.ImageName);
+                    App.MainView.SetToolTip(Picture, currentItem.ImageLegendText);
                 }
             }
         }

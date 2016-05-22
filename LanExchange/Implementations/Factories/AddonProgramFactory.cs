@@ -3,6 +3,7 @@ using LanExchange.Helpers;
 using LanExchange.Interfaces.Factories;
 using LanExchange.SDK;
 using System;
+using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace LanExchange.Implementations.Factories
@@ -10,12 +11,17 @@ namespace LanExchange.Implementations.Factories
     internal sealed class AddonProgramFactory : IAddonProgramFactory
     {
         private readonly IFolderManager folderManager;
+        private readonly IImageManager imageManager;
 
-        public AddonProgramFactory(IFolderManager folderManager)
+        public AddonProgramFactory(
+            IFolderManager folderManager,
+            IImageManager imageManager)
         {
-            if (folderManager == null) throw new ArgumentNullException(nameof(folderManager));
+            Contract.Requires<ArgumentNullException>(folderManager != null);
+            Contract.Requires<ArgumentNullException>(imageManager != null);
 
             this.folderManager = folderManager;
+            this.imageManager = imageManager;
         }
 
         public AddonProgramInfo CreateAddonProgramInfo(AddonProgram program)
@@ -24,7 +30,7 @@ namespace LanExchange.Implementations.Factories
             if (fileName.Equals(Path.GetFileName(fileName)))
                 fileName = Path.Combine(folderManager.CurrentPath, fileName);
 
-            var image = App.Images.GetSmallImageOfFileName(fileName);
+            var image = imageManager.GetSmallImageOfFileName(fileName);
 
             return new AddonProgramInfo(fileName, image);
         }

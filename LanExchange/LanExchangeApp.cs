@@ -6,16 +6,23 @@ using System;
 using LanExchange.Misc;
 using LanExchange.Interfaces.Services;
 using LanExchange.Model;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange
 {
     public class LanExchangeApp
     {
+        private readonly IImageManager imageManager;
         private readonly IAppPresenter application;
 
-        public LanExchangeApp(IConfigPersistenceService configService)
+        public LanExchangeApp(
+            IConfigPersistenceService configService,
+            IImageManager imageManager)
         {
-            if (configService == null) throw new ArgumentNullException(nameof(configService));
+            Contract.Requires<ArgumentNullException>(configService != null);
+            Contract.Requires<ArgumentNullException>(imageManager != null);
+
+            this.imageManager = imageManager;
 
             // global map interfaces to classes
             App.TR.SetResourceManagerTo<Resources>();
@@ -44,12 +51,12 @@ namespace LanExchange
             application.Run(App.MainView);
         }
 
-        private static void LoadPlugins()
+        private void LoadPlugins()
         {
             var plugins = App.Resolve<IPluginManager>();
             plugins.LoadPlugins();
             // register stage images for icon animation
-            AnimationHelper.Register(AnimationHelper.WORKING, Resources.process_working, 16, 16);
+            AnimationHelper.Register(imageManager, AnimationHelper.WORKING, Resources.process_working, 16, 16);
         }
 
     }

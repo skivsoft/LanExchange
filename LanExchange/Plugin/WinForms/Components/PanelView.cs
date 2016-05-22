@@ -23,6 +23,7 @@ namespace LanExchange.Plugin.WinForms.Components
         private readonly IAddonManager addonManager;
         private readonly IPanelItemFactoryManager factoryManager;
         private readonly ILazyThreadPool threadPool;
+        private readonly IImageManager imageManager;
 
         private PanelModelCopyHelper copyHelper;
         private int sortColumn;
@@ -33,12 +34,14 @@ namespace LanExchange.Plugin.WinForms.Components
             IPanelPresenter presenter, 
             IAddonManager addonManager, 
             IPanelItemFactoryManager factoryManager,
-            ILazyThreadPool threadPool)
+            ILazyThreadPool threadPool,
+            IImageManager imageManager)
         {
             Contract.Requires<ArgumentNullException>(presenter != null);
             Contract.Requires<ArgumentNullException>(addonManager != null);
             Contract.Requires<ArgumentNullException>(factoryManager != null);
             Contract.Requires<ArgumentNullException>(threadPool != null);
+            Contract.Requires<ArgumentNullException>(imageManager != null);
 
             InitializeComponent();
             // init presenters
@@ -48,6 +51,7 @@ namespace LanExchange.Plugin.WinForms.Components
             this.addonManager = addonManager;
             this.factoryManager = factoryManager;
             this.threadPool = threadPool;
+            this.imageManager = imageManager;
 
             // setup items cache
             var cache = new ListViewItemCache(this);
@@ -122,7 +126,7 @@ namespace LanExchange.Plugin.WinForms.Components
                     }
                 }
             }
-            result.ImageIndex = App.Images.IndexOf(panelItem.ImageName);
+            result.ImageIndex = imageManager.IndexOf(panelItem.ImageName);
             result.ToolTipText = sb.ToString();
             result.Tag = panelItem;
             return result;
@@ -596,7 +600,7 @@ namespace LanExchange.Plugin.WinForms.Components
             var menuVisible = false;
             if (panelItem != null)
             {
-                mComp.Image = App.Images.GetSmallImage(panelItem.ImageName);
+                mComp.Image = imageManager.GetSmallImage(panelItem.ImageName);
                 mComp.Text = panelItem.Name;
                 var typeId = panelItem.GetType().Name;
                 menuVisible = addonManager.BuildMenuForPanelItemType(mComp, typeId);

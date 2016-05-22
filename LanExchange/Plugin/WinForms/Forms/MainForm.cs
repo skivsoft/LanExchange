@@ -20,21 +20,25 @@ namespace LanExchange.Plugin.WinForms.Forms
         private readonly IAddonManager addonManager;
         private readonly IPanelItemFactoryManager factoryManager;
         private readonly ILazyThreadPool threadPool;
+        private readonly IImageManager imageManager;
 
         public MainForm(
             IAddonManager addonManager, 
             IPanelItemFactoryManager factoryManager,
-            ILazyThreadPool threadPool)
+            ILazyThreadPool threadPool,
+            IImageManager imageManager)
         {
             Contract.Requires<ArgumentNullException>(addonManager != null);
             Contract.Requires<ArgumentNullException>(factoryManager != null);
             Contract.Requires<ArgumentNullException>(threadPool != null);
-
-            InitializeComponent();
+            Contract.Requires<ArgumentNullException>(imageManager != null);
 
             this.addonManager = addonManager;
             this.factoryManager = factoryManager;
             this.threadPool = threadPool;
+            this.imageManager = imageManager;
+
+            InitializeComponent();
 
             if (App.TR.RightToLeft)
             {
@@ -46,11 +50,11 @@ namespace LanExchange.Plugin.WinForms.Forms
 
             // show computer name
             lCompName.Text = SystemInformation.ComputerName;
-            lCompName.ImageIndex = App.Images.IndexOf(PanelImageNames.COMPUTER);
+            lCompName.ImageIndex = imageManager.IndexOf(PanelImageNames.COMPUTER);
 
             // show current user
             lUserName.Text = SystemInformation.UserName;
-            lUserName.ImageIndex = App.Images.IndexOf(PanelImageNames.USER);
+            lUserName.ImageIndex = imageManager.IndexOf(PanelImageNames.USER);
         }
 
         public void SetupMenuLanguages()
@@ -81,8 +85,8 @@ namespace LanExchange.Plugin.WinForms.Forms
             Controls.Add(Pages);
             Pages.BringToFront();
             // setup images
-            App.Images.SetImagesTo(Pages.Pages);
-            App.Images.SetImagesTo(Status);
+            imageManager.SetImagesTo(Pages.Pages);
+            imageManager.SetImagesTo(Status);
             // load saved pages from config
             Pages.SetupContextMenu();
         }
