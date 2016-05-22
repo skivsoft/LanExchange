@@ -5,40 +5,52 @@ using System.Windows.Forms;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.Properties;
 using LanExchange.SDK;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange.Plugin.WinForms.Components
 {
     public partial class PagesView : UserControl, IPagesView, ITranslationable
     {
-        private readonly IPagesPresenter m_Presenter;
-        private readonly IPanelItemFactoryManager m_FactoryManager;
-        private readonly IImageManager m_ImageManager;
+        private readonly IPagesPresenter presenter;
+        private readonly IPanelItemFactoryManager factoryManager;
+        private readonly IImageManager imageManager;
+        private readonly IPanelFillerManager panelFillers;
 
-        private int m_PopupSelectedIndex = -1;
+        private int popupSelectedIndex = -1;
 
         /// <summary>
         /// Mouse right click was pressed.
         /// </summary>
-        private bool m_MouseDown;
+        private bool isMouseDown;
         /// <summary>
         /// Popup menu was opened.
         /// </summary>
-        private bool m_Opened;
+        private bool isOpened;
         /// <summary>
         /// Menu item in popup menu was clicked.
         /// </summary>
-        private bool m_Clicked;
+        private bool isClicked;
 
-        public PagesView(IPagesPresenter presenter, IPanelItemFactoryManager factoryManager, IImageManager imageManager)
+        public PagesView(
+            IPagesPresenter presenter, 
+            IPanelItemFactoryManager factoryManager, 
+            IImageManager imageManager,
+            IPanelFillerManager panelFillers)
         {
+            Contract.Requires<ArgumentNullException>(presenter != null);
+            Contract.Requires<ArgumentNullException>(factoryManager != null);
+            Contract.Requires<ArgumentNullException>(imageManager != null);
+            Contract.Requires<ArgumentNullException>(panelFillers != null);
+
             InitializeComponent();
-            m_Presenter = presenter;
-            m_Presenter.View = this;
+            this.presenter = presenter;
+            this.presenter.View = this;
 
-            m_FactoryManager = factoryManager;
-            m_ImageManager = imageManager;
+            this.factoryManager = factoryManager;
+            this.imageManager = imageManager;
+            this.panelFillers = panelFillers;
 
-            m_ImageManager.SetImagesTo(popPages);
+            this.imageManager.SetImagesTo(popPages);
         }
 
         public void TranslateUI()
@@ -61,9 +73,9 @@ namespace LanExchange.Plugin.WinForms.Components
                 items.RemoveAt(0);
                 menuItem.Dispose();
             }
-            m_FactoryManager.CreateDefaultRoots();
+            factoryManager.CreateDefaultRoots();
             var index = 0;
-            foreach (var root in m_FactoryManager.DefaultRoots)
+            foreach (var root in factoryManager.DefaultRoots)
             {
                 var menuItem = new ToolStripMenuItem(string.Format(Resources.PagesView_OpenTab, root.Name));
                 menuItem.Tag = root;
@@ -84,13 +96,13 @@ namespace LanExchange.Plugin.WinForms.Components
             if (menuItem == null) return;
             var root = menuItem.Tag as PanelItemBase;
             if (root == null) return;
-            if (!m_Presenter.SelectTabByName(root.Name))
+            if (!presenter.SelectTabByName(root.Name))
             {
                 var info = App.Resolve<IPanelModel>();
                 info.SetDefaultRoot(root);
-                var type = App.PanelFillers.GetFillType(root);
+                var type = panelFillers.GetFillType(root);
                 info.DataType = type != null ? Name : string.Empty;
-                m_Presenter.AddTab(info);
+                presenter.AddTab(info);
             }
         }
 
@@ -139,7 +151,7 @@ namespace LanExchange.Plugin.WinForms.Components
 
         private void Pages_Selected(object sender, TabControlEventArgs e)
         {
-            m_Presenter.SelectedIndex = e.TabPageIndex;
+            presenter.SelectedIndex = e.TabPageIndex;
         }
 
         public IPanelView ActivePanelView
@@ -174,30 +186,30 @@ namespace LanExchange.Plugin.WinForms.Components
         {
             if (e.Button == MouseButtons.Right)
             {
-                m_PopupSelectedIndex = GetTabIndexByPoint(e.Location);
-                m_MouseDown = true;
-                m_Opened = false;
-                m_Clicked = false;
+                popupSelectedIndex = GetTabIndexByPoint(e.Location);
+                isMouseDown = true;
+                isOpened = false;
+                isClicked = false;
             }
             //logger.Info("MouseDown={0}", bMouseDown);
         }
 
         private void popPages_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            m_Clicked = m_Opened;
+            isClicked = isOpened;
             //logger.Info("Clicked={0}", bClicked);
         }
 
         [Localizable(false)]
         private void popPages_Opened(object sender, EventArgs e)
         {
-            if (m_MouseDown && !m_Opened)
+            if (isMouseDown && !isOpened)
             {
-                m_Opened = true;
-                m_MouseDown = false;
+                isOpened = true;
+                isMouseDown = false;
             }
             else
-                m_Opened = false;
+                isOpened = false;
             mReRead.Enabled = App.Presenter.IsActionEnabled("ActionReRead");
             mCloseTab.Enabled = App.Presenter.IsActionEnabled("ActionCloseTab");
             mCloseOther.Enabled = App.Presenter.IsActionEnabled("ActionCloseOther");
@@ -206,7 +218,7 @@ namespace LanExchange.Plugin.WinForms.Components
 
         private void popPages_Closed(object sender, ToolStripDropDownClosedEventArgs e)
         {
-            m_Opened = false;
+            isOpened = false;
             //logger.Info("Closed={0}", bClosed);
         }
 
@@ -215,14 +227,14 @@ namespace LanExchange.Plugin.WinForms.Components
             get
             {
                 //logger.Info("MouseDown={0}, Opened={1}, Clicked={2}, Closed={3}", bMouseDown, bOpened, bClicked, bClosed);
-                if (m_Clicked && !m_Opened)
+                if (isClicked && !isOpened)
                 {
-                    m_MouseDown = false;
-                    m_Opened = false;
-                    m_Clicked = false;
-                    if (m_PopupSelectedIndex < 0 || m_PopupSelectedIndex > Pages.TabCount - 1)
+                    isMouseDown = false;
+                    isOpened = false;
+                    isClicked = false;
+                    if (popupSelectedIndex < 0 || popupSelectedIndex > Pages.TabCount - 1)
                         return Pages.SelectedIndex;
-                    return m_PopupSelectedIndex;
+                    return popupSelectedIndex;
                 }
                 return Pages.SelectedIndex;
             }
@@ -234,7 +246,7 @@ namespace LanExchange.Plugin.WinForms.Components
             set
             {
                 Pages.SelectedIndex = value;
-                m_Presenter.SelectedIndex = value;
+                presenter.SelectedIndex = value;
             }
         }
 
@@ -249,7 +261,7 @@ namespace LanExchange.Plugin.WinForms.Components
                 App.Images.SetImagesTo(listView);
                 listView.View = (View) info.CurrentView;
             }
-            m_Presenter.SetupPanelViewEvents(panelView);
+            presenter.SetupPanelViewEvents(panelView);
             // add new tab and insert panel into it
             var tabPage = CreateTabPageFromModel(info);
             panelView.Dock = DockStyle.Fill;

@@ -1,14 +1,23 @@
 ﻿using System;
 using LanExchange.Properties;
 using LanExchange.SDK;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange.Presenter
 {
     public class PanelPresenter : PresenterBase<IPanelView>, IPanelPresenter, IDisposable
     {
+        private readonly IPanelFillerManager panelFillers;
         private IPanelModel m_Objects;
 
         public event EventHandler CurrentPathChanged;
+
+        public PanelPresenter(IPanelFillerManager panelFillers)
+        {
+            Contract.Requires<ArgumentNullException>(panelFillers != null);
+
+            this.panelFillers = panelFillers;
+        }
 
         public void Dispose()
         {
@@ -106,7 +115,7 @@ namespace LanExchange.Presenter
                 return false;
             if (panelItem is PanelItemDoubleDot)
                 return CommandLevelUp();
-            if (!App.PanelFillers.FillerExists(panelItem)) return false;
+            if (!panelFillers.FillerExists(panelItem)) return false;
             Objects.FocusedItem = new PanelItemDoubleDot(panelItem);
             Objects.CurrentPath.Push(panelItem);
             Objects.OnTabNameUpdated();
@@ -125,7 +134,7 @@ namespace LanExchange.Presenter
             var panelItem = Objects.CurrentPath.Peek();
             if (panelItem == null || panelItem is PanelItemRootBase) 
                 return false;
-            if (!App.PanelFillers.FillerExists(panelItem)) return false;
+            if (!panelFillers.FillerExists(panelItem)) return false;
             Objects.FocusedItem = panelItem;
             Objects.CurrentPath.Pop();
             Objects.OnTabNameUpdated();

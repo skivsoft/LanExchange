@@ -6,12 +6,14 @@ using System.Xml.Serialization;
 using LanExchange.Helpers;
 using LanExchange.Model.Comparers;
 using LanExchange.SDK;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange.Model
 {
     [XmlType("Tab")]
     public class PanelModel : IPanelModel
-    {       
+    {
+        private readonly IPanelFillerManager panelFillers;
         // items added by user
         private readonly IList<PanelItemBase> m_Items;
         // merged all results and user items
@@ -33,8 +35,12 @@ namespace LanExchange.Model
         /// <summary>
         /// Parameterless constructor for xml serialization.
         /// </summary>
-        public PanelModel()
+        public PanelModel(IPanelFillerManager panelFillers)
         {
+            Contract.Requires<ArgumentNullException>(panelFillers != null);
+
+            this.panelFillers = panelFillers;
+
             m_Punto = App.Resolve<IPuntoSwitcherService>();
             m_Updater = App.Resolve<IPanelUpdater>();
             m_Items = new List<PanelItemBase>();
@@ -230,7 +236,7 @@ namespace LanExchange.Model
             // get parent
             var parent = m_CurrentPath.IsEmpty ? null : m_CurrentPath.Peek();
             // retrieve items
-            return App.PanelFillers.RetrievePanelItems(parent, mode);
+            return panelFillers.RetrievePanelItems(parent, mode);
         }
 
         public void SetFillerResult(PanelFillerResult fillerResult, bool clearFilter)

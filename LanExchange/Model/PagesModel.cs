@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Xml.Serialization;
 using LanExchange.SDK;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange.Model
 {
@@ -14,6 +13,7 @@ namespace LanExchange.Model
         private const string DEFAULT2_PANELITEMTYPE = "DrivePanelItem";
 
         private readonly IPanelItemFactoryManager factoryManager;
+        private readonly IPanelFillerManager panelFillers;
         private readonly List<IPanelModel> panels;
         private int selectedIndex;
 
@@ -21,11 +21,15 @@ namespace LanExchange.Model
         public event EventHandler<PanelIndexEventArgs> AfterRemove;
         public event EventHandler<PanelIndexEventArgs> IndexChanged;
 
-        public PagesModel(IPanelItemFactoryManager factoryManager)
+        public PagesModel(
+            IPanelItemFactoryManager factoryManager,
+            IPanelFillerManager fillerManager)
         {
-            if (factoryManager == null) throw new ArgumentNullException(nameof(factoryManager));
+            Contract.Requires<ArgumentNullException>(factoryManager != null);
+            Contract.Requires<ArgumentNullException>(fillerManager != null);
 
             this.factoryManager = factoryManager;
+            this.panelFillers = fillerManager;
 
             panels = new List<IPanelModel>();
             selectedIndex = -1;
@@ -158,7 +162,7 @@ namespace LanExchange.Model
                 // create default tab
                 var info = App.Resolve<IPanelModel>();
                 info.SetDefaultRoot(root);
-                info.DataType = App.PanelFillers.GetFillType(root).Name;
+                info.DataType = panelFillers.GetFillType(root).Name;
                 AddTab(info);
             }
         }

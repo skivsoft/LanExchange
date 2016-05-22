@@ -16,7 +16,8 @@ namespace LanExchange.Plugin
             factoryManager.RegisterFactory<ShortcutRoot>(new PanelItemRootFactory<ShortcutRoot>());
             factoryManager.RegisterFactory<ShortcutPanelItem>(new ShortcutFactory());
 
-            App.PanelFillers.RegisterFiller<ShortcutPanelItem>(new ShortcutFiller());
+            var panelFillers = App.Resolve<IPanelFillerManager>();
+            panelFillers.RegisterFiller<ShortcutPanelItem>(new ShortcutFiller());
         }
     }
 }

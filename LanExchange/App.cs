@@ -17,7 +17,6 @@ namespace LanExchange
         // public setters
         public static IMainView MainView { get; set; }
         public static IImageManager Images { get; set; }
-        public static IPanelFillerManager PanelFillers { get; set; }
         // managers
         public static IPanelColumnManager PanelColumns { get; private set; }
         // presenters
@@ -34,7 +33,6 @@ namespace LanExchange
             // init translation service first and replace global resource manager
             TR = Resolve<ITranslationService>();
             // managers
-            PanelFillers = Resolve<IPanelFillerManager>();
             PanelColumns = Resolve<IPanelColumnManager>();
             // presenters
             Presenter = Resolve<IMainPresenter>();
