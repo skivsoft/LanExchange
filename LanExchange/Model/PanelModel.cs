@@ -14,6 +14,8 @@ namespace LanExchange.Model
     public class PanelModel : IPanelModel
     {
         private readonly IPanelFillerManager panelFillers;
+        private readonly IPanelColumnManager panelColumns;
+
         // items added by user
         private readonly IList<PanelItemBase> m_Items;
         // merged all results and user items
@@ -35,11 +37,15 @@ namespace LanExchange.Model
         /// <summary>
         /// Parameterless constructor for xml serialization.
         /// </summary>
-        public PanelModel(IPanelFillerManager panelFillers)
+        public PanelModel(
+            IPanelFillerManager panelFillers,
+            IPanelColumnManager panelColumns)
         {
             Contract.Requires<ArgumentNullException>(panelFillers != null);
+            Contract.Requires<ArgumentNullException>(panelColumns != null);
 
             this.panelFillers = panelFillers;
+            this.panelColumns = panelColumns;
 
             m_Punto = App.Resolve<IPuntoSwitcherService>();
             m_Updater = App.Resolve<IPanelUpdater>();
@@ -184,7 +190,7 @@ namespace LanExchange.Model
             var filter1 = FilterText.ToUpper(CultureInfo.CurrentCulture);
             var filter2 = m_Punto.Change(FilterText);
             if (filter2 != null) filter2 = filter2.ToUpper(CultureInfo.CurrentCulture);
-            var helper = new PanelModelCopyHelper(this);
+            var helper = new PanelModelCopyHelper(this, panelColumns);
             var upperValues = new List<string>();
             foreach (var value in m_Data)
             {

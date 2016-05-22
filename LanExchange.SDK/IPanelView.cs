@@ -79,6 +79,6 @@ namespace LanExchange.SDK
 
         void SetColumnMarker(int columnIndex, PanelSortOrder sortOrder);
 
-        void ShowHeaderMenu(IList<PanelColumnHeader> columns);
+        void ShowHeaderMenu(IEnumerable<PanelColumnHeader> columns);
     }
 }

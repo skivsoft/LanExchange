@@ -16,8 +16,6 @@ namespace LanExchange
 
         // public setters
         public static IMainView MainView { get; set; }
-        // managers
-        public static IPanelColumnManager PanelColumns { get; private set; }
         // presenters
         public static IPagesPresenter MainPages { get; private set; }
         public static IMainPresenter Presenter { get; private set; }
@@ -31,8 +29,6 @@ namespace LanExchange
             s_Ioc = container;
             // init translation service first and replace global resource manager
             TR = Resolve<ITranslationService>();
-            // managers
-            PanelColumns = Resolve<IPanelColumnManager>();
             // presenters
             Presenter = Resolve<IMainPresenter>();
             MainPages = Resolve<IPagesPresenter>();

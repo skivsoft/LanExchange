@@ -6,49 +6,41 @@ namespace LanExchange.Misc.Impl
 {
     class PanelColumnManagerImpl : IPanelColumnManager
     {
-        private readonly IDictionary<string, IList<PanelColumnHeader>> m_Types;
-        private int m_MaxColumns;
+        private readonly IDictionary<string, IList<PanelColumnHeader>> types;
 
         public PanelColumnManagerImpl()
         {
-            m_Types = new Dictionary<string, IList<PanelColumnHeader>>();
+            types = new Dictionary<string, IList<PanelColumnHeader>>();
         }
 
         public void RegisterColumn<TPanelItem>(PanelColumnHeader header) where TPanelItem : PanelItemBase
         {
             IList<PanelColumnHeader> found;
             var typeName = typeof (TPanelItem).Name;
-            if (!m_Types.TryGetValue(typeName, out found))
+            if (!types.TryGetValue(typeName, out found))
             {
                 found = new List<PanelColumnHeader>();
-                m_Types.Add(typeName, found);
+                types.Add(typeName, found);
             }
             header.Index = found.Count;
             found.Add(header);
-            if (found.Count > m_MaxColumns)
-                m_MaxColumns = found.Count;
         }
 
         public void UnregisterColumns(string typeName)
         {
-            m_Types.Remove(typeName);
+            types.Remove(typeName);
         }
 
-        public IList<PanelColumnHeader> GetColumns(string typeName)
+        public IEnumerable<PanelColumnHeader> GetColumns(string typeName)
         {
             IList<PanelColumnHeader> result;
-            m_Types.TryGetValue(typeName, out result);
+            types.TryGetValue(typeName, out result);
             return result;
         }
 
         public IEnumerable<PanelColumnHeader> EnumAllColumns()
         {
-            return m_Types.SelectMany(pair => pair.Value);
-        }
-
-        public int MaxColumns
-        {
-            get { return m_MaxColumns; }
+            return types.SelectMany(pair => pair.Value);
         }
 
         // TODO Column reorder

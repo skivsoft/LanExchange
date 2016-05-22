@@ -24,6 +24,7 @@ namespace LanExchange.Plugin.WinForms.Components
         private readonly IPanelItemFactoryManager factoryManager;
         private readonly ILazyThreadPool threadPool;
         private readonly IImageManager imageManager;
+        private readonly IPanelColumnManager panelColumns;
 
         private PanelModelCopyHelper copyHelper;
         private int sortColumn;
@@ -35,16 +36,16 @@ namespace LanExchange.Plugin.WinForms.Components
             IAddonManager addonManager, 
             IPanelItemFactoryManager factoryManager,
             ILazyThreadPool threadPool,
-            IImageManager imageManager)
+            IImageManager imageManager,
+            IPanelColumnManager panelColumns)
         {
             Contract.Requires<ArgumentNullException>(presenter != null);
             Contract.Requires<ArgumentNullException>(addonManager != null);
             Contract.Requires<ArgumentNullException>(factoryManager != null);
             Contract.Requires<ArgumentNullException>(threadPool != null);
             Contract.Requires<ArgumentNullException>(imageManager != null);
+            Contract.Requires<ArgumentNullException>(panelColumns != null);
 
-            InitializeComponent();
-            // init presenters
             this.presenter = presenter;
             this.presenter.View = this;
 
@@ -52,6 +53,9 @@ namespace LanExchange.Plugin.WinForms.Components
             this.factoryManager = factoryManager;
             this.threadPool = threadPool;
             this.imageManager = imageManager;
+            this.panelColumns = panelColumns;
+
+            InitializeComponent();
 
             // setup items cache
             var cache = new ListViewItemCache(this);
@@ -95,7 +99,7 @@ namespace LanExchange.Plugin.WinForms.Components
             var sb = new StringBuilder();
             if (!(panelItem is PanelItemDoubleDot))
             {
-                var columns = App.PanelColumns.GetColumns(presenter.Objects.DataType);
+                var columns = panelColumns.GetColumns(presenter.Objects.DataType).ToList();
                 for (int i = 0; i < panelItem.CountColumns; i++)
                 {
                     IComparable value;
@@ -425,18 +429,20 @@ namespace LanExchange.Plugin.WinForms.Components
                 presenter.ShowHideColumnClick((int)menuItem.Tag);
         }
 
-        public void ShowHeaderMenu(IList<PanelColumnHeader> columns)
+        public void ShowHeaderMenu(IEnumerable<PanelColumnHeader> columns)
         {
             var strip = new ContextMenuStrip();
             strip.RightToLeft = RightToLeft;
-            for (int i = 0; i < columns.Count; i++)
+            var index = 0;
+            foreach (var column in columns)
             {
-                var menuItem = new ToolStripMenuItem(columns[i].Text);
-                menuItem.Checked = columns[i].Visible;
-                menuItem.Enabled = i > 0;
+                var menuItem = new ToolStripMenuItem(column.Text);
+                menuItem.Checked = column.Visible;
+                menuItem.Enabled = index > 0;
                 menuItem.Click += ShowHideColumn_Click;
-                menuItem.Tag = i;
+                menuItem.Tag = index;
                 strip.Items.Add(menuItem);
+                index++;
             }
             strip.Show(Cursor.Position);
         }
@@ -536,7 +542,7 @@ namespace LanExchange.Plugin.WinForms.Components
             if (helper.IndexesCount == 1)
                 helper.MoveTo(0);
             var result = new List<ToolStripItem>();
-            var columns = App.PanelColumns.GetColumns(helper.IndexesCount == 1 ? helper.CurrentItem.GetType().Name : presenter.Objects.DataType);
+            var columns = panelColumns.GetColumns(helper.IndexesCount == 1 ? helper.CurrentItem.GetType().Name : presenter.Objects.DataType);
             var ctrlInsColumn = 0;
             foreach (var column in columns)
                 if (column.Visible)
@@ -584,7 +590,7 @@ namespace LanExchange.Plugin.WinForms.Components
 
         private void SetupCopyHelper()
         {
-            copyHelper = new PanelModelCopyHelper(presenter.Objects);
+            copyHelper = new PanelModelCopyHelper(presenter.Objects, panelColumns);
             foreach (int index in LV.SelectedIndices)
                 copyHelper.Indexes.Add(index);
             copyHelper.Prepare();

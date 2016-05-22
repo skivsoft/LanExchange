@@ -12,6 +12,7 @@ namespace LanExchange.Model
     public class ConfigModel : ConfigBase
     {
         private const int MIN_INFO_LINES = 3;
+        private const int MAX_INFO_LINES = 7;
 
         private bool showInfoPanel;
         private bool runMinimized;
@@ -81,12 +82,8 @@ namespace LanExchange.Model
             {
                 if (value < MIN_INFO_LINES)
                     value = MIN_INFO_LINES;
-                if (App.PanelColumns != null)
-                {
-                    var maxColumns = Math.Max(MIN_INFO_LINES, App.PanelColumns.MaxColumns);
-                    if (value > maxColumns)
-                        value = maxColumns;
-                }
+                if (value > MAX_INFO_LINES)
+                    value = MAX_INFO_LINES;
                 if (numInfoLines != value)
                 {
                     numInfoLines = value;

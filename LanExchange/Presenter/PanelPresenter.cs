@@ -2,21 +2,27 @@
 using LanExchange.Properties;
 using LanExchange.SDK;
 using System.Diagnostics.Contracts;
+using System.Linq;
 
 namespace LanExchange.Presenter
 {
     public class PanelPresenter : PresenterBase<IPanelView>, IPanelPresenter, IDisposable
     {
         private readonly IPanelFillerManager panelFillers;
-        private IPanelModel m_Objects;
+        private readonly IPanelColumnManager panelColumns;
+        private IPanelModel objects;
 
         public event EventHandler CurrentPathChanged;
 
-        public PanelPresenter(IPanelFillerManager panelFillers)
+        public PanelPresenter(
+            IPanelFillerManager panelFillers,
+            IPanelColumnManager panelColumns)
         {
             Contract.Requires<ArgumentNullException>(panelFillers != null);
+            Contract.Requires<ArgumentNullException>(panelColumns != null);
 
             this.panelFillers = panelFillers;
+            this.panelColumns = panelColumns;
         }
 
         public void Dispose()
@@ -26,40 +32,43 @@ namespace LanExchange.Presenter
 
         public void SetupColumns()
         {
-            if (m_Objects.DataType == null)
+            if (objects.DataType == null)
                 return;
+
             View.ColumnsClear();
-            var columns = App.PanelColumns.GetColumns(m_Objects.DataType);
-            if (columns == null) return;
-            int j = 0;
-            for (int i = 0; i < columns.Count; i++ )
-                if (columns[i].Visible)
+            int index = 0;
+            int visibleIndex = 0;
+            foreach (var column in panelColumns.GetColumns(objects.DataType))
+            {
+                if (column.Visible)
                 {
-                    View.AddColumn(columns[i]);
-                    if (i == m_Objects.Comparer.ColumnIndex)
-                        View.SetColumnMarker(j, m_Objects.Comparer.SortOrder);
-                    ++j;
+                    View.AddColumn(column);
+                    if (index == objects.Comparer.ColumnIndex)
+                        View.SetColumnMarker(visibleIndex, objects.Comparer.SortOrder);
+                    ++visibleIndex;
                 }
+                ++index;
+            }
         }
 
         public void ResetSortOrder()
         {
-            m_Objects.Comparer.ColumnIndex = 0;
-            m_Objects.Comparer.SortOrder = PanelSortOrder.Ascending;
+            objects.Comparer.ColumnIndex = 0;
+            objects.Comparer.SortOrder = PanelSortOrder.Ascending;
         }
 
         public void UpdateItemsAndStatus()
         {
-            if (m_Objects == null) return;
+            if (objects == null) return;
             // refresh only for current page
             var presenter = App.MainPages;
             var panelModel = presenter.GetItem(presenter.SelectedIndex);
-            if (panelModel == null || !m_Objects.Equals(panelModel)) 
+            if (panelModel == null || !objects.Equals(panelModel)) 
                 return;
             // get number of visible items (filtered) and number of total items
-            var showCount = m_Objects.FilterCount;
-            var totalCount = m_Objects.Count;
-            if (m_Objects.HasBackItem)
+            var showCount = objects.FilterCount;
+            var totalCount = objects.Count;
+            if (objects.HasBackItem)
             {
                 showCount--;
                 totalCount--;
@@ -69,8 +78,8 @@ namespace LanExchange.Presenter
             else
                 App.MainView.ShowStatusText(Resources.PanelPresenter_Items1, showCount);
             SetupColumns();
-            View.SetVirtualListSize(m_Objects.FilterCount);
-            if (m_Objects.FilterCount > 0)
+            View.SetVirtualListSize(objects.FilterCount);
+            if (objects.FilterCount > 0)
             {
                 var index = Objects.IndexOf(panelModel.FocusedItem);
                 View.FocusedItemIndex = index;
@@ -81,20 +90,20 @@ namespace LanExchange.Presenter
 
         private void CurrentPath_Changed(object sender, EventArgs e)
         {
-            if (m_Objects != null && CurrentPathChanged != null)
+            if (objects != null && CurrentPathChanged != null)
                 CurrentPathChanged(sender, e);
         }
 
         public IPanelModel Objects
         {
-            get { return m_Objects; }
+            get { return objects; }
             set
             {
-                if (m_Objects != null)
-                    m_Objects.CurrentPath.Changed -= CurrentPath_Changed;
-                m_Objects = value;
-                if (m_Objects != null)
-                    m_Objects.CurrentPath.Changed += CurrentPath_Changed;
+                if (objects != null)
+                    objects.CurrentPath.Changed -= CurrentPath_Changed;
+                objects = value;
+                if (objects != null)
+                    objects.CurrentPath.Changed += CurrentPath_Changed;
                 if (View.Filter != null)
                     View.Filter.Presenter.SetModel(value);
             }
@@ -149,7 +158,7 @@ namespace LanExchange.Presenter
         public void ColumnClick(int index)
         {
             // TODO Need sort lazy column
-            var columns = App.PanelColumns.GetColumns(m_Objects.DataType);
+            var columns = panelColumns.GetColumns(objects.DataType).ToList();
             if (columns[index].Callback != null)
                 return;
 
@@ -197,9 +206,9 @@ namespace LanExchange.Presenter
 
         public void ColumnRightClick(int columnIndex)
         {
-            if (m_Objects.DataType != null)
+            if (objects.DataType != null)
             {
-                var columns = App.PanelColumns.GetColumns(m_Objects.DataType);
+                var columns = panelColumns.GetColumns(objects.DataType);
                 View.ShowHeaderMenu(columns);
             }
         }
@@ -207,7 +216,7 @@ namespace LanExchange.Presenter
         public void ShowHideColumnClick(int columnIndex)
         {
             if (columnIndex == 0) return;
-            var columns = App.PanelColumns.GetColumns(m_Objects.DataType);
+            var columns = panelColumns.GetColumns(objects.DataType).ToList();
             columns[columnIndex].Visible = !columns[columnIndex].Visible;
             SetupColumns();
             //AppPresenter.MainPages.PV_FocusedItemChanged(m_View, EventArgs.Empty);

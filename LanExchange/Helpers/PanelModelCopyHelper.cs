@@ -3,91 +3,101 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using LanExchange.SDK;
+using System.Diagnostics.Contracts;
+using System.Linq;
 
 namespace LanExchange.Helpers
-{  
+{
+    /// TODO need refactoring
     public sealed class PanelModelCopyHelper : IDisposable
     {
-        private readonly IPanelModel m_Model;
-        private readonly List<int> m_Indexes;
-        private PanelItemBase m_CurrentItem;
-        private IList<PanelColumnHeader> m_Columns;
+        private readonly IPanelModel model;
+        private readonly IPanelColumnManager panelColumns;
 
-        public PanelModelCopyHelper(IPanelModel model)
+        private readonly List<int> indexes;
+        private PanelItemBase currentItem;
+        private IList<PanelColumnHeader> columns;
+
+        public PanelModelCopyHelper(
+            IPanelModel model,
+            IPanelColumnManager panelColumns)
         {
-            m_Model = model;
-            m_Indexes = new List<int>();
+            Contract.Requires<ArgumentNullException>(model != null);
+            Contract.Requires<ArgumentNullException>(panelColumns != null);
+
+            this.model = model;
+            this.panelColumns = panelColumns;
+
+            indexes = new List<int>();
         }
 
         public void Dispose()
         {
-            if (m_Model != null)
-                m_Model.Dispose();
+            model.Dispose();
         }
  
         public IPanelModel Model
         {
-            get { return m_Model; }
+            get { return model; }
         }
 
         public IList<int> Indexes
         {
-            get { return m_Indexes; }
+            get { return indexes; }
         }
 
         public int IndexesCount
         {
-            get { return m_Indexes.Count; }
+            get { return indexes.Count; }
         }
 
         public IEnumerable<PanelColumnHeader> Columns
         {
-            get { return m_Columns; }
+            get { return columns; }
         }
 
         public int ColumnsCount
         {
-            get { return m_Columns.Count; }
+            get { return columns.Count; }
         }
 
         public PanelItemBase CurrentItem
         {
-            get { return m_CurrentItem; }
+            get { return currentItem; }
             set
             {
-                m_CurrentItem = value;
-                if (m_CurrentItem is PanelItemDoubleDot)
-                    m_CurrentItem = m_CurrentItem.Parent;
-                if (App.PanelColumns != null)
-                    m_Columns = App.PanelColumns.GetColumns(m_CurrentItem.GetType().Name);
+                currentItem = value;
+                if (currentItem is PanelItemDoubleDot)
+                    currentItem = currentItem.Parent;
+                columns = panelColumns.GetColumns(currentItem.GetType().Name).ToList();
             }
         }
 
         public void Prepare()
         {
-            m_Indexes.Sort();
-            if (m_Indexes.Count > 1)
+            indexes.Sort();
+            if (indexes.Count > 1)
             {
-                if (m_Indexes[0] == 0 && m_Model.GetItemAt(0) is PanelItemDoubleDot)
-                    m_Indexes.Remove(0);
+                if (indexes[0] == 0 && model.GetItemAt(0) is PanelItemDoubleDot)
+                    indexes.Remove(0);
             }
         }
 
         public void MoveTo(int index)
         {
-            CurrentItem = m_Model.GetItemAt(m_Indexes[index]);
+            CurrentItem = model.GetItemAt(indexes[index]);
         }
 
         public string GetColumnValue(int colIndex)
         {
             if (colIndex == -1)
-                return m_CurrentItem != null ? m_CurrentItem.FullName : string.Empty;
+                return currentItem != null ? currentItem.FullName : string.Empty;
             IComparable comparable;
-            var column = m_Columns[colIndex];
+            var column = columns[colIndex];
             if (column.Callback != null)
-                column.LazyDict.TryGetValue(m_CurrentItem, out comparable);
+                column.LazyDict.TryGetValue(currentItem, out comparable);
             else
-                comparable = m_CurrentItem[colIndex];
+                comparable = currentItem[colIndex];
             return comparable != null ? comparable.ToString() : string.Empty;
         }
 
@@ -95,12 +105,12 @@ namespace LanExchange.Helpers
         public string GetSelectedText()
         {
             var sb = new StringBuilder();
-            for (int index = 0; index < m_Indexes.Count; index++)
+            for (int index = 0; index < indexes.Count; index++)
             {
                 MoveTo(index);
                 if (index > 0) sb.AppendLine();
                 var first = true;
-                foreach(var column in m_Columns)
+                foreach(var column in columns)
                     if (column.Visible)
                     {
                         if (!first) sb.Append("\t");
@@ -114,7 +124,7 @@ namespace LanExchange.Helpers
         public string GetColumnText(int colIndex)
         {
             var sb = new StringBuilder();
-            for (int index = 0; index < m_Indexes.Count; index++)
+            for (int index = 0; index < indexes.Count; index++)
             {
                 MoveTo(index);
                 if (index > 0) sb.AppendLine();
@@ -125,8 +135,8 @@ namespace LanExchange.Helpers
     
         public PanelItemBaseHolder GetItems()
         {
-            var result = new PanelItemBaseHolder(m_Model.TabName, m_Model.DataType);
-            for (int index = 0; index < m_Indexes.Count; index++)
+            var result = new PanelItemBaseHolder(model.TabName, model.DataType);
+            for (int index = 0; index < indexes.Count; index++)
             {
                 MoveTo(index);
                 result.Add(CurrentItem);

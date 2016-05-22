@@ -18,17 +18,22 @@ namespace LanExchange.Presenter
     {
         private readonly Dictionary<string, IAction> actions;
         private readonly ILazyThreadPool threadPool;
+        private readonly IPanelColumnManager panelColumns;
         private IHotkeysService hotkeys;
 
-        public MainPresenter(ILazyThreadPool threadPool)
+        public MainPresenter(
+            ILazyThreadPool threadPool,
+            IPanelColumnManager panelColumns)
         {
             Contract.Requires<ArgumentNullException>(threadPool != null);
+            Contract.Requires<ArgumentNullException>(panelColumns != null);
 
             this.threadPool = threadPool;
+            this.panelColumns = panelColumns;
 
             actions = new Dictionary<string, IAction>();
             RegisterAction(new ActionAbout());
-            RegisterAction(new ActionReRead());
+            RegisterAction(new ActionReRead(panelColumns));
             RegisterAction(new ActionCloseTab());
             RegisterAction(new ActionCloseOther());
             RegisterAction(new ActionShortcutKeys());
@@ -134,7 +139,7 @@ namespace LanExchange.Presenter
             if (panelItem == null || View.Info == null) return;
             View.Info.CurrentItem = panelItem;
             View.Info.NumLines = App.Config.NumInfoLines;
-            var helper = new PanelModelCopyHelper(null);
+            var helper = new PanelModelCopyHelper(null, panelColumns);
             helper.CurrentItem = panelItem;
             int index = 0;
             foreach (var column in helper.Columns)
