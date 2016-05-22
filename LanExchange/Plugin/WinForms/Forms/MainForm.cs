@@ -8,6 +8,7 @@ using LanExchange.Plugin.WinForms.Components;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.Properties;
 using LanExchange.SDK;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange.Plugin.WinForms.Forms
 {
@@ -16,15 +17,24 @@ namespace LanExchange.Plugin.WinForms.Forms
         public const int WAIT_FOR_KEYUP_MS = 500;
         public PagesView Pages;
 
-        private readonly IAddonManager m_AddonManager;
-        private readonly IPanelItemFactoryManager m_FactoryManager;
+        private readonly IAddonManager addonManager;
+        private readonly IPanelItemFactoryManager factoryManager;
+        private readonly ILazyThreadPool threadPool;
 
-        public MainForm(IAddonManager addonManager, IPanelItemFactoryManager factoryManager)
+        public MainForm(
+            IAddonManager addonManager, 
+            IPanelItemFactoryManager factoryManager,
+            ILazyThreadPool threadPool)
         {
+            Contract.Requires<ArgumentNullException>(addonManager != null);
+            Contract.Requires<ArgumentNullException>(factoryManager != null);
+            Contract.Requires<ArgumentNullException>(threadPool != null);
+
             InitializeComponent();
 
-            m_AddonManager = addonManager;
-            m_FactoryManager = factoryManager;
+            this.addonManager = addonManager;
+            this.factoryManager = factoryManager;
+            this.threadPool = threadPool;
 
             if (App.TR.RightToLeft)
             {
@@ -136,7 +146,7 @@ namespace LanExchange.Plugin.WinForms.Forms
                     var parent = pv == null || pv.Presenter.Objects.CurrentPath.IsEmptyOrRoot
                                      ? null
                                      : pv.Presenter.Objects.CurrentPath.Peek();
-                    if ((parent == null) || m_FactoryManager.DefaultRoots.Contains(parent))
+                    if ((parent == null) || factoryManager.DefaultRoots.Contains(parent))
                         Hide();
                     else if (!m_EscDown)
                     {
@@ -192,8 +202,8 @@ namespace LanExchange.Plugin.WinForms.Forms
                 e.Cancel = true;
                 return;
             }
-            e.Cancel = !m_AddonManager.BuildMenuForPanelItemType(popTop, pInfo.CurrentItem.GetType().Name);
-            m_AddonManager.SetupMenuForPanelItem(popTop, pInfo.CurrentItem);
+            e.Cancel = !addonManager.BuildMenuForPanelItemType(popTop, pInfo.CurrentItem.GetType().Name);
+            addonManager.SetupMenuForPanelItem(popTop, pInfo.CurrentItem);
         }
 
         private void tipComps_Popup(object sender, PopupEventArgs e)
@@ -402,7 +412,7 @@ namespace LanExchange.Plugin.WinForms.Forms
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            App.Threads.Dispose();
+            threadPool.Dispose();
         }
 
         private void lCompName_MouseDown(object sender, MouseEventArgs e)

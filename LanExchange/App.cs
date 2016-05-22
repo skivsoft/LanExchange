@@ -25,7 +25,6 @@ namespace LanExchange
         public static IMainPresenter Presenter { get; private set; }
         // other
         public static ConfigModel Config { get; set; }
-        public static ILazyThreadPool Threads { get; private set; }
         public static ITranslationService TR { get; private set; }
 
         [Localizable(false)]
@@ -41,7 +40,6 @@ namespace LanExchange
             Presenter = Resolve<IMainPresenter>();
             MainPages = Resolve<IPagesPresenter>();
             // other
-            Threads = Resolve<ILazyThreadPool>();
             Images = Resolve<IImageManager>();
         }
 

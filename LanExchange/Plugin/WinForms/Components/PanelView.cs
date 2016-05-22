@@ -11,6 +11,7 @@ using LanExchange.Plugin.WinForms.Interfaces;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.Properties;
 using LanExchange.SDK;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange.Plugin.WinForms.Components
 {
@@ -18,25 +19,35 @@ namespace LanExchange.Plugin.WinForms.Components
     {
         #region Class declarations and constructor
 
-        private readonly IPanelPresenter m_Presenter;
-        private readonly IAddonManager m_AddonManager;
-        private readonly IPanelItemFactoryManager m_FactoryManager;
+        private readonly IPanelPresenter presenter;
+        private readonly IAddonManager addonManager;
+        private readonly IPanelItemFactoryManager factoryManager;
+        private readonly ILazyThreadPool threadPool;
 
-        private PanelModelCopyHelper m_CopyHelper;
-        private int m_SortColumn;
+        private PanelModelCopyHelper copyHelper;
+        private int sortColumn;
 
         public event EventHandler FocusedItemChanged;
 
-        public PanelView(IPanelPresenter presenter, IAddonManager addonManager, IPanelItemFactoryManager factoryManager)
+        public PanelView(
+            IPanelPresenter presenter, 
+            IAddonManager addonManager, 
+            IPanelItemFactoryManager factoryManager,
+            ILazyThreadPool threadPool)
         {
+            Contract.Requires<ArgumentNullException>(presenter != null);
+            Contract.Requires<ArgumentNullException>(addonManager != null);
+            Contract.Requires<ArgumentNullException>(factoryManager != null);
+            Contract.Requires<ArgumentNullException>(threadPool != null);
+
             InitializeComponent();
             // init presenters
-            m_Presenter = presenter;
-            m_Presenter.View = this;
+            this.presenter = presenter;
+            this.presenter.View = this;
 
-            m_AddonManager = addonManager;
-            m_FactoryManager = factoryManager;
-
+            this.addonManager = addonManager;
+            this.factoryManager = factoryManager;
+            this.threadPool = threadPool;
 
             // setup items cache
             var cache = new ListViewItemCache(this);
@@ -69,18 +80,18 @@ namespace LanExchange.Plugin.WinForms.Components
         [Localizable(false)]
         public ListViewItem GetListViewItemAt(int index)
         {
-            if (m_Presenter.Objects == null)
+            if (presenter.Objects == null)
                 return null;
-            if (index < 0 || index > Math.Min(m_Presenter.Objects.FilterCount, LV.VirtualListSize) - 1)
+            if (index < 0 || index > Math.Min(presenter.Objects.FilterCount, LV.VirtualListSize) - 1)
                 return null;
-            var panelItem = m_Presenter.Objects.GetItemAt(index);
+            var panelItem = presenter.Objects.GetItemAt(index);
             if (panelItem == null)
                 return null;
             var result = new ListViewItem();
             var sb = new StringBuilder();
             if (!(panelItem is PanelItemDoubleDot))
             {
-                var columns = App.PanelColumns.GetColumns(m_Presenter.Objects.DataType);
+                var columns = App.PanelColumns.GetColumns(presenter.Objects.DataType);
                 for (int i = 0; i < panelItem.CountColumns; i++)
                 {
                     IComparable value;
@@ -88,7 +99,7 @@ namespace LanExchange.Plugin.WinForms.Components
                     if (columns[i].Visible)
                     {
                         if ((i > 0) && (columns[i].Callback != null))
-                            value = App.Threads.AsyncGetData(columns[i], panelItem);
+                            value = threadPool.AsyncGetData(columns[i], panelItem);
                         else
                             value = panelItem[columns[i].Index];
 
@@ -212,7 +223,7 @@ namespace LanExchange.Plugin.WinForms.Components
 
         public IPanelPresenter Presenter
         {
-            get { return m_Presenter; }
+            get { return presenter; }
         }
 
         private int focusedLockCount;
@@ -228,7 +239,7 @@ namespace LanExchange.Plugin.WinForms.Components
         {
             //logger.Info("FocusedItemChanged: {0}", FocusedItem);
             if (focusedLockCount == 0 && LV.FocusedItem != null)
-                m_Presenter.Objects.FocusedItem = LV.FocusedItem.Tag as PanelItemBase;
+                presenter.Objects.FocusedItem = LV.FocusedItem.Tag as PanelItemBase;
             if (FocusedItemChanged != null)
                 FocusedItemChanged(this, EventArgs.Empty);
         }
@@ -251,9 +262,9 @@ namespace LanExchange.Plugin.WinForms.Components
 
         private void OpenCurrentItem()
         {
-            if (m_Presenter.CommandLevelDown())
+            if (presenter.CommandLevelDown())
                 return;
-            m_AddonManager.RunDefaultCmdLine();
+            addonManager.RunDefaultCmdLine();
         }
 
         private void lvComps_KeyDown(object sender, KeyEventArgs e)
@@ -277,10 +288,10 @@ namespace LanExchange.Plugin.WinForms.Components
             if (e.KeyCode == Keys.Back)
             {
 
-                var parent = m_Presenter.Objects.CurrentPath.IsEmpty ? null : m_Presenter.Objects.CurrentPath.Peek();
-                if (parent != null && !m_FactoryManager.DefaultRoots.Contains(parent))
+                var parent = presenter.Objects.CurrentPath.IsEmpty ? null : presenter.Objects.CurrentPath.Peek();
+                if (parent != null && !factoryManager.DefaultRoots.Contains(parent))
                 {
-                    m_Presenter.CommandLevelUp();
+                    presenter.CommandLevelUp();
                     e.Handled = true;
                 }
             }
@@ -306,13 +317,13 @@ namespace LanExchange.Plugin.WinForms.Components
             }
             // process KeyDown on addons if KeyDown event not handled yet
             if (!e.Handled)
-                m_AddonManager.ProcessKeyDown(e);
+                addonManager.ProcessKeyDown(e);
         }
 
         [Localizable(false)]
         private int GetCtrlInsColumnIndex()
         {
-            foreach(var item in CreateCopyMenuItems(m_CopyHelper))
+            foreach(var item in CreateCopyMenuItems(copyHelper))
                 if (item is ToolStripMenuItem)
                 {
                     var menuItem = item as ToolStripMenuItem;
@@ -349,7 +360,7 @@ namespace LanExchange.Plugin.WinForms.Components
                 if (hitInfo.Item != null && hitInfo.Item.Selected)
                 {
                     SetupCopyHelper();
-                    if (m_CopyHelper.Indexes.Count > 0)
+                    if (copyHelper.Indexes.Count > 0)
                     {
                         m_CanDrag = true;
                     }
@@ -363,9 +374,9 @@ namespace LanExchange.Plugin.WinForms.Components
             {
                 m_CanDrag = false;
                 var obj = new DataObject();
-                obj.SetText(m_CopyHelper.GetSelectedText(), TextDataFormat.UnicodeText);
+                obj.SetText(copyHelper.GetSelectedText(), TextDataFormat.UnicodeText);
                 if (App.MainPages.CanSendToNewTab())
-                    obj.SetData(m_CopyHelper.GetType(), m_CopyHelper);
+                    obj.SetData(copyHelper.GetType(), copyHelper);
                 LV.DoDragDrop(obj, DragDropEffects.Copy);
             }
         }
@@ -392,7 +403,7 @@ namespace LanExchange.Plugin.WinForms.Components
 
         private void pFilter_FilterCountChanged(object sender, EventArgs e)
         {
-            m_Presenter.UpdateItemsAndStatus();
+            presenter.UpdateItemsAndStatus();
         }
 
         public void SetColumnMarker(int columnIndex, PanelSortOrder sortOrder)
@@ -400,14 +411,14 @@ namespace LanExchange.Plugin.WinForms.Components
 			var service = App.Resolve<IUser32Service>();
 			service.SetColumnImage(LV.Handle, columnIndex, (int)sortOrder, -1);
             //NativeMethods.SetColumnImage(LV, columnIndex, (SortOrder)sortOrder, -1);
-            m_SortColumn = columnIndex;
+            sortColumn = columnIndex;
         }
 
         private void ShowHideColumn_Click(object sender, EventArgs e)
         {
             var menuItem = sender as ToolStripMenuItem;
             if (menuItem != null)
-                m_Presenter.ShowHideColumnClick((int)menuItem.Tag);
+                presenter.ShowHideColumnClick((int)menuItem.Tag);
         }
 
         public void ShowHeaderMenu(IList<PanelColumnHeader> columns)
@@ -430,7 +441,7 @@ namespace LanExchange.Plugin.WinForms.Components
         {
             var header = LV.Columns[e.Column].Tag as PanelColumnHeader;
             if (header != null)
-                m_Presenter.ColumnClick(header.Index);
+                presenter.ColumnClick(header.Index);
         }
 
         public void ColumnsClear()
@@ -453,34 +464,34 @@ namespace LanExchange.Plugin.WinForms.Components
             {
                 LV.View = (View) value;
                 LV.ToolTipActive = LV.View != View.Details;
-                m_Presenter.Objects.CurrentView = value;
+                presenter.Objects.CurrentView = value;
             }
         }
 
         private void LV_ColumnReordered(object sender, ColumnReorderedEventArgs e)
         {
-            e.Cancel = !m_Presenter.ReorderColumns(e.OldDisplayIndex, e.NewDisplayIndex);
+            e.Cancel = !presenter.ReorderColumns(e.OldDisplayIndex, e.NewDisplayIndex);
         }
 
 
         private void LV_ColumnWidthChanged(object sender, ColumnWidthChangedEventArgs e)
         {
-            m_Presenter.ColumnWidthChanged(e.ColumnIndex, LV.Columns[e.ColumnIndex].Width);
+            presenter.ColumnWidthChanged(e.ColumnIndex, LV.Columns[e.ColumnIndex].Width);
         }
 
         private void LV_ColumnRightClick(object sender, ColumnClickEventArgs e)
         {
-            m_Presenter.ColumnRightClick(e.Column);
+            presenter.ColumnRightClick(e.Column);
         }
 
         private void CopySelectedToClipboard(bool needSetup)
         {
             if (needSetup)
                 SetupCopyHelper();
-            var selectedText = m_CopyHelper.GetSelectedText();
+            var selectedText = copyHelper.GetSelectedText();
             // put object clipboard for this app and for paste into another tab
             var obj = new DataObject();
-            var items = m_CopyHelper.GetItems();
+            var items = copyHelper.GetItems();
             obj.SetData(typeof(PanelItemBaseHolder), items);
             obj.SetText(selectedText, TextDataFormat.UnicodeText);
             Clipboard.SetDataObject(obj);
@@ -497,7 +508,7 @@ namespace LanExchange.Plugin.WinForms.Components
 
         private void CopyColumnToClipboard(int colIndex)
         {
-            Clipboard.SetText(m_CopyHelper.GetColumnText(colIndex), TextDataFormat.UnicodeText);
+            Clipboard.SetText(copyHelper.GetColumnText(colIndex), TextDataFormat.UnicodeText);
         }
 
         private void CopySelectedOnClick(object sender, EventArgs e)
@@ -521,7 +532,7 @@ namespace LanExchange.Plugin.WinForms.Components
             if (helper.IndexesCount == 1)
                 helper.MoveTo(0);
             var result = new List<ToolStripItem>();
-            var columns = App.PanelColumns.GetColumns(helper.IndexesCount == 1 ? helper.CurrentItem.GetType().Name : m_Presenter.Objects.DataType);
+            var columns = App.PanelColumns.GetColumns(helper.IndexesCount == 1 ? helper.CurrentItem.GetType().Name : presenter.Objects.DataType);
             var ctrlInsColumn = 0;
             foreach (var column in columns)
                 if (column.Visible)
@@ -551,8 +562,8 @@ namespace LanExchange.Plugin.WinForms.Components
                     if (!string.IsNullOrEmpty(value))
                     {
                         var menuItem = new ToolStripMenuItem(string.Format(CultureInfo.CurrentCulture, Resources.PanelView_CopyColumn, value));
-                        if (column.Index == m_SortColumn)
-                            ctrlInsColumn = m_SortColumn;
+                        if (column.Index == sortColumn)
+                            ctrlInsColumn = sortColumn;
                         menuItem.Tag = column.Index;
                         menuItem.Click += CopyColumnOnClick;
                         result.Add(menuItem);
@@ -569,10 +580,10 @@ namespace LanExchange.Plugin.WinForms.Components
 
         private void SetupCopyHelper()
         {
-            m_CopyHelper = new PanelModelCopyHelper(m_Presenter.Objects);
+            copyHelper = new PanelModelCopyHelper(presenter.Objects);
             foreach (int index in LV.SelectedIndices)
-                m_CopyHelper.Indexes.Add(index);
-            m_CopyHelper.Prepare();
+                copyHelper.Indexes.Add(index);
+            copyHelper.Prepare();
         }
 
         internal bool PrepareContextMenu()
@@ -581,20 +592,20 @@ namespace LanExchange.Plugin.WinForms.Components
                 if (LV.FocusedItem.Selected)
                     DoFocusedItemChanged();
 
-            var panelItem = m_Presenter.GetFocusedPanelItem(true);
+            var panelItem = presenter.GetFocusedPanelItem(true);
             var menuVisible = false;
             if (panelItem != null)
             {
                 mComp.Image = App.Images.GetSmallImage(panelItem.ImageName);
                 mComp.Text = panelItem.Name;
                 var typeId = panelItem.GetType().Name;
-                menuVisible = m_AddonManager.BuildMenuForPanelItemType(mComp, typeId);
+                menuVisible = addonManager.BuildMenuForPanelItemType(mComp, typeId);
                 if (!menuVisible)
                 {
                     mComp.DropDownItems.Clear();
                     mComp.Tag = null;
                 } else
-                    m_AddonManager.SetupMenuForPanelItem(mComp, panelItem);
+                    addonManager.SetupMenuForPanelItem(mComp, panelItem);
             }
             mAfterComp.Visible = panelItem != null;
             mComp.Visible = panelItem != null;
@@ -605,15 +616,15 @@ namespace LanExchange.Plugin.WinForms.Components
         {
             mComp.Enabled = PrepareContextMenu();
             SetupCopyHelper();
-            mCopyMenu.Enabled = m_CopyHelper.IndexesCount > 0;
+            mCopyMenu.Enabled = copyHelper.IndexesCount > 0;
             //mSendToNewTab.Enabled = App.MainPages.CanSendToNewTab();
             mPaste.Enabled = App.MainPages.CanPasteItems();
             mDelete.Enabled = false;
             // lookup at least 1 item for delete
-            for (int index = 0; index < m_CopyHelper.IndexesCount; index++)
+            for (int index = 0; index < copyHelper.IndexesCount; index++)
             {
-                m_CopyHelper.MoveTo(index);
-                if (Presenter.Objects.Items.Contains(m_CopyHelper.CurrentItem))
+                copyHelper.MoveTo(index);
+                if (Presenter.Objects.Items.Contains(copyHelper.CurrentItem))
                 {
                     mDelete.Enabled = true;
                     break;
@@ -635,12 +646,12 @@ namespace LanExchange.Plugin.WinForms.Components
                     menuItem.Dispose();
                 }
             // choose single or plural form for text
-            if (m_CopyHelper.IndexesCount == 1)
+            if (copyHelper.IndexesCount == 1)
                 mCopySelected.Text = Resources.PanelView_CopySelected;
             else
-                mCopySelected.Text = string.Format(CultureInfo.CurrentCulture, Resources.PanelView_CopySelectedPlural, m_CopyHelper.IndexesCount);
+                mCopySelected.Text = string.Format(CultureInfo.CurrentCulture, Resources.PanelView_CopySelectedPlural, copyHelper.IndexesCount);
             // add new items
-            foreach (var item in CreateCopyMenuItems(m_CopyHelper))
+            foreach (var item in CreateCopyMenuItems(copyHelper))
                 mCopyMenu.DropDownItems.Add(item);
         }
 
@@ -675,7 +686,7 @@ namespace LanExchange.Plugin.WinForms.Components
             //PrepareContextMenu();
             var panelView = App.MainPages.View.ActivePanelView;
             if (panelView == this)
-                m_Presenter.UpdateItemsAndStatus();
+                presenter.UpdateItemsAndStatus();
         }
 
         [Localizable(false)]

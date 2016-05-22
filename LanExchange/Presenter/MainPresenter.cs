@@ -10,23 +10,28 @@ using LanExchange.Interfaces;
 using LanExchange.Plugin.Shortcut;
 using LanExchange.SDK;
 using LanExchange.Model;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange.Presenter
 {
     public class MainPresenter : PresenterBase<IMainView>, IMainPresenter
     {
-        private readonly Dictionary<string, IAction> m_Actions;
-        private IHotkeysService m_Hotkeys;
+        private readonly Dictionary<string, IAction> actions;
+        private readonly ILazyThreadPool threadPool;
+        private IHotkeysService hotkeys;
 
-        public MainPresenter()
+        public MainPresenter(ILazyThreadPool threadPool)
         {
-            m_Actions = new Dictionary<string, IAction>();
+            Contract.Requires<ArgumentNullException>(threadPool != null);
+
+            this.threadPool = threadPool;
+
+            actions = new Dictionary<string, IAction>();
             RegisterAction(new ActionAbout());
             RegisterAction(new ActionReRead());
             RegisterAction(new ActionCloseTab());
             RegisterAction(new ActionCloseOther());
             RegisterAction(new ActionShortcutKeys());
-            //RegisterAction(new ActionNewItem());
         }
 
         public void PrepareForm()
@@ -38,12 +43,12 @@ namespace LanExchange.Presenter
             View.SetupPages();
             SetupForm();
             // set hotkey for activate: Ctrl+Win+X
-            m_Hotkeys = App.Resolve<IHotkeysService>();
-            App.Resolve<IDisposableManager>().RegisterInstance(m_Hotkeys);
-            if (m_Hotkeys.RegisterShowWindowKey(View.Handle))
-                View.ShowWindowKey = m_Hotkeys.ShowWindowKey;
+            hotkeys = App.Resolve<IHotkeysService>();
+            App.Resolve<IDisposableManager>().RegisterInstance(hotkeys);
+            if (hotkeys.RegisterShowWindowKey(View.Handle))
+                View.ShowWindowKey = hotkeys.ShowWindowKey;
             // set lazy events
-            App.Threads.DataReady += OnDataReady;
+            threadPool.DataReady += OnDataReady;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Windows.Forms.Control.set_Text(System.String)")]
@@ -164,7 +169,7 @@ namespace LanExchange.Presenter
 
         public bool IsHotKey(short id)
         {
-            return id == m_Hotkeys.HotkeyId;
+            return id == hotkeys.HotkeyId;
         }
 
         private static void GlobalTranslateColumns()
@@ -246,13 +251,13 @@ namespace LanExchange.Presenter
         {
             if (action == null)
                 throw new ArgumentNullException("action");
-            m_Actions.Add(action.GetType().Name, action);
+            actions.Add(action.GetType().Name, action);
         }
 
         public void ExecuteAction(string actionName)
         {
             IAction action;
-            if (m_Actions.TryGetValue(actionName, out action))
+            if (actions.TryGetValue(actionName, out action))
                 action.Execute();
         }
 
@@ -264,7 +269,7 @@ namespace LanExchange.Presenter
         public bool IsActionEnabled(string actionName)
         {
             IAction action;
-            if (m_Actions.TryGetValue(actionName, out action))
+            if (actions.TryGetValue(actionName, out action))
                 return action.Enabled;
             return false;
         }
