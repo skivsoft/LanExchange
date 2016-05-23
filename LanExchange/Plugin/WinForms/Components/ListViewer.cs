@@ -7,7 +7,7 @@ namespace LanExchange.Plugin.WinForms.Components
 {
     public class ListViewer : ListView
     {
-        private ToolTip m_ToolTip;
+        private ToolTip toolTip;
         public event EventHandler<ColumnClickEventArgs> ColumnRightClick;
 
         public ListViewer()
@@ -90,32 +90,32 @@ namespace LanExchange.Plugin.WinForms.Components
         [Localizable(false)]
         protected override void OnCreateControl()
         {
-            m_ToolTip = new ToolTip(); 
-            m_ToolTip.IsBalloon = true;
-            m_ToolTip.ToolTipIcon = ToolTipIcon.Info;
-            m_ToolTip.SetToolTip(this, Resources.EmptyText);
-            m_ToolTip.Popup += ToolTipOnPopup;
-            m_ToolTip.Active = View != View.Details;
+            toolTip = new ToolTip(); 
+            toolTip.IsBalloon = true;
+            toolTip.ToolTipIcon = ToolTipIcon.Info;
+            toolTip.SetToolTip(this, Resources.EmptyText);
+            toolTip.Popup += ToolTipOnPopup;
+            toolTip.Active = View != View.Details;
         }
 
         private void ToolTipOnPopup(object sender, PopupEventArgs e)
         {
-            if (sender == m_ToolTip && e.AssociatedControl == this)
+            if (sender == toolTip && e.AssociatedControl == this)
             {
                 var point = PointToClient(MousePosition);
                 var info = HitTest(point);
                 if (info.Item != null)
-                    m_ToolTip.ToolTipTitle = info.Item.Text;
+                    toolTip.ToolTipTitle = info.Item.Text;
             }
         }
 
         public bool ToolTipActive
         {
-            get { return m_ToolTip != null && m_ToolTip.Active; }
+            get { return toolTip != null && toolTip.Active; }
             set
             {
-                if (m_ToolTip != null)
-                    m_ToolTip.Active = value;
+                if (toolTip != null)
+                    toolTip.Active = value;
             }
         }
     }

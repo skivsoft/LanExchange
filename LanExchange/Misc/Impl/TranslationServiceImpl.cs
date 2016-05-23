@@ -23,10 +23,10 @@ namespace LanExchange.Misc.Impl
         private const string TRUE        = "true";
 
         private readonly IFolderManager folderManager;
-        private readonly IList<string> m_CurrentLanguageLines;
-        private readonly IDictionary<string, Type> m_Translits;
-        private string m_CurrentLanguage;
-        private ITranslitStrategy m_CurrentTranslit;
+        private readonly IList<string> currentLanguageLines;
+        private readonly IDictionary<string, Type> translits;
+        private string currentLanguage;
+        private ITranslitStrategy currentTranslit;
 
         public TranslationServiceImpl(IFolderManager folderManager)
         {
@@ -34,8 +34,8 @@ namespace LanExchange.Misc.Impl
 
             this.folderManager = folderManager;
 
-            m_CurrentLanguageLines = new List<string>();
-            m_Translits = new Dictionary<string, Type>();
+            currentLanguageLines = new List<string>();
+            translits = new Dictionary<string, Type>();
             CurrentLanguage = SourceLanguage;
             //CurrentLanguage = "Russian";
         }
@@ -55,11 +55,11 @@ namespace LanExchange.Misc.Impl
 
         public string CurrentLanguage
         {
-            get { return m_CurrentLanguage; } 
+            get { return currentLanguage; } 
             set
             {
                 if (String.Compare(SourceLanguage, value, StringComparison.OrdinalIgnoreCase) == 0)
-                    m_CurrentLanguage = value;
+                    currentLanguage = value;
                 else
                     foreach(var fileName in folderManager.GetLanguagesFiles())
                     {
@@ -68,10 +68,10 @@ namespace LanExchange.Misc.Impl
                         {
                             RightToLeft = TranslateFromPO(fileName, ID_RTL).Equals(TRUE);
                             var fname = GetBaseFileName(fileName);
-                            m_CurrentLanguageLines.Clear();
+                            currentLanguageLines.Clear();
                             foreach(var line in ReadAllLines(fname))
-                                m_CurrentLanguageLines.Add(line);
-                            m_CurrentLanguage = value;
+                                currentLanguageLines.Add(line);
+                            currentLanguage = value;
                             break;
                         }
                     }
@@ -80,7 +80,7 @@ namespace LanExchange.Misc.Impl
 
         private string GetBaseFileName(string fileName)
         {
-            m_CurrentTranslit = null;
+            currentTranslit = null;
             var baseLanguage = TranslateFromPO(fileName, ID_BASE);
             if (!string.IsNullOrEmpty(baseLanguage))
             {
@@ -102,8 +102,8 @@ namespace LanExchange.Misc.Impl
         {
             Type tp;
             var translit = TranslateFromPO(fileName, ID_TRANSLIT);
-            if (m_Translits.TryGetValue(translit, out tp))
-                m_CurrentTranslit = (ITranslitStrategy) Activator.CreateInstance(tp);
+            if (translits.TryGetValue(translit, out tp))
+                currentTranslit = (ITranslitStrategy) Activator.CreateInstance(tp);
         }
 
         public bool RightToLeft { get; private set; }
@@ -121,7 +121,7 @@ namespace LanExchange.Misc.Impl
                     var langName = TranslateFromPO(fileName, ID_LANGUAGE);
                     var translit = TranslateFromPO(fileName, ID_TRANSLIT);
                     if (!string.IsNullOrEmpty(langName))
-                        if (string.IsNullOrEmpty(translit) || m_Translits.ContainsKey(translit))
+                        if (string.IsNullOrEmpty(translit) || translits.ContainsKey(translit))
                             sorted.Add(langName, lang);
                 }
                 catch(ArgumentException)
@@ -182,9 +182,9 @@ namespace LanExchange.Misc.Impl
         {
             if (SourceLanguage.Equals(CurrentLanguage))
                 return id;
-            var result = InternalTranslate(m_CurrentLanguageLines, id);
-            if (m_CurrentTranslit != null)
-                result = m_CurrentTranslit.Transliterate(result);
+            var result = InternalTranslate(currentLanguageLines, id);
+            if (currentTranslit != null)
+                result = currentTranslit.Transliterate(result);
             return result;
         }
 
@@ -232,7 +232,7 @@ namespace LanExchange.Misc.Impl
 
         public void RegisterTranslit<TTranslit>() where TTranslit : ITranslitStrategy
         {
-            m_Translits.Add(typeof(TTranslit).Name, typeof(TTranslit));
+            translits.Add(typeof(TTranslit).Name, typeof(TTranslit));
         }
     }
 }

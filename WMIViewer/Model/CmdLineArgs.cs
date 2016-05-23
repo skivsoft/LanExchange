@@ -22,7 +22,7 @@ namespace WMIViewer.Model
             const string EXECUTE_CMD_MARKER = "/EXECUTE";
 
             if (args == null)
-                throw new ArgumentNullException("args");
+                throw new ArgumentNullException(nameof(args));
 
             var result = new CmdLineArgs();
             result.ComputerName = SystemInformation.ComputerName;

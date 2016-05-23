@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 
-namespace LanExchange.Extensions
+namespace LanExchange.SDK.Extensions
 {
     /// <summary>
     /// Extensions method for the <see cref="IServiceProvider"/>.

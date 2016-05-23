@@ -6,23 +6,23 @@ namespace LanExchange.Misc.Impl
 {
     public class DisposableManagerImpl : IDisposableManager
     {
-        private readonly IList<IDisposable> m_List;
+        private readonly IList<IDisposable> list;
 
         public DisposableManagerImpl()
         {
-            m_List = new List<IDisposable>();
+            list = new List<IDisposable>();
         }
 
         public void RegisterInstance(IDisposable instance)
         {
-            m_List.Add(instance);
+            list.Add(instance);
         }
 
         public void Dispose()
         {
-            foreach(var instance in m_List)
+            foreach(var instance in list)
                 instance.Dispose();
-            m_List.Clear();
+            list.Clear();
         }
     }
 }

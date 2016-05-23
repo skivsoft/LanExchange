@@ -6,11 +6,11 @@ namespace LanExchange.Plugin.Users
 {
     public sealed class PathDistinct
     {
-        private readonly Dictionary<string, int> m_Dict;
+        private readonly Dictionary<string, int> dict;
 
         public PathDistinct()
         {
-            m_Dict = new Dictionary<string, int>(new StringEqualityComparer());
+            dict = new Dictionary<string, int>(new StringEqualityComparer());
 
         }
 
@@ -18,20 +18,20 @@ namespace LanExchange.Plugin.Users
         {
             get
             {
-                foreach (var pair in m_Dict)
+                foreach (var pair in dict)
                     yield return pair.Key;
             }
         }
 
         public void Add(string path)
         {
-            if (!m_Dict.ContainsKey(path))
-                m_Dict.Add(path, 0);
+            if (!dict.ContainsKey(path))
+                dict.Add(path, 0);
         }
 
         public int Count 
         {
-            get { return m_Dict.Count; }
+            get { return dict.Count; }
         }
 
         [Localizable(false)]
@@ -42,7 +42,7 @@ namespace LanExchange.Plugin.Users
             int index = 0;
             while (true)
             {
-                var enumDict = m_Dict.GetEnumerator();
+                var enumDict = dict.GetEnumerator();
                 if (!enumDict.MoveNext()) break;
                 var str = enumDict.Current.Key.Split('\\');
                 if (index + 1 > str.Length) break;

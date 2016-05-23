@@ -1,11 +1,13 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace LanExchange.Plugin.Windows.Utils
 {
     /// <summary>
     /// Enumeration containing XP ImageList Draw State options
     /// </summary>
-    [Flags]	
+    [Flags]
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public enum ImageListDrawStateConstants
     {
         /// <summary>

@@ -13,22 +13,22 @@ namespace LanExchange.Misc.Impl
     {
         private const int NUM_CYCLES_IN_THREAD = 10;
 
-        private readonly LinkedList<PanelItemBase> m_AsyncQueue;
-        private readonly List<Thread> m_Threads;
-        private long m_NumThreads;
+        private readonly LinkedList<PanelItemBase> asyncQueue;
+        private readonly List<Thread> threads;
+        private long numThreads;
 
         public event EventHandler<DataReadyArgs> DataReady;
         public event EventHandler NumThreadsChanged;
 
         public LazyThreadPoolImpl()
         {
-            m_AsyncQueue = new LinkedList<PanelItemBase>();
-            m_Threads = new List<Thread>();
+            asyncQueue = new LinkedList<PanelItemBase>();
+            threads = new List<Thread>();
         }
 
         public long NumThreads
         {
-            get { return Interlocked.Read(ref m_NumThreads); }
+            get { return Interlocked.Read(ref numThreads); }
         }
 
         private void DoDataReady(PanelItemBase item)
@@ -53,11 +53,11 @@ namespace LanExchange.Misc.Impl
             }
             if (found)
                 return result;
-            lock (m_AsyncQueue)
+            lock (asyncQueue)
             {
-                if (m_AsyncQueue.Contains(panelItem))
-                    m_AsyncQueue.Remove(panelItem);
-                m_AsyncQueue.AddFirst(panelItem);
+                if (asyncQueue.Contains(panelItem))
+                    asyncQueue.Remove(panelItem);
+                asyncQueue.AddFirst(panelItem);
             }
             UpdateThreads(column);
             return null;
@@ -68,18 +68,18 @@ namespace LanExchange.Misc.Impl
             var column = state as PanelColumnHeader;
             if (column == null || column.Callback == null)
                 return;
-            Interlocked.Increment(ref m_NumThreads);
+            Interlocked.Increment(ref numThreads);
             DoNumThreadsChanged();
             int number = 0;
-            while (m_AsyncQueue.Count > 0 && number < NUM_CYCLES_IN_THREAD)
+            while (asyncQueue.Count > 0 && number < NUM_CYCLES_IN_THREAD)
             {
                 try
                 {
                     PanelItemBase item;
-                    lock (m_AsyncQueue)
+                    lock (asyncQueue)
                     {
-                        item = m_AsyncQueue.First.Value;
-                        m_AsyncQueue.RemoveFirst();
+                        item = asyncQueue.First.Value;
+                        asyncQueue.RemoveFirst();
                     }
                     var result = column.Callback(item);
                     //bool bFound = false;
@@ -101,24 +101,24 @@ namespace LanExchange.Misc.Impl
                 }
                 ++number;
             }
-            Interlocked.Decrement(ref m_NumThreads);
+            Interlocked.Decrement(ref numThreads);
             DoNumThreadsChanged();
         }
 
         private void UpdateThreads(PanelColumnHeader column)
         {
-            if (NumThreads * NUM_CYCLES_IN_THREAD < m_AsyncQueue.Count)
-                lock (m_Threads)
+            if (NumThreads * NUM_CYCLES_IN_THREAD < asyncQueue.Count)
+                lock (threads)
                 {
                     // remove stopped threads
-                    for (int i = m_Threads.Count - 1; i >= 0; i--)
-                        if (m_Threads[i].ThreadState == ThreadState.Stopped)
-                            m_Threads.RemoveAt(i);
+                    for (int i = threads.Count - 1; i >= 0; i--)
+                        if (threads[i].ThreadState == ThreadState.Stopped)
+                            threads.RemoveAt(i);
                     // start new threads
-                    while (NumThreads * NUM_CYCLES_IN_THREAD < m_AsyncQueue.Count)
+                    while (NumThreads * NUM_CYCLES_IN_THREAD < asyncQueue.Count)
                     {
                         var thread = new Thread(AsyncEnum);
-                        m_Threads.Add(thread);
+                        threads.Add(thread);
                         thread.Start(column);
                     }
                 }
@@ -126,17 +126,17 @@ namespace LanExchange.Misc.Impl
 
         public void Dispose()
         {
-            lock (m_Threads)
+            lock (threads)
             {
-                if (!m_Disposed)
+                if (!disposed)
                 {
-                    foreach (var t in m_Threads.Where(t => t.ThreadState == ThreadState.Running))
+                    foreach (var t in threads.Where(t => t.ThreadState == ThreadState.Running))
                         t.Abort();
-                    m_Disposed = true;
+                    disposed = true;
                 }
             }
         }
 
-        private bool m_Disposed;
+        private bool disposed;
     }
 }

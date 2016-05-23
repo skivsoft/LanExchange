@@ -10,7 +10,7 @@ namespace LanExchange.SDK
     /// </summary>
     public sealed class ObjectPath<TPanelItemBase> where TPanelItemBase : PanelItemBase
     {
-        private readonly Stack<TPanelItemBase> m_Path;
+        private readonly Stack<TPanelItemBase> path;
 
         /// <summary>
         /// Occurs when [changed].
@@ -19,7 +19,7 @@ namespace LanExchange.SDK
 
         public ObjectPath()
         {
-            m_Path = new Stack<TPanelItemBase>();
+            path = new Stack<TPanelItemBase>();
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace LanExchange.SDK
 
         private void OnChanged()
         {
-            Item = m_Path.ToArray();
+            Item = path.ToArray();
             if (Changed != null)
                 Changed(this, EventArgs.Empty);
         }
@@ -39,7 +39,7 @@ namespace LanExchange.SDK
         /// </summary>
         public void Clear()
         {
-            m_Path.Clear();
+            path.Clear();
             OnChanged();
         }
 
@@ -49,7 +49,7 @@ namespace LanExchange.SDK
         /// <param name="item">The item.</param>
         public void Push(TPanelItemBase item)
         {
-            m_Path.Push(item);
+            path.Push(item);
             OnChanged();
         }
 
@@ -58,7 +58,7 @@ namespace LanExchange.SDK
         /// </summary>
         public void Pop()
         {
-            m_Path.Pop();
+            path.Pop();
             OnChanged();
         }
 
@@ -68,7 +68,7 @@ namespace LanExchange.SDK
         /// <returns></returns>
         public TPanelItemBase Peek()
         {
-            return m_Path.Peek();
+            return path.Peek();
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace LanExchange.SDK
         public override string ToString()
         {
             var sb = new StringBuilder();
-            foreach (var item in m_Path)
+            foreach (var item in path)
             {
                 if (sb.Length > 0)
                     sb.Insert(0, @"\");
@@ -98,15 +98,15 @@ namespace LanExchange.SDK
         /// </value>
         public bool IsEmpty
         {
-            get { return m_Path.Count == 0; }
+            get { return path.Count == 0; }
         }
 
         public bool IsEmptyOrRoot
         {
             get
             {
-                var parent = m_Path.Count == 0 ? null : Peek();
-                return (parent == null) || (parent is PanelItemRootBase);
+                var parent = path.Count == 0 ? null : Peek();
+                return (parent == null) || parent is PanelItemRootBase;
             }
         }
     }

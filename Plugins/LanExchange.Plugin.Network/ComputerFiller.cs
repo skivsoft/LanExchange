@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using LanExchange.Plugin.Network.NetApi;
 using LanExchange.SDK;
 
@@ -19,10 +20,8 @@ namespace LanExchange.Plugin.Network
 
         public void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
-            if (parent == null)
-                throw new ArgumentNullException("parent");
-            //Thread.Sleep(5000);
-            //result.Add(new PanelItemDoubleDot(parent));
+            Contract.Requires<ArgumentNullException>(parent != null);
+
             // get server list via OS api
             foreach (var item in NetApiHelper.NetServerEnum(parent.Name, SV_101_TYPES.SV_TYPE_ALL))
             {

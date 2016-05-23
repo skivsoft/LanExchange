@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using LanExchange.SDK;
@@ -97,7 +98,8 @@ namespace LanExchange.Plugin.Windows.Utils
 		#endregion
 		
 		#region Private Enumerations
-		[Flags]		
+		[Flags]
+		[SuppressMessage("ReSharper", "InconsistentNaming")]
 		private enum SHGetFileInfoConstants
 		{
             //SHGFI_ICON = 0x100,                // get icon 

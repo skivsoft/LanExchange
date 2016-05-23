@@ -9,19 +9,19 @@ namespace LanExchange.SDK
     /// </summary>
     public sealed class PanelColumnHeader
     {
-        private readonly IDictionary<PanelItemBase, IComparable> m_LazyDict;
+        private readonly IDictionary<PanelItemBase, IComparable> lazyDict;
 
         public PanelColumnHeader(string text, int width = 120)
         {
             Text = text;
             Width = width;
             Visible = true;
-            m_LazyDict = new Dictionary<PanelItemBase, IComparable>();
+            lazyDict = new Dictionary<PanelItemBase, IComparable>();
         }
 
         public IDictionary<PanelItemBase, IComparable> LazyDict
         {
-            get { return m_LazyDict; }
+            get { return lazyDict; }
         }
 
         public string Text { get; private set; }

@@ -17,19 +17,19 @@ namespace LanExchange.Model
         private readonly IPanelColumnManager panelColumns;
 
         // items added by user
-        private readonly IList<PanelItemBase> m_Items;
+        private readonly IList<PanelItemBase> items;
         // merged all results and user items
-        private readonly List<PanelItemBase> m_Data;
+        private readonly List<PanelItemBase> data;
         // keys for filtering
-        private readonly IList<PanelItemBase> m_Keys;
+        private readonly IList<PanelItemBase> keys;
         // current path for item list
-        private readonly ObjectPath<PanelItemBase> m_CurrentPath;
+        private readonly ObjectPath<PanelItemBase> currentPath;
         // column sorter
-        private readonly IColumnComparer m_Comparer;
+        private readonly IColumnComparer comparer;
         // punto switcher service
-        private readonly IPuntoSwitcherService m_Punto;
+        private readonly IPuntoSwitcherService puntoService;
         // panel updater
-        private readonly IPanelUpdater m_Updater;
+        private readonly IPanelUpdater updater;
 
         public event EventHandler Changed;
         public event EventHandler TabNameUpdated;
@@ -47,19 +47,19 @@ namespace LanExchange.Model
             this.panelFillers = panelFillers;
             this.panelColumns = panelColumns;
 
-            m_Punto = App.Resolve<IPuntoSwitcherService>();
-            m_Updater = App.Resolve<IPanelUpdater>();
-            m_Items = new List<PanelItemBase>();
-            m_Data = new List<PanelItemBase>();
-            m_Keys = new List<PanelItemBase>();
-            m_CurrentPath = new ObjectPath<PanelItemBase>();
-            m_Comparer = new ColumnComparer(0, PanelSortOrder.Ascending);
+            puntoService = App.Resolve<IPuntoSwitcherService>();
+            updater = App.Resolve<IPanelUpdater>();
+            items = new List<PanelItemBase>();
+            data = new List<PanelItemBase>();
+            keys = new List<PanelItemBase>();
+            currentPath = new ObjectPath<PanelItemBase>();
+            comparer = new ColumnComparer(0, PanelSortOrder.Ascending);
             CurrentView = PanelViewMode.Details;
         }
 
         public void Dispose()
         {
-            m_Updater.Dispose();
+            updater.Dispose();
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace LanExchange.Model
         {
             get
             {
-                var parent = m_CurrentPath.IsEmpty ? null : m_CurrentPath.Peek();
+                var parent = currentPath.IsEmpty ? null : currentPath.Peek();
                 return parent == null ? string.Empty : parent[0].ToString();
             }
         }
@@ -90,15 +90,15 @@ namespace LanExchange.Model
         {
             get 
             { 
-                var parent = m_CurrentPath.Peek();
+                var parent = currentPath.Peek();
                 return parent.ImageName;
             }
         }
 
         public void AsyncRetrieveData(bool clearFilter)
         {
-            m_Updater.Stop();
-            m_Updater.Start(this, clearFilter);
+            updater.Stop();
+            updater.Start(this, clearFilter);
         }
 
         [XmlAttribute]
@@ -115,18 +115,18 @@ namespace LanExchange.Model
         [XmlElement("Path")]
         public ObjectPath<PanelItemBase> CurrentPath
         {
-            get { return m_CurrentPath; }
+            get { return currentPath; }
             set
             {
                 // build path from loaded items
                 var items = value.Item;
-                m_CurrentPath.Clear();
+                currentPath.Clear();
                 for (int index = items.Length - 1; index >= 0; index--)
                 {
                     var item = items[index];
                     if (index < items.Length - 1)
                         item.Parent = items[index + 1];
-                    m_CurrentPath.Push(item);
+                    currentPath.Push(item);
                 }
             }
         }
@@ -136,17 +136,17 @@ namespace LanExchange.Model
 
         public IList<PanelItemBase> Items
         {
-            get { return m_Items; }
+            get { return items; }
         }
 
         public PanelItemBase GetItemAt(int index)
         {
-            return m_Keys[index];
+            return keys[index];
         }
 
         public int IndexOf(PanelItemBase key)
         {
-            return m_Keys.IndexOf(key);
+            return keys.IndexOf(key);
         }
 
         private bool GoodForFilter(string[] strList, string filter1, string filter2)
@@ -155,8 +155,8 @@ namespace LanExchange.Model
             {
                 if (i == 0)
                 {
-                    if (m_Punto.SpecificContains(strList[i], filter1) ||
-                        m_Punto.SpecificContains(strList[i], filter2))
+                    if (puntoService.SpecificContains(strList[i], filter1) ||
+                        puntoService.SpecificContains(strList[i], filter2))
                         return true;
                 } else
                 if (filter1 != null && strList[i].Contains(filter1) || filter2 != null && strList[i].Contains(filter2))
@@ -167,12 +167,12 @@ namespace LanExchange.Model
 
         public IColumnComparer Comparer
         {
-            get { return m_Comparer; }
+            get { return comparer; }
         }
 
         public void Sort(IComparer<PanelItemBase> sorter)
         {
-            m_Data.Sort(sorter);
+            data.Sort(sorter);
             ApplyFilter();
             OnChanged();
         }
@@ -186,17 +186,17 @@ namespace LanExchange.Model
             if (FilterText == null) 
                 FilterText = string.Empty;
             var filtered = FilterText != string.Empty;
-            m_Keys.Clear();
+            keys.Clear();
             var filter1 = FilterText.ToUpper(CultureInfo.CurrentCulture);
-            var filter2 = m_Punto.Change(FilterText);
+            var filter2 = puntoService.Change(FilterText);
             if (filter2 != null) filter2 = filter2.ToUpper(CultureInfo.CurrentCulture);
             var helper = new PanelModelCopyHelper(this, panelColumns);
             var upperValues = new List<string>();
-            foreach (var value in m_Data)
+            foreach (var value in data)
             {
                 if (value is PanelItemDoubleDot)
                 {
-                    m_Keys.Add(value);
+                    keys.Add(value);
                     continue;
                 }
                 helper.CurrentItem = value;
@@ -209,26 +209,26 @@ namespace LanExchange.Model
                             upperValues.Add(column.ToUpper(CultureInfo.CurrentCulture));
                     }
                 if (!filtered || GoodForFilter(upperValues.ToArray(), filter1, filter2))
-                    m_Keys.Add(value);
+                    keys.Add(value);
             }
         }
 
         public int Count
         {
-            get { return m_Data.Count; }
+            get { return data.Count; }
         }
 
         public int FilterCount
         {
-            get { return m_Keys.Count; }
+            get { return keys.Count; }
         }
 
         public bool HasBackItem
         {
             get
             {
-                if (m_Data.Count > 0)
-                    if (m_Data[0] is PanelItemDoubleDot)
+                if (data.Count > 0)
+                    if (data[0] is PanelItemDoubleDot)
                         return true;
                 return false;
             }
@@ -240,30 +240,30 @@ namespace LanExchange.Model
         public PanelFillerResult RetrieveData(RetrieveMode mode, bool clearFilter)
         {
             // get parent
-            var parent = m_CurrentPath.IsEmpty ? null : m_CurrentPath.Peek();
+            var parent = currentPath.IsEmpty ? null : currentPath.Peek();
             // retrieve items
             return panelFillers.RetrievePanelItems(parent, mode);
         }
 
         public void SetFillerResult(PanelFillerResult fillerResult, bool clearFilter)
         {
-            lock (m_Data)
+            lock (data)
             {
-                m_Data.Clear();
+                data.Clear();
                 // add ".." item
-                if (!m_CurrentPath.IsEmptyOrRoot)
-                    m_Data.Add(new PanelItemDoubleDot(m_CurrentPath.Peek()));
+                if (!currentPath.IsEmptyOrRoot)
+                    data.Add(new PanelItemDoubleDot(currentPath.Peek()));
                 // add items from filler
-                m_Data.AddRange(fillerResult.Items);
+                data.AddRange(fillerResult.Items);
                 // set current items DataType and filter
                 if (fillerResult.ItemsType != null)
                     DataType = fillerResult.ItemsType.Name;
                 // add custom items created by user
                 foreach(var panelItem in Items)
                     if (panelItem.GetType().Name == DataType)
-                        m_Data.Add(panelItem);
+                        data.Add(panelItem);
                 // sort 
-                m_Data.Sort(m_Comparer);
+                data.Sort(comparer);
                 if (clearFilter)
                     FilterText = string.Empty;
                 ApplyFilter();
@@ -294,9 +294,9 @@ namespace LanExchange.Model
 
         public bool Contains(PanelItemBase panelItem)
         {
-            if (m_Data.Contains(panelItem))
+            if (data.Contains(panelItem))
                 return true;
-            return m_Items.Contains(panelItem);
+            return items.Contains(panelItem);
         }
 
         public void SetDefaultRoot(PanelItemBase root)

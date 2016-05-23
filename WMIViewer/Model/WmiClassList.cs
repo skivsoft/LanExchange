@@ -12,47 +12,47 @@ namespace WMIViewer.Model
     [Localizable(false)]
     internal sealed class WmiClassList
     {
-        private static WmiClassList s_Instance;
-        private bool m_Loaded;
-        private readonly List<string> m_Classes;
-        private readonly List<string> m_ReadOnlyClasses;
-        private readonly List<string> m_IncludeClasses;
-        private readonly List<string> m_AllClasses;
-        private int m_PropCount;
-        private int m_MethodCount;
-        private ManagementScope m_Namespace;
+        private static WmiClassList wmiClassList;
+        private bool loaded;
+        private readonly List<string> classes;
+        private readonly List<string> readOnlyClasses;
+        private readonly List<string> includeClasses;
+        private readonly List<string> allClasses;
+        private int propCount;
+        private int methodCount;
+        private ManagementScope namespaceScope;
 
         private WmiClassList()
         {
-            m_Classes = new List<string>();
-            m_IncludeClasses = new List<string>();
-            m_ReadOnlyClasses = new List<string>();
-            m_AllClasses = new List<string>();
+            classes = new List<string>();
+            includeClasses = new List<string>();
+            readOnlyClasses = new List<string>();
+            allClasses = new List<string>();
         }
 
         public static WmiClassList Instance
         {
             get
             {
-                if (s_Instance == null)
-                    s_Instance = new WmiClassList();
-                return s_Instance;
+                if (wmiClassList == null)
+                    wmiClassList = new WmiClassList();
+                return wmiClassList;
             }
         }
 
         public IList<string> Classes
         {
-            get { return m_Classes; }
+            get { return classes; }
         }
 
         public IList<string> ReadOnlyClasses
         {
-            get { return m_ReadOnlyClasses; }
+            get { return readOnlyClasses; }
         }
 
         public IList<string> IncludeClasses
         {
-            get { return m_IncludeClasses; }
+            get { return includeClasses; }
         }
 
         //public IEnumerable<string> AllClasses
@@ -62,38 +62,38 @@ namespace WMIViewer.Model
 
         public int ClassCount
         {
-            get { return m_Classes.Count + m_ReadOnlyClasses.Count; }
+            get { return classes.Count + readOnlyClasses.Count; }
         }
 
         public int PropCount
         {
-            get { return m_PropCount; }
+            get { return propCount; }
         }
 
         public int MethodCount
         {
-            get { return m_MethodCount; }
+            get { return methodCount; }
         }
 
         public bool Loaded
         {
-            get { return m_Loaded; }
+            get { return loaded; }
         }
 
         private bool ConnectToLocalMachine()
         {
-            if (m_Namespace != null && m_Namespace.IsConnected)
+            if (namespaceScope != null && namespaceScope.IsConnected)
                 return true;
-            m_Namespace = new ManagementScope(CmdLineArgs.DefaultNamespaceName, null);
+            namespaceScope = new ManagementScope(CmdLineArgs.DefaultNamespaceName, null);
             try
             {
-                m_Namespace.Connect();
+                namespaceScope.Connect();
             }
             catch (ManagementException ex)
             {
                 Debug.Print(ex.Message);
             }
-            return m_Namespace.IsConnected;
+            return namespaceScope.IsConnected;
         }
 
         //public string GetClassQualifiers(ManagementScope scope, string className)
@@ -136,7 +136,7 @@ namespace WMIViewer.Model
             if (scope == null)
             {
                 if (!ConnectToLocalMachine()) return string.Empty;
-                scope = m_Namespace;
+                scope = namespaceScope;
             }
             var result = string.Empty;
             try
@@ -174,7 +174,7 @@ namespace WMIViewer.Model
                 var op = new ObjectGetOptions(null, TimeSpan.MaxValue, true);
 
                 var path = new ManagementPath(className);
-                using (var mc = new ManagementClass(m_Namespace, path, op))
+                using (var mc = new ManagementClass(namespaceScope, path, op))
                 {
                     mc.Options.UseAmendedQualifiers = true;
                     var prop = mc.Properties[propName];
@@ -200,7 +200,7 @@ namespace WMIViewer.Model
                 var op = new ObjectGetOptions(null, TimeSpan.MaxValue, true);
 
                 var path = new ManagementPath(className);
-                using (var mc = new ManagementClass(m_Namespace, path, op))
+                using (var mc = new ManagementClass(namespaceScope, path, op))
                 {
                     mc.Options.UseAmendedQualifiers = true;
                     var prop = mc.Properties[propName];
@@ -227,7 +227,7 @@ namespace WMIViewer.Model
             {
                 var op = new ObjectGetOptions(null, TimeSpan.MaxValue, true);
                 var path = new ManagementPath(className);
-                using (var mc = new ManagementClass(m_Namespace, path, op))
+                using (var mc = new ManagementClass(namespaceScope, path, op))
                 {
                     foreach (var md in mc.Methods)
                         if (string.Compare(md.Name, methodName, StringComparison.OrdinalIgnoreCase) == 0)
@@ -247,7 +247,7 @@ namespace WMIViewer.Model
         public static string GetPropertyValue(ManagementScope scope, string className, string propName)
         {
             if (scope == null)
-                throw new ArgumentNullException("scope");
+                throw new ArgumentNullException(nameof(scope));
             var result = string.Empty;
             try
             {
@@ -273,7 +273,7 @@ namespace WMIViewer.Model
         public static void SetPropertyValue(ManagementScope scope, string className, string propName, string value)
         {
             if (scope == null)
-                throw new ArgumentNullException("scope");
+                throw new ArgumentNullException(nameof(scope));
             try
             {
                 scope.Connect();
@@ -298,7 +298,7 @@ namespace WMIViewer.Model
         {
             if (!ConnectToLocalMachine()) return;
             var query = new ObjectQuery("select * from meta_class");
-            using (var searcher = new ManagementObjectSearcher(m_Namespace, query))
+            using (var searcher = new ManagementObjectSearcher(namespaceScope, query))
             {
                 foreach (ManagementClass wmiClass in searcher.Get())
                 {
@@ -312,26 +312,26 @@ namespace WMIViewer.Model
                     //if (m_ExcludeClasses.Contains(ClassName)) continue;
                     var info = new QualifiersInfo(wmiClass.Qualifiers);
                     if (info.IsAssociation || !info.IsDynamic || info.IsPerf) continue;
-                    m_AllClasses.Add(className);
-                    var isInclude = m_IncludeClasses.Contains(className);
+                    allClasses.Add(className);
+                    var isInclude = includeClasses.Contains(className);
                     if (!isInclude && !info.IsSupportsModify) continue;
-                    m_PropCount += wmiClass.Properties.Count;
+                    propCount += wmiClass.Properties.Count;
                     // count implemented methods
                     var foundMethod = WmiHelper.HasImplementedMethod(wmiClass);
                     if (foundMethod)
-                        m_MethodCount++;
+                        methodCount++;
                     if (!isInclude && !foundMethod)
                         continue;
                     if (foundMethod)
-                        m_Classes.Add(className);
+                        classes.Add(className);
                     else
-                        m_ReadOnlyClasses.Add(className);
+                        readOnlyClasses.Add(className);
                 }
             }
-            m_AllClasses.Sort();
-            m_Classes.Sort();
-            m_ReadOnlyClasses.Sort();
-            m_Loaded = true;
+            allClasses.Sort();
+            classes.Sort();
+            readOnlyClasses.Sort();
+            loaded = true;
         }
     }
 }

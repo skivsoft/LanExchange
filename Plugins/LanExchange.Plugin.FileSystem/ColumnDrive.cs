@@ -4,18 +4,18 @@ namespace LanExchange.Plugin.FileSystem
 {
     internal class ColumnDrive : IComparable<ColumnDrive>, IComparable
     {
-        private readonly string m_Name;
-        private readonly string m_DisplayName;
+        private readonly string name;
+        private readonly string displayName;
 
         public ColumnDrive(string name, string displayName)
         {
-            m_Name = name;
-            m_DisplayName = displayName;
+            this.name = name;
+            this.displayName = displayName;
         }
 
         public string Name
         {
-            get { return m_Name; }
+            get { return name; }
         }
 
         public int CompareTo(object obj)
@@ -30,7 +30,7 @@ namespace LanExchange.Plugin.FileSystem
 
         public override string ToString()
         {
-            return m_DisplayName;
+            return displayName;
         }
     }
 }

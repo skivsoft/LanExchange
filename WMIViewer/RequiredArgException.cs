@@ -9,7 +9,7 @@ namespace WMIViewer
     [Serializable]
     public sealed class RequiredArgException : Exception
     {
-        private readonly string m_Marker;
+        private readonly string marker;
 
         //public WMIRequiredParamException
 
@@ -19,7 +19,7 @@ namespace WMIViewer
 
         public RequiredArgException(string marker)
         {
-            m_Marker = marker;
+            this.marker = marker;
         }
 
         public RequiredArgException(string message, Exception innerException) : base(message, innerException)
@@ -29,15 +29,15 @@ namespace WMIViewer
         private RequiredArgException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            m_Marker = info.GetString ("Marker");
+            marker = info.GetString ("Marker");
         }        
 
         [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             if (info == null)
-                throw new ArgumentNullException("info");
-            info.AddValue("Marker", m_Marker);
+                throw new ArgumentNullException(nameof(info));
+            info.AddValue("Marker", marker);
             base.GetObjectData(info, context);
         }
 
@@ -45,7 +45,7 @@ namespace WMIViewer
         {
             get
             {
-                return string.Format(CultureInfo.InvariantCulture, Resources.WmiRequiredParamException_Message, m_Marker);
+                return string.Format(CultureInfo.InvariantCulture, Resources.WmiRequiredParamException_Message, marker);
             }
         }
     }

@@ -4,17 +4,17 @@ namespace LanExchange.Plugin.Users
 {
     public sealed class UserRoot : PanelItemRootBase
     {
-        private readonly string m_StartPath;
+        private readonly string startPath;
 
         public UserRoot()
         {
-            m_StartPath = LdapUtils.GetUserPath(PluginUsers.ScreenService.UserName);
-            m_StartPath = LdapUtils.GetDCNameFromPath(m_StartPath, 2);
+            startPath = LdapUtils.GetUserPath(PluginUsers.ScreenService.UserName);
+            startPath = LdapUtils.GetDCNameFromPath(startPath, 2);
         }
 
         protected override string GetName()
         {
-            return LdapUtils.GetLdapValue(m_StartPath);
+            return LdapUtils.GetLdapValue(startPath);
         }
 
         public override string ImageName

@@ -9,21 +9,21 @@ namespace LanExchange.Misc.Impl
 {
     public class PanelFillerManagerImpl : IPanelFillerManager
     {
-        private readonly IDictionary<Type, IPanelFiller> m_Fillers;
+        private readonly IDictionary<Type, IPanelFiller> fillers;
 
         public PanelFillerManagerImpl()
         {
-            m_Fillers = new Dictionary<Type, IPanelFiller>();
+            fillers = new Dictionary<Type, IPanelFiller>();
         }
 
         public void RegisterFiller<TPanelItem>(IPanelFiller filler) where TPanelItem : PanelItemBase
         {
-            m_Fillers.Add(typeof(TPanelItem), filler);
+            fillers.Add(typeof(TPanelItem), filler);
         }
 
         public Type GetFillType(PanelItemBase parent)
         {
-            foreach (var pair in m_Fillers)
+            foreach (var pair in fillers)
                 if (pair.Value.IsParentAccepted(parent))
                     return pair.Key;
             return null;
@@ -34,7 +34,7 @@ namespace LanExchange.Misc.Impl
             Contract.Requires<ArgumentNullException>(parent != null);
 
             var result = new PanelFillerResult();
-            foreach (var pair in m_Fillers)
+            foreach (var pair in fillers)
                 if (pair.Value.IsParentAccepted(parent))
                 {
                     if (result.ItemsType == null)
@@ -56,7 +56,7 @@ namespace LanExchange.Misc.Impl
 
         public bool FillerExists(PanelItemBase parent)
         {
-            return m_Fillers.Any(pair => pair.Value.IsParentAccepted(parent));
+            return fillers.Any(pair => pair.Value.IsParentAccepted(parent));
         }
     }
 }

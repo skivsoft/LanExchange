@@ -15,9 +15,9 @@ namespace LanExchange.Plugin.Windows.Utils
 
         // ************************************************************************
         // Internal properties
-        protected IntPtr m_hhook = IntPtr.Zero;
-        protected HookProc m_filterFunc = null;
-        protected HookType m_hookType;
+        protected IntPtr hhook = IntPtr.Zero;
+        protected HookProc filterFunc = null;
+        protected HookType hookType;
         // ************************************************************************
 
         // ************************************************************************
@@ -39,13 +39,13 @@ namespace LanExchange.Plugin.Windows.Utils
         // Class constructor(s)
         public LocalWindowsHook(HookType hook)
         {
-            m_hookType = hook;
-            m_filterFunc = CoreHookProc;
+            hookType = hook;
+            filterFunc = CoreHookProc;
         }
         public LocalWindowsHook(HookType hook, HookProc func)
         {
-            m_hookType = hook;
-            m_filterFunc = func;
+            hookType = hook;
+            filterFunc = func;
         }
         // ************************************************************************
 
@@ -54,7 +54,7 @@ namespace LanExchange.Plugin.Windows.Utils
         protected int CoreHookProc(int code, IntPtr wParam, IntPtr lParam)
         {
             if (code < 0)
-                return CallNextHookEx(m_hhook, code, wParam, lParam);
+                return CallNextHookEx(hhook, code, wParam, lParam);
 
             // Let clients determine what to do
             var e = new HookEventArgs();
@@ -64,7 +64,7 @@ namespace LanExchange.Plugin.Windows.Utils
             OnHookInvoked(e);
 
             // Yield to the next hook in the chain
-            return CallNextHookEx(m_hhook, code, wParam, lParam);
+            return CallNextHookEx(hhook, code, wParam, lParam);
         }
         // ************************************************************************
 
@@ -72,9 +72,9 @@ namespace LanExchange.Plugin.Windows.Utils
         // Install the hook
         public void Install()
         {
-            m_hhook = SetWindowsHookEx(
-                m_hookType,
-                m_filterFunc,
+            hhook = SetWindowsHookEx(
+                hookType,
+                filterFunc,
                 IntPtr.Zero,
                 Thread.CurrentThread.ManagedThreadId);
         }
@@ -84,7 +84,7 @@ namespace LanExchange.Plugin.Windows.Utils
         // Uninstall the hook
         public void Uninstall()
         {
-            UnhookWindowsHookEx(m_hhook);
+            UnhookWindowsHookEx(hhook);
         }
         // ************************************************************************
 
@@ -96,7 +96,7 @@ namespace LanExchange.Plugin.Windows.Utils
         protected static extern IntPtr SetWindowsHookEx(HookType code,
                                                         HookProc func,
                                                         IntPtr hInstance,
-                                                        int threadID);
+                                                        int threadId);
         // ************************************************************************
 
         // ************************************************************************

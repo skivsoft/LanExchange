@@ -6,34 +6,34 @@ namespace LanExchange.Plugin.Windows
 {
     internal class SysImageListService : ISysImageListService
     {
-        private SysImageList m_ImageList;
+        private SysImageList imageList;
 
         public void Create(SysImageListSize size)
         {
-            m_ImageList = new SysImageList(size);
+            imageList = new SysImageList(size);
         }
 
         public void Dispose()
         {
-            if (m_ImageList != null)
-                m_ImageList.Dispose();
+            if (imageList != null)
+                imageList.Dispose();
         }
 
         public Size Size
         {
-            get { return m_ImageList == null ? Size.Empty : m_ImageList.Size; }
+            get { return imageList == null ? Size.Empty : imageList.Size; }
         }
 
         public Icon GetIcon(int index)
         {
-            if (m_ImageList == null)
+            if (imageList == null)
                 return null;
-            return m_ImageList.Icon(index);
+            return imageList.Icon(index);
         }
 
         public int GetIconIndex(string fileName)
         {
-            return m_ImageList == null ? -1 : m_ImageList.IconIndex(fileName);
+            return imageList == null ? -1 : imageList.IconIndex(fileName);
         }
     }
 }

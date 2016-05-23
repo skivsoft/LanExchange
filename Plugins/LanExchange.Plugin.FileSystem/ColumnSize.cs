@@ -8,30 +8,30 @@ namespace LanExchange.Plugin.FileSystem
     {
         public static ColumnSize Zero = new ColumnSize(0, true, string.Empty);
 
-        private readonly long m_Value;
-        private readonly bool m_IsDirectory;
-        private readonly string m_Name;
+        private readonly long value;
+        private readonly bool isDirectory;
+        private readonly string name;
 
         public ColumnSize(long value, bool isDirectory = true, string name = null )
         {
-            m_Value = value;
-            m_IsDirectory = isDirectory;
-            m_Name = name;
+            this.value = value;
+            this.isDirectory = isDirectory;
+            this.name = name;
         }
 
         public long Value
         {
-            get { return m_Value; }
+            get { return value; }
         }
 
         public bool IsDirectory
         {
-            get { return m_IsDirectory; }
+            get { return isDirectory; }
         }
 
         public string Name
         {
-            get { return m_Name; }
+            get { return name; }
         }
 
         public int CompareTo(object obj)
@@ -56,7 +56,7 @@ namespace LanExchange.Plugin.FileSystem
         [Localizable(false)]
         public override string ToString()
         {
-            return m_IsDirectory && m_Value == 0 ? string.Empty : m_Value.ToString("N0", CultureInfo.CurrentCulture);
+            return isDirectory && value == 0 ? string.Empty : value.ToString("N0", CultureInfo.CurrentCulture);
         }
     }
 }

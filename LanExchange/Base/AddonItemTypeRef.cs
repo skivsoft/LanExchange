@@ -7,23 +7,23 @@ namespace LanExchange.Base
     [XmlType("ItemTypeRef")]
     public class AddOnItemTypeRef : AddonObjectId
     {
-        private readonly List<AddonMenuItem> m_Items;
+        private readonly List<AddonMenuItem> items;
 
         public AddOnItemTypeRef()
         {
-            m_Items = new List<AddonMenuItem>();
+            items = new List<AddonMenuItem>();
         }
 
         public List<AddonMenuItem> ContextMenu
         {
-            get { return m_Items; }
+            get { return items; }
         }
 
         public int CountVisible
         {
             get
             {
-                return m_Items.Count(item => item.Visible);
+                return items.Count(item => item.Visible);
             }
         }
     }

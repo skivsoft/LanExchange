@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.Contracts;
 using LanExchange.Plugin.Network.NetApi;
 using LanExchange.SDK;
 
@@ -24,8 +25,8 @@ namespace LanExchange.Plugin.Network
         [Localizable(false)]
         public void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
-            if (parent == null)
-                throw new ArgumentNullException("parent");
+            Contract.Requires<ArgumentNullException>(parent != null);
+
             //result.Add(new PanelItemDoubleDot(parent));
             foreach (var item in NetApiHelper.NetShareEnum(parent.Name))
             {

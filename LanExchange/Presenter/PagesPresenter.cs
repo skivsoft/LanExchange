@@ -44,13 +44,13 @@ namespace LanExchange.Presenter
 
         public bool CanSendToNewTab()
         {
-            var sourcePV = View.ActivePanelView;
-            if (sourcePV == null) 
+            var sourcePanel = View.ActivePanelView;
+            if (sourcePanel == null) 
                 return false;
-            var indexes = sourcePV.SelectedIndexes.GetEnumerator();
+            var indexes = sourcePanel.SelectedIndexes.GetEnumerator();
             if (!indexes.MoveNext()) 
                 return false;
-            return sourcePV.Presenter.Objects.Count > 1;
+            return sourcePanel.Presenter.Objects.Count > 1;
         }
 
         public void CommandSendToNewTab()

@@ -15,16 +15,16 @@ namespace WMIViewer.UI
     {
         const string METHOD_FAIL_FMT = "[{0}] {1}";
 
-        private readonly WmiPresenter m_Presenter;
-        private readonly CmdLineArgs m_Args;
-        private bool m_OutParamPresent;
+        private readonly WmiPresenter presenter;
+        private readonly CmdLineArgs args;
+        private bool outParamPresent;
 
         public MethodForm(WmiPresenter presenter)
         {
             if (presenter == null)
-                throw new ArgumentNullException("presenter");
-            m_Presenter = presenter;
-            m_Args = m_Presenter.Args;
+                throw new ArgumentNullException(nameof(presenter));
+            this.presenter = presenter;
+            args = this.presenter.Args;
             InitializeComponent();
             Icon = Resources.WMIViewer16;
         }
@@ -50,7 +50,7 @@ namespace WMIViewer.UI
             return value.ToString();
         }
 
-        private string m_ReturnValueName;
+        private string returnValueName;
 
         [Localizable(false)]
         private void PrepareArgs()
@@ -58,14 +58,14 @@ namespace WMIViewer.UI
             if (WmiClass == null)
             {
                 var op = new ObjectGetOptions(null, TimeSpan.MaxValue, true);
-                var path = new ManagementPath(m_Args.ClassName);
-                WmiClass = new ManagementClass(m_Presenter.Namespace, path, op);
+                var path = new ManagementPath(args.ClassName);
+                WmiClass = new ManagementClass(presenter.Namespace, path, op);
             }
             if (WmiMethod == null)
             {
                 foreach(var md in WmiClass.Methods)
                 {
-                    if (string.Compare(md.Name, m_Args.MethodName, StringComparison.OrdinalIgnoreCase) == 0)
+                    if (string.Compare(md.Name, args.MethodName, StringComparison.OrdinalIgnoreCase) == 0)
                     {
                         WmiMethod = md;
                         break;
@@ -74,9 +74,9 @@ namespace WMIViewer.UI
             }
             if (WmiObject == null)
             {
-                m_Presenter.Namespace.Connect();
-                var query = new ObjectQuery("SELECT * FROM " + m_Args.ClassName);
-                using (var searcher = new ManagementObjectSearcher(m_Presenter.Namespace, query))
+                presenter.Namespace.Connect();
+                var query = new ObjectQuery("SELECT * FROM " + args.ClassName);
+                using (var searcher = new ManagementObjectSearcher(presenter.Namespace, query))
                 {
                     foreach (ManagementObject queryObj in searcher.Get())
                     {
@@ -91,7 +91,7 @@ namespace WMIViewer.UI
         public void PrepareForm()
         {
             PrepareArgs();
-            Text = String.Format(CultureInfo.InvariantCulture, Text, m_Args.NamespaceName, WmiClass.Path.ClassName, WmiMethod.Name);
+            Text = String.Format(CultureInfo.InvariantCulture, Text, args.NamespaceName, WmiClass.Path.ClassName, WmiMethod.Name);
             lMethodName.Text = WmiMethod.Name;
             foreach (var qd in WmiMethod.Qualifiers)
             {
@@ -133,9 +133,9 @@ namespace WMIViewer.UI
             {
                 // detect return value parameter name
                 if (prop.ParameterType == ParameterType.Return)
-                    m_ReturnValueName = prop.Name;
+                    returnValueName = prop.Name;
                 if (prop.ParameterType == ParameterType.Out)
-                    m_OutParamPresent = true;
+                    outParamPresent = true;
                 str = String.Format(CultureInfo.InvariantCulture, "{0} {1} {2} : {3}", prop.Id, prop.ParameterType, prop.Name, prop.PropType);
                 LB.Items.Add(str);
                 foreach (var qd in prop.Qualifiers)
@@ -164,24 +164,24 @@ namespace WMIViewer.UI
         private void bRun_Click(object sender, EventArgs e)
         {
             RunTheMethod();
-            if (m_Args.StartCmd == CmdLineCommand.ExecuteMethod && m_ExecuteOK)
+            if (args.StartCmd == CmdLineCommand.ExecuteMethod && executeOk)
                 DialogResult = DialogResult.OK;
         }
 
-        private bool m_ExecuteOK;
+        private bool executeOk;
 
-        private void ShowOK(string message)
+        private void ShowOk(string message)
         {
             lResult.BackColor = Color.Green;
             lResult.Text = message;
-            m_ExecuteOK = true;
+            executeOk = true;
         }
 
-        private void ShowFAIL(string message)
+        private void ShowFail(string message)
         {
             lResult.BackColor = Color.Red;
             lResult.Text = message;
-            m_ExecuteOK = false;
+            executeOk = false;
         }
 
         [Localizable(false)]
@@ -199,7 +199,7 @@ namespace WMIViewer.UI
             }
             catch (ManagementException ex)
             {
-                ShowFAIL(ex.Message);
+                ShowFail(ex.Message);
             }
             bRun.Enabled = true;
             if (result == null) return;
@@ -210,7 +210,7 @@ namespace WMIViewer.UI
                 str = String.Format(CultureInfo.InvariantCulture, "{0} = {1}", pd.Name, pd.Value);
                 LB.Items.Add(str);
             }
-            var resultProp = new PropertyDataExt(result.Properties[m_ReturnValueName]);
+            var resultProp = new PropertyDataExt(result.Properties[returnValueName]);
             if (resultProp.Value != null)
             {
                 var value = (int) ((UInt32) resultProp.Value);
@@ -219,13 +219,13 @@ namespace WMIViewer.UI
                 LB.Items.Add(str);
                 if (value == 0)
                 {
-                    ShowOK(Resources.MethodForm_Success);
-                    if (!m_OutParamPresent)
+                    ShowOk(Resources.MethodForm_Success);
+                    if (!outParamPresent)
                         timerOK.Enabled = true;
                 }
                 else
                 {
-                    ShowFAIL(String.Format(CultureInfo.InvariantCulture, METHOD_FAIL_FMT, value, message));
+                    ShowFail(String.Format(CultureInfo.InvariantCulture, METHOD_FAIL_FMT, value, message));
                 }
             }
         }

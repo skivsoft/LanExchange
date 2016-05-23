@@ -346,7 +346,7 @@ namespace LanExchange.Plugin.WinForms.Components
 
         private void lvComps_ItemActivate(object sender, EventArgs e)
         {
-            m_CanDrag = false;
+            canDrag = false;
             OpenCurrentItem();
         }
 
@@ -360,7 +360,7 @@ namespace LanExchange.Plugin.WinForms.Components
             }
         }
 
-        private bool m_CanDrag;
+        private bool canDrag;
 
         private void LV_MouseDown(object sender, MouseEventArgs e)
         {
@@ -372,7 +372,7 @@ namespace LanExchange.Plugin.WinForms.Components
                     SetupCopyHelper();
                     if (copyHelper.Indexes.Count > 0)
                     {
-                        m_CanDrag = true;
+                        canDrag = true;
                     }
                 }
             }
@@ -380,9 +380,9 @@ namespace LanExchange.Plugin.WinForms.Components
 
         private void LV_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left && m_CanDrag)
+            if (e.Button == MouseButtons.Left && canDrag)
             {
-                m_CanDrag = false;
+                canDrag = false;
                 var obj = new DataObject();
                 obj.SetText(copyHelper.GetSelectedText(), TextDataFormat.UnicodeText);
                 if (pagesPresenter.CanSendToNewTab())

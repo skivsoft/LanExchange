@@ -7,34 +7,34 @@ namespace LanExchange.Plugin.Notify
 {
     public class UdpListener : IDisposable
     {
-        private readonly UdpClient m_Udp;
+        private readonly UdpClient udpClient;
 
         public event EventHandler<MessageEventArgs> MessageReceived;
-        private IPEndPoint m_EndPoint;
+        private IPEndPoint endPoint;
 
         public UdpListener(int port)
         {
-            m_EndPoint = new IPEndPoint(IPAddress.Any, port);
-            m_Udp = new UdpClient();
-            m_Udp.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true); 
-            m_Udp.Client.Bind(m_EndPoint);
-            m_Udp.BeginReceive(ReceiveCallback, null);
+            endPoint = new IPEndPoint(IPAddress.Any, port);
+            udpClient = new UdpClient();
+            udpClient.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true); 
+            udpClient.Client.Bind(endPoint);
+            udpClient.BeginReceive(ReceiveCallback, null);
         }
 
         public void Dispose()
         {
-            m_Udp.BeginReceive(ReceiveCallback, null);
-            m_Udp.Close();
+            udpClient.BeginReceive(ReceiveCallback, null);
+            udpClient.Close();
         }
 
         public void ReceiveCallback(IAsyncResult ar)
         {
             try
             {
-                var data = m_Udp.EndReceive(ar, ref m_EndPoint);
+                var data = udpClient.EndReceive(ar, ref endPoint);
                 if (MessageReceived != null)
                     MessageReceived(this, new MessageEventArgs(data));
-                m_Udp.BeginReceive(ReceiveCallback, null);
+                udpClient.BeginReceive(ReceiveCallback, null);
             }
             catch (Exception e)
             {

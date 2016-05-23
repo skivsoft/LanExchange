@@ -13,17 +13,17 @@ namespace LanExchange.Plugin.WinForms.Impl
         private const int SYSTEM_INDEX_WORKGROUP  = 18;
         private const int SYSTEM_INDEX_FOLDER     = 4;
 
-        private readonly ImageList m_SmallImageList;
-        private readonly ImageList m_LargeImageList;
-        private readonly Dictionary<string, int> m_NamesMap;
-        private int m_LastIndex;
+        private readonly ImageList smallImageList;
+        private readonly ImageList largeImageList;
+        private readonly Dictionary<string, int> namesMap;
+        private int lastIndex;
 
         private static readonly Bitmap SmallEmpty = new Bitmap(16, 16);
         private static readonly Bitmap LargeEmpty = new Bitmap(32, 32);
 
         public ImageManagerImpl()
         {
-            m_NamesMap = new Dictionary<string, int>();
+            namesMap = new Dictionary<string, int>();
             // init system images
             App.Resolve<IShell32Service>().FileIconInit(true);
 
@@ -32,12 +32,12 @@ namespace LanExchange.Plugin.WinForms.Impl
             small.Create(SysImageListSize.SmallIcons);
             large.Create(SysImageListSize.LargeIcons);
             // init image lists
-            m_SmallImageList = new ImageList();
-            m_SmallImageList.ColorDepth = ColorDepth.Depth32Bit;
-            m_SmallImageList.ImageSize = small.Size;
-            m_LargeImageList = new ImageList();
-            m_LargeImageList.ColorDepth = ColorDepth.Depth32Bit;
-            m_LargeImageList.ImageSize = large.Size;
+            smallImageList = new ImageList();
+            smallImageList.ColorDepth = ColorDepth.Depth32Bit;
+            smallImageList.ImageSize = small.Size;
+            largeImageList = new ImageList();
+            largeImageList.ColorDepth = ColorDepth.Depth32Bit;
+            largeImageList.ImageSize = large.Size;
             // Workgroup icon
             Icon icon1 = small.GetIcon(SYSTEM_INDEX_WORKGROUP);
             Icon icon2 = large.GetIcon(SYSTEM_INDEX_WORKGROUP);
@@ -77,8 +77,8 @@ namespace LanExchange.Plugin.WinForms.Impl
 
         public void Dispose()
         {
-            m_SmallImageList.Dispose();
-            m_LargeImageList.Dispose();
+            smallImageList.Dispose();
+            largeImageList.Dispose();
         }
 
         private static Image MadeDisabledBitmap(Image bmp)
@@ -94,7 +94,7 @@ namespace LanExchange.Plugin.WinForms.Impl
         public int IndexOf(string name)
         {
             int index;
-            if (name != null && m_NamesMap.TryGetValue(name, out index))
+            if (name != null && namesMap.TryGetValue(name, out index))
                 return index;
             return -1;
         }
@@ -104,17 +104,17 @@ namespace LanExchange.Plugin.WinForms.Impl
             int index;
             if (imageSmall == null) imageSmall = SmallEmpty;
             if (imageLarge == null) imageLarge = LargeEmpty;
-            if (m_NamesMap.TryGetValue(name, out index))
+            if (namesMap.TryGetValue(name, out index))
             {
-                m_SmallImageList.Images[index] = imageSmall;
-                m_LargeImageList.Images[index] = imageLarge;
+                smallImageList.Images[index] = imageSmall;
+                largeImageList.Images[index] = imageLarge;
             }
             else
             {
-                m_NamesMap.Add(name, m_LastIndex);
-                m_SmallImageList.Images.Add(imageSmall);
-                m_LargeImageList.Images.Add(imageLarge);
-                m_LastIndex++;
+                namesMap.Add(name, lastIndex);
+                smallImageList.Images.Add(imageSmall);
+                largeImageList.Images.Add(imageLarge);
+                lastIndex++;
             }
         }
 
@@ -140,11 +140,11 @@ namespace LanExchange.Plugin.WinForms.Impl
         public void UnregisterImage(string name)
         {
             int index;
-            if (m_NamesMap.TryGetValue(name, out index))
+            if (namesMap.TryGetValue(name, out index))
             {
-                m_NamesMap.Remove(name);
-                m_SmallImageList.Images[index] = SmallEmpty;
-                m_LargeImageList.Images[index] = LargeEmpty;
+                namesMap.Remove(name);
+                smallImageList.Images[index] = SmallEmpty;
+                largeImageList.Images[index] = LargeEmpty;
             }
         }
 
@@ -152,14 +152,14 @@ namespace LanExchange.Plugin.WinForms.Impl
         {
             var index = IndexOf(key);
             if (index == -1) return null;
-            return m_SmallImageList.Images[index];
+            return smallImageList.Images[index];
         }
 
         public Image GetLargeImage(string key)
         {
             var index = IndexOf(key);
             if (index == -1) return null;
-            return m_LargeImageList.Images[index];
+            return largeImageList.Images[index];
         }
 
         public Icon GetSmallIcon(string key)
@@ -167,7 +167,7 @@ namespace LanExchange.Plugin.WinForms.Impl
             var index = IndexOf(key);
             if (index == -1) return null;
             Icon result;
-            using (var bitmap = new Bitmap(m_SmallImageList.Images[index]))
+            using (var bitmap = new Bitmap(smallImageList.Images[index]))
             {
                 result = Icon.FromHandle(bitmap.GetHicon());
             }
@@ -179,7 +179,7 @@ namespace LanExchange.Plugin.WinForms.Impl
             var index = IndexOf(key);
             if (index == -1) return null;
             Icon result;
-            using (var bitmap = new Bitmap(m_LargeImageList.Images[index]))
+            using (var bitmap = new Bitmap(largeImageList.Images[index]))
             {
                 result = Icon.FromHandle(bitmap.GetHicon());
             }
@@ -209,16 +209,16 @@ namespace LanExchange.Plugin.WinForms.Impl
         public void SetImagesTo(object control)
         {
             if (control is TabControl)
-                (control as TabControl).ImageList = m_SmallImageList;
+                (control as TabControl).ImageList = smallImageList;
             if (control is StatusStrip)
-                (control as StatusStrip).ImageList = m_SmallImageList;
+                (control as StatusStrip).ImageList = smallImageList;
             if (control is ContextMenuStrip)
-                (control as ContextMenuStrip).ImageList = m_SmallImageList;
+                (control as ContextMenuStrip).ImageList = smallImageList;
             if (control is ListView)
             {
                 var lv = control as ListView;
-                lv.SmallImageList = m_SmallImageList;
-                lv.LargeImageList = m_LargeImageList;
+                lv.SmallImageList = smallImageList;
+                lv.LargeImageList = largeImageList;
             }
         }
 

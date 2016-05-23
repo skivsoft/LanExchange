@@ -6,23 +6,23 @@ namespace LanExchange.Plugin.Network
 {
     public sealed class IPAddressArray : IComparable<IPAddressArray>, IComparable
     {
-        private readonly IPAddressComparable[] m_List;
+        private readonly IPAddressComparable[] addresses;
 
         public IPAddressArray(IPAddress[] list)
         {
-            m_List = new IPAddressComparable[list.Length];
-            for (int i = 0; i < m_List.Length; i++)
-                m_List[i] = new IPAddressComparable(list[i]);
-            Array.Sort(m_List);
+            addresses = new IPAddressComparable[list.Length];
+            for (int i = 0; i < addresses.Length; i++)
+                addresses[i] = new IPAddressComparable(list[i]);
+            Array.Sort(addresses);
         }
 
         public IPAddressComparable First
         {
             get
             {
-                if (m_List.Length == 0)
+                if (addresses.Length == 0)
                     return null;
-                return m_List[0];
+                return addresses[0];
             }
         }
 
@@ -30,10 +30,10 @@ namespace LanExchange.Plugin.Network
         public override string ToString()
         {
             var result = "";
-            for (int i = 0; i < m_List.Length; i++)
+            for (int i = 0; i < addresses.Length; i++)
             {
                 if (i > 0) result += ", ";
-                result += m_List[i].ToString();
+                result += addresses[i].ToString();
             }
             return result;
         }

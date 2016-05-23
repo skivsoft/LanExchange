@@ -9,7 +9,7 @@ namespace WMIViewer
     [Serializable]
     public sealed class ObjectNotFoundException : Exception
     {
-        private readonly string m_WMIObject;
+        private readonly string wmiObject;
 
         public ObjectNotFoundException()
         {
@@ -18,7 +18,7 @@ namespace WMIViewer
 
         public ObjectNotFoundException(string wmiObject)
         {
-            m_WMIObject = wmiObject;
+            this.wmiObject = wmiObject;
         }
 
         public ObjectNotFoundException(string message, Exception innerException) : base(message, innerException)
@@ -28,21 +28,21 @@ namespace WMIViewer
         private ObjectNotFoundException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            m_WMIObject = info.GetString("WMIObject");
+            wmiObject = info.GetString("WMIObject");
         }        
 
         [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             if (info == null)
-                throw new ArgumentNullException("info");
-            info.AddValue("WMIObject", m_WMIObject);
+                throw new ArgumentNullException(nameof(info));
+            info.AddValue("WMIObject", wmiObject);
             base.GetObjectData(info, context);
         }
 
         public override string Message
         {
-            get { return string.Format(CultureInfo.InvariantCulture, Resources.ObjectNotFoundException_Message, m_WMIObject); }
+            get { return string.Format(CultureInfo.InvariantCulture, Resources.ObjectNotFoundException_Message, wmiObject); }
         }
     }
 }

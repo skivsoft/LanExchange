@@ -5,47 +5,47 @@ namespace LanExchange.Plugin.Network
 {
     public sealed class ShareInfo : IComparable<ShareInfo>
     {
-        private readonly SHARE_INFO_1 m_Info;
+        private readonly SHARE_INFO_1 shareInfo;
 
         public ShareInfo()
         {
-            m_Info = new SHARE_INFO_1();
+            shareInfo = new SHARE_INFO_1();
         }
 
         public ShareInfo(SHARE_INFO_1 info)
         {
-            m_Info = info;
+            shareInfo = info;
         }
 
         public string Name
         {
-            get { return m_Info.netname; }
-            set { m_Info.netname = value; }
+            get { return shareInfo.netname; }
+            set { shareInfo.netname = value; }
         }
 
         public string Comment
         {
-            get { return m_Info.remark; }
-            set { m_Info.remark = value; }
+            get { return shareInfo.remark; }
+            set { shareInfo.remark = value; }
         }
 
         public uint ShareType
         {
-            get { return m_Info.type; }
-            set { m_Info.type = value; }
+            get { return shareInfo.type; }
+            set { shareInfo.type = value; }
         }
 
         public bool IsPrinter
         {
-            get { return (m_Info.type == (uint)SHARE_TYPE.STYPE_PRINTQ); }
+            get { return shareInfo.type == (uint)SHARE_TYPE.STYPE_PRINTQ; }
         }
 
         public bool IsHidden
         {
             get
             {
-                if (!String.IsNullOrEmpty(m_Info.netname))
-                    return m_Info.netname[m_Info.netname.Length - 1] == '$';
+                if (!String.IsNullOrEmpty(shareInfo.netname))
+                    return shareInfo.netname[shareInfo.netname.Length - 1] == '$';
                 return false;
             }
         }

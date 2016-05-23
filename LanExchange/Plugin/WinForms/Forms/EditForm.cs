@@ -8,18 +8,18 @@ namespace LanExchange.Plugin.WinForms.Forms
 {
     public partial class EditForm : EscapeForm, IEditView
     {
-        private readonly IEditPresenter m_Presenter;
+        private readonly IEditPresenter presenter;
 
         public EditForm(IEditPresenter presenter)
         {
             InitializeComponent();
-            m_Presenter = presenter;
-            m_Presenter.View = this;
+            this.presenter = presenter;
+            this.presenter.View = this;
         }
 
         public IEditPresenter Presenter
         {
-            get { return m_Presenter; }
+            get { return presenter; }
         }
 
         public event EventHandler ViewClosed;

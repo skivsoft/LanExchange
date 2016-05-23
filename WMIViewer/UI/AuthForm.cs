@@ -9,8 +9,8 @@ namespace WMIViewer.UI
 {
     public sealed partial class AuthForm : Form
     {
-        private static string s_UserName;
-        private static string s_UserPassword;
+        private static string userName;
+        private static string userPassword;
         
         public AuthForm()
         {
@@ -23,16 +23,16 @@ namespace WMIViewer.UI
             picShield.Image = SystemIcons.Error.ToBitmap();
             bOK.NotifyDefault(true);
             ActiveControl = eUserName;
-            UserName = s_UserName;
-            UserPassword = s_UserPassword;
+            UserName = userName;
+            UserPassword = userPassword;
         }
 
         public bool AutoLogOn()
         {
-            if (!String.IsNullOrEmpty(s_UserName))
+            if (!String.IsNullOrEmpty(userName))
             {
-                eUserName.Text = s_UserName;
-                ePassword.Text = s_UserPassword;
+                eUserName.Text = userName;
+                ePassword.Text = userPassword;
                 return true;
             }
             return false;
@@ -42,7 +42,7 @@ namespace WMIViewer.UI
         public void SetComputerName(string computerName)
         {
             Text = String.Format(CultureInfo.InvariantCulture, Text, computerName);
-            var userName = AutoLogOn() ? s_UserName : 
+            var userName = AutoLogOn() ? AuthForm.userName : 
                 string.Format(CultureInfo.InvariantCulture, @"{0}\{1}", Environment.UserDomainName, Environment.UserName);
             lMessage.Text = String.Format(CultureInfo.InvariantCulture, lMessage.Text, userName);
         }
@@ -67,14 +67,14 @@ namespace WMIViewer.UI
                 DialogResult = DialogResult.None;
                 return;
             }
-            s_UserName = UserName;
-            s_UserPassword = UserPassword;
+            userName = UserName;
+            userPassword = UserPassword;
         }
 
         public static void ClearSavedPassword()
         {
-            s_UserName = string.Empty;
-            s_UserPassword = string.Empty;
+            userName = string.Empty;
+            userPassword = string.Empty;
         }
 
         private void WMIAuthForm_KeyDown(object sender, KeyEventArgs e)

@@ -2,6 +2,7 @@
 using System.ComponentModel.Composition;
 using System.Text;
 using LanExchange.SDK;
+using LanExchange.SDK.Extensions;
 
 namespace LanExchange.Plugin.Notify
 {
@@ -11,13 +12,13 @@ namespace LanExchange.Plugin.Notify
         private const int LANEX_PORT = 3003;
         private const string MSG_LANEX_NOTIFY = "LANEX:NOTIFY";
 
-        private IServiceProvider m_Provider;
+        private IServiceProvider serviceProvider;
 
         public void Initialize(IServiceProvider serviceProvider)
         {
-            m_Provider = serviceProvider;
+            this.serviceProvider = serviceProvider;
 
-            var disposableManger = (IDisposableManager) serviceProvider.GetService(typeof (IDisposableManager));
+            var disposableManger = serviceProvider.Resolve<IDisposableManager>();
             if (disposableManger != null)
             {
                 var listener = new UdpListener(LANEX_PORT);
@@ -32,7 +33,7 @@ namespace LanExchange.Plugin.Notify
             switch (msg[0])
             {
                 case MSG_LANEX_NOTIFY:
-                    var pagesView = (IPagesView)m_Provider.GetService(typeof(IPagesView));
+                    var pagesView = serviceProvider.Resolve<IPagesView>();
                     if (pagesView != null)
                         ReReadPlugin(msg[1], msg.Length > 2 ? msg[2] : String.Empty);
                     break;
@@ -41,8 +42,8 @@ namespace LanExchange.Plugin.Notify
 
         private void ReReadPlugin(string typeName, string subject)
         {
-            var pagesPresenter = (IPagesPresenter)m_Provider.GetService(typeof(IPagesPresenter));
-            var mainView = (IMainView)m_Provider.GetService(typeof(IMainView));
+            var pagesPresenter = serviceProvider.Resolve<IPagesPresenter>();
+            var mainView = serviceProvider.Resolve<IMainView>();
             if (pagesPresenter == null || mainView == null || pagesPresenter.Count == 0) return;
             lock (pagesPresenter)
                 for (int index = 0; index < pagesPresenter.Count; index++)

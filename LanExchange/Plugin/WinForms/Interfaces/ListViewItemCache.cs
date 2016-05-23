@@ -9,12 +9,12 @@ namespace LanExchange.Plugin.WinForms.Interfaces
 
         //private ListViewItem[] TableCache;
         //private int TableCacheStartIndex;
-        private readonly IListViewItemGetter m_Getter;
+        private readonly IListViewItemGetter getter;
 
         // TODO Cache is currently OFF. Need perfomance stress-tests.
         public ListViewItemCache(IListViewItemGetter getter)
         {
-            m_Getter = getter;
+            this.getter = getter;
             //TableCache = new ListViewItem[0];
         }
         
@@ -40,8 +40,8 @@ namespace LanExchange.Plugin.WinForms.Interfaces
                 e.Item = null;
             if (e.ItemIndex >=  0 && e.ItemIndex <= lv.VirtualListSize-1)
             {
-                if (m_Getter != null)
-                    e.Item = m_Getter.GetListViewItemAt(e.ItemIndex);
+                if (getter != null)
+                    e.Item = getter.GetListViewItemAt(e.ItemIndex);
                 //e.Item = TableCache[e.ItemIndex - TableCacheStartIndex];
             }
             if (e.Item == null)

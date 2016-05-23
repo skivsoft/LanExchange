@@ -22,15 +22,15 @@ namespace WMIViewer.Model
             string tempString;
             if (dmtf == null)
             {
-                throw new ArgumentOutOfRangeException("wmiDate");
+                throw new ArgumentOutOfRangeException(nameof(wmiDate));
             }
             if (dmtf.Length == 0)
             {
-                throw new ArgumentOutOfRangeException("wmiDate");
+                throw new ArgumentOutOfRangeException(nameof(wmiDate));
             }
             if (dmtf.Length != 25)
             {
-                throw new ArgumentOutOfRangeException("wmiDate");
+                throw new ArgumentOutOfRangeException(nameof(wmiDate));
             }
             try
             {
@@ -78,7 +78,7 @@ namespace WMIViewer.Model
                             || (second < 0))
                             || (ticks < 0)))
                 {
-                    throw new ArgumentOutOfRangeException("wmiDate");
+                    throw new ArgumentOutOfRangeException(nameof(wmiDate));
                 }
             }
             catch (Exception e)

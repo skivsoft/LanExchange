@@ -8,13 +8,13 @@ namespace LanExchange.Misc.Impl
     public class PuntoSwitcherServiceEngRus : IPuntoSwitcherService
     {
         [Localizable(false)] 
-        private readonly string[] m_ABC = 
+        private readonly string[] abc = 
         {"АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя", 
          "F<DULT~:PBQRKVYJGHCNEA{WXIO}SM\">Zf,dult`;pbqrkvyjghcnea[wxio]sm'.z"};
 
         public bool IsValidChar(char ch)
         {
-            return m_ABC[0].Contains(ch.ToString(CultureInfo.InvariantCulture)) || m_ABC[1].Contains(ch.ToString(CultureInfo.InvariantCulture));
+            return abc[0].Contains(ch.ToString(CultureInfo.InvariantCulture)) || abc[1].Contains(ch.ToString(CultureInfo.InvariantCulture));
         }
 
         public string Change(string str)
@@ -22,14 +22,14 @@ namespace LanExchange.Misc.Impl
             var result = string.Empty;
             foreach (char ch in str)
             {
-                int index = m_ABC[1].IndexOf(ch);
+                int index = abc[1].IndexOf(ch);
                 if (index != -1)
-                    result += m_ABC[0][index];
+                    result += abc[0][index];
                 else
                 {
-                    index = m_ABC[0].IndexOf(ch);
+                    index = abc[0].IndexOf(ch);
                     if (index != -1)
-                        result += m_ABC[1][index];
+                        result += abc[1][index];
                     else
                         result += ch;
                 }

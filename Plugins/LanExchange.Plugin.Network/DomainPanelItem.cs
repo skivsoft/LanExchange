@@ -7,28 +7,28 @@ namespace LanExchange.Plugin.Network
     [Serializable]
     public sealed class DomainPanelItem : PanelItemBase
     {
-        private readonly ServerInfo m_SI;
+        private readonly ServerInfo serverInfo;
 
         public DomainPanelItem()
         {
-            m_SI = new ServerInfo();
+            serverInfo = new ServerInfo();
         }
 
         public DomainPanelItem(PanelItemBase parent, ServerInfo si) : base(parent)
         {
-            m_SI = si;
+            serverInfo = si;
         }
 
         public DomainPanelItem(PanelItemBase parent, string domain) : base(parent)
         {
-            m_SI = new ServerInfo {Name = domain, Comment = string.Empty};
+            serverInfo = new ServerInfo {Name = domain, Comment = string.Empty};
         }
 
         [XmlAttribute]
         public override string Name
         {
-            get { return m_SI.Name; }
-            set { m_SI.Name = value; }
+            get { return serverInfo.Name; }
+            set { serverInfo.Name = value; }
         }
 
         public override string FullName
@@ -43,7 +43,7 @@ namespace LanExchange.Plugin.Network
 
         public override object Clone()
         {
-            var result = new DomainPanelItem(Parent, m_SI);
+            var result = new DomainPanelItem(Parent, serverInfo);
             result.Name = Name;
             return result;
         }

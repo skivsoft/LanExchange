@@ -253,7 +253,7 @@ namespace WMIViewer.Presenter
         public void BuildContextMenu(ToolStripItemCollection items)
         {
             if (items == null)
-                throw new ArgumentNullException("items");
+                throw new ArgumentNullException(nameof(items));
             items.Clear();
             if (m_Class == null) return;
             try

@@ -14,9 +14,9 @@ namespace WMIViewer.UI
     {
         public const string TITLE_FMT = @"\\{0} — {1}";
 
-        private readonly WmiPresenter m_Presenter;
-        private readonly CmdLineArgs m_Args;
-        private string m_CurrentWmiClass;
+        private readonly WmiPresenter presenter;
+        private readonly CmdLineArgs args;
+        private string currentWmiClass;
 
         public event EventHandler FocusedItemChanged;
 
@@ -24,10 +24,10 @@ namespace WMIViewer.UI
         public MainForm(WmiPresenter presenter)
         {
             if (presenter == null)
-                throw new ArgumentNullException("presenter");
-            m_Presenter = presenter;
-            m_Presenter.View = this;
-            m_Args = m_Presenter.Args;
+                throw new ArgumentNullException(nameof(presenter));
+            this.presenter = presenter;
+            this.presenter.View = this;
+            args = this.presenter.Args;
             InitializeComponent();
             // Enable double buffer for ListView
             var mi = typeof(Control).GetMethod("SetStyle", BindingFlags.Instance | BindingFlags.NonPublic);
@@ -41,27 +41,27 @@ namespace WMIViewer.UI
 
         public void UpdateTitle()
         {
-            var description = WmiClassList.GetPropertyValue(m_Presenter.Namespace, "Win32_OperatingSystem",
+            var description = WmiClassList.GetPropertyValue(presenter.Namespace, "Win32_OperatingSystem",
                 "Description");
             if (string.IsNullOrEmpty(description))
-                Text = @"\\" + m_Args.ComputerName;
+                Text = @"\\" + args.ComputerName;
             else
-                Text = string.Format(CultureInfo.InvariantCulture, TITLE_FMT, m_Args.ComputerName, description);
+                Text = string.Format(CultureInfo.InvariantCulture, TITLE_FMT, args.ComputerName, description);
         }
 
         public WmiPresenter Presenter
         {
-            get { return m_Presenter; }
+            get { return presenter; }
         }
 
         [Localizable(false)]
         private void lvInstances_FocusedItemChanged(object sender, EventArgs e)
         {
-            if (m_Presenter.WmiClass == null) return;
+            if (presenter.WmiClass == null) return;
             if (lvInstances.FocusedItem == null) return;
-            m_Presenter.WmiObject = (ManagementObject)lvInstances.FocusedItem.Tag;
-            if (m_Presenter.WmiObject == null) return;
-            PropGrid.SelectedObject = m_Presenter.CreateDynamicObject();
+            presenter.WmiObject = (ManagementObject)lvInstances.FocusedItem.Tag;
+            if (presenter.WmiObject == null) return;
+            PropGrid.SelectedObject = presenter.CreateDynamicObject();
         }
 
         public ListView LV
@@ -73,15 +73,15 @@ namespace WMIViewer.UI
         {
             get
             {
-                return m_CurrentWmiClass;
+                return currentWmiClass;
             }
             set
             {
-                m_CurrentWmiClass = value;
-                lDescription.Text = WmiClassList.Instance.GetClassDescription(m_Presenter.Namespace, value);
+                currentWmiClass = value;
+                lDescription.Text = WmiClassList.Instance.GetClassDescription(presenter.Namespace, value);
                 lClassName.Text = value;
-                m_Presenter.EnumObjects(value);
-                m_Presenter.BuildContextMenu(menuCommands.Items);
+                presenter.EnumObjects(value);
+                presenter.BuildContextMenu(menuCommands.Items);
                 //m_Presenter.BuildContextMenu(mMethod.DropDownItems);
                 if (lvInstances.Items.Count == 0)
                     PropGrid.SelectedObject = null;
@@ -145,7 +145,7 @@ namespace WMIViewer.UI
             //menuClasses.Items.Add(mSetup);
         }
 
-        private bool m_MenuUpdated;
+        private bool menuUpdated;
 
         private void menuClasses_Opening(object sender, CancelEventArgs e)
         {
@@ -154,10 +154,10 @@ namespace WMIViewer.UI
                 e.Cancel = true;
                 return;
             }
-            if (!m_MenuUpdated)
+            if (!menuUpdated)
             {
                 UpdateClassesMenu();
-                m_MenuUpdated = true;
+                menuUpdated = true;
             }
             foreach (var menuItem in menuClasses.Items)
             {
@@ -174,12 +174,12 @@ namespace WMIViewer.UI
             if (propName == null) return;
             object propValue = e.ChangedItem.Value;
             string caption = String.Format(CultureInfo.InvariantCulture, Resources.MainForm_EditingProperty, propName);
-            string message = String.Format(CultureInfo.InvariantCulture, Resources.MainForm_PropertyChanged_Message, m_Args.ComputerName, e.OldValue, propValue);
+            string message = String.Format(CultureInfo.InvariantCulture, Resources.MainForm_PropertyChanged_Message, args.ComputerName, e.OldValue, propValue);
             try
             {
                 // trying to change wmi property
-                m_Presenter.WmiObject[propName] = propValue;
-                m_Presenter.WmiObject.Put();
+                presenter.WmiObject[propName] = propValue;
+                presenter.WmiObject.Put();
 
                 // update computer comment if we changes Win32_OperatingSystme.Description
                 if (CurrentWmiClass.Equals("Win32_OperatingSystem") && propName.Equals("Description"))

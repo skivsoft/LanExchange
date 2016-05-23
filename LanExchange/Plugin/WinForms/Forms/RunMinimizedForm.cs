@@ -9,34 +9,34 @@ namespace LanExchange.Plugin.WinForms.Forms
     /// </summary>
     public class RunMinimizedForm : Form
     {
-        private FormWindowState m_LastWindowState;
-        private bool m_RunMinimized;
-        private bool m_AllowVisible;
-        private bool m_AllowClose;
-        private bool m_ResizeBegan;
+        private FormWindowState lastWindowState;
+        private bool runMinimized;
+        private bool allowVisible;
+        private bool allowClose;
+        private bool resizeBegan;
 
         protected RunMinimizedForm()
         {
             Resize += Form_Resize;
-            ResizeBegin += (sender, args) => m_ResizeBegan = true;
-            ResizeEnd += (sender, args) => m_ResizeBegan = false;
+            ResizeBegin += (sender, args) => resizeBegan = true;
+            ResizeEnd += (sender, args) => resizeBegan = false;
         }
 
         protected override void SetVisibleCore(bool value)
         {
-            if (m_RunMinimized && !m_AllowVisible)
+            if (runMinimized && !allowVisible)
             {
                 value = false;
-                m_AllowVisible = true;
+                allowVisible = true;
             }
             base.SetVisibleCore(value);
             if (value && WindowState == FormWindowState.Minimized)
-                WindowState = m_LastWindowState;
+                WindowState = lastWindowState;
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            if (!m_AllowClose)
+            if (!allowClose)
             {
                 Visible = false;
                 e.Cancel = true;
@@ -46,23 +46,23 @@ namespace LanExchange.Plugin.WinForms.Forms
 
         public void SetRunMinimized(bool value)
         {
-            m_RunMinimized = value;
+            runMinimized = value;
         }
 
         public virtual void ApplicationExit()
         {
-            m_AllowClose = true;
+            allowClose = true;
             Application.Exit();
         }
 
 
         private void Form_Resize(object sender, EventArgs e)
         {
-            if (m_ResizeBegan) return;
+            if (resizeBegan) return;
 
             if (WindowState != FormWindowState.Minimized)
             {
-                m_LastWindowState = WindowState;
+                lastWindowState = WindowState;
             }
             else
             {

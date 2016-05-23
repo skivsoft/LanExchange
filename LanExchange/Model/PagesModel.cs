@@ -37,7 +37,7 @@ namespace LanExchange.Model
 
         public int Count { get { return panels.Count; }  }
 
-        private int m_LockCount;
+        private int lockCount;
 
         public int SelectedIndex 
         {
@@ -48,11 +48,11 @@ namespace LanExchange.Model
             set
             {
                 selectedIndex = value;
-                if (m_LockCount == 0)
+                if (lockCount == 0)
                 {
-                    m_LockCount++;
+                    lockCount++;
                     DoIndexChanged(value);
-                    m_LockCount--;
+                    lockCount--;
                 }
             }
         }

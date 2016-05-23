@@ -10,16 +10,16 @@ namespace WMIViewer.UI
 {
     internal sealed partial class EditPropertyForm : Form
     {
-        private readonly WmiPresenter m_Presenter;
-        private readonly CmdLineArgs m_Args;
-        private string m_OldValue;
+        private readonly WmiPresenter presenter;
+        private readonly CmdLineArgs args;
+        private string oldValue;
 
         public EditPropertyForm(WmiPresenter presenter)
         {
             if (presenter == null)
-                throw new ArgumentNullException("presenter");
-            m_Presenter = presenter;
-            m_Args = presenter.Args;
+                throw new ArgumentNullException(nameof(presenter));
+            this.presenter = presenter;
+            args = presenter.Args;
             InitializeComponent();
             UpdateTitle();
             SetArgsToControls();
@@ -29,33 +29,33 @@ namespace WMIViewer.UI
         [Localizable(false)]
         public void UpdateTitle()
         {
-            var description = WmiClassList.GetPropertyValue(m_Presenter.Namespace, "Win32_OperatingSystem",
+            var description = WmiClassList.GetPropertyValue(presenter.Namespace, "Win32_OperatingSystem",
                 "Description");
             if (string.IsNullOrEmpty(description))
-                Text = @"\\" + m_Args.ComputerName;
+                Text = @"\\" + args.ComputerName;
             else
-                Text = string.Format(CultureInfo.InvariantCulture, MainForm.TITLE_FMT, m_Args.ComputerName, description);
+                Text = string.Format(CultureInfo.InvariantCulture, MainForm.TITLE_FMT, args.ComputerName, description);
         }
 
         [Localizable(false)]
         public void SetArgsToControls()
         {
-            lClass.Text = string.Format(CultureInfo.InvariantCulture, @"{0}\{1}", m_Args.NamespaceName, m_Args.ClassName);
-            eClass.Text = WmiClassList.GetPropertyValue(m_Presenter.Namespace, m_Args.ClassName, "Caption");
-            lProperty.Text = "&" + m_Args.PropertyName;
-            lDescription.Text = WmiClassList.Instance.GetPropertyDescription(m_Args.ClassName, 
-                m_Args.PropertyName);
-            m_OldValue = WmiClassList.GetPropertyValue(m_Presenter.Namespace, m_Args.ClassName,
-                m_Args.PropertyName);
-            eProp.Text = m_OldValue;
-            eProp.ReadOnly = !WmiClassList.Instance.IsPropertyEditable(m_Args.ClassName, m_Args.PropertyName);
+            lClass.Text = string.Format(CultureInfo.InvariantCulture, @"{0}\{1}", args.NamespaceName, args.ClassName);
+            eClass.Text = WmiClassList.GetPropertyValue(presenter.Namespace, args.ClassName, "Caption");
+            lProperty.Text = "&" + args.PropertyName;
+            lDescription.Text = WmiClassList.Instance.GetPropertyDescription(args.ClassName, 
+                args.PropertyName);
+            oldValue = WmiClassList.GetPropertyValue(presenter.Namespace, args.ClassName,
+                args.PropertyName);
+            eProp.Text = oldValue;
+            eProp.ReadOnly = !WmiClassList.Instance.IsPropertyEditable(args.ClassName, args.PropertyName);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (!eProp.ReadOnly && !m_OldValue.Equals(eProp.Text))
+            if (!eProp.ReadOnly && !oldValue.Equals(eProp.Text))
             {
-                WmiClassList.SetPropertyValue(m_Presenter.Namespace, m_Args.ClassName, m_Args.PropertyName, eProp.Text);
+                WmiClassList.SetPropertyValue(presenter.Namespace, args.ClassName, args.PropertyName, eProp.Text);
             }
         }
     }

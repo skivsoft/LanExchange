@@ -7,57 +7,57 @@ namespace WMIViewer.Model
     [Localizable(false)]
     internal sealed class PropertyDataExt : IComparable<PropertyDataExt>
     {
-        private readonly PropertyData m_Data;
-        private readonly ParameterType m_ParameterType;
-        private readonly int m_Id;
+        private readonly PropertyData data;
+        private readonly ParameterType parameterType;
+        private readonly int id;
 
         public PropertyDataExt(PropertyData data)
         {
             if (data == null)
-                throw new ArgumentNullException("data");
-            m_Data = data;
-            m_Id = 100;
-            foreach (var qd in m_Data.Qualifiers)
+                throw new ArgumentNullException(nameof(data));
+            this.data = data;
+            id = 100;
+            foreach (var qd in this.data.Qualifiers)
             {
                 if (qd.Name.Equals("In") || qd.Name.Equals("in"))
-                    m_ParameterType = ParameterType.In;
+                    parameterType = ParameterType.In;
                 if (qd.Name.Equals("Out"))
-                    m_ParameterType = ParameterType.Out;
+                    parameterType = ParameterType.Out;
                 if (qd.Name.Equals("out"))
-                    m_ParameterType = ParameterType.Return;
+                    parameterType = ParameterType.Return;
                 if (qd.Name.Equals("ID"))
-                    m_Id = (int) qd.Value;
+                    id = (int) qd.Value;
             }
         }
 
         public ParameterType ParameterType
         {
-            get { return m_ParameterType; }
+            get { return parameterType; }
         }
 
         public int Id
         {
-            get { return m_Id; }
+            get { return id; }
         }
 
         public string Name
         {
-            get { return m_Data.Name; }
+            get { return data.Name; }
         }
 
         public CimType PropType
         {
-            get { return m_Data.Type; }
+            get { return data.Type; }
         }
 
         public QualifierDataCollection Qualifiers
         {
-            get { return m_Data.Qualifiers; }
+            get { return data.Qualifiers; }
         }
 
         public object Value
         {
-            get { return m_Data.Value; }   
+            get { return data.Value; }   
         }
 
         public int CompareTo(PropertyDataExt other)
@@ -74,7 +74,7 @@ namespace WMIViewer.Model
 
         public override int GetHashCode()
         {
-            return m_Id;
+            return id;
         }
 
         public static bool operator ==(PropertyDataExt left, PropertyDataExt right)

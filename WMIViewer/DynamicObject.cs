@@ -7,9 +7,9 @@ namespace WMIViewer
     [Localizable(false)]
     public sealed class DynamicObject : ICustomTypeDescriptor
 	{
-        private readonly string m_Filter = string.Empty;
-        private readonly PropertyDescriptorCollection m_FilteredPropertyDescriptors = new PropertyDescriptorCollection(null);
-        private readonly PropertyDescriptorCollection m_FullPropertyDescriptors = new PropertyDescriptorCollection(null);
+        private readonly string filter = string.Empty;
+        private readonly PropertyDescriptorCollection filteredPropertyDescriptors = new PropertyDescriptorCollection(null);
+        private readonly PropertyDescriptorCollection fullPropertyDescriptors = new PropertyDescriptorCollection(null);
 
         public void AddProperty<T>(
           string name,
@@ -35,7 +35,7 @@ namespace WMIViewer
             if (readOnly)
                 attrs.Add(new ReadOnlyAttribute(true));
 
-            m_FullPropertyDescriptors.Add(new GenericPropertyDescriptor<T>(
+            fullPropertyDescriptors.Add(new GenericPropertyDescriptor<T>(
               name, value, attrs.ToArray()));
         }
 
@@ -58,7 +58,7 @@ namespace WMIViewer
             if (readOnly)
                 attrs.Add(new ReadOnlyAttribute(true));
 
-            m_FullPropertyDescriptors.Add(new GenericPropertyDescriptor<T>(
+            fullPropertyDescriptors.Add(new GenericPropertyDescriptor<T>(
               name, attrs.ToArray()));
         }
 
@@ -74,9 +74,9 @@ namespace WMIViewer
 
         public void RemoveProperty(string propertyName)
         {
-            var descriptor = m_FullPropertyDescriptors.Find(propertyName, true);
+            var descriptor = fullPropertyDescriptors.Find(propertyName, true);
             if (descriptor != null)
-                m_FullPropertyDescriptors.Remove(descriptor);
+                fullPropertyDescriptors.Remove(descriptor);
             else
                 throw new ObjectNotFoundException(propertyName);
         }
@@ -89,7 +89,7 @@ namespace WMIViewer
 
         private object GetPropertyValue(string propertyName)
         {
-            var descriptor = m_FullPropertyDescriptors.Find(propertyName, true);
+            var descriptor = fullPropertyDescriptors.Find(propertyName, true);
             if (descriptor != null)
                 return descriptor.GetValue(new object());
             throw new ObjectNotFoundException(propertyName);
@@ -97,7 +97,7 @@ namespace WMIViewer
 
         private void SetPropertyValue(string propertyName, object value)
         {
-            var descriptor = m_FullPropertyDescriptors.Find(propertyName, true);
+            var descriptor = fullPropertyDescriptors.Find(propertyName, true);
             if (descriptor != null)
                 descriptor.SetValue(null, value);
             else
@@ -140,7 +140,7 @@ namespace WMIViewer
 
         public PropertyDescriptorCollection GetProperties(Attribute[] attributes)
         {
-            return m_Filter.Length != 0 ? m_FilteredPropertyDescriptors : m_FullPropertyDescriptors;
+            return filter.Length != 0 ? filteredPropertyDescriptors : fullPropertyDescriptors;
         }
 
         public PropertyDescriptorCollection GetProperties()

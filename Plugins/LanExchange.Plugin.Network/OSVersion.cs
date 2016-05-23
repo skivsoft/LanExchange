@@ -7,40 +7,40 @@ namespace LanExchange.Plugin.Network
     [Serializable]
     public sealed class OSVersion : IComparable<OSVersion>, IComparable
     {
-        private uint m_PlatformID;
-        private uint m_Major;
-        private uint m_Minor;
-        private uint m_Type;
+        private uint platformId;
+        private uint major;
+        private uint minor;
+        private uint type;
 
         public uint Type
         {
-            get { return m_Type; }
-            set { m_Type = value; }
+            get { return type; }
+            set { type = value; }
         }
 
-        public uint PlatformID
+        public uint PlatformId
         {
-            get { return m_PlatformID; }
-            set { m_PlatformID = value; }
+            get { return platformId; }
+            set { platformId = value; }
         }
 
         public uint Major
         {
-            get { return m_Major; }
-            set { m_Major = value; }
+            get { return major; }
+            set { major = value; }
         }
 
         public uint Minor
         {
-            get { return m_Minor; }
-            set { m_Minor = value; }
+            get { return minor; }
+            set { minor = value; }
         }
 
         public bool IsDomainController()
         {
             const uint ctrl =
                 (uint)SV_101_TYPES.SV_TYPE_DOMAIN_CTRL | (uint)SV_101_TYPES.SV_TYPE_DOMAIN_BAKCTRL;
-            return (m_Type & ctrl) != 0;
+            return (type & ctrl) != 0;
         }
 
         public bool IsServer()
@@ -49,54 +49,54 @@ namespace LanExchange.Plugin.Network
             const uint ctrl =
                 (uint)SV_101_TYPES.SV_TYPE_DOMAIN_CTRL | (uint)SV_101_TYPES.SV_TYPE_DOMAIN_BAKCTRL;
             const uint noctrl = (uint)SV_101_TYPES.SV_TYPE_SERVER_NT;
-            return (m_Type & srv) != 0 && (m_Type & (ctrl | noctrl)) != 0;
+            return (type & srv) != 0 && (type & (ctrl | noctrl)) != 0;
         }
 
         public bool IsSqlServer()
         {
-            return (m_Type & (uint)SV_101_TYPES.SV_TYPE_SQLSERVER) != 0;
+            return (type & (uint)SV_101_TYPES.SV_TYPE_SQLSERVER) != 0;
         }
 
         public bool IsTimeSource()
         {
-            return (m_Type & (uint)SV_101_TYPES.SV_TYPE_TIME_SOURCE) != 0;
+            return (type & (uint)SV_101_TYPES.SV_TYPE_TIME_SOURCE) != 0;
         }
 
         public bool IsPrintServer()
         {
-            return (m_Type & (uint)SV_101_TYPES.SV_TYPE_PRINTQ_SERVER) != 0;
+            return (type & (uint)SV_101_TYPES.SV_TYPE_PRINTQ_SERVER) != 0;
         }
 
         public bool IsDialInServer()
         {
-            return (m_Type & (uint)SV_101_TYPES.SV_TYPE_DIALIN_SERVER) != 0;
+            return (type & (uint)SV_101_TYPES.SV_TYPE_DIALIN_SERVER) != 0;
         }
 
         public bool IsPotentialBrowser()
         {
-            return (m_Type & (uint)SV_101_TYPES.SV_TYPE_POTENTIAL_BROWSER) != 0;
+            return (type & (uint)SV_101_TYPES.SV_TYPE_POTENTIAL_BROWSER) != 0;
         }
 
         public bool IsBackupBrowser()
         {
-            return (m_Type & (uint)SV_101_TYPES.SV_TYPE_BACKUP_BROWSER) != 0;
+            return (type & (uint)SV_101_TYPES.SV_TYPE_BACKUP_BROWSER) != 0;
         }
 
         public bool IsMasterBrowser()
         {
-            return (m_Type & (uint)SV_101_TYPES.SV_TYPE_MASTER_BROWSER) != 0;
+            return (type & (uint)SV_101_TYPES.SV_TYPE_MASTER_BROWSER) != 0;
         }
 
         public bool IsDfsRoot()
         {
-            return (m_Type & (uint)SV_101_TYPES.SV_TYPE_DFS) != 0;
+            return (type & (uint)SV_101_TYPES.SV_TYPE_DFS) != 0;
         }
 
         public int CompareTo(OSVersion other)
         {
             if (other == null) return 1;
-            uint u1 = m_PlatformID;
-            uint u2 = other.m_PlatformID;
+            uint u1 = platformId;
+            uint u2 = other.platformId;
             if (u1 < u2) return -1;
             if (u1 > u2) return 1;
             bool s1 = IsServer();
@@ -107,12 +107,12 @@ namespace LanExchange.Plugin.Network
             if (s1 && !s2) return 1;
             if (!c1 && c2) return 1;
             if (c1 && !c2) return -1;
-            u1 = m_Major;
-            u2 = other.m_Major;
+            u1 = major;
+            u2 = other.major;
             if (u1 < u2) return -1;
             if (u1 > u2) return 1;
-            u1 = m_Minor;
-            u2 = other.m_Minor;
+            u1 = minor;
+            u2 = other.minor;
             if (u1 < u2) return -1;
             if (u1 > u2) return 1;
             return 0;
@@ -132,23 +132,23 @@ namespace LanExchange.Plugin.Network
         {
             //return String.Format("{0}.{1}.{2}.{3}", platform_id, ver_major, ver_minor, type);
             bool bServer = IsServer();
-            var platform = (SV_101_PLATFORM) m_PlatformID;
+            var platform = (SV_101_PLATFORM) platformId;
             // OS2 same as NT
             if (platform == SV_101_PLATFORM.PLATFORM_ID_OS2)
                 platform = SV_101_PLATFORM.PLATFORM_ID_NT;
             switch (platform)
             {
                 case SV_101_PLATFORM.PLATFORM_ID_DOS:
-                    return String.Format("MS-DOS {0}.{1}", m_Major, m_Minor);
+                    return String.Format("MS-DOS {0}.{1}", major, minor);
                 case SV_101_PLATFORM.PLATFORM_ID_NT:
-                    if ((m_Type & (uint)SV_101_TYPES.SV_TYPE_XENIX_SERVER) != 0)
-                        return String.Format("Linux Server {0}.{1}", m_Major, m_Minor);
-                    switch (m_Major)
+                    if ((type & (uint)SV_101_TYPES.SV_TYPE_XENIX_SERVER) != 0)
+                        return String.Format("Linux Server {0}.{1}", major, minor);
+                    switch (major)
                     {
                         case 3:
                             return "Windows NT 3.51";
                         case 4:
-                            switch (m_Minor)
+                            switch (minor)
                             {
                                 case 0:
                                     return "Windows 95";
@@ -157,10 +157,10 @@ namespace LanExchange.Plugin.Network
                                 case 90:
                                     return "Windows ME";
                                 default:
-                                    return String.Format("Windows NT {0}.{1}", m_Major, m_Minor);
+                                    return String.Format("Windows NT {0}.{1}", major, minor);
                             }
                         case 5:
-                            switch (m_Minor)
+                            switch (minor)
                             {
                                 case 0:
                                     return bServer ? "Windows Server 2000" : "Windows 2000";
@@ -169,10 +169,10 @@ namespace LanExchange.Plugin.Network
                                 case 2:
                                     return "Windows Server 2003 R2";
                                 default:
-                                    return String.Format("Windows NT {0}.{1}", m_Major, m_Minor);
+                                    return String.Format("Windows NT {0}.{1}", major, minor);
                             }
                         case 6:
-                            switch (m_Minor)
+                            switch (minor)
                             {
                                 case 0:
                                     return bServer ? "Windows Server 2008" : "Windows Vista";
@@ -185,17 +185,17 @@ namespace LanExchange.Plugin.Network
                                 case 4:
                                     return bServer ? "Windows 10 Server" : "Windows 10";
                                 default:
-                                    return String.Format("Windows NT {0}.{1}", m_Major, m_Minor);
+                                    return String.Format("Windows NT {0}.{1}", major, minor);
                             }
                         default:
-                            return String.Format("Windows NT {0}.{1}", m_Major, m_Minor);
+                            return String.Format("Windows NT {0}.{1}", major, minor);
                     }
                 case SV_101_PLATFORM.PLATFORM_ID_OSF:
-                    return String.Format("OSF {0}.{1}", m_Major, m_Minor);
+                    return String.Format("OSF {0}.{1}", major, minor);
                 case SV_101_PLATFORM.PLATFORM_ID_VMS:
-                    return String.Format("VMS {0}.{1}", m_Major, m_Minor);
+                    return String.Format("VMS {0}.{1}", major, minor);
                 default:
-                    return String.Format("{0} {1}.{2}", m_PlatformID, m_Major, m_Minor);
+                    return String.Format("{0} {1}.{2}", platformId, major, minor);
             }
         }
 

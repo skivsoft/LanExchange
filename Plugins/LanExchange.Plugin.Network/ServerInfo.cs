@@ -8,11 +8,11 @@ namespace LanExchange.Plugin.Network
     [Serializable]
     public sealed class ServerInfo
     {
-        private string m_Name;
-        private string m_Comment;
-        private readonly OSVersion m_Version;
+        private string name;
+        private string comment;
+        private readonly OSVersion version;
 
-        private DateTime m_UtcUpdated;
+        private DateTime utcUpdated;
 
         /// <summary>
         /// Constructor without params is required for XML-serialization.
@@ -23,46 +23,46 @@ namespace LanExchange.Plugin.Network
         public static ServerInfo FromNetApi32(SERVER_INFO_101 info)
         {
             var result = new ServerInfo();
-            result.m_Name = info.name;
-            result.m_Version.PlatformID = info.platform_id;
-            result.m_Version.Major = info.version_major;
-            result.m_Version.Minor = info.version_minor;
-            result.m_Version.Type = info.type;
-            result.m_Comment = info.comment;
+            result.name = info.name;
+            result.version.PlatformId = info.platform_id;
+            result.version.Major = info.version_major;
+            result.version.Minor = info.version_minor;
+            result.version.Type = info.type;
+            result.comment = info.comment;
             return result;
         }
 
         public ServerInfo()
         {
-            m_Version = new OSVersion();
+            version = new OSVersion();
         }
 
         public string Name
         {
-            get { return m_Name; }
-            set { m_Name = value; }
+            get { return name; }
+            set { name = value; }
         }
 
         public string Comment
         {
-            get { return m_Comment; }
-            set { m_Comment = value; }
+            get { return comment; }
+            set { comment = value; }
         }
 
         public OSVersion Version
         {
-            get { return m_Version; }
+            get { return version; }
         }
 
         public DateTime UtcUpdated
         {
-            get { return m_UtcUpdated; }
-            set { m_UtcUpdated = value; }
+            get { return utcUpdated; }
+            set { utcUpdated = value; }
         }
 
         public void ResetUtcUpdated()
         {
-            m_UtcUpdated = DateTime.UtcNow;
+            utcUpdated = DateTime.UtcNow;
         }
 
         /// <summary>

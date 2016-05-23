@@ -6,23 +6,23 @@ namespace LanExchange.Base
     [XmlType("LanExchangeAddon")]
     public class AddOn
     {
-        private readonly Collection<AddonProgram> m_Programs;
-        private readonly Collection<AddOnItemTypeRef> m_ItemTypes;
+        private readonly Collection<AddonProgram> programs;
+        private readonly Collection<AddOnItemTypeRef> itemTypes;
 
         public AddOn()
         {
-            m_ItemTypes = new Collection<AddOnItemTypeRef>();
-            m_Programs = new Collection<AddonProgram>();
+            itemTypes = new Collection<AddOnItemTypeRef>();
+            programs = new Collection<AddonProgram>();
         }
 
         public Collection<AddonProgram> Programs
         {
-            get { return m_Programs; }
+            get { return programs; }
         }
 
         public Collection<AddOnItemTypeRef> ItemTypes
         {
-            get { return m_ItemTypes; }
+            get { return itemTypes; }
         }
     }
 }

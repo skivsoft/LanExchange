@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
@@ -11,33 +12,35 @@ namespace LanExchange.Plugin.WinForms.Forms
     {
         private const int DELAY_FOR_SHOW = 250;
 
-        private readonly IImageManager m_ImageManager;
-        private PanelItemBase m_CurrentItem;
-        private readonly Thread m_Thread;
-        private volatile bool m_DoneAndAvailable;
+        private readonly IImageManager imageManager;
+        private PanelItemBase currentItem;
+        private readonly Thread thread;
+        private volatile bool doneAndAvailable;
 
         public event EventHandler ViewClosed;
 
         public CheckAvailabilityForm(IImageManager imageManager)
         {
-            InitializeComponent();
+            Contract.Requires<ArgumentNullException>(imageManager != null);
 
-            m_ImageManager = imageManager;
-            m_Thread = new Thread(ThreadProc);
+            this.imageManager = imageManager;
+
+            InitializeComponent();
+            thread = new Thread(ThreadProc);
         }
 
         public PanelItemBase CurrentItem
         {
-            get { return m_CurrentItem; }
+            get { return currentItem; }
             set
             {
-                m_CurrentItem = value;
-                if (m_CurrentItem != null)
+                currentItem = value;
+                if (currentItem != null)
                 {
-                    picObject.Image = m_ImageManager.GetSmallImage(m_CurrentItem.ImageName);
-                    Icon = m_ImageManager.GetSmallIcon(m_CurrentItem.ImageName);
-                    lObject.Text = m_CurrentItem.Name;
-                    toolTip.SetToolTip(lObject, m_CurrentItem.FullName);
+                    picObject.Image = imageManager.GetSmallImage(currentItem.ImageName);
+                    Icon = imageManager.GetSmallIcon(currentItem.ImageName);
+                    lObject.Text = currentItem.Name;
+                    toolTip.SetToolTip(lObject, currentItem.FullName);
                 }
             }
         }
@@ -60,7 +63,7 @@ namespace LanExchange.Plugin.WinForms.Forms
 
         public void StartChecking()
         {
-            m_Thread.Start(m_CurrentItem);
+            thread.Start(currentItem);
         }
 
         public void WaitAndShow()
@@ -70,8 +73,8 @@ namespace LanExchange.Plugin.WinForms.Forms
             do
             {
                 delta = DateTime.UtcNow - startTime;
-            } while (!m_DoneAndAvailable && delta.Milliseconds < DELAY_FOR_SHOW);
-            if (!m_DoneAndAvailable)
+            } while (!doneAndAvailable && delta.Milliseconds < DELAY_FOR_SHOW);
+            if (!doneAndAvailable)
                 Show();
         }
 
@@ -96,7 +99,7 @@ namespace LanExchange.Plugin.WinForms.Forms
                     Debug.Print(e.Message);
                 }
             }
-            m_DoneAndAvailable = true;
+            doneAndAvailable = true;
             if (RunAction != null)
                 RunAction();
             if (Visible)
@@ -106,7 +109,7 @@ namespace LanExchange.Plugin.WinForms.Forms
         private void bRun_Click(object sender, EventArgs e)
         {
             Close();
-            if (!m_DoneAndAvailable && RunAction != null)
+            if (!doneAndAvailable && RunAction != null)
                 RunAction();
         }
 
@@ -117,13 +120,13 @@ namespace LanExchange.Plugin.WinForms.Forms
 
         private void CheckAvailabilityForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            m_Thread.Abort();
+            thread.Abort();
         }
 
 
         public bool DoneAndAvailable
         {
-            get { return m_DoneAndAvailable; }
+            get { return doneAndAvailable; }
        }
 
 

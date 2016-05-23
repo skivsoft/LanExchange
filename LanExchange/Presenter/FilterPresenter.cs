@@ -5,20 +5,20 @@ namespace LanExchange.Presenter
 {
     public class FilterPresenter : PresenterBase<IFilterView>, IFilterPresenter
     {
-        private IFilterModel m_Model;
-        private string m_Filter;
+        private IFilterModel model;
+        private string filter;
 
         public string FilterText
         {
-            get { return m_Filter; }
+            get { return filter; }
             set
             {
-                m_Filter = value;
-                if (m_Model != null)
+                filter = value;
+                if (model != null)
                 {
-                    m_Model.FilterText = value;
-                    m_Model.ApplyFilter();
-                    View.UpdateFromModel(m_Model);
+                    model.FilterText = value;
+                    model.ApplyFilter();
+                    View.UpdateFromModel(model);
                     View.DoFilterCountChanged();
                 }
                 View.IsVisible = IsFiltered;
@@ -29,24 +29,24 @@ namespace LanExchange.Presenter
         {
             get
             {
-                return !String.IsNullOrEmpty(m_Filter);
+                return !String.IsNullOrEmpty(filter);
             }
         }
 
         public IFilterModel GetModel()
         {
-            return m_Model;
+            return model;
         }
 
         public void SetModel(IFilterModel value)
         {
-            m_Model = null;
+            model = null;
             if (value != null)
             {
                 View.SetFilterText(value.FilterText);
-                m_Model = value;
-                m_Model.ApplyFilter();
-                View.UpdateFromModel(m_Model);
+                model = value;
+                model.ApplyFilter();
+                View.UpdateFromModel(model);
                 View.DoFilterCountChanged();
             }
         }

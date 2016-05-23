@@ -222,7 +222,6 @@ namespace LanExchange.Presenter
             var columns = panelColumns.GetColumns(objects.DataType).ToList();
             columns[columnIndex].Visible = !columns[columnIndex].Visible;
             SetupColumns();
-            //AppPresenter.MainPages.PV_FocusedItemChanged(m_View, EventArgs.Empty);
         }
     }
 }

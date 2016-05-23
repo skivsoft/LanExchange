@@ -2,8 +2,8 @@
 // START DATE: Jan 22, 2012
 // *****************************************************************************
 
-using LanExchange.Extensions;
 using System;
+using LanExchange.SDK.Extensions;
 
 namespace LanExchange
 {

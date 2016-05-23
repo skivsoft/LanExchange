@@ -9,21 +9,21 @@ namespace LanExchange.Plugin.Windows
 {
     internal class Shell32Service : IShell32Service
     {
-        private readonly ShellContextMenu m_Menu;
+        private readonly ShellContextMenu menu;
 
         public Shell32Service()
         {
-            m_Menu = new ShellContextMenu();
+            menu = new ShellContextMenu();
         }
 
         public void ShowContextMenu(IntPtr handle, FileInfo[] files, Point position)
         {
-            m_Menu.ShowContextMenu(handle, files, position);
+            menu.ShowContextMenu(handle, files, position);
         }
 
         public void ShowMyComputerContextMenu(IntPtr handle, Point position)
         {
-            m_Menu.ShowContextMenuForCSIDL(handle, ShellAPI.CSIDL.DRIVES, position);
+            menu.ShowContextMenuForCSIDL(handle, ShellAPI.CSIDL.DRIVES, position);
         }
 
         public void OpenMyComputer()

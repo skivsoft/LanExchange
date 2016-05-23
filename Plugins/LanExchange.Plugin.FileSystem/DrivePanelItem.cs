@@ -8,8 +8,8 @@ namespace LanExchange.Plugin.FileSystem
 {
     public sealed class DrivePanelItem : PanelItemBase
     {
-        private DriveInfo m_Info;
-        private string m_DisplayName;
+        private DriveInfo driveInfo;
+        private string displayName;
 
         public DrivePanelItem()
         {
@@ -24,14 +24,14 @@ namespace LanExchange.Plugin.FileSystem
         [XmlIgnore]
         public DriveInfo Info
         {
-            get { return m_Info; }
+            get { return driveInfo; }
             set
             {
-                m_Info = value;
-                if (m_Info != null)
+                driveInfo = value;
+                if (driveInfo != null)
                 {
-                    var root = m_Info.RootDirectory.Name;
-                    m_DisplayName = string.Format("{0} ({1})", m_Info.VolumeLabel, root.Substring(0, 2));
+                    var root = driveInfo.RootDirectory.Name;
+                    displayName = string.Format("{0} ({1})", driveInfo.VolumeLabel, root.Substring(0, 2));
                 }
             }
         }
@@ -67,15 +67,15 @@ namespace LanExchange.Plugin.FileSystem
             switch (index)
             {
                 case 0:
-                    return new ColumnDrive(Name, m_DisplayName);
+                    return new ColumnDrive(Name, displayName);
                 case 1:
-                    return m_Info != null ? m_Info.DriveType.ToString() : string.Empty;
+                    return driveInfo != null ? driveInfo.DriveType.ToString() : string.Empty;
                 case 2:
-                    return m_Info != null ? new ColumnSize(m_Info.TotalSize) : ColumnSize.Zero;
+                    return driveInfo != null ? new ColumnSize(driveInfo.TotalSize) : ColumnSize.Zero;
                 case 3:
-                    return m_Info != null ? new ColumnSize(m_Info.TotalFreeSpace) : ColumnSize.Zero; 
+                    return driveInfo != null ? new ColumnSize(driveInfo.TotalFreeSpace) : ColumnSize.Zero; 
                 case 4:
-                    return m_Info != null ? m_Info.DriveFormat : string.Empty;
+                    return driveInfo != null ? driveInfo.DriveFormat : string.Empty;
                 default:
                     return base.GetValue(index);
             }

@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
@@ -11,6 +12,7 @@ namespace LanExchange.Plugin.Windows.Utils
     /// </summary>
     [Localizable(false)]
     [CLSCompliant(false)]
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public static class ShellAPI
     {
         #region Variables and Constants

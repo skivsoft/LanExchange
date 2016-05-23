@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics.Contracts;
 using LanExchange.Plugin.Network.NetApi;
 using System.Xml.Serialization;
 using LanExchange.SDK;
@@ -9,28 +10,28 @@ namespace LanExchange.Plugin.Network
     [Serializable]
     public sealed class SharePanelItem : PanelItemBase//, IComparable<SharePanelItem>
     {
-        private readonly ShareInfo m_SHI;
+        private readonly ShareInfo shareInfo;
 
         public SharePanelItem()
         {
-            m_SHI = new ShareInfo();
+            shareInfo = new ShareInfo();
         }
 
         /// <summary>
         /// Panel item for network shared resource.
         /// </summary>
         /// <exception cref="ArgumentNullException"></exception>
-        public SharePanelItem(PanelItemBase parent, ShareInfo shi) : base(parent)
+        public SharePanelItem(PanelItemBase parent, ShareInfo shareInfo) : base(parent)
         {
-            if (shi == null)
-                throw new ArgumentNullException("shi");
-            m_SHI = shi;
-            Comment = m_SHI.Comment;
+            Contract.Requires<ArgumentNullException>(shareInfo != null);
+
+            this.shareInfo = shareInfo;
+            Comment = this.shareInfo.Comment;
         }
 
         public SharePanelItem(PanelItemBase parent, string name) : base(parent)
         {
-            m_SHI = new ShareInfo(new SHARE_INFO_1 {netname = name});
+            shareInfo = new ShareInfo(new SHARE_INFO_1 {netname = name});
             Comment = string.Empty;
         }
 
@@ -48,7 +49,7 @@ namespace LanExchange.Plugin.Network
 
         public ShareInfo SHI
         {
-            get { return m_SHI; }
+            get { return shareInfo; }
         }
 
         public override int CountColumns
@@ -78,8 +79,8 @@ namespace LanExchange.Plugin.Network
         [XmlAttribute]
         public override string Name 
         { 
-            get { return m_SHI.Name; }
-            set { m_SHI.Name = value; }
+            get { return shareInfo.Name; }
+            set { shareInfo.Name = value; }
         }
 
         [Localizable(false)]
@@ -94,15 +95,15 @@ namespace LanExchange.Plugin.Network
         [XmlAttribute]
         public uint ShareType
         {
-            get { return m_SHI.ShareType; }
-            set { m_SHI.ShareType = value; }
+            get { return shareInfo.ShareType; }
+            set { shareInfo.ShareType = value; }
         }
 
         [XmlAttribute]
         public string Comment
         {
-            get { return m_SHI.Comment; }
-            set { m_SHI.Comment = value; }
+            get { return shareInfo.Comment; }
+            set { shareInfo.Comment = value; }
         }
 
         public override object Clone()

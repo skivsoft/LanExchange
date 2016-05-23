@@ -10,7 +10,7 @@ namespace WMIViewer
 {
     public sealed class MethodDataExt
     {
-        private readonly MethodData m_Data;
+        private readonly MethodData data;
 
         /// <summary>
         /// 
@@ -20,13 +20,13 @@ namespace WMIViewer
         public MethodDataExt(MethodData data)
         {
             if (data == null)
-                throw new ArgumentNullException("data");
-            m_Data = data;
+                throw new ArgumentNullException(nameof(data));
+            this.data = data;
         }
 
         public bool HasQualifier(string name)
         {
-            foreach (var qd in m_Data.Qualifiers)
+            foreach (var qd in data.Qualifiers)
                 if (qd.Name.Equals(name))
                     return true;
             return false;
@@ -36,11 +36,11 @@ namespace WMIViewer
         public override string ToString()
         {
             var list = new List<PropertyDataExt>();
-            if (m_Data.InParameters != null)
-                foreach (var pd in m_Data.InParameters.Properties)
+            if (data.InParameters != null)
+                foreach (var pd in data.InParameters.Properties)
                     list.Add(new PropertyDataExt(pd));
-            if (m_Data.OutParameters != null)
-                foreach (var pd in m_Data.OutParameters.Properties)
+            if (data.OutParameters != null)
+                foreach (var pd in data.OutParameters.Properties)
                     list.Add(new PropertyDataExt(pd));
             list.Sort();
             //string sReturn = string.Empty;
@@ -59,7 +59,7 @@ namespace WMIViewer
                     sb.Append("out ");
                 sb.Append(prop.Name);
             }
-            return numArgs == 0 ? m_Data.Name : string.Format(CultureInfo.InvariantCulture, "{0} ({1})", m_Data.Name, sb);
+            return numArgs == 0 ? data.Name : string.Format(CultureInfo.InvariantCulture, "{0} ({1})", data.Name, sb);
         }
     }
 }

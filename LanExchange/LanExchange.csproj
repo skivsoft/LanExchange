@@ -114,7 +114,6 @@
     <Compile Include="Implementations\Managers\ActionManager.cs" />
     <Compile Include="Interfaces\Factories\AddonProgramInfo.cs" />
     <Compile Include="CoreFacade.cs" />
-    <Compile Include="Extensions\IServiceProviderExtension.cs" />
     <Compile Include="Helpers\EnvironmentHelper.cs" />
     <Compile Include="Helpers\PanelModelCopyHelper.cs" />
     <Compile Include="Interfaces\Factories\IAddonProgramFactory.cs" />

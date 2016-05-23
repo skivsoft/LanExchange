@@ -2,7 +2,7 @@
 using LanExchange.Plugin.Shortcut;
 using LanExchange.Properties;
 using LanExchange.SDK;
-using LanExchange.Extensions;
+using LanExchange.SDK.Extensions;
 
 namespace LanExchange.Plugin
 {

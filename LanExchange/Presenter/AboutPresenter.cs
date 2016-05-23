@@ -14,46 +14,46 @@ namespace LanExchange.Presenter
     [Localizable(false)]
     public sealed class AboutPresenter : PresenterBase<IAboutView>, IAboutPresenter
     {
-        private readonly IAboutModel m_Model;
+        private readonly IAboutModel model;
 
         public AboutPresenter(IAboutModel model)
         {
-            m_Model = model;
+            this.model = model;
         }
 
         public void LoadFromModel()
         {
-            View.Text = string.Format(CultureInfo.CurrentCulture, View.Text, m_Model.Title);
-            View.VersionText = m_Model.VersionFull;
-            View.CopyrightText = m_Model.Copyright;
-            View.WebText = m_Model.HomeLink;
-            View.WebToolTip = m_Model.HomeLink;
-            View.TwitterToolTip = m_Model.TwitterLink;
+            View.Text = string.Format(CultureInfo.CurrentCulture, View.Text, model.Title);
+            View.VersionText = model.VersionFull;
+            View.CopyrightText = model.Copyright;
+            View.WebText = model.HomeLink;
+            View.WebToolTip = model.HomeLink;
+            View.TwitterToolTip = model.TwitterLink;
         }
 
         public void OpenHomeLink()
         {
-            Process.Start(m_Model.HomeLink);
+            Process.Start(model.HomeLink);
         }
 
         public void OpenLocalizationLink()
         {
-            Process.Start(m_Model.LocalizationLink);
+            Process.Start(model.LocalizationLink);
         }
 
         public void OpenBugTrackerWebLink()
         {
-            Process.Start(m_Model.BugTrackerLink);
+            Process.Start(model.BugTrackerLink);
         }
 
         public void OpenTwitterLink()
         {
-            Process.Start(m_Model.TwitterLink);
+            Process.Start(model.TwitterLink);
         }
 
         public void OpenEmailLink()
         {
-            Process.Start(m_Model.EmailLink);
+            Process.Start(model.EmailLink);
         }
 
         //[Localizable(false)]

@@ -15,17 +15,17 @@ namespace LanExchange.Misc.Impl
 
 
         [ImportMany]
-        private IEnumerable<IPlugin> m_Plugins;
+        private readonly IEnumerable<IPlugin> plugins;
 
         CompositionContainer compContainer;
 
 
-        private readonly IDictionary<string, string> m_PluginsAuthors;
+        private readonly IDictionary<string, string> pluginsAuthors;
 
         public PluginManagerImpl()
         {
-            m_Plugins = new List<IPlugin>();
-            m_PluginsAuthors = new Dictionary<string, string>();
+            plugins = new List<IPlugin>();
+            pluginsAuthors = new Dictionary<string, string>();
         }
 
         public void LoadPlugins()
@@ -34,7 +34,7 @@ namespace LanExchange.Misc.Impl
             compContainer = new CompositionContainer(catalog);
             AttributedModelServices.ComposeParts(compContainer, this);
 
-            foreach(var plugin in m_Plugins)
+            foreach(var plugin in plugins)
             try
             {
                 plugin.Initialize(App.Resolve<IServiceProvider>());
@@ -55,12 +55,12 @@ namespace LanExchange.Misc.Impl
 
         public IEnumerable<IPlugin> Items
         {
-            get { return m_Plugins; }
+            get { return plugins; }
         }
 
         public IDictionary<string, string> PluginsAuthors
         {
-            get { return m_PluginsAuthors; }
+            get { return pluginsAuthors; }
         }
 
     }

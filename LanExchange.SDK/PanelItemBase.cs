@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.Xml.Serialization;
 
 namespace LanExchange.SDK
@@ -9,11 +10,11 @@ namespace LanExchange.SDK
     [Serializable]
     public abstract class PanelItemBase : IEquatable<PanelItemBase>, IComparable<PanelItemBase>, IComparable, ICloneable
     {
-        private bool m_IsReachable;
+        private bool isReachable;
 
         protected PanelItemBase()
         {
-            m_IsReachable = true;
+            isReachable = true;
         }
 
         /// <summary>
@@ -79,8 +80,8 @@ namespace LanExchange.SDK
         {
             get
             {
-                if (index < 0 || index >= CountColumns)    
-                    throw new ArgumentOutOfRangeException("index");
+                Contract.Requires<ArgumentOutOfRangeException>(index >= 0 && index < CountColumns);
+
                 return GetValue(index);
             }
             set
@@ -110,8 +111,8 @@ namespace LanExchange.SDK
         [XmlIgnore]
         public bool IsReachable
         {
-            get { return m_IsReachable; }
-            set { m_IsReachable = value; }
+            get { return isReachable; }
+            set { isReachable = value; }
         }
 
         /// <summary>
@@ -124,11 +125,11 @@ namespace LanExchange.SDK
         {
             var otherItem = other as PanelItemBase;
             if (otherItem == null) return 1;
-            if ((this is PanelItemDoubleDot) && !(other is PanelItemDoubleDot))
+            if (this is PanelItemDoubleDot && !(other is PanelItemDoubleDot))
                 return -1;
-            if (!(this is PanelItemDoubleDot) && (other is PanelItemDoubleDot))
+            if (!(this is PanelItemDoubleDot) && other is PanelItemDoubleDot)
                 return 1;
-            if ((this is PanelItemDoubleDot) && (other is PanelItemDoubleDot))
+            if (this is PanelItemDoubleDot && other is PanelItemDoubleDot)
                 return 0;
             var value1 = this[column];
             var value2 = otherItem[column];
@@ -153,11 +154,11 @@ namespace LanExchange.SDK
         public int CompareTo(PanelItemBase other)
         {
             if (other == null) return 1;
-            if ((this is PanelItemDoubleDot) && !(other is PanelItemDoubleDot))
+            if (this is PanelItemDoubleDot && !(other is PanelItemDoubleDot))
                 return -1;
-            if (!(this is PanelItemDoubleDot) && (other is PanelItemDoubleDot))
+            if (!(this is PanelItemDoubleDot) && other is PanelItemDoubleDot)
                 return 1;
-            if ((this is PanelItemDoubleDot) && (other is PanelItemDoubleDot))
+            if (this is PanelItemDoubleDot && other is PanelItemDoubleDot)
                 return 0;
             int result = String.Compare(Name, other.Name, StringComparison.OrdinalIgnoreCase);
             // TODO !!! CHECK ITEM SORT

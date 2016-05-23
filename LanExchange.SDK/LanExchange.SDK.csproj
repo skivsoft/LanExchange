@@ -46,6 +46,7 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="ConfigBase.cs" />
     <Compile Include="Delegates.cs" />
+    <Compile Include="Extensions\IServiceProviderExtension.cs" />
     <Compile Include="Factories\IWindowFactory.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="HorizontalAlignment.cs" />

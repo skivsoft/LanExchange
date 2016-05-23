@@ -147,8 +147,8 @@ namespace LanExchange.Plugin.WinForms.Forms
             mTrayOpen.Text = Visible ? Resources.MainForm_Close : Resources.mTrayOpen_Text;
         }
 
-        private bool m_EscDown;
-        private DateTime m_EscTime;
+        private bool escDown;
+        private DateTime escTime;
 
         public event EventHandler ViewClosed;
 
@@ -167,18 +167,18 @@ namespace LanExchange.Plugin.WinForms.Forms
                                      : pv.Presenter.Objects.CurrentPath.Peek();
                     if ((parent == null) || factoryManager.DefaultRoots.Contains(parent))
                         Hide();
-                    else if (!m_EscDown)
+                    else if (!escDown)
                     {
-                        m_EscTime = DateTime.UtcNow;
-                        m_EscDown = true;
+                        escTime = DateTime.UtcNow;
+                        escDown = true;
                     }
                     else
                     {
-                        TimeSpan diff = DateTime.UtcNow - m_EscTime;
+                        TimeSpan diff = DateTime.UtcNow - escTime;
                         if (diff.TotalMilliseconds >= WAIT_FOR_KEYUP_MS)
                         {
                             Hide();
-                            m_EscDown = false;
+                            escDown = false;
                         }
                     }
                 }
@@ -195,9 +195,9 @@ namespace LanExchange.Plugin.WinForms.Forms
         {
             if (e.KeyCode == Keys.Escape)
             {
-                if (m_EscDown)
+                if (escDown)
                 {
-                    TimeSpan diff = DateTime.UtcNow - m_EscTime;
+                    TimeSpan diff = DateTime.UtcNow - escTime;
                     var pv = Pages.ActivePanelView;
                     var presenter = pv.Presenter;
                     if (pv != null && !presenter.Objects.CurrentPath.IsEmptyOrRoot)
@@ -207,7 +207,7 @@ namespace LanExchange.Plugin.WinForms.Forms
                         else
                             Hide();
                     }
-                    m_EscDown = false;
+                    escDown = false;
                 }
                 e.Handled = true;
             }

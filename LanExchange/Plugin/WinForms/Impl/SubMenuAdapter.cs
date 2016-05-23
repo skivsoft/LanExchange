@@ -4,13 +4,13 @@ namespace LanExchange.Plugin.WinForms.Impl
 {
     public class SubMenuAdapter
     {
-        private readonly ContextMenuStrip m_SubMenu1;
-        private readonly ToolStripMenuItem m_SubMenu2;
+        private readonly ContextMenuStrip subMenu1;
+        private readonly ToolStripMenuItem subMenu2;
 
         private SubMenuAdapter(object subMenu)
         {
-            m_SubMenu1 = subMenu as ContextMenuStrip;
-            m_SubMenu2 = subMenu as ToolStripMenuItem;
+            subMenu1 = subMenu as ContextMenuStrip;
+            subMenu2 = subMenu as ToolStripMenuItem;
         }
 
         public static SubMenuAdapter CreateFrom(object subMenu)
@@ -22,19 +22,19 @@ namespace LanExchange.Plugin.WinForms.Impl
 
         public object Tag
         {
-            get { return m_SubMenu1 != null ? m_SubMenu1.Tag : m_SubMenu2.Tag; }
+            get { return subMenu1 != null ? subMenu1.Tag : subMenu2.Tag; }
             set
             {
-                if (m_SubMenu1 != null)
-                    m_SubMenu1.Tag = value;
+                if (subMenu1 != null)
+                    subMenu1.Tag = value;
                 else
-                    m_SubMenu2.Tag = value;
+                    subMenu2.Tag = value;
             }
         }
 
         public ToolStripItemCollection Items
         {
-            get { return m_SubMenu1 != null ? m_SubMenu1.Items : m_SubMenu2.DropDownItems; }
+            get { return subMenu1 != null ? subMenu1.Items : subMenu2.DropDownItems; }
         }
     }
 }

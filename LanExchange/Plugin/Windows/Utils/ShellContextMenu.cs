@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -33,6 +34,7 @@ namespace LanExchange.Plugin.Windows.Utils
     ///    scm.ShowContextMenu(this.Handle, files, Cursor.Position);
     /// </example>
     [Localizable(false)]
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class ShellContextMenu
     {
         #region Destructor

@@ -18,58 +18,58 @@ namespace LanExchange.Misc.Impl
         public const string ADDONS_EXT = ".xml";
         public const string LANGUAGES_EXT = ".po";
 
-        private readonly string m_CurrentPath;
-        private readonly string m_ExeFileName;
-        private readonly string m_ConfigFileName;
-        private readonly string m_TabsConfigFileName;
-        private readonly string m_SystemAddonsPath;
-        private readonly string m_UserAddonsPath;
-        private readonly string m_LanguagesPath;
+        private readonly string currentPath;
+        private readonly string exeFileName;
+        private readonly string configFileName;
+        private readonly string tabsConfigFileName;
+        private readonly string systemAddonsPath;
+        private readonly string userAddonsPath;
+        private readonly string languagesPath;
 
         public FolderManagerImpl()
         {
             var args = Environment.GetCommandLineArgs();
-            m_ExeFileName = args.Length > 0 ? args[0] : string.Empty;
-            m_CurrentPath = Path.GetDirectoryName(m_ExeFileName) ?? string.Empty;
-            m_SystemAddonsPath = Path.Combine(m_CurrentPath, ADDONS_DIR);
-            m_LanguagesPath = Path.Combine(m_CurrentPath, LANGUAGES_DIR);
+            exeFileName = args.Length > 0 ? args[0] : string.Empty;
+            currentPath = Path.GetDirectoryName(exeFileName) ?? string.Empty;
+            systemAddonsPath = Path.Combine(currentPath, ADDONS_DIR);
+            languagesPath = Path.Combine(currentPath, LANGUAGES_DIR);
             var appData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             var programDir = Path.Combine(appData, PROGRAM_DIR);
-            m_UserAddonsPath = Path.Combine(programDir, ADDONS_DIR);
+            userAddonsPath = Path.Combine(programDir, ADDONS_DIR);
             var configDir = Path.Combine(programDir, CONFIG_DIR);
-            var fileName = Path.ChangeExtension(Path.GetFileName(m_ExeFileName), ".cfg");
-            m_ConfigFileName = Path.Combine(configDir, fileName);
-            m_TabsConfigFileName = Path.Combine(configDir, TABS_FILE);
+            var fileName = Path.ChangeExtension(Path.GetFileName(exeFileName), ".cfg");
+            configFileName = Path.Combine(configDir, fileName);
+            tabsConfigFileName = Path.Combine(configDir, TABS_FILE);
         }
 
         public string CurrentPath
         {
-            get { return m_CurrentPath; }
+            get { return currentPath; }
         }
 
         public string ConfigFileName
         {
-            get { return m_ConfigFileName; }
+            get { return configFileName; }
         }
 
         public string ExeFileName
         {
-            get { return m_ExeFileName; }
+            get { return exeFileName; }
         }
 
         public string TabsConfigFileName
         {
-            get { return m_TabsConfigFileName; }
+            get { return tabsConfigFileName; }
         }
 
         public string SystemAddonsPath
         {
-            get { return m_SystemAddonsPath; }
+            get { return systemAddonsPath; }
         }
 
         public string UserAddonsPath
         {
-            get { return m_UserAddonsPath; }
+            get { return userAddonsPath; }
         }
 
         /// <summary>
@@ -81,10 +81,10 @@ namespace LanExchange.Misc.Impl
         {
             var sysAddons = new string[0];
             var userAddons = new string[0];
-            if (Directory.Exists(m_SystemAddonsPath))
-                sysAddons = Directory.GetFiles(m_SystemAddonsPath, "*" + ADDONS_EXT, SearchOption.AllDirectories);
-            if (Directory.Exists(m_UserAddonsPath))
-                userAddons = Directory.GetFiles(m_UserAddonsPath, "*" + ADDONS_EXT, SearchOption.AllDirectories);
+            if (Directory.Exists(systemAddonsPath))
+                sysAddons = Directory.GetFiles(systemAddonsPath, "*" + ADDONS_EXT, SearchOption.AllDirectories);
+            if (Directory.Exists(userAddonsPath))
+                userAddons = Directory.GetFiles(userAddonsPath, "*" + ADDONS_EXT, SearchOption.AllDirectories);
             var result = new List<string>();
             result.AddRange(sysAddons);
             result.AddRange(userAddons);
@@ -94,8 +94,8 @@ namespace LanExchange.Misc.Impl
         public string[] GetLanguagesFiles()
         {
             var languages = new string[0];
-            if (Directory.Exists(m_LanguagesPath))
-                languages = Directory.GetFiles(m_LanguagesPath, "*" + LANGUAGES_EXT, SearchOption.TopDirectoryOnly);
+            if (Directory.Exists(languagesPath))
+                languages = Directory.GetFiles(languagesPath, "*" + LANGUAGES_EXT, SearchOption.TopDirectoryOnly);
             return languages;
         }
 

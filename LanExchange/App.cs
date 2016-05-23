@@ -1,9 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
-using LanExchange.Interfaces;
 using LanExchange.SDK;
-using LanExchange.Extensions;
 using LanExchange.Model;
+using LanExchange.SDK.Extensions;
 
 namespace LanExchange
 {

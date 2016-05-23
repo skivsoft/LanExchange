@@ -8,39 +8,39 @@ namespace LanExchange.Misc.Impl
 {
     public class PanelItemFactoryManagerImpl : IPanelItemFactoryManager
     {
-        private readonly IDictionary<Type, IPanelItemFactory> m_Types;
-        private readonly List<PanelItemBase> m_DefaultRoots;
+        private readonly IDictionary<Type, IPanelItemFactory> types;
+        private readonly List<PanelItemBase> defaultRoots;
 
         public PanelItemFactoryManagerImpl()
         {
-            m_Types = new Dictionary<Type, IPanelItemFactory>();
-            m_DefaultRoots = new List<PanelItemBase>();
+            types = new Dictionary<Type, IPanelItemFactory>();
+            defaultRoots = new List<PanelItemBase>();
         }
 
         public void RegisterFactory<TPanelItem>(IPanelItemFactory factory) where TPanelItem : PanelItemBase
         {
             Contract.Requires<ArgumentNullException>(factory != null);
 
-            m_Types.Add(typeof(TPanelItem), factory);
+            types.Add(typeof(TPanelItem), factory);
             factory.RegisterColumns(App.Resolve<IPanelColumnManager>());
         }
 
         public Func<PanelItemBase, bool> GetAvailabilityChecker(Type type)
         {
             IPanelItemFactory foundFactory;
-            if (m_Types.TryGetValue(type, out foundFactory))
+            if (types.TryGetValue(type, out foundFactory))
                 return foundFactory.GetAvailabilityChecker();
             return null;
         }
 
         public IDictionary<Type, IPanelItemFactory> Types
         {
-            get { return m_Types; }
+            get { return types; }
         }
 
         public PanelItemBase CreateDefaultRoot(string typeName)
         {
-            foreach(var pair in m_Types)
+            foreach(var pair in types)
                 if (pair.Key.Name.Equals(typeName))
                     return pair.Value.CreateDefaultRoot();
             return null;
@@ -48,14 +48,14 @@ namespace LanExchange.Misc.Impl
 
         public void CreateDefaultRoots()
         {
-            m_DefaultRoots.Clear();
-            foreach(var pair in m_Types)
+            defaultRoots.Clear();
+            foreach(var pair in types)
             try
             {
                 var root = pair.Value.CreateDefaultRoot();
                 if (root != null)
-                    m_DefaultRoots.Add(root);
-                m_DefaultRoots.Sort();
+                    defaultRoots.Add(root);
+                defaultRoots.Sort();
             }
             catch (Exception ex)
             {
@@ -65,29 +65,29 @@ namespace LanExchange.Misc.Impl
 
         public IList<PanelItemBase> DefaultRoots
         {
-            get { return m_DefaultRoots; }
+            get { return defaultRoots; }
         }
 
         public bool Exists(Type type)
         {
             IPanelItemFactory factory;
-            return m_Types.TryGetValue(type, out factory);
+            return types.TryGetValue(type, out factory);
         }
 
         public Type[] ToArray()
         {
-            var result = new Type[m_Types.Count+2];
+            var result = new Type[types.Count+2];
             int i = 0;
-            foreach (var key in m_Types.Keys)
+            foreach (var key in types.Keys)
                 result[i++] = key;
-            result[m_Types.Count] = typeof (PanelItemRootBase);
-            result[m_Types.Count + 1] = typeof (PanelItemDoubleDot);
+            result[types.Count] = typeof (PanelItemRootBase);
+            result[types.Count + 1] = typeof (PanelItemDoubleDot);
             return result;
         }
 
         public bool IsEmpty
         {
-            get { return m_Types.Count == 0; }
+            get { return types.Count == 0; }
         }
     }
 }

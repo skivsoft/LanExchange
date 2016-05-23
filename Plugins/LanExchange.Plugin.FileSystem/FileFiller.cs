@@ -9,7 +9,7 @@ namespace LanExchange.Plugin.FileSystem
     internal class FileFiller : IPanelFiller
     {
         private const string SHARE_TYPE_NAME = "SharePanelItem";
-        private string m_PathExt;
+        private string pathExt;
 
         public bool IsParentAccepted(PanelItemBase parent)
         {
@@ -28,8 +28,8 @@ namespace LanExchange.Plugin.FileSystem
         {
             var path = parent.FullName;
             var files = Directory.GetFileSystemEntries(path, "*.*");
-            m_PathExt = Environment.GetEnvironmentVariable("PATHEXT") + ";";
-            m_PathExt = m_PathExt.ToUpper();
+            pathExt = Environment.GetEnvironmentVariable("PATHEXT") + ";";
+            pathExt = pathExt.ToUpper();
             foreach (var fname in files)
             {
                 var file = new FilePanelItem(parent, fname);

@@ -8,8 +8,8 @@ namespace LanExchange.Plugin.FileSystem
     public class FilePanelItem : PanelItemBase
     {
 
-        private string m_FileName;
-        private FileInfo m_FI;
+        private string fileName;
+        private FileInfo fileInfo;
 
         public FilePanelItem()
         {
@@ -25,22 +25,22 @@ namespace LanExchange.Plugin.FileSystem
 
         public string FileName
         {
-            get { return m_FileName; }
+            get { return fileName; }
             set { 
-                m_FileName = value;
-                Name = Path.GetFileName(m_FileName);
-                m_FI = new FileInfo(m_FileName);
+                fileName = value;
+                Name = Path.GetFileName(fileName);
+                fileInfo = new FileInfo(fileName);
             }
         }
 
         public override string FullName
         {
-            get { return m_FileName; }
+            get { return fileName; }
         }
 
         public bool IsDirectory
         {
-            get { return (m_FI.Attributes & FileAttributes.Directory) != 0; }
+            get { return (fileInfo.Attributes & FileAttributes.Directory) != 0; }
         }
 
         public override int CountColumns
@@ -53,7 +53,7 @@ namespace LanExchange.Plugin.FileSystem
             get
             {
                 if (IsDirectory)
-                    return (m_FI.Attributes & (FileAttributes.Hidden | FileAttributes.System)) != 0
+                    return (fileInfo.Attributes & (FileAttributes.Hidden | FileAttributes.System)) != 0
                                ? PanelImageNames.FOLDER + PanelImageNames.HIDDEN_POSTFIX
                                : PanelImageNames.FOLDER;
                 return FullName;
@@ -69,7 +69,7 @@ namespace LanExchange.Plugin.FileSystem
                 case 1:
                     if (IsDirectory)
                         return ColumnSize.Zero;
-                    return new ColumnSize(m_FI.Length, false, string.Empty);
+                    return new ColumnSize(fileInfo.Length, false, string.Empty);
                 default:
                     return base.GetValue(index);
             }

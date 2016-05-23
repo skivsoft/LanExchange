@@ -7,13 +7,13 @@ namespace LanExchange.Misc
 {
     public class CustomPanelItem : PanelItemBase
     {
-        private readonly IDictionary<int, IComparable> m_Data;
-        private int m_CountColumns;
+        private readonly IDictionary<int, IComparable> data;
+        private int countColumns;
 
         [Localizable(false)]
         public CustomPanelItem(PanelItemBase parent, string name) : base(parent)
         {
-            m_Data = new Dictionary<int, IComparable>();
+            data = new Dictionary<int, IComparable>();
             Name = name;
             SetCountColumns(1);
         }
@@ -26,26 +26,26 @@ namespace LanExchange.Misc
 
         public override int CountColumns
         {
-            get { return m_CountColumns;  }
+            get { return countColumns;  }
         }
 
         public void SetCountColumns(int value)
         {
-            m_CountColumns = value;
+            countColumns = value;
         }
 
         public override IComparable GetValue(int index)
         {
             IComparable result;
-            if (m_Data.TryGetValue(index, out result))
+            if (data.TryGetValue(index, out result))
                 return result;
             return null;
         }
 
         protected override void SetValue(int index, IComparable value)
         {
-            m_Data.Remove(index);
-            m_Data.Add(index, value);
+            data.Remove(index);
+            data.Add(index, value);
         }
 
         public override object Clone()

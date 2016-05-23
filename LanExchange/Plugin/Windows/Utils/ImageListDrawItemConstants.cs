@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace LanExchange.Plugin.Windows.Utils
 {
@@ -6,7 +7,8 @@ namespace LanExchange.Plugin.Windows.Utils
     /// Flags controlling how the Image List item is 
     /// drawn
     /// </summary>
-    [Flags]	
+    [Flags]
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public enum ImageListDrawItemConstants
     {
         /// <summary>

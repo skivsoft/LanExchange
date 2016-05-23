@@ -5,7 +5,7 @@ namespace WMIViewer
 {
     public sealed class GenericPropertyDescriptor<T> : PropertyDescriptor
     {
-        private T m_Value;
+        private T value;
 
         public GenericPropertyDescriptor(string name, Attribute[] attributes)
             : base(name, attributes)
@@ -15,7 +15,7 @@ namespace WMIViewer
         public GenericPropertyDescriptor(string name, T value, Attribute[] attributes)
             : base(name, attributes)
         {
-            m_Value = value;
+            this.value = value;
         }
 
         public GenericPropertyDescriptor(MemberDescriptor description)
@@ -46,7 +46,7 @@ namespace WMIViewer
 
         public override object GetValue(object component)
         {
-            return m_Value;
+            return value;
         }
 
         public override bool IsReadOnly
@@ -72,7 +72,7 @@ namespace WMIViewer
 
         public override void SetValue(object component, object value)
         {
-            m_Value = (T)value;
+            this.value = (T)value;
         }
 
         public override bool ShouldSerializeValue(object component)

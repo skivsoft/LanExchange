@@ -2,19 +2,16 @@
 using System.ComponentModel.Composition;
 
 using LanExchange.SDK;
+using LanExchange.SDK.Extensions;
 
 namespace LanExchange.Plugin.Translit
 {
     [Export(typeof(IPlugin))]
     public sealed class PluginTranslit : IPlugin
     {
-        private IServiceProvider m_Provider;
-
         public void Initialize(IServiceProvider serviceProvider)
         {
-            m_Provider = serviceProvider;
-
-            var service = (ITranslationService)m_Provider.GetService(typeof (ITranslationService));
+            var service = serviceProvider.Resolve<ITranslationService>();
             if (service != null)
             {
                 service.RegisterTranslit<RussianCyrillicToLatin>();

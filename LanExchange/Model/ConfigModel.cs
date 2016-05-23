@@ -1,5 +1,4 @@
 ﻿using LanExchange.SDK;
-using System;
 using System.ComponentModel;
 using System.Xml.Serialization;
 
