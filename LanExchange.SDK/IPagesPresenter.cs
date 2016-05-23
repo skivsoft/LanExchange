@@ -45,5 +45,7 @@ namespace LanExchange.SDK
         int IndexOf(IPanelModel model);
 
         void UpdateTabName(int index);
+
+        void CommandReRead();
     }
 }

@@ -10,6 +10,7 @@ namespace LanExchange.Presenter
         private readonly IPagesModel model;
         private readonly IPagesPersistenceService pagesService;
         private readonly IImageManager imageManager;
+        private readonly IPanelColumnManager panelColumns;
 
         public event EventHandler PanelViewFocusedItemChanged;
         public event EventHandler PanelViewFilterTextChanged;
@@ -17,15 +18,18 @@ namespace LanExchange.Presenter
         public PagesPresenter(
             IPagesModel model, 
             IPagesPersistenceService pagesService,
-            IImageManager imageManager)
+            IImageManager imageManager,
+            IPanelColumnManager panelColumns)
         {
             Contract.Requires<ArgumentNullException>(model != null);
             Contract.Requires<ArgumentNullException>(pagesService != null);
             Contract.Requires<ArgumentNullException>(imageManager != null);
+            Contract.Requires<ArgumentNullException>(panelColumns != null);
 
             this.model = model;
             this.pagesService = pagesService;
             this.imageManager = imageManager;
+            this.panelColumns = panelColumns;
 
             App.Resolve<IDisposableManager>().RegisterInstance(this);
             this.model.AfterAppendTab += Model_AfterAppendTab;
@@ -161,6 +165,19 @@ namespace LanExchange.Presenter
                 if (index != popupIndex)
                     model.DelTab(index);
             model.SelectedIndex = 0;
+        }
+
+        public void CommandReRead()
+        {
+            var pageModel = GetItem(SelectedIndex);
+            // clear refreshable columns
+            if (pageModel.DataType != null)
+                foreach (var column in panelColumns.GetColumns(pageModel.DataType))
+                    if (column.Callback != null && column.Refreshable)
+                        column.LazyDict.Clear();
+            //var result = pageModel.RetrieveData(RetrieveMode.Sync, false);
+            //pageModel.SetFillerResult(result, false);
+            pageModel.AsyncRetrieveData(false);
         }
 
         public int IndexOf(IPanelModel model)

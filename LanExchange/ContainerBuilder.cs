@@ -16,6 +16,9 @@ using LanExchange.Interfaces.Processes;
 using LanExchange.Implementations.Processes;
 using LanExchange.Interfaces.Factories;
 using LanExchange.Implementations.Factories;
+using LanExchange.SDK.Managers;
+using LanExchange.Implementations.Managers;
+using LanExchange.SDK.Factories;
 
 namespace LanExchange
 {
@@ -57,6 +60,7 @@ namespace LanExchange
             container.RegisterSingleton<IPuntoSwitcherService, PuntoSwitcherServiceEngRus>();
             container.RegisterSingleton<ITranslationService, TranslationServiceImpl>();
             container.RegisterSingleton<IDisposableManager, DisposableManagerImpl>();
+            container.RegisterSingleton<IActionManager, ActionManager>();
         }
 
         private void RegisterPanelUpdater()
@@ -97,7 +101,6 @@ namespace LanExchange
         private void RegisterWinForms()
         {
             container.Register<ICheckAvailabilityWindow, CheckAvailabilityForm>();
-            container.Register<IAboutView, AboutForm>();
             container.Register<IFilterView, FilterView>();
             container.Register<IPanelView, PanelView>();
             container.Register<IEditView, EditForm>();
@@ -127,6 +130,7 @@ namespace LanExchange
         private void RegisterFactories()
         {
             container.RegisterSingleton<IAddonProgramFactory, AddonProgramFactory>();
+            container.RegisterSingleton<IWindowFactory, WindowFactory>();
         }
     }
 }

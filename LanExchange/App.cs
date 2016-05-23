@@ -16,9 +16,6 @@ namespace LanExchange
 
         // public setters
         public static IMainView MainView { get; set; }
-        // presenters
-        public static IPagesPresenter MainPages { get; private set; }
-        public static IMainPresenter Presenter { get; private set; }
         // other
         public static ConfigModel Config { get; set; }
         public static ITranslationService TR { get; private set; }
@@ -29,9 +26,6 @@ namespace LanExchange
             s_Ioc = container;
             // init translation service first and replace global resource manager
             TR = Resolve<ITranslationService>();
-            // presenters
-            Presenter = Resolve<IMainPresenter>();
-            MainPages = Resolve<IPagesPresenter>();
         }
 
         public static TTypeToResolve Resolve<TTypeToResolve>()

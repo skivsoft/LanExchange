@@ -10,19 +10,23 @@ namespace LanExchange.Presenter
     {
         private readonly IPanelFillerManager panelFillers;
         private readonly IPanelColumnManager panelColumns;
+        private readonly IPagesPresenter pagesPresenter;
         private IPanelModel objects;
 
         public event EventHandler CurrentPathChanged;
 
         public PanelPresenter(
             IPanelFillerManager panelFillers,
-            IPanelColumnManager panelColumns)
+            IPanelColumnManager panelColumns,
+            IPagesPresenter pagesPresenter)
         {
             Contract.Requires<ArgumentNullException>(panelFillers != null);
             Contract.Requires<ArgumentNullException>(panelColumns != null);
+            Contract.Requires<ArgumentNullException>(pagesPresenter != null);
 
             this.panelFillers = panelFillers;
             this.panelColumns = panelColumns;
+            this.pagesPresenter = pagesPresenter;
         }
 
         public void Dispose()
@@ -61,8 +65,7 @@ namespace LanExchange.Presenter
         {
             if (objects == null) return;
             // refresh only for current page
-            var presenter = App.MainPages;
-            var panelModel = presenter.GetItem(presenter.SelectedIndex);
+            var panelModel = pagesPresenter.GetItem(pagesPresenter.SelectedIndex);
             if (panelModel == null || !objects.Equals(panelModel)) 
                 return;
             // get number of visible items (filtered) and number of total items

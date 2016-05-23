@@ -9,6 +9,8 @@ using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.Properties;
 using LanExchange.SDK;
 using System.Diagnostics.Contracts;
+using LanExchange.SDK.Managers;
+using LanExchange.Actions;
 
 namespace LanExchange.Plugin.WinForms.Forms
 {
@@ -21,22 +23,34 @@ namespace LanExchange.Plugin.WinForms.Forms
         private readonly IPanelItemFactoryManager factoryManager;
         private readonly ILazyThreadPool threadPool;
         private readonly IImageManager imageManager;
+        private readonly IMainPresenter mainPresenter;
+        private readonly IPagesPresenter pagesPresenter;
+        private readonly IActionManager actionManager;
 
         public MainForm(
+            IMainPresenter mainPresenter,
+            IPagesPresenter pagesPresenter,
             IAddonManager addonManager, 
             IPanelItemFactoryManager factoryManager,
             ILazyThreadPool threadPool,
-            IImageManager imageManager)
+            IImageManager imageManager,
+            IActionManager actionManager)
         {
+            Contract.Requires<ArgumentNullException>(mainPresenter != null);
+            Contract.Requires<ArgumentNullException>(pagesPresenter != null);
             Contract.Requires<ArgumentNullException>(addonManager != null);
             Contract.Requires<ArgumentNullException>(factoryManager != null);
             Contract.Requires<ArgumentNullException>(threadPool != null);
             Contract.Requires<ArgumentNullException>(imageManager != null);
+            Contract.Requires<ArgumentNullException>(actionManager != null);
 
+            this.mainPresenter = mainPresenter;
+            this.pagesPresenter = pagesPresenter;
             this.addonManager = addonManager;
             this.factoryManager = factoryManager;
             this.threadPool = threadPool;
             this.imageManager = imageManager;
+            this.actionManager = actionManager;
 
             InitializeComponent();
 
@@ -118,12 +132,11 @@ namespace LanExchange.Plugin.WinForms.Forms
             // addons context menu will refresh later
             popTop.Tag = null;
             // refresh tab names
-            var pages = App.MainPages;
-            var shortcutIndex = App.Presenter.FindShortcutKeysPanelIndex();
-            for (int index = 0; index < pages.Count; index++ )
+            var shortcutIndex = mainPresenter.FindShortcutKeysPanelIndex();
+            for (int index = 0; index < pagesPresenter.Count; index++ )
             {
-                var model = pages.GetItem(index);
-                App.MainPages.UpdateTabName(index);
+                var model = pagesPresenter.GetItem(index);
+                pagesPresenter.UpdateTabName(index);
                 if (index == shortcutIndex)
                     model.AsyncRetrieveData(false);
             }
@@ -136,6 +149,8 @@ namespace LanExchange.Plugin.WinForms.Forms
 
         private bool m_EscDown;
         private DateTime m_EscTime;
+
+        public event EventHandler ViewClosed;
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
@@ -234,7 +249,7 @@ namespace LanExchange.Plugin.WinForms.Forms
         [Localizable(false)]
         private void mHelpAbout_Click(object sender, EventArgs e)
         {
-            App.Presenter.ExecuteAction("ActionAbout");
+            actionManager.ExecuteAction<AboutAction>();
         }
         
         private void lItemsCount_MouseUp(object sender, MouseEventArgs e)
@@ -286,7 +301,7 @@ namespace LanExchange.Plugin.WinForms.Forms
             switch (m.Msg)
             {
                 case WM_HOTKEY:
-                    if (App.Presenter.IsHotKey((short)m.WParam))
+                    if (mainPresenter.IsHotKey((short)m.WParam))
                     {
                         ToggleVisible();
                         m.Result = new IntPtr(1);
@@ -305,8 +320,7 @@ namespace LanExchange.Plugin.WinForms.Forms
 
         private void MainForm_ResizeEnd(object sender, EventArgs e)
         {
-            App.Presenter.SettingsSetBounds(Bounds);
-            //Settings.SaveIfModified();
+            mainPresenter.SettingsSetBounds(Bounds);
         }
 
         private void MainForm_Activated(object sender, EventArgs e)
@@ -317,7 +331,7 @@ namespace LanExchange.Plugin.WinForms.Forms
         [Localizable(false)]
         private void mReRead_Click(object sender, EventArgs e)
         {
-            App.Presenter.ExecuteAction("ActionReRead");
+            actionManager.ExecuteAction<PagesReReadAction>();
             popTop.Tag = null;
         }
 
@@ -411,7 +425,7 @@ namespace LanExchange.Plugin.WinForms.Forms
         [Localizable(false)]
         private void mHelpKeys_Click(object sender, EventArgs e)
         {
-            App.Presenter.ExecuteAction("ActionShortcutKeys");
+            actionManager.ExecuteAction<ShortcutKeysAction>();
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -447,22 +461,21 @@ namespace LanExchange.Plugin.WinForms.Forms
         [Localizable(false)]
         private void mPanel_Popup(object sender, EventArgs e)
         {
-            mNewItem.Enabled = App.Presenter.IsActionEnabled("ActionNewItem");
-            mReRead.Enabled = App.Presenter.IsActionEnabled("ActionReRead");
-            mCloseTab.Enabled = App.Presenter.IsActionEnabled("ActionCloseTab");
-            mCloseOther.Enabled = App.Presenter.IsActionEnabled("ActionCloseOther");
+            mReRead.Enabled = actionManager.IsActionEnabled<PagesReReadAction>();
+            mCloseTab.Enabled = actionManager.IsActionEnabled<PagesCloseTabAction>();
+            mCloseOther.Enabled = actionManager.IsActionEnabled<PagesCloseOtherAction>();
         }
 
         [Localizable(false)]
         private void mCloseTab_Click(object sender, EventArgs e)
         {
-            App.Presenter.ExecuteAction("ActionCloseTab");
+            actionManager.ExecuteAction<PagesCloseTabAction>();
         }
 
         [Localizable(false)]
         private void mCloseOther_Click(object sender, EventArgs e)
         {
-            App.Presenter.ExecuteAction("ActionCloseOther");
+            actionManager.ExecuteAction<PagesCloseOtherAction>();
         }
 
         private void mViewInfo_Click(object sender, EventArgs e)
@@ -524,13 +537,6 @@ namespace LanExchange.Plugin.WinForms.Forms
             get { return mTrayOpen.ShortcutKeyDisplayString; }
             set { mTrayOpen.ShortcutKeyDisplayString = value; }
         }
-
-        [Localizable(false)]
-        private void mNewItem_Click(object sender, EventArgs e)
-        {
-            App.Presenter.ExecuteAction("ActionNewItem");
-        }
-
 
         public object SafeInvoke(Delegate method, params object[] args)
         {

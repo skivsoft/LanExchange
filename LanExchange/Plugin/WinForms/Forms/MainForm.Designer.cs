@@ -242,7 +242,6 @@ namespace LanExchange.Plugin.WinForms.Forms
             this.mNewItem.Shortcut = System.Windows.Forms.Shortcut.Ins;
             this.mNewItem.Text = global::LanExchange.Properties.Resources.mNewItem_Text;
             this.mNewItem.Visible = false;
-            this.mNewItem.Click += new System.EventHandler(this.mNewItem_Click);
             // 
             // menuItem3
             // 

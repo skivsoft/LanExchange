@@ -23,21 +23,25 @@ namespace LanExchange.Plugin.WinForms.Impl
         private readonly IFolderManager folderManager;
         private readonly IAddonProgramFactory programFactory;
         private readonly IImageManager imageManager;
+        private readonly IPagesPresenter pagesPresenter;
 
         private bool isLoaded;
 
         public AddonManagerImpl(
             IFolderManager folderManager, 
             IAddonProgramFactory programFactory,
-            IImageManager imageManager)
+            IImageManager imageManager,
+            IPagesPresenter pagesPresenter)
         {
             Contract.Requires<ArgumentNullException>(folderManager != null);
             Contract.Requires<ArgumentNullException>(programFactory != null);
             Contract.Requires<ArgumentNullException>(imageManager != null);
+            Contract.Requires<ArgumentNullException>(pagesPresenter != null);
 
             this.folderManager = folderManager;
             this.programFactory = programFactory;
             this.imageManager = imageManager;
+            this.pagesPresenter = pagesPresenter;
 
             programs = new Dictionary<string, AddonProgram>();
             panelItems = new Dictionary<string, AddOnItemTypeRef>();
@@ -223,7 +227,7 @@ namespace LanExchange.Plugin.WinForms.Impl
 
         public void ProcessKeyDown(object args)
         {
-            var pv = App.MainPages.View.ActivePanelView;
+            var pv = pagesPresenter.View.ActivePanelView;
             var e = args as KeyEventArgs;
             if (pv == null || e == null) return;
             var panelItem = pv.Presenter.GetFocusedPanelItem(true);
@@ -247,7 +251,7 @@ namespace LanExchange.Plugin.WinForms.Impl
         /// </summary>
         public void RunDefaultCmdLine()
         {
-            var pv = App.MainPages.View.ActivePanelView;
+            var pv = pagesPresenter.View.ActivePanelView;
             if (pv == null) return;
 
             var panelItem = pv.Presenter.GetFocusedPanelItem(true);

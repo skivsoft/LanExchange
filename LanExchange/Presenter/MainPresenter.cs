@@ -11,32 +11,42 @@ using LanExchange.Plugin.Shortcut;
 using LanExchange.SDK;
 using LanExchange.Model;
 using System.Diagnostics.Contracts;
+using LanExchange.SDK.Managers;
+using LanExchange.SDK.Factories;
 
 namespace LanExchange.Presenter
 {
     public class MainPresenter : PresenterBase<IMainView>, IMainPresenter
     {
-        private readonly Dictionary<string, IAction> actions;
         private readonly ILazyThreadPool threadPool;
         private readonly IPanelColumnManager panelColumns;
+        private readonly IActionManager actionManager;
+        private readonly IPagesPresenter pagesPresenter;
         private IHotkeysService hotkeys;
 
         public MainPresenter(
             ILazyThreadPool threadPool,
-            IPanelColumnManager panelColumns)
+            IPanelColumnManager panelColumns,
+            IActionManager actionManager,
+            IPagesPresenter pagesPresenter,
+            IWindowFactory windowFactory)
         {
             Contract.Requires<ArgumentNullException>(threadPool != null);
             Contract.Requires<ArgumentNullException>(panelColumns != null);
+            Contract.Requires<ArgumentNullException>(actionManager != null);
+            Contract.Requires<ArgumentNullException>(pagesPresenter != null);
 
             this.threadPool = threadPool;
             this.panelColumns = panelColumns;
+            this.actionManager = actionManager;
+            this.pagesPresenter = pagesPresenter;
 
-            actions = new Dictionary<string, IAction>();
-            RegisterAction(new ActionAbout());
-            RegisterAction(new ActionReRead(panelColumns));
-            RegisterAction(new ActionCloseTab());
-            RegisterAction(new ActionCloseOther());
-            RegisterAction(new ActionShortcutKeys());
+            // TODO: delegate action registration to DI container
+            actionManager.RegisterAction(new AboutAction(windowFactory));
+            actionManager.RegisterAction(new PagesReReadAction(pagesPresenter));
+            actionManager.RegisterAction(new PagesCloseTabAction(pagesPresenter));
+            actionManager.RegisterAction(new PagesCloseOtherAction(pagesPresenter));
+            actionManager.RegisterAction(new ShortcutKeysAction(this, pagesPresenter));
         }
 
         public void PrepareForm()
@@ -61,9 +71,9 @@ namespace LanExchange.Presenter
         public void SetupForm()
         {
             //App.MainPages.View.SetupContextMenu();
-            App.MainPages.PanelViewFocusedItemChanged += Pages_PanelViewFocusedItemChanged;
+            pagesPresenter.PanelViewFocusedItemChanged += Pages_PanelViewFocusedItemChanged;
             // set mainform bounds
-            var rect = App.Presenter.SettingsGetBounds();
+            var rect = SettingsGetBounds();
             View.SetBounds(rect.Left, rect.Top, rect.Width, rect.Height);
             // set mainform title
             var aboutModel = App.Resolve<IAboutModel>();
@@ -85,13 +95,13 @@ namespace LanExchange.Presenter
                     App.MainView.ShowInfoPanel = config.ShowInfoPanel;
                     break;
                 case nameof(config.ShowGridLines):
-                    var panelView = App.MainPages.View.ActivePanelView;
+                    var panelView = pagesPresenter.View.ActivePanelView;
                     if (panelView != null)
                         panelView.GridLines = config.ShowGridLines;
                     break;
                 case nameof(config.NumInfoLines):
                     App.MainView.NumInfoLines = config.NumInfoLines;
-                    App.MainPages.DoPanelViewFocusedItemChanged(App.MainPages.View.ActivePanelView, EventArgs.Empty);
+                    pagesPresenter.DoPanelViewFocusedItemChanged(pagesPresenter.View.ActivePanelView, EventArgs.Empty);
                     break;
                 case nameof(config.Language):
                     App.TR.CurrentLanguage = config.Language;
@@ -252,44 +262,11 @@ namespace LanExchange.Presenter
             }
         }
 
-        public void RegisterAction(IAction action)
-        {
-            if (action == null)
-                throw new ArgumentNullException("action");
-            actions.Add(action.GetType().Name, action);
-        }
-
-        public void ExecuteAction(string actionName)
-        {
-            IAction action;
-            if (actions.TryGetValue(actionName, out action))
-                action.Execute();
-        }
-
-        public void ExecuteAction<T>() where T : IAction
-        {
-            ExecuteAction(typeof(T).Name);
-        }
-
-        public bool IsActionEnabled(string actionName)
-        {
-            IAction action;
-            if (actions.TryGetValue(actionName, out action))
-                return action.Enabled;
-            return false;
-        }
-
-        public bool IsActionEnabled<T>() where T : IAction
-        {
-            return IsActionEnabled(typeof (T).Name);
-        }
-
         public int FindShortcutKeysPanelIndex()
         {
-            var presenter = App.MainPages;
-            for (int index = 0; index < presenter.Count; index++)
+            for (int index = 0; index < pagesPresenter.Count; index++)
             {
-                var model = presenter.GetItem(index);
+                var model = pagesPresenter.GetItem(index);
                 if (model.DataType.Equals(typeof(ShortcutPanelItem).Name))
                     return index;
             }

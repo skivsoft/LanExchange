@@ -1,14 +1,10 @@
-﻿using System;
-
-namespace LanExchange.SDK
+﻿namespace LanExchange.SDK
 {
     /// <summary>
     /// View for AboutForm.
     /// </summary>
     public interface IAboutView : IWindow
     {
-        event EventHandler ViewClosed;
-
         /// <summary>
         /// Gets or sets the web text.
         /// </summary>

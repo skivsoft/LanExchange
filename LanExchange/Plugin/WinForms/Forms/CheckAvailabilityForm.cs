@@ -16,6 +16,8 @@ namespace LanExchange.Plugin.WinForms.Forms
         private readonly Thread m_Thread;
         private volatile bool m_DoneAndAvailable;
 
+        public event EventHandler ViewClosed;
+
         public CheckAvailabilityForm(IImageManager imageManager)
         {
             InitializeComponent();

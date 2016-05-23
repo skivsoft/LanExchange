@@ -9,17 +9,22 @@ namespace LanExchange.Misc.Impl
     internal class PanelUpdaterImpl : IPanelUpdater
     {
         private readonly IImageManager imageManager;
+        private readonly IPagesPresenter pagesPresenter;
 
         private const int NODISPLAY_DELAY = 500;
         private Thread setTabImageThread;
         private Thread updateThread;
         private bool isClearFilter;
 
-        public PanelUpdaterImpl(IImageManager imageManager)
+        public PanelUpdaterImpl(
+            IImageManager imageManager,
+            IPagesPresenter pagesPresenter)
         {
             Contract.Requires<ArgumentNullException>(imageManager != null);
+            Contract.Requires<ArgumentNullException>(pagesPresenter != null);
 
             this.imageManager = imageManager;
+            this.pagesPresenter = pagesPresenter;
         }
 
         public void Dispose()
@@ -79,7 +84,6 @@ namespace LanExchange.Misc.Impl
         private void SetTabImageInvoked(IPanelModel model, string imageName)
         {
             if (model == null) return;
-            var pagesPresenter = App.MainPages;
             var index = pagesPresenter.IndexOf(model);
             if (index != -1)
                 pagesPresenter.View.SetTabImage(index, imageManager.IndexOf(imageName));

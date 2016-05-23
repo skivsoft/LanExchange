@@ -6,6 +6,8 @@ using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.Properties;
 using LanExchange.SDK;
 using System.Diagnostics.Contracts;
+using LanExchange.SDK.Managers;
+using LanExchange.Actions;
 
 namespace LanExchange.Plugin.WinForms.Components
 {
@@ -15,6 +17,7 @@ namespace LanExchange.Plugin.WinForms.Components
         private readonly IPanelItemFactoryManager factoryManager;
         private readonly IImageManager imageManager;
         private readonly IPanelFillerManager panelFillers;
+        private readonly IActionManager actionManager;
 
         private int popupSelectedIndex = -1;
 
@@ -35,12 +38,14 @@ namespace LanExchange.Plugin.WinForms.Components
             IPagesPresenter presenter, 
             IPanelItemFactoryManager factoryManager, 
             IImageManager imageManager,
-            IPanelFillerManager panelFillers)
+            IPanelFillerManager panelFillers,
+            IActionManager actionManager)
         {
             Contract.Requires<ArgumentNullException>(presenter != null);
             Contract.Requires<ArgumentNullException>(factoryManager != null);
             Contract.Requires<ArgumentNullException>(imageManager != null);
             Contract.Requires<ArgumentNullException>(panelFillers != null);
+            Contract.Requires<ArgumentNullException>(actionManager != null);
 
             InitializeComponent();
             this.presenter = presenter;
@@ -49,6 +54,7 @@ namespace LanExchange.Plugin.WinForms.Components
             this.factoryManager = factoryManager;
             this.imageManager = imageManager;
             this.panelFillers = panelFillers;
+            this.actionManager = actionManager;
 
             this.imageManager.SetImagesTo(popPages);
         }
@@ -191,13 +197,11 @@ namespace LanExchange.Plugin.WinForms.Components
                 isOpened = false;
                 isClicked = false;
             }
-            //logger.Info("MouseDown={0}", bMouseDown);
         }
 
         private void popPages_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             isClicked = isOpened;
-            //logger.Info("Clicked={0}", bClicked);
         }
 
         [Localizable(false)]
@@ -210,16 +214,14 @@ namespace LanExchange.Plugin.WinForms.Components
             }
             else
                 isOpened = false;
-            mReRead.Enabled = App.Presenter.IsActionEnabled("ActionReRead");
-            mCloseTab.Enabled = App.Presenter.IsActionEnabled("ActionCloseTab");
-            mCloseOther.Enabled = App.Presenter.IsActionEnabled("ActionCloseOther");
-            //logger.Info("Opened={0}", bOpened);
+            mReRead.Enabled = actionManager.IsActionEnabled<PagesReReadAction>();
+            mCloseTab.Enabled = actionManager.IsActionEnabled<PagesCloseTabAction>();
+            mCloseOther.Enabled = actionManager.IsActionEnabled<PagesCloseOtherAction>();
         }
 
         private void popPages_Closed(object sender, ToolStripDropDownClosedEventArgs e)
         {
             isOpened = false;
-            //logger.Info("Closed={0}", bClosed);
         }
 
         public int PopupSelectedIndex
@@ -292,19 +294,19 @@ namespace LanExchange.Plugin.WinForms.Components
         [Localizable(false)]
         private void mReRead_Click(object sender, EventArgs e)
         {
-            App.Presenter.ExecuteAction("ActionReRead");
+            actionManager.ExecuteAction<PagesReReadAction>();
         }
 
         [Localizable(false)]
         private void mCloseTab_Click(object sender, EventArgs e)
         {
-            App.Presenter.ExecuteAction("ActionCloseTab");
+            actionManager.ExecuteAction<PagesCloseTabAction>();
         }
 
         [Localizable(false)]
         private void mCloseOther_Click(object sender, EventArgs e)
         {
-            App.Presenter.ExecuteAction("ActionCloseOther");
+            actionManager.ExecuteAction<PagesCloseOtherAction>();
         }
 
         private void PagesView_RightToLeftChanged(object sender, EventArgs e)

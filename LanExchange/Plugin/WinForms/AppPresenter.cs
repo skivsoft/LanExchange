@@ -6,18 +6,24 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using LanExchange.SDK;
 using LanExchange.Interfaces.Services;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange.Plugin.WinForms
 {
     public class AppPresenter : IAppPresenter
     {
         private readonly IConfigPersistenceService configService;
+        private readonly IPagesPresenter pagesPresenter;
 
-        public AppPresenter(IConfigPersistenceService configService)
+        public AppPresenter(
+            IConfigPersistenceService configService,
+            IPagesPresenter pagesPresenter)
         {
-            if (configService == null) throw new ArgumentNullException(nameof(configService));
+            Contract.Requires<ArgumentNullException>(configService != null);
+            Contract.Requires<ArgumentNullException>(pagesPresenter != null);
 
             this.configService = configService;
+            this.pagesPresenter = pagesPresenter;
         }
 
         public void Init()
@@ -52,7 +58,7 @@ namespace LanExchange.Plugin.WinForms
 
         private void ApplicationOnThreadExit(object sender, EventArgs e)
         {
-            App.MainPages.SaveInstant();
+            pagesPresenter.SaveInstant();
             configService.Save(App.Config);
             // dispose instances registered in plugins
             App.Resolve<IDisposableManager>().Dispose();

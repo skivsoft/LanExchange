@@ -25,6 +25,7 @@ namespace LanExchange.Plugin.WinForms.Components
         private readonly ILazyThreadPool threadPool;
         private readonly IImageManager imageManager;
         private readonly IPanelColumnManager panelColumns;
+        private readonly IPagesPresenter pagesPresenter;
 
         private PanelModelCopyHelper copyHelper;
         private int sortColumn;
@@ -37,7 +38,9 @@ namespace LanExchange.Plugin.WinForms.Components
             IPanelItemFactoryManager factoryManager,
             ILazyThreadPool threadPool,
             IImageManager imageManager,
-            IPanelColumnManager panelColumns)
+            IPanelColumnManager panelColumns,
+            IPagesPresenter pagesPresenter,
+            IFilterPresenter filterPresenter)
         {
             Contract.Requires<ArgumentNullException>(presenter != null);
             Contract.Requires<ArgumentNullException>(addonManager != null);
@@ -45,29 +48,28 @@ namespace LanExchange.Plugin.WinForms.Components
             Contract.Requires<ArgumentNullException>(threadPool != null);
             Contract.Requires<ArgumentNullException>(imageManager != null);
             Contract.Requires<ArgumentNullException>(panelColumns != null);
+            Contract.Requires<ArgumentNullException>(pagesPresenter != null);
+            Contract.Requires<ArgumentNullException>(filterPresenter != null);
 
             this.presenter = presenter;
             this.presenter.View = this;
-
             this.addonManager = addonManager;
             this.factoryManager = factoryManager;
             this.threadPool = threadPool;
             this.imageManager = imageManager;
             this.panelColumns = panelColumns;
+            this.pagesPresenter = pagesPresenter;
 
             InitializeComponent();
 
             // setup items cache
             var cache = new ListViewItemCache(this);
-            //LV.CacheVirtualItems += m_Cache.CacheVirtualItems;
+            LV.CacheVirtualItems += cache.CacheVirtualItems;
             LV.RetrieveVirtualItem += cache.RetrieveVirtualItem;
-            // set dropdown direction for sub-menus (actual for dual-monitor system)
-            //mComp.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
-            //mSendToNewTab.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
             // focus listview when panel got focus
             GotFocus += (sender, args) => ActiveControl = LV;
             // set filter's presenter
-            pFilter.Presenter = App.Resolve<IFilterPresenter>();
+            pFilter.Presenter = filterPresenter;
             pFilter.Presenter.View = pFilter;
         }
         #endregion
@@ -320,7 +322,7 @@ namespace LanExchange.Plugin.WinForms.Components
             // Del - Delete selected items
             if (e.KeyCode == Keys.Delete)
             {
-                App.MainPages.CommandDeleteItems();
+                pagesPresenter.CommandDeleteItems();
                 e.Handled = true;
             }
             // process KeyDown on addons if KeyDown event not handled yet
@@ -383,7 +385,7 @@ namespace LanExchange.Plugin.WinForms.Components
                 m_CanDrag = false;
                 var obj = new DataObject();
                 obj.SetText(copyHelper.GetSelectedText(), TextDataFormat.UnicodeText);
-                if (App.MainPages.CanSendToNewTab())
+                if (pagesPresenter.CanSendToNewTab())
                     obj.SetData(copyHelper.GetType(), copyHelper);
                 LV.DoDragDrop(obj, DragDropEffects.Copy);
             }
@@ -628,7 +630,7 @@ namespace LanExchange.Plugin.WinForms.Components
             SetupCopyHelper();
             mCopyMenu.Enabled = copyHelper.IndexesCount > 0;
             //mSendToNewTab.Enabled = App.MainPages.CanSendToNewTab();
-            mPaste.Enabled = App.MainPages.CanPasteItems();
+            mPaste.Enabled = pagesPresenter.CanPasteItems();
             mDelete.Enabled = false;
             // lookup at least 1 item for delete
             for (int index = 0; index < copyHelper.IndexesCount; index++)
@@ -672,15 +674,13 @@ namespace LanExchange.Plugin.WinForms.Components
 
         private void mPaste_Click(object sender, EventArgs e)
         {
-            App.MainPages.CommandPasteItems();
+            pagesPresenter.CommandPasteItems();
         }
 
         private void mDelete_Click(object sender, EventArgs e)
         {
-            App.MainPages.CommandDeleteItems();
+            pagesPresenter.CommandDeleteItems();
         }
-
-
 
         public bool GridLines
         {
@@ -694,15 +694,9 @@ namespace LanExchange.Plugin.WinForms.Components
             TranslationUtils.TranslateControls(Controls);
             mComp.Tag = null;
             //PrepareContextMenu();
-            var panelView = App.MainPages.View.ActivePanelView;
+            var panelView = pagesPresenter.View.ActivePanelView;
             if (panelView == this)
                 presenter.UpdateItemsAndStatus();
-        }
-
-        [Localizable(false)]
-        private void mNewItem_Click(object sender, EventArgs e)
-        {
-            App.Presenter.ExecuteAction("ActionNewItem");
         }
 
         private void PanelView_RightToLeftChanged(object sender, EventArgs e)

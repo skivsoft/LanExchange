@@ -115,7 +115,6 @@
             this.mNewItem.Size = new System.Drawing.Size(152, 22);
             this.mNewItem.Text = "New item";
             this.mNewItem.Visible = false;
-            this.mNewItem.Click += new System.EventHandler(this.mNewItem_Click);
             // 
             // LV
             // 

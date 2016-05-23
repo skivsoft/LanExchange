@@ -22,6 +22,8 @@ namespace LanExchange.Plugin.WinForms.Forms
             get { return m_Presenter; }
         }
 
+        public event EventHandler ViewClosed;
+
         [Localizable(false)]
         public void SetColumns(IList<PanelColumnHeader> columns)
         {

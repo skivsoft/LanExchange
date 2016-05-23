@@ -102,6 +102,7 @@
     <Compile Include="..\AnyAssemblyInfo.cs">
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Actions\PagesActionBase.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Base\Addon.cs" />
     <Compile Include="Base\AddonItemTypeRef.cs" />
@@ -109,6 +110,8 @@
     <Compile Include="Base\AddonObjectId.cs" />
     <Compile Include="Base\AddonProgram.cs" />
     <Compile Include="Implementations\Factories\AddonProgramFactory.cs" />
+    <Compile Include="Implementations\Factories\WindowFactory.cs" />
+    <Compile Include="Implementations\Managers\ActionManager.cs" />
     <Compile Include="Interfaces\Factories\AddonProgramInfo.cs" />
     <Compile Include="CoreFacade.cs" />
     <Compile Include="Extensions\IServiceProviderExtension.cs" />
@@ -132,11 +135,11 @@
     <Compile Include="Misc\Impl\PanelUpdaterImpl.cs" />
     <Compile Include="Misc\Impl\DisposableManagerImpl.cs" />
     <Compile Include="Misc\TranslationResourceManager.cs" />
-    <Compile Include="Actions\ActionAbout.cs" />
-    <Compile Include="Actions\ActionCloseTab.cs" />
-    <Compile Include="Actions\ActionCloseOther.cs" />
-    <Compile Include="Actions\ActionReRead.cs" />
-    <Compile Include="Actions\ActionShortcutKeys.cs" />
+    <Compile Include="Actions\AboutAction.cs" />
+    <Compile Include="Actions\PagesCloseTabAction.cs" />
+    <Compile Include="Actions\PagesCloseOtherAction.cs" />
+    <Compile Include="Actions\PagesReReadAction.cs" />
+    <Compile Include="Actions\ShortcutKeysAction.cs" />
     <Compile Include="Implementations\Processes\CmdLineProcessor.cs" />
     <Compile Include="Misc\Impl\PanelColumnManagerImpl.cs" />
     <Compile Include="Misc\Impl\PanelFillerManagerImpl.cs" />
