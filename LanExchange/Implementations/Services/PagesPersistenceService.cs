@@ -4,6 +4,7 @@ using LanExchange.SDK;
 using System.IO;
 using LanExchange.Model;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange.Implementations.Services
 {
@@ -12,10 +13,12 @@ namespace LanExchange.Implementations.Services
         private readonly IFolderManager folderManager;
         private readonly IPanelItemFactoryManager factoryManager;
 
-        public PagesPersistenceService(IFolderManager folderManager, IPanelItemFactoryManager factoryManager)
+        public PagesPersistenceService(
+            IFolderManager folderManager, 
+            IPanelItemFactoryManager factoryManager)
         {
-            if (folderManager == null) throw new ArgumentNullException(nameof(folderManager));
-            if (factoryManager == null) throw new ArgumentNullException(nameof(factoryManager));
+            Contract.Requires<ArgumentNullException>(folderManager != null);
+            Contract.Requires<ArgumentNullException>(factoryManager != null);
 
             this.folderManager = folderManager;
             this.factoryManager = factoryManager;

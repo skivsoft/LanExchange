@@ -1,6 +1,7 @@
 using LanExchange.Interfaces.Processes;
 using System;
 using System.ComponentModel;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange.Implementations.Processes
 {
@@ -11,7 +12,7 @@ namespace LanExchange.Implementations.Processes
 
         public CmdLineProcessor(IGenerateEnglishProcess generateEnglish)
         {
-            if (generateEnglish == null) throw new ArgumentNullException(nameof(generateEnglish));
+            Contract.Requires<ArgumentNullException>(generateEnglish != null);
 
             this.generateEnglish = generateEnglish;
         }

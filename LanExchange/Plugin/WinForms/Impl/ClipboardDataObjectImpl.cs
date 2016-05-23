@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using LanExchange.SDK;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange.Plugin.WinForms.Impl
 {
@@ -8,8 +9,8 @@ namespace LanExchange.Plugin.WinForms.Impl
     {
         public ClipboardDataObjectImpl(IDataObject dataObject)
         {
-            if (dataObject == null)
-                throw new ArgumentNullException("dataObject");
+            Contract.Requires<ArgumentNullException>(dataObject != null);
+
             DataObject = dataObject;
         }
 

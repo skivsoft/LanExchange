@@ -7,14 +7,15 @@ using LanExchange.Base;
 using LanExchange.Helpers;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.SDK;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange.Plugin.WinForms.Impl
 {
     public class AddonCommandStarter
     {
-        private readonly PanelItemBase m_PanelItem;
-        private readonly AddonMenuItem m_MenuItem;
-        private readonly Func<PanelItemBase, bool> m_Checker;
+        private readonly PanelItemBase panelItem;
+        private readonly AddonMenuItem menuItem;
+        private readonly Func<PanelItemBase, bool> checker;
 
         public static string[] BuildCmdLine(PanelItemBase panelItem, AddonMenuItem menuItem)
         {
@@ -28,31 +29,28 @@ namespace LanExchange.Plugin.WinForms.Impl
 
         public AddonCommandStarter(AddonMenuItem menuItem, PanelItemBase panelItem)
         {
-            if (menuItem == null)
-                throw new ArgumentNullException("menuItem");
+            Contract.Requires<ArgumentNullException>(menuItem != null);
+            Contract.Requires<ArgumentNullException>(panelItem != null);
 
-            if (panelItem == null)
-                throw new ArgumentNullException("panelItem");
-
-            m_PanelItem = panelItem;
-            m_MenuItem = menuItem;
+            this.panelItem = panelItem;
+            this.menuItem = menuItem;
 
             var factoryManager = App.Resolve<IPanelItemFactoryManager>();
-            m_Checker = factoryManager.GetAvailabilityChecker(m_PanelItem.GetType());
+            checker = factoryManager.GetAvailabilityChecker(this.panelItem.GetType());
         }
 
         [Localizable(false)]
         private void ShowCheckAvailabilityWindow()
         {
             var form = App.Resolve<ICheckAvailabilityWindow>();
-            form.Text = string.Format("{0} — {1}", m_PanelItem.Name, m_MenuItem.Text);
-            form.CurrentItem = m_PanelItem;
-            form.RunText = m_MenuItem.Text;
-            if (m_MenuItem.ProgramValue != null)
-                form.RunImage = m_MenuItem.ProgramValue.ProgramImage;
+            form.Text = string.Format("{0} — {1}", panelItem.Name, menuItem.Text);
+            form.CurrentItem = panelItem;
+            form.RunText = menuItem.Text;
+            if (menuItem.ProgramValue != null)
+                form.RunImage = menuItem.ProgramValue.ProgramImage;
             form.CallerControl = this;
             form.RunAction = InternalStart;
-            form.AvailabilityChecker = m_Checker;
+            form.AvailabilityChecker = checker;
 
             form.StartChecking();
             form.WaitAndShow();
@@ -61,7 +59,7 @@ namespace LanExchange.Plugin.WinForms.Impl
         [Localizable(false)]
         private void InternalStart()
         {
-            var cmdLine = BuildCmdLine(m_PanelItem, m_MenuItem);
+            var cmdLine = BuildCmdLine(panelItem, menuItem);
             try
             {
                 ProcessStartInfo startInfo;
@@ -76,9 +74,9 @@ namespace LanExchange.Plugin.WinForms.Impl
                     default:
                         return;
                 }
-                if (!string.IsNullOrEmpty(m_MenuItem.WorkingDirectory))
+                if (!string.IsNullOrEmpty(menuItem.WorkingDirectory))
                 {
-                    var path = MacroHelper.ExpandPublicProperties(m_MenuItem.WorkingDirectory, m_PanelItem);
+                    var path = MacroHelper.ExpandPublicProperties(menuItem.WorkingDirectory, panelItem);
                     // get parent directory if file was selected
                     if (File.Exists(path))
                         path = Path.GetDirectoryName(path);
@@ -95,7 +93,7 @@ namespace LanExchange.Plugin.WinForms.Impl
 
         public void Start()
         {
-            if (!m_MenuItem.AllowUnreachable && m_Checker != null)
+            if (!menuItem.AllowUnreachable && checker != null)
                 ShowCheckAvailabilityWindow();
             else
                 InternalStart();

@@ -12,6 +12,7 @@ using System.Text;
 using LanExchange.Base;
 using LanExchange.SDK;
 using LanExchange.Interfaces.Processes;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange.Implementations.Processes
 {
@@ -23,7 +24,7 @@ namespace LanExchange.Implementations.Processes
 
         public GenerateEnglishProcess(IFolderManager folderManager)
         {
-            if (folderManager == null) throw new ArgumentNullException(nameof(folderManager));
+            Contract.Requires<ArgumentNullException>(folderManager != null);
 
             this.folderManager = folderManager;
         }

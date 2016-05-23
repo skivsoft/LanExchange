@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using LanExchange.SDK;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange.Misc.Impl
 {
@@ -18,8 +19,8 @@ namespace LanExchange.Misc.Impl
 
         public void RegisterFactory<TPanelItem>(IPanelItemFactory factory) where TPanelItem : PanelItemBase
         {
-            if (factory == null)
-                throw new ArgumentNullException("factory");
+            Contract.Requires<ArgumentNullException>(factory != null);
+
             m_Types.Add(typeof(TPanelItem), factory);
             factory.RegisterColumns(App.Resolve<IPanelColumnManager>());
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using LanExchange.SDK;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange.Misc.Impl
 {
@@ -30,8 +31,8 @@ namespace LanExchange.Misc.Impl
 
         public PanelFillerResult RetrievePanelItems(PanelItemBase parent, RetrieveMode mode)
         {
-            if (parent == null)
-                throw new ArgumentNullException("parent");
+            Contract.Requires<ArgumentNullException>(parent != null);
+
             var result = new PanelFillerResult();
             foreach (var pair in m_Fillers)
                 if (pair.Value.IsParentAccepted(parent))

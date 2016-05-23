@@ -8,6 +8,7 @@ using System.Resources;
 using System.Text;
 using LanExchange.Helpers;
 using LanExchange.SDK;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange.Misc.Impl
 {
@@ -29,7 +30,7 @@ namespace LanExchange.Misc.Impl
 
         public TranslationServiceImpl(IFolderManager folderManager)
         {
-            if (folderManager == null) throw new ArgumentNullException(nameof(folderManager));
+            Contract.Requires<ArgumentNullException>(folderManager != null);
 
             this.folderManager = folderManager;
 

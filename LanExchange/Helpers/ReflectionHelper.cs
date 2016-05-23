@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.Contracts;
 using System.Reflection;
 
 namespace LanExchange.Helpers
@@ -25,8 +26,8 @@ namespace LanExchange.Helpers
         /// <exception cref="System.ArgumentNullException">instance</exception>
         public static TResult GetObjectProperty<TResult>(object instance, string name) where TResult : class
         {
-            if (instance == null)
-                throw new ArgumentNullException("instance");
+            Contract.Requires<ArgumentNullException>(instance != null);
+
             var propInfo = instance.GetType().GetProperty(name);
             return propInfo == null ? null : (TResult)propInfo.GetValue(instance, null);
         }

@@ -5,12 +5,13 @@ using System.Reflection;
 using System.Resources;
 using System.Windows.Forms;
 using LanExchange.SDK;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange.Plugin.WinForms.Utils
 {
     internal static class TranslationUtils
     {
-        private static readonly IDictionary<Component, string> s_FieldsMap = new Dictionary<Component, string>();
+        private static readonly IDictionary<Component, string> fieldsMap = new Dictionary<Component, string>();
 
         /// <summary>
         /// Recursive translation every control.
@@ -35,19 +36,17 @@ namespace LanExchange.Plugin.WinForms.Utils
         /// <param name="components"></param>
         internal static void TranslateComponents(ResourceManager resources, ContainerControl instance, IContainer components)
         {
-            if (resources == null)
-                throw new ArgumentNullException("resources");
-            if (instance == null)
-                throw new ArgumentNullException("instance");
-            if (components == null)
-                throw new ArgumentNullException("components");
-            s_FieldsMap.Clear();
+            Contract.Requires<ArgumentNullException>(resources != null);
+            Contract.Requires<ArgumentNullException>(instance != null);
+            Contract.Requires<ArgumentNullException>(components != null);
+
+            fieldsMap.Clear();
             var fields = instance.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
             foreach (var field in fields)
             if (field.FieldType.IsSubclassOf(typeof(Component)))
             {
                 var component = (Component) field.GetValue(instance);
-                s_FieldsMap.Add(component, field.Name);
+                fieldsMap.Add(component, field.Name);
             }
 
             foreach (Component component in components.Components)
@@ -67,7 +66,7 @@ namespace LanExchange.Plugin.WinForms.Utils
         private static string GetComponentName(Component component)
         {
             string result;
-            if (s_FieldsMap.TryGetValue(component, out result))
+            if (fieldsMap.TryGetValue(component, out result))
                 return result;
             return null;
         }

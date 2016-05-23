@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using LanExchange.Properties;
 using LanExchange.SDK;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange.Plugin.WinForms.Forms
 {
@@ -10,18 +11,18 @@ namespace LanExchange.Plugin.WinForms.Forms
     /// </summary>
     public sealed partial class AboutForm : EscapeForm, IAboutView, ITranslationable
     {
-        private readonly IAboutPresenter m_Presenter;
-        private RichTextBox m_BoxDetails;
-        private bool m_DetailsVisible;
+        private readonly IAboutPresenter presenter;
+        private RichTextBox boxDetails;
+        private bool detailsVisible;
 
         public event EventHandler ViewClosed;
         
         public AboutForm(IAboutPresenter presenter)
         {
-            if (presenter == null)
-                throw new ArgumentNullException("presenter");
-            m_Presenter = presenter;
-            m_Presenter.View = this;
+            Contract.Requires<ArgumentNullException>(presenter != null);
+
+            this.presenter = presenter;
+            this.presenter.View = this;
             InitializeComponent();
             TranslateUI();
             FormClosed += OnFormClosed;
@@ -43,33 +44,33 @@ namespace LanExchange.Plugin.WinForms.Forms
             lWeb.Text = Resources.AboutForm_Webpage;
             UpdateShowDetailsButton();
             bClose.Text = Resources.MainForm_Close;
-            if (m_DetailsVisible)
+            if (detailsVisible)
             {
                 SetupBoxDetails();
-                m_BoxDetails.Rtf = m_Presenter.GetDetailsRtf();
+                boxDetails.Rtf = presenter.GetDetailsRtf();
             }
-            m_Presenter.LoadFromModel();
+            presenter.LoadFromModel();
         }
        
         private void SetupBoxDetails()
         {
-            if (m_BoxDetails != null) return;
-            m_BoxDetails = new RichTextBox();
+            if (boxDetails != null) return;
+            boxDetails = new RichTextBox();
             var rect = ClientRectangle;
-			m_BoxDetails.Font = Font;
-            m_BoxDetails.SetBounds(rect.Left+16, rect.Top+16, rect.Width-32, rect.Height-bShowDetails.Height-32);
-            m_BoxDetails.Visible = false;
-            m_BoxDetails.RightToLeft = RightToLeft;
-            m_BoxDetails.ReadOnly = true;
-            m_BoxDetails.BorderStyle = BorderStyle.None;
-            m_BoxDetails.Rtf = m_Presenter.GetDetailsRtf();
-            Controls.Add(m_BoxDetails);
-            m_BoxDetails.BringToFront();
+			boxDetails.Font = Font;
+            boxDetails.SetBounds(rect.Left+16, rect.Top+16, rect.Width-32, rect.Height-bShowDetails.Height-32);
+            boxDetails.Visible = false;
+            boxDetails.RightToLeft = RightToLeft;
+            boxDetails.ReadOnly = true;
+            boxDetails.BorderStyle = BorderStyle.None;
+            boxDetails.Rtf = presenter.GetDetailsRtf();
+            Controls.Add(boxDetails);
+            boxDetails.BringToFront();
         }
 
         private void eWeb_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            m_Presenter.OpenHomeLink();
+            presenter.OpenHomeLink();
         }
 
         public string VersionText
@@ -112,16 +113,16 @@ namespace LanExchange.Plugin.WinForms.Forms
 
         private void bShowLicense_Click(object sender, EventArgs e)
         {
-            m_DetailsVisible = !m_DetailsVisible;
+            detailsVisible = !detailsVisible;
             SetupBoxDetails();
-            m_BoxDetails.Visible = m_DetailsVisible;
+            boxDetails.Visible = detailsVisible;
             UpdateShowDetailsButton();
         }
 
 
         private void UpdateShowDetailsButton()
         {
-            bShowDetails.Text = m_DetailsVisible ? Resources.HideDetails : Resources.ShowDetails;
+            bShowDetails.Text = detailsVisible ? Resources.HideDetails : Resources.ShowDetails;
         }
 
         private void bClose_Click(object sender, EventArgs e)
@@ -136,13 +137,13 @@ namespace LanExchange.Plugin.WinForms.Forms
 
         private void picTwitter_Click(object sender, EventArgs e)
         {
-            m_Presenter.OpenTwitterLink();
+            presenter.OpenTwitterLink();
         }
 
         private void AboutForm_RightToLeftChanged(object sender, EventArgs e)
         {
-            if (m_BoxDetails != null)
-                m_BoxDetails.RightToLeft = RightToLeft;
+            if (boxDetails != null)
+                boxDetails.RightToLeft = RightToLeft;
         }
     }
 }
