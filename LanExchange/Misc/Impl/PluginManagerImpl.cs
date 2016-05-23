@@ -15,9 +15,10 @@ namespace LanExchange.Misc.Impl
 
 
         [ImportMany]
-        private readonly IEnumerable<IPlugin> plugins;
+        // ReSharper disable once FieldCanBeMadeReadOnly.Local
+        private IEnumerable<IPlugin> plugins;
 
-        CompositionContainer compContainer;
+        private CompositionContainer compContainer;
 
 
         private readonly IDictionary<string, string> pluginsAuthors;

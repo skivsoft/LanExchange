@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 
 namespace LanExchange.SDK.Extensions
 {
@@ -18,7 +17,7 @@ namespace LanExchange.SDK.Extensions
         /// <exception cref="System.ArgumentNullException">serviceProvider</exception>
         public static TTypeToResolve Resolve<TTypeToResolve>(this IServiceProvider serviceProvider)
         {
-            Contract.Requires<ArgumentNullException>(serviceProvider != null);
+            if (serviceProvider == null) throw new ArgumentNullException(nameof(serviceProvider));
                 
             return (TTypeToResolve)serviceProvider.GetService(typeof(TTypeToResolve));
         }

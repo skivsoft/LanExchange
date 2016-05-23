@@ -8,7 +8,7 @@ namespace LanExchange.Actions
     {
         protected readonly IPagesPresenter pagesPresenter;
 
-        public PagesActionBase(IPagesPresenter pagesPresenter)
+        protected PagesActionBase(IPagesPresenter pagesPresenter)
         {
             Contract.Requires<ArgumentNullException>(pagesPresenter != null);
 

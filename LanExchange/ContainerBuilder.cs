@@ -94,7 +94,6 @@ namespace LanExchange
             container.RegisterSingleton<IOle32Service, Ole32Service>();
             container.RegisterSingleton<IIPHLPAPISerivice, IPHLPAPISerivce>();
             container.RegisterSingleton<IHotkeysService, HotkeysService>();
-            container.RegisterSingleton<ISingleInstanceService, SingleInstanceService>();
             container.Register<ISysImageListService, SysImageListService>();
         }
 

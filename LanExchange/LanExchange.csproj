@@ -162,7 +162,6 @@
     <Compile Include="Plugin\Windows\Kernel32Service.cs" />
     <Compile Include="Plugin\Windows\Ole32Service.cs" />
     <Compile Include="Plugin\Windows\Shell32Service.cs" />
-    <Compile Include="Plugin\Windows\SingleInstanceService.cs" />
     <Compile Include="Plugin\Windows\SysImageListService.cs" />
     <Compile Include="Plugin\Windows\User32Service.cs" />
     <Compile Include="Plugin\Windows\Utils\HookEventArgs.cs" />
@@ -171,12 +170,10 @@
     <Compile Include="Plugin\Windows\Utils\ImageListDrawStateConstants.cs" />
     <Compile Include="Plugin\Windows\Utils\LocalWindowsHook.cs" />
     <Compile Include="Plugin\Windows\Utils\NativeMethods.cs" />
-    <Compile Include="Plugin\Windows\Utils\SafeNativeMethods.cs" />
     <Compile Include="Plugin\Windows\Utils\ShellAPI.cs" />
     <Compile Include="Plugin\Windows\Utils\ShellContextMenu.cs" />
     <Compile Include="Plugin\Windows\Utils\ShellContextMenuException.cs" />
     <Compile Include="Plugin\Windows\Utils\ShellIconStateConstants.cs" />
-    <Compile Include="Plugin\Windows\Utils\SingleInstanceCheck.cs" />
     <Compile Include="Plugin\Windows\Utils\SysImageList.cs" />
     <Compile Include="Plugin\Windows\Utils\SysImageListHelper.cs" />
     <Compile Include="Plugin\Windows\Utils\UnsafeNativeMethods.cs" />

@@ -36,22 +36,22 @@ namespace LanExchange.Plugin.WinForms.Utils
 
             if (0 > alpha || 255 < alpha)
             {
-                throw new ArgumentOutOfRangeException("alpha", alpha,
+                throw new ArgumentOutOfRangeException(nameof(alpha), alpha,
                   "Value must be within a range of 0 - 255.");
             }
             if (0f > hue || 360f < hue)
             {
-                throw new ArgumentOutOfRangeException("hue", hue,
+                throw new ArgumentOutOfRangeException(nameof(hue), hue,
                   "Value must be within a range of 0 - 360.");
             }
             if (0f > saturation || 1f < saturation)
             {
-                throw new ArgumentOutOfRangeException("saturation", saturation,
+                throw new ArgumentOutOfRangeException(nameof(saturation), saturation,
                   "Value must be within a range of 0 - 1.");
             }
             if (0f > brightness || 1f < brightness)
             {
-                throw new ArgumentOutOfRangeException("brightness", brightness,
+                throw new ArgumentOutOfRangeException(nameof(brightness), brightness,
                   "Value must be within a range of 0 - 1.");
             }
 
