@@ -10,16 +10,21 @@ namespace LanExchange.Plugin.WinForms.Components
     public partial class InfoView : UserControl, IInfoView
     {
         private readonly IImageManager imageManager;
+        private readonly IMainView mainView;
 
         private int numLines;
         private readonly IList<Label> lines;
         private PanelItemBase currentItem;
         
-        public InfoView(IImageManager imageManager)
+        public InfoView(
+            IImageManager imageManager,
+            IMainView mainView)
         {
             Contract.Requires<ArgumentNullException>(imageManager != null);
+            Contract.Requires<ArgumentNullException>(mainView != null);
 
             this.imageManager = imageManager;
+            this.mainView = mainView;
 
             InitializeComponent();
             lines = new List<Label>();
@@ -112,7 +117,7 @@ namespace LanExchange.Plugin.WinForms.Components
                 if (currentItem != null)
                 {
                     Picture.Image = imageManager.GetLargeImage(currentItem.ImageName);
-                    App.MainView.SetToolTip(Picture, currentItem.ImageLegendText);
+                    mainView.SetToolTip(Picture, currentItem.ImageLegendText);
                 }
             }
         }

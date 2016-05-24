@@ -10,5 +10,6 @@
         /// </summary>
         /// <returns></returns>
         IWindow CreateAboutView();
+        IMainView CreateMainView();
     }
 }

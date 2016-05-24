@@ -8,12 +8,6 @@ namespace LanExchange.SDK.Managers
     public interface IActionManager
     {
         /// <summary>
-        /// Registers the action.
-        /// </summary>
-        /// <param name="action">The action.</param>
-        void RegisterAction(IAction action);
-
-        /// <summary>
         /// Executes the action.
         /// </summary>
         /// <param name="actionName">Name of the action.</param>

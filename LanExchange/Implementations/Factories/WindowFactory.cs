@@ -1,30 +1,30 @@
 ﻿using LanExchange.SDK.Factories;
 using System;
 using LanExchange.SDK;
-using LanExchange.Plugin.WinForms.Forms;
 using System.Diagnostics.Contracts;
+using LanExchange.SDK.Extensions;
 
 namespace LanExchange.Implementations.Factories
 {
     internal sealed class WindowFactory : IWindowFactory
     {
-        private readonly IAboutPresenter aboutPresenter;
-        private readonly ITranslationService translationService;
+        private readonly IServiceProvider serviceProvider;
 
-        public WindowFactory(
-            IAboutPresenter aboutPresenter,
-            ITranslationService translationService)
+        public WindowFactory(IServiceProvider serviceProvider)
         {
-            Contract.Requires<ArgumentNullException>(aboutPresenter != null);
-            Contract.Requires<ArgumentNullException>(translationService != null);
+            Contract.Requires<ArgumentNullException>(serviceProvider != null);
 
-            this.aboutPresenter = aboutPresenter;
-            this.translationService = translationService;
+            this.serviceProvider = serviceProvider;
         }
 
         public IWindow CreateAboutView()
         {
-            return new AboutForm(aboutPresenter, translationService);
+            return serviceProvider.Resolve<IAboutView>();
+        }
+
+        public IMainView CreateMainView()
+        {
+            return serviceProvider.Resolve<IMainView>();
         }
     }
 }

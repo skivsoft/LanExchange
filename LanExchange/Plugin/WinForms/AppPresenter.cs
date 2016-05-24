@@ -15,6 +15,7 @@ namespace LanExchange.Plugin.WinForms
         private readonly IConfigPersistenceService configService;
         private readonly IPagesPresenter pagesPresenter;
         private readonly ITranslationService translationService;
+        private IMainView mainView;
 
         public AppPresenter(
             IConfigPersistenceService configService,
@@ -42,12 +43,13 @@ namespace LanExchange.Plugin.WinForms
 
         public void Run(IMainView view)
         {
+            mainView = view;
             Application.Run((Form)view);
         }
 
-        private static void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        private void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            App.MainView.ApplicationExit();
+            mainView.ApplicationExit();
         }
 
         [Localizable(false)]

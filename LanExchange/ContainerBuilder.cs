@@ -1,24 +1,25 @@
-using System;
+using LanExchange.Actions;
+using LanExchange.Implementations.Factories;
+using LanExchange.Implementations.Managers;
+using LanExchange.Implementations.Processes;
+using LanExchange.Implementations.Services;
 using LanExchange.Interfaces;
+using LanExchange.Interfaces.Factories;
+using LanExchange.Interfaces.Processes;
+using LanExchange.Interfaces.Services;
 using LanExchange.Misc.Impl;
 using LanExchange.Model;
 using LanExchange.Plugin.Windows;
-using LanExchange.Presenter;
-using LanExchange.SDK;
+using LanExchange.Plugin.WinForms;
 using LanExchange.Plugin.WinForms.Components;
 using LanExchange.Plugin.WinForms.Forms;
-using LanExchange.Plugin.WinForms;
 using LanExchange.Plugin.WinForms.Impl;
-using SimpleInjector;
-using LanExchange.Interfaces.Services;
-using LanExchange.Implementations.Services;
-using LanExchange.Interfaces.Processes;
-using LanExchange.Implementations.Processes;
-using LanExchange.Interfaces.Factories;
-using LanExchange.Implementations.Factories;
-using LanExchange.SDK.Managers;
-using LanExchange.Implementations.Managers;
+using LanExchange.Presenter;
+using LanExchange.SDK;
 using LanExchange.SDK.Factories;
+using LanExchange.SDK.Managers;
+using SimpleInjector;
+using System;
 
 namespace LanExchange
 {
@@ -44,6 +45,7 @@ namespace LanExchange
             RegisterServices();
             RegisterProcesses();
             RegisterFactories();
+            RegisterActions();
             return container;
         }
 
@@ -100,6 +102,7 @@ namespace LanExchange
         private void RegisterWinForms()
         {
             container.Register<ICheckAvailabilityWindow, CheckAvailabilityForm>();
+            container.Register<IAboutView, AboutForm>();
             container.Register<IFilterView, FilterView>();
             container.Register<IPanelView, PanelView>();
             container.Register<IEditView, EditForm>();
@@ -130,6 +133,18 @@ namespace LanExchange
         {
             container.RegisterSingleton<IAddonProgramFactory, AddonProgramFactory>();
             container.RegisterSingleton<IWindowFactory, WindowFactory>();
+        }
+
+        private void RegisterActions()
+        {
+            container.RegisterCollection<IAction>(new []
+            {
+                typeof(AboutAction),
+                typeof(PagesReReadAction),
+                typeof(PagesCloseTabAction),
+                typeof(PagesCloseOtherAction),
+                typeof(ShortcutKeysAction)
+            });
         }
     }
 }

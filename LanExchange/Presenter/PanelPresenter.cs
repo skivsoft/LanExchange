@@ -12,6 +12,7 @@ namespace LanExchange.Presenter
         private readonly IPanelColumnManager panelColumns;
         private readonly IPagesPresenter pagesPresenter;
         private readonly ITranslationService translationService;
+        private readonly IMainView mainView;
         private IPanelModel objects;
 
         public event EventHandler CurrentPathChanged;
@@ -20,17 +21,20 @@ namespace LanExchange.Presenter
             IPanelFillerManager panelFillers,
             IPanelColumnManager panelColumns,
             IPagesPresenter pagesPresenter,
-            ITranslationService translationService)
+            ITranslationService translationService,
+            IMainView mainView)
         {
             Contract.Requires<ArgumentNullException>(panelFillers != null);
             Contract.Requires<ArgumentNullException>(panelColumns != null);
             Contract.Requires<ArgumentNullException>(pagesPresenter != null);
             Contract.Requires<ArgumentNullException>(translationService != null);
+            Contract.Requires<ArgumentNullException>(mainView != null);
 
             this.panelFillers = panelFillers;
             this.panelColumns = panelColumns;
             this.pagesPresenter = pagesPresenter;
             this.translationService = translationService;
+            this.mainView = mainView;
         }
 
         public void Dispose()
@@ -81,9 +85,9 @@ namespace LanExchange.Presenter
                 totalCount--;
             }
             if (showCount != totalCount)
-                App.MainView.ShowStatusText(translationService.PluralForm(Resources.PanelPresenter_Items2, totalCount), showCount, totalCount);
+                mainView.ShowStatusText(translationService.PluralForm(Resources.PanelPresenter_Items2, totalCount), showCount, totalCount);
             else
-                App.MainView.ShowStatusText(Resources.PanelPresenter_Items1, showCount);
+                mainView.ShowStatusText(Resources.PanelPresenter_Items1, showCount);
             SetupColumns();
             View.SetVirtualListSize(objects.FilterCount);
             if (objects.FilterCount > 0)

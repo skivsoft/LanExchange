@@ -7,6 +7,7 @@ using LanExchange.Misc;
 using LanExchange.Interfaces.Services;
 using LanExchange.Model;
 using System.Diagnostics.Contracts;
+using LanExchange.SDK.Factories;
 
 namespace LanExchange
 {
@@ -20,6 +21,7 @@ namespace LanExchange
         private readonly IAddonManager addonManager;
         private readonly IPluginManager pluginManager;
         private readonly ITranslationService translationService;
+        private readonly IWindowFactory windowFactory;
 
         public LanExchangeApp(
             IAppPresenter application,
@@ -29,7 +31,8 @@ namespace LanExchange
             IImageManager imageManager,
             IAddonManager addonManager,
             IPluginManager pluginManager,
-            ITranslationService translationService)
+            ITranslationService translationService,
+            IWindowFactory windowFactory)
         {
             Contract.Requires<ArgumentNullException>(application != null);
             Contract.Requires<ArgumentNullException>(mainPresenter != null);
@@ -39,6 +42,7 @@ namespace LanExchange
             Contract.Requires<ArgumentNullException>(addonManager != null);
             Contract.Requires<ArgumentNullException>(pluginManager != null);
             Contract.Requires<ArgumentNullException>(translationService != null);
+            Contract.Requires<ArgumentNullException>(windowFactory != null);
 
             this.application = application;
             this.mainPresenter = mainPresenter;
@@ -48,6 +52,7 @@ namespace LanExchange
             this.addonManager = addonManager;
             this.pluginManager = pluginManager;
             this.translationService = translationService;
+            this.windowFactory = windowFactory;
 
             Initialize();
         }
@@ -75,12 +80,12 @@ namespace LanExchange
         {
             // create main form
             //App.Presenter.ConfigOnChanged(App.Config, new ConfigChangedArgs(ConfigNames.Language));
-            App.MainView = App.Resolve<IMainView>();
-            mainPresenter.View = App.MainView;
+            var mainView = windowFactory.CreateMainView();
+            mainPresenter.View = mainView;
             mainPresenter.PrepareForm();
             pagesPresenter.LoadSettings();
             // run application
-            application.Run(App.MainView);
+            application.Run(mainView);
         }
     }
 }

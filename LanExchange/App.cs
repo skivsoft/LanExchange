@@ -13,8 +13,6 @@ namespace LanExchange
         /// </summary>
         private static IServiceProvider s_Ioc;
 
-        // public setters
-        public static IMainView MainView { get; set; }
         // other
         public static ConfigModel Config { get; set; }
 

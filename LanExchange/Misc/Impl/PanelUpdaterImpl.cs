@@ -10,6 +10,7 @@ namespace LanExchange.Misc.Impl
     {
         private readonly IImageManager imageManager;
         private readonly IPagesPresenter pagesPresenter;
+        private readonly IMainView mainView;
 
         private const int NODISPLAY_DELAY = 500;
         private Thread setTabImageThread;
@@ -18,13 +19,16 @@ namespace LanExchange.Misc.Impl
 
         public PanelUpdaterImpl(
             IImageManager imageManager,
-            IPagesPresenter pagesPresenter)
+            IPagesPresenter pagesPresenter,
+            IMainView mainView)
         {
             Contract.Requires<ArgumentNullException>(imageManager != null);
             Contract.Requires<ArgumentNullException>(pagesPresenter != null);
+            Contract.Requires<ArgumentNullException>(mainView != null);
 
             this.imageManager = imageManager;
             this.pagesPresenter = pagesPresenter;
+            this.mainView = mainView;
         }
 
         public void Dispose()
@@ -68,7 +72,7 @@ namespace LanExchange.Misc.Impl
                     if (count >= NODISPLAY_DELAY / AnimationHelper.DELAY)
                     {
                         var imageName = helper.GetNextImageName();
-                        App.MainView.SafeInvoke(new SetTabImageDelegate(SetTabImageInvoked), model, imageName);
+                        mainView.SafeInvoke(new SetTabImageDelegate(SetTabImageInvoked), model, imageName);
                     }
                     Thread.Sleep(AnimationHelper.DELAY);
                     count++;
@@ -78,7 +82,7 @@ namespace LanExchange.Misc.Impl
             {
                 Debug.Print(e.Message);
             }
-            App.MainView.SafeInvoke(new SetTabImageDelegate(SetTabImageInvoked), model, model.ImageName);
+            mainView.SafeInvoke(new SetTabImageDelegate(SetTabImageInvoked), model, model.ImageName);
         }
 
         private void SetTabImageInvoked(IPanelModel model, string imageName)
@@ -94,7 +98,7 @@ namespace LanExchange.Misc.Impl
             var model = argument as IPanelModel;
             if (model == null) return;
             var fillerResult = model.RetrieveData(RetrieveMode.Async, isClearFilter);
-            App.MainView.SafeInvoke(new SetFillerResultDelegate(UpdateThreadInvoked), model, fillerResult);
+            mainView.SafeInvoke(new SetFillerResultDelegate(UpdateThreadInvoked), model, fillerResult);
             setTabImageThread.Interrupt();
         }
 

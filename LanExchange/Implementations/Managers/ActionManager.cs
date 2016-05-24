@@ -10,12 +10,16 @@ namespace LanExchange.Implementations.Managers
     {
         private readonly Dictionary<string, IAction> actions;
 
-        public ActionManager()
+        public ActionManager(IEnumerable<IAction> actions)
         {
-            actions = new Dictionary<string, IAction>();
+            Contract.Requires<ArgumentNullException>(actions != null);
+
+            this.actions = new Dictionary<string, IAction>();
+            foreach (var action in actions)
+                RegisterAction(action);
         }
 
-        public void RegisterAction(IAction action)
+        private void RegisterAction(IAction action)
         {
             Contract.Requires<ArgumentNullException>(action != null);
 

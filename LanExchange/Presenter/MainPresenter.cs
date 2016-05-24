@@ -3,15 +3,12 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Threading;
-using LanExchange.Actions;
 using LanExchange.Helpers;
 using LanExchange.Interfaces;
 using LanExchange.Plugin.Shortcut;
 using LanExchange.SDK;
 using LanExchange.Model;
 using System.Diagnostics.Contracts;
-using LanExchange.SDK.Managers;
-using LanExchange.SDK.Factories;
 
 namespace LanExchange.Presenter
 {
@@ -19,7 +16,6 @@ namespace LanExchange.Presenter
     {
         private readonly ILazyThreadPool threadPool;
         private readonly IPanelColumnManager panelColumns;
-        private readonly IActionManager actionManager;
         private readonly IPagesPresenter pagesPresenter;
         private readonly ITranslationService translationService;
         private IHotkeysService hotkeys;
@@ -27,29 +23,18 @@ namespace LanExchange.Presenter
         public MainPresenter(
             ILazyThreadPool threadPool,
             IPanelColumnManager panelColumns,
-            IActionManager actionManager,
             IPagesPresenter pagesPresenter,
-            IWindowFactory windowFactory,
             ITranslationService translationService)
         {
             Contract.Requires<ArgumentNullException>(threadPool != null);
             Contract.Requires<ArgumentNullException>(panelColumns != null);
-            Contract.Requires<ArgumentNullException>(actionManager != null);
             Contract.Requires<ArgumentNullException>(pagesPresenter != null);
             Contract.Requires<ArgumentNullException>(translationService != null);
 
             this.threadPool = threadPool;
             this.panelColumns = panelColumns;
-            this.actionManager = actionManager;
             this.pagesPresenter = pagesPresenter;
             this.translationService = translationService;
-
-            // TODO: delegate action registration to DI container
-            actionManager.RegisterAction(new AboutAction(windowFactory));
-            actionManager.RegisterAction(new PagesReReadAction(pagesPresenter));
-            actionManager.RegisterAction(new PagesCloseTabAction(pagesPresenter));
-            actionManager.RegisterAction(new PagesCloseOtherAction(pagesPresenter));
-            actionManager.RegisterAction(new ShortcutKeysAction(this, pagesPresenter));
         }
 
         public void PrepareForm()
@@ -95,7 +80,7 @@ namespace LanExchange.Presenter
             switch (e.PropertyName)
             {
                 case nameof(config.ShowInfoPanel):
-                    App.MainView.ShowInfoPanel = config.ShowInfoPanel;
+                    View.ShowInfoPanel = config.ShowInfoPanel;
                     break;
                 case nameof(config.ShowGridLines):
                     var panelView = pagesPresenter.View.ActivePanelView;
@@ -103,7 +88,7 @@ namespace LanExchange.Presenter
                         panelView.GridLines = config.ShowGridLines;
                     break;
                 case nameof(config.NumInfoLines):
-                    App.MainView.NumInfoLines = config.NumInfoLines;
+                    View.NumInfoLines = config.NumInfoLines;
                     pagesPresenter.DoPanelViewFocusedItemChanged(pagesPresenter.View.ActivePanelView, EventArgs.Empty);
                     break;
                 case nameof(config.Language):
@@ -169,7 +154,7 @@ namespace LanExchange.Presenter
         public void GlobalTranslateUI()
         {
             var service = App.Resolve<IWaitingService>();
-            if (App.MainView != null)
+            if (View != null)
                 service.BeginWait();
             try
             {
@@ -180,7 +165,7 @@ namespace LanExchange.Presenter
             }
             finally
             {
-                if (App.MainView != null)
+                if (View != null)
                     service.EndWait();
             }
         }
