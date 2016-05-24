@@ -21,6 +21,7 @@ namespace LanExchange.Presenter
         private readonly IPanelColumnManager panelColumns;
         private readonly IActionManager actionManager;
         private readonly IPagesPresenter pagesPresenter;
+        private readonly ITranslationService translationService;
         private IHotkeysService hotkeys;
 
         public MainPresenter(
@@ -28,17 +29,20 @@ namespace LanExchange.Presenter
             IPanelColumnManager panelColumns,
             IActionManager actionManager,
             IPagesPresenter pagesPresenter,
-            IWindowFactory windowFactory)
+            IWindowFactory windowFactory,
+            ITranslationService translationService)
         {
             Contract.Requires<ArgumentNullException>(threadPool != null);
             Contract.Requires<ArgumentNullException>(panelColumns != null);
             Contract.Requires<ArgumentNullException>(actionManager != null);
             Contract.Requires<ArgumentNullException>(pagesPresenter != null);
+            Contract.Requires<ArgumentNullException>(translationService != null);
 
             this.threadPool = threadPool;
             this.panelColumns = panelColumns;
             this.actionManager = actionManager;
             this.pagesPresenter = pagesPresenter;
+            this.translationService = translationService;
 
             // TODO: delegate action registration to DI container
             actionManager.RegisterAction(new AboutAction(windowFactory));
@@ -103,7 +107,7 @@ namespace LanExchange.Presenter
                     pagesPresenter.DoPanelViewFocusedItemChanged(pagesPresenter.View.ActivePanelView, EventArgs.Empty);
                     break;
                 case nameof(config.Language):
-                    App.TR.CurrentLanguage = config.Language;
+                    translationService.CurrentLanguage = config.Language;
                     GlobalTranslateUI();
                     break;
             }

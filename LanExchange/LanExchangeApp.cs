@@ -19,6 +19,7 @@ namespace LanExchange
         private readonly IImageManager imageManager;
         private readonly IAddonManager addonManager;
         private readonly IPluginManager pluginManager;
+        private readonly ITranslationService translationService;
 
         public LanExchangeApp(
             IAppPresenter application,
@@ -27,7 +28,8 @@ namespace LanExchange
             IConfigPersistenceService configService,
             IImageManager imageManager,
             IAddonManager addonManager,
-            IPluginManager pluginManager)
+            IPluginManager pluginManager,
+            ITranslationService translationService)
         {
             Contract.Requires<ArgumentNullException>(application != null);
             Contract.Requires<ArgumentNullException>(mainPresenter != null);
@@ -36,6 +38,7 @@ namespace LanExchange
             Contract.Requires<ArgumentNullException>(imageManager != null);
             Contract.Requires<ArgumentNullException>(addonManager != null);
             Contract.Requires<ArgumentNullException>(pluginManager != null);
+            Contract.Requires<ArgumentNullException>(translationService != null);
 
             this.application = application;
             this.mainPresenter = mainPresenter;
@@ -44,6 +47,7 @@ namespace LanExchange
             this.imageManager = imageManager;
             this.addonManager = addonManager;
             this.pluginManager = pluginManager;
+            this.translationService = translationService;
 
             Initialize();
         }
@@ -51,7 +55,7 @@ namespace LanExchange
         private void Initialize()
         {
             // global map interfaces to classes
-            App.TR.SetResourceManagerTo<Resources>();
+            translationService.SetResourceManagerTo<Resources>();
             // load plugins
             pluginManager.LoadPlugins();
             // register stage images for icon animation

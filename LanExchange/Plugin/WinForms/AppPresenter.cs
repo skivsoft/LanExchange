@@ -14,16 +14,20 @@ namespace LanExchange.Plugin.WinForms
     {
         private readonly IConfigPersistenceService configService;
         private readonly IPagesPresenter pagesPresenter;
+        private readonly ITranslationService translationService;
 
         public AppPresenter(
             IConfigPersistenceService configService,
-            IPagesPresenter pagesPresenter)
+            IPagesPresenter pagesPresenter,
+            ITranslationService translationService)
         {
             Contract.Requires<ArgumentNullException>(configService != null);
             Contract.Requires<ArgumentNullException>(pagesPresenter != null);
+            Contract.Requires<ArgumentNullException>(translationService != null);
 
             this.configService = configService;
             this.pagesPresenter = pagesPresenter;
+            this.translationService = translationService;
         }
 
         public void Init()
@@ -73,10 +77,10 @@ namespace LanExchange.Plugin.WinForms
                 if (form is ITranslationable)
                 {
                     // set rtl
-                    var rtlChanged = App.TR.RightToLeft != form.RightToLeftLayout;
+                    var rtlChanged = translationService.RightToLeft != form.RightToLeftLayout;
                     if (rtlChanged)
                         form.Hide();
-                    if (App.TR.RightToLeft)
+                    if (translationService.RightToLeft)
                     {
                         form.RightToLeftLayout = true;
                         form.RightToLeft = RightToLeft.Yes;

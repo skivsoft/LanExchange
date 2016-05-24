@@ -17,7 +17,9 @@ namespace LanExchange.Plugin.WinForms.Forms
 
         public event EventHandler ViewClosed;
         
-        public AboutForm(IAboutPresenter presenter)
+        public AboutForm(
+            IAboutPresenter presenter,
+            ITranslationService translationService) : base(translationService)
         {
             Contract.Requires<ArgumentNullException>(presenter != null);
 

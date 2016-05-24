@@ -24,6 +24,7 @@ namespace LanExchange.Plugin.WinForms.Impl
         private readonly IAddonProgramFactory programFactory;
         private readonly IImageManager imageManager;
         private readonly IPagesPresenter pagesPresenter;
+        private readonly ITranslationService translationService;
 
         private bool isLoaded;
 
@@ -31,17 +32,20 @@ namespace LanExchange.Plugin.WinForms.Impl
             IFolderManager folderManager, 
             IAddonProgramFactory programFactory,
             IImageManager imageManager,
-            IPagesPresenter pagesPresenter)
+            IPagesPresenter pagesPresenter,
+            ITranslationService translationService)
         {
             Contract.Requires<ArgumentNullException>(folderManager != null);
             Contract.Requires<ArgumentNullException>(programFactory != null);
             Contract.Requires<ArgumentNullException>(imageManager != null);
             Contract.Requires<ArgumentNullException>(pagesPresenter != null);
+            Contract.Requires<ArgumentNullException>(translationService != null);
 
             this.folderManager = folderManager;
             this.programFactory = programFactory;
             this.imageManager = imageManager;
             this.pagesPresenter = pagesPresenter;
+            this.translationService = translationService;
 
             programs = new Dictionary<string, AddonProgram>();
             panelItems = new Dictionary<string, AddOnItemTypeRef>();
@@ -154,7 +158,7 @@ namespace LanExchange.Plugin.WinForms.Impl
                 {
                     var menuItem = new ToolStripMenuItem();
                     menuItem.Tag = item;
-                    menuItem.Text = App.TR.Translate(item.Text);
+                    menuItem.Text = translationService.Translate(item.Text);
                     menuItem.ShortcutKeyDisplayString = item.ShortcutKeys;
                     menuItem.Click += MenuItemOnClick;
                     if (item.ProgramValue != null)

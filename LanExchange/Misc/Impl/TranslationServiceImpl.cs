@@ -15,6 +15,7 @@ namespace LanExchange.Misc.Impl
     [Localizable(false)]
     public class TranslationServiceImpl : ITranslationService
     {
+        private const string DEFAULT_LANGUAGE = "English";
         private const string ID_LANGUAGE = "@LANGUAGE_NAME";
         private const string ID_AUTHOR   = "@AUTHOR";
         private const string ID_BASE     = "@BASE";
@@ -28,7 +29,8 @@ namespace LanExchange.Misc.Impl
         private string currentLanguage;
         private ITranslitStrategy currentTranslit;
 
-        public TranslationServiceImpl(IFolderManager folderManager)
+        public TranslationServiceImpl(
+            IFolderManager folderManager)
         {
             Contract.Requires<ArgumentNullException>(folderManager != null);
 
@@ -36,15 +38,9 @@ namespace LanExchange.Misc.Impl
 
             currentLanguageLines = new List<string>();
             translits = new Dictionary<string, Type>();
-            CurrentLanguage = SourceLanguage;
-            //CurrentLanguage = "Russian";
+            CurrentLanguage = DEFAULT_LANGUAGE;
         }
         
-        public string SourceLanguage
-        {
-            get { return "English"; }
-        }
-
         private IEnumerable<string> ReadAllLines(string fileName)
         {
             string line;
@@ -58,7 +54,7 @@ namespace LanExchange.Misc.Impl
             get { return currentLanguage; } 
             set
             {
-                if (String.Compare(SourceLanguage, value, StringComparison.OrdinalIgnoreCase) == 0)
+                if (String.Compare(DEFAULT_LANGUAGE, value, StringComparison.OrdinalIgnoreCase) == 0)
                     currentLanguage = value;
                 else
                     foreach(var fileName in folderManager.GetLanguagesFiles())
@@ -111,7 +107,7 @@ namespace LanExchange.Misc.Impl
         public IDictionary<string, string> GetLanguagesNames()
         {
             var sorted = new SortedDictionary<string, string>();
-            sorted.Add(SourceLanguage, SourceLanguage);
+            sorted.Add(DEFAULT_LANGUAGE, DEFAULT_LANGUAGE);
             foreach (var fileName in folderManager.GetLanguagesFiles())
             {
                 var lang = Path.GetFileNameWithoutExtension(fileName);
@@ -180,7 +176,7 @@ namespace LanExchange.Misc.Impl
 
         public string Translate(string id)
         {
-            if (SourceLanguage.Equals(CurrentLanguage))
+            if (CurrentLanguage == DEFAULT_LANGUAGE)
                 return id;
             var result = InternalTranslate(currentLanguageLines, id);
             if (currentTranslit != null)
@@ -226,7 +222,7 @@ namespace LanExchange.Misc.Impl
         [Localizable(false)]
         public void SetResourceManagerTo<TClass>() where TClass : class
         {
-            var resourceMan = new TranslationResourceManager(typeof (TClass).FullName, typeof (TClass).Assembly);
+            var resourceMan = new TranslationResourceManager(this, typeof (TClass).FullName, typeof (TClass).Assembly);
             ReflectionUtils.SetClassPrivateField<TClass, ResourceManager>("resourceMan", resourceMan);
         }
 

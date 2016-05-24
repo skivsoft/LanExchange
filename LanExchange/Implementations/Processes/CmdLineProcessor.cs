@@ -1,4 +1,5 @@
 using LanExchange.Interfaces.Processes;
+using LanExchange.SDK;
 using System;
 using System.ComponentModel;
 using System.Diagnostics.Contracts;
@@ -9,12 +10,17 @@ namespace LanExchange.Implementations.Processes
     {
         private readonly string[] args = Environment.GetCommandLineArgs();
         private readonly IGenerateEnglishProcess generateEnglish;
+        private readonly ITranslationService translationService;
 
-        public CmdLineProcessor(IGenerateEnglishProcess generateEnglish)
+        public CmdLineProcessor(
+            IGenerateEnglishProcess generateEnglish,
+            ITranslationService translationService)
         {
             Contract.Requires<ArgumentNullException>(generateEnglish != null);
+            Contract.Requires<ArgumentNullException>(translationService != null);
 
             this.generateEnglish = generateEnglish;
+            this.translationService = translationService;
         }
 
         internal string GetIfPresent(string name)
@@ -39,7 +45,8 @@ namespace LanExchange.Implementations.Processes
             var lang = GetIfPresent("/lang:");
             if (lang == null)
                 lang = App.Config.Language;
-            App.TR.CurrentLanguage = lang;
+
+            translationService.CurrentLanguage = lang;
         }
     }
 }

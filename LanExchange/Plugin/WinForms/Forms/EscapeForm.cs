@@ -1,18 +1,27 @@
-﻿using System.Windows.Forms;
+﻿using LanExchange.SDK;
+using System;
+using System.Diagnostics.Contracts;
+using System.Windows.Forms;
 
 namespace LanExchange.Plugin.WinForms.Forms
 {
     public partial class EscapeForm : Form
     {
-        public EscapeForm()
+        protected readonly ITranslationService translationService;
+
+        public EscapeForm(ITranslationService translationService)
         {
+            Contract.Requires<ArgumentNullException>(translationService != null);
+
+            this.translationService = translationService;
+
             InitializeComponent();
-            SetupRtl();
+            SetupRightToLeft();
         }
 
-        private void SetupRtl()
+        private void SetupRightToLeft()
         {
-            if (App.TR != null && App.TR.RightToLeft)
+            if (translationService.RightToLeft)
             {
                 RightToLeftLayout = true;
                 RightToLeft = RightToLeft.Yes;

@@ -4,7 +4,6 @@ namespace LanExchange.SDK
 {
     public interface ITranslationService
     {
-        string SourceLanguage { get; }
         string CurrentLanguage { get; set; }
         bool RightToLeft { get; }
         IDictionary<string, string> GetLanguagesNames();

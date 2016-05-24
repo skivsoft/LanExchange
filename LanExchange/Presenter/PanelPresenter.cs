@@ -11,6 +11,7 @@ namespace LanExchange.Presenter
         private readonly IPanelFillerManager panelFillers;
         private readonly IPanelColumnManager panelColumns;
         private readonly IPagesPresenter pagesPresenter;
+        private readonly ITranslationService translationService;
         private IPanelModel objects;
 
         public event EventHandler CurrentPathChanged;
@@ -18,15 +19,18 @@ namespace LanExchange.Presenter
         public PanelPresenter(
             IPanelFillerManager panelFillers,
             IPanelColumnManager panelColumns,
-            IPagesPresenter pagesPresenter)
+            IPagesPresenter pagesPresenter,
+            ITranslationService translationService)
         {
             Contract.Requires<ArgumentNullException>(panelFillers != null);
             Contract.Requires<ArgumentNullException>(panelColumns != null);
             Contract.Requires<ArgumentNullException>(pagesPresenter != null);
+            Contract.Requires<ArgumentNullException>(translationService != null);
 
             this.panelFillers = panelFillers;
             this.panelColumns = panelColumns;
             this.pagesPresenter = pagesPresenter;
+            this.translationService = translationService;
         }
 
         public void Dispose()
@@ -77,7 +81,7 @@ namespace LanExchange.Presenter
                 totalCount--;
             }
             if (showCount != totalCount)
-                App.MainView.ShowStatusText(App.TR.PluralForm(Resources.PanelPresenter_Items2, totalCount), showCount, totalCount);
+                App.MainView.ShowStatusText(translationService.PluralForm(Resources.PanelPresenter_Items2, totalCount), showCount, totalCount);
             else
                 App.MainView.ShowStatusText(Resources.PanelPresenter_Items1, showCount);
             SetupColumns();

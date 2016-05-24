@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using LanExchange.SDK;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange.Plugin.WinForms.Forms
 {
@@ -10,9 +11,14 @@ namespace LanExchange.Plugin.WinForms.Forms
     {
         private readonly IEditPresenter presenter;
 
-        public EditForm(IEditPresenter presenter)
+        public EditForm(
+            IEditPresenter presenter,
+            ITranslationService translationService) : base(translationService)
         {
+            Contract.Requires<ArgumentNullException>(presenter != null);
+
             InitializeComponent();
+
             this.presenter = presenter;
             this.presenter.View = this;
         }

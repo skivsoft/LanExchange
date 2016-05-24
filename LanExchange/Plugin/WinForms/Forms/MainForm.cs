@@ -27,6 +27,7 @@ namespace LanExchange.Plugin.WinForms.Forms
         private readonly IMainPresenter mainPresenter;
         private readonly IPagesPresenter pagesPresenter;
         private readonly IActionManager actionManager;
+        private readonly ITranslationService translationService;
 
         public MainForm(
             IMainPresenter mainPresenter,
@@ -35,7 +36,8 @@ namespace LanExchange.Plugin.WinForms.Forms
             IPanelItemFactoryManager factoryManager,
             ILazyThreadPool threadPool,
             IImageManager imageManager,
-            IActionManager actionManager)
+            IActionManager actionManager,
+            ITranslationService translationService)
         {
             Contract.Requires<ArgumentNullException>(mainPresenter != null);
             Contract.Requires<ArgumentNullException>(pagesPresenter != null);
@@ -44,6 +46,7 @@ namespace LanExchange.Plugin.WinForms.Forms
             Contract.Requires<ArgumentNullException>(threadPool != null);
             Contract.Requires<ArgumentNullException>(imageManager != null);
             Contract.Requires<ArgumentNullException>(actionManager != null);
+            Contract.Requires<ArgumentNullException>(translationService != null);
 
             this.mainPresenter = mainPresenter;
             this.pagesPresenter = pagesPresenter;
@@ -52,10 +55,11 @@ namespace LanExchange.Plugin.WinForms.Forms
             this.threadPool = threadPool;
             this.imageManager = imageManager;
             this.actionManager = actionManager;
+            this.translationService = translationService;
 
             InitializeComponent();
 
-            if (App.TR.RightToLeft)
+            if (translationService.RightToLeft)
             {
                 RightToLeftLayout = true;
                 RightToLeft = RightToLeft.Yes;
@@ -109,7 +113,7 @@ namespace LanExchange.Plugin.WinForms.Forms
         private void MarkCurrentLanguage()
         {
             foreach (MenuItem menuItem in mLanguage.MenuItems)
-                menuItem.Checked = menuItem.Tag.Equals(App.TR.CurrentLanguage);
+                menuItem.Checked = menuItem.Tag.Equals(translationService.CurrentLanguage);
         }
 
         private void mLanguage_Popup(object sender, EventArgs e)

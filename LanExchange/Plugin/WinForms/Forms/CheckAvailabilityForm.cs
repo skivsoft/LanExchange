@@ -19,7 +19,9 @@ namespace LanExchange.Plugin.WinForms.Forms
 
         public event EventHandler ViewClosed;
 
-        public CheckAvailabilityForm(IImageManager imageManager)
+        public CheckAvailabilityForm(
+            IImageManager imageManager,
+            ITranslationService translationService) : base(translationService)
         {
             Contract.Requires<ArgumentNullException>(imageManager != null);
 

@@ -17,14 +17,11 @@ namespace LanExchange
         public static IMainView MainView { get; set; }
         // other
         public static ConfigModel Config { get; set; }
-        public static ITranslationService TR { get; private set; }
 
         [Localizable(false)]
         public static void SetContainer(IServiceProvider container)
         {
             s_Ioc = container;
-            // init translation service first and replace global resource manager
-            TR = Resolve<ITranslationService>();
         }
 
         public static TTypeToResolve Resolve<TTypeToResolve>()

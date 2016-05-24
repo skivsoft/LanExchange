@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Text;
 using LanExchange.Properties;
 using LanExchange.SDK;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange.Presenter
 {
@@ -15,10 +16,17 @@ namespace LanExchange.Presenter
     public sealed class AboutPresenter : PresenterBase<IAboutView>, IAboutPresenter
     {
         private readonly IAboutModel model;
+        private readonly ITranslationService translationService;
 
-        public AboutPresenter(IAboutModel model)
+        public AboutPresenter(
+            IAboutModel model,
+            ITranslationService translationService)
         {
+            Contract.Requires<ArgumentNullException>(model != null);
+            Contract.Requires<ArgumentNullException>(translationService != null);
+
             this.model = model;
+            this.translationService = translationService;
         }
 
         public void LoadFromModel()
@@ -76,7 +84,7 @@ namespace LanExchange.Presenter
                 }
                 sb.AppendLine();
             }
-            var translations = App.TR.GetTranslations();
+            var translations = translationService.GetTranslations();
             if (translations.Count > 0)
             {
                 sb.AppendLine(string.Format(@"\b {0}\b0", Resources.AboutForm_Translations));
@@ -91,6 +99,5 @@ namespace LanExchange.Presenter
             sb.Append("}");
             return sb.ToString().Replace(Environment.NewLine, @"\line ");
         }
-
     }
 }

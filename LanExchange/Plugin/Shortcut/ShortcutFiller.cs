@@ -4,12 +4,22 @@ using System.Globalization;
 using LanExchange.Interfaces;
 using LanExchange.Properties;
 using LanExchange.SDK;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange.Plugin.Shortcut
 {
     public sealed class ShortcutFiller : IPanelFiller
     {
         private const string PANEL_ITEM_SUFFIX = "PanelItem";
+
+        private readonly ITranslationService translationService;
+
+        public ShortcutFiller(ITranslationService translationService)
+        {
+            Contract.Requires<ArgumentNullException>(translationService != null);
+
+            this.translationService = translationService;
+        }
 
         public bool IsParentAccepted(PanelItemBase parent)
         {
@@ -43,7 +53,8 @@ namespace LanExchange.Plugin.Shortcut
                 foreach (var menuItem in pair.Value.ContextMenu)
                     if (!string.IsNullOrEmpty(menuItem.ShortcutKeys))
                     {
-                        var shortcut = new ShortcutPanelItem(parent, menuItem.ShortcutKeys, App.TR.Translate(menuItem.Text));
+                        var translatedText = translationService.Translate(menuItem.Text);
+                        var shortcut = new ShortcutPanelItem(parent, menuItem.ShortcutKeys, translatedText);
                         shortcut.Context = SuppressPostfix(pair.Key, PANEL_ITEM_SUFFIX);
                         if (menuItem.ProgramValue != null)
                             shortcut.CustomImageName = string.Format(CultureInfo.InvariantCulture, PanelImageNames.ADDON_FMT, menuItem.ProgramValue.Id);
