@@ -3,6 +3,7 @@ using System.ComponentModel.Composition;
 using System.Text;
 using LanExchange.SDK;
 using LanExchange.SDK.Extensions;
+using System.Linq;
 
 namespace LanExchange.Plugin.Notify
 {
@@ -50,13 +51,11 @@ namespace LanExchange.Plugin.Notify
                 {
                     var model = pagesPresenter.GetItem(index);
                     var parent = model.CurrentPath.Peek();
-                    if (parent == null) continue;
-                    if (parent.GetType().Name.Equals(typeName))
-                        if (parent.IsRereadAccepted(subject))
-                        {
-                            model.AsyncRetrieveData(false);
-                            break;
-                        }
+                    if (parent.Where(item => item.GetType().Name.Equals(typeName) && item.IsRereadAccepted(subject)).Any())
+                    {
+                        model.AsyncRetrieveData(false);
+                        break;
+                    }
                 }
         }
     }

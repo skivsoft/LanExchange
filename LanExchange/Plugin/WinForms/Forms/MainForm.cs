@@ -11,6 +11,7 @@ using LanExchange.SDK;
 using System.Diagnostics.Contracts;
 using LanExchange.SDK.Managers;
 using LanExchange.Actions;
+using System.Linq;
 
 namespace LanExchange.Plugin.WinForms.Forms
 {
@@ -162,10 +163,8 @@ namespace LanExchange.Plugin.WinForms.Forms
                     pv.Filter.SetFilterText(string.Empty);
                 else
                 {
-                    var parent = pv == null || pv.Presenter.Objects.CurrentPath.IsEmptyOrRoot
-                                     ? null
-                                     : pv.Presenter.Objects.CurrentPath.Peek();
-                    if ((parent == null) || factoryManager.DefaultRoots.Contains(parent))
+                    var parent = pv.Presenter.Objects.CurrentPath.Peek();
+                    if (!parent.Any() || factoryManager.DefaultRoots.Contains(parent.Single()))
                         Hide();
                     else if (!escDown)
                     {
@@ -200,7 +199,7 @@ namespace LanExchange.Plugin.WinForms.Forms
                     TimeSpan diff = DateTime.UtcNow - escTime;
                     var pv = Pages.ActivePanelView;
                     var presenter = pv.Presenter;
-                    if (pv != null && !presenter.Objects.CurrentPath.IsEmptyOrRoot)
+                    if (pv != null && presenter.Objects.CurrentPath.Any())
                     {
                         if (diff.TotalMilliseconds < WAIT_FOR_KEYUP_MS)
                             presenter.CommandLevelUp();

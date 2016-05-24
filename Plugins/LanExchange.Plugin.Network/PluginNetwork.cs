@@ -16,27 +16,20 @@ namespace LanExchange.Plugin.Network
         {         
             // Setup resource manager
             var translationService = serviceProvider.Resolve<ITranslationService>();
-            if (translationService != null)
-                translationService.SetResourceManagerTo<Resources>();
+            translationService.SetResourceManagerTo<Resources>();
 
             // Register new panel item types
             var factoryManager = serviceProvider.Resolve<IPanelItemFactoryManager>();
-            if (factoryManager != null)
-            {
-                factoryManager.RegisterFactory<DomainRoot>(new PanelItemRootFactory<DomainRoot>());
-                factoryManager.RegisterFactory<DomainPanelItem>(new DomainFactory());
-                factoryManager.RegisterFactory<ComputerPanelItem>(new ComputerFactory());
-                factoryManager.RegisterFactory<SharePanelItem>(new ShareFactory());
-            }
+            factoryManager.RegisterFactory<DomainRoot>(new PanelItemRootFactory<DomainRoot>());
+            factoryManager.RegisterFactory<DomainPanelItem>(new DomainFactory());
+            factoryManager.RegisterFactory<ComputerPanelItem>(new ComputerFactory());
+            factoryManager.RegisterFactory<SharePanelItem>(new ShareFactory());
 
             // Register new panel fillers
             var fillerManager = serviceProvider.Resolve<IPanelFillerManager>();
-            if (fillerManager != null)
-            {
-                fillerManager.RegisterFiller<DomainPanelItem>(new DomainFiller());
-                fillerManager.RegisterFiller<ComputerPanelItem>(new ComputerFiller());
-                fillerManager.RegisterFiller<SharePanelItem>(new ShareFiller());
-            }
+            fillerManager.RegisterFiller<DomainPanelItem>(new DomainFiller());
+            fillerManager.RegisterFiller<ComputerPanelItem>(new ComputerFiller());
+            fillerManager.RegisterFiller<SharePanelItem>(new ShareFiller());
 
             IPHLPAPI = serviceProvider.Resolve<IIPHLPAPISerivice>();
         }

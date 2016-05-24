@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LanExchange</RootNamespace>
-    <AssemblyName>LanExchange</AssemblyName>
+    <AssemblyName>LanExchangeCore</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <CodeContractsAssemblyMode>1</CodeContractsAssemblyMode>
@@ -112,6 +112,7 @@
     <Compile Include="Implementations\Factories\AddonProgramFactory.cs" />
     <Compile Include="Implementations\Factories\WindowFactory.cs" />
     <Compile Include="Implementations\Managers\ActionManager.cs" />
+    <Compile Include="Infrastructure\ObjectPath.cs" />
     <Compile Include="Interfaces\Factories\AddonProgramInfo.cs" />
     <Compile Include="CoreFacade.cs" />
     <Compile Include="Helpers\EnvironmentHelper.cs" />

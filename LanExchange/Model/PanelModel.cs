@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
-using System.Xml.Serialization;
-using LanExchange.Helpers;
+﻿using LanExchange.Helpers;
 using LanExchange.Model.Comparers;
 using LanExchange.SDK;
+using LanExchange.SDK.Domain;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.Contracts;
+using System.Globalization;
+using System.Linq;
+using System.Xml.Serialization;
+using LanExchange.Infrastructure;
 
 namespace LanExchange.Model
 {
@@ -23,7 +26,7 @@ namespace LanExchange.Model
         // keys for filtering
         private readonly IList<PanelItemBase> keys;
         // current path for item list
-        private readonly ObjectPath<PanelItemBase> currentPath;
+        private readonly IObjectPath<PanelItemBase> currentPath;
         // column sorter
         private readonly IColumnComparer comparer;
         // punto switcher service
@@ -75,8 +78,8 @@ namespace LanExchange.Model
         {
             get
             {
-                var parent = currentPath.IsEmpty ? null : currentPath.Peek();
-                return parent == null ? string.Empty : parent[0].ToString();
+                var parent = currentPath.Peek();
+                return parent.Single().Name;
             }
         }
 
@@ -91,7 +94,7 @@ namespace LanExchange.Model
             get 
             { 
                 var parent = currentPath.Peek();
-                return parent.ImageName;
+                return parent.Single().ImageName;
             }
         }
 
@@ -113,21 +116,14 @@ namespace LanExchange.Model
         public string FilterText { get; set; }
 
         [XmlElement("Path")]
-        public ObjectPath<PanelItemBase> CurrentPath
+        public IObjectPath<PanelItemBase> CurrentPath
         {
             get { return currentPath; }
             set
             {
-                // build path from loaded items
-                var items = value.Item;
                 currentPath.Clear();
-                for (int index = items.Length - 1; index >= 0; index--)
-                {
-                    var item = items[index];
-                    if (index < items.Length - 1)
-                        item.Parent = items[index + 1];
+                foreach (var item in value)
                     currentPath.Push(item);
-                }
             }
         }
 
@@ -240,9 +236,9 @@ namespace LanExchange.Model
         public PanelFillerResult RetrieveData(RetrieveMode mode, bool clearFilter)
         {
             // get parent
-            var parent = currentPath.IsEmpty ? null : currentPath.Peek();
+            var parent = currentPath.Peek();
             // retrieve items
-            return panelFillers.RetrievePanelItems(parent, mode);
+            return panelFillers.RetrievePanelItems(parent.SingleOrDefault(), mode);
         }
 
         public void SetFillerResult(PanelFillerResult fillerResult, bool clearFilter)
@@ -251,8 +247,8 @@ namespace LanExchange.Model
             {
                 data.Clear();
                 // add ".." item
-                if (!currentPath.IsEmptyOrRoot)
-                    data.Add(new PanelItemDoubleDot(currentPath.Peek()));
+                if (currentPath.Any())
+                    data.Add(new PanelItemDoubleDot(currentPath.Peek().Single()));
                 // add items from filler
                 data.AddRange(fillerResult.Items);
                 // set current items DataType and filter

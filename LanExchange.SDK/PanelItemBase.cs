@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Xml.Serialization;
 
 namespace LanExchange.SDK
@@ -80,7 +79,8 @@ namespace LanExchange.SDK
         {
             get
             {
-                Contract.Requires<ArgumentOutOfRangeException>(index >= 0 && index < CountColumns);
+                if (index < 0 || index >= CountColumns)
+                    throw new ArgumentOutOfRangeException("index");
 
                 return GetValue(index);
             }

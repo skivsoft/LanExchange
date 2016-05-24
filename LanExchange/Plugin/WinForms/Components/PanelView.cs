@@ -298,8 +298,8 @@ namespace LanExchange.Plugin.WinForms.Components
             if (e.KeyCode == Keys.Back)
             {
 
-                var parent = presenter.Objects.CurrentPath.IsEmpty ? null : presenter.Objects.CurrentPath.Peek();
-                if (parent != null && !factoryManager.DefaultRoots.Contains(parent))
+                var parent = presenter.Objects.CurrentPath.Peek();
+                if (parent.Any() && !factoryManager.DefaultRoots.Contains(parent.Single()))
                 {
                     presenter.CommandLevelUp();
                     e.Handled = true;

@@ -141,13 +141,13 @@ namespace LanExchange.Presenter
 
         public bool CommandLevelUp()
         {
-            if (Objects == null || Objects.CurrentPath.IsEmptyOrRoot) 
+            if (Objects == null || !Objects.CurrentPath.Any()) 
                 return false;
             var panelItem = Objects.CurrentPath.Peek();
-            if (panelItem == null || panelItem is PanelItemRootBase) 
+            if (!panelItem.Any() || panelItem.Single() is PanelItemRootBase) 
                 return false;
-            if (!panelFillers.FillerExists(panelItem)) return false;
-            Objects.FocusedItem = panelItem;
+            if (!panelFillers.FillerExists(panelItem.Single())) return false;
+            Objects.FocusedItem = panelItem.Single();
             Objects.CurrentPath.Pop();
             Objects.OnTabNameUpdated();
             ResetSortOrder();

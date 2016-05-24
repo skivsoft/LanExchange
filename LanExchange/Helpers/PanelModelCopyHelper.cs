@@ -22,7 +22,6 @@ namespace LanExchange.Helpers
             IPanelModel model,
             IPanelColumnManager panelColumns)
         {
-            Contract.Requires<ArgumentNullException>(model != null);
             Contract.Requires<ArgumentNullException>(panelColumns != null);
 
             this.model = model;
@@ -33,7 +32,8 @@ namespace LanExchange.Helpers
 
         public void Dispose()
         {
-            model.Dispose();
+            if (model != null)
+                model.Dispose();
         }
  
         public IPanelModel Model

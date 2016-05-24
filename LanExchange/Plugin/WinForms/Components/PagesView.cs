@@ -8,6 +8,7 @@ using LanExchange.SDK;
 using System.Diagnostics.Contracts;
 using LanExchange.SDK.Managers;
 using LanExchange.Actions;
+using System.Linq;
 
 namespace LanExchange.Plugin.WinForms.Components
 {
@@ -286,7 +287,7 @@ namespace LanExchange.Plugin.WinForms.Components
 
             tabPage.Padding = new Padding(0);
             tabPage.Text = model.TabName;
-            tabPage.ImageIndex = imageManager.IndexOf(model.CurrentPath.Item[0].ImageName);
+            tabPage.ImageIndex = imageManager.IndexOf(model.CurrentPath.First().ImageName);
             tabPage.ToolTipText = model.ToolTipText;
             return tabPage;
         }

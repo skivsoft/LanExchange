@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LanExchange.SDK.Domain;
+using System;
 using System.Collections.Generic;
 
 namespace LanExchange.SDK
@@ -45,7 +46,7 @@ namespace LanExchange.SDK
         /// <value>
         /// The current path.
         /// </value>
-        ObjectPath<PanelItemBase> CurrentPath { get; }
+        IObjectPath<PanelItemBase> CurrentPath { get; }
         /// <summary>
         /// Gets or sets the focused item text.
         /// </summary>
