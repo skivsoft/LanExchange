@@ -1,11 +1,9 @@
 using LanExchange.Actions;
 using LanExchange.Implementations.Factories;
 using LanExchange.Implementations.Managers;
-using LanExchange.Implementations.Processes;
 using LanExchange.Implementations.Services;
 using LanExchange.Interfaces;
 using LanExchange.Interfaces.Factories;
-using LanExchange.Interfaces.Processes;
 using LanExchange.Interfaces.Services;
 using LanExchange.Misc.Impl;
 using LanExchange.Model;
@@ -43,7 +41,6 @@ namespace LanExchange
             RegisterOSWindows();
             RegisterWinForms();
             RegisterServices();
-            RegisterProcesses();
             RegisterFactories();
             RegisterActions();
             return container;
@@ -121,12 +118,6 @@ namespace LanExchange
         {
             container.RegisterSingleton<IConfigPersistenceService, ConfigPersistenceService>();
             container.RegisterSingleton<IPagesPersistenceService, PagesPersistenceService>();
-        }
-
-        private void RegisterProcesses()
-        {
-            container.Register<ICmdLineProcessor, CmdLineProcessor>();
-            container.Register<IGenerateEnglishProcess, GenerateEnglishProcess>();
         }
 
         private void RegisterFactories()

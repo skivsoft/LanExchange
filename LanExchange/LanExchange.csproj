@@ -118,8 +118,6 @@
     <Compile Include="Helpers\EnvironmentHelper.cs" />
     <Compile Include="Helpers\PanelModelCopyHelper.cs" />
     <Compile Include="Interfaces\Factories\IAddonProgramFactory.cs" />
-    <Compile Include="Interfaces\Processes\ICmdLineProcessor.cs" />
-    <Compile Include="Interfaces\Processes\IGenerateEnglishProcess.cs" />
     <Compile Include="Implementations\Services\ConfigPersistenceService.cs" />
     <Compile Include="Implementations\Services\PagesPersistenceService.cs" />
     <Compile Include="Interfaces\DataReadyArgs.cs" />
@@ -131,7 +129,6 @@
     <Compile Include="Model\Comparers\ColumnComparer.cs" />
     <Compile Include="Misc\AnimationHelper.cs" />
     <Compile Include="ContainerBuilder.cs" />
-    <Compile Include="Implementations\Processes\GenerateEnglishProcess.cs" />
     <Compile Include="Misc\Impl\PanelUpdaterImpl.cs" />
     <Compile Include="Misc\Impl\DisposableManagerImpl.cs" />
     <Compile Include="Misc\TranslationResourceManager.cs" />
@@ -140,7 +137,6 @@
     <Compile Include="Actions\PagesCloseOtherAction.cs" />
     <Compile Include="Actions\PagesReReadAction.cs" />
     <Compile Include="Actions\ShortcutKeysAction.cs" />
-    <Compile Include="Implementations\Processes\CmdLineProcessor.cs" />
     <Compile Include="Misc\Impl\PanelColumnManagerImpl.cs" />
     <Compile Include="Misc\Impl\PanelFillerManagerImpl.cs" />
     <Compile Include="Misc\Impl\PanelItemFactoryManagerImpl.cs" />
@@ -149,7 +145,6 @@
     <Compile Include="Misc\Impl\FolderManagerImpl.cs" />
     <Compile Include="Model\PagesModel.cs" />
     <Compile Include="Model\PanelModel.cs" />
-    <Compile Include="Implementations\Processes\Phrase.cs" />
     <Compile Include="Plugin\PluginInternal.cs" />
     <Compile Include="Plugin\Shortcut\ShortcutFactory.cs" />
     <Compile Include="Plugin\Shortcut\ShortcutFiller.cs" />
