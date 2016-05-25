@@ -8,11 +8,14 @@ using LanExchange.Helpers;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.SDK;
 using System.Diagnostics.Contracts;
+using LanExchange.SDK.Factories;
 
 namespace LanExchange.Plugin.WinForms.Impl
 {
     public class AddonCommandStarter
     {
+        private readonly IWindowFactory windowFactory;
+
         private readonly PanelItemBase panelItem;
         private readonly AddonMenuItem menuItem;
         private readonly Func<PanelItemBase, bool> checker;
@@ -27,22 +30,28 @@ namespace LanExchange.Plugin.WinForms.Impl
                 : new[] { programFileName, programArgs };
         }
 
-        public AddonCommandStarter(AddonMenuItem menuItem, PanelItemBase panelItem)
+        public AddonCommandStarter(
+            IPanelItemFactoryManager factoryManager,
+            IWindowFactory windowFactory,
+            AddonMenuItem menuItem, 
+            PanelItemBase panelItem)
         {
+            Contract.Requires<ArgumentNullException>(factoryManager != null);
+            Contract.Requires<ArgumentNullException>(windowFactory != null);
             Contract.Requires<ArgumentNullException>(menuItem != null);
             Contract.Requires<ArgumentNullException>(panelItem != null);
 
+            this.windowFactory = windowFactory;
             this.panelItem = panelItem;
             this.menuItem = menuItem;
 
-            var factoryManager = App.Resolve<IPanelItemFactoryManager>();
             checker = factoryManager.GetAvailabilityChecker(this.panelItem.GetType());
         }
 
         [Localizable(false)]
         private void ShowCheckAvailabilityWindow()
         {
-            var form = App.Resolve<ICheckAvailabilityWindow>();
+            var form = windowFactory.CreateCheckAvailabilityWindow();
             form.Text = string.Format("{0} — {1}", panelItem.Name, menuItem.Text);
             form.CurrentItem = panelItem;
             form.RunText = menuItem.Text;

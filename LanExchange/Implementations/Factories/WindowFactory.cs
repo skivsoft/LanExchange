@@ -1,20 +1,14 @@
 ﻿using LanExchange.SDK.Factories;
 using System;
 using LanExchange.SDK;
-using System.Diagnostics.Contracts;
 using LanExchange.SDK.Extensions;
 
 namespace LanExchange.Implementations.Factories
 {
-    internal sealed class WindowFactory : IWindowFactory
+    internal sealed class WindowFactory : FactoryBase, IWindowFactory
     {
-        private readonly IServiceProvider serviceProvider;
-
-        public WindowFactory(IServiceProvider serviceProvider)
+        public WindowFactory(IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            Contract.Requires<ArgumentNullException>(serviceProvider != null);
-
-            this.serviceProvider = serviceProvider;
         }
 
         public IWindow CreateAboutView()
@@ -25,6 +19,11 @@ namespace LanExchange.Implementations.Factories
         public IMainView CreateMainView()
         {
             return serviceProvider.Resolve<IMainView>();
+        }
+
+        public ICheckAvailabilityWindow CreateCheckAvailabilityWindow()
+        {
+            return serviceProvider.Resolve<ICheckAvailabilityWindow>();
         }
     }
 }

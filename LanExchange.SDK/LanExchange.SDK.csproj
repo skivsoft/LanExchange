@@ -93,6 +93,7 @@
     <Compile Include="Domain\IObjectPath.cs" />
     <Compile Include="Domain\Option.cs" />
     <Compile Include="Extensions\IServiceProviderExtension.cs" />
+    <Compile Include="Factories\IModelFactory.cs" />
     <Compile Include="Factories\IWindowFactory.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="HorizontalAlignment.cs" />

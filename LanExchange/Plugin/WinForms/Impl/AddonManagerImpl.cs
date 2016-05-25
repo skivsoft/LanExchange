@@ -12,6 +12,7 @@ using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.SDK;
 using LanExchange.Interfaces.Factories;
 using System.Diagnostics.Contracts;
+using LanExchange.SDK.Factories;
 
 namespace LanExchange.Plugin.WinForms.Impl
 {
@@ -25,6 +26,8 @@ namespace LanExchange.Plugin.WinForms.Impl
         private readonly IImageManager imageManager;
         private readonly IPagesPresenter pagesPresenter;
         private readonly ITranslationService translationService;
+        private readonly IPanelItemFactoryManager factoryManager;
+        private readonly IWindowFactory windowFactory;
 
         private bool isLoaded;
 
@@ -33,19 +36,25 @@ namespace LanExchange.Plugin.WinForms.Impl
             IAddonProgramFactory programFactory,
             IImageManager imageManager,
             IPagesPresenter pagesPresenter,
-            ITranslationService translationService)
+            ITranslationService translationService,
+            IPanelItemFactoryManager factoryManager,
+            IWindowFactory windowFactory)
         {
             Contract.Requires<ArgumentNullException>(folderManager != null);
             Contract.Requires<ArgumentNullException>(programFactory != null);
             Contract.Requires<ArgumentNullException>(imageManager != null);
             Contract.Requires<ArgumentNullException>(pagesPresenter != null);
             Contract.Requires<ArgumentNullException>(translationService != null);
+            Contract.Requires<ArgumentNullException>(factoryManager != null);
+            Contract.Requires<ArgumentNullException>(windowFactory != null);
 
             this.folderManager = folderManager;
             this.programFactory = programFactory;
             this.imageManager = imageManager;
             this.pagesPresenter = pagesPresenter;
             this.translationService = translationService;
+            this.factoryManager = factoryManager;
+            this.windowFactory = windowFactory;
 
             programs = new Dictionary<string, AddonProgram>();
             panelItems = new Dictionary<string, AddOnItemTypeRef>();
@@ -218,7 +227,7 @@ namespace LanExchange.Plugin.WinForms.Impl
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="eventArgs"></param>
-        private static void MenuItemOnClick(object sender, EventArgs eventArgs)
+        private void MenuItemOnClick(object sender, EventArgs eventArgs)
         {
             var menuItem = (sender as ToolStripMenuItem);
             if (menuItem == null) return;
@@ -226,7 +235,7 @@ namespace LanExchange.Plugin.WinForms.Impl
             var item = (AddonMenuItem) menuItem.Tag;
             if (item == null || !item.Enabled) return;
 
-            new AddonCommandStarter(item, item.CurrentItem).Start();
+            new AddonCommandStarter(factoryManager, windowFactory, item, item.CurrentItem).Start();
         }
 
         public void ProcessKeyDown(object args)
@@ -244,7 +253,7 @@ namespace LanExchange.Plugin.WinForms.Impl
             foreach (var menuItem in item.ContextMenu)
                 if (menuItem.ShortcutPresent && menuItem.ShortcutKeys.Equals(shortcut) && menuItem.Enabled)
                 {
-                    new AddonCommandStarter(menuItem, panelItem).Start();
+                    new AddonCommandStarter(factoryManager, windowFactory, menuItem, panelItem).Start();
                     e.Handled = true;
                     break;
                 }
@@ -272,7 +281,7 @@ namespace LanExchange.Plugin.WinForms.Impl
                     defaultItem = menuItem;
 
             if (defaultItem != null)
-                new AddonCommandStarter(defaultItem, panelItem).Start();
+                new AddonCommandStarter(factoryManager, windowFactory, defaultItem, panelItem).Start();
         }
     }
 }

@@ -8,11 +8,16 @@ namespace LanExchange.Misc.Impl
 {
     public class PanelItemFactoryManagerImpl : IPanelItemFactoryManager
     {
+        private readonly IPanelColumnManager columnManager;
         private readonly IDictionary<Type, IPanelItemFactory> types;
         private readonly List<PanelItemBase> defaultRoots;
 
-        public PanelItemFactoryManagerImpl()
+        public PanelItemFactoryManagerImpl(IPanelColumnManager columnManager)
         {
+            Contract.Requires<ArgumentNullException>(columnManager != null);
+
+            this.columnManager = columnManager;
+
             types = new Dictionary<Type, IPanelItemFactory>();
             defaultRoots = new List<PanelItemBase>();
         }
@@ -22,7 +27,7 @@ namespace LanExchange.Misc.Impl
             Contract.Requires<ArgumentNullException>(factory != null);
 
             types.Add(typeof(TPanelItem), factory);
-            factory.RegisterColumns(App.Resolve<IPanelColumnManager>());
+            factory.RegisterColumns(columnManager);
         }
 
         public Func<PanelItemBase, bool> GetAvailabilityChecker(Type type)

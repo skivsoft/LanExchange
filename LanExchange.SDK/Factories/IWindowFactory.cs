@@ -10,6 +10,17 @@
         /// </summary>
         /// <returns></returns>
         IWindow CreateAboutView();
+
+        /// <summary>
+        /// Creates the main view.
+        /// </summary>
+        /// <returns></returns>
         IMainView CreateMainView();
+
+        /// <summary>
+        /// Creates the check availability window.
+        /// </summary>
+        /// <returns></returns>
+        ICheckAvailabilityWindow CreateCheckAvailabilityWindow();
     }
 }

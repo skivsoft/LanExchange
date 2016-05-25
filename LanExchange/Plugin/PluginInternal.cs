@@ -3,6 +3,7 @@ using LanExchange.Plugin.Shortcut;
 using LanExchange.Properties;
 using LanExchange.SDK;
 using LanExchange.SDK.Extensions;
+using LanExchange.Interfaces;
 
 namespace LanExchange.Plugin
 {
@@ -18,9 +19,10 @@ namespace LanExchange.Plugin
             factoryManager.RegisterFactory<ShortcutRoot>(new PanelItemRootFactory<ShortcutRoot>());
             factoryManager.RegisterFactory<ShortcutPanelItem>(new ShortcutFactory());
 
+            var addonManager = serviceProvider.Resolve<IAddonManager>();
             var translationService = serviceProvider.Resolve<ITranslationService>();
             var panelFillers = serviceProvider.Resolve<IPanelFillerManager>();
-            panelFillers.RegisterFiller<ShortcutPanelItem>(new ShortcutFiller(translationService));
+            panelFillers.RegisterFiller<ShortcutPanelItem>(new ShortcutFiller(translationService, addonManager));
         }
     }
 }

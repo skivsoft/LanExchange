@@ -6,6 +6,7 @@ using LanExchange.SDK;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange.Misc.Impl
 {
@@ -13,6 +14,8 @@ namespace LanExchange.Misc.Impl
     {
         private const string PLUGIN_MASK = "LanExchange.Plugin.*.dll";
 
+        private readonly IServiceProvider serviceProvider;
+        private readonly IDictionary<string, string> pluginsAuthors;
 
         [ImportMany]
         // ReSharper disable once FieldCanBeMadeReadOnly.Local
@@ -20,11 +23,12 @@ namespace LanExchange.Misc.Impl
 
         private CompositionContainer compContainer;
 
-
-        private readonly IDictionary<string, string> pluginsAuthors;
-
-        public PluginManagerImpl()
+        public PluginManagerImpl(IServiceProvider serviceProvider)
         {
+            Contract.Requires<ArgumentNullException>(serviceProvider != null);
+
+            this.serviceProvider = serviceProvider;
+
             plugins = new List<IPlugin>();
             pluginsAuthors = new Dictionary<string, string>();
         }
@@ -38,7 +42,7 @@ namespace LanExchange.Misc.Impl
             foreach(var plugin in plugins)
             try
             {
-                plugin.Initialize(App.Resolve<IServiceProvider>());
+                plugin.Initialize(serviceProvider);
             }
             catch (Exception ex)
             {
@@ -63,6 +67,5 @@ namespace LanExchange.Misc.Impl
         {
             get { return pluginsAuthors; }
         }
-
     }
 }

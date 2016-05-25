@@ -124,6 +124,7 @@ namespace LanExchange
         {
             container.RegisterSingleton<IAddonProgramFactory, AddonProgramFactory>();
             container.RegisterSingleton<IWindowFactory, WindowFactory>();
+            container.RegisterSingleton<IModelFactory, ModelFactory>();
         }
 
         private void RegisterActions()

@@ -13,12 +13,17 @@ namespace LanExchange.Plugin.Shortcut
         private const string PANEL_ITEM_SUFFIX = "PanelItem";
 
         private readonly ITranslationService translationService;
+        private readonly IAddonManager addonManager;
 
-        public ShortcutFiller(ITranslationService translationService)
+        public ShortcutFiller(
+            ITranslationService translationService,
+            IAddonManager addonManager)
         {
             Contract.Requires<ArgumentNullException>(translationService != null);
+            Contract.Requires<ArgumentNullException>(addonManager != null);
 
             this.translationService = translationService;
+            this.addonManager = addonManager;
         }
 
         public bool IsParentAccepted(PanelItemBase parent)
@@ -49,7 +54,7 @@ namespace LanExchange.Plugin.Shortcut
             result.Add(new ShortcutPanelItem(parent, Resources.KeyBackspace, Resources.KeyBackspace__));
             result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlDown, Resources.KeyCtrlDown__));
             result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlUp, Resources.KeyCtrlUp__));
-            foreach (var pair in App.Resolve<IAddonManager>().PanelItems)
+            foreach (var pair in addonManager.PanelItems)
                 foreach (var menuItem in pair.Value.ContextMenu)
                     if (!string.IsNullOrEmpty(menuItem.ShortcutKeys))
                     {
