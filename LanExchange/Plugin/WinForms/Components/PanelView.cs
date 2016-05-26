@@ -26,6 +26,8 @@ namespace LanExchange.Plugin.WinForms.Components
         private readonly IImageManager imageManager;
         private readonly IPanelColumnManager panelColumns;
         private readonly IPagesPresenter pagesPresenter;
+        private readonly IUser32Service userService;
+        private readonly IPuntoSwitcherService puntoService;
 
         private PanelModelCopyHelper copyHelper;
         private int sortColumn;
@@ -40,7 +42,9 @@ namespace LanExchange.Plugin.WinForms.Components
             IImageManager imageManager,
             IPanelColumnManager panelColumns,
             IPagesPresenter pagesPresenter,
-            IFilterPresenter filterPresenter)
+            IFilterPresenter filterPresenter,
+            IUser32Service userService,
+            IPuntoSwitcherService puntoService)
         {
             Contract.Requires<ArgumentNullException>(presenter != null);
             Contract.Requires<ArgumentNullException>(addonManager != null);
@@ -50,6 +54,8 @@ namespace LanExchange.Plugin.WinForms.Components
             Contract.Requires<ArgumentNullException>(panelColumns != null);
             Contract.Requires<ArgumentNullException>(pagesPresenter != null);
             Contract.Requires<ArgumentNullException>(filterPresenter != null);
+            Contract.Requires<ArgumentNullException>(userService != null);
+            Contract.Requires<ArgumentNullException>(puntoService != null);
 
             this.presenter = presenter;
             this.presenter.View = this;
@@ -59,6 +65,8 @@ namespace LanExchange.Plugin.WinForms.Components
             this.imageManager = imageManager;
             this.panelColumns = panelColumns;
             this.pagesPresenter = pagesPresenter;
+            this.userService = userService;
+            this.puntoService = puntoService;
 
             InitializeComponent();
 
@@ -262,8 +270,7 @@ namespace LanExchange.Plugin.WinForms.Components
 
         private void lvComps_KeyPress(object sender, KeyPressEventArgs e)
         {
-            var punto = App.Resolve<IPuntoSwitcherService>();
-            if (Char.IsLetterOrDigit(e.KeyChar) || Char.IsPunctuation(e.KeyChar) || punto.IsValidChar(e.KeyChar))
+            if (char.IsLetterOrDigit(e.KeyChar) || Char.IsPunctuation(e.KeyChar) || puntoService.IsValidChar(e.KeyChar))
             {
                 pFilter.FocusAndKeyPress(e);
                 e.Handled = true;
@@ -291,7 +298,7 @@ namespace LanExchange.Plugin.WinForms.Components
             {
                 var listView = sender as ListView;
                 if (listView != null)
-                    App.Resolve<IUser32Service>().SelectAllItems(listView.Handle);
+                    userService.SelectAllItems(listView.Handle);
                 e.Handled = true;
             }
             // Backspace - Go level up
@@ -418,9 +425,7 @@ namespace LanExchange.Plugin.WinForms.Components
 
         public void SetColumnMarker(int columnIndex, PanelSortOrder sortOrder)
         {
-			var service = App.Resolve<IUser32Service>();
-			service.SetColumnImage(LV.Handle, columnIndex, (int)sortOrder, -1);
-            //NativeMethods.SetColumnImage(LV, columnIndex, (SortOrder)sortOrder, -1);
+			userService.SetColumnImage(LV.Handle, columnIndex, (int)sortOrder, -1);
             sortColumn = columnIndex;
         }
 

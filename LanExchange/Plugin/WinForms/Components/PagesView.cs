@@ -9,6 +9,7 @@ using System.Diagnostics.Contracts;
 using LanExchange.SDK.Managers;
 using LanExchange.Actions;
 using System.Linq;
+using LanExchange.SDK.Factories;
 
 namespace LanExchange.Plugin.WinForms.Components
 {
@@ -19,6 +20,8 @@ namespace LanExchange.Plugin.WinForms.Components
         private readonly IImageManager imageManager;
         private readonly IPanelFillerManager panelFillers;
         private readonly IActionManager actionManager;
+        private readonly IModelFactory modelFactory;
+        private readonly IViewFactory viewFactory;
 
         private int popupSelectedIndex = -1;
 
@@ -40,13 +43,17 @@ namespace LanExchange.Plugin.WinForms.Components
             IPanelItemFactoryManager factoryManager, 
             IImageManager imageManager,
             IPanelFillerManager panelFillers,
-            IActionManager actionManager)
+            IActionManager actionManager,
+            IModelFactory modelFactory,
+            IViewFactory viewFactory)
         {
             Contract.Requires<ArgumentNullException>(presenter != null);
             Contract.Requires<ArgumentNullException>(factoryManager != null);
             Contract.Requires<ArgumentNullException>(imageManager != null);
             Contract.Requires<ArgumentNullException>(panelFillers != null);
             Contract.Requires<ArgumentNullException>(actionManager != null);
+            Contract.Requires<ArgumentNullException>(modelFactory != null);
+            Contract.Requires<ArgumentNullException>(viewFactory != null);
 
             InitializeComponent();
             this.presenter = presenter;
@@ -56,6 +63,8 @@ namespace LanExchange.Plugin.WinForms.Components
             this.imageManager = imageManager;
             this.panelFillers = panelFillers;
             this.actionManager = actionManager;
+            this.modelFactory = modelFactory;
+            this.viewFactory = viewFactory;
 
             this.imageManager.SetImagesTo(popPages);
         }
@@ -105,7 +114,7 @@ namespace LanExchange.Plugin.WinForms.Components
             if (root == null) return;
             if (!presenter.SelectTabByName(root.Name))
             {
-                var info = App.Resolve<IPanelModel>();
+                var info = modelFactory.CreatePanelModel();
                 info.SetDefaultRoot(root);
                 var type = panelFillers.GetFillType(root);
                 info.DataType = type != null ? Name : string.Empty;
@@ -256,7 +265,7 @@ namespace LanExchange.Plugin.WinForms.Components
         [Localizable(false)]
         public IPanelView CreatePanelView(IPanelModel info)
         {
-            var panelView = (PanelView) App.Resolve<IPanelView>();
+            var panelView = (PanelView) viewFactory.CreatePanelView();
             panelView.GridLines = App.Config.ShowGridLines;
             var listView = panelView.Controls[0] as ListView;
             if (listView != null)

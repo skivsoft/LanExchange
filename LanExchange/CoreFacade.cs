@@ -13,9 +13,7 @@ namespace LanExchange
         /// <returns>The <see cref="IServiceProvider"/> instance.</returns>
         public static IServiceProvider InitializeDIContainer()
         {
-            var container = new ContainerBuilder().Build();
-            App.SetContainer(container);
-            return container;
+            return new ContainerBuilder().Build();
         }
     }
 }

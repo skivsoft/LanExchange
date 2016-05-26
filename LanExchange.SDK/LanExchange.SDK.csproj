@@ -94,6 +94,8 @@
     <Compile Include="Domain\Option.cs" />
     <Compile Include="Extensions\IServiceProviderExtension.cs" />
     <Compile Include="Factories\IModelFactory.cs" />
+    <Compile Include="Factories\IServiceFactory.cs" />
+    <Compile Include="Factories\IViewFactory.cs" />
     <Compile Include="Factories\IWindowFactory.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="HorizontalAlignment.cs" />
@@ -114,7 +116,7 @@
     <Compile Include="IFilterPresenter.cs" />
     <Compile Include="IFilterView.cs" />
     <Compile Include="IFolderManager.cs" />
-    <Compile Include="IHotkeysService.cs" />
+    <Compile Include="IHotkeyService.cs" />
     <Compile Include="IImageManager.cs" />
     <Compile Include="IInfoView.cs" />
     <Compile Include="IIPHLPAPISerivice.cs" />

@@ -17,6 +17,7 @@ using LanExchange.SDK;
 using LanExchange.SDK.Factories;
 using LanExchange.SDK.Managers;
 using SimpleInjector;
+using SimpleInjector.Diagnostics;
 using System;
 
 namespace LanExchange
@@ -34,6 +35,7 @@ namespace LanExchange
         public IServiceProvider Build()
         {
             container = new Container();
+
             RegisterCoreSingletons();
             RegisterPanelUpdater();
             RegisterModels();
@@ -43,6 +45,8 @@ namespace LanExchange
             RegisterServices();
             RegisterFactories();
             RegisterActions();
+
+            VerifyContainer();
             return container;
         }
 
@@ -92,8 +96,7 @@ namespace LanExchange
             container.RegisterSingleton<IComctl32Service, Comctl32Service>();
             container.RegisterSingleton<IOle32Service, Ole32Service>();
             container.RegisterSingleton<IIPHLPAPISerivice, IPHLPAPISerivce>();
-            container.RegisterSingleton<IHotkeysService, HotkeysService>();
-            container.Register<ISysImageListService, SysImageListService>();
+            container.RegisterSingleton<IHotkeyService, HotkeysService>();
         }
 
         private void RegisterWinForms()
@@ -124,7 +127,9 @@ namespace LanExchange
         {
             container.RegisterSingleton<IAddonProgramFactory, AddonProgramFactory>();
             container.RegisterSingleton<IWindowFactory, WindowFactory>();
+            container.RegisterSingleton<IViewFactory, ViewFactory>();
             container.RegisterSingleton<IModelFactory, ModelFactory>();
+            container.RegisterSingleton<IServiceFactory, ServiceFactory>();
         }
 
         private void RegisterActions()
@@ -137,6 +142,25 @@ namespace LanExchange
                 typeof(PagesCloseOtherAction),
                 typeof(ShortcutKeysAction)
             });
+        }
+
+        private void SuppressDisposableTransientComponentWarning<T>()
+        {
+            container.GetRegistration(typeof(T)).Registration
+                .SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "manual");
+        }
+
+        private void VerifyContainer()
+        {
+            SuppressDisposableTransientComponentWarning<IAboutView>();
+            SuppressDisposableTransientComponentWarning<IFilterView>();
+            SuppressDisposableTransientComponentWarning<IEditView>();
+            SuppressDisposableTransientComponentWarning<IPanelView>();
+            SuppressDisposableTransientComponentWarning<IPanelUpdater>();
+            SuppressDisposableTransientComponentWarning<IPanelModel>();
+            SuppressDisposableTransientComponentWarning<ICheckAvailabilityWindow>();
+
+            container.Verify();
         }
     }
 }

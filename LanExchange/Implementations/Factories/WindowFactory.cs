@@ -25,5 +25,10 @@ namespace LanExchange.Implementations.Factories
         {
             return serviceProvider.Resolve<ICheckAvailabilityWindow>();
         }
+
+        public IPanelView CreatePanelView()
+        {
+            return serviceProvider.Resolve<IPanelView>();
+        }
     }
 }

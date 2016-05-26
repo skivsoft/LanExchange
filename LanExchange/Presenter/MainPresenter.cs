@@ -9,32 +9,64 @@ using LanExchange.Plugin.Shortcut;
 using LanExchange.SDK;
 using LanExchange.Model;
 using System.Diagnostics.Contracts;
+using LanExchange.SDK.Factories;
 
 namespace LanExchange.Presenter
 {
     public class MainPresenter : PresenterBase<IMainView>, IMainPresenter
     {
         private readonly ILazyThreadPool threadPool;
-        private readonly IPanelColumnManager panelColumns;
+        private readonly IPanelColumnManager columnManager;
+        private readonly IAppPresenter appPresenter;
         private readonly IPagesPresenter pagesPresenter;
         private readonly ITranslationService translationService;
-        private IHotkeysService hotkeys;
+        private readonly IHotkeyService hotkeyService;
+        private readonly IDisposableManager disposableManager;
+        private readonly IAboutModel aboutModel;
+        private readonly IViewFactory viewFactory;
+        private readonly IWaitingService waitingService;
+        private readonly IPanelItemFactoryManager factoryManager;
+        private readonly IScreenService screenService;
 
         public MainPresenter(
             ILazyThreadPool threadPool,
             IPanelColumnManager panelColumns,
+            IAppPresenter appPresenter,
             IPagesPresenter pagesPresenter,
-            ITranslationService translationService)
+            ITranslationService translationService,
+            IHotkeyService hotkeyService,
+            IDisposableManager disposableManager,
+            IAboutModel aboutModel,
+            IViewFactory viewFactory,
+            IWaitingService waitingService,
+            IPanelItemFactoryManager factoryManager,
+            IScreenService screenService)
         {
             Contract.Requires<ArgumentNullException>(threadPool != null);
             Contract.Requires<ArgumentNullException>(panelColumns != null);
+            Contract.Requires<ArgumentNullException>(appPresenter != null);
             Contract.Requires<ArgumentNullException>(pagesPresenter != null);
             Contract.Requires<ArgumentNullException>(translationService != null);
+            Contract.Requires<ArgumentNullException>(hotkeyService != null);
+            Contract.Requires<ArgumentNullException>(disposableManager != null);
+            Contract.Requires<ArgumentNullException>(aboutModel != null);
+            Contract.Requires<ArgumentNullException>(viewFactory != null);
+            Contract.Requires<ArgumentNullException>(waitingService != null);
+            Contract.Requires<ArgumentNullException>(factoryManager != null);
+            Contract.Requires<ArgumentNullException>(screenService != null);
 
             this.threadPool = threadPool;
-            this.panelColumns = panelColumns;
+            this.columnManager = panelColumns;
+            this.appPresenter = appPresenter;
             this.pagesPresenter = pagesPresenter;
             this.translationService = translationService;
+            this.hotkeyService = hotkeyService;
+            this.disposableManager = disposableManager;
+            this.aboutModel = aboutModel;
+            this.viewFactory = viewFactory;
+            this.waitingService = waitingService;
+            this.factoryManager = factoryManager;
+            this.screenService = screenService;
         }
 
         public void PrepareForm()
@@ -46,10 +78,9 @@ namespace LanExchange.Presenter
             View.SetupPages();
             SetupForm();
             // set hotkey for activate: Ctrl+Win+X
-            hotkeys = App.Resolve<IHotkeysService>();
-            App.Resolve<IDisposableManager>().RegisterInstance(hotkeys);
-            if (hotkeys.RegisterShowWindowKey(View.Handle))
-                View.ShowWindowKey = hotkeys.ShowWindowKey;
+            disposableManager.RegisterInstance(hotkeyService);
+            if (hotkeyService.RegisterShowWindowKey(View.Handle))
+                View.ShowWindowKey = hotkeyService.ShowWindowKey;
             // set lazy events
             threadPool.DataReady += OnDataReady;
         }
@@ -64,7 +95,6 @@ namespace LanExchange.Presenter
             var rect = SettingsGetBounds();
             View.SetBounds(rect.Left, rect.Top, rect.Width, rect.Height);
             // set mainform title
-            var aboutModel = App.Resolve<IAboutModel>();
             var text = String.Format(CultureInfo.CurrentCulture, "{0} {1}", aboutModel.Title, aboutModel.VersionShort);
             View.Text = text;
             // show tray
@@ -105,7 +135,7 @@ namespace LanExchange.Presenter
 
         private void MainForm_RefreshItem(object item)
         {
-            var pv = App.Resolve<IPagesView>().ActivePanelView;
+            var pv = viewFactory.GetPagesView().ActivePanelView;
             if (pv != null)
             {
                 var index = pv.Presenter.Objects.IndexOf(item as PanelItemBase);
@@ -137,7 +167,7 @@ namespace LanExchange.Presenter
             if (panelItem == null || View.Info == null) return;
             View.Info.CurrentItem = panelItem;
             View.Info.NumLines = App.Config.NumInfoLines;
-            var helper = new PanelModelCopyHelper(null, panelColumns);
+            var helper = new PanelModelCopyHelper(null, columnManager);
             helper.CurrentItem = panelItem;
             int index = 0;
             foreach (var column in helper.Columns)
@@ -153,34 +183,29 @@ namespace LanExchange.Presenter
 
         public void GlobalTranslateUI()
         {
-            var service = App.Resolve<IWaitingService>();
             if (View != null)
-                service.BeginWait();
+                waitingService.BeginWait();
             try
             {
                 // recreate all columns
                 GlobalTranslateColumns();
                 // Run TranslateUI() for all opened forms
-                App.Resolve<IAppPresenter>().TranslateOpenForms();
+                appPresenter.TranslateOpenForms();
             }
             finally
             {
                 if (View != null)
-                    service.EndWait();
+                    waitingService.EndWait();
             }
         }
 
         public bool IsHotKey(short id)
         {
-            return id == hotkeys.HotkeyId;
+            return hotkeyService.IsHotKey(id);
         }
 
-        private static void GlobalTranslateColumns()
+        private void GlobalTranslateColumns()
         {
-            var columnManager = App.Resolve<IPanelColumnManager>();
-            var factoryManager = App.Resolve<IPanelItemFactoryManager>();
-            if (columnManager == null || factoryManager == null || factoryManager.IsEmpty) 
-                return;
             foreach (var pair in factoryManager.Types)
             {
                 columnManager.UnregisterColumns(pair.Key.Name);
@@ -200,16 +225,15 @@ namespace LanExchange.Presenter
             // correct width and height
             bool boundsIsNotSet = mainFormWidth == 0;
             Rectangle workingArea;
-            var screen = App.Resolve<IScreenService>();
             if (boundsIsNotSet)
-                workingArea = screen.PrimaryScreenWorkingArea;
+                workingArea = screenService.PrimaryScreenWorkingArea;
             else
-                workingArea = screen.GetWorkingArea(new Point(mainFormX + mainFormWidth / 2, 0));
+                workingArea = screenService.GetWorkingArea(new Point(mainFormX + mainFormWidth / 2, 0));
             var rect = new Rectangle();
             rect.X = mainFormX;
             rect.Y = workingArea.Top;
             rect.Width = Math.Min(Math.Max(GetDefaultWidth(), mainFormWidth), workingArea.Width);
-            rect.Height = workingArea.Height - screen.MenuHeight;
+            rect.Height = workingArea.Height - screenService.MenuHeight;
             // determination side to snap right or left
             int centerX = (rect.Left + rect.Right) >> 1;
             int workingAreaCenterX = (workingArea.Left + workingArea.Right) >> 1;
@@ -224,8 +248,7 @@ namespace LanExchange.Presenter
 
         public void SettingsSetBounds(Rectangle rect)
         {
-            var screen = App.Resolve<IScreenService>();
-            Rectangle workingArea = screen.GetWorkingArea(rect);
+            Rectangle workingArea = screenService.GetWorkingArea(rect);
             // shift rect into working area
             if (rect.Left < workingArea.Left) rect.X = workingArea.Left;
             if (rect.Top < workingArea.Top) rect.Y = workingArea.Top;

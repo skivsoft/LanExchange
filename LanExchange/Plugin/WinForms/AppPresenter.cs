@@ -15,20 +15,24 @@ namespace LanExchange.Plugin.WinForms
         private readonly IConfigPersistenceService configService;
         private readonly IPagesPresenter pagesPresenter;
         private readonly ITranslationService translationService;
+        private readonly IDisposableManager disposableManager;
         private IMainView mainView;
 
         public AppPresenter(
             IConfigPersistenceService configService,
             IPagesPresenter pagesPresenter,
-            ITranslationService translationService)
+            ITranslationService translationService,
+            IDisposableManager disposableManager)
         {
             Contract.Requires<ArgumentNullException>(configService != null);
             Contract.Requires<ArgumentNullException>(pagesPresenter != null);
             Contract.Requires<ArgumentNullException>(translationService != null);
+            Contract.Requires<ArgumentNullException>(disposableManager != null);
 
             this.configService = configService;
             this.pagesPresenter = pagesPresenter;
             this.translationService = translationService;
+            this.disposableManager = disposableManager;
         }
 
         public void Init()
@@ -67,7 +71,7 @@ namespace LanExchange.Plugin.WinForms
             pagesPresenter.SaveInstant();
             configService.Save(App.Config);
             // dispose instances registered in plugins
-            App.Resolve<IDisposableManager>().Dispose();
+            disposableManager.Dispose();
         }
 
         public void TranslateOpenForms()

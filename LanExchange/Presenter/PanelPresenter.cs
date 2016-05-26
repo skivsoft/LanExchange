@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace LanExchange.Presenter
 {
-    public class PanelPresenter : PresenterBase<IPanelView>, IPanelPresenter, IDisposable
+    public class PanelPresenter : PresenterBase<IPanelView>, IPanelPresenter
     {
         private readonly IPanelFillerManager panelFillers;
         private readonly IPanelColumnManager panelColumns;
@@ -35,11 +35,6 @@ namespace LanExchange.Presenter
             this.pagesPresenter = pagesPresenter;
             this.translationService = translationService;
             this.mainView = mainView;
-        }
-
-        public void Dispose()
-        {
-            
         }
 
         public void SetupColumns()

@@ -11,6 +11,7 @@ namespace LanExchange.Presenter
         private readonly IPagesPersistenceService pagesService;
         private readonly IImageManager imageManager;
         private readonly IPanelColumnManager panelColumns;
+        private readonly IClipboardService clipboardService;
 
         public event EventHandler PanelViewFocusedItemChanged;
         public event EventHandler PanelViewFilterTextChanged;
@@ -19,19 +20,24 @@ namespace LanExchange.Presenter
             IPagesModel model, 
             IPagesPersistenceService pagesService,
             IImageManager imageManager,
-            IPanelColumnManager panelColumns)
+            IPanelColumnManager panelColumns,
+            IDisposableManager disposableManager,
+            IClipboardService clipboardService)
         {
             Contract.Requires<ArgumentNullException>(model != null);
             Contract.Requires<ArgumentNullException>(pagesService != null);
             Contract.Requires<ArgumentNullException>(imageManager != null);
             Contract.Requires<ArgumentNullException>(panelColumns != null);
+            Contract.Requires<ArgumentNullException>(disposableManager != null);
+            Contract.Requires<ArgumentNullException>(clipboardService != null);
 
             this.model = model;
             this.pagesService = pagesService;
             this.imageManager = imageManager;
             this.panelColumns = panelColumns;
+            this.clipboardService = clipboardService;
 
-            App.Resolve<IDisposableManager>().RegisterInstance(this);
+            disposableManager.RegisterInstance(this);
             this.model.AfterAppendTab += Model_AfterAppendTab;
             this.model.AfterRemove += Model_AfterRemove;
             this.model.IndexChanged += Model_IndexChanged;
@@ -86,8 +92,7 @@ namespace LanExchange.Presenter
         {
             if (View.ActivePanelView == null)
                 return false;
-            var clipboard = App.Resolve<IClipboardService>();
-            var obj = clipboard.GetDataObject();
+            var obj = clipboardService.GetDataObject();
             if (obj == null)
                 return false;
             if (!obj.GetDataPresent(typeof(PanelItemBaseHolder)))
@@ -101,8 +106,7 @@ namespace LanExchange.Presenter
         public void CommandPasteItems()
         {
             if (!CanPasteItems()) return;
-            var clipboard = App.Resolve<IClipboardService>();
-            var obj = clipboard.GetDataObject();
+            var obj = clipboardService.GetDataObject();
             if (obj == null) return;
             var items = (PanelItemBaseHolder)obj.GetData(typeof(PanelItemBaseHolder));
             var destObjects = model.GetItem(model.SelectedIndex);

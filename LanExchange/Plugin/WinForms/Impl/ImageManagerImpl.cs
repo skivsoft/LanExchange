@@ -4,6 +4,9 @@ using System.Windows.Forms;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.Properties;
 using LanExchange.SDK;
+using System.Diagnostics.Contracts;
+using System;
+using LanExchange.SDK.Factories;
 
 namespace LanExchange.Plugin.WinForms.Impl
 {
@@ -13,6 +16,8 @@ namespace LanExchange.Plugin.WinForms.Impl
         private const int SYSTEM_INDEX_WORKGROUP  = 18;
         private const int SYSTEM_INDEX_FOLDER     = 4;
 
+        private readonly IServiceFactory serviceFactory;
+
         private readonly ImageList smallImageList;
         private readonly ImageList largeImageList;
         private readonly Dictionary<string, int> namesMap;
@@ -21,14 +26,21 @@ namespace LanExchange.Plugin.WinForms.Impl
         private static readonly Bitmap SmallEmpty = new Bitmap(16, 16);
         private static readonly Bitmap LargeEmpty = new Bitmap(32, 32);
 
-        public ImageManagerImpl()
+        public ImageManagerImpl(
+            IShell32Service shellService,
+            IServiceFactory serviceFactory)
         {
+            Contract.Requires<ArgumentNullException>(shellService != null);
+            Contract.Requires<ArgumentNullException>(serviceFactory != null);
+
+            this.serviceFactory = serviceFactory;
+
             namesMap = new Dictionary<string, int>();
             // init system images
-            App.Resolve<IShell32Service>().FileIconInit(true);
+            shellService.FileIconInit(true);
 
-            var small = App.Resolve<ISysImageListService>();
-            var large = App.Resolve<ISysImageListService>();
+            var small = serviceFactory.CreateSysImageListService();
+            var large = serviceFactory.CreateSysImageListService();
             small.Create(SysImageListSize.SmallIcons);
             large.Create(SysImageListSize.LargeIcons);
             // init image lists
@@ -188,7 +200,7 @@ namespace LanExchange.Plugin.WinForms.Impl
 
         public Image GetSmallImageOfFileName(string fileName)
         {
-            using (var small = App.Resolve<ISysImageListService>())
+            using (var small = serviceFactory.CreateSysImageListService())
             {
                 small.Create(SysImageListSize.SmallIcons);
                 var index = small.GetIconIndex(fileName);
@@ -198,7 +210,7 @@ namespace LanExchange.Plugin.WinForms.Impl
 
         public Image GetLargeImageOfFileName(string fileName)
         {
-            using (var large = App.Resolve<ISysImageListService>())
+            using (var large = serviceFactory.CreateSysImageListService())
             {
                 large.Create(SysImageListSize.LargeIcons);
                 var index = large.GetIconIndex(fileName);

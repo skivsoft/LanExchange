@@ -2,16 +2,24 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 using LanExchange.Properties;
+using LanExchange.SDK;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange.Plugin.WinForms.Components
 {
     public class ListViewer : ListView
     {
+        private readonly IUser32Service userService;
+
         private ToolTip toolTip;
         public event EventHandler<ColumnClickEventArgs> ColumnRightClick;
 
-        public ListViewer()
+        public ListViewer(IUser32Service userService)
         {
+            Contract.Requires<ArgumentNullException>(userService != null);
+
+            this.userService = userService;
+
             if (!SystemInformation.TerminalServerSession)
                 // switch off flikering only if not terminal session
                 SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);    
@@ -68,7 +76,7 @@ namespace LanExchange.Plugin.WinForms.Components
         [Browsable(false)]
         public HeaderControl HeaderControl
         {
-            get { return headerControl ?? (headerControl = new HeaderControl(this)); }
+            get { return headerControl ?? (headerControl = new HeaderControl(userService, this)); }
         }
         private HeaderControl headerControl;
 

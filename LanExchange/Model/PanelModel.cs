@@ -32,7 +32,7 @@ namespace LanExchange.Model
         // punto switcher service
         private readonly IPuntoSwitcherService puntoService;
         // panel updater
-        private readonly IPanelUpdater updater;
+        private readonly IPanelUpdater panelUpdater;
 
         public event EventHandler Changed;
         public event EventHandler TabNameUpdated;
@@ -42,16 +42,20 @@ namespace LanExchange.Model
         /// </summary>
         public PanelModel(
             IPanelFillerManager panelFillers,
-            IPanelColumnManager panelColumns)
+            IPanelColumnManager panelColumns,
+            IPuntoSwitcherService puntoService,
+            IPanelUpdater panelUpdater)
         {
             Contract.Requires<ArgumentNullException>(panelFillers != null);
             Contract.Requires<ArgumentNullException>(panelColumns != null);
+            Contract.Requires<ArgumentNullException>(puntoService != null);
+            Contract.Requires<ArgumentNullException>(panelUpdater != null);
 
             this.panelFillers = panelFillers;
             this.panelColumns = panelColumns;
+            this.puntoService = puntoService;
+            this.panelUpdater = panelUpdater;
 
-            puntoService = App.Resolve<IPuntoSwitcherService>();
-            updater = App.Resolve<IPanelUpdater>();
             items = new List<PanelItemBase>();
             data = new List<PanelItemBase>();
             keys = new List<PanelItemBase>();
@@ -62,7 +66,7 @@ namespace LanExchange.Model
 
         public void Dispose()
         {
-            updater.Dispose();
+            panelUpdater.Dispose();
         }
 
         /// <summary>
@@ -100,8 +104,8 @@ namespace LanExchange.Model
 
         public void AsyncRetrieveData(bool clearFilter)
         {
-            updater.Stop();
-            updater.Start(this, clearFilter);
+            panelUpdater.Stop();
+            panelUpdater.Start(this, clearFilter);
         }
 
         [XmlAttribute]

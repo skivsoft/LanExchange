@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using LanExchange.SDK;
 using System.Diagnostics.Contracts;
+using LanExchange.SDK.Factories;
 
 namespace LanExchange.Model
 {
@@ -14,6 +15,7 @@ namespace LanExchange.Model
 
         private readonly IPanelItemFactoryManager factoryManager;
         private readonly IPanelFillerManager panelFillers;
+        private readonly IModelFactory modelFactory;
         private readonly List<IPanelModel> panels;
         private int selectedIndex;
 
@@ -23,13 +25,16 @@ namespace LanExchange.Model
 
         public PagesModel(
             IPanelItemFactoryManager factoryManager,
-            IPanelFillerManager fillerManager)
+            IPanelFillerManager fillerManager,
+            IModelFactory modelFactory)
         {
             Contract.Requires<ArgumentNullException>(factoryManager != null);
             Contract.Requires<ArgumentNullException>(fillerManager != null);
+            Contract.Requires<ArgumentNullException>(modelFactory != null);
 
             this.factoryManager = factoryManager;
             this.panelFillers = fillerManager;
+            this.modelFactory = modelFactory;
 
             panels = new List<IPanelModel>();
             selectedIndex = -1;
@@ -160,7 +165,7 @@ namespace LanExchange.Model
                     root = factoryManager.CreateDefaultRoot(DEFAULT2_PANELITEMTYPE);
                 if (root == null) return;
                 // create default tab
-                var info = App.Resolve<IPanelModel>();
+                var info = modelFactory.CreatePanelModel();
                 info.SetDefaultRoot(root);
                 info.DataType = panelFillers.GetFillType(root).Name;
                 AddTab(info);

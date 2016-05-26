@@ -2,6 +2,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.SDK;
+using System.Diagnostics.Contracts;
 
 namespace LanExchange.Plugin.WinForms.Components
 {
@@ -11,13 +12,20 @@ namespace LanExchange.Plugin.WinForms.Components
     /// </summary>
     public class HeaderControl : NativeWindow
     {
+        private readonly IUser32Service userService;
+
         /// <summary>
         /// Create a header control for the given ObjectListView.
         /// </summary>
         /// <param name="olv"></param>
-        public HeaderControl(ListViewer olv) {
+        public HeaderControl(IUser32Service userService, ListViewer olv)
+        {
+            Contract.Requires<ArgumentNullException>(userService != null);
+
+            this.userService = userService;
+
             ListView = olv;
-			var handle = App.Resolve<IUser32Service>().GetHeaderControl(olv.Handle);
+			var handle = userService.GetHeaderControl(olv.Handle);
 			if (handle != IntPtr.Zero)
 				AssignHandle(handle);
             //AssignHandle(NativeMethods.GetHeaderControl(olv));
@@ -32,9 +40,8 @@ namespace LanExchange.Plugin.WinForms.Components
             get {
                 Point pt = ListView.PointToClient(Cursor.Position);
 
-				var service = App.Resolve<IUser32Service>();
-				pt.X += service.GetScrollPosition(ListView.Handle, true);
-				return service.GetColumnUnderPoint(Handle, pt);
+				pt.X += userService.GetScrollPosition(ListView.Handle, true);
+				return userService.GetColumnUnderPoint(Handle, pt);
                 //pt.X += NativeMethods.GetScrollPosition(ListView, true);
                 //return NativeMethods.GetColumnUnderPoint(Handle, pt);
             }
@@ -52,7 +59,7 @@ namespace LanExchange.Plugin.WinForms.Components
         /// </remarks>
         public new IntPtr Handle
         {
-            get { return App.Resolve<IUser32Service>().GetHeaderControl(ListView.Handle); }
+            get { return userService.GetHeaderControl(ListView.Handle); }
         }
 
         /// <summary>

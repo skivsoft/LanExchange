@@ -12,6 +12,7 @@ using System.Diagnostics.Contracts;
 using LanExchange.SDK.Managers;
 using LanExchange.Actions;
 using System.Linq;
+using LanExchange.SDK.Factories;
 
 namespace LanExchange.Plugin.WinForms.Forms
 {
@@ -26,36 +27,52 @@ namespace LanExchange.Plugin.WinForms.Forms
         private readonly IImageManager imageManager;
         private readonly IMainPresenter mainPresenter;
         private readonly IPagesPresenter pagesPresenter;
+        private readonly IAboutPresenter aboutPresenter;
         private readonly IActionManager actionManager;
         private readonly ITranslationService translationService;
+        private readonly IViewFactory viewFactory;
+        private readonly IScreenService screenService;
+        private readonly IShell32Service shellService;
 
         public MainForm(
             IMainPresenter mainPresenter,
             IPagesPresenter pagesPresenter,
+            IAboutPresenter aboutPresenter,
             IAddonManager addonManager, 
             IPanelItemFactoryManager factoryManager,
             ILazyThreadPool threadPool,
             IImageManager imageManager,
             IActionManager actionManager,
-            ITranslationService translationService)
+            ITranslationService translationService,
+            IViewFactory viewFactory,
+            IScreenService screenService,
+            IShell32Service shellService)
         {
             Contract.Requires<ArgumentNullException>(mainPresenter != null);
             Contract.Requires<ArgumentNullException>(pagesPresenter != null);
+            Contract.Requires<ArgumentNullException>(aboutPresenter != null);
             Contract.Requires<ArgumentNullException>(addonManager != null);
             Contract.Requires<ArgumentNullException>(factoryManager != null);
             Contract.Requires<ArgumentNullException>(threadPool != null);
             Contract.Requires<ArgumentNullException>(imageManager != null);
             Contract.Requires<ArgumentNullException>(actionManager != null);
             Contract.Requires<ArgumentNullException>(translationService != null);
+            Contract.Requires<ArgumentNullException>(viewFactory != null);
+            Contract.Requires<ArgumentNullException>(screenService != null);
+            Contract.Requires<ArgumentNullException>(shellService != null);
 
             this.mainPresenter = mainPresenter;
             this.pagesPresenter = pagesPresenter;
+            this.aboutPresenter = aboutPresenter;
             this.addonManager = addonManager;
             this.factoryManager = factoryManager;
             this.threadPool = threadPool;
             this.imageManager = imageManager;
             this.actionManager = actionManager;
             this.translationService = translationService;
+            this.viewFactory = viewFactory;
+            this.screenService = screenService;
+            this.shellService = shellService;
 
             InitializeComponent();
 
@@ -78,7 +95,7 @@ namespace LanExchange.Plugin.WinForms.Forms
 
         public void SetupMenuLanguages()
         {
-            var nameDict = App.Resolve<ITranslationService>().GetLanguagesNames();
+            var nameDict = translationService.GetLanguagesNames();
             if (nameDict.Count < 2)
             {
                 mLanguage.Visible = false;
@@ -98,8 +115,7 @@ namespace LanExchange.Plugin.WinForms.Forms
 
         public void SetupPages()
         {
-            //// init Pages presenter
-            Pages = (PagesView)App.Resolve<IPagesView>();
+            Pages = (PagesView)viewFactory.GetPagesView();
             Pages.Dock = DockStyle.Fill;
             Controls.Add(Pages);
             Pages.BringToFront();
@@ -342,15 +358,15 @@ namespace LanExchange.Plugin.WinForms.Forms
         {
             if (e.Button == MouseButtons.Right)
             {
-                var position = App.Resolve<IScreenService>().CursorPosition;
-                App.Resolve<IShell32Service>().ShowMyComputerContextMenu(Handle, position);
+                var position = screenService.CursorPosition;
+                shellService.ShowMyComputerContextMenu(Handle, position);
             }
         }
 
         private void Status_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
-                App.Resolve<IShell32Service>().OpenMyComputer();
+                shellService.OpenMyComputer();
         }
 
         private void UpdatePanelRelatedMenu()
@@ -403,26 +419,22 @@ namespace LanExchange.Plugin.WinForms.Forms
 
         private void mWebPage_Click(object sender, EventArgs e)
         {
-            var presenter = App.Resolve<IAboutPresenter>();
-            presenter.OpenHomeLink();
+            aboutPresenter.OpenHomeLink();
         }
 
         private void mHelpLangs_Click(object sender, EventArgs e)
         {
-            var presenter = App.Resolve<IAboutPresenter>();
-            presenter.OpenLocalizationLink();
+            aboutPresenter.OpenLocalizationLink();
         }
 
         private void mHelpBugs_Click(object sender, EventArgs e)
         {
-            var presenter = App.Resolve<IAboutPresenter>();
-            presenter.OpenBugTrackerWebLink();
+            aboutPresenter.OpenBugTrackerWebLink();
         }
 
         private void mHelpFeedback_Click(object sender, EventArgs e)
         {
-            var presenter = App.Resolve<IAboutPresenter>();
-            presenter.OpenEmailLink();
+            aboutPresenter.OpenEmailLink();
         }
 
         [Localizable(false)]

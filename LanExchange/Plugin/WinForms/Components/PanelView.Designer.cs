@@ -38,7 +38,7 @@
             this.mDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.mAfterDelete = new System.Windows.Forms.ToolStripSeparator();
             this.mNewItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.LV = new ListViewer();
+            this.LV = new ListViewer(userService);
             this.pFilter = new FilterView();
             this.popComps.SuspendLayout();
             this.SuspendLayout();
