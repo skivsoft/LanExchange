@@ -150,8 +150,6 @@ namespace LanExchange.Plugin.WinForms.Forms
             TranslationUtils.TranslateComponents(Resources.ResourceManager, this, components);
             mTrayOpen_TranslateUI();
             TranslationUtils.TranslateControls(Controls);
-            // addons context menu will refresh later
-            popTop.Tag = null;
             // refresh tab names
             var shortcutIndex = mainPresenter.FindShortcutKeysPanelIndex();
             for (int index = 0; index < pagesPresenter.Count; index++ )
@@ -202,12 +200,6 @@ namespace LanExchange.Plugin.WinForms.Forms
                     }
                 }
             }
-            // Ctrl+Up/Ctrl+Down - change number of info lines
-            if (e.Control && (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down))
-            {
-                App.Config.NumInfoLines = App.Config.NumInfoLines + (e.KeyCode == Keys.Down ? +1 : -1);
-                e.Handled = true;
-            }
         }
 
         private void MainForm_KeyUp(object sender, KeyEventArgs e)
@@ -232,27 +224,12 @@ namespace LanExchange.Plugin.WinForms.Forms
             }
         }
 
-        private void popTop_Opening(object sender, CancelEventArgs e)
-        {
-            var pv = Pages.ActivePanelView as PanelView;
-            if (pv == null || pInfo.CurrentItem == null)
-            {
-                e.Cancel = true;
-                return;
-            }
-            e.Cancel = !addonManager.BuildMenuForPanelItemType(popTop, pInfo.CurrentItem.GetType().Name);
-            addonManager.SetupMenuForPanelItem(popTop, pInfo.CurrentItem);
-        }
+
 
         private void tipComps_Popup(object sender, PopupEventArgs e)
         {
             var tooltip = (sender as ToolTip);
             if (tooltip == null) return;
-            if (e.AssociatedControl == pInfo.Picture)
-            {
-                tooltip.ToolTipTitle = Resources.MainForm_Legend;
-                return;
-            }
             if (e.AssociatedControl is TabControl && e.AssociatedControl == Pages.Pages)
             {
                 var tab = Pages.GetTabPageByPoint(e.AssociatedControl.PointToClient(MousePosition));
@@ -280,14 +257,7 @@ namespace LanExchange.Plugin.WinForms.Forms
             }
         }
 
-        public void ClearInfoPanel()
-        {
-            pInfo.CurrentItem = null;
-            pInfo.Picture.Image = null;
-            for (int index = 0; index < pInfo.NumLines; index++)
-                pInfo.SetLine(index, string.Empty);
-            lItemsCount.Text = string.Empty;
-        }
+
 
         private void popTray_Opening(object sender, CancelEventArgs e)
         {
@@ -351,7 +321,6 @@ namespace LanExchange.Plugin.WinForms.Forms
         private void mReRead_Click(object sender, EventArgs e)
         {
             actionManager.ExecuteAction<PagesReReadAction>();
-            popTop.Tag = null;
         }
 
         private void lCompName_MouseUp(object sender, MouseEventArgs e)
@@ -402,7 +371,6 @@ namespace LanExchange.Plugin.WinForms.Forms
         private void mView_Popup(object sender, EventArgs e)
         {
             mViewGrid.Checked = App.Config.ShowGridLines;
-            mViewInfo.Checked = App.Config.ShowInfoPanel;
             UpdatePanelRelatedMenu();
         }
 
@@ -493,26 +461,9 @@ namespace LanExchange.Plugin.WinForms.Forms
             actionManager.ExecuteAction<PagesCloseOtherAction>();
         }
 
-        private void mViewInfo_Click(object sender, EventArgs e)
-        {
-            App.Config.ShowInfoPanel = !App.Config.ShowInfoPanel;
-        }
-
         private void mViewGrid_Click(object sender, EventArgs e)
         {
             App.Config.ShowGridLines = !App.Config.ShowGridLines;
-        }
-
-        public bool ShowInfoPanel
-        {
-            get { return pInfo.Visible; }
-            set { pInfo.Visible = value; }
-        }
-
-        public int NumInfoLines
-        {
-            get { return pInfo.NumLines; }
-            set { pInfo.NumLines = value; }
         }
 
         public string TrayText
@@ -539,12 +490,6 @@ namespace LanExchange.Plugin.WinForms.Forms
     //            return cp;
     //        }
     //    } 
-
-
-        public IInfoView Info
-        {
-            get { return pInfo; }
-        }
 
 
         public string ShowWindowKey

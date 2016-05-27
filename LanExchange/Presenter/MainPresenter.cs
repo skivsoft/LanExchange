@@ -109,17 +109,10 @@ namespace LanExchange.Presenter
             if (config == null) return;
             switch (e.PropertyName)
             {
-                case nameof(config.ShowInfoPanel):
-                    View.ShowInfoPanel = config.ShowInfoPanel;
-                    break;
                 case nameof(config.ShowGridLines):
                     var panelView = pagesPresenter.View.ActivePanelView;
                     if (panelView != null)
                         panelView.GridLines = config.ShowGridLines;
-                    break;
-                case nameof(config.NumInfoLines):
-                    View.NumInfoLines = config.NumInfoLines;
-                    pagesPresenter.DoPanelViewFocusedItemChanged(pagesPresenter.View.ActivePanelView, EventArgs.Empty);
                     break;
                 case nameof(config.Language):
                     translationService.CurrentLanguage = config.Language;
@@ -164,20 +157,6 @@ namespace LanExchange.Presenter
                     break;
                 panelItem = panelItem.Parent;
             }
-            if (panelItem == null || View.Info == null) return;
-            View.Info.CurrentItem = panelItem;
-            View.Info.NumLines = App.Config.NumInfoLines;
-            var helper = new PanelModelCopyHelper(null, columnManager);
-            helper.CurrentItem = panelItem;
-            int index = 0;
-            foreach (var column in helper.Columns)
-            {
-                View.Info.SetLine(index, helper.GetColumnValue(column.Index));
-                ++index;
-                if (index >= View.Info.NumLines) break;
-            }
-            for (int i = index; i < View.Info.NumLines; i++)
-                View.Info.SetLine(i, string.Empty);
         }
 
 

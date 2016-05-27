@@ -154,13 +154,10 @@
     <Compile Include="Plugin\Shortcut\ShortcutFiller.cs" />
     <Compile Include="Plugin\Shortcut\ShortcutPanelItem.cs" />
     <Compile Include="Plugin\Shortcut\ShortcutRoot.cs" />
-    <Compile Include="Plugin\Windows\Comctl32Service.cs" />
     <Compile Include="Plugin\Windows\ExternDll.cs" />
     <Compile Include="Plugin\Windows\HotkeysService.cs" />
     <Compile Include="Plugin\Windows\IPHLPAPISerivce.cs" />
     <Compile Include="Plugin\Windows\IPHLPAPI\NativeMethods.cs" />
-    <Compile Include="Plugin\Windows\Kernel32Service.cs" />
-    <Compile Include="Plugin\Windows\Ole32Service.cs" />
     <Compile Include="Plugin\Windows\Shell32Service.cs" />
     <Compile Include="Plugin\Windows\SysImageListService.cs" />
     <Compile Include="Plugin\Windows\User32Service.cs" />
@@ -222,12 +219,6 @@
     <Compile Include="Plugin\WinForms\Components\HeaderControl.cs" />
     <Compile Include="Plugin\WinForms\Interfaces\IListViewItemGetter.cs" />
     <Compile Include="Plugin\WinForms\Impl\ImageManagerImpl.cs" />
-    <Compile Include="Plugin\WinForms\Components\InfoView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Plugin\WinForms\Components\InfoView.Designer.cs">
-      <DependentUpon>InfoView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Plugin\WinForms\Utils\KeyboardUtils.cs" />
     <Compile Include="Plugin\WinForms\Components\ListViewer.cs">
       <SubType>Component</SubType>
@@ -290,9 +281,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Plugin\WinForms\Forms\EditForm.resx">
       <DependentUpon>EditForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Plugin\WinForms\Components\InfoView.resx">
-      <DependentUpon>InfoView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Plugin\WinForms\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

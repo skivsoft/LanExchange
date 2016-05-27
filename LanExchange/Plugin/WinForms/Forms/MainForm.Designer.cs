@@ -47,8 +47,6 @@ namespace LanExchange.Plugin.WinForms.Forms
             this.StatusSep2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lUserName = new System.Windows.Forms.ToolStripStatusLabel();
             this.tipComps = new System.Windows.Forms.ToolTip(this.components);
-            this.popTop = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.pInfo = new LanExchange.Plugin.WinForms.Components.InfoView(imageManager, this);
             this.MainMenu = new System.Windows.Forms.MainMenu(this.components);
             this.mPanel = new System.Windows.Forms.MenuItem();
             this.mNewItem = new System.Windows.Forms.MenuItem();
@@ -60,7 +58,6 @@ namespace LanExchange.Plugin.WinForms.Forms
             this.mPanelSep3 = new System.Windows.Forms.MenuItem();
             this.mExit = new System.Windows.Forms.MenuItem();
             this.mView = new System.Windows.Forms.MenuItem();
-            this.mViewInfo = new System.Windows.Forms.MenuItem();
             this.mViewGrid = new System.Windows.Forms.MenuItem();
             this.mViewSep1 = new System.Windows.Forms.MenuItem();
             this.mViewLarge = new System.Windows.Forms.MenuItem();
@@ -193,26 +190,6 @@ namespace LanExchange.Plugin.WinForms.Forms
             this.tipComps.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.tipComps.Popup += new System.Windows.Forms.PopupEventHandler(this.tipComps_Popup);
             // 
-            // popTop
-            // 
-            this.popTop.Name = "popTop";
-            this.popTop.Size = new System.Drawing.Size(61, 4);
-            this.popTop.Opening += new System.ComponentModel.CancelEventHandler(this.popTop_Opening);
-            // 
-            // pInfo
-            // 
-            this.pInfo.AllowDrop = true;
-            this.pInfo.BackColor = System.Drawing.SystemColors.Window;
-            this.pInfo.ContextMenuStrip = this.popTop;
-            this.pInfo.CurrentItem = null;
-            this.pInfo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pInfo.Location = new System.Drawing.Point(0, 0);
-            this.pInfo.MinimumSize = new System.Drawing.Size(0, 64);
-            this.pInfo.Name = "pInfo";
-            this.pInfo.NumLines = 3;
-            this.pInfo.Size = new System.Drawing.Size(564, 64);
-            this.pInfo.TabIndex = 23;
-            // 
             // MainMenu
             // 
             this.MainMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
@@ -290,7 +267,6 @@ namespace LanExchange.Plugin.WinForms.Forms
             // 
             this.mView.Index = 1;
             this.mView.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.mViewInfo,
             this.mViewGrid,
             this.mViewSep1,
             this.mViewLarge,
@@ -300,28 +276,21 @@ namespace LanExchange.Plugin.WinForms.Forms
             this.mView.Text = global::LanExchange.Properties.Resources.mView_Text;
             this.mView.Popup += new System.EventHandler(this.mView_Popup);
             // 
-            // mViewInfo
-            // 
-            this.mViewInfo.Checked = true;
-            this.mViewInfo.Index = 0;
-            this.mViewInfo.Text = global::LanExchange.Properties.Resources.mViewInfo_Text;
-            this.mViewInfo.Click += new System.EventHandler(this.mViewInfo_Click);
-            // 
             // mViewGrid
             // 
             this.mViewGrid.Checked = true;
-            this.mViewGrid.Index = 1;
+            this.mViewGrid.Index = 0;
             this.mViewGrid.Text = global::LanExchange.Properties.Resources.mViewGrid_Text;
             this.mViewGrid.Click += new System.EventHandler(this.mViewGrid_Click);
             // 
             // mViewSep1
             // 
-            this.mViewSep1.Index = 2;
+            this.mViewSep1.Index = 1;
             this.mViewSep1.Text = "-";
             // 
             // mViewLarge
             // 
-            this.mViewLarge.Index = 3;
+            this.mViewLarge.Index = 2;
             this.mViewLarge.RadioCheck = true;
             this.mViewLarge.Tag = "0";
             this.mViewLarge.Text = global::LanExchange.Properties.Resources.mViewLarge_Text;
@@ -329,7 +298,7 @@ namespace LanExchange.Plugin.WinForms.Forms
             // 
             // mViewSmall
             // 
-            this.mViewSmall.Index = 4;
+            this.mViewSmall.Index = 3;
             this.mViewSmall.RadioCheck = true;
             this.mViewSmall.Tag = "2";
             this.mViewSmall.Text = global::LanExchange.Properties.Resources.mViewSmall_Text;
@@ -337,7 +306,7 @@ namespace LanExchange.Plugin.WinForms.Forms
             // 
             // mViewList
             // 
-            this.mViewList.Index = 5;
+            this.mViewList.Index = 4;
             this.mViewList.RadioCheck = true;
             this.mViewList.Tag = "3";
             this.mViewList.Text = global::LanExchange.Properties.Resources.mViewList_Text;
@@ -346,7 +315,7 @@ namespace LanExchange.Plugin.WinForms.Forms
             // mViewDetails
             // 
             this.mViewDetails.Checked = true;
-            this.mViewDetails.Index = 6;
+            this.mViewDetails.Index = 5;
             this.mViewDetails.RadioCheck = true;
             this.mViewDetails.Tag = "1";
             this.mViewDetails.Text = global::LanExchange.Properties.Resources.mViewDetails_Text;
@@ -417,7 +386,6 @@ namespace LanExchange.Plugin.WinForms.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(564, 542);
             this.Controls.Add(this.Status);
-            this.Controls.Add(this.pInfo);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "MainForm";
@@ -450,10 +418,8 @@ namespace LanExchange.Plugin.WinForms.Forms
         private System.Windows.Forms.ToolStripStatusLabel StatusSep1;
         private System.Windows.Forms.ToolStripStatusLabel lCompName;
         public System.Windows.Forms.ToolTip tipComps;
-        internal System.Windows.Forms.ContextMenuStrip popTop;
         private System.Windows.Forms.ToolStripStatusLabel StatusSep2;
         private System.Windows.Forms.ToolStripStatusLabel lUserName;
-        internal InfoView pInfo;
         private System.Windows.Forms.MainMenu MainMenu;
         private System.Windows.Forms.MenuItem mHelp;
         private System.Windows.Forms.MenuItem mHelpAbout;
@@ -473,7 +439,6 @@ namespace LanExchange.Plugin.WinForms.Forms
         private System.Windows.Forms.MenuItem mPanelSep2;
         private System.Windows.Forms.MenuItem mCloseTab;
         private System.Windows.Forms.MenuItem mCloseOther;
-        private System.Windows.Forms.MenuItem mViewInfo;
         private System.Windows.Forms.MenuItem mViewGrid;
         private System.Windows.Forms.MenuItem mViewSep1;
         private MenuItem mHelpSep2;

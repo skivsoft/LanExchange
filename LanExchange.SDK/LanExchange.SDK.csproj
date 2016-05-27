@@ -108,7 +108,6 @@
     <Compile Include="IClipboardDataObject.cs" />
     <Compile Include="IClipboardService.cs" />
     <Compile Include="IColumnComparer.cs" />
-    <Compile Include="IComctl32Service.cs" />
     <Compile Include="IDisposableManager.cs" />
     <Compile Include="IEditPresenter.cs" />
     <Compile Include="IEditView.cs" />
@@ -118,13 +117,10 @@
     <Compile Include="IFolderManager.cs" />
     <Compile Include="IHotkeyService.cs" />
     <Compile Include="IImageManager.cs" />
-    <Compile Include="IInfoView.cs" />
     <Compile Include="IIPHLPAPISerivice.cs" />
-    <Compile Include="IKernel32Service.cs" />
     <Compile Include="IMainPresenter.cs" />
     <Compile Include="IMainView.cs" />
     <Compile Include="IMessageBoxService.cs" />
-    <Compile Include="IOle32Service.cs" />
     <Compile Include="IPagesModel.cs" />
     <Compile Include="IPagesPresenter.cs" />
     <Compile Include="IPagesView.cs" />
