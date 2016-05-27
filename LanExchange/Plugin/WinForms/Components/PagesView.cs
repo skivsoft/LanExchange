@@ -323,5 +323,17 @@ namespace LanExchange.Plugin.WinForms.Components
         {
             Pages.RightToLeftLayout = RightToLeft == RightToLeft.Yes;
         }
+
+        private void Pages_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                e.Handled = presenter.PerformEscapeDown();
+        }
+
+        private void Pages_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                e.Handled = presenter.PerformEscapeUp();
+        }
     }
 }

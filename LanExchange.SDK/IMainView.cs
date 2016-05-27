@@ -4,6 +4,7 @@ namespace LanExchange.SDK
 {
     public interface IMainView : IWindow
     {
+        IntPtr Handle { get; }
         string TrayText { get; set; }
         bool TrayVisible { get; set; }
         string ShowWindowKey { get; set; }

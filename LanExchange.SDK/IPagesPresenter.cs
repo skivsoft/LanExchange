@@ -2,7 +2,7 @@
 
 namespace LanExchange.SDK
 {
-    public interface IPagesPresenter : IPresenter<IPagesView>
+    public interface IPagesPresenter : IPresenter<IPagesView>, IPerformEscape
     {
         event EventHandler PanelViewFocusedItemChanged;
         event EventHandler PanelViewFilterTextChanged;

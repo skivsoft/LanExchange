@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Threading;
-using LanExchange.Helpers;
 using LanExchange.Interfaces;
 using LanExchange.Plugin.Shortcut;
 using LanExchange.SDK;

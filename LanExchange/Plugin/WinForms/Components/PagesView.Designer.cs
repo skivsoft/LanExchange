@@ -91,6 +91,8 @@
             this.Pages.Size = new System.Drawing.Size(484, 621);
             this.Pages.TabIndex = 1;
             this.Pages.Selected += new System.Windows.Forms.TabControlEventHandler(this.Pages_Selected);
+            this.Pages.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Pages_KeyDown);
+            this.Pages.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Pages_KeyUp);
             this.Pages.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Pages_MouseDown);
             // 
             // PagesView

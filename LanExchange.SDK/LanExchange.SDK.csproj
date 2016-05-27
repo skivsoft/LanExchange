@@ -133,6 +133,7 @@
     <Compile Include="IPanelPresenter.cs" />
     <Compile Include="IPanelUpdater.cs" />
     <Compile Include="IPanelView.cs" />
+    <Compile Include="IPerformEscape.cs" />
     <Compile Include="IPlugin.cs" />
     <Compile Include="IPluginManager.cs" />
     <Compile Include="IPresenter.cs" />

@@ -36,6 +36,11 @@ namespace LanExchange.SDK
         void Show();
 
         /// <summary>
+        /// Hides the window.
+        /// </summary>
+        void Hide();
+
+        /// <summary>
         /// Activates the window.
         /// </summary>
         void Activate();

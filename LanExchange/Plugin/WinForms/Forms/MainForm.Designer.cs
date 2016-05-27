@@ -395,7 +395,6 @@ namespace LanExchange.Plugin.WinForms.Forms
             this.ResizeEnd += new System.EventHandler(this.MainForm_ResizeEnd);
             this.RightToLeftChanged += new System.EventHandler(this.MainForm_RightToLeftChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
-            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyUp);
             this.popTray.ResumeLayout(false);
             this.Status.ResumeLayout(false);
             this.Status.PerformLayout();

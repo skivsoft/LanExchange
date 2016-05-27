@@ -11,14 +11,12 @@ using LanExchange.SDK;
 using System.Diagnostics.Contracts;
 using LanExchange.SDK.Managers;
 using LanExchange.Actions;
-using System.Linq;
 using LanExchange.SDK.Factories;
 
 namespace LanExchange.Plugin.WinForms.Forms
 {
     public sealed partial class MainForm : RunMinimizedForm, IMainView, ITranslationable
     {
-        public const int WAIT_FOR_KEYUP_MS = 500;
         public PagesView Pages;
 
         private readonly IAddonManager addonManager;
@@ -33,6 +31,8 @@ namespace LanExchange.Plugin.WinForms.Forms
         private readonly IViewFactory viewFactory;
         private readonly IScreenService screenService;
         private readonly IShell32Service shellService;
+
+        public event EventHandler ViewClosed;
 
         public MainForm(
             IMainPresenter mainPresenter,
@@ -166,65 +166,14 @@ namespace LanExchange.Plugin.WinForms.Forms
             mTrayOpen.Text = Visible ? Resources.MainForm_Close : Resources.mTrayOpen_Text;
         }
 
-        private bool escDown;
-        private DateTime escTime;
-
-        public event EventHandler ViewClosed;
-
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
             {
-                var pv = Pages.ActivePanelView;
-                e.Handled = true;
-                if (pv != null && pv.Filter.IsVisible)
-                    pv.Filter.SetFilterText(string.Empty);
-                else
-                {
-                    var parent = pv.Presenter.Objects.CurrentPath.Peek();
-                    if (!parent.Any() || factoryManager.DefaultRoots.Contains(parent.Single()))
-                        Hide();
-                    else if (!escDown)
-                    {
-                        escTime = DateTime.UtcNow;
-                        escDown = true;
-                    }
-                    else
-                    {
-                        TimeSpan diff = DateTime.UtcNow - escTime;
-                        if (diff.TotalMilliseconds >= WAIT_FOR_KEYUP_MS)
-                        {
-                            Hide();
-                            escDown = false;
-                        }
-                    }
-                }
-            }
-        }
-
-        private void MainForm_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Escape)
-            {
-                if (escDown)
-                {
-                    TimeSpan diff = DateTime.UtcNow - escTime;
-                    var pv = Pages.ActivePanelView;
-                    var presenter = pv.Presenter;
-                    if (pv != null && presenter.Objects.CurrentPath.Any())
-                    {
-                        if (diff.TotalMilliseconds < WAIT_FOR_KEYUP_MS)
-                            presenter.CommandLevelUp();
-                        else
-                            Hide();
-                    }
-                    escDown = false;
-                }
+                Hide();
                 e.Handled = true;
             }
         }
-
-
 
         private void tipComps_Popup(object sender, PopupEventArgs e)
         {

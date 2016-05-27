@@ -3,10 +3,9 @@
 namespace LanExchange.SDK
 {
     /// <summary>
-    /// Base interface for any View interface.
+    /// The base interface for any View in Model-View-Preseneter terminology.
     /// </summary>
     public interface IView
     {
-        IntPtr Handle { get; }
     }
 }

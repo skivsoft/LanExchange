@@ -312,5 +312,38 @@ namespace LanExchange.Presenter
             if (model != null)
                 View.SetTabText(index, model.TabName);
         }
+
+        private bool escapeDown;
+
+        public bool PerformEscapeDown()
+        {
+            var panelView = View.ActivePanelView;
+            if (panelView == null) return false;
+
+            if (escapeDown)
+            {
+                escapeDown = false;
+                return false;
+            }
+
+            // hide filter panel
+            if (panelView.Filter.IsVisible)
+                panelView.Filter.SetFilterText(string.Empty);
+
+            escapeDown = true;
+            return true;
+        }
+
+        public bool PerformEscapeUp()
+        {
+            if (!escapeDown)
+                return false;
+
+            var panelView = View.ActivePanelView;
+            panelView.Presenter.CommandLevelUp();
+
+            escapeDown = false;
+            return true;
+        }
     }
 }
