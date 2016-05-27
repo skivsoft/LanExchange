@@ -1,4 +1,6 @@
-﻿namespace LanExchange.SDK
+﻿using LanExchange.SDK.Presentation.Interfaces;
+
+namespace LanExchange.SDK
 {
     /// <summary>
     /// LanExchange main TabControl View interface.

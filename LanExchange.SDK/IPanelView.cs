@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LanExchange.SDK.Presentation.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace LanExchange.SDK

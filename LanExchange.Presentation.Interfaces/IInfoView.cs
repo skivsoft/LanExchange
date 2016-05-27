@@ -1,4 +1,5 @@
 ﻿using LanExchange.SDK;
+using LanExchange.SDK.Presentation.Interfaces;
 
 namespace LanExchange.Presentation.Interfaces
 {

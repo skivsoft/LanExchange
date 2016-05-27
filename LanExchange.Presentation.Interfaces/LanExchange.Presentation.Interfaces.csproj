@@ -40,6 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IInfoView.cs" />
+    <Compile Include="IMenuItem.cs" />
+    <Compile Include="IMenuItemVisitor.cs" />
+    <Compile Include="MenuItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

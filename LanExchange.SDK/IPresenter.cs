@@ -1,4 +1,6 @@
-﻿namespace LanExchange.SDK
+﻿using LanExchange.SDK.Presentation.Interfaces;
+
+namespace LanExchange.SDK
 {
     /// <summary>
     /// Base interface for any Presenter interface.

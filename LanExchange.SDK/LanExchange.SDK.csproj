@@ -145,7 +145,7 @@
     <Compile Include="ITranslationService.cs" />
     <Compile Include="ITranslitStrategy.cs" />
     <Compile Include="IUser32Service.cs" />
-    <Compile Include="IView.cs" />
+    <Compile Include="Presentation\Interfaces\IView.cs" />
     <Compile Include="IWaitingService.cs" />
     <Compile Include="IWindow.cs" />
     <Compile Include="Managers\IActionManager.cs" />
