@@ -2,7 +2,7 @@
 
 namespace LanExchange.SDK
 {
-    public interface IEditPresenter : IPresenter<IEditView>
+    public interface IEditPresenter : IPresenter<IEditView>, IPerformOkCancel
     {
         void SetDataType(string typeName);
     }

@@ -9,7 +9,7 @@ namespace LanExchange.Plugin.WinForms.Forms
     /// <summary>
     /// Concrete class for IAboutView.
     /// </summary>
-    public sealed partial class AboutForm : EscapeForm, IAboutView, ITranslationable
+    public sealed partial class AboutForm : Form, IAboutView, ITranslationable
     {
         private readonly IAboutPresenter presenter;
         private RichTextBox boxDetails;
@@ -17,9 +17,7 @@ namespace LanExchange.Plugin.WinForms.Forms
 
         public event EventHandler ViewClosed;
         
-        public AboutForm(
-            IAboutPresenter presenter,
-            ITranslationService translationService) : base(translationService)
+        public AboutForm(IAboutPresenter presenter)
         {
             Contract.Requires<ArgumentNullException>(presenter != null);
 
@@ -31,7 +29,7 @@ namespace LanExchange.Plugin.WinForms.Forms
             FormClosed += OnFormClosed;
         }
 
-        private void OnFormClosed(object sender, FormClosedEventArgs formClosedEventArgs)
+        private void OnFormClosed(object sender, FormClosedEventArgs e)
         {
             if (ViewClosed != null)
                 ViewClosed(this, EventArgs.Empty);
@@ -147,6 +145,15 @@ namespace LanExchange.Plugin.WinForms.Forms
         {
             if (boxDetails != null)
                 boxDetails.RightToLeft = RightToLeft;
+        }
+
+        private void AboutForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                Close();
+                e.Handled = true;
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace LanExchange.SDK
+﻿namespace LanExchange.SDK.Presentation.Interfaces
 {
     /// <summary>
     /// The perform Escape KeyDown/KeyUp interface.

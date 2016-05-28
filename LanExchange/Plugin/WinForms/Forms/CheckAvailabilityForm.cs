@@ -1,34 +1,26 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Drawing;
-using System.Threading;
 using System.Windows.Forms;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.WinForms.Forms
 {
-    public partial class CheckAvailabilityForm : EscapeForm, ICheckAvailabilityWindow
+    public partial class CheckAvailabilityForm : Form, ICheckAvailabilityWindow
     {
-        private const int DELAY_FOR_SHOW = 250;
-
-        private readonly IImageManager imageManager;
+        private readonly ICheckAvailabilityPresenter presenter;
         private PanelItemBase currentItem;
-        private readonly Thread thread;
-        private volatile bool doneAndAvailable;
 
         public event EventHandler ViewClosed;
 
-        public CheckAvailabilityForm(
-            IImageManager imageManager,
-            ITranslationService translationService) : base(translationService)
+        public CheckAvailabilityForm(ICheckAvailabilityPresenter presenter)
         {
-            Contract.Requires<ArgumentNullException>(imageManager != null);
-
-            this.imageManager = imageManager;
+            Contract.Requires<ArgumentNullException>(presenter != null);
 
             InitializeComponent();
-            thread = new Thread(ThreadProc);
+
+            this.presenter = presenter;
+            presenter.Initialize(this);
         }
 
         public PanelItemBase CurrentItem
@@ -37,13 +29,7 @@ namespace LanExchange.Plugin.WinForms.Forms
             set
             {
                 currentItem = value;
-                if (currentItem != null)
-                {
-                    picObject.Image = imageManager.GetSmallImage(currentItem.ImageName);
-                    Icon = imageManager.GetSmallIcon(currentItem.ImageName);
-                    lObject.Text = currentItem.Name;
-                    toolTip.SetToolTip(lObject, currentItem.FullName);
-                }
+                presenter.OnCurrentItemChanged();
             }
         }
 
@@ -65,73 +51,62 @@ namespace LanExchange.Plugin.WinForms.Forms
 
         public void StartChecking()
         {
-            thread.Start(currentItem);
+            presenter.StartChecking();
         }
 
         public void WaitAndShow()
         {
-            var startTime = DateTime.UtcNow;
-            TimeSpan delta;
-            do
-            {
-                delta = DateTime.UtcNow - startTime;
-            } while (!doneAndAvailable && delta.Milliseconds < DELAY_FOR_SHOW);
-            if (!doneAndAvailable)
-                Show();
-        }
-
-        private void ThreadProc(object arg)
-        {
-            if (AvailabilityChecker == null || arg == null)
-                return;
-
-            var panelItem = arg as PanelItemBase;
-            if (panelItem == null) return;
-
-            bool available = false;
-            while (!available) 
-            {
-                try
-                {
-                    //Thread.Sleep(10000);
-                    available = AvailabilityChecker(panelItem);
-                }
-                catch (Exception e)
-                {
-                    Debug.Print(e.Message);
-                }
-            }
-            doneAndAvailable = true;
-            if (RunAction != null)
-                RunAction();
-            if (Visible)
-                Invoke(new Action(Close));
+            presenter.WaitAndShow();
         }
 
         private void bRun_Click(object sender, EventArgs e)
         {
-            Close();
-            if (!doneAndAvailable && RunAction != null)
-                RunAction();
+            presenter.PerformOk();
         }
 
         private void bCancel_Click(object sender, EventArgs e)
         {
-            Close();
+            presenter.PerformCancel();
         }
 
         private void CheckAvailabilityForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            thread.Abort();
+            if (ViewClosed != null)
+                ViewClosed(this, EventArgs.Empty);
         }
 
-
-        public bool DoneAndAvailable
+        public Image ObjectImage
         {
-            get { return doneAndAvailable; }
-       }
+            get { return picObject.Image; }
+            set { picObject.Image = value; }
+        }
 
+        public string ObjectText
+        {
+            get { return lObject.Text; }
+            set { lObject.Text = value; }
+        }
+
+        public void SetToolTip(string tooltip)
+        {
+            toolTip.SetToolTip(lObject, tooltip);
+        }
+
+        public void InvokeClose()
+        {
+            if (Visible)
+                Invoke(new Action(Close));
+        }
 
         public object CallerControl { get; set; }
+
+        private void CheckAvailabilityForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                presenter.PerformCancel();
+                e.Handled = true;
+            }
+        }
     }
 }

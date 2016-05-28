@@ -41,6 +41,7 @@
             this.buttonOK.TabIndex = 0;
             this.buttonOK.Text = "Add";
             this.buttonOK.UseVisualStyleBackColor = true;
+            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
             // buttonCancel
             // 
@@ -51,7 +52,7 @@
             this.buttonCancel.TabIndex = 1;
             this.buttonCancel.Text = "Close";
             this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Click += new System.EventHandler(this.button2_Click);
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // EditForm
             // 
@@ -68,6 +69,7 @@
             this.Name = "EditForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "New item";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EditForm_KeyDown);
             this.ResumeLayout(false);
 
         }

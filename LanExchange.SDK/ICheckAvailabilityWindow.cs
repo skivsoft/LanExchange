@@ -21,6 +21,10 @@ namespace LanExchange.SDK
 
         void WaitAndShow();
 
-        bool DoneAndAvailable { get; }
+        Image ObjectImage { get; set; }
+        string ObjectText { get; set; }
+        Icon Icon { get; set; }
+        void SetToolTip(string tooltip);
+        void InvokeClose();
     }
 }

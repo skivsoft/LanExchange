@@ -87,8 +87,8 @@
   <PropertyGroup />
   <PropertyGroup />
   <ItemGroup>
-    <Reference Include="SimpleInjector, Version=3.1.4.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
-      <HintPath>..\Solution\packages\SimpleInjector.3.1.4\lib\net40-client\SimpleInjector.dll</HintPath>
+    <Reference Include="SimpleInjector, Version=3.1.5.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\Solution\packages\SimpleInjector.3.1.5\lib\net40-client\SimpleInjector.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -202,12 +202,6 @@
     <Compile Include="Plugin\WinForms\Utils\BitmapUtils.cs" />
     <Compile Include="Plugin\WinForms\Impl\ClipboardDataObjectImpl.cs" />
     <Compile Include="Plugin\WinForms\Impl\ClipboardServiceImpl.cs" />
-    <Compile Include="Plugin\WinForms\Forms\EscapeForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Plugin\WinForms\Forms\EscapeForm.Designer.cs">
-      <DependentUpon>EscapeForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Plugin\WinForms\Components\FilterView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -254,6 +248,7 @@
     <Compile Include="Misc\Impl\LazyThreadPoolImpl.cs" />
     <Compile Include="Misc\Impl\PluginManagerImpl.cs" />
     <Compile Include="Presenter\AboutPresenter.cs" />
+    <Compile Include="Presenter\CheckAvailabilityPresenter.cs" />
     <Compile Include="Presenter\EditPresenter.cs" />
     <Compile Include="Presenter\FilterPresenter.cs" />
     <Compile Include="Presenter\MainPresenter.cs" />

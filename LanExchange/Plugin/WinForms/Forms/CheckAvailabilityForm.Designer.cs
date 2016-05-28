@@ -63,7 +63,7 @@ namespace LanExchange.Plugin.WinForms.Forms
             this.bCancel.Name = "bCancel";
             this.bCancel.Size = new System.Drawing.Size(75, 23);
             this.bCancel.TabIndex = 2;
-            this.bCancel.Text = Resources.Cancel;
+            this.bCancel.Text = global::LanExchange.Properties.Resources.Cancel;
             this.bCancel.UseVisualStyleBackColor = true;
             this.bCancel.Click += new System.EventHandler(this.bCancel_Click);
             // 
@@ -73,9 +73,9 @@ namespace LanExchange.Plugin.WinForms.Forms
             this.lObject.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lObject.Location = new System.Drawing.Point(25, 32);
             this.lObject.Name = "lObject";
-            this.lObject.Size = new System.Drawing.Size(31, 13);
+            this.lObject.Size = new System.Drawing.Size(23, 13);
             this.lObject.TabIndex = 6;
-            this.lObject.Text = Resources.EmptyText;
+            this.lObject.Text = "    ";
             // 
             // progressBar1
             // 
@@ -124,6 +124,7 @@ namespace LanExchange.Plugin.WinForms.Forms
             this.Name = "CheckAvailabilityForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CheckAvailabilityForm_FormClosed);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CheckAvailabilityForm_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.picObject)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

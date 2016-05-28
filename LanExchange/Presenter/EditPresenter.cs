@@ -22,5 +22,15 @@ namespace LanExchange.Presenter
             var columnsForView = columns.Where(header => !header.Refreshable).ToList();
             View.SetColumns(columnsForView);
         }
+
+        public void PerformOk()
+        {
+            View.Close();
+        }
+
+        public void PerformCancel()
+        {
+            View.Close();
+        }
     }
 }

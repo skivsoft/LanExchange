@@ -104,6 +104,7 @@
     <Compile Include="IAboutView.cs" />
     <Compile Include="IAction.cs" />
     <Compile Include="IAppPresenter.cs" />
+    <Compile Include="ICheckAvailabilityPresenter.cs" />
     <Compile Include="ICheckAvailabilityWindow.cs" />
     <Compile Include="IClipboardDataObject.cs" />
     <Compile Include="IClipboardService.cs" />
@@ -133,7 +134,8 @@
     <Compile Include="IPanelPresenter.cs" />
     <Compile Include="IPanelUpdater.cs" />
     <Compile Include="IPanelView.cs" />
-    <Compile Include="IPerformEscape.cs" />
+    <Compile Include="Presentation\Interfaces\IPerformEscape.cs" />
+    <Compile Include="Presentation\Interfaces\IPerformOkCancel.cs" />
     <Compile Include="IPlugin.cs" />
     <Compile Include="IPluginManager.cs" />
     <Compile Include="Presentation\Interfaces\IPresenter.cs" />

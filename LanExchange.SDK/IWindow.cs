@@ -45,5 +45,10 @@ namespace LanExchange.SDK
         /// Activates the window.
         /// </summary>
         void Activate();
+
+        /// <summary>
+        /// Closes the window.
+        /// </summary>
+        void Close();
     }
 }

@@ -9,10 +9,10 @@ namespace LanExchange.SDK
         {
             if (view == null) throw new ArgumentNullException(nameof(view));
             View = view;
-            InternalInitialize();
+            InitializePresenter();
         }
 
-        protected virtual void InternalInitialize()
+        protected virtual void InitializePresenter()
         {
         }
 

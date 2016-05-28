@@ -86,6 +86,7 @@ namespace LanExchange
             container.Register<IFilterPresenter, FilterPresenter>();
             container.Register<IPanelPresenter, PanelPresenter>();
             container.Register<IEditPresenter, EditPresenter>();
+            container.Register<ICheckAvailabilityPresenter, CheckAvailabilityPresenter>();
         }
 
         private void RegisterOSWindows()

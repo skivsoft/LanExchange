@@ -7,13 +7,11 @@ using System.Diagnostics.Contracts;
 
 namespace LanExchange.Plugin.WinForms.Forms
 {
-    public partial class EditForm : EscapeForm, IEditView
+    public partial class EditForm : Form, IEditView
     {
         private readonly IEditPresenter presenter;
 
-        public EditForm(
-            IEditPresenter presenter,
-            ITranslationService translationService) : base(translationService)
+        public EditForm(IEditPresenter presenter)
         {
             Contract.Requires<ArgumentNullException>(presenter != null);
 
@@ -21,11 +19,6 @@ namespace LanExchange.Plugin.WinForms.Forms
 
             this.presenter = presenter;
             presenter.Initialize(this);
-        }
-
-        public IEditPresenter Presenter
-        {
-            get { return presenter; }
         }
 
         public event EventHandler ViewClosed;
@@ -78,10 +71,23 @@ namespace LanExchange.Plugin.WinForms.Forms
             return ShowDialog() == DialogResult.OK;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void buttonOK_Click(object sender, EventArgs e)
         {
-            Close();
+            presenter.PerformOk();
         }
 
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            presenter.PerformCancel();
+        }
+
+        private void EditForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                presenter.PerformCancel();
+                e.Handled = true;
+            }
+        }
     }
 }
