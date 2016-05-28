@@ -240,7 +240,7 @@ namespace LanExchange.Plugin.WinForms.Impl
 
         public void ProcessKeyDown(object args)
         {
-            var pv = pagesPresenter.View.ActivePanelView;
+            var pv = pagesPresenter.ActivePanelView;
             var e = args as KeyEventArgs;
             if (pv == null || e == null) return;
             var panelItem = pv.Presenter.GetFocusedPanelItem(true);
@@ -264,7 +264,7 @@ namespace LanExchange.Plugin.WinForms.Impl
         /// </summary>
         public void RunDefaultCmdLine()
         {
-            var pv = pagesPresenter.View.ActivePanelView;
+            var pv = pagesPresenter.ActivePanelView;
             if (pv == null) return;
 
             var panelItem = pv.Presenter.GetFocusedPanelItem(true);

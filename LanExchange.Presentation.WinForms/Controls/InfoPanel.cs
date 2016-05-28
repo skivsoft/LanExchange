@@ -10,19 +10,20 @@ namespace LanExchange.Presentation.WinForms.Controls
 {
     public partial class InfoPanel : UserControl, IInfoView
     {
-        private readonly IImageManager imageManager;
+        private readonly IInfoPresenter presenter;
 
         private int numLines;
         private readonly IList<Label> lines;
         private PanelItemBase currentItem;
         
-        public InfoPanel(IImageManager imageManager)
+        public InfoPanel(IInfoPresenter presenter)
         {
-            Contract.Requires<ArgumentNullException>(imageManager != null);
-
-            this.imageManager = imageManager;
+            Contract.Requires<ArgumentNullException>(presenter != null);
 
             InitializeComponent();
+            this.presenter = presenter;
+            presenter.Initialize(this);
+
             lines = new List<Label>();
         }
 
@@ -110,10 +111,10 @@ namespace LanExchange.Presentation.WinForms.Controls
             set
             {
                 currentItem = value;
-                if (currentItem != null)
-                {
-                    Picture.Image = imageManager.GetLargeImage(currentItem.ImageName);
-                }
+                //if (currentItem != null)
+                //{
+                //    Picture.Image = presenter.GetLargeImage(currentItem.ImageName);
+                //}
             }
         }
 

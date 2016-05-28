@@ -175,35 +175,33 @@
     <Compile Include="Plugin\Windows\Utils\SysImageListHelper.cs" />
     <Compile Include="Plugin\Windows\Utils\UnsafeNativeMethods.cs" />
     <Compile Include="Plugin\Windows\Utils\User32Utils.cs" />
-    <Compile Include="Plugin\WinForms\Forms\CheckAvailabilityForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Plugin\WinForms\Forms\CheckAvailabilityForm.Designer.cs">
-      <DependentUpon>CheckAvailabilityForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Plugin\WinForms\Impl\AddonCommandStarter.cs" />
-    <Compile Include="Plugin\WinForms\Impl\SubMenuAdapter.cs" />
-    <Compile Include="Plugin\WinForms\Utils\MessageBoxHelper.cs" />
-    <Compile Include="Helpers\ProtocolHelper.cs" />
-    <Compile Include="Presenter\EditPresenter.cs" />
-    <Compile Include="Presenter\MainPresenter.cs" />
     <Compile Include="Plugin\WinForms\Forms\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Plugin\WinForms\Forms\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Plugin\WinForms\Impl\AddonManagerImpl.cs" />
-    <Compile Include="Plugin\WinForms\AppPresenter.cs" />
-    <Compile Include="Plugin\WinForms\Utils\BitmapUtils.cs" />
-    <Compile Include="Plugin\WinForms\Impl\ClipboardDataObjectImpl.cs" />
-    <Compile Include="Plugin\WinForms\Impl\ClipboardServiceImpl.cs" />
+    <Compile Include="Plugin\WinForms\Forms\CheckAvailabilityForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Plugin\WinForms\Forms\CheckAvailabilityForm.Designer.cs">
+      <DependentUpon>CheckAvailabilityForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Plugin\WinForms\Forms\EditForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Plugin\WinForms\Forms\EditForm.Designer.cs">
       <DependentUpon>EditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Plugin\WinForms\Impl\AddonCommandStarter.cs" />
+    <Compile Include="Plugin\WinForms\Impl\SubMenuAdapter.cs" />
+    <Compile Include="Plugin\WinForms\Utils\MessageBoxHelper.cs" />
+    <Compile Include="Helpers\ProtocolHelper.cs" />
+    <Compile Include="Plugin\WinForms\Impl\AddonManagerImpl.cs" />
+    <Compile Include="Plugin\WinForms\AppPresenter.cs" />
+    <Compile Include="Plugin\WinForms\Utils\BitmapUtils.cs" />
+    <Compile Include="Plugin\WinForms\Impl\ClipboardDataObjectImpl.cs" />
+    <Compile Include="Plugin\WinForms\Impl\ClipboardServiceImpl.cs" />
     <Compile Include="Plugin\WinForms\Forms\EscapeForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -253,12 +251,14 @@
     <Compile Include="Misc\Impl\PuntoSwitcherServiceEngRus.cs" />
     <Compile Include="Model\ConfigModel.cs" />
     <Compile Include="Model\AboutModel.cs" />
-    <Compile Include="Presenter\AboutPresenter.cs" />
-    <Compile Include="Presenter\FilterPresenter.cs" />
     <Compile Include="Misc\Impl\LazyThreadPoolImpl.cs" />
+    <Compile Include="Misc\Impl\PluginManagerImpl.cs" />
+    <Compile Include="Presenter\AboutPresenter.cs" />
+    <Compile Include="Presenter\EditPresenter.cs" />
+    <Compile Include="Presenter\FilterPresenter.cs" />
+    <Compile Include="Presenter\MainPresenter.cs" />
     <Compile Include="Presenter\PagesPresenter.cs" />
     <Compile Include="Presenter\PanelPresenter.cs" />
-    <Compile Include="Misc\Impl\PluginManagerImpl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\ReflectionHelper.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -266,21 +266,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Plugin\WinForms\Forms\AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Plugin\WinForms\Forms\CheckAvailabilityForm.resx">
       <DependentUpon>CheckAvailabilityForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Plugin\WinForms\Forms\EditForm.resx">
+      <DependentUpon>EditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Plugin\WinForms\Forms\AboutForm.resx">
-      <DependentUpon>AboutForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Plugin\WinForms\Forms\EditForm.resx">
-      <DependentUpon>EditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Plugin\WinForms\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -379,10 +379,13 @@
   <ItemGroup>
     <Content Include="Misc\MVP.gif" />
     <Content Include="Languages\!Readme.txt" />
-    <Content Include="Presenter\!Readme.txt" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\LanExchange.Presentation.WinForms\LanExchange.Presentation.WinForms.csproj">
+      <Project>{99898dfe-7ea8-44cf-acca-543b74eb7e6e}</Project>
+      <Name>LanExchange.Presentation.WinForms</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LanExchange.SDK\LanExchange.SDK.csproj">
       <Project>{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}</Project>
       <Name>LanExchange.SDK</Name>

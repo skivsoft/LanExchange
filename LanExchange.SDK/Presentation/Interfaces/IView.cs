@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace LanExchange.SDK.Presentation.Interfaces
+﻿namespace LanExchange.SDK.Presentation.Interfaces
 {
     /// <summary>
-    /// The base interface for any View in Model-View-Preseneter terminology.
+    /// The base interface for any View in Model-View-Preseneter pattern.
     /// </summary>
     public interface IView
     {

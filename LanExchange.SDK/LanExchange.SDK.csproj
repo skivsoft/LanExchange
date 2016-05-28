@@ -136,7 +136,7 @@
     <Compile Include="IPerformEscape.cs" />
     <Compile Include="IPlugin.cs" />
     <Compile Include="IPluginManager.cs" />
-    <Compile Include="IPresenter.cs" />
+    <Compile Include="Presentation\Interfaces\IPresenter.cs" />
     <Compile Include="IPuntoSwitcherService.cs" />
     <Compile Include="IScreenService.cs" />
     <Compile Include="IShell32Service.cs" />

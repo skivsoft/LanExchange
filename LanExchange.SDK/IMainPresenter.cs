@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Drawing;
+using LanExchange.SDK.Presentation.Interfaces;
 
 namespace LanExchange.SDK
 {

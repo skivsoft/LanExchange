@@ -23,9 +23,10 @@ namespace LanExchange.Plugin.WinForms.Forms
         {
             Contract.Requires<ArgumentNullException>(presenter != null);
 
-            this.presenter = presenter;
-            this.presenter.View = this;
             InitializeComponent();
+            this.presenter = presenter;
+            this.presenter.Initialize(this);
+
             TranslateUI();
             FormClosed += OnFormClosed;
         }

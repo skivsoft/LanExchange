@@ -57,8 +57,6 @@ namespace LanExchange.Plugin.WinForms.Components
             Contract.Requires<ArgumentNullException>(userService != null);
             Contract.Requires<ArgumentNullException>(puntoService != null);
 
-            this.presenter = presenter;
-            this.presenter.View = this;
             this.addonManager = addonManager;
             this.factoryManager = factoryManager;
             this.threadPool = threadPool;
@@ -69,6 +67,8 @@ namespace LanExchange.Plugin.WinForms.Components
             this.puntoService = puntoService;
 
             InitializeComponent();
+            this.presenter = presenter;
+            presenter.Initialize(this);
 
             // setup items cache
             var cache = new ListViewItemCache(this);
@@ -78,7 +78,7 @@ namespace LanExchange.Plugin.WinForms.Components
             GotFocus += (sender, args) => ActiveControl = LV;
             // set filter's presenter
             pFilter.Presenter = filterPresenter;
-            pFilter.Presenter.View = pFilter;
+            pFilter.Presenter.Initialize(pFilter);
         }
         #endregion
 
@@ -699,9 +699,9 @@ namespace LanExchange.Plugin.WinForms.Components
             TranslationUtils.TranslateControls(Controls);
             mComp.Tag = null;
             //PrepareContextMenu();
-            var panelView = pagesPresenter.View.ActivePanelView;
-            if (panelView == this)
-                presenter.UpdateItemsAndStatus();
+            var panelView = pagesPresenter.ActivePanelView;
+            //if (panelView == this)
+            //    presenter.UpdateItemsAndStatus();
         }
 
         private void PanelView_RightToLeftChanged(object sender, EventArgs e)

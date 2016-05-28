@@ -1,4 +1,5 @@
 ﻿using System;
+using LanExchange.SDK.Presentation.Interfaces;
 
 namespace LanExchange.SDK
 {
@@ -12,6 +13,9 @@ namespace LanExchange.SDK
         void CommandCloseTab();
 
         int SelectedIndex { get; set; }
+
+        [Obsolete("Need to be removed.")]
+        IPanelView ActivePanelView { get; }
 
         void SaveInstant();
 
@@ -47,5 +51,6 @@ namespace LanExchange.SDK
         void UpdateTabName(int index);
 
         void CommandReRead();
+        void SetTabImageForModel(IPanelModel theModel, string imageName);
     }
 }

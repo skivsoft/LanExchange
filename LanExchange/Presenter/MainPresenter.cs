@@ -109,7 +109,7 @@ namespace LanExchange.Presenter
             switch (e.PropertyName)
             {
                 case nameof(config.ShowGridLines):
-                    var panelView = pagesPresenter.View.ActivePanelView;
+                    var panelView = pagesPresenter.ActivePanelView;
                     if (panelView != null)
                         panelView.GridLines = config.ShowGridLines;
                     break;

@@ -184,12 +184,20 @@ namespace LanExchange.Presenter
             pageModel.AsyncRetrieveData(false);
         }
 
-        public int IndexOf(IPanelModel model)
+        public void SetTabImageForModel(IPanelModel theModel, string imageName)
         {
-            if (model == null)
+            if (theModel == null) return;
+            var index = IndexOf(theModel);
+            if (index != -1)
+                View.SetTabImage(index, imageManager.IndexOf(imageName));
+        }
+
+        public int IndexOf(IPanelModel theModel)
+        {
+            if (theModel == null)
                 return -1;
             for (int index = 0; index < this.model.Count; index++)
-                if (this.model.GetItem(index) == model)
+                if (model.GetItem(index) == theModel)
                     return index;
             return -1;
         }
@@ -271,6 +279,11 @@ namespace LanExchange.Presenter
         {
             get { return model.SelectedIndex; }
             set { model.SelectedIndex = value; }
+        }
+
+        public IPanelView ActivePanelView
+        {
+            get { return View.ActivePanelView; }
         }
 
         public void SaveInstant()

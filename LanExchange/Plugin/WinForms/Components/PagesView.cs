@@ -57,7 +57,7 @@ namespace LanExchange.Plugin.WinForms.Components
 
             InitializeComponent();
             this.presenter = presenter;
-            this.presenter.View = this;
+            presenter.Initialize(this);
 
             this.factoryManager = factoryManager;
             this.imageManager = imageManager;

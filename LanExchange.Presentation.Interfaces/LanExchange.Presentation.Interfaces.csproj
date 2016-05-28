@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IInfoPresenter.cs" />
     <Compile Include="IInfoView.cs" />
     <Compile Include="IMenuItem.cs" />
     <Compile Include="IMenuItemVisitor.cs" />

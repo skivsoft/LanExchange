@@ -87,10 +87,7 @@ namespace LanExchange.Misc.Impl
 
         private void SetTabImageInvoked(IPanelModel model, string imageName)
         {
-            if (model == null) return;
-            var index = pagesPresenter.IndexOf(model);
-            if (index != -1)
-                pagesPresenter.View.SetTabImage(index, imageManager.IndexOf(imageName));
+            pagesPresenter.SetTabImageForModel(model, imageName);
         }
 
         private void UpdateThread(object argument)

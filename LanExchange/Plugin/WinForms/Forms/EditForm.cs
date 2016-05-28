@@ -20,7 +20,7 @@ namespace LanExchange.Plugin.WinForms.Forms
             InitializeComponent();
 
             this.presenter = presenter;
-            this.presenter.View = this;
+            presenter.Initialize(this);
         }
 
         public IEditPresenter Presenter
