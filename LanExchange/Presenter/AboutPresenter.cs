@@ -103,5 +103,9 @@ namespace LanExchange.Presenter
             sb.Append("}");
             return sb.ToString().Replace(Environment.NewLine, @"\line ");
         }
+
+        protected override void InitializePresenter()
+        {
+        }
     }
 }

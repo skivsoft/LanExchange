@@ -358,5 +358,9 @@ namespace LanExchange.Presenter
             escapeDown = false;
             return true;
         }
+
+        protected override void InitializePresenter()
+        {
+        }
     }
 }

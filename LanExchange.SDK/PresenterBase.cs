@@ -12,9 +12,7 @@ namespace LanExchange.SDK
             InitializePresenter();
         }
 
-        protected virtual void InitializePresenter()
-        {
-        }
+        protected abstract void InitializePresenter();
 
         protected TView View { get; private set; }
     }

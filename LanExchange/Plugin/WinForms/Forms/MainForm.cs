@@ -34,6 +34,7 @@ namespace LanExchange.Plugin.WinForms.Forms
 
         public event EventHandler ViewClosed;
 
+        [Obsolete("Should be only single depenedcy: Presenter.")]
         public MainForm(
             IMainPresenter mainPresenter,
             IPagesPresenter pagesPresenter,
@@ -61,7 +62,6 @@ namespace LanExchange.Plugin.WinForms.Forms
             Contract.Requires<ArgumentNullException>(screenService != null);
             Contract.Requires<ArgumentNullException>(shellService != null);
 
-            this.mainPresenter = mainPresenter;
             this.pagesPresenter = pagesPresenter;
             this.aboutPresenter = aboutPresenter;
             this.addonManager = addonManager;
@@ -75,6 +75,8 @@ namespace LanExchange.Plugin.WinForms.Forms
             this.shellService = shellService;
 
             InitializeComponent();
+            this.mainPresenter = mainPresenter;
+            mainPresenter.Initialize(this);
 
             if (translationService.RightToLeft)
             {

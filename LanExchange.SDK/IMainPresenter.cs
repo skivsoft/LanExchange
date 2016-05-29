@@ -9,7 +9,6 @@ namespace LanExchange.SDK
         Rectangle SettingsGetBounds();
         void SettingsSetBounds(Rectangle rect);
         void ConfigOnChanged(object sender, PropertyChangedEventArgs e);
-        void PrepareForm();
         int FindShortcutKeysPanelIndex();
         void GlobalTranslateUI();
 

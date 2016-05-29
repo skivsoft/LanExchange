@@ -50,5 +50,9 @@ namespace LanExchange.Presenter
                 View.DoFilterCountChanged();
             }
         }
+
+        protected override void InitializePresenter()
+        {
+        }
     }
 }

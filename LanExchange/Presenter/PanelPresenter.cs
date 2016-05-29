@@ -226,5 +226,9 @@ namespace LanExchange.Presenter
             columns[columnIndex].Visible = !columns[columnIndex].Visible;
             SetupColumns();
         }
+
+        protected override void InitializePresenter()
+        {
+        }
     }
 }

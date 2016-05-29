@@ -34,6 +34,7 @@ namespace LanExchange.Plugin.WinForms.Components
 
         public event EventHandler FocusedItemChanged;
 
+        [Obsolete("Should be only single depenedcy: Presenter.")]
         public PanelView(
             IPanelPresenter presenter, 
             IAddonManager addonManager, 

@@ -32,5 +32,9 @@ namespace LanExchange.Presenter
         {
             View.Close();
         }
+
+        protected override void InitializePresenter()
+        {
+        }
     }
 }

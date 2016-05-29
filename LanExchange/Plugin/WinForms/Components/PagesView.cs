@@ -38,6 +38,7 @@ namespace LanExchange.Plugin.WinForms.Components
         /// </summary>
         private bool isClicked;
 
+        [Obsolete("Should be only single depenedcy: Presenter.")]
         public PagesView(
             IPagesPresenter presenter, 
             IPanelItemFactoryManager factoryManager, 

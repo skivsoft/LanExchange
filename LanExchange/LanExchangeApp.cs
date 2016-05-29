@@ -81,8 +81,6 @@ namespace LanExchange
             // create main form
             //App.Presenter.ConfigOnChanged(App.Config, new ConfigChangedArgs(ConfigNames.Language));
             var mainView = windowFactory.CreateMainView();
-            mainPresenter.Initialize(mainView);
-            mainPresenter.PrepareForm();
             pagesPresenter.LoadSettings();
             // run application
             application.Run(mainView);

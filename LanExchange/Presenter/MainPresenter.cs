@@ -68,7 +68,12 @@ namespace LanExchange.Presenter
             this.screenService = screenService;
         }
 
-        public void PrepareForm()
+        protected override void InitializePresenter()
+        {
+            PrepareForm();
+        }
+
+        private void PrepareForm()
         {
             View.SetRunMinimized(App.Config.RunMinimized);
             // setup languages in menu
