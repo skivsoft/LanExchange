@@ -1,5 +1,4 @@
 ﻿using System;
-using LanExchange.Properties;
 using LanExchange.SDK;
 using System.Diagnostics.Contracts;
 using System.Linq;

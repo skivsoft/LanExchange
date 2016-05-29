@@ -97,12 +97,23 @@
     <Compile Include="Controls\InfoPanel.Designer.cs">
       <DependentUpon>InfoPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\StatusPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\StatusPanel.Designer.cs">
+      <DependentUpon>StatusPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="InfoPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StatusPanelPresenter.cs" />
+    <Compile Include="SystemInformationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Controls\InfoPanel.resx">
       <DependentUpon>InfoPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StatusPanel.resx">
+      <DependentUpon>StatusPanel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

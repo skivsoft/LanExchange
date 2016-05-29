@@ -17,5 +17,11 @@
         /// </summary>
         /// <returns></returns>
         IPagesView GetPagesView();
+
+        /// <summary>
+        /// Creates the status panel view.
+        /// </summary>
+        /// <returns></returns>
+        IStatusPanelView CreateStatusPanelView();
     }
 }

@@ -20,5 +20,10 @@ namespace LanExchange.Implementations.Factories
         {
             return serviceProvider.Resolve<IPagesView>();
         }
+
+        public IStatusPanelView CreateStatusPanelView()
+        {
+            return serviceProvider.Resolve<IStatusPanelView>();
+        }
     }
 }

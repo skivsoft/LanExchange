@@ -18,17 +18,12 @@ namespace LanExchange.Presentation.WinForms.Forms
             var presenter = new Mock<IMainPresenter>();
             var form = new MainForm(
                 presenter.Object,
-                new Mock<IPagesPresenter>().Object,
                 new Mock<IAboutPresenter>().Object,
-                new Mock<IAddonManager>().Object,
-                new Mock<IPanelItemFactoryManager>().Object,
                 new Mock<ILazyThreadPool>().Object,
                 new Mock<IImageManager>().Object,
                 new Mock<IActionManager>().Object,
                 new Mock<ITranslationService>().Object,
-                new Mock<IViewFactory>().Object,
-                new Mock<IScreenService>().Object,
-                new Mock<IShell32Service>().Object
+                new Mock<IViewFactory>().Object
                 );
             presenter.Verify(m => m.Initialize(form));
         }

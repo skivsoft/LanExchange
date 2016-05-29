@@ -40,12 +40,6 @@ namespace LanExchange.Plugin.WinForms.Forms
             this.mTrayAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.mTrayExit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.Status = new System.Windows.Forms.StatusStrip();
-            this.lItemsCount = new System.Windows.Forms.ToolStripStatusLabel();
-            this.StatusSep1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lCompName = new System.Windows.Forms.ToolStripStatusLabel();
-            this.StatusSep2 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lUserName = new System.Windows.Forms.ToolStripStatusLabel();
             this.tipComps = new System.Windows.Forms.ToolTip(this.components);
             this.MainMenu = new System.Windows.Forms.MainMenu(this.components);
             this.mPanel = new System.Windows.Forms.MenuItem();
@@ -74,7 +68,6 @@ namespace LanExchange.Plugin.WinForms.Forms
             this.mHelpSep2 = new System.Windows.Forms.MenuItem();
             this.mHelpAbout = new System.Windows.Forms.MenuItem();
             this.popTray.SuspendLayout();
-            this.Status.SuspendLayout();
             this.SuspendLayout();
             // 
             // TrayIcon
@@ -127,62 +120,6 @@ namespace LanExchange.Plugin.WinForms.Forms
             // 
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
             this.toolStripStatusLabel2.Size = new System.Drawing.Size(118, 17);
-            // 
-            // Status
-            // 
-            this.Status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lItemsCount,
-            this.StatusSep1,
-            this.lCompName,
-            this.StatusSep2,
-            this.lUserName});
-            this.Status.Location = new System.Drawing.Point(0, 520);
-            this.Status.Name = "Status";
-            this.Status.ShowItemToolTips = true;
-            this.Status.Size = new System.Drawing.Size(564, 22);
-            this.Status.TabIndex = 15;
-            this.Status.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Status_MouseDoubleClick);
-            // 
-            // lItemsCount
-            // 
-            this.lItemsCount.Name = "lItemsCount";
-            this.lItemsCount.Size = new System.Drawing.Size(503, 17);
-            this.lItemsCount.Spring = true;
-            this.lItemsCount.Text = global::LanExchange.Properties.Resources.EmptyText;
-            this.lItemsCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lItemsCount.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lItemsCount_MouseUp);
-            // 
-            // StatusSep1
-            // 
-            this.StatusSep1.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-            this.StatusSep1.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
-            this.StatusSep1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
-            this.StatusSep1.Name = "StatusSep1";
-            this.StatusSep1.Size = new System.Drawing.Size(4, 17);
-            // 
-            // lCompName
-            // 
-            this.lCompName.Name = "lCompName";
-            this.lCompName.Size = new System.Drawing.Size(19, 17);
-            this.lCompName.Text = global::LanExchange.Properties.Resources.EmptyText;
-            this.lCompName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lCompName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lCompName_MouseDown);
-            this.lCompName.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lCompName_MouseUp);
-            // 
-            // StatusSep2
-            // 
-            this.StatusSep2.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-            this.StatusSep2.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
-            this.StatusSep2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
-            this.StatusSep2.Name = "StatusSep2";
-            this.StatusSep2.Size = new System.Drawing.Size(4, 17);
-            // 
-            // lUserName
-            // 
-            this.lUserName.Name = "lUserName";
-            this.lUserName.Size = new System.Drawing.Size(19, 17);
-            this.lUserName.Text = global::LanExchange.Properties.Resources.EmptyText;
-            this.lUserName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lCompName_MouseDown);
             // 
             // tipComps
             // 
@@ -385,7 +322,6 @@ namespace LanExchange.Plugin.WinForms.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(564, 542);
-            this.Controls.Add(this.Status);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "MainForm";
@@ -396,10 +332,7 @@ namespace LanExchange.Plugin.WinForms.Forms
             this.RightToLeftChanged += new System.EventHandler(this.MainForm_RightToLeftChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.popTray.ResumeLayout(false);
-            this.Status.ResumeLayout(false);
-            this.Status.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -412,13 +345,7 @@ namespace LanExchange.Plugin.WinForms.Forms
         private System.Windows.Forms.ToolStripMenuItem mTrayOpen;
         private System.Windows.Forms.ToolStripSeparator mTraySep1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
-        private System.Windows.Forms.StatusStrip Status;
-        public System.Windows.Forms.ToolStripStatusLabel lItemsCount;
-        private System.Windows.Forms.ToolStripStatusLabel StatusSep1;
-        private System.Windows.Forms.ToolStripStatusLabel lCompName;
         public System.Windows.Forms.ToolTip tipComps;
-        private System.Windows.Forms.ToolStripStatusLabel StatusSep2;
-        private System.Windows.Forms.ToolStripStatusLabel lUserName;
         private System.Windows.Forms.MainMenu MainMenu;
         private System.Windows.Forms.MenuItem mHelp;
         private System.Windows.Forms.MenuItem mHelpAbout;

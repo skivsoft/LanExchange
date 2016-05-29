@@ -21,6 +21,8 @@ using SimpleInjector.Diagnostics;
 using System;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Factories;
+using LanExchange.Presentation.WinForms;
+using LanExchange.Presentation.WinForms.Controls;
 
 namespace LanExchange
 {
@@ -89,6 +91,7 @@ namespace LanExchange
             container.Register<IPanelPresenter, PanelPresenter>();
             container.Register<IEditPresenter, EditPresenter>();
             container.Register<ICheckAvailabilityPresenter, CheckAvailabilityPresenter>();
+            container.Register<IStatusPanelPresenter, StatusPanelPresenter>();
         }
 
         private void RegisterOSWindows()
@@ -106,6 +109,7 @@ namespace LanExchange
             container.Register<IFilterView, FilterView>();
             container.Register<IPanelView, PanelView>();
             container.Register<IEditView, EditForm>();
+            container.Register<IStatusPanelView, StatusPanel>();
             container.RegisterSingleton<IMainView, MainForm>();
             container.RegisterSingleton<IPagesView, PagesView>();
             container.RegisterSingleton<IAddonManager, AddonManagerImpl>();
@@ -121,6 +125,7 @@ namespace LanExchange
         {
             container.RegisterSingleton<IConfigPersistenceService, ConfigPersistenceService>();
             container.RegisterSingleton<IPagesPersistenceService, PagesPersistenceService>();
+            container.Register<ISystemInformationService, SystemInformationService>();
         }
 
         private void RegisterFactories()
@@ -159,6 +164,7 @@ namespace LanExchange
             SuppressDisposableTransientComponentWarning<IPanelUpdater>();
             SuppressDisposableTransientComponentWarning<IPanelModel>();
             SuppressDisposableTransientComponentWarning<ICheckAvailabilityWindow>();
+            SuppressDisposableTransientComponentWarning<IStatusPanelView>();
 
             container.Verify();
         }

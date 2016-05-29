@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Globalization;
 using System.Security.Permissions;
 using System.Windows.Forms;
 using LanExchange.Interfaces;
@@ -13,7 +12,6 @@ using LanExchange.SDK.Managers;
 using LanExchange.Actions;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Factories;
-using MenuItem = System.Windows.Forms.MenuItem;
 
 namespace LanExchange.Plugin.WinForms.Forms
 {
@@ -21,60 +19,47 @@ namespace LanExchange.Plugin.WinForms.Forms
     {
         public PagesView Pages;
 
-        private readonly IAddonManager addonManager;
-        private readonly IPanelItemFactoryManager factoryManager;
         private readonly ILazyThreadPool threadPool;
         private readonly IImageManager imageManager;
         private readonly IMainPresenter mainPresenter;
-        private readonly IPagesPresenter pagesPresenter;
         private readonly IAboutPresenter aboutPresenter;
         private readonly IActionManager actionManager;
         private readonly ITranslationService translationService;
         private readonly IViewFactory viewFactory;
-        private readonly IScreenService screenService;
-        private readonly IShell32Service shellService;
+
+        private readonly IStatusPanelView statusPanel;
 
         public event EventHandler ViewClosed;
 
         [Obsolete("Should be only single depenedcy: Presenter.")]
         public MainForm(
             IMainPresenter mainPresenter,
-            IPagesPresenter pagesPresenter,
             IAboutPresenter aboutPresenter,
-            IAddonManager addonManager, 
-            IPanelItemFactoryManager factoryManager,
             ILazyThreadPool threadPool,
             IImageManager imageManager,
             IActionManager actionManager,
             ITranslationService translationService,
-            IViewFactory viewFactory,
-            IScreenService screenService,
-            IShell32Service shellService)
+            IViewFactory viewFactory
+            )
         {
             Contract.Requires<ArgumentNullException>(mainPresenter != null);
-            Contract.Requires<ArgumentNullException>(pagesPresenter != null);
             Contract.Requires<ArgumentNullException>(aboutPresenter != null);
-            Contract.Requires<ArgumentNullException>(addonManager != null);
-            Contract.Requires<ArgumentNullException>(factoryManager != null);
             Contract.Requires<ArgumentNullException>(threadPool != null);
             Contract.Requires<ArgumentNullException>(imageManager != null);
             Contract.Requires<ArgumentNullException>(actionManager != null);
             Contract.Requires<ArgumentNullException>(translationService != null);
             Contract.Requires<ArgumentNullException>(viewFactory != null);
-            Contract.Requires<ArgumentNullException>(screenService != null);
-            Contract.Requires<ArgumentNullException>(shellService != null);
 
-            this.pagesPresenter = pagesPresenter;
             this.aboutPresenter = aboutPresenter;
-            this.addonManager = addonManager;
-            this.factoryManager = factoryManager;
             this.threadPool = threadPool;
             this.imageManager = imageManager;
             this.actionManager = actionManager;
             this.translationService = translationService;
             this.viewFactory = viewFactory;
-            this.screenService = screenService;
-            this.shellService = shellService;
+
+            // create status panel
+            statusPanel = viewFactory.CreateStatusPanelView();
+            Controls.Add((Control)statusPanel);
 
             InitializeComponent();
             this.mainPresenter = mainPresenter;
@@ -87,14 +72,6 @@ namespace LanExchange.Plugin.WinForms.Forms
             }
 
             Menu = MainMenu;
-
-            // show computer name
-            lCompName.Text = SystemInformation.ComputerName;
-            lCompName.ImageIndex = imageManager.IndexOf(PanelImageNames.COMPUTER);
-
-            // show current user
-            lUserName.Text = SystemInformation.UserName;
-            lUserName.ImageIndex = imageManager.IndexOf(PanelImageNames.USER);
         }
 
         public void SetupMenuLanguages()
@@ -125,7 +102,7 @@ namespace LanExchange.Plugin.WinForms.Forms
             Pages.BringToFront();
             // setup images
             imageManager.SetImagesTo(Pages.Pages);
-            imageManager.SetImagesTo(Status);
+            imageManager.SetImagesTo(statusPanel);
             // load saved pages from config
             Pages.SetupContextMenu();
         }
@@ -155,7 +132,7 @@ namespace LanExchange.Plugin.WinForms.Forms
             mTrayOpen_TranslateUI();
             TranslationUtils.TranslateControls(Controls);
             // refresh tab names
-            var shortcutIndex = mainPresenter.FindShortcutKeysPanelIndex();
+            //var shortcutIndex = mainPresenter.FindShortcutKeysPanelIndex();
             // TODO hide model
             //for (int index = 0; index < pagesPresenter.Count; index++ )
             //{
@@ -202,17 +179,6 @@ namespace LanExchange.Plugin.WinForms.Forms
             actionManager.ExecuteAction<AboutAction>();
         }
         
-        private void lItemsCount_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                var point = Status.PointToScreen(e.Location);
-                popTray.Show(point);
-            }
-        }
-
-
-
         private void popTray_Opening(object sender, CancelEventArgs e)
         {
             mTrayOpen_TranslateUI();
@@ -275,21 +241,6 @@ namespace LanExchange.Plugin.WinForms.Forms
         private void mReRead_Click(object sender, EventArgs e)
         {
             actionManager.ExecuteAction<PagesReReadAction>();
-        }
-
-        private void lCompName_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                var position = screenService.CursorPosition;
-                shellService.ShowMyComputerContextMenu(Handle, position);
-            }
-        }
-
-        private void Status_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-                shellService.OpenMyComputer();
         }
 
         private void UpdatePanelRelatedMenu()
@@ -359,40 +310,20 @@ namespace LanExchange.Plugin.WinForms.Forms
             aboutPresenter.OpenEmailLink();
         }
 
-        [Localizable(false)]
-        private void mHelpKeys_Click(object sender, EventArgs e)
-        {
-            actionManager.ExecuteAction<ShortcutKeysAction>();
-        }
-
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             threadPool.Dispose();
         }
 
-        private void lCompName_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left && e.Clicks == 1)
-            {
-                var label = (sender as ToolStripStatusLabel);
-                if (label != null)
-                {
-                    var obj = new DataObject();
-                    obj.SetText(label.Text, TextDataFormat.UnicodeText);
-                    Status.DoDragDrop(obj, DragDropEffects.Copy);
-                }
-            }
-        }
-
         public void SetToolTip(object control, string tipText)
         {
             if (control is Control)
-                tipComps.SetToolTip(control as Control, tipText);
+                tipComps.SetToolTip((Control)control, tipText);
         }
 
         public void ShowStatusText(string format, params object[] args)
         {
-            lItemsCount.Text = String.Format(CultureInfo.InvariantCulture, format, args);
+            //lItemsCount.Text = String.Format(CultureInfo.InvariantCulture, format, args);
         }
 
         [Localizable(false)]
@@ -462,7 +393,7 @@ namespace LanExchange.Plugin.WinForms.Forms
         private void MainForm_RightToLeftChanged(object sender, EventArgs e)
         {
             popTray.RightToLeft = RightToLeft;
-            Status.SizingGrip = RightToLeft == RightToLeft.No;
+            //Status.SizingGrip = RightToLeft == RightToLeft.No;
         }
     }
 }

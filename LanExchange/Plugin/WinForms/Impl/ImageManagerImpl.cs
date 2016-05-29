@@ -6,6 +6,7 @@ using LanExchange.Properties;
 using LanExchange.SDK;
 using System.Diagnostics.Contracts;
 using System;
+using LanExchange.Presentation.Interfaces;
 using LanExchange.SDK.Factories;
 
 namespace LanExchange.Plugin.WinForms.Impl
@@ -220,17 +221,25 @@ namespace LanExchange.Plugin.WinForms.Impl
 
         public void SetImagesTo(object control)
         {
-            if (control is TabControl)
-                (control as TabControl).ImageList = smallImageList;
-            if (control is StatusStrip)
-                (control as StatusStrip).ImageList = smallImageList;
-            if (control is ContextMenuStrip)
-                (control as ContextMenuStrip).ImageList = smallImageList;
-            if (control is ListView)
+            Contract.Requires<ArgumentNullException>(control != null);
+
+            var needImageList = control as IWithImageList;
+            needImageList?.SetImageList(smallImageList);
+
+            // TODO use IWithImageList
+            var tabControl = control as TabControl;
+            if (tabControl != null)
+                tabControl.ImageList = smallImageList;
+
+            var contextMenu = control as ContextMenuStrip;
+            if (contextMenu != null)
+                contextMenu.ImageList = smallImageList;
+
+            var listView = control as ListView;
+            if (listView != null)
             {
-                var lv = control as ListView;
-                lv.SmallImageList = smallImageList;
-                lv.LargeImageList = largeImageList;
+                listView.SmallImageList = smallImageList;
+                listView.LargeImageList = largeImageList;
             }
         }
 
