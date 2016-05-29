@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using LanExchange.Properties;
 using LanExchange.SDK;
 using System.Diagnostics.Contracts;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.WinForms.Forms
 {

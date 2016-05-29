@@ -1,9 +1,8 @@
 ﻿using FluentAssertions;
-using LanExchange.SDK;
-using LanExchange.SDK.Presentation.Interfaces;
 using Moq;
 using NUnit.Framework;
 using System;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Presenter
 {

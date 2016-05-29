@@ -1,4 +1,4 @@
-﻿namespace LanExchange.SDK.Presentation.Interfaces
+﻿namespace LanExchange.Presentation.Interfaces
 {
     public interface IPerformOkCancel
     {

@@ -3,6 +3,7 @@ using LanExchange.SDK;
 using LanExchange.SDK.Factories;
 using System;
 using System.Diagnostics.Contracts;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Actions
 {
@@ -35,7 +36,8 @@ namespace LanExchange.Actions
                 var root = new ShortcutRoot();
                 model.DataType = typeof (ShortcutPanelItem).Name;
                 model.CurrentPath.Push(root);
-                pagesPresenter.AddTab(model);
+                //TODO: hide model
+                //pagesPresenter.AddTab(model);
                 foundIndex = pagesPresenter.Count - 1;
             }
             pagesPresenter.SelectedIndex = foundIndex;

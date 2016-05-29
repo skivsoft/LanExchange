@@ -7,7 +7,8 @@ using LanExchange.Misc;
 using LanExchange.Interfaces.Services;
 using LanExchange.Model;
 using System.Diagnostics.Contracts;
-using LanExchange.SDK.Factories;
+using LanExchange.Presentation.Interfaces;
+using LanExchange.Presentation.Interfaces.Factories;
 
 namespace LanExchange
 {

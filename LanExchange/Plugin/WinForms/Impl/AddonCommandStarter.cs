@@ -8,7 +8,7 @@ using LanExchange.Helpers;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.SDK;
 using System.Diagnostics.Contracts;
-using LanExchange.SDK.Factories;
+using LanExchange.Presentation.Interfaces.Factories;
 
 namespace LanExchange.Plugin.WinForms.Impl
 {
@@ -51,18 +51,19 @@ namespace LanExchange.Plugin.WinForms.Impl
         [Localizable(false)]
         private void ShowCheckAvailabilityWindow()
         {
-            var form = windowFactory.CreateCheckAvailabilityWindow();
-            form.Text = string.Format("{0} — {1}", panelItem.Name, menuItem.Text);
-            form.CurrentItem = panelItem;
-            form.RunText = menuItem.Text;
-            if (menuItem.ProgramValue != null)
-                form.RunImage = menuItem.ProgramValue.ProgramImage;
-            form.CallerControl = this;
-            form.RunAction = InternalStart;
-            form.AvailabilityChecker = checker;
+            // TODO hide model
+            //var form = windowFactory.CreateCheckAvailabilityWindow();
+            //form.Text = string.Format("{0} — {1}", panelItem.Name, menuItem.Text);
+            //form.CurrentItem = panelItem;
+            //form.RunText = menuItem.Text;
+            //if (menuItem.ProgramValue != null)
+            //    form.RunImage = menuItem.ProgramValue.ProgramImage;
+            //form.CallerControl = this;
+            //form.RunAction = InternalStart;
+            //form.AvailabilityChecker = checker;
 
-            form.StartChecking();
-            form.WaitAndShow();
+            //form.StartChecking();
+            //form.WaitAndShow();
         }
 
         [Localizable(false)]

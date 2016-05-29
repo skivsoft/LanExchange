@@ -1,6 +1,4 @@
-﻿using LanExchange.SDK.Presentation.Interfaces;
-
-namespace LanExchange.SDK
+﻿namespace LanExchange.Presentation.Interfaces
 {
     /// <summary>
     /// View for filter panel.
@@ -25,8 +23,8 @@ namespace LanExchange.SDK
         /// <summary>
         /// Updates from model.
         /// </summary>
-        /// <param name="model">The model.</param>
-        void UpdateFromModel(IFilterModel model);
+        // //TODO: subscribe on model changed event
+        //void UpdateFromModel(IFilterModel model);
         /// <summary>
         /// Does the filter count changed.
         /// </summary>

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LanExchange.SDK
+namespace LanExchange.Presentation.Interfaces
 {
     public interface IMainView : IWindow
     {

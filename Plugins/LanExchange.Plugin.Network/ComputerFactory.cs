@@ -92,17 +92,10 @@ namespace LanExchange.Plugin.Network
         /// <returns>MAC-address string.</returns>
         public static IComparable GetMACAddress(PanelItemBase item)
         {
-            if (PluginNetwork.IPHLPAPI == null)
+            if (PluginNetwork.macAddressService == null)
                 return null;
-            var ipAddr = InternalGetIPAddress(item.Name);
-            var mac = new byte[6];
-            var len = (uint)mac.Length;
-            if (0 != PluginNetwork.IPHLPAPI.SendARP(ipAddr.GetHashCode(), 0, mac, ref len))
-            {
-                item.IsReachable = false;
-                return string.Empty;
-            }
-            return BitConverter.ToString(mac, 0, 6);
+            var ipAddress = InternalGetIPAddress(item.Name);
+            return PluginNetwork.macAddressService.GetMACAddress(ipAddress);
         }
 
         private static IPAddress InternalGetIPAddress(string computerName)

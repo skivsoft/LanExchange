@@ -1,4 +1,4 @@
-﻿namespace LanExchange.SDK.Factories
+﻿namespace LanExchange.Presentation.Interfaces.Factories
 {
     /// <summary>
     /// The window factory.

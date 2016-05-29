@@ -1,7 +1,6 @@
 ﻿using System;
-using LanExchange.SDK.Presentation.Interfaces;
 
-namespace LanExchange.SDK
+namespace LanExchange.Presentation.Interfaces
 {
     public abstract class PresenterBase<TView> : IPresenter<TView> where TView : IView
     {

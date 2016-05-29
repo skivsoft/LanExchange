@@ -156,7 +156,7 @@
     <Compile Include="Plugin\Shortcut\ShortcutRoot.cs" />
     <Compile Include="Plugin\Windows\ExternDll.cs" />
     <Compile Include="Plugin\Windows\HotkeysService.cs" />
-    <Compile Include="Plugin\Windows\IPHLPAPISerivce.cs" />
+    <Compile Include="Plugin\Windows\MACAddressService.cs" />
     <Compile Include="Plugin\Windows\IPHLPAPI\NativeMethods.cs" />
     <Compile Include="Plugin\Windows\Shell32Service.cs" />
     <Compile Include="Plugin\Windows\SysImageListService.cs" />

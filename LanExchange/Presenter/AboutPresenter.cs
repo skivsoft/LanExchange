@@ -6,6 +6,7 @@ using System.Text;
 using LanExchange.Properties;
 using LanExchange.SDK;
 using System.Diagnostics.Contracts;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Presenter
 {

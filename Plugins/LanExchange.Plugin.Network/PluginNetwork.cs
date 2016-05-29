@@ -10,7 +10,7 @@ namespace LanExchange.Plugin.Network
     [Export(typeof(IPlugin))]
     public sealed class PluginNetwork : IPlugin
     {
-        public static IIPHLPAPISerivice IPHLPAPI { get; private set; }
+        public static IMACAddressSerivice macAddressService { get; private set; }
 
         public void Initialize(IServiceProvider serviceProvider)
         {         
@@ -31,7 +31,7 @@ namespace LanExchange.Plugin.Network
             fillerManager.RegisterFiller<ComputerPanelItem>(new ComputerFiller());
             fillerManager.RegisterFiller<SharePanelItem>(new ShareFiller());
 
-            IPHLPAPI = serviceProvider.Resolve<IIPHLPAPISerivice>();
+            macAddressService = serviceProvider.Resolve<IMACAddressSerivice>();
         }
     }
 }

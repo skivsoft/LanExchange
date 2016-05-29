@@ -1,7 +1,8 @@
 ﻿using System;
 using LanExchange.SDK;
-using LanExchange.SDK.Factories;
 using System.Diagnostics.Contracts;
+using LanExchange.Presentation.Interfaces;
+using LanExchange.Presentation.Interfaces.Factories;
 
 namespace LanExchange.Actions
 {

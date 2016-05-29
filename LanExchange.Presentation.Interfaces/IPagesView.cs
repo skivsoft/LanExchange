@@ -1,6 +1,4 @@
-﻿using LanExchange.SDK.Presentation.Interfaces;
-
-namespace LanExchange.SDK
+﻿namespace LanExchange.Presentation.Interfaces
 {
     /// <summary>
     /// LanExchange main TabControl View interface.
@@ -53,9 +51,9 @@ namespace LanExchange.SDK
         /// <summary>
         /// Creates the panel view.
         /// </summary>
-        /// <param name="info">The info.</param>
         /// <returns></returns>
-        IPanelView CreatePanelView(IPanelModel info);
+        // TODO: hide model
+        //IPanelView CreatePanelView(IPanelModel info);
 
         void SetupContextMenu();
         void SetTabText(int index, string title);

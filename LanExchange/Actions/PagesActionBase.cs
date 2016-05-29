@@ -1,6 +1,7 @@
 ﻿using LanExchange.SDK;
 using System;
 using System.Diagnostics.Contracts;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Actions
 {

@@ -1,4 +1,5 @@
 ﻿using System;
+using LanExchange.Presentation.Interfaces;
 using LanExchange.SDK;
 
 namespace LanExchange.Presenter
@@ -18,7 +19,8 @@ namespace LanExchange.Presenter
                 {
                     model.FilterText = value;
                     model.ApplyFilter();
-                    View.UpdateFromModel(model);
+                    //TODO hide model
+                    //View.UpdateFromModel(model);
                     View.DoFilterCountChanged();
                 }
                 View.IsVisible = IsFiltered;
@@ -46,7 +48,8 @@ namespace LanExchange.Presenter
                 View.SetFilterText(value.FilterText);
                 model = value;
                 model.ApplyFilter();
-                View.UpdateFromModel(model);
+                //TODO hide model
+                //View.UpdateFromModel(model);
                 View.DoFilterCountChanged();
             }
         }

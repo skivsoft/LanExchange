@@ -1,6 +1,4 @@
-﻿using System;
-using LanExchange.Presentation.Interfaces;
-using LanExchange.SDK;
+﻿using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Presentation.WinForms
 {

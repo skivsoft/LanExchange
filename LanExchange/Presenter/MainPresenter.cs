@@ -8,7 +8,8 @@ using LanExchange.Plugin.Shortcut;
 using LanExchange.SDK;
 using LanExchange.Model;
 using System.Diagnostics.Contracts;
-using LanExchange.SDK.Factories;
+using LanExchange.Presentation.Interfaces;
+using LanExchange.Presentation.Interfaces.Factories;
 
 namespace LanExchange.Presenter
 {
@@ -135,9 +136,10 @@ namespace LanExchange.Presenter
             var pv = viewFactory.GetPagesView().ActivePanelView;
             if (pv != null)
             {
-                var index = pv.Presenter.Objects.IndexOf(item as PanelItemBase);
-                if (index >= 0)
-                    pv.RedrawItem(index);
+                //TODO hide model
+                //var index = pv.Presenter.Objects.IndexOf(item as PanelItemBase);
+                //if (index >= 0)
+                //    pv.RedrawItem(index);
             }
         }
 
@@ -151,16 +153,17 @@ namespace LanExchange.Presenter
             // get focused item from current PanelView
             var pv = sender as IPanelView;
             if (pv == null) return;
-            var panelItem = pv.Presenter.GetFocusedPanelItem(true);
-            // check if parent item more informative than current panel item
-            while (panelItem != null)
-            {
-                if (panelItem.Parent is PanelItemRootBase) 
-                    break;
-                if (panelItem.Parent != null && (panelItem.Parent.Parent is PanelItemRootBase))
-                    break;
-                panelItem = panelItem.Parent;
-            }
+            //TODO hide model
+            //var panelItem = pv.Presenter.GetFocusedPanelItem(true);
+            //// check if parent item more informative than current panel item
+            //while (panelItem != null)
+            //{
+            //    if (panelItem.Parent is PanelItemRootBase) 
+            //        break;
+            //    if (panelItem.Parent != null && (panelItem.Parent.Parent is PanelItemRootBase))
+            //        break;
+            //    panelItem = panelItem.Parent;
+            //}
         }
 
 
@@ -258,13 +261,7 @@ namespace LanExchange.Presenter
 
         public int FindShortcutKeysPanelIndex()
         {
-            for (int index = 0; index < pagesPresenter.Count; index++)
-            {
-                var model = pagesPresenter.GetItem(index);
-                if (model.DataType.Equals(typeof(ShortcutPanelItem).Name))
-                    return index;
-            }
-            return -1;
+            return pagesPresenter.GetPanelIndexByDataType(typeof(ShortcutPanelItem));
         }
     }
 }

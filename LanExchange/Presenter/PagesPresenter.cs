@@ -2,6 +2,7 @@
 using LanExchange.SDK;
 using LanExchange.Interfaces.Services;
 using System.Diagnostics.Contracts;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Presenter
 {
@@ -56,7 +57,10 @@ namespace LanExchange.Presenter
             var indexes = sourcePanel.SelectedIndexes.GetEnumerator();
             if (!indexes.MoveNext()) 
                 return false;
-            return sourcePanel.Presenter.Objects.Count > 1;
+
+            return false;
+            //TODO hide model
+            //return sourcePanel.Presenter.Objects.Count > 1;
         }
 
         public void CommandSendToNewTab()
@@ -100,7 +104,10 @@ namespace LanExchange.Presenter
             var items = (PanelItemBaseHolder)obj.GetData(typeof(PanelItemBaseHolder));
             if (items == null)
                 return false;
-            return !View.ActivePanelView.Presenter.Objects.TabName.Equals(items.Context);
+
+            return false;
+            //TODO hide model
+            //return !View.ActivePanelView.Presenter.Objects.TabName.Equals(items.Context);
         }
 
         public void CommandPasteItems()
@@ -128,32 +135,36 @@ namespace LanExchange.Presenter
 
         public void CommandDeleteItems()
         {
-            var panelView = View.ActivePanelView;
-            if (panelView == null) return;
-            var indexes = panelView.SelectedIndexes.GetEnumerator();
-            if (!indexes.MoveNext()) return;
-            var modified = false;
-            var firstIndex = -1;
-            foreach (int index in panelView.SelectedIndexes)
-            {
-                var comp = panelView.Presenter.Objects.GetItemAt(index);
-                if (comp.ImageName.Contains(PanelImageNames.GREEN_POSTFIX) || comp.ImageName.Contains(PanelImageNames.HIDDEN_POSTFIX))
-                {
-                    if (firstIndex == -1)
-                        firstIndex = index-1;
-                    panelView.Presenter.Objects.Items.Remove(comp);
-                    modified = true;
-                }
-            }
-            panelView.ClearSelected();
-            if (modified)
-            {
-                if (firstIndex < 0 || firstIndex > panelView.Presenter.Objects.FilterCount - 1)
-                    firstIndex = panelView.Presenter.Objects.FilterCount - 1;
-                if (firstIndex >= 0)
-                    panelView.Presenter.Objects.FocusedItem = panelView.Presenter.Objects.GetItemAt(firstIndex);
-                panelView.Presenter.Objects.AsyncRetrieveData(false);
-            }
+            // TODO hide model
+            //var panelView = View.ActivePanelView;
+            //if (panelView == null) return;
+            //var indexes = panelView.SelectedIndexes.GetEnumerator();
+            //if (!indexes.MoveNext()) return;
+
+
+            //var modified = false;
+            //var firstIndex = -1;
+
+            //foreach (int index in panelView.SelectedIndexes)
+            //{
+            //    var comp = panelView.Presenter.Objects.GetItemAt(index);
+            //    if (comp.ImageName.Contains(PanelImageNames.GREEN_POSTFIX) || comp.ImageName.Contains(PanelImageNames.HIDDEN_POSTFIX))
+            //    {
+            //        if (firstIndex == -1)
+            //            firstIndex = index-1;
+            //        panelView.Presenter.Objects.Items.Remove(comp);
+            //        modified = true;
+            //    }
+            //}
+            //panelView.ClearSelected();
+            //if (modified)
+            //{
+            //    if (firstIndex < 0 || firstIndex > panelView.Presenter.Objects.FilterCount - 1)
+            //        firstIndex = panelView.Presenter.Objects.FilterCount - 1;
+            //    if (firstIndex >= 0)
+            //        panelView.Presenter.Objects.FocusedItem = panelView.Presenter.Objects.GetItemAt(firstIndex);
+            //    panelView.Presenter.Objects.AsyncRetrieveData(false);
+            //}
         }
 
         public void CommandCloseTab()
@@ -184,6 +195,14 @@ namespace LanExchange.Presenter
             pageModel.AsyncRetrieveData(false);
         }
 
+        public int GetPanelIndexByDataType(Type dataType)
+        {
+            for (int index = 0; index < Count; index++)
+                if (GetItem(index).DataType.Equals(dataType.Name))
+                    return index;
+            return -1;
+        }
+
         public void SetTabImageForModel(IPanelModel theModel, string imageName)
         {
             if (theModel == null) return;
@@ -204,20 +223,22 @@ namespace LanExchange.Presenter
 
         public void Model_AfterAppendTab(object sender, PanelModelEventArgs e)
         {
-            // create panel
-            var panelView = View.CreatePanelView(e.Info);
-            // set update event
-            IPanelPresenter presenter = panelView.Presenter;
-            presenter.Objects = e.Info;
-            //m_View.SelectedIndex = m_View.TabPagesCount - 1;
-            e.Info.Changed += (o, args) => presenter.UpdateItemsAndStatus();
-            e.Info.TabNameUpdated += InfoOnTabNameUpdated;
-            e.Info.OnTabNameUpdated();
-            //e.Info.SubscriptionChanged += Item_SubscriptionChanged;
-            // update items
-            //e.Info.DataChanged(null, ConcreteSubject.s_UserItems);
-            panelView.Presenter.ResetSortOrder();
-            e.Info.AsyncRetrieveData(false);
+            // TODO hide model
+            //// create panel
+            //var panelView = View.CreatePanelView(e.Info);
+            //// set update event
+            //IPanelPresenter presenter = panelView.Presenter;
+            //presenter.Objects = e.Info;
+
+            ////m_View.SelectedIndex = m_View.TabPagesCount - 1;
+            //e.Info.Changed += (o, args) => presenter.UpdateItemsAndStatus();
+            //e.Info.TabNameUpdated += InfoOnTabNameUpdated;
+            //e.Info.OnTabNameUpdated();
+            ////e.Info.SubscriptionChanged += Item_SubscriptionChanged;
+            //// update items
+            ////e.Info.DataChanged(null, ConcreteSubject.s_UserItems);
+            //panelView.Presenter.ResetSortOrder();
+            //e.Info.AsyncRetrieveData(false);
         }
 
         private void InfoOnTabNameUpdated(object sender, EventArgs eventArgs)

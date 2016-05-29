@@ -1,4 +1,4 @@
-﻿namespace LanExchange.SDK
+﻿namespace LanExchange.Presentation.Interfaces
 {
     /// <summary>
     /// View for AboutForm.

@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-
-namespace LanExchange.SDK
+﻿namespace LanExchange.Presentation.Interfaces
 {
     public interface IEditView : IWindow
     {
-        void SetColumns(IList<PanelColumnHeader> columns);
+        //TODO: hide model
+        //void SetColumns(IList<PanelColumnHeader> columns);
 
         bool ShowModal();
     }

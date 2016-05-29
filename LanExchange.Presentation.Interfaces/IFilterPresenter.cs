@@ -1,11 +1,10 @@
-﻿using LanExchange.SDK.Presentation.Interfaces;
-
-namespace LanExchange.SDK
+﻿namespace LanExchange.Presentation.Interfaces
 {
     public interface IFilterPresenter : IPresenter<IFilterView>
     {
         string FilterText { get; set; }
         bool IsFiltered { get; }
-        void SetModel(IFilterModel value);
+        //TODO: subscribe on model changed event
+        //void SetModel(IFilterModel value);
     }
 }

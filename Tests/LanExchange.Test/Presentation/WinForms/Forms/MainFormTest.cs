@@ -1,7 +1,8 @@
 ﻿using LanExchange.Interfaces;
 using LanExchange.Plugin.WinForms.Forms;
+using LanExchange.Presentation.Interfaces;
+using LanExchange.Presentation.Interfaces.Factories;
 using LanExchange.SDK;
-using LanExchange.SDK.Factories;
 using LanExchange.SDK.Managers;
 using Moq;
 using NUnit.Framework;

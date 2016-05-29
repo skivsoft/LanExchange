@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Drawing;
 
-namespace LanExchange.SDK
+namespace LanExchange.Presentation.Interfaces
 {
     public interface ICheckAvailabilityWindow : IWindow
     {
-        PanelItemBase CurrentItem { get; set; }
-
         string RunText { get; set; }
 
         Image RunImage { get; set; }
@@ -15,7 +13,7 @@ namespace LanExchange.SDK
 
         object CallerControl { get; set; }
 
-        Func<PanelItemBase, bool> AvailabilityChecker { get; set; }
+        Func<bool> AvailabilityChecker { get; set; }
 
         void StartChecking();
 

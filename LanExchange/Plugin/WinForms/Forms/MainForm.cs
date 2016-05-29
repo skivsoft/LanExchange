@@ -11,7 +11,9 @@ using LanExchange.SDK;
 using System.Diagnostics.Contracts;
 using LanExchange.SDK.Managers;
 using LanExchange.Actions;
-using LanExchange.SDK.Factories;
+using LanExchange.Presentation.Interfaces;
+using LanExchange.Presentation.Interfaces.Factories;
+using MenuItem = System.Windows.Forms.MenuItem;
 
 namespace LanExchange.Plugin.WinForms.Forms
 {
@@ -154,13 +156,14 @@ namespace LanExchange.Plugin.WinForms.Forms
             TranslationUtils.TranslateControls(Controls);
             // refresh tab names
             var shortcutIndex = mainPresenter.FindShortcutKeysPanelIndex();
-            for (int index = 0; index < pagesPresenter.Count; index++ )
-            {
-                var model = pagesPresenter.GetItem(index);
-                pagesPresenter.UpdateTabName(index);
-                if (index == shortcutIndex)
-                    model.AsyncRetrieveData(false);
-            }
+            // TODO hide model
+            //for (int index = 0; index < pagesPresenter.Count; index++ )
+            //{
+            //    var model = pagesPresenter.GetItem(index);
+            //    pagesPresenter.UpdateTabName(index);
+            //    if (index == shortcutIndex)
+            //        model.AsyncRetrieveData(false);
+            //}
         }
 
         private void mTrayOpen_TranslateUI()

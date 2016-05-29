@@ -1,6 +1,7 @@
 ﻿using LanExchange.SDK.Domain;
 using System;
 using System.Collections.Generic;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.SDK
 {

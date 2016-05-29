@@ -1,7 +1,6 @@
 ﻿using System;
-using LanExchange.SDK.Presentation.Interfaces;
 
-namespace LanExchange.SDK
+namespace LanExchange.Presentation.Interfaces
 {
     /// <summary>
     /// Presenter of LanExchange panel.
@@ -16,7 +15,8 @@ namespace LanExchange.SDK
         /// <value>
         /// The objects.
         /// </value>
-        IPanelModel Objects { get; set; }
+        /// TODO: hide model
+        //IPanelModel Objects { get; set; }
         /// <summary>
         /// Updates the items and status.
         /// </summary>
@@ -31,9 +31,9 @@ namespace LanExchange.SDK
         /// <summary>
         /// Gets the focused panel item.
         /// </summary>
-        /// <param name="canReturnParent">if set to <c>true</c> [b can return parent].</param>
         /// <returns></returns>
-        PanelItemBase GetFocusedPanelItem(bool canReturnParent);
+        /// TODO: hide model
+        //PanelItemBase GetFocusedPanelItem(bool canReturnParent);
 
         void ResetSortOrder();
         void ColumnClick(int index);

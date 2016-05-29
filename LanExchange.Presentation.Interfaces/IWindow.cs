@@ -1,12 +1,11 @@
-﻿using LanExchange.SDK.Presentation.Interfaces;
-using System;
+﻿using System;
 
-namespace LanExchange.SDK
+namespace LanExchange.Presentation.Interfaces
 {
     /// <summary>
     /// The window interface.
     /// </summary>
-    /// <seealso cref="LanExchange.SDK.IView" />
+    /// <seealso cref="IView" />
     public interface IWindow : IView
     {
         /// <summary>

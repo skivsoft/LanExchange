@@ -1,7 +1,6 @@
 ﻿using System;
-using LanExchange.SDK.Presentation.Interfaces;
 
-namespace LanExchange.SDK
+namespace LanExchange.Presentation.Interfaces
 {
     public interface IPagesPresenter : IPresenter<IPagesView>, IPerformEscape
     {
@@ -25,13 +24,15 @@ namespace LanExchange.SDK
 
         void LoadSettings();
 
-        IPanelModel GetItem(int index);
+        //TODO: hide model
+        //IPanelModel GetItem(int index);
 
         bool CanSendToNewTab();
 
         bool CanPasteItems();
 
-        bool AddTab(IPanelModel info);
+        //TODO: hide model
+        //bool AddTab(IPanelModel info);
 
         void CommandDeleteItems();
 
@@ -46,11 +47,15 @@ namespace LanExchange.SDK
 
         void CommanCloseOtherTabs();
 
-        int IndexOf(IPanelModel model);
+        //TODO hide model
+        //int IndexOf(IPanelModel model);
 
         void UpdateTabName(int index);
 
         void CommandReRead();
-        void SetTabImageForModel(IPanelModel theModel, string imageName);
+
+        //TODO hide model
+        //void SetTabImageForModel(IPanelModel theModel, string imageName);
+        int GetPanelIndexByDataType(Type dataType);
     }
 }

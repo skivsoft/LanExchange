@@ -10,6 +10,7 @@ using System.Globalization;
 using System.Linq;
 using System.Xml.Serialization;
 using LanExchange.Infrastructure;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Model
 {

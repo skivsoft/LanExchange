@@ -1,7 +1,4 @@
-﻿using LanExchange.SDK;
-using LanExchange.SDK.Presentation.Interfaces;
-
-namespace LanExchange.Presentation.Interfaces
+﻿namespace LanExchange.Presentation.Interfaces
 {
     /// <summary>
     /// View of top info panel.
@@ -20,6 +17,7 @@ namespace LanExchange.Presentation.Interfaces
         string GetLine(int index);
         void SetLine(int index, string text);
 
-        PanelItemBase CurrentItem { get; set; }
+        //TODO hide model use events
+        //IPanelItem CurrentItem { get; set; }
     }
 }

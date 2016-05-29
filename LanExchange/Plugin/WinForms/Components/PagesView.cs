@@ -9,6 +9,8 @@ using System.Diagnostics.Contracts;
 using LanExchange.SDK.Managers;
 using LanExchange.Actions;
 using System.Linq;
+using LanExchange.Presentation.Interfaces;
+using LanExchange.Presentation.Interfaces.Factories;
 using LanExchange.SDK.Factories;
 
 namespace LanExchange.Plugin.WinForms.Components
@@ -119,7 +121,8 @@ namespace LanExchange.Plugin.WinForms.Components
                 info.SetDefaultRoot(root);
                 var type = panelFillers.GetFillType(root);
                 info.DataType = type != null ? Name : string.Empty;
-                presenter.AddTab(info);
+                //TODO hide model
+                //presenter.AddTab(info);
             }
         }
 

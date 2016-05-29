@@ -1,28 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.SDK
 {
     /// <summary>
     /// Column header interface returns by <cref>PanelItemBase</cref>.
     /// </summary>
-    public sealed class PanelColumnHeader
+    public sealed class PanelColumnHeader : IColumnHeader
     {
-        private readonly IDictionary<PanelItemBase, IComparable> lazyDict;
-
         public PanelColumnHeader(string text, int width = 120)
         {
             Text = text;
             Width = width;
             Visible = true;
-            lazyDict = new Dictionary<PanelItemBase, IComparable>();
+            LazyDict = new Dictionary<PanelItemBase, IComparable>();
         }
 
-        public IDictionary<PanelItemBase, IComparable> LazyDict
-        {
-            get { return lazyDict; }
-        }
+        public IDictionary<PanelItemBase, IComparable> LazyDict { get; }
 
         public string Text { get; private set; }
 
@@ -32,7 +28,7 @@ namespace LanExchange.SDK
 
         public bool Refreshable { get; set; }
 
-        public LazyCallback Callback { get; set; }
+        public Func<PanelItemBase, IComparable> Callback { get; set; }
 
         public int Index { get; set; }
 

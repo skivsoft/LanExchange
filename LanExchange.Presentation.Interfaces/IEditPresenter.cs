@@ -1,6 +1,4 @@
-﻿using LanExchange.SDK.Presentation.Interfaces;
-
-namespace LanExchange.SDK
+﻿namespace LanExchange.Presentation.Interfaces
 {
     public interface IEditPresenter : IPresenter<IEditView>, IPerformOkCancel
     {

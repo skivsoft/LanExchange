@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Threading;
+using LanExchange.Presentation.Interfaces;
 using LanExchange.SDK;
 
 namespace LanExchange.Presenter
@@ -45,7 +46,7 @@ namespace LanExchange.Presenter
                 try
                 {
                     //Thread.Sleep(10000);
-                    available = View.AvailabilityChecker(panelItem);
+                    available = View.AvailabilityChecker();
                 }
                 catch (Exception e)
                 {
@@ -59,18 +60,20 @@ namespace LanExchange.Presenter
 
         public void OnCurrentItemChanged()
         {
-            var currentItem = View.CurrentItem;
-            if (currentItem == null) return;
+            // TODO hide model
+            //var currentItem = View.CurrentItem;
+            //if (currentItem == null) return;
 
-            View.ObjectImage = imageManager.GetSmallImage(currentItem.ImageName);
-            View.ObjectText = currentItem.Name;
-            View.Icon = imageManager.GetSmallIcon(currentItem.ImageName);
-            View.SetToolTip(currentItem.FullName);
+            //View.ObjectImage = imageManager.GetSmallImage(currentItem.ImageName);
+            //View.ObjectText = currentItem.Name;
+            //View.Icon = imageManager.GetSmallIcon(currentItem.ImageName);
+            //View.SetToolTip(currentItem.FullName);
         }
 
         public void StartChecking()
         {
-            thread.Start(View.CurrentItem);
+            // TODO hide model
+            //thread.Start(View.CurrentItem);
         }
 
         public void WaitAndShow()

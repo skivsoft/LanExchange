@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 
 namespace LanExchange.SDK.Domain
@@ -25,7 +24,7 @@ namespace LanExchange.SDK.Domain
         /// <returns></returns>
         public static Option<T> Create(T element)
         {
-            return new Option<T>(new T[] { element });
+            return new Option<T>(new[] { element });
         }
 
         /// <summary>

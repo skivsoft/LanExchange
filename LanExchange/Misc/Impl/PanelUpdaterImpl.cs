@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading;
 using LanExchange.SDK;
 using System.Diagnostics.Contracts;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Misc.Impl
 {
@@ -87,7 +88,8 @@ namespace LanExchange.Misc.Impl
 
         private void SetTabImageInvoked(IPanelModel model, string imageName)
         {
-            pagesPresenter.SetTabImageForModel(model, imageName);
+            //TODO hide model
+            //pagesPresenter.SetTabImageForModel(model, imageName);
         }
 
         private void UpdateThread(object argument)

@@ -7,6 +7,7 @@ using System.Diagnostics;
 using LanExchange.SDK;
 using LanExchange.Interfaces.Services;
 using System.Diagnostics.Contracts;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.WinForms
 {

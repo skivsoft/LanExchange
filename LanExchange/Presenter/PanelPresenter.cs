@@ -3,6 +3,7 @@ using LanExchange.Properties;
 using LanExchange.SDK;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Presenter
 {
@@ -66,32 +67,33 @@ namespace LanExchange.Presenter
 
         public void UpdateItemsAndStatus()
         {
-            if (objects == null) return;
-            // refresh only for current page
-            var panelModel = pagesPresenter.GetItem(pagesPresenter.SelectedIndex);
-            if (panelModel == null || !objects.Equals(panelModel)) 
-                return;
-            // get number of visible items (filtered) and number of total items
-            var showCount = objects.FilterCount;
-            var totalCount = objects.Count;
-            if (objects.HasBackItem)
-            {
-                showCount--;
-                totalCount--;
-            }
-            if (showCount != totalCount)
-                mainView.ShowStatusText(translationService.PluralForm(Resources.PanelPresenter_Items2, totalCount), showCount, totalCount);
-            else
-                mainView.ShowStatusText(Resources.PanelPresenter_Items1, showCount);
-            SetupColumns();
-            View.SetVirtualListSize(objects.FilterCount);
-            if (objects.FilterCount > 0)
-            {
-                var index = Objects.IndexOf(panelModel.FocusedItem);
-                View.FocusedItemIndex = index;
-            }
-            if (View.Filter != null)
-                View.Filter.UpdateFromModel(Objects);
+            // TODO hide model
+            //if (objects == null) return;
+            //// refresh only for current page
+            //var panelModel = pagesPresenter.GetItem(pagesPresenter.SelectedIndex);
+            //if (panelModel == null || !objects.Equals(panelModel)) 
+            //    return;
+            //// get number of visible items (filtered) and number of total items
+            //var showCount = objects.FilterCount;
+            //var totalCount = objects.Count;
+            //if (objects.HasBackItem)
+            //{
+            //    showCount--;
+            //    totalCount--;
+            //}
+            //if (showCount != totalCount)
+            //    mainView.ShowStatusText(translationService.PluralForm(Resources.PanelPresenter_Items2, totalCount), showCount, totalCount);
+            //else
+            //    mainView.ShowStatusText(Resources.PanelPresenter_Items1, showCount);
+            //SetupColumns();
+            //View.SetVirtualListSize(objects.FilterCount);
+            //if (objects.FilterCount > 0)
+            //{
+            //    var index = Objects.IndexOf(panelModel.FocusedItem);
+            //    View.FocusedItemIndex = index;
+            //}
+            //if (View.Filter != null)
+            //    View.Filter.UpdateFromModel(Objects);
         }
 
         private void CurrentPath_Changed(object sender, EventArgs e)
@@ -110,17 +112,20 @@ namespace LanExchange.Presenter
                 objects = value;
                 if (objects != null)
                     objects.CurrentPath.Changed += CurrentPath_Changed;
-                if (View.Filter != null)
-                    View.Filter.Presenter.SetModel(value);
+                // TODO hide model using events
+                //if (View.Filter != null)
+                //    View.Filter.Presenter.SetModel(value);
             }
         }
 
         public PanelItemBase GetFocusedPanelItem(bool canReturnParent)
         {
-            var panelItem = View.FocusedItem;
-            if (canReturnParent && panelItem is PanelItemDoubleDot)
-                panelItem = panelItem.Parent;
-            return panelItem;
+            return null;
+            // TODO hide model
+            //var panelItem = View.FocusedItem;
+            //if (canReturnParent && panelItem is PanelItemDoubleDot)
+            //    panelItem = panelItem.Parent;
+            //return panelItem;
         }
 
         public bool CommandLevelDown()
@@ -212,11 +217,12 @@ namespace LanExchange.Presenter
 
         public void ColumnRightClick(int columnIndex)
         {
-            if (objects.DataType != null)
-            {
-                var columns = panelColumns.GetColumns(objects.DataType);
-                View.ShowHeaderMenu(columns);
-            }
+            // TODO hide model
+            //if (objects.DataType != null)
+            //{
+            //    var columns = panelColumns.GetColumns(objects.DataType);
+            //    View.ShowHeaderMenu(columns);
+            //}
         }
 
         public void ShowHideColumnClick(int columnIndex)

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using LanExchange.Helpers;
 using LanExchange.Interfaces;
@@ -12,6 +10,8 @@ using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.Properties;
 using LanExchange.SDK;
 using System.Diagnostics.Contracts;
+using System.Linq;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.WinForms.Components
 {
@@ -99,52 +99,54 @@ namespace LanExchange.Plugin.WinForms.Components
         [Localizable(false)]
         public ListViewItem GetListViewItemAt(int index)
         {
-            if (presenter.Objects == null)
-                return null;
-            if (index < 0 || index > Math.Min(presenter.Objects.FilterCount, LV.VirtualListSize) - 1)
-                return null;
-            var panelItem = presenter.Objects.GetItemAt(index);
-            if (panelItem == null)
-                return null;
-            var result = new ListViewItem();
-            var sb = new StringBuilder();
-            if (!(panelItem is PanelItemDoubleDot))
-            {
-                var columns = panelColumns.GetColumns(presenter.Objects.DataType).ToList();
-                for (int i = 0; i < panelItem.CountColumns; i++)
-                {
-                    IComparable value;
-                    var text = string.Empty;
-                    if (columns[i].Visible)
-                    {
-                        if ((i > 0) && (columns[i].Callback != null))
-                            value = threadPool.AsyncGetData(columns[i], panelItem);
-                        else
-                            value = panelItem[columns[i].Index];
+            // TODO hide model
+            //if (presenter.Objects == null)
+            //    return null;
+            //if (index < 0 || index > Math.Min(presenter.Objects.FilterCount, LV.VirtualListSize) - 1)
+            //    return null;
+            //var panelItem = presenter.Objects.GetItemAt(index);
+            //if (panelItem == null)
+            //    return null;
+            //var result = new ListViewItem();
+            //var sb = new StringBuilder();
+            //if (!(panelItem is PanelItemDoubleDot))
+            //{
+            //    var columns = panelColumns.GetColumns(presenter.Objects.DataType).ToList();
+            //    for (int i = 0; i < panelItem.CountColumns; i++)
+            //    {
+            //        IComparable value;
+            //        var text = string.Empty;
+            //        if (columns[i].Visible)
+            //        {
+            //            if ((i > 0) && (columns[i].Callback != null))
+            //                value = threadPool.AsyncGetData(columns[i], panelItem);
+            //            else
+            //                value = panelItem[columns[i].Index];
 
-                        text = value != null ? value.ToString() : string.Empty;
-                        if (i == 0)
-                            result.Text = text;
-                        else
-                            result.SubItems.Add(text);
-                    } else
-                        if (columns[i].Callback == null)
-                        {
-                            value = panelItem[columns[i].Index];
-                            text = value != null ? value.ToString() : string.Empty;
-                        }
-                    if (i > 0 && !string.IsNullOrEmpty(text))
-                    {
-                        if (sb.Length > 0)
-                            sb.AppendLine();
-                        sb.Append(string.Format(CultureInfo.CurrentCulture, "{0}: {1}", columns[i].Text, text));
-                    }
-                }
-            }
-            result.ImageIndex = imageManager.IndexOf(panelItem.ImageName);
-            result.ToolTipText = sb.ToString();
-            result.Tag = panelItem;
-            return result;
+            //            text = value != null ? value.ToString() : string.Empty;
+            //            if (i == 0)
+            //                result.Text = text;
+            //            else
+            //                result.SubItems.Add(text);
+            //        } else
+            //            if (columns[i].Callback == null)
+            //            {
+            //                value = panelItem[columns[i].Index];
+            //                text = value != null ? value.ToString() : string.Empty;
+            //            }
+            //        if (i > 0 && !string.IsNullOrEmpty(text))
+            //        {
+            //            if (sb.Length > 0)
+            //                sb.AppendLine();
+            //            sb.Append(string.Format(CultureInfo.CurrentCulture, "{0}: {1}", columns[i].Text, text));
+            //        }
+            //    }
+            //}
+            //result.ImageIndex = imageManager.IndexOf(panelItem.ImageName);
+            //result.ToolTipText = sb.ToString();
+            //result.Tag = panelItem;
+            //return result;
+            return null;
         }
         #endregion
 
@@ -256,11 +258,11 @@ namespace LanExchange.Plugin.WinForms.Components
 
         private void DoFocusedItemChanged()
         {
-            //logger.Info("FocusedItemChanged: {0}", FocusedItem);
-            if (focusedLockCount == 0 && LV.FocusedItem != null)
-                presenter.Objects.FocusedItem = LV.FocusedItem.Tag as PanelItemBase;
-            if (FocusedItemChanged != null)
-                FocusedItemChanged(this, EventArgs.Empty);
+            //TODO hide model using events
+            //if (focusedLockCount == 0 && LV.FocusedItem != null)
+            //    presenter.Objects.FocusedItem = LV.FocusedItem.Tag as PanelItemBase;
+            //if (FocusedItemChanged != null)
+            //    FocusedItemChanged(this, EventArgs.Empty);
         }
 
         private void lvComps_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
@@ -305,13 +307,13 @@ namespace LanExchange.Plugin.WinForms.Components
             // Backspace - Go level up
             if (e.KeyCode == Keys.Back)
             {
-
-                var parent = presenter.Objects.CurrentPath.Peek();
-                if (parent.Any() && !factoryManager.DefaultRoots.Contains(parent.Single()))
-                {
-                    presenter.CommandLevelUp();
-                    e.Handled = true;
-                }
+                //TODO hide model
+                //var parent = presenter.Objects.CurrentPath.Peek();
+                //if (parent.Any() && !factoryManager.DefaultRoots.Contains(parent.Single()))
+                //{
+                //    presenter.CommandLevelUp();
+                //    e.Handled = true;
+                //}
             }
             // Ctrl+C - copy selected items
             if (e.Control && e.KeyCode == Keys.C)
@@ -467,7 +469,7 @@ namespace LanExchange.Plugin.WinForms.Components
             LV.Columns.Clear();
         }
 
-        public void AddColumn(PanelColumnHeader header)
+        public void AddColumn(IColumnHeader header)
         {
             var column = LV.Columns.Add(header.Text, header.Width);
             column.TextAlign = (System.Windows.Forms.HorizontalAlignment)header.TextAlign;
@@ -482,7 +484,8 @@ namespace LanExchange.Plugin.WinForms.Components
             {
                 LV.View = (View) value;
                 LV.ToolTipActive = LV.View != View.Details;
-                presenter.Objects.CurrentView = value;
+                //TODO hide model
+                //presenter.Objects.CurrentView = value;
             }
         }
 
@@ -547,61 +550,64 @@ namespace LanExchange.Plugin.WinForms.Components
         /// <returns></returns>
         private IEnumerable<ToolStripItem> CreateCopyMenuItems(PanelModelCopyHelper helper)
         {
-            if (helper.IndexesCount == 1)
-                helper.MoveTo(0);
-            var result = new List<ToolStripItem>();
-            var columns = panelColumns.GetColumns(helper.IndexesCount == 1 ? helper.CurrentItem.GetType().Name : presenter.Objects.DataType);
-            var ctrlInsColumn = 0;
-            foreach (var column in columns)
-                if (column.Visible)
-                {
-                    if (column.Index == 0)
-                    {
-                        var valuePath = helper.GetColumnValue(-1);
-                        if (helper.IndexesCount > 1 || !string.IsNullOrEmpty(valuePath))
-                        {
-                            var menuPath = new ToolStripMenuItem();
-                            if (helper.IndexesCount == 1)
-                                menuPath.Text = string.Format(CultureInfo.CurrentCulture, Resources.PanelView_CopyColumn, valuePath);
-                            else
-                                menuPath.Text = string.Format(CultureInfo.CurrentCulture, Resources.PanelView_CopyPathTo, column.Text);
-                            menuPath.ShortcutKeyDisplayString = Resources.KeyCtrlAltIns;
-                            menuPath.Tag = -1;
-                            menuPath.Click += CopyColumnOnClick;
-                            result.Add(menuPath);
-                        }
-                        result.Add(new ToolStripSeparator());
-                    }
-                    string value;
-                    if (helper.IndexesCount == 1)
-                        value = helper.GetColumnValue(column.Index);
-                    else
-                        value = column.Text;
-                    if (!string.IsNullOrEmpty(value))
-                    {
-                        var menuItem = new ToolStripMenuItem(string.Format(CultureInfo.CurrentCulture, Resources.PanelView_CopyColumn, value));
-                        if (column.Index == sortColumn)
-                            ctrlInsColumn = sortColumn;
-                        menuItem.Tag = column.Index;
-                        menuItem.Click += CopyColumnOnClick;
-                        result.Add(menuItem);
-                    }
-                }
-            foreach(var menuItem in result)
-                if ((menuItem is ToolStripMenuItem) && (int)menuItem.Tag == ctrlInsColumn)
-                {
-                    (menuItem as ToolStripMenuItem).ShortcutKeyDisplayString = Resources.KeyCtrlIns;
-                    break;
-                }
-            return result;
+            // TODO hide model
+            //if (helper.IndexesCount == 1)
+            //    helper.MoveTo(0);
+            //var result = new List<ToolStripItem>();
+            //var columns = panelColumns.GetColumns(helper.IndexesCount == 1 ? helper.CurrentItem.GetType().Name : presenter.Objects.DataType);
+            //var ctrlInsColumn = 0;
+            //foreach (var column in columns)
+            //    if (column.Visible)
+            //    {
+            //        if (column.Index == 0)
+            //        {
+            //            var valuePath = helper.GetColumnValue(-1);
+            //            if (helper.IndexesCount > 1 || !string.IsNullOrEmpty(valuePath))
+            //            {
+            //                var menuPath = new ToolStripMenuItem();
+            //                if (helper.IndexesCount == 1)
+            //                    menuPath.Text = string.Format(CultureInfo.CurrentCulture, Resources.PanelView_CopyColumn, valuePath);
+            //                else
+            //                    menuPath.Text = string.Format(CultureInfo.CurrentCulture, Resources.PanelView_CopyPathTo, column.Text);
+            //                menuPath.ShortcutKeyDisplayString = Resources.KeyCtrlAltIns;
+            //                menuPath.Tag = -1;
+            //                menuPath.Click += CopyColumnOnClick;
+            //                result.Add(menuPath);
+            //            }
+            //            result.Add(new ToolStripSeparator());
+            //        }
+            //        string value;
+            //        if (helper.IndexesCount == 1)
+            //            value = helper.GetColumnValue(column.Index);
+            //        else
+            //            value = column.Text;
+            //        if (!string.IsNullOrEmpty(value))
+            //        {
+            //            var menuItem = new ToolStripMenuItem(string.Format(CultureInfo.CurrentCulture, Resources.PanelView_CopyColumn, value));
+            //            if (column.Index == sortColumn)
+            //                ctrlInsColumn = sortColumn;
+            //            menuItem.Tag = column.Index;
+            //            menuItem.Click += CopyColumnOnClick;
+            //            result.Add(menuItem);
+            //        }
+            //    }
+            //foreach(var menuItem in result)
+            //    if ((menuItem is ToolStripMenuItem) && (int)menuItem.Tag == ctrlInsColumn)
+            //    {
+            //        (menuItem as ToolStripMenuItem).ShortcutKeyDisplayString = Resources.KeyCtrlIns;
+            //        break;
+            //    }
+            //return result;
+            return null;
         }
 
         private void SetupCopyHelper()
         {
-            copyHelper = new PanelModelCopyHelper(presenter.Objects, panelColumns);
-            foreach (int index in LV.SelectedIndices)
-                copyHelper.Indexes.Add(index);
-            copyHelper.Prepare();
+            //TODO hide model
+            //copyHelper = new PanelModelCopyHelper(presenter.Objects, panelColumns);
+            //foreach (int index in LV.SelectedIndices)
+            //    copyHelper.Indexes.Add(index);
+            //copyHelper.Prepare();
         }
 
         internal bool PrepareContextMenu()
@@ -610,7 +616,9 @@ namespace LanExchange.Plugin.WinForms.Components
                 if (LV.FocusedItem.Selected)
                     DoFocusedItemChanged();
 
-            var panelItem = presenter.GetFocusedPanelItem(true);
+            //TODO hide model
+            //var panelItem = presenter.GetFocusedPanelItem(true);
+            var panelItem = (PanelItemBase)null;
             var menuVisible = false;
             if (panelItem != null)
             {
@@ -639,15 +647,16 @@ namespace LanExchange.Plugin.WinForms.Components
             mPaste.Enabled = pagesPresenter.CanPasteItems();
             mDelete.Enabled = false;
             // lookup at least 1 item for delete
-            for (int index = 0; index < copyHelper.IndexesCount; index++)
-            {
-                copyHelper.MoveTo(index);
-                if (Presenter.Objects.Items.Contains(copyHelper.CurrentItem))
-                {
-                    mDelete.Enabled = true;
-                    break;
-                }
-            }
+            // TODO hide model
+            //for (int index = 0; index < copyHelper.IndexesCount; index++)
+            //{
+            //    copyHelper.MoveTo(index);
+            //    if (Presenter.Objects.Items.Contains(copyHelper.CurrentItem))
+            //    {
+            //        mDelete.Enabled = true;
+            //        break;
+            //    }
+            //}
         }
 
         /// <summary>

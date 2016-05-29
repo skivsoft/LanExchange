@@ -1,4 +1,4 @@
-﻿using LanExchange.SDK;
+﻿using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Actions
 {

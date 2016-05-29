@@ -19,6 +19,8 @@ using LanExchange.SDK.Managers;
 using SimpleInjector;
 using SimpleInjector.Diagnostics;
 using System;
+using LanExchange.Presentation.Interfaces;
+using LanExchange.Presentation.Interfaces.Factories;
 
 namespace LanExchange
 {
@@ -93,7 +95,7 @@ namespace LanExchange
         {
             container.RegisterSingleton<IUser32Service, User32Service>();
             container.RegisterSingleton<IShell32Service, Shell32Service>();
-            container.RegisterSingleton<IIPHLPAPISerivice, IPHLPAPISerivce>();
+            container.RegisterSingleton<IMACAddressSerivice, MACAddressService>();
             container.RegisterSingleton<IHotkeyService, HotkeysService>();
         }
 

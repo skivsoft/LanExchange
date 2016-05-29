@@ -3,7 +3,7 @@ using System.ComponentModel.Composition;
 using System.Text;
 using LanExchange.SDK;
 using LanExchange.SDK.Extensions;
-using System.Linq;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.Notify
 {
@@ -43,20 +43,21 @@ namespace LanExchange.Plugin.Notify
 
         private void ReReadPlugin(string typeName, string subject)
         {
-            var pagesPresenter = serviceProvider.Resolve<IPagesPresenter>();
-            var mainView = serviceProvider.Resolve<IMainView>();
-            if (pagesPresenter == null || mainView == null || pagesPresenter.Count == 0) return;
-            lock (pagesPresenter)
-                for (int index = 0; index < pagesPresenter.Count; index++)
-                {
-                    var model = pagesPresenter.GetItem(index);
-                    var parent = model.CurrentPath.Peek();
-                    if (parent.Where(item => item.GetType().Name.Equals(typeName) && item.IsRereadAccepted(subject)).Any())
-                    {
-                        model.AsyncRetrieveData(false);
-                        break;
-                    }
-                }
+            // TODO hide model
+            //var pagesPresenter = serviceProvider.Resolve<IPagesPresenter>();
+            //var mainView = serviceProvider.Resolve<IMainView>();
+            //if (pagesPresenter == null || mainView == null || pagesPresenter.Count == 0) return;
+            //lock (pagesPresenter)
+            //    for (int index = 0; index < pagesPresenter.Count; index++)
+            //    {
+            //        var model = pagesPresenter.GetItem(index);
+            //        var parent = model.CurrentPath.Peek();
+            //        if (parent.Where(item => item.GetType().Name.Equals(typeName) && item.IsRereadAccepted(subject)).Any())
+            //        {
+            //            model.AsyncRetrieveData(false);
+            //            break;
+            //        }
+            //    }
         }
     }
 }

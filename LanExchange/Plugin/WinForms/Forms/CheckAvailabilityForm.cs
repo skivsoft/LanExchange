@@ -2,6 +2,7 @@
 using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Windows.Forms;
+using LanExchange.Presentation.Interfaces;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.WinForms.Forms
@@ -47,7 +48,7 @@ namespace LanExchange.Plugin.WinForms.Forms
 
         public Action RunAction { get; set; }
 
-        public Func<PanelItemBase, bool> AvailabilityChecker { get; set; }
+        public Func<bool> AvailabilityChecker { get; set; }
 
         public void StartChecking()
         {

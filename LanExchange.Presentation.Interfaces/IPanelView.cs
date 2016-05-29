@@ -1,8 +1,7 @@
-﻿using LanExchange.SDK.Presentation.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace LanExchange.SDK
+namespace LanExchange.Presentation.Interfaces
 {
     /// <summary>
     /// View of LanExchange panel.
@@ -71,15 +70,18 @@ namespace LanExchange.SDK
         void ClearSelected();
 
         void ColumnsClear();
-        void AddColumn(PanelColumnHeader header);
+        //TODO hide model use events
+        void AddColumn(IColumnHeader header);
         PanelViewMode ViewMode { get; set; }
-        PanelItemBase FocusedItem { get; }
+        //TODO: hide model
+        //PanelItemBase FocusedItem { get; }
         bool GridLines { get; set; }
 
         void RedrawItem(int index);
 
         void SetColumnMarker(int columnIndex, PanelSortOrder sortOrder);
 
-        void ShowHeaderMenu(IEnumerable<PanelColumnHeader> columns);
+        //TODO hide model
+        //void ShowHeaderMenu(IEnumerable<PanelColumnHeader> columns);
     }
 }

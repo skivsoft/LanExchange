@@ -20,7 +20,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\output\Debug\LanExchange.Presentation.Interfaces.XML</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -41,19 +42,19 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Factories\IViewFactory.cs" />
     <Compile Include="Factories\IWindowFactory.cs" />
+    <Compile Include="HorizontalAlignment.cs" />
     <Compile Include="IAboutPresenter.cs" />
     <Compile Include="IAboutView.cs" />
     <Compile Include="IAppPresenter.cs" />
     <Compile Include="ICheckAvailabilityPresenter.cs" />
     <Compile Include="ICheckAvailabilityWindow.cs" />
+    <Compile Include="IColumnHeader.cs" />
     <Compile Include="IEditPresenter.cs" />
     <Compile Include="IEditView.cs" />
     <Compile Include="IFilterPresenter.cs" />
@@ -74,14 +75,10 @@
     <Compile Include="IView.cs" />
     <Compile Include="IWindow.cs" />
     <Compile Include="MenuItem.cs" />
+    <Compile Include="PanelSortOrder.cs" />
+    <Compile Include="PanelViewMode.cs" />
     <Compile Include="PresenterBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LanExchange.SDK\LanExchange.SDK.csproj">
-      <Project>{4ae4e72c-5d7d-42a9-b7fb-577eec0a149d}</Project>
-      <Name>LanExchange.SDK</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\LanExchange.snk">

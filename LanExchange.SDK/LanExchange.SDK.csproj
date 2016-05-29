@@ -96,7 +96,6 @@
     <Compile Include="Factories\IModelFactory.cs" />
     <Compile Include="Factories\IServiceFactory.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="HorizontalAlignment.cs" />
     <Compile Include="IAboutModel.cs" />
     <Compile Include="IAction.cs" />
     <Compile Include="IClipboardDataObject.cs" />
@@ -107,7 +106,7 @@
     <Compile Include="IFolderManager.cs" />
     <Compile Include="IHotkeyService.cs" />
     <Compile Include="IImageManager.cs" />
-    <Compile Include="IIPHLPAPISerivice.cs" />
+    <Compile Include="IMACAddressSerivice.cs" />
     <Compile Include="IMessageBoxService.cs" />
     <Compile Include="IPagesModel.cs" />
     <Compile Include="IPanelColumnManager.cs" />
@@ -139,8 +138,6 @@
     <Compile Include="PanelItemRootBase.cs" />
     <Compile Include="PanelItemRootFactory.cs" />
     <Compile Include="PanelModelEventArgs.cs" />
-    <Compile Include="PanelSortOrder.cs" />
-    <Compile Include="PanelViewMode.cs" />
     <Compile Include="RetrieveMode.cs" />
     <Compile Include="SerializeUtils.cs" />
     <Compile Include="SysImageListSize.cs" />
@@ -155,6 +152,12 @@
     <None Include="..\LanExchange.snk">
       <Link>LanExchange.snk</Link>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LanExchange.Presentation.Interfaces\LanExchange.Presentation.Interfaces.csproj">
+      <Project>{530bdbba-a879-403c-83c5-a2f27bdabe05}</Project>
+      <Name>LanExchange.Presentation.Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

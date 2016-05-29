@@ -80,7 +80,7 @@ namespace LanExchange.SDK
             get
             {
                 if (index < 0 || index >= CountColumns)
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
 
                 return GetValue(index);
             }
@@ -183,7 +183,7 @@ namespace LanExchange.SDK
 
         public override int GetHashCode()
         {
-            return Name != null ? Name.GetHashCode() : 0;
+            return Name?.GetHashCode() ?? 0;
         }
 
         public abstract object Clone();

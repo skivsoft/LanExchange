@@ -2,6 +2,7 @@
 using LanExchange.SDK;
 using System.Diagnostics.Contracts;
 using System;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Presenter
 {
@@ -20,7 +21,8 @@ namespace LanExchange.Presenter
         {
             var columns = panelColumns.GetColumns(typeName);
             var columnsForView = columns.Where(header => !header.Refreshable).ToList();
-            View.SetColumns(columnsForView);
+            //TODO hide model
+            //View.SetColumns(columnsForView);
         }
 
         public void PerformOk()
