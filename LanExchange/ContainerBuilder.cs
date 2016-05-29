@@ -9,8 +9,6 @@ using LanExchange.Misc.Impl;
 using LanExchange.Model;
 using LanExchange.Plugin.Windows;
 using LanExchange.Plugin.WinForms;
-using LanExchange.Plugin.WinForms.Components;
-using LanExchange.Plugin.WinForms.Forms;
 using LanExchange.Plugin.WinForms.Impl;
 using LanExchange.Presenter;
 using LanExchange.SDK;
@@ -23,6 +21,7 @@ using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Factories;
 using LanExchange.Presentation.WinForms;
 using LanExchange.Presentation.WinForms.Controls;
+using LanExchange.Presentation.WinForms.Forms;
 
 namespace LanExchange
 {

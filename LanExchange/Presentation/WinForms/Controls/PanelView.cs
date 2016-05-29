@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.Contracts;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Forms;
 using LanExchange.Helpers;
 using LanExchange.Interfaces;
 using LanExchange.Plugin.WinForms.Interfaces;
 using LanExchange.Plugin.WinForms.Utils;
+using LanExchange.Presentation.Interfaces;
 using LanExchange.Properties;
 using LanExchange.SDK;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using LanExchange.Presentation.Interfaces;
 
-namespace LanExchange.Plugin.WinForms.Components
+namespace LanExchange.Presentation.WinForms.Controls
 {
     public partial class PanelView : UserControl, IPanelView, IListViewItemGetter, ITranslationable
     {

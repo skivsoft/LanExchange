@@ -1,4 +1,4 @@
-﻿namespace LanExchange.Plugin.WinForms.Components
+﻿namespace LanExchange.Presentation.WinForms.Controls
 {
     partial class PanelView
     {

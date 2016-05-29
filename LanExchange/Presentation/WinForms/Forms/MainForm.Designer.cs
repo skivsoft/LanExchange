@@ -1,7 +1,6 @@
 ﻿using System.Windows.Forms;
-using LanExchange.Plugin.WinForms.Components;
 
-namespace LanExchange.Plugin.WinForms.Forms
+namespace LanExchange.Presentation.WinForms.Forms
 {
     partial class MainForm
     {

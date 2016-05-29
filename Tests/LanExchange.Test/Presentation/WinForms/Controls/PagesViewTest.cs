@@ -1,5 +1,4 @@
-﻿using LanExchange.Plugin.WinForms.Components;
-using LanExchange.Presentation.Interfaces;
+﻿using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Factories;
 using LanExchange.SDK;
 using LanExchange.SDK.Factories;

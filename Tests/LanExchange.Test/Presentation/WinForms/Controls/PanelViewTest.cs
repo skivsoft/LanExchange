@@ -1,5 +1,4 @@
 ﻿using LanExchange.Interfaces;
-using LanExchange.Plugin.WinForms.Components;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.SDK;
 using Moq;

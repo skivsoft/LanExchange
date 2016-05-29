@@ -1,5 +1,4 @@
-﻿using LanExchange.Plugin.WinForms.Forms;
-using LanExchange.Presentation.Interfaces;
+﻿using LanExchange.Presentation.Interfaces;
 using Moq;
 using NUnit.Framework;
 
