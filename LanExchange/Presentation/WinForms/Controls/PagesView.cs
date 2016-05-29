@@ -4,7 +4,7 @@ using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using LanExchange.Actions;
+using LanExchange.Commands;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Factories;
@@ -21,7 +21,7 @@ namespace LanExchange.Presentation.WinForms.Controls
         private readonly IPanelItemFactoryManager factoryManager;
         private readonly IImageManager imageManager;
         private readonly IPanelFillerManager panelFillers;
-        private readonly IActionManager actionManager;
+        private readonly ICommandManager commandManager;
         private readonly IModelFactory modelFactory;
         private readonly IViewFactory viewFactory;
 
@@ -46,7 +46,7 @@ namespace LanExchange.Presentation.WinForms.Controls
             IPanelItemFactoryManager factoryManager, 
             IImageManager imageManager,
             IPanelFillerManager panelFillers,
-            IActionManager actionManager,
+            ICommandManager commandManager,
             IModelFactory modelFactory,
             IViewFactory viewFactory)
         {
@@ -54,7 +54,7 @@ namespace LanExchange.Presentation.WinForms.Controls
             Contract.Requires<ArgumentNullException>(factoryManager != null);
             Contract.Requires<ArgumentNullException>(imageManager != null);
             Contract.Requires<ArgumentNullException>(panelFillers != null);
-            Contract.Requires<ArgumentNullException>(actionManager != null);
+            Contract.Requires<ArgumentNullException>(commandManager != null);
             Contract.Requires<ArgumentNullException>(modelFactory != null);
             Contract.Requires<ArgumentNullException>(viewFactory != null);
 
@@ -65,7 +65,7 @@ namespace LanExchange.Presentation.WinForms.Controls
             this.factoryManager = factoryManager;
             this.imageManager = imageManager;
             this.panelFillers = panelFillers;
-            this.actionManager = actionManager;
+            this.commandManager = commandManager;
             this.modelFactory = modelFactory;
             this.viewFactory = viewFactory;
 
@@ -228,9 +228,9 @@ namespace LanExchange.Presentation.WinForms.Controls
             }
             else
                 isOpened = false;
-            mReRead.Enabled = actionManager.IsActionEnabled<PagesReReadAction>();
-            mCloseTab.Enabled = actionManager.IsActionEnabled<PagesCloseTabAction>();
-            mCloseOther.Enabled = actionManager.IsActionEnabled<PagesCloseOtherAction>();
+            mReRead.Enabled = commandManager.IsCommandEnabled<PagesReReadCommand>();
+            mCloseTab.Enabled = commandManager.IsCommandEnabled<PagesCloseTabCommand>();
+            mCloseOther.Enabled = commandManager.IsCommandEnabled<PagesCloseOtherCommand>();
         }
 
         private void popPages_Closed(object sender, ToolStripDropDownClosedEventArgs e)
@@ -308,19 +308,19 @@ namespace LanExchange.Presentation.WinForms.Controls
         [Localizable(false)]
         private void mReRead_Click(object sender, EventArgs e)
         {
-            actionManager.ExecuteAction<PagesReReadAction>();
+            commandManager.ExecuteCommand<PagesReReadCommand>();
         }
 
         [Localizable(false)]
         private void mCloseTab_Click(object sender, EventArgs e)
         {
-            actionManager.ExecuteAction<PagesCloseTabAction>();
+            commandManager.ExecuteCommand<PagesCloseTabCommand>();
         }
 
         [Localizable(false)]
         private void mCloseOther_Click(object sender, EventArgs e)
         {
-            actionManager.ExecuteAction<PagesCloseOtherAction>();
+            commandManager.ExecuteCommand<PagesCloseOtherCommand>();
         }
 
         private void PagesView_RightToLeftChanged(object sender, EventArgs e)

@@ -1,4 +1,3 @@
-using LanExchange.Actions;
 using LanExchange.Implementations.Factories;
 using LanExchange.Implementations.Managers;
 using LanExchange.Implementations.Services;
@@ -17,6 +16,7 @@ using LanExchange.SDK.Managers;
 using SimpleInjector;
 using SimpleInjector.Diagnostics;
 using System;
+using LanExchange.Commands;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Factories;
 using LanExchange.Presentation.WinForms;
@@ -47,7 +47,7 @@ namespace LanExchange
             RegisterWinForms();
             RegisterServices();
             RegisterFactories();
-            RegisterActions();
+            RegisterCommands();
 
             VerifyContainer();
             return container;
@@ -66,7 +66,7 @@ namespace LanExchange
             container.RegisterSingleton<IPuntoSwitcherService, PuntoSwitcherServiceEngRus>();
             container.RegisterSingleton<ITranslationService, TranslationServiceImpl>();
             container.RegisterSingleton<IDisposableManager, DisposableManagerImpl>();
-            container.RegisterSingleton<IActionManager, ActionManager>();
+            container.RegisterSingleton<ICommandManager, CommandManager>();
         }
 
         private void RegisterPanelUpdater()
@@ -136,15 +136,15 @@ namespace LanExchange
             container.RegisterSingleton<IServiceFactory, ServiceFactory>();
         }
 
-        private void RegisterActions()
+        private void RegisterCommands()
         {
-            container.RegisterCollection<IAction>(new []
+            container.RegisterCollection<ICommand>(new []
             {
-                typeof(AboutAction),
-                typeof(PagesReReadAction),
-                typeof(PagesCloseTabAction),
-                typeof(PagesCloseOtherAction),
-                typeof(ShortcutKeysAction)
+                typeof(AboutCommand),
+                typeof(PagesReReadCommand),
+                typeof(PagesCloseTabCommand),
+                typeof(PagesCloseOtherCommand),
+                typeof(ShortcutKeysCommand)
             });
         }
 

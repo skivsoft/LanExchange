@@ -102,7 +102,7 @@
     <Compile Include="..\AnyAssemblyInfo.cs">
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Actions\PagesActionBase.cs" />
+    <Compile Include="Commands\PagesCommandBase.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Base\Addon.cs" />
     <Compile Include="Base\AddonItemTypeRef.cs" />
@@ -115,7 +115,7 @@
     <Compile Include="Implementations\Factories\ServiceFactory.cs" />
     <Compile Include="Implementations\Factories\ViewFactory.cs" />
     <Compile Include="Implementations\Factories\WindowFactory.cs" />
-    <Compile Include="Implementations\Managers\ActionManager.cs" />
+    <Compile Include="Implementations\Managers\CommandManager.cs" />
     <Compile Include="Infrastructure\ObjectPath.cs" />
     <Compile Include="Interfaces\Factories\AddonProgramInfo.cs" />
     <Compile Include="CoreFacade.cs" />
@@ -136,11 +136,11 @@
     <Compile Include="Misc\Impl\PanelUpdaterImpl.cs" />
     <Compile Include="Misc\Impl\DisposableManagerImpl.cs" />
     <Compile Include="Misc\TranslationResourceManager.cs" />
-    <Compile Include="Actions\AboutAction.cs" />
-    <Compile Include="Actions\PagesCloseTabAction.cs" />
-    <Compile Include="Actions\PagesCloseOtherAction.cs" />
-    <Compile Include="Actions\PagesReReadAction.cs" />
-    <Compile Include="Actions\ShortcutKeysAction.cs" />
+    <Compile Include="Commands\AboutCommand.cs" />
+    <Compile Include="Commands\PagesCloseTabCommand.cs" />
+    <Compile Include="Commands\PagesCloseOtherCommand.cs" />
+    <Compile Include="Commands\PagesReReadCommand.cs" />
+    <Compile Include="Commands\ShortcutKeysCommand.cs" />
     <Compile Include="Misc\Impl\PanelColumnManagerImpl.cs" />
     <Compile Include="Misc\Impl\PanelFillerManagerImpl.cs" />
     <Compile Include="Misc\Impl\PanelItemFactoryManagerImpl.cs" />

@@ -20,7 +20,7 @@ namespace LanExchange.Presentation.WinForms.Controls
                 new Mock<IPanelItemFactoryManager>().Object,
                 new Mock<IImageManager>().Object,
                 new Mock<IPanelFillerManager>().Object,
-                new Mock<IActionManager>().Object,
+                new Mock<ICommandManager>().Object,
                 new Mock<IModelFactory>().Object,
                 new Mock<IViewFactory>().Object);
             presenter.Verify(m => m.Initialize(control));

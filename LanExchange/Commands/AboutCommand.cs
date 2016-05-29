@@ -1,17 +1,17 @@
 ﻿using System;
-using LanExchange.SDK;
 using System.Diagnostics.Contracts;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Factories;
+using LanExchange.SDK;
 
-namespace LanExchange.Actions
+namespace LanExchange.Commands
 {
-    internal sealed class AboutAction : IAction
+    internal sealed class AboutCommand : ICommand
     {
         private readonly IWindowFactory windowFactory;
         private IWindow aboutInstance;
 
-        public AboutAction(IWindowFactory windowFactory)
+        public AboutCommand(IWindowFactory windowFactory)
         {
             Contract.Requires<ArgumentNullException>(windowFactory != null);
 

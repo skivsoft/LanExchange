@@ -1,19 +1,19 @@
-﻿using LanExchange.Plugin.Shortcut;
+﻿using System;
+using System.Diagnostics.Contracts;
+using LanExchange.Plugin.Shortcut;
+using LanExchange.Presentation.Interfaces;
 using LanExchange.SDK;
 using LanExchange.SDK.Factories;
-using System;
-using System.Diagnostics.Contracts;
-using LanExchange.Presentation.Interfaces;
 
-namespace LanExchange.Actions
+namespace LanExchange.Commands
 {
-    internal sealed class ShortcutKeysAction : IAction
+    internal sealed class ShortcutKeysCommand : ICommand
     {
         private readonly IMainPresenter mainPresenter;
         private readonly IPagesPresenter pagesPresenter;
         private readonly IModelFactory modelFactory;
 
-        public ShortcutKeysAction(
+        public ShortcutKeysCommand(
             IMainPresenter mainPresenter,
             IPagesPresenter pagesPresenter,
             IModelFactory modelFactory)

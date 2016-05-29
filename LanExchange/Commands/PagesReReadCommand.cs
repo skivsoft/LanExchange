@@ -1,10 +1,10 @@
 ﻿using LanExchange.Presentation.Interfaces;
 
-namespace LanExchange.Actions
+namespace LanExchange.Commands
 {
-    internal sealed class PagesReReadAction : PagesActionBase
+    internal sealed class PagesReReadCommand : PagesCommandBase
     {
-        public PagesReReadAction(IPagesPresenter pagesPresenter) : base(pagesPresenter)
+        public PagesReReadCommand(IPagesPresenter pagesPresenter) : base(pagesPresenter)
         {
         }
 

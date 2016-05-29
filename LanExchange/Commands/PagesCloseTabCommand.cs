@@ -1,10 +1,10 @@
 ﻿using LanExchange.Presentation.Interfaces;
 
-namespace LanExchange.Actions
+namespace LanExchange.Commands
 {
-    internal sealed class PagesCloseTabAction : PagesActionBase
+    internal sealed class PagesCloseTabCommand : PagesCommandBase
     {
-        public PagesCloseTabAction(IPagesPresenter pagesPresenter) : base(pagesPresenter)
+        public PagesCloseTabCommand(IPagesPresenter pagesPresenter) : base(pagesPresenter)
         {
         }
 

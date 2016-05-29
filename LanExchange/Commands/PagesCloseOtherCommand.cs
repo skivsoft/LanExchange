@@ -1,10 +1,10 @@
 ﻿using LanExchange.Presentation.Interfaces;
 
-namespace LanExchange.Actions
+namespace LanExchange.Commands
 {
-    internal sealed class PagesCloseOtherAction : PagesActionBase
+    internal sealed class PagesCloseOtherCommand : PagesCommandBase
     {
-        public PagesCloseOtherAction(IPagesPresenter pagesPresenter) : base(pagesPresenter)
+        public PagesCloseOtherCommand(IPagesPresenter pagesPresenter) : base(pagesPresenter)
         {
         }
 

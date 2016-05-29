@@ -1,15 +1,15 @@
-﻿using LanExchange.SDK;
-using System;
+﻿using System;
 using System.Diagnostics.Contracts;
 using LanExchange.Presentation.Interfaces;
+using LanExchange.SDK;
 
-namespace LanExchange.Actions
+namespace LanExchange.Commands
 {
-    internal abstract class PagesActionBase : IAction
+    internal abstract class PagesCommandBase : ICommand
     {
         protected readonly IPagesPresenter pagesPresenter;
 
-        protected PagesActionBase(IPagesPresenter pagesPresenter)
+        protected PagesCommandBase(IPagesPresenter pagesPresenter)
         {
             Contract.Requires<ArgumentNullException>(pagesPresenter != null);
 
