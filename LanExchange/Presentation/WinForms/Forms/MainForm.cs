@@ -305,10 +305,6 @@ namespace LanExchange.Presentation.WinForms.Forms
             aboutPresenter.OpenBugTrackerWebLink();
         }
 
-        private void mHelpFeedback_Click(object sender, EventArgs e)
-        {
-            aboutPresenter.OpenEmailLink();
-        }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {

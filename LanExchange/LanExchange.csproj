@@ -109,6 +109,7 @@
     <Compile Include="Base\AddonMenuItem.cs" />
     <Compile Include="Base\AddonObjectId.cs" />
     <Compile Include="Base\AddonProgram.cs" />
+    <Compile Include="Extensions\AssemblyExtensions.cs" />
     <Compile Include="Implementations\Factories\AddonProgramFactory.cs" />
     <Compile Include="Implementations\Factories\FactoryBase.cs" />
     <Compile Include="Implementations\Factories\ModelFactory.cs" />

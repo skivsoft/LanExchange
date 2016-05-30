@@ -14,7 +14,6 @@ namespace LanExchange.Presentation.WinForms.Forms
     {
         private readonly IAboutPresenter presenter;
         private RichTextBox boxDetails;
-        private bool detailsVisible;
 
         public event EventHandler ViewClosed;
         
@@ -26,7 +25,6 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.presenter = presenter;
             this.presenter.Initialize(this);
 
-            TranslateUI();
             FormClosed += OnFormClosed;
         }
 
@@ -44,17 +42,15 @@ namespace LanExchange.Presentation.WinForms.Forms
             eLicense.Text = Resources.AboutForm_MIT;
             lCopyright.Text = Resources.AboutForm_Copyright;
             lWeb.Text = Resources.AboutForm_Webpage;
-            UpdateShowDetailsButton();
             bClose.Text = Resources.MainForm_Close;
-            if (detailsVisible)
+            if (DetailsVisible)
             {
                 SetupBoxDetails();
                 boxDetails.Rtf = presenter.GetDetailsRtf();
             }
-            presenter.LoadFromModel();
         }
        
-        private void SetupBoxDetails()
+        public void SetupBoxDetails()
         {
             if (boxDetails != null) return;
             boxDetails = new RichTextBox();
@@ -104,27 +100,25 @@ namespace LanExchange.Presentation.WinForms.Forms
             set { tipAbout.SetToolTip(eWeb, value); }
         }
 
-        public string TwitterToolTip
+        public bool DetailsVisible
         {
-            get { return tipAbout.GetToolTip(picTwitter); }
+            get
+            {
+                if (boxDetails == null) return false;
+                return boxDetails.Visible;
+            }
             set
             {
-                tipAbout.SetToolTip(picTwitter, value);
+                if (boxDetails == null)
+                    SetupBoxDetails();
+                boxDetails.Visible = value;
+                bShowDetails.Text = value ? Resources.HideDetails : Resources.ShowDetails;
             }
         }
 
-        private void bShowLicense_Click(object sender, EventArgs e)
+        private void bShowDetails_Click(object sender, EventArgs e)
         {
-            detailsVisible = !detailsVisible;
-            SetupBoxDetails();
-            boxDetails.Visible = detailsVisible;
-            UpdateShowDetailsButton();
-        }
-
-
-        private void UpdateShowDetailsButton()
-        {
-            bShowDetails.Text = detailsVisible ? Resources.HideDetails : Resources.ShowDetails;
+            presenter.PerformShowDetails();
         }
 
         private void bClose_Click(object sender, EventArgs e)
@@ -137,24 +131,10 @@ namespace LanExchange.Presentation.WinForms.Forms
             bShowDetails.Text = Resources.ShowDetails;
         }
 
-        private void picTwitter_Click(object sender, EventArgs e)
-        {
-            presenter.OpenTwitterLink();
-        }
-
         private void AboutForm_RightToLeftChanged(object sender, EventArgs e)
         {
             if (boxDetails != null)
                 boxDetails.RightToLeft = RightToLeft;
-        }
-
-        private void AboutForm_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Escape)
-            {
-                Close();
-                e.Handled = true;
-            }
         }
     }
 }

@@ -14,10 +14,12 @@
         string WebText { get; set; }
 
         string WebToolTip { get; set; }
-        string TwitterToolTip { get; set; }
 
         string VersionText { get; set; }
 
         string CopyrightText { get; set; }
+        bool DetailsVisible { get; set; }
+
+        void TranslateUI();
     }
 }

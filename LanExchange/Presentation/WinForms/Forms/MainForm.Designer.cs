@@ -63,8 +63,6 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.mHelpBugs = new System.Windows.Forms.MenuItem();
             this.mHelpLangs = new System.Windows.Forms.MenuItem();
             this.menuItem1 = new System.Windows.Forms.MenuItem();
-            this.mHelpFeedback = new System.Windows.Forms.MenuItem();
-            this.mHelpSep2 = new System.Windows.Forms.MenuItem();
             this.mHelpAbout = new System.Windows.Forms.MenuItem();
             this.popTray.SuspendLayout();
             this.SuspendLayout();
@@ -271,8 +269,6 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.mHelpBugs,
             this.mHelpLangs,
             this.menuItem1,
-            this.mHelpFeedback,
-            this.mHelpSep2,
             this.mHelpAbout});
             this.mHelp.Text = global::LanExchange.Properties.Resources.mHelp_Text;
             // 
@@ -299,20 +295,9 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.menuItem1.Index = 3;
             this.menuItem1.Text = "-";
             // 
-            // mHelpFeedback
-            // 
-            this.mHelpFeedback.Index = 4;
-            this.mHelpFeedback.Text = global::LanExchange.Properties.Resources.mHelpFeedback_Text;
-            this.mHelpFeedback.Click += new System.EventHandler(this.mHelpFeedback_Click);
-            // 
-            // mHelpSep2
-            // 
-            this.mHelpSep2.Index = 5;
-            this.mHelpSep2.Text = "-";
-            // 
             // mHelpAbout
             // 
-            this.mHelpAbout.Index = 6;
+            this.mHelpAbout.Index = 4;
             this.mHelpAbout.Text = global::LanExchange.Properties.Resources.mHelpAbout_Text;
             this.mHelpAbout.Click += new System.EventHandler(this.mHelpAbout_Click);
             // 
@@ -366,8 +351,6 @@ namespace LanExchange.Presentation.WinForms.Forms
         private System.Windows.Forms.MenuItem mCloseOther;
         private System.Windows.Forms.MenuItem mViewGrid;
         private System.Windows.Forms.MenuItem mViewSep1;
-        private MenuItem mHelpSep2;
-        private MenuItem mHelpFeedback;
         private MenuItem menuItem1;
         private MenuItem mNewItem;
         private MenuItem menuItem3;

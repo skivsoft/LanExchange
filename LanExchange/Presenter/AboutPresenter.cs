@@ -34,14 +34,19 @@ namespace LanExchange.Presenter
             this.pluginManager = pluginManager;
         }
 
-        public void LoadFromModel()
+        protected override void InitializePresenter()
+        {
+            View.TranslateUI();
+            LoadFromModel();
+        }
+
+        private void LoadFromModel()
         {
             View.Text = string.Format(CultureInfo.CurrentCulture, View.Text, model.Title);
             View.VersionText = model.VersionFull;
             View.CopyrightText = model.Copyright;
             View.WebText = model.HomeLink;
             View.WebToolTip = model.HomeLink;
-            View.TwitterToolTip = model.TwitterLink;
         }
 
         public void OpenHomeLink()
@@ -57,16 +62,6 @@ namespace LanExchange.Presenter
         public void OpenBugTrackerWebLink()
         {
             Process.Start(model.BugTrackerLink);
-        }
-
-        public void OpenTwitterLink()
-        {
-            Process.Start(model.TwitterLink);
-        }
-
-        public void OpenEmailLink()
-        {
-            Process.Start(model.EmailLink);
         }
 
         //[Localizable(false)]
@@ -105,8 +100,9 @@ namespace LanExchange.Presenter
             return sb.ToString().Replace(Environment.NewLine, @"\line ");
         }
 
-        protected override void InitializePresenter()
+        public void PerformShowDetails()
         {
+            View.DetailsVisible = !View.DetailsVisible;
         }
     }
 }

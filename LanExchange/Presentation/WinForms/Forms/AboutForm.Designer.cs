@@ -42,9 +42,7 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.eCopyright = new System.Windows.Forms.Label();
             this.logoPictureBox = new System.Windows.Forms.PictureBox();
             this.tipAbout = new System.Windows.Forms.ToolTip(this.components);
-            this.picTwitter = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picTwitter)).BeginInit();
             this.SuspendLayout();
             // 
             // eWeb
@@ -56,7 +54,7 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.eWeb.Size = new System.Drawing.Size(19, 13);
             this.eWeb.TabIndex = 43;
             this.eWeb.TabStop = true;
-            this.eWeb.Text = Resources.EmptyText;
+            this.eWeb.Text = "    ";
             this.eWeb.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.eWeb_LinkClicked);
             // 
             // lWeb
@@ -68,9 +66,9 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.lWeb.Location = new System.Drawing.Point(80, 136);
             this.lWeb.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
             this.lWeb.Name = "lWeb";
-            this.lWeb.Size = new System.Drawing.Size(11, 13);
+            this.lWeb.Size = new System.Drawing.Size(23, 13);
             this.lWeb.TabIndex = 42;
-            this.lWeb.Text = Resources.EmptyText;
+            this.lWeb.Text = "    ";
             this.lWeb.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // eVersion
@@ -79,15 +77,16 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.eVersion.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.eVersion.Location = new System.Drawing.Point(93, 32);
             this.eVersion.Name = "eVersion";
-            this.eVersion.Size = new System.Drawing.Size(10, 13);
+            this.eVersion.Size = new System.Drawing.Size(19, 13);
             this.eVersion.TabIndex = 41;
-            this.eVersion.Text = Resources.EmptyText;
+            this.eVersion.Text = "    ";
             // 
             // bClose
             // 
             this.bClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.bClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.bClose.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.bClose.Location = new System.Drawing.Point(326, 240);
+            this.bClose.Location = new System.Drawing.Point(266, 209);
             this.bClose.Name = "bClose";
             this.bClose.Size = new System.Drawing.Size(100, 23);
             this.bClose.TabIndex = 36;
@@ -99,12 +98,12 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.bShowDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.bShowDetails.AutoSize = true;
             this.bShowDetails.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.bShowDetails.Location = new System.Drawing.Point(216, 240);
+            this.bShowDetails.Location = new System.Drawing.Point(156, 209);
             this.bShowDetails.Name = "bShowDetails";
             this.bShowDetails.Size = new System.Drawing.Size(100, 23);
             this.bShowDetails.TabIndex = 35;
             this.bShowDetails.UseVisualStyleBackColor = true;
-            this.bShowDetails.Click += new System.EventHandler(this.bShowLicense_Click);
+            this.bShowDetails.Click += new System.EventHandler(this.bShowDetails_Click);
             // 
             // lCopyright
             // 
@@ -115,9 +114,9 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.lCopyright.Location = new System.Drawing.Point(80, 96);
             this.lCopyright.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
             this.lCopyright.Name = "lCopyright";
-            this.lCopyright.Size = new System.Drawing.Size(11, 13);
+            this.lCopyright.Size = new System.Drawing.Size(23, 13);
             this.lCopyright.TabIndex = 34;
-            this.lCopyright.Text = Resources.EmptyText;
+            this.lCopyright.Text = "    ";
             this.lCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // eLicense
@@ -126,10 +125,10 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.eLicense.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.eLicense.Location = new System.Drawing.Point(93, 72);
             this.eLicense.Name = "eLicense";
-            this.eLicense.Size = new System.Drawing.Size(7, 17);
+            this.eLicense.Size = new System.Drawing.Size(16, 17);
             this.eLicense.TabIndex = 33;
             this.eLicense.TabStop = true;
-            this.eLicense.Text = Resources.EmptyText;
+            this.eLicense.Text = "    ";
             this.eLicense.UseCompatibleTextRendering = true;
             // 
             // lLicense
@@ -141,9 +140,9 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.lLicense.Location = new System.Drawing.Point(80, 56);
             this.lLicense.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
             this.lLicense.Name = "lLicense";
-            this.lLicense.Size = new System.Drawing.Size(11, 13);
+            this.lLicense.Size = new System.Drawing.Size(23, 13);
             this.lLicense.TabIndex = 31;
-            this.lLicense.Text = Resources.EmptyText;
+            this.lLicense.Text = "    ";
             this.lLicense.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lVersion
@@ -155,9 +154,9 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.lVersion.Location = new System.Drawing.Point(80, 16);
             this.lVersion.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
             this.lVersion.Name = "lVersion";
-            this.lVersion.Size = new System.Drawing.Size(11, 13);
+            this.lVersion.Size = new System.Drawing.Size(23, 13);
             this.lVersion.TabIndex = 19;
-            this.lVersion.Text = Resources.EmptyText;
+            this.lVersion.Text = "    ";
             this.lVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // eCopyright
@@ -168,7 +167,7 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.eCopyright.Name = "eCopyright";
             this.eCopyright.Size = new System.Drawing.Size(19, 13);
             this.eCopyright.TabIndex = 28;
-            this.eCopyright.Text = Resources.EmptyText;
+            this.eCopyright.Text = "    ";
             // 
             // logoPictureBox
             // 
@@ -181,26 +180,12 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.logoPictureBox.TabIndex = 13;
             this.logoPictureBox.TabStop = false;
             // 
-            // picTwitter
-            // 
-            this.picTwitter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.picTwitter.BackColor = System.Drawing.SystemColors.Control;
-            this.picTwitter.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picTwitter.Image = global::LanExchange.Properties.Resources.twitter_icon_v2;
-            this.picTwitter.Location = new System.Drawing.Point(16, 247);
-            this.picTwitter.Name = "picTwitter";
-            this.picTwitter.Size = new System.Drawing.Size(16, 16);
-            this.picTwitter.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.picTwitter.TabIndex = 50;
-            this.picTwitter.TabStop = false;
-            this.picTwitter.Click += new System.EventHandler(this.picTwitter_Click);
-            // 
             // AboutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(444, 273);
-            this.Controls.Add(this.picTwitter);
+            this.CancelButton = this.bClose;
+            this.ClientSize = new System.Drawing.Size(384, 242);
             this.Controls.Add(this.eWeb);
             this.Controls.Add(this.lWeb);
             this.Controls.Add(this.eVersion);
@@ -219,12 +204,11 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.Name = "AboutForm";
             this.Padding = new System.Windows.Forms.Padding(9);
             this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.AboutForm_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AboutForm_KeyDown);
             this.RightToLeftChanged += new System.EventHandler(this.AboutForm_RightToLeftChanged);
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picTwitter)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -244,6 +228,5 @@ namespace LanExchange.Presentation.WinForms.Forms
         private System.Windows.Forms.Label lWeb;
         private System.Windows.Forms.LinkLabel eWeb;
         private System.Windows.Forms.ToolTip tipAbout;
-        private System.Windows.Forms.PictureBox picTwitter;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace LanExchange.Presentation.Interfaces
 {
-    public interface IWithHandle
+    public interface ISupportHandle
     {
         IntPtr Handle { get; }
     }

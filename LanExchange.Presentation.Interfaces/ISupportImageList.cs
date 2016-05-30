@@ -1,6 +1,6 @@
 ﻿namespace LanExchange.Presentation.Interfaces
 {
-    public interface IWithImageList
+    public interface ISupportImageList
     {
         void SetImageList(object imageList);
     }

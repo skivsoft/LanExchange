@@ -5,25 +5,27 @@ using System.IO;
 using System.Reflection;
 using LanExchange.Properties;
 using LanExchange.SDK;
+using LanExchange.Extensions;
 
 namespace LanExchange.Model
 {
     public class AboutModel : IAboutModel
     {
-        private const string HOME_LINK = "https://github.com/LanExchange/LanExchange";
-        private const string BUGTRACKER_LINK = "https://github.com/LanExchange/LanExchange/issues";
+        private const string ISSUES = "/issues";
         private const string LOCALIZATION_LINK = "https://crowdin.net/project/lanexchange";
-        private const string TWITTER = "TheLanExchange";
-        private const string EMAIL   = "skivsoft@gmail.com";
 
-        private Assembly GetAssembly()
+        private readonly Assembly entryAssembly;
+        private readonly string homeLink;
+
+        public AboutModel()
         {
-            return Assembly.GetEntryAssembly();
+            entryAssembly = Assembly.GetEntryAssembly();
+            homeLink = entryAssembly.GetCustomAttribute<AssemblyCompanyAttribute>().Company ?? string.Empty;
         }
 
         public string HomeLink
         {
-            get { return HOME_LINK; }
+            get { return homeLink; }
         }
 
         public string LocalizationLink
@@ -33,47 +35,23 @@ namespace LanExchange.Model
 
         public string BugTrackerLink
         {
-            get { return BUGTRACKER_LINK; }
-        }
-
-        [Localizable(false)]
-        public string TwitterLink
-        {
-            get { return "https://twitter.com/" + TWITTER; }
-        }
-
-        [Localizable(false)]
-        public string EmailLink
-        {
-            get
-            {
-                var ver = GetVersion();
-                var subject = string.Format(Resources.AboutModel_FeedbackFmt, Title, ver.ToString(3));
-                return string.Format("mailto:{0}?subject={1}", EMAIL, subject);
-            }
+            get { return homeLink + ISSUES; }
         }
 
         public string Title
         {
             get
             {
-                var assembly = GetAssembly();
-                if (assembly == null) return string.Empty;
-                var attributes = assembly.GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
-                if (attributes.Length > 0)
-                {
-                    var titleAttribute = (AssemblyTitleAttribute)attributes[0];
-                    if (titleAttribute.Title != "")
-                        return titleAttribute.Title;
-                }
-                return Path.GetFileNameWithoutExtension(GetAssembly().CodeBase);
+                var result = entryAssembly.GetCustomAttribute<AssemblyTitleAttribute>().Title;
+                if (string.IsNullOrEmpty(result))
+                    return Path.GetFileNameWithoutExtension(entryAssembly.CodeBase);
+                return result;
             }
         }
 
         private Version GetVersion()
         {
-            var assembly = GetAssembly();
-            return assembly == null ? null : assembly.GetName().Version;
+            return entryAssembly == null ?  null : entryAssembly.GetName().Version;
         }
 
         [Localizable(false)]
@@ -81,8 +59,8 @@ namespace LanExchange.Model
         {
             get
             {
-                var ver = GetVersion();
-                return ver == null ? string.Empty : ver.ToString(2);
+                var version = GetVersion();
+                return version == null ? string.Empty : version.ToString(2);
             }
         }
 
@@ -91,11 +69,11 @@ namespace LanExchange.Model
         {
             get
             {
-                var ver = GetVersion();
-                if (ver == null) return string.Empty;
-                var result = ver.ToString(2);
-                if (ver.Build > 0)
-                    result += String.Format(CultureInfo.CurrentCulture, Resources.AboutInfo_Build, ver.Build);
+                var version = GetVersion();
+                if (version == null) return string.Empty;
+                var result = version.ToString(2);
+                if (version.Build > 0)
+                    result += string.Format(CultureInfo.CurrentCulture, Resources.AboutInfo_Build, version.Build);
                 return result;
             }
         }
@@ -104,10 +82,7 @@ namespace LanExchange.Model
         {
             get
             {
-                var assembly = GetAssembly();
-                if (assembly == null) return string.Empty;
-                var attributes = assembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
-                return attributes.Length == 0 ? string.Empty : ((AssemblyDescriptionAttribute)attributes[0]).Description;
+                return entryAssembly.GetCustomAttribute<AssemblyDescriptionAttribute>().Description ?? string.Empty;
             }
         }
 
@@ -115,10 +90,7 @@ namespace LanExchange.Model
         {
             get
             {
-                var assembly = GetAssembly();
-                if (assembly == null) return string.Empty;
-                var attributes = assembly.GetCustomAttributes(typeof(AssemblyProductAttribute), false);
-                return attributes.Length == 0 ? string.Empty : ((AssemblyProductAttribute)attributes[0]).Product;
+                return entryAssembly.GetCustomAttribute<AssemblyProductAttribute>().Product ?? string.Empty;
             }
         }
 
@@ -126,21 +98,7 @@ namespace LanExchange.Model
         {
             get
             {
-                var assembly = GetAssembly();
-                if (assembly == null) return string.Empty;
-                var attributes = assembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
-                return attributes.Length == 0 ? "" : ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
-            }
-        }
-
-        public string Company
-        {
-            get
-            {
-                var assembly = GetAssembly();
-                if (assembly == null) return string.Empty;
-                var attributes = assembly.GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
-                return attributes.Length == 0 ? "" : ((AssemblyCompanyAttribute)attributes[0]).Company;
+                return entryAssembly.GetCustomAttribute<AssemblyCopyrightAttribute>().Copyright ?? string.Empty;
             }
         }
     }

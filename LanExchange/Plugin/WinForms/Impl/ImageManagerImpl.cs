@@ -223,7 +223,7 @@ namespace LanExchange.Plugin.WinForms.Impl
         {
             Contract.Requires<ArgumentNullException>(control != null);
 
-            var needImageList = control as IWithImageList;
+            var needImageList = control as ISupportImageList;
             needImageList?.SetImageList(smallImageList);
 
             // TODO use IWithImageList
