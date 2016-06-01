@@ -219,7 +219,7 @@ namespace LanExchange.Presenter
             rect.X = mainFormX;
             rect.Y = workingArea.Top;
             rect.Width = Math.Min(Math.Max(GetDefaultWidth(), mainFormWidth), workingArea.Width);
-            rect.Height = workingArea.Height - screenService.MenuHeight;
+            rect.Height = workingArea.Height;
             // determination side to snap right or left
             int centerX = (rect.Left + rect.Right) >> 1;
             int workingAreaCenterX = (workingArea.Left + workingArea.Right) >> 1;

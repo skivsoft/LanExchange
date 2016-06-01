@@ -461,8 +461,7 @@ namespace LanExchange.Plugin.Windows.Utils
 
                 if (nSelected != 0)
                 {
-                    var strParentFolder = string.Empty;
-                    InvokeCommand(_oContextMenu, nSelected, strParentFolder, pointScreen);
+                    InvokeCommand(_oContextMenu, nSelected, null, pointScreen);
                 }
             }
             finally

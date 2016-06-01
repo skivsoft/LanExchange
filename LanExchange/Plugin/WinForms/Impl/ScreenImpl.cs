@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
-using LanExchange.Helpers;
 using LanExchange.SDK;
 
 namespace LanExchange.Plugin.WinForms.Impl
@@ -20,24 +19,6 @@ namespace LanExchange.Plugin.WinForms.Impl
         public Rectangle GetWorkingArea(Rectangle rect)
         {
             return Screen.GetWorkingArea(rect);
-        }
-
-        public int MenuHeight
-        {
-            get 
-			{ 
-				return EnvironmentHelper.IsRunningOnMono() ? 0 : SystemInformation.MenuHeight; 
-			}
-        }
-
-        public string UserName
-        {
-            get { return SystemInformation.UserName; }
-        }
-
-        public string ComputerName
-        {
-            get { return SystemInformation.ComputerName; }
         }
 
         public Point CursorPosition
