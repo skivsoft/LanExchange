@@ -1,20 +1,20 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Text;
+using LanExchange.Presentation.Interfaces;
 using LanExchange.Properties;
 using LanExchange.SDK;
-using System.Diagnostics.Contracts;
-using LanExchange.Presentation.Interfaces;
 
-namespace LanExchange.Presenter
+namespace LanExchange.Application.Presenters
 {
     /// <summary>
     /// Presenter for Settings (model) and AboutForm (view).
     /// </summary>
     [Localizable(false)]
-    public sealed class AboutPresenter : PresenterBase<IAboutView>, IAboutPresenter
+    internal sealed class AboutPresenter : PresenterBase<IAboutView>, IAboutPresenter
     {
         private readonly IAboutModel model;
         private readonly ITranslationService translationService;

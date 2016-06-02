@@ -4,7 +4,7 @@ using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using LanExchange.Commands;
+using LanExchange.Application.Commands;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Factories;

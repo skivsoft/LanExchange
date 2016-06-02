@@ -5,7 +5,7 @@ using System.Threading;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.SDK;
 
-namespace LanExchange.Presenter
+namespace LanExchange.Application.Presenters
 {
     internal sealed class CheckAvailabilityPresenter : PresenterBase<ICheckAvailabilityWindow>, ICheckAvailabilityPresenter
     {

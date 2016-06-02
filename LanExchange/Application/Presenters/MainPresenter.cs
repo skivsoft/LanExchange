@@ -1,19 +1,19 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Globalization;
 using System.Threading;
 using LanExchange.Interfaces;
-using LanExchange.Plugin.Shortcut;
-using LanExchange.SDK;
 using LanExchange.Model;
-using System.Diagnostics.Contracts;
+using LanExchange.Plugin.Shortcut;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Factories;
+using LanExchange.SDK;
 
-namespace LanExchange.Presenter
+namespace LanExchange.Application.Presenters
 {
-    public class MainPresenter : PresenterBase<IMainView>, IMainPresenter
+    internal sealed class MainPresenter : PresenterBase<IMainView>, IMainPresenter
     {
         private readonly ILazyThreadPool threadPool;
         private readonly IPanelColumnManager columnManager;

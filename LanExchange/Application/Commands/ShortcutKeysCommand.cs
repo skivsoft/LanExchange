@@ -5,7 +5,7 @@ using LanExchange.Presentation.Interfaces;
 using LanExchange.SDK;
 using LanExchange.SDK.Factories;
 
-namespace LanExchange.Commands
+namespace LanExchange.Application.Commands
 {
     internal sealed class ShortcutKeysCommand : ICommand
     {

@@ -22,37 +22,37 @@ namespace LanExchange.Presentation.WinForms
 
         public event ThreadExceptionEventHandler ThreadException
         {
-            add { Application.ThreadException += value; }
-            remove { Application.ThreadException -= value; }
+            add { System.Windows.Forms.Application.ThreadException += value; }
+            remove { System.Windows.Forms.Application.ThreadException -= value; }
         }
 
         public event EventHandler ThreadExit
         {
-            add { Application.ThreadExit += value; }
-            remove { Application.ThreadExit -= value; }
+            add { System.Windows.Forms.Application.ThreadExit += value; }
+            remove { System.Windows.Forms.Application.ThreadExit -= value; }
         }
 
         public void Run(IWindow mainView)
         {
             Contract.Requires<ArgumentNullException>(mainView != null);
-            Application.Run((Form)mainView);
+            System.Windows.Forms.Application.Run((Form)mainView);
         }
 
         public void InitVisualStyles()
         {
-            Application.EnableVisualStyles();
+            System.Windows.Forms.Application.EnableVisualStyles();
             // must be called before first form created
-            Application.SetCompatibleTextRenderingDefault(false);
+            System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
         }
 
         public IEnumerable<IWindow> GetOpenWindows()
         {
-            return Application.OpenForms.Cast<IWindow>();
+            return System.Windows.Forms.Application.OpenForms.Cast<IWindow>();
         }
 
         public void Exit()
         {
-            Application.Exit();
+            System.Windows.Forms.Application.Exit();
         }
     }
 }

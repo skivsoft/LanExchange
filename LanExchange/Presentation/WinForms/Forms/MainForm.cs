@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using System.Security.Permissions;
 using System.Windows.Forms;
-using LanExchange.Commands;
+using LanExchange.Application.Commands;
 using LanExchange.Interfaces;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.Presentation.Interfaces;

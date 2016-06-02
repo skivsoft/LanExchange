@@ -1,16 +1,15 @@
-﻿using LanExchange.Properties;
-using LanExchange.Interfaces;
-using LanExchange.SDK;
-using System;
-
-using LanExchange.Misc;
-using LanExchange.Interfaces.Services;
-using LanExchange.Model;
+﻿using System;
 using System.Diagnostics.Contracts;
+using LanExchange.Interfaces;
+using LanExchange.Interfaces.Services;
+using LanExchange.Misc;
+using LanExchange.Model;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Factories;
+using LanExchange.Properties;
+using LanExchange.SDK;
 
-namespace LanExchange
+namespace LanExchange.Application
 {
     internal sealed class AppBootstrap : IAppBootstrap
     {

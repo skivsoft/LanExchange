@@ -3,7 +3,7 @@ using System.Diagnostics.Contracts;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.SDK;
 
-namespace LanExchange.Commands
+namespace LanExchange.Application.Commands
 {
     internal abstract class PagesCommandBase : ICommand
     {

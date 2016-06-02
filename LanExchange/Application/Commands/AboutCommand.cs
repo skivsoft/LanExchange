@@ -3,7 +3,7 @@ using System.Diagnostics.Contracts;
 using LanExchange.Presentation.Interfaces.Factories;
 using LanExchange.SDK;
 
-namespace LanExchange.Commands
+namespace LanExchange.Application.Commands
 {
     internal sealed class AboutCommand : ICommand
     {

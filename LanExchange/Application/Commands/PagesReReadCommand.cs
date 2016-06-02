@@ -1,6 +1,6 @@
 ﻿using LanExchange.Presentation.Interfaces;
 
-namespace LanExchange.Commands
+namespace LanExchange.Application.Commands
 {
     internal sealed class PagesReReadCommand : PagesCommandBase
     {

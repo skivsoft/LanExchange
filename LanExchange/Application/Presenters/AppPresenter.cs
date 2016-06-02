@@ -1,15 +1,15 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading;
-using System.Diagnostics;
-using LanExchange.SDK;
 using LanExchange.Interfaces.Services;
-using System.Diagnostics.Contracts;
 using LanExchange.Presentation.Interfaces;
+using LanExchange.SDK;
 
-namespace LanExchange.Presenter
+namespace LanExchange.Application.Presenters
 {
-    internal class AppPresenter : PresenterBase<IAppView>, IAppPresenter
+    internal sealed class AppPresenter : PresenterBase<IAppView>, IAppPresenter
     {
         private readonly IConfigPersistenceService configService;
         private readonly IPagesPresenter pagesPresenter;

@@ -52,7 +52,7 @@ namespace LanExchange.Presentation.WinForms.Forms
         public virtual void ApplicationExit()
         {
             allowClose = true;
-            Application.Exit();
+            System.Windows.Forms.Application.Exit();
         }
 
 

@@ -145,7 +145,7 @@
     <Compile Include="..\AnyAssemblyInfo.cs">
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Commands\PagesCommandBase.cs" />
+    <Compile Include="Application\Commands\PagesCommandBase.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Base\Addon.cs" />
     <Compile Include="Base\AddonItemTypeRef.cs" />
@@ -173,18 +173,18 @@
     <Compile Include="Interfaces\ILazyThreadPool.cs" />
     <Compile Include="Interfaces\Services\IConfigPersistenceService.cs" />
     <Compile Include="Interfaces\Services\IPagesPersistenceService.cs" />
-    <Compile Include="AppBootstrap.cs" />
+    <Compile Include="Application\AppBootstrap.cs" />
     <Compile Include="Model\Comparers\ColumnComparer.cs" />
     <Compile Include="Misc\AnimationHelper.cs" />
     <Compile Include="ContainerBuilder.cs" />
     <Compile Include="Misc\Impl\PanelUpdaterImpl.cs" />
     <Compile Include="Misc\Impl\DisposableManagerImpl.cs" />
     <Compile Include="Misc\TranslationResourceManager.cs" />
-    <Compile Include="Commands\AboutCommand.cs" />
-    <Compile Include="Commands\PagesCloseTabCommand.cs" />
-    <Compile Include="Commands\PagesCloseOtherCommand.cs" />
-    <Compile Include="Commands\PagesReReadCommand.cs" />
-    <Compile Include="Commands\ShortcutKeysCommand.cs" />
+    <Compile Include="Application\Commands\AboutCommand.cs" />
+    <Compile Include="Application\Commands\PagesCloseTabCommand.cs" />
+    <Compile Include="Application\Commands\PagesCloseOtherCommand.cs" />
+    <Compile Include="Application\Commands\PagesReReadCommand.cs" />
+    <Compile Include="Application\Commands\ShortcutKeysCommand.cs" />
     <Compile Include="Misc\Impl\PanelColumnManagerImpl.cs" />
     <Compile Include="Misc\Impl\PanelFillerManagerImpl.cs" />
     <Compile Include="Misc\Impl\PanelItemFactoryManagerImpl.cs" />
@@ -243,7 +243,7 @@
     <Compile Include="Plugin\WinForms\Utils\MessageBoxHelper.cs" />
     <Compile Include="Helpers\ProtocolHelper.cs" />
     <Compile Include="Plugin\WinForms\Impl\AddonManagerImpl.cs" />
-    <Compile Include="Presenter\AppPresenter.cs" />
+    <Compile Include="Application\Presenters\AppPresenter.cs" />
     <Compile Include="Plugin\WinForms\Utils\BitmapUtils.cs" />
     <Compile Include="Plugin\WinForms\Impl\ClipboardDataObjectImpl.cs" />
     <Compile Include="Plugin\WinForms\Impl\ClipboardServiceImpl.cs" />
@@ -292,13 +292,13 @@
     <Compile Include="Model\AboutModel.cs" />
     <Compile Include="Misc\Impl\LazyThreadPoolImpl.cs" />
     <Compile Include="Misc\Impl\PluginManagerImpl.cs" />
-    <Compile Include="Presenter\AboutPresenter.cs" />
-    <Compile Include="Presenter\CheckAvailabilityPresenter.cs" />
-    <Compile Include="Presenter\EditPresenter.cs" />
-    <Compile Include="Presenter\FilterPresenter.cs" />
-    <Compile Include="Presenter\MainPresenter.cs" />
-    <Compile Include="Presenter\PagesPresenter.cs" />
-    <Compile Include="Presenter\PanelPresenter.cs" />
+    <Compile Include="Application\Presenters\AboutPresenter.cs" />
+    <Compile Include="Application\Presenters\CheckAvailabilityPresenter.cs" />
+    <Compile Include="Application\Presenters\EditPresenter.cs" />
+    <Compile Include="Application\Presenters\FilterPresenter.cs" />
+    <Compile Include="Application\Presenters\MainPresenter.cs" />
+    <Compile Include="Application\Presenters\PagesPresenter.cs" />
+    <Compile Include="Application\Presenters\PanelPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\ReflectionHelper.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -420,7 +420,9 @@
     <Content Include="Misc\MVP.gif" />
     <Content Include="Languages\!Readme.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Application\Interfaces\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LanExchange.Presentation.Interfaces\LanExchange.Presentation.Interfaces.csproj">
       <Project>{530BDBBA-A879-403C-83C5-A2F27BDABE05}</Project>
