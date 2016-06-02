@@ -12,9 +12,9 @@ using LanExchange.Presentation.Interfaces.Factories;
 
 namespace LanExchange
 {
-    public class LanExchangeApp
+    internal sealed class AppBootstrap : IAppBootstrap
     {
-        private readonly IAppPresenter application;
+        private readonly IAppView appView;
         private readonly IMainPresenter mainPresenter;
         private readonly IPagesPresenter pagesPresenter;
         private readonly IConfigPersistenceService configService;
@@ -24,8 +24,8 @@ namespace LanExchange
         private readonly ITranslationService translationService;
         private readonly IWindowFactory windowFactory;
 
-        public LanExchangeApp(
-            IAppPresenter application,
+        public AppBootstrap(
+            IAppView appView,
             IMainPresenter mainPresenter,
             IPagesPresenter pagesPresenter,
             IConfigPersistenceService configService,
@@ -35,7 +35,7 @@ namespace LanExchange
             ITranslationService translationService,
             IWindowFactory windowFactory)
         {
-            Contract.Requires<ArgumentNullException>(application != null);
+            Contract.Requires<ArgumentNullException>(appView != null);
             Contract.Requires<ArgumentNullException>(mainPresenter != null);
             Contract.Requires<ArgumentNullException>(pagesPresenter != null);
             Contract.Requires<ArgumentNullException>(configService != null);
@@ -45,7 +45,7 @@ namespace LanExchange
             Contract.Requires<ArgumentNullException>(translationService != null);
             Contract.Requires<ArgumentNullException>(windowFactory != null);
 
-            this.application = application;
+            this.appView = appView;
             this.mainPresenter = mainPresenter;
             this.pagesPresenter = pagesPresenter;
             this.configService = configService;
@@ -72,8 +72,6 @@ namespace LanExchange
             App.Config.PropertyChanged += mainPresenter.ConfigOnChanged;
             // load addons
             addonManager.LoadAddons();
-            // init application
-            application.Init();
         }
 
 
@@ -81,10 +79,12 @@ namespace LanExchange
         {
             // create main form
             //App.Presenter.ConfigOnChanged(App.Config, new ConfigChangedArgs(ConfigNames.Language));
-            var mainView = windowFactory.CreateMainView();
-            pagesPresenter.LoadSettings();
-            // run application
-            application.Run(mainView);
+            using (var mainView = windowFactory.CreateMainView())
+            {
+                pagesPresenter.LoadSettings();
+                // run application
+                appView.Run(mainView);
+            }
         }
     }
 }

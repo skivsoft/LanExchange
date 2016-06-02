@@ -1,9 +1,7 @@
 namespace LanExchange.Presentation.Interfaces
 {
-    public interface IAppPresenter
+    public interface IAppPresenter : IPresenter<IAppView>
     {
-        void Init();
-        void Run(IMainView view);
         void TranslateOpenForms();
     }
 }

@@ -51,7 +51,9 @@
     <Compile Include="HorizontalAlignment.cs" />
     <Compile Include="IAboutPresenter.cs" />
     <Compile Include="IAboutView.cs" />
+    <Compile Include="IAppBootstrap.cs" />
     <Compile Include="IAppPresenter.cs" />
+    <Compile Include="IAppView.cs" />
     <Compile Include="ICheckAvailabilityPresenter.cs" />
     <Compile Include="ICheckAvailabilityWindow.cs" />
     <Compile Include="IColumnHeader.cs" />
@@ -78,8 +80,10 @@
     <Compile Include="IStatusPanelPresenter.cs" />
     <Compile Include="IStatusPanelView.cs" />
     <Compile Include="ISystemInformationService.cs" />
+    <Compile Include="ITranslationable.cs" />
     <Compile Include="IView.cs" />
     <Compile Include="IWindow.cs" />
+    <Compile Include="IWindowTranslationable.cs" />
     <Compile Include="MenuElement.cs" />
     <Compile Include="PanelSortOrder.cs" />
     <Compile Include="PanelViewMode.cs" />

@@ -56,7 +56,7 @@ namespace LanExchange
         private void RegisterCoreSingletons()
         {
             container.RegisterSingleton<IServiceProvider>(container);
-            container.RegisterSingleton<LanExchangeApp>();
+            container.RegisterSingleton<IAppBootstrap, AppBootstrap>();
             container.RegisterSingleton<IPanelItemFactoryManager, PanelItemFactoryManagerImpl>();
             container.RegisterSingleton<IPanelFillerManager, PanelFillerManagerImpl>();
             container.RegisterSingleton<IPanelColumnManager, PanelColumnManagerImpl>();
@@ -83,6 +83,7 @@ namespace LanExchange
 
         private void RegisterPresenters()
         {
+            container.RegisterSingleton<IAppPresenter, AppPresenter>();
             container.RegisterSingleton<IMainPresenter, MainPresenter>();
             container.RegisterSingleton<IAboutPresenter, AboutPresenter>();
             container.RegisterSingleton<IPagesPresenter, PagesPresenter>();
@@ -109,11 +110,11 @@ namespace LanExchange
             container.Register<IPanelView, PanelView>();
             container.Register<IEditView, EditForm>();
             container.Register<IStatusPanelView, StatusPanel>();
+            container.RegisterSingleton<IAppView, AppView>();
             container.RegisterSingleton<IMainView, MainForm>();
             container.RegisterSingleton<IPagesView, PagesView>();
             container.RegisterSingleton<IAddonManager, AddonManagerImpl>();
             container.RegisterSingleton<IImageManager, ImageManagerImpl>();
-            container.RegisterSingleton<IAppPresenter, AppPresenter>();
             container.RegisterSingleton<IWaitingService, WaitingServiceImpl>();
             container.RegisterSingleton<IClipboardService, ClipboardServiceImpl>();
             container.RegisterSingleton<IScreenService, ScreenImpl>();

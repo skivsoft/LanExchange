@@ -4,6 +4,7 @@
 
 using System;
 using LanExchange.SDK.Extensions;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange
 {
@@ -16,7 +17,7 @@ namespace LanExchange
         static void Main()
         {
             CoreFacade.InitializeDIContainer()
-                .Resolve<LanExchangeApp>()
+                .Resolve<IAppBootstrap>()
                 .Run();
         }
     }
