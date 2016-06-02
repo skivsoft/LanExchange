@@ -16,6 +16,8 @@ using SimpleInjector.Diagnostics;
 using System;
 using LanExchange.Application;
 using LanExchange.Application.Commands;
+using LanExchange.Application.Implementation;
+using LanExchange.Application.Interfaces;
 using LanExchange.Application.Presenters;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Factories;
@@ -60,12 +62,12 @@ namespace LanExchange
             container.RegisterSingleton<IPanelItemFactoryManager, PanelItemFactoryManagerImpl>();
             container.RegisterSingleton<IPanelFillerManager, PanelFillerManagerImpl>();
             container.RegisterSingleton<IPanelColumnManager, PanelColumnManagerImpl>();
-            container.RegisterSingleton<IFolderManager, FolderManagerImpl>();
+            container.RegisterSingleton<IFolderManager, FolderManager>();
             container.RegisterSingleton<IPluginManager, PluginManagerImpl>();
             container.RegisterSingleton<ILazyThreadPool, LazyThreadPoolImpl>();
             container.RegisterSingleton<IPuntoSwitcherService, PuntoSwitcherServiceEngRus>();
-            container.RegisterSingleton<ITranslationService, TranslationServiceImpl>();
-            container.RegisterSingleton<IDisposableManager, DisposableManagerImpl>();
+            container.RegisterSingleton<ITranslationService, TranslationService>();
+            container.RegisterSingleton<IDisposableManager, DisposableManager>();
             container.RegisterSingleton<ICommandManager, CommandManager>();
         }
 
@@ -85,7 +87,7 @@ namespace LanExchange
         {
             container.RegisterSingleton<IAppPresenter, AppPresenter>();
             container.RegisterSingleton<IMainPresenter, MainPresenter>();
-            container.RegisterSingleton<IAboutPresenter, AboutPresenter>();
+            container.Register<IAboutPresenter, AboutPresenter>();
             container.RegisterSingleton<IPagesPresenter, PagesPresenter>();
             container.Register<IFilterPresenter, FilterPresenter>();
             container.Register<IPanelPresenter, PanelPresenter>();
@@ -111,7 +113,7 @@ namespace LanExchange
             container.Register<IEditView, EditForm>();
             container.Register<IStatusPanelView, StatusPanel>();
             container.RegisterSingleton<IAppView, AppView>();
-            container.RegisterSingleton<IMainView, MainForm>();
+            container.Register<IMainView, MainForm>();
             container.RegisterSingleton<IPagesView, PagesView>();
             container.RegisterSingleton<IAddonManager, AddonManagerImpl>();
             container.RegisterSingleton<IImageManager, ImageManagerImpl>();
@@ -126,6 +128,7 @@ namespace LanExchange
             container.RegisterSingleton<IConfigPersistenceService, ConfigPersistenceService>();
             container.RegisterSingleton<IPagesPersistenceService, PagesPersistenceService>();
             container.Register<ISystemInformationService, SystemInformationService>();
+            container.Register<IProcessService, ProcessService>();
         }
 
         private void RegisterFactories()
@@ -157,6 +160,7 @@ namespace LanExchange
 
         private void VerifyContainer()
         {
+            SuppressDisposableTransientComponentWarning<IMainView>();
             SuppressDisposableTransientComponentWarning<IAboutView>();
             SuppressDisposableTransientComponentWarning<IFilterView>();
             SuppressDisposableTransientComponentWarning<IEditView>();

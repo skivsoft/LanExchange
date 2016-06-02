@@ -3,9 +3,9 @@ using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading;
+using LanExchange.Application.Interfaces;
 using LanExchange.Interfaces.Services;
 using LanExchange.Presentation.Interfaces;
-using LanExchange.SDK;
 
 namespace LanExchange.Application.Presenters
 {

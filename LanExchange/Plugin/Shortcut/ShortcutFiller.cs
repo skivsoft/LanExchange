@@ -5,6 +5,7 @@ using LanExchange.Interfaces;
 using LanExchange.Properties;
 using LanExchange.SDK;
 using System.Diagnostics.Contracts;
+using LanExchange.Application.Interfaces;
 
 namespace LanExchange.Plugin.Shortcut
 {

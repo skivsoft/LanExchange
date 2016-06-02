@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using LanExchange.Application.Interfaces;
 using LanExchange.Interfaces.Services;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.SDK;

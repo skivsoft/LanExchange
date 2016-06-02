@@ -6,6 +6,5 @@ namespace LanExchange.SDK
     {
         void LoadPlugins();
         IEnumerable<IPlugin> Items { get; }
-        IDictionary<string, string> PluginsAuthors { get; }
     }
 }

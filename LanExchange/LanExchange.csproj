@@ -147,6 +147,13 @@
     </Compile>
     <Compile Include="Application\Commands\PagesCommandBase.cs" />
     <Compile Include="App.cs" />
+    <Compile Include="Application\Implementation\ProcessService.cs" />
+    <Compile Include="Application\Interfaces\IAboutModel.cs" />
+    <Compile Include="Application\Interfaces\IDisposableManager.cs" />
+    <Compile Include="Application\Interfaces\IFolderManager.cs" />
+    <Compile Include="Application\Interfaces\IProcessService.cs" />
+    <Compile Include="Application\Interfaces\ITranslationService.cs" />
+    <Compile Include="Application\Interfaces\ITranslitStrategy.cs" />
     <Compile Include="Base\Addon.cs" />
     <Compile Include="Base\AddonItemTypeRef.cs" />
     <Compile Include="Base\AddonMenuItem.cs" />
@@ -178,8 +185,8 @@
     <Compile Include="Misc\AnimationHelper.cs" />
     <Compile Include="ContainerBuilder.cs" />
     <Compile Include="Misc\Impl\PanelUpdaterImpl.cs" />
-    <Compile Include="Misc\Impl\DisposableManagerImpl.cs" />
-    <Compile Include="Misc\TranslationResourceManager.cs" />
+    <Compile Include="Application\Implementation\DisposableManager.cs" />
+    <Compile Include="Application\Implementation\TranslationResourceManager.cs" />
     <Compile Include="Application\Commands\AboutCommand.cs" />
     <Compile Include="Application\Commands\PagesCloseTabCommand.cs" />
     <Compile Include="Application\Commands\PagesCloseOtherCommand.cs" />
@@ -188,9 +195,9 @@
     <Compile Include="Misc\Impl\PanelColumnManagerImpl.cs" />
     <Compile Include="Misc\Impl\PanelFillerManagerImpl.cs" />
     <Compile Include="Misc\Impl\PanelItemFactoryManagerImpl.cs" />
-    <Compile Include="Misc\Impl\TranslationServiceImpl.cs" />
+    <Compile Include="Application\Implementation\TranslationService.cs" />
     <Compile Include="Misc\CustomPanelItem.cs" />
-    <Compile Include="Misc\Impl\FolderManagerImpl.cs" />
+    <Compile Include="Application\Implementation\FolderManager.cs" />
     <Compile Include="Model\PagesModel.cs" />
     <Compile Include="Model\PanelModel.cs" />
     <Compile Include="Plugin\PluginInternal.cs" />
@@ -289,7 +296,7 @@
     <Compile Include="Plugin\WinForms\Impl\WaitingServiceImpl.cs" />
     <Compile Include="Misc\Impl\PuntoSwitcherServiceEngRus.cs" />
     <Compile Include="Model\ConfigModel.cs" />
-    <Compile Include="Model\AboutModel.cs" />
+    <Compile Include="Application\Implementation\AboutModel.cs" />
     <Compile Include="Misc\Impl\LazyThreadPoolImpl.cs" />
     <Compile Include="Misc\Impl\PluginManagerImpl.cs" />
     <Compile Include="Application\Presenters\AboutPresenter.cs" />
@@ -420,9 +427,7 @@
     <Content Include="Misc\MVP.gif" />
     <Content Include="Languages\!Readme.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Application\Interfaces\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\LanExchange.Presentation.Interfaces\LanExchange.Presentation.Interfaces.csproj">
       <Project>{530BDBBA-A879-403C-83C5-A2F27BDABE05}</Project>

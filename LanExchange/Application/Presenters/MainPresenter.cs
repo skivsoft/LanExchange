@@ -4,6 +4,7 @@ using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Globalization;
 using System.Threading;
+using LanExchange.Application.Interfaces;
 using LanExchange.Interfaces;
 using LanExchange.Model;
 using LanExchange.Plugin.Shortcut;

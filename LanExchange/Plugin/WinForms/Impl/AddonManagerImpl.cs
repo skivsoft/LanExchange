@@ -11,6 +11,7 @@ using LanExchange.Interfaces;
 using LanExchange.SDK;
 using LanExchange.Interfaces.Factories;
 using System.Diagnostics.Contracts;
+using LanExchange.Application.Interfaces;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Factories;
 

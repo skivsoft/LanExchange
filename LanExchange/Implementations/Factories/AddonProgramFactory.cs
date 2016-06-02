@@ -5,6 +5,7 @@ using LanExchange.SDK;
 using System;
 using System.Diagnostics.Contracts;
 using System.IO;
+using LanExchange.Application.Interfaces;
 
 namespace LanExchange.Implementations.Factories
 {

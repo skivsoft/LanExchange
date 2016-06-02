@@ -4,6 +4,7 @@ using LanExchange.SDK;
 using System;
 using System.Diagnostics;
 using System.IO;
+using LanExchange.Application.Interfaces;
 
 namespace LanExchange.Implementations.Services
 {

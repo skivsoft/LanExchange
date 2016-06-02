@@ -1,4 +1,4 @@
-﻿using LanExchange.Misc.Impl;
+﻿using LanExchange.Application.Implementation;
 
 namespace GenerateEnglish
 {
@@ -6,7 +6,7 @@ namespace GenerateEnglish
     {
         static void Main(string[] args)
         {
-            new GenerateEnglishProcess(new FolderManagerImpl()).Execute();
+            new GenerateEnglishProcess(new FolderManager()).Execute();
         }
     }
 }

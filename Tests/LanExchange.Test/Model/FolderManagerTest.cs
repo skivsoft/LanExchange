@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using LanExchange.Application.Implementation;
 using LanExchange.Misc.Impl;
 using NUnit.Framework;
 
@@ -10,9 +11,9 @@ namespace LanExchange.Model
         [Test]
         public void TestTabConfigFileName()
         {
-            var manager = new FolderManagerImpl();
+            var manager = new FolderManager();
             string fileName = manager.TabsConfigFileName;
-            Assert.AreEqual(FolderManagerImpl.TABS_FILE, Path.GetFileName(fileName));
+            Assert.AreEqual(FolderManager.TABS_FILE, Path.GetFileName(fileName));
         }
     }
 }

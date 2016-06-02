@@ -9,29 +9,6 @@ namespace LanExchange.Helpers
     /// </summary>
     public static class ReflectionUtils
     {
-        public static void SetClassPrivateField<TClass,TFieldType>(string name, TFieldType value) where TClass : class
-        {
-            var fieldInfo = typeof (TClass).GetField(name, BindingFlags.Static | BindingFlags.NonPublic);
-            if (fieldInfo != null)
-                fieldInfo.SetValue(null, value);
-        }
-
-        /// <summary>
-        /// Gets the object property.
-        /// </summary>
-        /// <typeparam name="TResult"></typeparam>
-        /// <param name="instance">The instance.</param>
-        /// <param name="name">The name.</param>
-        /// <returns></returns>
-        /// <exception cref="System.ArgumentNullException">instance</exception>
-        public static TResult GetObjectProperty<TResult>(object instance, string name) where TResult : class
-        {
-            Contract.Requires<ArgumentNullException>(instance != null);
-
-            var propInfo = instance.GetType().GetProperty(name);
-            return propInfo == null ? null : (TResult)propInfo.GetValue(instance, null);
-        }
-
         /// <summary>
         /// Copies the object properties.
         /// </summary>

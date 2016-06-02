@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Resources;
 using System.Text;
+using LanExchange.Application.Interfaces;
 using LanExchange.Base;
 using LanExchange.SDK;
 

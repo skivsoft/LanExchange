@@ -5,6 +5,7 @@ using System.IO;
 using LanExchange.Model;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
+using LanExchange.Application.Interfaces;
 
 namespace LanExchange.Implementations.Services
 {
