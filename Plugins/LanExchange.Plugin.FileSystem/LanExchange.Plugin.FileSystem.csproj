@@ -57,6 +57,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\LanExchange.Application.Interfaces\LanExchange.Application.Interfaces.csproj">
+      <Project>{1c003a71-105f-46dd-ad18-2c1534961a2e}</Project>
+      <Name>LanExchange.Application.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\LanExchange.Presentation.Interfaces\LanExchange.Presentation.Interfaces.csproj">
       <Project>{530bdbba-a879-403c-83c5-a2f27bdabe05}</Project>
       <Name>LanExchange.Presentation.Interfaces</Name>

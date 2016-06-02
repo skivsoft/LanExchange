@@ -1,5 +1,5 @@
 ﻿using System.Globalization;
-using LanExchange.SDK;
+using LanExchange.Application.Interfaces;
 
 namespace LanExchange.Plugin.Translit
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel.Composition;
-
+using LanExchange.Application.Interfaces;
 using LanExchange.Plugin.Users.Properties;
 using LanExchange.SDK;
 using LanExchange.SDK.Extensions;

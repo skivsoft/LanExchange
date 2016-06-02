@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using LanExchange.SDK;
+using LanExchange.Application.Interfaces;
 
 namespace LanExchange.Plugin.Translit
 {

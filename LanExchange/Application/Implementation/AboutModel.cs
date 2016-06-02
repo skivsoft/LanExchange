@@ -3,8 +3,8 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
+using LanExchange.Application.Extensions;
 using LanExchange.Application.Interfaces;
-using LanExchange.Extensions;
 using LanExchange.Properties;
 
 namespace LanExchange.Application.Implementation

@@ -148,18 +148,12 @@
     <Compile Include="Application\Commands\PagesCommandBase.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Application\Implementation\ProcessService.cs" />
-    <Compile Include="Application\Interfaces\IAboutModel.cs" />
-    <Compile Include="Application\Interfaces\IDisposableManager.cs" />
-    <Compile Include="Application\Interfaces\IFolderManager.cs" />
-    <Compile Include="Application\Interfaces\IProcessService.cs" />
-    <Compile Include="Application\Interfaces\ITranslationService.cs" />
-    <Compile Include="Application\Interfaces\ITranslitStrategy.cs" />
     <Compile Include="Base\Addon.cs" />
     <Compile Include="Base\AddonItemTypeRef.cs" />
     <Compile Include="Base\AddonMenuItem.cs" />
     <Compile Include="Base\AddonObjectId.cs" />
     <Compile Include="Base\AddonProgram.cs" />
-    <Compile Include="Extensions\AssemblyExtensions.cs" />
+    <Compile Include="Application\Extensions\AssemblyExtensions.cs" />
     <Compile Include="Implementations\Factories\AddonProgramFactory.cs" />
     <Compile Include="Implementations\Factories\FactoryBase.cs" />
     <Compile Include="Implementations\Factories\ModelFactory.cs" />
@@ -425,10 +419,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Misc\MVP.gif" />
-    <Content Include="Languages\!Readme.txt" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\LanExchange.Application.Interfaces\LanExchange.Application.Interfaces.csproj">
+      <Project>{1c003a71-105f-46dd-ad18-2c1534961a2e}</Project>
+      <Name>LanExchange.Application.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LanExchange.Presentation.Interfaces\LanExchange.Presentation.Interfaces.csproj">
       <Project>{530BDBBA-A879-403C-83C5-A2F27BDABE05}</Project>
       <Name>LanExchange.Presentation.Interfaces</Name>

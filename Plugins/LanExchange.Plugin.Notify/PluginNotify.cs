@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.Composition;
 using System.Text;
+using LanExchange.Application.Interfaces;
 using LanExchange.SDK;
 using LanExchange.SDK.Extensions;
 using LanExchange.Presentation.Interfaces;

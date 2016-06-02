@@ -2,7 +2,7 @@
 using System.Diagnostics.Contracts;
 using System.Reflection;
 
-namespace LanExchange.Extensions
+namespace LanExchange.Application.Extensions
 {
     public static class AssemblyExtensions
     {
