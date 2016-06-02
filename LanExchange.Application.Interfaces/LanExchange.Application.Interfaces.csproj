@@ -39,18 +39,21 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IAboutModel.cs" />
     <Compile Include="IDisposableManager.cs" />
     <Compile Include="IFolderManager.cs" />
+    <Compile Include="IImageManager.cs" />
     <Compile Include="IProcessService.cs" />
+    <Compile Include="IScreenService.cs" />
+    <Compile Include="IShell32Service.cs" />
     <Compile Include="ITranslationService.cs" />
     <Compile Include="ITranslitStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

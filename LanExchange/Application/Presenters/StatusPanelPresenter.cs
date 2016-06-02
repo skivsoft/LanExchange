@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using LanExchange.Application.Interfaces;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.SDK;
 
-namespace LanExchange.Presentation.WinForms
+namespace LanExchange.Application.Presenters
 {
-    public sealed class StatusPanelPresenter : PresenterBase<IStatusPanelView>, IStatusPanelPresenter
+    internal sealed class StatusPanelPresenter : PresenterBase<IStatusPanelView>, IStatusPanelPresenter
     {
         private readonly IShell32Service shellService;
         private readonly IScreenService screenService;

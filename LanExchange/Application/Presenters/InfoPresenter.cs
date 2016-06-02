@@ -1,6 +1,6 @@
 ﻿using LanExchange.Presentation.Interfaces;
 
-namespace LanExchange.Presentation.WinForms
+namespace LanExchange.Application.Presenters
 {
     internal sealed class InfoPresenter : PresenterBase<IInfoView>, IInfoPresenter
     {

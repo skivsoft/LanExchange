@@ -2,12 +2,12 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using LanExchange.Application.Interfaces;
 using LanExchange.Plugin.Windows.Utils;
-using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Windows
 {
-    internal class Shell32Service : IShell32Service
+    internal sealed class Shell32Service : IShell32Service
     {
         private readonly ShellContextMenu menu;
 

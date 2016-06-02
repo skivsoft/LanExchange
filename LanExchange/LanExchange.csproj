@@ -148,6 +148,8 @@
     <Compile Include="Application\Commands\PagesCommandBase.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Application\Implementation\ProcessService.cs" />
+    <Compile Include="Application\Presenters\InfoPresenter.cs" />
+    <Compile Include="Application\Presenters\StatusPanelPresenter.cs" />
     <Compile Include="Base\Addon.cs" />
     <Compile Include="Base\AddonItemTypeRef.cs" />
     <Compile Include="Base\AddonMenuItem.cs" />
@@ -256,7 +258,7 @@
     </Compile>
     <Compile Include="Presentation\WinForms\Controls\HeaderControl.cs" />
     <Compile Include="Plugin\WinForms\Interfaces\IListViewItemGetter.cs" />
-    <Compile Include="Plugin\WinForms\Impl\ImageManagerImpl.cs" />
+    <Compile Include="Application\Implementation\ImageManager.cs" />
     <Compile Include="Plugin\WinForms\Utils\KeyboardUtils.cs" />
     <Compile Include="Presentation\WinForms\Controls\ListViewer.cs">
       <SubType>Component</SubType>
@@ -285,7 +287,7 @@
     <Compile Include="Presentation\WinForms\Forms\RunMinimizedForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Plugin\WinForms\Impl\ScreenImpl.cs" />
+    <Compile Include="Application\Implementation\ScreenService.cs" />
     <Compile Include="Plugin\WinForms\Utils\TranslationUtils.cs" />
     <Compile Include="Plugin\WinForms\Impl\WaitingServiceImpl.cs" />
     <Compile Include="Misc\Impl\PuntoSwitcherServiceEngRus.cs" />

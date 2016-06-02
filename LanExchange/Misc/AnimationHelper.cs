@@ -1,7 +1,7 @@
-﻿using LanExchange.SDK;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
+using LanExchange.Application.Interfaces;
 
 namespace LanExchange.Misc
 {

@@ -5,6 +5,7 @@ using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
+using LanExchange.Application.Interfaces;
 using LanExchange.Helpers;
 using LanExchange.Interfaces;
 using LanExchange.Plugin.WinForms.Interfaces;

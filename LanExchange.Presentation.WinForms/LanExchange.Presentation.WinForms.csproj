@@ -128,9 +128,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -146,9 +144,7 @@
     <Compile Include="Controls\StatusPanel.Designer.cs">
       <DependentUpon>StatusPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="InfoPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StatusPanelPresenter.cs" />
     <Compile Include="SystemInformationService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -163,10 +159,6 @@
     <ProjectReference Include="..\LanExchange.Presentation.Interfaces\LanExchange.Presentation.Interfaces.csproj">
       <Project>{530bdbba-a879-403c-83c5-a2f27bdabe05}</Project>
       <Name>LanExchange.Presentation.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LanExchange.SDK\LanExchange.SDK.csproj">
-      <Project>{4ae4e72c-5d7d-42a9-b7fb-577eec0a149d}</Project>
-      <Name>LanExchange.SDK</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

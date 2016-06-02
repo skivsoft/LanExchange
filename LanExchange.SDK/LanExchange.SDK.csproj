@@ -102,7 +102,6 @@
     <Compile Include="IColumnComparer.cs" />
     <Compile Include="IFilterModel.cs" />
     <Compile Include="IHotkeyService.cs" />
-    <Compile Include="IImageManager.cs" />
     <Compile Include="IMACAddressSerivice.cs" />
     <Compile Include="IMessageBoxService.cs" />
     <Compile Include="IPagesModel.cs" />
@@ -116,8 +115,6 @@
     <Compile Include="IPlugin.cs" />
     <Compile Include="IPluginManager.cs" />
     <Compile Include="IPuntoSwitcherService.cs" />
-    <Compile Include="IScreenService.cs" />
-    <Compile Include="IShell32Service.cs" />
     <Compile Include="ISysImageListService.cs" />
     <Compile Include="IUser32Service.cs" />
     <Compile Include="IWaitingService.cs" />

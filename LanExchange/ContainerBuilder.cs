@@ -116,10 +116,10 @@ namespace LanExchange
             container.Register<IMainView, MainForm>();
             container.RegisterSingleton<IPagesView, PagesView>();
             container.RegisterSingleton<IAddonManager, AddonManagerImpl>();
-            container.RegisterSingleton<IImageManager, ImageManagerImpl>();
+            container.RegisterSingleton<IImageManager, ImageManager>();
             container.RegisterSingleton<IWaitingService, WaitingServiceImpl>();
             container.RegisterSingleton<IClipboardService, ClipboardServiceImpl>();
-            container.RegisterSingleton<IScreenService, ScreenImpl>();
+            container.RegisterSingleton<IScreenService, ScreenService>();
             container.RegisterSingleton<IMessageBoxService, MessageBoxServiceImpl>();
         }
 

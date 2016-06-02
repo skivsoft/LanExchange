@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using LanExchange.SDK;
 using System.Diagnostics.Contracts;
 using LanExchange.Presentation.Interfaces;
 
@@ -14,7 +13,6 @@ namespace LanExchange.Presentation.WinForms.Controls
 
         private int numLines;
         private readonly IList<Label> lines;
-        private PanelItemBase currentItem;
         
         public InfoPanel(IInfoPresenter presenter)
         {
@@ -102,19 +100,6 @@ namespace LanExchange.Presentation.WinForms.Controls
                 var obj = new DataObject();
                 obj.SetText(label.Text, TextDataFormat.UnicodeText);
                 DoDragDrop(obj, DragDropEffects.Copy);
-            }
-        }
-
-        public PanelItemBase CurrentItem
-        {
-            get { return currentItem; }
-            set
-            {
-                currentItem = value;
-                //if (currentItem != null)
-                //{
-                //    Picture.Image = presenter.GetLargeImage(currentItem.ImageName);
-                //}
             }
         }
 
