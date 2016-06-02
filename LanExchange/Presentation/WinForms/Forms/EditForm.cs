@@ -67,7 +67,7 @@ namespace LanExchange.Presentation.WinForms.Forms
             }
         }
 
-        public bool ShowModal()
+        public bool ShowModalDialog()
         {
             return ShowDialog() == DialogResult.OK;
         }

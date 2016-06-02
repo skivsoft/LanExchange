@@ -136,5 +136,10 @@ namespace LanExchange.Presentation.WinForms.Forms
             if (boxDetails != null)
                 boxDetails.RightToLeft = RightToLeft;
         }
+
+        public bool ShowModalDialog()
+        {
+            return ShowDialog() == DialogResult.OK;
+        }
     }
 }

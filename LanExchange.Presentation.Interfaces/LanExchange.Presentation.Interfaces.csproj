@@ -59,6 +59,7 @@
     <Compile Include="IEditView.cs" />
     <Compile Include="IFilterPresenter.cs" />
     <Compile Include="IFilterView.cs" />
+    <Compile Include="IModalDialog.cs" />
     <Compile Include="ISupportHandle.cs" />
     <Compile Include="ISupportImageList.cs" />
     <Compile Include="IInfoPresenter.cs" />

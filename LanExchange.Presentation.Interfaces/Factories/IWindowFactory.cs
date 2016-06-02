@@ -9,7 +9,7 @@
         /// Creates the about view.
         /// </summary>
         /// <returns></returns>
-        IWindow CreateAboutView();
+        IAboutView CreateAboutView();
 
         /// <summary>
         /// Creates the main view.

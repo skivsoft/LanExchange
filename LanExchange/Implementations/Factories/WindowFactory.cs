@@ -11,7 +11,7 @@ namespace LanExchange.Implementations.Factories
         {
         }
 
-        public IWindow CreateAboutView()
+        public IAboutView CreateAboutView()
         {
             return serviceProvider.Resolve<IAboutView>();
         }

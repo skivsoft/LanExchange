@@ -3,7 +3,7 @@
     /// <summary>
     /// View for AboutForm.
     /// </summary>
-    public interface IAboutView : IWindow
+    public interface IAboutView : IWindow, IModalDialog
     {
         /// <summary>
         /// Gets or sets the web text.

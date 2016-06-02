@@ -6,7 +6,7 @@ namespace LanExchange.Presentation.Interfaces
     /// The window interface.
     /// </summary>
     /// <seealso cref="IView" />
-    public interface IWindow : IView
+    public interface IWindow : IView, IDisposable
     {
         /// <summary>
         /// Occurs when window closed.

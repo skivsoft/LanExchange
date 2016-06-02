@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
-using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Factories;
 using LanExchange.SDK;
 
@@ -9,7 +8,6 @@ namespace LanExchange.Commands
     internal sealed class AboutCommand : ICommand
     {
         private readonly IWindowFactory windowFactory;
-        private IWindow aboutInstance;
 
         public AboutCommand(IWindowFactory windowFactory)
         {
@@ -20,23 +18,15 @@ namespace LanExchange.Commands
 
         public void Execute()
         {
-            if (aboutInstance == null)
+            using (var window = windowFactory.CreateAboutView())
             {
-                aboutInstance = windowFactory.CreateAboutView();
-                aboutInstance.ViewClosed += OnViewClosed;
-                aboutInstance.Show();
-            } else
-                aboutInstance.Activate();
+                window.ShowModalDialog();
+            }
         }
 
         public bool Enabled
         {
             get { return true; }
-        }
-
-        private void OnViewClosed(object sender, EventArgs e)
-        {
-            aboutInstance = null;
         }
     }
 }
