@@ -132,6 +132,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClipboardDataObject.cs" />
+    <Compile Include="ClipboardService.cs" />
     <Compile Include="Controls\InfoPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -144,8 +146,10 @@
     <Compile Include="Controls\StatusPanel.Designer.cs">
       <DependentUpon>StatusPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="PresentationFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemInformationService.cs" />
+    <Compile Include="WaitingService.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Controls\InfoPanel.resx">

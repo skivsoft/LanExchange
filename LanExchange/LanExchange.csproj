@@ -156,6 +156,7 @@
     <Compile Include="Base\AddonObjectId.cs" />
     <Compile Include="Base\AddonProgram.cs" />
     <Compile Include="Application\Extensions\AssemblyExtensions.cs" />
+    <Compile Include="ContainerWrapper.cs" />
     <Compile Include="Implementations\Factories\AddonProgramFactory.cs" />
     <Compile Include="Implementations\Factories\FactoryBase.cs" />
     <Compile Include="Implementations\Factories\ModelFactory.cs" />
@@ -248,8 +249,6 @@
     <Compile Include="Plugin\WinForms\Impl\AddonManagerImpl.cs" />
     <Compile Include="Application\Presenters\AppPresenter.cs" />
     <Compile Include="Plugin\WinForms\Utils\BitmapUtils.cs" />
-    <Compile Include="Plugin\WinForms\Impl\ClipboardDataObjectImpl.cs" />
-    <Compile Include="Plugin\WinForms\Impl\ClipboardServiceImpl.cs" />
     <Compile Include="Presentation\WinForms\Controls\FilterView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -289,7 +288,6 @@
     </Compile>
     <Compile Include="Application\Implementation\ScreenService.cs" />
     <Compile Include="Plugin\WinForms\Utils\TranslationUtils.cs" />
-    <Compile Include="Plugin\WinForms\Impl\WaitingServiceImpl.cs" />
     <Compile Include="Misc\Impl\PuntoSwitcherServiceEngRus.cs" />
     <Compile Include="Model\ConfigModel.cs" />
     <Compile Include="Application\Implementation\AboutModel.cs" />

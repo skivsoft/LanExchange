@@ -1,4 +1,5 @@
 ﻿using System;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange
 {
@@ -11,7 +12,7 @@ namespace LanExchange
         /// Initializes the DI-container.
         /// </summary>
         /// <returns>The <see cref="IServiceProvider"/> instance.</returns>
-        public static IServiceProvider InitializeDIContainer()
+        public static IContainerWrapper InitializeDIContainer()
         {
             return new ContainerBuilder().Build();
         }

@@ -5,7 +5,7 @@ using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Presentation.WinForms.Controls
 {
-    public sealed partial class StatusPanel : UserControl, IStatusPanelView
+    internal sealed partial class StatusPanel : UserControl, IStatusPanelView
     {
         private readonly IStatusPanelPresenter presenter;
 

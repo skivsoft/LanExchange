@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.InteropServices;
-using LanExchange.SDK;
+using LanExchange.Application.Interfaces;
 
 namespace LanExchange.Plugin.Windows
 {

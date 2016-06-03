@@ -58,6 +58,7 @@
     <Compile Include="IDisposableManager.cs" />
     <Compile Include="IFilterModel.cs" />
     <Compile Include="IFolderManager.cs" />
+    <Compile Include="IHotkeyService.cs" />
     <Compile Include="IImageManager.cs" />
     <Compile Include="IPagesModel.cs" />
     <Compile Include="IPanelColumnManager.cs" />

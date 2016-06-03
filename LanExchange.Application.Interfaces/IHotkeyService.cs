@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LanExchange.SDK
+namespace LanExchange.Application.Interfaces
 {
     public interface IHotkeyService : IDisposable
     {

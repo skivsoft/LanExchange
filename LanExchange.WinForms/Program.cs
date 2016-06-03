@@ -5,6 +5,7 @@
 using System;
 using LanExchange.SDK.Extensions;
 using LanExchange.Presentation.Interfaces;
+using LanExchange.Presentation.WinForms;
 
 namespace LanExchange
 {
@@ -16,7 +17,9 @@ namespace LanExchange
         [STAThread]
         static void Main()
         {
-            CoreFacade.InitializeDIContainer()
+            CoreFacade
+                .InitializeDIContainer()
+                .RegisterPresentationLayer()
                 .Resolve<IAppBootstrap>()
                 .Run();
         }

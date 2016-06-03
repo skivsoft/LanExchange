@@ -10,7 +10,6 @@ using LanExchange.Model;
 using LanExchange.Plugin.Shortcut;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Factories;
-using LanExchange.SDK;
 
 namespace LanExchange.Application.Presenters
 {

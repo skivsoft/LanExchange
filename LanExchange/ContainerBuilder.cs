@@ -37,7 +37,7 @@ namespace LanExchange
         /// <summary>
         /// Maps interfaces to concrete implementations in DI-container.
         /// </summary>
-        public IServiceProvider Build()
+        public IContainerWrapper Build()
         {
             container = new Container();
 
@@ -52,7 +52,7 @@ namespace LanExchange
             RegisterCommands();
 
             VerifyContainer();
-            return container;
+            return new ContainerWrapper(container);
         }
 
         private void RegisterCoreSingletons()
@@ -111,14 +111,11 @@ namespace LanExchange
             container.Register<IFilterView, FilterView>();
             container.Register<IPanelView, PanelView>();
             container.Register<IEditView, EditForm>();
-            container.Register<IStatusPanelView, StatusPanel>();
             container.RegisterSingleton<IAppView, AppView>();
             container.Register<IMainView, MainForm>();
             container.RegisterSingleton<IPagesView, PagesView>();
             container.RegisterSingleton<IAddonManager, AddonManagerImpl>();
             container.RegisterSingleton<IImageManager, ImageManager>();
-            container.RegisterSingleton<IWaitingService, WaitingServiceImpl>();
-            container.RegisterSingleton<IClipboardService, ClipboardServiceImpl>();
             container.RegisterSingleton<IScreenService, ScreenService>();
             container.RegisterSingleton<IMessageBoxService, MessageBoxServiceImpl>();
         }
@@ -127,7 +124,6 @@ namespace LanExchange
         {
             container.RegisterSingleton<IConfigPersistenceService, ConfigPersistenceService>();
             container.RegisterSingleton<IPagesPersistenceService, PagesPersistenceService>();
-            container.Register<ISystemInformationService, SystemInformationService>();
             container.Register<IProcessService, ProcessService>();
         }
 

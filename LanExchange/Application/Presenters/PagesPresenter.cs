@@ -4,7 +4,6 @@ using LanExchange.Application.Interfaces;
 using LanExchange.Application.Interfaces.EventArgs;
 using LanExchange.Interfaces.Services;
 using LanExchange.Presentation.Interfaces;
-using LanExchange.SDK;
 
 namespace LanExchange.Application.Presenters
 {

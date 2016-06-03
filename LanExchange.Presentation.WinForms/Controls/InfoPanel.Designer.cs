@@ -1,4 +1,6 @@
-﻿namespace LanExchange.Presentation.WinForms.Controls
+﻿using LanExchange.Presentation.Interfaces;
+
+namespace LanExchange.Presentation.WinForms.Controls
 {
     partial class InfoPanel
     {

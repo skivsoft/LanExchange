@@ -56,7 +56,10 @@
     <Compile Include="IAppView.cs" />
     <Compile Include="ICheckAvailabilityPresenter.cs" />
     <Compile Include="ICheckAvailabilityWindow.cs" />
+    <Compile Include="IClipboardDataObject.cs" />
+    <Compile Include="IClipboardService.cs" />
     <Compile Include="IColumnHeader.cs" />
+    <Compile Include="IContainerWrapper.cs" />
     <Compile Include="IEditPresenter.cs" />
     <Compile Include="IEditView.cs" />
     <Compile Include="IFilterPresenter.cs" />
@@ -82,6 +85,7 @@
     <Compile Include="ISystemInformationService.cs" />
     <Compile Include="ITranslationable.cs" />
     <Compile Include="IView.cs" />
+    <Compile Include="IWaitingService.cs" />
     <Compile Include="IWindow.cs" />
     <Compile Include="IWindowTranslationable.cs" />
     <Compile Include="MenuElement.cs" />

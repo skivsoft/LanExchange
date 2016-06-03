@@ -7,7 +7,7 @@ using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Presentation.WinForms.Controls
 {
-    public partial class InfoPanel : UserControl, IInfoView
+    internal sealed partial class InfoPanel : UserControl, IInfoView
     {
         private readonly IInfoPresenter presenter;
 
