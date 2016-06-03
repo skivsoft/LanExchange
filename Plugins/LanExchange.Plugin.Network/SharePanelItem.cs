@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using LanExchange.Plugin.Network.NetApi;
 using System.Xml.Serialization;
-using LanExchange.SDK;
+using LanExchange.Application.Interfaces;
 
 namespace LanExchange.Plugin.Network
 {

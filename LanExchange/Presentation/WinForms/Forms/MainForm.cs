@@ -11,12 +11,11 @@ using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Factories;
 using LanExchange.Presentation.WinForms.Controls;
 using LanExchange.Properties;
-using LanExchange.SDK;
 using LanExchange.SDK.Managers;
 
 namespace LanExchange.Presentation.WinForms.Forms
 {
-    public sealed partial class MainForm : RunMinimizedForm, IMainView, ITranslationable
+    public sealed partial class MainForm : RunMinimizedForm, IMainView, IWindowTranslationable
     {
         public PagesView Pages;
 
@@ -392,5 +391,7 @@ namespace LanExchange.Presentation.WinForms.Forms
             popTray.RightToLeft = RightToLeft;
             //Status.SizingGrip = RightToLeft == RightToLeft.No;
         }
+
+        public bool RightToLeftValue { get; set; }
     }
 }

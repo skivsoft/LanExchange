@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using LanExchange.Application.Implementation;
-using LanExchange.Misc.Impl;
 using NUnit.Framework;
 
 namespace LanExchange.Model

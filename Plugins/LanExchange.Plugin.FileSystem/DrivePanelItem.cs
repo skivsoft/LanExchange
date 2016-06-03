@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.IO;
 using System.Xml.Serialization;
-using LanExchange.SDK;
+using LanExchange.Application.Interfaces;
 
 namespace LanExchange.Plugin.FileSystem
 {

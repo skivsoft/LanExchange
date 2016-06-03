@@ -1,7 +1,7 @@
-﻿using LanExchange.SDK.Domain;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using LanExchange.Application.Interfaces.Domain;
 
 namespace LanExchange.Infrastructure
 {

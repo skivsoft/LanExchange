@@ -2,6 +2,6 @@
 {
     public interface IWindowTranslationable : IWindow, ITranslationable
     {
-        bool RightToLeft { get; set; }
+        bool RightToLeftValue { get; set; }
     }
 }

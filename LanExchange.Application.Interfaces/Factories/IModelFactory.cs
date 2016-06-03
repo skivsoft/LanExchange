@@ -1,4 +1,4 @@
-﻿namespace LanExchange.SDK.Factories
+﻿namespace LanExchange.Application.Interfaces.Factories
 {
     /// <summary>
     /// The model factory interface.

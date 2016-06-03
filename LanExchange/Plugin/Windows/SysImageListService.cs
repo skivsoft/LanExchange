@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
+using LanExchange.Application.Interfaces;
 using LanExchange.Plugin.Windows.Utils;
-using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Windows
 {

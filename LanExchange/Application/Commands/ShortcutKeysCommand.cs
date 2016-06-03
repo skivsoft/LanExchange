@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using LanExchange.Application.Interfaces.Factories;
 using LanExchange.Plugin.Shortcut;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.SDK;
-using LanExchange.SDK.Factories;
 
 namespace LanExchange.Application.Commands
 {

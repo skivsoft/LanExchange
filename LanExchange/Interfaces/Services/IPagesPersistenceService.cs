@@ -1,4 +1,4 @@
-﻿using LanExchange.SDK;
+﻿using LanExchange.Application.Interfaces;
 
 namespace LanExchange.Interfaces.Services
 {

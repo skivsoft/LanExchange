@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using LanExchange.Application.Interfaces;
 using LanExchange.Misc;
 using NUnit.Framework;
 

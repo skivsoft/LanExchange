@@ -1,4 +1,4 @@
-﻿using LanExchange.SDK;
+﻿using LanExchange.Application.Interfaces.EventArgs;
 using NUnit.Framework;
 
 namespace LanExchange.Model

@@ -4,11 +4,10 @@ using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.Application.Interfaces;
+using LanExchange.Application.Interfaces.Factories;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Properties;
-using LanExchange.SDK;
-using LanExchange.SDK.Factories;
 
 namespace LanExchange.Application.Implementation
 {

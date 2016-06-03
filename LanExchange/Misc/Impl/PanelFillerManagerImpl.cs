@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using LanExchange.SDK;
 using System.Diagnostics.Contracts;
+using LanExchange.Application.Interfaces;
 
 namespace LanExchange.Misc.Impl
 {

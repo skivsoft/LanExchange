@@ -1,7 +1,3 @@
-using System;
-using System.Diagnostics.Contracts;
-using System.Reflection;
-
 namespace LanExchange.Helpers
 {
     /// <summary>

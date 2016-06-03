@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Xml.Serialization;
+using LanExchange.Application.Interfaces;
 using LanExchange.Plugin.Users.Properties;
-using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Users
 {

@@ -44,6 +44,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\LanExchange.Application.Interfaces\LanExchange.Application.Interfaces.csproj">
+      <Project>{1C003A71-105F-46DD-AD18-2C1534961A2E}</Project>
+      <Name>LanExchange.Application.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\LanExchange.SDK\LanExchange.SDK.csproj">
       <Project>{4ae4e72c-5d7d-42a9-b7fb-577eec0a149d}</Project>
       <Name>LanExchange.SDK</Name>

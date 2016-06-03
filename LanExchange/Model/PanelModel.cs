@@ -1,7 +1,6 @@
 ﻿using LanExchange.Helpers;
 using LanExchange.Model.Comparers;
 using LanExchange.SDK;
-using LanExchange.SDK.Domain;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +8,8 @@ using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
 using System.Xml.Serialization;
+using LanExchange.Application.Interfaces;
+using LanExchange.Application.Interfaces.Domain;
 using LanExchange.Infrastructure;
 using LanExchange.Presentation.Interfaces;
 

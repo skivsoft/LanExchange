@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using LanExchange.Application.Interfaces;
 using LanExchange.Interfaces;
-using LanExchange.SDK;
 using ThreadState = System.Threading.ThreadState;
 
 namespace LanExchange.Misc.Impl

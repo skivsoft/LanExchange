@@ -1,5 +1,5 @@
 ﻿using System;
-using LanExchange.SDK;
+using LanExchange.Application.Interfaces;
 
 namespace LanExchange.Interfaces
 {

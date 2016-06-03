@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using LanExchange.Application.Interfaces;
 using LanExchange.Base;
-using LanExchange.SDK;
 
 namespace LanExchange.Interfaces
 {

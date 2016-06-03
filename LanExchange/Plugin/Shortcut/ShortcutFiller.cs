@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using LanExchange.Interfaces;
 using LanExchange.Properties;
-using LanExchange.SDK;
 using System.Diagnostics.Contracts;
 using LanExchange.Application.Interfaces;
 

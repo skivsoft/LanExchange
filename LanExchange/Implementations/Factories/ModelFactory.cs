@@ -1,6 +1,6 @@
-﻿using LanExchange.SDK.Factories;
-using System;
-using LanExchange.SDK;
+﻿using System;
+using LanExchange.Application.Interfaces;
+using LanExchange.Application.Interfaces.Factories;
 using LanExchange.SDK.Extensions;
 
 namespace LanExchange.Implementations.Factories

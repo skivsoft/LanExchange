@@ -1,8 +1,8 @@
-﻿using LanExchange.Plugin.WinForms;
-using LanExchange.Presentation.Interfaces;
+﻿using LanExchange.Presentation.Interfaces;
 using Moq;
 using NUnit.Framework;
 
+// ReSharper disable once CheckNamespace
 namespace LanExchange.Presentation.WinForms.Forms
 {
     [TestFixture]

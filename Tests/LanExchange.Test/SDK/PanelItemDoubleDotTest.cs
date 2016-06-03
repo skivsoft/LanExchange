@@ -1,4 +1,5 @@
-﻿using LanExchange.Misc;
+﻿using LanExchange.Application.Interfaces;
+using LanExchange.Misc;
 using NUnit.Framework;
 
 namespace LanExchange.SDK

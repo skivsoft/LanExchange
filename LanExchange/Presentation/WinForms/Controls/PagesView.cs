@@ -6,12 +6,11 @@ using System.Linq;
 using System.Windows.Forms;
 using LanExchange.Application.Commands;
 using LanExchange.Application.Interfaces;
+using LanExchange.Application.Interfaces.Factories;
 using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Factories;
 using LanExchange.Properties;
-using LanExchange.SDK;
-using LanExchange.SDK.Factories;
 using LanExchange.SDK.Managers;
 
 namespace LanExchange.Presentation.WinForms.Controls

@@ -3,9 +3,9 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
+using LanExchange.Application.Interfaces;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Properties;
-using LanExchange.SDK;
 
 namespace LanExchange.Presentation.WinForms.Controls
 {

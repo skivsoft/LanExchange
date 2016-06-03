@@ -2,8 +2,8 @@
 using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Windows.Forms;
+using LanExchange.Application.Interfaces;
 using LanExchange.Presentation.Interfaces;
-using LanExchange.SDK;
 
 namespace LanExchange.Presentation.WinForms.Forms
 {

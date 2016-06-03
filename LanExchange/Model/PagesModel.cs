@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
-using LanExchange.SDK;
 using System.Diagnostics.Contracts;
-using LanExchange.SDK.Factories;
+using LanExchange.Application.Interfaces;
+using LanExchange.Application.Interfaces.EventArgs;
+using LanExchange.Application.Interfaces.Factories;
 
 namespace LanExchange.Model
 {

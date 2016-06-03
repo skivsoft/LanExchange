@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace LanExchange.SDK.Domain
+namespace LanExchange.Application.Interfaces.Domain
 {
     /// <summary>
     /// The Option class implementation.

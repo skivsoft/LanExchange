@@ -3,8 +3,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
+using LanExchange.Application.Interfaces;
 using LanExchange.Plugin.Network.Properties;
-using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Network
 {

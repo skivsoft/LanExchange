@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
-using LanExchange.SDK;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using LanExchange.Application.Interfaces;
 
 namespace LanExchange.Helpers
 {

@@ -3,14 +3,13 @@ using System.Diagnostics.Contracts;
 using System.Windows.Forms;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Properties;
-using LanExchange.SDK;
 
 namespace LanExchange.Presentation.WinForms.Forms
 {
     /// <summary>
     /// Concrete class for IAboutView.
     /// </summary>
-    public sealed partial class AboutForm : Form, IAboutView, ITranslationable
+    public sealed partial class AboutForm : Form, IAboutView, IWindowTranslationable
     {
         private readonly IAboutPresenter presenter;
         private RichTextBox boxDetails;
@@ -58,7 +57,7 @@ namespace LanExchange.Presentation.WinForms.Forms
 			boxDetails.Font = Font;
             boxDetails.SetBounds(rect.Left+16, rect.Top+16, rect.Width-32, rect.Height-bShowDetails.Height-32);
             boxDetails.Visible = false;
-            boxDetails.RightToLeft = RightToLeft;
+            boxDetails.RightToLeft = RightToLeftValue ? RightToLeft.Yes : RightToLeft.No;
             boxDetails.ReadOnly = true;
             boxDetails.BorderStyle = BorderStyle.None;
             boxDetails.Rtf = presenter.GetDetailsRtf();
@@ -134,12 +133,14 @@ namespace LanExchange.Presentation.WinForms.Forms
         private void AboutForm_RightToLeftChanged(object sender, EventArgs e)
         {
             if (boxDetails != null)
-                boxDetails.RightToLeft = RightToLeft;
+                boxDetails.RightToLeft = RightToLeftValue ? RightToLeft.Yes : RightToLeft.No;
         }
 
         public bool ShowModalDialog()
         {
             return ShowDialog() == DialogResult.OK;
         }
+
+        public bool RightToLeftValue { get; set; }
     }
 }

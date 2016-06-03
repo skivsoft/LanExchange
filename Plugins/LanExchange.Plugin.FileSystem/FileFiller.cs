@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using LanExchange.SDK;
 using System.IO;
+using LanExchange.Application.Interfaces;
 
 namespace LanExchange.Plugin.FileSystem
 {

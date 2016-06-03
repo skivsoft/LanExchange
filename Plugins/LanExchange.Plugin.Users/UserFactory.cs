@@ -1,6 +1,6 @@
 ﻿using System;
+using LanExchange.Application.Interfaces;
 using LanExchange.Plugin.Users.Properties;
-using LanExchange.SDK;
 
 namespace LanExchange.Plugin.Users
 {

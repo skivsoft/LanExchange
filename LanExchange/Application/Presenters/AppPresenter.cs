@@ -70,9 +70,9 @@ namespace LanExchange.Application.Presenters
             foreach (var form in View.GetOpenWindows().Cast<IWindowTranslationable>())
             {
                 // set rtl
-                var rtlChanged = translationService.RightToLeft != form.RightToLeft;
+                var rtlChanged = translationService.RightToLeft != form.RightToLeftValue;
                 if (rtlChanged) form.Hide();
-                form.RightToLeft = translationService.RightToLeft;
+                form.RightToLeftValue = translationService.RightToLeft;
                 form.TranslateUI();
                 if (rtlChanged) form.Show();
             }

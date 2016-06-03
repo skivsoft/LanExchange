@@ -4,7 +4,6 @@ using System.Diagnostics.Contracts;
 using System.Threading;
 using LanExchange.Application.Interfaces;
 using LanExchange.Presentation.Interfaces;
-using LanExchange.SDK;
 
 namespace LanExchange.Application.Presenters
 {
@@ -38,8 +37,8 @@ namespace LanExchange.Application.Presenters
             if (View.AvailabilityChecker == null || arg == null)
                 return;
 
-            var panelItem = arg as PanelItemBase;
-            if (panelItem == null) return;
+            //var panelItem = arg as PanelItemBase;
+            //if (panelItem == null) return;
 
             bool available = false;
             while (!available)

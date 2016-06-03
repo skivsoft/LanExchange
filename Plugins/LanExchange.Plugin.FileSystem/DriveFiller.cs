@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using LanExchange.SDK;
+using LanExchange.Application.Interfaces;
 
 namespace LanExchange.Plugin.FileSystem
 {

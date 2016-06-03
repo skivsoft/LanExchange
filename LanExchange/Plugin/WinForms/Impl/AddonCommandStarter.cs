@@ -6,8 +6,8 @@ using System.IO;
 using LanExchange.Base;
 using LanExchange.Helpers;
 using LanExchange.Plugin.WinForms.Utils;
-using LanExchange.SDK;
 using System.Diagnostics.Contracts;
+using LanExchange.Application.Interfaces;
 using LanExchange.Presentation.Interfaces.Factories;
 
 namespace LanExchange.Plugin.WinForms.Impl

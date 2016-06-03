@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LanExchange.SDK.Domain
+namespace LanExchange.Application.Interfaces.Domain
 {
     /// <summary>
     /// The ObjectPath interface.

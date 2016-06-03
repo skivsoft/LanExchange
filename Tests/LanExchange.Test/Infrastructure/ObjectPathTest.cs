@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using System.Linq;
-using LanExchange.SDK.Domain;
+using LanExchange.Application.Interfaces.Domain;
 
 namespace LanExchange.Infrastructure
 {
