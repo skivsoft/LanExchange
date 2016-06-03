@@ -52,7 +52,7 @@ namespace LanExchange.Plugin.Windows.Utils
         //private extern static int GetLastError();
 
 		[DllImport(ExternDll.Comctl32)]
-		private extern static int ImageList_Draw(
+		private static extern int ImageList_Draw(
 			IntPtr hIml,
 			int i,
 			IntPtr hdcDst,
@@ -61,17 +61,17 @@ namespace LanExchange.Plugin.Windows.Utils
 			int fStyle);
 
         [DllImport(ExternDll.Comctl32)]
-		private extern static int ImageList_DrawIndirect(
+		private static extern int ImageList_DrawIndirect(
 			ref IMAGELISTDRAWPARAMS pimldp);
 
         [DllImport(ExternDll.Comctl32)]
-		private extern static int ImageList_GetIconSize(
+		private static extern int ImageList_GetIconSize(
 			IntPtr himl, 
 			ref int cx, 
 			ref int cy);
 
         [DllImport(ExternDll.Comctl32)]
-		private extern static IntPtr ImageList_GetIcon(
+		private static extern IntPtr ImageList_GetIcon(
 			IntPtr himl, 
 			int i, 
 			int flags);
@@ -82,14 +82,14 @@ namespace LanExchange.Plugin.Windows.Utils
 		/// Apparently (and hopefully) ordinal 727 isn't going to change.
 		/// </summary>
         [DllImport(ExternDll.Shell32, EntryPoint = "#727")]
-		private extern static int SHGetImageList(
+		private static extern int SHGetImageList(
 			int iImageList,
 			ref Guid riid,
 			ref IImageList ppv
 			);
 
         [DllImport(ExternDll.Shell32, EntryPoint = "#727")]
-		private extern static int SHGetImageListHandle(
+		private static extern int SHGetImageListHandle(
 			int iImageList,
 			ref Guid riid,
 			ref IntPtr handle

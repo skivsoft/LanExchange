@@ -4,13 +4,10 @@ using System.Diagnostics.Contracts;
 using System.Security.Permissions;
 using System.Windows.Forms;
 using LanExchange.Application.Commands;
-using LanExchange.Application.Interfaces;
-using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.Presentation.Interfaces;
-using LanExchange.Presentation.Interfaces.Factories;
 using LanExchange.Presentation.WinForms.Controls;
+using LanExchange.Presentation.WinForms.Helpers;
 using LanExchange.Properties;
-using LanExchange.SDK.Managers;
 
 namespace LanExchange.Presentation.WinForms.Forms
 {
@@ -127,9 +124,9 @@ namespace LanExchange.Presentation.WinForms.Forms
         public void TranslateUI()
         {
             // translate sub-components
-            TranslationUtils.TranslateComponents(Resources.ResourceManager, this, components);
+            TranslationHelper.TranslateComponents(Resources.ResourceManager, this, components);
             mTrayOpen_TranslateUI();
-            TranslationUtils.TranslateControls(Controls);
+            TranslationHelper.TranslateControls(Controls);
             // refresh tab names
             //var shortcutIndex = mainPresenter.FindShortcutKeysPanelIndex();
             // TODO hide model

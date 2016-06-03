@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
-using LanExchange.Application.Interfaces;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Misc
 {
@@ -49,7 +49,7 @@ namespace LanExchange.Misc
             currentStage = 0;
         }
 
-        public string Prefix { get; private set; }
+        public string Prefix { get; }
 
         public string GetNextImageName()
         {

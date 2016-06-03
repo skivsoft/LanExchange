@@ -1,5 +1,5 @@
-﻿using LanExchange.Application.Interfaces;
-using LanExchange.Plugin.Users.Properties;
+﻿using LanExchange.Plugin.Users.Properties;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.Users
 {

@@ -5,14 +5,14 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
-using LanExchange.Helpers;
 using LanExchange.SDK;
 using System.Diagnostics.Contracts;
 using LanExchange.Application.Interfaces;
-using LanExchange.Application.Interfaces.Addons;
 using LanExchange.Application.Interfaces.Factories;
 using LanExchange.Presentation.Interfaces;
-using LanExchange.Presentation.Interfaces.Factories;
+using LanExchange.Presentation.Interfaces.Addons;
+using LanExchange.Presentation.WinForms;
+using LanExchange.Presentation.WinForms.Helpers;
 
 namespace LanExchange.Plugin.WinForms.Impl
 {

@@ -4,7 +4,7 @@ using System.Diagnostics.Contracts;
 using System.Xml.Serialization;
 using LanExchange.Application.Interfaces;
 using LanExchange.Application.Interfaces.EventArgs;
-using LanExchange.Application.Interfaces.Factories;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Models
 {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using LanExchange.Application.Interfaces;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Misc.Impl
 {

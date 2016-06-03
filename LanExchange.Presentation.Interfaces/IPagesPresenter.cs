@@ -40,8 +40,8 @@ namespace LanExchange.Presentation.Interfaces
 
         void CommandSendToNewTab();
 
-        void DoPanelViewFocusedItemChanged(object sender, EventArgs e);
-        void DoPanelViewFilterTextChanged(object sender, EventArgs e);
+        void DoPanelViewFocusedItemChanged(object sender, System.EventArgs e);
+        void DoPanelViewFilterTextChanged(object sender, System.EventArgs e);
 
         bool SelectTabByName(string tabName);
 
@@ -57,5 +57,8 @@ namespace LanExchange.Presentation.Interfaces
         //TODO hide model
         //void SetTabImageForModel(IPanelModel theModel, string imageName);
         int GetPanelIndexByDataType(Type dataType);
+        void DoPagesReRead();
+        void DoPagesCloseTab();
+        void DoPagesCloseOther();
     }
 }

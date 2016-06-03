@@ -146,7 +146,7 @@
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Application\Commands\PagesCommandBase.cs" />
-    <Compile Include="App.cs" />
+    <Compile Include="Application\Implementation\PanelModelCopyHelper.cs" />
     <Compile Include="Application\Implementation\ProcessService.cs" />
     <Compile Include="Application\Presenters\InfoPresenter.cs" />
     <Compile Include="Application\Presenters\StatusPanelPresenter.cs" />
@@ -159,10 +159,8 @@
     <Compile Include="Application\Factories\ViewFactory.cs" />
     <Compile Include="Application\Factories\WindowFactory.cs" />
     <Compile Include="Application\Managers\CommandManager.cs" />
-    <Compile Include="Infrastructure\ObjectPath.cs" />
+    <Compile Include="Application\Models\ObjectPath.cs" />
     <Compile Include="CoreFacade.cs" />
-    <Compile Include="Helpers\EnvironmentHelper.cs" />
-    <Compile Include="Helpers\PanelModelCopyHelper.cs" />
     <Compile Include="Application\Services\ConfigPersistenceService.cs" />
     <Compile Include="Application\Services\PagesPersistenceService.cs" />
     <Compile Include="Application\AppBootstrap.cs" />
@@ -211,7 +209,6 @@
     <Compile Include="Plugin\Windows\Utils\SysImageListHelper.cs" />
     <Compile Include="Plugin\Windows\Utils\UnsafeNativeMethods.cs" />
     <Compile Include="Plugin\Windows\Utils\User32Utils.cs" />
-    <Compile Include="Presentation\WinForms\AppView.cs" />
     <Compile Include="Presentation\WinForms\Forms\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -230,28 +227,12 @@
     <Compile Include="Presentation\WinForms\Forms\EditForm.Designer.cs">
       <DependentUpon>EditForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Plugin\WinForms\Impl\AddonCommandStarter.cs" />
     <Compile Include="Plugin\WinForms\Impl\SubMenuAdapter.cs" />
-    <Compile Include="Plugin\WinForms\Utils\MessageBoxHelper.cs" />
-    <Compile Include="Helpers\ProtocolHelper.cs" />
     <Compile Include="Plugin\WinForms\Impl\AddonManagerImpl.cs" />
     <Compile Include="Application\Presenters\AppPresenter.cs" />
     <Compile Include="Plugin\WinForms\Utils\BitmapUtils.cs" />
-    <Compile Include="Presentation\WinForms\Controls\FilterView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Presentation\WinForms\Controls\FilterView.Designer.cs">
-      <DependentUpon>FilterView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Presentation\WinForms\Controls\HeaderControl.cs" />
-    <Compile Include="Plugin\WinForms\Interfaces\IListViewItemGetter.cs" />
     <Compile Include="Application\Implementation\ImageManager.cs" />
     <Compile Include="Plugin\WinForms\Utils\KeyboardUtils.cs" />
-    <Compile Include="Presentation\WinForms\Controls\ListViewer.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Plugin\WinForms\Interfaces\ListViewItemCache.cs" />
-    <Compile Include="Plugin\WinForms\Utils\MacroHelper.cs" />
     <Compile Include="Presentation\WinForms\Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -259,25 +240,11 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Plugin\WinForms\Impl\MessageBoxServiceImpl.cs" />
-    <Compile Include="Presentation\WinForms\Controls\PagesView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Presentation\WinForms\Controls\PagesView.Designer.cs">
-      <DependentUpon>PagesView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Presentation\WinForms\Controls\PanelView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Presentation\WinForms\Controls\PanelView.Designer.cs">
-      <DependentUpon>PanelView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Presentation\WinForms\Forms\RunMinimizedForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Application\Implementation\ScreenService.cs" />
-    <Compile Include="Plugin\WinForms\Utils\TranslationUtils.cs" />
     <Compile Include="Misc\Impl\PuntoSwitcherServiceEngRus.cs" />
-    <Compile Include="Application\Models\ConfigModel.cs" />
     <Compile Include="Application\Models\AboutModel.cs" />
     <Compile Include="Misc\Impl\LazyThreadPoolImpl.cs" />
     <Compile Include="Misc\Impl\PluginManagerImpl.cs" />
@@ -314,12 +281,6 @@
     <EmbeddedResource Include="Presentation\WinForms\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\WinForms\Controls\PagesView.resx">
-      <DependentUpon>PagesView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\WinForms\Controls\PanelView.resx">
-      <DependentUpon>PanelView.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Addons\Commanders.xml">
@@ -354,8 +315,6 @@
     <None Include="Resources\user_16.png" />
     <None Include="Resources\twitter-icon-v2.png" />
     <None Include="Resources\LanExchange_48x48.png" />
-    <None Include="Resources\clear_normal.png" />
-    <None Include="Resources\clear_hover.png" />
     <None Include="Resources\back_32.png" />
     <None Include="Resources\back_16.png" />
     <None Include="Resources\process_working.png" />

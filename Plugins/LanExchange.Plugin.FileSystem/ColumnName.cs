@@ -10,9 +10,9 @@ namespace LanExchange.Plugin.FileSystem
             IsDirectory = isDirectory;
         }
 
-        public string Name { get; private set; }
+        public string Name { get; }
         
-        public bool IsDirectory { get; private set; }
+        public bool IsDirectory { get; }
 
 
         public int CompareTo(object obj)

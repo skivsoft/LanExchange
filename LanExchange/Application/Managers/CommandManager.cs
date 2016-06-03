@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using LanExchange.SDK;
-using LanExchange.SDK.Managers;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Managers
 {

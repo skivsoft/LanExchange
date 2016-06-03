@@ -4,6 +4,7 @@ using System.IO;
 using LanExchange.Application.Interfaces;
 using LanExchange.Application.Interfaces.Services;
 using LanExchange.Helpers;
+using LanExchange.Presentation.Interfaces.Models;
 using LanExchange.SDK;
 
 namespace LanExchange.Application.Services

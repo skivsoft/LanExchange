@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
-using LanExchange.Application.Interfaces;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.Users
 {

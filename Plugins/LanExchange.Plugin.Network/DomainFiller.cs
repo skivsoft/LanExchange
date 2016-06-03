@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using LanExchange.Application.Interfaces;
 using LanExchange.Plugin.Network.NetApi;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.Network
 {

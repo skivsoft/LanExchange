@@ -16,12 +16,17 @@ namespace LanExchange.Presentation.WinForms
 
             container.RegisterTransient<IInfoView, InfoPanel>();
             container.RegisterTransient<IStatusPanelView, StatusPanel>();
+            container.RegisterTransient<IFilterView, FilterView>();
+            container.RegisterTransient<IPanelView, PanelView>();
+            container.RegisterSingleton<IPagesView, PagesView>();
+            container.RegisterSingleton<IAppView, AppView>();
 
             // TODO remove singleton dependency on PagesPresenter
             container.RegisterSingleton<IClipboardService, ClipboardService>();
             container.RegisterTransient<ISystemInformationService, SystemInformationService>();
             // TODO remove singleton dependency on MainPresenter
             container.RegisterSingleton<IWaitingService, WaitingService>();
+
 
             return container;
         }

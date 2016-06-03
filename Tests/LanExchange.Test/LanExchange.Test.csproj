@@ -78,7 +78,7 @@
     <Compile Include="Model\PanelItemListEventArgsTest.cs" />
     <Compile Include="Misc\Impl\PuntoSwitcherServiceEngRusTest.cs" />
     <Compile Include="Misc\Impl\PuntoSwitcherServiceFactoryTest.cs" />
-    <Compile Include="Infrastructure\ObjectPathTest.cs" />
+    <Compile Include="Application\Models\ObjectPathTest.cs" />
     <Compile Include="Presentation\WinForms\AppViewTest.cs" />
     <Compile Include="Presentation\WinForms\Controls\StatusPanelTest.cs" />
     <Compile Include="Presentation\WinForms\Controls\PanelViewTest.cs" />

@@ -5,12 +5,9 @@ using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
 using System.Xml.Serialization;
+using LanExchange.Application.Implementation;
 using LanExchange.Application.Interfaces;
-using LanExchange.Application.Interfaces.Domain;
-using LanExchange.Helpers;
-using LanExchange.Infrastructure;
 using LanExchange.Presentation.Interfaces;
-using LanExchange.SDK;
 
 namespace LanExchange.Application.Models
 {

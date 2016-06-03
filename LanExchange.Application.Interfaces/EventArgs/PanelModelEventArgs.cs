@@ -1,4 +1,5 @@
 ﻿using System;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Interfaces.EventArgs
 {

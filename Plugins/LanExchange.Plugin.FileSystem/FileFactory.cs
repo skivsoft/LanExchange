@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using LanExchange.Application.Interfaces;
 using LanExchange.Plugin.FileSystem.Properties;
 using LanExchange.Presentation.Interfaces;
 

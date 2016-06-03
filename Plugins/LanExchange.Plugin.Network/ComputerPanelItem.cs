@@ -2,8 +2,8 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.Xml.Serialization;
-using LanExchange.Application.Interfaces;
 using LanExchange.Plugin.Network.Properties;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.Network
 {

@@ -1,4 +1,3 @@
-using LanExchange.Application.Interfaces;
 using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Models

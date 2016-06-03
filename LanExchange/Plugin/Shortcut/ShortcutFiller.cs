@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using LanExchange.Properties;
 using System.Diagnostics.Contracts;
-using LanExchange.Application.Interfaces;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.Shortcut
 {

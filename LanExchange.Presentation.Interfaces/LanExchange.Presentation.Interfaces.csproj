@@ -46,8 +46,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Factories\IViewFactory.cs" />
-    <Compile Include="Factories\IWindowFactory.cs" />
+    <Compile Include="Addons\Addon.cs" />
+    <Compile Include="Addons\AddonItemTypeRef.cs" />
+    <Compile Include="Addons\AddonMenuItem.cs" />
+    <Compile Include="Addons\AddonObjectId.cs" />
+    <Compile Include="Addons\AddonProgram.cs" />
+    <Compile Include="Addons\AddonProgramInfo.cs" />
+    <Compile Include="EventArgs\DataReadyArgs.cs" />
+    <Compile Include="Extensions\IServiceProviderExtension.cs" />
+    <Compile Include="IAddonManager.cs" />
+    <Compile Include="IColumnComparer.cs" />
+    <Compile Include="ICommand.cs" />
+    <Compile Include="ICommandManager.cs" />
+    <Compile Include="IDisposableManager.cs" />
+    <Compile Include="IImageManager.cs" />
+    <Compile Include="ILazyThreadPool.cs" />
+    <Compile Include="IMACAddressSerivice.cs" />
+    <Compile Include="IModelFactory.cs" />
+    <Compile Include="IObjectPath.cs" />
+    <Compile Include="IPanelColumnManager.cs" />
+    <Compile Include="IPanelFiller.cs" />
+    <Compile Include="IPanelFillerManager.cs" />
+    <Compile Include="IPanelItemFactory.cs" />
+    <Compile Include="IPanelItemFactoryManager.cs" />
+    <Compile Include="IPanelModel.cs" />
+    <Compile Include="IPlugin.cs" />
+    <Compile Include="IPuntoSwitcherService.cs" />
+    <Compile Include="ITranslationService.cs" />
+    <Compile Include="ITranslitStrategy.cs" />
+    <Compile Include="IViewFactory.cs" />
+    <Compile Include="IWindowFactory.cs" />
     <Compile Include="HorizontalAlignment.cs" />
     <Compile Include="IAboutPresenter.cs" />
     <Compile Include="IAboutView.cs" />
@@ -62,6 +90,7 @@
     <Compile Include="IContainerWrapper.cs" />
     <Compile Include="IEditPresenter.cs" />
     <Compile Include="IEditView.cs" />
+    <Compile Include="IFilterModel.cs" />
     <Compile Include="IFilterPresenter.cs" />
     <Compile Include="IFilterView.cs" />
     <Compile Include="IModalDialog.cs" />
@@ -84,15 +113,28 @@
     <Compile Include="IStatusPanelView.cs" />
     <Compile Include="ISystemInformationService.cs" />
     <Compile Include="ITranslationable.cs" />
+    <Compile Include="IUser32Service.cs" />
     <Compile Include="IView.cs" />
     <Compile Include="IWaitingService.cs" />
     <Compile Include="IWindow.cs" />
     <Compile Include="IWindowTranslationable.cs" />
     <Compile Include="MenuElement.cs" />
+    <Compile Include="Models\ConfigBase.cs" />
+    <Compile Include="Models\ConfigModel.cs" />
+    <Compile Include="Option.cs" />
+    <Compile Include="PanelColumnHeader.cs" />
+    <Compile Include="PanelFillerResult.cs" />
+    <Compile Include="PanelImageNames.cs" />
+    <Compile Include="PanelItemBase.cs" />
+    <Compile Include="PanelItemBaseHolder.cs" />
+    <Compile Include="PanelItemDoubleDot.cs" />
+    <Compile Include="PanelItemRootBase.cs" />
+    <Compile Include="PanelItemRootFactory.cs" />
     <Compile Include="PanelSortOrder.cs" />
     <Compile Include="PanelViewMode.cs" />
     <Compile Include="PresenterBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RetrieveMode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\LanExchange.snk">

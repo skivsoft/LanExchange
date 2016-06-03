@@ -14,7 +14,7 @@ namespace LanExchange.Presentation.WinForms
             DataObject = dataObject;
         }
 
-        public IDataObject DataObject { get; private set; }
+        public IDataObject DataObject { get; }
 
         public object GetData(string format, bool autoConvert)
         {

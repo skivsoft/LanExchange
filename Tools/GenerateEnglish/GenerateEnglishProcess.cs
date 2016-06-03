@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Resources;
 using System.Text;
 using LanExchange.Application.Interfaces;
-using LanExchange.Application.Interfaces.Addons;
+using LanExchange.Presentation.Interfaces.Addons;
 using LanExchange.SDK;
 
 namespace GenerateEnglish

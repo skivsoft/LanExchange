@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using LanExchange.Plugin.Windows.Utils;
-using LanExchange.SDK;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.Windows
 {

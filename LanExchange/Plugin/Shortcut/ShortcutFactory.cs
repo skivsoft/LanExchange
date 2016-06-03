@@ -1,5 +1,5 @@
 using System;
-using LanExchange.Application.Interfaces;
+using LanExchange.Presentation.Interfaces;
 using LanExchange.Properties;
 
 namespace LanExchange.Plugin.Shortcut

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using LanExchange.Application.Interfaces;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Misc
 {
@@ -18,7 +18,7 @@ namespace LanExchange.Misc
             SetCountColumns(1);
         }
 
-        public override sealed string Name 
+        public sealed override string Name 
         {
             get { return this[0].ToString(); }
             set { this[0] = value; }

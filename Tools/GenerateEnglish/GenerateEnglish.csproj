@@ -51,6 +51,10 @@
       <Project>{1c003a71-105f-46dd-ad18-2c1534961a2e}</Project>
       <Name>LanExchange.Application.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\LanExchange.Presentation.Interfaces\LanExchange.Presentation.Interfaces.csproj">
+      <Project>{530bdbba-a879-403c-83c5-a2f27bdabe05}</Project>
+      <Name>LanExchange.Presentation.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\LanExchange.SDK\LanExchange.SDK.csproj">
       <Project>{4ae4e72c-5d7d-42a9-b7fb-577eec0a149d}</Project>
       <Name>LanExchange.SDK</Name>

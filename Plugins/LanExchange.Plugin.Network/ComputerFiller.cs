@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using LanExchange.Application.Interfaces;
 using LanExchange.Plugin.Network.NetApi;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.Network
 {

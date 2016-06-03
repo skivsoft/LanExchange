@@ -1,6 +1,6 @@
 using System;
 using System.Net;
-using LanExchange.SDK;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.Windows
 {

@@ -150,9 +150,6 @@
   <data name="KeyF10__" xml:space="preserve">
     <value>Quit from LanExchange program.</value>
   </data>
-  <data name="KeyCtrlC" xml:space="preserve">
-    <value>Ctrl+C</value>
-  </data>
   <data name="KeyCtrlA" xml:space="preserve">
     <value>Ctrl+A</value>
   </data>
@@ -174,14 +171,8 @@
   <data name="KeyAnyChar" xml:space="preserve">
     <value>Any char</value>
   </data>
-  <data name="KeyCtrlC_" xml:space="preserve">
-    <value>Copy selected items</value>
-  </data>
   <data name="KeyBackspace" xml:space="preserve">
     <value>Backspace</value>
-  </data>
-  <data name="KeyCtrlC__" xml:space="preserve">
-    <value>Copy selected item(s) to clipboard.</value>
   </data>
   <data name="KeyCtrlV__" xml:space="preserve">
     <value>Paste items from clipboard.</value>
@@ -191,9 +182,6 @@
   </data>
   <data name="KeyCtrlWinX__" xml:space="preserve">
     <value>Show/hide main window.</value>
-  </data>
-  <data name="KeyDel" xml:space="preserve">
-    <value>Del</value>
   </data>
   <data name="KeyEsc__" xml:space="preserve">
     <value>Clear filter OR go level up OR hide main window.</value>
@@ -212,9 +200,6 @@
   </data>
   <data name="KeyCtrlAltIns__" xml:space="preserve">
     <value>Copy full path of selected item(s) to clipboard.</value>
-  </data>
-  <data name="KeyDel__" xml:space="preserve">
-    <value>Delete selected item(s) which was created by user.</value>
   </data>
   <data name="KeyCtrlUp__" xml:space="preserve">
     <value>Decrease height of info panel or hide it.</value>
@@ -326,18 +311,6 @@ Continue anyway?</value>
   <data name="MainForm_Legend" xml:space="preserve">
     <value>Legend</value>
   </data>
-  <data name="mCloseOther_Text" xml:space="preserve">
-    <value>Close other tabs</value>
-  </data>
-  <data name="mCloseTab_Text" xml:space="preserve">
-    <value>Close tab</value>
-  </data>
-  <data name="mCopyMenu_Text" xml:space="preserve">
-    <value>Copy</value>
-  </data>
-  <data name="mDelete_Text" xml:space="preserve">
-    <value>Delete</value>
-  </data>
   <data name="mExit_Text" xml:space="preserve">
     <value>Exit</value>
   </data>
@@ -364,12 +337,6 @@ Continue anyway?</value>
   </data>
   <data name="mPanel_Text" xml:space="preserve">
     <value>&amp;Panel</value>
-  </data>
-  <data name="mPaste_Text" xml:space="preserve">
-    <value>Paste</value>
-  </data>
-  <data name="mReRead_Text" xml:space="preserve">
-    <value>Re-read</value>
   </data>
   <data name="mTrayAbout_Text" xml:space="preserve">
     <value>About</value>
@@ -401,28 +368,6 @@ Continue anyway?</value>
   <data name="mView_Text" xml:space="preserve">
     <value>&amp;View</value>
   </data>
-  <data name="PagesView_OpenTab" xml:space="preserve">
-    <value>Open tab «{0}»</value>
-  </data>
-  <data name="PanelView_CopyColumn" xml:space="preserve">
-    <value>Copy «{0}»</value>
-  </data>
-  <data name="PanelView_CopyPathTo" xml:space="preserve">
-    <value>Copy path to «{0}»</value>
-  </data>
-  <data name="PanelView_CopySelected" xml:space="preserve">
-    <value>Copy selected item</value>
-  </data>
-  <data name="PanelView_CopySelectedPlural" xml:space="preserve">
-    <value>Copy {0} selected items</value>
-  </data>
-  <data name="PanelView_RunCmdErrorCaption" xml:space="preserve">
-    <value>Execution error</value>
-  </data>
-  <data name="PanelView_RunCmdErrorMsg" xml:space="preserve">
-    <value>Unable to execute command line:
-{0}</value>
-  </data>
   <data name="Program_Error" xml:space="preserve">
     <value>Error</value>
   </data>
@@ -434,12 +379,6 @@ Continue anyway?</value>
   </data>
   <data name="back_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\back_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="clear_hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\clear_hover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="clear_normal" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\clear_normal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="LanExchange_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\lanexchange_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -455,5 +394,29 @@ Continue anyway?</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
+  </data>
+  <data name="mCloseOther_Text" xml:space="preserve">
+    <value>Close other tabs</value>
+  </data>
+  <data name="mCloseTab_Text" xml:space="preserve">
+    <value>Close tab</value>
+  </data>
+  <data name="mReRead_Text" xml:space="preserve">
+    <value>Re-read</value>
+  </data>
+  <data name="KeyCtrlC" xml:space="preserve">
+    <value>Ctrl+C</value>
+  </data>
+  <data name="KeyCtrlC_" xml:space="preserve">
+    <value>Copy selected items</value>
+  </data>
+  <data name="KeyCtrlC__" xml:space="preserve">
+    <value>Copy selected item(s) to clipboard.</value>
+  </data>
+  <data name="KeyDel" xml:space="preserve">
+    <value>Del</value>
+  </data>
+  <data name="KeyDel__" xml:space="preserve">
+    <value>Delete selected item(s) which was created by user.</value>
   </data>
 </root>

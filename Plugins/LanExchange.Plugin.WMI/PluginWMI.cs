@@ -1,6 +1,6 @@
-﻿using LanExchange.SDK;
-using System;
+﻿using System;
 using System.ComponentModel.Composition;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.WMI
 {

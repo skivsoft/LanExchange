@@ -198,26 +198,6 @@ namespace LanExchange.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap clear_hover {
-            get {
-                object obj = ResourceManager.GetObject("clear_hover", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap clear_normal {
-            get {
-                object obj = ResourceManager.GetObject("clear_normal", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Context.
         /// </summary>
         internal static string Context {
@@ -715,24 +695,6 @@ namespace LanExchange.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copy.
-        /// </summary>
-        internal static string mCopyMenu_Text {
-            get {
-                return ResourceManager.GetString("mCopyMenu_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Delete.
-        /// </summary>
-        internal static string mDelete_Text {
-            get {
-                return ResourceManager.GetString("mDelete_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Exit.
         /// </summary>
         internal static string mExit_Text {
@@ -819,15 +781,6 @@ namespace LanExchange.Properties {
         internal static string mPanel_Text {
             get {
                 return ResourceManager.GetString("mPanel_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Paste.
-        /// </summary>
-        internal static string mPaste_Text {
-            get {
-                return ResourceManager.GetString("mPaste_Text", resourceCulture);
             }
         }
         
@@ -931,15 +884,6 @@ namespace LanExchange.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open tab «{0}».
-        /// </summary>
-        internal static string PagesView_OpenTab {
-            get {
-                return ResourceManager.GetString("PagesView_OpenTab", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Items: {0}.
         /// </summary>
         internal static string PanelPresenter_Items1 {
@@ -973,61 +917,6 @@ namespace LanExchange.Properties {
         internal static string PanelPresenter_UnreachableMsg {
             get {
                 return ResourceManager.GetString("PanelPresenter_UnreachableMsg", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Copy «{0}».
-        /// </summary>
-        internal static string PanelView_CopyColumn {
-            get {
-                return ResourceManager.GetString("PanelView_CopyColumn", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Copy path to «{0}».
-        /// </summary>
-        internal static string PanelView_CopyPathTo {
-            get {
-                return ResourceManager.GetString("PanelView_CopyPathTo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Copy selected item.
-        /// </summary>
-        internal static string PanelView_CopySelected {
-            get {
-                return ResourceManager.GetString("PanelView_CopySelected", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Copy {0} selected items.
-        /// </summary>
-        internal static string PanelView_CopySelectedPlural {
-            get {
-                return ResourceManager.GetString("PanelView_CopySelectedPlural", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Execution error.
-        /// </summary>
-        internal static string PanelView_RunCmdErrorCaption {
-            get {
-                return ResourceManager.GetString("PanelView_RunCmdErrorCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unable to execute command line:
-        ///{0}.
-        /// </summary>
-        internal static string PanelView_RunCmdErrorMsg {
-            get {
-                return ResourceManager.GetString("PanelView_RunCmdErrorMsg", resourceCulture);
             }
         }
         

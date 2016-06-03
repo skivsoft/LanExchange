@@ -1,6 +1,4 @@
-﻿using LanExchange.Application.Interfaces;
-using LanExchange.Presentation.Interfaces;
-using LanExchange.SDK;
+﻿using LanExchange.Presentation.Interfaces;
 using Moq;
 using NUnit.Framework;
 

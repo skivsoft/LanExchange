@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
-using LanExchange.Application.Interfaces;
 using LanExchange.Application.Interfaces.Services;
-using LanExchange.Application.Models;
 using LanExchange.Misc;
 using LanExchange.Presentation.Interfaces;
-using LanExchange.Presentation.Interfaces.Factories;
+using LanExchange.Presentation.Interfaces.Models;
+using LanExchange.Presentation.WinForms;
 using LanExchange.Properties;
 using LanExchange.SDK;
 

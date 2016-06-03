@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
-using LanExchange.Presentation.Interfaces.Factories;
-using LanExchange.SDK;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Commands
 {

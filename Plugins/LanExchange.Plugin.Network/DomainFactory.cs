@@ -1,7 +1,7 @@
 ﻿using System;
-using LanExchange.Application.Interfaces;
 using LanExchange.Plugin.Network.NetApi;
 using LanExchange.Plugin.Network.Properties;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.Network
 {

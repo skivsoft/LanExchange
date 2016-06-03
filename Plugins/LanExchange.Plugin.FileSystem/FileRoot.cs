@@ -1,5 +1,5 @@
-﻿using LanExchange.Application.Interfaces;
-using LanExchange.Plugin.FileSystem.Properties;
+﻿using LanExchange.Plugin.FileSystem.Properties;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.FileSystem
 {

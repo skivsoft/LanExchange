@@ -3,8 +3,8 @@
 // *****************************************************************************
 
 using System;
-using LanExchange.SDK.Extensions;
 using LanExchange.Presentation.Interfaces;
+using LanExchange.Presentation.Interfaces.Extensions;
 using LanExchange.Presentation.WinForms;
 
 namespace LanExchange

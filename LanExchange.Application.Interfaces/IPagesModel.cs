@@ -1,5 +1,6 @@
 ﻿using System;
 using LanExchange.Application.Interfaces.EventArgs;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Interfaces
 {

@@ -7,6 +7,7 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Misc.Impl
 {

@@ -1,4 +1,6 @@
-﻿namespace LanExchange.Application.Interfaces.Services
+﻿using LanExchange.Presentation.Interfaces.Models;
+
+namespace LanExchange.Application.Interfaces.Services
 {
     public interface IConfigPersistenceService
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Globalization;
-using LanExchange.SDK;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Misc.Impl
 {

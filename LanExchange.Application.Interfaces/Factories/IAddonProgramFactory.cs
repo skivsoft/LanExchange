@@ -1,4 +1,4 @@
-﻿using LanExchange.Application.Interfaces.Addons;
+﻿using LanExchange.Presentation.Interfaces.Addons;
 
 namespace LanExchange.Application.Interfaces.Factories
 {

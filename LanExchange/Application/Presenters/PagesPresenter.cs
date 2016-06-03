@@ -204,6 +204,21 @@ namespace LanExchange.Application.Presenters
             return -1;
         }
 
+        public void DoPagesReRead()
+        {
+            //commandManager.ExecuteCommand<PagesReReadCommand>();
+        }
+
+        public void DoPagesCloseTab()
+        {
+            //commandManager.ExecuteCommand<PagesCloseTabCommand>();
+        }
+
+        public void DoPagesCloseOther()
+        {
+            //commandManager.ExecuteCommand<PagesCloseOtherCommand>();
+        }
+
         public void SetTabImageForModel(IPanelModel theModel, string imageName)
         {
             if (theModel == null) return;

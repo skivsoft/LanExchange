@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Threading;
-using LanExchange.Application.Interfaces;
 using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Presenters

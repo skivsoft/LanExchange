@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using LanExchange.Application.Interfaces;
 using LanExchange.Misc;
+using LanExchange.Presentation.Interfaces;
 using NUnit.Framework;
 
 namespace LanExchange.SDK

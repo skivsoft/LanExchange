@@ -127,18 +127,45 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddonCommandStarter.cs" />
+    <Compile Include="App.cs" />
+    <Compile Include="AppView.cs" />
     <Compile Include="ClipboardDataObject.cs" />
     <Compile Include="ClipboardService.cs" />
+    <Compile Include="Controls\FilterView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\FilterView.Designer.cs">
+      <DependentUpon>FilterView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\HeaderControl.cs" />
     <Compile Include="Controls\InfoPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\InfoPanel.Designer.cs">
       <DependentUpon>InfoPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\IPanelModelCopyHelper.cs" />
+    <Compile Include="Controls\ListViewer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ListViewItemCache.cs" />
+    <Compile Include="Controls\PagesView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PagesView.Designer.cs">
+      <DependentUpon>PagesView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PanelModelCopyHelper.cs" />
+    <Compile Include="Controls\PanelView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PanelView.Designer.cs">
+      <DependentUpon>PanelView.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\StatusPanel.cs">
       <SubType>UserControl</SubType>
@@ -146,17 +173,38 @@
     <Compile Include="Controls\StatusPanel.Designer.cs">
       <DependentUpon>StatusPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\IListViewItemGetter.cs" />
+    <Compile Include="Helpers\EnvironmentHelper.cs" />
+    <Compile Include="Helpers\MacroHelper.cs" />
+    <Compile Include="Helpers\MessageBoxHelper.cs" />
+    <Compile Include="Helpers\ProtocolHelper.cs" />
     <Compile Include="PresentationFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="SystemInformationService.cs" />
+    <Compile Include="Helpers\TranslationHelper.cs" />
     <Compile Include="WaitingService.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Controls\InfoPanel.resx">
       <DependentUpon>InfoPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PagesView.resx">
+      <DependentUpon>PagesView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PanelView.resx">
+      <DependentUpon>PanelView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\StatusPanel.resx">
       <DependentUpon>StatusPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -170,7 +218,15 @@
       <Link>LanExchange.snk</Link>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Forms\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\clear_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\clear_normal.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

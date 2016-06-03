@@ -1,5 +1,5 @@
-﻿using LanExchange.Application.Interfaces;
-using LanExchange.Plugin.Network.Properties;
+﻿using LanExchange.Plugin.Network.Properties;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.Network
 {

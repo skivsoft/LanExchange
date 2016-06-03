@@ -2,7 +2,6 @@ using LanExchange.Misc.Impl;
 using LanExchange.Plugin.Windows;
 using LanExchange.Plugin.WinForms.Impl;
 using LanExchange.SDK;
-using LanExchange.SDK.Managers;
 using SimpleInjector;
 using System;
 using LanExchange.Application;
@@ -17,9 +16,6 @@ using LanExchange.Application.Models;
 using LanExchange.Application.Presenters;
 using LanExchange.Application.Services;
 using LanExchange.Presentation.Interfaces;
-using LanExchange.Presentation.Interfaces.Factories;
-using LanExchange.Presentation.WinForms;
-using LanExchange.Presentation.WinForms.Controls;
 using LanExchange.Presentation.WinForms.Forms;
 
 namespace LanExchange
@@ -105,12 +101,8 @@ namespace LanExchange
         {
             container.Register<ICheckAvailabilityWindow, CheckAvailabilityForm>();
             container.Register<IAboutView, AboutForm>();
-            container.Register<IFilterView, FilterView>();
-            container.Register<IPanelView, PanelView>();
             container.Register<IEditView, EditForm>();
-            container.RegisterSingleton<IAppView, AppView>();
             container.Register<IMainView, MainForm>();
-            container.RegisterSingleton<IPagesView, PagesView>();
             container.RegisterSingleton<IAddonManager, AddonManagerImpl>();
             container.RegisterSingleton<IImageManager, ImageManager>();
             container.RegisterSingleton<IScreenService, ScreenService>();
