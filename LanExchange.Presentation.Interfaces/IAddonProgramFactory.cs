@@ -1,6 +1,6 @@
 ﻿using LanExchange.Presentation.Interfaces.Addons;
 
-namespace LanExchange.Application.Interfaces.Factories
+namespace LanExchange.Presentation.Interfaces
 {
     public interface IAddonProgramFactory
     {

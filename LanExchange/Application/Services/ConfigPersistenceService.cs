@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using LanExchange.Application.Interfaces;
 using LanExchange.Application.Interfaces.Services;
 using LanExchange.Helpers;
+using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Models;
-using LanExchange.SDK;
+using LanExchange.Presentation.WinForms.Helpers;
 
 namespace LanExchange.Application.Services
 {
@@ -26,7 +26,7 @@ namespace LanExchange.Application.Services
 
             try
             {
-                var loaded = (TConfig)SerializeUtils.DeserializeObjectFromXmlFile(fileName, typeof(TConfig));
+                var loaded = (TConfig)SerializeHelper.DeserializeObjectFromXmlFile(fileName, typeof(TConfig));
                 if (loaded != null)
                     ReflectionUtils.CopyObjectProperties(loaded, result);
             }
@@ -42,7 +42,7 @@ namespace LanExchange.Application.Services
             var fileName = folderManager.ConfigFileName;
             try
             {
-                SerializeUtils.SerializeObjectToXmlFile(fileName, config);
+                SerializeHelper.SerializeObjectToXmlFile(fileName, config);
             }
             catch (Exception ex)
             {

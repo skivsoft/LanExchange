@@ -27,6 +27,8 @@ namespace LanExchange.Presentation.WinForms
             // TODO remove singleton dependency on MainPresenter
             container.RegisterSingleton<IWaitingService, WaitingService>();
 
+            container.RegisterSingleton<IAddonManager, AddonManager>();
+            container.RegisterSingleton<IMessageBoxService, MessageBoxService>();
 
             return container;
         }

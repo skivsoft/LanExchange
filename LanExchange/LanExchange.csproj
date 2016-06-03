@@ -227,8 +227,6 @@
     <Compile Include="Presentation\WinForms\Forms\EditForm.Designer.cs">
       <DependentUpon>EditForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Plugin\WinForms\Impl\SubMenuAdapter.cs" />
-    <Compile Include="Plugin\WinForms\Impl\AddonManagerImpl.cs" />
     <Compile Include="Application\Presenters\AppPresenter.cs" />
     <Compile Include="Plugin\WinForms\Utils\BitmapUtils.cs" />
     <Compile Include="Application\Implementation\ImageManager.cs" />
@@ -239,7 +237,6 @@
     <Compile Include="Presentation\WinForms\Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Plugin\WinForms\Impl\MessageBoxServiceImpl.cs" />
     <Compile Include="Presentation\WinForms\Forms\RunMinimizedForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -367,7 +364,9 @@
   <ItemGroup>
     <Content Include="Misc\MVP.gif" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Plugin\WinForms\Impl\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LanExchange.Application.Interfaces\LanExchange.Application.Interfaces.csproj">
       <Project>{1c003a71-105f-46dd-ad18-2c1534961a2e}</Project>
@@ -380,11 +379,6 @@
     <ProjectReference Include="..\LanExchange.Presentation.WinForms\LanExchange.Presentation.WinForms.csproj">
       <Project>{99898dfe-7ea8-44cf-acca-543b74eb7e6e}</Project>
       <Name>LanExchange.Presentation.WinForms</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LanExchange.SDK\LanExchange.SDK.csproj">
-      <Project>{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}</Project>
-      <Name>LanExchange.SDK</Name>
-      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

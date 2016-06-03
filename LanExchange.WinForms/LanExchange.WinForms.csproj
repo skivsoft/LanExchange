@@ -88,10 +88,6 @@
       <Project>{99898DFE-7EA8-44CF-ACCA-543B74EB7E6E}</Project>
       <Name>LanExchange.Presentation.WinForms</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LanExchange.SDK\LanExchange.SDK.csproj">
-      <Project>{4AE4E72C-5D7D-42A9-B7FB-577EEC0A149D}</Project>
-      <Name>LanExchange.SDK</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LanExchange\LanExchange.csproj">
       <Project>{abd7f255-097f-4081-b5b5-1f2dd67b9db6}</Project>
       <Name>LanExchange</Name>

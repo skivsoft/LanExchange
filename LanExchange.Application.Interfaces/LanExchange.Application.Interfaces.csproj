@@ -46,10 +46,8 @@
   <ItemGroup>
     <Compile Include="Delegates.cs" />
     <Compile Include="EventArgs\PanelIndexEventArgs.cs" />
-    <Compile Include="Factories\IAddonProgramFactory.cs" />
     <Compile Include="Factories\IServiceFactory.cs" />
     <Compile Include="IAboutModel.cs" />
-    <Compile Include="IFolderManager.cs" />
     <Compile Include="IHotkeyService.cs" />
     <Compile Include="IPagesModel.cs" />
     <Compile Include="IPanelUpdater.cs" />

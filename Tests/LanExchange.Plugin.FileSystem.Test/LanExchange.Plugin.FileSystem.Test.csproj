@@ -52,9 +52,9 @@
       <Project>{530BDBBA-A879-403C-83C5-A2F27BDABE05}</Project>
       <Name>LanExchange.Presentation.Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\LanExchange.SDK\LanExchange.SDK.csproj">
-      <Project>{4ae4e72c-5d7d-42a9-b7fb-577eec0a149d}</Project>
-      <Name>LanExchange.SDK</Name>
+    <ProjectReference Include="..\..\LanExchange.Presentation.WinForms\LanExchange.Presentation.WinForms.csproj">
+      <Project>{99898dfe-7ea8-44cf-acca-543b74eb7e6e}</Project>
+      <Name>LanExchange.Presentation.WinForms</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Plugins\LanExchange.Plugin.FileSystem\LanExchange.Plugin.FileSystem.csproj">
       <Project>{7380df5f-5e0a-4080-97f4-b955c250b700}</Project>

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using LanExchange.Presentation.Interfaces;
 
-namespace LanExchange.SDK
+namespace LanExchange.Presentation.Interfaces
 {
     public interface IPluginManager
     {

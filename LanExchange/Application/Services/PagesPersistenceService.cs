@@ -6,7 +6,7 @@ using LanExchange.Application.Interfaces;
 using LanExchange.Application.Interfaces.Services;
 using LanExchange.Application.Models;
 using LanExchange.Presentation.Interfaces;
-using LanExchange.SDK;
+using LanExchange.Presentation.WinForms.Helpers;
 
 namespace LanExchange.Application.Services
 {
@@ -35,7 +35,7 @@ namespace LanExchange.Application.Services
                 {
                     pages =
                         (PagesModel)
-                        SerializeUtils.DeserializeObjectFromXmlFile(fileFName, typeof(PagesModel),
+                        SerializeHelper.DeserializeObjectFromXmlFile(fileFName, typeof(PagesModel),
                                                                     factoryManager.ToArray());
                 }
                 catch (Exception ex)
@@ -48,7 +48,7 @@ namespace LanExchange.Application.Services
         {
             try
             {
-                SerializeUtils.SerializeObjectToXmlFile(folderManager.TabsConfigFileName, pages, factoryManager.ToArray());
+                SerializeHelper.SerializeObjectToXmlFile(folderManager.TabsConfigFileName, pages, factoryManager.ToArray());
             }
             catch (Exception ex)
             {

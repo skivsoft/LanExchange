@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 using System.IO;
-using LanExchange.Application.Interfaces;
-using LanExchange.Application.Interfaces.Factories;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Addons;
 using LanExchange.Presentation.WinForms.Helpers;

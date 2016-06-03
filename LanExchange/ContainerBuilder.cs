@@ -1,7 +1,5 @@
 using LanExchange.Misc.Impl;
 using LanExchange.Plugin.Windows;
-using LanExchange.Plugin.WinForms.Impl;
-using LanExchange.SDK;
 using SimpleInjector;
 using System;
 using LanExchange.Application;
@@ -103,10 +101,8 @@ namespace LanExchange
             container.Register<IAboutView, AboutForm>();
             container.Register<IEditView, EditForm>();
             container.Register<IMainView, MainForm>();
-            container.RegisterSingleton<IAddonManager, AddonManagerImpl>();
             container.RegisterSingleton<IImageManager, ImageManager>();
             container.RegisterSingleton<IScreenService, ScreenService>();
-            container.RegisterSingleton<IMessageBoxService, MessageBoxServiceImpl>();
         }
 
         private void RegisterServices()
