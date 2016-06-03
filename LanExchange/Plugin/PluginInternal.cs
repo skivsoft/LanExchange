@@ -4,7 +4,6 @@ using LanExchange.Plugin.Shortcut;
 using LanExchange.Properties;
 using LanExchange.SDK;
 using LanExchange.SDK.Extensions;
-using LanExchange.Interfaces;
 
 namespace LanExchange.Plugin
 {

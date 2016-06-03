@@ -2,7 +2,7 @@
 using System.Diagnostics.Contracts;
 using LanExchange.Application.Interfaces;
 using LanExchange.Application.Interfaces.EventArgs;
-using LanExchange.Interfaces.Services;
+using LanExchange.Application.Interfaces.Services;
 using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Presenters

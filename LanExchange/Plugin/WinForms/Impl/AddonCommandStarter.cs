@@ -3,11 +3,11 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using LanExchange.Base;
 using LanExchange.Helpers;
 using LanExchange.Plugin.WinForms.Utils;
 using System.Diagnostics.Contracts;
 using LanExchange.Application.Interfaces;
+using LanExchange.Application.Interfaces.Addons;
 using LanExchange.Presentation.Interfaces.Factories;
 
 namespace LanExchange.Plugin.WinForms.Impl

@@ -1,5 +1,4 @@
 ﻿using LanExchange.Application.Interfaces;
-using LanExchange.Interfaces;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.SDK;
 using Moq;

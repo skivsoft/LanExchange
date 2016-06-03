@@ -4,7 +4,7 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading;
 using LanExchange.Application.Interfaces;
-using LanExchange.Interfaces.Services;
+using LanExchange.Application.Interfaces.Services;
 using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Presenters

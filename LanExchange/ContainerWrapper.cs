@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
+using LanExchange.Application.Interfaces;
 using LanExchange.Presentation.Interfaces;
 using SimpleInjector;
+using SimpleInjector.Diagnostics;
 
 namespace LanExchange
 {
@@ -10,6 +13,8 @@ namespace LanExchange
 
         public ContainerWrapper(Container container)
         {
+            Contract.Requires<ArgumentNullException>(container != null);
+
             this.container = container;
         }
 
@@ -18,14 +23,43 @@ namespace LanExchange
             return ((IServiceProvider) container).GetService(serviceType);
         }
 
-        public void RegisterTransient<TService, TImplementation>() where TService : class where TImplementation : class, TService
+        public IContainerWrapper RegisterTransient<TService, TImplementation>() 
+            where TService : class 
+            where TImplementation : class, TService
         {
             container.Register<TService, TImplementation>();
+            return this;
         }
 
-        public void RegisterSingleton<TService, TImplementation>() where TService : class where TImplementation : class, TService
+        public IContainerWrapper RegisterSingleton<TService, TImplementation>() 
+            where TService : class 
+            where TImplementation : class, TService
         {
             container.RegisterSingleton<TService, TImplementation>();
+            return this;
+        }
+
+        public IContainerWrapper Verify()
+        {
+            SuppressDisposableTransientComponentWarning<IMainView>();
+            SuppressDisposableTransientComponentWarning<IAboutView>();
+            SuppressDisposableTransientComponentWarning<IFilterView>();
+            SuppressDisposableTransientComponentWarning<IEditView>();
+            SuppressDisposableTransientComponentWarning<IPanelView>();
+            SuppressDisposableTransientComponentWarning<IPanelUpdater>();
+            SuppressDisposableTransientComponentWarning<IPanelModel>();
+            SuppressDisposableTransientComponentWarning<ICheckAvailabilityWindow>();
+            SuppressDisposableTransientComponentWarning<IInfoView>();
+            SuppressDisposableTransientComponentWarning<IStatusPanelView>();
+
+            container.Verify();
+            return this;
+        }
+        private void SuppressDisposableTransientComponentWarning<T>()
+        {
+            container.GetRegistration(typeof(T))
+                .Registration
+                .SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "manual");
         }
     }
 }

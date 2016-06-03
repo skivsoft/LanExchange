@@ -1,24 +1,21 @@
-using LanExchange.Implementations.Factories;
-using LanExchange.Implementations.Managers;
-using LanExchange.Implementations.Services;
-using LanExchange.Interfaces;
-using LanExchange.Interfaces.Factories;
-using LanExchange.Interfaces.Services;
 using LanExchange.Misc.Impl;
-using LanExchange.Model;
 using LanExchange.Plugin.Windows;
 using LanExchange.Plugin.WinForms.Impl;
 using LanExchange.SDK;
 using LanExchange.SDK.Managers;
 using SimpleInjector;
-using SimpleInjector.Diagnostics;
 using System;
 using LanExchange.Application;
 using LanExchange.Application.Commands;
+using LanExchange.Application.Factories;
 using LanExchange.Application.Implementation;
 using LanExchange.Application.Interfaces;
 using LanExchange.Application.Interfaces.Factories;
+using LanExchange.Application.Interfaces.Services;
+using LanExchange.Application.Managers;
+using LanExchange.Application.Models;
 using LanExchange.Application.Presenters;
+using LanExchange.Application.Services;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Factories;
 using LanExchange.Presentation.WinForms;
@@ -51,7 +48,6 @@ namespace LanExchange
             RegisterFactories();
             RegisterCommands();
 
-            VerifyContainer();
             return new ContainerWrapper(container);
         }
 
@@ -93,6 +89,7 @@ namespace LanExchange
             container.Register<IPanelPresenter, PanelPresenter>();
             container.Register<IEditPresenter, EditPresenter>();
             container.Register<ICheckAvailabilityPresenter, CheckAvailabilityPresenter>();
+            container.Register<IInfoPresenter, InfoPresenter>();
             container.Register<IStatusPanelPresenter, StatusPanelPresenter>();
         }
 
@@ -148,25 +145,5 @@ namespace LanExchange
             });
         }
 
-        private void SuppressDisposableTransientComponentWarning<T>()
-        {
-            container.GetRegistration(typeof(T)).Registration
-                .SuppressDiagnosticWarning(DiagnosticType.DisposableTransientComponent, "manual");
-        }
-
-        private void VerifyContainer()
-        {
-            SuppressDisposableTransientComponentWarning<IMainView>();
-            SuppressDisposableTransientComponentWarning<IAboutView>();
-            SuppressDisposableTransientComponentWarning<IFilterView>();
-            SuppressDisposableTransientComponentWarning<IEditView>();
-            SuppressDisposableTransientComponentWarning<IPanelView>();
-            SuppressDisposableTransientComponentWarning<IPanelUpdater>();
-            SuppressDisposableTransientComponentWarning<IPanelModel>();
-            SuppressDisposableTransientComponentWarning<ICheckAvailabilityWindow>();
-            SuppressDisposableTransientComponentWarning<IStatusPanelView>();
-
-            container.Verify();
-        }
     }
 }

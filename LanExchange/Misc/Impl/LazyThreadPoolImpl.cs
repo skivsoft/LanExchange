@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using LanExchange.Application.Interfaces;
-using LanExchange.Interfaces;
+using LanExchange.Application.Interfaces.EventArgs;
 using ThreadState = System.Threading.ThreadState;
 
 namespace LanExchange.Misc.Impl

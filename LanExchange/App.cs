@@ -1,4 +1,4 @@
-﻿using LanExchange.Model;
+﻿using LanExchange.Application.Models;
 
 namespace LanExchange
 {

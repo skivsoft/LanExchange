@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace LanExchange.Application.Extensions
 {
-    public static class AssemblyExtensions
+    internal static class AssemblyExtensions
     {
         public static T GetCustomAttribute<T>(this Assembly assembly)
         {

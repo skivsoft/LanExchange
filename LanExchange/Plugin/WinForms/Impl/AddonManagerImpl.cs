@@ -5,13 +5,12 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
-using LanExchange.Base;
 using LanExchange.Helpers;
-using LanExchange.Interfaces;
 using LanExchange.SDK;
-using LanExchange.Interfaces.Factories;
 using System.Diagnostics.Contracts;
 using LanExchange.Application.Interfaces;
+using LanExchange.Application.Interfaces.Addons;
+using LanExchange.Application.Interfaces.Factories;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Factories;
 

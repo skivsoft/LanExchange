@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using LanExchange.Interfaces;
 using LanExchange.Properties;
 using System.Diagnostics.Contracts;
 using LanExchange.Application.Interfaces;
