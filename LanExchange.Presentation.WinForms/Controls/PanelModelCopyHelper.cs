@@ -30,11 +30,6 @@ namespace LanExchange.Presentation.WinForms.Controls
             indexes = new List<int>();
         }
 
-        public void Dispose()
-        {
-            if (model != null)
-                model.Dispose();
-        }
  
         public IPanelModel Model
         {

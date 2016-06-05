@@ -20,7 +20,6 @@ namespace LanExchange
             CoreFacade
                 .InitializeDIContainer()
                 .RegisterPresentationLayer()
-                .Verify()
                 .Resolve<IAppBootstrap>()
                 .Run();
         }

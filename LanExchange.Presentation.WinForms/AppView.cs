@@ -20,16 +20,27 @@ namespace LanExchange.Presentation.WinForms
             presenter.Initialize(this);
         }
 
-        public event ThreadExceptionEventHandler ThreadException
+        public void SetExceptionHandlers()
         {
-            add { Application.ThreadException += value; }
-            remove { Application.ThreadException -= value; }
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+            Application.ThreadException += ApplicationOnThreadException;
+            Application.ThreadExit += ApplicationOnThreadExit;
         }
 
-        public event EventHandler ThreadExit
+        private void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            add { Application.ThreadExit += value; }
-            remove { Application.ThreadExit -= value; }
+            presenter.OnNonUIException((Exception)e.ExceptionObject);
+        }
+
+        private void ApplicationOnThreadException(object sender, ThreadExceptionEventArgs e)
+        {
+            presenter.OnUIException(e.Exception);
+        }
+
+        private void ApplicationOnThreadExit(object sender, EventArgs e)
+        {
+            presenter.OnExit();
         }
 
         public void Run(IWindow mainView)

@@ -61,8 +61,6 @@ namespace LanExchange.Application
             translationService.SetResourceManagerTo<Resources>();
             // load plugins
             pluginManager.LoadPlugins();
-            // register stage images for icon animation
-            AnimationHelper.Register(imageManager, AnimationHelper.WORKING, Resources.process_working, 16, 16);
 
             // load settings from cfg-file (must be loaded before plugins)
             App.Config = configService.Load<ConfigModel>();

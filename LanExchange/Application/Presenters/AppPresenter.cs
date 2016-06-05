@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Linq;
-using System.Threading;
 using LanExchange.Application.Interfaces.Services;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.WinForms;
@@ -35,28 +34,24 @@ namespace LanExchange.Application.Presenters
 
         protected override void InitializePresenter()
         {
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
-            View.ThreadException += ApplicationOnThreadException;
-            View.ThreadExit += ApplicationOnThreadExit;
-
+            View.SetExceptionHandlers();
             View.InitVisualStyles();
         }
 
-        private void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        public void OnNonUIException(Exception exception)
         {
-            View.Exit();
         }
 
-        private void ApplicationOnThreadException(object sender, ThreadExceptionEventArgs e)
+        public void OnUIException(Exception exception)
         {
-            #if DEBUG
-            Debug.Fail(e.Exception.Message + Environment.NewLine + e.Exception.StackTrace);
-            #else
+#if DEBUG
+            Debug.Fail(exception.Message + Environment.NewLine + exception.StackTrace);
+#else
             View.Exit();
-            #endif
+#endif
         }
 
-        private void ApplicationOnThreadExit(object sender, EventArgs e)
+        public void OnExit()
         {
             pagesPresenter.SaveInstant();
             configService.Save(App.Config);

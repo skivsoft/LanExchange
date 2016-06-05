@@ -50,7 +50,6 @@
     <Compile Include="IAboutModel.cs" />
     <Compile Include="IHotkeyService.cs" />
     <Compile Include="IPagesModel.cs" />
-    <Compile Include="IPanelUpdater.cs" />
     <Compile Include="IProcessService.cs" />
     <Compile Include="IScreenService.cs" />
     <Compile Include="IShell32Service.cs" />

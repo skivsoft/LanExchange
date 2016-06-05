@@ -6,7 +6,7 @@ namespace LanExchange.Presentation.Interfaces
     /// <summary>
     /// LanExchange panel model.
     /// </summary>
-    public interface IPanelModel : IFilterModel, IEquatable<IPanelModel>, IDisposable
+    public interface IPanelModel : IFilterModel, IEquatable<IPanelModel>
     {
         event EventHandler Changed;
         event EventHandler TabNameUpdated;

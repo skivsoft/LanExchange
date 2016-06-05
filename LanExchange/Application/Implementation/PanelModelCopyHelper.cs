@@ -9,7 +9,7 @@ using LanExchange.Presentation.Interfaces;
 namespace LanExchange.Application.Implementation
 {
     /// TODO need refactoring
-    internal sealed class PanelModelCopyHelper : IDisposable
+    internal sealed class PanelModelCopyHelper
     {
         private readonly IPanelModel model;
         private readonly IPanelColumnManager panelColumns;
@@ -30,12 +30,6 @@ namespace LanExchange.Application.Implementation
             indexes = new List<int>();
         }
 
-        public void Dispose()
-        {
-            if (model != null)
-                model.Dispose();
-        }
- 
         public IPanelModel Model
         {
             get { return model; }

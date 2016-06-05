@@ -128,7 +128,7 @@ namespace LanExchange.Application.Presenters
 
         public void OnDataReady(object sender, DataReadyArgs args)
         {
-            View.SafeInvoke(new WaitCallback(MainForm_RefreshItem), args.Item);
+            //View.SafeInvoke(new WaitCallback(MainForm_RefreshItem), args.Item);
         }
 
         private void MainForm_RefreshItem(object item)

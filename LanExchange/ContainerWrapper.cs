@@ -46,7 +46,6 @@ namespace LanExchange
             SuppressDisposableTransientComponentWarning<IFilterView>();
             SuppressDisposableTransientComponentWarning<IEditView>();
             SuppressDisposableTransientComponentWarning<IPanelView>();
-            SuppressDisposableTransientComponentWarning<IPanelUpdater>();
             SuppressDisposableTransientComponentWarning<IPanelModel>();
             SuppressDisposableTransientComponentWarning<ICheckAvailabilityWindow>();
             SuppressDisposableTransientComponentWarning<IInfoView>();

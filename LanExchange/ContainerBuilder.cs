@@ -33,7 +33,6 @@ namespace LanExchange
             container = new Container();
 
             RegisterCoreSingletons();
-            RegisterPanelUpdater();
             RegisterModels();
             RegisterPresenters();
             RegisterOSWindows();
@@ -59,11 +58,6 @@ namespace LanExchange
             container.RegisterSingleton<ITranslationService, TranslationService>();
             container.RegisterSingleton<IDisposableManager, DisposableManager>();
             container.RegisterSingleton<ICommandManager, CommandManager>();
-        }
-
-        private void RegisterPanelUpdater()
-        {
-            container.Register<IPanelUpdater, PanelUpdaterImpl>();
         }
 
         private void RegisterModels()

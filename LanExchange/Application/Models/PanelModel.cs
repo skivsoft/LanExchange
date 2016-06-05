@@ -29,8 +29,6 @@ namespace LanExchange.Application.Models
         private readonly IColumnComparer comparer;
         // punto switcher service
         private readonly IPuntoSwitcherService puntoService;
-        // panel updater
-        private readonly IPanelUpdater panelUpdater;
 
         public event EventHandler Changed;
         public event EventHandler TabNameUpdated;
@@ -41,18 +39,15 @@ namespace LanExchange.Application.Models
         public PanelModel(
             IPanelFillerManager panelFillers,
             IPanelColumnManager panelColumns,
-            IPuntoSwitcherService puntoService,
-            IPanelUpdater panelUpdater)
+            IPuntoSwitcherService puntoService)
         {
             Contract.Requires<ArgumentNullException>(panelFillers != null);
             Contract.Requires<ArgumentNullException>(panelColumns != null);
             Contract.Requires<ArgumentNullException>(puntoService != null);
-            Contract.Requires<ArgumentNullException>(panelUpdater != null);
 
             this.panelFillers = panelFillers;
             this.panelColumns = panelColumns;
             this.puntoService = puntoService;
-            this.panelUpdater = panelUpdater;
 
             items = new List<PanelItemBase>();
             data = new List<PanelItemBase>();
@@ -60,11 +55,6 @@ namespace LanExchange.Application.Models
             currentPath = new ObjectPath<PanelItemBase>();
             comparer = new ColumnComparer(0, PanelSortOrder.Ascending);
             CurrentView = PanelViewMode.Details;
-        }
-
-        public void Dispose()
-        {
-            panelUpdater.Dispose();
         }
 
         /// <summary>
@@ -102,8 +92,8 @@ namespace LanExchange.Application.Models
 
         public void AsyncRetrieveData(bool clearFilter)
         {
-            panelUpdater.Stop();
-            panelUpdater.Start(this, clearFilter);
+            //panelUpdater.Stop();
+            //panelUpdater.Start(this, clearFilter);
         }
 
         [XmlAttribute]

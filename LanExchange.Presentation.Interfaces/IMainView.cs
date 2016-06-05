@@ -17,6 +17,5 @@ namespace LanExchange.Presentation.Interfaces
         void SetupMenuLanguages();
 
         void SetupPages();
-        object SafeInvoke(Delegate method, params object[] args);
     }
 }

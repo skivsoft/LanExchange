@@ -165,9 +165,7 @@
     <Compile Include="Application\Services\PagesPersistenceService.cs" />
     <Compile Include="Application\AppBootstrap.cs" />
     <Compile Include="Application\Models\ColumnComparer.cs" />
-    <Compile Include="Misc\AnimationHelper.cs" />
     <Compile Include="ContainerBuilder.cs" />
-    <Compile Include="Misc\Impl\PanelUpdaterImpl.cs" />
     <Compile Include="Application\Implementation\DisposableManager.cs" />
     <Compile Include="Application\Implementation\TranslationResourceManager.cs" />
     <Compile Include="Application\Commands\AboutCommand.cs" />

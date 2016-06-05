@@ -25,7 +25,7 @@ namespace LanExchange.Presentation.WinForms.Controls
         private readonly IUser32Service userService;
         private readonly IPuntoSwitcherService puntoService;
 
-        private PanelModelCopyHelper copyHelper;
+        private IPanelModelCopyHelper copyHelper;
         private int sortColumn;
 
         public event EventHandler FocusedItemChanged;
@@ -376,7 +376,7 @@ namespace LanExchange.Presentation.WinForms.Controls
                 if (hitInfo.Item != null && hitInfo.Item.Selected)
                 {
                     SetupCopyHelper();
-                    if (copyHelper.Indexes.Count > 0)
+                    if (copyHelper.IndexesCount > 0)
                     {
                         canDrag = true;
                     }
@@ -544,7 +544,7 @@ namespace LanExchange.Presentation.WinForms.Controls
         /// Creates menu items depends on visible columns.
         /// </summary>
         /// <returns></returns>
-        private IEnumerable<ToolStripItem> CreateCopyMenuItems(PanelModelCopyHelper helper)
+        private IEnumerable<ToolStripItem> CreateCopyMenuItems(IPanelModelCopyHelper helper)
         {
             // TODO hide model
             //if (helper.IndexesCount == 1)

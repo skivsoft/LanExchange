@@ -6,9 +6,7 @@ namespace LanExchange.Presentation.Interfaces
 {
     public interface IAppView : IView
     {
-        event ThreadExceptionEventHandler ThreadException;
-        event EventHandler ThreadExit;
-
+        void SetExceptionHandlers();
         void InitVisualStyles();
         void Run(IWindow mainView);
         void Exit();

@@ -134,7 +134,6 @@ namespace LanExchange.Application.Models
             {
                 var model = panels[index];
                 panels.RemoveAt(index);
-                model.Dispose();
                 selectedIndex = panels.Count - 1;
                 DoIndexChanged(selectedIndex);
                 DoAfterRemove(index);
@@ -179,7 +178,6 @@ namespace LanExchange.Application.Models
             {
                 var model = panels[i];
                 panels.RemoveAt(i);
-                model.Dispose();
             }
         }
     }
