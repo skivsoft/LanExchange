@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 using LanExchange.Application.Interfaces.Services;
-using LanExchange.Misc;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Models;
 using LanExchange.Presentation.WinForms;

@@ -2,14 +2,14 @@
 using System.Diagnostics.Contracts;
 using System.Windows.Forms;
 using LanExchange.Presentation.Interfaces;
-using LanExchange.Properties;
+using LanExchange.Presentation.WinForms.Properties;
 
 namespace LanExchange.Presentation.WinForms.Forms
 {
     /// <summary>
     /// Concrete class for IAboutView.
     /// </summary>
-    public sealed partial class AboutForm : Form, IAboutView, IWindowTranslationable
+    internal sealed partial class AboutForm : Form, IAboutView, IWindowTranslationable
     {
         private readonly IAboutPresenter presenter;
         private RichTextBox boxDetails;

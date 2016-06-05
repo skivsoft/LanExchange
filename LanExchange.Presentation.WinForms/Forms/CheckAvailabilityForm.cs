@@ -6,7 +6,7 @@ using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Presentation.WinForms.Forms
 {
-    public partial class CheckAvailabilityForm : Form, ICheckAvailabilityWindow
+    internal sealed partial class CheckAvailabilityForm : Form, ICheckAvailabilityWindow
     {
         private readonly ICheckAvailabilityPresenter presenter;
         private PanelItemBase currentItem;

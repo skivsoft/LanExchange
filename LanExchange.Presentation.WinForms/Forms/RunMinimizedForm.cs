@@ -7,7 +7,7 @@ namespace LanExchange.Presentation.WinForms.Forms
     /// We must not use ShowInTaskbar=false for MainForm. 
     /// This is need for correctly work system-wide hot-keys in future.
     /// </summary>
-    public class RunMinimizedForm : Form
+    internal abstract class RunMinimizedForm : Form
     {
         private FormWindowState lastWindowState;
         private bool runMinimized;
@@ -52,7 +52,7 @@ namespace LanExchange.Presentation.WinForms.Forms
         public virtual void ApplicationExit()
         {
             allowClose = true;
-            System.Windows.Forms.Application.Exit();
+            Application.Exit();
         }
 
 

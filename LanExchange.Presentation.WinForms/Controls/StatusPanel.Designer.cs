@@ -30,9 +30,7 @@
         {
             this.Status = new System.Windows.Forms.StatusStrip();
             this.lItemsCount = new System.Windows.Forms.ToolStripStatusLabel();
-            this.StatusSep1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lCompName = new System.Windows.Forms.ToolStripStatusLabel();
-            this.StatusSep2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lUserName = new System.Windows.Forms.ToolStripStatusLabel();
             this.Status.SuspendLayout();
             this.SuspendLayout();
@@ -41,9 +39,7 @@
             // 
             this.Status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lItemsCount,
-            this.StatusSep1,
             this.lCompName,
-            this.StatusSep2,
             this.lUserName});
             this.Status.Location = new System.Drawing.Point(0, 23);
             this.Status.Name = "Status";
@@ -55,39 +51,23 @@
             // lItemsCount
             // 
             this.lItemsCount.Name = "lItemsCount";
-            this.lItemsCount.Size = new System.Drawing.Size(439, 17);
+            this.lItemsCount.Size = new System.Drawing.Size(409, 17);
             this.lItemsCount.Spring = true;
             this.lItemsCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // StatusSep1
-            // 
-            this.StatusSep1.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-            this.StatusSep1.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
-            this.StatusSep1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
-            this.StatusSep1.Name = "StatusSep1";
-            this.StatusSep1.Size = new System.Drawing.Size(4, 17);
             // 
             // lCompName
             // 
             this.lCompName.Name = "lCompName";
+            this.lCompName.Size = new System.Drawing.Size(19, 17);
             this.lCompName.Text = "    ";
-            this.lCompName.Size = new System.Drawing.Size(0, 17);
             this.lCompName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lCompName.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lCompName_MouseUp);
-            // 
-            // StatusSep2
-            // 
-            this.StatusSep2.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-            this.StatusSep2.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
-            this.StatusSep2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
-            this.StatusSep2.Name = "StatusSep2";
-            this.StatusSep2.Size = new System.Drawing.Size(4, 17);
             // 
             // lUserName
             // 
             this.lUserName.Name = "lUserName";
+            this.lUserName.Size = new System.Drawing.Size(19, 17);
             this.lUserName.Text = "    ";
-            this.lUserName.Size = new System.Drawing.Size(0, 17);
             this.lUserName.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lUserName_MouseUp);
             // 
             // StatusPanel
@@ -109,9 +89,7 @@
 
         private System.Windows.Forms.StatusStrip Status;
         public System.Windows.Forms.ToolStripStatusLabel lItemsCount;
-        private System.Windows.Forms.ToolStripStatusLabel StatusSep1;
         private System.Windows.Forms.ToolStripStatusLabel lCompName;
-        private System.Windows.Forms.ToolStripStatusLabel StatusSep2;
         private System.Windows.Forms.ToolStripStatusLabel lUserName;
     }
 }

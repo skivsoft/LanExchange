@@ -213,26 +213,11 @@
   <data name="KeyCtrlIns__" xml:space="preserve">
     <value>Copy column on which the ordered item(s) to clipboard.</value>
   </data>
-  <data name="AboutForm_Plugins" xml:space="preserve">
-    <value>Plugins:</value>
-  </data>
-  <data name="AboutForm_Translations" xml:space="preserve">
-    <value>Translations:</value>
-  </data>
-  <data name="AboutInfo_Build" xml:space="preserve">
-    <value> (build {0})</value>
-  </data>
-  <data name="AboutModel_FeedbackFmt" xml:space="preserve">
-    <value>{0} {1} Feedback</value>
-  </data>
   <data name="Action" xml:space="preserve">
     <value>Action</value>
   </data>
   <data name="Context" xml:space="preserve">
     <value>Context</value>
-  </data>
-  <data name="mHelpKeys_Text" xml:space="preserve">
-    <value>Shortcut Keys</value>
   </data>
   <data name="PanelPresenter_Items1" xml:space="preserve">
     <value>Items: {0}</value>
@@ -251,29 +236,8 @@ Continue anyway?</value>
   <data name="keyboard_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\keyboard_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="AboutForm_Copyright" xml:space="preserve">
-    <value>Copyright</value>
-  </data>
-  <data name="AboutForm_License" xml:space="preserve">
-    <value>License</value>
-  </data>
-  <data name="AboutForm_MIT" xml:space="preserve">
-    <value>Released under the MIT license.</value>
-  </data>
-  <data name="AboutForm_Title" xml:space="preserve">
-    <value>About «{0}»</value>
-  </data>
-  <data name="AboutForm_Version" xml:space="preserve">
-    <value>Version</value>
-  </data>
-  <data name="AboutForm_Webpage" xml:space="preserve">
-    <value>Webpage</value>
-  </data>
   <data name="EmptyText" xml:space="preserve">
     <value>    </value>
-  </data>
-  <data name="HideDetails" xml:space="preserve">
-    <value>Hide Details</value>
   </data>
   <data name="KeyAnyChar1" xml:space="preserve">
     <value>Any char</value>
@@ -308,68 +272,8 @@ Continue anyway?</value>
   <data name="MainForm_Legend" xml:space="preserve">
     <value>Legend</value>
   </data>
-  <data name="mExit_Text" xml:space="preserve">
-    <value>Exit</value>
-  </data>
-  <data name="mHelpAbout_Text" xml:space="preserve">
-    <value>About</value>
-  </data>
-  <data name="mHelpBugs_Text" xml:space="preserve">
-    <value>BugTracker Webpage</value>
-  </data>
-  <data name="mHelpLangs_Text" xml:space="preserve">
-    <value>Localization Webpage</value>
-  </data>
-  <data name="mHelpWeb_Text" xml:space="preserve">
-    <value>LanExchange Webpage</value>
-  </data>
-  <data name="mHelp_Text" xml:space="preserve">
-    <value>&amp;Help</value>
-  </data>
-  <data name="mLanguage_Text" xml:space="preserve">
-    <value>&amp;Language</value>
-  </data>
-  <data name="mNewItem_Text" xml:space="preserve">
-    <value>New item</value>
-  </data>
-  <data name="mPanel_Text" xml:space="preserve">
-    <value>&amp;Panel</value>
-  </data>
-  <data name="mTrayAbout_Text" xml:space="preserve">
-    <value>About</value>
-  </data>
-  <data name="mTrayExit_Text" xml:space="preserve">
-    <value>Exit</value>
-  </data>
-  <data name="mTrayOpen_Text" xml:space="preserve">
-    <value>Open</value>
-  </data>
-  <data name="mViewDetails_Text" xml:space="preserve">
-    <value>Details</value>
-  </data>
-  <data name="mViewGrid_Text" xml:space="preserve">
-    <value>Grid lines</value>
-  </data>
-  <data name="mViewInfo_Text" xml:space="preserve">
-    <value>Info panel</value>
-  </data>
-  <data name="mViewLarge_Text" xml:space="preserve">
-    <value>Large icons</value>
-  </data>
-  <data name="mViewList_Text" xml:space="preserve">
-    <value>List</value>
-  </data>
-  <data name="mViewSmall_Text" xml:space="preserve">
-    <value>Small icons</value>
-  </data>
-  <data name="mView_Text" xml:space="preserve">
-    <value>&amp;View</value>
-  </data>
   <data name="Program_Error" xml:space="preserve">
     <value>Error</value>
-  </data>
-  <data name="ShowDetails" xml:space="preserve">
-    <value>Show Details</value>
   </data>
   <data name="back_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\back_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -386,21 +290,6 @@ Continue anyway?</value>
   <data name="user_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\user_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Checking_the_availability" xml:space="preserve">
-    <value>Checking the availability of the resource...</value>
-  </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="mCloseOther_Text" xml:space="preserve">
-    <value>Close other tabs</value>
-  </data>
-  <data name="mCloseTab_Text" xml:space="preserve">
-    <value>Close tab</value>
-  </data>
-  <data name="mReRead_Text" xml:space="preserve">
-    <value>Re-read</value>
-  </data>
   <data name="KeyCtrlC" xml:space="preserve">
     <value>Ctrl+C</value>
   </data>
@@ -415,5 +304,14 @@ Continue anyway?</value>
   </data>
   <data name="KeyDel__" xml:space="preserve">
     <value>Delete selected item(s) which was created by user.</value>
+  </data>
+  <data name="AboutForm_Translations" xml:space="preserve">
+    <value>Translations:</value>
+  </data>
+  <data name="AboutInfo_Build" xml:space="preserve">
+    <value> (build {0})</value>
+  </data>
+  <data name="mHelpKeys_Text" xml:space="preserve">
+    <value>Shortcut Keys</value>
   </data>
 </root>

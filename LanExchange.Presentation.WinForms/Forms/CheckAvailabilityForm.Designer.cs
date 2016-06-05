@@ -1,4 +1,4 @@
-﻿using LanExchange.Properties;
+﻿using LanExchange.Presentation.WinForms.Properties;
 
 namespace LanExchange.Presentation.WinForms.Forms
 {
@@ -63,7 +63,7 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.bCancel.Name = "bCancel";
             this.bCancel.Size = new System.Drawing.Size(75, 23);
             this.bCancel.TabIndex = 2;
-            this.bCancel.Text = global::LanExchange.Properties.Resources.Cancel;
+            this.bCancel.Text = Resources.Cancel;
             this.bCancel.UseVisualStyleBackColor = true;
             this.bCancel.Click += new System.EventHandler(this.bCancel_Click);
             // 

@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Globalization;
-using System.Threading;
 using LanExchange.Application.Interfaces;
 using LanExchange.Plugin.Shortcut;
 using LanExchange.Presentation.Interfaces;
@@ -27,6 +26,7 @@ namespace LanExchange.Application.Presenters
         private readonly IWaitingService waitingService;
         private readonly IPanelItemFactoryManager factoryManager;
         private readonly IScreenService screenService;
+        //private readonly ICommandManager commandManager;
 
         public MainPresenter(
             ILazyThreadPool threadPool,
@@ -54,6 +54,7 @@ namespace LanExchange.Application.Presenters
             Contract.Requires<ArgumentNullException>(waitingService != null);
             Contract.Requires<ArgumentNullException>(factoryManager != null);
             Contract.Requires<ArgumentNullException>(screenService != null);
+            //Contract.Requires<ArgumentNullException>(commandManager != null);
 
             this.threadPool = threadPool;
             this.columnManager = panelColumns;
@@ -67,6 +68,7 @@ namespace LanExchange.Application.Presenters
             this.waitingService = waitingService;
             this.factoryManager = factoryManager;
             this.screenService = screenService;
+            //this.commandManager = commandManager;
         }
 
         protected override void InitializePresenter()
@@ -188,6 +190,26 @@ namespace LanExchange.Application.Presenters
         public bool IsHotKey(short id)
         {
             return hotkeyService.IsHotKey(id);
+        }
+
+        public void DoPagesReRead()
+        {
+            //commandManager.ExecuteCommand<PagesReReadCommand>();
+        }
+
+        public void DoPagesCloseTab()
+        {
+            //commandManager.ExecuteCommand<PagesCloseTabCommand>();
+        }
+
+        public void DoAbout()
+        {
+            //commandManager.ExecuteCommand<AboutCommand>();
+        }
+
+        public void DoPagesCloseOther()
+        {
+            //commandManager.ExecuteCommand<PagesCloseOtherCommand>();
         }
 
         private void GlobalTranslateColumns()

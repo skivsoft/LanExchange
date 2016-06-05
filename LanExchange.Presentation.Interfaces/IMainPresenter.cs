@@ -12,5 +12,9 @@ namespace LanExchange.Presentation.Interfaces
         void GlobalTranslateUI();
 
         bool IsHotKey(short id);
+        void DoPagesReRead();
+        void DoPagesCloseTab();
+        void DoAbout();
+        void DoPagesCloseOther();
     }
 }

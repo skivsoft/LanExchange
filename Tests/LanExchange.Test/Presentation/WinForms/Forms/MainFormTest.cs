@@ -16,7 +16,6 @@ namespace LanExchange.Presentation.WinForms.Forms
                 new Mock<IAboutPresenter>().Object,
                 new Mock<ILazyThreadPool>().Object,
                 new Mock<IImageManager>().Object,
-                new Mock<ICommandManager>().Object,
                 new Mock<ITranslationService>().Object,
                 new Mock<IViewFactory>().Object
                 );

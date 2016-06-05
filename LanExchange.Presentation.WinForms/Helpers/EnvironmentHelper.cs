@@ -21,7 +21,7 @@ namespace LanExchange.Presentation.WinForms.Helpers
                 return string.Empty;
 
             var cmdLine = fileName;
-            if (!EnvironmentHelper.Is64BitOperatingSystem())
+            if (!Is64BitOperatingSystem())
                 cmdLine = cmdLine.Replace("%ProgramFiles(x86)%", "%ProgramFiles%");
             return Environment.ExpandEnvironmentVariables(cmdLine);
         }

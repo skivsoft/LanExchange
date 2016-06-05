@@ -207,37 +207,9 @@
     <Compile Include="Plugin\Windows\Utils\SysImageListHelper.cs" />
     <Compile Include="Plugin\Windows\Utils\UnsafeNativeMethods.cs" />
     <Compile Include="Plugin\Windows\Utils\User32Utils.cs" />
-    <Compile Include="Presentation\WinForms\Forms\AboutForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Presentation\WinForms\Forms\AboutForm.Designer.cs">
-      <DependentUpon>AboutForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Presentation\WinForms\Forms\CheckAvailabilityForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Presentation\WinForms\Forms\CheckAvailabilityForm.Designer.cs">
-      <DependentUpon>CheckAvailabilityForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Presentation\WinForms\Forms\EditForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Presentation\WinForms\Forms\EditForm.Designer.cs">
-      <DependentUpon>EditForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Application\Presenters\AppPresenter.cs" />
-    <Compile Include="Plugin\WinForms\Utils\BitmapUtils.cs" />
+    <Compile Include="Application\Implementation\BitmapUtils.cs" />
     <Compile Include="Application\Implementation\ImageManager.cs" />
-    <Compile Include="Plugin\WinForms\Utils\KeyboardUtils.cs" />
-    <Compile Include="Presentation\WinForms\Forms\MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Presentation\WinForms\Forms\MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Presentation\WinForms\Forms\RunMinimizedForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Application\Implementation\ScreenService.cs" />
     <Compile Include="Misc\Impl\PuntoSwitcherServiceEngRus.cs" />
     <Compile Include="Application\Models\AboutModel.cs" />
@@ -251,30 +223,16 @@
     <Compile Include="Application\Presenters\PagesPresenter.cs" />
     <Compile Include="Application\Presenters\PanelPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Helpers\ReflectionHelper.cs" />
+    <Compile Include="Application\Services\ReflectionHelper.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Presentation\WinForms\Forms\AboutForm.resx">
-      <DependentUpon>AboutForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\WinForms\Forms\CheckAvailabilityForm.resx">
-      <DependentUpon>CheckAvailabilityForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\WinForms\Forms\EditForm.resx">
-      <DependentUpon>EditForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\WinForms\Forms\MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -362,9 +320,7 @@
   <ItemGroup>
     <Content Include="Misc\MVP.gif" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Plugin\WinForms\Impl\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\LanExchange.Application.Interfaces\LanExchange.Application.Interfaces.csproj">
       <Project>{1c003a71-105f-46dd-ad18-2c1534961a2e}</Project>

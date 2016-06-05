@@ -3,15 +3,14 @@ using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using System.Security.Permissions;
 using System.Windows.Forms;
-using LanExchange.Application.Commands;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.WinForms.Controls;
 using LanExchange.Presentation.WinForms.Helpers;
-using LanExchange.Properties;
+using LanExchange.Presentation.WinForms.Properties;
 
 namespace LanExchange.Presentation.WinForms.Forms
 {
-    public sealed partial class MainForm : RunMinimizedForm, IMainView, IWindowTranslationable
+    internal sealed partial class MainForm : RunMinimizedForm, IMainView, IWindowTranslationable
     {
         public PagesView Pages;
 
@@ -19,7 +18,6 @@ namespace LanExchange.Presentation.WinForms.Forms
         private readonly IImageManager imageManager;
         private readonly IMainPresenter mainPresenter;
         private readonly IAboutPresenter aboutPresenter;
-        private readonly ICommandManager commandManager;
         private readonly ITranslationService translationService;
         private readonly IViewFactory viewFactory;
 
@@ -33,7 +31,6 @@ namespace LanExchange.Presentation.WinForms.Forms
             IAboutPresenter aboutPresenter,
             ILazyThreadPool threadPool,
             IImageManager imageManager,
-            ICommandManager commandManager,
             ITranslationService translationService,
             IViewFactory viewFactory
             )
@@ -42,14 +39,12 @@ namespace LanExchange.Presentation.WinForms.Forms
             Contract.Requires<ArgumentNullException>(aboutPresenter != null);
             Contract.Requires<ArgumentNullException>(threadPool != null);
             Contract.Requires<ArgumentNullException>(imageManager != null);
-            Contract.Requires<ArgumentNullException>(commandManager != null);
             Contract.Requires<ArgumentNullException>(translationService != null);
             Contract.Requires<ArgumentNullException>(viewFactory != null);
 
             this.aboutPresenter = aboutPresenter;
             this.threadPool = threadPool;
             this.imageManager = imageManager;
-            this.commandManager = commandManager;
             this.translationService = translationService;
             this.viewFactory = viewFactory;
 
@@ -172,7 +167,7 @@ namespace LanExchange.Presentation.WinForms.Forms
         [Localizable(false)]
         private void mHelpAbout_Click(object sender, EventArgs e)
         {
-            commandManager.ExecuteCommand<AboutCommand>();
+            mainPresenter.DoAbout();
         }
         
         private void popTray_Opening(object sender, CancelEventArgs e)
@@ -236,7 +231,7 @@ namespace LanExchange.Presentation.WinForms.Forms
         [Localizable(false)]
         private void mReRead_Click(object sender, EventArgs e)
         {
-            commandManager.ExecuteCommand<PagesReReadCommand>();
+            mainPresenter.DoPagesReRead();
         }
 
         private void UpdatePanelRelatedMenu()
@@ -321,21 +316,22 @@ namespace LanExchange.Presentation.WinForms.Forms
         [Localizable(false)]
         private void mPanel_Popup(object sender, EventArgs e)
         {
-            mReRead.Enabled = commandManager.IsCommandEnabled<PagesReReadCommand>();
-            mCloseTab.Enabled = commandManager.IsCommandEnabled<PagesCloseTabCommand>();
-            mCloseOther.Enabled = commandManager.IsCommandEnabled<PagesCloseOtherCommand>();
+            // TODO remove commandManager
+            //mReRead.Enabled = commandManager.IsCommandEnabled<PagesReReadCommand>();
+            //mCloseTab.Enabled = commandManager.IsCommandEnabled<PagesCloseTabCommand>();
+            //mCloseOther.Enabled = commandManager.IsCommandEnabled<PagesCloseOtherCommand>();
         }
 
         [Localizable(false)]
         private void mCloseTab_Click(object sender, EventArgs e)
         {
-            commandManager.ExecuteCommand<PagesCloseTabCommand>();
+            mainPresenter.DoPagesCloseTab();
         }
 
         [Localizable(false)]
         private void mCloseOther_Click(object sender, EventArgs e)
         {
-            commandManager.ExecuteCommand<PagesCloseOtherCommand>();
+            mainPresenter.DoPagesCloseOther();
         }
 
         private void mViewGrid_Click(object sender, EventArgs e)

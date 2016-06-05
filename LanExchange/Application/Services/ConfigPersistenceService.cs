@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.IO;
 using LanExchange.Application.Interfaces.Services;
-using LanExchange.Helpers;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Models;
 using LanExchange.Presentation.WinForms.Helpers;

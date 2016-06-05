@@ -5,7 +5,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.Application.Interfaces;
 using LanExchange.Application.Interfaces.Factories;
-using LanExchange.Plugin.WinForms.Utils;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Properties;
 

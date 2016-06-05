@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
-using LanExchange.Application.Interfaces;
 using LanExchange.Presentation.Interfaces;
 using SimpleInjector;
 using SimpleInjector.Diagnostics;

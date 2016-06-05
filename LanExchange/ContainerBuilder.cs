@@ -14,7 +14,6 @@ using LanExchange.Application.Models;
 using LanExchange.Application.Presenters;
 using LanExchange.Application.Services;
 using LanExchange.Presentation.Interfaces;
-using LanExchange.Presentation.WinForms.Forms;
 
 namespace LanExchange
 {
@@ -91,10 +90,6 @@ namespace LanExchange
 
         private void RegisterWinForms()
         {
-            container.Register<ICheckAvailabilityWindow, CheckAvailabilityForm>();
-            container.Register<IAboutView, AboutForm>();
-            container.Register<IEditView, EditForm>();
-            container.Register<IMainView, MainForm>();
             container.RegisterSingleton<IImageManager, ImageManager>();
             container.RegisterSingleton<IScreenService, ScreenService>();
         }

@@ -2,6 +2,7 @@
 using System.Diagnostics.Contracts;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.WinForms.Controls;
+using LanExchange.Presentation.WinForms.Forms;
 
 namespace LanExchange.Presentation.WinForms
 {
@@ -14,12 +15,21 @@ namespace LanExchange.Presentation.WinForms
         {
             Contract.Requires<ArgumentNullException>(container != null);
 
+            // Application
+            container.RegisterSingleton<IAppView, AppView>();
+
+            // Controls
             container.RegisterTransient<IInfoView, InfoPanel>();
             container.RegisterTransient<IStatusPanelView, StatusPanel>();
             container.RegisterTransient<IFilterView, FilterView>();
             container.RegisterTransient<IPanelView, PanelView>();
             container.RegisterSingleton<IPagesView, PagesView>();
-            container.RegisterSingleton<IAppView, AppView>();
+
+            // Forms
+            container.RegisterTransient<IAboutView, AboutForm>();
+            container.RegisterTransient<IEditView, EditForm>();
+            container.RegisterTransient<ICheckAvailabilityWindow, CheckAvailabilityForm>();
+            container.RegisterTransient<IMainView, MainForm>();
 
             // TODO remove singleton dependency on PagesPresenter
             container.RegisterSingleton<IClipboardService, ClipboardService>();
@@ -29,6 +39,7 @@ namespace LanExchange.Presentation.WinForms
 
             container.RegisterSingleton<IAddonManager, AddonManager>();
             container.RegisterSingleton<IMessageBoxService, MessageBoxService>();
+
 
             return container;
         }

@@ -61,51 +61,6 @@ namespace LanExchange.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copyright.
-        /// </summary>
-        internal static string AboutForm_Copyright {
-            get {
-                return ResourceManager.GetString("AboutForm_Copyright", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to License.
-        /// </summary>
-        internal static string AboutForm_License {
-            get {
-                return ResourceManager.GetString("AboutForm_License", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Released under the MIT license..
-        /// </summary>
-        internal static string AboutForm_MIT {
-            get {
-                return ResourceManager.GetString("AboutForm_MIT", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Plugins:.
-        /// </summary>
-        internal static string AboutForm_Plugins {
-            get {
-                return ResourceManager.GetString("AboutForm_Plugins", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to About «{0}».
-        /// </summary>
-        internal static string AboutForm_Title {
-            get {
-                return ResourceManager.GetString("AboutForm_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Translations:.
         /// </summary>
         internal static string AboutForm_Translations {
@@ -115,38 +70,11 @@ namespace LanExchange.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Version.
-        /// </summary>
-        internal static string AboutForm_Version {
-            get {
-                return ResourceManager.GetString("AboutForm_Version", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Webpage.
-        /// </summary>
-        internal static string AboutForm_Webpage {
-            get {
-                return ResourceManager.GetString("AboutForm_Webpage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to  (build {0}).
         /// </summary>
         internal static string AboutInfo_Build {
             get {
                 return ResourceManager.GetString("AboutInfo_Build", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} {1} Feedback.
-        /// </summary>
-        internal static string AboutModel_FeedbackFmt {
-            get {
-                return ResourceManager.GetString("AboutModel_FeedbackFmt", resourceCulture);
             }
         }
         
@@ -180,24 +108,6 @@ namespace LanExchange.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cancel.
-        /// </summary>
-        internal static string Cancel {
-            get {
-                return ResourceManager.GetString("Cancel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Checking the availability of the resource....
-        /// </summary>
-        internal static string Checking_the_availability {
-            get {
-                return ResourceManager.GetString("Checking_the_availability", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Context.
         /// </summary>
         internal static string Context {
@@ -212,15 +122,6 @@ namespace LanExchange.Properties {
         internal static string EmptyText {
             get {
                 return ResourceManager.GetString("EmptyText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Hide Details.
-        /// </summary>
-        internal static string HideDetails {
-            get {
-                return ResourceManager.GetString("HideDetails", resourceCulture);
             }
         }
         
@@ -677,209 +578,11 @@ namespace LanExchange.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Close other tabs.
-        /// </summary>
-        internal static string mCloseOther_Text {
-            get {
-                return ResourceManager.GetString("mCloseOther_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Close tab.
-        /// </summary>
-        internal static string mCloseTab_Text {
-            get {
-                return ResourceManager.GetString("mCloseTab_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Exit.
-        /// </summary>
-        internal static string mExit_Text {
-            get {
-                return ResourceManager.GetString("mExit_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &amp;Help.
-        /// </summary>
-        internal static string mHelp_Text {
-            get {
-                return ResourceManager.GetString("mHelp_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to About.
-        /// </summary>
-        internal static string mHelpAbout_Text {
-            get {
-                return ResourceManager.GetString("mHelpAbout_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to BugTracker Webpage.
-        /// </summary>
-        internal static string mHelpBugs_Text {
-            get {
-                return ResourceManager.GetString("mHelpBugs_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Shortcut Keys.
         /// </summary>
         internal static string mHelpKeys_Text {
             get {
                 return ResourceManager.GetString("mHelpKeys_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Localization Webpage.
-        /// </summary>
-        internal static string mHelpLangs_Text {
-            get {
-                return ResourceManager.GetString("mHelpLangs_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to LanExchange Webpage.
-        /// </summary>
-        internal static string mHelpWeb_Text {
-            get {
-                return ResourceManager.GetString("mHelpWeb_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &amp;Language.
-        /// </summary>
-        internal static string mLanguage_Text {
-            get {
-                return ResourceManager.GetString("mLanguage_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New item.
-        /// </summary>
-        internal static string mNewItem_Text {
-            get {
-                return ResourceManager.GetString("mNewItem_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &amp;Panel.
-        /// </summary>
-        internal static string mPanel_Text {
-            get {
-                return ResourceManager.GetString("mPanel_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Re-read.
-        /// </summary>
-        internal static string mReRead_Text {
-            get {
-                return ResourceManager.GetString("mReRead_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to About.
-        /// </summary>
-        internal static string mTrayAbout_Text {
-            get {
-                return ResourceManager.GetString("mTrayAbout_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Exit.
-        /// </summary>
-        internal static string mTrayExit_Text {
-            get {
-                return ResourceManager.GetString("mTrayExit_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Open.
-        /// </summary>
-        internal static string mTrayOpen_Text {
-            get {
-                return ResourceManager.GetString("mTrayOpen_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &amp;View.
-        /// </summary>
-        internal static string mView_Text {
-            get {
-                return ResourceManager.GetString("mView_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Details.
-        /// </summary>
-        internal static string mViewDetails_Text {
-            get {
-                return ResourceManager.GetString("mViewDetails_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Grid lines.
-        /// </summary>
-        internal static string mViewGrid_Text {
-            get {
-                return ResourceManager.GetString("mViewGrid_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Info panel.
-        /// </summary>
-        internal static string mViewInfo_Text {
-            get {
-                return ResourceManager.GetString("mViewInfo_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Large icons.
-        /// </summary>
-        internal static string mViewLarge_Text {
-            get {
-                return ResourceManager.GetString("mViewLarge_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to List.
-        /// </summary>
-        internal static string mViewList_Text {
-            get {
-                return ResourceManager.GetString("mViewList_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Small icons.
-        /// </summary>
-        internal static string mViewSmall_Text {
-            get {
-                return ResourceManager.GetString("mViewSmall_Text", resourceCulture);
             }
         }
         
@@ -926,15 +629,6 @@ namespace LanExchange.Properties {
         internal static string Program_Error {
             get {
                 return ResourceManager.GetString("Program_Error", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Show Details.
-        /// </summary>
-        internal static string ShowDetails {
-            get {
-                return ResourceManager.GetString("ShowDetails", resourceCulture);
             }
         }
         

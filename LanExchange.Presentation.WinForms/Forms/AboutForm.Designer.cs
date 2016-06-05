@@ -1,8 +1,8 @@
-﻿using LanExchange.Properties;
+﻿using LanExchange.Presentation.WinForms.Properties;
 
 namespace LanExchange.Presentation.WinForms.Forms
 {
-    public sealed partial class AboutForm
+    internal sealed partial class AboutForm
     {
         /// <summary>
         /// Required designer variable.
@@ -171,7 +171,7 @@ namespace LanExchange.Presentation.WinForms.Forms
             // 
             // logoPictureBox
             // 
-            this.logoPictureBox.Image = global::LanExchange.Properties.Resources.LanExchange_48x48;
+            this.logoPictureBox.Image = Resources.LanExchange_48x48;
             this.logoPictureBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.logoPictureBox.Location = new System.Drawing.Point(16, 16);
             this.logoPictureBox.Name = "logoPictureBox";

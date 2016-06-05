@@ -7,7 +7,7 @@ using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Presentation.WinForms.Forms
 {
-    public partial class EditForm : Form, IEditView
+    internal sealed partial class EditForm : Form, IEditView
     {
         private readonly IEditPresenter presenter;
 

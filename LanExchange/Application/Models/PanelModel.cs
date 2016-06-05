@@ -6,7 +6,6 @@ using System.Globalization;
 using System.Linq;
 using System.Xml.Serialization;
 using LanExchange.Application.Implementation;
-using LanExchange.Application.Interfaces;
 using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Models
