@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using LanExchange.Application.Implementation;
+using NUnit.Framework;
 
 namespace LanExchange.Misc.Impl
 {

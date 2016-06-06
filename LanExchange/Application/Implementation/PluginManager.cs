@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
+using System.Reflection;
 using LanExchange.Presentation.Interfaces;
 
-namespace LanExchange.Misc.Impl
+namespace LanExchange.Application.Implementation
 {
-    public class PluginManagerImpl : IPluginManager
+    internal sealed class PluginManager : IPluginManager
     {
         private const string PLUGIN_MASK = "LanExchange.Plugin.*.dll";
 
@@ -22,7 +22,7 @@ namespace LanExchange.Misc.Impl
 
         private CompositionContainer compContainer;
 
-        public PluginManagerImpl(IServiceProvider serviceProvider)
+        public PluginManager(IServiceProvider serviceProvider)
         {
             Contract.Requires<ArgumentNullException>(serviceProvider != null);
 

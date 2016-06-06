@@ -521,16 +521,6 @@ namespace LanExchange.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap LanExchange_48x48 {
-            get {
-                object obj = ResourceManager.GetObject("LanExchange_48x48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         internal static string MainForm_Close {

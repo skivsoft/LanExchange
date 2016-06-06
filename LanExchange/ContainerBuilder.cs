@@ -1,4 +1,3 @@
-using LanExchange.Misc.Impl;
 using LanExchange.Plugin.Windows;
 using SimpleInjector;
 using System;
@@ -45,12 +44,12 @@ namespace LanExchange
         {
             container.RegisterSingleton<IServiceProvider>(container);
             container.RegisterSingleton<IAppBootstrap, AppBootstrap>();
-            container.RegisterSingleton<IPanelItemFactoryManager, PanelItemFactoryManagerImpl>();
-            container.RegisterSingleton<IPanelFillerManager, PanelFillerManagerImpl>();
-            container.RegisterSingleton<IPanelColumnManager, PanelColumnManagerImpl>();
+            container.RegisterSingleton<IPanelItemFactoryManager, PanelItemFactoryManager>();
+            container.RegisterSingleton<IPanelFillerManager, PanelFillerManager>();
+            container.RegisterSingleton<IPanelColumnManager, PanelColumnManager>();
             container.RegisterSingleton<IFolderManager, FolderManager>();
-            container.RegisterSingleton<IPluginManager, PluginManagerImpl>();
-            container.RegisterSingleton<ILazyThreadPool, LazyThreadPoolImpl>();
+            container.RegisterSingleton<IPluginManager, PluginManager>();
+            container.RegisterSingleton<ILazyThreadPool, LazyThreadPool>();
             container.RegisterSingleton<IPuntoSwitcherService, PuntoSwitcherServiceEngRus>();
             container.RegisterSingleton<ITranslationService, TranslationService>();
             container.RegisterSingleton<IDisposableManager, DisposableManager>();

@@ -171,11 +171,10 @@
     <Compile Include="Application\Commands\PagesCloseOtherCommand.cs" />
     <Compile Include="Application\Commands\PagesReReadCommand.cs" />
     <Compile Include="Application\Commands\ShortcutKeysCommand.cs" />
-    <Compile Include="Misc\Impl\PanelColumnManagerImpl.cs" />
-    <Compile Include="Misc\Impl\PanelFillerManagerImpl.cs" />
-    <Compile Include="Misc\Impl\PanelItemFactoryManagerImpl.cs" />
+    <Compile Include="Application\Implementation\PanelColumnManager.cs" />
+    <Compile Include="Application\Implementation\PanelFillerManager.cs" />
+    <Compile Include="Application\Implementation\PanelItemFactoryManager.cs" />
     <Compile Include="Application\Implementation\TranslationService.cs" />
-    <Compile Include="Misc\CustomPanelItem.cs" />
     <Compile Include="Application\Implementation\FolderManager.cs" />
     <Compile Include="Application\Models\PagesModel.cs" />
     <Compile Include="Application\Models\PanelModel.cs" />
@@ -206,10 +205,10 @@
     <Compile Include="Plugin\Windows\Utils\UnsafeNativeMethods.cs" />
     <Compile Include="Plugin\Windows\Utils\User32Utils.cs" />
     <Compile Include="Application\Presenters\AppPresenter.cs" />
-    <Compile Include="Misc\Impl\PuntoSwitcherServiceEngRus.cs" />
+    <Compile Include="Application\Implementation\PuntoSwitcherServiceEngRus.cs" />
     <Compile Include="Application\Models\AboutModel.cs" />
-    <Compile Include="Misc\Impl\LazyThreadPoolImpl.cs" />
-    <Compile Include="Misc\Impl\PluginManagerImpl.cs" />
+    <Compile Include="Application\Implementation\LazyThreadPool.cs" />
+    <Compile Include="Application\Implementation\PluginManager.cs" />
     <Compile Include="Application\Presenters\AboutPresenter.cs" />
     <Compile Include="Application\Presenters\CheckAvailabilityPresenter.cs" />
     <Compile Include="Application\Presenters\EditPresenter.cs" />
@@ -277,9 +276,6 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Misc\MVP.gif" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

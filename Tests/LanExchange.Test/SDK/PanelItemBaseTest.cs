@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using LanExchange.Misc;
 using LanExchange.Presentation.Interfaces;
 using NUnit.Framework;
+using LanExchange.Misc;
 
 namespace LanExchange.SDK
 {

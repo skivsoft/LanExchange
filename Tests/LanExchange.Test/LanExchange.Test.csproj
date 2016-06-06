@@ -90,6 +90,7 @@
     <Compile Include="Presentation\WinForms\Forms\AboutFormTest.cs" />
     <Compile Include="Presenter\PresenterBaseSpy.cs" />
     <Compile Include="Presenter\PresenterBaseTest.cs" />
+    <Compile Include="Misc\CustomPanelItem.cs" />
     <Compile Include="SDK\PanelFillerResultTest.cs" />
     <Compile Include="SDK\PanelItemBaseTest.cs" />
     <Compile Include="SDK\PanelItemDoubleDotTest.cs" />

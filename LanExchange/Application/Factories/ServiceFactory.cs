@@ -1,5 +1,4 @@
-﻿using LanExchange.Application.Interfaces;
-using LanExchange.Plugin.Windows;
+﻿using LanExchange.Plugin.Windows;
 using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Factories

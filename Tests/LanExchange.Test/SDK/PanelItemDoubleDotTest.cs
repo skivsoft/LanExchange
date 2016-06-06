@@ -1,4 +1,5 @@
 ﻿using LanExchange.Misc;
+using LanExchange.Model;
 using LanExchange.Presentation.Interfaces;
 using NUnit.Framework;
 

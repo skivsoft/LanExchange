@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using LanExchange.Application.Interfaces;
 using LanExchange.Plugin.Windows.Utils;
 using LanExchange.Presentation.Interfaces;
 
