@@ -5,7 +5,6 @@ using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Windows.Forms;
 
 namespace LanExchange.Plugin.Windows.Utils
 {
@@ -84,7 +83,8 @@ namespace LanExchange.Plugin.Windows.Utils
         #endregion
 
         #region InvokeCommand
-        private static void InvokeCommand(IContextMenu oContextMenu, uint nCmd, string strFolder, Point pointInvoke)
+        private static void InvokeCommand(IContextMenu oContextMenu, uint nCmd, string strFolder, Point pointInvoke,
+            bool control, bool shift)
         {
             var invoke = new CMINVOKECOMMANDINFOEX();
             invoke.cbSize = cbInvokeCommand;
@@ -93,8 +93,8 @@ namespace LanExchange.Plugin.Windows.Utils
             invoke.lpVerbW = (IntPtr)(nCmd - CMD_FIRST);
             invoke.lpDirectoryW = strFolder;
             invoke.fMask = CMIC.UNICODE | CMIC.PTINVOKE |
-                ((Control.ModifierKeys & Keys.Control) != 0 ? CMIC.CONTROL_DOWN : 0) |
-                ((Control.ModifierKeys & Keys.Shift) != 0 ? CMIC.SHIFT_DOWN : 0);
+                (control ? CMIC.CONTROL_DOWN : 0) |
+                (shift ? CMIC.SHIFT_DOWN : 0);
             invoke.ptInvoke = new ShellAPI.POINT(pointInvoke.X, pointInvoke.Y);
             invoke.nShow = SW.SHOWNORMAL;
             
@@ -338,7 +338,7 @@ namespace LanExchange.Plugin.Windows.Utils
         /// <param name="handleOwner">Window that will get messages</param>
         /// <param name="arrFileInfo">FileInfos (should all be in same directory)</param>
         /// <param name="pointScreen">Where to show the menu</param>
-        public void ShowContextMenu(IntPtr handleOwner, FileInfo[] arrFileInfo, Point pointScreen)
+        public void ShowContextMenu(IntPtr handleOwner, FileInfo[] arrFileInfo, Point pointScreen, bool control, bool shift)
         {
             // Release all resources first.
             ReleaseAll();
@@ -373,7 +373,7 @@ namespace LanExchange.Plugin.Windows.Utils
                     CMD_LAST,
                     CMF.EXPLORE |
                     CMF.NORMAL |
-                    ((Control.ModifierKeys & Keys.Shift) != 0 ? CMF.EXTENDEDVERBS : 0));
+                    (shift ? CMF.EXTENDEDVERBS : 0));
 
                 hook.Install();
 
@@ -390,7 +390,7 @@ namespace LanExchange.Plugin.Windows.Utils
 
                 if (nSelected != 0)
                 {
-                    InvokeCommand(_oContextMenu, nSelected, _strParentFolder, pointScreen);
+                    InvokeCommand(_oContextMenu, nSelected, _strParentFolder, pointScreen, control, shift);
                 }
             }
             finally
@@ -413,7 +413,8 @@ namespace LanExchange.Plugin.Windows.Utils
         /// <param name="csidl">CSIDL value for special folder.</param>
         /// <param name="pointScreen">Where to show the menu</param>
         [CLSCompliant(false)]
-        public void ShowContextMenuForCSIDL(IntPtr handleOwner, ShellAPI.CSIDL csidl, Point pointScreen)
+        public void ShowContextMenuForCSIDL(IntPtr handleOwner, ShellAPI.CSIDL csidl, Point pointScreen, 
+            bool control, bool shift)
         {
             // Release all resources first.
             ReleaseAll();
@@ -444,7 +445,7 @@ namespace LanExchange.Plugin.Windows.Utils
                     CMD_LAST,
                     CMF.EXPLORE |
                     CMF.NORMAL |
-                    ((Control.ModifierKeys & Keys.Shift) != 0 ? CMF.EXTENDEDVERBS : 0));
+                    (shift ? CMF.EXTENDEDVERBS : 0));
 
                 hook.Install();
 
@@ -461,7 +462,7 @@ namespace LanExchange.Plugin.Windows.Utils
 
                 if (nSelected != 0)
                 {
-                    InvokeCommand(_oContextMenu, nSelected, null, pointScreen);
+                    InvokeCommand(_oContextMenu, nSelected, null, pointScreen, control, shift);
                 }
             }
             finally

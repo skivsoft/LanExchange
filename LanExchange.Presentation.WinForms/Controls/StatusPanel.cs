@@ -29,7 +29,11 @@ namespace LanExchange.Presentation.WinForms.Controls
         private void lCompName_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
-                presenter.PerformComputerRightClick();
+            {
+                var control = (ModifierKeys & Keys.Control) != 0;
+                var shift = (ModifierKeys & Keys.Shift) != 0;
+                presenter.PerformComputerRightClick(control, shift);
+            }
         }
 
         private void lUserName_MouseUp(object sender, MouseEventArgs e)

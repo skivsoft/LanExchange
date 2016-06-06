@@ -1,4 +1,4 @@
-﻿namespace LanExchange.Application.Interfaces.Factories
+﻿namespace LanExchange.Presentation.Interfaces
 {
     /// <summary>
     /// The service factory interface.

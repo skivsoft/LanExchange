@@ -135,6 +135,7 @@
     <Compile Include="AddonManager.cs" />
     <Compile Include="App.cs" />
     <Compile Include="AppView.cs" />
+    <Compile Include="BitmapUtils.cs" />
     <Compile Include="ClipboardDataObject.cs" />
     <Compile Include="ClipboardService.cs" />
     <Compile Include="Controls\FilterView.cs">
@@ -207,6 +208,7 @@
     <Compile Include="Helpers\MessageBoxHelper.cs" />
     <Compile Include="Helpers\ProtocolHelper.cs" />
     <Compile Include="Helpers\SerializeHelper.cs" />
+    <Compile Include="ImageManager.cs" />
     <Compile Include="KeyboardUtils.cs" />
     <Compile Include="MessageBoxService.cs" />
     <Compile Include="PresentationFacade.cs" />
@@ -216,6 +218,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ScreenService.cs" />
     <Compile Include="SubMenuAdapter.cs" />
     <Compile Include="SystemInformationService.cs" />
     <Compile Include="Helpers\TranslationHelper.cs" />
@@ -272,6 +275,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\clear_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\back_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\back_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\user_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\user_32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

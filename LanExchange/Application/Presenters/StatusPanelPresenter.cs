@@ -45,10 +45,10 @@ namespace LanExchange.Application.Presenters
             shellService.OpenMyComputer();
         }
 
-        public void PerformComputerRightClick()
+        public void PerformComputerRightClick(bool control, bool shift)
         {
             var position = screenService.CursorPosition;
-            shellService.ShowMyComputerContextMenu(View.Handle, position);
+            shellService.ShowMyComputerContextMenu(View.Handle, position, control, shift);
         }
 
         public void PerformUserRightClick()

@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using LanExchange.Application.Interfaces;
 using LanExchange.Plugin.Windows.Utils;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.Windows
 {
@@ -16,14 +17,14 @@ namespace LanExchange.Plugin.Windows
             menu = new ShellContextMenu();
         }
 
-        public void ShowContextMenu(IntPtr handle, FileInfo[] files, Point position)
+        public void ShowContextMenu(IntPtr handle, FileInfo[] files, Point position, bool control, bool shift)
         {
-            menu.ShowContextMenu(handle, files, position);
+            menu.ShowContextMenu(handle, files, position, control, shift);
         }
 
-        public void ShowMyComputerContextMenu(IntPtr handle, Point position)
+        public void ShowMyComputerContextMenu(IntPtr handle, Point position, bool control, bool shift)
         {
-            menu.ShowContextMenuForCSIDL(handle, ShellAPI.CSIDL.DRIVES, position);
+            menu.ShowContextMenuForCSIDL(handle, ShellAPI.CSIDL.DRIVES, position, control, shift);
         }
 
         public void OpenMyComputer()

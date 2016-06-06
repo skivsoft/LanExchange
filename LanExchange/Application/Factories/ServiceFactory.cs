@@ -1,6 +1,6 @@
 ﻿using LanExchange.Application.Interfaces;
-using LanExchange.Application.Interfaces.Factories;
 using LanExchange.Plugin.Windows;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Factories
 {

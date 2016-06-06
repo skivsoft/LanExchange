@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Windows.Forms;
-using LanExchange.Application.Interfaces;
-using LanExchange.Application.Interfaces.Factories;
 using LanExchange.Presentation.Interfaces;
-using LanExchange.Properties;
+using LanExchange.Presentation.WinForms.Properties;
 
-namespace LanExchange.Application.Implementation
+namespace LanExchange.Presentation.WinForms
 {
     internal sealed class ImageManager : IImageManager
     {

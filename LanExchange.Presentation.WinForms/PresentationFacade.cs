@@ -31,14 +31,18 @@ namespace LanExchange.Presentation.WinForms
             container.RegisterTransient<ICheckAvailabilityWindow, CheckAvailabilityForm>();
             container.RegisterTransient<IMainView, MainForm>();
 
+            // Managers
+            container.RegisterSingleton<IAddonManager, AddonManager>();
+            container.RegisterSingleton<IImageManager, ImageManager>();
+
+            // Services
+            // TODO remove singleton dependency on MainPresenter
+            container.RegisterSingleton<IWaitingService, WaitingService>();
             // TODO remove singleton dependency on PagesPresenter
             container.RegisterSingleton<IClipboardService, ClipboardService>();
             container.RegisterTransient<ISystemInformationService, SystemInformationService>();
-            // TODO remove singleton dependency on MainPresenter
-            container.RegisterSingleton<IWaitingService, WaitingService>();
-
-            container.RegisterSingleton<IAddonManager, AddonManager>();
             container.RegisterSingleton<IMessageBoxService, MessageBoxService>();
+            container.RegisterSingleton<IScreenService, ScreenService>();
 
 
             return container;

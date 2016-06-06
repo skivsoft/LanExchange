@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
-using LanExchange.Application.Interfaces;
+using LanExchange.Presentation.Interfaces;
 
-namespace LanExchange.Application.Implementation
+namespace LanExchange.Presentation.WinForms
 {
     internal sealed class ScreenService : IScreenService
     {

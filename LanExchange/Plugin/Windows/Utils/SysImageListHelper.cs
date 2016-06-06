@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using LanExchange.Application.Interfaces;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.Windows.Utils
 {

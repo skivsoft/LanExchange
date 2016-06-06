@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace LanExchange.Application.Interfaces
+namespace LanExchange.Presentation.Interfaces
 {
     public interface ISysImageListService : IDisposable
     {

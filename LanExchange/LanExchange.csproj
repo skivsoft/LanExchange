@@ -138,7 +138,6 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -208,9 +207,6 @@
     <Compile Include="Plugin\Windows\Utils\UnsafeNativeMethods.cs" />
     <Compile Include="Plugin\Windows\Utils\User32Utils.cs" />
     <Compile Include="Application\Presenters\AppPresenter.cs" />
-    <Compile Include="Application\Implementation\BitmapUtils.cs" />
-    <Compile Include="Application\Implementation\ImageManager.cs" />
-    <Compile Include="Application\Implementation\ScreenService.cs" />
     <Compile Include="Misc\Impl\PuntoSwitcherServiceEngRus.cs" />
     <Compile Include="Application\Models\AboutModel.cs" />
     <Compile Include="Misc\Impl\LazyThreadPoolImpl.cs" />
@@ -264,12 +260,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
-    <None Include="Resources\user_32.png" />
-    <None Include="Resources\user_16.png" />
-    <None Include="Resources\twitter-icon-v2.png" />
     <None Include="Resources\LanExchange_48x48.png" />
-    <None Include="Resources\back_32.png" />
-    <None Include="Resources\back_16.png" />
     <None Include="Resources\process_working.png" />
     <None Include="Resources\keyboard_16.png" />
     <None Include="..\LanExchange.snk">

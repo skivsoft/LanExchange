@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using LanExchange.Application.Interfaces;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.Windows.Utils
 {

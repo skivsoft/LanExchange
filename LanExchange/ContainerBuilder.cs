@@ -7,7 +7,6 @@ using LanExchange.Application.Commands;
 using LanExchange.Application.Factories;
 using LanExchange.Application.Implementation;
 using LanExchange.Application.Interfaces;
-using LanExchange.Application.Interfaces.Factories;
 using LanExchange.Application.Interfaces.Services;
 using LanExchange.Application.Managers;
 using LanExchange.Application.Models;
@@ -35,7 +34,6 @@ namespace LanExchange
             RegisterModels();
             RegisterPresenters();
             RegisterOSWindows();
-            RegisterWinForms();
             RegisterServices();
             RegisterFactories();
             RegisterCommands();
@@ -86,12 +84,6 @@ namespace LanExchange
             container.RegisterSingleton<IShell32Service, Shell32Service>();
             container.RegisterSingleton<IMACAddressSerivice, MACAddressService>();
             container.RegisterSingleton<IHotkeyService, HotkeysService>();
-        }
-
-        private void RegisterWinForms()
-        {
-            container.RegisterSingleton<IImageManager, ImageManager>();
-            container.RegisterSingleton<IScreenService, ScreenService>();
         }
 
         private void RegisterServices()
