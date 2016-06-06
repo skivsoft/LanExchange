@@ -75,7 +75,6 @@ namespace LanExchange.Presentation.Interfaces
         PanelViewMode ViewMode { get; set; }
         //TODO: hide model
         //PanelItemBase FocusedItem { get; }
-        bool GridLines { get; set; }
 
         void RedrawItem(int index);
 

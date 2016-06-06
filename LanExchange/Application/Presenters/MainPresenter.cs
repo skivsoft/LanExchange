@@ -3,11 +3,11 @@ using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Globalization;
+using LanExchange.Application.Commands;
 using LanExchange.Application.Interfaces;
-using LanExchange.Plugin.Shortcut;
 using LanExchange.Presentation.Interfaces;
+using LanExchange.Presentation.Interfaces.Config;
 using LanExchange.Presentation.Interfaces.EventArgs;
-using LanExchange.Presentation.Interfaces.Models;
 using LanExchange.Presentation.WinForms;
 
 namespace LanExchange.Application.Presenters
@@ -26,7 +26,7 @@ namespace LanExchange.Application.Presenters
         private readonly IWaitingService waitingService;
         private readonly IPanelItemFactoryManager factoryManager;
         private readonly IScreenService screenService;
-        //private readonly ICommandManager commandManager;
+        private readonly ICommandManager commandManager;
 
         public MainPresenter(
             ILazyThreadPool threadPool,
@@ -40,7 +40,8 @@ namespace LanExchange.Application.Presenters
             IViewFactory viewFactory,
             IWaitingService waitingService,
             IPanelItemFactoryManager factoryManager,
-            IScreenService screenService)
+            IScreenService screenService,
+            ICommandManager commandManager)
         {
             Contract.Requires<ArgumentNullException>(threadPool != null);
             Contract.Requires<ArgumentNullException>(panelColumns != null);
@@ -54,7 +55,7 @@ namespace LanExchange.Application.Presenters
             Contract.Requires<ArgumentNullException>(waitingService != null);
             Contract.Requires<ArgumentNullException>(factoryManager != null);
             Contract.Requires<ArgumentNullException>(screenService != null);
-            //Contract.Requires<ArgumentNullException>(commandManager != null);
+            Contract.Requires<ArgumentNullException>(commandManager != null);
 
             this.threadPool = threadPool;
             this.columnManager = panelColumns;
@@ -68,7 +69,7 @@ namespace LanExchange.Application.Presenters
             this.waitingService = waitingService;
             this.factoryManager = factoryManager;
             this.screenService = screenService;
-            //this.commandManager = commandManager;
+            this.commandManager = commandManager;
         }
 
         protected override void InitializePresenter()
@@ -112,15 +113,10 @@ namespace LanExchange.Application.Presenters
         [Localizable(false)]
         public void ConfigOnChanged(object sender, PropertyChangedEventArgs e)
         {
-            var config = sender as ConfigModel;
+            var config = sender as MainConfig;
             if (config == null) return;
             switch (e.PropertyName)
             {
-                case nameof(config.ShowGridLines):
-                    var panelView = pagesPresenter.ActivePanelView;
-                    if (panelView != null)
-                        panelView.GridLines = config.ShowGridLines;
-                    break;
                 case nameof(config.Language):
                     translationService.CurrentLanguage = config.Language;
                     GlobalTranslateUI();
@@ -204,7 +200,7 @@ namespace LanExchange.Application.Presenters
 
         public void DoAbout()
         {
-            //commandManager.ExecuteCommand<AboutCommand>();
+            commandManager.ExecuteCommand<AboutCommand>();
         }
 
         public void DoPagesCloseOther()
@@ -279,11 +275,6 @@ namespace LanExchange.Application.Presenters
                 App.Config.MainFormX = rect.Left;
                 App.Config.MainFormWidth = rect.Width;
             }
-        }
-
-        public int FindShortcutKeysPanelIndex()
-        {
-            return pagesPresenter.GetPanelIndexByDataType(typeof(ShortcutPanelItem));
         }
     }
 }

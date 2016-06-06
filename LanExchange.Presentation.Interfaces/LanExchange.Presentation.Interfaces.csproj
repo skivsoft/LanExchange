@@ -127,8 +127,8 @@
     <Compile Include="IWindow.cs" />
     <Compile Include="IWindowTranslationable.cs" />
     <Compile Include="MenuElement.cs" />
-    <Compile Include="Models\ConfigBase.cs" />
-    <Compile Include="Models\ConfigModel.cs" />
+    <Compile Include="Config\ConfigBase.cs" />
+    <Compile Include="Config\MainConfig.cs" />
     <Compile Include="Option.cs" />
     <Compile Include="PanelColumnHeader.cs" />
     <Compile Include="PanelFillerResult.cs" />

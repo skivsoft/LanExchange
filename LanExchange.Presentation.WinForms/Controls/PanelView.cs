@@ -693,12 +693,6 @@ namespace LanExchange.Presentation.WinForms.Controls
             pagesPresenter.CommandDeleteItems();
         }
 
-        public bool GridLines
-        {
-            get { return LV.GridLines; }
-            set { LV.GridLines = value; }
-        }
-
         public void TranslateUI()
         {
             TranslationHelper.TranslateComponents(Resources.ResourceManager, this, components);

@@ -267,7 +267,6 @@ namespace LanExchange.Presentation.WinForms.Controls
         public IPanelView CreatePanelView(IPanelModel info)
         {
             var panelView = (PanelView) viewFactory.CreatePanelView();
-            panelView.GridLines = App.Config.ShowGridLines;
             var listView = panelView.Controls[0] as ListView;
             if (listView != null)
             {

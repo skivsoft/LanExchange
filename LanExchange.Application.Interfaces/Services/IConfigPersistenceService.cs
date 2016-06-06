@@ -1,4 +1,4 @@
-﻿using LanExchange.Presentation.Interfaces.Models;
+﻿using LanExchange.Presentation.Interfaces.Config;
 
 namespace LanExchange.Application.Interfaces.Services
 {

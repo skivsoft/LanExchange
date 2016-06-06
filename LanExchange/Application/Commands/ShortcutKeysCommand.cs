@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using LanExchange.Application.Interfaces;
 using LanExchange.Plugin.Shortcut;
 using LanExchange.Presentation.Interfaces;
 
@@ -7,43 +8,46 @@ namespace LanExchange.Application.Commands
 {
     internal sealed class ShortcutKeysCommand : ICommand
     {
-        private readonly IMainPresenter mainPresenter;
-        private readonly IPagesPresenter pagesPresenter;
+        private readonly IPagesModel pagesModel;
         private readonly IModelFactory modelFactory;
 
         public ShortcutKeysCommand(
-            IMainPresenter mainPresenter,
-            IPagesPresenter pagesPresenter,
+            IPagesModel pagesModel,
             IModelFactory modelFactory)
         {
-            Contract.Requires<ArgumentNullException>(mainPresenter != null);
-            Contract.Requires<ArgumentNullException>(pagesPresenter != null);
+            Contract.Requires<ArgumentNullException>(pagesModel != null);
             Contract.Requires<ArgumentNullException>(modelFactory != null);
 
-            this.mainPresenter = mainPresenter;
-            this.pagesPresenter = pagesPresenter;
+            this.pagesModel = pagesModel;
             this.modelFactory = modelFactory;
         }
 
         public void Execute()
         {
-            var foundIndex = mainPresenter.FindShortcutKeysPanelIndex();
+            var foundIndex = GetPanelIndexByDataType(typeof(ShortcutPanelItem));
             if (foundIndex == -1)
             {
                 var model = modelFactory.CreatePanelModel();
                 var root = new ShortcutRoot();
                 model.DataType = typeof (ShortcutPanelItem).Name;
                 model.CurrentPath.Push(root);
-                //TODO: hide model
-                //pagesPresenter.AddTab(model);
-                foundIndex = pagesPresenter.Count - 1;
+                pagesModel.AddTab(model);
+                foundIndex = pagesModel.Count - 1;
             }
-            pagesPresenter.SelectedIndex = foundIndex;
+            pagesModel.SelectedIndex = foundIndex;
         }
 
         public bool Enabled
         {
             get { return true; }
+        }
+
+        private int GetPanelIndexByDataType(Type dataType)
+        {
+            for (int index = 0; index < pagesModel.Count; index++)
+                if (pagesModel.GetItem(index).DataType.Equals(dataType.Name))
+                    return index;
+            return -1;
         }
     }
 }

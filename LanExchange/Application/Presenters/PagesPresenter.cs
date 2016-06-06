@@ -185,7 +185,7 @@ namespace LanExchange.Application.Presenters
 
         public void CommandReRead()
         {
-            var pageModel = GetItem(SelectedIndex);
+            var pageModel = model.GetItem(SelectedIndex);
             // clear refreshable columns
             if (pageModel.DataType != null)
                 foreach (var column in panelColumns.GetColumns(pageModel.DataType))
@@ -194,14 +194,6 @@ namespace LanExchange.Application.Presenters
             //var result = pageModel.RetrieveData(RetrieveMode.Sync, false);
             //pageModel.SetFillerResult(result, false);
             pageModel.AsyncRetrieveData(false);
-        }
-
-        public int GetPanelIndexByDataType(Type dataType)
-        {
-            for (int index = 0; index < Count; index++)
-                if (GetItem(index).DataType.Equals(dataType.Name))
-                    return index;
-            return -1;
         }
 
         public void DoPagesReRead()
@@ -339,21 +331,11 @@ namespace LanExchange.Application.Presenters
             panelView.FilterTextChanged += DoPanelViewFilterTextChanged;
         }
 
-        public IPanelModel GetItem(int index)
-        {
-            return model.GetItem(index);
-        }
-
         public void LoadSettings()
         {
             IPagesModel model;
             pagesService.LoadSettings(out model);
             this.model.SetLoadedModel(model);
-        }
-
-        public bool AddTab(IPanelModel info)
-        {
-            return model.AddTab(info);
         }
 
         public void UpdateTabName(int index)

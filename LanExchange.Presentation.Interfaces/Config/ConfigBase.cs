@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace LanExchange.Presentation.Interfaces.Models
+namespace LanExchange.Presentation.Interfaces.Config
 {
     /// <summary>
     /// The base class for any an application config.

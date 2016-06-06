@@ -266,7 +266,6 @@ namespace LanExchange.Presentation.WinForms.Forms
 
         private void mView_Popup(object sender, EventArgs e)
         {
-            mViewGrid.Checked = App.Config.ShowGridLines;
             UpdatePanelRelatedMenu();
         }
 
@@ -332,11 +331,6 @@ namespace LanExchange.Presentation.WinForms.Forms
         private void mCloseOther_Click(object sender, EventArgs e)
         {
             mainPresenter.DoPagesCloseOther();
-        }
-
-        private void mViewGrid_Click(object sender, EventArgs e)
-        {
-            App.Config.ShowGridLines = !App.Config.ShowGridLines;
         }
 
         public string TrayText

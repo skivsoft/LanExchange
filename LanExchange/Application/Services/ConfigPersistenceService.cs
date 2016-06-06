@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using LanExchange.Application.Interfaces.Services;
 using LanExchange.Presentation.Interfaces;
-using LanExchange.Presentation.Interfaces.Models;
+using LanExchange.Presentation.Interfaces.Config;
 using LanExchange.Presentation.WinForms.Helpers;
 
 namespace LanExchange.Application.Services

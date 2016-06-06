@@ -1,27 +1,24 @@
 ﻿using System.ComponentModel;
 using System.Xml.Serialization;
 
-namespace LanExchange.Presentation.Interfaces.Models
+namespace LanExchange.Presentation.Interfaces.Config
 {
     /// <summary>
     /// Program settings. Implemented as Singleton.
     /// </summary>
     [XmlType("LanExchangeConfig")]
-    public class ConfigModel : ConfigBase
+    public class MainConfig : ConfigBase
     {
         private bool runMinimized;
-        private bool advancedMode;
         private string language;
         private int mainFormX;
         private int mainFormWidth;
-        private bool showGridLines;
 
         [Localizable(false)]
-        public ConfigModel()
+        public MainConfig()
         {
             RunMinimized = true;
             Language = "English";
-            ShowGridLines = true;
         }
 
         [DefaultValue(true)]
@@ -34,19 +31,6 @@ namespace LanExchange.Presentation.Interfaces.Models
                 {
                     runMinimized = value;
                     OnChanged(nameof(RunMinimized));
-                }
-            }
-        }
-
-        public bool AdvancedMode
-        {
-            get { return advancedMode; }
-            set
-            {
-                if (advancedMode != value)
-                {
-                    advancedMode = value;
-                    OnChanged(nameof(AdvancedMode));
                 }
             }
         }
@@ -87,20 +71,6 @@ namespace LanExchange.Presentation.Interfaces.Models
                 {
                     mainFormWidth = value;
                     OnChanged(nameof(MainFormWidth));
-                }
-            }
-        }
-
-        [DefaultValue(true)]
-        public bool ShowGridLines
-        {
-            get { return showGridLines; }
-            set
-            {
-                if (showGridLines != value)
-                {
-                    showGridLines = value;
-                    OnChanged(nameof(ShowGridLines));
                 }
             }
         }

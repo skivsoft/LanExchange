@@ -8,7 +8,6 @@ namespace LanExchange.Presentation.Interfaces
         Rectangle SettingsGetBounds();
         void SettingsSetBounds(Rectangle rect);
         void ConfigOnChanged(object sender, PropertyChangedEventArgs e);
-        int FindShortcutKeysPanelIndex();
         void GlobalTranslateUI();
 
         bool IsHotKey(short id);

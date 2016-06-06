@@ -2,7 +2,7 @@
 using System.Diagnostics.Contracts;
 using LanExchange.Application.Interfaces.Services;
 using LanExchange.Presentation.Interfaces;
-using LanExchange.Presentation.Interfaces.Models;
+using LanExchange.Presentation.Interfaces.Config;
 using LanExchange.Presentation.WinForms;
 using LanExchange.Properties;
 
@@ -62,7 +62,7 @@ namespace LanExchange.Application
             pluginManager.LoadPlugins();
 
             // load settings from cfg-file (must be loaded before plugins)
-            App.Config = configService.Load<ConfigModel>();
+            App.Config = configService.Load<MainConfig>();
             App.Config.PropertyChanged += mainPresenter.ConfigOnChanged;
             // load addons
             addonManager.LoadAddons();
