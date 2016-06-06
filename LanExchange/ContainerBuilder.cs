@@ -88,7 +88,6 @@ namespace LanExchange
 
         private void RegisterServices()
         {
-            container.RegisterSingleton<IConfigPersistenceService, ConfigPersistenceService>();
             container.RegisterSingleton<IPagesPersistenceService, PagesPersistenceService>();
             container.Register<IProcessService, ProcessService>();
         }

@@ -133,7 +133,6 @@
   <ItemGroup>
     <Compile Include="AddonCommandStarter.cs" />
     <Compile Include="AddonManager.cs" />
-    <Compile Include="App.cs" />
     <Compile Include="AppView.cs" />
     <Compile Include="BitmapUtils.cs" />
     <Compile Include="ClipboardDataObject.cs" />
@@ -200,9 +199,6 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\RunMinimizedForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Helpers\EnvironmentHelper.cs" />
     <Compile Include="Helpers\MacroHelper.cs" />
     <Compile Include="Helpers\MessageBoxHelper.cs" />
@@ -217,6 +213,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="ScreenService.cs" />
     <Compile Include="SubMenuAdapter.cs" />
@@ -268,6 +269,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Resources\lanexchange_48x48.png" />
   </ItemGroup>
   <ItemGroup>

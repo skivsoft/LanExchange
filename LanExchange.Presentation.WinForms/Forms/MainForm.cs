@@ -10,7 +10,7 @@ using LanExchange.Presentation.WinForms.Properties;
 
 namespace LanExchange.Presentation.WinForms.Forms
 {
-    internal sealed partial class MainForm : RunMinimizedForm, IMainView, IWindowTranslationable
+    internal sealed partial class MainForm : Form, IMainView, IWindowTranslationable
     {
         public PagesView Pages;
 
@@ -113,7 +113,7 @@ namespace LanExchange.Presentation.WinForms.Forms
         {
             var menuItem = sender as MenuItem;
             if (menuItem != null)
-                App.Config.Language = (string)menuItem.Tag;
+                Settings.Default.Language = (string)menuItem.Tag;
         }
 
         public void TranslateUI()
@@ -177,18 +177,18 @@ namespace LanExchange.Presentation.WinForms.Forms
 
         private void mOpen_Click(object sender, EventArgs e)
         {
-            ToggleVisible();
+            Visible = !Visible;
         }
 
         private void TrayIcon_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
-                ToggleVisible();
+                Visible = !Visible;
         }
 
         private void mTrayExit_Click(object sender, EventArgs e)
         {
-            ApplicationExit();
+            Application.Exit();
         }
 
         [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
@@ -203,7 +203,7 @@ namespace LanExchange.Presentation.WinForms.Forms
                 case WM_HOTKEY:
                     if (mainPresenter.IsHotKey((short)m.WParam))
                     {
-                        ToggleVisible();
+                        Visible = !Visible;
                         m.Result = new IntPtr(1);
                     }
                     break;

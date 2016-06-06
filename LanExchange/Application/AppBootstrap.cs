@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
-using LanExchange.Application.Interfaces.Services;
 using LanExchange.Presentation.Interfaces;
-using LanExchange.Presentation.Interfaces.Config;
-using LanExchange.Presentation.WinForms;
 using LanExchange.Properties;
 
 namespace LanExchange.Application
@@ -13,7 +10,6 @@ namespace LanExchange.Application
         private readonly IAppView appView;
         private readonly IMainPresenter mainPresenter;
         private readonly IPagesPresenter pagesPresenter;
-        private readonly IConfigPersistenceService configService;
         private readonly IImageManager imageManager;
         private readonly IAddonManager addonManager;
         private readonly IPluginManager pluginManager;
@@ -24,7 +20,6 @@ namespace LanExchange.Application
             IAppView appView,
             IMainPresenter mainPresenter,
             IPagesPresenter pagesPresenter,
-            IConfigPersistenceService configService,
             IImageManager imageManager,
             IAddonManager addonManager,
             IPluginManager pluginManager,
@@ -34,7 +29,6 @@ namespace LanExchange.Application
             Contract.Requires<ArgumentNullException>(appView != null);
             Contract.Requires<ArgumentNullException>(mainPresenter != null);
             Contract.Requires<ArgumentNullException>(pagesPresenter != null);
-            Contract.Requires<ArgumentNullException>(configService != null);
             Contract.Requires<ArgumentNullException>(imageManager != null);
             Contract.Requires<ArgumentNullException>(addonManager != null);
             Contract.Requires<ArgumentNullException>(pluginManager != null);
@@ -44,7 +38,6 @@ namespace LanExchange.Application
             this.appView = appView;
             this.mainPresenter = mainPresenter;
             this.pagesPresenter = pagesPresenter;
-            this.configService = configService;
             this.imageManager = imageManager;
             this.addonManager = addonManager;
             this.pluginManager = pluginManager;
@@ -60,10 +53,6 @@ namespace LanExchange.Application
             translationService.SetResourceManagerTo<Resources>();
             // load plugins
             pluginManager.LoadPlugins();
-
-            // load settings from cfg-file (must be loaded before plugins)
-            App.Config = configService.Load<MainConfig>();
-            App.Config.PropertyChanged += mainPresenter.ConfigOnChanged;
             // load addons
             addonManager.LoadAddons();
         }

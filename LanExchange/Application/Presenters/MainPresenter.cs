@@ -6,9 +6,8 @@ using System.Globalization;
 using LanExchange.Application.Commands;
 using LanExchange.Application.Interfaces;
 using LanExchange.Presentation.Interfaces;
-using LanExchange.Presentation.Interfaces.Config;
 using LanExchange.Presentation.Interfaces.EventArgs;
-using LanExchange.Presentation.WinForms;
+using LanExchange.Properties;
 
 namespace LanExchange.Application.Presenters
 {
@@ -79,7 +78,6 @@ namespace LanExchange.Application.Presenters
 
         private void PrepareForm()
         {
-            View.SetRunMinimized(App.Config.RunMinimized);
             // setup languages in menu
             View.SetupMenuLanguages();
             // init main form
@@ -108,20 +106,6 @@ namespace LanExchange.Application.Presenters
             // show tray
             View.TrayText = text;
             View.TrayVisible = true;
-        }
-
-        [Localizable(false)]
-        public void ConfigOnChanged(object sender, PropertyChangedEventArgs e)
-        {
-            var config = sender as MainConfig;
-            if (config == null) return;
-            switch (e.PropertyName)
-            {
-                case nameof(config.Language):
-                    translationService.CurrentLanguage = config.Language;
-                    GlobalTranslateUI();
-                    break;
-            }
         }
 
         public void OnDataReady(object sender, DataReadyArgs args)
@@ -224,17 +208,17 @@ namespace LanExchange.Application.Presenters
 
         public Rectangle SettingsGetBounds()
         {
-            var mainFormWidth = App.Config.MainFormWidth;
-            var mainFormX = App.Config.MainFormX;
+            var mainFormWidth = Settings.Default.MainFormWidth;
+            var mainFormLeft = Settings.Default.MainFormLeft;
             // correct width and height
             bool boundsIsNotSet = mainFormWidth == 0;
             Rectangle workingArea;
             if (boundsIsNotSet)
                 workingArea = screenService.PrimaryScreenWorkingArea;
             else
-                workingArea = screenService.GetWorkingArea(new Point(mainFormX + mainFormWidth / 2, 0));
+                workingArea = screenService.GetWorkingArea(new Point(mainFormLeft + mainFormWidth / 2, 0));
             var rect = new Rectangle();
-            rect.X = mainFormX;
+            rect.X = mainFormLeft;
             rect.Y = workingArea.Top;
             rect.Width = Math.Min(Math.Max(GetDefaultWidth(), mainFormWidth), workingArea.Width);
             rect.Height = workingArea.Height;
@@ -268,12 +252,12 @@ namespace LanExchange.Application.Presenters
                 // snap to left side
                 rect.X -= rect.Left - workingArea.Left;
             // set properties
-            var mainFormWidth = App.Config.MainFormWidth;
-            var mainFormX = App.Config.MainFormX;
-            if (rect.Left != mainFormX || rect.Width != mainFormWidth)
+            var mainFormWidth = Settings.Default.MainFormWidth;
+            var mainFormLeft = Settings.Default.MainFormLeft;
+            if (rect.Left != mainFormLeft || rect.Width != mainFormWidth)
             {
-                App.Config.MainFormX = rect.Left;
-                App.Config.MainFormWidth = rect.Width;
+                Settings.Default.MainFormLeft = rect.Left;
+                Settings.Default.MainFormWidth = rect.Width;
             }
         }
     }

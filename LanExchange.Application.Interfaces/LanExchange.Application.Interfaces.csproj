@@ -52,7 +52,6 @@
     <Compile Include="IProcessService.cs" />
     <Compile Include="EventArgs\PanelModelEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\IConfigPersistenceService.cs" />
     <Compile Include="Services\IPagesPersistenceService.cs" />
   </ItemGroup>
   <ItemGroup>
