@@ -16,18 +16,13 @@ namespace LanExchange.Presentation.WinForms.Controls
             InitializeComponent();
             this.presenter = presenter;
             presenter.Initialize(this);
-
-            Dock = DockStyle.Bottom;
-        }
-
-        private void Status_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-                presenter.PerformDoubleClick();
         }
 
         private void lCompName_MouseUp(object sender, MouseEventArgs e)
         {
+            if (e.Button == MouseButtons.Left)
+                presenter.PerformComputerLeftClick();
+
             if (e.Button == MouseButtons.Right)
             {
                 var control = (ModifierKeys & Keys.Control) != 0;

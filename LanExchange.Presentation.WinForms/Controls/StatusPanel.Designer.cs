@@ -46,7 +46,6 @@
             this.Status.ShowItemToolTips = true;
             this.Status.Size = new System.Drawing.Size(493, 22);
             this.Status.TabIndex = 16;
-            this.Status.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Status_MouseDoubleClick);
             // 
             // lItemsCount
             // 

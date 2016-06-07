@@ -39,7 +39,7 @@ namespace LanExchange.Application.Presenters
             View.UserImageIndex = imageManager.IndexOf(PanelImageNames.USER);
         }
 
-        public void PerformDoubleClick()
+        public void PerformComputerLeftClick()
         {
             shellService.OpenMyComputer();
         }

@@ -50,6 +50,7 @@ namespace LanExchange.Presentation.WinForms.Forms
 
             // create status panel
             statusPanel = viewFactory.CreateStatusPanelView();
+            ((Control)statusPanel).Dock = DockStyle.Bottom;
             Controls.Add((Control)statusPanel);
 
             InitializeComponent();
@@ -175,15 +176,22 @@ namespace LanExchange.Presentation.WinForms.Forms
             mTrayOpen_TranslateUI();
         }
 
-        private void mOpen_Click(object sender, EventArgs e)
+        private void ToggleVisible()
         {
             Visible = !Visible;
+            if (Visible)
+                Activate();
+        }
+
+        private void mOpen_Click(object sender, EventArgs e)
+        {
+            ToggleVisible();
         }
 
         private void TrayIcon_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
-                Visible = !Visible;
+                ToggleVisible();
         }
 
         private void mTrayExit_Click(object sender, EventArgs e)
@@ -203,7 +211,7 @@ namespace LanExchange.Presentation.WinForms.Forms
                 case WM_HOTKEY:
                     if (mainPresenter.IsHotKey((short)m.WParam))
                     {
-                        Visible = !Visible;
+                        ToggleVisible();
                         m.Result = new IntPtr(1);
                     }
                     break;
