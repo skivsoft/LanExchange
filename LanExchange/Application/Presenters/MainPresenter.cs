@@ -85,6 +85,7 @@ namespace LanExchange.Application.Presenters
 
         protected override void InitializePresenter()
         {
+            View.SetupMenuTags();
             // setup languages in menu
             View.SetupMenuLanguages();
             // init main form
@@ -205,19 +206,9 @@ namespace LanExchange.Application.Presenters
             //commandManager.ExecuteCommand<PagesReReadCommand>();
         }
 
-        public void DoPagesCloseTab()
-        {
-            //commandManager.ExecuteCommand<PagesCloseTabCommand>();
-        }
-
         public void DoAbout()
         {
             commandManager.ExecuteCommand<AboutCommand>();
-        }
-
-        public void DoPagesCloseOther()
-        {
-            //commandManager.ExecuteCommand<PagesCloseOtherCommand>();
         }
 
         private void GlobalTranslateColumns()
@@ -262,33 +253,6 @@ namespace LanExchange.Application.Presenters
             return rect;
         }
 
-        public void SettingsSetBounds(Rectangle rect)
-        {
-            Rectangle workingArea = screenService.GetWorkingArea(rect);
-            // shift rect into working area
-            if (rect.Left < workingArea.Left) rect.X = workingArea.Left;
-            if (rect.Top < workingArea.Top) rect.Y = workingArea.Top;
-            if (rect.Right > workingArea.Right) rect.X -= rect.Right - workingArea.Right;
-            if (rect.Bottom > workingArea.Bottom) rect.Y -= rect.Bottom - workingArea.Bottom;
-            // determination side to snap right or left
-            int centerX = (rect.Left + rect.Right) >> 1;
-            int workingAreaCenterX = (workingArea.Left + workingArea.Right) >> 1;
-            if (centerX >= workingAreaCenterX)
-                // snap to right side
-                rect.X = workingArea.Right - rect.Width;
-            else
-                // snap to left side
-                rect.X -= rect.Left - workingArea.Left;
-            // set properties
-            var mainFormWidth = Settings.Default.MainFormWidth;
-            var mainFormLeft = Settings.Default.MainFormLeft;
-            if (rect.Left != mainFormLeft || rect.Width != mainFormWidth)
-            {
-                Settings.Default.MainFormLeft = rect.Left;
-                Settings.Default.MainFormWidth = rect.Width;
-            }
-        }
-
         public void DoToggleVisible()
         {
             View.Visible = !View.Visible;
@@ -318,14 +282,40 @@ namespace LanExchange.Application.Presenters
 
         public void DoChangeView(PanelViewMode viewMode)
         {
-            //var pv = Pages.ActivePanelView;
-            //if (pv == null) return;
+            pagesPresenter.ViewMode = viewMode;
+        }
 
-            //var menuItem = sender as MenuItem;
-            //if (menuItem == null) return;
-            //int tag;
-            //if (int.TryParse(menuItem.Tag.ToString(), out tag))
-            //    pv.ViewMode = (PanelViewMode)tag;
+        private bool menuIsOpening;
+
+        public void PerformMenuKeyDown()
+        {
+            if (!View.MenuVisible)
+            {
+                View.MenuVisible = true;
+                menuIsOpening = true;
+            }
+        }
+
+        public bool PerformMenuKeyUp()
+        {
+            if (menuIsOpening)
+            {
+                menuIsOpening = false;
+                return false;
+            }
+            View.MenuVisible = false;
+            return true;
+        }
+
+        public void PerformEscapeKeyDown()
+        {
+            View.Visible = false;
+        }
+
+        public void PerformEscapeKeyUp()
+        {
+            if (View.MenuVisible)
+                View.MenuVisible = false;
         }
     }
 }

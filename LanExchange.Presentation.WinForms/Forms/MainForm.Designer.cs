@@ -44,12 +44,9 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.MainMenu = new System.Windows.Forms.MainMenu(this.components);
             this.mPanel = new System.Windows.Forms.MenuItem();
             this.mNewItem = new System.Windows.Forms.MenuItem();
-            this.menuItem3 = new System.Windows.Forms.MenuItem();
+            this.panelSep1 = new System.Windows.Forms.MenuItem();
             this.mReRead = new System.Windows.Forms.MenuItem();
             this.mPanelSep2 = new System.Windows.Forms.MenuItem();
-            this.mCloseTab = new System.Windows.Forms.MenuItem();
-            this.mCloseOther = new System.Windows.Forms.MenuItem();
-            this.mPanelSep3 = new System.Windows.Forms.MenuItem();
             this.mExit = new System.Windows.Forms.MenuItem();
             this.mView = new System.Windows.Forms.MenuItem();
             this.mViewLarge = new System.Windows.Forms.MenuItem();
@@ -136,12 +133,9 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.mPanel.Index = 0;
             this.mPanel.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.mNewItem,
-            this.menuItem3,
+            this.panelSep1,
             this.mReRead,
             this.mPanelSep2,
-            this.mCloseTab,
-            this.mCloseOther,
-            this.mPanelSep3,
             this.mExit});
             this.mPanel.Text = global::LanExchange.Presentation.WinForms.Properties.Resources.mPanel_Text;
             this.mPanel.Popup += new System.EventHandler(this.mPanel_Popup);
@@ -153,17 +147,17 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.mNewItem.Text = global::LanExchange.Presentation.WinForms.Properties.Resources.mNewItem_Text;
             this.mNewItem.Visible = false;
             // 
-            // menuItem3
+            // panelSep1
             // 
-            this.menuItem3.Index = 1;
-            this.menuItem3.Text = "-";
-            this.menuItem3.Visible = false;
+            this.panelSep1.Index = 1;
+            this.panelSep1.Text = "-";
+            this.panelSep1.Visible = false;
             // 
             // mReRead
             // 
             this.mReRead.Index = 2;
             this.mReRead.Shortcut = System.Windows.Forms.Shortcut.CtrlR;
-            this.mReRead.Text = global::LanExchange.Presentation.WinForms.Properties.Resources.mReRead_Text;
+            this.mReRead.Text = "&Re-read";
             this.mReRead.Click += new System.EventHandler(this.mReRead_Click);
             // 
             // mPanelSep2
@@ -171,29 +165,11 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.mPanelSep2.Index = 3;
             this.mPanelSep2.Text = "-";
             // 
-            // mCloseTab
-            // 
-            this.mCloseTab.Index = 4;
-            this.mCloseTab.Shortcut = System.Windows.Forms.Shortcut.CtrlW;
-            this.mCloseTab.Text = global::LanExchange.Presentation.WinForms.Properties.Resources.mCloseTab_Text;
-            this.mCloseTab.Click += new System.EventHandler(this.mCloseTab_Click);
-            // 
-            // mCloseOther
-            // 
-            this.mCloseOther.Index = 5;
-            this.mCloseOther.Text = global::LanExchange.Presentation.WinForms.Properties.Resources.mCloseOther_Text;
-            this.mCloseOther.Click += new System.EventHandler(this.mCloseOther_Click);
-            // 
-            // mPanelSep3
-            // 
-            this.mPanelSep3.Index = 6;
-            this.mPanelSep3.Text = "-";
-            // 
             // mExit
             // 
-            this.mExit.Index = 7;
-            this.mExit.Shortcut = System.Windows.Forms.Shortcut.F10;
-            this.mExit.Text = global::LanExchange.Presentation.WinForms.Properties.Resources.mExit_Text;
+            this.mExit.Index = 4;
+            this.mExit.Shortcut = System.Windows.Forms.Shortcut.AltF4;
+            this.mExit.Text = "E&xit";
             this.mExit.Click += new System.EventHandler(this.mTrayExit_Click);
             // 
             // mView
@@ -211,34 +187,34 @@ namespace LanExchange.Presentation.WinForms.Forms
             // 
             this.mViewLarge.Index = 0;
             this.mViewLarge.RadioCheck = true;
-            this.mViewLarge.Tag = "0";
-            this.mViewLarge.Text = global::LanExchange.Presentation.WinForms.Properties.Resources.mViewLarge_Text;
-            this.mViewLarge.Click += new System.EventHandler(this.mViewLarge_Click);
+            this.mViewLarge.Tag = "";
+            this.mViewLarge.Text = "La&rge icons";
+            this.mViewLarge.Click += new System.EventHandler(this.mView_Click);
             // 
             // mViewSmall
             // 
             this.mViewSmall.Index = 1;
             this.mViewSmall.RadioCheck = true;
-            this.mViewSmall.Tag = "2";
-            this.mViewSmall.Text = global::LanExchange.Presentation.WinForms.Properties.Resources.mViewSmall_Text;
-            this.mViewSmall.Click += new System.EventHandler(this.mViewLarge_Click);
+            this.mViewSmall.Tag = "";
+            this.mViewSmall.Text = "Small ico&ns";
+            this.mViewSmall.Click += new System.EventHandler(this.mView_Click);
             // 
             // mViewList
             // 
             this.mViewList.Index = 2;
             this.mViewList.RadioCheck = true;
-            this.mViewList.Tag = "3";
-            this.mViewList.Text = global::LanExchange.Presentation.WinForms.Properties.Resources.mViewList_Text;
-            this.mViewList.Click += new System.EventHandler(this.mViewLarge_Click);
+            this.mViewList.Tag = "";
+            this.mViewList.Text = "&List";
+            this.mViewList.Click += new System.EventHandler(this.mView_Click);
             // 
             // mViewDetails
             // 
             this.mViewDetails.Checked = true;
             this.mViewDetails.Index = 3;
             this.mViewDetails.RadioCheck = true;
-            this.mViewDetails.Tag = "1";
-            this.mViewDetails.Text = global::LanExchange.Presentation.WinForms.Properties.Resources.mViewDetails_Text;
-            this.mViewDetails.Click += new System.EventHandler(this.mViewLarge_Click);
+            this.mViewDetails.Tag = "";
+            this.mViewDetails.Text = "&Details";
+            this.mViewDetails.Click += new System.EventHandler(this.mView_Click);
             // 
             // mLanguage
             // 
@@ -260,19 +236,19 @@ namespace LanExchange.Presentation.WinForms.Forms
             // mHelpWeb
             // 
             this.mHelpWeb.Index = 0;
-            this.mHelpWeb.Text = global::LanExchange.Presentation.WinForms.Properties.Resources.mHelpWeb_Text;
+            this.mHelpWeb.Text = "Lan&Exchange Webpage";
             this.mHelpWeb.Click += new System.EventHandler(this.mWebPage_Click);
             // 
             // mHelpBugs
             // 
             this.mHelpBugs.Index = 1;
-            this.mHelpBugs.Text = global::LanExchange.Presentation.WinForms.Properties.Resources.mHelpBugs_Text;
+            this.mHelpBugs.Text = "&BugTracker Webpage";
             this.mHelpBugs.Click += new System.EventHandler(this.mHelpBugs_Click);
             // 
             // mHelpLangs
             // 
             this.mHelpLangs.Index = 2;
-            this.mHelpLangs.Text = global::LanExchange.Presentation.WinForms.Properties.Resources.mHelpLangs_Text;
+            this.mHelpLangs.Text = "&Localization Webpage";
             this.mHelpLangs.Click += new System.EventHandler(this.mHelpLangs_Click);
             // 
             // menuItem1
@@ -283,7 +259,7 @@ namespace LanExchange.Presentation.WinForms.Forms
             // mHelpAbout
             // 
             this.mHelpAbout.Index = 4;
-            this.mHelpAbout.Text = global::LanExchange.Presentation.WinForms.Properties.Resources.mHelpAbout_Text;
+            this.mHelpAbout.Text = "&About";
             this.mHelpAbout.Click += new System.EventHandler(this.mHelpAbout_Click);
             // 
             // MainForm
@@ -295,9 +271,9 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.KeyPreview = true;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.ResizeEnd += new System.EventHandler(this.MainForm_ResizeEnd);
             this.RightToLeftChanged += new System.EventHandler(this.MainForm_RightToLeftChanged);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyUp);
             this.popTray.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -319,7 +295,6 @@ namespace LanExchange.Presentation.WinForms.Forms
         private System.Windows.Forms.MenuItem mPanel;
         private System.Windows.Forms.MenuItem mReRead;
         private System.Windows.Forms.MenuItem mHelpWeb;
-        private System.Windows.Forms.MenuItem mPanelSep3;
         private System.Windows.Forms.MenuItem mExit;
         private System.Windows.Forms.MenuItem mLanguage;
         private System.Windows.Forms.MenuItem mHelpLangs;
@@ -330,11 +305,9 @@ namespace LanExchange.Presentation.WinForms.Forms
         private System.Windows.Forms.MenuItem mViewList;
         private System.Windows.Forms.MenuItem mViewDetails;
         private System.Windows.Forms.MenuItem mPanelSep2;
-        private System.Windows.Forms.MenuItem mCloseTab;
-        private System.Windows.Forms.MenuItem mCloseOther;
         private MenuItem menuItem1;
         private MenuItem mNewItem;
-        private MenuItem menuItem3;
+        private MenuItem panelSep1;
     }
 }
 

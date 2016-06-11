@@ -19,16 +19,17 @@ namespace LanExchange.Application.Implementation
         private const string PLUGIN_MASK = "LanExchange.Plugin.*.dll";
         private readonly ILogService logService;
 
+        [ImportMany]
+        // ReSharper disable once FieldCanBeMadeReadOnly.Local
+        private IEnumerable<IPlugin> plugins;
+
         public PluginManager(ILogService logService)
         {
             Contract.Requires<ArgumentNullException>(logService != null);
 
             this.logService = logService;
+            plugins = Enumerable.Empty<IPlugin>();
         }
-
-        [ImportMany]
-        // ReSharper disable once FieldCanBeMadeReadOnly.Local
-        private IEnumerable<IPlugin> plugins = Enumerable.Empty<IPlugin>();
 
         public void LoadPlugins()
         {

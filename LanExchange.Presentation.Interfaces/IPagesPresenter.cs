@@ -15,6 +15,7 @@ namespace LanExchange.Presentation.Interfaces
 
         [Obsolete("Need to be removed.")]
         IPanelView ActivePanelView { get; }
+        PanelViewMode ViewMode { get; set; }
 
         void SaveInstant();
 

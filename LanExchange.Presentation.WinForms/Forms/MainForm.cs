@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.WinForms.Helpers;
 using LanExchange.Presentation.WinForms.Properties;
+using System.Diagnostics;
 
 namespace LanExchange.Presentation.WinForms.Forms
 {
@@ -22,8 +23,6 @@ namespace LanExchange.Presentation.WinForms.Forms
             InitializeComponent();
             this.mainPresenter = mainPresenter;
             mainPresenter.Initialize(this);
-
-            Menu = MainMenu;
         }
 
         public void SetupMenuLanguages()
@@ -87,12 +86,29 @@ namespace LanExchange.Presentation.WinForms.Forms
             mTrayOpen.Text = Visible ? Resources.MainForm_Close : Resources.mTrayOpen_Text;
         }
 
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
             {
-                Hide();
+                mainPresenter.PerformEscapeKeyDown();
                 e.Handled = true;
+            }
+            if (e.KeyCode == Keys.F10 || e.KeyCode == Keys.Menu)
+            {
+                mainPresenter.PerformMenuKeyDown();
+            }
+        }
+
+        private void MainForm_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                mainPresenter.PerformEscapeKeyUp();
+                e.Handled = true;
+            }
+            if (e.KeyCode == Keys.F10 || e.KeyCode == Keys.Menu)
+            {
+                e.Handled = mainPresenter.PerformMenuKeyUp();
             }
         }
 
@@ -112,7 +128,6 @@ namespace LanExchange.Presentation.WinForms.Forms
             //tooltip.ToolTipTitle = string.Empty;
         }
 
-        [Localizable(false)]
         private void mHelpAbout_Click(object sender, EventArgs e)
         {
             mainPresenter.DoAbout();
@@ -166,12 +181,6 @@ namespace LanExchange.Presentation.WinForms.Forms
             }
         }
 
-        private void MainForm_ResizeEnd(object sender, EventArgs e)
-        {
-            mainPresenter.SettingsSetBounds(Bounds);
-        }
-
-        [Localizable(false)]
         private void mReRead_Click(object sender, EventArgs e)
         {
             mainPresenter.DoPagesReRead();
@@ -212,10 +221,18 @@ namespace LanExchange.Presentation.WinForms.Forms
             UpdatePanelRelatedMenu();
         }
 
-        private void mViewLarge_Click(object sender, EventArgs e)
+        public void SetupMenuTags()
         {
-            var control = (Control)sender;
-            mainPresenter.DoChangeView((PanelViewMode)control.Tag);
+            mViewLarge.Tag = PanelViewMode.LargeIcon;
+            mViewSmall.Tag = PanelViewMode.SmallIcon;
+            mViewList.Tag = PanelViewMode.List;
+            mViewDetails.Tag = PanelViewMode.Details;
+        }
+
+        private void mView_Click(object sender, EventArgs e)
+        {
+            var menu = (Menu)sender;
+            mainPresenter.DoChangeView((PanelViewMode)menu.Tag);
         }
 
         private void mWebPage_Click(object sender, EventArgs e)
@@ -244,25 +261,12 @@ namespace LanExchange.Presentation.WinForms.Forms
             //lItemsCount.Text = String.Format(CultureInfo.InvariantCulture, format, args);
         }
 
-        [Localizable(false)]
         private void mPanel_Popup(object sender, EventArgs e)
         {
             // TODO remove commandManager
             //mReRead.Enabled = commandManager.IsCommandEnabled<PagesReReadCommand>();
             //mCloseTab.Enabled = commandManager.IsCommandEnabled<PagesCloseTabCommand>();
             //mCloseOther.Enabled = commandManager.IsCommandEnabled<PagesCloseOtherCommand>();
-        }
-
-        [Localizable(false)]
-        private void mCloseTab_Click(object sender, EventArgs e)
-        {
-            mainPresenter.DoPagesCloseTab();
-        }
-
-        [Localizable(false)]
-        private void mCloseOther_Click(object sender, EventArgs e)
-        {
-            mainPresenter.DoPagesCloseOther();
         }
 
         public string TrayText
@@ -317,5 +321,14 @@ namespace LanExchange.Presentation.WinForms.Forms
         }
 
         public bool RightToLeftValue { get; set; }
+
+        public bool MenuVisible
+        {
+            get { return Menu != null; }
+            set
+            {
+                Menu = value ? MainMenu : null;
+            }
+        }
     }
 }

@@ -314,6 +314,16 @@ namespace LanExchange.Application.Presenters
             get { return View.ActivePanelView; }
         }
 
+        public PanelViewMode ViewMode
+        {
+            get { return View.ActivePanelView?.ViewMode ?? PanelViewMode.Details; }
+            set
+            {
+                if (View.ActivePanelView != null)
+                    View.ActivePanelView.ViewMode = value;
+            }
+        }
+
         public void SaveInstant()
         {
             pagesService.SaveSettings(model);
