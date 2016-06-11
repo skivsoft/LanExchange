@@ -22,6 +22,14 @@ namespace LanExchange.Presentation.Interfaces
         string Text { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="IView"/> is visible.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if visible; otherwise, <c>false</c>.
+        /// </value>
+        bool Visible { get; set; }
+
+        /// <summary>
         /// Sets the window bounds.
         /// </summary>
         /// <param name="left">The left.</param>
@@ -29,16 +37,6 @@ namespace LanExchange.Presentation.Interfaces
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
         void SetBounds(int left, int top, int width, int height);
-
-        /// <summary>
-        /// Shows the window.
-        /// </summary>
-        void Show();
-
-        /// <summary>
-        /// Hides the window.
-        /// </summary>
-        void Hide();
 
         /// <summary>
         /// Activates the window.

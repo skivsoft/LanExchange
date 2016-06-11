@@ -4,13 +4,11 @@ using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
-using System.Xml.Serialization;
 using LanExchange.Application.Implementation;
 using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Models
 {
-    [XmlType("Tab")]
     public class PanelModel : IPanelModel
     {
         private readonly IPanelFillerManager panelFillers;
@@ -64,7 +62,6 @@ namespace LanExchange.Application.Models
         /// </value>
         [Localizable(false)]
         //[XmlAttribute("Name")]
-        [XmlIgnore]
         public string TabName
         {
             get
@@ -95,18 +92,14 @@ namespace LanExchange.Application.Models
             //panelUpdater.Start(this, clearFilter);
         }
 
-        [XmlAttribute]
         public string DataType { get; set; }
 
         [Localizable(false)]
-        [XmlAttribute("View")]
         public PanelViewMode CurrentView { get; set; }
 
         [Localizable(false)]
-        [XmlAttribute("Filter")]
         public string FilterText { get; set; }
 
-        [XmlElement("Path")]
         public IObjectPath<PanelItemBase> CurrentPath
         {
             get { return currentPath; }
@@ -118,7 +111,6 @@ namespace LanExchange.Application.Models
             }
         }
 
-        [XmlElement("Focused")]
         public PanelItemBase FocusedItem { get; set; }
 
         public IList<PanelItemBase> Items

@@ -79,9 +79,11 @@
     <Compile Include="IScreenService.cs" />
     <Compile Include="IServiceFactory.cs" />
     <Compile Include="IShell32Service.cs" />
+    <Compile Include="ISupportRightToLeft.cs" />
     <Compile Include="ISysImageListService.cs" />
     <Compile Include="ITranslationService.cs" />
     <Compile Include="ITranslitStrategy.cs" />
+    <Compile Include="IViewContainer.cs" />
     <Compile Include="IViewFactory.cs" />
     <Compile Include="IWindowFactory.cs" />
     <Compile Include="HorizontalAlignment.cs" />
@@ -142,6 +144,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RetrieveMode.cs" />
     <Compile Include="SysImageListSize.cs" />
+    <Compile Include="ViewDockStyle.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\LanExchange.snk">

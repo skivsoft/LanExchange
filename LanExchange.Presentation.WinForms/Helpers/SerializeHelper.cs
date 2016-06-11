@@ -1,94 +1,12 @@
 ﻿using System;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
 
 namespace LanExchange.Presentation.WinForms.Helpers
 {
-    public static class SerializeHelper
+    internal static class SerializeHelper
     {
-        public static void ForceCreatePath(string path)
-        {
-            if (!Directory.Exists(path))
-            {
-                ForceCreatePath(Path.GetDirectoryName(path));
-                Directory.CreateDirectory(path);
-            }
-        }
-
-        public static void SerializeObjectToBinaryFile(string fileName, object obj)
-        {
-            ForceCreatePath(Path.GetDirectoryName(fileName));
-            var stream = File.Open(fileName, FileMode.Create);
-            var bformatter = new BinaryFormatter();
-            bformatter.Serialize(stream, obj);
-            stream.Close();
-        }
-
-        public static object DeserializeObjectFromBinaryFile(string fileName)
-        {
-            var stream = File.Open(fileName, FileMode.Open);
-            var bformatter = new BinaryFormatter();
-            var result = bformatter.Deserialize(stream);
-            stream.Close();
-            return result;
-        }
-
-        public static string SerializeObjectToXml(object obj)
-        {
-            if (obj == null) return null;
-            var ser = new XmlSerializer(obj.GetType());
-            using (var sw = new StringWriter(CultureInfo.InvariantCulture))
-            {
-                ser.Serialize(sw, obj);
-                return sw.ToString();
-            }
-        }
-
-        public static void SerializeObjectToXmlFile(string fileName, object obj)
-        {
-            if (obj == null) return;
-            ForceCreatePath(Path.GetDirectoryName(fileName));
-            var writer = new XmlSerializer(obj.GetType());
-            using (var file = new StreamWriter(fileName))
-            {
-                writer.Serialize(file, obj);
-            }
-        }
-
-        public static void SerializeObjectToXmlFile(string fileName, object obj, Type[] extraTypes)
-        {
-            if (obj == null) return;
-            ForceCreatePath(Path.GetDirectoryName(fileName));
-            var writer = new XmlSerializer(obj.GetType(), extraTypes);
-            using (var file = new StreamWriter(fileName))
-            {
-                writer.Serialize(file, obj);
-            }
-        }
-
-        public static object DeserializeObjectFromXml(string xml, Type tp)
-        {
-            var ser = new XmlSerializer(tp);
-            using (TextReader tr = new StringReader(xml))
-            {
-                object obj = ser.Deserialize(tr);
-                return obj;
-            }
-        }
-
-        public static object DeserializeObjectFromXmlFile(string fileName, Type tp, Type[] extraTypes)
-        {
-            var ser = new XmlSerializer(tp, extraTypes);
-            using (var tr = new StreamReader(fileName))
-            {
-                object obj = ser.Deserialize(tr);
-                return obj;
-            }
-        }
-
         public static object DeserializeObjectFromXmlFile(string fileName, Type tp)
         {
             var ser = new XmlSerializer(tp);

@@ -1,4 +1,4 @@
-﻿namespace LanExchange.Application.Interfaces.Services
+﻿namespace LanExchange.Application.Interfaces
 {
     public interface IPagesPersistenceService
     {

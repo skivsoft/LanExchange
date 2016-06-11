@@ -1,7 +1,6 @@
 ﻿namespace LanExchange.Presentation.Interfaces
 {
-    public interface IWindowTranslationable : IWindow, ITranslationable
+    public interface IWindowTranslationable : IWindow, ITranslationable, ISupportRightToLeft
     {
-        bool RightToLeftValue { get; set; }
     }
 }

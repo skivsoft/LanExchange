@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Xml.Serialization;
 using LanExchange.Application.Interfaces;
 using LanExchange.Application.Interfaces.EventArgs;
 using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Models
 {
-    [XmlType("LanExchangeTabs")]
-    public class PagesModel : IPagesModel
+    internal sealed class PagesModel : IPagesModel
     {
         private const string DEFAULT1_PANELITEMTYPE = "DomainPanelItem";
         private const string DEFAULT2_PANELITEMTYPE = "DrivePanelItem";

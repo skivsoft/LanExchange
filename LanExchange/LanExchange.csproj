@@ -65,6 +65,7 @@
     <CodeContractsRuntimeCheckingLevel>Preconditions</CodeContractsRuntimeCheckingLevel>
     <CodeContractsReferenceAssembly>%28none%29</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+    <LangVersion>default</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -145,8 +146,12 @@
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Application\Commands\PagesCommandBase.cs" />
+    <Compile Include="Application\Implementation\EmptyLogService.cs" />
     <Compile Include="Application\Implementation\PanelModelCopyHelper.cs" />
     <Compile Include="Application\Implementation\ProcessService.cs" />
+    <Compile Include="Application\Models\PagesDto.cs" />
+    <Compile Include="Application\Models\PagesExtension.cs" />
+    <Compile Include="Application\Models\PanelDto.cs" />
     <Compile Include="Application\Presenters\InfoPresenter.cs" />
     <Compile Include="Application\Presenters\StatusPanelPresenter.cs" />
     <Compile Include="Application\Extensions\AssemblyExtensions.cs" />
@@ -160,7 +165,7 @@
     <Compile Include="Application\Managers\CommandManager.cs" />
     <Compile Include="Application\Models\ObjectPath.cs" />
     <Compile Include="CoreFacade.cs" />
-    <Compile Include="Application\Services\PagesPersistenceService.cs" />
+    <Compile Include="Domain\Implementation\PagesPersistenceService.cs" />
     <Compile Include="Application\AppBootstrap.cs" />
     <Compile Include="Application\Models\ColumnComparer.cs" />
     <Compile Include="ContainerBuilder.cs" />
@@ -178,6 +183,8 @@
     <Compile Include="Application\Implementation\FolderManager.cs" />
     <Compile Include="Application\Models\PagesModel.cs" />
     <Compile Include="Application\Models\PanelModel.cs" />
+    <Compile Include="Domain\Interfaces\ISerializeService.cs" />
+    <Compile Include="Infrastructure\XmlSerializeService.cs" />
     <Compile Include="Plugin\PluginInternal.cs" />
     <Compile Include="Plugin\Shortcut\ShortcutFactory.cs" />
     <Compile Include="Plugin\Shortcut\ShortcutFiller.cs" />

@@ -6,12 +6,13 @@ using LanExchange.Application.Commands;
 using LanExchange.Application.Factories;
 using LanExchange.Application.Implementation;
 using LanExchange.Application.Interfaces;
-using LanExchange.Application.Interfaces.Services;
 using LanExchange.Application.Managers;
 using LanExchange.Application.Models;
 using LanExchange.Application.Presenters;
-using LanExchange.Application.Services;
+using LanExchange.Domain.Implementation;
 using LanExchange.Presentation.Interfaces;
+using LanExchange.Domain.Interfaces;
+using LanExchange.Infrastructure;
 
 namespace LanExchange
 {
@@ -36,6 +37,8 @@ namespace LanExchange
             RegisterServices();
             RegisterFactories();
             RegisterCommands();
+            RegisterDomain();
+            RegisterInfrastucture();
 
             return new ContainerWrapper(container);
         }
@@ -43,7 +46,6 @@ namespace LanExchange
         private void RegisterCoreSingletons()
         {
             container.RegisterSingleton<IServiceProvider>(container);
-            container.RegisterSingleton<IAppBootstrap, AppBootstrap>();
             container.RegisterSingleton<IPanelItemFactoryManager, PanelItemFactoryManager>();
             container.RegisterSingleton<IPanelFillerManager, PanelFillerManager>();
             container.RegisterSingleton<IPanelColumnManager, PanelColumnManager>();
@@ -65,8 +67,9 @@ namespace LanExchange
 
         private void RegisterPresenters()
         {
+            container.Register<IAppBootstrap, AppBootstrap>();
             container.RegisterSingleton<IAppPresenter, AppPresenter>();
-            container.RegisterSingleton<IMainPresenter, MainPresenter>();
+            container.Register<IMainPresenter, MainPresenter>();
             container.Register<IAboutPresenter, AboutPresenter>();
             container.RegisterSingleton<IPagesPresenter, PagesPresenter>();
             container.Register<IFilterPresenter, FilterPresenter>();
@@ -87,8 +90,8 @@ namespace LanExchange
 
         private void RegisterServices()
         {
-            container.RegisterSingleton<IPagesPersistenceService, PagesPersistenceService>();
             container.Register<IProcessService, ProcessService>();
+            container.RegisterSingleton<ILogService, EmptyLogService>();
         }
 
         private void RegisterFactories()
@@ -112,5 +115,15 @@ namespace LanExchange
             });
         }
 
+        private void RegisterDomain()
+        {
+            // TODO: can became transient when dependecy on PagesPresenter will be removed from commands
+            container.RegisterSingleton<IPagesPersistenceService, PagesPersistenceService>();
+        }
+
+        private void RegisterInfrastucture()
+        {
+            container.RegisterSingleton<ISerializeService, XmlSerializeService>();
+        }
     }
 }

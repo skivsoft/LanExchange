@@ -2,7 +2,7 @@
 
 namespace LanExchange.Presentation.Interfaces
 {
-    public interface IMainView : IWindow
+    public interface IMainView : IWindow, IViewContainer, ISupportRightToLeft
     {
         IntPtr Handle { get; }
         string TrayText { get; set; }
@@ -13,7 +13,5 @@ namespace LanExchange.Presentation.Interfaces
         void SetToolTip(object control, string tipText);
 
         void SetupMenuLanguages();
-
-        void SetupPages();
     }
 }

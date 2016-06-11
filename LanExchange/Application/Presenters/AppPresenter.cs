@@ -59,10 +59,10 @@ namespace LanExchange.Application.Presenters
             {
                 // set rtl
                 var rtlChanged = translationService.RightToLeft != form.RightToLeftValue;
-                if (rtlChanged) form.Hide();
+                if (rtlChanged) form.Visible = false;
                 form.RightToLeftValue = translationService.RightToLeft;
                 form.TranslateUI();
-                if (rtlChanged) form.Show();
+                if (rtlChanged) form.Visible = true;
             }
         }
     }

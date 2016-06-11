@@ -53,16 +53,6 @@ namespace LanExchange.Application.Presenters
             processService.Start(model.HomeLink);
         }
 
-        public void OpenLocalizationLink()
-        {
-            processService.Start(model.LocalizationLink);
-        }
-
-        public void OpenBugTrackerWebLink()
-        {
-            processService.Start(model.BugTrackerLink);
-        }
-
         public string GetDetailsRtf()
         {
             var sb = new StringBuilder();

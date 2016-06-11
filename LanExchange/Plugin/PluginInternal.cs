@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.Composition;
 using LanExchange.Plugin.Shortcut;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Extensions;
@@ -6,6 +7,7 @@ using LanExchange.Properties;
 
 namespace LanExchange.Plugin
 {
+    [Export(typeof(IPlugin))]
     internal class PluginInternal : IPlugin
     {
         public void Initialize(IServiceProvider serviceProvider)

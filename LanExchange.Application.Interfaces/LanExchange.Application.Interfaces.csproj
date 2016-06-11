@@ -48,11 +48,12 @@
     <Compile Include="EventArgs\PanelIndexEventArgs.cs" />
     <Compile Include="IAboutModel.cs" />
     <Compile Include="IHotkeyService.cs" />
+    <Compile Include="ILogService.cs" />
     <Compile Include="IPagesModel.cs" />
     <Compile Include="IProcessService.cs" />
     <Compile Include="EventArgs\PanelModelEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\IPagesPersistenceService.cs" />
+    <Compile Include="IPagesPersistenceService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\LanExchange.snk">

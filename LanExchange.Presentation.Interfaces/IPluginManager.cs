@@ -1,10 +1,10 @@
-using System.Collections.Generic;
+using System;
 
 namespace LanExchange.Presentation.Interfaces
 {
     public interface IPluginManager
     {
         void LoadPlugins();
-        IEnumerable<IPlugin> Items { get; }
+        void InitializePlugins(IServiceProvider serviceProvider);
     }
 }

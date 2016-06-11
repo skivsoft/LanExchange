@@ -26,6 +26,9 @@ namespace LanExchange.Application.Presenters
         private readonly IPanelItemFactoryManager factoryManager;
         private readonly IScreenService screenService;
         private readonly ICommandManager commandManager;
+        private readonly IAppView appView;
+        private readonly IProcessService processService;
+        private readonly IImageManager imageManager;
 
         public MainPresenter(
             ILazyThreadPool threadPool,
@@ -40,7 +43,10 @@ namespace LanExchange.Application.Presenters
             IWaitingService waitingService,
             IPanelItemFactoryManager factoryManager,
             IScreenService screenService,
-            ICommandManager commandManager)
+            ICommandManager commandManager,
+            IAppView appView,
+            IProcessService processService,
+            IImageManager imageManager)
         {
             Contract.Requires<ArgumentNullException>(threadPool != null);
             Contract.Requires<ArgumentNullException>(panelColumns != null);
@@ -55,6 +61,9 @@ namespace LanExchange.Application.Presenters
             Contract.Requires<ArgumentNullException>(factoryManager != null);
             Contract.Requires<ArgumentNullException>(screenService != null);
             Contract.Requires<ArgumentNullException>(commandManager != null);
+            Contract.Requires<ArgumentNullException>(appView != null);
+            Contract.Requires<ArgumentNullException>(processService != null);
+            Contract.Requires<ArgumentNullException>(imageManager != null);
 
             this.threadPool = threadPool;
             this.columnManager = panelColumns;
@@ -69,20 +78,20 @@ namespace LanExchange.Application.Presenters
             this.factoryManager = factoryManager;
             this.screenService = screenService;
             this.commandManager = commandManager;
+            this.appView = appView;
+            this.processService = processService;
+            this.imageManager = imageManager;
         }
 
         protected override void InitializePresenter()
         {
-            PrepareForm();
-        }
-
-        private void PrepareForm()
-        {
             // setup languages in menu
             View.SetupMenuLanguages();
             // init main form
-            View.SetupPages();
+            SetupStatusPanel();
+            SetupPages();
             SetupForm();
+            View.RightToLeftValue = translationService.RightToLeft;
             // set hotkey for activate: Ctrl+Win+X
             disposableManager.RegisterInstance(hotkeyService);
             if (hotkeyService.RegisterShowWindowKey(View.Handle))
@@ -91,7 +100,26 @@ namespace LanExchange.Application.Presenters
             threadPool.DataReady += OnDataReady;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Windows.Forms.Control.set_Text(System.String)")]
+        private void SetupStatusPanel()
+        {
+            var statusPanel = viewFactory.CreateStatusPanelView();
+            imageManager.SetImagesTo(statusPanel);
+            View.AddView(statusPanel, ViewDockStyle.Bottom);
+        }
+
+        private void SetupPages()
+        {
+            //Pages = (PagesView)viewFactory.GetPagesView();
+            //Pages.Dock = DockStyle.Fill;
+            //Controls.Add(Pages);
+            //Pages.BringToFront();
+
+            //// setup images
+            //imageManager.SetImagesTo(Pages.Pages);
+            //// load saved pages from config
+            //Pages.SetupContextMenu();
+        }
+
         [Localizable(false)]
         public void SetupForm()
         {
@@ -101,7 +129,7 @@ namespace LanExchange.Application.Presenters
             var rect = SettingsGetBounds();
             View.SetBounds(rect.Left, rect.Top, rect.Width, rect.Height);
             // set mainform title
-            var text = String.Format(CultureInfo.CurrentCulture, "{0} {1}", aboutModel.Title, aboutModel.VersionShort);
+            var text = string.Format(CultureInfo.CurrentCulture, "{0} {1}", aboutModel.Title, aboutModel.VersionShort);
             View.Text = text;
             // show tray
             View.TrayText = text;
@@ -259,6 +287,45 @@ namespace LanExchange.Application.Presenters
                 Settings.Default.MainFormLeft = rect.Left;
                 Settings.Default.MainFormWidth = rect.Width;
             }
+        }
+
+        public void DoToggleVisible()
+        {
+            View.Visible = !View.Visible;
+            if (View.Visible)
+                View.Activate();
+        }
+
+        public void DoExit()
+        {
+            appView.Exit();
+        }
+
+        public void OpenHomeLink()
+        {
+            processService.Start(aboutModel.HomeLink);
+        }
+
+        public void OpenLocalizationLink()
+        {
+            processService.Start(aboutModel.LocalizationLink);
+        }
+
+        public void OpenBugTrackerWebLink()
+        {
+            processService.Start(aboutModel.BugTrackerLink);
+        }
+
+        public void DoChangeView(PanelViewMode viewMode)
+        {
+            //var pv = Pages.ActivePanelView;
+            //if (pv == null) return;
+
+            //var menuItem = sender as MenuItem;
+            //if (menuItem == null) return;
+            //int tag;
+            //if (int.TryParse(menuItem.Tag.ToString(), out tag))
+            //    pv.ViewMode = (PanelViewMode)tag;
         }
     }
 }

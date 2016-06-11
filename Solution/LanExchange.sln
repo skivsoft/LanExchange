@@ -37,6 +37,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{707566C8-7103-4F11-B44B-6B63F989F9F6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.WinForms", "..\LanExchange.WinForms\LanExchange.WinForms.csproj", "{269907C3-FAD4-48F3-BB7F-C531E19A1829}"
+	ProjectSection(ProjectDependencies) = postProject
+		{18971728-B208-45D9-B4BB-4BB6020963E7} = {18971728-B208-45D9-B4BB-4BB6020963E7}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FBD39BFC-A305-4676-AEBA-08677B29B590}"
 	ProjectSection(SolutionItems) = preProject

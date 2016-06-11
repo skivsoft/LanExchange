@@ -4,105 +4,52 @@ using System.Diagnostics.Contracts;
 using System.Security.Permissions;
 using System.Windows.Forms;
 using LanExchange.Presentation.Interfaces;
-using LanExchange.Presentation.WinForms.Controls;
 using LanExchange.Presentation.WinForms.Helpers;
 using LanExchange.Presentation.WinForms.Properties;
 
 namespace LanExchange.Presentation.WinForms.Forms
 {
-    internal sealed partial class MainForm : Form, IMainView, IWindowTranslationable
+    internal sealed partial class MainForm : Form, IMainView
     {
-        public PagesView Pages;
-
-        private readonly ILazyThreadPool threadPool;
-        private readonly IImageManager imageManager;
         private readonly IMainPresenter mainPresenter;
-        private readonly IAboutPresenter aboutPresenter;
-        private readonly ITranslationService translationService;
-        private readonly IViewFactory viewFactory;
-
-        private readonly IStatusPanelView statusPanel;
 
         public event EventHandler ViewClosed;
 
-        [Obsolete("Should be only single depenedcy: Presenter.")]
-        public MainForm(
-            IMainPresenter mainPresenter,
-            IAboutPresenter aboutPresenter,
-            ILazyThreadPool threadPool,
-            IImageManager imageManager,
-            ITranslationService translationService,
-            IViewFactory viewFactory
-            )
+        public MainForm(IMainPresenter mainPresenter)
         {
             Contract.Requires<ArgumentNullException>(mainPresenter != null);
-            Contract.Requires<ArgumentNullException>(aboutPresenter != null);
-            Contract.Requires<ArgumentNullException>(threadPool != null);
-            Contract.Requires<ArgumentNullException>(imageManager != null);
-            Contract.Requires<ArgumentNullException>(translationService != null);
-            Contract.Requires<ArgumentNullException>(viewFactory != null);
-
-            this.aboutPresenter = aboutPresenter;
-            this.threadPool = threadPool;
-            this.imageManager = imageManager;
-            this.translationService = translationService;
-            this.viewFactory = viewFactory;
-
-            // create status panel
-            statusPanel = viewFactory.CreateStatusPanelView();
-            ((Control)statusPanel).Dock = DockStyle.Bottom;
-            Controls.Add((Control)statusPanel);
 
             InitializeComponent();
             this.mainPresenter = mainPresenter;
             mainPresenter.Initialize(this);
-
-            if (translationService.RightToLeft)
-            {
-                RightToLeftLayout = true;
-                RightToLeft = RightToLeft.Yes;
-            }
 
             Menu = MainMenu;
         }
 
         public void SetupMenuLanguages()
         {
-            var nameDict = translationService.GetLanguagesNames();
-            if (nameDict.Count < 2)
-            {
-                mLanguage.Visible = false;
-                return;
-            }
-            mLanguage.Visible = true;
-            mLanguage.MenuItems.Clear();
-            foreach(var pair in nameDict)
-            {
-                var menuItem = new MenuItem(pair.Value);
-                menuItem.RadioCheck = true;
-                menuItem.Tag = pair.Key;
-                menuItem.Click += MenuItemOnClick;
-                mLanguage.MenuItems.Add(menuItem);
-            }
-        }
-
-        public void SetupPages()
-        {
-            Pages = (PagesView)viewFactory.GetPagesView();
-            Pages.Dock = DockStyle.Fill;
-            Controls.Add(Pages);
-            Pages.BringToFront();
-            // setup images
-            imageManager.SetImagesTo(Pages.Pages);
-            imageManager.SetImagesTo(statusPanel);
-            // load saved pages from config
-            Pages.SetupContextMenu();
+            //var nameDict = translationService.GetLanguagesNames();
+            //if (nameDict.Count < 2)
+            //{
+            //    mLanguage.Visible = false;
+            //    return;
+            //}
+            //mLanguage.Visible = true;
+            //mLanguage.MenuItems.Clear();
+            //foreach(var pair in nameDict)
+            //{
+            //    var menuItem = new MenuItem(pair.Value);
+            //    menuItem.RadioCheck = true;
+            //    menuItem.Tag = pair.Key;
+            //    menuItem.Click += MenuItemOnClick;
+            //    mLanguage.MenuItems.Add(menuItem);
+            //}
         }
 
         private void MarkCurrentLanguage()
         {
-            foreach (MenuItem menuItem in mLanguage.MenuItems)
-                menuItem.Checked = menuItem.Tag.Equals(translationService.CurrentLanguage);
+            //foreach (MenuItem menuItem in mLanguage.MenuItems)
+            //    menuItem.Checked = menuItem.Tag.Equals(translationService.CurrentLanguage);
         }
 
         private void mLanguage_Popup(object sender, EventArgs e)
@@ -151,18 +98,18 @@ namespace LanExchange.Presentation.WinForms.Forms
 
         private void tipComps_Popup(object sender, PopupEventArgs e)
         {
-            var tooltip = (sender as ToolTip);
-            if (tooltip == null) return;
-            if (e.AssociatedControl is TabControl && e.AssociatedControl == Pages.Pages)
-            {
-                var tab = Pages.GetTabPageByPoint(e.AssociatedControl.PointToClient(MousePosition));
-                if (tab != null)
-                    tooltip.ToolTipTitle = tab.Text;
-                else
-                    e.Cancel = true;
-                return;
-            }
-            tooltip.ToolTipTitle = string.Empty;
+            //var tooltip = (sender as ToolTip);
+            //if (tooltip == null) return;
+            //if (e.AssociatedControl is TabControl && e.AssociatedControl == Pages.Pages)
+            //{
+            //    var tab = Pages.GetTabPageByPoint(e.AssociatedControl.PointToClient(MousePosition));
+            //    if (tab != null)
+            //        tooltip.ToolTipTitle = tab.Text;
+            //    else
+            //        e.Cancel = true;
+            //    return;
+            //}
+            //tooltip.ToolTipTitle = string.Empty;
         }
 
         [Localizable(false)]
@@ -176,27 +123,20 @@ namespace LanExchange.Presentation.WinForms.Forms
             mTrayOpen_TranslateUI();
         }
 
-        private void ToggleVisible()
-        {
-            Visible = !Visible;
-            if (Visible)
-                Activate();
-        }
-
         private void mOpen_Click(object sender, EventArgs e)
         {
-            ToggleVisible();
+            mainPresenter.DoToggleVisible();
         }
 
         private void TrayIcon_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
-                ToggleVisible();
+                mainPresenter.DoToggleVisible();
         }
 
         private void mTrayExit_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            mainPresenter.DoExit();
         }
 
         [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
@@ -211,7 +151,7 @@ namespace LanExchange.Presentation.WinForms.Forms
                 case WM_HOTKEY:
                     if (mainPresenter.IsHotKey((short)m.WParam))
                     {
-                        ToggleVisible();
+                        mainPresenter.DoToggleVisible();
                         m.Result = new IntPtr(1);
                     }
                     break;
@@ -231,11 +171,6 @@ namespace LanExchange.Presentation.WinForms.Forms
             mainPresenter.SettingsSetBounds(Bounds);
         }
 
-        private void MainForm_Activated(object sender, EventArgs e)
-        {
-            Pages.FocusPanelView();
-        }
-
         [Localizable(false)]
         private void mReRead_Click(object sender, EventArgs e)
         {
@@ -244,32 +179,32 @@ namespace LanExchange.Presentation.WinForms.Forms
 
         private void UpdatePanelRelatedMenu()
         {
-            mViewLarge.Checked = false;
-            mViewSmall.Checked = false;
-            mViewList.Checked = false;
-            mViewDetails.Checked = false;
-            var pv = Pages.ActivePanelView;
-            var enabled = pv != null;
-            mViewLarge.Enabled = enabled;
-            mViewSmall.Enabled = enabled;
-            mViewList.Enabled = enabled;
-            mViewDetails.Enabled = enabled;
-            if (pv != null)
-                switch (pv.ViewMode)
-                {
-                    case PanelViewMode.LargeIcon:
-                        mViewLarge.Checked = true;
-                        break;
-                    case PanelViewMode.SmallIcon:
-                        mViewSmall.Checked = true;
-                        break;
-                    case PanelViewMode.List:
-                        mViewList.Checked = true;
-                        break;
-                    case PanelViewMode.Details:
-                        mViewDetails.Checked = true;
-                        break;
-                }
+            //mViewLarge.Checked = false;
+            //mViewSmall.Checked = false;
+            //mViewList.Checked = false;
+            //mViewDetails.Checked = false;
+            //var pv = Pages.ActivePanelView;
+            //var enabled = pv != null;
+            //mViewLarge.Enabled = enabled;
+            //mViewSmall.Enabled = enabled;
+            //mViewList.Enabled = enabled;
+            //mViewDetails.Enabled = enabled;
+            //if (pv != null)
+            //    switch (pv.ViewMode)
+            //    {
+            //        case PanelViewMode.LargeIcon:
+            //            mViewLarge.Checked = true;
+            //            break;
+            //        case PanelViewMode.SmallIcon:
+            //            mViewSmall.Checked = true;
+            //            break;
+            //        case PanelViewMode.List:
+            //            mViewList.Checked = true;
+            //            break;
+            //        case PanelViewMode.Details:
+            //            mViewDetails.Checked = true;
+            //            break;
+            //    }
         }
 
         private void mView_Popup(object sender, EventArgs e)
@@ -279,34 +214,23 @@ namespace LanExchange.Presentation.WinForms.Forms
 
         private void mViewLarge_Click(object sender, EventArgs e)
         {
-            var pv = Pages.ActivePanelView;
-            if (pv == null) return;
-            var menuItem = sender as MenuItem;
-            if (menuItem == null) return;
-            int tag;
-            if (int.TryParse(menuItem.Tag.ToString(), out tag))
-                pv.ViewMode = (PanelViewMode)tag;
+            var control = (Control)sender;
+            mainPresenter.DoChangeView((PanelViewMode)control.Tag);
         }
 
         private void mWebPage_Click(object sender, EventArgs e)
         {
-            aboutPresenter.OpenHomeLink();
+            mainPresenter.OpenHomeLink();
         }
 
         private void mHelpLangs_Click(object sender, EventArgs e)
         {
-            aboutPresenter.OpenLocalizationLink();
+            mainPresenter.OpenLocalizationLink();
         }
 
         private void mHelpBugs_Click(object sender, EventArgs e)
         {
-            aboutPresenter.OpenBugTrackerWebLink();
-        }
-
-
-        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            threadPool.Dispose();
+            mainPresenter.OpenBugTrackerWebLink();
         }
 
         public void SetToolTip(object control, string tipText)
@@ -384,6 +308,12 @@ namespace LanExchange.Presentation.WinForms.Forms
         {
             popTray.RightToLeft = RightToLeft;
             //Status.SizingGrip = RightToLeft == RightToLeft.No;
+        }
+
+        public void AddView(IView view, ViewDockStyle dockStyle)
+        {
+            ((Control)view).Dock = (DockStyle)dockStyle;
+            Controls.Add((Control)view);
         }
 
         public bool RightToLeftValue { get; set; }

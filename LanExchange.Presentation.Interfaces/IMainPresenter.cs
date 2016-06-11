@@ -14,5 +14,11 @@ namespace LanExchange.Presentation.Interfaces
         void DoPagesCloseTab();
         void DoAbout();
         void DoPagesCloseOther();
+        void DoToggleVisible();
+        void DoExit();
+        void OpenHomeLink();
+        void OpenLocalizationLink();
+        void OpenBugTrackerWebLink();
+        void DoChangeView(PanelViewMode viewMode);
     }
 }

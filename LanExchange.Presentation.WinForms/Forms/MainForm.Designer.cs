@@ -295,8 +295,6 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.KeyPreview = true;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Activated += new System.EventHandler(this.MainForm_Activated);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.ResizeEnd += new System.EventHandler(this.MainForm_ResizeEnd);
             this.RightToLeftChanged += new System.EventHandler(this.MainForm_RightToLeftChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);

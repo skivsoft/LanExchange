@@ -11,14 +11,7 @@ namespace LanExchange.Presentation.WinForms.Forms
         public void Ctor_Presenter_InitializeCalled()
         {
             var presenter = new Mock<IMainPresenter>();
-            var form = new MainForm(
-                presenter.Object,
-                new Mock<IAboutPresenter>().Object,
-                new Mock<ILazyThreadPool>().Object,
-                new Mock<IImageManager>().Object,
-                new Mock<ITranslationService>().Object,
-                new Mock<IViewFactory>().Object
-                );
+            var form = new MainForm(presenter.Object);
             presenter.Verify(m => m.Initialize(form));
         }
     }

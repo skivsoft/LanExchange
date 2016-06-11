@@ -84,7 +84,7 @@ namespace LanExchange.Application.Presenters
                 delta = DateTime.UtcNow - startTime;
             } while (!doneAndAvailable && delta.Milliseconds < DELAY_FOR_SHOW);
             if (!doneAndAvailable)
-                View.Show();
+                View.Visible = true;
         }
 
         public void PerformOk()
