@@ -91,5 +91,6 @@ namespace LanExchange.Presentation.Interfaces
         PanelFillerResult RetrieveData(RetrieveMode mode, bool clearFilter);
         void SetFillerResult(PanelFillerResult fillerResult, bool clearFilter);
         void OnTabNameUpdated();
+        void Assign(PanelDto dto);
     }
 }

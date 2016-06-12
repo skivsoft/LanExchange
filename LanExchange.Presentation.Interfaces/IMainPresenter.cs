@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace LanExchange.Presentation.Interfaces
 {

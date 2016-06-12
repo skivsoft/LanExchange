@@ -61,7 +61,7 @@ namespace LanExchange
         private void RegisterModels()
         {
             container.RegisterSingleton<IAboutModel, AboutModel>();
-            container.RegisterSingleton<IPagesModel, PagesModel>();
+            container.RegisterSingleton<Application.Interfaces.IPagesModel, PagesModel>();
             container.Register<IPanelModel, PanelModel>();
         }
 

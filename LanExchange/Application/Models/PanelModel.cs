@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
@@ -9,7 +8,7 @@ using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Models
 {
-    public class PanelModel : IPanelModel
+    public sealed class PanelModel : IPanelModel
     {
         private readonly IPanelFillerManager panelFillers;
         private readonly IPanelColumnManager panelColumns;
@@ -60,8 +59,6 @@ namespace LanExchange.Application.Models
         /// <value>
         /// The name of the tab.
         /// </value>
-        [Localizable(false)]
-        //[XmlAttribute("Name")]
         public string TabName
         {
             get
@@ -73,8 +70,12 @@ namespace LanExchange.Application.Models
 
         public void OnTabNameUpdated()
         {
-            if (TabNameUpdated != null)
-                TabNameUpdated(this, EventArgs.Empty);
+            TabNameUpdated?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void Assign(PanelDto dto)
+        {
+            // TODO implement assign dto to panel model
         }
 
         public string ImageName
@@ -94,10 +95,8 @@ namespace LanExchange.Application.Models
 
         public string DataType { get; set; }
 
-        [Localizable(false)]
         public PanelViewMode CurrentView { get; set; }
 
-        [Localizable(false)]
         public string FilterText { get; set; }
 
         public IObjectPath<PanelItemBase> CurrentPath
@@ -252,13 +251,12 @@ namespace LanExchange.Application.Models
 
         private void OnChanged()
         {
-            if (Changed != null)
-                Changed(this, EventArgs.Empty);
+            Changed?.Invoke(this, EventArgs.Empty);
         }
 
         public bool Equals(IPanelModel other)
         {
-            return String.Compare(TabName, other.TabName, StringComparison.OrdinalIgnoreCase) == 0;
+            return string.Compare(TabName, other.TabName, StringComparison.OrdinalIgnoreCase) == 0;
         }
 
         public string ToolTipText

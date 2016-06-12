@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
 using LanExchange.Application.Interfaces;
-using LanExchange.Application.Models;
 using LanExchange.Domain.Interfaces;
 using LanExchange.Presentation.Interfaces;
 
@@ -49,29 +46,28 @@ namespace LanExchange.Domain.Implementation
             return factoryManager.ToArray();
         }
 
-        public void LoadSettings(out IPagesModel pages)
+        public PagesDto LoadPages()
         {
             var fileName = folderManager.TabsConfigFileName;
-            pages = null;
             if (File.Exists(fileName))
                 try
                 {
-                    var dto = serializeService.DeserializeFromXmlFile<PagesDto>(fileName, GetExtraTypes());
-                    //pages = dto.ToModel();
+                    return serializeService.DeserializeFromXmlFile<PagesDto>(fileName, GetExtraTypes());
                 }
                 catch (Exception exception)
                 {
                     logService.Log(exception);
                 }
+            return PagesDto.Empty;
         }
 
-        public void SaveSettings(IPagesModel pages)
+        public void SavePages(PagesDto pages)
         {
             try
             {
                 var fileName = folderManager.TabsConfigFileName;
                 ForceCreatePath(fileName);
-                serializeService.SerializeToXmlFile(fileName, pages.ToDto(), GetExtraTypes());
+                serializeService.SerializeToXmlFile(fileName, pages, GetExtraTypes());
             }
             catch (Exception exception)
             {

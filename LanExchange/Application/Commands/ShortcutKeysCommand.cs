@@ -31,7 +31,7 @@ namespace LanExchange.Application.Commands
                 var root = new ShortcutRoot();
                 model.DataType = typeof (ShortcutPanelItem).Name;
                 model.CurrentPath.Push(root);
-                pagesModel.AddTab(model);
+                pagesModel.Append(model);
                 foundIndex = pagesModel.Count - 1;
             }
             pagesModel.SelectedIndex = foundIndex;
@@ -45,7 +45,7 @@ namespace LanExchange.Application.Commands
         private int GetPanelIndexByDataType(Type dataType)
         {
             for (int index = 0; index < pagesModel.Count; index++)
-                if (pagesModel.GetItem(index).DataType.Equals(dataType.Name))
+                if (pagesModel.GetAt(index).DataType.Equals(dataType.Name))
                     return index;
             return -1;
         }

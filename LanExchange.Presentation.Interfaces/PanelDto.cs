@@ -1,7 +1,6 @@
 ﻿using System.Xml.Serialization;
-using LanExchange.Presentation.Interfaces;
 
-namespace LanExchange.Application.Models
+namespace LanExchange.Presentation.Interfaces
 {
     [XmlType("Tab")]
     public sealed class PanelDto

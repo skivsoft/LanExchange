@@ -17,7 +17,6 @@ namespace LanExchange.Presentation.WinForms.Controls
         private readonly IPanelItemFactoryManager factoryManager;
         private readonly IImageManager imageManager;
         private readonly IPanelFillerManager panelFillers;
-        private readonly ICommandManager commandManager;
         private readonly IModelFactory modelFactory;
         private readonly IViewFactory viewFactory;
 
@@ -50,7 +49,6 @@ namespace LanExchange.Presentation.WinForms.Controls
             Contract.Requires<ArgumentNullException>(factoryManager != null);
             Contract.Requires<ArgumentNullException>(imageManager != null);
             Contract.Requires<ArgumentNullException>(panelFillers != null);
-            Contract.Requires<ArgumentNullException>(commandManager != null);
             Contract.Requires<ArgumentNullException>(modelFactory != null);
             Contract.Requires<ArgumentNullException>(viewFactory != null);
 
@@ -61,7 +59,6 @@ namespace LanExchange.Presentation.WinForms.Controls
             this.factoryManager = factoryManager;
             this.imageManager = imageManager;
             this.panelFillers = panelFillers;
-            this.commandManager = commandManager;
             this.modelFactory = modelFactory;
             this.viewFactory = viewFactory;
 

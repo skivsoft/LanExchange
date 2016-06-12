@@ -149,9 +149,6 @@
     <Compile Include="Application\Implementation\EmptyLogService.cs" />
     <Compile Include="Application\Implementation\PanelModelCopyHelper.cs" />
     <Compile Include="Application\Implementation\ProcessService.cs" />
-    <Compile Include="Application\Models\PagesDto.cs" />
-    <Compile Include="Application\Models\PagesExtension.cs" />
-    <Compile Include="Application\Models\PanelDto.cs" />
     <Compile Include="Application\Presenters\InfoPresenter.cs" />
     <Compile Include="Application\Presenters\StatusPanelPresenter.cs" />
     <Compile Include="Application\Extensions\AssemblyExtensions.cs" />

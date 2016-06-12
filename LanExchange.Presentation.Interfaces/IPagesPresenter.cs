@@ -19,8 +19,6 @@ namespace LanExchange.Presentation.Interfaces
 
         void SaveInstant();
 
-        string GetTabName(int index);
-
         void SetupPanelViewEvents(IPanelView panelView);
 
         void LoadSettings();

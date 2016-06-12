@@ -18,9 +18,9 @@ namespace LanExchange.Application.Models
         private readonly List<IPanelModel> panels;
         private int selectedIndex;
 
-        public event EventHandler<PanelModelEventArgs> AfterAppendTab;
-        public event EventHandler<PanelIndexEventArgs> AfterRemove;
-        public event EventHandler<PanelIndexEventArgs> IndexChanged;
+        public event EventHandler<PanelEventArgs> AppendPanel;
+        public event EventHandler<PanelIndexEventArgs> RemovePanel;
+        public event EventHandler<PanelIndexEventArgs> SelectedIndexChanged;
 
         public PagesModel(
             IPanelItemFactoryManager factoryManager,
@@ -61,60 +61,29 @@ namespace LanExchange.Application.Models
             }
         }
 
-        public IPanelModel GetItem(int index)
+        public IPanelModel GetAt(int index)
         {
             if (index < 0 || index > panels.Count - 1)
                 return null;
             return panels[index];
         }
 
-        /// <summary>
-        /// Gets or sets the items for xml serialization.
-        /// </summary>
-        /// <value>
-        /// The items.
-        /// </value>
-        public PanelModel[] Items
-        {
-            get
-            {
-                var result = new PanelModel[panels.Count];
-                for (int index = 0; index < panels.Count; index++)
-                    result[index] = (PanelModel)panels[index];
-                return result;
-            }
-            set
-            {
-                panels.Clear();
-                foreach (var tab in value)
-                    AddTab(tab);
-            }
-        }
-
-        public int GetItemIndex(IPanelModel item)
-        {
-            return panels.IndexOf(item);
-        }
-
         private void DoAfterAppendTab(IPanelModel info)
         {
-            if (AfterAppendTab != null)
-                AfterAppendTab(this, new PanelModelEventArgs(info));
+            AppendPanel?.Invoke(this, new PanelEventArgs(info));
         }
 
         private void DoAfterRemove(int index)
         {
-            if (AfterRemove != null)
-                AfterRemove(this, new PanelIndexEventArgs(index));
+            RemovePanel?.Invoke(this, new PanelIndexEventArgs(index));
         }
 
         private void DoIndexChanged(int index)
         {
-            if (IndexChanged != null)
-                IndexChanged(this, new PanelIndexEventArgs(index));
+            SelectedIndexChanged?.Invoke(this, new PanelIndexEventArgs(index));
         }
 
-        public bool AddTab(IPanelModel model)
+        public bool Append(IPanelModel model)
         {
             // ommit duplicates
             //if (m_List.Contains(model))
@@ -126,7 +95,7 @@ namespace LanExchange.Application.Models
             return true;
         }
 
-        public void DelTab(int index)
+        public void RemoveAt(int index)
         {
             if (index >= 0 && index < panels.Count)
             {
@@ -138,24 +107,17 @@ namespace LanExchange.Application.Models
             }
         }
 
-        public string GetTabName(int index)
+        public void Assign(PagesDto dto)
         {
-            return index >= 0 && index <= Count - 1 ? panels[index].TabName : null;
-        }
-
-        public void SetLoadedModel(IPagesModel model)
-        {
-            if (model != null && model.Count > 0)
+            foreach(var item in dto.Items)
             {
-                // add loaded tabs if present
-                for (int index = 0; index < model.Count; index++)
-                {
-                    var panelModel = model.GetItem(index);
-                    AddTab(panelModel);
-                }
-                if (model.SelectedIndex != -1)
-                    SelectedIndex = model.SelectedIndex;
+                var panel = modelFactory.CreatePanelModel();
+                panel.Assign(item);
+                Append(panel);
             }
+            if (dto.SelectedIndex != -1)
+                SelectedIndex = dto.SelectedIndex;
+
             if (Count == 0)
             {
                 var root = factoryManager.CreateDefaultRoot(DEFAULT1_PANELITEMTYPE);
@@ -166,16 +128,7 @@ namespace LanExchange.Application.Models
                 var info = modelFactory.CreatePanelModel();
                 info.SetDefaultRoot(root);
                 info.DataType = panelFillers.GetFillType(root).Name;
-                AddTab(info);
-            }
-        }
-
-        public void Dispose()
-        {
-            for (int i = panels.Count - 1; i >= 0; i--)
-            {
-                var model = panels[i];
-                panels.RemoveAt(i);
+                Append(info);
             }
         }
     }

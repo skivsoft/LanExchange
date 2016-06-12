@@ -2,11 +2,12 @@
 using System.Diagnostics.Contracts;
 using LanExchange.Application.Interfaces;
 using LanExchange.Application.Interfaces.EventArgs;
+using LanExchange.Application.Interfaces.Extensions;
 using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Presenters
 {
-    internal sealed class PagesPresenter : PresenterBase<IPagesView>, IPagesPresenter, IDisposable
+    internal sealed class PagesPresenter : PresenterBase<IPagesView>, IPagesPresenter
     {
         private readonly IPagesModel model;
         private readonly IPagesPersistenceService pagesService;
@@ -22,14 +23,12 @@ namespace LanExchange.Application.Presenters
             IPagesPersistenceService pagesService,
             IImageManager imageManager,
             IPanelColumnManager panelColumns,
-            IDisposableManager disposableManager,
             IClipboardService clipboardService)
         {
             Contract.Requires<ArgumentNullException>(model != null);
             Contract.Requires<ArgumentNullException>(pagesService != null);
             Contract.Requires<ArgumentNullException>(imageManager != null);
             Contract.Requires<ArgumentNullException>(panelColumns != null);
-            Contract.Requires<ArgumentNullException>(disposableManager != null);
             Contract.Requires<ArgumentNullException>(clipboardService != null);
 
             this.model = model;
@@ -38,15 +37,9 @@ namespace LanExchange.Application.Presenters
             this.panelColumns = panelColumns;
             this.clipboardService = clipboardService;
 
-            disposableManager.RegisterInstance(this);
-            this.model.AfterAppendTab += Model_AfterAppendTab;
-            this.model.AfterRemove += Model_AfterRemove;
-            this.model.IndexChanged += Model_IndexChanged;
-        }
-
-        public void Dispose()
-        {
-            model.Dispose();
+            this.model.AppendPanel += Model_AfterAppendTab;
+            this.model.RemovePanel += Model_AfterRemove;
+            this.model.SelectedIndexChanged += Model_IndexChanged;
         }
 
         public bool CanSendToNewTab()
@@ -116,7 +109,7 @@ namespace LanExchange.Application.Presenters
             var obj = clipboardService.GetDataObject();
             if (obj == null) return;
             var items = (PanelItemBaseHolder)obj.GetData(typeof(PanelItemBaseHolder));
-            var destObjects = model.GetItem(model.SelectedIndex);
+            var destObjects = model.GetAt(model.SelectedIndex);
             destObjects.DataType = items.DataType;
             //destObjects.CurrentPath.Push(PanelItemRoot.ROOT_OF_USERITEMS);
             foreach (var panelItem in items)
@@ -170,7 +163,7 @@ namespace LanExchange.Application.Presenters
         public void CommandCloseTab()
         {
             var index = View.PopupSelectedIndex;
-            model.DelTab(index);
+            model.RemoveAt(index);
         }
 
         public void CommanCloseOtherTabs()
@@ -178,13 +171,13 @@ namespace LanExchange.Application.Presenters
             var popupIndex = View.PopupSelectedIndex;
             for (int index = model.Count - 1; index >= 0; index--)
                 if (index != popupIndex)
-                    model.DelTab(index);
+                    model.RemoveAt(index);
             model.SelectedIndex = 0;
         }
 
         public void CommandReRead()
         {
-            var pageModel = model.GetItem(SelectedIndex);
+            var pageModel = model.GetAt(SelectedIndex);
             // clear refreshable columns
             if (pageModel.DataType != null)
                 foreach (var column in panelColumns.GetColumns(pageModel.DataType))
@@ -223,12 +216,12 @@ namespace LanExchange.Application.Presenters
             if (theModel == null)
                 return -1;
             for (int index = 0; index < this.model.Count; index++)
-                if (model.GetItem(index) == theModel)
+                if (model.GetAt(index) == theModel)
                     return index;
             return -1;
         }
 
-        public void Model_AfterAppendTab(object sender, PanelModelEventArgs e)
+        public void Model_AfterAppendTab(object sender, PanelEventArgs e)
         {
             // TODO hide model
             //// create panel
@@ -267,7 +260,7 @@ namespace LanExchange.Application.Presenters
 
         public void Model_AfterRename(object sender, PanelIndexEventArgs e)
         {
-            var model = this.model.GetItem(e.Index);
+            var model = this.model.GetAt(e.Index);
             View.SetTabText(e.Index, model.TabName);
         }
 
@@ -290,7 +283,7 @@ namespace LanExchange.Application.Presenters
         public bool SelectTabByName(string tabName)
         {
             for (int index = 0; index < model.Count; index++ )
-                if (model.GetTabName(index).Equals(tabName))
+                if (model.GetAt(index).TabName.Equals(tabName))
                 {
                     SelectedIndex = index;
                     return true;
@@ -326,12 +319,7 @@ namespace LanExchange.Application.Presenters
 
         public void SaveInstant()
         {
-            pagesService.SaveSettings(model);
-        }
-
-        public string GetTabName(int index)
-        {
-            return model.GetTabName(index);
+            pagesService.SavePages(model.ToDto());
         }
 
         public void SetupPanelViewEvents(IPanelView panelView)
@@ -342,14 +330,12 @@ namespace LanExchange.Application.Presenters
 
         public void LoadSettings()
         {
-            IPagesModel model;
-            pagesService.LoadSettings(out model);
-            this.model.SetLoadedModel(model);
+            model.Assign(pagesService.LoadPages());
         }
 
         public void UpdateTabName(int index)
         {
-            var model = this.model.GetItem(index);
+            var model = this.model.GetAt(index);
             if (model != null)
                 View.SetTabText(index, model.TabName);
         }

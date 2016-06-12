@@ -4,21 +4,18 @@ using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Interfaces
 {
-    public interface IPagesModel : IDisposable
+    public interface IPagesModel
     {
-        event EventHandler<PanelModelEventArgs> AfterAppendTab;
-        event EventHandler<PanelIndexEventArgs> AfterRemove;
-        event EventHandler<PanelIndexEventArgs> IndexChanged;
+        event EventHandler<PanelEventArgs> AppendPanel;
+        event EventHandler<PanelIndexEventArgs> RemovePanel;
+        event EventHandler<PanelIndexEventArgs> SelectedIndexChanged;
 
-        bool AddTab(IPanelModel model);
-
-        void DelTab(int index);
+        bool Append(IPanelModel panel);
+        void RemoveAt(int index);
+        IPanelModel GetAt(int index);
+        void Assign(PagesDto dto);
 
         int Count { get; }
         int SelectedIndex { get; set; }
-        IPanelModel GetItem(int index);
-        string GetTabName(int index);
-
-        void SetLoadedModel(IPagesModel model);
     }
 }

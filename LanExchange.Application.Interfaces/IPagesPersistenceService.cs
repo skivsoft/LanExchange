@@ -2,7 +2,7 @@
 {
     public interface IPagesPersistenceService
     {
-        void LoadSettings(out IPagesModel pages);
-        void SaveSettings(IPagesModel pages);
+        PagesDto LoadPages();
+        void SavePages(PagesDto pages);
     }
 }

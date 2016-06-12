@@ -131,6 +131,7 @@
     <Compile Include="MenuElement.cs" />
     <Compile Include="Option.cs" />
     <Compile Include="PanelColumnHeader.cs" />
+    <Compile Include="PanelDto.cs" />
     <Compile Include="PanelFillerResult.cs" />
     <Compile Include="PanelImageNames.cs" />
     <Compile Include="PanelItemBase.cs" />
