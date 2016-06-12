@@ -1,10 +1,10 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentAssertions;
+using LanExchange.Presentation.Interfaces;
 using Moq;
 using NUnit.Framework;
-using System;
-using LanExchange.Presentation.Interfaces;
 
-namespace LanExchange.Presenter
+namespace LanExchange.Application.Presenters
 {
     [TestFixture]
     public class PresenterBaseTest

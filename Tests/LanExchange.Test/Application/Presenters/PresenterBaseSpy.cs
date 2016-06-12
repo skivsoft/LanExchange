@@ -1,6 +1,6 @@
 ﻿using LanExchange.Presentation.Interfaces;
 
-namespace LanExchange.Presenter
+namespace LanExchange.Application.Presenters
 {
     internal class PresenterBaseSpy<T> : PresenterBase<T> where T : IView
     {

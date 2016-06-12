@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Forms;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Addons;
@@ -24,8 +25,6 @@ namespace LanExchange.Presentation.WinForms
         private readonly IWindowFactory windowFactory;
         private readonly ILogService logService;
         private readonly IAddonPersistenceService persistenceService;
-
-        private bool isLoaded;
 
         public AddonManager(
             IFolderManager folderManager, 
@@ -68,7 +67,12 @@ namespace LanExchange.Presentation.WinForms
 
         public void LoadAddons()
         {
-            if (isLoaded) return;
+            InternalLoadAddons();
+            RegisterProgramsImages();
+        }
+
+        private void InternalLoadAddons()
+        {
             foreach (var fileName in folderManager.GetAddonsFiles())
             {
                 logService.Log("loading addon: {0}", fileName);
@@ -81,37 +85,48 @@ namespace LanExchange.Presentation.WinForms
                     logService.Log(exception);
                 }
             }
-            // register programs images
-            foreach (var pair in Programs)
-                if (pair.Value.ProgramImage != null)
-                {
-                    var imageName = string.Format(CultureInfo.InvariantCulture, PanelImageNames.ADDON_FMT, pair.Key);
-                    imageManager.RegisterImage(imageName, pair.Value.ProgramImage, pair.Value.ProgramImage);
-                }
-            isLoaded = true;
         }
 
+        private void RegisterProgramsImages()
+        {
+            foreach (var pair in Programs.Where(pair => pair.Value.ProgramImage != null))
+            {
+                var imageName = string.Format(CultureInfo.InvariantCulture, PanelImageNames.ADDON_FMT, pair.Key);
+                imageManager.RegisterImage(imageName, pair.Value.ProgramImage, pair.Value.ProgramImage);
+            }
+        }
         private void LoadAddon(string fileName)
         {
-            // load addon from xml
             var addon = persistenceService.Load(fileName);
-            // process programs
+            ProcessPrograms(addon);
+            ProcessProtocols(addon);
+            ProcessMenuItems(addon);
+        }
+
+        private void ProcessPrograms(AddOn addon)
+        {
             foreach (var item in addon.Programs)
                 if (!Programs.ContainsKey(item.Id))
                 {
                     item.Info = programFactory.CreateAddonProgramInfo(item);
                     Programs.Add(item.Id, item);
                 }
-            // process protocols
+        }
+
+        private void ProcessProtocols(AddOn addon)
+        {
             foreach (var item in addon.ItemTypes)
-                foreach(var menuItem in item.ContextMenu)
+                foreach (var menuItem in item.ContextMenu)
                     if (ProtocolHelper.IsProtocol(menuItem.ProgramRef.Id))
                     {
                         var itemProgram = programFactory.CreateFromProtocol(menuItem.ProgramRef.Id);
                         if (itemProgram != null)
                             Programs.Add(itemProgram.Id, itemProgram);
                     }
-            // process menu items
+        }
+
+        private void ProcessMenuItems(AddOn addon)
+        {
             foreach (var item in addon.ItemTypes)
             {
                 AddOnItemTypeRef found;
@@ -136,8 +151,8 @@ namespace LanExchange.Presentation.WinForms
                         {
                             if (Programs.ContainsKey(menuItem.ProgramRef.Id))
                                 menuItem.ProgramValue = Programs[menuItem.ProgramRef.Id];
-                            if (!found.ContextMenu.Contains(menuItem) && 
-                                menuItem.ProgramRef != null && 
+                            if (!found.ContextMenu.Contains(menuItem) &&
+                                menuItem.ProgramRef != null &&
                                 menuItem.ProgramValue != null)
                                 found.ContextMenu.Add(menuItem);
                         }

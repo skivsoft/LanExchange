@@ -68,6 +68,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\Presenters\MainPresenterTest.cs" />
     <Compile Include="Misc\Impl\AddonManagerImplTest.cs" />
     <Compile Include="Model\FolderManagerTest.cs" />
     <Compile Include="Model\PagesModelTest.cs" />
@@ -86,8 +87,8 @@
     <Compile Include="Presentation\WinForms\Forms\EditFormTest.cs" />
     <Compile Include="Presentation\WinForms\Forms\MainFormTest.cs" />
     <Compile Include="Presentation\WinForms\Forms\AboutFormTest.cs" />
-    <Compile Include="Presenter\PresenterBaseSpy.cs" />
-    <Compile Include="Presenter\PresenterBaseTest.cs" />
+    <Compile Include="Application\Presenters\PresenterBaseSpy.cs" />
+    <Compile Include="Application\Presenters\PresenterBaseTest.cs" />
     <Compile Include="Misc\CustomPanelItem.cs" />
     <Compile Include="SDK\PanelFillerResultTest.cs" />
     <Compile Include="SDK\PanelItemBaseTest.cs" />
