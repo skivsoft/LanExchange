@@ -14,11 +14,13 @@ namespace LanExchange.Presentation.WinForms
         private const int SYSTEM_INDEX_WORKGROUP  = 18;
         private const int SYSTEM_INDEX_FOLDER     = 4;
 
+        private readonly IShell32Service shellService;
         private readonly IServiceFactory serviceFactory;
+        private readonly ILogService logService;
 
-        private readonly ImageList smallImageList;
-        private readonly ImageList largeImageList;
-        private readonly Dictionary<string, int> namesMap;
+        private ImageList smallImageList;
+        private ImageList largeImageList;
+        private Dictionary<string, int> namesMap;
         private int lastIndex;
 
         private static readonly Bitmap SmallEmpty = new Bitmap(16, 16);
@@ -26,35 +28,63 @@ namespace LanExchange.Presentation.WinForms
 
         public ImageManager(
             IShell32Service shellService,
-            IServiceFactory serviceFactory)
+            IServiceFactory serviceFactory,
+            ILogService logService)
         {
             Contract.Requires<ArgumentNullException>(shellService != null);
             Contract.Requires<ArgumentNullException>(serviceFactory != null);
+            Contract.Requires<ArgumentNullException>(logService != null);
 
+            this.shellService = shellService;
             this.serviceFactory = serviceFactory;
+            this.logService = logService;
 
             namesMap = new Dictionary<string, int>();
-            // init system images
-            shellService.FileIconInit(true);
+            Initialize();
+        }
 
-            var small = serviceFactory.CreateSysImageListService();
-            var large = serviceFactory.CreateSysImageListService();
-            small.Create(SysImageListSize.SmallIcons);
-            large.Create(SysImageListSize.LargeIcons);
-            // init image lists
+        private void Initialize()
+        {
+            shellService.FileIconInit(true);
+            using (var small = serviceFactory.CreateSysImageListService())
+            using (var large = serviceFactory.CreateSysImageListService())
+            {
+                small.Create(SysImageListSize.SmallIcons);
+                large.Create(SysImageListSize.LargeIcons);
+
+                InitializeImageLists(small, large);
+                RegisterWorkgroupIcon(small, large);
+                RegisterMyComputerIcon(small, large);
+                RegisterFolderIcon(small, large);
+                // register double dot icon
+                RegisterImage(PanelImageNames.DOUBLEDOT, Resources.back_16, Resources.back_32);
+                // register user icon
+                RegisterImage(PanelImageNames.USER, Resources.user_16, Resources.user_32);
+                RegisterDisabledImage(PanelImageNames.USER + PanelImageNames.HIDDEN_POSTFIX, Resources.user_16, Resources.user_32);
+            }
+        }
+
+        private void InitializeImageLists(ISysImageListService small, ISysImageListService large)
+        {
             smallImageList = new ImageList();
             smallImageList.ColorDepth = ColorDepth.Depth32Bit;
             smallImageList.ImageSize = small.Size;
             largeImageList = new ImageList();
             largeImageList.ColorDepth = ColorDepth.Depth32Bit;
             largeImageList.ImageSize = large.Size;
-            // Workgroup icon
-            Icon icon1 = small.GetIcon(SYSTEM_INDEX_WORKGROUP);
-            Icon icon2 = large.GetIcon(SYSTEM_INDEX_WORKGROUP);
+        }
+
+        private void RegisterWorkgroupIcon(ISysImageListService small, ISysImageListService large)
+        {
+            var icon1 = small.GetIcon(SYSTEM_INDEX_WORKGROUP);
+            var icon2 = large.GetIcon(SYSTEM_INDEX_WORKGROUP);
             RegisterImage(PanelImageNames.DOMAIN, icon1, icon2);
-            // MyComputer icon
-            icon1 = small.GetIcon(SYSTEM_INDEX_MYCOMPUTER);
-            icon2 = large.GetIcon(SYSTEM_INDEX_MYCOMPUTER);
+        }
+
+        private void RegisterMyComputerIcon(ISysImageListService small, ISysImageListService large)
+        {
+            var icon1 = small.GetIcon(SYSTEM_INDEX_MYCOMPUTER);
+            var icon2 = large.GetIcon(SYSTEM_INDEX_MYCOMPUTER);
             RegisterImage(PanelImageNames.COMPUTER, icon1, icon2);
             if (icon1 != null && icon2 != null)
             {
@@ -62,20 +92,15 @@ namespace LanExchange.Presentation.WinForms
                 RegisterImageWithOtherColor(PanelImageNames.COMPUTER + PanelImageNames.RED_POSTFIX, icon1, icon2, 2);
                 RegisterImageWithOtherColor(PanelImageNames.COMPUTER + PanelImageNames.GREEN_POSTFIX, icon1, icon2, 4);
             }
-            // Folder icon
-            icon1 = small.GetIcon(SYSTEM_INDEX_FOLDER);
-            icon2 = large.GetIcon(SYSTEM_INDEX_FOLDER);
+        }
+
+        private void RegisterFolderIcon(ISysImageListService small, ISysImageListService large)
+        {
+            var icon1 = small.GetIcon(SYSTEM_INDEX_FOLDER);
+            var icon2 = large.GetIcon(SYSTEM_INDEX_FOLDER);
             RegisterImage(PanelImageNames.FOLDER, icon1, icon2);
             if (icon1 != null && icon2 != null)
                 RegisterDisabledImage(PanelImageNames.FOLDER + PanelImageNames.HIDDEN_POSTFIX, icon1, icon2);
-            // ".." icon
-            RegisterImage(PanelImageNames.DOUBLEDOT, Resources.back_16, Resources.back_32);
-            // User icon
-            RegisterImage(PanelImageNames.USER, Resources.user_16, Resources.user_32);
-            RegisterDisabledImage(PanelImageNames.USER + PanelImageNames.HIDDEN_POSTFIX, Resources.user_16, Resources.user_32);
-            // release sys images list
-            small.Dispose();
-            large.Dispose();
         }
 
         private void RegisterImageWithOtherColor(string imageName, Icon icon1, Icon icon2 , int shift)
@@ -111,6 +136,7 @@ namespace LanExchange.Presentation.WinForms
 
         public void RegisterImage(string name, Image imageSmall, Image imageLarge)
         {
+            logService.Log("register image {0}", name);
             int index;
             if (imageSmall == null) imageSmall = SmallEmpty;
             if (imageLarge == null) imageLarge = LargeEmpty;
@@ -223,7 +249,7 @@ namespace LanExchange.Presentation.WinForms
             var needImageList = control as ISupportImageList;
             needImageList?.SetImageList(smallImageList);
 
-            // TODO use IWithImageList
+            // TODO use ISupportImageList
             var tabControl = control as TabControl;
             if (tabControl != null)
                 tabControl.ImageList = smallImageList;
