@@ -1,6 +1,3 @@
-using LanExchange.Plugin.Windows;
-using SimpleInjector;
-using System;
 using LanExchange.Application;
 using LanExchange.Application.Commands;
 using LanExchange.Application.Factories;
@@ -10,9 +7,13 @@ using LanExchange.Application.Managers;
 using LanExchange.Application.Models;
 using LanExchange.Application.Presenters;
 using LanExchange.Domain.Implementation;
-using LanExchange.Presentation.Interfaces;
 using LanExchange.Domain.Interfaces;
 using LanExchange.Infrastructure;
+using LanExchange.Plugin.Windows;
+using LanExchange.Presentation.Interfaces;
+using LanExchange.Presentation.Interfaces.Persistence;
+using SimpleInjector;
+using System;
 
 namespace LanExchange
 {
@@ -119,6 +120,7 @@ namespace LanExchange
         {
             // TODO: can became transient when dependecy on PagesPresenter will be removed from commands
             container.RegisterSingleton<IPagesPersistenceService, PagesPersistenceService>();
+            container.RegisterSingleton<IAddonPersistenceService, AddonPersistenceService>();
         }
 
         private void RegisterInfrastucture()

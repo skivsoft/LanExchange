@@ -1,21 +1,11 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using System.Xml.Serialization;
 
 namespace LanExchange.Presentation.WinForms.Helpers
 {
     internal static class SerializeHelper
     {
-        public static object DeserializeObjectFromXmlFile(string fileName, Type tp)
-        {
-            var ser = new XmlSerializer(tp);
-            using (var tr = new StreamReader(fileName))
-            {
-                object obj = ser.Deserialize(tr);
-                return obj;
-            }
-        }
 
         /// <summary>
         /// URL: http://www.dailycoding.com/Posts/convert_image_to_base64_string_and_base64_string_to_image.aspx

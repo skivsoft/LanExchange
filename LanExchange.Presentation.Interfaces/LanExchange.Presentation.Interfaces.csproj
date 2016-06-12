@@ -63,6 +63,7 @@
     <Compile Include="IFolderManager.cs" />
     <Compile Include="IImageManager.cs" />
     <Compile Include="ILazyThreadPool.cs" />
+    <Compile Include="ILogService.cs" />
     <Compile Include="IMACAddressSerivice.cs" />
     <Compile Include="IMessageBoxService.cs" />
     <Compile Include="IModelFactory.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="PanelItemRootFactory.cs" />
     <Compile Include="PanelSortOrder.cs" />
     <Compile Include="PanelViewMode.cs" />
+    <Compile Include="Persistence\IAddonPersistenceService.cs" />
     <Compile Include="PresenterBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RetrieveMode.cs" />

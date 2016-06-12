@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Addons;
+using LanExchange.Presentation.Interfaces.Persistence;
 using LanExchange.Presentation.WinForms.Helpers;
 
 namespace LanExchange.Presentation.WinForms
@@ -15,8 +15,6 @@ namespace LanExchange.Presentation.WinForms
     [Localizable(false)]
     internal sealed class AddonManager : IAddonManager
     {
-        private readonly IDictionary<string, AddonProgram> programs;
-        private readonly IDictionary<string, AddOnItemTypeRef> panelItems;
         private readonly IFolderManager folderManager;
         private readonly IAddonProgramFactory programFactory;
         private readonly IImageManager imageManager;
@@ -24,6 +22,8 @@ namespace LanExchange.Presentation.WinForms
         private readonly ITranslationService translationService;
         private readonly IPanelItemFactoryManager factoryManager;
         private readonly IWindowFactory windowFactory;
+        private readonly ILogService logService;
+        private readonly IAddonPersistenceService persistenceService;
 
         private bool isLoaded;
 
@@ -34,7 +34,9 @@ namespace LanExchange.Presentation.WinForms
             IPagesPresenter pagesPresenter,
             ITranslationService translationService,
             IPanelItemFactoryManager factoryManager,
-            IWindowFactory windowFactory)
+            IWindowFactory windowFactory,
+            ILogService logService,
+            IAddonPersistenceService persistenceService)
         {
             Contract.Requires<ArgumentNullException>(folderManager != null);
             Contract.Requires<ArgumentNullException>(programFactory != null);
@@ -43,6 +45,8 @@ namespace LanExchange.Presentation.WinForms
             Contract.Requires<ArgumentNullException>(translationService != null);
             Contract.Requires<ArgumentNullException>(factoryManager != null);
             Contract.Requires<ArgumentNullException>(windowFactory != null);
+            Contract.Requires<ArgumentNullException>(logService != null);
+            Contract.Requires<ArgumentNullException>(persistenceService != null);
 
             this.folderManager = folderManager;
             this.programFactory = programFactory;
@@ -51,43 +55,34 @@ namespace LanExchange.Presentation.WinForms
             this.translationService = translationService;
             this.factoryManager = factoryManager;
             this.windowFactory = windowFactory;
+            this.logService = logService;
+            this.persistenceService = persistenceService;
 
-            programs = new Dictionary<string, AddonProgram>();
-            panelItems = new Dictionary<string, AddOnItemTypeRef>();
+            Programs = new Dictionary<string, AddonProgram>();
+            PanelItems = new Dictionary<string, AddOnItemTypeRef>();
         }
 
-        public IDictionary<string, AddonProgram> Programs 
-        { 
-            get
-            {
-                LoadAddons();
-                return programs;
-            }
-        }
-        
-        public IDictionary<string, AddOnItemTypeRef> PanelItems
-        {
-            get
-            {
-                LoadAddons();
-                return panelItems;
-            }
-        }
+        public IDictionary<string, AddonProgram> Programs { get; }
+
+        public IDictionary<string, AddOnItemTypeRef> PanelItems { get; }
 
         public void LoadAddons()
         {
             if (isLoaded) return;
             foreach (var fileName in folderManager.GetAddonsFiles())
+            {
+                logService.Log("loading addon: {0}", fileName);
                 try
                 {
                     LoadAddon(fileName);
                 }
-                catch (Exception ex)
+                catch (Exception exception)
                 {
-                    Debug.Print(ex.Message);
+                    logService.Log(exception);
                 }
+            }
             // register programs images
-            foreach (var pair in programs)
+            foreach (var pair in Programs)
                 if (pair.Value.ProgramImage != null)
                 {
                     var imageName = string.Format(CultureInfo.InvariantCulture, PanelImageNames.ADDON_FMT, pair.Key);
@@ -99,13 +94,13 @@ namespace LanExchange.Presentation.WinForms
         private void LoadAddon(string fileName)
         {
             // load addon from xml
-            var addon = (AddOn)SerializeHelper.DeserializeObjectFromXmlFile(fileName, typeof(AddOn));
+            var addon = persistenceService.Load(fileName);
             // process programs
             foreach (var item in addon.Programs)
-                if (!programs.ContainsKey(item.Id))
+                if (!Programs.ContainsKey(item.Id))
                 {
                     item.Info = programFactory.CreateAddonProgramInfo(item);
-                    programs.Add(item.Id, item);
+                    Programs.Add(item.Id, item);
                 }
             // process protocols
             foreach (var item in addon.ItemTypes)
@@ -114,16 +109,16 @@ namespace LanExchange.Presentation.WinForms
                     {
                         var itemProgram = programFactory.CreateFromProtocol(menuItem.ProgramRef.Id);
                         if (itemProgram != null)
-                            programs.Add(itemProgram.Id, itemProgram);
+                            Programs.Add(itemProgram.Id, itemProgram);
                     }
             // process menu items
             foreach (var item in addon.ItemTypes)
             {
                 AddOnItemTypeRef found;
-                if (panelItems.ContainsKey(item.Id))
+                if (PanelItems.ContainsKey(item.Id))
                 {
-                    found = panelItems[item.Id];
-                    panelItems.Remove(item.Id);
+                    found = PanelItems[item.Id];
+                    PanelItems.Remove(item.Id);
                 }
                 else
                     found = new AddOnItemTypeRef();
@@ -139,15 +134,15 @@ namespace LanExchange.Presentation.WinForms
                             found.ContextMenu.Add(menuItem);
                         else
                         {
-                            if (programs.ContainsKey(menuItem.ProgramRef.Id))
-                                menuItem.ProgramValue = programs[menuItem.ProgramRef.Id];
+                            if (Programs.ContainsKey(menuItem.ProgramRef.Id))
+                                menuItem.ProgramValue = Programs[menuItem.ProgramRef.Id];
                             if (!found.ContextMenu.Contains(menuItem) && 
                                 menuItem.ProgramRef != null && 
                                 menuItem.ProgramValue != null)
                                 found.ContextMenu.Add(menuItem);
                         }
                     }
-                panelItems.Add(item.Id, found);
+                PanelItems.Add(item.Id, found);
             }
         }
 

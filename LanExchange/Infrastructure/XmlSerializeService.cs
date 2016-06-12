@@ -11,7 +11,7 @@ namespace LanExchange.Infrastructure
     /// <seealso cref="LanExchange.Domain.Interfaces.ISerializeService" />
     internal sealed class XmlSerializeService : ISerializeService
     {
-        public void SerializeToXmlFile<T>(string fileName, T dto, Type[] extraTypes)
+        public void SerializeToFile<T>(string fileName, T dto, Type[] extraTypes)
         {
             var serializer = new XmlSerializer(dto.GetType(), extraTypes);
             using (var file = new StreamWriter(fileName))
@@ -20,7 +20,7 @@ namespace LanExchange.Infrastructure
             }
         }
 
-        public T DeserializeFromXmlFile<T>(string fileName, Type[] extraTypes)
+        public T DeserializeFromFile<T>(string fileName, Type[] extraTypes)
         {
             var ser = new XmlSerializer(typeof(T), extraTypes);
             using (var tr = new StreamReader(fileName))

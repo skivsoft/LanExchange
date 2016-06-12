@@ -7,7 +7,7 @@ namespace LanExchange.Domain.Interfaces
     /// </summary>
     public interface ISerializeService
     {
-        void SerializeToXmlFile<T>(string fileName, T dto, Type[] extraTypes);
-        T DeserializeFromXmlFile<T>(string fileName, Type[] extraTypes);
+        void SerializeToFile<T>(string fileName, T dto, Type[] extraTypes);
+        T DeserializeFromFile<T>(string fileName, Type[] extraTypes);
     }
 }

@@ -162,6 +162,7 @@
     <Compile Include="Application\Managers\CommandManager.cs" />
     <Compile Include="Application\Models\ObjectPath.cs" />
     <Compile Include="CoreFacade.cs" />
+    <Compile Include="Domain\Implementation\AddonPersistenceService.cs" />
     <Compile Include="Domain\Implementation\PagesPersistenceService.cs" />
     <Compile Include="Application\AppBootstrap.cs" />
     <Compile Include="Application\Models\ColumnComparer.cs" />

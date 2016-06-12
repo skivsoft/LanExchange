@@ -52,7 +52,7 @@ namespace LanExchange.Domain.Implementation
             if (File.Exists(fileName))
                 try
                 {
-                    return serializeService.DeserializeFromXmlFile<PagesDto>(fileName, GetExtraTypes());
+                    return serializeService.DeserializeFromFile<PagesDto>(fileName, GetExtraTypes());
                 }
                 catch (Exception exception)
                 {
@@ -67,7 +67,7 @@ namespace LanExchange.Domain.Implementation
             {
                 var fileName = folderManager.TabsConfigFileName;
                 ForceCreatePath(fileName);
-                serializeService.SerializeToXmlFile(fileName, pages, GetExtraTypes());
+                serializeService.SerializeToFile(fileName, pages, GetExtraTypes());
             }
             catch (Exception exception)
             {
