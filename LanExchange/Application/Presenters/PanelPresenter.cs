@@ -134,7 +134,8 @@ namespace LanExchange.Application.Presenters
             Objects.CurrentPath.Push(panelItem);
             Objects.OnTabNameUpdated();
             ResetSortOrder();
-            var syncResult = Objects.RetrieveData(RetrieveMode.Sync, true);
+
+            var syncResult = Objects.RetrieveData(true);
             Objects.SetFillerResult(syncResult, true);
             View.Filter.SetFilterText(string.Empty);
             Objects.AsyncRetrieveData(true);
@@ -153,7 +154,7 @@ namespace LanExchange.Application.Presenters
             Objects.CurrentPath.Pop();
             Objects.OnTabNameUpdated();
             ResetSortOrder();
-            var syncResult = Objects.RetrieveData(RetrieveMode.Sync, true);
+            var syncResult = Objects.RetrieveData(true);
             Objects.SetFillerResult(syncResult, true);
             View.Filter.SetFilterText(string.Empty);
             Objects.AsyncRetrieveData(true);

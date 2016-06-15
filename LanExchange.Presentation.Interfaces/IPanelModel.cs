@@ -88,7 +88,7 @@ namespace LanExchange.Presentation.Interfaces
         bool Contains(PanelItemBase panelItem);
 
         void SetDefaultRoot(PanelItemBase root);
-        PanelFillerResult RetrieveData(RetrieveMode mode, bool clearFilter);
+        PanelFillerResult RetrieveData(bool clearFilter);
         void SetFillerResult(PanelFillerResult fillerResult, bool clearFilter);
         void OnTabNameUpdated();
         void Assign(PanelDto dto);

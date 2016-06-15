@@ -6,12 +6,14 @@ namespace LanExchange.Application.Interfaces
 {
     public interface IPagesModel
     {
-        event EventHandler<PanelEventArgs> AppendPanel;
-        event EventHandler<PanelIndexEventArgs> RemovePanel;
+        event EventHandler<PanelEventArgs> PanelAdded;
+        event EventHandler<PanelIndexEventArgs> PanelRemoved;
         event EventHandler<PanelIndexEventArgs> SelectedIndexChanged;
+        event EventHandler Cleared;
 
-        bool Append(IPanelModel panel);
+        bool Add(IPanelModel panel);
         void RemoveAt(int index);
+        void Clear();
         IPanelModel GetAt(int index);
         void Assign(PagesDto dto);
 

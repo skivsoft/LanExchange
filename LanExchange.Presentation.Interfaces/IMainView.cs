@@ -1,4 +1,6 @@
 ﻿using System;
+using LanExchange.Presentation.Interfaces.Menu;
+using System.Collections.Generic;
 
 namespace LanExchange.Presentation.Interfaces
 {
@@ -15,5 +17,6 @@ namespace LanExchange.Presentation.Interfaces
 
         void SetupMenuLanguages();
         void SetupMenuTags();
+        void InitializeMenu(IMenuElement menu);
     }
 }

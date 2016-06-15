@@ -31,7 +31,7 @@ namespace LanExchange.Application.Commands
                 var root = new ShortcutRoot();
                 model.DataType = typeof (ShortcutPanelItem).Name;
                 model.CurrentPath.Push(root);
-                pagesModel.Append(model);
+                pagesModel.Add(model);
                 foundIndex = pagesModel.Count - 1;
             }
             pagesModel.SelectedIndex = foundIndex;

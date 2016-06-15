@@ -6,7 +6,8 @@ using System.Windows.Forms;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.WinForms.Helpers;
 using LanExchange.Presentation.WinForms.Properties;
-using System.Diagnostics;
+using LanExchange.Presentation.Interfaces.Menu;
+using LanExchange.Presentation.WinForms.Visitors;
 
 namespace LanExchange.Presentation.WinForms.Forms
 {
@@ -96,6 +97,11 @@ namespace LanExchange.Presentation.WinForms.Forms
             if (e.KeyCode == Keys.F10 || e.KeyCode == Keys.Menu)
             {
                 mainPresenter.PerformMenuKeyDown();
+            }
+            if (e.KeyCode == Keys.F1)
+            {
+                mainPresenter.PerformF1KeyDown();
+                e.Handled = true;
             }
         }
 
@@ -318,6 +324,13 @@ namespace LanExchange.Presentation.WinForms.Forms
         {
             ((Control)view).Dock = (DockStyle)dockStyle;
             Controls.Add((Control)view);
+        }
+
+        public void InitializeMenu(IMenuElement menu)
+        {
+            var builder = new MenuBuilderVisitor();
+            menu.Accept(builder);
+            Menu = builder.Build();
         }
 
         public bool RightToLeftValue { get; set; }

@@ -111,8 +111,8 @@
     <Compile Include="IInfoView.cs" />
     <Compile Include="IMainPresenter.cs" />
     <Compile Include="IMainView.cs" />
-    <Compile Include="IMenuElement.cs" />
-    <Compile Include="IMenuElementVisitor.cs" />
+    <Compile Include="Menu\IMenuElement.cs" />
+    <Compile Include="Menu\IMenuElementVisitor.cs" />
     <Compile Include="IPagesPresenter.cs" />
     <Compile Include="IPagesView.cs" />
     <Compile Include="IPanelPresenter.cs" />
@@ -129,7 +129,6 @@
     <Compile Include="IWaitingService.cs" />
     <Compile Include="IWindow.cs" />
     <Compile Include="IWindowTranslationable.cs" />
-    <Compile Include="MenuElement.cs" />
     <Compile Include="Option.cs" />
     <Compile Include="PanelColumnHeader.cs" />
     <Compile Include="PanelDto.cs" />
@@ -145,7 +144,6 @@
     <Compile Include="Persistence\IAddonPersistenceService.cs" />
     <Compile Include="PresenterBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RetrieveMode.cs" />
     <Compile Include="SysImageListSize.cs" />
     <Compile Include="ViewDockStyle.cs" />
   </ItemGroup>

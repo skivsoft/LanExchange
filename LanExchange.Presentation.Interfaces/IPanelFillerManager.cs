@@ -6,7 +6,7 @@ namespace LanExchange.Presentation.Interfaces
     {
         void RegisterFiller<TPanelItem>(IPanelFiller filler) where TPanelItem : PanelItemBase;
         Type GetFillType(PanelItemBase parent);
-        PanelFillerResult RetrievePanelItems(PanelItemBase parent, RetrieveMode mode);
+        PanelFillerResult RetrievePanelItems(PanelItemBase parent);
         bool FillerExists(PanelItemBase panelItem);
     }
 }

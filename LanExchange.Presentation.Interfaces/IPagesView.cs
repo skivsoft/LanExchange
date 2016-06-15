@@ -59,5 +59,6 @@
         void SetTabText(int index, string title);
 
         void SetTabImage(int index, int imageIndex);
+        void Clear();
     }
 }

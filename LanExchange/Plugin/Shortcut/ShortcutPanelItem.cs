@@ -1,41 +1,32 @@
 using System;
-using System.Xml.Serialization;
 using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.Shortcut
 {
     public sealed class ShortcutPanelItem : PanelItemBase
     {
-        public ShortcutPanelItem()
-        {
-        }
+        private readonly string action;
+        private readonly string context;
+        private readonly string customImageName;
 
-        public ShortcutPanelItem(PanelItemBase parent, string name) : base(parent)
-        {
-            Name = name;
-        }
-
-        public ShortcutPanelItem(PanelItemBase parent, string name, string action) : base(parent)
+        public ShortcutPanelItem(PanelItemBase parent, string name, string action, string context, string customImageName) : base(parent)
         {
             Name = name;
-            Action = action;
+            this.action = action;
+            this.context = context;
+            this.customImageName = customImageName;
         }
 
-        [XmlAttribute]
+        public ShortcutPanelItem(PanelItemBase parent, string name, string action) : 
+            this(parent, name, action, string.Empty, string.Empty)
+        {
+        }
+
         public override string Name { get; set; }
-
-        [XmlIgnore]
-        public string Action { get; set; }
-
-        [XmlIgnore]
-        public string Context { get; set; }
-
-        [XmlIgnore]
-        public string CustomImageName { get; set; }
 
         public override string ImageName
         {
-            get { return string.IsNullOrEmpty(CustomImageName) ? PanelImageNames.SHORTCUT : CustomImageName; }
+            get { return string.IsNullOrEmpty(customImageName) ? PanelImageNames.SHORTCUT : customImageName; }
         }
 
         public override string ImageLegendText
@@ -45,7 +36,7 @@ namespace LanExchange.Plugin.Shortcut
 
         public override object Clone()
         {
-            var result = new ShortcutPanelItem(Parent, Name, Action);
+            var result = new ShortcutPanelItem(Parent, Name, action, context, customImageName);
             return result;
         }
 
@@ -59,9 +50,9 @@ namespace LanExchange.Plugin.Shortcut
             switch(index)
             {
                 case 1:
-                    return Action;
+                    return action;
                 case 2:
-                    return Context;
+                    return context;
                 default:
                     return base.GetValue(index);
             }

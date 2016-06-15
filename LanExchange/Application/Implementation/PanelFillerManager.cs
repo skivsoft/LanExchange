@@ -29,7 +29,7 @@ namespace LanExchange.Application.Implementation
             return null;
         }
 
-        public PanelFillerResult RetrievePanelItems(PanelItemBase parent, RetrieveMode mode)
+        public PanelFillerResult RetrievePanelItems(PanelItemBase parent)
         {
             Contract.Requires<ArgumentNullException>(parent != null);
 
@@ -41,10 +41,7 @@ namespace LanExchange.Application.Implementation
                         result.ItemsType = pair.Key;
                     try
                     {
-                        if (mode == RetrieveMode.Sync)
-                            pair.Value.SyncFill(parent, result.Items);
-                        else
-                            pair.Value.AsyncFill(parent, result.Items);
+                        pair.Value.AsyncFill(parent, result.Items);
                     }
                     catch (Exception ex)
                     {

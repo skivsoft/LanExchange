@@ -8,7 +8,7 @@ namespace LanExchange.Plugin.Shortcut
     {
         public PanelItemBase CreatePanelItem(PanelItemBase parent, string name)
         {
-            return new ShortcutPanelItem(parent, name);
+            return new ShortcutPanelItem(parent, name, string.Empty);
         }
 
         public PanelItemBase CreateDefaultRoot()

@@ -147,6 +147,10 @@
     </Compile>
     <Compile Include="Application\Commands\PagesCommandBase.cs" />
     <Compile Include="Application\Implementation\EmptyLogService.cs" />
+    <Compile Include="Application\Implementation\Menu\MenuElement.cs" />
+    <Compile Include="Application\Implementation\Menu\MenuGroup.cs" />
+    <Compile Include="Application\Implementation\Menu\MenuRoot.cs" />
+    <Compile Include="Application\Implementation\Menu\MenuSeparator.cs" />
     <Compile Include="Application\Implementation\PanelModelCopyHelper.cs" />
     <Compile Include="Application\Implementation\ProcessService.cs" />
     <Compile Include="Application\Presenters\InfoPresenter.cs" />

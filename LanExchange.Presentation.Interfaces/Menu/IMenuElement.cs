@@ -1,4 +1,4 @@
-﻿namespace LanExchange.Presentation.Interfaces
+﻿namespace LanExchange.Presentation.Interfaces.Menu
 {
     public interface IMenuElement
     {

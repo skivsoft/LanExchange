@@ -37,9 +37,10 @@ namespace LanExchange.Application.Presenters
             this.panelColumns = panelColumns;
             this.clipboardService = clipboardService;
 
-            this.model.AppendPanel += Model_AfterAppendTab;
-            this.model.RemovePanel += Model_AfterRemove;
-            this.model.SelectedIndexChanged += Model_IndexChanged;
+            this.model.PanelAdded += ModelOnPanelAdded;
+            this.model.PanelRemoved += ModelOnPanelRemoved;
+            this.model.SelectedIndexChanged += ModelOnSelectedIndexChanged;
+            this.model.Cleared += ModelOnCleared;
         }
 
         public bool CanSendToNewTab()
@@ -164,14 +165,15 @@ namespace LanExchange.Application.Presenters
         {
             var index = View.PopupSelectedIndex;
             model.RemoveAt(index);
+            if (index > model.Count - 1)
+                model.SelectedIndex = model.Count - 1;
         }
 
         public void CommanCloseOtherTabs()
         {
-            var popupIndex = View.PopupSelectedIndex;
-            for (int index = model.Count - 1; index >= 0; index--)
-                if (index != popupIndex)
-                    model.RemoveAt(index);
+            var panel = model.GetAt(View.PopupSelectedIndex);
+            model.Clear();
+            model.Add(panel);
             model.SelectedIndex = 0;
         }
 
@@ -221,24 +223,24 @@ namespace LanExchange.Application.Presenters
             return -1;
         }
 
-        public void Model_AfterAppendTab(object sender, PanelEventArgs e)
+        public void ModelOnPanelAdded(object sender, PanelEventArgs e)
         {
-            // TODO hide model
+            //// TODO hide model
             //// create panel
-            //var panelView = View.CreatePanelView(e.Info);
+            //var panelView = View.CreatePanelView(e.Panel);
             //// set update event
             //IPanelPresenter presenter = panelView.Presenter;
-            //presenter.Objects = e.Info;
+            //presenter.Objects = e.Panel;
 
             ////m_View.SelectedIndex = m_View.TabPagesCount - 1;
-            //e.Info.Changed += (o, args) => presenter.UpdateItemsAndStatus();
-            //e.Info.TabNameUpdated += InfoOnTabNameUpdated;
-            //e.Info.OnTabNameUpdated();
+            //e.Panel.Changed += (o, args) => presenter.UpdateItemsAndStatus();
+            //e.Panel.TabNameUpdated += InfoOnTabNameUpdated;
+            //e.Panel.OnTabNameUpdated();
             ////e.Info.SubscriptionChanged += Item_SubscriptionChanged;
             //// update items
             ////e.Info.DataChanged(null, ConcreteSubject.s_UserItems);
             //panelView.Presenter.ResetSortOrder();
-            //e.Info.AsyncRetrieveData(false);
+            //e.Panel.AsyncRetrieveData(false);
         }
 
         private void InfoOnTabNameUpdated(object sender, EventArgs eventArgs)
@@ -253,7 +255,7 @@ namespace LanExchange.Application.Presenters
             }
         }
 
-        public void Model_AfterRemove(object sender, PanelIndexEventArgs e)
+        public void ModelOnPanelRemoved(object sender, PanelIndexEventArgs e)
         {
             View.RemoveTabAt(e.Index);
         }
@@ -264,10 +266,15 @@ namespace LanExchange.Application.Presenters
             View.SetTabText(e.Index, model.TabName);
         }
 
-        public void Model_IndexChanged(object sender, PanelIndexEventArgs e)
+        public void ModelOnSelectedIndexChanged(object sender, PanelIndexEventArgs e)
         {
             View.SelectedIndex = e.Index;
             View.FocusPanelView();
+        }
+
+        private void ModelOnCleared(object sender, EventArgs e)
+        {
+            View.Clear();
         }
 
         public void DoPanelViewFocusedItemChanged(object sender, EventArgs e)

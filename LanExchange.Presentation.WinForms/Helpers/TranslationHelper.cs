@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Resources;
 using System.Windows.Forms;
 using LanExchange.Presentation.Interfaces;
+using static System.Windows.Forms.Menu;
 
 namespace LanExchange.Presentation.WinForms.Helpers
 {
@@ -73,7 +74,7 @@ namespace LanExchange.Presentation.WinForms.Helpers
         }
 
         [Localizable(false)]
-        private static void ProcessMenuItems(ResourceManager resources, Menu.MenuItemCollection menuItems)
+        private static void ProcessMenuItems(ResourceManager resources, MenuItemCollection menuItems)
         {
             foreach (MenuItem menuItem in menuItems)
                 if (menuItem.Text != "-")

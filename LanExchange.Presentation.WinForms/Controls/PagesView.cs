@@ -332,5 +332,10 @@ namespace LanExchange.Presentation.WinForms.Controls
             if (e.KeyCode == Keys.Escape)
                 e.Handled = presenter.PerformEscapeUp();
         }
+
+        public void Clear()
+        {
+            // TODO clear tabs
+        }
     }
 }

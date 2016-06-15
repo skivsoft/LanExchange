@@ -18,9 +18,10 @@ namespace LanExchange.Application.Models
         private readonly List<IPanelModel> panels;
         private int selectedIndex;
 
-        public event EventHandler<PanelEventArgs> AppendPanel;
-        public event EventHandler<PanelIndexEventArgs> RemovePanel;
+        public event EventHandler<PanelEventArgs> PanelAdded;
+        public event EventHandler<PanelIndexEventArgs> PanelRemoved;
         public event EventHandler<PanelIndexEventArgs> SelectedIndexChanged;
+        public event EventHandler Cleared;
 
         public PagesModel(
             IPanelItemFactoryManager factoryManager,
@@ -39,7 +40,10 @@ namespace LanExchange.Application.Models
             selectedIndex = -1;
         }
 
-        public int Count { get { return panels.Count; }  }
+        public int Count
+        {
+            get { return panels.Count; }
+        }
 
         private int lockCount;
 
@@ -55,7 +59,7 @@ namespace LanExchange.Application.Models
                 if (lockCount == 0)
                 {
                     lockCount++;
-                    DoIndexChanged(value);
+                    NotifySelectedIndexChanged(value);
                     lockCount--;
                 }
             }
@@ -68,30 +72,33 @@ namespace LanExchange.Application.Models
             return panels[index];
         }
 
-        private void DoAfterAppendTab(IPanelModel info)
+        private void NotifyPanelAdded(IPanelModel panel)
         {
-            AppendPanel?.Invoke(this, new PanelEventArgs(info));
+            PanelAdded?.Invoke(this, new PanelEventArgs(panel));
         }
 
-        private void DoAfterRemove(int index)
+        private void NotifyPanelRemoved(int index)
         {
-            RemovePanel?.Invoke(this, new PanelIndexEventArgs(index));
+            PanelRemoved?.Invoke(this, new PanelIndexEventArgs(index));
         }
 
-        private void DoIndexChanged(int index)
+        private void NotifySelectedIndexChanged(int index)
         {
             SelectedIndexChanged?.Invoke(this, new PanelIndexEventArgs(index));
         }
 
-        public bool Append(IPanelModel model)
+        private void NotifyPanelCleared()
+        {
+            Cleared?.Invoke(this, EventArgs.Empty);
+        }
+
+        public bool Add(IPanelModel panel)
         {
             // ommit duplicates
-            //if (m_List.Contains(model))
-            //    return false;
-            panels.Add(model);
-            if (selectedIndex == -1 && panels.Count == 1)
-                selectedIndex = 0;
-            DoAfterAppendTab(model);
+            if (panels.Contains(panel))
+                return false;
+            panels.Add(panel);
+            NotifyPanelAdded(panel);
             return true;
         }
 
@@ -99,11 +106,17 @@ namespace LanExchange.Application.Models
         {
             if (index >= 0 && index < panels.Count)
             {
-                var model = panels[index];
                 panels.RemoveAt(index);
-                selectedIndex = panels.Count - 1;
-                DoIndexChanged(selectedIndex);
-                DoAfterRemove(index);
+                NotifyPanelRemoved(index);
+            }
+        }
+
+        public void Clear()
+        {
+            if (panels.Count > 0)
+            {
+                panels.Clear();
+                NotifyPanelCleared();
             }
         }
 
@@ -113,7 +126,7 @@ namespace LanExchange.Application.Models
             {
                 var panel = modelFactory.CreatePanelModel();
                 panel.Assign(item);
-                Append(panel);
+                Add(panel);
             }
             if (dto.SelectedIndex != -1)
                 SelectedIndex = dto.SelectedIndex;
@@ -128,7 +141,7 @@ namespace LanExchange.Application.Models
                 var info = modelFactory.CreatePanelModel();
                 info.SetDefaultRoot(root);
                 info.DataType = panelFillers.GetFillType(root).Name;
-                Append(info);
+                Add(info);
             }
         }
     }

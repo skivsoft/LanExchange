@@ -30,10 +30,6 @@ namespace LanExchange.Plugin.Shortcut
             return parent is ShortcutRoot;
         }
 
-        public void SyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
-        {
-        }
-
         public void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
             result.Add(new ShortcutPanelItem(parent, Resources.KeyF1, Resources.KeyF1__));
@@ -58,11 +54,11 @@ namespace LanExchange.Plugin.Shortcut
                     if (!string.IsNullOrEmpty(menuItem.ShortcutKeys))
                     {
                         var translatedText = translationService.Translate(menuItem.Text);
-                        var shortcut = new ShortcutPanelItem(parent, menuItem.ShortcutKeys, translatedText);
-                        shortcut.Context = SuppressPostfix(pair.Key, PANEL_ITEM_SUFFIX);
+                        var context = SuppressPostfix(pair.Key, PANEL_ITEM_SUFFIX);
+                        string customImageName = string.Empty;
                         if (menuItem.ProgramValue != null)
-                            shortcut.CustomImageName = string.Format(CultureInfo.InvariantCulture, PanelImageNames.ADDON_FMT, menuItem.ProgramValue.Id);
-                        result.Add(shortcut);
+                            customImageName = string.Format(PanelImageNames.ADDON_FMT, menuItem.ProgramValue.Id);
+                        result.Add(new ShortcutPanelItem(parent, menuItem.ShortcutKeys, translatedText, context, customImageName));
                     }
         }
 

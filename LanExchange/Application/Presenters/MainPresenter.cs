@@ -8,6 +8,8 @@ using LanExchange.Application.Interfaces;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.EventArgs;
 using LanExchange.Properties;
+using LanExchange.Application.Implementation.Menu;
+using LanExchange.Presentation.Interfaces.Menu;
 
 namespace LanExchange.Application.Presenters
 {
@@ -85,6 +87,7 @@ namespace LanExchange.Application.Presenters
 
         protected override void InitializePresenter()
         {
+            SetupMenu();
             View.SetupMenuTags();
             // setup languages in menu
             View.SetupMenuLanguages();
@@ -99,6 +102,22 @@ namespace LanExchange.Application.Presenters
                 View.ShowWindowKey = hotkeyService.ShowWindowKey;
             // set lazy events
             threadPool.DataReady += OnDataReady;
+        }
+
+        private void SetupMenu()
+        {
+            var menu = new MenuRoot(
+                new IMenuElement[]
+                {
+                    new MenuGroup("&Panel", new IMenuElement[]
+                    {
+                        new MenuElement("&Re-read"),
+                        new MenuSeparator(),
+                        new MenuElement("E&xit")
+                    })
+                }
+            );
+            View.InitializeMenu(menu);
         }
 
         private void SetupStatusPanel()
@@ -316,6 +335,11 @@ namespace LanExchange.Application.Presenters
         {
             if (View.MenuVisible)
                 View.MenuVisible = false;
+        }
+
+        public void PerformF1KeyDown()
+        {
+            commandManager.ExecuteCommand<ShortcutKeysCommand>();
         }
     }
 }

@@ -215,12 +215,12 @@ namespace LanExchange.Application.Models
         /// <summary>
         /// Sync retrieving panel items using appropriate filler strategy.
         /// </summary>
-        public PanelFillerResult RetrieveData(RetrieveMode mode, bool clearFilter)
+        public PanelFillerResult RetrieveData(bool clearFilter)
         {
             // get parent
             var parent = currentPath.Peek();
             // retrieve items
-            return panelFillers.RetrievePanelItems(parent.SingleOrDefault(), mode);
+            return panelFillers.RetrievePanelItems(parent.SingleOrDefault());
         }
 
         public void SetFillerResult(PanelFillerResult fillerResult, bool clearFilter)
