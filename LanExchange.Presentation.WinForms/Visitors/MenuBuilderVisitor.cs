@@ -1,37 +1,64 @@
 ﻿using LanExchange.Presentation.Interfaces.Menu;
+using System;
+using System.Diagnostics.Contracts;
 using System.Windows.Forms;
 
 namespace LanExchange.Presentation.WinForms.Visitors
 {
-    internal class MenuBuilderVisitor : IMenuElementVisitor
+    internal sealed class MenuBuilderVisitor : IMenuElementVisitor
     {
-        private MainMenu mainMenu;
-        private MenuItem group;
+        private Menu rootMenu;
+        private MenuItem submenu;
 
-        public void VisitMenuRoot()
+        public MainMenu BuildMainMenu(IMenuElement menu)
         {
-            mainMenu = new MainMenu();
+            Contract.Requires<ArgumentNullException>(menu != null);
+
+            rootMenu = new MainMenu();
+            submenu = null;
+            menu.Accept(this);
+            return (MainMenu)rootMenu;
+        }
+
+        public ContextMenu BuildContextMenu(IMenuElement menu)
+        {
+            Contract.Requires<ArgumentNullException>(menu != null);
+
+            rootMenu = new ContextMenu();
+            submenu = null;
+            menu.Accept(this);
+            return (ContextMenu)rootMenu;
         }
 
         public void VisitMenuGroup(string text)
         {
-            group = new MenuItem(text);
-            mainMenu.MenuItems.Add(group);
+            submenu = new MenuItem(text);
+            rootMenu.MenuItems.Add(submenu);
         }
 
-        public void VisitMenuElement(string text)
+        private void AddItem(MenuItem menuItem)
         {
-            group.MenuItems.Add(new MenuItem(text));
+            if (submenu == null)
+                rootMenu.MenuItems.Add(menuItem);
+            else
+                submenu.MenuItems.Add(menuItem);
+        }
+
+        public void VisitMenuElement(string text, string shortcut)
+        {
+            var menuItem = new MenuItem(text);
+            if (!string.IsNullOrEmpty(shortcut))
+            {
+                var converter = new KeysConverter();
+                menuItem.Shortcut = (Shortcut)converter.ConvertFrom(shortcut);
+            }
+
+            AddItem(menuItem);
         }
 
         public void VisitSeparator()
         {
-            group.MenuItems.Add(new MenuItem("-"));
-        }
-
-        internal MainMenu Build()
-        {
-            return mainMenu;
+            AddItem(new MenuItem("-"));
         }
     }
 }

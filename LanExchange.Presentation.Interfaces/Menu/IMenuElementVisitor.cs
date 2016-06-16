@@ -2,9 +2,8 @@
 {
     public interface IMenuElementVisitor
     {
-        void VisitMenuRoot();
         void VisitMenuGroup(string text);
-        void VisitMenuElement(string text);
+        void VisitMenuElement(string text, string shortcut);
         void VisitSeparator();
     }
 }

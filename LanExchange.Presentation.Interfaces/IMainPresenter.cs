@@ -20,6 +20,5 @@ namespace LanExchange.Presentation.Interfaces
         bool PerformMenuKeyUp();
         void PerformEscapeKeyDown();
         void PerformEscapeKeyUp();
-        void PerformF1KeyDown();
     }
 }

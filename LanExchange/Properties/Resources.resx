@@ -125,6 +125,7 @@
   </data>
   <data name="KeyF10" xml:space="preserve">
     <value>F10</value>
+    <comment>comment for f10</comment>
   </data>
   <data name="KeyF9" xml:space="preserve">
     <value>F9</value>
@@ -177,9 +178,6 @@
   <data name="KeyCtrlV__" xml:space="preserve">
     <value>Paste items from clipboard.</value>
   </data>
-  <data name="KeyCtrlR" xml:space="preserve">
-    <value>Ctrl+R</value>
-  </data>
   <data name="KeyCtrlWinX__" xml:space="preserve">
     <value>Show/hide main window.</value>
   </data>
@@ -213,12 +211,6 @@
   <data name="KeyCtrlIns__" xml:space="preserve">
     <value>Copy column on which the ordered item(s) to clipboard.</value>
   </data>
-  <data name="Action" xml:space="preserve">
-    <value>Action</value>
-  </data>
-  <data name="Context" xml:space="preserve">
-    <value>Context</value>
-  </data>
   <data name="PanelPresenter_Items1" xml:space="preserve">
     <value>Items: {0}</value>
   </data>
@@ -232,10 +224,6 @@
     <value>Resource «{0}» not reachable.
 Continue anyway?</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="keyboard_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\keyboard_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="EmptyText" xml:space="preserve">
     <value>    </value>
   </data>
@@ -247,9 +235,6 @@ Continue anyway?</value>
   </data>
   <data name="KeyCtrlIns1" xml:space="preserve">
     <value>Ctrl+Ins</value>
-  </data>
-  <data name="KeyCtrlR1" xml:space="preserve">
-    <value>Ctrl+R</value>
   </data>
   <data name="KeyCtrlUp1" xml:space="preserve">
     <value>Ctrl+Up</value>
@@ -296,7 +281,40 @@ Continue anyway?</value>
   <data name="AboutInfo_Build" xml:space="preserve">
     <value> (build {0})</value>
   </data>
-  <data name="mHelpKeys_Text" xml:space="preserve">
-    <value>Shortcut Keys</value>
+  <data name="mHelpAbout_Text" xml:space="preserve">
+    <value>&amp;About...</value>
+  </data>
+  <data name="mHelp_Text" xml:space="preserve">
+    <value>&amp;Help</value>
+  </data>
+  <data name="mPanelExit_Text" xml:space="preserve">
+    <value>E&amp;xit</value>
+  </data>
+  <data name="mPanelReRead_Text" xml:space="preserve">
+    <value>&amp;Re-read</value>
+  </data>
+  <data name="mPanel_Text" xml:space="preserve">
+    <value>&amp;Panel</value>
+  </data>
+  <data name="mViewDetails_Text" xml:space="preserve">
+    <value>&amp;Details</value>
+  </data>
+  <data name="mViewLarge_Text" xml:space="preserve">
+    <value>La&amp;rge icons</value>
+  </data>
+  <data name="mViewList_Text" xml:space="preserve">
+    <value>&amp;List</value>
+  </data>
+  <data name="mViewSmall_Text" xml:space="preserve">
+    <value>Small ico&amp;ns</value>
+  </data>
+  <data name="mView_Text" xml:space="preserve">
+    <value>&amp;View</value>
+  </data>
+  <data name="mTrayOpen_Text" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="mTrayClose_Text" xml:space="preserve">
+    <value>Close</value>
   </data>
 </root>

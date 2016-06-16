@@ -2,6 +2,7 @@
 using LanExchange.Application.Interfaces;
 using LanExchange.Presentation.Interfaces;
 using Moq;
+using LanExchange.Presentation.Interfaces.Menu;
 
 namespace LanExchange.Application.Presenters
 {
@@ -29,7 +30,8 @@ namespace LanExchange.Application.Presenters
                 new Mock<ICommandManager>().Object,
                 new Mock<IAppView>().Object,
                 new Mock<IProcessService>().Object,
-                new Mock<IImageManager>().Object
+                new Mock<IImageManager>().Object,
+                new Mock<IMenuProducer>().Object
                 );
             return presenter;
         }

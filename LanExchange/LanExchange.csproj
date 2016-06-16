@@ -149,8 +149,9 @@
     <Compile Include="Application\Implementation\EmptyLogService.cs" />
     <Compile Include="Application\Implementation\Menu\MenuElement.cs" />
     <Compile Include="Application\Implementation\Menu\MenuGroup.cs" />
-    <Compile Include="Application\Implementation\Menu\MenuRoot.cs" />
+    <Compile Include="Application\Implementation\Menu\MenuProducer.cs" />
     <Compile Include="Application\Implementation\Menu\MenuSeparator.cs" />
+    <Compile Include="Application\Implementation\Menu\NullMenu.cs" />
     <Compile Include="Application\Implementation\PanelModelCopyHelper.cs" />
     <Compile Include="Application\Implementation\ProcessService.cs" />
     <Compile Include="Application\Presenters\InfoPresenter.cs" />
@@ -177,7 +178,6 @@
     <Compile Include="Application\Commands\PagesCloseTabCommand.cs" />
     <Compile Include="Application\Commands\PagesCloseOtherCommand.cs" />
     <Compile Include="Application\Commands\PagesReReadCommand.cs" />
-    <Compile Include="Application\Commands\ShortcutKeysCommand.cs" />
     <Compile Include="Application\Implementation\PanelColumnManager.cs" />
     <Compile Include="Application\Implementation\PanelFillerManager.cs" />
     <Compile Include="Application\Implementation\PanelItemFactoryManager.cs" />
@@ -187,11 +187,6 @@
     <Compile Include="Application\Models\PanelModel.cs" />
     <Compile Include="Domain\Interfaces\ISerializeService.cs" />
     <Compile Include="Infrastructure\XmlSerializeService.cs" />
-    <Compile Include="Plugin\PluginInternal.cs" />
-    <Compile Include="Plugin\Shortcut\ShortcutFactory.cs" />
-    <Compile Include="Plugin\Shortcut\ShortcutFiller.cs" />
-    <Compile Include="Plugin\Shortcut\ShortcutPanelItem.cs" />
-    <Compile Include="Plugin\Shortcut\ShortcutRoot.cs" />
     <Compile Include="Plugin\Windows\ExternDll.cs" />
     <Compile Include="Plugin\Windows\HotkeysService.cs" />
     <Compile Include="Plugin\Windows\MACAddressService.cs" />
@@ -249,7 +244,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Resources\keyboard_16.png" />
     <None Include="..\LanExchange.snk">
       <Link>LanExchange.snk</Link>
     </None>

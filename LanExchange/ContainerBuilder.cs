@@ -2,6 +2,7 @@ using LanExchange.Application;
 using LanExchange.Application.Commands;
 using LanExchange.Application.Factories;
 using LanExchange.Application.Implementation;
+using LanExchange.Application.Implementation.Menu;
 using LanExchange.Application.Interfaces;
 using LanExchange.Application.Managers;
 using LanExchange.Application.Models;
@@ -11,6 +12,7 @@ using LanExchange.Domain.Interfaces;
 using LanExchange.Infrastructure;
 using LanExchange.Plugin.Windows;
 using LanExchange.Presentation.Interfaces;
+using LanExchange.Presentation.Interfaces.Menu;
 using LanExchange.Presentation.Interfaces.Persistence;
 using SimpleInjector;
 using System;
@@ -57,6 +59,7 @@ namespace LanExchange
             container.RegisterSingleton<ITranslationService, TranslationService>();
             container.RegisterSingleton<IDisposableManager, DisposableManager>();
             container.RegisterSingleton<ICommandManager, CommandManager>();
+            container.RegisterSingleton<IMenuProducer, MenuProducer>();
         }
 
         private void RegisterModels()
@@ -111,8 +114,7 @@ namespace LanExchange
                 typeof(AboutCommand),
                 typeof(PagesReReadCommand),
                 typeof(PagesCloseTabCommand),
-                typeof(PagesCloseOtherCommand),
-                typeof(ShortcutKeysCommand)
+                typeof(PagesCloseOtherCommand)
             });
         }
 

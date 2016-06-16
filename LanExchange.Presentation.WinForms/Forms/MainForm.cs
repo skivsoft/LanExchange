@@ -98,11 +98,6 @@ namespace LanExchange.Presentation.WinForms.Forms
             {
                 mainPresenter.PerformMenuKeyDown();
             }
-            if (e.KeyCode == Keys.F1)
-            {
-                mainPresenter.PerformF1KeyDown();
-                e.Handled = true;
-            }
         }
 
         private void MainForm_KeyUp(object sender, KeyEventArgs e)
@@ -326,11 +321,16 @@ namespace LanExchange.Presentation.WinForms.Forms
             Controls.Add((Control)view);
         }
 
-        public void InitializeMenu(IMenuElement menu)
+        public void InitializeMenus(IMenuProducer menus)
         {
-            var builder = new MenuBuilderVisitor();
-            menu.Accept(builder);
-            Menu = builder.Build();
+            //Menu = new MenuBuilderVisitor().BuildMainMenu(menus.MainMenu);
+            //TrayIcon.ContextMenu = new MenuBuilderVisitor().BuildContextMenu(menus.TrayMenu);
+
+            var menuStrip = new MenuStripBuilderVisitor().BuildMainMenu(menus.MainMenu);
+            Controls.Add(menuStrip);
+            MainMenuStrip = menuStrip;
+            //TrayIcon.ContextMenuStrip = new MenuStripBuilderVisitor().BuildContextMenu(menus.TrayMenu);
+            TrayIcon.ContextMenuStrip = popTray;
         }
 
         public bool RightToLeftValue { get; set; }

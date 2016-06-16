@@ -154,8 +154,8 @@
   <data name="mPaste_Text" xml:space="preserve">
     <value>Paste</value>
   </data>
-  <data name="mReRead_Text" xml:space="preserve">
-    <value>Re-read</value>
+  <data name="mPanelReRead_Text" xml:space="preserve">
+    <value>&amp;Re-read</value>
   </data>
   <data name="EmptyText" xml:space="preserve">
     <value>    </value>
@@ -227,11 +227,11 @@
   <data name="mCloseTab_Text1" xml:space="preserve">
     <value>Close tab</value>
   </data>
-  <data name="mExit_Text" xml:space="preserve">
-    <value>Exit</value>
+  <data name="mPanelExit_Text" xml:space="preserve">
+    <value>E&amp;xit</value>
   </data>
   <data name="mHelpAbout_Text" xml:space="preserve">
-    <value>About</value>
+    <value>&amp;About</value>
   </data>
   <data name="mHelpBugs_Text" xml:space="preserve">
     <value>BugTracker Webpage</value>
@@ -251,41 +251,26 @@
   <data name="mLanguage_Text" xml:space="preserve">
     <value>&amp;Language</value>
   </data>
-  <data name="mNewItem_Text" xml:space="preserve">
-    <value>New item</value>
-  </data>
   <data name="mPanel_Text" xml:space="preserve">
     <value>&amp;Panel</value>
-  </data>
-  <data name="mReRead_Text1" xml:space="preserve">
-    <value>Re-read</value>
-  </data>
-  <data name="mTrayAbout_Text" xml:space="preserve">
-    <value>About</value>
-  </data>
-  <data name="mTrayExit_Text" xml:space="preserve">
-    <value>Exit</value>
   </data>
   <data name="mTrayOpen_Text" xml:space="preserve">
     <value>Open</value>
   </data>
   <data name="mViewDetails_Text" xml:space="preserve">
-    <value>Details</value>
-  </data>
-  <data name="mViewGrid_Text" xml:space="preserve">
-    <value>Grid lines</value>
+    <value>&amp;Details</value>
   </data>
   <data name="mViewInfo_Text" xml:space="preserve">
     <value>Info panel</value>
   </data>
   <data name="mViewLarge_Text" xml:space="preserve">
-    <value>Large icons</value>
+    <value>La&amp;rge icons</value>
   </data>
   <data name="mViewList_Text" xml:space="preserve">
-    <value>List</value>
+    <value>&amp;List</value>
   </data>
   <data name="mViewSmall_Text" xml:space="preserve">
-    <value>Small icons</value>
+    <value>Small ico&amp;ns</value>
   </data>
   <data name="mView_Text" xml:space="preserve">
     <value>&amp;View</value>

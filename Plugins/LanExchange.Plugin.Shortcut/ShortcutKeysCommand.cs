@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 using LanExchange.Application.Interfaces;
-using LanExchange.Plugin.Shortcut;
 using LanExchange.Presentation.Interfaces;
 
-namespace LanExchange.Application.Commands
+namespace LanExchange.Plugin.Shortcut
 {
     internal sealed class ShortcutKeysCommand : ICommand
     {

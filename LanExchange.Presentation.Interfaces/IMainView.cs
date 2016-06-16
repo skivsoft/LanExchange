@@ -17,6 +17,6 @@ namespace LanExchange.Presentation.Interfaces
 
         void SetupMenuLanguages();
         void SetupMenuTags();
-        void InitializeMenu(IMenuElement menu);
+        void InitializeMenus(IMenuProducer menus);
     }
 }

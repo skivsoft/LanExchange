@@ -43,8 +43,6 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.tipComps = new System.Windows.Forms.ToolTip(this.components);
             this.MainMenu = new System.Windows.Forms.MainMenu(this.components);
             this.mPanel = new System.Windows.Forms.MenuItem();
-            this.mNewItem = new System.Windows.Forms.MenuItem();
-            this.panelSep1 = new System.Windows.Forms.MenuItem();
             this.mReRead = new System.Windows.Forms.MenuItem();
             this.mPanelSep2 = new System.Windows.Forms.MenuItem();
             this.mExit = new System.Windows.Forms.MenuItem();
@@ -66,7 +64,6 @@ namespace LanExchange.Presentation.WinForms.Forms
             // TrayIcon
             // 
             this.TrayIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.TrayIcon.ContextMenuStrip = this.popTray;
             this.TrayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("TrayIcon.Icon")));
             this.TrayIcon.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TrayIcon_MouseUp);
             // 
@@ -99,14 +96,14 @@ namespace LanExchange.Presentation.WinForms.Forms
             // 
             this.mTrayAbout.Name = "mTrayAbout";
             this.mTrayAbout.Size = new System.Drawing.Size(107, 22);
-            this.mTrayAbout.Text = global::LanExchange.Presentation.WinForms.Properties.Resources.mTrayAbout_Text;
+            this.mTrayAbout.Text = global::LanExchange.Presentation.WinForms.Properties.Resources.mHelpAbout_Text;
             this.mTrayAbout.Click += new System.EventHandler(this.mHelpAbout_Click);
             // 
             // mTrayExit
             // 
             this.mTrayExit.Name = "mTrayExit";
             this.mTrayExit.Size = new System.Drawing.Size(107, 22);
-            this.mTrayExit.Text = global::LanExchange.Presentation.WinForms.Properties.Resources.mTrayExit_Text;
+            this.mTrayExit.Text = global::LanExchange.Presentation.WinForms.Properties.Resources.mPanelExit_Text;
             this.mTrayExit.Click += new System.EventHandler(this.mTrayExit_Click);
             // 
             // toolStripStatusLabel2
@@ -132,42 +129,27 @@ namespace LanExchange.Presentation.WinForms.Forms
             // 
             this.mPanel.Index = 0;
             this.mPanel.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.mNewItem,
-            this.panelSep1,
             this.mReRead,
             this.mPanelSep2,
             this.mExit});
             this.mPanel.Text = global::LanExchange.Presentation.WinForms.Properties.Resources.mPanel_Text;
             this.mPanel.Popup += new System.EventHandler(this.mPanel_Popup);
             // 
-            // mNewItem
-            // 
-            this.mNewItem.Index = 0;
-            this.mNewItem.Shortcut = System.Windows.Forms.Shortcut.Ins;
-            this.mNewItem.Text = global::LanExchange.Presentation.WinForms.Properties.Resources.mNewItem_Text;
-            this.mNewItem.Visible = false;
-            // 
-            // panelSep1
-            // 
-            this.panelSep1.Index = 1;
-            this.panelSep1.Text = "-";
-            this.panelSep1.Visible = false;
-            // 
             // mReRead
             // 
-            this.mReRead.Index = 2;
+            this.mReRead.Index = 0;
             this.mReRead.Shortcut = System.Windows.Forms.Shortcut.CtrlR;
             this.mReRead.Text = "&Re-read";
             this.mReRead.Click += new System.EventHandler(this.mReRead_Click);
             // 
             // mPanelSep2
             // 
-            this.mPanelSep2.Index = 3;
+            this.mPanelSep2.Index = 1;
             this.mPanelSep2.Text = "-";
             // 
             // mExit
             // 
-            this.mExit.Index = 4;
+            this.mExit.Index = 2;
             this.mExit.Shortcut = System.Windows.Forms.Shortcut.AltF4;
             this.mExit.Text = "E&xit";
             this.mExit.Click += new System.EventHandler(this.mTrayExit_Click);
@@ -306,8 +288,6 @@ namespace LanExchange.Presentation.WinForms.Forms
         private System.Windows.Forms.MenuItem mViewDetails;
         private System.Windows.Forms.MenuItem mPanelSep2;
         private MenuItem menuItem1;
-        private MenuItem mNewItem;
-        private MenuItem panelSep1;
     }
 }
 

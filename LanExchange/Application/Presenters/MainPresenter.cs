@@ -31,6 +31,7 @@ namespace LanExchange.Application.Presenters
         private readonly IAppView appView;
         private readonly IProcessService processService;
         private readonly IImageManager imageManager;
+        private readonly IMenuProducer menuProducer;
 
         public MainPresenter(
             ILazyThreadPool threadPool,
@@ -48,7 +49,8 @@ namespace LanExchange.Application.Presenters
             ICommandManager commandManager,
             IAppView appView,
             IProcessService processService,
-            IImageManager imageManager)
+            IImageManager imageManager,
+            IMenuProducer menuProducer)
         {
             Contract.Requires<ArgumentNullException>(threadPool != null);
             Contract.Requires<ArgumentNullException>(panelColumns != null);
@@ -66,6 +68,7 @@ namespace LanExchange.Application.Presenters
             Contract.Requires<ArgumentNullException>(appView != null);
             Contract.Requires<ArgumentNullException>(processService != null);
             Contract.Requires<ArgumentNullException>(imageManager != null);
+            Contract.Requires<ArgumentNullException>(menuProducer != null);
 
             this.threadPool = threadPool;
             this.columnManager = panelColumns;
@@ -83,6 +86,7 @@ namespace LanExchange.Application.Presenters
             this.appView = appView;
             this.processService = processService;
             this.imageManager = imageManager;
+            this.menuProducer = menuProducer;
         }
 
         protected override void InitializePresenter()
@@ -106,18 +110,29 @@ namespace LanExchange.Application.Presenters
 
         private void SetupMenu()
         {
-            var menu = new MenuRoot(
-                new IMenuElement[]
-                {
-                    new MenuGroup("&Panel", new IMenuElement[]
-                    {
-                        new MenuElement("&Re-read"),
-                        new MenuSeparator(),
-                        new MenuElement("E&xit")
-                    })
-                }
+            menuProducer.MainMenu = new MenuGroup(
+                new MenuGroup(Resources.mPanel_Text,
+                    new MenuElement(Resources.mPanelReRead_Text, "Ctrl+R"),
+                    new MenuSeparator(),
+                    new MenuElement(Resources.mPanelExit_Text, "Alt+F4")
+                ),
+                new MenuGroup(Resources.mView_Text,
+                    new MenuElement(Resources.mViewLarge_Text),
+                    new MenuElement(Resources.mViewSmall_Text),
+                    new MenuElement(Resources.mViewList_Text),
+                    new MenuElement(Resources.mViewDetails_Text)
+                ),
+                new MenuGroup(Resources.mHelp_Text, 
+                    new MenuElement(Resources.mHelpAbout_Text)
+                )
             );
-            View.InitializeMenu(menu);
+                
+            menuProducer.TrayMenu = new MenuGroup(
+                    new MenuElement(Resources.mTrayClose_Text),
+                    new MenuElement(Resources.mPanelExit_Text)
+            );
+
+            View.InitializeMenus(menuProducer);
         }
 
         private void SetupStatusPanel()
@@ -335,11 +350,6 @@ namespace LanExchange.Application.Presenters
         {
             if (View.MenuVisible)
                 View.MenuVisible = false;
-        }
-
-        public void PerformF1KeyDown()
-        {
-            commandManager.ExecuteCommand<ShortcutKeysCommand>();
         }
     }
 }

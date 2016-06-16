@@ -318,15 +318,6 @@ namespace LanExchange.Presentation.WinForms.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exit.
-        /// </summary>
-        internal static string mExit_Text {
-            get {
-                return ResourceManager.GetString("mExit_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to &amp;Help.
         /// </summary>
         internal static string mHelp_Text {
@@ -336,7 +327,7 @@ namespace LanExchange.Presentation.WinForms.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to About.
+        ///   Looks up a localized string similar to &amp;About.
         /// </summary>
         internal static string mHelpAbout_Text {
             get {
@@ -390,15 +381,6 @@ namespace LanExchange.Presentation.WinForms.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New item.
-        /// </summary>
-        internal static string mNewItem_Text {
-            get {
-                return ResourceManager.GetString("mNewItem_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to &amp;Panel.
         /// </summary>
         internal static string mPanel_Text {
@@ -408,47 +390,29 @@ namespace LanExchange.Presentation.WinForms.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to E&amp;xit.
+        /// </summary>
+        internal static string mPanelExit_Text {
+            get {
+                return ResourceManager.GetString("mPanelExit_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Re-read.
+        /// </summary>
+        internal static string mPanelReRead_Text {
+            get {
+                return ResourceManager.GetString("mPanelReRead_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Paste.
         /// </summary>
         internal static string mPaste_Text {
             get {
                 return ResourceManager.GetString("mPaste_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Re-read.
-        /// </summary>
-        internal static string mReRead_Text {
-            get {
-                return ResourceManager.GetString("mReRead_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Re-read.
-        /// </summary>
-        internal static string mReRead_Text1 {
-            get {
-                return ResourceManager.GetString("mReRead_Text1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to About.
-        /// </summary>
-        internal static string mTrayAbout_Text {
-            get {
-                return ResourceManager.GetString("mTrayAbout_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Exit.
-        /// </summary>
-        internal static string mTrayExit_Text {
-            get {
-                return ResourceManager.GetString("mTrayExit_Text", resourceCulture);
             }
         }
         
@@ -471,20 +435,11 @@ namespace LanExchange.Presentation.WinForms.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Details.
+        ///   Looks up a localized string similar to &amp;Details.
         /// </summary>
         internal static string mViewDetails_Text {
             get {
                 return ResourceManager.GetString("mViewDetails_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Grid lines.
-        /// </summary>
-        internal static string mViewGrid_Text {
-            get {
-                return ResourceManager.GetString("mViewGrid_Text", resourceCulture);
             }
         }
         
@@ -498,7 +453,7 @@ namespace LanExchange.Presentation.WinForms.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Large icons.
+        ///   Looks up a localized string similar to La&amp;rge icons.
         /// </summary>
         internal static string mViewLarge_Text {
             get {
@@ -507,7 +462,7 @@ namespace LanExchange.Presentation.WinForms.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List.
+        ///   Looks up a localized string similar to &amp;List.
         /// </summary>
         internal static string mViewList_Text {
             get {
@@ -516,7 +471,7 @@ namespace LanExchange.Presentation.WinForms.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Small icons.
+        ///   Looks up a localized string similar to Small ico&amp;ns.
         /// </summary>
         internal static string mViewSmall_Text {
             get {

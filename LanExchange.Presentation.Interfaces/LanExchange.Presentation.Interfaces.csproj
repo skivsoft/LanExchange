@@ -129,6 +129,7 @@
     <Compile Include="IWaitingService.cs" />
     <Compile Include="IWindow.cs" />
     <Compile Include="IWindowTranslationable.cs" />
+    <Compile Include="Menu\IMenuProducer.cs" />
     <Compile Include="Option.cs" />
     <Compile Include="PanelColumnHeader.cs" />
     <Compile Include="PanelDto.cs" />

@@ -58,7 +58,7 @@ namespace LanExchange.Presentation.WinForms.Controls
             this.mReRead.Name = "mReRead";
             this.mReRead.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
             this.mReRead.Size = new System.Drawing.Size(168, 22);
-            this.mReRead.Text = Resources.mReRead_Text;
+            this.mReRead.Text = Resources.mPanelReRead_Text;
             this.mReRead.Click += new System.EventHandler(this.mReRead_Click);
             // 
             // toolStripSeparator2

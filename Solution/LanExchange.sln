@@ -37,6 +37,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{707566C8-7103-4F11-B44B-6B63F989F9F6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.WinForms", "..\LanExchange.WinForms\LanExchange.WinForms.csproj", "{269907C3-FAD4-48F3-BB7F-C531E19A1829}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DFD46AF6-DBC9-44D4-85B7-07CCCA3718E8} = {DFD46AF6-DBC9-44D4-85B7-07CCCA3718E8}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FBD39BFC-A305-4676-AEBA-08677B29B590}"
 	ProjectSection(SolutionItems) = preProject
@@ -60,6 +63,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Presentation.WinForms", "..\LanExchange.Presentation.WinForms\LanExchange.Presentation.WinForms.csproj", "{99898DFE-7EA8-44CF-ACCA-543B74EB7E6E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Application.Interfaces", "..\LanExchange.Application.Interfaces\LanExchange.Application.Interfaces.csproj", "{1C003A71-105F-46DD-AD18-2C1534961A2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanExchange.Plugin.Shortcut", "..\Plugins\LanExchange.Plugin.Shortcut\LanExchange.Plugin.Shortcut.csproj", "{DFD46AF6-DBC9-44D4-85B7-07CCCA3718E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -265,6 +270,18 @@ Global
 		{1C003A71-105F-46DD-AD18-2C1534961A2E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1C003A71-105F-46DD-AD18-2C1534961A2E}.Release|x86.ActiveCfg = Release|Any CPU
 		{1C003A71-105F-46DD-AD18-2C1534961A2E}.Release|x86.Build.0 = Release|Any CPU
+		{DFD46AF6-DBC9-44D4-85B7-07CCCA3718E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFD46AF6-DBC9-44D4-85B7-07CCCA3718E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFD46AF6-DBC9-44D4-85B7-07CCCA3718E8}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{DFD46AF6-DBC9-44D4-85B7-07CCCA3718E8}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{DFD46AF6-DBC9-44D4-85B7-07CCCA3718E8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DFD46AF6-DBC9-44D4-85B7-07CCCA3718E8}.Debug|x86.Build.0 = Debug|Any CPU
+		{DFD46AF6-DBC9-44D4-85B7-07CCCA3718E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFD46AF6-DBC9-44D4-85B7-07CCCA3718E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFD46AF6-DBC9-44D4-85B7-07CCCA3718E8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{DFD46AF6-DBC9-44D4-85B7-07CCCA3718E8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{DFD46AF6-DBC9-44D4-85B7-07CCCA3718E8}.Release|x86.ActiveCfg = Release|Any CPU
+		{DFD46AF6-DBC9-44D4-85B7-07CCCA3718E8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -284,6 +301,7 @@ Global
 		{530BDBBA-A879-403C-83C5-A2F27BDABE05} = {707566C8-7103-4F11-B44B-6B63F989F9F6}
 		{99898DFE-7EA8-44CF-ACCA-543B74EB7E6E} = {707566C8-7103-4F11-B44B-6B63F989F9F6}
 		{1C003A71-105F-46DD-AD18-2C1534961A2E} = {707566C8-7103-4F11-B44B-6B63F989F9F6}
+		{DFD46AF6-DBC9-44D4-85B7-07CCCA3718E8} = {9C54C6C3-1F51-4250-A283-367AA1D2D73D}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = LanExchange2010.vsmdi

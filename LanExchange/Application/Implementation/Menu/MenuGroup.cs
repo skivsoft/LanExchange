@@ -12,20 +12,26 @@ namespace LanExchange.Application.Implementation.Menu
         private readonly string text;
         private readonly IEnumerable<IMenuElement> elements;
 
-        public MenuGroup(string text, IEnumerable<IMenuElement> elements)
+        public MenuGroup(string text, params IMenuElement[] elements) 
         {
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(text));
+            Contract.Requires<ArgumentNullException>(text != null);
             Contract.Requires<ArgumentNullException>(elements != null);
 
             this.text = text;
             this.elements = elements;
         }
 
+        public MenuGroup(params IMenuElement[] elements) : this(string.Empty, elements)
+        {
+        }
+
         public void Accept(IMenuElementVisitor visitor)
         {
             Contract.Requires<ArgumentNullException>(visitor != null);
 
-            visitor.VisitMenuGroup(text);
+            if (!string.IsNullOrEmpty(text))
+                visitor.VisitMenuGroup(text);
+
             foreach (var element in elements)
                 element.Accept(visitor);
         }

@@ -79,24 +79,6 @@ namespace LanExchange.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Action.
-        /// </summary>
-        internal static string Action {
-            get {
-                return ResourceManager.GetString("Action", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Context.
-        /// </summary>
-        internal static string Context {
-            get {
-                return ResourceManager.GetString("Context", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to     .
         /// </summary>
         internal static string EmptyText {
@@ -147,16 +129,6 @@ namespace LanExchange.Properties {
         internal static string KeyBackspace__ {
             get {
                 return ResourceManager.GetString("KeyBackspace__", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap keyboard_16 {
-            get {
-                object obj = ResourceManager.GetObject("keyboard_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -278,29 +250,11 @@ namespace LanExchange.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ctrl+R.
-        /// </summary>
-        internal static string KeyCtrlR {
-            get {
-                return ResourceManager.GetString("KeyCtrlR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Re-read panel..
         /// </summary>
         internal static string KeyCtrlR__ {
             get {
                 return ResourceManager.GetString("KeyCtrlR__", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ctrl+R.
-        /// </summary>
-        internal static string KeyCtrlR1 {
-            get {
-                return ResourceManager.GetString("KeyCtrlR1", resourceCulture);
             }
         }
         
@@ -548,11 +502,110 @@ namespace LanExchange.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Shortcut Keys.
+        ///   Looks up a localized string similar to &amp;Help.
         /// </summary>
-        internal static string mHelpKeys_Text {
+        internal static string mHelp_Text {
             get {
-                return ResourceManager.GetString("mHelpKeys_Text", resourceCulture);
+                return ResourceManager.GetString("mHelp_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;About....
+        /// </summary>
+        internal static string mHelpAbout_Text {
+            get {
+                return ResourceManager.GetString("mHelpAbout_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Panel.
+        /// </summary>
+        internal static string mPanel_Text {
+            get {
+                return ResourceManager.GetString("mPanel_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E&amp;xit.
+        /// </summary>
+        internal static string mPanelExit_Text {
+            get {
+                return ResourceManager.GetString("mPanelExit_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Re-read.
+        /// </summary>
+        internal static string mPanelReRead_Text {
+            get {
+                return ResourceManager.GetString("mPanelReRead_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        internal static string mTrayClose_Text {
+            get {
+                return ResourceManager.GetString("mTrayClose_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        internal static string mTrayOpen_Text {
+            get {
+                return ResourceManager.GetString("mTrayOpen_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;View.
+        /// </summary>
+        internal static string mView_Text {
+            get {
+                return ResourceManager.GetString("mView_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Details.
+        /// </summary>
+        internal static string mViewDetails_Text {
+            get {
+                return ResourceManager.GetString("mViewDetails_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La&amp;rge icons.
+        /// </summary>
+        internal static string mViewLarge_Text {
+            get {
+                return ResourceManager.GetString("mViewLarge_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;List.
+        /// </summary>
+        internal static string mViewList_Text {
+            get {
+                return ResourceManager.GetString("mViewList_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Small ico&amp;ns.
+        /// </summary>
+        internal static string mViewSmall_Text {
+            get {
+                return ResourceManager.GetString("mViewSmall_Text", resourceCulture);
             }
         }
         
