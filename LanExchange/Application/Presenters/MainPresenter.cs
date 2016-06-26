@@ -10,6 +10,7 @@ using LanExchange.Presentation.Interfaces.EventArgs;
 using LanExchange.Properties;
 using LanExchange.Application.Implementation.Menu;
 using LanExchange.Presentation.Interfaces.Menu;
+using System.Collections.Generic;
 
 namespace LanExchange.Application.Presenters
 {
@@ -91,48 +92,94 @@ namespace LanExchange.Application.Presenters
 
         protected override void InitializePresenter()
         {
+            // set hotkey for activate: Ctrl+Win+X
+            disposableManager.RegisterInstance(hotkeyService);
+            if (hotkeyService.RegisterShowWindowKey(View.Handle))
+                showWindowKey = hotkeyService.ShowWindowKey;
+
             SetupMenu();
-            View.SetupMenuTags();
-            // setup languages in menu
-            View.SetupMenuLanguages();
             // init main form
             SetupStatusPanel();
             SetupPages();
             SetupForm();
             View.RightToLeftValue = translationService.RightToLeft;
-            // set hotkey for activate: Ctrl+Win+X
-            disposableManager.RegisterInstance(hotkeyService);
-            if (hotkeyService.RegisterShowWindowKey(View.Handle))
-                View.ShowWindowKey = hotkeyService.ShowWindowKey;
             // set lazy events
             threadPool.DataReady += OnDataReady;
         }
 
         private void SetupMenu()
         {
-            menuProducer.MainMenu = new MenuGroup(
+            menuProducer.MainMenu = BuildMainMenu();
+            menuProducer.TrayMenu = BuildTrayMenu();
+
+            View.InitializeMainMenu(menuProducer.MainMenu);
+            View.InitializeTrayMenu(menuProducer.TrayMenu);
+            View.MenuVisible = false;
+        }
+
+        private IMenuElement BuildMainMenu()
+        {
+            return new MenuGroup(
                 new MenuGroup(Resources.mPanel_Text,
-                    new MenuElement(Resources.mPanelReRead_Text, "Ctrl+R"),
+                    new MenuElement(Resources.mPanelReRead_Text, "Ctrl+R", NullCommand.Instance),
                     new MenuSeparator(),
-                    new MenuElement(Resources.mPanelExit_Text, "Alt+F4")
+                    new MenuElement(Resources.mPanelExit_Text, "Alt+F4", new ExitCommand(appView))
                 ),
                 new MenuGroup(Resources.mView_Text,
-                    new MenuElement(Resources.mViewLarge_Text),
-                    new MenuElement(Resources.mViewSmall_Text),
-                    new MenuElement(Resources.mViewList_Text),
-                    new MenuElement(Resources.mViewDetails_Text)
+                    new MenuElement(Resources.mViewLarge_Text, NullCommand.Instance),
+                    new MenuElement(Resources.mViewSmall_Text, NullCommand.Instance),
+                    new MenuElement(Resources.mViewList_Text, NullCommand.Instance),
+                    new MenuElement(Resources.mViewDetails_Text, NullCommand.Instance)
                 ),
-                new MenuGroup(Resources.mHelp_Text, 
-                    new MenuElement(Resources.mHelpAbout_Text)
+                BuildLanguageMenu(),
+                new MenuGroup(Resources.mHelp_Text,
+                    new MenuElement(Resources.mHelpWeb_Text, NullCommand.Instance),
+                    new MenuElement(Resources.mHelpBugs_Text, NullCommand.Instance),
+                    new MenuElement(Resources.mHelpLangs_Text, NullCommand.Instance),
+                    new MenuSeparator(),
+                    new MenuElement(Resources.mHelpAbout_Text, commandManager.GetCommand(nameof(AboutCommand)))
                 )
             );
-                
-            menuProducer.TrayMenu = new MenuGroup(
-                    new MenuElement(Resources.mTrayClose_Text),
-                    new MenuElement(Resources.mPanelExit_Text)
-            );
+        }
 
-            View.InitializeMenus(menuProducer);
+        private string showWindowKey;
+
+        private IMenuElement BuildTrayMenu()
+        {
+            return new MenuGroup(
+                    new MenuElement(Resources.mTrayClose_Text, showWindowKey, new ToggleVisibleCommand(View), MenuElementKind.Default),
+                    new MenuSeparator(),
+                    new MenuElement(Resources.mHelpAbout_Text, commandManager.GetCommand(nameof(AboutCommand))),
+                    new MenuElement(Resources.mPanelExit_Text, commandManager.GetCommand(nameof(ExitCommand)))
+            );
+        }
+
+        private IMenuElement BuildLanguageMenu()
+        {
+            var languagesDict = translationService.GetLanguagesNames();
+            if (languagesDict.Count <= 1)
+                return NullMenu.Instance;
+
+            var menuItems = new List<IMenuElement>();
+            foreach (var pair in languagesDict)
+            {
+                var menuItem = new MenuElement(pair.Value, NullCommand.Instance);
+                //menuItem.RadioCheck = true;
+                //menuItem.Tag = pair.Key;
+                //menuItem.Click += MenuItemOnClick;
+                //mLanguage.MenuItems.Add(menuItem);
+                menuItems.Add(menuItem);
+            }
+
+            return new MenuGroup(Resources.mLanguage_Text, menuItems.ToArray());
+        }
+
+        public void SetupMenuTags()
+        {
+            //mViewLarge.Tag = PanelViewMode.LargeIcon;
+            //mViewSmall.Tag = PanelViewMode.SmallIcon;
+            //mViewList.Tag = PanelViewMode.List;
+            //mViewDetails.Tag = PanelViewMode.Details;
         }
 
         private void SetupStatusPanel()
@@ -240,11 +287,6 @@ namespace LanExchange.Application.Presenters
             //commandManager.ExecuteCommand<PagesReReadCommand>();
         }
 
-        public void DoAbout()
-        {
-            commandManager.ExecuteCommand<AboutCommand>();
-        }
-
         private void GlobalTranslateColumns()
         {
             foreach (var pair in factoryManager.Types)
@@ -289,14 +331,7 @@ namespace LanExchange.Application.Presenters
 
         public void DoToggleVisible()
         {
-            View.Visible = !View.Visible;
-            if (View.Visible)
-                View.Activate();
-        }
-
-        public void DoExit()
-        {
-            appView.Exit();
+            commandManager.GetCommand(nameof(ToggleVisibleCommand)).Execute();
         }
 
         public void OpenHomeLink()

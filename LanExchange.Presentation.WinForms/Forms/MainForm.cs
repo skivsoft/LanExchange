@@ -1,5 +1,6 @@
-﻿using System;
-using System.ComponentModel;
+﻿#define _SYSTEM_MENU
+
+using System;
 using System.Diagnostics.Contracts;
 using System.Security.Permissions;
 using System.Windows.Forms;
@@ -26,26 +27,6 @@ namespace LanExchange.Presentation.WinForms.Forms
             mainPresenter.Initialize(this);
         }
 
-        public void SetupMenuLanguages()
-        {
-            //var nameDict = translationService.GetLanguagesNames();
-            //if (nameDict.Count < 2)
-            //{
-            //    mLanguage.Visible = false;
-            //    return;
-            //}
-            //mLanguage.Visible = true;
-            //mLanguage.MenuItems.Clear();
-            //foreach(var pair in nameDict)
-            //{
-            //    var menuItem = new MenuItem(pair.Value);
-            //    menuItem.RadioCheck = true;
-            //    menuItem.Tag = pair.Key;
-            //    menuItem.Click += MenuItemOnClick;
-            //    mLanguage.MenuItems.Add(menuItem);
-            //}
-        }
-
         private void MarkCurrentLanguage()
         {
             //foreach (MenuItem menuItem in mLanguage.MenuItems)
@@ -68,7 +49,6 @@ namespace LanExchange.Presentation.WinForms.Forms
         {
             // translate sub-components
             TranslationHelper.TranslateComponents(Resources.ResourceManager, this, components);
-            mTrayOpen_TranslateUI();
             TranslationHelper.TranslateControls(Controls);
             // refresh tab names
             //var shortcutIndex = mainPresenter.FindShortcutKeysPanelIndex();
@@ -80,11 +60,6 @@ namespace LanExchange.Presentation.WinForms.Forms
             //    if (index == shortcutIndex)
             //        model.AsyncRetrieveData(false);
             //}
-        }
-
-        private void mTrayOpen_TranslateUI()
-        {
-            mTrayOpen.Text = Visible ? Resources.MainForm_Close : Resources.mTrayOpen_Text;
         }
 
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
@@ -128,31 +103,11 @@ namespace LanExchange.Presentation.WinForms.Forms
             //}
             //tooltip.ToolTipTitle = string.Empty;
         }
-
-        private void mHelpAbout_Click(object sender, EventArgs e)
-        {
-            mainPresenter.DoAbout();
-        }
-        
-        private void popTray_Opening(object sender, CancelEventArgs e)
-        {
-            mTrayOpen_TranslateUI();
-        }
-
-        private void mOpen_Click(object sender, EventArgs e)
-        {
-            mainPresenter.DoToggleVisible();
-        }
-
+     
         private void TrayIcon_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
                 mainPresenter.DoToggleVisible();
-        }
-
-        private void mTrayExit_Click(object sender, EventArgs e)
-        {
-            mainPresenter.DoExit();
         }
 
         [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
@@ -222,14 +177,6 @@ namespace LanExchange.Presentation.WinForms.Forms
             UpdatePanelRelatedMenu();
         }
 
-        public void SetupMenuTags()
-        {
-            mViewLarge.Tag = PanelViewMode.LargeIcon;
-            mViewSmall.Tag = PanelViewMode.SmallIcon;
-            mViewList.Tag = PanelViewMode.List;
-            mViewDetails.Tag = PanelViewMode.Details;
-        }
-
         private void mView_Click(object sender, EventArgs e)
         {
             var menu = (Menu)sender;
@@ -296,23 +243,11 @@ namespace LanExchange.Presentation.WinForms.Forms
     //    } 
 
 
-        public string ShowWindowKey
-        {
-            get { return mTrayOpen.ShortcutKeyDisplayString; }
-            set { mTrayOpen.ShortcutKeyDisplayString = value; }
-        }
-
         public object SafeInvoke(Delegate method, params object[] args)
         {
             if (IsHandleCreated)
                 return Invoke(method, args);
             return null;
-        }
-
-        private void MainForm_RightToLeftChanged(object sender, EventArgs e)
-        {
-            popTray.RightToLeft = RightToLeft;
-            //Status.SizingGrip = RightToLeft == RightToLeft.No;
         }
 
         public void AddView(IView view, ViewDockStyle dockStyle)
@@ -321,27 +256,37 @@ namespace LanExchange.Presentation.WinForms.Forms
             Controls.Add((Control)view);
         }
 
-        public void InitializeMenus(IMenuProducer menus)
+        public void InitializeMainMenu(IMenuElement menu)
         {
-            //Menu = new MenuBuilderVisitor().BuildMainMenu(menus.MainMenu);
-            //TrayIcon.ContextMenu = new MenuBuilderVisitor().BuildContextMenu(menus.TrayMenu);
+#if SYSTEM_MENU
+            Menu = new SystemMenuBuilder().BuildMainMenu(menu);
+#else
+            var mainMenu = new PlatformMenuBuilder().BuildMainMenu(menu);
+            Controls.Add(mainMenu);
+            MainMenuStrip = mainMenu;
+#endif
+        }
 
-            var menuStrip = new MenuStripBuilderVisitor().BuildMainMenu(menus.MainMenu);
-            Controls.Add(menuStrip);
-            MainMenuStrip = menuStrip;
-            //TrayIcon.ContextMenuStrip = new MenuStripBuilderVisitor().BuildContextMenu(menus.TrayMenu);
-            TrayIcon.ContextMenuStrip = popTray;
+        public void InitializeTrayMenu(IMenuElement menu)
+        {
+#if SYSTEM_MENU
+            TrayIcon.ContextMenu = new SystemMenuBuilder().BuildContextMenu(menu);
+#else
+            var trayMenu = new PlatformMenuBuilder().BuildContextMenu(menu);
+            TrayIcon.ContextMenuStrip = trayMenu;
+#endif
+        }
+
+        public bool MenuVisible
+        {
+            get { return MainMenuStrip.Visible; }
+            set
+            {
+                MainMenuStrip.Visible = value;
+            }
         }
 
         public bool RightToLeftValue { get; set; }
 
-        public bool MenuVisible
-        {
-            get { return Menu != null; }
-            set
-            {
-                Menu = value ? MainMenu : null;
-            }
-        }
     }
 }

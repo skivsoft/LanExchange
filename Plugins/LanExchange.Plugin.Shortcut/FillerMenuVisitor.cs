@@ -20,7 +20,7 @@ namespace LanExchange.Plugin.Shortcut
             this.result = result;
         }
 
-        public void VisitMenuElement(string text, string shortcut)
+        public void VisitMenuElement(string text, string shortcut, ICommand command, bool isDefault)
         {
             result.Add(new ShortcutPanelItem(parent, shortcut, text));
         }

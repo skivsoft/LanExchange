@@ -1,11 +1,12 @@
-﻿using LanExchange.Presentation.Interfaces.Menu;
+﻿using LanExchange.Presentation.Interfaces;
+using LanExchange.Presentation.Interfaces.Menu;
 using System;
 using System.Diagnostics.Contracts;
 using System.Windows.Forms;
 
 namespace LanExchange.Presentation.WinForms.Visitors
 {
-    internal sealed class MenuBuilderVisitor : IMenuElementVisitor
+    internal sealed class SystemMenuBuilder : IMenuElementVisitor
     {
         private Menu rootMenu;
         private MenuItem submenu;
@@ -44,15 +45,23 @@ namespace LanExchange.Presentation.WinForms.Visitors
                 submenu.MenuItems.Add(menuItem);
         }
 
-        public void VisitMenuElement(string text, string shortcut)
+        public void VisitMenuElement(string text, string shortcut, ICommand command, bool isDefault)
         {
             var menuItem = new MenuItem(text);
             if (!string.IsNullOrEmpty(shortcut))
             {
                 var converter = new KeysConverter();
-                menuItem.Shortcut = (Shortcut)converter.ConvertFrom(shortcut);
+                try
+                {
+                    menuItem.Shortcut = (Shortcut)converter.ConvertFrom(shortcut);
+                }
+                catch (ArgumentException)
+                {
+                }
             }
-
+            menuItem.Enabled = command.Enabled;
+            menuItem.Click += (sender, e) => command.Execute();
+            menuItem.DefaultItem = isDefault;
             AddItem(menuItem);
         }
 

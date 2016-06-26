@@ -206,7 +206,7 @@
     <Compile Include="Helpers\ProtocolHelper.cs" />
     <Compile Include="Helpers\SerializeHelper.cs" />
     <Compile Include="ImageManager.cs" />
-    <Compile Include="Visitors\MenuBuilderVisitor.cs" />
+    <Compile Include="Visitors\SystemMenuBuilder.cs" />
     <Compile Include="MessageBoxService.cs" />
     <Compile Include="PresentationFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -224,7 +224,7 @@
     <Compile Include="SubMenuAdapter.cs" />
     <Compile Include="SystemInformationService.cs" />
     <Compile Include="Helpers\TranslationHelper.cs" />
-    <Compile Include="Visitors\MenuStripBuilderVisitor.cs" />
+    <Compile Include="Visitors\PlatformMenuBuilder.cs" />
     <Compile Include="WaitingService.cs" />
   </ItemGroup>
   <ItemGroup>

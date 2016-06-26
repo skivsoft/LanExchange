@@ -317,4 +317,16 @@ Continue anyway?</value>
   <data name="mTrayClose_Text" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="mHelpBugs_Text" xml:space="preserve">
+    <value>&amp;BugTracker Webpage</value>
+  </data>
+  <data name="mHelpLangs_Text" xml:space="preserve">
+    <value>&amp;Localization Webpage</value>
+  </data>
+  <data name="mHelpWeb_Text" xml:space="preserve">
+    <value>LanE&amp;xchange Webpage</value>
+  </data>
+  <data name="mLanguage_Text" xml:space="preserve">
+    <value>&amp;Language</value>
+  </data>
 </root>

@@ -8,7 +8,7 @@ namespace LanExchange.Application.Commands
         {
         }
 
-        public override void Execute()
+        protected override void InternalExecute()
         {
             pagesPresenter.CommandReRead();
         }

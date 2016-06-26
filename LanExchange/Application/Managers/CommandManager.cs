@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using LanExchange.Presentation.Interfaces;
+using LanExchange.Application.Commands;
 
 namespace LanExchange.Application.Managers
 {
@@ -14,42 +15,17 @@ namespace LanExchange.Application.Managers
             Contract.Requires<ArgumentNullException>(commands != null);
 
             this.commands = new Dictionary<string, ICommand>();
-            foreach (var action in commands)
-                RegisterCommand(action);
+            foreach (var command in commands)
+                this.commands.Add(command.GetType().Name, command);
         }
 
-        private void RegisterCommand(ICommand command)
-        {
-            Contract.Requires<ArgumentNullException>(command != null);
-
-            commands.Add(command.GetType().Name, command);
-        }
-
-        public void ExecuteCommand(string commandName)
+        public ICommand GetCommand(string commandName)
         {
             ICommand command;
             if (commands.TryGetValue(commandName, out command))
-                if (command.Enabled)
-                    command.Execute();
-        }
+                return command;
 
-        public void ExecuteCommand<T>() where T : ICommand
-        {
-            ExecuteCommand(typeof(T).Name);
-        }
-
-        public bool IsCommandEnabled(string commandName)
-        {
-            ICommand command;
-            if (commands.TryGetValue(commandName, out command))
-                return command.Enabled;
-
-            return false;
-        }
-
-        public bool IsCommandEnabled<T>() where T : ICommand
-        {
-            return IsCommandEnabled(typeof(T).Name);
+            return NullCommand.Instance;
         }
     }
 }

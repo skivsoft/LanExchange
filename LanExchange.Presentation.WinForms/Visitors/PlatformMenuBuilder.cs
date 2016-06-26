@@ -1,10 +1,12 @@
 ﻿using LanExchange.Presentation.Interfaces.Menu;
 using System.Windows.Forms;
 using System;
+using LanExchange.Presentation.Interfaces;
+using System.Drawing;
 
 namespace LanExchange.Presentation.WinForms.Visitors
 {
-    internal sealed class MenuStripBuilderVisitor : IMenuElementVisitor
+    internal sealed class PlatformMenuBuilder : IMenuElementVisitor
     {
         private ToolStrip menuStrip;
         private ToolStripMenuItem submenu;
@@ -32,14 +34,25 @@ namespace LanExchange.Presentation.WinForms.Visitors
                 submenu.DropDownItems.Add(menuItem);
         }
 
-        public void VisitMenuElement(string text, string shortcut)
+        public void VisitMenuElement(string text, string shortcut, ICommand command, bool isDefault)
         {
             var menuItem = new ToolStripMenuItem(text);
             if (!string.IsNullOrEmpty(shortcut))
             {
                 var converter = new KeysConverter();
-                menuItem.ShortcutKeys = (Keys)converter.ConvertFrom(shortcut);
+                try
+                {
+                    menuItem.ShortcutKeys = (Keys)converter.ConvertFrom(shortcut);
+                }
+                catch (ArgumentException)
+                {
+                    menuItem.ShortcutKeyDisplayString = shortcut;
+                }
             }
+            menuItem.Enabled = command.Enabled;
+            menuItem.Click += (sender, e) => command.Execute();
+            if (isDefault)
+                menuItem.Font = new Font(menuItem.Font, FontStyle.Bold);
             AddItem(menuItem);
         }
 

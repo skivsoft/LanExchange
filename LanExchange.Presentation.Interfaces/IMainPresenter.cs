@@ -9,9 +9,7 @@ namespace LanExchange.Presentation.Interfaces
 
         bool IsHotKey(short id);
         void DoPagesReRead();
-        void DoAbout();
         void DoToggleVisible();
-        void DoExit();
         void OpenHomeLink();
         void OpenLocalizationLink();
         void OpenBugTrackerWebLink();

@@ -9,14 +9,11 @@ namespace LanExchange.Presentation.Interfaces
         IntPtr Handle { get; }
         string TrayText { get; set; }
         bool TrayVisible { get; set; }
-        string ShowWindowKey { get; set; }
         bool MenuVisible { get; set; }
 
         void ShowStatusText(string format, params object[] args);
         void SetToolTip(object control, string tipText);
-
-        void SetupMenuLanguages();
-        void SetupMenuTags();
-        void InitializeMenus(IMenuProducer menus);
+        void InitializeMainMenu(IMenuElement menu);
+        void InitializeTrayMenu(IMenuElement menu);
     }
 }

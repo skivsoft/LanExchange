@@ -4,7 +4,7 @@ using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Commands
 {
-    internal abstract class PagesCommandBase : ICommand
+    internal abstract class PagesCommandBase : CommandBase
     {
         protected readonly IPagesPresenter pagesPresenter;
 
@@ -15,9 +15,7 @@ namespace LanExchange.Application.Commands
             this.pagesPresenter = pagesPresenter;
         }
 
-        public abstract void Execute();
-
-        public virtual bool Enabled
+        public override bool Enabled
         {
             get { return pagesPresenter.SelectedIndex != -1; }
         }

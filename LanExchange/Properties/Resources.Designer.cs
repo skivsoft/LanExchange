@@ -520,6 +520,42 @@ namespace LanExchange.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &amp;BugTracker Webpage.
+        /// </summary>
+        internal static string mHelpBugs_Text {
+            get {
+                return ResourceManager.GetString("mHelpBugs_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Localization Webpage.
+        /// </summary>
+        internal static string mHelpLangs_Text {
+            get {
+                return ResourceManager.GetString("mHelpLangs_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LanE&amp;xchange Webpage.
+        /// </summary>
+        internal static string mHelpWeb_Text {
+            get {
+                return ResourceManager.GetString("mHelpWeb_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Language.
+        /// </summary>
+        internal static string mLanguage_Text {
+            get {
+                return ResourceManager.GetString("mLanguage_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;Panel.
         /// </summary>
         internal static string mPanel_Text {

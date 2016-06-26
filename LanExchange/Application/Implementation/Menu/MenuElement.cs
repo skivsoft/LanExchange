@@ -2,6 +2,7 @@
 using LanExchange.Presentation.Interfaces.Menu;
 using System.Diagnostics.Contracts;
 using System.ComponentModel;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Implementation.Menu
 {
@@ -10,17 +11,22 @@ namespace LanExchange.Application.Implementation.Menu
     {
         private readonly string text;
         private readonly string shortcut;
+        private readonly ICommand command;
+        private readonly MenuElementKind kind;
 
-        public MenuElement(string text, string shortcut)
+        public MenuElement(string text, string shortcut, ICommand command, MenuElementKind kind = MenuElementKind.Normal)
         {
             Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(text));
             Contract.Requires<ArgumentNullException>(shortcut != null);
+            Contract.Requires<ArgumentNullException>(command != null);
 
             this.text = text;
             this.shortcut = shortcut;
+            this.command = command;
+            this.kind = kind;
         }
 
-        public MenuElement(string text) : this(text, string.Empty)
+        public MenuElement(string text, ICommand command) : this(text, string.Empty, command)
         {
         }
 
@@ -28,7 +34,7 @@ namespace LanExchange.Application.Implementation.Menu
         {
             Contract.Requires<ArgumentNullException>(visitor != null);
 
-            visitor.VisitMenuElement(text, shortcut);
+            visitor.VisitMenuElement(text, shortcut, command, kind == MenuElementKind.Default);
         }
     }
 }

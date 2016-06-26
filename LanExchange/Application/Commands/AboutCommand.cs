@@ -4,7 +4,7 @@ using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Commands
 {
-    internal sealed class AboutCommand : ICommand
+    internal sealed class AboutCommand : CommandBase
     {
         private readonly IWindowFactory windowFactory;
 
@@ -15,17 +15,12 @@ namespace LanExchange.Application.Commands
             this.windowFactory = windowFactory;
         }
 
-        public void Execute()
+        protected override void InternalExecute()
         {
             using (var window = windowFactory.CreateAboutView())
             {
                 window.ShowModalDialog();
             }
-        }
-
-        public bool Enabled
-        {
-            get { return true; }
         }
     }
 }

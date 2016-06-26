@@ -111,6 +111,7 @@ namespace LanExchange
         {
             container.RegisterCollection<ICommand>(new []
             {
+                typeof(ExitCommand),
                 typeof(AboutCommand),
                 typeof(PagesReReadCommand),
                 typeof(PagesCloseTabCommand),
