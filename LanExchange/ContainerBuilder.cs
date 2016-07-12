@@ -1,5 +1,6 @@
 using LanExchange.Application;
-using LanExchange.Application.Commands;
+using LanExchange.Application.Attributes;
+using LanExchange.Application.Extensions;
 using LanExchange.Application.Factories;
 using LanExchange.Application.Implementation;
 using LanExchange.Application.Implementation.Menu;
@@ -16,6 +17,8 @@ using LanExchange.Presentation.Interfaces.Menu;
 using LanExchange.Presentation.Interfaces.Persistence;
 using SimpleInjector;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LanExchange
 {
@@ -109,14 +112,13 @@ namespace LanExchange
 
         private void RegisterCommands()
         {
-            container.RegisterCollection<ICommand>(new []
-            {
-                typeof(ExitCommand),
-                typeof(AboutCommand),
-                typeof(PagesReReadCommand),
-                typeof(PagesCloseTabCommand),
-                typeof(PagesCloseOtherCommand)
-            });
+            container.RegisterCollection<ICommand>(GetAutoWiredCommandTypes());
+        }
+
+        private IEnumerable<Type> GetAutoWiredCommandTypes()
+        {
+            return GetType().Assembly.GetTypes()
+                   .Where(type => !type.IsAbstract && typeof(ICommand).IsAssignableFrom(type) && type.HasAttribute<AutoWiredAttribute>());
         }
 
         private void RegisterDomain()

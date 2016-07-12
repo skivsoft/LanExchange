@@ -24,7 +24,7 @@
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
     <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
-    <CodeContractsRuntimeThrowOnFailure>False</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
     <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
     <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
     <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
@@ -145,11 +145,13 @@
     <Compile Include="..\AnyAssemblyInfo.cs">
       <Link>AnyAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Application\Attributes\AutoWiredAttribute.cs" />
     <Compile Include="Application\Commands\CommandBase.cs" />
-    <Compile Include="Application\Commands\ExitCommand.cs" />
+    <Compile Include="Application\Commands\AutoWired\ExitCommand.cs" />
     <Compile Include="Application\Commands\NullCommand.cs" />
-    <Compile Include="Application\Commands\PagesCommandBase.cs" />
+    <Compile Include="Application\Commands\AutoWired\PagesCommandBase.cs" />
     <Compile Include="Application\Commands\ToggleVisibleCommand.cs" />
+    <Compile Include="Application\Extensions\TypeExtension.cs" />
     <Compile Include="Application\Implementation\EmptyLogService.cs" />
     <Compile Include="Application\Implementation\Menu\MenuElement.cs" />
     <Compile Include="Application\Implementation\Menu\MenuElementKind.cs" />
@@ -179,10 +181,10 @@
     <Compile Include="ContainerBuilder.cs" />
     <Compile Include="Application\Implementation\DisposableManager.cs" />
     <Compile Include="Application\Implementation\TranslationResourceManager.cs" />
-    <Compile Include="Application\Commands\AboutCommand.cs" />
-    <Compile Include="Application\Commands\PagesCloseTabCommand.cs" />
-    <Compile Include="Application\Commands\PagesCloseOtherCommand.cs" />
-    <Compile Include="Application\Commands\PagesReReadCommand.cs" />
+    <Compile Include="Application\Commands\AutoWired\AboutCommand.cs" />
+    <Compile Include="Application\Commands\AutoWired\PagesCloseTabCommand.cs" />
+    <Compile Include="Application\Commands\AutoWired\PagesCloseOtherCommand.cs" />
+    <Compile Include="Application\Commands\AutoWired\PagesReReadCommand.cs" />
     <Compile Include="Application\Implementation\PanelColumnManager.cs" />
     <Compile Include="Application\Implementation\PanelFillerManager.cs" />
     <Compile Include="Application\Implementation\PanelItemFactoryManager.cs" />

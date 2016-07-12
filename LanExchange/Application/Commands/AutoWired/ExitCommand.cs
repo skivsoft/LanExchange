@@ -1,9 +1,11 @@
-﻿using LanExchange.Presentation.Interfaces;
+﻿using LanExchange.Application.Attributes;
+using LanExchange.Presentation.Interfaces;
 using System;
 using System.Diagnostics.Contracts;
 
-namespace LanExchange.Application.Commands
+namespace LanExchange.Application.Commands.AutoWired
 {
+    [AutoWired]
     internal sealed class ExitCommand : CommandBase
     {
         private readonly IAppView appView;

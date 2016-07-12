@@ -11,6 +11,7 @@ using LanExchange.Properties;
 using LanExchange.Application.Implementation.Menu;
 using LanExchange.Presentation.Interfaces.Menu;
 using System.Collections.Generic;
+using LanExchange.Application.Commands.AutoWired;
 
 namespace LanExchange.Application.Presenters
 {

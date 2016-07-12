@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 using LanExchange.Presentation.Interfaces;
+using LanExchange.Application.Attributes;
 
-namespace LanExchange.Application.Commands
+namespace LanExchange.Application.Commands.AutoWired
 {
+    [AutoWired]
     internal sealed class AboutCommand : CommandBase
     {
         private readonly IWindowFactory windowFactory;

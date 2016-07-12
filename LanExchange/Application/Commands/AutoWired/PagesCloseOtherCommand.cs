@@ -1,6 +1,6 @@
 ﻿using LanExchange.Presentation.Interfaces;
 
-namespace LanExchange.Application.Commands
+namespace LanExchange.Application.Commands.AutoWired
 {
     internal sealed class PagesCloseOtherCommand : PagesCommandBase
     {
