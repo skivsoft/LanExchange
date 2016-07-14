@@ -1,4 +1,4 @@
-﻿#define _SYSTEM_MENU
+﻿#define SYSTEM_MENU
 
 using System;
 using System.Diagnostics.Contracts;
@@ -256,10 +256,13 @@ namespace LanExchange.Presentation.WinForms.Forms
             Controls.Add((Control)view);
         }
 
+        MainMenu mainMenu;
+
         public void InitializeMainMenu(IMenuElement menu)
         {
 #if SYSTEM_MENU
-            Menu = new SystemMenuBuilder().BuildMainMenu(menu);
+            mainMenu = new SystemMenuBuilder().BuildMainMenu(menu);
+            Menu = mainMenu;
 #else
             var mainMenu = new PlatformMenuBuilder().BuildMainMenu(menu);
             Controls.Add(mainMenu);
@@ -267,16 +270,27 @@ namespace LanExchange.Presentation.WinForms.Forms
 #endif
         }
 
+#if SYSTEM_MENU
         public void InitializeTrayMenu(IMenuElement menu)
         {
-#if SYSTEM_MENU
             TrayIcon.ContextMenu = new SystemMenuBuilder().BuildContextMenu(menu);
+        }
 #else
+        public void InitializeTrayMenu(IMenuElement menu)
+        {
             var trayMenu = new PlatformMenuBuilder().BuildContextMenu(menu);
             TrayIcon.ContextMenuStrip = trayMenu;
-#endif
         }
+#endif
 
+
+#if SYSTEM_MENU
+        public bool MenuVisible
+        {
+            get { return Menu != null; }
+            set { Menu = value ? mainMenu : null; }
+        }
+#else
         public bool MenuVisible
         {
             get { return MainMenuStrip.Visible; }
@@ -285,6 +299,7 @@ namespace LanExchange.Presentation.WinForms.Forms
                 MainMenuStrip.Visible = value;
             }
         }
+#endif
 
         public bool RightToLeftValue { get; set; }
 
