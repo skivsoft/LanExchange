@@ -1,6 +1,4 @@
-﻿#define SYSTEM_MENU
-
-using System;
+﻿using System;
 using System.Diagnostics.Contracts;
 using System.Security.Permissions;
 using System.Windows.Forms;
@@ -260,46 +258,20 @@ namespace LanExchange.Presentation.WinForms.Forms
 
         public void InitializeMainMenu(IMenuElement menu)
         {
-#if SYSTEM_MENU
             mainMenu = new SystemMenuBuilder().BuildMainMenu(menu);
             Menu = mainMenu;
-#else
-            var mainMenu = new PlatformMenuBuilder().BuildMainMenu(menu);
-            Controls.Add(mainMenu);
-            MainMenuStrip = mainMenu;
-#endif
         }
 
-#if SYSTEM_MENU
         public void InitializeTrayMenu(IMenuElement menu)
         {
             TrayIcon.ContextMenu = new SystemMenuBuilder().BuildContextMenu(menu);
         }
-#else
-        public void InitializeTrayMenu(IMenuElement menu)
-        {
-            var trayMenu = new PlatformMenuBuilder().BuildContextMenu(menu);
-            TrayIcon.ContextMenuStrip = trayMenu;
-        }
-#endif
 
-
-#if SYSTEM_MENU
         public bool MenuVisible
         {
             get { return Menu != null; }
             set { Menu = value ? mainMenu : null; }
         }
-#else
-        public bool MenuVisible
-        {
-            get { return MainMenuStrip.Visible; }
-            set
-            {
-                MainMenuStrip.Visible = value;
-            }
-        }
-#endif
 
         public bool RightToLeftValue { get; set; }
 

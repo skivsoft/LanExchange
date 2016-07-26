@@ -225,7 +225,6 @@
     <Compile Include="SubMenuAdapter.cs" />
     <Compile Include="SystemInformationService.cs" />
     <Compile Include="Helpers\TranslationHelper.cs" />
-    <Compile Include="Visitors\PlatformMenuBuilder.cs" />
     <Compile Include="WaitingService.cs" />
   </ItemGroup>
   <ItemGroup>

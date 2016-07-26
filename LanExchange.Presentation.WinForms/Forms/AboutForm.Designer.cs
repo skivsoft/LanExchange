@@ -127,9 +127,7 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.eLicense.Name = "eLicense";
             this.eLicense.Size = new System.Drawing.Size(16, 17);
             this.eLicense.TabIndex = 33;
-            this.eLicense.TabStop = true;
             this.eLicense.Text = "    ";
-            this.eLicense.UseCompatibleTextRendering = true;
             // 
             // lLicense
             // 
