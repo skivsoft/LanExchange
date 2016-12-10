@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using LanExchange.Presentation.Interfaces;
@@ -22,7 +21,7 @@ namespace LanExchange.Presentation.WinForms.Controls
             IPanelModel model,
             IPanelColumnManager panelColumns)
         {
-            Contract.Requires<ArgumentNullException>(panelColumns != null);
+            if (panelColumns != null) throw new ArgumentNullException(nameof(panelColumns));
 
             this.model = model;
             this.panelColumns = panelColumns;

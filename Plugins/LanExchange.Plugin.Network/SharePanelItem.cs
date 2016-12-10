@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
 using LanExchange.Plugin.Network.NetApi;
 using System.Xml.Serialization;
 using LanExchange.Presentation.Interfaces;
@@ -23,7 +22,7 @@ namespace LanExchange.Plugin.Network
         /// <exception cref="ArgumentNullException"></exception>
         public SharePanelItem(PanelItemBase parent, ShareInfo shareInfo) : base(parent)
         {
-            Contract.Requires<ArgumentNullException>(shareInfo != null);
+            if (shareInfo != null) throw new ArgumentNullException(nameof(shareInfo));
 
             this.shareInfo = shareInfo;
             Comment = this.shareInfo.Comment;

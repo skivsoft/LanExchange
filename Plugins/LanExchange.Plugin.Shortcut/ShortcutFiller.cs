@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Menu;
 
@@ -19,9 +18,9 @@ namespace LanExchange.Plugin.Shortcut
             IAddonManager addonManager,
             IMenuProducer menuProducer)
         {
-            Contract.Requires<ArgumentNullException>(translationService != null);
-            Contract.Requires<ArgumentNullException>(addonManager != null);
-            Contract.Requires<ArgumentNullException>(menuProducer != null);
+            if (translationService != null) throw new ArgumentNullException(nameof(translationService));
+            if (addonManager != null) throw new ArgumentNullException(nameof(addonManager));
+            if (menuProducer != null) throw new ArgumentNullException(nameof(menuProducer));
 
             this.translationService = translationService;
             this.addonManager = addonManager;

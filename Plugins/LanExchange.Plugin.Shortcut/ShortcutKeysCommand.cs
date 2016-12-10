@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using LanExchange.Application.Interfaces;
 using LanExchange.Presentation.Interfaces;
 
@@ -14,8 +13,8 @@ namespace LanExchange.Plugin.Shortcut
             IPagesModel pagesModel,
             IModelFactory modelFactory)
         {
-            Contract.Requires<ArgumentNullException>(pagesModel != null);
-            Contract.Requires<ArgumentNullException>(modelFactory != null);
+            if (pagesModel != null) throw new ArgumentNullException(nameof(pagesModel));
+            if (modelFactory != null) throw new ArgumentNullException(nameof(modelFactory));
 
             this.pagesModel = pagesModel;
             this.modelFactory = modelFactory;

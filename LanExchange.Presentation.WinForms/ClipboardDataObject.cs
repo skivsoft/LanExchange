@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Windows.Forms;
 using LanExchange.Presentation.Interfaces;
 
@@ -9,7 +8,7 @@ namespace LanExchange.Presentation.WinForms
     {
         public ClipboardDataObject(IDataObject dataObject)
         {
-            Contract.Requires<ArgumentNullException>(dataObject != null);
+            if (dataObject != null) throw new ArgumentNullException(nameof(dataObject));
 
             DataObject = dataObject;
         }

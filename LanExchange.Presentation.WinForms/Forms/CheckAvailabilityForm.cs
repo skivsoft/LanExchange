@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.Presentation.Interfaces;
@@ -15,7 +14,7 @@ namespace LanExchange.Presentation.WinForms.Forms
 
         public CheckAvailabilityForm(ICheckAvailabilityPresenter presenter)
         {
-            Contract.Requires<ArgumentNullException>(presenter != null);
+            if (presenter != null) throw new ArgumentNullException(nameof(presenter));
 
             InitializeComponent();
 

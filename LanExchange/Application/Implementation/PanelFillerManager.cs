@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using LanExchange.Presentation.Interfaces;
 
@@ -31,7 +30,7 @@ namespace LanExchange.Application.Implementation
 
         public PanelFillerResult RetrievePanelItems(PanelItemBase parent)
         {
-            Contract.Requires<ArgumentNullException>(parent != null);
+            if (parent != null) throw new ArgumentNullException(nameof(parent));
 
             var result = new PanelFillerResult();
             foreach (var pair in fillers)

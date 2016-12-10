@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using LanExchange.Presentation.Interfaces;
 
@@ -11,7 +10,7 @@ namespace LanExchange.Application.Presenters
 
         public EditPresenter(IPanelColumnManager panelColumns)
         {
-            Contract.Requires<ArgumentNullException>(panelColumns != null);
+            if (panelColumns != null) throw new ArgumentNullException(nameof(panelColumns));
 
             this.panelColumns = panelColumns;
         }

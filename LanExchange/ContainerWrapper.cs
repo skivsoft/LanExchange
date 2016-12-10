@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using LanExchange.Presentation.Interfaces;
 using SimpleInjector;
 using SimpleInjector.Diagnostics;
@@ -12,7 +11,7 @@ namespace LanExchange
 
         public ContainerWrapper(Container container)
         {
-            Contract.Requires<ArgumentNullException>(container != null);
+            if (container != null) throw new ArgumentNullException(nameof(container));
 
             this.container = container;
         }

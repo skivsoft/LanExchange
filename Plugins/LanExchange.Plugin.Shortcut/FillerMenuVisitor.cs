@@ -2,7 +2,6 @@
 using LanExchange.Presentation.Interfaces.Menu;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 
 namespace LanExchange.Plugin.Shortcut
 {
@@ -13,8 +12,8 @@ namespace LanExchange.Plugin.Shortcut
 
         public FillerMenuVisitor(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
-            Contract.Requires<ArgumentNullException>(parent != null);
-            Contract.Requires<ArgumentNullException>(result != null);
+            if (parent != null) throw new ArgumentNullException(nameof(parent));
+            if (result != null) throw new ArgumentNullException(nameof(result));
 
             this.parent = parent;
             this.result = result;

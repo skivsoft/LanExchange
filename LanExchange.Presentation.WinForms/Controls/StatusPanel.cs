@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Windows.Forms;
 using LanExchange.Presentation.Interfaces;
 
@@ -11,7 +10,7 @@ namespace LanExchange.Presentation.WinForms.Controls
 
         public StatusPanel(IStatusPanelPresenter presenter)
         {
-            Contract.Requires<ArgumentNullException>(presenter != null);
+            if (presenter != null) throw new ArgumentNullException(nameof(presenter));
 
             InitializeComponent();
             this.presenter = presenter;

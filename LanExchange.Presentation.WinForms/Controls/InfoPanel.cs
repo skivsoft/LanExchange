@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Diagnostics.Contracts;
 using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Presentation.WinForms.Controls
@@ -16,7 +15,7 @@ namespace LanExchange.Presentation.WinForms.Controls
         
         public InfoPanel(IInfoPresenter presenter)
         {
-            Contract.Requires<ArgumentNullException>(presenter != null);
+            if (presenter != null) throw new ArgumentNullException(nameof(presenter));
 
             InitializeComponent();
             this.presenter = presenter;

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
 
 namespace LanExchange.Application.Implementation.Menu
 {
@@ -14,8 +13,8 @@ namespace LanExchange.Application.Implementation.Menu
 
         public MenuGroup(string text, params IMenuElement[] elements) 
         {
-            Contract.Requires<ArgumentNullException>(text != null);
-            Contract.Requires<ArgumentNullException>(elements != null);
+            if (text != null) throw new ArgumentNullException(nameof(text));
+            if (elements != null) throw new ArgumentNullException(nameof(elements));
 
             this.text = text;
             this.elements = elements;
@@ -27,7 +26,7 @@ namespace LanExchange.Application.Implementation.Menu
 
         public void Accept(IMenuElementVisitor visitor)
         {
-            Contract.Requires<ArgumentNullException>(visitor != null);
+            if (visitor != null) throw new ArgumentNullException(nameof(visitor));
 
             if (!string.IsNullOrEmpty(text))
                 visitor.VisitMenuGroup(text);

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Security.Permissions;
 using System.Windows.Forms;
 using LanExchange.Presentation.Interfaces;
@@ -18,7 +17,7 @@ namespace LanExchange.Presentation.WinForms.Forms
 
         public MainForm(IMainPresenter mainPresenter)
         {
-            Contract.Requires<ArgumentNullException>(mainPresenter != null);
+            if (mainPresenter != null) throw new ArgumentNullException(nameof(mainPresenter));
 
             InitializeComponent();
             this.mainPresenter = mainPresenter;

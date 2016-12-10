@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -45,12 +44,12 @@ namespace LanExchange.Presentation.WinForms.Controls
             IModelFactory modelFactory,
             IViewFactory viewFactory)
         {
-            Contract.Requires<ArgumentNullException>(presenter != null);
-            Contract.Requires<ArgumentNullException>(factoryManager != null);
-            Contract.Requires<ArgumentNullException>(imageManager != null);
-            Contract.Requires<ArgumentNullException>(panelFillers != null);
-            Contract.Requires<ArgumentNullException>(modelFactory != null);
-            Contract.Requires<ArgumentNullException>(viewFactory != null);
+            if (presenter != null) throw new ArgumentNullException(nameof(presenter));
+            if (factoryManager != null) throw new ArgumentNullException(nameof(factoryManager));
+            if (imageManager != null) throw new ArgumentNullException(nameof(imageManager));
+            if (panelFillers != null) throw new ArgumentNullException(nameof(panelFillers));
+            if (modelFactory != null) throw new ArgumentNullException(nameof(modelFactory));
+            if (viewFactory != null) throw new ArgumentNullException(nameof(viewFactory));
 
             InitializeComponent();
             this.presenter = presenter;

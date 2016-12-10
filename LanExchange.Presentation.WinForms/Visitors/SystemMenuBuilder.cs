@@ -1,7 +1,6 @@
 ﻿using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Menu;
 using System;
-using System.Diagnostics.Contracts;
 using System.Windows.Forms;
 
 namespace LanExchange.Presentation.WinForms.Visitors
@@ -13,7 +12,7 @@ namespace LanExchange.Presentation.WinForms.Visitors
 
         public MainMenu BuildMainMenu(IMenuElement menu)
         {
-            Contract.Requires<ArgumentNullException>(menu != null);
+            if (menu != null) throw new ArgumentNullException(nameof(menu));
 
             rootMenu = new MainMenu();
             submenu = null;
@@ -23,7 +22,7 @@ namespace LanExchange.Presentation.WinForms.Visitors
 
         public ContextMenu BuildContextMenu(IMenuElement menu)
         {
-            Contract.Requires<ArgumentNullException>(menu != null);
+            if (menu != null) throw new ArgumentNullException(nameof(menu));
 
             rootMenu = new ContextMenu();
             submenu = null;

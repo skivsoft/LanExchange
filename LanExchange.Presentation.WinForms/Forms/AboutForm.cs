@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Windows.Forms;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.WinForms.Properties;
@@ -18,7 +17,7 @@ namespace LanExchange.Presentation.WinForms.Forms
         
         public AboutForm(IAboutPresenter presenter)
         {
-            Contract.Requires<ArgumentNullException>(presenter != null);
+            if (presenter != null) throw new ArgumentNullException(nameof(presenter));
 
             InitializeComponent();
             this.presenter = presenter;

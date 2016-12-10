@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
 using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Implementation
@@ -14,7 +13,7 @@ namespace LanExchange.Application.Implementation
 
         public PanelItemFactoryManager(IPanelColumnManager columnManager)
         {
-            Contract.Requires<ArgumentNullException>(columnManager != null);
+            if (columnManager != null) throw new ArgumentNullException(nameof(columnManager));
 
             this.columnManager = columnManager;
 
@@ -24,7 +23,7 @@ namespace LanExchange.Application.Implementation
 
         public void RegisterFactory<TPanelItem>(IPanelItemFactory factory) where TPanelItem : PanelItemBase
         {
-            Contract.Requires<ArgumentNullException>(factory != null);
+            if (factory != null) throw new ArgumentNullException(nameof(factory));
 
             types.Add(typeof(TPanelItem), factory);
             factory.RegisterColumns(columnManager);

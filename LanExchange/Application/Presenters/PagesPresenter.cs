@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using LanExchange.Application.Interfaces;
 using LanExchange.Application.Interfaces.EventArgs;
 using LanExchange.Application.Interfaces.Extensions;
@@ -25,11 +24,11 @@ namespace LanExchange.Application.Presenters
             IPanelColumnManager panelColumns,
             IClipboardService clipboardService)
         {
-            Contract.Requires<ArgumentNullException>(model != null);
-            Contract.Requires<ArgumentNullException>(pagesService != null);
-            Contract.Requires<ArgumentNullException>(imageManager != null);
-            Contract.Requires<ArgumentNullException>(panelColumns != null);
-            Contract.Requires<ArgumentNullException>(clipboardService != null);
+            if (model != null) throw new ArgumentNullException(nameof(model));
+            if (pagesService != null) throw new ArgumentNullException(nameof(pagesService));
+            if (imageManager != null) throw new ArgumentNullException(nameof(imageManager));
+            if (panelColumns != null) throw new ArgumentNullException(nameof(panelColumns));
+            if (clipboardService != null) throw new ArgumentNullException(nameof(clipboardService));
 
             this.model = model;
             this.pagesService = pagesService;

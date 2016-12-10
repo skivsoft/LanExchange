@@ -1,6 +1,5 @@
 ﻿using LanExchange.Presentation.Interfaces;
 using System;
-using System.Diagnostics.Contracts;
 
 namespace LanExchange.Application.Interfaces.EventArgs
 {
@@ -8,7 +7,7 @@ namespace LanExchange.Application.Interfaces.EventArgs
     {
         public PanelEventArgs(IPanelModel panel)
         {
-            Contract.Requires<ArgumentNullException>(panel != null);
+            if (panel != null) throw new ArgumentNullException(nameof(panel));
             Panel = panel;
         }
 

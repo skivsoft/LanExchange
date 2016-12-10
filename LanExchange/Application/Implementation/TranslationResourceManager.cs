@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Reflection;
 using System.Resources;
@@ -15,7 +14,7 @@ namespace LanExchange.Application.Implementation
             ITranslationService translationService,            
             string baseName, Assembly assembly) : base(baseName, assembly)
         {
-            Contract.Requires<ArgumentNullException>(translationService != null);
+            if (translationService != null) throw new ArgumentNullException(nameof(translationService));
 
             this.translationService = translationService;
         }

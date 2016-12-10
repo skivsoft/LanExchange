@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using LanExchange.Application.Interfaces;
 using LanExchange.Application.Interfaces.EventArgs;
 using LanExchange.Presentation.Interfaces;
@@ -28,9 +27,9 @@ namespace LanExchange.Application.Models
             IPanelFillerManager fillerManager,
             IModelFactory modelFactory)
         {
-            Contract.Requires<ArgumentNullException>(factoryManager != null);
-            Contract.Requires<ArgumentNullException>(fillerManager != null);
-            Contract.Requires<ArgumentNullException>(modelFactory != null);
+            if (factoryManager != null) throw new ArgumentNullException(nameof(factoryManager));
+            if (fillerManager != null) throw new ArgumentNullException(nameof(fillerManager));
+            if (modelFactory != null) throw new ArgumentNullException(nameof(modelFactory));
 
             this.factoryManager = factoryManager;
             this.panelFillers = fillerManager;

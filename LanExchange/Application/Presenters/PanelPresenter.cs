@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using LanExchange.Presentation.Interfaces;
 
@@ -21,10 +20,10 @@ namespace LanExchange.Application.Presenters
             IPagesPresenter pagesPresenter,
             ITranslationService translationService)
         {
-            Contract.Requires<ArgumentNullException>(panelFillers != null);
-            Contract.Requires<ArgumentNullException>(panelColumns != null);
-            Contract.Requires<ArgumentNullException>(pagesPresenter != null);
-            Contract.Requires<ArgumentNullException>(translationService != null);
+            if (panelFillers != null) throw new ArgumentNullException(nameof(panelFillers));
+            if (panelColumns != null) throw new ArgumentNullException(nameof(panelColumns));
+            if (pagesPresenter != null) throw new ArgumentNullException(nameof(pagesPresenter));
+            if (translationService != null) throw new ArgumentNullException(nameof(translationService));
 
             this.panelFillers = panelFillers;
             this.panelColumns = panelColumns;

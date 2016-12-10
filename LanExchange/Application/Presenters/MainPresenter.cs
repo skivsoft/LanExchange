@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Globalization;
 using LanExchange.Application.Commands;
@@ -54,23 +53,23 @@ namespace LanExchange.Application.Presenters
             IImageManager imageManager,
             IMenuProducer menuProducer)
         {
-            Contract.Requires<ArgumentNullException>(threadPool != null);
-            Contract.Requires<ArgumentNullException>(panelColumns != null);
-            Contract.Requires<ArgumentNullException>(appPresenter != null);
-            Contract.Requires<ArgumentNullException>(pagesPresenter != null);
-            Contract.Requires<ArgumentNullException>(translationService != null);
-            Contract.Requires<ArgumentNullException>(hotkeyService != null);
-            Contract.Requires<ArgumentNullException>(disposableManager != null);
-            Contract.Requires<ArgumentNullException>(aboutModel != null);
-            Contract.Requires<ArgumentNullException>(viewFactory != null);
-            Contract.Requires<ArgumentNullException>(waitingService != null);
-            Contract.Requires<ArgumentNullException>(factoryManager != null);
-            Contract.Requires<ArgumentNullException>(screenService != null);
-            Contract.Requires<ArgumentNullException>(commandManager != null);
-            Contract.Requires<ArgumentNullException>(appView != null);
-            Contract.Requires<ArgumentNullException>(processService != null);
-            Contract.Requires<ArgumentNullException>(imageManager != null);
-            Contract.Requires<ArgumentNullException>(menuProducer != null);
+            if (threadPool != null) throw new ArgumentNullException(nameof(threadPool));
+            if (panelColumns != null) throw new ArgumentNullException(nameof(panelColumns));
+            if (appPresenter != null) throw new ArgumentNullException(nameof(appPresenter));
+            if (pagesPresenter != null) throw new ArgumentNullException(nameof(pagesPresenter));
+            if (translationService != null) throw new ArgumentNullException(nameof(translationService));
+            if (hotkeyService != null) throw new ArgumentNullException(nameof(hotkeyService));
+            if (disposableManager != null) throw new ArgumentNullException(nameof(disposableManager));
+            if (aboutModel != null) throw new ArgumentNullException(nameof(aboutModel));
+            if (viewFactory != null) throw new ArgumentNullException(nameof(viewFactory));
+            if (waitingService != null) throw new ArgumentNullException(nameof(waitingService));
+            if (factoryManager != null) throw new ArgumentNullException(nameof(factoryManager));
+            if (screenService != null) throw new ArgumentNullException(nameof(screenService));
+            if (commandManager != null) throw new ArgumentNullException(nameof(commandManager));
+            if (appView != null) throw new ArgumentNullException(nameof(appView));
+            if (processService != null) throw new ArgumentNullException(nameof(processService));
+            if (imageManager != null) throw new ArgumentNullException(nameof(imageManager));
+            if (menuProducer != null) throw new ArgumentNullException(nameof(menuProducer));
 
             this.threadPool = threadPool;
             this.columnManager = panelColumns;

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Reflection;
 
 namespace LanExchange.Application.Extensions
@@ -8,7 +7,7 @@ namespace LanExchange.Application.Extensions
     {
         public static T GetCustomAttribute<T>(this Assembly assembly)
         {
-            Contract.Requires<ArgumentNullException>(assembly != null);
+            if (assembly != null) throw new ArgumentNullException(nameof(assembly));
 
             var attributes = assembly.GetCustomAttributes(typeof(T), false);
             if (attributes.Length == 0)

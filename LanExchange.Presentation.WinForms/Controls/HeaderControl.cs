@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.Presentation.Interfaces;
@@ -20,7 +19,7 @@ namespace LanExchange.Presentation.WinForms.Controls
         /// <param name="olv"></param>
         public HeaderControl(IUser32Service userService, ListViewer olv)
         {
-            Contract.Requires<ArgumentNullException>(userService != null);
+            if (userService != null) throw new ArgumentNullException(nameof(userService));
 
             this.userService = userService;
 

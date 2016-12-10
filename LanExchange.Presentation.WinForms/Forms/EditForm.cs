@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
 using System.Windows.Forms;
 using LanExchange.Presentation.Interfaces;
 
@@ -13,7 +12,7 @@ namespace LanExchange.Presentation.WinForms.Forms
 
         public EditForm(IEditPresenter presenter)
         {
-            Contract.Requires<ArgumentNullException>(presenter != null);
+            if (presenter != null) throw new ArgumentNullException(nameof(presenter));
 
             InitializeComponent();
 

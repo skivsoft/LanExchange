@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.IO;
 using LanExchange.Application.Interfaces;
 using LanExchange.Domain.Interfaces;
@@ -20,10 +19,10 @@ namespace LanExchange.Domain.Implementation
             ISerializeService serializeService,
             ILogService logService)
         {
-            Contract.Requires<ArgumentNullException>(folderManager != null);
-            Contract.Requires<ArgumentNullException>(factoryManager != null);
-            Contract.Requires<ArgumentNullException>(serializeService != null);
-            Contract.Requires<ArgumentNullException>(logService != null);
+            if (folderManager != null) throw new ArgumentNullException(nameof(folderManager));
+            if (factoryManager != null) throw new ArgumentNullException(nameof(factoryManager));
+            if (serializeService != null) throw new ArgumentNullException(nameof(serializeService));
+            if (logService != null) throw new ArgumentNullException(nameof(logService));
 
             this.folderManager = folderManager;
             this.factoryManager = factoryManager;

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
 using System.Reflection;
 using System.Resources;
 using System.Windows.Forms;
@@ -38,9 +37,9 @@ namespace LanExchange.Presentation.WinForms.Helpers
         /// <param name="components"></param>
         public static void TranslateComponents(ResourceManager resources, ContainerControl instance, IContainer components)
         {
-            Contract.Requires<ArgumentNullException>(resources != null);
-            Contract.Requires<ArgumentNullException>(instance != null);
-            Contract.Requires<ArgumentNullException>(components != null);
+            if (resources != null) throw new ArgumentNullException(nameof(resources));
+            if (instance != null) throw new ArgumentNullException(nameof(instance));
+            if (components != null) throw new ArgumentNullException(nameof(components));
 
             fieldsMap.Clear();
             var fields = instance.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance);

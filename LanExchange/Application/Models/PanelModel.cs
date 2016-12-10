@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
 using LanExchange.Application.Implementation;
@@ -37,9 +36,9 @@ namespace LanExchange.Application.Models
             IPanelColumnManager panelColumns,
             IPuntoSwitcherService puntoService)
         {
-            Contract.Requires<ArgumentNullException>(panelFillers != null);
-            Contract.Requires<ArgumentNullException>(panelColumns != null);
-            Contract.Requires<ArgumentNullException>(puntoService != null);
+            if (panelFillers != null) throw new ArgumentNullException(nameof(panelFillers));
+            if (panelColumns != null) throw new ArgumentNullException(nameof(panelColumns));
+            if (puntoService != null) throw new ArgumentNullException(nameof(puntoService));
 
             this.panelFillers = panelFillers;
             this.panelColumns = panelColumns;

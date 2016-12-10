@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -37,15 +36,15 @@ namespace LanExchange.Presentation.WinForms
             ILogService logService,
             IAddonPersistenceService persistenceService)
         {
-            Contract.Requires<ArgumentNullException>(folderManager != null);
-            Contract.Requires<ArgumentNullException>(programFactory != null);
-            Contract.Requires<ArgumentNullException>(imageManager != null);
-            Contract.Requires<ArgumentNullException>(pagesPresenter != null);
-            Contract.Requires<ArgumentNullException>(translationService != null);
-            Contract.Requires<ArgumentNullException>(factoryManager != null);
-            Contract.Requires<ArgumentNullException>(windowFactory != null);
-            Contract.Requires<ArgumentNullException>(logService != null);
-            Contract.Requires<ArgumentNullException>(persistenceService != null);
+            if (folderManager != null) throw new ArgumentNullException(nameof(folderManager));
+            if (programFactory != null) throw new ArgumentNullException(nameof(programFactory));
+            if (imageManager != null) throw new ArgumentNullException(nameof(imageManager));
+            if (pagesPresenter != null) throw new ArgumentNullException(nameof(pagesPresenter));
+            if (translationService != null) throw new ArgumentNullException(nameof(translationService));
+            if (factoryManager != null) throw new ArgumentNullException(nameof(factoryManager));
+            if (windowFactory != null) throw new ArgumentNullException(nameof(windowFactory));
+            if (logService != null) throw new ArgumentNullException(nameof(logService));
+            if (persistenceService != null) throw new ArgumentNullException(nameof(persistenceService));
 
             this.folderManager = folderManager;
             this.programFactory = programFactory;

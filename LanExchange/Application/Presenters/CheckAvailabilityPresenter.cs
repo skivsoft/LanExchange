@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
 using System.Threading;
 using LanExchange.Presentation.Interfaces;
 
@@ -16,7 +15,7 @@ namespace LanExchange.Application.Presenters
 
         public CheckAvailabilityPresenter(IImageManager imageManager)
         {
-            Contract.Requires<ArgumentNullException>(imageManager != null);
+            if (imageManager != null) throw new ArgumentNullException(nameof(imageManager));
             this.imageManager = imageManager;
         }
 

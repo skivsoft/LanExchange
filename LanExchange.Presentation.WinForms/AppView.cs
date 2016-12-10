@@ -1,6 +1,5 @@
 ﻿using System;
 using LanExchange.Presentation.Interfaces;
-using System.Diagnostics.Contracts;
 using System.Windows.Forms;
 using System.Threading;
 using System.Collections.Generic;
@@ -14,7 +13,7 @@ namespace LanExchange.Presentation.WinForms
 
         public AppView(IAppPresenter presenter)
         {
-            Contract.Requires<ArgumentNullException>(presenter != null);
+            if (presenter != null) throw new ArgumentNullException(nameof(presenter));
 
             this.presenter = presenter;
             presenter.Initialize(this);
@@ -45,7 +44,7 @@ namespace LanExchange.Presentation.WinForms
 
         public void Run(IWindow mainView)
         {
-            Contract.Requires<ArgumentNullException>(mainView != null);
+            if (mainView != null) throw new ArgumentNullException(nameof(mainView));
             Application.Run((Form)mainView);
         }
 

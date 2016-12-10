@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Windows.Forms;
 using LanExchange.Presentation.Interfaces;
@@ -31,9 +30,9 @@ namespace LanExchange.Presentation.WinForms
             IServiceFactory serviceFactory,
             ILogService logService)
         {
-            Contract.Requires<ArgumentNullException>(shellService != null);
-            Contract.Requires<ArgumentNullException>(serviceFactory != null);
-            Contract.Requires<ArgumentNullException>(logService != null);
+            if (shellService != null) throw new ArgumentNullException(nameof(shellService));
+            if (serviceFactory != null) throw new ArgumentNullException(nameof(serviceFactory));
+            if (logService != null) throw new ArgumentNullException(nameof(logService));
 
             this.shellService = shellService;
             this.serviceFactory = serviceFactory;
@@ -244,7 +243,7 @@ namespace LanExchange.Presentation.WinForms
 
         public void SetImagesTo(object control)
         {
-            Contract.Requires<ArgumentNullException>(control != null);
+            if (control != null) throw new ArgumentNullException(nameof(control));
 
             var needImageList = control as ISupportImageList;
             needImageList?.SetImageList(smallImageList);

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
@@ -43,16 +42,16 @@ namespace LanExchange.Presentation.WinForms.Controls
             IUser32Service userService,
             IPuntoSwitcherService puntoService)
         {
-            Contract.Requires<ArgumentNullException>(presenter != null);
-            Contract.Requires<ArgumentNullException>(addonManager != null);
-            Contract.Requires<ArgumentNullException>(factoryManager != null);
-            Contract.Requires<ArgumentNullException>(threadPool != null);
-            Contract.Requires<ArgumentNullException>(imageManager != null);
-            Contract.Requires<ArgumentNullException>(panelColumns != null);
-            Contract.Requires<ArgumentNullException>(pagesPresenter != null);
-            Contract.Requires<ArgumentNullException>(filterPresenter != null);
-            Contract.Requires<ArgumentNullException>(userService != null);
-            Contract.Requires<ArgumentNullException>(puntoService != null);
+            if (presenter != null) throw new ArgumentNullException(nameof(presenter));
+            if (addonManager != null) throw new ArgumentNullException(nameof(addonManager));
+            if (factoryManager != null) throw new ArgumentNullException(nameof(factoryManager));
+            if (threadPool != null) throw new ArgumentNullException(nameof(threadPool));
+            if (imageManager != null) throw new ArgumentNullException(nameof(imageManager));
+            if (panelColumns != null) throw new ArgumentNullException(nameof(panelColumns));
+            if (pagesPresenter != null) throw new ArgumentNullException(nameof(pagesPresenter));
+            if (filterPresenter != null) throw new ArgumentNullException(nameof(filterPresenter));
+            if (userService != null) throw new ArgumentNullException(nameof(userService));
+            if (puntoService != null) throw new ArgumentNullException(nameof(puntoService));
 
             this.addonManager = addonManager;
             this.factoryManager = factoryManager;

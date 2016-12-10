@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Application.Attributes;
 
@@ -12,7 +11,7 @@ namespace LanExchange.Application.Commands.AutoWired
 
         public AboutCommand(IWindowFactory windowFactory)
         {
-            Contract.Requires<ArgumentNullException>(windowFactory != null);
+            if (windowFactory != null) throw new ArgumentNullException(nameof(windowFactory));
 
             this.windowFactory = windowFactory;
         }

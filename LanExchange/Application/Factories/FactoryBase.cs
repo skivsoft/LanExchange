@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 
 namespace LanExchange.Application.Factories
 {
@@ -9,7 +8,7 @@ namespace LanExchange.Application.Factories
 
         protected FactoryBase(IServiceProvider serviceProvider)
         {
-            Contract.Requires<ArgumentNullException>(serviceProvider != null);
+            if (serviceProvider != null) throw new ArgumentNullException(nameof(serviceProvider));
 
             this.serviceProvider = serviceProvider;
         }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Application.Attributes;
 
@@ -12,7 +11,7 @@ namespace LanExchange.Application.Commands.AutoWired
 
         protected PagesCommandBase(IPagesPresenter pagesPresenter)
         {
-            Contract.Requires<ArgumentNullException>(pagesPresenter != null);
+            if (pagesPresenter != null) throw new ArgumentNullException(nameof(pagesPresenter));
 
             this.pagesPresenter = pagesPresenter;
         }

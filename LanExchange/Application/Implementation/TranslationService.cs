@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -31,7 +30,7 @@ namespace LanExchange.Application.Implementation
         public TranslationService(
             IFolderManager folderManager)
         {
-            Contract.Requires<ArgumentNullException>(folderManager != null);
+            if (folderManager != null) throw new ArgumentNullException(nameof(folderManager));
 
             this.folderManager = folderManager;
 

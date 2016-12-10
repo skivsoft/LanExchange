@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
 using System.Windows.Forms;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.WinForms.Properties;
@@ -16,7 +15,7 @@ namespace LanExchange.Presentation.WinForms.Controls
 
         public ListViewer(IUser32Service userService)
         {
-            Contract.Requires<ArgumentNullException>(userService != null);
+            if (userService != null) throw new ArgumentNullException(nameof(userService));
 
             this.userService = userService;
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Text;
 using LanExchange.Application.Interfaces;
@@ -24,9 +23,9 @@ namespace LanExchange.Application.Presenters
             ITranslationService translationService,
             IProcessService processService)
         {
-            Contract.Requires<ArgumentNullException>(model != null);
-            Contract.Requires<ArgumentNullException>(translationService != null);
-            Contract.Requires<ArgumentNullException>(processService != null);
+            if (model != null) throw new ArgumentNullException(nameof(model));
+            if (translationService != null) throw new ArgumentNullException(nameof(translationService));
+            if (processService != null) throw new ArgumentNullException(nameof(processService));
 
             this.model = model;
             this.translationService = translationService;
