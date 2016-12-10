@@ -13,11 +13,8 @@ namespace LanExchange.Application.Implementation.Menu
 
         public MenuGroup(string text, params IMenuElement[] elements) 
         {
-            if (text != null) throw new ArgumentNullException(nameof(text));
-            if (elements != null) throw new ArgumentNullException(nameof(elements));
-
-            this.text = text;
-            this.elements = elements;
+            this.text = text ?? throw new ArgumentNullException(nameof(text));
+            this.elements = elements ?? throw new ArgumentNullException(nameof(elements));
         }
 
         public MenuGroup(params IMenuElement[] elements) : this(string.Empty, elements)
@@ -26,7 +23,7 @@ namespace LanExchange.Application.Implementation.Menu
 
         public void Accept(IMenuElementVisitor visitor)
         {
-            if (visitor != null) throw new ArgumentNullException(nameof(visitor));
+            if (visitor == null) throw new ArgumentNullException(nameof(visitor));
 
             if (!string.IsNullOrEmpty(text))
                 visitor.VisitMenuGroup(text);

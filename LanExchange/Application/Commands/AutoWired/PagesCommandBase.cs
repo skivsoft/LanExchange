@@ -11,9 +11,7 @@ namespace LanExchange.Application.Commands.AutoWired
 
         protected PagesCommandBase(IPagesPresenter pagesPresenter)
         {
-            if (pagesPresenter != null) throw new ArgumentNullException(nameof(pagesPresenter));
-
-            this.pagesPresenter = pagesPresenter;
+            this.pagesPresenter = pagesPresenter ?? throw new ArgumentNullException(nameof(pagesPresenter));
         }
 
         public override bool Enabled

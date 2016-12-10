@@ -22,9 +22,7 @@ namespace LanExchange.Plugin.Network
         /// <exception cref="ArgumentNullException"></exception>
         public SharePanelItem(PanelItemBase parent, ShareInfo shareInfo) : base(parent)
         {
-            if (shareInfo != null) throw new ArgumentNullException(nameof(shareInfo));
-
-            this.shareInfo = shareInfo;
+            this.shareInfo = shareInfo ?? throw new ArgumentNullException(nameof(shareInfo));
             Comment = this.shareInfo.Comment;
         }
 

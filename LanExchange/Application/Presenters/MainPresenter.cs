@@ -53,41 +53,23 @@ namespace LanExchange.Application.Presenters
             IImageManager imageManager,
             IMenuProducer menuProducer)
         {
-            if (threadPool != null) throw new ArgumentNullException(nameof(threadPool));
-            if (panelColumns != null) throw new ArgumentNullException(nameof(panelColumns));
-            if (appPresenter != null) throw new ArgumentNullException(nameof(appPresenter));
-            if (pagesPresenter != null) throw new ArgumentNullException(nameof(pagesPresenter));
-            if (translationService != null) throw new ArgumentNullException(nameof(translationService));
-            if (hotkeyService != null) throw new ArgumentNullException(nameof(hotkeyService));
-            if (disposableManager != null) throw new ArgumentNullException(nameof(disposableManager));
-            if (aboutModel != null) throw new ArgumentNullException(nameof(aboutModel));
-            if (viewFactory != null) throw new ArgumentNullException(nameof(viewFactory));
-            if (waitingService != null) throw new ArgumentNullException(nameof(waitingService));
-            if (factoryManager != null) throw new ArgumentNullException(nameof(factoryManager));
-            if (screenService != null) throw new ArgumentNullException(nameof(screenService));
-            if (commandManager != null) throw new ArgumentNullException(nameof(commandManager));
-            if (appView != null) throw new ArgumentNullException(nameof(appView));
-            if (processService != null) throw new ArgumentNullException(nameof(processService));
-            if (imageManager != null) throw new ArgumentNullException(nameof(imageManager));
-            if (menuProducer != null) throw new ArgumentNullException(nameof(menuProducer));
-
-            this.threadPool = threadPool;
-            this.columnManager = panelColumns;
-            this.appPresenter = appPresenter;
-            this.pagesPresenter = pagesPresenter;
-            this.translationService = translationService;
-            this.hotkeyService = hotkeyService;
-            this.disposableManager = disposableManager;
-            this.aboutModel = aboutModel;
-            this.viewFactory = viewFactory;
-            this.waitingService = waitingService;
-            this.factoryManager = factoryManager;
-            this.screenService = screenService;
-            this.commandManager = commandManager;
-            this.appView = appView;
-            this.processService = processService;
-            this.imageManager = imageManager;
-            this.menuProducer = menuProducer;
+            this.threadPool = threadPool ?? throw new ArgumentNullException(nameof(threadPool));
+            this.columnManager = panelColumns ?? throw new ArgumentNullException(nameof(panelColumns));
+            this.appPresenter = appPresenter ?? throw new ArgumentNullException(nameof(appPresenter));
+            this.pagesPresenter = pagesPresenter ?? throw new ArgumentNullException(nameof(pagesPresenter));
+            this.translationService = translationService ?? throw new ArgumentNullException(nameof(translationService));
+            this.hotkeyService = hotkeyService ?? throw new ArgumentNullException(nameof(hotkeyService));
+            this.disposableManager = disposableManager ?? throw new ArgumentNullException(nameof(disposableManager));
+            this.aboutModel = aboutModel ?? throw new ArgumentNullException(nameof(aboutModel));
+            this.viewFactory = viewFactory ?? throw new ArgumentNullException(nameof(viewFactory));
+            this.waitingService = waitingService ?? throw new ArgumentNullException(nameof(waitingService));
+            this.factoryManager = factoryManager ?? throw new ArgumentNullException(nameof(factoryManager));
+            this.screenService = screenService ?? throw new ArgumentNullException(nameof(screenService));
+            this.commandManager = commandManager ?? throw new ArgumentNullException(nameof(commandManager));
+            this.appView = appView ?? throw new ArgumentNullException(nameof(appView));
+            this.processService = processService ?? throw new ArgumentNullException(nameof(processService));
+            this.imageManager = imageManager ?? throw new ArgumentNullException(nameof(imageManager));
+            this.menuProducer = menuProducer ?? throw new ArgumentNullException(nameof(menuProducer));
         }
 
         protected override void InitializePresenter()

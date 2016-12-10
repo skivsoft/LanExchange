@@ -16,9 +16,7 @@ namespace WMIViewer.UI
 
         public EditPropertyForm(WmiPresenter presenter)
         {
-            if (presenter == null)
-                throw new ArgumentNullException(nameof(presenter));
-            this.presenter = presenter;
+            this.presenter = presenter ?? throw new ArgumentNullException(nameof(presenter));
             args = presenter.Args;
             InitializeComponent();
             UpdateTitle();

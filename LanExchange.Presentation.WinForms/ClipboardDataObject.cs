@@ -8,9 +8,7 @@ namespace LanExchange.Presentation.WinForms
     {
         public ClipboardDataObject(IDataObject dataObject)
         {
-            if (dataObject != null) throw new ArgumentNullException(nameof(dataObject));
-
-            DataObject = dataObject;
+            DataObject = dataObject ?? throw new ArgumentNullException(nameof(dataObject));
         }
 
         public IDataObject DataObject { get; }

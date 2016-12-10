@@ -19,9 +19,7 @@ namespace LanExchange.Presentation.WinForms.Controls
         /// <param name="olv"></param>
         public HeaderControl(IUser32Service userService, ListViewer olv)
         {
-            if (userService != null) throw new ArgumentNullException(nameof(userService));
-
-            this.userService = userService;
+            this.userService = userService ?? throw new ArgumentNullException(nameof(userService));
 
             ListView = olv;
 			var handle = userService.GetHeaderControl(olv.Handle);

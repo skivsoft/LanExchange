@@ -8,9 +8,7 @@ namespace LanExchange.Application.Factories
 
         protected FactoryBase(IServiceProvider serviceProvider)
         {
-            if (serviceProvider != null) throw new ArgumentNullException(nameof(serviceProvider));
-
-            this.serviceProvider = serviceProvider;
+            this.serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
         }
     }
 }

@@ -14,9 +14,7 @@ namespace LanExchange.Application.Implementation
             ITranslationService translationService,            
             string baseName, Assembly assembly) : base(baseName, assembly)
         {
-            if (translationService != null) throw new ArgumentNullException(nameof(translationService));
-
-            this.translationService = translationService;
+            this.translationService = translationService ?? throw new ArgumentNullException(nameof(translationService));
         }
 
         public override string GetString(string name, CultureInfo culture)

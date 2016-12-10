@@ -13,9 +13,7 @@ namespace WMIViewer.Model
 
         public PropertyDataExt(PropertyData data)
         {
-            if (data == null)
-                throw new ArgumentNullException(nameof(data));
-            this.data = data;
+            this.data = data ?? throw new ArgumentNullException(nameof(data));
             id = 100;
             foreach (var qd in this.data.Qualifiers)
             {

@@ -15,9 +15,7 @@ namespace LanExchange.Presentation.WinForms.Controls
 
         public ListViewer(IUser32Service userService)
         {
-            if (userService != null) throw new ArgumentNullException(nameof(userService));
-
-            this.userService = userService;
+            this.userService = userService ?? throw new ArgumentNullException(nameof(userService));
 
             if (!SystemInformation.TerminalServerSession)
                 // switch off flikering only if not terminal session

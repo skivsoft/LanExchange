@@ -21,10 +21,8 @@ namespace LanExchange.Application.Implementation
             IPanelModel model,
             IPanelColumnManager panelColumns)
         {
-            if (panelColumns != null) throw new ArgumentNullException(nameof(panelColumns));
-
             this.model = model;
-            this.panelColumns = panelColumns;
+            this.panelColumns = panelColumns ?? throw new ArgumentNullException(nameof(panelColumns));
 
             indexes = new List<int>();
         }

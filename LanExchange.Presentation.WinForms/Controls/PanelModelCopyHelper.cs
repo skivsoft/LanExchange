@@ -21,10 +21,8 @@ namespace LanExchange.Presentation.WinForms.Controls
             IPanelModel model,
             IPanelColumnManager panelColumns)
         {
-            if (panelColumns != null) throw new ArgumentNullException(nameof(panelColumns));
-
-            this.model = model;
-            this.panelColumns = panelColumns;
+            this.model = model ?? throw new ArgumentNullException(nameof(model));
+            this.panelColumns = panelColumns ?? throw new ArgumentNullException(nameof(panelColumns));
 
             indexes = new List<int>();
         }

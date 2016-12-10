@@ -16,15 +16,10 @@ namespace LanExchange.Application.Presenters
             ISystemInformationService systemInformation,
             IImageManager imageManager)
         {
-            if (shellService != null) throw new ArgumentNullException(nameof(shellService));
-            if (screenService != null) throw new ArgumentNullException(nameof(screenService));
-            if (systemInformation != null) throw new ArgumentNullException(nameof(systemInformation));
-            if (imageManager != null) throw new ArgumentNullException(nameof(imageManager));
-
-            this.shellService = shellService;
-            this.screenService = screenService;
-            this.systemInformation = systemInformation;
-            this.imageManager = imageManager;
+            this.shellService = shellService ?? throw new ArgumentNullException(nameof(shellService));
+            this.screenService = screenService ?? throw new ArgumentNullException(nameof(screenService));
+            this.systemInformation = systemInformation ?? throw new ArgumentNullException(nameof(systemInformation));
+            this.imageManager = imageManager ?? throw new ArgumentNullException(nameof(imageManager));
         }
 
         protected override void InitializePresenter()

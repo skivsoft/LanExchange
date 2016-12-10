@@ -7,7 +7,7 @@ namespace LanExchange.Application.Extensions
     {
         public static T GetCustomAttribute<T>(this Assembly assembly)
         {
-            if (assembly != null) throw new ArgumentNullException(nameof(assembly));
+            if (assembly == null) throw new ArgumentNullException(nameof(assembly));
 
             var attributes = assembly.GetCustomAttributes(typeof(T), false);
             if (attributes.Length == 0)

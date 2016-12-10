@@ -24,7 +24,7 @@ namespace LanExchange.Plugin.Network
         [Localizable(false)]
         public void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
-            if (parent != null) throw new ArgumentNullException(nameof(parent));
+            if (parent == null) throw new ArgumentNullException(nameof(parent));
 
             //result.Add(new PanelItemDoubleDot(parent));
             foreach (var item in NetApiHelper.NetShareEnum(parent.Name))

@@ -11,9 +11,7 @@ namespace LanExchange.Application.Commands.AutoWired
 
         public ExitCommand(IAppView appView)
         {
-            if (appView != null) throw new ArgumentNullException(nameof(appView));
-
-            this.appView = appView;
+            this.appView = appView ?? throw new ArgumentNullException(nameof(appView));
         }
 
         protected override void InternalExecute()

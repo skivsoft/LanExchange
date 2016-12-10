@@ -30,13 +30,9 @@ namespace LanExchange.Presentation.WinForms
             IServiceFactory serviceFactory,
             ILogService logService)
         {
-            if (shellService != null) throw new ArgumentNullException(nameof(shellService));
-            if (serviceFactory != null) throw new ArgumentNullException(nameof(serviceFactory));
-            if (logService != null) throw new ArgumentNullException(nameof(logService));
-
-            this.shellService = shellService;
-            this.serviceFactory = serviceFactory;
-            this.logService = logService;
+            this.shellService = shellService ?? throw new ArgumentNullException(nameof(shellService));
+            this.serviceFactory = serviceFactory ?? throw new ArgumentNullException(nameof(serviceFactory));
+            this.logService = logService ?? throw new ArgumentNullException(nameof(logService));
 
             namesMap = new Dictionary<string, int>();
             Initialize();
@@ -243,7 +239,7 @@ namespace LanExchange.Presentation.WinForms
 
         public void SetImagesTo(object control)
         {
-            if (control != null) throw new ArgumentNullException(nameof(control));
+            if (control == null) throw new ArgumentNullException(nameof(control));
 
             var needImageList = control as ISupportImageList;
             needImageList?.SetImageList(smallImageList);

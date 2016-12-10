@@ -24,9 +24,7 @@ namespace LanExchange.Application.Implementation
 
         public PluginManager(ILogService logService)
         {
-            if (logService != null) throw new ArgumentNullException(nameof(logService));
-
-            this.logService = logService;
+            this.logService = logService ?? throw new ArgumentNullException(nameof(logService));
             plugins = Enumerable.Empty<IPlugin>();
         }
 

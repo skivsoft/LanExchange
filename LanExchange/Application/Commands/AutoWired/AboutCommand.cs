@@ -11,9 +11,7 @@ namespace LanExchange.Application.Commands.AutoWired
 
         public AboutCommand(IWindowFactory windowFactory)
         {
-            if (windowFactory != null) throw new ArgumentNullException(nameof(windowFactory));
-
-            this.windowFactory = windowFactory;
+            this.windowFactory = windowFactory ?? throw new ArgumentNullException(nameof(windowFactory));
         }
 
         protected override void InternalExecute()

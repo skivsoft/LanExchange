@@ -12,11 +12,9 @@ namespace LanExchange.Presentation.WinForms.Forms
 
         public EditForm(IEditPresenter presenter)
         {
-            if (presenter != null) throw new ArgumentNullException(nameof(presenter));
+            this.presenter = presenter ?? throw new ArgumentNullException(nameof(presenter));
 
             InitializeComponent();
-
-            this.presenter = presenter;
             presenter.Initialize(this);
         }
 

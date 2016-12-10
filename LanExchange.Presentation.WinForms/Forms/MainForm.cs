@@ -17,10 +17,9 @@ namespace LanExchange.Presentation.WinForms.Forms
 
         public MainForm(IMainPresenter mainPresenter)
         {
-            if (mainPresenter != null) throw new ArgumentNullException(nameof(mainPresenter));
+            this.mainPresenter = mainPresenter ?? throw new ArgumentNullException(nameof(mainPresenter));
 
             InitializeComponent();
-            this.mainPresenter = mainPresenter;
             mainPresenter.Initialize(this);
         }
 

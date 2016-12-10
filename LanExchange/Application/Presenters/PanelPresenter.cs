@@ -20,15 +20,10 @@ namespace LanExchange.Application.Presenters
             IPagesPresenter pagesPresenter,
             ITranslationService translationService)
         {
-            if (panelFillers != null) throw new ArgumentNullException(nameof(panelFillers));
-            if (panelColumns != null) throw new ArgumentNullException(nameof(panelColumns));
-            if (pagesPresenter != null) throw new ArgumentNullException(nameof(pagesPresenter));
-            if (translationService != null) throw new ArgumentNullException(nameof(translationService));
-
-            this.panelFillers = panelFillers;
-            this.panelColumns = panelColumns;
-            this.pagesPresenter = pagesPresenter;
-            this.translationService = translationService;
+            this.panelFillers = panelFillers ?? throw new ArgumentNullException(nameof(panelFillers));
+            this.panelColumns = panelColumns ?? throw new ArgumentNullException(nameof(panelColumns));
+            this.pagesPresenter = pagesPresenter ?? throw new ArgumentNullException(nameof(pagesPresenter));
+            this.translationService = translationService ?? throw new ArgumentNullException(nameof(translationService));
         }
 
         public void SetupColumns()

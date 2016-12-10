@@ -23,13 +23,9 @@ namespace LanExchange.Application.Presenters
             ITranslationService translationService,
             IProcessService processService)
         {
-            if (model != null) throw new ArgumentNullException(nameof(model));
-            if (translationService != null) throw new ArgumentNullException(nameof(translationService));
-            if (processService != null) throw new ArgumentNullException(nameof(processService));
-
-            this.model = model;
-            this.translationService = translationService;
-            this.processService = processService;
+            this.model = model ?? throw new ArgumentNullException(nameof(model));
+            this.translationService = translationService ?? throw new ArgumentNullException(nameof(translationService));
+            this.processService = processService ?? throw new ArgumentNullException(nameof(processService));
         }
 
         protected override void InitializePresenter()

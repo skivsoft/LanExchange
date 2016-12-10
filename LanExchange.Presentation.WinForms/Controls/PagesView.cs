@@ -44,22 +44,15 @@ namespace LanExchange.Presentation.WinForms.Controls
             IModelFactory modelFactory,
             IViewFactory viewFactory)
         {
-            if (presenter != null) throw new ArgumentNullException(nameof(presenter));
-            if (factoryManager != null) throw new ArgumentNullException(nameof(factoryManager));
-            if (imageManager != null) throw new ArgumentNullException(nameof(imageManager));
-            if (panelFillers != null) throw new ArgumentNullException(nameof(panelFillers));
-            if (modelFactory != null) throw new ArgumentNullException(nameof(modelFactory));
-            if (viewFactory != null) throw new ArgumentNullException(nameof(viewFactory));
+            this.presenter = presenter ?? throw new ArgumentNullException(nameof(presenter));
+            this.factoryManager = factoryManager ?? throw new ArgumentNullException(nameof(factoryManager));
+            this.imageManager = imageManager ?? throw new ArgumentNullException(nameof(imageManager));
+            this.panelFillers = panelFillers ?? throw new ArgumentNullException(nameof(panelFillers));
+            this.modelFactory = modelFactory ?? throw new ArgumentNullException(nameof(modelFactory));
+            this.viewFactory = viewFactory ?? throw new ArgumentNullException(nameof(viewFactory));
 
             InitializeComponent();
-            this.presenter = presenter;
             presenter.Initialize(this);
-
-            this.factoryManager = factoryManager;
-            this.imageManager = imageManager;
-            this.panelFillers = panelFillers;
-            this.modelFactory = modelFactory;
-            this.viewFactory = viewFactory;
 
             this.imageManager.SetImagesTo(popPages);
         }

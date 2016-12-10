@@ -11,9 +11,7 @@ namespace LanExchange
 
         public ContainerWrapper(Container container)
         {
-            if (container != null) throw new ArgumentNullException(nameof(container));
-
-            this.container = container;
+            this.container = container ?? throw new ArgumentNullException(nameof(container));
         }
 
         public object GetService(Type serviceType)

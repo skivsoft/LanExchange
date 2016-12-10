@@ -15,11 +15,8 @@ namespace LanExchange.Application.Factories
             IFolderManager folderManager,
             IImageManager imageManager)
         {
-            if (folderManager != null) throw new ArgumentNullException(nameof(folderManager));
-            if (imageManager != null) throw new ArgumentNullException(nameof(imageManager));
-
-            this.folderManager = folderManager;
-            this.imageManager = imageManager;
+            this.folderManager = folderManager ?? throw new ArgumentNullException(nameof(folderManager));
+            this.imageManager = imageManager ?? throw new ArgumentNullException(nameof(imageManager));
         }
 
         public AddonProgramInfo CreateAddonProgramInfo(AddonProgram program)

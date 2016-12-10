@@ -11,8 +11,7 @@ namespace LanExchange.Domain.Implementation
 
         public AddonPersistenceService(ISerializeService serializeService)
         {
-            if (serializeService != null) throw new ArgumentNullException(nameof(serializeService));
-            this.serializeService = serializeService;
+            this.serializeService = serializeService ?? throw new ArgumentNullException(nameof(serializeService));
         }
 
         public AddOn Load(string fileName)

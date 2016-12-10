@@ -24,21 +24,13 @@ namespace LanExchange.Application
             IServiceProvider serviceProvider,
             ILogService logService)
         {
-            if (appView != null) throw new ArgumentNullException(nameof(appView));
-            if (addonManager != null) throw new ArgumentNullException(nameof(addonManager));
-            if (pluginManager != null) throw new ArgumentNullException(nameof(pluginManager));
-            if (translationService != null) throw new ArgumentNullException(nameof(translationService));
-            if (windowFactory != null) throw new ArgumentNullException(nameof(windowFactory));
-            if (serviceProvider != null) throw new ArgumentNullException(nameof(serviceProvider));
-            if (logService != null) throw new ArgumentNullException(nameof(logService));
-
-            this.appView = appView;
-            this.addonManager = addonManager;
-            this.pluginManager = pluginManager;
-            this.translationService = translationService;
-            this.windowFactory = windowFactory;
-            this.serviceProvider = serviceProvider;
-            this.logService = logService;
+            this.appView = appView ?? throw new ArgumentNullException(nameof(appView));
+            this.addonManager = addonManager ?? throw new ArgumentNullException(nameof(addonManager));
+            this.pluginManager = pluginManager ?? throw new ArgumentNullException(nameof(pluginManager));
+            this.translationService = translationService ?? throw new ArgumentNullException(nameof(translationService));
+            this.windowFactory = windowFactory ?? throw new ArgumentNullException(nameof(windowFactory));
+            this.serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
+            this.logService = logService ?? throw new ArgumentNullException(nameof(logService));
 
             Initialize();
         }

@@ -42,28 +42,17 @@ namespace LanExchange.Presentation.WinForms.Controls
             IUser32Service userService,
             IPuntoSwitcherService puntoService)
         {
-            if (presenter != null) throw new ArgumentNullException(nameof(presenter));
-            if (addonManager != null) throw new ArgumentNullException(nameof(addonManager));
-            if (factoryManager != null) throw new ArgumentNullException(nameof(factoryManager));
-            if (threadPool != null) throw new ArgumentNullException(nameof(threadPool));
-            if (imageManager != null) throw new ArgumentNullException(nameof(imageManager));
-            if (panelColumns != null) throw new ArgumentNullException(nameof(panelColumns));
-            if (pagesPresenter != null) throw new ArgumentNullException(nameof(pagesPresenter));
-            if (filterPresenter != null) throw new ArgumentNullException(nameof(filterPresenter));
-            if (userService != null) throw new ArgumentNullException(nameof(userService));
-            if (puntoService != null) throw new ArgumentNullException(nameof(puntoService));
-
-            this.addonManager = addonManager;
-            this.factoryManager = factoryManager;
-            this.threadPool = threadPool;
-            this.imageManager = imageManager;
-            this.panelColumns = panelColumns;
-            this.pagesPresenter = pagesPresenter;
-            this.userService = userService;
-            this.puntoService = puntoService;
+            this.addonManager = addonManager ?? throw new ArgumentNullException(nameof(addonManager));
+            this.factoryManager = factoryManager ?? throw new ArgumentNullException(nameof(factoryManager));
+            this.threadPool = threadPool ?? throw new ArgumentNullException(nameof(threadPool));
+            this.imageManager = imageManager ?? throw new ArgumentNullException(nameof(imageManager));
+            this.panelColumns = panelColumns ?? throw new ArgumentNullException(nameof(panelColumns));
+            this.pagesPresenter = pagesPresenter ?? throw new ArgumentNullException(nameof(pagesPresenter));
+            this.userService = userService ?? throw new ArgumentNullException(nameof(userService));
+            this.puntoService = puntoService ?? throw new ArgumentNullException(nameof(puntoService));
+            this.presenter = presenter ?? throw new ArgumentNullException(nameof(presenter));
 
             InitializeComponent();
-            this.presenter = presenter;
             presenter.Initialize(this);
 
             // setup items cache
@@ -73,7 +62,7 @@ namespace LanExchange.Presentation.WinForms.Controls
             // focus listview when panel got focus
             GotFocus += (sender, args) => ActiveControl = LV;
             // set filter's presenter
-            pFilter.Presenter = filterPresenter;
+            pFilter.Presenter = filterPresenter ?? throw new ArgumentNullException(nameof(filterPresenter));
             pFilter.Presenter.Initialize(pFilter);
         }
         #endregion

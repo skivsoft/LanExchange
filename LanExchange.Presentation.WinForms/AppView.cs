@@ -13,9 +13,7 @@ namespace LanExchange.Presentation.WinForms
 
         public AppView(IAppPresenter presenter)
         {
-            if (presenter != null) throw new ArgumentNullException(nameof(presenter));
-
-            this.presenter = presenter;
+            this.presenter = presenter ?? throw new ArgumentNullException(nameof(presenter));
             presenter.Initialize(this);
         }
 
@@ -44,7 +42,7 @@ namespace LanExchange.Presentation.WinForms
 
         public void Run(IWindow mainView)
         {
-            if (mainView != null) throw new ArgumentNullException(nameof(mainView));
+            if (mainView == null) throw new ArgumentNullException(nameof(mainView));
             Application.Run((Form)mainView);
         }
 
