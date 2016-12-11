@@ -12,7 +12,6 @@ namespace LanExchange.Plugin.Network
         [SetUp]
         public void SetUp()
         {
-            Utils.InitPlugins();
         }
 
         [Test]

@@ -2,8 +2,8 @@
 using System.IO;
 using LanExchange.Plugin.Network.NetApi;
 using System.Xml.Serialization;
-using LanExchange.SDK;
 using NUnit.Framework;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.Network
 {
@@ -16,7 +16,7 @@ namespace LanExchange.Plugin.Network
             var info = new ServerInfo();
             info.Name = "COMP01";
             info.Comment = "Hello world";
-            info.Version.PlatformID = (uint) SV_101_PLATFORM.PLATFORM_ID_NT;
+            info.Version.PlatformId = (uint) SV_101_PLATFORM.PLATFORM_ID_NT;
             info.Version.Major = 6;
             info.Version.Minor = 2;
             m_Comp = new ComputerPanelItem(null, info);
@@ -41,7 +41,7 @@ namespace LanExchange.Plugin.Network
         {
             m_Comp.SI.Name = "QQQ";
             m_Comp.SI.Comment = "WWW";
-            m_Comp.SI.Version.PlatformID = 1;
+            m_Comp.SI.Version.PlatformId = 1;
             m_Comp.SI.Version.Type = 2;
             m_Comp.SI.Version.Major = 3;
             m_Comp.SI.Version.Minor = 4;
@@ -63,7 +63,7 @@ namespace LanExchange.Plugin.Network
         {
             m_Comp.SI.Name = "QQQ";
             m_Comp.SI.Comment = null;
-            m_Comp.SI.Version.PlatformID = 1;
+            m_Comp.SI.Version.PlatformId = 1;
             m_Comp.SI.Version.Type = 2;
             m_Comp.SI.Version.Major = 3;
             m_Comp.SI.Version.Minor = 4;

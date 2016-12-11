@@ -34,6 +34,14 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\..\Solution\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Moq, Version=4.5.29.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\..\Solution\packages\Moq.4.5.29\lib\net45\Moq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\..\Solution\packages\NUnit.3.5.0\lib\net40\nunit.framework.dll</HintPath>
       <Private>True</Private>
@@ -50,7 +58,6 @@
     <Compile Include="DomainFillerTest.cs" />
     <Compile Include="DomainPanelItemFactoryTest.cs" />
     <Compile Include="DomainPanelItemTest.cs" />
-    <Compile Include="Model\PanelItemListTest.cs" />
     <Compile Include="NetApi32UtilsTest.cs" />
     <Compile Include="NetworkTest.cs" />
     <Compile Include="OSVersionTest.cs" />
@@ -60,12 +67,11 @@
     <Compile Include="ShareInfoTest.cs" />
     <Compile Include="SharePanelItemFactory.cs" />
     <Compile Include="SharePanelItemTest.cs" />
-    <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\LanExchange.SDK\LanExchange.SDK.csproj">
-      <Project>{4ae4e72c-5d7d-42a9-b7fb-577eec0a149d}</Project>
-      <Name>LanExchange.SDK</Name>
+    <ProjectReference Include="..\..\LanExchange.Presentation.Interfaces\LanExchange.Presentation.Interfaces.csproj">
+      <Project>{530bdbba-a879-403c-83c5-a2f27bdabe05}</Project>
+      <Name>LanExchange.Presentation.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\LanExchange\LanExchange.csproj">
       <Project>{abd7f255-097f-4081-b5b5-1f2dd67b9db6}</Project>
@@ -78,6 +84,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

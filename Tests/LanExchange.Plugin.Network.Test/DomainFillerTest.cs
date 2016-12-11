@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
-using LanExchange.SDK;
 using NUnit.Framework;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.Network
 {
@@ -17,7 +17,6 @@ namespace LanExchange.Plugin.Network
         [Test]
         public void TestAsyncFill()
         {
-            Utils.InitPlugins();
             var strategy = new DomainFiller();
             var result = new Collection<PanelItemBase>();
             strategy.AsyncFill(null, result);

@@ -1,7 +1,7 @@
 ﻿using System;
-using LanExchange.SDK;
 using Moq;
 using NUnit.Framework;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.Network
 {

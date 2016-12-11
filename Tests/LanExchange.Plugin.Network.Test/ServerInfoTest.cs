@@ -28,13 +28,13 @@ namespace LanExchange.Plugin.Network
         {
             m_Info.Name = "QQQ";
             m_Info.Comment = "WWW";
-            m_Info.Version.PlatformID = 1;
+            m_Info.Version.PlatformId = 1;
             m_Info.Version.Type = 2;
             m_Info.Version.Major = 3;
             m_Info.Version.Minor = 4;
             Assert.AreEqual("QQQ", m_Info.Name);
             Assert.AreEqual("WWW", m_Info.Comment);
-            Assert.AreEqual(1, m_Info.Version.PlatformID);
+            Assert.AreEqual(1, m_Info.Version.PlatformId);
             Assert.AreEqual(2, m_Info.Version.Type);
             Assert.AreEqual(3, m_Info.Version.Major);
             Assert.AreEqual(4, m_Info.Version.Minor);

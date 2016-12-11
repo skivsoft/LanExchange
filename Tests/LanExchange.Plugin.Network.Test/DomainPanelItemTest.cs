@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Xml.Serialization;
-using LanExchange.SDK;
 using NUnit.Framework;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.Network
 {

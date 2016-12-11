@@ -167,7 +167,6 @@
     <Compile Include="Application\Implementation\ProcessService.cs" />
     <Compile Include="Application\Presenters\InfoPresenter.cs" />
     <Compile Include="Application\Presenters\StatusPanelPresenter.cs" />
-    <Compile Include="Application\Extensions\AssemblyExtensions.cs" />
     <Compile Include="ContainerWrapper.cs" />
     <Compile Include="Application\Factories\AddonProgramFactory.cs" />
     <Compile Include="Application\Factories\FactoryBase.cs" />

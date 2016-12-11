@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using LanExchange.Plugin.Network.NetApi;
-using LanExchange.SDK;
 using NUnit.Framework;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.Network
 {
@@ -20,7 +20,6 @@ namespace LanExchange.Plugin.Network
         [Test]
         public void TestAsyncFill()
         {
-            Utils.InitPlugins();
             var strategy = new ComputerFiller();
             var result = new Collection<PanelItemBase>();
             string domain = WorkstationInfo.FromComputer(null).LanGroup;

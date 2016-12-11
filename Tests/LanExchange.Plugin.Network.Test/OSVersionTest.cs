@@ -23,7 +23,7 @@ namespace LanExchange.Plugin.Network
         private void СheckVer(SV_101_PLATFORM platform, uint major, uint minor, string compVer,
             string serverVer, uint type)
         {
-            m_Info.PlatformID = (uint) platform;
+            m_Info.PlatformId = (uint) platform;
             m_Info.Major = major;
             m_Info.Minor = minor;
             // computer check
@@ -43,7 +43,7 @@ namespace LanExchange.Plugin.Network
         private OSVersion NewInfo(uint platform, bool server = false, bool ctrl = false, uint major = 0, uint minor = 0)
         {
             var result = new OSVersion();
-            result.PlatformID = platform;
+            result.PlatformId = platform;
             result.Major = major;
             result.Minor = minor;
             result.Type = (uint) SV_101_TYPES.SV_TYPE_SERVER_NT;

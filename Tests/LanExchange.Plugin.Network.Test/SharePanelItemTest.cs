@@ -1,7 +1,7 @@
 ﻿using System;
 using LanExchange.Plugin.Network.NetApi;
-using LanExchange.SDK;
 using NUnit.Framework;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.Network.Test
 {
