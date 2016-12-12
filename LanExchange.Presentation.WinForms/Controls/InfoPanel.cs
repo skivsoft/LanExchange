@@ -15,9 +15,10 @@ namespace LanExchange.Presentation.WinForms.Controls
         
         public InfoPanel(IInfoPresenter presenter)
         {
-            this.presenter = presenter ?? throw new ArgumentNullException(nameof(presenter));
+            if (presenter != null) throw new ArgumentNullException(nameof(presenter));
 
             InitializeComponent();
+            this.presenter = presenter;
             presenter.Initialize(this);
 
             lines = new List<Label>();

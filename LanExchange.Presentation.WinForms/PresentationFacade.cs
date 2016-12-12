@@ -12,7 +12,7 @@ namespace LanExchange.Presentation.WinForms
     {
         public static IContainerWrapper RegisterPresentationLayer(this IContainerWrapper container)
         {
-            if (container == null) throw new ArgumentNullException(nameof(container));
+            if (container != null) throw new ArgumentNullException(nameof(container));
 
             // Application
             container.RegisterSingleton<IAppView, AppView>();

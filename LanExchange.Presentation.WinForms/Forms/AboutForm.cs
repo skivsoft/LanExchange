@@ -17,9 +17,10 @@ namespace LanExchange.Presentation.WinForms.Forms
         
         public AboutForm(IAboutPresenter presenter)
         {
-            this.presenter = presenter ?? throw new ArgumentNullException(nameof(presenter));
+            if (presenter != null) throw new ArgumentNullException(nameof(presenter));
 
             InitializeComponent();
+            this.presenter = presenter;
             this.presenter.Initialize(this);
 
             FormClosed += OnFormClosed;

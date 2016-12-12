@@ -19,7 +19,9 @@ namespace WMIViewer
         /// <param name="data"></param>
         public MethodDataExt(MethodData data)
         {
-            this.data = data ?? throw new ArgumentNullException(nameof(data));
+            if (data == null)
+                throw new ArgumentNullException(nameof(data));
+            this.data = data;
         }
 
         public bool HasQualifier(string name)

@@ -18,9 +18,13 @@ namespace LanExchange.Plugin.Shortcut
             IAddonManager addonManager,
             IMenuProducer menuProducer)
         {
-            this.translationService = translationService ?? throw new ArgumentNullException(nameof(translationService));
-            this.addonManager = addonManager ?? throw new ArgumentNullException(nameof(addonManager));
-            this.menuProducer = menuProducer ?? throw new ArgumentNullException(nameof(menuProducer));
+            if (translationService != null) throw new ArgumentNullException(nameof(translationService));
+            if (addonManager != null) throw new ArgumentNullException(nameof(addonManager));
+            if (menuProducer != null) throw new ArgumentNullException(nameof(menuProducer));
+
+            this.translationService = translationService;
+            this.addonManager = addonManager;
+            this.menuProducer = menuProducer;
         }
 
         public bool IsParentAccepted(PanelItemBase parent)

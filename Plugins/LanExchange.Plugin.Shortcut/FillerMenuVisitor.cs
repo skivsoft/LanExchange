@@ -12,8 +12,11 @@ namespace LanExchange.Plugin.Shortcut
 
         public FillerMenuVisitor(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
-            this.parent = parent ?? throw new ArgumentNullException(nameof(parent));
-            this.result = result ?? throw new ArgumentNullException(nameof(result));
+            if (parent != null) throw new ArgumentNullException(nameof(parent));
+            if (result != null) throw new ArgumentNullException(nameof(result));
+
+            this.parent = parent;
+            this.result = result;
         }
 
         public void VisitMenuElement(string text, string shortcut, ICommand command, bool isDefault)

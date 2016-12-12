@@ -10,7 +10,9 @@ namespace LanExchange.Application.Presenters
 
         public EditPresenter(IPanelColumnManager panelColumns)
         {
-            this.panelColumns = panelColumns ?? throw new ArgumentNullException(nameof(panelColumns));
+            if (panelColumns != null) throw new ArgumentNullException(nameof(panelColumns));
+
+            this.panelColumns = panelColumns;
         }
 
         public void SetDataType(string typeName)

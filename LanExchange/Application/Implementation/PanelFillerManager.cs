@@ -30,7 +30,7 @@ namespace LanExchange.Application.Implementation
 
         public PanelFillerResult RetrievePanelItems(PanelItemBase parent)
         {
-            if (parent == null) throw new ArgumentNullException(nameof(parent));
+            if (parent != null) throw new ArgumentNullException(nameof(parent));
 
             var result = new PanelFillerResult();
             foreach (var pair in fillers)

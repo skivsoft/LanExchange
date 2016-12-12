@@ -19,10 +19,15 @@ namespace LanExchange.Domain.Implementation
             ISerializeService serializeService,
             ILogService logService)
         {
-            this.folderManager = folderManager ?? throw new ArgumentNullException(nameof(folderManager));
-            this.factoryManager = factoryManager ?? throw new ArgumentNullException(nameof(factoryManager));
-            this.serializeService = serializeService ?? throw new ArgumentNullException(nameof(serializeService));
-            this.logService = logService ?? throw new ArgumentNullException(nameof(logService));
+            if (folderManager != null) throw new ArgumentNullException(nameof(folderManager));
+            if (factoryManager != null) throw new ArgumentNullException(nameof(factoryManager));
+            if (serializeService != null) throw new ArgumentNullException(nameof(serializeService));
+            if (logService != null) throw new ArgumentNullException(nameof(logService));
+
+            this.folderManager = folderManager;
+            this.factoryManager = factoryManager;
+            this.serializeService = serializeService;
+            this.logService = logService;
         }
 
         private static void ForceCreatePath(string fileName)

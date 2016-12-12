@@ -13,7 +13,9 @@ namespace LanExchange.Application.Implementation
 
         public PanelItemFactoryManager(IPanelColumnManager columnManager)
         {
-            this.columnManager = columnManager ?? throw new ArgumentNullException(nameof(columnManager));
+            if (columnManager != null) throw new ArgumentNullException(nameof(columnManager));
+
+            this.columnManager = columnManager;
 
             types = new Dictionary<Type, IPanelItemFactory>();
             defaultRoots = new List<PanelItemBase>();
@@ -21,7 +23,7 @@ namespace LanExchange.Application.Implementation
 
         public void RegisterFactory<TPanelItem>(IPanelItemFactory factory) where TPanelItem : PanelItemBase
         {
-            if (factory == null) throw new ArgumentNullException(nameof(factory));
+            if (factory != null) throw new ArgumentNullException(nameof(factory));
 
             types.Add(typeof(TPanelItem), factory);
             factory.RegisterColumns(columnManager);

@@ -23,7 +23,9 @@ namespace WMIViewer.UI
         [Localizable(false)]
         public MainForm(WmiPresenter presenter)
         {
-            this.presenter = presenter ?? throw new ArgumentNullException(nameof(presenter));
+            if (presenter == null)
+                throw new ArgumentNullException(nameof(presenter));
+            this.presenter = presenter;
             this.presenter.View = this;
             args = this.presenter.Args;
             InitializeComponent();

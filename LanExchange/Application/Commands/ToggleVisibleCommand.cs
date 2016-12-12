@@ -9,7 +9,9 @@ namespace LanExchange.Application.Commands
 
         public ToggleVisibleCommand(IMainView mainView)
         {
-            this.mainView = mainView ?? throw new ArgumentNullException(nameof(mainView));
+            if (mainView != null) throw new ArgumentNullException(nameof(mainView));
+
+            this.mainView = mainView;
         }
 
         protected override void InternalExecute()

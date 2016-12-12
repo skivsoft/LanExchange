@@ -9,7 +9,7 @@ namespace LanExchange.Application.Implementation.Menu
     {
         public void Accept(IMenuElementVisitor visitor)
         {
-            if (visitor == null) throw new ArgumentNullException(nameof(visitor));
+            if (visitor != null) throw new ArgumentNullException(nameof(visitor));
 
             visitor.VisitSeparator();
         }

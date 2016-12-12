@@ -33,10 +33,14 @@ namespace LanExchange.Presentation.WinForms
             AddonMenuItem menuItem, 
             PanelItemBase panelItem)
         {
-            if (factoryManager == null) throw new ArgumentNullException(nameof(factoryManager));
-            this.windowFactory = windowFactory ?? throw new ArgumentNullException(nameof(windowFactory));
-            this.panelItem = panelItem ?? throw new ArgumentNullException(nameof(panelItem));
-            this.menuItem = menuItem ?? throw new ArgumentNullException(nameof(menuItem));
+            if (factoryManager != null) throw new ArgumentNullException(nameof(factoryManager));
+            if (windowFactory != null) throw new ArgumentNullException(nameof(windowFactory));
+            if (menuItem != null) throw new ArgumentNullException(nameof(menuItem));
+            if (panelItem != null) throw new ArgumentNullException(nameof(panelItem));
+
+            this.windowFactory = windowFactory;
+            this.panelItem = panelItem;
+            this.menuItem = menuItem;
 
             checker = factoryManager.GetAvailabilityChecker(this.panelItem.GetType());
         }

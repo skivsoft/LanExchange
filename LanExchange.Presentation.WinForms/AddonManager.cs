@@ -36,15 +36,25 @@ namespace LanExchange.Presentation.WinForms
             ILogService logService,
             IAddonPersistenceService persistenceService)
         {
-            this.folderManager = folderManager ?? throw new ArgumentNullException(nameof(folderManager));
-            this.programFactory = programFactory ?? throw new ArgumentNullException(nameof(programFactory));
-            this.imageManager = imageManager ?? throw new ArgumentNullException(nameof(imageManager));
-            this.pagesPresenter = pagesPresenter ?? throw new ArgumentNullException(nameof(pagesPresenter));
-            this.translationService = translationService ?? throw new ArgumentNullException(nameof(translationService));
-            this.factoryManager = factoryManager ?? throw new ArgumentNullException(nameof(factoryManager));
-            this.windowFactory = windowFactory ?? throw new ArgumentNullException(nameof(windowFactory));
-            this.logService = logService ?? throw new ArgumentNullException(nameof(logService));
-            this.persistenceService = persistenceService ?? throw new ArgumentNullException(nameof(persistenceService));
+            if (folderManager != null) throw new ArgumentNullException(nameof(folderManager));
+            if (programFactory != null) throw new ArgumentNullException(nameof(programFactory));
+            if (imageManager != null) throw new ArgumentNullException(nameof(imageManager));
+            if (pagesPresenter != null) throw new ArgumentNullException(nameof(pagesPresenter));
+            if (translationService != null) throw new ArgumentNullException(nameof(translationService));
+            if (factoryManager != null) throw new ArgumentNullException(nameof(factoryManager));
+            if (windowFactory != null) throw new ArgumentNullException(nameof(windowFactory));
+            if (logService != null) throw new ArgumentNullException(nameof(logService));
+            if (persistenceService != null) throw new ArgumentNullException(nameof(persistenceService));
+
+            this.folderManager = folderManager;
+            this.programFactory = programFactory;
+            this.imageManager = imageManager;
+            this.pagesPresenter = pagesPresenter;
+            this.translationService = translationService;
+            this.factoryManager = factoryManager;
+            this.windowFactory = windowFactory;
+            this.logService = logService;
+            this.persistenceService = persistenceService;
 
             Programs = new Dictionary<string, AddonProgram>();
             PanelItems = new Dictionary<string, AddOnItemTypeRef>();

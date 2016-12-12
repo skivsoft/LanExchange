@@ -20,7 +20,9 @@ namespace GenerateEnglish
 
         public GenerateEnglishProcess(IFolderManager folderManager)
         {
-            this.folderManager = folderManager ?? throw new ArgumentNullException(nameof(folderManager));
+            if (folderManager == null) throw new ArgumentNullException(nameof(folderManager));
+
+            this.folderManager = folderManager;
         }
 
         public void Execute()

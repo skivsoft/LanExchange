@@ -15,7 +15,8 @@ namespace LanExchange.Application.Presenters
 
         public CheckAvailabilityPresenter(IImageManager imageManager)
         {
-            this.imageManager = imageManager ?? throw new ArgumentNullException(nameof(imageManager));
+            if (imageManager != null) throw new ArgumentNullException(nameof(imageManager));
+            this.imageManager = imageManager;
         }
 
         protected override void InitializePresenter()

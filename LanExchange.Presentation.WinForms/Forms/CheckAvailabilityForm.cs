@@ -14,9 +14,11 @@ namespace LanExchange.Presentation.WinForms.Forms
 
         public CheckAvailabilityForm(ICheckAvailabilityPresenter presenter)
         {
-            this.presenter = presenter ?? throw new ArgumentNullException(nameof(presenter));
+            if (presenter != null) throw new ArgumentNullException(nameof(presenter));
+
             InitializeComponent();
 
+            this.presenter = presenter;
             presenter.Initialize(this);
         }
 

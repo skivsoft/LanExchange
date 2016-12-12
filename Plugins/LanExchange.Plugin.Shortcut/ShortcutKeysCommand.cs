@@ -13,8 +13,11 @@ namespace LanExchange.Plugin.Shortcut
             IPagesModel pagesModel,
             IModelFactory modelFactory)
         {
-            this.pagesModel = pagesModel ?? throw new ArgumentNullException(nameof(pagesModel));
-            this.modelFactory = modelFactory ?? throw new ArgumentNullException(nameof(modelFactory));
+            if (pagesModel != null) throw new ArgumentNullException(nameof(pagesModel));
+            if (modelFactory != null) throw new ArgumentNullException(nameof(modelFactory));
+
+            this.pagesModel = pagesModel;
+            this.modelFactory = modelFactory;
         }
 
         public void Execute()

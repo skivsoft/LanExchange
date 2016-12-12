@@ -21,7 +21,9 @@ namespace WMIViewer.UI
 
         public MethodForm(WmiPresenter presenter)
         {
-            this.presenter = presenter ?? throw new ArgumentNullException(nameof(presenter));
+            if (presenter == null)
+                throw new ArgumentNullException(nameof(presenter));
+            this.presenter = presenter;
             args = this.presenter.Args;
             InitializeComponent();
             Icon = Resources.WMIViewer16;

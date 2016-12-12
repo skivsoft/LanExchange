@@ -11,7 +11,7 @@ namespace LanExchange.Application.Managers
 
         public CommandManager(IEnumerable<ICommand> commands)
         {
-            if (commands == null) throw new ArgumentNullException(nameof(commands));
+            if (commands != null) throw new ArgumentNullException(nameof(commands));
 
             this.commands = new Dictionary<string, ICommand>();
             foreach (var command in commands)

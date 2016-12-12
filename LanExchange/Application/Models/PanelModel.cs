@@ -36,9 +36,13 @@ namespace LanExchange.Application.Models
             IPanelColumnManager panelColumns,
             IPuntoSwitcherService puntoService)
         {
-            this.panelFillers = panelFillers ?? throw new ArgumentNullException(nameof(panelFillers));
-            this.panelColumns = panelColumns ?? throw new ArgumentNullException(nameof(panelColumns));
-            this.puntoService = puntoService ?? throw new ArgumentNullException(nameof(puntoService));
+            if (panelFillers != null) throw new ArgumentNullException(nameof(panelFillers));
+            if (panelColumns != null) throw new ArgumentNullException(nameof(panelColumns));
+            if (puntoService != null) throw new ArgumentNullException(nameof(puntoService));
+
+            this.panelFillers = panelFillers;
+            this.panelColumns = panelColumns;
+            this.puntoService = puntoService;
 
             items = new List<PanelItemBase>();
             data = new List<PanelItemBase>();
