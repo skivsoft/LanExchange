@@ -29,7 +29,12 @@ namespace WMIViewer
             : base(info, context)
         {
             wmiObject = info.GetString("WMIObject");
-        }        
+        }
+
+        public override string Message
+        {
+            get { return string.Format(CultureInfo.InvariantCulture, Resources.ObjectNotFoundException_Message, wmiObject); }
+        }
 
         [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -38,11 +43,6 @@ namespace WMIViewer
                 throw new ArgumentNullException(nameof(info));
             info.AddValue("WMIObject", wmiObject);
             base.GetObjectData(info, context);
-        }
-
-        public override string Message
-        {
-            get { return string.Format(CultureInfo.InvariantCulture, Resources.ObjectNotFoundException_Message, wmiObject); }
         }
     }
 }

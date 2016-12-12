@@ -121,7 +121,7 @@ namespace LanExchange.Application.Models
 
         public void Assign(PagesDto dto)
         {
-            foreach(var item in dto.Items)
+            foreach (var item in dto.Items)
             {
                 var panel = modelFactory.CreatePanelModel();
                 panel.Assign(item);

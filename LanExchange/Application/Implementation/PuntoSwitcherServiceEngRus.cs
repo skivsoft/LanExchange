@@ -45,7 +45,7 @@ namespace LanExchange.Application.Implementation
         /// <returns></returns>
         public bool SpecificContains(string s, string what)
         {
-            if (String.IsNullOrEmpty(what))
+            if (string.IsNullOrEmpty(what))
                 return false;
             for (int i = 0; i < s.Length - what.Length + 1; i++)
             {

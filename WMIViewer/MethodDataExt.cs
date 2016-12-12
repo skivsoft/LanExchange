@@ -43,7 +43,8 @@ namespace WMIViewer
                 foreach (var pd in data.OutParameters.Properties)
                     list.Add(new PropertyDataExt(pd));
             list.Sort();
-            //string sReturn = string.Empty;
+
+            // string sReturn = string.Empty;
             var sb = new StringBuilder();
             int numArgs = 0;
             foreach (var prop in list)

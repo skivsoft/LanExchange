@@ -12,7 +12,6 @@ namespace LanExchange.Presentation.Interfaces
 
         int SelectedIndex { get; set; }
 
-        [Obsolete("Need to be removed.")]
         IPanelView ActivePanelView { get; }
 
         PanelViewMode ViewMode { get; set; }

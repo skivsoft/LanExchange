@@ -30,7 +30,7 @@ namespace LanExchange.Application.Presenters
         {
             get
             {
-                return !String.IsNullOrEmpty(filter);
+                return !string.IsNullOrEmpty(filter);
             }
         }
 

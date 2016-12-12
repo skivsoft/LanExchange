@@ -20,7 +20,7 @@ namespace LanExchange.Application.Implementation
 
         public void Dispose()
         {
-            foreach(var instance in list)
+            foreach (var instance in list)
                 instance.Dispose();
             list.Clear();
         }

@@ -236,7 +236,7 @@ namespace LanExchange.Application.Models
                 if (fillerResult.ItemsType != null)
                     DataType = fillerResult.ItemsType.Name;
                 // add custom items created by user
-                foreach(var panelItem in Items)
+                foreach (var panelItem in Items)
                     if (panelItem.GetType().Name == DataType)
                         data.Add(panelItem);
                 // sort 

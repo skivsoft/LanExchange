@@ -29,12 +29,6 @@ namespace WMIViewer
         {
             
         }
-         
-
-        public override bool CanResetValue(object component)
-        {
-            return false;
-        }
 
         public override Type ComponentType
         {
@@ -42,11 +36,6 @@ namespace WMIViewer
             {
                 return typeof(GenericPropertyDescriptor<T>);
             }
-        }
-
-        public override object GetValue(object component)
-        {
-            return value;
         }
 
         public override bool IsReadOnly
@@ -63,6 +52,16 @@ namespace WMIViewer
             {
                 return typeof(T);
             }
+        }
+
+        public override bool CanResetValue(object component)
+        {
+            return false;
+        }
+
+        public override object GetValue(object component)
+        {
+            return value;
         }
 
         public override void ResetValue(object component)

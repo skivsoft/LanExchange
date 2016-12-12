@@ -35,7 +35,7 @@ namespace LanExchange.Plugin.Notify
                 case MSG_LANEX_NOTIFY:
                     var pagesView = serviceProvider.Resolve<IPagesView>();
                     if (pagesView != null)
-                        ReReadPlugin(msg[1], msg.Length > 2 ? msg[2] : String.Empty);
+                        ReReadPlugin(msg[1], msg.Length > 2 ? msg[2] : string.Empty);
                     break;
             }
         }

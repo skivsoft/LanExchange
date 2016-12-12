@@ -6,7 +6,6 @@ namespace GenerateEnglish
 {
     public static class SerializeUtils
     {
-
         public static object DeserializeObjectFromXmlFile(string fileName, Type tp)
         {
             var ser = new XmlSerializer(tp);

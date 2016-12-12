@@ -44,7 +44,7 @@ namespace LanExchange.Plugin.Network
         {
             get
             {
-                if (!String.IsNullOrEmpty(shareInfo.netname))
+                if (!string.IsNullOrEmpty(shareInfo.netname))
                     return shareInfo.netname[shareInfo.netname.Length - 1] == '$';
                 return false;
             }
@@ -54,7 +54,7 @@ namespace LanExchange.Plugin.Network
 
         public int CompareTo(ShareInfo other)
         {
-            return String.Compare(Name, other.Name, StringComparison.InvariantCultureIgnoreCase);
+            return string.Compare(Name, other.Name, StringComparison.InvariantCultureIgnoreCase);
         }
 
         #endregion

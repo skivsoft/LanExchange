@@ -52,18 +52,18 @@ namespace LanExchange.Application.Implementation
             get { return currentLanguage; } 
             set
             {
-                if (String.Compare(DEFAULT_LANGUAGE, value, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Compare(DEFAULT_LANGUAGE, value, StringComparison.OrdinalIgnoreCase) == 0)
                     currentLanguage = value;
                 else
-                    foreach(var fileName in folderManager.GetLanguagesFiles())
+                    foreach (var fileName in folderManager.GetLanguagesFiles())
                     {
                         var lang = Path.GetFileNameWithoutExtension(fileName);
-                        if (lang != null && String.Compare(lang, value, StringComparison.OrdinalIgnoreCase) == 0)
+                        if (lang != null && string.Compare(lang, value, StringComparison.OrdinalIgnoreCase) == 0)
                         {
                             RightToLeft = TranslateFromPO(fileName, ID_RTL).Equals(TRUE);
                             var fname = GetBaseFileName(fileName);
                             currentLanguageLines.Clear();
-                            foreach(var line in ReadAllLines(fname))
+                            foreach (var line in ReadAllLines(fname))
                                 currentLanguageLines.Add(line);
                             currentLanguage = value;
                             break;
@@ -118,7 +118,7 @@ namespace LanExchange.Application.Implementation
                         if (string.IsNullOrEmpty(translit) || translits.ContainsKey(translit))
                             sorted.Add(langName, lang);
                 }
-                catch(ArgumentException)
+                catch (ArgumentException)
                 {
                 }
             }

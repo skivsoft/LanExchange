@@ -203,7 +203,7 @@ namespace LanExchange.Presentation.WinForms.Forms
 
         public void ShowStatusText(string format, params object[] args)
         {
-            //lItemsCount.Text = String.Format(CultureInfo.InvariantCulture, format, args);
+            //lItemsCount.Text = string.Format(CultureInfo.InvariantCulture, format, args);
         }
 
         private void mPanel_Popup(object sender, EventArgs e)

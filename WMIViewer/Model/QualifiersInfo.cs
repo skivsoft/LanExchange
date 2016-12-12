@@ -19,6 +19,7 @@ namespace WMIViewer.Model
                 if (qd.Name.Equals("SupportsUpdate")) IsSupportsUpdate = true;
                 if (qd.Name.Equals("SupportsCreate")) IsSupportsCreate = true;
                 if (qd.Name.Equals("SupportsDelete")) IsSupportsDelete = true;
+
                 // property qualifiers
                 if (qd.Name.Equals("CIM_Key")) IsCimKey = true;
                 if (qd.Name.Equals("write")) IsReadOnly = false;

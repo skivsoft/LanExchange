@@ -6,10 +6,16 @@ namespace WMIViewer
 {
     [Localizable(false)]
     public sealed class DynamicObject : ICustomTypeDescriptor
-	{
+    {
         private readonly string filter = string.Empty;
         private readonly PropertyDescriptorCollection filteredPropertyDescriptors = new PropertyDescriptorCollection(null);
         private readonly PropertyDescriptorCollection fullPropertyDescriptors = new PropertyDescriptorCollection(null);
+
+        public object this[string propertyName]
+        {
+            get { return GetPropertyValue(propertyName); }
+            set { SetPropertyValue(propertyName, value); }
+        }
 
         public void AddProperty<T>(
           string name,
@@ -23,13 +29,13 @@ namespace WMIViewer
             var attrs = attributes == null ? new List<Attribute>()
                                            : new List<Attribute>(attributes);
 
-            if (!String.IsNullOrEmpty(displayName))
+            if (!string.IsNullOrEmpty(displayName))
                 attrs.Add(new DisplayNameAttribute(displayName));
 
-            if (!String.IsNullOrEmpty(description))
+            if (!string.IsNullOrEmpty(description))
                 attrs.Add(new DescriptionAttribute(description));
 
-            if (!String.IsNullOrEmpty(category))
+            if (!string.IsNullOrEmpty(category))
                 attrs.Add(new CategoryAttribute(category));
 
             if (readOnly)
@@ -40,19 +46,24 @@ namespace WMIViewer
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public void AddPropertyNull<T>(string name, string displayName, string description,
-            string category, bool readOnly, IEnumerable<Attribute> attributes)
+        public void AddPropertyNull<T>(
+            string name,
+            string displayName,
+            string description,
+            string category,
+            bool readOnly,
+            IEnumerable<Attribute> attributes)
         {
             var attrs = attributes == null ? new List<Attribute>()
                                            : new List<Attribute>(attributes);
 
-            if (!String.IsNullOrEmpty(displayName))
+            if (!string.IsNullOrEmpty(displayName))
                 attrs.Add(new DisplayNameAttribute(displayName));
 
-            if (!String.IsNullOrEmpty(description))
+            if (!string.IsNullOrEmpty(description))
                 attrs.Add(new DescriptionAttribute(description));
 
-            if (!String.IsNullOrEmpty(category))
+            if (!string.IsNullOrEmpty(category))
                 attrs.Add(new CategoryAttribute(category));
 
             if (readOnly)
@@ -81,32 +92,7 @@ namespace WMIViewer
                 throw new ObjectNotFoundException(propertyName);
         }
 
-        public object this[string propertyName]
-        {
-            get { return GetPropertyValue(propertyName); }
-            set { SetPropertyValue(propertyName, value); }
-        }
-
-        private object GetPropertyValue(string propertyName)
-        {
-            var descriptor = fullPropertyDescriptors.Find(propertyName, true);
-            if (descriptor != null)
-                return descriptor.GetValue(new object());
-            throw new ObjectNotFoundException(propertyName);
-        }
-
-        private void SetPropertyValue(string propertyName, object value)
-        {
-            var descriptor = fullPropertyDescriptors.Find(propertyName, true);
-            if (descriptor != null)
-                descriptor.SetValue(null, value);
-            else
-                throw new ObjectNotFoundException(propertyName);
-        }
-
-
-
-		#region Implementation of ICustomTypeDescriptor
+        #region Implementation of ICustomTypeDescriptor
 
         public TypeConverter GetConverter()
         {
@@ -123,10 +109,10 @@ namespace WMIViewer
             return TypeDescriptor.GetEvents(this, true);
         }
 
-		public string GetComponentName()
-		{
-			return TypeDescriptor.GetComponentName(this, true);
-		}
+        public string GetComponentName()
+        {
+            return TypeDescriptor.GetComponentName(this, true);
+        }
 
         public object GetPropertyOwner(PropertyDescriptor pd)
         {
@@ -163,11 +149,28 @@ namespace WMIViewer
             return TypeDescriptor.GetDefaultEvent(this, true);
         }
 
-		public string GetClassName()
-		{
-			return TypeDescriptor.GetClassName(this, true);
-		}
+        public string GetClassName()
+        {
+            return TypeDescriptor.GetClassName(this, true);
+        }
 
-		#endregion
-	}
+        #endregion
+
+        private object GetPropertyValue(string propertyName)
+        {
+            var descriptor = fullPropertyDescriptors.Find(propertyName, true);
+            if (descriptor != null)
+                return descriptor.GetValue(new object());
+            throw new ObjectNotFoundException(propertyName);
+        }
+
+        private void SetPropertyValue(string propertyName, object value)
+        {
+            var descriptor = fullPropertyDescriptors.Find(propertyName, true);
+            if (descriptor != null)
+                descriptor.SetValue(null, value);
+            else
+                throw new ObjectNotFoundException(propertyName);
+        }
+    }
 }

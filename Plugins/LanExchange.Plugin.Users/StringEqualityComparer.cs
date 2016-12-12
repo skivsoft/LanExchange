@@ -8,7 +8,7 @@ namespace LanExchange.Plugin.Users
     {
         public bool Equals(string x, string y)
         {
-            return String.Compare(x, y, StringComparison.OrdinalIgnoreCase) == 0;
+            return string.Compare(x, y, StringComparison.OrdinalIgnoreCase) == 0;
         }
 
         public int GetHashCode(string obj)

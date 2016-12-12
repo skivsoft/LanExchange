@@ -104,7 +104,7 @@ namespace LanExchange.Presentation.WinForms.Controls
                 MoveTo(index);
                 if (index > 0) sb.AppendLine();
                 var first = true;
-                foreach(var column in columns)
+                foreach (var column in columns)
                     if (column.Visible)
                     {
                         if (!first) sb.Append("\t");

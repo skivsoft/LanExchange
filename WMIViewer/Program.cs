@@ -9,18 +9,18 @@ using WMIViewer.UI;
 
 namespace WMIViewer
 {
-    static class Program
+    internal static class Program
     {
         [STAThread]
         [Localizable(true)]
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             CmdLineArgs wmiArgs = null;
             try
             {
                 wmiArgs = CmdLineArgs.ParseFromCmdLine(args);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, GetProgramTitle(), MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
             }
@@ -50,7 +50,7 @@ namespace WMIViewer
                 }
         }
 
-        public static string GetProgramTitle()
+        private static string GetProgramTitle()
         {
             var assembly = Assembly.GetEntryAssembly();
             var attributes = assembly.GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
@@ -60,8 +60,8 @@ namespace WMIViewer
                 if (!string.IsNullOrEmpty(titleAttribute.Title))
                     return titleAttribute.Title;
             }
+
             return Path.GetFileNameWithoutExtension(assembly.CodeBase);
         }
-
     }
 }

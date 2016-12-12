@@ -92,6 +92,7 @@ namespace LanExchange.Plugin.Network
             const string content =
                 "<ComputerPanelItem PlatformID=\"500\" Comment=\"WWW\" Version=\"5.1\" Type=\"11407\" />";
             var ser = new XmlSerializer(typeof (ComputerPanelItem));
+
             // try deserialize
             TextReader tr = new StringReader(content);
             object result = ser.Deserialize(tr);

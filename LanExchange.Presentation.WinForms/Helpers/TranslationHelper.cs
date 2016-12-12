@@ -88,7 +88,7 @@ namespace LanExchange.Presentation.WinForms.Helpers
 
         private static void ProcessContextMenuStrip(ResourceManager resources, ContextMenuStrip menu)
         {
-            foreach(var item in menu.Items)
+            foreach (var item in menu.Items)
             {
                 var menuItem = item as ToolStripMenuItem;
                 if (menuItem != null && !string.IsNullOrEmpty(menuItem.Name))

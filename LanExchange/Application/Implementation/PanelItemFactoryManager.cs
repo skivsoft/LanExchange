@@ -44,7 +44,7 @@ namespace LanExchange.Application.Implementation
 
         public PanelItemBase CreateDefaultRoot(string typeName)
         {
-            foreach(var pair in types)
+            foreach (var pair in types)
                 if (pair.Key.Name.Equals(typeName))
                     return pair.Value.CreateDefaultRoot();
             return null;
@@ -53,7 +53,7 @@ namespace LanExchange.Application.Implementation
         public void CreateDefaultRoots()
         {
             defaultRoots.Clear();
-            foreach(var pair in types)
+            foreach (var pair in types)
             try
             {
                 var root = pair.Value.CreateDefaultRoot();

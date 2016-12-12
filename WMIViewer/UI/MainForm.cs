@@ -17,8 +17,7 @@ namespace WMIViewer.UI
         private readonly WmiPresenter presenter;
         private readonly CmdLineArgs args;
         private string currentWmiClass;
-
-        public event EventHandler FocusedItemChanged;
+        private bool menuUpdated;
 
         [Localizable(false)]
         public MainForm(WmiPresenter presenter)
@@ -29,6 +28,7 @@ namespace WMIViewer.UI
             this.presenter.View = this;
             args = this.presenter.Args;
             InitializeComponent();
+
             // Enable double buffer for ListView
             var mi = typeof(Control).GetMethod("SetStyle", BindingFlags.Instance | BindingFlags.NonPublic);
             mi.Invoke(lvInstances, new object[] { ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true });
@@ -39,29 +39,11 @@ namespace WMIViewer.UI
             Icon = Resources.WMIViewer16;
         }
 
-        public void UpdateTitle()
-        {
-            var description = WmiClassList.GetPropertyValue(presenter.Namespace, "Win32_OperatingSystem",
-                "Description");
-            if (string.IsNullOrEmpty(description))
-                Text = @"\\" + args.ComputerName;
-            else
-                Text = string.Format(CultureInfo.InvariantCulture, TITLE_FMT, args.ComputerName, description);
-        }
+        public event EventHandler FocusedItemChanged;
 
         public WmiPresenter Presenter
         {
             get { return presenter; }
-        }
-
-        [Localizable(false)]
-        private void lvInstances_FocusedItemChanged(object sender, EventArgs e)
-        {
-            if (presenter.WmiClass == null) return;
-            if (lvInstances.FocusedItem == null) return;
-            presenter.WmiObject = (ManagementObject)lvInstances.FocusedItem.Tag;
-            if (presenter.WmiObject == null) return;
-            PropGrid.SelectedObject = presenter.CreateDynamicObject();
         }
 
         public ListView LV
@@ -75,6 +57,7 @@ namespace WMIViewer.UI
             {
                 return currentWmiClass;
             }
+
             set
             {
                 currentWmiClass = value;
@@ -82,7 +65,8 @@ namespace WMIViewer.UI
                 lClassName.Text = value;
                 presenter.EnumObjects(value);
                 presenter.BuildContextMenu(menuCommands.Items);
-                //m_Presenter.BuildContextMenu(mMethod.DropDownItems);
+
+                // m_Presenter.BuildContextMenu(mMethod.DropDownItems);
                 if (lvInstances.Items.Count == 0)
                     PropGrid.SelectedObject = null;
                 else
@@ -92,22 +76,28 @@ namespace WMIViewer.UI
                     lvInstances_FocusedItemChanged(lvInstances, EventArgs.Empty);
                     lvInstances.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
                 }
-                lStatus.Text = String.Format(CultureInfo.InvariantCulture, Resources.MainForm_Items, lvInstances.Items.Count);
+
+                lStatus.Text = string.Format(CultureInfo.InvariantCulture, Resources.MainForm_Items, lvInstances.Items.Count);
             }
         }
 
-        [Localizable(false)]
-        private void WMIForm_Load(object sender, EventArgs e)
+        public void UpdateTitle()
         {
-            CurrentWmiClass = "Win32_OperatingSystem";
-            ActiveControl = lvInstances;
+            var description = WmiClassList.GetPropertyValue(
+                presenter.Namespace,
+                "Win32_OperatingSystem",
+                "Description");
+            if (string.IsNullOrEmpty(description))
+                Text = @"\\" + args.ComputerName;
+            else
+                Text = string.Format(CultureInfo.InvariantCulture, TITLE_FMT, args.ComputerName, description);
         }
 
         public void ShowStat(int classCount, int propCount, int methodCount)
         {
-            lClasses.Text = String.Format(CultureInfo.InvariantCulture, Resources.MainForm_Classes, classCount);
-            lProps.Text = String.Format(CultureInfo.InvariantCulture, Resources.MainForm_Properties, propCount);
-            lMethods.Text = String.Format(CultureInfo.InvariantCulture, Resources.MainForm_Methods, methodCount);
+            lClasses.Text = string.Format(CultureInfo.InvariantCulture, Resources.MainForm_Classes, classCount);
+            lProps.Text = string.Format(CultureInfo.InvariantCulture, Resources.MainForm_Properties, propCount);
+            lMethods.Text = string.Format(CultureInfo.InvariantCulture, Resources.MainForm_Methods, methodCount);
         }
 
         public void MenuClassesOnClick(object sender, EventArgs e)
@@ -123,12 +113,13 @@ namespace WMIViewer.UI
             menuClasses.Items.Clear();
             int count1 = WmiClassList.Instance.Classes.Count;
             int count2 = WmiClassList.Instance.ReadOnlyClasses.Count;
-            foreach(var str in WmiClassList.Instance.Classes)
+            foreach (var str in WmiClassList.Instance.Classes)
             {
-                var menuItem = new ToolStripMenuItem {Text = str};
+                var menuItem = new ToolStripMenuItem { Text = str };
                 menuItem.Click += MenuClassesOnClick;
                 menuClasses.Items.Add(menuItem);
             }
+
             if (count1 > 0 && count2 > 0)
                 menuClasses.Items.Add(new ToolStripSeparator());
             foreach (var str in WmiClassList.Instance.ReadOnlyClasses)
@@ -137,15 +128,31 @@ namespace WMIViewer.UI
                 menuItem.Click += MenuClassesOnClick;
                 menuClasses.Items.Add(menuItem);
             }
+
             // TODO uncomment setup wmi-classes
-            //if (Count1 + Count2 > 0)
+            // if (Count1 + Count2 > 0)
             //    menuClasses.Items.Add(new ToolStripSeparator());
-            //ToolStripMenuItem mSetup = new ToolStripMenuItem { Text = "Настроить..."};
-            //mSetup.Click += mSetup_Click;
-            //menuClasses.Items.Add(mSetup);
+            // ToolStripMenuItem mSetup = new ToolStripMenuItem { Text = "Настроить..."};
+            // mSetup.Click += mSetup_Click;
+            // menuClasses.Items.Add(mSetup);
         }
 
-        private bool menuUpdated;
+        [Localizable(false)]
+        private void lvInstances_FocusedItemChanged(object sender, EventArgs e)
+        {
+            if (presenter.WmiClass == null) return;
+            if (lvInstances.FocusedItem == null) return;
+            presenter.WmiObject = (ManagementObject)lvInstances.FocusedItem.Tag;
+            if (presenter.WmiObject == null) return;
+            PropGrid.SelectedObject = presenter.CreateDynamicObject();
+        }
+
+        [Localizable(false)]
+        private void WMIForm_Load(object sender, EventArgs e)
+        {
+            CurrentWmiClass = "Win32_OperatingSystem";
+            ActiveControl = lvInstances;
+        }
 
         private void menuClasses_Opening(object sender, CancelEventArgs e)
         {
@@ -154,11 +161,13 @@ namespace WMIViewer.UI
                 e.Cancel = true;
                 return;
             }
+
             if (!menuUpdated)
             {
                 UpdateClassesMenu();
                 menuUpdated = true;
             }
+
             foreach (var menuItem in menuClasses.Items)
             {
                 var mi = menuItem as ToolStripMenuItem;
@@ -173,8 +182,8 @@ namespace WMIViewer.UI
             string propName = e.ChangedItem.Label;
             if (propName == null) return;
             object propValue = e.ChangedItem.Value;
-            string caption = String.Format(CultureInfo.InvariantCulture, Resources.MainForm_EditingProperty, propName);
-            string message = String.Format(CultureInfo.InvariantCulture, Resources.MainForm_PropertyChanged_Message, args.ComputerName, e.OldValue, propValue);
+            string caption = string.Format(CultureInfo.InvariantCulture, Resources.MainForm_EditingProperty, propName);
+            string message = string.Format(CultureInfo.InvariantCulture, Resources.MainForm_PropertyChanged_Message, args.ComputerName, e.OldValue, propValue);
             try
             {
                 // trying to change wmi property
@@ -186,11 +195,10 @@ namespace WMIViewer.UI
                     UpdateTitle();
 
                 // property has been changed
-                message += String.Format(CultureInfo.InvariantCulture, Resources.MainForm_PropertyChanged_Success, propName);
-                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1,
-                    MessageBoxOptions.DefaultDesktopOnly);
+                message += string.Format(CultureInfo.InvariantCulture, Resources.MainForm_PropertyChanged_Success, propName);
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
             }
-            catch(ManagementException ex)
+            catch (ManagementException ex)
             {
                 // property not changed
                 var dynObj = PropGrid.SelectedObject as DynamicObject;
@@ -199,8 +207,7 @@ namespace WMIViewer.UI
                 message += "\n\n" + ex.Message;
                 if (ex.InnerException != null)
                     message += "\n\n" + ex.InnerException.Message;
-                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1,
-                    MessageBoxOptions.DefaultDesktopOnly);
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
             }
         }
 
@@ -240,16 +247,19 @@ namespace WMIViewer.UI
                 Close();
                 e.Handled = true;
             }
+
             if (e.KeyCode == Keys.F2)
             {
                 lClassName.ShowDropDown();
                 e.Handled = true;
             }
+
             if (e.Control && e.KeyCode == Keys.R)
             {
                 CurrentWmiClass = CurrentWmiClass;
                 e.Handled = true;
             }
+
             // Ctrl+Left
             if (e.Control && e.KeyCode == Keys.Left)
             {
@@ -257,6 +267,7 @@ namespace WMIViewer.UI
                 TheSplitter.Dock = DockStyle.Left;
                 e.Handled = true;
             }
+
             // Ctrl+Right
             if (e.Control && e.KeyCode == Keys.Right)
             {

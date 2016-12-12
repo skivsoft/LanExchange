@@ -53,7 +53,7 @@ namespace LanExchange.Plugin.Users
                 {
                     str = enumDict.Current.Key.Split('\\');
                     if (index + 1 > str.Length) break;
-                    if (String.Compare(current, str[index], StringComparison.InvariantCultureIgnoreCase) != 0)
+                    if (string.Compare(current, str[index], StringComparison.InvariantCultureIgnoreCase) != 0)
                     {
                         allEqual = false;
                         break;
@@ -65,7 +65,7 @@ namespace LanExchange.Plugin.Users
                     break;
                 index++;
             }
-            return String.Join(@"\", result.ToArray());
+            return string.Join(@"\", result.ToArray());
         }
 
         public string Prefix

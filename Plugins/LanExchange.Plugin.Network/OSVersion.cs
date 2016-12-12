@@ -130,7 +130,7 @@ namespace LanExchange.Plugin.Network
         [Localizable(false)]
         public override string ToString()
         {
-            //return String.Format("{0}.{1}.{2}.{3}", platform_id, ver_major, ver_minor, type);
+            //return string.Format("{0}.{1}.{2}.{3}", platform_id, ver_major, ver_minor, type);
             bool bServer = IsServer();
             var platform = (SV_101_PLATFORM) platformId;
             // OS2 same as NT
@@ -139,10 +139,10 @@ namespace LanExchange.Plugin.Network
             switch (platform)
             {
                 case SV_101_PLATFORM.PLATFORM_ID_DOS:
-                    return String.Format("MS-DOS {0}.{1}", major, minor);
+                    return string.Format("MS-DOS {0}.{1}", major, minor);
                 case SV_101_PLATFORM.PLATFORM_ID_NT:
                     if ((type & (uint)SV_101_TYPES.SV_TYPE_XENIX_SERVER) != 0)
-                        return String.Format("Linux Server {0}.{1}", major, minor);
+                        return string.Format("Linux Server {0}.{1}", major, minor);
                     switch (major)
                     {
                         case 3:
@@ -157,7 +157,7 @@ namespace LanExchange.Plugin.Network
                                 case 90:
                                     return "Windows ME";
                                 default:
-                                    return String.Format("Windows NT {0}.{1}", major, minor);
+                                    return string.Format("Windows NT {0}.{1}", major, minor);
                             }
                         case 5:
                             switch (minor)
@@ -169,7 +169,7 @@ namespace LanExchange.Plugin.Network
                                 case 2:
                                     return "Windows Server 2003 R2";
                                 default:
-                                    return String.Format("Windows NT {0}.{1}", major, minor);
+                                    return string.Format("Windows NT {0}.{1}", major, minor);
                             }
                         case 6:
                             switch (minor)
@@ -185,17 +185,17 @@ namespace LanExchange.Plugin.Network
                                 case 4:
                                     return bServer ? "Windows 10 Server" : "Windows 10";
                                 default:
-                                    return String.Format("Windows NT {0}.{1}", major, minor);
+                                    return string.Format("Windows NT {0}.{1}", major, minor);
                             }
                         default:
-                            return String.Format("Windows NT {0}.{1}", major, minor);
+                            return string.Format("Windows NT {0}.{1}", major, minor);
                     }
                 case SV_101_PLATFORM.PLATFORM_ID_OSF:
-                    return String.Format("OSF {0}.{1}", major, minor);
+                    return string.Format("OSF {0}.{1}", major, minor);
                 case SV_101_PLATFORM.PLATFORM_ID_VMS:
-                    return String.Format("VMS {0}.{1}", major, minor);
+                    return string.Format("VMS {0}.{1}", major, minor);
                 default:
-                    return String.Format("{0} {1}.{2}", platformId, major, minor);
+                    return string.Format("{0} {1}.{2}", platformId, major, minor);
             }
         }
 

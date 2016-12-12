@@ -95,7 +95,7 @@ namespace LanExchange.Application.Implementation
                     column.LazyDict.Add(item, result);
                     DoDataReady(item);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Debug.Print(ex.Message);
                 }

@@ -10,6 +10,8 @@ namespace LanExchange.Presentation.WinForms.Forms
     {
         private readonly IEditPresenter presenter;
 
+        public event EventHandler ViewClosed;
+
         public EditForm(IEditPresenter presenter)
         {
             if (presenter != null) throw new ArgumentNullException(nameof(presenter));
@@ -19,8 +21,6 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.presenter = presenter;
             presenter.Initialize(this);
         }
-
-        public event EventHandler ViewClosed;
 
         [Localizable(false)]
         public void SetColumns(IList<PanelColumnHeader> columns)

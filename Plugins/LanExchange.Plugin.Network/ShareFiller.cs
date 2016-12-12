@@ -39,7 +39,7 @@ namespace LanExchange.Plugin.Network
                 result.Add(new SharePanelItem(parent, si));
             }
             // enum logged users
-            foreach(var item in NetworkHelper.NetWorkstationUserEnumNames(parent.Name))
+            foreach (var item in NetworkHelper.NetWorkstationUserEnumNames(parent.Name))
             {
                 var si = new ShareInfo();
                 si.Name = item;

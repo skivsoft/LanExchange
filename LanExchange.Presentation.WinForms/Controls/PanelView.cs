@@ -27,9 +27,6 @@ namespace LanExchange.Presentation.WinForms.Controls
         private IPanelModelCopyHelper copyHelper;
         private int sortColumn;
 
-        public event EventHandler FocusedItemChanged;
-
-        [Obsolete("Should be only single depenedcy: Presenter.")]
         public PanelView(
             IPanelPresenter presenter, 
             IAddonManager addonManager, 
@@ -338,12 +335,12 @@ namespace LanExchange.Presentation.WinForms.Controls
         [Localizable(false)]
         private int GetCtrlInsColumnIndex()
         {
-            foreach(var item in CreateCopyMenuItems(copyHelper))
+            foreach (var item in CreateCopyMenuItems(copyHelper))
                 if (item is ToolStripMenuItem)
                 {
                     var menuItem = item as ToolStripMenuItem;
                     if (!string.IsNullOrEmpty(menuItem.ShortcutKeyDisplayString))
-                        if (menuItem.ShortcutKeyDisplayString.Equals("Ctrl+Ins"))
+                        if (menuItem.ShortcutKeyDisplaystring.Equals("Ctrl+Ins"))
                             return (int) item.Tag;
                 }
             return 0;
@@ -366,6 +363,8 @@ namespace LanExchange.Presentation.WinForms.Controls
         }
 
         private bool canDrag;
+
+        public event EventHandler FocusedItemChanged;
 
         private void LV_MouseDown(object sender, MouseEventArgs e)
         {
@@ -586,7 +585,7 @@ namespace LanExchange.Presentation.WinForms.Controls
             //            result.Add(menuItem);
             //        }
             //    }
-            //foreach(var menuItem in result)
+            //foreach (var menuItem in result)
             //    if ((menuItem is ToolStripMenuItem) && (int)menuItem.Tag == ctrlInsColumn)
             //    {
             //        (menuItem as ToolStripMenuItem).ShortcutKeyDisplayString = Resources.KeyCtrlIns;
@@ -598,7 +597,6 @@ namespace LanExchange.Presentation.WinForms.Controls
 
         private void SetupCopyHelper()
         {
-            //TODO hide model
             //copyHelper = new PanelModelCopyHelper(presenter.Objects, panelColumns);
             //foreach (int index in LV.SelectedIndices)
             //    copyHelper.Indexes.Add(index);

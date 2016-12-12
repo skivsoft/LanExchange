@@ -26,7 +26,7 @@ namespace WMIViewer.Model
                 if (qd.Name.Equals("out"))
                     parameterType = ParameterType.Return;
                 if (qd.Name.Equals("ID"))
-                    id = (int) qd.Value;
+                    id = (int)qd.Value;
             }
         }
 
