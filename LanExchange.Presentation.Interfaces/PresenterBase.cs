@@ -4,6 +4,8 @@ namespace LanExchange.Presentation.Interfaces
 {
     public abstract class PresenterBase<TView> : IPresenter<TView> where TView : IView
     {
+        protected TView View { get; private set; }
+
         public void Initialize(TView view)
         {
             if (view == null) throw new ArgumentNullException(nameof(view));
@@ -12,7 +14,5 @@ namespace LanExchange.Presentation.Interfaces
         }
 
         protected abstract void InitializePresenter();
-
-        protected TView View { get; private set; }
     }
 }

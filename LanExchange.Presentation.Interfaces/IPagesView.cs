@@ -12,6 +12,7 @@
         /// The tab pages count.
         /// </value>
         int TabPagesCount { get; }
+
         /// <summary>
         /// Gets the index of the popup selected.
         /// </summary>
@@ -19,6 +20,7 @@
         /// The index of the popup selected.
         /// </value>
         int PopupSelectedIndex { get; }
+
         /// <summary>
         /// Gets or sets the index of the selected.
         /// </summary>
@@ -26,6 +28,7 @@
         /// The index of the selected.
         /// </value>
         int SelectedIndex { get; set; }
+
         /// <summary>
         /// Gets the active panel view.
         /// </summary>
@@ -33,32 +36,32 @@
         /// The active panel view.
         /// </value>
         IPanelView ActivePanelView { get; }
+
         /// <summary>
         /// Removes the tab at.
         /// </summary>
         /// <param name="index">The index.</param>
         void RemoveTabAt(int index);
+
         /// <summary>
         /// Sets the tab tool tip.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="value">The value.</param>
         void SetTabToolTip(int index, string value);
+
         /// <summary>
         /// Focuses the panel view.
         /// </summary>
         void FocusPanelView();
-        /// <summary>
-        /// Creates the panel view.
-        /// </summary>
-        /// <returns></returns>
-        // TODO: hide model
-        //IPanelView CreatePanelView(IPanelModel info);
 
+        // IPanelView CreatePanelView(IPanelModel info);
         void SetupContextMenu();
+
         void SetTabText(int index, string title);
 
         void SetTabImage(int index, int imageIndex);
+
         void Clear();
     }
 }

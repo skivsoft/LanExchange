@@ -57,38 +57,6 @@ namespace LanExchange.Presentation.Interfaces
             get { return 1; }
         }
 
-        protected virtual void SetValue(int index, IComparable value)
-        {
-            
-        }
-
-        public virtual IComparable GetValue(int index)
-        {
-            return Name;
-        }
-
-        /// <summary>
-        /// Gets or sets the <see cref="IComparable"/> at the specified index.
-        /// </summary>
-        /// <value>
-        /// The <see cref="IComparable"/>.
-        /// </value>
-        /// <param name="index">The index.</param>
-        /// <returns></returns>
-        public IComparable this[int index]
-        {
-            get
-            {
-                if (index < 0 || index >= CountColumns)
-                    throw new ArgumentOutOfRangeException(nameof(index));
-
-                return GetValue(index);
-            }
-            set
-            {
-                SetValue(index, value);
-            }
-        }
         /// <summary>
         /// Gets the name of the image.
         /// </summary>
@@ -113,6 +81,35 @@ namespace LanExchange.Presentation.Interfaces
         {
             get { return isReachable; }
             set { isReachable = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="IComparable"/> at the specified index.
+        /// </summary>
+        /// <value>
+        /// The <see cref="IComparable"/>.
+        /// </value>
+        /// <param name="index">The index.</param>
+        /// <returns></returns>
+        public IComparable this[int index]
+        {
+            get
+            {
+                if (index < 0 || index >= CountColumns)
+                    throw new ArgumentOutOfRangeException(nameof(index));
+
+                return GetValue(index);
+            }
+
+            set
+            {
+                SetValue(index, value);
+            }
+        }
+
+        public virtual IComparable GetValue(int index)
+        {
+            return Name;
         }
 
         /// <summary>
@@ -145,7 +142,6 @@ namespace LanExchange.Presentation.Interfaces
             return compres == 0 ? CompareTo(other) : compres;
         }
 
-
         /// <summary>
         /// Compares to.
         /// </summary>
@@ -160,10 +156,10 @@ namespace LanExchange.Presentation.Interfaces
                 return 1;
             if (this is PanelItemDoubleDot && other is PanelItemDoubleDot)
                 return 0;
-            int result = String.Compare(Name, other.Name, StringComparison.OrdinalIgnoreCase);
+            int result = string.Compare(Name, other.Name, StringComparison.OrdinalIgnoreCase);
+
             // TODO !!! CHECK ITEM SORT
             return result;
-            //return CompareTo(other, 0);
         }
 
         /// <summary>
@@ -191,6 +187,10 @@ namespace LanExchange.Presentation.Interfaces
         public virtual bool IsRereadAccepted(string subject)
         {
             return false;
+        }
+
+        protected virtual void SetValue(int index, IComparable value)
+        {
         }
     }
 }

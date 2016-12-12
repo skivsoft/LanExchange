@@ -6,10 +6,10 @@ namespace LanExchange.Presentation.Interfaces
     {
         Rectangle PrimaryScreenWorkingArea { get; }
 
+        Point CursorPosition { get; }
+
         Rectangle GetWorkingArea(Point pt);
 
         Rectangle GetWorkingArea(Rectangle rect);
-
-        Point CursorPosition { get; }
     }
 }

@@ -6,20 +6,18 @@ namespace LanExchange.Presentation.Interfaces
     [Serializable]
     public abstract class PanelItemRootBase : PanelItemBase
     {
-        protected abstract string GetName();
-
         [XmlIgnore]
         public override string Name
         {
             get { return GetName(); }
-            set
-            {
-            }
+            set { }
         }
 
         public override string ImageLegendText
         {
             get { return string.Empty; }
         }
+
+        protected abstract string GetName();
     }
 }

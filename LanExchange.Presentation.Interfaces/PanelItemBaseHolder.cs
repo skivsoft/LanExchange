@@ -13,6 +13,7 @@ namespace LanExchange.Presentation.Interfaces
         }
 
         public string Context { get; private set; }
+
         public string DataType { get; private set; }
     }
 }

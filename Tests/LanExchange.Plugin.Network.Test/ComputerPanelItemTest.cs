@@ -128,14 +128,14 @@ namespace LanExchange.Plugin.Network
         [Test]
         public void TestImageName()
         {
-            Assert.AreEqual(PanelImageNames.COMPUTER + PanelImageNames.GREEN_POSTFIX, m_Comp.ImageName);
+            Assert.AreEqual(PanelImageNames.COMPUTER + PanelImageNames.GreenPostfix, m_Comp.ImageName);
             m_Comp.IsReachable = false;
-            Assert.AreEqual(PanelImageNames.COMPUTER + PanelImageNames.GREEN_POSTFIX, m_Comp.ImageName);
+            Assert.AreEqual(PanelImageNames.COMPUTER + PanelImageNames.GreenPostfix, m_Comp.ImageName);
             m_Comp.Parent = new DomainRoot();
             m_Comp.IsReachable = true;
             Assert.AreEqual(PanelImageNames.COMPUTER, m_Comp.ImageName);
             m_Comp.IsReachable = false;
-            Assert.AreEqual(PanelImageNames.COMPUTER + PanelImageNames.RED_POSTFIX, m_Comp.ImageName);
+            Assert.AreEqual(PanelImageNames.COMPUTER + PanelImageNames.RedPostfix, m_Comp.ImageName);
         }
 
         [Test]

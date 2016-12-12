@@ -3,6 +3,7 @@
     public interface IPerformOkCancel
     {
         void PerformOk();
+
         void PerformCancel();
     }
 }

@@ -24,3 +24,4 @@
 *.GhostDoc.xml
 output/
 *.DotSettings
+StyleCop.Cache

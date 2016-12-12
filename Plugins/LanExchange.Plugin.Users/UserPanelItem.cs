@@ -100,7 +100,7 @@ namespace LanExchange.Plugin.Users
         {
             get
             {
-                return IsAccountDisabled ? PanelImageNames.USER + PanelImageNames.RED_POSTFIX : PanelImageNames.USER;
+                return IsAccountDisabled ? PanelImageNames.USER + PanelImageNames.RedPostfix : PanelImageNames.USER;
             }
         }
 

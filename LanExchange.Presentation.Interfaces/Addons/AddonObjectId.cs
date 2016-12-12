@@ -6,7 +6,6 @@ namespace LanExchange.Presentation.Interfaces.Addons
     {
         public AddonObjectId()
         {
-            
         }
 
         public AddonObjectId(string id)

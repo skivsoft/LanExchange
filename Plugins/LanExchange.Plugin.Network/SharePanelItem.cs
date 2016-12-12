@@ -42,7 +42,7 @@ namespace LanExchange.Plugin.Network
                     return string.Empty;
                 if (SHI.ShareType == 100)
                     return PanelImageNames.USER;
-                return SHI.IsHidden ? PanelImageNames.FOLDER + PanelImageNames.HIDDEN_POSTFIX : PanelImageNames.FOLDER;
+                return SHI.IsHidden ? PanelImageNames.FOLDER + PanelImageNames.HiddenPostfix : PanelImageNames.FOLDER;
             }
         }
 

@@ -41,7 +41,7 @@ namespace LanExchange.Plugin.Network.Test
             Assert.AreEqual((uint) SHARE_TYPE.STYPE_DEVICE, m_Share.SHI.ShareType);
             Assert.AreEqual(PanelImageNames.FOLDER, m_Share.ImageName);
             m_Share.Name = "C$";
-            Assert.AreEqual(PanelImageNames.FOLDER + PanelImageNames.HIDDEN_POSTFIX, m_Share.ImageName);
+            Assert.AreEqual(PanelImageNames.FOLDER + PanelImageNames.HiddenPostfix, m_Share.ImageName);
         }
 
         [Test]

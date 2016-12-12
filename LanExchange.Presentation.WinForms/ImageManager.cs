@@ -59,7 +59,7 @@ namespace LanExchange.Presentation.WinForms
                 RegisterImage(PanelImageNames.DOUBLEDOT, Resources.back_16, Resources.back_32);
                 // register user icon
                 RegisterImage(PanelImageNames.USER, Resources.user_16, Resources.user_32);
-                RegisterDisabledImage(PanelImageNames.USER + PanelImageNames.HIDDEN_POSTFIX, Resources.user_16, Resources.user_32);
+                RegisterDisabledImage(PanelImageNames.USER + PanelImageNames.HiddenPostfix, Resources.user_16, Resources.user_32);
             }
         }
 
@@ -87,9 +87,9 @@ namespace LanExchange.Presentation.WinForms
             RegisterImage(PanelImageNames.COMPUTER, icon1, icon2);
             if (icon1 != null && icon2 != null)
             {
-                RegisterDisabledImage(PanelImageNames.COMPUTER + PanelImageNames.HIDDEN_POSTFIX, icon1, icon2);
-                RegisterImageWithOtherColor(PanelImageNames.COMPUTER + PanelImageNames.RED_POSTFIX, icon1, icon2, 2);
-                RegisterImageWithOtherColor(PanelImageNames.COMPUTER + PanelImageNames.GREEN_POSTFIX, icon1, icon2, 4);
+                RegisterDisabledImage(PanelImageNames.COMPUTER + PanelImageNames.HiddenPostfix, icon1, icon2);
+                RegisterImageWithOtherColor(PanelImageNames.COMPUTER + PanelImageNames.RedPostfix, icon1, icon2, 2);
+                RegisterImageWithOtherColor(PanelImageNames.COMPUTER + PanelImageNames.GreenPostfix, icon1, icon2, 4);
             }
         }
 
@@ -99,7 +99,7 @@ namespace LanExchange.Presentation.WinForms
             var icon2 = large.GetIcon(SYSTEM_INDEX_FOLDER);
             RegisterImage(PanelImageNames.FOLDER, icon1, icon2);
             if (icon1 != null && icon2 != null)
-                RegisterDisabledImage(PanelImageNames.FOLDER + PanelImageNames.HIDDEN_POSTFIX, icon1, icon2);
+                RegisterDisabledImage(PanelImageNames.FOLDER + PanelImageNames.HiddenPostfix, icon1, icon2);
         }
 
         private void RegisterImageWithOtherColor(string imageName, Icon icon1, Icon icon2 , int shift)

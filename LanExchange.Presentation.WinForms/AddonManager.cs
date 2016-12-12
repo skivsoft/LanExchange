@@ -90,7 +90,7 @@ namespace LanExchange.Presentation.WinForms
         {
             foreach (var pair in Programs.Where(pair => pair.Value.ProgramImage != null))
             {
-                var imageName = string.Format(CultureInfo.InvariantCulture, PanelImageNames.ADDON_FMT, pair.Key);
+                var imageName = string.Format(CultureInfo.InvariantCulture, PanelImageNames.AddonFmt, pair.Key);
                 imageManager.RegisterImage(imageName, pair.Value.ProgramImage, pair.Value.ProgramImage);
             }
         }

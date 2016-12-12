@@ -11,7 +11,6 @@ namespace LanExchange.Presentation.Interfaces
     {
         public PanelItemDoubleDot()
         {
-            
         }
         
         public PanelItemDoubleDot(PanelItemBase parent) : base(parent)
@@ -28,12 +27,12 @@ namespace LanExchange.Presentation.Interfaces
             get { return string.Empty; }
         }
 
+        [XmlAttribute]
+        public override string Name { get; set; }
+
         public override object Clone()
         {
             return new PanelItemDoubleDot(Parent);
         }
-
-        [XmlAttribute]
-        public override string Name { get; set; }
     }
 }

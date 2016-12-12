@@ -3,7 +3,9 @@
     public interface IColumnHeader
     {
         string Text { get; }
+
         int Width { get; }
+
         HorizontalAlignment TextAlign { get; }
     }
 }

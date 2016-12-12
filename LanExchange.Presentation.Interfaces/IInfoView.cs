@@ -14,10 +14,12 @@
         bool Visible { get; set; }
 
         int NumLines { get; set; }
+
         string GetLine(int index);
+
         void SetLine(int index, string text);
 
-        //TODO hide model use events
-        //IPanelItem CurrentItem { get; set; }
+        // TODO hide model use events
+        // IPanelItem CurrentItem { get; set; }
     }
 }

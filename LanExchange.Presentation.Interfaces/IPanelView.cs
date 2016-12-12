@@ -9,6 +9,7 @@ namespace LanExchange.Presentation.Interfaces
     public interface IPanelView : IView
     {
         event EventHandler FocusedItemChanged;
+
         event EventHandler FilterTextChanged;
 
         /// <summary>
@@ -18,6 +19,7 @@ namespace LanExchange.Presentation.Interfaces
         /// The filter.
         /// </value>
         IFilterView Filter { get; }
+
         /// <summary>
         /// Gets the selected indexes.
         /// </summary>
@@ -25,6 +27,7 @@ namespace LanExchange.Presentation.Interfaces
         /// The selected indexes.
         /// </value>
         IEnumerable<int> SelectedIndexes { get; }
+
         /// <summary>
         /// Gets the focused item text.
         /// </summary>
@@ -32,6 +35,7 @@ namespace LanExchange.Presentation.Interfaces
         /// The focused item text.
         /// </value>
         string FocusedItemText { get; }
+
         /// <summary>
         /// Gets or sets the index of the focused item.
         /// </summary>
@@ -39,6 +43,7 @@ namespace LanExchange.Presentation.Interfaces
         /// The index of the focused item.
         /// </value>
         int FocusedItemIndex { get; set; }
+
         /// <summary>
         /// Gets the presenter.
         /// </summary>
@@ -46,41 +51,46 @@ namespace LanExchange.Presentation.Interfaces
         /// The presenter.
         /// </value>
         IPanelPresenter Presenter { get; }
+
+        PanelViewMode ViewMode { get; set; }
+
+        // PanelItemBase FocusedItem { get; }
+
         /// <summary>
         /// Selects the item.
         /// </summary>
         /// <param name="index">The index.</param>
         void SelectItem(int index);
+
         /// <summary>
         /// Sets the size of the virtual list.
         /// </summary>
         /// <param name="count">The count.</param>
         void SetVirtualListSize(int count);
+
         /// <summary>
         /// Redraws the focused item.
         /// </summary>
         void RedrawFocusedItem();
+
         /// <summary>
         /// Focuses the list view.
         /// </summary>
         void FocusListView();
+
         /// <summary>
         /// Clears the selected.
         /// </summary>
         void ClearSelected();
 
         void ColumnsClear();
-        //TODO hide model use events
+
         void AddColumn(IColumnHeader header);
-        PanelViewMode ViewMode { get; set; }
-        //TODO: hide model
-        //PanelItemBase FocusedItem { get; }
 
         void RedrawItem(int index);
 
         void SetColumnMarker(int columnIndex, PanelSortOrder sortOrder);
 
-        //TODO hide model
-        //void ShowHeaderMenu(IEnumerable<PanelColumnHeader> columns);
+        // void ShowHeaderMenu(IEnumerable<PanelColumnHeader> columns);
     }
 }

@@ -63,7 +63,7 @@ namespace LanExchange.Plugin.Shortcut
                         var context = SuppressPostfix(pair.Key, PANEL_ITEM_SUFFIX);
                         string customImageName = string.Empty;
                         if (menuItem.ProgramValue != null)
-                            customImageName = string.Format(PanelImageNames.ADDON_FMT, menuItem.ProgramValue.Id);
+                            customImageName = string.Format(PanelImageNames.AddonFmt, menuItem.ProgramValue.Id);
                         result.Add(new ShortcutPanelItem(parent, menuItem.ShortcutKeys, translatedText, context, customImageName));
                     }
         }
