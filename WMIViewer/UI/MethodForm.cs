@@ -13,7 +13,7 @@ namespace WMIViewer.UI
 {
     internal sealed partial class MethodForm : Form
     {
-        const string METHOD_FAIL_FMT = "[{0}] {1}";
+        private const string METHOD_FAIL_FMT = "[{0}] {1}";
 
         private readonly WmiPresenter presenter;
         private readonly CmdLineArgs args;
@@ -127,7 +127,7 @@ namespace WMIViewer.UI
             {
                 var op = new ObjectGetOptions(null, TimeSpan.MaxValue, true);
                 var path = new ManagementPath(args.ClassName);
-                WmiClass = new ManagementClass(presenter.Namespace, path, op);
+                WmiClass = new ManagementClass(presenter.ManagementScope, path, op);
             }
 
             if (WmiMethod == null)
@@ -144,9 +144,9 @@ namespace WMIViewer.UI
 
             if (WmiObject == null)
             {
-                presenter.Namespace.Connect();
+                presenter.ManagementScope.Connect();
                 var query = new ObjectQuery("SELECT * FROM " + args.ClassName);
-                using (var searcher = new ManagementObjectSearcher(presenter.Namespace, query))
+                using (var searcher = new ManagementObjectSearcher(presenter.ManagementScope, query))
                 {
                     foreach (ManagementObject queryObj in searcher.Get())
                     {
@@ -242,7 +242,7 @@ namespace WMIViewer.UI
             }
         }
 
-        private void timerOK_Tick(object sender, EventArgs e)
+        private void TimerOK_Tick(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
         }

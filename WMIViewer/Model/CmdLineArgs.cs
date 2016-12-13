@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Forms;
+using WMIViewer.Exceptions;
 
 namespace WMIViewer.Model
 {
@@ -22,6 +23,9 @@ namespace WMIViewer.Model
 
         public CmdLineCommand StartCmd { get; set; }
 
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="RequiredArgException"></exception>
+        /// <exception cref="ObjectNotFoundException"></exception>
         [Localizable(false)]
         public static CmdLineArgs ParseFromCmdLine(IEnumerable<string> args)
         {
@@ -33,8 +37,7 @@ namespace WMIViewer.Model
             const string EDIT_CMD_MARKER    = "/EDIT";
             const string EXECUTE_CMD_MARKER = "/EXECUTE";
 
-            if (args == null)
-                throw new ArgumentNullException(nameof(args));
+            if (args == null) throw new ArgumentNullException(nameof(args));
 
             var result = new CmdLineArgs();
             result.ComputerName = SystemInformation.ComputerName;
@@ -88,6 +91,7 @@ namespace WMIViewer.Model
                 if (wordUpper.Equals(EXECUTE_CMD_MARKER, StringComparison.OrdinalIgnoreCase))
                     result.StartCmd = CmdLineCommand.ExecuteMethod;
             }
+
             if (string.IsNullOrEmpty(result.NamespaceName))
                 result.NamespaceName = DefaultNamespaceName;
             switch (result.StartCmd)
@@ -110,6 +114,7 @@ namespace WMIViewer.Model
                         throw new ObjectNotFoundException(string.Format(CultureInfo.InvariantCulture, @"{0}\{1}.{2}()", result.NamespaceName, result.ClassName, result.MethodName));
                     break;
             }
+
             return result;
         }
     }

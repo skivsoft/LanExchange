@@ -14,10 +14,10 @@ namespace WMIViewer.Presenter
 {
     internal sealed class WmiPresenter : IDisposable
     {
-        private const string NULL = "null";
-        private ManagementScope m_Namespace;
+        private const string NULL_TEXT = "null";
+        private ManagementScope managementScope;
 
-        private ManagementClass m_Class;
+        private ManagementClass managementClass;
 
         [Localizable(false)]
         public WmiPresenter(CmdLineArgs args)
@@ -31,45 +31,34 @@ namespace WMIViewer.Presenter
             WmiClassList.Instance.IncludeClasses.Add("Win32_PhysicalMemory");
         }
 
-        public CmdLineArgs Args { get; private set; }
+        public CmdLineArgs Args { get; }
 
         public MainForm View { get; set; }
 
         public ManagementClass WmiClass
         {
-            get { return m_Class; }
+            get { return managementClass; }
         }
 
         public ManagementObject WmiObject { get; set; }
 
-        public ManagementScope Namespace
+        public ManagementScope ManagementScope
         {
-            get { return m_Namespace; }
-        }
-
-        private static void DynObjAddProperty<T>(DynamicObject dynamicObj, PropertyData prop, string description, string category, bool isReadOnly)
-        {
-            if (prop.Value == null)
-                dynamicObj.AddPropertyNull<T>(prop.Name, prop.Name, description, category, isReadOnly, null);
-            else
-                if (prop.IsArray)
-                dynamicObj.AddProperty(prop.Name, (T[])prop.Value, description, category, isReadOnly);
-            else
-                dynamicObj.AddProperty(prop.Name, (T)prop.Value, description, category, isReadOnly);
+            get { return managementScope; }
         }
 
         public void Dispose()
         {
-            if (m_Class != null)
+            if (managementClass != null)
             {
-                m_Class.Dispose();
-                m_Class = null;
+                managementClass.Dispose();
+                managementClass = null;
             }
         }
 
         public bool ConnectToComputer()
         {
-            if (m_Namespace != null && m_Namespace.IsConnected)
+            if (managementScope != null && managementScope.IsConnected)
                 return true;
             string connectionString = MakeConnectionString();
             ConnectionOptions options = null;
@@ -81,11 +70,11 @@ namespace WMIViewer.Presenter
                 options = new ConnectionOptions();
 
                 // options.Impersonation = true;
-                m_Namespace = new ManagementScope(connectionString, options);
-                m_Namespace.Options.EnablePrivileges = true;
-                m_Namespace.Options.Impersonation = ImpersonationLevel.Impersonate;
-                m_Namespace.Connect();
-                if (m_Namespace.IsConnected)
+                managementScope = new ManagementScope(connectionString, options);
+                managementScope.Options.EnablePrivileges = true;
+                managementScope.Options.Impersonation = ImpersonationLevel.Impersonate;
+                managementScope.Connect();
+                if (managementScope.IsConnected)
                 {
                     return true;
                 }
@@ -107,7 +96,7 @@ namespace WMIViewer.Presenter
                             ok = form.ShowDialog() == DialogResult.OK;
                         if (ok)
                         {
-                            m_Namespace = null;
+                            managementScope = null;
                             options = new ConnectionOptions
                                 {
                                     Username = form.UserName, 
@@ -127,7 +116,8 @@ namespace WMIViewer.Presenter
                 else
                     ShowCommonConnectionError(ex);
             }
-            m_Namespace = null;
+
+            managementScope = null;
             return false;
         }
 
@@ -137,15 +127,16 @@ namespace WMIViewer.Presenter
             View.LV.Clear();
 
             var op = new ObjectGetOptions(null, TimeSpan.MaxValue, true);
-            using (var mc = new ManagementClass(m_Namespace, new ManagementPath(className), op))
+            using (var mc = new ManagementClass(managementScope, new ManagementPath(className), op))
             {
                 mc.Options.UseAmendedQualifiers = true;
-                m_Class = mc;
+                managementClass = mc;
             }
+
             if (!SetupColumns()) return;
 
             var query = new ObjectQuery("select * from " + className);
-            using (var searcher = new ManagementObjectSearcher(m_Namespace, query))
+            using (var searcher = new ManagementObjectSearcher(managementScope, query))
             {
                 try
                 {
@@ -159,19 +150,21 @@ namespace WMIViewer.Presenter
                         {
                             var prop = wmiObject.Properties[header.Text];
 
-                            var value = prop.Value == null ? NULL : prop.Value.ToString();
+                            var value = prop.Value == null ? NULL_TEXT : prop.Value.ToString();
                             if (prop.Name.Equals("Name"))
                             {
-                                string[] sList = value.Split('|');
-                                if (sList.Length > 0)
-                                    value = sList[0];
+                                string[] list = value.Split('|');
+                                if (list.Length > 0)
+                                    value = list[0];
                             }
+
                             if (index == 0)
                                 lvi.Text = value;
                             else
                                 lvi.SubItems.Add(value);
                             index++;
                         }
+
                         View.LV.Items.Add(lvi);
                     }
                 }
@@ -190,7 +183,7 @@ namespace WMIViewer.Presenter
             if (md == null) return;
             using (var form = new MethodForm(this))
             {
-                form.WmiClass = m_Class;
+                form.WmiClass = managementClass;
                 form.WmiObject = WmiObject;
                 form.WmiMethod = md;
                 form.PrepareForm();
@@ -199,16 +192,15 @@ namespace WMIViewer.Presenter
         }
 
         [Localizable(false)]
-        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public void BuildContextMenu(ToolStripItemCollection items)
         {
             if (items == null)
                 throw new ArgumentNullException(nameof(items));
             items.Clear();
-            if (m_Class == null) return;
+            if (managementClass == null) return;
             try
             {
-                foreach (MethodData md in m_Class.Methods)
+                foreach (MethodData md in managementClass.Methods)
                 {
                     var method = new MethodDataExt(md);
                     if (!method.HasQualifier("Implemented")) continue;
@@ -223,122 +215,6 @@ namespace WMIViewer.Presenter
             {
                 Debug.Print(ex.Message);
             }
-        }
-
-        [Localizable(false)]
-        internal object CreateDynamicObject()
-        {
-            var dynObj = new DynamicObject();
-            foreach (var prop in WmiObject.Properties)
-            {
-                // skip array of bytes
-                if (prop.Type == CimType.UInt8 && prop.IsArray)
-                    continue;
-
-                var classProp = WmiClass.Properties[prop.Name];
-                var info = new QualifiersInfo(classProp.Qualifiers);
-                if (info.IsCimKey) continue;
-                var category = prop.Type.ToString();
-                var description = info.Description;
-                var isReadOnly = info.IsReadOnly;
-                switch (prop.Type)
-                {
-                    // A signed 16-bit integer. This value maps to the System.Int16 type.
-                    case CimType.SInt16:
-                        DynObjAddProperty<short>(dynObj, prop, description, category, isReadOnly);
-                        break;
-                    
-                    // A signed 32-bit integer. This value maps to the System.Int32 type.
-                    case CimType.SInt32:
-                        DynObjAddProperty<int>(dynObj, prop, description, category, isReadOnly);
-                        break;
-                    
-                    // A floating-point 32-bit number. This value maps to the System.Single type.
-                    case CimType.Real32:
-                        DynObjAddProperty<float>(dynObj, prop, description, category, isReadOnly);
-                        break;
-                    
-                    // A floating point 64-bit number. This value maps to the System.Double type.
-                    case CimType.Real64:
-                        DynObjAddProperty<double>(dynObj, prop, description, category, isReadOnly);
-                        break;
-                    
-                    // A string. This value maps to the System.String type.
-                    case CimType.String:
-                        DynObjAddProperty<string>(dynObj, prop, description, category, isReadOnly);
-                        break;
-                    
-                    // A Boolean. This value maps to the System.Boolean type.
-                    case CimType.Boolean:
-                        DynObjAddProperty<bool>(dynObj, prop, description, category, isReadOnly);
-                        break;
-                    
-                    // An embedded object. Note that embedded objects differ from references in
-                    // that the embedded object does not have a path and its lifetime is identical
-                    // to the lifetime of the containing object. This value maps to the System.Object
-                    // type.
-                    case CimType.Object:
-                        DynObjAddProperty<object>(dynObj, prop, description, category, isReadOnly);
-                        break;
-                    
-                    // A signed 8-bit integer. This value maps to the System.SByte type.
-                    case CimType.SInt8:
-                        DynObjAddProperty<sbyte>(dynObj, prop, description, category, isReadOnly);
-                        break;
-                    
-                    // An unsigned 8-bit integer. This value maps to the System.Byte type.
-                    case CimType.UInt8:
-                        DynObjAddProperty<byte>(dynObj, prop, description, category, isReadOnly);
-                        break;
-                    
-                    // An unsigned 16-bit integer. This value maps to the System.UInt16 type.
-                    case CimType.UInt16:
-                        DynObjAddProperty<ushort>(dynObj, prop, description, category, isReadOnly);
-                        break;
-                    
-                    // An unsigned 32-bit integer. This value maps to the System.UInt32 type.
-                    case CimType.UInt32:
-                        DynObjAddProperty<uint>(dynObj, prop, description, category, isReadOnly);
-                        break;
-
-                    // A signed 64-bit integer. This value maps to the System.Int64 type.
-                    case CimType.SInt64:
-                        DynObjAddProperty<long>(dynObj, prop, description, category, isReadOnly);
-                        break;
-
-                    // An unsigned 64-bit integer. This value maps to the System.UInt64 type.
-                    case CimType.UInt64:
-                        DynObjAddProperty<ulong>(dynObj, prop, description, category, isReadOnly);
-                        break;
-
-                    // A date or time value, represented in a string in DMTF date/time format: yyyymmddHHMMSS.mmmmmmsUUU,
-                    // where yyyymmdd is the date in year/month/day; HHMMSS is the time in hours/minutes/seconds;
-                    // mmmmmm is the number of microseconds in 6 digits; and sUUU is a sign (+ or
-                    // -) and a 3-digit UTC offset. This value maps to the System.DateTime type.
-                    case CimType.DateTime:
-                        if (prop.Value == null)
-                            dynObj.AddPropertyNull<DateTime>(prop.Name, prop.Name, description, category, isReadOnly, null);
-                        else
-                            dynObj.AddProperty(prop.Name, WmiHelper.ToDateTime(prop.Value.ToString()), description, category, isReadOnly);
-                        break;
-
-                    // A reference to another object. This is represented by a string containing
-                    // the path to the referenced object. This value maps to the System.Int16 type.
-                    case CimType.Reference:
-                        DynObjAddProperty<short>(dynObj, prop, description, category, isReadOnly);
-                        break;
-
-                    // A 16-bit character. This value maps to the System.Char type.
-                    case CimType.Char16:
-                        DynObjAddProperty<char>(dynObj, prop, description, category, isReadOnly);
-                        break;
-                    default:
-                        string value = prop.Value == null ? null : prop.Value.ToString();
-                        dynObj.AddProperty(string.Format(CultureInfo.InvariantCulture, "{0} : {1}", prop.Name, prop.Type), value, description, "Unknown", isReadOnly);
-                        break;
-                }
-            }
-            return dynObj;
         }
 
         [Localizable(false)]
@@ -380,13 +256,14 @@ namespace WMIViewer.Presenter
             bool checkError = true;
             try
             {
-                foreach (var prop in m_Class.Properties)
+                foreach (var prop in managementClass.Properties)
                 {
                     if (prop.Name.Equals(WMI_NAME) || prop.Name.Equals(WMI_CAPTION))
                     {
                         View.LV.Columns.Insert(0, prop.Name);
                         continue;
                     }
+
                     if (prop.Name.Equals(WMI_DESCRIPTION)) continue;
                     if (prop.IsLocal) continue;
                     bool isCimKey = false;
@@ -396,16 +273,19 @@ namespace WMIViewer.Presenter
                             isCimKey = true;
                             break;
                         }
+
                     if (isCimKey || prop.IsArray || !prop.Type.Equals(CimType.String))
                         continue;
                     View.LV.Columns.Add(prop.Name);
                 }
+
                 checkError = false;
             }
             catch (ManagementException ex)
             {
                 Debug.Print(ex.Message);
             }
+
             return !checkError;
         }
     }

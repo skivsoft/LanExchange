@@ -29,6 +29,12 @@ namespace WMIViewer.UI
             set { ePassword.Text = value; }
         }
 
+        public static void ClearSavedPassword()
+        {
+            userName = string.Empty;
+            userPassword = string.Empty;
+        }
+
         public bool AutoLogOn()
         {
             if (!string.IsNullOrEmpty(userName))
@@ -52,7 +58,6 @@ namespace WMIViewer.UI
 
         private void WMIAuthForm_Load(object sender, EventArgs e)
         {
-
             picShield.Image = SystemIcons.Error.ToBitmap();
             bOK.NotifyDefault(true);
             ActiveControl = eUserName;
@@ -71,12 +76,6 @@ namespace WMIViewer.UI
 
             userName = UserName;
             userPassword = UserPassword;
-        }
-
-        public static void ClearSavedPassword()
-        {
-            userName = string.Empty;
-            userPassword = string.Empty;
         }
 
         private void WMIAuthForm_KeyDown(object sender, KeyEventArgs e)

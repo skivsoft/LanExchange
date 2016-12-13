@@ -4,6 +4,8 @@ using System.Globalization;
 using System.Management;
 using System.Reflection;
 using System.Windows.Forms;
+using WMIViewer.Builders;
+using WMIViewer.Extensions;
 using WMIViewer.Model;
 using WMIViewer.Presenter;
 using WMIViewer.Properties;
@@ -61,7 +63,7 @@ namespace WMIViewer.UI
             set
             {
                 currentWmiClass = value;
-                lDescription.Text = WmiClassList.Instance.GetClassDescription(presenter.Namespace, value);
+                lDescription.Text = WmiClassList.Instance.GetClassDescription(presenter.ManagementScope, value);
                 lClassName.Text = value;
                 presenter.EnumObjects(value);
                 presenter.BuildContextMenu(menuCommands.Items);
@@ -83,8 +85,7 @@ namespace WMIViewer.UI
 
         public void UpdateTitle()
         {
-            var description = WmiClassList.GetPropertyValue(
-                presenter.Namespace,
+            var description = presenter.ManagementScope.GetPropertyValue(
                 "Win32_OperatingSystem",
                 "Description");
             if (string.IsNullOrEmpty(description))
@@ -107,7 +108,6 @@ namespace WMIViewer.UI
                 CurrentWmiClass = menuItem.Text;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public void UpdateClassesMenu()
         {
             menuClasses.Items.Clear();
@@ -148,7 +148,10 @@ namespace WMIViewer.UI
             if (lvInstances.FocusedItem == null) return;
             presenter.WmiObject = (ManagementObject)lvInstances.FocusedItem.Tag;
             if (presenter.WmiObject == null) return;
-            PropGrid.SelectedObject = presenter.CreateDynamicObject();
+            PropGrid.SelectedObject = new DynamicObjectBuilder()
+                .SetClass(presenter.WmiClass)
+                .SetObject(presenter.WmiObject)
+                .Build();
         }
 
         [Localizable(false)]
@@ -281,5 +284,4 @@ namespace WMIViewer.UI
             }
         }
     }
-
 }

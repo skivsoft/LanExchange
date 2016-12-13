@@ -13,11 +13,11 @@ namespace WMIViewer.Model
     internal sealed class WmiClassList
     {
         private static WmiClassList wmiClassList;
-        private bool loaded;
         private readonly List<string> classes;
         private readonly List<string> readOnlyClasses;
         private readonly List<string> includeClasses;
         private readonly List<string> allClasses;
+        private bool loaded;
         private int propCount;
         private int methodCount;
         private ManagementScope namespaceScope;
@@ -32,12 +32,7 @@ namespace WMIViewer.Model
 
         public static WmiClassList Instance
         {
-            get
-            {
-                if (wmiClassList == null)
-                    wmiClassList = new WmiClassList();
-                return wmiClassList;
-            }
+            get { return wmiClassList ?? (wmiClassList = new WmiClassList()); }
         }
 
         public IList<string> Classes
@@ -82,6 +77,7 @@ namespace WMIViewer.Model
                 if (!ConnectToLocalMachine()) return string.Empty;
                 scope = namespaceScope;
             }
+
             var result = string.Empty;
             try
             {
@@ -104,8 +100,8 @@ namespace WMIViewer.Model
             {
                 Debug.Print(ex.Message);
             }
-            return result;
 
+            return result;
         }
 
         public string GetPropertyDescription(string className, string propName)
@@ -131,6 +127,7 @@ namespace WMIViewer.Model
             {
                 Debug.Print(ex.Message);
             }
+
             return result;
         }
 
@@ -160,6 +157,7 @@ namespace WMIViewer.Model
             {
                 Debug.Print(ex.Message);
             }
+
             return result;
         }
 
@@ -185,57 +183,8 @@ namespace WMIViewer.Model
             {
                 Debug.Print(ex.Message);
             }
+
             return result;
-        }
-
-        public static string GetPropertyValue(ManagementScope scope, string className, string propName)
-        {
-            if (scope == null)
-                throw new ArgumentNullException(nameof(scope));
-            var result = string.Empty;
-            try
-            {
-                scope.Connect();
-                var query = new ObjectQuery("SELECT * FROM " + className);
-                using (var searcher = new ManagementObjectSearcher(scope, query))
-                {
-                    foreach (ManagementObject queryObj in searcher.Get())
-                    {
-                        result = queryObj[propName].ToString();
-                        break;
-                    }
-                }
-
-            }
-            catch (ManagementException ex)
-            {
-                Debug.Print(ex.Message);
-            }
-            return result;
-        }
-
-        public static void SetPropertyValue(ManagementScope scope, string className, string propName, string value)
-        {
-            if (scope == null)
-                throw new ArgumentNullException(nameof(scope));
-            try
-            {
-                scope.Connect();
-                var query = new ObjectQuery("SELECT * FROM " + className);
-                using (var searcher = new ManagementObjectSearcher(scope, query))
-                {
-                    foreach (ManagementObject queryObj in searcher.Get())
-                    {
-                        queryObj[propName] = value;
-                        queryObj.Put();
-                        break;
-                    }
-                }
-            }
-            catch (ManagementException ex)
-            {
-                Debug.Print(ex.Message);
-            }
         }
 
         public void EnumLocalMachineClasses()
@@ -276,6 +225,7 @@ namespace WMIViewer.Model
                         readOnlyClasses.Add(className);
                 }
             }
+
             allClasses.Sort();
             classes.Sort();
             readOnlyClasses.Sort();
@@ -295,6 +245,7 @@ namespace WMIViewer.Model
             {
                 Debug.Print(ex.Message);
             }
+
             return namespaceScope.IsConnected;
         }
     }

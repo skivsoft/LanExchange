@@ -148,7 +148,7 @@ namespace WMIViewer.UI
             this.lvInstances.UseCompatibleStateImageBehavior = false;
             this.lvInstances.View = System.Windows.Forms.View.Details;
             this.lvInstances.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.LVCompsOnItemSelectionChanged);
-            this.lvInstances.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvInstances_KeyDown);
+            this.lvInstances.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LVInstances_KeyDown);
             // 
             // menuCommands
             // 
@@ -194,7 +194,7 @@ namespace WMIViewer.UI
             this.menuClasses.Name = "menuClasses";
             this.menuClasses.OwnerItem = this.lClassName;
             this.menuClasses.Size = new System.Drawing.Size(68, 26);
-            this.menuClasses.Opening += new System.ComponentModel.CancelEventHandler(this.menuClasses_Opening);
+            this.menuClasses.Opening += new System.ComponentModel.CancelEventHandler(this.MenuClasses_Opening);
             // 
             // wMIItemToolStripMenuItem
             // 

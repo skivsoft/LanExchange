@@ -33,11 +33,11 @@ namespace WMIViewer.Model
 
         public bool IsPerf { get; private set; }
 
-        public bool IsSupportsUpdate { get; private set; }
+        public bool IsSupportsUpdate { get; }
 
-        public bool IsSupportsCreate { get; private set; }
+        public bool IsSupportsCreate { get; }
 
-        public bool IsSupportsDelete { get; private set; }
+        public bool IsSupportsDelete { get; }
 
         public bool IsSupportsModify
         {
