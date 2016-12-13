@@ -82,16 +82,26 @@ namespace LanExchange.Application.Implementation
                         asyncQueue.RemoveFirst();
                     }
                     var result = column.Callback(item);
-                    //bool bFound = false;
-                    //IComparable found;
-                    //lock (column)
-                    //{
-                    //    bFound = column.Dict.TryGetValue(item, out found);
-                    //    if (!bFound)
-                    //        column.Dict.Add(item, result);
-                    //}
-                    //if (!bFound)
-                    //    DoDataReady(item);
+                    // bool bFound = false;
+
+                    // IComparable found;
+
+                    // lock (column)
+
+                    // {
+
+                    // bFound = column.Dict.TryGetValue(item, out found);
+
+                    // if (!bFound)
+
+                    // column.Dict.Add(item, result);
+
+                    // }
+
+                    // if (!bFound)
+
+                    // DoDataReady(item);
+
                     column.LazyDict.Add(item, result);
                     DoDataReady(item);
                 }

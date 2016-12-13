@@ -46,7 +46,7 @@ namespace LanExchange.Presentation.WinForms.Helpers
             foreach (var field in fields)
             if (field.FieldType.IsSubclassOf(typeof(Component)))
             {
-                var component = (Component) field.GetValue(instance);
+                var component = (Component)field.GetValue(instance);
                 fieldsMap.Add(component, field.Name);
             }
 

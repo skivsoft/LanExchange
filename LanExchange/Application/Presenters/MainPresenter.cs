@@ -125,13 +125,16 @@ namespace LanExchange.Application.Presenters
                     new MenuSeparator(),
                     new MenuElement(Resources.mPanelExit_Text, "Alt+F4", new ExitCommand(appView))
                 ),
+
                 new MenuGroup(Resources.mView_Text,
                     new MenuElement(Resources.mViewLarge_Text, NullCommand.Instance),
                     new MenuElement(Resources.mViewSmall_Text, NullCommand.Instance),
                     new MenuElement(Resources.mViewList_Text, NullCommand.Instance),
                     new MenuElement(Resources.mViewDetails_Text, NullCommand.Instance)
                 ),
+
                 BuildLanguageMenu(),
+
                 new MenuGroup(Resources.mHelp_Text,
                     new MenuElement(Resources.mHelpWeb_Text, NullCommand.Instance),
                     new MenuElement(Resources.mHelpBugs_Text, NullCommand.Instance),
@@ -164,10 +167,10 @@ namespace LanExchange.Application.Presenters
             foreach (var pair in languagesDict)
             {
                 var menuItem = new MenuElement(pair.Value, NullCommand.Instance);
-                //menuItem.RadioCheck = true;
-                //menuItem.Tag = pair.Key;
-                //menuItem.Click += MenuItemOnClick;
-                //mLanguage.MenuItems.Add(menuItem);
+                // menuItem.RadioCheck = true;
+                // menuItem.Tag = pair.Key;
+                // menuItem.Click += MenuItemOnClick;
+                // mLanguage.MenuItems.Add(menuItem);
                 menuItems.Add(menuItem);
             }
 
@@ -176,10 +179,10 @@ namespace LanExchange.Application.Presenters
 
         public void SetupMenuTags()
         {
-            //mViewLarge.Tag = PanelViewMode.LargeIcon;
-            //mViewSmall.Tag = PanelViewMode.SmallIcon;
-            //mViewList.Tag = PanelViewMode.List;
-            //mViewDetails.Tag = PanelViewMode.Details;
+            // mViewLarge.Tag = PanelViewMode.LargeIcon;
+            // mViewSmall.Tag = PanelViewMode.SmallIcon;
+            // mViewList.Tag = PanelViewMode.List;
+            // mViewDetails.Tag = PanelViewMode.Details;
         }
 
         private void SetupStatusPanel()
@@ -191,21 +194,21 @@ namespace LanExchange.Application.Presenters
 
         private void SetupPages()
         {
-            //Pages = (PagesView)viewFactory.GetPagesView();
-            //Pages.Dock = DockStyle.Fill;
-            //Controls.Add(Pages);
-            //Pages.BringToFront();
+            // Pages = (PagesView)viewFactory.GetPagesView();
+            // Pages.Dock = DockStyle.Fill;
+            // Controls.Add(Pages);
+            // Pages.BringToFront();
 
             //// setup images
-            //imageManager.SetImagesTo(Pages.Pages);
+            // imageManager.SetImagesTo(Pages.Pages);
             //// load saved pages from config
-            //Pages.SetupContextMenu();
+            // Pages.SetupContextMenu();
         }
 
         [Localizable(false)]
         public void SetupForm()
         {
-            //App.MainPages.View.SetupContextMenu();
+            // App.MainPages.View.SetupContextMenu();
             pagesPresenter.PanelViewFocusedItemChanged += Pages_PanelViewFocusedItemChanged;
             // set mainform bounds
             var rect = SettingsGetBounds();
@@ -220,7 +223,7 @@ namespace LanExchange.Application.Presenters
 
         public void OnDataReady(object sender, DataReadyArgs args)
         {
-            //View.SafeInvoke(new WaitCallback(MainForm_RefreshItem), args.Item);
+            // View.SafeInvoke(new WaitCallback(MainForm_RefreshItem), args.Item);
         }
 
         private void MainForm_RefreshItem(object item)
@@ -228,10 +231,10 @@ namespace LanExchange.Application.Presenters
             var pv = viewFactory.GetPagesView().ActivePanelView;
             if (pv != null)
             {
-                //TODO hide model
-                //var index = pv.Presenter.Objects.IndexOf(item as PanelItemBase);
-                //if (index >= 0)
-                //    pv.RedrawItem(index);
+                // TODO hide model
+                // var index = pv.Presenter.Objects.IndexOf(item as PanelItemBase);
+                // if (index >= 0)
+                // pv.RedrawItem(index);
             }
         }
 
@@ -245,17 +248,17 @@ namespace LanExchange.Application.Presenters
             // get focused item from current PanelView
             var pv = sender as IPanelView;
             if (pv == null) return;
-            //TODO hide model
-            //var panelItem = pv.Presenter.GetFocusedPanelItem(true);
+            // TODO hide model
+            // var panelItem = pv.Presenter.GetFocusedPanelItem(true);
             //// check if parent item more informative than current panel item
-            //while (panelItem != null)
-            //{
-            //    if (panelItem.Parent is PanelItemRootBase) 
-            //        break;
-            //    if (panelItem.Parent != null && (panelItem.Parent.Parent is PanelItemRootBase))
-            //        break;
-            //    panelItem = panelItem.Parent;
-            //}
+            // while (panelItem != null)
+            // {
+            // if (panelItem.Parent is PanelItemRootBase) 
+            // break;
+            // if (panelItem.Parent != null && (panelItem.Parent.Parent is PanelItemRootBase))
+            // break;
+            // panelItem = panelItem.Parent;
+            // }
         }
 
 
@@ -284,7 +287,7 @@ namespace LanExchange.Application.Presenters
 
         public void DoPagesReRead()
         {
-            //commandManager.ExecuteCommand<PagesReReadCommand>();
+            // commandManager.ExecuteCommand<PagesReReadCommand>();
         }
 
         private void GlobalTranslateColumns()

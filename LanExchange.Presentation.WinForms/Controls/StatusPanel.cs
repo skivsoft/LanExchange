@@ -62,7 +62,7 @@ namespace LanExchange.Presentation.WinForms.Controls
 
         public void SetImageList(object imageList)
         {
-            Status.ImageList = (ImageList) imageList;
+            Status.ImageList = (ImageList)imageList;
         }
     }
 }

@@ -18,7 +18,7 @@ namespace LanExchange
 
         public object GetService(Type serviceType)
         {
-            return ((IServiceProvider) container).GetService(serviceType);
+            return ((IServiceProvider)container).GetService(serviceType);
         }
 
         public IContainerWrapper RegisterTransient<TService, TImplementation>() 

@@ -22,7 +22,7 @@ namespace LanExchange.Plugin.Translit
         private string TR(char ch)
         {
             var index = abc.IndexOf(ch);
-            return index == -1 || index > result.Length-1 ? ch.ToString(CultureInfo.InvariantCulture) : result[index];
+            return index == -1 || index > result.Length - 1 ? ch.ToString(CultureInfo.InvariantCulture) : result[index];
         }
 
         public string Transliterate(string text)

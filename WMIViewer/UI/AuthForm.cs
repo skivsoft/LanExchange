@@ -60,7 +60,7 @@ namespace WMIViewer.UI
             UserPassword = userPassword;
         }
 
-        private void bOK_Click(object sender, EventArgs e)
+        private void ButtonOK_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(eUserName.Text.Trim()))
             {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
-using System.Windows.Forms;
 using System.Reflection;
+using System.Windows.Forms;
 using WMIViewer.Model;
 using WMIViewer.Presenter;
 using WMIViewer.UI;

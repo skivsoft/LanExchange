@@ -253,7 +253,7 @@ namespace WMIViewer.Model
                     var className = wmiClass["__CLASS"].ToString();
                     if (!className.StartsWith("Win32_", StringComparison.Ordinal)) continue;
 
-                    // skip classes without qualifiers (ex.: Win32_Perf*)
+                    // skip classes without qualifiers(ex.: Win32_Perf*)
                     if (wmiClass.Qualifiers.Count == 0) continue;
 
                     // if (m_ExcludeClasses.Contains(ClassName)) continue;

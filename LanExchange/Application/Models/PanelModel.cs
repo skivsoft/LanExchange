@@ -88,8 +88,8 @@ namespace LanExchange.Application.Models
 
         public void AsyncRetrieveData(bool clearFilter)
         {
-            //panelUpdater.Stop();
-            //panelUpdater.Start(this, clearFilter);
+            // panelUpdater.Stop();
+            // panelUpdater.Start(this, clearFilter);
         }
 
         public string DataType { get; set; }

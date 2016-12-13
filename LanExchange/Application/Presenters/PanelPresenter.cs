@@ -61,32 +61,32 @@ namespace LanExchange.Application.Presenters
         public void UpdateItemsAndStatus()
         {
             // TODO hide model
-            //if (objects == null) return;
+            // if (objects == null) return;
             //// refresh only for current page
-            //var panelModel = pagesPresenter.GetItem(pagesPresenter.SelectedIndex);
-            //if (panelModel == null || !objects.Equals(panelModel)) 
-            //    return;
-            //// get number of visible items (filtered) and number of total items
-            //var showCount = objects.FilterCount;
-            //var totalCount = objects.Count;
-            //if (objects.HasBackItem)
-            //{
-            //    showCount--;
-            //    totalCount--;
-            //}
-            //if (showCount != totalCount)
-            //    mainView.ShowStatusText(translationService.PluralForm(Resources.PanelPresenter_Items2, totalCount), showCount, totalCount);
-            //else
-            //    mainView.ShowStatusText(Resources.PanelPresenter_Items1, showCount);
-            //SetupColumns();
-            //View.SetVirtualListSize(objects.FilterCount);
-            //if (objects.FilterCount > 0)
-            //{
-            //    var index = Objects.IndexOf(panelModel.FocusedItem);
-            //    View.FocusedItemIndex = index;
-            //}
-            //if (View.Filter != null)
-            //    View.Filter.UpdateFromModel(Objects);
+            // var panelModel = pagesPresenter.GetItem(pagesPresenter.SelectedIndex);
+            // if (panelModel == null || !objects.Equals(panelModel)) 
+            // return;
+            //// get number of visible items(filtered) and number of total items
+            // var showCount = objects.FilterCount;
+            // var totalCount = objects.Count;
+            // if (objects.HasBackItem)
+            // {
+            // showCount--;
+            // totalCount--;
+            // }
+            // if (showCount != totalCount)
+            // mainView.ShowStatusText(translationService.PluralForm(Resources.PanelPresenter_Items2, totalCount), showCount, totalCount);
+            // else
+            // mainView.ShowStatusText(Resources.PanelPresenter_Items1, showCount);
+            // SetupColumns();
+            // View.SetVirtualListSize(objects.FilterCount);
+            // if (objects.FilterCount > 0)
+            // {
+            // var index = Objects.IndexOf(panelModel.FocusedItem);
+            // View.FocusedItemIndex = index;
+            // }
+            // if (View.Filter != null)
+            // View.Filter.UpdateFromModel(Objects);
         }
 
         private void CurrentPath_Changed(object sender, EventArgs e)
@@ -106,8 +106,8 @@ namespace LanExchange.Application.Presenters
                 if (objects != null)
                     objects.CurrentPath.Changed += CurrentPath_Changed;
                 // TODO hide model using events
-                //if (View.Filter != null)
-                //    View.Filter.Presenter.SetModel(value);
+                // if (View.Filter != null)
+                // View.Filter.Presenter.SetModel(value);
             }
         }
 
@@ -115,10 +115,10 @@ namespace LanExchange.Application.Presenters
         {
             return null;
             // TODO hide model
-            //var panelItem = View.FocusedItem;
-            //if (canReturnParent && panelItem is PanelItemDoubleDot)
-            //    panelItem = panelItem.Parent;
-            //return panelItem;
+            // var panelItem = View.FocusedItem;
+            // if (canReturnParent && panelItem is PanelItemDoubleDot)
+            // panelItem = panelItem.Parent;
+            // return panelItem;
         }
 
         public bool CommandLevelDown()
@@ -189,34 +189,34 @@ namespace LanExchange.Application.Presenters
         // TODO Column reorder
         public bool ReorderColumns(int oldIndex, int newIndex)
         {
-            //var result = AppPresenter.PanelColumns.ReorderColumns(m_Objects.DataType, oldIndex, newIndex);
-            //if (result)
-            //{
-            //    if (m_Objects.Comparer.ColumnIndex == oldIndex)
-            //        m_Objects.Comparer.ColumnIndex = newIndex;
-            //    else if (m_Objects.Comparer.ColumnIndex == newIndex)
-            //        m_Objects.Comparer.ColumnIndex = newIndex + 1;
-            //    m_View.Refresh();
-            //}
-            //return result;
+            // var result = AppPresenter.PanelColumns.ReorderColumns(m_Objects.DataType, oldIndex, newIndex);
+            // if (result)
+            // {
+            // if (m_Objects.Comparer.ColumnIndex == oldIndex)
+            // m_Objects.Comparer.ColumnIndex = newIndex;
+            // else if (m_Objects.Comparer.ColumnIndex == newIndex)
+            // m_Objects.Comparer.ColumnIndex = newIndex + 1;
+            // m_View.Refresh();
+            // }
+            // return result;
             return false;
         }
 
         public void ColumnWidthChanged(int index, int newWidth)
         {
             // TODO need change internal column width but not always
-            //var columns = AppPresenter.PanelColumns.GetColumns(m_Objects.DataType);
-            //columns[index].Width = newWidth;
+            // var columns = AppPresenter.PanelColumns.GetColumns(m_Objects.DataType);
+            // columns[index].Width = newWidth;
         }
 
         public void ColumnRightClick(int columnIndex)
         {
             // TODO hide model
-            //if (objects.DataType != null)
-            //{
-            //    var columns = panelColumns.GetColumns(objects.DataType);
-            //    View.ShowHeaderMenu(columns);
-            //}
+            // if (objects.DataType != null)
+            // {
+            // var columns = panelColumns.GetColumns(objects.DataType);
+            // View.ShowHeaderMenu(columns);
+            // }
         }
 
         public void ShowHideColumnClick(int columnIndex)

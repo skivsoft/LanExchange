@@ -130,9 +130,10 @@ namespace LanExchange.Plugin.Network
         [Localizable(false)]
         public override string ToString()
         {
-            //return string.Format("{0}.{1}.{2}.{3}", platform_id, ver_major, ver_minor, type);
+            // return string.Format("{0}.{1}.{2}.{3}", platform_id, ver_major, ver_minor, type);
+
             bool bServer = IsServer();
-            var platform = (SV_101_PLATFORM) platformId;
+            var platform = (SV_101_PLATFORM)platformId;
             // OS2 same as NT
             if (platform == SV_101_PLATFORM.PLATFORM_ID_OS2)
                 platform = SV_101_PLATFORM.PLATFORM_ID_NT;
@@ -199,9 +200,13 @@ namespace LanExchange.Plugin.Network
             }
         }
 
-        //public override int GetHashCode()
-        //{
-        //   return (int)m_PlatformID ^ (int)m_Major ^ (int)m_Minor ^ (int)m_Type;
-        //}
+        // public override int GetHashCode()
+
+        // {
+
+        // return (int)m_PlatformID ^ (int)m_Major ^ (int)m_Minor ^ (int)m_Type;
+
+        // }
+
     }
 }

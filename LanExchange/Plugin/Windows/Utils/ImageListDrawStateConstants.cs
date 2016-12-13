@@ -19,12 +19,14 @@ namespace LanExchange.Plugin.Windows.Utils
         /// with a given color around the edges. (Note: does not appear to be
         /// implemented)
         /// </summary>
-        ILS_GLOW = (0x00000001), //The color for the glow effect is passed to the IImageList::Draw method in the crEffect member of IMAGELISTDRAWPARAMS. 
+        ILS_GLOW = (0x00000001), // The color for the glow effect is passed to the IImageList::Draw method in the crEffect member of IMAGELISTDRAWPARAMS. 
+
         /// <summary>
         /// Adds a drop shadow effect to the icon. (Note: does not appear to be
         /// implemented)
         /// </summary>
-        ILS_SHADOW = (0x00000002), //The color for the drop shadow effect is passed to the IImageList::Draw method in the crEffect member of IMAGELISTDRAWPARAMS. 
+        ILS_SHADOW = (0x00000002), // The color for the drop shadow effect is passed to the IImageList::Draw method in the crEffect member of IMAGELISTDRAWPARAMS. 
+
         /// <summary>
         /// Saturates the icon by increasing each color component 
         /// of the RGB triplet for each pixel in the icon. (Note: only ever appears
@@ -36,6 +38,7 @@ namespace LanExchange.Plugin.Windows.Utils
         /// level of an icon, according to the value of its alpha channel. 
         /// (Note: does not appear to be implemented).
         /// </summary>
-        ILS_ALPHA = (0x00000008) //The value of the alpha channel is indicated by the frame member in the IMAGELISTDRAWPARAMS method. The alpha channel can be from 0 to 255, with 0 being completely transparent, and 255 being completely opaque. 
+        ILS_ALPHA = (0x00000008) // The value of the alpha channel is indicated by the frame member in the IMAGELISTDRAWPARAMS method. The alpha channel can be from 0 to 255, with 0 being completely transparent, and 255 being completely opaque. 
+
     }
 }

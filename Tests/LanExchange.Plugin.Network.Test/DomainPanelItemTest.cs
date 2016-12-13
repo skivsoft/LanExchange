@@ -45,7 +45,8 @@ namespace LanExchange.Plugin.Network
         [Test]
         public void TestName()
         {
-            //Assert.IsTrue(m_Domain.IsCacheable);
+            // Assert.IsTrue(m_Domain.IsCacheable);
+
             m_Domain.Name = "DOMAIN1";
             Assert.AreEqual("DOMAIN1", m_Domain.Name);
         }
@@ -53,8 +54,9 @@ namespace LanExchange.Plugin.Network
         [Test]
         public void TestSerialization()
         {
-            var extraTypes = new[] {typeof (DomainPanelItem)};
-            var ser = new XmlSerializer(typeof (PanelItemBase), extraTypes);
+            var extraTypes = new[] {typeof(DomainPanelItem)};
+
+           var ser = new XmlSerializer(typeof(PanelItemBase), extraTypes);
             using (var sw = new StringWriter())
             {
                 ser.Serialize(sw, m_Domain);

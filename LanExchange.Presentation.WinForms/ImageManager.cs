@@ -102,7 +102,7 @@ namespace LanExchange.Presentation.WinForms
                 RegisterDisabledImage(PanelImageNames.FOLDER + PanelImageNames.HiddenPostfix, icon1, icon2);
         }
 
-        private void RegisterImageWithOtherColor(string imageName, Icon icon1, Icon icon2 , int shift)
+        private void RegisterImageWithOtherColor(string imageName, Icon icon1, Icon icon2, int shift)
         {
             var bitmap1 = BitmapUtils.MadeNewBitmap(icon1.ToBitmap(), 72 * shift);
             var bitmap2 = BitmapUtils.MadeNewBitmap(icon2.ToBitmap(), 72 * shift);

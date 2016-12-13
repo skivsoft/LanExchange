@@ -10,27 +10,34 @@ namespace LanExchange.Plugin.Windows.Utils
 {
     /// <summary>
     /// "Stand-alone" shell context menu
-    /// 
-    /// It isn't really debugged but is mostly working.
+    /// /// It isn't really debugged but is mostly working.
+
     /// Create an instance and call ShowContextMenu with a list of FileInfo for the files.
     /// Limitation is that it only handles files in the same directory but it can be fixed
     /// by changing the way files are translated into PIDLs.
-    /// 
-    /// Based on FileBrowser in C# from CodeProject
-    /// http://www.codeproject.com/useritems/FileBrowser.asp
-    /// 
-    /// Hooking class taken from MSDN Magazine Cutting Edge column
-    /// http://msdn.microsoft.com/msdnmag/issues/02/10/CuttingEdge/
-    /// 
-    /// Andreas Johansson
+    /// /// Based on FileBrowser in C# from CodeProject
+
+    /// http:// www.codeproject.com/useritems/FileBrowser.asp
+
+    /// /// Hooking class taken from MSDN Magazine Cutting Edge column
+
+    /// http:// msdn.microsoft.com/msdnmag/issues/02/10/CuttingEdge/
+
+    /// /// Andreas Johansson
+
     /// afjohansson@hotmail.com
-    /// http://afjohansson.spaces.live.com
+    /// http:// afjohansson.spaces.live.com
+
     /// </summary>
     /// <example>
-    ///    ShellContextMenu scm = new ShellContextMenu();
-    ///    FileInfo[] files = new FileInfo[1];
-    ///    files[0] = new FileInfo(@"c:\windows\notepad.exe");
-    ///    scm.ShowContextMenu(this.Handle, files, Cursor.Position);
+    /// ShellContextMenu scm = new ShellContextMenu();
+
+    /// FileInfo[] files = new FileInfo[1];
+
+    /// files[0] = new FileInfo(@"c:\windows\notepad.exe");
+
+    /// scm.ShowContextMenu(this.Handle, files, Cursor.Position);
+
     /// </example>
     [Localizable(false)]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -167,7 +174,7 @@ namespace LanExchange.Plugin.Windows.Utils
         /// Gets the parent folder
         /// </summary>
         /// <param name="folderName">Folder path</param>
-        /// <returns>IShellFolder for the folder (relative from the desktop)</returns>
+        /// <returns>IShellFolder for the folder(relative from the desktop)</returns>
         private IShellFolder GetParentFolder(string folderName)
         {
             if (null == _oParentFolder)
@@ -257,7 +264,7 @@ namespace LanExchange.Plugin.Windows.Utils
         /// <summary>
         /// Free the PIDLs
         /// </summary>
-        /// <param name="arrPIDL">Array of PIDLs (IntPtr)</param>
+        /// <param name="arrPIDL">Array of PIDLs(IntPtr)</param>
         protected void FreePIDL(IntPtr[] arrPIDL)
         {
             if (null != arrPIDL)
@@ -275,60 +282,107 @@ namespace LanExchange.Plugin.Windows.Utils
         #endregion
 
         #region InvokeContextMenuDefault
-        //private void InvokeContextMenuDefault(FileInfo[] arrayOfFileInfo)
-        //{
-        //    // Release all resources first.
-        //    ReleaseAll();
+        // private void InvokeContextMenuDefault(FileInfo[] arrayOfFileInfo)
 
-        //    IntPtr pMenu = IntPtr.Zero;
+        // {
 
-        //    try
-        //    {
-        //        _arrPIDLs = GetPIDL(arrayOfFileInfo);
-        //        if (null == _arrPIDLs)
-        //        {
-        //            ReleaseAll();
-        //            return;
-        //        }
+        // // Release all resources first.
 
-        //        if (false == GetContextMenuInterfaces(_oParentFolder, _arrPIDLs))
-        //        {
-        //            ReleaseAll();
-        //            return;
-        //        }
+        // ReleaseAll();
 
-        //        pMenu = CreatePopupMenu();
 
-        //        int nResult = _oContextMenu.QueryContextMenu(
-        //            pMenu,
-        //            0,
-        //            CMD_FIRST,
-        //            CMD_LAST,
-        //            CMF.DEFAULTONLY |
-        //            ((Control.ModifierKeys & Keys.Shift) != 0 ? CMF.EXTENDEDVERBS : 0));
+        // IntPtr pMenu = IntPtr.Zero;
 
-        //        uint nDefaultCmd = (uint)GetMenuDefaultItem(pMenu, false, 0);
-        //        if (nDefaultCmd >= CMD_FIRST)
-        //        {
-        //            InvokeCommand(_oContextMenu, nDefaultCmd, arrayOfFileInfo[0].DirectoryName, Control.MousePosition);
-        //        }
 
-        //        DestroyMenu(pMenu);
-        //        pMenu = IntPtr.Zero;
-        //    }
-        //    catch
-        //    {
-        //        throw;
-        //    }
-        //    finally
-        //    {
-        //        if (pMenu != IntPtr.Zero)
-        //        {
-        //            DestroyMenu(pMenu);
-        //        }
-        //        ReleaseAll();
-        //    }
-        //}
+        // try
+
+        // {
+
+        // _arrPIDLs = GetPIDL(arrayOfFileInfo);
+
+        // if (null == _arrPIDLs)
+
+        // {
+
+        // ReleaseAll();
+
+        // return;
+
+        // }
+
+
+        // if (false == GetContextMenuInterfaces(_oParentFolder, _arrPIDLs))
+
+        // {
+
+        // ReleaseAll();
+
+        // return;
+
+        // }
+
+
+        // pMenu = CreatePopupMenu();
+
+
+        // int nResult = _oContextMenu.QueryContextMenu(
+
+        // pMenu,
+
+        // 0,
+
+        // CMD_FIRST,
+
+        // CMD_LAST,
+
+        // CMF.DEFAULTONLY |
+
+        // ((Control.ModifierKeys & Keys.Shift) != 0 ? CMF.EXTENDEDVERBS : 0));
+
+
+        // uint nDefaultCmd = (uint)GetMenuDefaultItem(pMenu, false, 0);
+
+        // if (nDefaultCmd >= CMD_FIRST)
+
+        // {
+
+        // InvokeCommand(_oContextMenu, nDefaultCmd, arrayOfFileInfo[0].DirectoryName, Control.MousePosition);
+
+        // }
+
+
+        // DestroyMenu(pMenu);
+
+        // pMenu = IntPtr.Zero;
+
+        // }
+
+        // catch
+
+        // {
+
+        // throw;
+
+        // }
+
+        // finally
+
+        // {
+
+        // if (pMenu != IntPtr.Zero)
+
+        // {
+
+        // DestroyMenu(pMenu);
+
+        // }
+
+        // ReleaseAll();
+
+        // }
+
+        // }
+
         #endregion
 
         #region ShowContextMenu()
@@ -349,7 +403,8 @@ namespace LanExchange.Plugin.Windows.Utils
 
             try
             {
-                //Application.AddMessageFilter(this);
+                // Application.AddMessageFilter(this);
+
 
                 _arrPIDLs = GetPIDL(arrFileInfo);
                 if (null == _arrPIDLs)
@@ -428,7 +483,8 @@ namespace LanExchange.Plugin.Windows.Utils
                 IntPtr tempPidl;
                 ShellAPI.SHGetSpecialFolderLocation(IntPtr.Zero, csidl, out tempPidl);
                 _arrPIDLs = new[] { tempPidl };
-                _oParentFolder = GetDesktopFolder();
+
+               _oParentFolder = GetDesktopFolder();
 
                 if (false == GetContextMenuInterfaces(_oParentFolder, _arrPIDLs))
                 {
@@ -487,7 +543,7 @@ namespace LanExchange.Plugin.Windows.Utils
             var cwp = (CWPSTRUCT)Marshal.PtrToStructure(e.LParam, typeof(CWPSTRUCT));
             
             if (_oContextMenu2 != null &&
-                (cwp.message == (int)WM.INITMENUPOPUP ||
+                (cwp.message == (int) WM.INITMENUPOPUP ||
                  cwp.message == (int)WM.MEASUREITEM ||
                  cwp.message == (int)WM.DRAWITEM))
             {
@@ -497,7 +553,7 @@ namespace LanExchange.Plugin.Windows.Utils
                 }
             }
 
-            if (_oContextMenu3 != null && cwp.message == (int)WM.MENUCHAR)
+            if (_oContextMenu3 != null && cwp.message == (int) WM.MENUCHAR)
             {
                 if (_oContextMenu3.HandleMenuMsg2((uint)cwp.message, cwp.wparam, cwp.lparam, IntPtr.Zero) == S_OK)
                 {
@@ -551,17 +607,19 @@ namespace LanExchange.Plugin.Windows.Utils
         private static extern bool DestroyMenu(IntPtr hMenu);
 
         // Determines the default menu item on the specified menu
-        //[DllImport(ExternDll.User32, SetLastError = true, CharSet = CharSet.Auto)]
-        //private static extern int GetMenuDefaultItem(IntPtr hMenu, bool fByPos, uint gmdiFlags);
+        // [DllImport(ExternDll.User32, SetLastError = true, CharSet = CharSet.Auto)]
+
+        // private static extern int GetMenuDefaultItem(IntPtr hMenu, bool fByPos, uint gmdiFlags);
+
 
         #endregion
 
         #region Shell GUIDs
 
-        private static Guid IID_IShellFolder = new Guid("{000214E6-0000-0000-C000-000000000046}");
-        private static Guid IID_IContextMenu = new Guid("{000214e4-0000-0000-c000-000000000046}");
-        private static Guid IID_IContextMenu2 = new Guid("{000214f4-0000-0000-c000-000000000046}");
-        private static Guid IID_IContextMenu3 = new Guid("{bcfce0a0-ec17-11d0-8d10-00a0c90f2719}");
+        private static Guid IID_IShellFolder = new Guid("{000214E6 - 0000-0000-C000 - 000000000046}");
+        private static Guid IID_IContextMenu = new Guid("{000214e4 - 0000-0000-c000 - 000000000046}");
+        private static Guid IID_IContextMenu2 = new Guid("{000214f4 - 0000-0000-c000 - 000000000046}");
+        private static Guid IID_IContextMenu3 = new Guid("{bcfce0a0-ec17 - 11d0 - 8d10 - 00a0c90f2719}");
 
         #endregion
 
@@ -623,56 +681,88 @@ namespace LanExchange.Plugin.Windows.Utils
         private enum CMF : uint
         {
             NORMAL = 0x00000000,
-            //DEFAULTONLY = 0x00000001,
-            //VERBSONLY = 0x00000002,
+            // DEFAULTONLY = 0x00000001,
+
+            // VERBSONLY = 0x00000002,
+
             EXPLORE = 0x00000004,
-            //NOVERBS = 0x00000008,
-            //CANRENAME = 0x00000010,
-            //NODEFAULT = 0x00000020,
-            //INCLUDESTATIC = 0x00000040,
+            // NOVERBS = 0x00000008,
+
+            // CANRENAME = 0x00000010,
+
+            // NODEFAULT = 0x00000020,
+
+            // INCLUDESTATIC = 0x00000040,
+
             EXTENDEDVERBS = 0x00000100,
-            //RESERVED = 0xffff0000
+            // RESERVED = 0xffff0000
+
         }
 
         // Specifies how TrackPopupMenuEx positions the shortcut menu horizontally
         [Flags]
         private enum TPM : uint
         {
-            //LEFTBUTTON = 0x0000,
-            //RIGHTBUTTON = 0x0002,
-            //LEFTALIGN = 0x0000,
-            //CENTERALIGN = 0x0004,
-            //RIGHTALIGN = 0x0008,
-            //TOPALIGN = 0x0000,
-            //VCENTERALIGN = 0x0010,
-            //BOTTOMALIGN = 0x0020,
-            //HORIZONTAL = 0x0000,
-            //VERTICAL = 0x0040,
-            //NONOTIFY = 0x0080,
+            // LEFTBUTTON = 0x0000,
+
+            // RIGHTBUTTON = 0x0002,
+
+            // LEFTALIGN = 0x0000,
+
+            // CENTERALIGN = 0x0004,
+
+            // RIGHTALIGN = 0x0008,
+
+            // TOPALIGN = 0x0000,
+
+            // VCENTERALIGN = 0x0010,
+
+            // BOTTOMALIGN = 0x0020,
+
+            // HORIZONTAL = 0x0000,
+
+            // VERTICAL = 0x0040,
+
+            // NONOTIFY = 0x0080,
+
             RETURNCMD = 0x0100,
-            //RECURSE = 0x0001,
-            //HORPOSANIMATION = 0x0400,
-            //HORNEGANIMATION = 0x0800,
-            //VERPOSANIMATION = 0x1000,
-            //VERNEGANIMATION = 0x2000,
-            //NOANIMATION = 0x4000,
-            //LAYOUTRTL = 0x8000
+            // RECURSE = 0x0001,
+
+            // HORPOSANIMATION = 0x0400,
+
+            // HORNEGANIMATION = 0x0800,
+
+            // VERPOSANIMATION = 0x1000,
+
+            // VERNEGANIMATION = 0x2000,
+
+            // NOANIMATION = 0x4000,
+
+            // LAYOUTRTL = 0x8000
+
         }
 
         // Flags used with the CMINVOKECOMMANDINFOEX structure
         [Flags]
         private enum CMIC : uint
         {
-            //HOTKEY = 0x00000020,
-            //ICON = 0x00000010,
-            //FLAG_NO_UI = 0x00000400,
+            // HOTKEY = 0x00000020,
+
+            // ICON = 0x00000010,
+
+            // FLAG_NO_UI = 0x00000400,
+
             UNICODE = 0x00004000,
-            //NO_CONSOLE = 0x00008000,
-            //ASYNCOK = 0x00100000,
-            //NOZONECHECKS = 0x00800000,
+            // NO_CONSOLE = 0x00008000,
+
+            // ASYNCOK = 0x00100000,
+
+            // NOZONECHECKS = 0x00800000,
+
             SHIFT_DOWN = 0x10000000,
             CONTROL_DOWN = 0x40000000,
-            //FLAG_LOG_USAGE = 0x04000000,
+            // FLAG_LOG_USAGE = 0x04000000,
+
             PTINVOKE = 0x20000000
         }
 
@@ -680,234 +770,451 @@ namespace LanExchange.Plugin.Windows.Utils
         [Flags]
         private enum SW
         {
-            //HIDE = 0,
+            // HIDE = 0,
+
             SHOWNORMAL = 1,
-            //NORMAL = 1,
-            //SHOWMINIMIZED = 2,
-            //SHOWMAXIMIZED = 3,
-            //MAXIMIZE = 3,
-            //SHOWNOACTIVATE = 4,
-            //SHOW = 5,
-            //MINIMIZE = 6,
-            //SHOWMINNOACTIVE = 7,
-            //SHOWNA = 8,
-            //RESTORE = 9,
-            //SHOWDEFAULT = 10,
+            // NORMAL = 1,
+
+            // SHOWMINIMIZED = 2,
+
+            // SHOWMAXIMIZED = 3,
+
+            // MAXIMIZE = 3,
+
+            // SHOWNOACTIVATE = 4,
+
+            // SHOW = 5,
+
+            // MINIMIZE = 6,
+
+            // SHOWMINNOACTIVE = 7,
+
+            // SHOWNA = 8,
+
+            // RESTORE = 9,
+
+            // SHOWDEFAULT = 10,
+
         }
 
         // Window message flags
         [Flags]
         private enum WM : uint
         {
-            //ACTIVATE = 0x6,
-            //ACTIVATEAPP = 0x1C,
-            //AFXFIRST = 0x360,
-            //AFXLAST = 0x37F,
-            //APP = 0x8000,
-            //ASKCBFORMATNAME = 0x30C,
-            //CANCELJOURNAL = 0x4B,
-            //CANCELMODE = 0x1F,
-            //CAPTURECHANGED = 0x215,
-            //CHANGECBCHAIN = 0x30D,
-            //CHAR = 0x102,
-            //CHARTOITEM = 0x2F,
-            //CHILDACTIVATE = 0x22,
-            //CLEAR = 0x303,
-            //CLOSE = 0x10,
-            //COMMAND = 0x111,
-            //COMPACTING = 0x41,
-            //COMPAREITEM = 0x39,
-            //CONTEXTMENU = 0x7B,
-            //COPY = 0x301,
-            //COPYDATA = 0x4A,
-            //CREATE = 0x1,
-            //CTLCOLORBTN = 0x135,
-            //CTLCOLORDLG = 0x136,
-            //CTLCOLOREDIT = 0x133,
-            //CTLCOLORLISTBOX = 0x134,
-            //CTLCOLORMSGBOX = 0x132,
-            //CTLCOLORSCROLLBAR = 0x137,
-            //CTLCOLORSTATIC = 0x138,
-            //CUT = 0x300,
-            //DEADCHAR = 0x103,
-            //DELETEITEM = 0x2D,
-            //DESTROY = 0x2,
-            //DESTROYCLIPBOARD = 0x307,
-            //DEVICECHANGE = 0x219,
-            //DEVMODECHANGE = 0x1B,
-            //DISPLAYCHANGE = 0x7E,
-            //DRAWCLIPBOARD = 0x308,
+            // ACTIVATE = 0x6,
+
+            // ACTIVATEAPP = 0x1C,
+
+            // AFXFIRST = 0x360,
+
+            // AFXLAST = 0x37F,
+
+            // APP = 0x8000,
+
+            // ASKCBFORMATNAME = 0x30C,
+
+            // CANCELJOURNAL = 0x4B,
+
+            // CANCELMODE = 0x1F,
+
+            // CAPTURECHANGED = 0x215,
+
+            // CHANGECBCHAIN = 0x30D,
+
+            // CHAR = 0x102,
+
+            // CHARTOITEM = 0x2F,
+
+            // CHILDACTIVATE = 0x22,
+
+            // CLEAR = 0x303,
+
+            // CLOSE = 0x10,
+
+            // COMMAND = 0x111,
+
+            // COMPACTING = 0x41,
+
+            // COMPAREITEM = 0x39,
+
+            // CONTEXTMENU = 0x7B,
+
+            // COPY = 0x301,
+
+            // COPYDATA = 0x4A,
+
+            // CREATE = 0x1,
+
+            // CTLCOLORBTN = 0x135,
+
+            // CTLCOLORDLG = 0x136,
+
+            // CTLCOLOREDIT = 0x133,
+
+            // CTLCOLORLISTBOX = 0x134,
+
+            // CTLCOLORMSGBOX = 0x132,
+
+            // CTLCOLORSCROLLBAR = 0x137,
+
+            // CTLCOLORSTATIC = 0x138,
+
+            // CUT = 0x300,
+
+            // DEADCHAR = 0x103,
+
+            // DELETEITEM = 0x2D,
+
+            // DESTROY = 0x2,
+
+            // DESTROYCLIPBOARD = 0x307,
+
+            // DEVICECHANGE = 0x219,
+
+            // DEVMODECHANGE = 0x1B,
+
+            // DISPLAYCHANGE = 0x7E,
+
+            // DRAWCLIPBOARD = 0x308,
+
             DRAWITEM = 0x2B,
-            //DROPFILES = 0x233,
-            //ENABLE = 0xA,
-            //ENDSESSION = 0x16,
-            //ENTERIDLE = 0x121,
-            //ENTERMENULOOP = 0x211,
-            //ENTERSIZEMOVE = 0x231,
-            //ERASEBKGND = 0x14,
-            //EXITMENULOOP = 0x212,
-            //EXITSIZEMOVE = 0x232,
-            //FONTCHANGE = 0x1D,
-            //GETDLGCODE = 0x87,
-            //GETFONT = 0x31,
-            //GETHOTKEY = 0x33,
-            //GETICON = 0x7F,
-            //GETMINMAXINFO = 0x24,
-            //GETOBJECT = 0x3D,
-            //GETSYSMENU = 0x313,
-            //GETTEXT = 0xD,
-            //GETTEXTLENGTH = 0xE,
-            //HANDHELDFIRST = 0x358,
-            //HANDHELDLAST = 0x35F,
-            //HELP = 0x53,
-            //HOTKEY = 0x312,
-            //HSCROLL = 0x114,
-            //HSCROLLCLIPBOARD = 0x30E,
-            //ICONERASEBKGND = 0x27,
-            //IME_CHAR = 0x286,
-            //IME_COMPOSITION = 0x10F,
-            //IME_COMPOSITIONFULL = 0x284,
-            //IME_CONTROL = 0x283,
-            //IME_ENDCOMPOSITION = 0x10E,
-            //IME_KEYDOWN = 0x290,
-            //IME_KEYLAST = 0x10F,
-            //IME_KEYUP = 0x291,
-            //IME_NOTIFY = 0x282,
-            //IME_REQUEST = 0x288,
-            //IME_SELECT = 0x285,
-            //IME_SETCONTEXT = 0x281,
-            //IME_STARTCOMPOSITION = 0x10D,
-            //INITDIALOG = 0x110,
-            //INITMENU = 0x116,
+            // DROPFILES = 0x233,
+
+            // ENABLE = 0xA,
+
+            // ENDSESSION = 0x16,
+
+            // ENTERIDLE = 0x121,
+
+            // ENTERMENULOOP = 0x211,
+
+            // ENTERSIZEMOVE = 0x231,
+
+            // ERASEBKGND = 0x14,
+
+            // EXITMENULOOP = 0x212,
+
+            // EXITSIZEMOVE = 0x232,
+
+            // FONTCHANGE = 0x1D,
+
+            // GETDLGCODE = 0x87,
+
+            // GETFONT = 0x31,
+
+            // GETHOTKEY = 0x33,
+
+            // GETICON = 0x7F,
+
+            // GETMINMAXINFO = 0x24,
+
+            // GETOBJECT = 0x3D,
+
+            // GETSYSMENU = 0x313,
+
+            // GETTEXT = 0xD,
+
+            // GETTEXTLENGTH = 0xE,
+
+            // HANDHELDFIRST = 0x358,
+
+            // HANDHELDLAST = 0x35F,
+
+            // HELP = 0x53,
+
+            // HOTKEY = 0x312,
+
+            // HSCROLL = 0x114,
+
+            // HSCROLLCLIPBOARD = 0x30E,
+
+            // ICONERASEBKGND = 0x27,
+
+            // IME_CHAR = 0x286,
+
+            // IME_COMPOSITION = 0x10F,
+
+            // IME_COMPOSITIONFULL = 0x284,
+
+            // IME_CONTROL = 0x283,
+
+            // IME_ENDCOMPOSITION = 0x10E,
+
+            // IME_KEYDOWN = 0x290,
+
+            // IME_KEYLAST = 0x10F,
+
+            // IME_KEYUP = 0x291,
+
+            // IME_NOTIFY = 0x282,
+
+            // IME_REQUEST = 0x288,
+
+            // IME_SELECT = 0x285,
+
+            // IME_SETCONTEXT = 0x281,
+
+            // IME_STARTCOMPOSITION = 0x10D,
+
+            // INITDIALOG = 0x110,
+
+            // INITMENU = 0x116,
+
             INITMENUPOPUP = 0x117,
-            //INPUTLANGCHANGE = 0x51,
-            //INPUTLANGCHANGEREQUEST = 0x50,
-            //KEYDOWN = 0x100,
-            //KEYFIRST = 0x100,
-            //KEYLAST = 0x108,
-            //KEYUP = 0x101,
-            //KILLFOCUS = 0x8,
-            //LBUTTONDBLCLK = 0x203,
-            //LBUTTONDOWN = 0x201,
-            //LBUTTONUP = 0x202,
-            //LVM_GETEDITCONTROL = 0x1018,
-            //LVM_SETIMAGELIST = 0x1003,
-            //MBUTTONDBLCLK = 0x209,
-            //MBUTTONDOWN = 0x207,
-            //MBUTTONUP = 0x208,
-            //MDIACTIVATE = 0x222,
-            //MDICASCADE = 0x227,
-            //MDICREATE = 0x220,
-            //MDIDESTROY = 0x221,
-            //MDIGETACTIVE = 0x229,
-            //MDIICONARRANGE = 0x228,
-            //MDIMAXIMIZE = 0x225,
-            //MDINEXT = 0x224,
-            //MDIREFRESHMENU = 0x234,
-            //MDIRESTORE = 0x223,
-            //MDISETMENU = 0x230,
-            //MDITILE = 0x226,
+            // INPUTLANGCHANGE = 0x51,
+
+            // INPUTLANGCHANGEREQUEST = 0x50,
+
+            // KEYDOWN = 0x100,
+
+            // KEYFIRST = 0x100,
+
+            // KEYLAST = 0x108,
+
+            // KEYUP = 0x101,
+
+            // KILLFOCUS = 0x8,
+
+            // LBUTTONDBLCLK = 0x203,
+
+            // LBUTTONDOWN = 0x201,
+
+            // LBUTTONUP = 0x202,
+
+            // LVM_GETEDITCONTROL = 0x1018,
+
+            // LVM_SETIMAGELIST = 0x1003,
+
+            // MBUTTONDBLCLK = 0x209,
+
+            // MBUTTONDOWN = 0x207,
+
+            // MBUTTONUP = 0x208,
+
+            // MDIACTIVATE = 0x222,
+
+            // MDICASCADE = 0x227,
+
+            // MDICREATE = 0x220,
+
+            // MDIDESTROY = 0x221,
+
+            // MDIGETACTIVE = 0x229,
+
+            // MDIICONARRANGE = 0x228,
+
+            // MDIMAXIMIZE = 0x225,
+
+            // MDINEXT = 0x224,
+
+            // MDIREFRESHMENU = 0x234,
+
+            // MDIRESTORE = 0x223,
+
+            // MDISETMENU = 0x230,
+
+            // MDITILE = 0x226,
+
             MEASUREITEM = 0x2C,
             MENUCHAR = 0x120,
-            //MENUCOMMAND = 0x126,
-            //MENUDRAG = 0x123,
-            //MENUGETOBJECT = 0x124,
-            //MENURBUTTONUP = 0x122,
-            //MENUSELECT = 0x11F,
-            //MOUSEACTIVATE = 0x21,
-            //MOUSEFIRST = 0x200,
-            //MOUSEHOVER = 0x2A1,
-            //MOUSELAST = 0x20A,
-            //MOUSELEAVE = 0x2A3,
-            //MOUSEMOVE = 0x200,
-            //MOUSEWHEEL = 0x20A,
-            //MOVE = 0x3,
-            //MOVING = 0x216,
-            //NCACTIVATE = 0x86,
-            //NCCALCSIZE = 0x83,
-            //NCCREATE = 0x81,
-            //NCDESTROY = 0x82,
-            //NCHITTEST = 0x84,
-            //NCLBUTTONDBLCLK = 0xA3,
-            //NCLBUTTONDOWN = 0xA1,
-            //NCLBUTTONUP = 0xA2,
-            //NCMBUTTONDBLCLK = 0xA9,
-            //NCMBUTTONDOWN = 0xA7,
-            //NCMBUTTONUP = 0xA8,
-            //NCMOUSEHOVER = 0x2A0,
-            //NCMOUSELEAVE = 0x2A2,
-            //NCMOUSEMOVE = 0xA0,
-            //NCPAINT = 0x85,
-            //NCRBUTTONDBLCLK = 0xA6,
-            //NCRBUTTONDOWN = 0xA4,
-            //NCRBUTTONUP = 0xA5,
-            //NEXTDLGCTL = 0x28,
-            //NEXTMENU = 0x213,
-            //NOTIFY = 0x4E,
-            //NOTIFYFORMAT = 0x55,
-            //NULL = 0x0,
-            //PAINT = 0xF,
-            //PAINTCLIPBOARD = 0x309,
-            //PAINTICON = 0x26,
-            //PALETTECHANGED = 0x311,
-            //PALETTEISCHANGING = 0x310,
-            //PARENTNOTIFY = 0x210,
-            //PASTE = 0x302,
-            //PENWINFIRST = 0x380,
-            //PENWINLAST = 0x38F,
-            //POWER = 0x48,
-            //PRINT = 0x317,
-            //PRINTCLIENT = 0x318,
-            //QUERYDRAGICON = 0x37,
-            //QUERYENDSESSION = 0x11,
-            //QUERYNEWPALETTE = 0x30F,
-            //QUERYOPEN = 0x13,
-            //QUEUESYNC = 0x23,
-            //QUIT = 0x12,
-            //RBUTTONDBLCLK = 0x206,
-            //RBUTTONDOWN = 0x204,
-            //RBUTTONUP = 0x205,
-            //RENDERALLFORMATS = 0x306,
-            //RENDERFORMAT = 0x305,
-            //SETCURSOR = 0x20,
-            //SETFOCUS = 0x7,
-            //SETFONT = 0x30,
-            //SETHOTKEY = 0x32,
-            //SETICON = 0x80,
-            //SETMARGINS = 0xD3,
-            //SETREDRAW = 0xB,
-            //SETTEXT = 0xC,
-            //SETTINGCHANGE = 0x1A,
-            //SHOWWINDOW = 0x18,
-            //SIZE = 0x5,
-            //SIZECLIPBOARD = 0x30B,
-            //SIZING = 0x214,
-            //SPOOLERSTATUS = 0x2A,
-            //STYLECHANGED = 0x7D,
-            //STYLECHANGING = 0x7C,
-            //SYNCPAINT = 0x88,
-            //SYSCHAR = 0x106,
-            //SYSCOLORCHANGE = 0x15,
-            //SYSCOMMAND = 0x112,
-            //SYSDEADCHAR = 0x107,
-            //SYSKEYDOWN = 0x104,
-            //SYSKEYUP = 0x105,
-            //TCARD = 0x52,
-            //TIMECHANGE = 0x1E,
-            //TIMER = 0x113,
-            //TVM_GETEDITCONTROL = 0x110F,
-            //TVM_SETIMAGELIST = 0x1109,
-            //UNDO = 0x304,
-            //UNINITMENUPOPUP = 0x125,
-            //USER = 0x400,
-            //USERCHANGED = 0x54,
-            //VKEYTOITEM = 0x2E,
-            //VSCROLL = 0x115,
-            //VSCROLLCLIPBOARD = 0x30A,
-            //WINDOWPOSCHANGED = 0x47,
-            //WINDOWPOSCHANGING = 0x46,
-            //WININICHANGE = 0x1A,
-            //SH_NOTIFY = 0x0401
+            // MENUCOMMAND = 0x126,
+
+            // MENUDRAG = 0x123,
+
+            // MENUGETOBJECT = 0x124,
+
+            // MENURBUTTONUP = 0x122,
+
+            // MENUSELECT = 0x11F,
+
+            // MOUSEACTIVATE = 0x21,
+
+            // MOUSEFIRST = 0x200,
+
+            // MOUSEHOVER = 0x2A1,
+
+            // MOUSELAST = 0x20A,
+
+            // MOUSELEAVE = 0x2A3,
+
+            // MOUSEMOVE = 0x200,
+
+            // MOUSEWHEEL = 0x20A,
+
+            // MOVE = 0x3,
+
+            // MOVING = 0x216,
+
+            // NCACTIVATE = 0x86,
+
+            // NCCALCSIZE = 0x83,
+
+            // NCCREATE = 0x81,
+
+            // NCDESTROY = 0x82,
+
+            // NCHITTEST = 0x84,
+
+            // NCLBUTTONDBLCLK = 0xA3,
+
+            // NCLBUTTONDOWN = 0xA1,
+
+            // NCLBUTTONUP = 0xA2,
+
+            // NCMBUTTONDBLCLK = 0xA9,
+
+            // NCMBUTTONDOWN = 0xA7,
+
+            // NCMBUTTONUP = 0xA8,
+
+            // NCMOUSEHOVER = 0x2A0,
+
+            // NCMOUSELEAVE = 0x2A2,
+
+            // NCMOUSEMOVE = 0xA0,
+
+            // NCPAINT = 0x85,
+
+            // NCRBUTTONDBLCLK = 0xA6,
+
+            // NCRBUTTONDOWN = 0xA4,
+
+            // NCRBUTTONUP = 0xA5,
+
+            // NEXTDLGCTL = 0x28,
+
+            // NEXTMENU = 0x213,
+
+            // NOTIFY = 0x4E,
+
+            // NOTIFYFORMAT = 0x55,
+
+            // NULL = 0x0,
+
+            // PAINT = 0xF,
+
+            // PAINTCLIPBOARD = 0x309,
+
+            // PAINTICON = 0x26,
+
+            // PALETTECHANGED = 0x311,
+
+            // PALETTEISCHANGING = 0x310,
+
+            // PARENTNOTIFY = 0x210,
+
+            // PASTE = 0x302,
+
+            // PENWINFIRST = 0x380,
+
+            // PENWINLAST = 0x38F,
+
+            // POWER = 0x48,
+
+            // PRINT = 0x317,
+
+            // PRINTCLIENT = 0x318,
+
+            // QUERYDRAGICON = 0x37,
+
+            // QUERYENDSESSION = 0x11,
+
+            // QUERYNEWPALETTE = 0x30F,
+
+            // QUERYOPEN = 0x13,
+
+            // QUEUESYNC = 0x23,
+
+            // QUIT = 0x12,
+
+            // RBUTTONDBLCLK = 0x206,
+
+            // RBUTTONDOWN = 0x204,
+
+            // RBUTTONUP = 0x205,
+
+            // RENDERALLFORMATS = 0x306,
+
+            // RENDERFORMAT = 0x305,
+
+            // SETCURSOR = 0x20,
+
+            // SETFOCUS = 0x7,
+
+            // SETFONT = 0x30,
+
+            // SETHOTKEY = 0x32,
+
+            // SETICON = 0x80,
+
+            // SETMARGINS = 0xD3,
+
+            // SETREDRAW = 0xB,
+
+            // SETTEXT = 0xC,
+
+            // SETTINGCHANGE = 0x1A,
+
+            // SHOWWINDOW = 0x18,
+
+            // SIZE = 0x5,
+
+            // SIZECLIPBOARD = 0x30B,
+
+            // SIZING = 0x214,
+
+            // SPOOLERSTATUS = 0x2A,
+
+            // STYLECHANGED = 0x7D,
+
+            // STYLECHANGING = 0x7C,
+
+            // SYNCPAINT = 0x88,
+
+            // SYSCHAR = 0x106,
+
+            // SYSCOLORCHANGE = 0x15,
+
+            // SYSCOMMAND = 0x112,
+
+            // SYSDEADCHAR = 0x107,
+
+            // SYSKEYDOWN = 0x104,
+
+            // SYSKEYUP = 0x105,
+
+            // TCARD = 0x52,
+
+            // TIMECHANGE = 0x1E,
+
+            // TIMER = 0x113,
+
+            // TVM_GETEDITCONTROL = 0x110F,
+
+            // TVM_SETIMAGELIST = 0x1109,
+
+            // UNDO = 0x304,
+
+            // UNINITMENUPOPUP = 0x125,
+
+            // USER = 0x400,
+
+            // USERCHANGED = 0x54,
+
+            // VKEYTOITEM = 0x2E,
+
+            // VSCROLL = 0x115,
+
+            // VSCROLLCLIPBOARD = 0x30A,
+
+            // WINDOWPOSCHANGED = 0x47,
+
+            // WINDOWPOSCHANGING = 0x46,
+
+            // WININICHANGE = 0x1A,
+
+            // SH_NOTIFY = 0x0401
+
         }
 
         #endregion
@@ -959,14 +1266,14 @@ namespace LanExchange.Plugin.Windows.Utils
 
             // Determines the relative order of two file objects or folders, given their
             // item identifier lists. Return value: If this method is successful, the
-            // CODE field of the HRESULT contains one of the following values (the code
+            // CODE field of the HRESULT contains one of the following values(the code
             // can be retrived using the helper function GetHResultCode): Negative A
             // negative return value indicates that the first item should precede
-            // the second (pidl1 < pidl2). 
+            // the second(pidl1 < pidl2). 
 
             // Positive A positive return value indicates that the first item should
-            // follow the second (pidl1 > pidl2).  Zero A return value of zero
-            // indicates that the two items are the same (pidl1 = pidl2). 
+            // follow the second(pidl1 > pidl2).  Zero A return value of zero
+            // indicates that the two items are the same(pidl1 = pidl2). 
             [PreserveSig]
             Int32 CompareIDs(
                 IntPtr lParam,

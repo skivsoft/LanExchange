@@ -14,7 +14,8 @@ namespace LanExchange.Application.Interfaces.Extensions
                 SelectedIndex = pages.SelectedIndex,
                 Items = items
             };
-            return dto;
+
+           return dto;
         }
     }
 }

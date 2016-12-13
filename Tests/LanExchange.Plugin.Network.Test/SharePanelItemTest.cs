@@ -34,11 +34,11 @@ namespace LanExchange.Plugin.Network.Test
         [Test]
         public void TestImageName()
         {
-            m_Share.ShareType = (uint) SHARE_TYPE.STYPE_PRINTQ;
+            m_Share.ShareType = (uint)SHARE_TYPE.STYPE_PRINTQ;
             m_Share.Name = "HP";
             Assert.AreEqual(string.Empty, m_Share.ImageName);
-            m_Share.ShareType = (uint) SHARE_TYPE.STYPE_DEVICE;
-            Assert.AreEqual((uint) SHARE_TYPE.STYPE_DEVICE, m_Share.SHI.ShareType);
+            m_Share.ShareType = (uint)SHARE_TYPE.STYPE_DEVICE;
+            Assert.AreEqual((uint)SHARE_TYPE.STYPE_DEVICE, m_Share.SHI.ShareType);
             Assert.AreEqual(PanelImageNames.FOLDER, m_Share.ImageName);
             m_Share.Name = "C$";
             Assert.AreEqual(PanelImageNames.FOLDER + PanelImageNames.HiddenPostfix, m_Share.ImageName);

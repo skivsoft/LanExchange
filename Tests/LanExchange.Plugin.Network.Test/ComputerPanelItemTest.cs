@@ -16,7 +16,7 @@ namespace LanExchange.Plugin.Network
             var info = new ServerInfo();
             info.Name = "COMP01";
             info.Comment = "Hello world";
-            info.Version.PlatformId = (uint) SV_101_PLATFORM.PLATFORM_ID_NT;
+            info.Version.PlatformId = (uint)SV_101_PLATFORM.PLATFORM_ID_NT;
             info.Version.Major = 6;
             info.Version.Minor = 2;
             m_Comp = new ComputerPanelItem(null, info);
@@ -30,13 +30,16 @@ namespace LanExchange.Plugin.Network
 
         private ComputerPanelItem m_Comp;
 
-        //[Test]
+        // [Test]
+
         public void TestGetSchema()
         {
-            //Assert.IsNull(m_Comp.GetSchema());
+            // Assert.IsNull(m_Comp.GetSchema());
+
         }
 
-        //[Test]
+        // [Test]
+
         public void TestWriteXML()
         {
             m_Comp.SI.Name = "QQQ";
@@ -58,7 +61,8 @@ namespace LanExchange.Plugin.Network
             Assert.IsTrue(content.EndsWith(contentCheck));
         }
 
-        //[Test]
+        // [Test]
+
         public void TestReadXML1()
         {
             m_Comp.SI.Name = "QQQ";
@@ -81,17 +85,18 @@ namespace LanExchange.Plugin.Network
             tr.Close();
             // check deserialize result
             Assert.IsNotNull(result);
-            Assert.IsInstanceOf(typeof (ComputerPanelItem), result);
-            Assert.AreEqual("QQQ", ((ComputerPanelItem) result).Name);
-            Assert.AreEqual(string.Empty, ((ComputerPanelItem) result).Comment);
+            Assert.IsInstanceOf(typeof(ComputerPanelItem), result);
+            Assert.AreEqual("QQQ", ((ComputerPanelItem)result).Name);
+            Assert.AreEqual(string.Empty, ((ComputerPanelItem)result).Comment);
         }
 
-        //[Test]
+        // [Test]
+
         public void TestReadXML2()
         {
             const string content =
                 "<ComputerPanelItem PlatformID=\"500\" Comment=\"WWW\" Version=\"5.1\" Type=\"11407\" />";
-            var ser = new XmlSerializer(typeof (ComputerPanelItem));
+            var ser = new XmlSerializer(typeof(ComputerPanelItem));
 
             // try deserialize
             TextReader tr = new StringReader(content);
@@ -99,9 +104,9 @@ namespace LanExchange.Plugin.Network
             tr.Close();
             // check deserialize result
             Assert.IsNotNull(result);
-            Assert.IsInstanceOf(typeof (ComputerPanelItem), result);
-            Assert.AreEqual(string.Empty, ((ComputerPanelItem) result).Name);
-            Assert.AreEqual("WWW", ((ComputerPanelItem) result).Comment);
+            Assert.IsInstanceOf(typeof(ComputerPanelItem), result);
+            Assert.AreEqual(string.Empty, ((ComputerPanelItem)result).Name);
+            Assert.AreEqual("WWW", ((ComputerPanelItem)result).Comment);
         }
 
         [Test]
@@ -114,7 +119,7 @@ namespace LanExchange.Plugin.Network
         [Test]
         public void TestComputerPanelItem()
         {
-            m_Comp = new ComputerPanelItem(null, (ServerInfo) null);
+            m_Comp = new ComputerPanelItem(null, (ServerInfo)null);
             Assert.IsNotNull(m_Comp.SI);
         }
 

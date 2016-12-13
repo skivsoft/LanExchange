@@ -68,8 +68,10 @@ namespace LanExchange.Application.Implementation
                             break;
                         }
                 }
+
                 if (isEqual) return true;
             }
+
             return false;
         }
     }

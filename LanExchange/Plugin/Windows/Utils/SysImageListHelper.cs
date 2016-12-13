@@ -21,7 +21,7 @@ namespace LanExchange.Plugin.Windows.Utils
 
         private const int TV_FIRST = 0x1100;
         private const int TVM_SETIMAGELIST = (TV_FIRST + 9);
-		
+        
         private const int TVSIL_NORMAL = 0;
         private const int TVSIL_STATE = 2;
 
@@ -58,7 +58,7 @@ namespace LanExchange.Plugin.Windows.Utils
                 listView,
                 LVM_SETIMAGELIST,
                 wParam,
-                sysImageList.Handle);	
+                sysImageList.Handle);    
         }
 
         /// <summary>
@@ -83,6 +83,6 @@ namespace LanExchange.Plugin.Windows.Utils
                 TVM_SETIMAGELIST,
                 wParam,
                 sysImageList.Handle);
-        }		
+        }        
     }
 }

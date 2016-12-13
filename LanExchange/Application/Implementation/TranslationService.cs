@@ -97,7 +97,7 @@ namespace LanExchange.Application.Implementation
             Type tp;
             var translit = TranslateFromPO(fileName, ID_TRANSLIT);
             if (translits.TryGetValue(translit, out tp))
-                currentTranslit = (ITranslitStrategy) Activator.CreateInstance(tp);
+                currentTranslit = (ITranslitStrategy)Activator.CreateInstance(tp);
         }
 
         public bool RightToLeft { get; private set; }
@@ -202,17 +202,17 @@ namespace LanExchange.Application.Implementation
         /// <returns>0: "-дан", 1: "-ден", 2: "-нан", 3: "-нен", 4: "-тан", 5: "-тен".</returns>
         private static int PluralFormKazakh(int num)
         {
-            if (num%10 == 6 || num%10 == 9 || num%100 == 20 || num%100 == 30)
+            if (num % 10 == 6 || num % 10 == 9 || num % 100 == 20 || num % 100 == 30)
                 return 0;
-            if (num%10 == 1 || num%10 == 2 || num%10 == 7 || num%10 == 8 || num%100 == 50 || num%1000 == 100)
+            if (num % 10 == 1 || num % 10 == 2 || num % 10 == 7 || num % 10 == 8 || num % 100 == 50 || num % 1000 == 100)
                 return 1;
-            if (num%100 == 10 || num%100 == 90)
+            if (num % 100 == 10 || num % 100 == 90)
                 return 2;
-            if (num%100 == 80)
+            if (num % 100 == 80)
                 return 3;
-            if (num%100 == 40 || num%100 == 60)
+            if (num % 100 == 40 || num % 100 == 60)
                 return 4;
-            if (num%10 == 3 || num%10 == 4 || num%10 == 5 || num%100 == 70)
+            if (num % 10 == 3 || num % 10 == 4 || num % 10 == 5 || num % 100 == 70)
                 return 5;
             return 0;
         }
@@ -220,7 +220,7 @@ namespace LanExchange.Application.Implementation
         [Localizable(false)]
         public void SetResourceManagerTo<TClass>() where TClass : class
         {
-            var resourceMan = new TranslationResourceManager(this, typeof (TClass).FullName, typeof (TClass).Assembly);
+            var resourceMan = new TranslationResourceManager(this, typeof(TClass).FullName, typeof(TClass).Assembly);
 
             var fieldInfo = typeof(TClass).GetField("resourceMan", BindingFlags.Static | BindingFlags.NonPublic);
             fieldInfo?.SetValue(null, resourceMan);

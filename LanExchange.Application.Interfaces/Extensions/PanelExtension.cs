@@ -15,7 +15,8 @@ namespace LanExchange.Application.Interfaces.Extensions
                 Path = panel.CurrentPath.ToArray(),
                 Focused = panel.FocusedItem
             };
-            return dto;
+
+           return dto;
         }
     }
 }

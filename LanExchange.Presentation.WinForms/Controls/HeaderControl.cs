@@ -24,10 +24,10 @@ namespace LanExchange.Presentation.WinForms.Controls
             this.userService = userService;
 
             ListView = olv;
-			var handle = userService.GetHeaderControl(olv.Handle);
-			if (handle != IntPtr.Zero)
-				AssignHandle(handle);
-            //AssignHandle(NativeMethods.GetHeaderControl(olv));
+            var handle = userService.GetHeaderControl(olv.Handle);
+            if (handle != IntPtr.Zero)
+                AssignHandle(handle);
+            // AssignHandle(NativeMethods.GetHeaderControl(olv));
         }
 
         /// <summary>
@@ -39,10 +39,10 @@ namespace LanExchange.Presentation.WinForms.Controls
             get {
                 Point pt = ListView.PointToClient(Cursor.Position);
 
-				pt.X += userService.GetScrollPosition(ListView.Handle, true);
-				return userService.GetColumnUnderPoint(Handle, pt);
-                //pt.X += NativeMethods.GetScrollPosition(ListView, true);
-                //return NativeMethods.GetColumnUnderPoint(Handle, pt);
+                pt.X += userService.GetScrollPosition(ListView.Handle, true);
+                return userService.GetColumnUnderPoint(Handle, pt);
+                // pt.X += NativeMethods.GetScrollPosition(ListView, true);
+                // return NativeMethods.GetColumnUnderPoint(Handle, pt);
             }
         }
 

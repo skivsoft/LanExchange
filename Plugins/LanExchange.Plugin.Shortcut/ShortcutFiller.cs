@@ -37,23 +37,23 @@ namespace LanExchange.Plugin.Shortcut
             var visitor = new FillerMenuVisitor(parent, result);
             menuProducer.MainMenu.Accept(visitor);
 
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyF1, Resources.KeyF1__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyF10, Resources.KeyF10__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlW, Resources.KeyCtrlW__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlR, Resources.KeyCtrlR__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlWinX, Resources.KeyCtrlWinX__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlA, Resources.KeyCtrlA__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlC, Resources.KeyCtrlC__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlV, Resources.KeyCtrlV__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlIns, Resources.KeyCtrlIns__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlAltIns, Resources.KeyCtrlAltIns__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyDel, Resources.KeyDel__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyEsc, Resources.KeyEsc__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyEscLong, Resources.KeyEscLong__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyAnyChar, Resources.KeyAnyChar__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyBackspace, Resources.KeyBackspace__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlDown, Resources.KeyCtrlDown__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlUp, Resources.KeyCtrlUp__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyF1, Resources.KeyF1__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyF10, Resources.KeyF10__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlW, Resources.KeyCtrlW__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlR, Resources.KeyCtrlR__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlWinX, Resources.KeyCtrlWinX__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlA, Resources.KeyCtrlA__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlC, Resources.KeyCtrlC__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlV, Resources.KeyCtrlV__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlIns, Resources.KeyCtrlIns__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlAltIns, Resources.KeyCtrlAltIns__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyDel, Resources.KeyDel__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyEsc, Resources.KeyEsc__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyEscLong, Resources.KeyEscLong__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyAnyChar, Resources.KeyAnyChar__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyBackspace, Resources.KeyBackspace__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlDown, Resources.KeyCtrlDown__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlUp, Resources.KeyCtrlUp__));
 
             foreach (var pair in addonManager.PanelItems)
                 foreach (var menuItem in pair.Value.ContextMenu)

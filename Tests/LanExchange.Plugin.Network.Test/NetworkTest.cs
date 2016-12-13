@@ -16,9 +16,9 @@ namespace LanExchange.Plugin.Network
             var typeManager = Mock.Of<IPanelItemFactoryManager>();
             var columnManager = Mock.Of<IPanelColumnManager>();
             var fillerManager = Mock.Of<IPanelFillerManager>();
-            mock.Setup(f => f.GetService(typeof (IPanelItemFactoryManager))).Returns(typeManager);
-            mock.Setup(f => f.GetService(typeof (IPanelColumnManager))).Returns(columnManager);
-            mock.Setup(f => f.GetService(typeof (IPanelFillerManager))).Returns(fillerManager);
+            mock.Setup(f => f.GetService(typeof(IPanelItemFactoryManager))).Returns(typeManager);
+            mock.Setup(f => f.GetService(typeof(IPanelColumnManager))).Returns(columnManager);
+            mock.Setup(f => f.GetService(typeof(IPanelFillerManager))).Returns(fillerManager);
             network.Initialize(mock.Object);
         }
     }

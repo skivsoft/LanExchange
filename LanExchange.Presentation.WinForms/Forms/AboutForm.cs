@@ -53,8 +53,8 @@ namespace LanExchange.Presentation.WinForms.Forms
             if (boxDetails != null) return;
             boxDetails = new RichTextBox();
             var rect = ClientRectangle;
-			boxDetails.Font = Font;
-            boxDetails.SetBounds(rect.Left+16, rect.Top+16, rect.Width-32, rect.Height-bShowDetails.Height-32);
+            boxDetails.Font = Font;
+            boxDetails.SetBounds(rect.Left + 16, rect.Top + 16, rect.Width - 32, rect.Height - bShowDetails.Height - 32);
             boxDetails.Visible = false;
             boxDetails.RightToLeft = RightToLeftValue ? RightToLeft.Yes : RightToLeft.No;
             boxDetails.ReadOnly = true;

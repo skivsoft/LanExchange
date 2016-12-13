@@ -8,14 +8,16 @@ namespace LanExchange.Plugin.Users
         [Test]
         public void FixLdapPath_DC_OU()
         {
-            string s = PathFixer.FixLdapPath("ldap://dc=1,ou=2");
+            string s = PathFixer.FixLdapPath("ldap:// dc = 1,ou = 2");
+
             Assert.AreEqual(@"2\1", s);
         }
 
         [Test]
         public void FixLdapPath_Init()
         {
-            string s = PathFixer.FixLdapPath("Ldap://qqq,www");
+            string s = PathFixer.FixLdapPath("Ldap:// qqq,www");
+
             Assert.AreEqual(@"www\qqq", s);
         }
 
@@ -29,7 +31,8 @@ namespace LanExchange.Plugin.Users
         [Test]
         public void FixLdapPath_LdapUpper()
         {
-            string s = PathFixer.FixLdapPath("LDAP://qqq,WWW,aaa");
+            string s = PathFixer.FixLdapPath("LDAP:// qqq,WWW,aaa");
+
             Assert.AreEqual(@"aaa\WWW\qqq", s);
         }
 

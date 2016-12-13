@@ -27,7 +27,7 @@ namespace LanExchange.Plugin.Shortcut
             {
                 var model = modelFactory.CreatePanelModel();
                 var root = new ShortcutRoot();
-                model.DataType = typeof (ShortcutPanelItem).Name;
+                model.DataType = typeof(ShortcutPanelItem).Name;
                 model.CurrentPath.Push(root);
                 pagesModel.Add(model);
                 foundIndex = pagesModel.Count - 1;

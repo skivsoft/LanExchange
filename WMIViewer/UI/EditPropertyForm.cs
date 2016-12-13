@@ -56,7 +56,7 @@ namespace WMIViewer.UI
             eProp.ReadOnly = !WmiClassList.Instance.IsPropertyEditable(args.ClassName, args.PropertyName);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             if (!eProp.ReadOnly && !oldValue.Equals(eProp.Text))
             {

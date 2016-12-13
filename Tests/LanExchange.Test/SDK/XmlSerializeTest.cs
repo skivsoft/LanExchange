@@ -43,8 +43,9 @@ namespace LanExchange.SDK
         {
             TestSomeAbstractBase obj = new TestSomeDescendant();
             obj.Hello = "World";
-            var extraTypes = new[] {typeof (TestSomeDescendant)};
-            var ser = new XmlSerializer(typeof (TestSomeAbstractBase), extraTypes);
+            var extraTypes = new[] {typeof(TestSomeDescendant)};
+
+           var ser = new XmlSerializer(typeof(TestSomeAbstractBase), extraTypes);
             string result;
             using (var sw = new StringWriter())
             {
@@ -54,8 +55,8 @@ namespace LanExchange.SDK
             Assert.IsNotEmpty(result);
             using (var sr = new StringReader(result))
             {
-                obj = (TestSomeAbstractBase) ser.Deserialize(sr);
-                Assert.AreEqual(typeof (TestSomeDescendant), obj.GetType());
+                obj = (TestSomeAbstractBase)ser.Deserialize(sr);
+                Assert.AreEqual(typeof(TestSomeDescendant), obj.GetType());
             }
         }
 

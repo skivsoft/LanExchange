@@ -9,7 +9,8 @@ namespace LanExchange.Plugin.Users
     [Export(typeof(IPlugin))]
     public sealed class PluginUsers : IPlugin
     {
-        public const string LDAP_PREFIX = "LDAP://";
+        public const string LDAP_PREFIX = "LDAP:// ";
+
 
         public static ISystemInformationService sysInfoService;
 

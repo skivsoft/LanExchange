@@ -86,7 +86,8 @@ namespace LanExchange.Plugin.Network
         /// <summary>
         /// Returns MAC address for specified computer "item".
         /// Sends ARP request to computer's ip address.
-        /// URL: http://www.codeproject.com/KB/IP/host_info_within_network.aspx
+        /// URL: http:// www.codeproject.com/KB/IP/host_info_within_network.aspx
+
         /// </summary>
         /// <param name="item">ComputerPanelItem object.</param>
         /// <returns>MAC-address string.</returns>

@@ -16,17 +16,17 @@ namespace LanExchange.Presentation.WinForms
 
         public bool IsYes(int result)
         {
-            return result == (int) DialogResult.Yes;
+            return result == (int)DialogResult.Yes;
         }
 
         public bool IsNo(int result)
         {
-            return result == (int) DialogResult.No;
+            return result == (int)DialogResult.No;
         }
 
         public bool IsCancel(int result)
         {
-            return result == (int) DialogResult.Cancel;
+            return result == (int)DialogResult.Cancel;
         }
     }
 }

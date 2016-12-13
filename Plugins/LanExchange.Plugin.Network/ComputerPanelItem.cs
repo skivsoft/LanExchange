@@ -34,7 +34,8 @@ namespace LanExchange.Plugin.Network
         public ComputerPanelItem(PanelItemBase parent, string name) : base(parent)
         {
             serverInfo = new ServerInfo { Name = name };
-        }
+
+       }
 
         public ServerInfo SI
         {

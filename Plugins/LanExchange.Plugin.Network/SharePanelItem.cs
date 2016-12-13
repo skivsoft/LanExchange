@@ -7,7 +7,8 @@ using LanExchange.Presentation.Interfaces;
 namespace LanExchange.Plugin.Network
 {
     [Serializable]
-    public sealed class SharePanelItem : PanelItemBase//, IComparable<SharePanelItem>
+    public sealed class SharePanelItem : PanelItemBase// , IComparable<SharePanelItem>
+
     {
         private readonly ShareInfo shareInfo;
 

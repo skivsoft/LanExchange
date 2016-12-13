@@ -39,7 +39,7 @@ namespace LanExchange.Presentation.WinForms.Forms
                 label.AutoSize = true;
                 label.UseMnemonic = true;
                 label.Text = "&" + columns[index].Text + ":";
-                label.TabIndex = START_TABINDEX + index*2;
+                label.TabIndex = START_TABINDEX + index * 2;
                 label.SetBounds(SPACE, top, 0, 0);
                 Controls.Add(label);
                 if (label.Width > maxWidth)
@@ -49,13 +49,13 @@ namespace LanExchange.Presentation.WinForms.Forms
                 }
                 top += LINE_DELTA;
             }
-            Width = SPACE*3 + maxWidth + EDIT_WIDTH + SystemInformation.FixedFrameBorderSize.Width * 2;
+            Width = SPACE * 3 + maxWidth + EDIT_WIDTH + SystemInformation.FixedFrameBorderSize.Width * 2;
             Height = top + 100;
             top = SPACE;
             for (int index = 0; index < columns.Count; index++)
             {
                 var edit = new TextBox();
-                edit.SetBounds(SPACE*2 + maxWidth, top-(20-labelHeight)/2, EDIT_WIDTH, 20);
+                edit.SetBounds(SPACE * 2 + maxWidth, top - (20 - labelHeight) / 2, EDIT_WIDTH, 20);
                 edit.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
                 edit.TabIndex = START_TABINDEX + index * 2 + 1;
                 Controls.Add(edit);

@@ -9,7 +9,7 @@ using LanExchange.Properties;
 namespace LanExchange.Application.Presenters
 {
     /// <summary>
-    /// Presenter for Settings (model) and AboutForm (view).
+    /// Presenter for Settings(model) and AboutForm(view).
     /// </summary>
     [Localizable(false)]
     internal sealed class AboutPresenter : PresenterBase<IAboutView>, IAboutPresenter
@@ -55,7 +55,7 @@ namespace LanExchange.Application.Presenters
         public string GetDetailsRtf()
         {
             var sb = new StringBuilder();
-            //sb.Append(@"{\rtf1\ansi");
+            // sb.Append(@"{\rtf1\ansi");
             sb.Append(@"{\rtf1\ansi\deff0{\fonttbl{\f0 Microsoft Sans Serif;}}"); // \fnil\fcharset204
             sb.Append(@"\viewkind4\uc1\pard\f0\fs17 ");
 

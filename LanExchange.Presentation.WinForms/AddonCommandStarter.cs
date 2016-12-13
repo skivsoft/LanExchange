@@ -49,18 +49,17 @@ namespace LanExchange.Presentation.WinForms
         private void ShowCheckAvailabilityWindow()
         {
             // TODO hide model
-            //var form = windowFactory.CreateCheckAvailabilityWindow();
-            //form.Text = string.Format("{0} — {1}", panelItem.Name, menuItem.Text);
-            //form.CurrentItem = panelItem;
-            //form.RunText = menuItem.Text;
-            //if (menuItem.ProgramValue != null)
-            //    form.RunImage = menuItem.ProgramValue.ProgramImage;
-            //form.CallerControl = this;
-            //form.RunAction = InternalStart;
-            //form.AvailabilityChecker = checker;
-
-            //form.StartChecking();
-            //form.WaitAndShow();
+            var form = windowFactory.CreateCheckAvailabilityWindow();
+            form.Text = string.Format("{0} — {1}", panelItem.Name, menuItem.Text);
+            // form.CurrentItem = panelItem;
+            form.RunText = menuItem.Text;
+            if (menuItem.ProgramValue != null)
+                form.RunImage = menuItem.ProgramValue.ProgramImage;
+            form.CallerControl = this;
+            form.RunAction = InternalStart;
+            // form.AvailabilityChecker = checker;
+            form.StartChecking();
+            form.WaitAndShow();
         }
 
         [Localizable(false)]

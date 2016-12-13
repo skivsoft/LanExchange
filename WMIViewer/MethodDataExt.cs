@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Management;
-using System.Collections.Generic;
 using System.Text;
 using WMIViewer.Model;
 
@@ -13,8 +13,8 @@ namespace WMIViewer
         private readonly MethodData data;
 
         /// <summary>
-        /// 
-        /// </summary>
+        /// /// </summary>
+
         /// <exception cref="ArgumentNullException"></exception>
         /// <param name="data"></param>
         public MethodDataExt(MethodData data)

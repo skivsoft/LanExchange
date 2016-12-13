@@ -80,12 +80,12 @@ namespace LanExchange.Application.Implementation
 
         public Type[] ToArray()
         {
-            var result = new Type[types.Count+2];
+            var result = new Type[types.Count + 2];
             int i = 0;
             foreach (var key in types.Keys)
                 result[i++] = key;
-            result[types.Count] = typeof (PanelItemRootBase);
-            result[types.Count + 1] = typeof (PanelItemDoubleDot);
+            result[types.Count] = typeof(PanelItemRootBase);
+            result[types.Count + 1] = typeof(PanelItemDoubleDot);
             return result;
         }
 

@@ -4,8 +4,8 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Management;
-using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 using WMIViewer.Model;
 using WMIViewer.Properties;
 using WMIViewer.UI;
@@ -113,7 +113,8 @@ namespace WMIViewer.Presenter
                                     Username = form.UserName, 
                                     Password = form.UserPassword
                                 };
-                            goto TryAgainWithPassword;
+
+                           goto TryAgainWithPassword;
                         }
                     }
                 else
@@ -152,7 +153,8 @@ namespace WMIViewer.Presenter
                     {
                         if (wmiObject == null) continue;
                         var lvi = new ListViewItem { Tag = wmiObject };
-                        int index = 0;
+
+                       int index = 0;
                         foreach (ColumnHeader header in View.LV.Columns)
                         {
                             var prop = wmiObject.Properties[header.Text];

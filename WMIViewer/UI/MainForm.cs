@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Globalization;
-using System.Windows.Forms;
-using System.Management;
 using System.ComponentModel;
+using System.Globalization;
+using System.Management;
 using System.Reflection;
+using System.Windows.Forms;
 using WMIViewer.Model;
 using WMIViewer.Presenter;
 using WMIViewer.Properties;
@@ -33,7 +33,7 @@ namespace WMIViewer.UI
             var mi = typeof(Control).GetMethod("SetStyle", BindingFlags.Instance | BindingFlags.NonPublic);
             mi.Invoke(lvInstances, new object[] { ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true });
 
-            FocusedItemChanged += lvInstances_FocusedItemChanged;
+            FocusedItemChanged += ListViewInstances_FocusedItemChanged;
             UpdateTitle();
             ShowStat(WmiClassList.Instance.ClassCount, WmiClassList.Instance.PropCount, WmiClassList.Instance.MethodCount);
             Icon = Resources.WMIViewer16;
@@ -73,7 +73,7 @@ namespace WMIViewer.UI
                 {
                     lvInstances.FocusedItem = lvInstances.Items[0];
                     lvInstances.FocusedItem.Selected = true;
-                    lvInstances_FocusedItemChanged(lvInstances, EventArgs.Empty);
+                    ListViewInstances_FocusedItemChanged(lvInstances, EventArgs.Empty);
                     lvInstances.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
                 }
 
@@ -116,7 +116,8 @@ namespace WMIViewer.UI
             foreach (var str in WmiClassList.Instance.Classes)
             {
                 var menuItem = new ToolStripMenuItem { Text = str };
-                menuItem.Click += MenuClassesOnClick;
+
+               menuItem.Click += MenuClassesOnClick;
                 menuClasses.Items.Add(menuItem);
             }
 
@@ -125,20 +126,23 @@ namespace WMIViewer.UI
             foreach (var str in WmiClassList.Instance.ReadOnlyClasses)
             {
                 var menuItem = new ToolStripMenuItem { Text = str };
-                menuItem.Click += MenuClassesOnClick;
+
+               menuItem.Click += MenuClassesOnClick;
                 menuClasses.Items.Add(menuItem);
             }
 
             // TODO uncomment setup wmi-classes
             // if (Count1 + Count2 > 0)
-            //    menuClasses.Items.Add(new ToolStripSeparator());
+            // menuClasses.Items.Add(new ToolStripSeparator());
+
             // ToolStripMenuItem mSetup = new ToolStripMenuItem { Text = "Настроить..."};
-            // mSetup.Click += mSetup_Click;
+
+           // mSetup.Click += mSetup_Click;
             // menuClasses.Items.Add(mSetup);
         }
 
         [Localizable(false)]
-        private void lvInstances_FocusedItemChanged(object sender, EventArgs e)
+        private void ListViewInstances_FocusedItemChanged(object sender, EventArgs e)
         {
             if (presenter.WmiClass == null) return;
             if (lvInstances.FocusedItem == null) return;
@@ -154,7 +158,7 @@ namespace WMIViewer.UI
             ActiveControl = lvInstances;
         }
 
-        private void menuClasses_Opening(object sender, CancelEventArgs e)
+        private void MenuClasses_Opening(object sender, CancelEventArgs e)
         {
             if (!WmiClassList.Instance.Loaded)
             {
@@ -230,7 +234,7 @@ namespace WMIViewer.UI
                     DoFocusedItemChanged();
         }
 
-        private void lvInstances_KeyDown(object sender, KeyEventArgs e)
+        private void LVInstances_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
             {

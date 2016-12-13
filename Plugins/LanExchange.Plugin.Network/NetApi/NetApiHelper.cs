@@ -19,7 +19,7 @@ namespace LanExchange.Plugin.Network.NetApi
         {
             uint resumeHandle = 0;
             int retval;
-            var itemSize = Marshal.SizeOf(typeof (SERVER_INFO_101));
+            var itemSize = Marshal.SizeOf(typeof(SERVER_INFO_101));
             var result = new List<SERVER_INFO_101>();
 
             do
@@ -28,8 +28,8 @@ namespace LanExchange.Plugin.Network.NetApi
                 uint entriesread;
                 uint totalentries;
                 retval = SafeNativeMethods.NetServerEnum(null, 101, out bufPtr, SafeNativeMethods.MAX_PREFERRED_LENGTH,
-                    out entriesread, out totalentries, (uint) types, domain, ref resumeHandle);
-                if (retval == (int) NERR.NERR_SUCCESS || retval == (int) NERR.ERROR_MORE_DATA)
+                    out entriesread, out totalentries, (uint)types, domain, ref resumeHandle);
+                if (retval == (int) NERR.NERR_SUCCESS || retval == (int)NERR.ERROR_MORE_DATA)
                 {
                     var ptr = bufPtr;
                     for (int i = 0; i < entriesread; i++)
@@ -37,11 +37,11 @@ namespace LanExchange.Plugin.Network.NetApi
                         var item = new SERVER_INFO_101();
                         Marshal.PtrToStructure(ptr, item);
                         result.Add(item);
-                        ptr = (IntPtr) (ptr.ToInt64() + itemSize);
+                        ptr = (IntPtr)(ptr.ToInt64() + itemSize);
                     }
                     SafeNativeMethods.NetApiBufferFree(bufPtr);
                 }
-            } while (retval == (int) NERR.ERROR_MORE_DATA);
+            } while (retval == (int)NERR.ERROR_MORE_DATA);
             return result;
         }
 
@@ -50,7 +50,7 @@ namespace LanExchange.Plugin.Network.NetApi
             const uint stypeIpc = (uint)SHARE_TYPE.STYPE_IPC;
             uint resumeHandle = 0;
             int retval;
-            var itemSize = Marshal.SizeOf(typeof (SHARE_INFO_1));
+            var itemSize = Marshal.SizeOf(typeof(SHARE_INFO_1));
             var result = new List<SHARE_INFO_1>();
 
             do
@@ -60,7 +60,7 @@ namespace LanExchange.Plugin.Network.NetApi
                 uint totalentries;
                 retval = SafeNativeMethods.NetShareEnum(computer, 1, out bufPtr, API_BUFFER_SIZE,
                     out entriesread, out totalentries, ref resumeHandle);
-                if (retval == (int) NERR.NERR_SUCCESS || retval == (int) NERR.ERROR_MORE_DATA)
+                if (retval == (int) NERR.NERR_SUCCESS || retval == (int)NERR.ERROR_MORE_DATA)
                 {
                     var ptr = bufPtr;
                     for (int i = 0; i < entriesread; i++)
@@ -73,7 +73,7 @@ namespace LanExchange.Plugin.Network.NetApi
                     }
                     SafeNativeMethods.NetApiBufferFree(bufPtr);
                 }
-            } while (retval == (int) NERR.ERROR_MORE_DATA);
+            } while (retval == (int)NERR.ERROR_MORE_DATA);
             return result;
         }
 
@@ -81,7 +81,7 @@ namespace LanExchange.Plugin.Network.NetApi
         {
             uint resumehandle = 0;
             int retval;
-            var itemSize = Marshal.SizeOf(typeof (WKSTA_USER_INFO_1));
+            var itemSize = Marshal.SizeOf(typeof(WKSTA_USER_INFO_1));
             var result = new List<WKSTA_USER_INFO_1>();
             do
             {
@@ -92,15 +92,15 @@ namespace LanExchange.Plugin.Network.NetApi
                     out entriesread, out totalentries, ref resumehandle);
                 switch (retval)
                 {
-                    case (int) NERR.ERROR_MORE_DATA:
-                    case (int) NERR.NERR_SUCCESS:
+                    case (int)NERR.ERROR_MORE_DATA:
+                    case (int)NERR.NERR_SUCCESS:
                         var ptr = bufPtr;
                         for (int i = 0; i < entriesread; i++)
                         {
                             var item = new WKSTA_USER_INFO_1();
                             Marshal.PtrToStructure(ptr, item);
                             result.Add(item);
-                            ptr = (IntPtr) (ptr.ToInt64() + itemSize);
+                            ptr = (IntPtr)(ptr.ToInt64() + itemSize);
                         }
                         SafeNativeMethods.NetApiBufferFree(bufPtr);
                         break;

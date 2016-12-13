@@ -49,7 +49,7 @@ namespace LanExchange.Plugin.Users
                 string current = str[index];
 
                 bool allEqual = true;
-                while(enumDict.MoveNext())
+                while (enumDict.MoveNext())
                 {
                     str = enumDict.Current.Key.Split('\\');
                     if (index + 1 > str.Length) break;

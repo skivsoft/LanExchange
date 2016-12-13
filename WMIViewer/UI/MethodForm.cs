@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Management;
 using System.Windows.Forms;
-using System.Collections.Generic;
-using System.ComponentModel;
 using WMIViewer.Model;
 using WMIViewer.Presenter;
 using WMIViewer.Properties;
@@ -172,7 +172,7 @@ namespace WMIViewer.UI
             }
         }
 
-        private void bRun_Click(object sender, EventArgs e)
+        private void ButtonRun_Click(object sender, EventArgs e)
         {
             RunTheMethod();
             if (args.StartCmd == CmdLineCommand.ExecuteMethod && executeOk)

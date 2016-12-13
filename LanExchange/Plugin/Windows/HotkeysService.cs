@@ -8,7 +8,8 @@ namespace LanExchange.Plugin.Windows
 {
     /// <summary> This class allows you to manage a hotkey </summary>
     [Localizable(false)]
-    //[CLSCompliant(false)]
+    // [CLSCompliant(false)]
+
     internal class HotkeysService : IHotkeyService
     {
         [DllImport(ExternDll.User32, SetLastError = true)]
@@ -45,10 +46,10 @@ namespace LanExchange.Plugin.Windows
         {
             UnregisterGlobalHotKey();
             this.handle = handle;
-            // use the GlobalAddAtom API to get a unique ID (as suggested by MSDN)
+            // use the GlobalAddAtom API to get a unique ID(as suggested by MSDN)
             var atomName = this.handle.ToInt32().ToString("X8", CultureInfo.InvariantCulture) + GetType().FullName;
             hotkeyId = GlobalAddAtom(atomName);
-            return hotkeyId != 0 && RegisterHotKey(this.handle, hotkeyId, (uint) modifiers, (uint) hotkey);
+            return hotkeyId != 0 && RegisterHotKey(this.handle, hotkeyId, (uint)modifiers, (uint)hotkey);
         }
 
         /// <summary>Unregister the hotkey</summary>

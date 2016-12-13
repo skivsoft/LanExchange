@@ -46,8 +46,10 @@ namespace LanExchange.Plugin.Network
         {
             ServerInfo info =
                 ServerInfo.FromNetApi32(new SERVER_INFO_101 {name = "QQQ", comment = "WWW"});
-            //SI.Name = "QQQ";
-            //SI.Comment = "WWW";
+            // SI.Name = "QQQ";
+
+            // SI.Comment = "WWW";
+
             var stream = new MemoryStream();
             var bformatter = new BinaryFormatter();
             // try serialize
@@ -56,37 +58,61 @@ namespace LanExchange.Plugin.Network
             stream.Position = 0;
             object result = bformatter.Deserialize(stream);
             Assert.IsNotNull(result, "Deserialize returns null");
-            Assert.IsInstanceOf(typeof (ServerInfo), result, "Deserialize wrong type");
+            Assert.IsInstanceOf(typeof(ServerInfo), result, "Deserialize wrong type");
             Assert.AreEqual("QQQ", info.Name);
             Assert.AreEqual("WWW", info.Comment);
             stream.Close();
         }
 
-        //[Test]
-        //public void TestGetTopicallity()
-        //{
-        //    m_Info.ResetUtcUpdated();
-        //    Assert.IsEmpty(m_Info.GetTopicalityText());
-        //    var info1 = MockRepository.GenerateStub<ServerInfo>();
-        //    var info2 = MockRepository.GenerateStub<ServerInfo>();
-        //    var current = new DateTime(2012, 01, 22, 18, 30, 40);
-        //    var past1 = new DateTime(current.Year, current.Month, current.Day-1, current.Hour - 10, current.Minute - 20, current.Second);
-        //    var past2 = new DateTime(current.Year, current.Month, current.Day, current.Hour, current.Minute-20, current.Second-30);
-        //    info1.Stub(x => x.GetTopicality()).Return(current - past1);
-        //    info2.Stub(x => x.GetTopicality()).Return(current - past2);
-        //    // checks day, hour, min
-        //    Assert.AreEqual("1d 10h 20m", info1.GetTopicalityText());
-        //    // checks min, sec
-        //    Assert.AreEqual("20m 30s", info2.GetTopicalityText());
-        //}
+        // [Test]
 
-        //[Test]
-        //public void TestCompareTo()
-        //{
-        //    Assert.AreEqual(0, (new ServerInfo {Name = "AA"}).CompareTo((new ServerInfo {Name = "aa"})));
-        //    Assert.Less((new ServerInfo {Name = "AA"}).CompareTo((new ServerInfo {Name = "ba"})), 0);
-        //    Assert.Greater((new ServerInfo { Name = "BB" }).CompareTo((new ServerInfo { Name = "aA" })), 0);
-        //}
+        // public void TestGetTopicallity()
+
+        // {
+
+        // m_Info.ResetUtcUpdated();
+
+        // Assert.IsEmpty(m_Info.GetTopicalityText());
+
+        // var info1 = MockRepository.GenerateStub<ServerInfo>();
+
+        // var info2 = MockRepository.GenerateStub<ServerInfo>();
+
+        // var current = new DateTime(2012, 01, 22, 18, 30, 40);
+
+        // var past1 = new DateTime(current.Year, current.Month, current.Day - 1, current.Hour - 10, current.Minute - 20, current.Second);
+
+        // var past2 = new DateTime(current.Year, current.Month, current.Day, current.Hour, current.Minute - 20, current.Second - 30);
+
+        // info1.Stub(x => x.GetTopicality()).Return(current - past1);
+
+        // info2.Stub(x => x.GetTopicality()).Return(current - past2);
+
+        // // checks day, hour, min
+
+        // Assert.AreEqual("1d 10h 20m", info1.GetTopicalityText());
+
+        // // checks min, sec
+
+        // Assert.AreEqual("20m 30s", info2.GetTopicalityText());
+
+        // }
+
+
+        // [Test]
+
+        // public void TestCompareTo()
+
+        // {
+
+        // Assert.AreEqual(0, (new ServerInfo {Name = "AA"}).CompareTo((new ServerInfo {Name = "aa"})));
+
+        // Assert.Less((new ServerInfo {Name = "AA"}).CompareTo((new ServerInfo {Name = "ba"})), 0);
+
+        // Assert.Greater((new ServerInfo { Name = "BB" }).CompareTo((new ServerInfo { Name = "aA" })), 0);
+
+        // }
+
 
         [Test]
         public void TestUtcUpdated()
