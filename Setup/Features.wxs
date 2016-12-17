@@ -3,8 +3,14 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 	<Fragment>
     <Feature Id="LanExchange" Level="1" Title="$(var.Product)" Display="expand" Absent="disallow" AllowAdvertise="no" ConfigurableDirectory="INSTALLDIR">
+      <ComponentRef Id="SimpleInjector.dll"/>
+      <ComponentRef Id="SimpleInjector.xml"/>
       <ComponentRef Id="LanExchange.exe"/>
-      <ComponentRef Id="LanExchange.SDK.dll"/>
+      <ComponentRef Id="LanExchange.Application.Interfaces.dll"/>
+      <ComponentRef Id="LanExchange.Application.Interfaces.xml"/>
+      <ComponentRef Id="LanExchange.Presentation.Interfaces.dll"/>
+      <ComponentRef Id="LanExchange.Presentation.Interfaces.xml"/>
+      <ComponentRef Id="$(var.PluginShortcut).dll" />
       <ComponentRef Id="LanExchangeShortcut"/>
       <ComponentRef Id="Russian.po"/>
       <ComponentRef Id="Kazakh.po"/>
@@ -15,7 +21,8 @@
         <ComponentRef Id="WMIViewer.exe"/>
         <ComponentRef Id="NetworkWMI.xml" />
         <ComponentRef Id="WMIViewerShortcut"/>
-        </Feature>
+        <ComponentRef Id="$(var.PluginWMI).dll" />
+      </Feature>
       <Feature Id="Addons" Level="100" Title="Addons" AllowAdvertise="no" Display="expand">
         <Feature Id="SystemAddon" Title="System commands" Level="1" AllowAdvertise="no" Description="System commands like Remote Desktop Connection and other system services.">
           <ComponentRef Id="NetworkSystem.xml" />

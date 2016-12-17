@@ -3,6 +3,12 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <Fragment>
     <DirectoryRef Id="INSTALLDIR">
+      <Component Id="SimpleInjector.dll" Guid="31ED3F31-215C-4141-8CBA-B43E74782338">
+        <File Id='SimpleInjector.dll' Source='$(var.SourceDir)SimpleInjector.dll'/>
+      </Component>
+      <Component Id="SimpleInjector.xml" Guid="AE39D9C3-E190-43D5-A7E4-E434898E85C1">
+        <File Id='SimpleInjector.xml' Source='$(var.SourceDir)SimpleInjector.xml'/>
+      </Component>
       <Component Id="LanExchange.exe" Guid="6E872465-039C-455A-A413-74B4AE08E86D"> 
         <File Id='LanExchange.exe' Source='$(var.SourceDir)LanExchange.exe'/>
       </Component>
@@ -10,36 +16,49 @@
         <File Id='WMIViewer.exe' Source='$(var.SourceDir)WMIViewer.exe'/>
       </Component>
       <Component Id="ChangeLog.md" Guid="2EA3B674-C8D3-496E-A574-5312AFB185AB">
-        <File Id='ChangeLog.md' Source='$(var.SolutionDir)..\ChangeLog.md'/>
+        <File Id='ChangeLog.md' Source='$(var.SolutionDir)ChangeLog.md'/>
       </Component>
-      <Directory Id="Lib" Name="Lib">
-        <Component Id='LanExchange.SDK.dll' Guid="340AE8C6-C70D-49D0-BA91-6F1FFCD422B2">
-          <File Id='LanExchange.SDK.dll' KeyPath='yes' Source='$(var.LibDir)LanExchange.SDK.dll'/>
-        </Component>
-        <Component Id="$(var.PluginNetwork).dll" Guid="84728A8A-6A8D-4467-8296-A87CBB288667">
-          <File Id='$(var.PluginNetwork).dll' KeyPath='yes' Source='$(var.LibDir)$(var.PluginNetwork).dll'/>
-        </Component>
-        <Component Id="$(var.PluginUsers).dll" Guid="7671C1F3-76BF-400B-B8F5-D17A27B2E2B1">
-          <File Id='$(var.PluginUsers).dll' KeyPath='yes' Source='$(var.LibDir)$(var.PluginUsers).dll'/>
-        </Component>
-        <Component Id="$(var.PluginFileSystem).dll" Guid="F6C95C7A-7752-4619-A252-24266D77D0E7">
-          <File Id='$(var.PluginFileSystem).dll' KeyPath='yes' Source='$(var.LibDir)$(var.PluginFileSystem).dll'/>
-        </Component>
-        <!--
-        <Component Id="$(var.PluginTranslit).dll" Guid="7FBA16AD-4D8B-4FF0-B25C-8F6194F834E7">
-          <File Id='$(var.PluginTranslit).dll' KeyPath='yes' Source='$(var.SourceDir)$(var.PluginTranslit).dll'/>
-        </Component>
-        <Component Id="$(var.PluginWin7).dll" Guid="F800769F-5AAB-4407-9DA2-9B9EFCD91630">
-          <File Id='$(var.PluginWin7).dll' KeyPath='yes' Source='$(var.PluginsDir)$(var.PluginWin7)\bin\$(var.Configuration)\$(var.PluginWin7).dll'/>
-        </Component>
-        <Component Id="Microsoft.WindowsAPICodePack.dll" Guid="7D336C44-CC15-4F3D-B0F7-CB77F0532E2B">
-          <File Id='Microsoft.WindowsAPICodePack.dll' KeyPath='yes' Source='$(var.PluginsDir)$(var.PluginWin7)\bin\$(var.Configuration)\Microsoft.WindowsAPICodePack.dll'/>
-        </Component>
-        <Component Id="Microsoft.WindowsAPICodePack.Shell.dll" Guid="84320F78-8FD8-48E8-94A1-DBD2EF916F83">
-          <File Id='Microsoft.WindowsAPICodePack.Shell.dll' KeyPath='yes' Source='$(var.PluginsDir)$(var.PluginWin7)\bin\$(var.Configuration)\Microsoft.WindowsAPICodePack.Shell.dll'/>
-        </Component>
-        -->
-      </Directory>
+      <Component Id='LanExchange.Application.Interfaces.dll' Guid="6822777B-6AD6-483F-BB9D-7B451AE69B21">
+        <File Id='LanExchange.Application.Interfaces.dll' KeyPath='yes' Source='$(var.LibDir)LanExchange.Application.Interfaces.dll'/>
+      </Component>
+      <Component Id='LanExchange.Application.Interfaces.xml' Guid="D667A21F-D7FD-4F34-A220-FCE266333A3D">
+        <File Id='LanExchange.Application.Interfaces.xml' KeyPath='yes' Source='$(var.LibDir)LanExchange.Application.Interfaces.xml'/>
+      </Component>
+      <Component Id='LanExchange.Presentation.Interfaces.dll' Guid="75A04444-D968-4ED1-B5F3-3F7147C42DB9">
+        <File Id='LanExchange.Presentation.Interfaces.dll' KeyPath='yes' Source='$(var.LibDir)LanExchange.Presentation.Interfaces.dll'/>
+      </Component>
+      <Component Id='LanExchange.Presentation.Interfaces.xml' Guid="0FB57C41-31B9-431E-9483-151540156BD2">
+        <File Id='LanExchange.Application.Presentation.xml' KeyPath='yes' Source='$(var.LibDir)LanExchange.Presentation.Interfaces.xml'/>
+      </Component>
+      <Component Id="$(var.PluginNetwork).dll" Guid="84728A8A-6A8D-4467-8296-A87CBB288667">
+        <File Id='$(var.PluginNetwork).dll' KeyPath='yes' Source='$(var.LibDir)$(var.PluginNetwork).dll'/>
+      </Component>
+      <Component Id="$(var.PluginUsers).dll" Guid="7671C1F3-76BF-400B-B8F5-D17A27B2E2B1">
+        <File Id='$(var.PluginUsers).dll' KeyPath='yes' Source='$(var.LibDir)$(var.PluginUsers).dll'/>
+      </Component>
+      <Component Id="$(var.PluginFileSystem).dll" Guid="F6C95C7A-7752-4619-A252-24266D77D0E7">
+        <File Id='$(var.PluginFileSystem).dll' KeyPath='yes' Source='$(var.LibDir)$(var.PluginFileSystem).dll'/>
+      </Component>
+      <Component Id="$(var.PluginShortcut).dll" Guid="58B4D7E9-670C-4087-B9BF-A75613AC1F4F">
+        <File Id='$(var.PluginShortcut).dll' KeyPath='yes' Source='$(var.LibDir)$(var.PluginShortcut).dll'/>
+      </Component>
+      <Component Id="$(var.PluginWMI).dll" Guid="8FC7F9FC-1485-441A-A61A-6015430BAA6F">
+        <File Id='$(var.PluginWMI).dll' KeyPath='yes' Source='$(var.LibDir)$(var.PluginWMI).dll'/>
+      </Component>
+      <!--
+      <Component Id="$(var.PluginTranslit).dll" Guid="7FBA16AD-4D8B-4FF0-B25C-8F6194F834E7">
+        <File Id='$(var.PluginTranslit).dll' KeyPath='yes' Source='$(var.SourceDir)$(var.PluginTranslit).dll'/>
+      </Component>
+      <Component Id="$(var.PluginWin7).dll" Guid="F800769F-5AAB-4407-9DA2-9B9EFCD91630">
+        <File Id='$(var.PluginWin7).dll' KeyPath='yes' Source='$(var.PluginsDir)$(var.PluginWin7)\bin\$(var.Configuration)\$(var.PluginWin7).dll'/>
+      </Component>
+      <Component Id="Microsoft.WindowsAPICodePack.dll" Guid="7D336C44-CC15-4F3D-B0F7-CB77F0532E2B">
+        <File Id='Microsoft.WindowsAPICodePack.dll' KeyPath='yes' Source='$(var.PluginsDir)$(var.PluginWin7)\bin\$(var.Configuration)\Microsoft.WindowsAPICodePack.dll'/>
+      </Component>
+      <Component Id="Microsoft.WindowsAPICodePack.Shell.dll" Guid="84320F78-8FD8-48E8-94A1-DBD2EF916F83">
+        <File Id='Microsoft.WindowsAPICodePack.Shell.dll' KeyPath='yes' Source='$(var.PluginsDir)$(var.PluginWin7)\bin\$(var.Configuration)\Microsoft.WindowsAPICodePack.Shell.dll'/>
+      </Component>
+      -->
       <Directory Id='Addons' Name='Addons'>
         <Component Id="FileSystem.xml" Guid="CB5ADB8A-1A03-4E76-AE68-E969249ECD63">
           <File Id='FileSystem.xml' KeyPath='yes' Source='$(var.AddonsDir)FileSystem.xml'/>

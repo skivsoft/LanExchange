@@ -8,7 +8,7 @@
 <?define UpgradeCode="0B3FF52F-F797-4DBC-BC27-7445B4A991FE"?>
 <?define Manufacturer="Kostya Mikhailyuk"?>
 <?define Description="User-friendly browser of computers for local area network."?>
-<?define SourceDir="$(var.SolutionDir)..\output\$(var.Configuration)\"?>
+<?define SourceDir="$(var.SolutionDir)output\$(var.Configuration)\"?>
 <?define LibDir="$(var.SourceDir)"?>
 <?define AddonsDir="$(var.SourceDir)Addons\"?>
 <?define LangDir="$(var.SourceDir)Languages\"?>
@@ -16,5 +16,7 @@
 <?define PluginUsers="LanExchange.Plugin.Users"?>
 <?define PluginTranslit="LanExchange.Plugin.Translit"?>
 <?define PluginFileSystem="LanExchange.Plugin.FileSystem"?>
+<?define PluginShortcut="LanExchange.Plugin.Shortcut"?>
+<?define PluginWMI="LanExchange.Plugin.WMI"?>
 <?define DefInstallDir="LanExchange" ?>
 <Include />
