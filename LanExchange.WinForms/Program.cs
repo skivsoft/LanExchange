@@ -22,5 +22,10 @@ namespace LanExchange
                 .Resolve<IAppBootstrap>()
                 .Run();
         }
+
+        private static TService Resolve<TService>(this IServiceProvider serviceProvider)
+        {
+            return (TService)serviceProvider.GetService(typeof(TService));
+        }
     }
 }

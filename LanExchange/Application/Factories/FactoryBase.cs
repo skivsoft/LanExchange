@@ -4,14 +4,19 @@ namespace LanExchange.Application.Factories
 {
     internal abstract class FactoryBase
     {
+        private readonly IServiceProvider serviceProvider;
+
         /// <exception cref="ArgumentNullException"></exception>
         protected FactoryBase(IServiceProvider serviceProvider)
         {
             if (serviceProvider == null) throw new ArgumentNullException(nameof(serviceProvider));
 
-            ServiceProvider = serviceProvider;
+            this.serviceProvider = serviceProvider;
         }
 
-        protected IServiceProvider ServiceProvider { get; private set; }
+        protected TService Resolve<TService>()
+        {
+            return (TService)serviceProvider.GetService(typeof(TService));
+        }
     }
 }

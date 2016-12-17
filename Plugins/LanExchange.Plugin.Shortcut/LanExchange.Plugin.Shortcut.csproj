@@ -94,6 +94,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ServiceProviderExtension.cs" />
     <Compile Include="ShortcutFactory.cs" />
     <Compile Include="ShortcutFiller.cs" />
     <Compile Include="ShortcutKeysCommand.cs" />

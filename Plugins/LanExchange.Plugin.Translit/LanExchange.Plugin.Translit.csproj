@@ -54,6 +54,7 @@
     <Compile Include="KazakhCyrillicToLatin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PluginTranslit.cs" />
+    <Compile Include="ServiceProviderExtension.cs" />
     <Compile Include="TranslitStrategyBase.cs" />
   </ItemGroup>
   <ItemGroup>

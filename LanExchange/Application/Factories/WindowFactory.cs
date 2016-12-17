@@ -1,5 +1,4 @@
 ﻿using System;
-using LanExchange.Application.Interfaces.Extensions;
 using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Factories
@@ -14,22 +13,22 @@ namespace LanExchange.Application.Factories
 
         public IAboutView CreateAboutView()
         {
-            return ServiceProvider. Resolve<IAboutView>();
+            return  Resolve<IAboutView>();
         }
 
         public IMainView CreateMainView()
         {
-            return ServiceProvider.Resolve<IMainView>();
+            return Resolve<IMainView>();
         }
 
         public ICheckAvailabilityWindow CreateCheckAvailabilityWindow()
         {
-            return ServiceProvider.Resolve<ICheckAvailabilityWindow>();
+            return Resolve<ICheckAvailabilityWindow>();
         }
 
         public IPanelView CreatePanelView()
         {
-            return ServiceProvider.Resolve<IPanelView>();
+            return Resolve<IPanelView>();
         }
     }
 }
