@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
 using LanExchange.Plugin.Network.NetApi;
 using LanExchange.Presentation.Interfaces;
 
@@ -25,22 +24,28 @@ namespace LanExchange.Plugin.Network
         [Localizable(false)]
         public void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
-            Contract.Requires<ArgumentNullException>(parent != null);
+            if (parent == null) throw new ArgumentNullException(nameof(parent));
 
-            //result.Add(new PanelItemDoubleDot(parent));
+
+            // result.Add(new PanelItemDoubleDot(parent));
+
             foreach (var item in NetApiHelper.NetShareEnum(parent.Name))
             {
                 var si = new ShareInfo(item);
-                //if (!Settings.Settings.Instance.ShowHiddenShares && SI.IsHidden)
-                //    continue;
-                //if (!Settings.Settings.Instance.ShowPrinters && SI.IsPrinter)
-                //    continue;
+                // if (!Settings.Settings.Instance.ShowHiddenShares && SI.IsHidden)
+
+                // continue;
+
+                // if (!Settings.Settings.Instance.ShowPrinters && SI.IsPrinter)
+
+                // continue;
+
                 if (!ShowHiddenShares && si.IsHidden || !ShowPrinters && si.IsPrinter)
                     continue;
                 result.Add(new SharePanelItem(parent, si));
             }
             // enum logged users
-            foreach(var item in NetworkHelper.NetWorkstationUserEnumNames(parent.Name))
+            foreach (var item in NetworkHelper.NetWorkstationUserEnumNames(parent.Name))
             {
                 var si = new ShareInfo();
                 si.Name = item;

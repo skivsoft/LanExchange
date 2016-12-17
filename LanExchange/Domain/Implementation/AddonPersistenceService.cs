@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using LanExchange.Domain.Interfaces;
 using LanExchange.Presentation.Interfaces.Addons;
 using LanExchange.Presentation.Interfaces.Persistence;
@@ -12,7 +11,7 @@ namespace LanExchange.Domain.Implementation
 
         public AddonPersistenceService(ISerializeService serializeService)
         {
-            Contract.Requires<ArgumentNullException>(serializeService != null);
+            if (serializeService == null) throw new ArgumentNullException(nameof(serializeService));
             this.serializeService = serializeService;
         }
 

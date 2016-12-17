@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace LanExchange.Plugin.Windows.Utils
 {
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public enum HookType
     {
         WH_JOURNALRECORD = 0,

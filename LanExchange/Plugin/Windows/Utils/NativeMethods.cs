@@ -77,7 +77,8 @@ namespace LanExchange.Plugin.Windows.Utils
             public IntPtr lParam;
             public int iImage;
             public int iOrder;
-            //if (_WIN32_IE >= 0x0500)
+            // if (_WIN32_IE >= 0x0500)
+
             public int type;
             public IntPtr pvFilter;
         }
@@ -151,19 +152,26 @@ namespace LanExchange.Plugin.Windows.Utils
 
             item.fmt &= ~(HDF_SORTUP | HDF_SORTDOWN | HDF_IMAGE | HDF_BITMAP_ON_RIGHT);
 
-            //if (NativeMethods.HasBuiltinSortIndicators())
+            // if (NativeMethods.HasBuiltinSortIndicators())
+
             {
                 if (order == 1) // ascending
                     item.fmt |= HDF_SORTUP;
                 if (order == 2) // descending
                     item.fmt |= HDF_SORTDOWN;
             }
-            //else
-            //{
-            //    item.mask |= HDI_IMAGE;
-            //    item.fmt |= (HDF_IMAGE | HDF_BITMAP_ON_RIGHT);
-            //    item.iImage = imageIndex;
-            //}
+            // else
+
+            // {
+
+            // item.mask |= HDI_IMAGE;
+
+            // item.fmt |= (HDF_IMAGE | HDF_BITMAP_ON_RIGHT);
+
+            // item.iImage = imageIndex;
+
+            // }
+
 
             SendMessageHDItem(hdrCntl, HDM_SETITEM, columnIndex, ref item);
         }
@@ -176,7 +184,7 @@ namespace LanExchange.Plugin.Windows.Utils
         /// <returns></returns>
         public static int GetScrollPosition(IntPtr listViewHandle, bool horizontalBar)
         {
-            int fnBar = (horizontalBar ? SB_HORZ : SB_VERT);
+            int fnBar = horizontalBar ? SB_HORZ : SB_VERT;
 
             var scrollInfo = new SCROLLINFO();
             scrollInfo.fMask = SIF_POS;

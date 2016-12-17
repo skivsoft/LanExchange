@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Reflection;
 using LanExchange.Application.Interfaces;
@@ -20,12 +19,11 @@ namespace LanExchange.Application.Implementation
         private readonly ILogService logService;
 
         [ImportMany]
-        // ReSharper disable once FieldCanBeMadeReadOnly.Local
         private IEnumerable<IPlugin> plugins;
 
         public PluginManager(ILogService logService)
         {
-            Contract.Requires<ArgumentNullException>(logService != null);
+            if (logService == null) throw new ArgumentNullException(nameof(logService));
 
             this.logService = logService;
             plugins = Enumerable.Empty<IPlugin>();

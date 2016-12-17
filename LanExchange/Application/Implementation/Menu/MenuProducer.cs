@@ -13,8 +13,11 @@ namespace LanExchange.Application.Implementation.Menu
         }
 
         public IMenuElement MainMenu { get; set; }
+
         public IMenuElement TrayMenu { get; set; }
+
         public IMenuElement ComputerMenu { get; set; }
+
         public IMenuElement UserMenu { get; set; }
     }
 }

@@ -12,6 +12,7 @@
         /// The filter text.
         /// </value>
         string FilterText { get; set; }
+
         /// <summary>
         /// Gets the filter count.
         /// </summary>
@@ -19,6 +20,7 @@
         /// The filter count.
         /// </value>
         int FilterCount { get; }
+
         /// <summary>
         /// Gets a value indicating whether this instance has back item.
         /// </summary>
@@ -26,6 +28,7 @@
         /// <c>true</c> if this instance has back item; otherwise, <c>false</c>.
         /// </value>
         bool HasBackItem { get; }
+
         /// <summary>
         /// Applies the filter.
         /// </summary>

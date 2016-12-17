@@ -22,7 +22,8 @@ namespace LanExchange.Plugin.Network
         public DomainPanelItem(PanelItemBase parent, string domain) : base(parent)
         {
             serverInfo = new ServerInfo {Name = domain, Comment = string.Empty};
-        }
+
+       }
 
         [XmlAttribute]
         public override string Name

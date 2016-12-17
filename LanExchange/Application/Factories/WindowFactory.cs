@@ -1,33 +1,34 @@
 ﻿using System;
 using LanExchange.Presentation.Interfaces;
-using LanExchange.Presentation.Interfaces.Extensions;
 
 namespace LanExchange.Application.Factories
 {
     internal sealed class WindowFactory : FactoryBase, IWindowFactory
     {
-        public WindowFactory(IServiceProvider serviceProvider) : base(serviceProvider)
+        /// <exception cref="ArgumentNullException"></exception>
+        public WindowFactory(IServiceProvider serviceProvider)
+            : base(serviceProvider)
         {
         }
 
         public IAboutView CreateAboutView()
         {
-            return serviceProvider.Resolve<IAboutView>();
+            return  Resolve<IAboutView>();
         }
 
         public IMainView CreateMainView()
         {
-            return serviceProvider.Resolve<IMainView>();
+            return Resolve<IMainView>();
         }
 
         public ICheckAvailabilityWindow CreateCheckAvailabilityWindow()
         {
-            return serviceProvider.Resolve<ICheckAvailabilityWindow>();
+            return Resolve<ICheckAvailabilityWindow>();
         }
 
         public IPanelView CreatePanelView()
         {
-            return serviceProvider.Resolve<IPanelView>();
+            return Resolve<IPanelView>();
         }
     }
 }

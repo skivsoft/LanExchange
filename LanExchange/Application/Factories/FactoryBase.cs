@@ -1,17 +1,22 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 
 namespace LanExchange.Application.Factories
 {
     internal abstract class FactoryBase
     {
-        protected readonly IServiceProvider serviceProvider;
+        private readonly IServiceProvider serviceProvider;
 
+        /// <exception cref="ArgumentNullException"></exception>
         protected FactoryBase(IServiceProvider serviceProvider)
         {
-            Contract.Requires<ArgumentNullException>(serviceProvider != null);
+            if (serviceProvider == null) throw new ArgumentNullException(nameof(serviceProvider));
 
             this.serviceProvider = serviceProvider;
+        }
+
+        protected TService Resolve<TService>()
+        {
+            return (TService)serviceProvider.GetService(typeof(TService));
         }
     }
 }

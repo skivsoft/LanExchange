@@ -1,28 +1,29 @@
 ﻿using System;
 using LanExchange.Presentation.Interfaces;
-using LanExchange.Presentation.Interfaces.Extensions;
 
 namespace LanExchange.Application.Factories
 {
     internal sealed class ViewFactory : FactoryBase, IViewFactory
     {
-        public ViewFactory(IServiceProvider serviceProvider) : base(serviceProvider)
+        /// <exception cref="ArgumentNullException"></exception>
+        public ViewFactory(IServiceProvider serviceProvider)
+            : base(serviceProvider)
         {
         }
 
         public IPanelView CreatePanelView()
         {
-            return serviceProvider.Resolve<IPanelView>();
+            return Resolve<IPanelView>();
         }
 
         public IPagesView GetPagesView()
         {
-            return serviceProvider.Resolve<IPagesView>();
+            return Resolve<IPagesView>();
         }
 
         public IStatusPanelView CreateStatusPanelView()
         {
-            return serviceProvider.Resolve<IStatusPanelView>();
+            return Resolve<IStatusPanelView>();
         }
     }
 }

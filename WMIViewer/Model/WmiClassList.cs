@@ -13,11 +13,11 @@ namespace WMIViewer.Model
     internal sealed class WmiClassList
     {
         private static WmiClassList wmiClassList;
-        private bool loaded;
         private readonly List<string> classes;
         private readonly List<string> readOnlyClasses;
         private readonly List<string> includeClasses;
         private readonly List<string> allClasses;
+        private bool loaded;
         private int propCount;
         private int methodCount;
         private ManagementScope namespaceScope;
@@ -32,12 +32,7 @@ namespace WMIViewer.Model
 
         public static WmiClassList Instance
         {
-            get
-            {
-                if (wmiClassList == null)
-                    wmiClassList = new WmiClassList();
-                return wmiClassList;
-            }
+            get { return wmiClassList ?? (wmiClassList = new WmiClassList()); }
         }
 
         public IList<string> Classes
@@ -54,11 +49,6 @@ namespace WMIViewer.Model
         {
             get { return includeClasses; }
         }
-
-        //public IEnumerable<string> AllClasses
-        //{
-        //    get { return m_AllClasses; }
-        //}
 
         public int ClassCount
         {
@@ -80,57 +70,6 @@ namespace WMIViewer.Model
             get { return loaded; }
         }
 
-        private bool ConnectToLocalMachine()
-        {
-            if (namespaceScope != null && namespaceScope.IsConnected)
-                return true;
-            namespaceScope = new ManagementScope(CmdLineArgs.DefaultNamespaceName, null);
-            try
-            {
-                namespaceScope.Connect();
-            }
-            catch (ManagementException ex)
-            {
-                Debug.Print(ex.Message);
-            }
-            return namespaceScope.IsConnected;
-        }
-
-        //public string GetClassQualifiers(ManagementScope scope, string className)
-        //{
-        //    if (scope == null)
-        //    {
-        //        if (!ConnectToLocalMachine()) return string.Empty;
-        //        scope = m_Namespace;
-        //    }
-        //    var sb = new StringBuilder();
-        //    try
-        //    {
-        //        // Gets the property qualifiers.
-        //        var op = new ObjectGetOptions(null, TimeSpan.MaxValue, true);
-        //        var path = new ManagementPath(className);
-        //        using (var mc = new ManagementClass(scope, path, op))
-        //        {
-        //            mc.Options.UseAmendedQualifiers = true;
-        //            foreach (var qd in mc.Qualifiers)
-        //            {
-        //                if (qd.Name.Equals("Description"))
-        //                    continue;
-        //                sb.Append(qd.Name);
-        //                sb.Append("=");
-        //                sb.Append(qd.Value);
-        //                sb.Append(", ");
-        //            }
-        //        }
-        //    }
-        //    catch(ManagementException ex)
-        //    {
-        //        Debug.Print(ex.Message);
-        //    }
-
-        //    return sb.ToString();
-        //}
-
         public string GetClassDescription(ManagementScope scope, string className)
         {
             if (scope == null)
@@ -138,6 +77,7 @@ namespace WMIViewer.Model
                 if (!ConnectToLocalMachine()) return string.Empty;
                 scope = namespaceScope;
             }
+
             var result = string.Empty;
             try
             {
@@ -156,12 +96,12 @@ namespace WMIViewer.Model
                         }
                 }
             }
-            catch(ManagementException ex)
+            catch (ManagementException ex)
             {
                 Debug.Print(ex.Message);
             }
-            return result;
 
+            return result;
         }
 
         public string GetPropertyDescription(string className, string propName)
@@ -187,6 +127,7 @@ namespace WMIViewer.Model
             {
                 Debug.Print(ex.Message);
             }
+
             return result;
         }
 
@@ -216,6 +157,7 @@ namespace WMIViewer.Model
             {
                 Debug.Print(ex.Message);
             }
+
             return result;
         }
 
@@ -241,57 +183,8 @@ namespace WMIViewer.Model
             {
                 Debug.Print(ex.Message);
             }
+
             return result;
-        }
-
-        public static string GetPropertyValue(ManagementScope scope, string className, string propName)
-        {
-            if (scope == null)
-                throw new ArgumentNullException(nameof(scope));
-            var result = string.Empty;
-            try
-            {
-                scope.Connect();
-                var query = new ObjectQuery("SELECT * FROM " + className);
-                using (var searcher = new ManagementObjectSearcher(scope, query))
-                {
-                    foreach (ManagementObject queryObj in searcher.Get())
-                    {
-                        result = queryObj[propName].ToString();
-                        break;
-                    }
-                }
-
-            }
-            catch (ManagementException ex)
-            {
-                Debug.Print(ex.Message);
-            }
-            return result;
-        }
-
-        public static void SetPropertyValue(ManagementScope scope, string className, string propName, string value)
-        {
-            if (scope == null)
-                throw new ArgumentNullException(nameof(scope));
-            try
-            {
-                scope.Connect();
-                var query = new ObjectQuery("SELECT * FROM " + className);
-                using (var searcher = new ManagementObjectSearcher(scope, query))
-                {
-                    foreach (ManagementObject queryObj in searcher.Get())
-                    {
-                        queryObj[propName] = value;
-                        queryObj.Put();
-                        break;
-                    }
-                }
-            }
-            catch (ManagementException ex)
-            {
-                Debug.Print(ex.Message);
-            }
         }
 
         public void EnumLocalMachineClasses()
@@ -304,18 +197,22 @@ namespace WMIViewer.Model
                 {
                     // skip WMI events
                     if (wmiClass.Derivation.Contains("__Event")) continue;
+
                     // skip classes in exclude list
                     var className = wmiClass["__CLASS"].ToString();
                     if (!className.StartsWith("Win32_", StringComparison.Ordinal)) continue;
-                    // skip classes without qualifiers (ex.: Win32_Perf*)
+
+                    // skip classes without qualifiers(ex.: Win32_Perf*)
                     if (wmiClass.Qualifiers.Count == 0) continue;
-                    //if (m_ExcludeClasses.Contains(ClassName)) continue;
+
+                    // if (m_ExcludeClasses.Contains(ClassName)) continue;
                     var info = new QualifiersInfo(wmiClass.Qualifiers);
                     if (info.IsAssociation || !info.IsDynamic || info.IsPerf) continue;
                     allClasses.Add(className);
                     var isInclude = includeClasses.Contains(className);
                     if (!isInclude && !info.IsSupportsModify) continue;
                     propCount += wmiClass.Properties.Count;
+
                     // count implemented methods
                     var foundMethod = WmiHelper.HasImplementedMethod(wmiClass);
                     if (foundMethod)
@@ -328,10 +225,28 @@ namespace WMIViewer.Model
                         readOnlyClasses.Add(className);
                 }
             }
+
             allClasses.Sort();
             classes.Sort();
             readOnlyClasses.Sort();
             loaded = true;
+        }
+
+        private bool ConnectToLocalMachine()
+        {
+            if (namespaceScope != null && namespaceScope.IsConnected)
+                return true;
+            namespaceScope = new ManagementScope(CmdLineArgs.DefaultNamespaceName, null);
+            try
+            {
+                namespaceScope.Connect();
+            }
+            catch (ManagementException ex)
+            {
+                Debug.Print(ex.Message);
+            }
+
+            return namespaceScope.IsConnected;
         }
     }
 }

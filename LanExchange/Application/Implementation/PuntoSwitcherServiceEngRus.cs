@@ -9,8 +9,10 @@ namespace LanExchange.Application.Implementation
     {
         [Localizable(false)] 
         private readonly string[] abc = 
-        {"АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя", 
-         "F<DULT~:PBQRKVYJGHCNEA{WXIO}SM\">Zf,dult`;pbqrkvyjghcnea[wxio]sm'.z"};
+        {
+            "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя", 
+            "F<DULT~:PBQRKVYJGHCNEA{WXIO}SM\">Zf,dult`;pbqrkvyjghcnea[wxio]sm'.z"
+        };
 
         public bool IsValidChar(char ch)
         {
@@ -45,7 +47,7 @@ namespace LanExchange.Application.Implementation
         /// <returns></returns>
         public bool SpecificContains(string s, string what)
         {
-            if (String.IsNullOrEmpty(what))
+            if (string.IsNullOrEmpty(what))
                 return false;
             for (int i = 0; i < s.Length - what.Length + 1; i++)
             {
@@ -68,8 +70,10 @@ namespace LanExchange.Application.Implementation
                             break;
                         }
                 }
+
                 if (isEqual) return true;
             }
+
             return false;
         }
     }

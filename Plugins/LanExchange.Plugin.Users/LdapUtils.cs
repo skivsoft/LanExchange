@@ -11,10 +11,10 @@ namespace LanExchange.Plugin.Users
         [Localizable(false)]
         internal static string GetUserPath(string userName)
         {
-            string result = String.Empty;
+            string result = string.Empty;
             using (var searcher = new DirectorySearcher(PluginUsers.LDAP_PREFIX))
             {
-                searcher.Filter = String.Format("(&(objectCategory=person)(sAMAccountName={0}))", userName);
+                searcher.Filter = string.Format("(&(objectCategory = person)(sAMAccountName={0}))", userName);
                 var found = searcher.FindOne();
                 if (found != null)
                     result = found.Path;
@@ -27,12 +27,13 @@ namespace LanExchange.Plugin.Users
         {
             var index = ldapPath.IndexOf(',');
             if (index == -1)
-                return String.Empty;
-            return "LDAP://" + ldapPath.Remove(0, index + 1);
+                return string.Empty;
+            return "LDAP:// " + ldapPath.Remove(0, index + 1);
+
         }
 
         /// <summary>
-        /// Split distinguished name (AdsPath) to array of string.
+        /// Split distinguished name(AdsPath) to array of string.
         /// This function skips chars after '\'.
         /// </summary>
         /// <param name="path"></param>
@@ -83,7 +84,8 @@ namespace LanExchange.Plugin.Users
                     if (numOrgUnit == 0)
                         break;
                 }
-            return "LDAP://" + String.Join(",", list.ToArray());
+            return "LDAP:// " + string.Join(",", list.ToArray());
+
         }
 
         [Localizable(false)]

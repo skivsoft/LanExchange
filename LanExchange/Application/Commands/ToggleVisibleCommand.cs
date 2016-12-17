@@ -1,6 +1,5 @@
-﻿using LanExchange.Presentation.Interfaces;
-using System;
-using System.Diagnostics.Contracts;
+﻿using System;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Commands
 {
@@ -10,7 +9,7 @@ namespace LanExchange.Application.Commands
 
         public ToggleVisibleCommand(IMainView mainView)
         {
-            Contract.Requires<ArgumentNullException>(mainView != null);
+            if (mainView == null) throw new ArgumentNullException(nameof(mainView));
 
             this.mainView = mainView;
         }

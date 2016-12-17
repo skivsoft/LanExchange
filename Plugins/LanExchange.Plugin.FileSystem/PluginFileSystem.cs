@@ -15,7 +15,7 @@ namespace LanExchange.Plugin.FileSystem
         {
             var provider = serviceProvider;
 
-            ImageManager = (IImageManager) provider.GetService(typeof (IImageManager));
+            ImageManager = (IImageManager)provider.GetService(typeof(IImageManager));
 
             // Setup resource manager
             var translationService = (ITranslationService)provider.GetService(typeof(ITranslationService));

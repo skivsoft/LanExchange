@@ -54,7 +54,7 @@ namespace LanExchange.Plugin.FileSystem
             {
                 if (IsDirectory)
                     return (fileInfo.Attributes & (FileAttributes.Hidden | FileAttributes.System)) != 0
-                               ? PanelImageNames.FOLDER + PanelImageNames.HIDDEN_POSTFIX
+                               ? PanelImageNames.FOLDER + PanelImageNames.HiddenPostfix
                                : PanelImageNames.FOLDER;
                 return FullName;
             }

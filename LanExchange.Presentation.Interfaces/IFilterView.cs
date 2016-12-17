@@ -12,6 +12,7 @@
         /// <c>true</c> if this instance is visible; otherwise, <c>false</c>.
         /// </value>
         bool IsVisible { get; set; }
+
         /// <summary>
         /// Gets the presenter.
         /// </summary>
@@ -20,17 +21,18 @@
         /// </value>
         IFilterPresenter Presenter { get; }
 
-        /// <summary>
-        /// Updates from model.
-        /// </summary>
-        // //TODO: subscribe on model changed event
-        //void UpdateFromModel(IFilterModel model);
+        // TODO: subscribe on model changed event
+        // void UpdateFromModel(IFilterModel model);
+
         /// <summary>
         /// Does the filter count changed.
         /// </summary>
         void DoFilterCountChanged();
-        //void FocusAndKeyPress(KeyPressEventArgs e);
-        //void FocusMe();
+
+        // void FocusAndKeyPress(KeyPressEventArgs e);
+
+        // void FocusMe();
+
         /// <summary>
         /// Sets the filter text.
         /// </summary>

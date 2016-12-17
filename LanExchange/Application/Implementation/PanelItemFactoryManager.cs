@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
 using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Implementation
@@ -14,7 +13,7 @@ namespace LanExchange.Application.Implementation
 
         public PanelItemFactoryManager(IPanelColumnManager columnManager)
         {
-            Contract.Requires<ArgumentNullException>(columnManager != null);
+            if (columnManager == null) throw new ArgumentNullException(nameof(columnManager));
 
             this.columnManager = columnManager;
 
@@ -24,7 +23,7 @@ namespace LanExchange.Application.Implementation
 
         public void RegisterFactory<TPanelItem>(IPanelItemFactory factory) where TPanelItem : PanelItemBase
         {
-            Contract.Requires<ArgumentNullException>(factory != null);
+            if (factory == null) throw new ArgumentNullException(nameof(factory));
 
             types.Add(typeof(TPanelItem), factory);
             factory.RegisterColumns(columnManager);
@@ -45,7 +44,7 @@ namespace LanExchange.Application.Implementation
 
         public PanelItemBase CreateDefaultRoot(string typeName)
         {
-            foreach(var pair in types)
+            foreach (var pair in types)
                 if (pair.Key.Name.Equals(typeName))
                     return pair.Value.CreateDefaultRoot();
             return null;
@@ -54,7 +53,7 @@ namespace LanExchange.Application.Implementation
         public void CreateDefaultRoots()
         {
             defaultRoots.Clear();
-            foreach(var pair in types)
+            foreach (var pair in types)
             try
             {
                 var root = pair.Value.CreateDefaultRoot();
@@ -81,12 +80,12 @@ namespace LanExchange.Application.Implementation
 
         public Type[] ToArray()
         {
-            var result = new Type[types.Count+2];
+            var result = new Type[types.Count + 2];
             int i = 0;
             foreach (var key in types.Keys)
                 result[i++] = key;
-            result[types.Count] = typeof (PanelItemRootBase);
-            result[types.Count + 1] = typeof (PanelItemDoubleDot);
+            result[types.Count] = typeof(PanelItemRootBase);
+            result[types.Count + 1] = typeof(PanelItemDoubleDot);
             return result;
         }
 

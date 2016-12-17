@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Windows.Forms;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.WinForms.Properties;
@@ -18,7 +17,7 @@ namespace LanExchange.Presentation.WinForms.Forms
         
         public AboutForm(IAboutPresenter presenter)
         {
-            Contract.Requires<ArgumentNullException>(presenter != null);
+            if (presenter == null) throw new ArgumentNullException(nameof(presenter));
 
             InitializeComponent();
             this.presenter = presenter;
@@ -54,8 +53,8 @@ namespace LanExchange.Presentation.WinForms.Forms
             if (boxDetails != null) return;
             boxDetails = new RichTextBox();
             var rect = ClientRectangle;
-			boxDetails.Font = Font;
-            boxDetails.SetBounds(rect.Left+16, rect.Top+16, rect.Width-32, rect.Height-bShowDetails.Height-32);
+            boxDetails.Font = Font;
+            boxDetails.SetBounds(rect.Left + 16, rect.Top + 16, rect.Width - 32, rect.Height - bShowDetails.Height - 32);
             boxDetails.Visible = false;
             boxDetails.RightToLeft = RightToLeftValue ? RightToLeft.Yes : RightToLeft.No;
             boxDetails.ReadOnly = true;

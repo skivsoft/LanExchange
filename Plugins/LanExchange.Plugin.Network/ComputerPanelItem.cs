@@ -34,7 +34,8 @@ namespace LanExchange.Plugin.Network
         public ComputerPanelItem(PanelItemBase parent, string name) : base(parent)
         {
             serverInfo = new ServerInfo { Name = name };
-        }
+
+       }
 
         public ServerInfo SI
         {
@@ -125,8 +126,8 @@ namespace LanExchange.Plugin.Network
             get
             {
                 if (Parent == null)
-                    return PanelImageNames.COMPUTER + PanelImageNames.GREEN_POSTFIX;
-                return IsReachable ? PanelImageNames.COMPUTER : PanelImageNames.COMPUTER + PanelImageNames.RED_POSTFIX;
+                    return PanelImageNames.COMPUTER + PanelImageNames.GreenPostfix;
+                return IsReachable ? PanelImageNames.COMPUTER : PanelImageNames.COMPUTER + PanelImageNames.RedPostfix;
             }
         }
 
@@ -138,7 +139,7 @@ namespace LanExchange.Plugin.Network
                 {
                     case PanelImageNames.COMPUTER:
                         return Resources.ImageLegendText_ComputerNormal;
-                    case PanelImageNames.COMPUTER + PanelImageNames.HIDDEN_POSTFIX:
+                    case PanelImageNames.COMPUTER + PanelImageNames.HiddenPostfix:
                         return Resources.ImageLegendText_ComputerDisabled;
                     default:
                         return string.Empty;

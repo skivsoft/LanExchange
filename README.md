@@ -5,6 +5,7 @@ User-friendly browser of computers for local area network.
 ## Features
 
 ### General
+
 - Browse computers of your local area network.
 - Browse users and groups of your enterprise.
 - Browse files and directories of your computer.
@@ -15,6 +16,7 @@ User-friendly browser of computers for local area network.
 - SDK for plugins developers written on C#.
 
 ### Addons
+
 - System utilities for selected computer.
 - WMI administration tool for selected computer.
 - Send email to selected user.

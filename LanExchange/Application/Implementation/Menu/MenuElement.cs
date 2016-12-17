@@ -1,7 +1,6 @@
 ﻿using System;
-using LanExchange.Presentation.Interfaces.Menu;
-using System.Diagnostics.Contracts;
 using System.ComponentModel;
+using LanExchange.Presentation.Interfaces.Menu;
 using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Implementation.Menu
@@ -16,9 +15,9 @@ namespace LanExchange.Application.Implementation.Menu
 
         public MenuElement(string text, string shortcut, ICommand command, MenuElementKind kind = MenuElementKind.Normal)
         {
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(text));
-            Contract.Requires<ArgumentNullException>(shortcut != null);
-            Contract.Requires<ArgumentNullException>(command != null);
+            if (string.IsNullOrEmpty(text)) throw new ArgumentNullException(nameof(text));
+            if (shortcut == null) throw new ArgumentNullException(nameof(shortcut));
+            if (command == null) throw new ArgumentNullException(nameof(command));
 
             this.text = text;
             this.shortcut = shortcut;
@@ -32,7 +31,7 @@ namespace LanExchange.Application.Implementation.Menu
 
         public void Accept(IMenuElementVisitor visitor)
         {
-            Contract.Requires<ArgumentNullException>(visitor != null);
+            if (visitor == null) throw new ArgumentNullException(nameof(visitor));
 
             visitor.VisitMenuElement(text, shortcut, command, kind == MenuElementKind.Default);
         }

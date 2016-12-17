@@ -25,12 +25,14 @@ namespace LanExchange.Plugin.Users
         {
             get
             {
-                //return "CN=" + base.FullName;
+                // return "CN=" + base.FullName;
+
                 return AdsPath;
             }
         }
 
-        //[XmlAttribute]
+        // [XmlAttribute]
+
         public string AdsPath { get; set; }
 
         [XmlAttribute]
@@ -100,7 +102,7 @@ namespace LanExchange.Plugin.Users
         {
             get
             {
-                return IsAccountDisabled ? PanelImageNames.USER + PanelImageNames.RED_POSTFIX : PanelImageNames.USER;
+                return IsAccountDisabled ? PanelImageNames.USER + PanelImageNames.RedPostfix : PanelImageNames.USER;
             }
         }
 

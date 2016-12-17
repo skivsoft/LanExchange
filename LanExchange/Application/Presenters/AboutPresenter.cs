@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Text;
 using LanExchange.Application.Interfaces;
@@ -10,7 +9,7 @@ using LanExchange.Properties;
 namespace LanExchange.Application.Presenters
 {
     /// <summary>
-    /// Presenter for Settings (model) and AboutForm (view).
+    /// Presenter for Settings(model) and AboutForm(view).
     /// </summary>
     [Localizable(false)]
     internal sealed class AboutPresenter : PresenterBase<IAboutView>, IAboutPresenter
@@ -24,9 +23,9 @@ namespace LanExchange.Application.Presenters
             ITranslationService translationService,
             IProcessService processService)
         {
-            Contract.Requires<ArgumentNullException>(model != null);
-            Contract.Requires<ArgumentNullException>(translationService != null);
-            Contract.Requires<ArgumentNullException>(processService != null);
+            if (model == null) throw new ArgumentNullException(nameof(model));
+            if (translationService == null) throw new ArgumentNullException(nameof(translationService));
+            if (processService == null) throw new ArgumentNullException(nameof(processService));
 
             this.model = model;
             this.translationService = translationService;
@@ -56,7 +55,7 @@ namespace LanExchange.Application.Presenters
         public string GetDetailsRtf()
         {
             var sb = new StringBuilder();
-            //sb.Append(@"{\rtf1\ansi");
+            // sb.Append(@"{\rtf1\ansi");
             sb.Append(@"{\rtf1\ansi\deff0{\fonttbl{\f0 Microsoft Sans Serif;}}"); // \fnil\fcharset204
             sb.Append(@"\viewkind4\uc1\pard\f0\fs17 ");
 

@@ -4,7 +4,7 @@ namespace LanExchange.Application.Commands
 {
     internal sealed class NullCommand : ICommand
     {
-        private static readonly ICommand instance = new NullCommand();
+        private static readonly ICommand NullInstance = new NullCommand();
 
         private NullCommand()
         {
@@ -12,7 +12,7 @@ namespace LanExchange.Application.Commands
 
         public static ICommand Instance
         {
-            get { return instance; }
+            get { return NullInstance; }
         }
 
         public bool Enabled

@@ -25,7 +25,7 @@ namespace LanExchange.Plugin.FileSystem
 
         public int CompareTo(ColumnDrive other)
         {
-            return String.Compare(Name, other.Name, StringComparison.CurrentCulture);
+            return string.Compare(Name, other.Name, StringComparison.CurrentCulture);
         }
 
         public override string ToString()

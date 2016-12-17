@@ -1,26 +1,26 @@
-﻿## LanExchange 3.2.104
+﻿# Change log
 
-### Main
+## LanExchange 4.0.0
+
+- [Changed] Upgrade to .NET 4.6.1
+
+## LanExchange 3.2.104
 
 - [Fixed] #3: Conflict with October 2014 Windows patches
 - [Added] Windows 10 detection
-
-### Addons
 - [Added] Far Manager command for files and directories
 - [Added] Total Commander command for files and directories
 
 ## LanExchange 3.1.102
+
 - [Changed] Enter key after filtering should activate default action on focused item
 
 ## LanExchange 3.1.101
 
-### Main
 - [Fixed] Wrong current panel item for context menu of info panel
 - [Added] Shows cmdline in tooltip of item's context menu
 - [Added] Check computer availability (via ping) before run external command
 - [Added] Ukrainian translation
-
-### Addons
 - [Added] User name in command "Send Email" for current user
 - [Changed] Addons format simplified
 - [Added] Ping command for computers
@@ -28,6 +28,7 @@
 
 
 ## LanExchange 2.0
+
 - Drag&Drop labels from info panel to external application
 - Drag&Drop selected items to external application
 - Copy column values of selected items to clipboard from context menu

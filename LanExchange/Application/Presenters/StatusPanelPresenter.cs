@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Presenters
@@ -17,10 +16,10 @@ namespace LanExchange.Application.Presenters
             ISystemInformationService systemInformation,
             IImageManager imageManager)
         {
-            Contract.Requires<ArgumentNullException>(shellService != null);
-            Contract.Requires<ArgumentNullException>(screenService != null);
-            Contract.Requires<ArgumentNullException>(systemInformation != null);
-            Contract.Requires<ArgumentNullException>(imageManager != null);
+            if (shellService == null) throw new ArgumentNullException(nameof(shellService));
+            if (screenService == null) throw new ArgumentNullException(nameof(screenService));
+            if (systemInformation == null) throw new ArgumentNullException(nameof(systemInformation));
+            if (imageManager == null) throw new ArgumentNullException(nameof(imageManager));
 
             this.shellService = shellService;
             this.screenService = screenService;

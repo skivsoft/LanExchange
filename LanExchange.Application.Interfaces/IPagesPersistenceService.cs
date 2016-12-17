@@ -3,6 +3,7 @@
     public interface IPagesPersistenceService
     {
         PagesDto LoadPages();
+
         void SavePages(PagesDto pages);
     }
 }

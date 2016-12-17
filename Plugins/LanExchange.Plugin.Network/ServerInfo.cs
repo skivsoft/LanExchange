@@ -17,9 +17,12 @@ namespace LanExchange.Plugin.Network
         /// <summary>
         /// Constructor without params is required for XML-serialization.
         /// </summary>
-        //public ServerInfo()
-        //{
-        //}
+        // public ServerInfo()
+
+        // {
+
+        // }
+
         public static ServerInfo FromNetApi32(SERVER_INFO_101 info)
         {
             var result = new ServerInfo();

@@ -13,7 +13,8 @@ namespace LanExchange.Plugin.Users
         {
             if (path == null) return string.Empty;
 
-            if (!path.ToUpper(CultureInfo.InvariantCulture).StartsWith("LDAP://"))
+            if (!path.ToUpper(CultureInfo.InvariantCulture).StartsWith("LDAP:// "))
+
                 return string.Empty;
 
             var list = path.Remove(0, 7).Split(',');

@@ -18,8 +18,10 @@ namespace LanExchange.Application.Presenters
                 {
                     model.FilterText = value;
                     model.ApplyFilter();
-                    //TODO hide model
-                    //View.UpdateFromModel(model);
+                    // TODO hide model
+
+                    // View.UpdateFromModel(model);
+
                     View.DoFilterCountChanged();
                 }
                 View.IsVisible = IsFiltered;
@@ -30,7 +32,7 @@ namespace LanExchange.Application.Presenters
         {
             get
             {
-                return !String.IsNullOrEmpty(filter);
+                return !string.IsNullOrEmpty(filter);
             }
         }
 
@@ -47,8 +49,10 @@ namespace LanExchange.Application.Presenters
                 View.SetFilterText(value.FilterText);
                 model = value;
                 model.ApplyFilter();
-                //TODO hide model
-                //View.UpdateFromModel(model);
+                // TODO hide model
+
+                // View.UpdateFromModel(model);
+
                 View.DoFilterCountChanged();
             }
         }

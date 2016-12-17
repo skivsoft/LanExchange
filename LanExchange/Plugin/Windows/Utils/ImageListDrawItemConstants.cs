@@ -8,7 +8,6 @@ namespace LanExchange.Plugin.Windows.Utils
     /// drawn
     /// </summary>
     [Flags]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public enum ImageListDrawItemConstants
     {
         /// <summary>

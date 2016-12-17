@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.WinForms.Controls;
 using LanExchange.Presentation.WinForms.Forms;
@@ -13,7 +12,7 @@ namespace LanExchange.Presentation.WinForms
     {
         public static IContainerWrapper RegisterPresentationLayer(this IContainerWrapper container)
         {
-            Contract.Requires<ArgumentNullException>(container != null);
+            if (container == null) throw new ArgumentNullException(nameof(container));
 
             // Application
             container.RegisterSingleton<IAppView, AppView>();

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Forms;
+using WMIViewer.Extensions;
 using WMIViewer.Model;
 using WMIViewer.Presenter;
 using WMIViewer.Properties;
@@ -29,7 +30,8 @@ namespace WMIViewer.UI
         [Localizable(false)]
         public void UpdateTitle()
         {
-            var description = WmiClassList.GetPropertyValue(presenter.Namespace, "Win32_OperatingSystem",
+            var description = presenter.ManagementScope.GetPropertyValue(
+                "Win32_OperatingSystem",
                 "Description");
             if (string.IsNullOrEmpty(description))
                 Text = @"\\" + args.ComputerName;
@@ -41,21 +43,23 @@ namespace WMIViewer.UI
         public void SetArgsToControls()
         {
             lClass.Text = string.Format(CultureInfo.InvariantCulture, @"{0}\{1}", args.NamespaceName, args.ClassName);
-            eClass.Text = WmiClassList.GetPropertyValue(presenter.Namespace, args.ClassName, "Caption");
+            eClass.Text = presenter.ManagementScope.GetPropertyValue(args.ClassName, "Caption");
             lProperty.Text = "&" + args.PropertyName;
-            lDescription.Text = WmiClassList.Instance.GetPropertyDescription(args.ClassName, 
+            lDescription.Text = WmiClassList.Instance.GetPropertyDescription(
+                args.ClassName, 
                 args.PropertyName);
-            oldValue = WmiClassList.GetPropertyValue(presenter.Namespace, args.ClassName,
+            oldValue = presenter.ManagementScope.GetPropertyValue(
+                args.ClassName,
                 args.PropertyName);
             eProp.Text = oldValue;
             eProp.ReadOnly = !WmiClassList.Instance.IsPropertyEditable(args.ClassName, args.PropertyName);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             if (!eProp.ReadOnly && !oldValue.Equals(eProp.Text))
             {
-                WmiClassList.SetPropertyValue(presenter.Namespace, args.ClassName, args.PropertyName, eProp.Text);
+                presenter.ManagementScope.SetPropertyValue(args.ClassName, args.PropertyName, eProp.Text);
             }
         }
     }

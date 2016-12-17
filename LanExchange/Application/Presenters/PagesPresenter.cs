@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using LanExchange.Application.Interfaces;
 using LanExchange.Application.Interfaces.EventArgs;
 using LanExchange.Application.Interfaces.Extensions;
@@ -14,6 +13,7 @@ namespace LanExchange.Application.Presenters
         private readonly IImageManager imageManager;
         private readonly IPanelColumnManager panelColumns;
         private readonly IClipboardService clipboardService;
+        private bool escapeDown;
 
         public event EventHandler PanelViewFocusedItemChanged;
         public event EventHandler PanelViewFilterTextChanged;
@@ -25,11 +25,11 @@ namespace LanExchange.Application.Presenters
             IPanelColumnManager panelColumns,
             IClipboardService clipboardService)
         {
-            Contract.Requires<ArgumentNullException>(model != null);
-            Contract.Requires<ArgumentNullException>(pagesService != null);
-            Contract.Requires<ArgumentNullException>(imageManager != null);
-            Contract.Requires<ArgumentNullException>(panelColumns != null);
-            Contract.Requires<ArgumentNullException>(clipboardService != null);
+            if (model == null) throw new ArgumentNullException(nameof(model));
+            if (pagesService == null) throw new ArgumentNullException(nameof(pagesService));
+            if (imageManager == null) throw new ArgumentNullException(nameof(imageManager));
+            if (panelColumns == null) throw new ArgumentNullException(nameof(panelColumns));
+            if (clipboardService == null) throw new ArgumentNullException(nameof(clipboardService));
 
             this.model = model;
             this.pagesService = pagesService;
@@ -53,37 +53,37 @@ namespace LanExchange.Application.Presenters
                 return false;
 
             return false;
-            //TODO hide model
-            //return sourcePanel.Presenter.Objects.Count > 1;
+            // TODO hide model
+            // return sourcePanel.Presenter.Objects.Count > 1;
         }
 
         public void CommandSendToNewTab()
         {
-            //if (!CanSendToNewTab()) return;
-            //var newTabName = m_Model.GenerateTabName();
-            //var sourcePV = View.ActivePanelView;
-            //var sourceObjects = sourcePV.Presenter.Objects;
-            //var destObjects = App.Resolve<IPanelModel>();
-            //destObjects.TabName = newTabName;
-            //destObjects.DataType = sourceObjects.DataType;
-            ////destObjects.CurrentPath.Push(PanelItemRoot.ROOT_OF_USERITEMS);
+            // if (!CanSendToNewTab()) return;
+            // var newTabName = m_Model.GenerateTabName();
+            // var sourcePV = View.ActivePanelView;
+            // var sourceObjects = sourcePV.Presenter.Objects;
+            // var destObjects = App.Resolve<IPanelModel>();
+            // destObjects.TabName = newTabName;
+            // destObjects.DataType = sourceObjects.DataType;
+            //// destObjects.CurrentPath.Push(PanelItemRoot.ROOT_OF_USERITEMS);
 
-            //foreach (int index in sourcePV.SelectedIndexes)
-            //{
-            //    var panelItem = sourceObjects.GetItemAt(index);
-            //    if (panelItem.GetType().Name.Equals(destObjects.DataType))
-            //    {
-            //        // add item to new panel
-            //        var newItem = (PanelItemBase) panelItem.Clone();
-            //        newItem.Parent = null;
-            //        destObjects.Items.Add(newItem);
-            //    }
-            //}
-            ////destObjects.SyncRetrieveData(true);
+            // foreach (int index in sourcePV.SelectedIndexes)
+            // {
+            // var panelItem = sourceObjects.GetItemAt(index);
+            // if (panelItem.GetType().Name.Equals(destObjects.DataType))
+            // {
+            // // add item to new panel
+            // var newItem = (PanelItemBase)panelItem.Clone();
+            // newItem.Parent = null;
+            // destObjects.Items.Add(newItem);
+            // }
+            // }
+            //// destObjects.SyncRetrieveData(true);
             //// add tab
-            //m_Model.AddTab(destObjects);
-            ////m_View.SelectedIndex = m_Model.Count - 1;
-            //View.ActivePanelView.Presenter.UpdateItemsAndStatus();
+            // m_Model.AddTab(destObjects);
+            //// m_View.SelectedIndex = m_Model.Count - 1;
+            // View.ActivePanelView.Presenter.UpdateItemsAndStatus();
         }
 
         public bool CanPasteItems()
@@ -100,8 +100,8 @@ namespace LanExchange.Application.Presenters
                 return false;
 
             return false;
-            //TODO hide model
-            //return !View.ActivePanelView.Presenter.Objects.TabName.Equals(items.Context);
+            // TODO hide model
+            // return !View.ActivePanelView.Presenter.Objects.TabName.Equals(items.Context);
         }
 
         public void CommandPasteItems()
@@ -112,53 +112,53 @@ namespace LanExchange.Application.Presenters
             var items = (PanelItemBaseHolder)obj.GetData(typeof(PanelItemBaseHolder));
             var destObjects = model.GetAt(model.SelectedIndex);
             destObjects.DataType = items.DataType;
-            //destObjects.CurrentPath.Push(PanelItemRoot.ROOT_OF_USERITEMS);
+            // destObjects.CurrentPath.Push(PanelItemRoot.ROOT_OF_USERITEMS);
             foreach (var panelItem in items)
                 if (panelItem.GetType().Name.Equals(destObjects.DataType))
                 {
                     if (destObjects.Contains(panelItem))
                         continue;
                     // add item to new panel
-                    var newItem = (PanelItemBase) panelItem.Clone();
-                    //newItem.Parent = PanelItemRootBase.ROOT_OF_USERITEMS;
+                    var newItem = (PanelItemBase)panelItem.Clone();
+                    // newItem.Parent = PanelItemRootBase.ROOT_OF_USERITEMS;
                     destObjects.Items.Add(newItem);
                 }
             destObjects.AsyncRetrieveData(true);
-            //m_View.ActivePanelView.Presenter.UpdateItemsAndStatus();
+            // m_View.ActivePanelView.Presenter.UpdateItemsAndStatus();
         }
 
         public void CommandDeleteItems()
         {
             // TODO hide model
-            //var panelView = View.ActivePanelView;
-            //if (panelView == null) return;
-            //var indexes = panelView.SelectedIndexes.GetEnumerator();
-            //if (!indexes.MoveNext()) return;
+            // var panelView = View.ActivePanelView;
+            // if (panelView == null) return;
+            // var indexes = panelView.SelectedIndexes.GetEnumerator();
+            // if (!indexes.MoveNext()) return;
 
 
-            //var modified = false;
-            //var firstIndex = -1;
+            // var modified = false;
+            // var firstIndex = -1;
 
-            //foreach (int index in panelView.SelectedIndexes)
-            //{
-            //    var comp = panelView.Presenter.Objects.GetItemAt(index);
-            //    if (comp.ImageName.Contains(PanelImageNames.GREEN_POSTFIX) || comp.ImageName.Contains(PanelImageNames.HIDDEN_POSTFIX))
-            //    {
-            //        if (firstIndex == -1)
-            //            firstIndex = index-1;
-            //        panelView.Presenter.Objects.Items.Remove(comp);
-            //        modified = true;
-            //    }
-            //}
-            //panelView.ClearSelected();
-            //if (modified)
-            //{
-            //    if (firstIndex < 0 || firstIndex > panelView.Presenter.Objects.FilterCount - 1)
-            //        firstIndex = panelView.Presenter.Objects.FilterCount - 1;
-            //    if (firstIndex >= 0)
-            //        panelView.Presenter.Objects.FocusedItem = panelView.Presenter.Objects.GetItemAt(firstIndex);
-            //    panelView.Presenter.Objects.AsyncRetrieveData(false);
-            //}
+            // foreach (int index in panelView.SelectedIndexes)
+            // {
+            // var comp = panelView.Presenter.Objects.GetItemAt(index);
+            // if (comp.ImageName.Contains(PanelImageNames.GREEN_POSTFIX) || comp.ImageName.Contains(PanelImageNames.HIDDEN_POSTFIX))
+            // {
+            // if (firstIndex == -1)
+            // firstIndex = index - 1;
+            // panelView.Presenter.Objects.Items.Remove(comp);
+            // modified = true;
+            // }
+            // }
+            // panelView.ClearSelected();
+            // if (modified)
+            // {
+            // if (firstIndex < 0 || firstIndex > panelView.Presenter.Objects.FilterCount - 1)
+            // firstIndex = panelView.Presenter.Objects.FilterCount - 1;
+            // if (firstIndex >= 0)
+            // panelView.Presenter.Objects.FocusedItem = panelView.Presenter.Objects.GetItemAt(firstIndex);
+            // panelView.Presenter.Objects.AsyncRetrieveData(false);
+            // }
         }
 
         public void CommandCloseTab()
@@ -185,24 +185,24 @@ namespace LanExchange.Application.Presenters
                 foreach (var column in panelColumns.GetColumns(pageModel.DataType))
                     if (column.Callback != null && column.Refreshable)
                         column.LazyDict.Clear();
-            //var result = pageModel.RetrieveData(RetrieveMode.Sync, false);
-            //pageModel.SetFillerResult(result, false);
+            // var result = pageModel.RetrieveData(RetrieveMode.Sync, false);
+            // pageModel.SetFillerResult(result, false);
             pageModel.AsyncRetrieveData(false);
         }
 
         public void DoPagesReRead()
         {
-            //commandManager.ExecuteCommand<PagesReReadCommand>();
+            // commandManager.ExecuteCommand<PagesReReadCommand>();
         }
 
         public void DoPagesCloseTab()
         {
-            //commandManager.ExecuteCommand<PagesCloseTabCommand>();
+            // commandManager.ExecuteCommand<PagesCloseTabCommand>();
         }
 
         public void DoPagesCloseOther()
         {
-            //commandManager.ExecuteCommand<PagesCloseOtherCommand>();
+            // commandManager.ExecuteCommand<PagesCloseOtherCommand>();
         }
 
         public void SetTabImageForModel(IPanelModel theModel, string imageName)
@@ -227,20 +227,20 @@ namespace LanExchange.Application.Presenters
         {
             //// TODO hide model
             //// create panel
-            //var panelView = View.CreatePanelView(e.Panel);
+            // var panelView = View.CreatePanelView(e.Panel);
             //// set update event
-            //IPanelPresenter presenter = panelView.Presenter;
-            //presenter.Objects = e.Panel;
+            // IPanelPresenter presenter = panelView.Presenter;
+            // presenter.Objects = e.Panel;
 
-            ////m_View.SelectedIndex = m_View.TabPagesCount - 1;
-            //e.Panel.Changed += (o, args) => presenter.UpdateItemsAndStatus();
-            //e.Panel.TabNameUpdated += InfoOnTabNameUpdated;
-            //e.Panel.OnTabNameUpdated();
-            ////e.Info.SubscriptionChanged += Item_SubscriptionChanged;
+            //// m_View.SelectedIndex = m_View.TabPagesCount - 1;
+            // e.Panel.Changed += (o, args) => presenter.UpdateItemsAndStatus();
+            // e.Panel.TabNameUpdated += InfoOnTabNameUpdated;
+            // e.Panel.OnTabNameUpdated();
+            //// e.Info.SubscriptionChanged += Item_SubscriptionChanged;
             //// update items
-            ////e.Info.DataChanged(null, ConcreteSubject.s_UserItems);
-            //panelView.Presenter.ResetSortOrder();
-            //e.Panel.AsyncRetrieveData(false);
+            //// e.Info.DataChanged(null, ConcreteSubject.s_UserItems);
+            // panelView.Presenter.ResetSortOrder();
+            // e.Panel.AsyncRetrieveData(false);
         }
 
         private void InfoOnTabNameUpdated(object sender, EventArgs eventArgs)
@@ -289,7 +289,7 @@ namespace LanExchange.Application.Presenters
 
         public bool SelectTabByName(string tabName)
         {
-            for (int index = 0; index < model.Count; index++ )
+            for (int index = 0; index < model.Count; index++)
                 if (model.GetAt(index).TabName.Equals(tabName))
                 {
                     SelectedIndex = index;
@@ -346,8 +346,6 @@ namespace LanExchange.Application.Presenters
             if (model != null)
                 View.SetTabText(index, model.TabName);
         }
-
-        private bool escapeDown;
 
         public bool PerformEscapeDown()
         {

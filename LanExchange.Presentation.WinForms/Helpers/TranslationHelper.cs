@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
 using System.Reflection;
 using System.Resources;
 using System.Windows.Forms;
@@ -38,16 +37,16 @@ namespace LanExchange.Presentation.WinForms.Helpers
         /// <param name="components"></param>
         public static void TranslateComponents(ResourceManager resources, ContainerControl instance, IContainer components)
         {
-            Contract.Requires<ArgumentNullException>(resources != null);
-            Contract.Requires<ArgumentNullException>(instance != null);
-            Contract.Requires<ArgumentNullException>(components != null);
+            if (resources == null) throw new ArgumentNullException(nameof(resources));
+            if (instance == null) throw new ArgumentNullException(nameof(instance));
+            if (components == null) throw new ArgumentNullException(nameof(components));
 
             fieldsMap.Clear();
             var fields = instance.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
             foreach (var field in fields)
             if (field.FieldType.IsSubclassOf(typeof(Component)))
             {
-                var component = (Component) field.GetValue(instance);
+                var component = (Component)field.GetValue(instance);
                 fieldsMap.Add(component, field.Name);
             }
 
@@ -89,7 +88,7 @@ namespace LanExchange.Presentation.WinForms.Helpers
 
         private static void ProcessContextMenuStrip(ResourceManager resources, ContextMenuStrip menu)
         {
-            foreach(var item in menu.Items)
+            foreach (var item in menu.Items)
             {
                 var menuItem = item as ToolStripMenuItem;
                 if (menuItem != null && !string.IsNullOrEmpty(menuItem.Name))

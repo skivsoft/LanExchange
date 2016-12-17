@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel.Composition;
 using LanExchange.Presentation.Interfaces;
-using LanExchange.Presentation.Interfaces.Extensions;
 
 namespace LanExchange.Plugin.Translit
 {

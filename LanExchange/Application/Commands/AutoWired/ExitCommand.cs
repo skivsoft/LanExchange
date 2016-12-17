@@ -1,7 +1,6 @@
-﻿using LanExchange.Application.Attributes;
+﻿using System;
+using LanExchange.Application.Attributes;
 using LanExchange.Presentation.Interfaces;
-using System;
-using System.Diagnostics.Contracts;
 
 namespace LanExchange.Application.Commands.AutoWired
 {
@@ -12,7 +11,7 @@ namespace LanExchange.Application.Commands.AutoWired
 
         public ExitCommand(IAppView appView)
         {
-            Contract.Requires<ArgumentNullException>(appView != null);
+            if (appView == null) throw new ArgumentNullException(nameof(appView));
 
             this.appView = appView;
         }

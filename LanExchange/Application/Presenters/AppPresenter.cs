@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using LanExchange.Presentation.Interfaces;
 
@@ -17,9 +16,9 @@ namespace LanExchange.Application.Presenters
             ITranslationService translationService,
             IDisposableManager disposableManager)
         {
-            Contract.Requires<ArgumentNullException>(pagesPresenter != null);
-            Contract.Requires<ArgumentNullException>(translationService != null);
-            Contract.Requires<ArgumentNullException>(disposableManager != null);
+            if (pagesPresenter == null) throw new ArgumentNullException(nameof(pagesPresenter));
+            if (translationService == null) throw new ArgumentNullException(nameof(translationService));
+            if (disposableManager == null) throw new ArgumentNullException(nameof(disposableManager));
 
             this.pagesPresenter = pagesPresenter;
             this.translationService = translationService;

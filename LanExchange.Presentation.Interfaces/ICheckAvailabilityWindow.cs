@@ -15,14 +15,18 @@ namespace LanExchange.Presentation.Interfaces
 
         Func<bool> AvailabilityChecker { get; set; }
 
+        Image ObjectImage { get; set; }
+
+        string ObjectText { get; set; }
+
+        Icon Icon { get; set; }
+
         void StartChecking();
 
         void WaitAndShow();
 
-        Image ObjectImage { get; set; }
-        string ObjectText { get; set; }
-        Icon Icon { get; set; }
         void SetToolTip(string tooltip);
+
         void InvokeClose();
     }
 }

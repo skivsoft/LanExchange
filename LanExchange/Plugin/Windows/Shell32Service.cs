@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using LanExchange.Plugin.Windows.ContextMenu;
 using LanExchange.Plugin.Windows.Utils;
 using LanExchange.Presentation.Interfaces;
 
@@ -28,7 +29,7 @@ namespace LanExchange.Plugin.Windows
 
         public void OpenMyComputer()
         {
-            Process.Start("explorer.exe", "/n,::{20D04FE0-3AEA-1069-A2D8-08002B30309D}");
+            Process.Start("explorer.exe", "/n,::{20D04FE0 - 3AEA - 1069-A2D8 - 08002B30309D}");
         }
 
         public void FileIconInit(bool isFullInit)

@@ -92,7 +92,7 @@ namespace WMIViewer.UI
             this.bOK.TabIndex = 4;
             this.bOK.Text = Resources.EditProperty_OK;
             this.bOK.UseVisualStyleBackColor = true;
-            this.bOK.Click += new System.EventHandler(this.button1_Click);
+            this.bOK.Click += new System.EventHandler(this.Button1_Click);
             // 
             // bCancel
             // 

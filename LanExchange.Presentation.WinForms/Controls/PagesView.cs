@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -35,7 +34,6 @@ namespace LanExchange.Presentation.WinForms.Controls
         /// </summary>
         private bool isClicked;
 
-        [Obsolete("Should be only single depenedcy: Presenter.")]
         public PagesView(
             IPagesPresenter presenter, 
             IPanelItemFactoryManager factoryManager, 
@@ -45,12 +43,12 @@ namespace LanExchange.Presentation.WinForms.Controls
             IModelFactory modelFactory,
             IViewFactory viewFactory)
         {
-            Contract.Requires<ArgumentNullException>(presenter != null);
-            Contract.Requires<ArgumentNullException>(factoryManager != null);
-            Contract.Requires<ArgumentNullException>(imageManager != null);
-            Contract.Requires<ArgumentNullException>(panelFillers != null);
-            Contract.Requires<ArgumentNullException>(modelFactory != null);
-            Contract.Requires<ArgumentNullException>(viewFactory != null);
+            if (presenter == null) throw new ArgumentNullException(nameof(presenter));
+            if (factoryManager == null) throw new ArgumentNullException(nameof(factoryManager));
+            if (imageManager == null) throw new ArgumentNullException(nameof(imageManager));
+            if (panelFillers == null) throw new ArgumentNullException(nameof(panelFillers));
+            if (modelFactory == null) throw new ArgumentNullException(nameof(modelFactory));
+            if (viewFactory == null) throw new ArgumentNullException(nameof(viewFactory));
 
             InitializeComponent();
             this.presenter = presenter;
@@ -114,8 +112,8 @@ namespace LanExchange.Presentation.WinForms.Controls
                 info.SetDefaultRoot(root);
                 var type = panelFillers.GetFillType(root);
                 info.DataType = type != null ? Name : string.Empty;
-                //TODO hide model
-                //presenter.AddTab(info);
+                // TODO hide model
+                // presenter.AddTab(info);
             }
         }
 
@@ -137,8 +135,8 @@ namespace LanExchange.Presentation.WinForms.Controls
         {
             var tabPage = Pages.TabPages[index];
             tabPage.ImageIndex = imageIndex;
-            //tabPage.Invalidate(true);
-            //tabPage.Refresh();
+            // tabPage.Invalidate(true);
+            // tabPage.Refresh();
         }
 
         public void RemoveTabAt(int index)
@@ -180,7 +178,7 @@ namespace LanExchange.Presentation.WinForms.Controls
 
         public void SetTabToolTip(int index, string value)
         {
-            if (index >= 0 && index <= Pages.TabCount-1)
+            if (index >= 0 && index <= Pages.TabCount - 1)
                 Pages.TabPages[index].ToolTipText = value;
         }
 
@@ -222,9 +220,9 @@ namespace LanExchange.Presentation.WinForms.Controls
             else
                 isOpened = false;
             // TODO seems command in wrong place
-            //mReRead.Enabled = commandManager.IsCommandEnabled<PagesReReadCommand>();
-            //mCloseTab.Enabled = commandManager.IsCommandEnabled<PagesCloseTabCommand>();
-            //mCloseOther.Enabled = commandManager.IsCommandEnabled<PagesCloseOtherCommand>();
+            // mReRead.Enabled = commandManager.IsCommandEnabled<PagesReReadCommand>();
+            // mCloseTab.Enabled = commandManager.IsCommandEnabled<PagesCloseTabCommand>();
+            // mCloseOther.Enabled = commandManager.IsCommandEnabled<PagesCloseOtherCommand>();
         }
 
         private void popPages_Closed(object sender, ToolStripDropDownClosedEventArgs e)
@@ -236,7 +234,7 @@ namespace LanExchange.Presentation.WinForms.Controls
         {
             get
             {
-                //logger.Info("MouseDown={0}, Opened={1}, Clicked={2}, Closed={3}", bMouseDown, bOpened, bClicked, bClosed);
+                // logger.Info("MouseDown={0}, Opened={1}, Clicked={2}, Closed={3}", bMouseDown, bOpened, bClicked, bClosed);
                 if (isClicked && !isOpened)
                 {
                     isMouseDown = false;
@@ -263,12 +261,12 @@ namespace LanExchange.Presentation.WinForms.Controls
         [Localizable(false)]
         public IPanelView CreatePanelView(IPanelModel info)
         {
-            var panelView = (PanelView) viewFactory.CreatePanelView();
+            var panelView = (PanelView)viewFactory.CreatePanelView();
             var listView = panelView.Controls[0] as ListView;
             if (listView != null)
             {
                 imageManager.SetImagesTo(listView);
-                listView.View = (View) info.CurrentView;
+                listView.View = (View)info.CurrentView;
             }
             presenter.SetupPanelViewEvents(panelView);
             // add new tab and insert panel into it
@@ -282,14 +280,14 @@ namespace LanExchange.Presentation.WinForms.Controls
         public TabPage CreateTabPageFromModel(IPanelModel model)
         {
             var tabPage = new TabPage();
-            //if (!SystemInformation.TerminalServerSession)
-            //{
-            //    System.Reflection.PropertyInfo aProp =
-            //        typeof (Control).GetProperty("DoubleBuffered", 
-            //            System.Reflection.BindingFlags.NonPublic |
-            //            System.Reflection.BindingFlags.Instance);
-            //    aProp.SetValue(tabPage, true, null);
-            //}
+            // if (!SystemInformation.TerminalServerSession)
+            // {
+            // System.Reflection.PropertyInfo aProp =
+            // typeof(Control).GetProperty("DoubleBuffered", 
+            // System.Reflection.BindingFlags.NonPublic |
+            // System.Reflection.BindingFlags.Instance);
+            // aProp.SetValue(tabPage, true, null);
+            // }
 
             tabPage.Padding = new Padding(0);
             tabPage.Text = model.TabName;

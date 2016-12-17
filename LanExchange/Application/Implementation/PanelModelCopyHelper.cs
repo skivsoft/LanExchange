@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using LanExchange.Presentation.Interfaces;
@@ -22,7 +21,7 @@ namespace LanExchange.Application.Implementation
             IPanelModel model,
             IPanelColumnManager panelColumns)
         {
-            Contract.Requires<ArgumentNullException>(panelColumns != null);
+            if (panelColumns == null) throw new ArgumentNullException(nameof(panelColumns));
 
             this.model = model;
             this.panelColumns = panelColumns;
@@ -104,7 +103,7 @@ namespace LanExchange.Application.Implementation
                 MoveTo(index);
                 if (index > 0) sb.AppendLine();
                 var first = true;
-                foreach(var column in columns)
+                foreach (var column in columns)
                     if (column.Visible)
                     {
                         if (!first) sb.Append("\t");

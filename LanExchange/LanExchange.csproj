@@ -8,11 +8,12 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LanExchange</RootNamespace>
-    <AssemblyName>LanExchangeCore</AssemblyName>
+    <AssemblyName>LanExchange</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <CodeContractsAssemblyMode>1</CodeContractsAssemblyMode>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -67,6 +68,7 @@
     <CodeContractsReferenceAssembly>%28none%29</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
     <LangVersion>default</LangVersion>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -117,6 +119,7 @@
     <CodeContractsRuntimeCheckingLevel>Preconditions</CodeContractsRuntimeCheckingLevel>
     <CodeContractsReferenceAssembly>%28none%29</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>
@@ -132,8 +135,8 @@
   <PropertyGroup />
   <PropertyGroup />
   <ItemGroup>
-    <Reference Include="SimpleInjector, Version=3.1.5.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
-      <HintPath>..\Solution\packages\SimpleInjector.3.1.5\lib\net40-client\SimpleInjector.dll</HintPath>
+    <Reference Include="SimpleInjector, Version=3.3.2.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.3.3.2\lib\net40-client\SimpleInjector.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -164,7 +167,6 @@
     <Compile Include="Application\Implementation\ProcessService.cs" />
     <Compile Include="Application\Presenters\InfoPresenter.cs" />
     <Compile Include="Application\Presenters\StatusPanelPresenter.cs" />
-    <Compile Include="Application\Extensions\AssemblyExtensions.cs" />
     <Compile Include="ContainerWrapper.cs" />
     <Compile Include="Application\Factories\AddonProgramFactory.cs" />
     <Compile Include="Application\Factories\FactoryBase.cs" />
@@ -195,6 +197,11 @@
     <Compile Include="Application\Models\PanelModel.cs" />
     <Compile Include="Domain\Interfaces\ISerializeService.cs" />
     <Compile Include="Infrastructure\XmlSerializeService.cs" />
+    <Compile Include="Plugin\Windows\ContextMenu\CMIC.cs" />
+    <Compile Include="Plugin\Windows\ContextMenu\CMINVOKECOMMANDINFOEX.cs" />
+    <Compile Include="Plugin\Windows\ContextMenu\GCS.cs" />
+    <Compile Include="Plugin\Windows\ContextMenu\SW.cs" />
+    <Compile Include="Plugin\Windows\ContextMenu\WM.cs" />
     <Compile Include="Plugin\Windows\ExternDll.cs" />
     <Compile Include="Plugin\Windows\HotkeysService.cs" />
     <Compile Include="Plugin\Windows\MACAddressService.cs" />
@@ -202,18 +209,26 @@
     <Compile Include="Plugin\Windows\Shell32Service.cs" />
     <Compile Include="Plugin\Windows\SysImageListService.cs" />
     <Compile Include="Plugin\Windows\User32Service.cs" />
+    <Compile Include="Plugin\Windows\ContextMenu\CMF.cs" />
+    <Compile Include="Plugin\Windows\ContextMenu\CWPSTRUCT.cs" />
     <Compile Include="Plugin\Windows\Utils\HookEventArgs.cs" />
     <Compile Include="Plugin\Windows\Utils\HookType.cs" />
+    <Compile Include="Plugin\Windows\ContextMenu\IContextMenu2.cs" />
+    <Compile Include="Plugin\Windows\ContextMenu\IContextMenu3.cs" />
     <Compile Include="Plugin\Windows\Utils\ImageListDrawItemConstants.cs" />
     <Compile Include="Plugin\Windows\Utils\ImageListDrawStateConstants.cs" />
+    <Compile Include="Plugin\Windows\ContextMenu\IShellContextMenu.cs" />
+    <Compile Include="Plugin\Windows\Utils\IShellFolder.cs" />
     <Compile Include="Plugin\Windows\Utils\LocalWindowsHook.cs" />
     <Compile Include="Plugin\Windows\Utils\NativeMethods.cs" />
     <Compile Include="Plugin\Windows\Utils\ShellAPI.cs" />
-    <Compile Include="Plugin\Windows\Utils\ShellContextMenu.cs" />
+    <Compile Include="Plugin\Windows\ContextMenu\ShellContextMenu.cs" />
     <Compile Include="Plugin\Windows\Utils\ShellContextMenuException.cs" />
     <Compile Include="Plugin\Windows\Utils\ShellIconStateConstants.cs" />
+    <Compile Include="Plugin\Windows\ContextMenu\SHGNO.cs" />
     <Compile Include="Plugin\Windows\Utils\SysImageList.cs" />
     <Compile Include="Plugin\Windows\Utils\SysImageListHelper.cs" />
+    <Compile Include="Plugin\Windows\ContextMenu\TPM.cs" />
     <Compile Include="Plugin\Windows\Utils\UnsafeNativeMethods.cs" />
     <Compile Include="Plugin\Windows\Utils\User32Utils.cs" />
     <Compile Include="Application\Presenters\AppPresenter.cs" />

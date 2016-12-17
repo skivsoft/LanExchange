@@ -33,8 +33,8 @@ namespace LanExchange.Plugin.Users
             {
                 // execute filter query to Active Directory
                 searcher.SearchRoot = new DirectoryEntry(startPath);
-                searcher.PageSize = Int32.MaxValue;
-                searcher.Filter = "(objectCategory=person)"; // lockoutTime
+                searcher.PageSize = int.MaxValue;
+                searcher.Filter = "(objectCategory = person)"; // lockoutTime
                 searcher.PropertiesToLoad.Add(Constants.MEMBER_OF);
                 try
                 {
@@ -43,7 +43,7 @@ namespace LanExchange.Plugin.Users
                     var list = row.Properties[Constants.MEMBER_OF];
                     foreach (var value in list)
                     {
-                        var valueStr = (string) value;
+                        var valueStr = (string)value;
 
                         var workspace = new WorkspacePanelItem(parent, LdapUtils.GetLdapValue(valueStr));
                         workspace.AdsPath = valueStr;

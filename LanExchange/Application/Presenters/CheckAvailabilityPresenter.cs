@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
 using System.Threading;
 using LanExchange.Presentation.Interfaces;
 
@@ -16,7 +15,7 @@ namespace LanExchange.Application.Presenters
 
         public CheckAvailabilityPresenter(IImageManager imageManager)
         {
-            Contract.Requires<ArgumentNullException>(imageManager != null);
+            if (imageManager == null) throw new ArgumentNullException(nameof(imageManager));
             this.imageManager = imageManager;
         }
 
@@ -36,15 +35,15 @@ namespace LanExchange.Application.Presenters
             if (View.AvailabilityChecker == null || arg == null)
                 return;
 
-            //var panelItem = arg as PanelItemBase;
-            //if (panelItem == null) return;
+            // var panelItem = arg as PanelItemBase;
+            // if (panelItem == null) return;
 
             bool available = false;
             while (!available)
             {
                 try
                 {
-                    //Thread.Sleep(10000);
+                    // Thread.Sleep(10000);
                     available = View.AvailabilityChecker();
                 }
                 catch (Exception e)
@@ -60,19 +59,19 @@ namespace LanExchange.Application.Presenters
         public void OnCurrentItemChanged()
         {
             // TODO hide model
-            //var currentItem = View.CurrentItem;
-            //if (currentItem == null) return;
+            // var currentItem = View.CurrentItem;
+            // if (currentItem == null) return;
 
-            //View.ObjectImage = imageManager.GetSmallImage(currentItem.ImageName);
-            //View.ObjectText = currentItem.Name;
-            //View.Icon = imageManager.GetSmallIcon(currentItem.ImageName);
-            //View.SetToolTip(currentItem.FullName);
+            // View.ObjectImage = imageManager.GetSmallImage(currentItem.ImageName);
+            // View.ObjectText = currentItem.Name;
+            // View.Icon = imageManager.GetSmallIcon(currentItem.ImageName);
+            // View.SetToolTip(currentItem.FullName);
         }
 
         public void StartChecking()
         {
             // TODO hide model
-            //thread.Start(View.CurrentItem);
+            // thread.Start(View.CurrentItem);
         }
 
         public void WaitAndShow()

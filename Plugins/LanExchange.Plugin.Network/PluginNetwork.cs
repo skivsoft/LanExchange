@@ -2,7 +2,6 @@
 using System.ComponentModel.Composition;
 using LanExchange.Plugin.Network.Properties;
 using LanExchange.Presentation.Interfaces;
-using LanExchange.Presentation.Interfaces.Extensions;
 
 namespace LanExchange.Plugin.Network
 {

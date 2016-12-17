@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.IO;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Addons;
@@ -16,8 +15,8 @@ namespace LanExchange.Application.Factories
             IFolderManager folderManager,
             IImageManager imageManager)
         {
-            Contract.Requires<ArgumentNullException>(folderManager != null);
-            Contract.Requires<ArgumentNullException>(imageManager != null);
+            if (folderManager == null) throw new ArgumentNullException(nameof(folderManager));
+            if (imageManager == null) throw new ArgumentNullException(nameof(imageManager));
 
             this.folderManager = folderManager;
             this.imageManager = imageManager;

@@ -1,22 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Globalization;
 using LanExchange.Application.Commands;
+using LanExchange.Application.Commands.AutoWired;
+using LanExchange.Application.Implementation.Menu;
 using LanExchange.Application.Interfaces;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.EventArgs;
-using LanExchange.Properties;
-using LanExchange.Application.Implementation.Menu;
 using LanExchange.Presentation.Interfaces.Menu;
-using System.Collections.Generic;
-using LanExchange.Application.Commands.AutoWired;
+using LanExchange.Properties;
 
 namespace LanExchange.Application.Presenters
 {
     internal sealed class MainPresenter : PresenterBase<IMainView>, IMainPresenter
     {
+        private const int DEFAULT_WIDTH = 500;
         private readonly ILazyThreadPool threadPool;
         private readonly IPanelColumnManager columnManager;
         private readonly IAppPresenter appPresenter;
@@ -34,7 +34,10 @@ namespace LanExchange.Application.Presenters
         private readonly IProcessService processService;
         private readonly IImageManager imageManager;
         private readonly IMenuProducer menuProducer;
+        private string showWindowKey;
+        private bool menuIsOpening;
 
+        /// <exception cref="ArgumentNullException"></exception>
         public MainPresenter(
             ILazyThreadPool threadPool,
             IPanelColumnManager panelColumns,
@@ -54,23 +57,23 @@ namespace LanExchange.Application.Presenters
             IImageManager imageManager,
             IMenuProducer menuProducer)
         {
-            Contract.Requires<ArgumentNullException>(threadPool != null);
-            Contract.Requires<ArgumentNullException>(panelColumns != null);
-            Contract.Requires<ArgumentNullException>(appPresenter != null);
-            Contract.Requires<ArgumentNullException>(pagesPresenter != null);
-            Contract.Requires<ArgumentNullException>(translationService != null);
-            Contract.Requires<ArgumentNullException>(hotkeyService != null);
-            Contract.Requires<ArgumentNullException>(disposableManager != null);
-            Contract.Requires<ArgumentNullException>(aboutModel != null);
-            Contract.Requires<ArgumentNullException>(viewFactory != null);
-            Contract.Requires<ArgumentNullException>(waitingService != null);
-            Contract.Requires<ArgumentNullException>(factoryManager != null);
-            Contract.Requires<ArgumentNullException>(screenService != null);
-            Contract.Requires<ArgumentNullException>(commandManager != null);
-            Contract.Requires<ArgumentNullException>(appView != null);
-            Contract.Requires<ArgumentNullException>(processService != null);
-            Contract.Requires<ArgumentNullException>(imageManager != null);
-            Contract.Requires<ArgumentNullException>(menuProducer != null);
+            if (threadPool == null) throw new ArgumentNullException(nameof(threadPool));
+            if (panelColumns == null) throw new ArgumentNullException(nameof(panelColumns));
+            if (appPresenter == null) throw new ArgumentNullException(nameof(appPresenter));
+            if (pagesPresenter == null) throw new ArgumentNullException(nameof(pagesPresenter));
+            if (translationService == null) throw new ArgumentNullException(nameof(translationService));
+            if (hotkeyService == null) throw new ArgumentNullException(nameof(hotkeyService));
+            if (disposableManager == null) throw new ArgumentNullException(nameof(disposableManager));
+            if (aboutModel == null) throw new ArgumentNullException(nameof(aboutModel));
+            if (viewFactory == null) throw new ArgumentNullException(nameof(viewFactory));
+            if (waitingService == null) throw new ArgumentNullException(nameof(waitingService));
+            if (factoryManager == null) throw new ArgumentNullException(nameof(factoryManager));
+            if (screenService == null) throw new ArgumentNullException(nameof(screenService));
+            if (commandManager == null) throw new ArgumentNullException(nameof(commandManager));
+            if (appView == null) throw new ArgumentNullException(nameof(appView));
+            if (processService == null) throw new ArgumentNullException(nameof(processService));
+            if (imageManager == null) throw new ArgumentNullException(nameof(imageManager));
+            if (menuProducer == null) throw new ArgumentNullException(nameof(menuProducer));
 
             this.threadPool = threadPool;
             this.columnManager = panelColumns;
@@ -91,129 +94,20 @@ namespace LanExchange.Application.Presenters
             this.menuProducer = menuProducer;
         }
 
-        protected override void InitializePresenter()
-        {
-            // set hotkey for activate: Ctrl+Win+X
-            disposableManager.RegisterInstance(hotkeyService);
-            if (hotkeyService.RegisterShowWindowKey(View.Handle))
-                showWindowKey = hotkeyService.ShowWindowKey;
-
-            SetupMenu();
-            // init main form
-            SetupStatusPanel();
-            SetupPages();
-            SetupForm();
-            View.RightToLeftValue = translationService.RightToLeft;
-            // set lazy events
-            threadPool.DataReady += OnDataReady;
-        }
-
-        private void SetupMenu()
-        {
-            menuProducer.MainMenu = BuildMainMenu();
-            menuProducer.TrayMenu = BuildTrayMenu();
-
-            View.InitializeMainMenu(menuProducer.MainMenu);
-            View.InitializeTrayMenu(menuProducer.TrayMenu);
-            View.MenuVisible = false;
-        }
-
-        private IMenuElement BuildMainMenu()
-        {
-            return new MenuGroup(
-                new MenuGroup(Resources.mPanel_Text,
-                    new MenuElement(Resources.mPanelReRead_Text, "Ctrl+R", NullCommand.Instance),
-                    new MenuSeparator(),
-                    new MenuElement(Resources.mPanelExit_Text, "Alt+F4", new ExitCommand(appView))
-                ),
-                new MenuGroup(Resources.mView_Text,
-                    new MenuElement(Resources.mViewLarge_Text, NullCommand.Instance),
-                    new MenuElement(Resources.mViewSmall_Text, NullCommand.Instance),
-                    new MenuElement(Resources.mViewList_Text, NullCommand.Instance),
-                    new MenuElement(Resources.mViewDetails_Text, NullCommand.Instance)
-                ),
-                BuildLanguageMenu(),
-                new MenuGroup(Resources.mHelp_Text,
-                    new MenuElement(Resources.mHelpWeb_Text, NullCommand.Instance),
-                    new MenuElement(Resources.mHelpBugs_Text, NullCommand.Instance),
-                    new MenuElement(Resources.mHelpLangs_Text, NullCommand.Instance),
-                    new MenuSeparator(),
-                    new MenuElement(Resources.mHelpAbout_Text, commandManager.GetCommand(nameof(AboutCommand)))
-                )
-            );
-        }
-
-        private string showWindowKey;
-
-        private IMenuElement BuildTrayMenu()
-        {
-            return new MenuGroup(
-                    new MenuElement(Resources.mTrayClose_Text, showWindowKey, new ToggleVisibleCommand(View), MenuElementKind.Default),
-                    new MenuSeparator(),
-                    new MenuElement(Resources.mHelpAbout_Text, commandManager.GetCommand(nameof(AboutCommand))),
-                    new MenuElement(Resources.mPanelExit_Text, commandManager.GetCommand(nameof(ExitCommand)))
-            );
-        }
-
-        private IMenuElement BuildLanguageMenu()
-        {
-            var languagesDict = translationService.GetLanguagesNames();
-            if (languagesDict.Count <= 1)
-                return NullMenu.Instance;
-
-            var menuItems = new List<IMenuElement>();
-            foreach (var pair in languagesDict)
-            {
-                var menuItem = new MenuElement(pair.Value, NullCommand.Instance);
-                //menuItem.RadioCheck = true;
-                //menuItem.Tag = pair.Key;
-                //menuItem.Click += MenuItemOnClick;
-                //mLanguage.MenuItems.Add(menuItem);
-                menuItems.Add(menuItem);
-            }
-
-            return new MenuGroup(Resources.mLanguage_Text, menuItems.ToArray());
-        }
-
-        public void SetupMenuTags()
-        {
-            //mViewLarge.Tag = PanelViewMode.LargeIcon;
-            //mViewSmall.Tag = PanelViewMode.SmallIcon;
-            //mViewList.Tag = PanelViewMode.List;
-            //mViewDetails.Tag = PanelViewMode.Details;
-        }
-
-        private void SetupStatusPanel()
-        {
-            var statusPanel = viewFactory.CreateStatusPanelView();
-            imageManager.SetImagesTo(statusPanel);
-            View.AddView(statusPanel, ViewDockStyle.Bottom);
-        }
-
-        private void SetupPages()
-        {
-            //Pages = (PagesView)viewFactory.GetPagesView();
-            //Pages.Dock = DockStyle.Fill;
-            //Controls.Add(Pages);
-            //Pages.BringToFront();
-
-            //// setup images
-            //imageManager.SetImagesTo(Pages.Pages);
-            //// load saved pages from config
-            //Pages.SetupContextMenu();
-        }
-
         [Localizable(false)]
         public void SetupForm()
         {
-            //App.MainPages.View.SetupContextMenu();
+            // App.MainPages.View.SetupContextMenu();
             pagesPresenter.PanelViewFocusedItemChanged += Pages_PanelViewFocusedItemChanged;
+
             // set mainform bounds
             var rect = SettingsGetBounds();
             View.SetBounds(rect.Left, rect.Top, rect.Width, rect.Height);
+
             // set mainform title
             var text = string.Format(CultureInfo.CurrentCulture, "{0} {1}", aboutModel.Title, aboutModel.VersionShort);
             View.Text = text;
+
             // show tray
             View.TrayText = text;
             View.TrayVisible = true;
@@ -221,44 +115,8 @@ namespace LanExchange.Application.Presenters
 
         public void OnDataReady(object sender, DataReadyArgs args)
         {
-            //View.SafeInvoke(new WaitCallback(MainForm_RefreshItem), args.Item);
+            // View.SafeInvoke(new WaitCallback(MainForm_RefreshItem), args.Item);
         }
-
-        private void MainForm_RefreshItem(object item)
-        {
-            var pv = viewFactory.GetPagesView().ActivePanelView;
-            if (pv != null)
-            {
-                //TODO hide model
-                //var index = pv.Presenter.Objects.IndexOf(item as PanelItemBase);
-                //if (index >= 0)
-                //    pv.RedrawItem(index);
-            }
-        }
-
-        /// <summary>
-        /// This event fires when focused item of PanelView has been changed.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Pages_PanelViewFocusedItemChanged(object sender, EventArgs e)
-        {
-            // get focused item from current PanelView
-            var pv = sender as IPanelView;
-            if (pv == null) return;
-            //TODO hide model
-            //var panelItem = pv.Presenter.GetFocusedPanelItem(true);
-            //// check if parent item more informative than current panel item
-            //while (panelItem != null)
-            //{
-            //    if (panelItem.Parent is PanelItemRootBase) 
-            //        break;
-            //    if (panelItem.Parent != null && (panelItem.Parent.Parent is PanelItemRootBase))
-            //        break;
-            //    panelItem = panelItem.Parent;
-            //}
-        }
-
 
         public void GlobalTranslateUI()
         {
@@ -268,6 +126,7 @@ namespace LanExchange.Application.Presenters
             {
                 // recreate all columns
                 GlobalTranslateColumns();
+
                 // Run TranslateUI() for all opened forms
                 appPresenter.TranslateOpenForms();
             }
@@ -285,48 +144,34 @@ namespace LanExchange.Application.Presenters
 
         public void DoPagesReRead()
         {
-            //commandManager.ExecuteCommand<PagesReReadCommand>();
-        }
-
-        private void GlobalTranslateColumns()
-        {
-            foreach (var pair in factoryManager.Types)
-            {
-                columnManager.UnregisterColumns(pair.Key.Name);
-                pair.Value.RegisterColumns(columnManager);
-            }
-        }
-
-        private static int GetDefaultWidth()
-        {
-            return 500;
+            // commandManager.ExecuteCommand<PagesReReadCommand>();
         }
 
         public Rectangle SettingsGetBounds()
         {
             var mainFormWidth = Settings.Default.MainFormWidth;
             var mainFormLeft = Settings.Default.MainFormLeft;
+
             // correct width and height
             bool boundsIsNotSet = mainFormWidth == 0;
             Rectangle workingArea;
             if (boundsIsNotSet)
                 workingArea = screenService.PrimaryScreenWorkingArea;
             else
-                workingArea = screenService.GetWorkingArea(new Point(mainFormLeft + mainFormWidth / 2, 0));
+                workingArea = screenService.GetWorkingArea(new Point(mainFormLeft + (mainFormWidth / 2), 0));
             var rect = new Rectangle();
             rect.X = mainFormLeft;
             rect.Y = workingArea.Top;
-            rect.Width = Math.Min(Math.Max(GetDefaultWidth(), mainFormWidth), workingArea.Width);
+            rect.Width = Math.Min(Math.Max(DEFAULT_WIDTH, mainFormWidth), workingArea.Width);
             rect.Height = workingArea.Height;
+
             // determination side to snap right or left
             int centerX = (rect.Left + rect.Right) >> 1;
             int workingAreaCenterX = (workingArea.Left + workingArea.Right) >> 1;
             if (boundsIsNotSet || centerX >= workingAreaCenterX)
-                // snap to right side
-                rect.X = workingArea.Right - rect.Width;
+                rect.X = workingArea.Right - rect.Width; // snap to right side
             else
-                // snap to left side
-                rect.X -= rect.Left - workingArea.Left;
+                rect.X -= rect.Left - workingArea.Left; // snap to left side
             return rect;
         }
 
@@ -355,8 +200,6 @@ namespace LanExchange.Application.Presenters
             pagesPresenter.ViewMode = viewMode;
         }
 
-        private bool menuIsOpening;
-
         public void PerformMenuKeyDown()
         {
             if (!View.MenuVisible)
@@ -373,6 +216,7 @@ namespace LanExchange.Application.Presenters
                 menuIsOpening = false;
                 return false;
             }
+
             View.MenuVisible = false;
             return true;
         }
@@ -386,6 +230,162 @@ namespace LanExchange.Application.Presenters
         {
             if (View.MenuVisible)
                 View.MenuVisible = false;
+        }
+
+        protected override void InitializePresenter()
+        {
+            // set hotkey for activate: Ctrl+Win+X
+            disposableManager.RegisterInstance(hotkeyService);
+            if (hotkeyService.RegisterShowWindowKey(View.Handle))
+                showWindowKey = hotkeyService.ShowWindowKey;
+
+            SetupMenu();
+
+            // init main form
+            SetupStatusPanel();
+            SetupPages();
+            SetupForm();
+            View.RightToLeftValue = translationService.RightToLeft;
+
+            // set lazy events
+            threadPool.DataReady += OnDataReady;
+        }
+
+        private void SetupMenu()
+        {
+            menuProducer.MainMenu = BuildMainMenu();
+            menuProducer.TrayMenu = BuildTrayMenu();
+
+            View.InitializeMainMenu(menuProducer.MainMenu);
+            View.InitializeTrayMenu(menuProducer.TrayMenu);
+            View.MenuVisible = false;
+        }
+
+        private IMenuElement BuildMainMenu()
+        {
+            return new MenuGroup(
+                new MenuGroup(
+                    Resources.mPanel_Text,
+                    new MenuElement(Resources.mPanelReRead_Text, "Ctrl+R", NullCommand.Instance),
+                    new MenuSeparator(),
+                    new MenuElement(Resources.mPanelExit_Text, "Alt+F4", new ExitCommand(appView))),
+                new MenuGroup(
+                    Resources.mView_Text,
+                    new MenuElement(Resources.mViewLarge_Text, NullCommand.Instance),
+                    new MenuElement(Resources.mViewSmall_Text, NullCommand.Instance),
+                    new MenuElement(Resources.mViewList_Text, NullCommand.Instance),
+                    new MenuElement(Resources.mViewDetails_Text, NullCommand.Instance)),
+                BuildLanguageMenu(),
+                new MenuGroup(
+                    Resources.mHelp_Text,
+                    new MenuElement(Resources.mHelpWeb_Text, NullCommand.Instance),
+                    new MenuElement(Resources.mHelpBugs_Text, NullCommand.Instance),
+                    new MenuElement(Resources.mHelpLangs_Text, NullCommand.Instance),
+                    new MenuSeparator(),
+                    new MenuElement(Resources.mHelpAbout_Text, commandManager.GetCommand(nameof(AboutCommand)))));
+        }
+
+        private IMenuElement BuildTrayMenu()
+        {
+            return new MenuGroup(
+                    new MenuElement(Resources.mTrayClose_Text, showWindowKey, new ToggleVisibleCommand(View), MenuElementKind.Default),
+                    new MenuSeparator(),
+                    new MenuElement(Resources.mHelpAbout_Text, commandManager.GetCommand(nameof(AboutCommand))),
+                    new MenuElement(Resources.mPanelExit_Text, commandManager.GetCommand(nameof(ExitCommand))));
+        }
+
+        private IMenuElement BuildLanguageMenu()
+        {
+            var languagesDict = translationService.GetLanguagesNames();
+            if (languagesDict.Count <= 1)
+                return NullMenu.Instance;
+
+            var menuItems = new List<IMenuElement>();
+            foreach (var pair in languagesDict)
+            {
+                var menuItem = new MenuElement(pair.Value, NullCommand.Instance);
+
+                // menuItem.RadioCheck = true;
+                // menuItem.Tag = pair.Key;
+                // menuItem.Click += MenuItemOnClick;
+                // mLanguage.MenuItems.Add(menuItem);
+                menuItems.Add(menuItem);
+            }
+
+            return new MenuGroup(Resources.mLanguage_Text, menuItems.ToArray());
+        }
+
+        private void SetupMenuTags()
+        {
+            // mViewLarge.Tag = PanelViewMode.LargeIcon;
+            // mViewSmall.Tag = PanelViewMode.SmallIcon;
+            // mViewList.Tag = PanelViewMode.List;
+            // mViewDetails.Tag = PanelViewMode.Details;
+        }
+
+        private void SetupStatusPanel()
+        {
+            var statusPanel = viewFactory.CreateStatusPanelView();
+            imageManager.SetImagesTo(statusPanel);
+            View.AddView(statusPanel, ViewDockStyle.Bottom);
+        }
+
+        private void SetupPages()
+        {
+            // Pages = (PagesView)viewFactory.GetPagesView();
+            // Pages.Dock = DockStyle.Fill;
+            // Controls.Add(Pages);
+            // Pages.BringToFront();
+
+            //// setup images
+            // imageManager.SetImagesTo(Pages.Pages);
+            //// load saved pages from config
+            // Pages.SetupContextMenu();
+        }
+
+        private void MainForm_RefreshItem(object item)
+        {
+            var pv = viewFactory.GetPagesView().ActivePanelView;
+            if (pv != null)
+            {
+                // TODO hide model
+                // var index = pv.Presenter.Objects.IndexOf(item as PanelItemBase);
+                // if (index >= 0)
+                // pv.RedrawItem(index);
+            }
+        }
+
+        /// <summary>
+        /// This event fires when focused item of PanelView has been changed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Pages_PanelViewFocusedItemChanged(object sender, EventArgs e)
+        {
+            // get focused item from current PanelView
+            var pv = sender as IPanelView;
+            if (pv == null) return;
+            
+            // TODO hide model
+            // var panelItem = pv.Presenter.GetFocusedPanelItem(true);
+            //// check if parent item more informative than current panel item
+            // while (panelItem != null)
+            // {
+            // if (panelItem.Parent is PanelItemRootBase) 
+            // break;
+            // if (panelItem.Parent != null && (panelItem.Parent.Parent is PanelItemRootBase))
+            // break;
+            // panelItem = panelItem.Parent;
+            // }
+        }
+
+        private void GlobalTranslateColumns()
+        {
+            foreach (var pair in factoryManager.Types)
+            {
+                columnManager.UnregisterColumns(pair.Key.Name);
+                pair.Value.RegisterColumns(columnManager);
+            }
         }
     }
 }

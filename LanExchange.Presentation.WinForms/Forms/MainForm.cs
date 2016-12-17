@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Security.Permissions;
 using System.Windows.Forms;
 using LanExchange.Presentation.Interfaces;
@@ -18,7 +17,7 @@ namespace LanExchange.Presentation.WinForms.Forms
 
         public MainForm(IMainPresenter mainPresenter)
         {
-            Contract.Requires<ArgumentNullException>(mainPresenter != null);
+            if (mainPresenter == null) throw new ArgumentNullException(nameof(mainPresenter));
 
             InitializeComponent();
             this.mainPresenter = mainPresenter;
@@ -27,8 +26,8 @@ namespace LanExchange.Presentation.WinForms.Forms
 
         private void MarkCurrentLanguage()
         {
-            //foreach (MenuItem menuItem in mLanguage.MenuItems)
-            //    menuItem.Checked = menuItem.Tag.Equals(translationService.CurrentLanguage);
+            // foreach (MenuItem menuItem in mLanguage.MenuItems)
+            // menuItem.Checked = menuItem.Tag.Equals(translationService.CurrentLanguage);
         }
 
         private void mLanguage_Popup(object sender, EventArgs e)
@@ -49,15 +48,15 @@ namespace LanExchange.Presentation.WinForms.Forms
             TranslationHelper.TranslateComponents(Resources.ResourceManager, this, components);
             TranslationHelper.TranslateControls(Controls);
             // refresh tab names
-            //var shortcutIndex = mainPresenter.FindShortcutKeysPanelIndex();
+            // var shortcutIndex = mainPresenter.FindShortcutKeysPanelIndex();
             // TODO hide model
-            //for (int index = 0; index < pagesPresenter.Count; index++ )
-            //{
-            //    var model = pagesPresenter.GetItem(index);
-            //    pagesPresenter.UpdateTabName(index);
-            //    if (index == shortcutIndex)
-            //        model.AsyncRetrieveData(false);
-            //}
+            // for (int index = 0; index < pagesPresenter.Count; index++)
+            // {
+            // var model = pagesPresenter.GetItem(index);
+            // pagesPresenter.UpdateTabName(index);
+            // if (index == shortcutIndex)
+            // model.AsyncRetrieveData(false);
+            // }
         }
 
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
@@ -88,18 +87,18 @@ namespace LanExchange.Presentation.WinForms.Forms
 
         private void tipComps_Popup(object sender, PopupEventArgs e)
         {
-            //var tooltip = (sender as ToolTip);
-            //if (tooltip == null) return;
-            //if (e.AssociatedControl is TabControl && e.AssociatedControl == Pages.Pages)
-            //{
-            //    var tab = Pages.GetTabPageByPoint(e.AssociatedControl.PointToClient(MousePosition));
-            //    if (tab != null)
-            //        tooltip.ToolTipTitle = tab.Text;
-            //    else
-            //        e.Cancel = true;
-            //    return;
-            //}
-            //tooltip.ToolTipTitle = string.Empty;
+            // var tooltip = (sender as ToolTip);
+            // if (tooltip == null) return;
+            // if (e.AssociatedControl is TabControl && e.AssociatedControl == Pages.Pages)
+            // {
+            // var tab = Pages.GetTabPageByPoint(e.AssociatedControl.PointToClient(MousePosition));
+            // if (tab != null)
+            // tooltip.ToolTipTitle = tab.Text;
+            // else
+            // e.Cancel = true;
+            // return;
+            // }
+            // tooltip.ToolTipTitle = string.Empty;
         }
      
         private void TrayIcon_MouseUp(object sender, MouseEventArgs e)
@@ -142,32 +141,32 @@ namespace LanExchange.Presentation.WinForms.Forms
 
         private void UpdatePanelRelatedMenu()
         {
-            //mViewLarge.Checked = false;
-            //mViewSmall.Checked = false;
-            //mViewList.Checked = false;
-            //mViewDetails.Checked = false;
-            //var pv = Pages.ActivePanelView;
-            //var enabled = pv != null;
-            //mViewLarge.Enabled = enabled;
-            //mViewSmall.Enabled = enabled;
-            //mViewList.Enabled = enabled;
-            //mViewDetails.Enabled = enabled;
-            //if (pv != null)
-            //    switch (pv.ViewMode)
-            //    {
-            //        case PanelViewMode.LargeIcon:
-            //            mViewLarge.Checked = true;
-            //            break;
-            //        case PanelViewMode.SmallIcon:
-            //            mViewSmall.Checked = true;
-            //            break;
-            //        case PanelViewMode.List:
-            //            mViewList.Checked = true;
-            //            break;
-            //        case PanelViewMode.Details:
-            //            mViewDetails.Checked = true;
-            //            break;
-            //    }
+            // mViewLarge.Checked = false;
+            // mViewSmall.Checked = false;
+            // mViewList.Checked = false;
+            // mViewDetails.Checked = false;
+            // var pv = Pages.ActivePanelView;
+            // var enabled = pv != null;
+            // mViewLarge.Enabled = enabled;
+            // mViewSmall.Enabled = enabled;
+            // mViewList.Enabled = enabled;
+            // mViewDetails.Enabled = enabled;
+            // if (pv != null)
+            // switch (pv.ViewMode)
+            // {
+            // case PanelViewMode.LargeIcon:
+            // mViewLarge.Checked = true;
+            // break;
+            // case PanelViewMode.SmallIcon:
+            // mViewSmall.Checked = true;
+            // break;
+            // case PanelViewMode.List:
+            // mViewList.Checked = true;
+            // break;
+            // case PanelViewMode.Details:
+            // mViewDetails.Checked = true;
+            // break;
+            // }
         }
 
         private void mView_Popup(object sender, EventArgs e)
@@ -204,15 +203,15 @@ namespace LanExchange.Presentation.WinForms.Forms
 
         public void ShowStatusText(string format, params object[] args)
         {
-            //lItemsCount.Text = String.Format(CultureInfo.InvariantCulture, format, args);
+            // lItemsCount.Text = string.Format(CultureInfo.InvariantCulture, format, args);
         }
 
         private void mPanel_Popup(object sender, EventArgs e)
         {
             // TODO remove commandManager
-            //mReRead.Enabled = commandManager.IsCommandEnabled<PagesReReadCommand>();
-            //mCloseTab.Enabled = commandManager.IsCommandEnabled<PagesCloseTabCommand>();
-            //mCloseOther.Enabled = commandManager.IsCommandEnabled<PagesCloseOtherCommand>();
+            // mReRead.Enabled = commandManager.IsCommandEnabled<PagesReReadCommand>();
+            // mCloseTab.Enabled = commandManager.IsCommandEnabled<PagesCloseTabCommand>();
+            // mCloseOther.Enabled = commandManager.IsCommandEnabled<PagesCloseOtherCommand>();
         }
 
         public string TrayText
@@ -230,15 +229,15 @@ namespace LanExchange.Presentation.WinForms.Forms
         ///// <summary>
         ///// This params needs for omit flickering when tab's image changed.
         ///// </summary>
-    //    protected override CreateParams CreateParams
-    //    {
-    //        get
-    //        {
-    //            CreateParams cp = base.CreateParams;
-    //            cp.ExStyle |= 0x02000000;  // Turn on WS_EX_COMPOSITED
-    //            return cp;
-    //        }
-    //    } 
+    // protected override CreateParams CreateParams
+    // {
+    // get
+    // {
+    // CreateParams cp = base.CreateParams;
+    // cp.ExStyle |= 0x02000000;  // Turn on WS_EX_COMPOSITED
+    // return cp;
+    // }
+    // } 
 
 
         public object SafeInvoke(Delegate method, params object[] args)

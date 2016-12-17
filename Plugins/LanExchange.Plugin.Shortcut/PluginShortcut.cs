@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel.Composition;
+using LanExchange.Application.Interfaces.Extensions;
 using LanExchange.Plugin.Shortcut;
 using LanExchange.Presentation.Interfaces;
-using LanExchange.Presentation.Interfaces.Extensions;
 using LanExchange.Plugin.Shortcut.Properties;
 using LanExchange.Presentation.Interfaces.Menu;
 

@@ -47,7 +47,7 @@ namespace LanExchange.Plugin.Shortcut
 
         public override IComparable GetValue(int index)
         {
-            switch(index)
+            switch (index)
             {
                 case 1:
                     return action;

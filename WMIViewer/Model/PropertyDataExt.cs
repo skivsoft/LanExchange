@@ -8,7 +8,6 @@ namespace WMIViewer.Model
     internal sealed class PropertyDataExt : IComparable<PropertyDataExt>
     {
         private readonly PropertyData data;
-        private readonly ParameterType parameterType;
         private readonly int id;
 
         public PropertyDataExt(PropertyData data)
@@ -20,20 +19,17 @@ namespace WMIViewer.Model
             foreach (var qd in this.data.Qualifiers)
             {
                 if (qd.Name.Equals("In") || qd.Name.Equals("in"))
-                    parameterType = ParameterType.In;
+                    ParameterType = ParameterType.In;
                 if (qd.Name.Equals("Out"))
-                    parameterType = ParameterType.Out;
+                    ParameterType = ParameterType.Out;
                 if (qd.Name.Equals("out"))
-                    parameterType = ParameterType.Return;
+                    ParameterType = ParameterType.Return;
                 if (qd.Name.Equals("ID"))
-                    id = (int) qd.Value;
+                    id = (int)qd.Value;
             }
         }
 
-        public ParameterType ParameterType
-        {
-            get { return parameterType; }
-        }
+        public ParameterType ParameterType { get; }
 
         public int Id
         {
@@ -57,24 +53,7 @@ namespace WMIViewer.Model
 
         public object Value
         {
-            get { return data.Value; }   
-        }
-
-        public int CompareTo(PropertyDataExt other)
-        {
-            if (other == null)
-                return 1;
-            return Id - other.Id;
-        }
-
-        public override bool Equals(object obj)
-        {
-            return CompareTo(obj as PropertyDataExt) == 0;
-        }
-
-        public override int GetHashCode()
-        {
-            return id;
+            get { return data.Value; }
         }
 
         public static bool operator ==(PropertyDataExt left, PropertyDataExt right)
@@ -101,6 +80,23 @@ namespace WMIViewer.Model
             if (left == null)
                 return false;
             return left.CompareTo(right) > 0;
+        }
+
+        public int CompareTo(PropertyDataExt other)
+        {
+            if (other == null)
+                return 1;
+            return Id - other.Id;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return CompareTo(obj as PropertyDataExt) == 0;
+        }
+
+        public override int GetHashCode()
+        {
+            return id;
         }
     }
 }

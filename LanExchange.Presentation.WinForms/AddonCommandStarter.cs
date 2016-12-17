@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.IO;
 using LanExchange.Presentation.Interfaces;
@@ -34,10 +33,10 @@ namespace LanExchange.Presentation.WinForms
             AddonMenuItem menuItem, 
             PanelItemBase panelItem)
         {
-            Contract.Requires<ArgumentNullException>(factoryManager != null);
-            Contract.Requires<ArgumentNullException>(windowFactory != null);
-            Contract.Requires<ArgumentNullException>(menuItem != null);
-            Contract.Requires<ArgumentNullException>(panelItem != null);
+            if (factoryManager == null) throw new ArgumentNullException(nameof(factoryManager));
+            if (windowFactory == null) throw new ArgumentNullException(nameof(windowFactory));
+            if (menuItem == null) throw new ArgumentNullException(nameof(menuItem));
+            if (panelItem == null) throw new ArgumentNullException(nameof(panelItem));
 
             this.windowFactory = windowFactory;
             this.panelItem = panelItem;
@@ -50,18 +49,17 @@ namespace LanExchange.Presentation.WinForms
         private void ShowCheckAvailabilityWindow()
         {
             // TODO hide model
-            //var form = windowFactory.CreateCheckAvailabilityWindow();
-            //form.Text = string.Format("{0} — {1}", panelItem.Name, menuItem.Text);
-            //form.CurrentItem = panelItem;
-            //form.RunText = menuItem.Text;
-            //if (menuItem.ProgramValue != null)
-            //    form.RunImage = menuItem.ProgramValue.ProgramImage;
-            //form.CallerControl = this;
-            //form.RunAction = InternalStart;
-            //form.AvailabilityChecker = checker;
-
-            //form.StartChecking();
-            //form.WaitAndShow();
+            var form = windowFactory.CreateCheckAvailabilityWindow();
+            form.Text = string.Format("{0} — {1}", panelItem.Name, menuItem.Text);
+            // form.CurrentItem = panelItem;
+            form.RunText = menuItem.Text;
+            if (menuItem.ProgramValue != null)
+                form.RunImage = menuItem.ProgramValue.ProgramImage;
+            form.CallerControl = this;
+            form.RunAction = InternalStart;
+            // form.AvailabilityChecker = checker;
+            form.StartChecking();
+            form.WaitAndShow();
         }
 
         [Localizable(false)]

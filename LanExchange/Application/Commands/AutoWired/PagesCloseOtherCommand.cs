@@ -8,14 +8,14 @@ namespace LanExchange.Application.Commands.AutoWired
         {
         }
 
-        protected override void InternalExecute()
-        {
-            pagesPresenter.CommanCloseOtherTabs();
-        }
-
         public override bool Enabled
         {
-            get { return pagesPresenter.Count > 1; }
+            get { return PagesPresenter.Count > 1; }
+        }
+
+        protected override void InternalExecute()
+        {
+            PagesPresenter.CommanCloseOtherTabs();
         }
     }
 }

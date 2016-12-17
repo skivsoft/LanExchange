@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -37,15 +36,15 @@ namespace LanExchange.Presentation.WinForms
             ILogService logService,
             IAddonPersistenceService persistenceService)
         {
-            Contract.Requires<ArgumentNullException>(folderManager != null);
-            Contract.Requires<ArgumentNullException>(programFactory != null);
-            Contract.Requires<ArgumentNullException>(imageManager != null);
-            Contract.Requires<ArgumentNullException>(pagesPresenter != null);
-            Contract.Requires<ArgumentNullException>(translationService != null);
-            Contract.Requires<ArgumentNullException>(factoryManager != null);
-            Contract.Requires<ArgumentNullException>(windowFactory != null);
-            Contract.Requires<ArgumentNullException>(logService != null);
-            Contract.Requires<ArgumentNullException>(persistenceService != null);
+            if (folderManager == null) throw new ArgumentNullException(nameof(folderManager));
+            if (programFactory == null) throw new ArgumentNullException(nameof(programFactory));
+            if (imageManager == null) throw new ArgumentNullException(nameof(imageManager));
+            if (pagesPresenter == null) throw new ArgumentNullException(nameof(pagesPresenter));
+            if (translationService == null) throw new ArgumentNullException(nameof(translationService));
+            if (factoryManager == null) throw new ArgumentNullException(nameof(factoryManager));
+            if (windowFactory == null) throw new ArgumentNullException(nameof(windowFactory));
+            if (logService == null) throw new ArgumentNullException(nameof(logService));
+            if (persistenceService == null) throw new ArgumentNullException(nameof(persistenceService));
 
             this.folderManager = folderManager;
             this.programFactory = programFactory;
@@ -91,7 +90,7 @@ namespace LanExchange.Presentation.WinForms
         {
             foreach (var pair in Programs.Where(pair => pair.Value.ProgramImage != null))
             {
-                var imageName = string.Format(CultureInfo.InvariantCulture, PanelImageNames.ADDON_FMT, pair.Key);
+                var imageName = string.Format(CultureInfo.InvariantCulture, PanelImageNames.AddonFmt, pair.Key);
                 imageManager.RegisterImage(imageName, pair.Value.ProgramImage, pair.Value.ProgramImage);
             }
         }
@@ -238,7 +237,7 @@ namespace LanExchange.Presentation.WinForms
             var menuItem = (sender as ToolStripMenuItem);
             if (menuItem == null) return;
 
-            var item = (AddonMenuItem) menuItem.Tag;
+            var item = (AddonMenuItem)menuItem.Tag;
             if (item == null || !item.Enabled) return;
 
             new AddonCommandStarter(factoryManager, windowFactory, item, item.CurrentItem).Start();
@@ -247,23 +246,23 @@ namespace LanExchange.Presentation.WinForms
         public void ProcessKeyDown(object args)
         {
             // TODO hide model
-            //var pv = pagesPresenter.ActivePanelView;
-            //var e = args as KeyEventArgs;
-            //if (pv == null || e == null) return;
-            //var panelItem = pv.Presenter.GetFocusedPanelItem(true);
-            //if (panelItem == null) return;
-            //var typeId = panelItem.GetType().Name;
-            //if (!PanelItems.ContainsKey(typeId))
-            //    return;
-            //var item = PanelItems[typeId];
-            //var shortcut = KeyboardUtils.KeyEventToString(e);
-            //foreach (var menuItem in item.ContextMenu)
-            //    if (menuItem.ShortcutPresent && menuItem.ShortcutKeys.Equals(shortcut) && menuItem.Enabled)
-            //    {
-            //        new AddonCommandStarter(factoryManager, windowFactory, menuItem, panelItem).Start();
-            //        e.Handled = true;
-            //        break;
-            //    }
+            // var pv = pagesPresenter.ActivePanelView;
+            // var e = args as KeyEventArgs;
+            // if (pv == null || e == null) return;
+            // var panelItem = pv.Presenter.GetFocusedPanelItem(true);
+            // if (panelItem == null) return;
+            // var typeId = panelItem.GetType().Name;
+            // if (!PanelItems.ContainsKey(typeId))
+            // return;
+            // var item = PanelItems[typeId];
+            // var shortcut = KeyboardUtils.KeyEventToString(e);
+            // foreach (var menuItem in item.ContextMenu)
+            // if (menuItem.ShortcutPresent && menuItem.ShortcutKeys.Equals(shortcut) && menuItem.Enabled)
+            // {
+            // new AddonCommandStarter(factoryManager, windowFactory, menuItem, panelItem).Start();
+            // e.Handled = true;
+            // break;
+            // }
         }
 
         /// <summary>
@@ -275,21 +274,21 @@ namespace LanExchange.Presentation.WinForms
             if (pv == null) return;
 
             // TODO hide model
-            //var panelItem = pv.Presenter.GetFocusedPanelItem(true);
-            //if (panelItem == null) return;
+            // var panelItem = pv.Presenter.GetFocusedPanelItem(true);
+            // if (panelItem == null) return;
 
-            //var typeId = panelItem.GetType().Name;
-            //if (!PanelItems.ContainsKey(typeId))
-            //    return;
+            // var typeId = panelItem.GetType().Name;
+            // if (!PanelItems.ContainsKey(typeId))
+            // return;
 
-            //var item = PanelItems[typeId];
-            //AddonMenuItem defaultItem = null;
-            //foreach (var menuItem in item.ContextMenu)
-            //    if (menuItem.Default && menuItem.Enabled)
-            //        defaultItem = menuItem;
+            // var item = PanelItems[typeId];
+            // AddonMenuItem defaultItem = null;
+            // foreach (var menuItem in item.ContextMenu)
+            // if (menuItem.Default && menuItem.Enabled)
+            // defaultItem = menuItem;
 
-            //if (defaultItem != null)
-            //    new AddonCommandStarter(factoryManager, windowFactory, defaultItem, panelItem).Start();
+            // if (defaultItem != null)
+            // new AddonCommandStarter(factoryManager, windowFactory, defaultItem, panelItem).Start();
         }
     }
 }

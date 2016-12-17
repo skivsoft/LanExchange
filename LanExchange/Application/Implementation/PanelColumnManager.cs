@@ -16,7 +16,7 @@ namespace LanExchange.Application.Implementation
         public void RegisterColumn<TPanelItem>(PanelColumnHeader header) where TPanelItem : PanelItemBase
         {
             IList<PanelColumnHeader> found;
-            var typeName = typeof (TPanelItem).Name;
+            var typeName = typeof(TPanelItem).Name;
             if (!types.TryGetValue(typeName, out found))
             {
                 found = new List<PanelColumnHeader>();
@@ -47,18 +47,32 @@ namespace LanExchange.Application.Implementation
         public bool ReorderColumns(string typeName, int oldIndex, int newIndex)
         {
             //// lock reorder for 0-column
-            //if (oldIndex == 0 || newIndex == 0)
-            //    return false;
-            //IList<PanelColumnHeader> result;
-            //if (m_Types.TryGetValue(type, out result))
-            //{
-            //    var temp = result[oldIndex];
-            //    result[oldIndex] = result[newIndex];
-            //    result[newIndex] = temp;
-            //    //m_Types.Remove(type);
-            //    //m_Types.Add(type, result);
-            //    return true;
-            //}
+            // if (oldIndex == 0 || newIndex == 0)
+
+            // return false;
+
+            // IList<PanelColumnHeader> result;
+
+            // if (m_Types.TryGetValue(type, out result))
+
+            // {
+
+            // var temp = result[oldIndex];
+
+            // result[oldIndex] = result[newIndex];
+
+            // result[newIndex] = temp;
+
+            // // m_Types.Remove(type);
+
+
+            // // m_Types.Add(type, result);
+
+
+            // return true;
+
+            // }
+
             return false;
         }
     }

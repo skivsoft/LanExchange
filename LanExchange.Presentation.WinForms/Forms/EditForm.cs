@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
 using System.Windows.Forms;
 using LanExchange.Presentation.Interfaces;
 
@@ -11,17 +10,18 @@ namespace LanExchange.Presentation.WinForms.Forms
     {
         private readonly IEditPresenter presenter;
 
+        public event EventHandler ViewClosed;
+
         public EditForm(IEditPresenter presenter)
         {
-            Contract.Requires<ArgumentNullException>(presenter != null);
+            if (presenter == null) throw new ArgumentNullException(nameof(presenter));
+
 
             InitializeComponent();
 
             this.presenter = presenter;
             presenter.Initialize(this);
         }
-
-        public event EventHandler ViewClosed;
 
         [Localizable(false)]
         public void SetColumns(IList<PanelColumnHeader> columns)
@@ -40,7 +40,7 @@ namespace LanExchange.Presentation.WinForms.Forms
                 label.AutoSize = true;
                 label.UseMnemonic = true;
                 label.Text = "&" + columns[index].Text + ":";
-                label.TabIndex = START_TABINDEX + index*2;
+                label.TabIndex = START_TABINDEX + index * 2;
                 label.SetBounds(SPACE, top, 0, 0);
                 Controls.Add(label);
                 if (label.Width > maxWidth)
@@ -50,13 +50,13 @@ namespace LanExchange.Presentation.WinForms.Forms
                 }
                 top += LINE_DELTA;
             }
-            Width = SPACE*3 + maxWidth + EDIT_WIDTH + SystemInformation.FixedFrameBorderSize.Width * 2;
+            Width = SPACE * 3 + maxWidth + EDIT_WIDTH + SystemInformation.FixedFrameBorderSize.Width * 2;
             Height = top + 100;
             top = SPACE;
             for (int index = 0; index < columns.Count; index++)
             {
                 var edit = new TextBox();
-                edit.SetBounds(SPACE*2 + maxWidth, top-(20-labelHeight)/2, EDIT_WIDTH, 20);
+                edit.SetBounds(SPACE * 2 + maxWidth, top - (20 - labelHeight) / 2, EDIT_WIDTH, 20);
                 edit.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
                 edit.TabIndex = START_TABINDEX + index * 2 + 1;
                 Controls.Add(edit);

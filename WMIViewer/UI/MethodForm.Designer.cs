@@ -97,7 +97,7 @@ namespace WMIViewer.UI
             this.bRun.TabIndex = 9;
             this.bRun.Text = Resources.MethodForm_bRun;
             this.bRun.UseVisualStyleBackColor = true;
-            this.bRun.Click += new System.EventHandler(this.bRun_Click);
+            this.bRun.Click += new System.EventHandler(this.ButtonRun_Click);
             // 
             // bCancel
             // 
@@ -143,7 +143,7 @@ namespace WMIViewer.UI
             // timerOK
             // 
             this.timerOK.Interval = 1000;
-            this.timerOK.Tick += new System.EventHandler(this.timerOK_Tick);
+            this.timerOK.Tick += new System.EventHandler(this.TimerOK_Tick);
             // 
             // WMIMethodForm
             // 

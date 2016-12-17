@@ -2,7 +2,6 @@
 using System.ComponentModel.Composition;
 using System.Text;
 using LanExchange.Presentation.Interfaces;
-using LanExchange.Presentation.Interfaces.Extensions;
 
 namespace LanExchange.Plugin.Notify
 {
@@ -35,7 +34,7 @@ namespace LanExchange.Plugin.Notify
                 case MSG_LANEX_NOTIFY:
                     var pagesView = serviceProvider.Resolve<IPagesView>();
                     if (pagesView != null)
-                        ReReadPlugin(msg[1], msg.Length > 2 ? msg[2] : String.Empty);
+                        ReReadPlugin(msg[1], msg.Length > 2 ? msg[2] : string.Empty);
                     break;
             }
         }
@@ -43,20 +42,34 @@ namespace LanExchange.Plugin.Notify
         private void ReReadPlugin(string typeName, string subject)
         {
             // TODO hide model
-            //var pagesPresenter = serviceProvider.Resolve<IPagesPresenter>();
-            //var mainView = serviceProvider.Resolve<IMainView>();
-            //if (pagesPresenter == null || mainView == null || pagesPresenter.Count == 0) return;
-            //lock (pagesPresenter)
-            //    for (int index = 0; index < pagesPresenter.Count; index++)
-            //    {
-            //        var model = pagesPresenter.GetItem(index);
-            //        var parent = model.CurrentPath.Peek();
-            //        if (parent.Where(item => item.GetType().Name.Equals(typeName) && item.IsRereadAccepted(subject)).Any())
-            //        {
-            //            model.AsyncRetrieveData(false);
-            //            break;
-            //        }
-            //    }
+            // var pagesPresenter = serviceProvider.Resolve<IPagesPresenter>();
+
+            // var mainView = serviceProvider.Resolve<IMainView>();
+
+            // if (pagesPresenter == null || mainView == null || pagesPresenter.Count == 0) return;
+
+            // lock (pagesPresenter)
+
+            // for (int index = 0; index < pagesPresenter.Count; index++)
+
+            // {
+
+            // var model = pagesPresenter.GetItem(index);
+
+            // var parent = model.CurrentPath.Peek();
+
+            // if (parent.Where(item => item.GetType().Name.Equals(typeName) && item.IsRereadAccepted(subject)).Any())
+
+            // {
+
+            // model.AsyncRetrieveData(false);
+
+            // break;
+
+            // }
+
+            // }
+
         }
     }
 }

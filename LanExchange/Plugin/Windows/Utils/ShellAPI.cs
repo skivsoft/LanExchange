@@ -12,7 +12,6 @@ namespace LanExchange.Plugin.Windows.Utils
     /// </summary>
     [Localizable(false)]
     [CLSCompliant(false)]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public static class ShellAPI
     {
         #region Variables and Constants
@@ -41,17 +40,28 @@ namespace LanExchange.Plugin.Windows.Utils
 
         // Retrieves information about an object in the file system,
         // such as a file, a folder, a directory, or a drive root.
-        //[DllImport("shell32", 
-        //    EntryPoint = "SHGetFileInfo", 
-        //    ExactSpelling = false, 
-        //    CharSet = CharSet.Auto,
-        //    SetLastError = true)]
-        //public static extern IntPtr SHGetFileInfo(
-        //    string pszPath, 
-        //    FILE_ATTRIBUTE dwFileAttributes, 
-        //    ref SHFILEINFO sfi,
-        //    int cbFileInfo, 
-        //    SHGFI uFlags);
+        // [DllImport("shell32", 
+
+        // EntryPoint = "SHGetFileInfo", 
+
+        // ExactSpelling = false, 
+
+        // CharSet = CharSet.Auto,
+
+        // SetLastError = true)]
+
+        // public static extern IntPtr SHGetFileInfo(
+
+        // string pszPath, 
+
+        // FILE_ATTRIBUTE dwFileAttributes, 
+
+        // ref SHFILEINFO sfi,
+
+        // int cbFileInfo, 
+
+        // SHGFI uFlags);
+
 
         // Retrieves information about an object in the file system,
         // such as a file, a folder, a directory, or a drive root.
@@ -68,18 +78,25 @@ namespace LanExchange.Plugin.Windows.Utils
             SHGFI uFlags);
 
         // Takes the CSIDL of a folder and returns the pathname.
-        //[DllImport("shell32.dll")]
-        //public static extern Int32 SHGetFolderPath(
-        //    IntPtr hwndOwner,
-        //    CSIDL nFolder,
-        //    IntPtr hToken,
-        //    SHGFP dwFlags,
-        //    StringBuilder pszPath);
+        // [DllImport("shell32.dll")]
+
+        // public static extern int SHGetFolderPath(
+
+        // IntPtr hwndOwner,
+
+        // CSIDL nFolder,
+
+        // IntPtr hToken,
+
+        // SHGFP dwFlags,
+
+        // StringBuilder pszPath);
+
 
         // Retrieves the IShellFolder interface for the desktop folder,
         // which is the root of the Shell's namespace. 
         [DllImport(ExternDll.Shell32)]
-        public static extern Int32 SHGetDesktopFolder(
+        public static extern int SHGetDesktopFolder(
             out IntPtr ppshf);
 
         // Retrieves ppidl of special folder
@@ -88,16 +105,16 @@ namespace LanExchange.Plugin.Windows.Utils
             ExactSpelling = true, 
             CharSet = CharSet.Ansi, 
             SetLastError = true)]
-        public static extern Int32 SHGetSpecialFolderLocation(
+        public static extern int SHGetSpecialFolderLocation(
             IntPtr hwndOwner, 
             CSIDL nFolder, 
             out IntPtr ppidl);
 
         // This function takes the fully-qualified pointer to an item
-        // identifier list (PIDL) of a namespace object, and returns a specified
+        // identifier list(PIDL) of a namespace object, and returns a specified
         // interface pointer on the parent object.
         [DllImport(ExternDll.Shell32)]
-        public static extern Int32 SHBindToParent(
+        public static extern int SHBindToParent(
             IntPtr pidl,            
             ref Guid riid,
             out IntPtr ppv,
@@ -120,17 +137,26 @@ namespace LanExchange.Plugin.Windows.Utils
             uint hNotify);
 
         // Converts an item identifier list to a file system path
-        //[DllImport("shell32.dll")]
-        //public static extern bool SHGetPathFromIDList(
-        //    IntPtr pidl,
-        //    StringBuilder pszPath);
+        // [DllImport("shell32.dll")]
+
+        // public static extern bool SHGetPathFromIDList(
+
+        // IntPtr pidl,
+
+        // StringBuilder pszPath);
+
 
         // SHGetRealIDL converts a simple PIDL to a full PIDL
-        //[DllImport("shell32.dll")]
-        //public static extern Int32 SHGetRealIDL(
-        //    IShellFolder psf,
-        //    IntPtr pidlSimple,
-        //    out IntPtr ppidlReal);
+        // [DllImport("shell32.dll")]
+
+        // public static extern int SHGetRealIDL(
+
+        // IShellFolder psf,
+
+        // IntPtr pidlSimple,
+
+        // out IntPtr ppidlReal);
+
 
         // Tests whether two ITEMIDLIST structures are equal in a binary comparison
         [DllImport(ExternDll.Shell32,
@@ -148,16 +174,26 @@ namespace LanExchange.Plugin.Windows.Utils
 
         // Takes a STRRET structure returned by IShellFolder::GetDisplayNameOf,
         // converts it to a string, and places the result in a buffer. 
-        //[DllImport("shlwapi.dll", 
-        //    EntryPoint = "StrRetToBuf", 
-        //    ExactSpelling = false, 
-        //    CharSet = CharSet.Auto, 
-        //    SetLastError = true)]
-        //public static extern Int32 StrRetToBuf(
-        //    IntPtr pstr, 
-        //    IntPtr pidl,
-        //    StringBuilder pszBuf, 
-        //    int cchBuf);
+        // [DllImport("shlwapi.dll", 
+
+        // EntryPoint = "StrRetToBuf", 
+
+        // ExactSpelling = false, 
+
+        // CharSet = CharSet.Auto, 
+
+        // SetLastError = true)]
+
+        // public static extern int StrRetToBuf(
+
+        // IntPtr pstr, 
+
+        // IntPtr pidl,
+
+        // StringBuilder pszBuf, 
+
+        // int cchBuf);
+
 
         #endregion
 
@@ -187,7 +223,7 @@ namespace LanExchange.Plugin.Windows.Utils
         // Displays a shortcut menu at the specified location and 
         // tracks the selection of items on the shortcut menu
         [DllImport(ExternDll.User32, 
-            ExactSpelling=true,
+            ExactSpelling = true,
             CharSet = CharSet.Auto)]
         public static extern uint TrackPopupMenuEx(
             IntPtr hmenu, 
@@ -214,27 +250,46 @@ namespace LanExchange.Plugin.Windows.Utils
         // appends a new item to the end of the specified menu bar, drop-down menu, submenu, 
         // or shortcut menu. You can use this function to specify the content, appearance, and 
         // behavior of the menu item
-        //[DllImport("user32",
-        //    SetLastError = true,
-        //    CharSet = CharSet.Auto)]
-        //public static extern bool AppendMenu(
-        //    IntPtr hMenu,
-        //    MFT uFlags,
-        //    uint uIDNewItem,
-        //    [MarshalAs(UnmanagedType.LPTStr)]
-        //    string lpNewItem);
+        // [DllImport("user32",
+
+        // SetLastError = true,
+
+        // CharSet = CharSet.Auto)]
+
+        // public static extern bool AppendMenu(
+
+        // IntPtr hMenu,
+
+        // MFT uFlags,
+
+        // uint uIDNewItem,
+
+        // [MarshalAs(UnmanagedType.LPTStr)]
+
+        // string lpNewItem);
+
 
         // Inserts a new menu item into a menu, moving other items down the menu
-        //[DllImport("user32", 
-        //    SetLastError = true, 
-        //    CharSet = CharSet.Auto)]
-        //public static extern bool InsertMenu(
-        //    IntPtr hmenu, 
-        //    uint uPosition, 
-        //    MFT uflags,
-        //    uint uIDNewItem, 
-        //    [MarshalAs(UnmanagedType.LPTStr)]
-        //    string lpNewItem);
+        // [DllImport("user32", 
+
+        // SetLastError = true, 
+
+        // CharSet = CharSet.Auto)]
+
+        // public static extern bool InsertMenu(
+
+        // IntPtr hmenu, 
+
+        // uint uPosition, 
+
+        // MFT uflags,
+
+        // uint uIDNewItem, 
+
+        // [MarshalAs(UnmanagedType.LPTStr)]
+
+        // string lpNewItem);
+
 
         // Inserts a new menu item at the specified position in a menu
         [DllImport(ExternDll.User32,
@@ -344,12 +399,18 @@ namespace LanExchange.Plugin.Windows.Utils
 
         // Registers the specified window as one that can be the target of an OLE drag-and-drop 
         // operation and specifies the IDropTarget instance to use for drop operations
-        //[DllImport("ole32.dll", 
-        //    CharSet = CharSet.Auto, 
-        //    SetLastError = true)]
-        //public static extern int RegisterDragDrop(
-        //    IntPtr hWnd, 
-        //    ShellDll.IDropTarget IdropTgt);
+        // [DllImport("ole32.dll", 
+
+        // CharSet = CharSet.Auto, 
+
+        // SetLastError = true)]
+
+        // public static extern int RegisterDragDrop(
+
+        // IntPtr hWnd, 
+
+        // ShellDll.IDropTarget IdropTgt);
+
 
         // Revokes the registration of the specified application window as a potential target for 
         // OLE drag-and-drop operations
@@ -367,15 +428,24 @@ namespace LanExchange.Plugin.Windows.Utils
             ref STGMEDIUM pmedium);
 
         // Carries out an OLE drag and drop operation
-        //[DllImport("ole32.dll",
-        //    CharSet = CharSet.Auto,
-        //    SetLastError = true)]
-        //public static extern int DoDragDrop(
-        //    IntPtr pDataObject,
-        //    [MarshalAs(UnmanagedType.Interface)]
-        //    IDropSource pDropSource,
-        //    DragDropEffects dwOKEffect,
-        //    out DragDropEffects pdwEffect);
+        // [DllImport("ole32.dll",
+
+        // CharSet = CharSet.Auto,
+
+        // SetLastError = true)]
+
+        // public static extern int DoDragDrop(
+
+        // IntPtr pDataObject,
+
+        // [MarshalAs(UnmanagedType.Interface)]
+
+        // IDropSource pDropSource,
+
+        // DragDropEffects dwOKEffect,
+
+        // out DragDropEffects pdwEffect);
+
 
         // Retrieves a drag/drop helper interface for drawing the drag/drop images
         [DllImport(ExternDll.Ole32,
@@ -487,6 +557,20 @@ namespace LanExchange.Plugin.Windows.Utils
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         public struct MENUITEMINFO 
         {
+            public int cbSize;
+            public MIIM fMask;
+            public MFT fType;
+            public MFS fState;
+            public uint wID;
+            public IntPtr hSubMenu;
+            public IntPtr hbmpChecked;
+            public IntPtr hbmpUnchecked;
+            public IntPtr dwItemData;
+            [MarshalAs(UnmanagedType.LPTStr)]
+            public string dwTypeData;
+            public int cch;
+            public IntPtr hbmpItem;
+
             public MENUITEMINFO(string text)
             {
                 cbSize = cbMenuItemInfo;
@@ -502,20 +586,6 @@ namespace LanExchange.Plugin.Windows.Utils
                 dwItemData = IntPtr.Zero;
                 hbmpItem = IntPtr.Zero;
             }
-
-            public int cbSize;
-            public MIIM fMask;
-            public MFT fType;
-            public MFS fState;
-            public uint wID;
-            public IntPtr hSubMenu;
-            public IntPtr hbmpChecked;
-            public IntPtr hbmpUnchecked;
-            public IntPtr dwItemData;
-            [MarshalAs(UnmanagedType.LPTStr)]
-            public string dwTypeData;
-            public int cch;
-            public IntPtr hbmpItem;
         }
 
         // A generalized Clipboard format, it is enhanced to encompass a 
@@ -573,22 +643,38 @@ namespace LanExchange.Plugin.Windows.Utils
         }
 
         // Contains statistical data about an open storage, stream, or byte-array object
-        //[StructLayout(LayoutKind.Sequential)]
-        //public struct STATSTG
-        //{
-        //    [MarshalAs(UnmanagedType.LPWStr)]
-        //    public string pwcsName;
-        //    public STGTY type;
-        //    public long cbSize;
-        //    public FILETIME mtime;
-        //    public FILETIME ctime;
-        //    public FILETIME atime;
-        //    public STGM grfMode;
-        //    public LOCKTYPE grfLocksSupported;
-        //    public Guid clsid;
-        //    public int grfStateBits;
-        //    public int reserved;
-        //}
+        // [StructLayout(LayoutKind.Sequential)]
+
+        // public struct STATSTG
+
+        // {
+
+        // [MarshalAs(UnmanagedType.LPWStr)]
+
+        // public string pwcsName;
+
+        // public STGTY type;
+
+        // public long cbSize;
+
+        // public FILETIME mtime;
+
+        // public FILETIME ctime;
+
+        // public FILETIME atime;
+
+        // public STGM grfMode;
+
+        // public LOCKTYPE grfLocksSupported;
+
+        // public Guid clsid;
+
+        // public int grfStateBits;
+
+        // public int reserved;
+
+        // }
+
 
         // Represents the number of 100-nanosecond intervals since January 1, 1601
         [StructLayout(LayoutKind.Sequential)]
@@ -602,14 +688,14 @@ namespace LanExchange.Plugin.Windows.Utils
         [StructLayout(LayoutKind.Sequential)]
         public struct POINT
         {
+            public int x;
+            public int y;
+
             public POINT(int x, int y)
             {
                 this.x = x;
                 this.y = y;
             }
-
-            public int x;
-            public int y;
         }
 
         // The SIZE structure specifies the width and height of a rectangle
@@ -769,18 +855,6 @@ namespace LanExchange.Plugin.Windows.Utils
             RESERVED = 0xffff0000
         }
 
-        // Flags specifying the information to return when calling IContextMenu::GetCommandString
-        [Flags]
-        public enum GCS : uint
-        {
-            VERBA = 0,
-            HELPTEXTA = 1,
-            VALIDATEA = 2,
-            VERBW = 4,
-            HELPTEXTW = 5,
-            VALIDATEW = 6
-        }
-
         // Flags that specify the file information to retrieve with SHGetFileInfo
         [Flags]
         public enum SHGFI : uint
@@ -872,7 +946,7 @@ namespace LanExchange.Plugin.Windows.Utils
         public enum ILD : uint
         {
             NORMAL = 0x0000,
-            TRANSPARENT =0x0001,
+            TRANSPARENT = 0x0001,
             MASK = 0x0010,
             BLEND25 = 0x0002,
             BLEND50 = 0x0004

@@ -23,7 +23,7 @@ namespace LanExchange.Presentation.Interfaces.Addons
         [XmlAttribute]
         public bool AllowUnreachable { get; set; }
 
-        public string ShortcutKeys  { get; set; }
+        public string ShortcutKeys { get; set; }
         
         public AddonObjectId ProgramRef { get; set; }
 
@@ -61,11 +61,12 @@ namespace LanExchange.Presentation.Interfaces.Addons
                 return true;
             if (ProgramValue == null || other.ProgramValue == null)
                 return (ProgramValue == null) == (other.ProgramValue == null);
-            if (String.Compare(ProgramValue.ExpandedFileName,
-                               other.ProgramValue.ExpandedFileName,
-                               StringComparison.OrdinalIgnoreCase) != 0)
+            if (string.Compare(
+                    ProgramValue.ExpandedFileName,
+                    other.ProgramValue.ExpandedFileName,
+                    StringComparison.OrdinalIgnoreCase) != 0)
                 return false;
-            return String.Compare(ProgramArgs, other.ProgramArgs, StringComparison.OrdinalIgnoreCase) == 0;
+            return string.Compare(ProgramArgs, other.ProgramArgs, StringComparison.OrdinalIgnoreCase) == 0;
         }
 
         public override int GetHashCode()

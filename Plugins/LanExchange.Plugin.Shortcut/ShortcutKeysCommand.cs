@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using LanExchange.Application.Interfaces;
 using LanExchange.Presentation.Interfaces;
 
@@ -14,8 +13,8 @@ namespace LanExchange.Plugin.Shortcut
             IPagesModel pagesModel,
             IModelFactory modelFactory)
         {
-            Contract.Requires<ArgumentNullException>(pagesModel != null);
-            Contract.Requires<ArgumentNullException>(modelFactory != null);
+            if (pagesModel == null) throw new ArgumentNullException(nameof(pagesModel));
+            if (modelFactory == null) throw new ArgumentNullException(nameof(modelFactory));
 
             this.pagesModel = pagesModel;
             this.modelFactory = modelFactory;
@@ -28,7 +27,7 @@ namespace LanExchange.Plugin.Shortcut
             {
                 var model = modelFactory.CreatePanelModel();
                 var root = new ShortcutRoot();
-                model.DataType = typeof (ShortcutPanelItem).Name;
+                model.DataType = typeof(ShortcutPanelItem).Name;
                 model.CurrentPath.Push(root);
                 pagesModel.Add(model);
                 foundIndex = pagesModel.Count - 1;

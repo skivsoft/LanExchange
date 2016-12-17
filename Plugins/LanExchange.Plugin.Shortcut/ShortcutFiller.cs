@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Menu;
 
@@ -19,9 +18,9 @@ namespace LanExchange.Plugin.Shortcut
             IAddonManager addonManager,
             IMenuProducer menuProducer)
         {
-            Contract.Requires<ArgumentNullException>(translationService != null);
-            Contract.Requires<ArgumentNullException>(addonManager != null);
-            Contract.Requires<ArgumentNullException>(menuProducer != null);
+            if (translationService == null) throw new ArgumentNullException(nameof(translationService));
+            if (addonManager == null) throw new ArgumentNullException(nameof(addonManager));
+            if (menuProducer == null) throw new ArgumentNullException(nameof(menuProducer));
 
             this.translationService = translationService;
             this.addonManager = addonManager;
@@ -38,23 +37,23 @@ namespace LanExchange.Plugin.Shortcut
             var visitor = new FillerMenuVisitor(parent, result);
             menuProducer.MainMenu.Accept(visitor);
 
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyF1, Resources.KeyF1__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyF10, Resources.KeyF10__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlW, Resources.KeyCtrlW__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlR, Resources.KeyCtrlR__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlWinX, Resources.KeyCtrlWinX__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlA, Resources.KeyCtrlA__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlC, Resources.KeyCtrlC__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlV, Resources.KeyCtrlV__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlIns, Resources.KeyCtrlIns__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlAltIns, Resources.KeyCtrlAltIns__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyDel, Resources.KeyDel__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyEsc, Resources.KeyEsc__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyEscLong, Resources.KeyEscLong__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyAnyChar, Resources.KeyAnyChar__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyBackspace, Resources.KeyBackspace__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlDown, Resources.KeyCtrlDown__));
-            //result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlUp, Resources.KeyCtrlUp__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyF1, Resources.KeyF1__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyF10, Resources.KeyF10__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlW, Resources.KeyCtrlW__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlR, Resources.KeyCtrlR__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlWinX, Resources.KeyCtrlWinX__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlA, Resources.KeyCtrlA__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlC, Resources.KeyCtrlC__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlV, Resources.KeyCtrlV__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlIns, Resources.KeyCtrlIns__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlAltIns, Resources.KeyCtrlAltIns__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyDel, Resources.KeyDel__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyEsc, Resources.KeyEsc__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyEscLong, Resources.KeyEscLong__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyAnyChar, Resources.KeyAnyChar__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyBackspace, Resources.KeyBackspace__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlDown, Resources.KeyCtrlDown__));
+            // result.Add(new ShortcutPanelItem(parent, Resources.KeyCtrlUp, Resources.KeyCtrlUp__));
 
             foreach (var pair in addonManager.PanelItems)
                 foreach (var menuItem in pair.Value.ContextMenu)
@@ -64,7 +63,7 @@ namespace LanExchange.Plugin.Shortcut
                         var context = SuppressPostfix(pair.Key, PANEL_ITEM_SUFFIX);
                         string customImageName = string.Empty;
                         if (menuItem.ProgramValue != null)
-                            customImageName = string.Format(PanelImageNames.ADDON_FMT, menuItem.ProgramValue.Id);
+                            customImageName = string.Format(PanelImageNames.AddonFmt, menuItem.ProgramValue.Id);
                         result.Add(new ShortcutPanelItem(parent, menuItem.ShortcutKeys, translatedText, context, customImageName));
                     }
         }

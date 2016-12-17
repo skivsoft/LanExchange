@@ -12,7 +12,8 @@ namespace LanExchange.Application.Models
     internal sealed class AboutModel : IAboutModel
     {
         private const string ISSUES = "/issues";
-        private const string LOCALIZATION_LINK = "https://crowdin.net/project/lanexchange";
+        private const string LOCALIZATION_LINK = "https:// crowdin.net/project/lanexchange";
+
 
         private readonly Assembly entryAssembly;
         private readonly string homeLink;
@@ -51,7 +52,7 @@ namespace LanExchange.Application.Models
 
         private Version GetVersion()
         {
-            return entryAssembly == null ?  null : entryAssembly.GetName().Version;
+            return entryAssembly == null ? null : entryAssembly.GetName().Version;
         }
 
         [Localizable(false)]

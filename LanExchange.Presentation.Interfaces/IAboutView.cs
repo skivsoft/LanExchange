@@ -18,6 +18,7 @@
         string VersionText { get; set; }
 
         string CopyrightText { get; set; }
+
         bool DetailsVisible { get; set; }
 
         void TranslateUI();

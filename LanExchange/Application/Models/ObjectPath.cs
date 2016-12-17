@@ -13,17 +13,17 @@ namespace LanExchange.Application.Models
         private readonly LinkedList<T> segments;
 
         /// <summary>
-        /// Occurs when path has changed.
-        /// </summary>
-        public event EventHandler Changed;
-
-        /// <summary>
         /// Initializes a new instance of the ObjectPath class.
         /// </summary>
         public ObjectPath()
         {
             segments = new LinkedList<T>();
         }
+
+        /// <summary>
+        /// Occurs when path has changed.
+        /// </summary>
+        public event EventHandler Changed;
 
         private void OnChanged()
         {

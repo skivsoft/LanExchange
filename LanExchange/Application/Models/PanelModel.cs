@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
 using LanExchange.Application.Implementation;
@@ -37,9 +36,9 @@ namespace LanExchange.Application.Models
             IPanelColumnManager panelColumns,
             IPuntoSwitcherService puntoService)
         {
-            Contract.Requires<ArgumentNullException>(panelFillers != null);
-            Contract.Requires<ArgumentNullException>(panelColumns != null);
-            Contract.Requires<ArgumentNullException>(puntoService != null);
+            if (panelFillers == null) throw new ArgumentNullException(nameof(panelFillers));
+            if (panelColumns == null) throw new ArgumentNullException(nameof(panelColumns));
+            if (puntoService == null) throw new ArgumentNullException(nameof(puntoService));
 
             this.panelFillers = panelFillers;
             this.panelColumns = panelColumns;
@@ -89,8 +88,8 @@ namespace LanExchange.Application.Models
 
         public void AsyncRetrieveData(bool clearFilter)
         {
-            //panelUpdater.Stop();
-            //panelUpdater.Start(this, clearFilter);
+            // panelUpdater.Stop();
+            // panelUpdater.Start(this, clearFilter);
         }
 
         public string DataType { get; set; }
@@ -136,7 +135,8 @@ namespace LanExchange.Application.Models
                     if (puntoService.SpecificContains(strList[i], filter1) ||
                         puntoService.SpecificContains(strList[i], filter2))
                         return true;
-                } else
+                }
+                else
                 if (filter1 != null && strList[i].Contains(filter1) || filter2 != null && strList[i].Contains(filter2))
                     return true;
             }
@@ -237,7 +237,7 @@ namespace LanExchange.Application.Models
                 if (fillerResult.ItemsType != null)
                     DataType = fillerResult.ItemsType.Name;
                 // add custom items created by user
-                foreach(var panelItem in Items)
+                foreach (var panelItem in Items)
                     if (panelItem.GetType().Name == DataType)
                         data.Add(panelItem);
                 // sort 

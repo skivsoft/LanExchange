@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -31,7 +30,7 @@ namespace LanExchange.Application.Implementation
         public TranslationService(
             IFolderManager folderManager)
         {
-            Contract.Requires<ArgumentNullException>(folderManager != null);
+            if (folderManager == null) throw new ArgumentNullException(nameof(folderManager));
 
             this.folderManager = folderManager;
 
@@ -53,18 +52,18 @@ namespace LanExchange.Application.Implementation
             get { return currentLanguage; } 
             set
             {
-                if (String.Compare(DEFAULT_LANGUAGE, value, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Compare(DEFAULT_LANGUAGE, value, StringComparison.OrdinalIgnoreCase) == 0)
                     currentLanguage = value;
                 else
-                    foreach(var fileName in folderManager.GetLanguagesFiles())
+                    foreach (var fileName in folderManager.GetLanguagesFiles())
                     {
                         var lang = Path.GetFileNameWithoutExtension(fileName);
-                        if (lang != null && String.Compare(lang, value, StringComparison.OrdinalIgnoreCase) == 0)
+                        if (lang != null && string.Compare(lang, value, StringComparison.OrdinalIgnoreCase) == 0)
                         {
                             RightToLeft = TranslateFromPO(fileName, ID_RTL).Equals(TRUE);
                             var fname = GetBaseFileName(fileName);
                             currentLanguageLines.Clear();
-                            foreach(var line in ReadAllLines(fname))
+                            foreach (var line in ReadAllLines(fname))
                                 currentLanguageLines.Add(line);
                             currentLanguage = value;
                             break;
@@ -98,7 +97,7 @@ namespace LanExchange.Application.Implementation
             Type tp;
             var translit = TranslateFromPO(fileName, ID_TRANSLIT);
             if (translits.TryGetValue(translit, out tp))
-                currentTranslit = (ITranslitStrategy) Activator.CreateInstance(tp);
+                currentTranslit = (ITranslitStrategy)Activator.CreateInstance(tp);
         }
 
         public bool RightToLeft { get; private set; }
@@ -119,7 +118,7 @@ namespace LanExchange.Application.Implementation
                         if (string.IsNullOrEmpty(translit) || translits.ContainsKey(translit))
                             sorted.Add(langName, lang);
                 }
-                catch(ArgumentException)
+                catch (ArgumentException)
                 {
                 }
             }
@@ -203,17 +202,17 @@ namespace LanExchange.Application.Implementation
         /// <returns>0: "-дан", 1: "-ден", 2: "-нан", 3: "-нен", 4: "-тан", 5: "-тен".</returns>
         private static int PluralFormKazakh(int num)
         {
-            if (num%10 == 6 || num%10 == 9 || num%100 == 20 || num%100 == 30)
+            if (num % 10 == 6 || num % 10 == 9 || num % 100 == 20 || num % 100 == 30)
                 return 0;
-            if (num%10 == 1 || num%10 == 2 || num%10 == 7 || num%10 == 8 || num%100 == 50 || num%1000 == 100)
+            if (num % 10 == 1 || num % 10 == 2 || num % 10 == 7 || num % 10 == 8 || num % 100 == 50 || num % 1000 == 100)
                 return 1;
-            if (num%100 == 10 || num%100 == 90)
+            if (num % 100 == 10 || num % 100 == 90)
                 return 2;
-            if (num%100 == 80)
+            if (num % 100 == 80)
                 return 3;
-            if (num%100 == 40 || num%100 == 60)
+            if (num % 100 == 40 || num % 100 == 60)
                 return 4;
-            if (num%10 == 3 || num%10 == 4 || num%10 == 5 || num%100 == 70)
+            if (num % 10 == 3 || num % 10 == 4 || num % 10 == 5 || num % 100 == 70)
                 return 5;
             return 0;
         }
@@ -221,7 +220,7 @@ namespace LanExchange.Application.Implementation
         [Localizable(false)]
         public void SetResourceManagerTo<TClass>() where TClass : class
         {
-            var resourceMan = new TranslationResourceManager(this, typeof (TClass).FullName, typeof (TClass).Assembly);
+            var resourceMan = new TranslationResourceManager(this, typeof(TClass).FullName, typeof(TClass).Assembly);
 
             var fieldInfo = typeof(TClass).GetField("resourceMan", BindingFlags.Static | BindingFlags.NonPublic);
             fieldInfo?.SetValue(null, resourceMan);

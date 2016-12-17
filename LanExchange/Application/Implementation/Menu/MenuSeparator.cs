@@ -1,7 +1,6 @@
-﻿using LanExchange.Presentation.Interfaces.Menu;
-using System;
+﻿using System;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
+using LanExchange.Presentation.Interfaces.Menu;
 
 namespace LanExchange.Application.Implementation.Menu
 {
@@ -10,7 +9,7 @@ namespace LanExchange.Application.Implementation.Menu
     {
         public void Accept(IMenuElementVisitor visitor)
         {
-            Contract.Requires<ArgumentNullException>(visitor != null);
+            if (visitor == null) throw new ArgumentNullException(nameof(visitor));
 
             visitor.VisitSeparator();
         }

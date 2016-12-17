@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Application.Commands;
 
@@ -12,7 +11,7 @@ namespace LanExchange.Application.Managers
 
         public CommandManager(IEnumerable<ICommand> commands)
         {
-            Contract.Requires<ArgumentNullException>(commands != null);
+            if (commands == null) throw new ArgumentNullException(nameof(commands));
 
             this.commands = new Dictionary<string, ICommand>();
             foreach (var command in commands)

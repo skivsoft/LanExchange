@@ -18,7 +18,7 @@ namespace LanExchange.Plugin.Network
                 if (item.username.EndsWith("$")) continue;
                 string name;
                 if (domain != item.logon_domain)
-                    name = String.Format(CultureInfo.CurrentCulture, @"{0}\{1}",
+                    name = string.Format(CultureInfo.CurrentCulture, @"{0}\{1}",
                         item.logon_domain.ToUpper(CultureInfo.CurrentCulture), item.username);
                 else
                     name = item.username;

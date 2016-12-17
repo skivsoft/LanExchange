@@ -19,6 +19,7 @@ namespace WMIViewer.Model
                 if (qd.Name.Equals("SupportsUpdate")) IsSupportsUpdate = true;
                 if (qd.Name.Equals("SupportsCreate")) IsSupportsCreate = true;
                 if (qd.Name.Equals("SupportsDelete")) IsSupportsDelete = true;
+
                 // property qualifiers
                 if (qd.Name.Equals("CIM_Key")) IsCimKey = true;
                 if (qd.Name.Equals("write")) IsReadOnly = false;
@@ -32,11 +33,11 @@ namespace WMIViewer.Model
 
         public bool IsPerf { get; private set; }
 
-        public bool IsSupportsUpdate { get; private set; }
+        public bool IsSupportsUpdate { get; }
 
-        public bool IsSupportsCreate { get; private set; }
+        public bool IsSupportsCreate { get; }
 
-        public bool IsSupportsDelete { get; private set; }
+        public bool IsSupportsDelete { get; }
 
         public bool IsSupportsModify
         {

@@ -8,7 +8,8 @@ namespace LanExchange.Presentation.WinForms.Helpers
     {
 
         /// <summary>
-        /// URL: http://www.dailycoding.com/Posts/convert_image_to_base64_string_and_base64_string_to_image.aspx
+        /// URL: http:// www.dailycoding.com/Posts/convert_image_to_base64_string_and_base64_string_to_image.aspx
+
         /// </summary>
         /// <param name="image"></param>
         /// <param name="format"></param>

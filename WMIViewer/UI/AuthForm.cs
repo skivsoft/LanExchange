@@ -17,36 +17,6 @@ namespace WMIViewer.UI
             InitializeComponent();
         }
 
-        private void WMIAuthForm_Load(object sender, EventArgs e)
-        {
-
-            picShield.Image = SystemIcons.Error.ToBitmap();
-            bOK.NotifyDefault(true);
-            ActiveControl = eUserName;
-            UserName = userName;
-            UserPassword = userPassword;
-        }
-
-        public bool AutoLogOn()
-        {
-            if (!String.IsNullOrEmpty(userName))
-            {
-                eUserName.Text = userName;
-                ePassword.Text = userPassword;
-                return true;
-            }
-            return false;
-        }
-
-        [Localizable(false)]
-        public void SetComputerName(string computerName)
-        {
-            Text = String.Format(CultureInfo.InvariantCulture, Text, computerName);
-            var userName = AutoLogOn() ? AuthForm.userName : 
-                string.Format(CultureInfo.InvariantCulture, @"{0}\{1}", Environment.UserDomainName, Environment.UserName);
-            lMessage.Text = String.Format(CultureInfo.InvariantCulture, lMessage.Text, userName);
-        }
-
         public string UserName
         {
             get { return eUserName.Text; }
@@ -59,7 +29,43 @@ namespace WMIViewer.UI
             set { ePassword.Text = value; }
         }
 
-        private void bOK_Click(object sender, EventArgs e)
+        public static void ClearSavedPassword()
+        {
+            userName = string.Empty;
+            userPassword = string.Empty;
+        }
+
+        public bool AutoLogOn()
+        {
+            if (!string.IsNullOrEmpty(userName))
+            {
+                eUserName.Text = userName;
+                ePassword.Text = userPassword;
+                return true;
+            }
+
+            return false;
+        }
+
+        [Localizable(false)]
+        public void SetComputerName(string computerName)
+        {
+            Text = string.Format(CultureInfo.InvariantCulture, Text, computerName);
+            var userName = AutoLogOn() ? AuthForm.userName : 
+                string.Format(CultureInfo.InvariantCulture, @"{0}\{1}", Environment.UserDomainName, Environment.UserName);
+            lMessage.Text = string.Format(CultureInfo.InvariantCulture, lMessage.Text, userName);
+        }
+
+        private void WMIAuthForm_Load(object sender, EventArgs e)
+        {
+            picShield.Image = SystemIcons.Error.ToBitmap();
+            bOK.NotifyDefault(true);
+            ActiveControl = eUserName;
+            UserName = userName;
+            UserPassword = userPassword;
+        }
+
+        private void ButtonOK_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(eUserName.Text.Trim()))
             {
@@ -67,14 +73,9 @@ namespace WMIViewer.UI
                 DialogResult = DialogResult.None;
                 return;
             }
+
             userName = UserName;
             userPassword = UserPassword;
-        }
-
-        public static void ClearSavedPassword()
-        {
-            userName = string.Empty;
-            userPassword = string.Empty;
         }
 
         private void WMIAuthForm_KeyDown(object sender, KeyEventArgs e)

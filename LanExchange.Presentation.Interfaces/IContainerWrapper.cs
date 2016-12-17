@@ -7,6 +7,7 @@ namespace LanExchange.Presentation.Interfaces
         IContainerWrapper RegisterTransient<TService, TImplementation>() 
             where TService : class 
             where TImplementation : class, TService;
+
         IContainerWrapper RegisterSingleton<TService, TImplementation>() 
             where TService : class 
             where TImplementation : class, TService;

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Diagnostics.Contracts;
 using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Presentation.WinForms.Controls
@@ -16,7 +15,7 @@ namespace LanExchange.Presentation.WinForms.Controls
         
         public InfoPanel(IInfoPresenter presenter)
         {
-            Contract.Requires<ArgumentNullException>(presenter != null);
+            if (presenter == null) throw new ArgumentNullException(nameof(presenter));
 
             InitializeComponent();
             this.presenter = presenter;
@@ -37,7 +36,7 @@ namespace LanExchange.Presentation.WinForms.Controls
             {
                 numLines = value;
                 Height = GetLocationY(numLines) + 8;
-                for (int i = lines.Count; i < numLines; i++ )
+                for (int i = lines.Count; i < numLines; i++)
                 {
                     var control = CreateLabelControl(i);
                     Controls.Add(control);
@@ -103,43 +102,43 @@ namespace LanExchange.Presentation.WinForms.Controls
             }
         }
 
-        //private void popTop_Opening(object sender, CancelEventArgs e)
-        //{
-        //    var pv = Pages.ActivePanelView as PanelView;
-        //    if (pv == null || pInfo.CurrentItem == null)
-        //    {
-        //        e.Cancel = true;
-        //        return;
-        //    }
-        //    e.Cancel = !addonManager.BuildMenuForPanelItemType(popTop, pInfo.CurrentItem.GetType().Name);
-        //    addonManager.SetupMenuForPanelItem(popTop, pInfo.CurrentItem);
-        //}
+        // private void popTop_Opening(object sender, CancelEventArgs e)
+        // {
+        // var pv = Pages.ActivePanelView as PanelView;
+        // if (pv == null || pInfo.CurrentItem == null)
+        // {
+        // e.Cancel = true;
+        // return;
+        // }
+        // e.Cancel = !addonManager.BuildMenuForPanelItemType(popTop, pInfo.CurrentItem.GetType().Name);
+        // addonManager.SetupMenuForPanelItem(popTop, pInfo.CurrentItem);
+        // }
 
-        //public void ClearInfoPanel()
-        //{
-        //    pInfo.CurrentItem = null;
-        //    pInfo.Picture.Image = null;
-        //    for (int index = 0; index < pInfo.NumLines; index++)
-        //        pInfo.SetLine(index, string.Empty);
-        //    lItemsCount.Text = string.Empty;
-        //}
+        // public void ClearInfoPanel()
+        // {
+        // pInfo.CurrentItem = null;
+        // pInfo.Picture.Image = null;
+        // for (int index = 0; index < pInfo.NumLines; index++)
+        // pInfo.SetLine(index, string.Empty);
+        // lItemsCount.Text = string.Empty;
+        // }
 
-        //private void FocusedItemChanged()
-        //{
-        //    View.Info.CurrentItem = panelItem;
-        //    View.Info.NumLines = App.Config.NumInfoLines;
-        //    var helper = new PanelModelCopyHelper(null, columnManager);
-        //    helper.CurrentItem = panelItem;
-        //    int index = 0;
-        //    foreach (var column in helper.Columns)
-        //    {
-        //        View.Info.SetLine(index, helper.GetColumnValue(column.Index));
-        //        ++index;
-        //        if (index >= View.Info.NumLines) break;
-        //    }
-        //    for (int i = index; i < View.Info.NumLines; i++)
-        //        View.Info.SetLine(i, string.Empty);
-        //}
+        // private void FocusedItemChanged()
+        // {
+        // View.Info.CurrentItem = panelItem;
+        // View.Info.NumLines = App.Config.NumInfoLines;
+        // var helper = new PanelModelCopyHelper(null, columnManager);
+        // helper.CurrentItem = panelItem;
+        // int index = 0;
+        // foreach (var column in helper.Columns)
+        // {
+        // View.Info.SetLine(index, helper.GetColumnValue(column.Index));
+        // ++index;
+        // if (index >= View.Info.NumLines) break;
+        // }
+        // for (int i = index; i < View.Info.NumLines; i++)
+        // View.Info.SetLine(i, string.Empty);
+        // }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {

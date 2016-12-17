@@ -2,9 +2,9 @@
 
 namespace GenerateEnglish
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             new GenerateEnglishProcess(new FolderManager()).Execute();
         }

@@ -37,16 +37,21 @@ namespace LanExchange.Plugin.Users
             get { return string.Empty; }
         }
 
-        //public override int CountColumns
-        //{
-        //    get { return base.CountColumns; }
-        //}
+        // public override int CountColumns
+
+        // {
+
+        // get { return base.CountColumns; }
+
+        // }
+
 
         public override IComparable GetValue(int index)
         {
             switch (index)
             {
-                //case 1: return AdsPath;
+                // case 1: return AdsPath;
+
                 default:
                     return LdapUtils.UnescapeName(Name);
             }

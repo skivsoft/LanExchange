@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
 using LanExchange.Plugin.Network.NetApi;
 using System.Xml.Serialization;
 using LanExchange.Presentation.Interfaces;
@@ -8,7 +7,8 @@ using LanExchange.Presentation.Interfaces;
 namespace LanExchange.Plugin.Network
 {
     [Serializable]
-    public sealed class SharePanelItem : PanelItemBase//, IComparable<SharePanelItem>
+    public sealed class SharePanelItem : PanelItemBase// , IComparable<SharePanelItem>
+
     {
         private readonly ShareInfo shareInfo;
 
@@ -23,7 +23,7 @@ namespace LanExchange.Plugin.Network
         /// <exception cref="ArgumentNullException"></exception>
         public SharePanelItem(PanelItemBase parent, ShareInfo shareInfo) : base(parent)
         {
-            Contract.Requires<ArgumentNullException>(shareInfo != null);
+            if (shareInfo == null) throw new ArgumentNullException(nameof(shareInfo));
 
             this.shareInfo = shareInfo;
             Comment = this.shareInfo.Comment;
@@ -43,7 +43,7 @@ namespace LanExchange.Plugin.Network
                     return string.Empty;
                 if (SHI.ShareType == 100)
                     return PanelImageNames.USER;
-                return SHI.IsHidden ? PanelImageNames.FOLDER + PanelImageNames.HIDDEN_POSTFIX : PanelImageNames.FOLDER;
+                return SHI.IsHidden ? PanelImageNames.FOLDER + PanelImageNames.HiddenPostfix : PanelImageNames.FOLDER;
             }
         }
 

@@ -25,11 +25,10 @@ namespace LanExchange.Plugin.Windows.Utils
             public int iGroupId;
             public int cColumns;
             public IntPtr puColumns;
-        };
+        }
 
         [DllImport(ExternDll.User32, EntryPoint = "SendMessage", CharSet = CharSet.Auto)]
         public static extern IntPtr SendMessageLVItem(IntPtr hWnd, int msg, int wParam, ref LVITEM lvi);
-
 
         /// <summary>
         /// Select all rows on the given listview
@@ -59,7 +58,8 @@ namespace LanExchange.Plugin.Windows.Utils
         public static void SetItemState(IntPtr list, int itemIndex, int mask, int value)
         {
             var lvItem = new LVITEM { stateMask = mask, state = value };
-            SendMessageLVItem(list, LVM_SETITEMSTATE, itemIndex, ref lvItem);
+
+           SendMessageLVItem(list, LVM_SETITEMSTATE, itemIndex, ref lvItem);
         }        
     }
 }

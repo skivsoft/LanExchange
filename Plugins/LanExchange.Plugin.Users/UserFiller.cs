@@ -45,8 +45,10 @@ namespace LanExchange.Plugin.Users
             user.Description = LdapUtils.SearchResult_GetString(row, Constants.DESCRIPTION);
             user.UserAccControl = int.Parse(LdapUtils.SearchResult_GetString(row, Constants.ACCOUNT_CONTROL));
             user.EmployeeID = LdapUtils.SearchResult_GetString(row, Constants.EMPLOYEE_ID);
-            //user.WorkPhone = "0x" + user.UserAccControl.ToString("X");
-            //user.Description = row["lockoutTime"].ToString();
+            // user.WorkPhone = "0x" + user.UserAccControl.ToString("X");
+
+            // user.Description = row["lockoutTime"].ToString();
+
             return user;
         }
 
@@ -57,13 +59,18 @@ namespace LanExchange.Plugin.Users
             {
                 // execute filter query to Active Directory
                 searcher.SearchRoot = new DirectoryEntry(startPath);
-                searcher.PageSize = Int32.MaxValue;
-                searcher.Filter = "(objectCategory=person)"; // lockoutTime
-                //var filter = "(&(&(|(&(objectCategory=person)(objectSid=*)(!samAccountType:1.2.840.113556.1.4.804:=3))(&(objectCategory=person)(!objectSid=*))(&(objectCategory=group)(groupType:1.2.840.113556.1.4.804:=14)))objectCategory=user)(cn=khmau.isup_builder)))";
-                //var filter = "(&(&(&(objectCategory=person)(objectClass=user)(lockoutTime:1.2.840.113556.1.4.804:=4294967295))))";
-                //var filter = "(&(objectClass=user)(userAccountControl:1.2.840.113556.1.4.803:=16))";
-                //var filter = "((!userAccountControl:1.2.840.113556.1.4.803:=2))";
-                //var filter = "(!(userAccountControl:1.2.840.113556.1.4.803:=2))";
+                searcher.PageSize = int.MaxValue;
+                searcher.Filter = "(objectCategory = person)"; // lockoutTime
+                // var filter = "(&(&(|(&(objectCategory = person)(objectSid=*)(!samAccountType:1.2.840.113556.1.4.804:=3))(&(objectCategory = person)(!objectSid=*))(&(objectCategory = group)(groupType:1.2.840.113556.1.4.804:=14)))objectCategory = user)(cn = khmau.isup_builder)))";
+
+                // var filter = "(&(&(&(objectCategory = person)(objectClass = user)(lockoutTime:1.2.840.113556.1.4.804:=4294967295))))";
+
+                // var filter = "(&(objectClass = user)(userAccountControl:1.2.840.113556.1.4.803:=16))";
+
+                // var filter = "((!userAccountControl:1.2.840.113556.1.4.803:=2))";
+
+                // var filter = "(!(userAccountControl:1.2.840.113556.1.4.803:=2))";
+
                 SetupPropertiesToLoad(searcher);
                 try
                 {
@@ -91,8 +98,8 @@ namespace LanExchange.Plugin.Users
             using (var searcher = new DirectorySearcher())
             {
                 searcher.SearchRoot = new DirectoryEntry(startPath);
-                searcher.PageSize = Int32.MaxValue;
-                searcher.Filter = "(objectCategory=person)";
+                searcher.PageSize = int.MaxValue;
+                searcher.Filter = "(objectCategory = person)";
                 SetupPropertiesToLoad(searcher);
                 searcher.PropertiesToLoad.Add(Constants.MEMBER_OF);
                 try

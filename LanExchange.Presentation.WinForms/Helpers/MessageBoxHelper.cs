@@ -9,7 +9,7 @@ namespace LanExchange.Presentation.WinForms.Helpers
     {
         public static void ShowRunCmdError(string cmdLine)
         {
-            MessageBox.Show(String.Format(CultureInfo.CurrentCulture, Resources.PanelView_RunCmdErrorMsg, cmdLine),
+            MessageBox.Show(string.Format(CultureInfo.CurrentCulture, Resources.PanelView_RunCmdErrorMsg, cmdLine),
                 Resources.PanelView_RunCmdErrorCaption,
                 MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
         }

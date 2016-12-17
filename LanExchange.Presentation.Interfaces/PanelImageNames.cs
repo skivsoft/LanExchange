@@ -12,9 +12,9 @@
         public const string USER      = "UserPanelItem";
         public const string SHORTCUT  = "ShortcutPanelItem";
 
-        public const string HIDDEN_POSTFIX = ".hidden";
-        public const string RED_POSTFIX    = ".red";
-        public const string GREEN_POSTFIX  = ".green";
-        public const string ADDON_FMT      = "program.{0}";
+        public const string HiddenPostfix = ".hidden";
+        public const string RedPostfix    = ".red";
+        public const string GreenPostfix  = ".green";
+        public const string AddonFmt      = "program.{0}";
     }
 }

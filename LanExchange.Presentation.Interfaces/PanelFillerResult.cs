@@ -12,6 +12,7 @@ namespace LanExchange.Presentation.Interfaces
         }
 
         public ICollection<PanelItemBase> Items { get; private set; }
+
         public Type ItemsType { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using LanExchange.Application.Interfaces;
 using LanExchange.Application.Interfaces.EventArgs;
 using LanExchange.Presentation.Interfaces;
@@ -17,20 +16,16 @@ namespace LanExchange.Application.Models
         private readonly IModelFactory modelFactory;
         private readonly List<IPanelModel> panels;
         private int selectedIndex;
-
-        public event EventHandler<PanelEventArgs> PanelAdded;
-        public event EventHandler<PanelIndexEventArgs> PanelRemoved;
-        public event EventHandler<PanelIndexEventArgs> SelectedIndexChanged;
-        public event EventHandler Cleared;
+        private int lockCount;
 
         public PagesModel(
             IPanelItemFactoryManager factoryManager,
             IPanelFillerManager fillerManager,
             IModelFactory modelFactory)
         {
-            Contract.Requires<ArgumentNullException>(factoryManager != null);
-            Contract.Requires<ArgumentNullException>(fillerManager != null);
-            Contract.Requires<ArgumentNullException>(modelFactory != null);
+            if (factoryManager == null) throw new ArgumentNullException(nameof(factoryManager));
+            if (fillerManager == null) throw new ArgumentNullException(nameof(fillerManager));
+            if (modelFactory == null) throw new ArgumentNullException(nameof(modelFactory));
 
             this.factoryManager = factoryManager;
             this.panelFillers = fillerManager;
@@ -40,12 +35,15 @@ namespace LanExchange.Application.Models
             selectedIndex = -1;
         }
 
+        public event EventHandler<PanelEventArgs> PanelAdded;
+        public event EventHandler<PanelIndexEventArgs> PanelRemoved;
+        public event EventHandler<PanelIndexEventArgs> SelectedIndexChanged;
+        public event EventHandler Cleared;
+
         public int Count
         {
             get { return panels.Count; }
         }
-
-        private int lockCount;
 
         public int SelectedIndex 
         {
@@ -122,7 +120,7 @@ namespace LanExchange.Application.Models
 
         public void Assign(PagesDto dto)
         {
-            foreach(var item in dto.Items)
+            foreach (var item in dto.Items)
             {
                 var panel = modelFactory.CreatePanelModel();
                 panel.Assign(item);
