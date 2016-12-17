@@ -43,12 +43,12 @@ namespace LanExchange.Presentation.WinForms.Controls
             IModelFactory modelFactory,
             IViewFactory viewFactory)
         {
-            if (presenter != null) throw new ArgumentNullException(nameof(presenter));
-            if (factoryManager != null) throw new ArgumentNullException(nameof(factoryManager));
-            if (imageManager != null) throw new ArgumentNullException(nameof(imageManager));
-            if (panelFillers != null) throw new ArgumentNullException(nameof(panelFillers));
-            if (modelFactory != null) throw new ArgumentNullException(nameof(modelFactory));
-            if (viewFactory != null) throw new ArgumentNullException(nameof(viewFactory));
+            if (presenter == null) throw new ArgumentNullException(nameof(presenter));
+            if (factoryManager == null) throw new ArgumentNullException(nameof(factoryManager));
+            if (imageManager == null) throw new ArgumentNullException(nameof(imageManager));
+            if (panelFillers == null) throw new ArgumentNullException(nameof(panelFillers));
+            if (modelFactory == null) throw new ArgumentNullException(nameof(modelFactory));
+            if (viewFactory == null) throw new ArgumentNullException(nameof(viewFactory));
 
             InitializeComponent();
             this.presenter = presenter;

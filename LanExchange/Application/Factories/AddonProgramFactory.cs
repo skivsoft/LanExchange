@@ -15,8 +15,8 @@ namespace LanExchange.Application.Factories
             IFolderManager folderManager,
             IImageManager imageManager)
         {
-            if (folderManager != null) throw new ArgumentNullException(nameof(folderManager));
-            if (imageManager != null) throw new ArgumentNullException(nameof(imageManager));
+            if (folderManager == null) throw new ArgumentNullException(nameof(folderManager));
+            if (imageManager == null) throw new ArgumentNullException(nameof(imageManager));
 
             this.folderManager = folderManager;
             this.imageManager = imageManager;

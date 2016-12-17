@@ -2,7 +2,7 @@
 
 namespace LanExchange.Application.Interfaces.Extensions
 {
-    public static class PagesExtension
+    public static class PagesModelExtension
     {
         public static PagesDto ToDto(this IPagesModel pages)
         {

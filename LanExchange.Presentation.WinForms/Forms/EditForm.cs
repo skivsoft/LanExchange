@@ -14,7 +14,8 @@ namespace LanExchange.Presentation.WinForms.Forms
 
         public EditForm(IEditPresenter presenter)
         {
-            if (presenter != null) throw new ArgumentNullException(nameof(presenter));
+            if (presenter == null) throw new ArgumentNullException(nameof(presenter));
+
 
             InitializeComponent();
 

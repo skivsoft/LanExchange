@@ -16,9 +16,9 @@ namespace LanExchange.Application.Presenters
             ITranslationService translationService,
             IDisposableManager disposableManager)
         {
-            if (pagesPresenter != null) throw new ArgumentNullException(nameof(pagesPresenter));
-            if (translationService != null) throw new ArgumentNullException(nameof(translationService));
-            if (disposableManager != null) throw new ArgumentNullException(nameof(disposableManager));
+            if (pagesPresenter == null) throw new ArgumentNullException(nameof(pagesPresenter));
+            if (translationService == null) throw new ArgumentNullException(nameof(translationService));
+            if (disposableManager == null) throw new ArgumentNullException(nameof(disposableManager));
 
             this.pagesPresenter = pagesPresenter;
             this.translationService = translationService;

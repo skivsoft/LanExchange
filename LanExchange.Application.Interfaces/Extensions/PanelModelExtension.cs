@@ -3,7 +3,7 @@ using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Interfaces.Extensions
 {
-    public static class PanelExtension
+    public static class PanelModelExtension
     {
         public static PanelDto ToDto(this IPanelModel panel)
         {

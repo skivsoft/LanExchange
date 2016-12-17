@@ -36,9 +36,9 @@ namespace LanExchange.Application.Models
             IPanelColumnManager panelColumns,
             IPuntoSwitcherService puntoService)
         {
-            if (panelFillers != null) throw new ArgumentNullException(nameof(panelFillers));
-            if (panelColumns != null) throw new ArgumentNullException(nameof(panelColumns));
-            if (puntoService != null) throw new ArgumentNullException(nameof(puntoService));
+            if (panelFillers == null) throw new ArgumentNullException(nameof(panelFillers));
+            if (panelColumns == null) throw new ArgumentNullException(nameof(panelColumns));
+            if (puntoService == null) throw new ArgumentNullException(nameof(puntoService));
 
             this.panelFillers = panelFillers;
             this.panelColumns = panelColumns;

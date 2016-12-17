@@ -12,7 +12,7 @@ namespace LanExchange.Presentation.WinForms.Visitors
 
         public MainMenu BuildMainMenu(IMenuElement menu)
         {
-            if (menu != null) throw new ArgumentNullException(nameof(menu));
+            if (menu == null) throw new ArgumentNullException(nameof(menu));
 
             rootMenu = new MainMenu();
             submenu = null;
@@ -22,7 +22,7 @@ namespace LanExchange.Presentation.WinForms.Visitors
 
         public ContextMenu BuildContextMenu(IMenuElement menu)
         {
-            if (menu != null) throw new ArgumentNullException(nameof(menu));
+            if (menu == null) throw new ArgumentNullException(nameof(menu));
 
             rootMenu = new ContextMenu();
             submenu = null;

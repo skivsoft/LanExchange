@@ -17,7 +17,7 @@ namespace LanExchange.Presentation.WinForms.Forms
         
         public AboutForm(IAboutPresenter presenter)
         {
-            if (presenter != null) throw new ArgumentNullException(nameof(presenter));
+            if (presenter == null) throw new ArgumentNullException(nameof(presenter));
 
             InitializeComponent();
             this.presenter = presenter;

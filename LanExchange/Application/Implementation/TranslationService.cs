@@ -30,7 +30,7 @@ namespace LanExchange.Application.Implementation
         public TranslationService(
             IFolderManager folderManager)
         {
-            if (folderManager != null) throw new ArgumentNullException(nameof(folderManager));
+            if (folderManager == null) throw new ArgumentNullException(nameof(folderManager));
 
             this.folderManager = folderManager;
 

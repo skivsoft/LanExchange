@@ -57,7 +57,6 @@
     <Compile Include="Addons\AddonProgram.cs" />
     <Compile Include="Addons\AddonProgramInfo.cs" />
     <Compile Include="EventArgs\DataReadyArgs.cs" />
-    <Compile Include="Extensions\IServiceProviderExtension.cs" />
     <Compile Include="IAddonManager.cs" />
     <Compile Include="IAddonProgramFactory.cs" />
     <Compile Include="IColumnComparer.cs" />

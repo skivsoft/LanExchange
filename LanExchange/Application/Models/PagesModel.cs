@@ -23,9 +23,9 @@ namespace LanExchange.Application.Models
             IPanelFillerManager fillerManager,
             IModelFactory modelFactory)
         {
-            if (factoryManager != null) throw new ArgumentNullException(nameof(factoryManager));
-            if (fillerManager != null) throw new ArgumentNullException(nameof(fillerManager));
-            if (modelFactory != null) throw new ArgumentNullException(nameof(modelFactory));
+            if (factoryManager == null) throw new ArgumentNullException(nameof(factoryManager));
+            if (fillerManager == null) throw new ArgumentNullException(nameof(fillerManager));
+            if (modelFactory == null) throw new ArgumentNullException(nameof(modelFactory));
 
             this.factoryManager = factoryManager;
             this.panelFillers = fillerManager;

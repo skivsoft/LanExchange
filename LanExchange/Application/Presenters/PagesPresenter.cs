@@ -25,11 +25,11 @@ namespace LanExchange.Application.Presenters
             IPanelColumnManager panelColumns,
             IClipboardService clipboardService)
         {
-            if (model != null) throw new ArgumentNullException(nameof(model));
-            if (pagesService != null) throw new ArgumentNullException(nameof(pagesService));
-            if (imageManager != null) throw new ArgumentNullException(nameof(imageManager));
-            if (panelColumns != null) throw new ArgumentNullException(nameof(panelColumns));
-            if (clipboardService != null) throw new ArgumentNullException(nameof(clipboardService));
+            if (model == null) throw new ArgumentNullException(nameof(model));
+            if (pagesService == null) throw new ArgumentNullException(nameof(pagesService));
+            if (imageManager == null) throw new ArgumentNullException(nameof(imageManager));
+            if (panelColumns == null) throw new ArgumentNullException(nameof(panelColumns));
+            if (clipboardService == null) throw new ArgumentNullException(nameof(clipboardService));
 
             this.model = model;
             this.pagesService = pagesService;

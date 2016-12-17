@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel.Composition;
 using System.Text;
+using LanExchange.Application.Interfaces.Extensions;
 using LanExchange.Presentation.Interfaces;
-using LanExchange.Presentation.Interfaces.Extensions;
 
 namespace LanExchange.Plugin.Notify
 {

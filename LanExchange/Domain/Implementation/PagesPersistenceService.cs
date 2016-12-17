@@ -19,10 +19,10 @@ namespace LanExchange.Domain.Implementation
             ISerializeService serializeService,
             ILogService logService)
         {
-            if (folderManager != null) throw new ArgumentNullException(nameof(folderManager));
-            if (factoryManager != null) throw new ArgumentNullException(nameof(factoryManager));
-            if (serializeService != null) throw new ArgumentNullException(nameof(serializeService));
-            if (logService != null) throw new ArgumentNullException(nameof(logService));
+            if (folderManager == null) throw new ArgumentNullException(nameof(folderManager));
+            if (factoryManager == null) throw new ArgumentNullException(nameof(factoryManager));
+            if (serializeService == null) throw new ArgumentNullException(nameof(serializeService));
+            if (logService == null) throw new ArgumentNullException(nameof(logService));
 
             this.folderManager = folderManager;
             this.factoryManager = factoryManager;

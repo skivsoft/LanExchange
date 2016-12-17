@@ -37,9 +37,9 @@ namespace LanExchange.Presentation.WinForms.Helpers
         /// <param name="components"></param>
         public static void TranslateComponents(ResourceManager resources, ContainerControl instance, IContainer components)
         {
-            if (resources != null) throw new ArgumentNullException(nameof(resources));
-            if (instance != null) throw new ArgumentNullException(nameof(instance));
-            if (components != null) throw new ArgumentNullException(nameof(components));
+            if (resources == null) throw new ArgumentNullException(nameof(resources));
+            if (instance == null) throw new ArgumentNullException(nameof(instance));
+            if (components == null) throw new ArgumentNullException(nameof(components));
 
             fieldsMap.Clear();
             var fields = instance.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance);

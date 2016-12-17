@@ -14,7 +14,7 @@ namespace LanExchange.Presentation.WinForms.Forms
 
         public CheckAvailabilityForm(ICheckAvailabilityPresenter presenter)
         {
-            if (presenter != null) throw new ArgumentNullException(nameof(presenter));
+            if (presenter == null) throw new ArgumentNullException(nameof(presenter));
 
             InitializeComponent();
 

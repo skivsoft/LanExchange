@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel.Composition;
 using LanExchange.Plugin.Users.Properties;
+using LanExchange.Application.Interfaces.Extensions;
 using LanExchange.Presentation.Interfaces;
-using LanExchange.Presentation.Interfaces.Extensions;
 
 namespace LanExchange.Plugin.Users
 {

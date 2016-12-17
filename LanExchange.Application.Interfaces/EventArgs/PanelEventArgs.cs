@@ -7,7 +7,7 @@ namespace LanExchange.Application.Interfaces.EventArgs
     {
         public PanelEventArgs(IPanelModel panel)
         {
-            if (panel != null) throw new ArgumentNullException(nameof(panel));
+            if (panel == null) throw new ArgumentNullException(nameof(panel));
             Panel = panel;
         }
 

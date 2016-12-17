@@ -18,9 +18,9 @@ namespace LanExchange.Plugin.Shortcut
             IAddonManager addonManager,
             IMenuProducer menuProducer)
         {
-            if (translationService != null) throw new ArgumentNullException(nameof(translationService));
-            if (addonManager != null) throw new ArgumentNullException(nameof(addonManager));
-            if (menuProducer != null) throw new ArgumentNullException(nameof(menuProducer));
+            if (translationService == null) throw new ArgumentNullException(nameof(translationService));
+            if (addonManager == null) throw new ArgumentNullException(nameof(addonManager));
+            if (menuProducer == null) throw new ArgumentNullException(nameof(menuProducer));
 
             this.translationService = translationService;
             this.addonManager = addonManager;

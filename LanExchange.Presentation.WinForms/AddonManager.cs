@@ -36,15 +36,15 @@ namespace LanExchange.Presentation.WinForms
             ILogService logService,
             IAddonPersistenceService persistenceService)
         {
-            if (folderManager != null) throw new ArgumentNullException(nameof(folderManager));
-            if (programFactory != null) throw new ArgumentNullException(nameof(programFactory));
-            if (imageManager != null) throw new ArgumentNullException(nameof(imageManager));
-            if (pagesPresenter != null) throw new ArgumentNullException(nameof(pagesPresenter));
-            if (translationService != null) throw new ArgumentNullException(nameof(translationService));
-            if (factoryManager != null) throw new ArgumentNullException(nameof(factoryManager));
-            if (windowFactory != null) throw new ArgumentNullException(nameof(windowFactory));
-            if (logService != null) throw new ArgumentNullException(nameof(logService));
-            if (persistenceService != null) throw new ArgumentNullException(nameof(persistenceService));
+            if (folderManager == null) throw new ArgumentNullException(nameof(folderManager));
+            if (programFactory == null) throw new ArgumentNullException(nameof(programFactory));
+            if (imageManager == null) throw new ArgumentNullException(nameof(imageManager));
+            if (pagesPresenter == null) throw new ArgumentNullException(nameof(pagesPresenter));
+            if (translationService == null) throw new ArgumentNullException(nameof(translationService));
+            if (factoryManager == null) throw new ArgumentNullException(nameof(factoryManager));
+            if (windowFactory == null) throw new ArgumentNullException(nameof(windowFactory));
+            if (logService == null) throw new ArgumentNullException(nameof(logService));
+            if (persistenceService == null) throw new ArgumentNullException(nameof(persistenceService));
 
             this.folderManager = folderManager;
             this.programFactory = programFactory;

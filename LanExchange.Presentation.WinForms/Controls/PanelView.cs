@@ -39,16 +39,26 @@ namespace LanExchange.Presentation.WinForms.Controls
             IUser32Service userService,
             IPuntoSwitcherService puntoService)
         {
-            if (presenter != null) throw new ArgumentNullException(nameof(presenter));
-            if (addonManager != null) throw new ArgumentNullException(nameof(addonManager));
-            if (factoryManager != null) throw new ArgumentNullException(nameof(factoryManager));
-            if (threadPool != null) throw new ArgumentNullException(nameof(threadPool));
-            if (imageManager != null) throw new ArgumentNullException(nameof(imageManager));
-            if (panelColumns != null) throw new ArgumentNullException(nameof(panelColumns));
-            if (pagesPresenter != null) throw new ArgumentNullException(nameof(pagesPresenter));
-            if (filterPresenter != null) throw new ArgumentNullException(nameof(filterPresenter));
-            if (userService != null) throw new ArgumentNullException(nameof(userService));
-            if (puntoService != null) throw new ArgumentNullException(nameof(puntoService));
+            if (presenter == null) throw new ArgumentNullException(nameof(presenter));
+
+            if (addonManager == null) throw new ArgumentNullException(nameof(addonManager));
+
+            if (factoryManager == null) throw new ArgumentNullException(nameof(factoryManager));
+
+            if (threadPool == null) throw new ArgumentNullException(nameof(threadPool));
+
+            if (imageManager == null) throw new ArgumentNullException(nameof(imageManager));
+
+            if (panelColumns == null) throw new ArgumentNullException(nameof(panelColumns));
+
+            if (pagesPresenter == null) throw new ArgumentNullException(nameof(pagesPresenter));
+
+            if (filterPresenter == null) throw new ArgumentNullException(nameof(filterPresenter));
+
+            if (userService == null) throw new ArgumentNullException(nameof(userService));
+
+            if (puntoService == null) throw new ArgumentNullException(nameof(puntoService));
+
 
             this.addonManager = addonManager;
             this.factoryManager = factoryManager;

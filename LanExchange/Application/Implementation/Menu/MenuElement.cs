@@ -16,8 +16,8 @@ namespace LanExchange.Application.Implementation.Menu
         public MenuElement(string text, string shortcut, ICommand command, MenuElementKind kind = MenuElementKind.Normal)
         {
             if (string.IsNullOrEmpty(text)) throw new ArgumentNullException(nameof(text));
-            if (shortcut != null) throw new ArgumentNullException(nameof(shortcut));
-            if (command != null) throw new ArgumentNullException(nameof(command));
+            if (shortcut == null) throw new ArgumentNullException(nameof(shortcut));
+            if (command == null) throw new ArgumentNullException(nameof(command));
 
             this.text = text;
             this.shortcut = shortcut;
@@ -31,7 +31,7 @@ namespace LanExchange.Application.Implementation.Menu
 
         public void Accept(IMenuElementVisitor visitor)
         {
-            if (visitor != null) throw new ArgumentNullException(nameof(visitor));
+            if (visitor == null) throw new ArgumentNullException(nameof(visitor));
 
             visitor.VisitMenuElement(text, shortcut, command, kind == MenuElementKind.Default);
         }

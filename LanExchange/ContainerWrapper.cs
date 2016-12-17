@@ -11,7 +11,7 @@ namespace LanExchange
 
         public ContainerWrapper(Container container)
         {
-            if (container != null) throw new ArgumentNullException(nameof(container));
+            if (container == null) throw new ArgumentNullException(nameof(container));
 
             this.container = container;
         }

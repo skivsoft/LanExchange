@@ -11,7 +11,7 @@ namespace LanExchange.Application.Commands.AutoWired
 
         protected PagesCommandBase(IPagesPresenter pagesPresenter)
         {
-            if (pagesPresenter != null) throw new ArgumentNullException(nameof(pagesPresenter));
+            if (pagesPresenter == null) throw new ArgumentNullException(nameof(pagesPresenter));
 
             PagesPresenter = pagesPresenter;
         }

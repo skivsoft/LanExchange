@@ -1,4 +1,6 @@
-﻿namespace LanExchange.Presentation.Interfaces
+﻿using System;
+
+namespace LanExchange.Presentation.Interfaces
 {
     /// <summary>
     /// The view factory interface.
@@ -9,6 +11,7 @@
         /// Creates the panel view.
         /// </summary>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         IPanelView CreatePanelView();
 
         /// <summary>
@@ -16,12 +19,14 @@
         /// TODO: need change to create
         /// </summary>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         IPagesView GetPagesView();
 
         /// <summary>
         /// Creates the status panel view.
         /// </summary>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         IStatusPanelView CreateStatusPanelView();
     }
 }

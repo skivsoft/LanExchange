@@ -10,7 +10,7 @@ namespace LanExchange.Presentation.WinForms.Controls
 
         public StatusPanel(IStatusPanelPresenter presenter)
         {
-            if (presenter != null) throw new ArgumentNullException(nameof(presenter));
+            if (presenter == null) throw new ArgumentNullException(nameof(presenter));
 
             InitializeComponent();
             this.presenter = presenter;

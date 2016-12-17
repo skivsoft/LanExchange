@@ -9,9 +9,10 @@ namespace LanExchange.Application.Commands.AutoWired
     {
         private readonly IWindowFactory windowFactory;
 
+        /// <exception cref="ArgumentNullException"></exception>
         public AboutCommand(IWindowFactory windowFactory)
         {
-            if (windowFactory != null) throw new ArgumentNullException(nameof(windowFactory));
+            if (windowFactory == null) throw new ArgumentNullException(nameof(windowFactory));
 
             this.windowFactory = windowFactory;
         }

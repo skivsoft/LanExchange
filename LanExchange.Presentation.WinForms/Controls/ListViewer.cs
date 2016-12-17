@@ -15,7 +15,7 @@ namespace LanExchange.Presentation.WinForms.Controls
 
         public ListViewer(IUser32Service userService)
         {
-            if (userService != null) throw new ArgumentNullException(nameof(userService));
+            if (userService == null) throw new ArgumentNullException(nameof(userService));
 
             this.userService = userService;
 

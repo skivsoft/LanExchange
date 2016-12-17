@@ -6,6 +6,7 @@ namespace LanExchange.Presentation.Interfaces
     {
         protected TView View { get; private set; }
 
+        /// <exception cref="ArgumentNullException"></exception>
         public void Initialize(TView view)
         {
             if (view == null) throw new ArgumentNullException(nameof(view));

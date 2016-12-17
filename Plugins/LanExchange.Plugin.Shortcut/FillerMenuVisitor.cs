@@ -12,8 +12,8 @@ namespace LanExchange.Plugin.Shortcut
 
         public FillerMenuVisitor(PanelItemBase parent, ICollection<PanelItemBase> result)
         {
-            if (parent != null) throw new ArgumentNullException(nameof(parent));
-            if (result != null) throw new ArgumentNullException(nameof(result));
+            if (parent == null) throw new ArgumentNullException(nameof(parent));
+            if (result == null) throw new ArgumentNullException(nameof(result));
 
             this.parent = parent;
             this.result = result;
