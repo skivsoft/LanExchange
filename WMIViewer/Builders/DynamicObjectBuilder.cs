@@ -44,7 +44,7 @@ namespace WMIViewer.Builders
                         DynObjAddProperty<short>(dynObj, prop, description, category, isReadOnly);
                         break;
 
-                    // A signed 32-bit integer. This value maps to the System.Int32 type.
+                    // A signed 32-bit integer. This value maps to the System.int type.
                     case CimType.SInt32:
                         DynObjAddProperty<int>(dynObj, prop, description, category, isReadOnly);
                         break;

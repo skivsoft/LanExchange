@@ -25,7 +25,7 @@ namespace LanExchange.Plugin.Windows.Utils
             public int iGroupId;
             public int cColumns;
             public IntPtr puColumns;
-        };
+        }
 
         [DllImport(ExternDll.User32, EntryPoint = "SendMessage", CharSet = CharSet.Auto)]
         public static extern IntPtr SendMessageLVItem(IntPtr hWnd, int msg, int wParam, ref LVITEM lvi);

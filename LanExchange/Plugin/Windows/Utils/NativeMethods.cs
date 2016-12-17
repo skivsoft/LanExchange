@@ -184,7 +184,7 @@ namespace LanExchange.Plugin.Windows.Utils
         /// <returns></returns>
         public static int GetScrollPosition(IntPtr listViewHandle, bool horizontalBar)
         {
-            int fnBar = (horizontalBar ? SB_HORZ : SB_VERT);
+            int fnBar = horizontalBar ? SB_HORZ : SB_VERT;
 
             var scrollInfo = new SCROLLINFO();
             scrollInfo.fMask = SIF_POS;

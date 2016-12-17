@@ -29,7 +29,7 @@ namespace LanExchange.Presentation.WinForms.Helpers
             var arr = obj.ToString().Split(',');
             fileName = arr[0];
             if (arr.Length > 1)
-                Int32.TryParse(arr[1], out iconIndex);
+                int.TryParse(arr[1], out iconIndex);
             return true;
         }
     }

@@ -33,7 +33,7 @@ namespace LanExchange.Plugin.Users
             {
                 // execute filter query to Active Directory
                 searcher.SearchRoot = new DirectoryEntry(startPath);
-                searcher.PageSize = Int32.MaxValue;
+                searcher.PageSize = int.MaxValue;
                 searcher.Filter = "(objectCategory = person)"; // lockoutTime
                 searcher.PropertiesToLoad.Add(Constants.MEMBER_OF);
                 try

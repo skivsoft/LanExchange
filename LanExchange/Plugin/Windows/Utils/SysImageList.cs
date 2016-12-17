@@ -107,15 +107,13 @@ namespace LanExchange.Plugin.Windows.Utils
         private static extern int SHGetImageList(
             int iImageList,
             ref Guid riid,
-            ref IImageList ppv
-            );
+            ref IImageList ppv);
 
         [DllImport(ExternDll.Shell32, EntryPoint = "#727")]
         private static extern int SHGetImageListHandle(
             int iImageList,
             ref Guid riid,
-            ref IntPtr handle
-            );
+            ref IntPtr handle);
 
         #endregion
         
@@ -382,7 +380,7 @@ namespace LanExchange.Plugin.Windows.Utils
             int GetOverlayImage(
                 int iOverlay, 
                 ref int piIndex);
-        };
+        }
 
     #endregion
 
@@ -523,8 +521,7 @@ namespace LanExchange.Plugin.Windows.Utils
         public int IconIndex(
             string fileName,
             bool forceLoadFromDisk,
-            ShellIconStateConstants iconState
-            )
+            ShellIconStateConstants iconState)
         {
             var dwFlags = SHGetFileInfoConstants.SHGFI_SYSICONINDEX;
             int dwAttr;
@@ -552,12 +549,15 @@ namespace LanExchange.Plugin.Windows.Utils
             var shfi = new SHFILEINFO();
             var shfiSize = (uint)Marshal.SizeOf(shfi.GetType());
             IntPtr retVal = SHGetFileInfo( 
-                fileName, dwAttr, ref shfi, shfiSize, 
-                ((uint)(dwFlags) | (uint)iconState));
+                fileName,
+                dwAttr,
+                ref shfi,
+                shfiSize, 
+                (uint)dwFlags | (uint)iconState);
 
             if (retVal.Equals(IntPtr.Zero))
             {
-                System.Diagnostics.Debug.Assert((!retVal.Equals(IntPtr.Zero)), "Failed to get icon index");
+                System.Diagnostics.Debug.Assert(!retVal.Equals(IntPtr.Zero), "Failed to get icon index");
                 return 0;
             }
             return shfi.iIcon;
@@ -576,8 +576,7 @@ namespace LanExchange.Plugin.Windows.Utils
             IntPtr hdc,
             int index, 
             int x,
-            int y
-            )
+            int y)
         {
             DrawImage(hdc, index, x, y, ImageListDrawItemConstants.ILD_TRANSPARENT);
         }
@@ -595,8 +594,7 @@ namespace LanExchange.Plugin.Windows.Utils
             int index,
             int x,
             int y,
-            ImageListDrawItemConstants flags
-            )
+            ImageListDrawItemConstants flags)
         {
             if (iImageList == null)
             {
@@ -642,8 +640,7 @@ namespace LanExchange.Plugin.Windows.Utils
             int y,
             ImageListDrawItemConstants flags,
             int cx,
-            int cy
-            )
+            int cy)
         {
             var pimldp = new IMAGELISTDRAWPARAMS();
             pimldp.hdcDst = hdc;
@@ -703,8 +700,8 @@ namespace LanExchange.Plugin.Windows.Utils
                 SHGetImageList(
                     (int)size,
                     ref iidImageList,
-                    ref iImageList
-                    );
+                    ref iImageList);
+
                 // the image list handle is the IUnknown pointer, but 
                 // using Marshal.GetIUnknownForObject doesn't return
                 // the right value.  It really doesn't hurt to make
@@ -731,7 +728,7 @@ namespace LanExchange.Plugin.Windows.Utils
                     ref shfi, 
                     shfiSize, 
                     (uint)dwFlags);
-                System.Diagnostics.Debug.Assert((hIml != IntPtr.Zero), "Failed to create Image List");
+                System.Diagnostics.Debug.Assert(hIml != IntPtr.Zero, "Failed to create Image List");
             }
         }
         #endregion

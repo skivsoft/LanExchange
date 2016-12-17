@@ -81,7 +81,7 @@ namespace LanExchange.Plugin.Windows.Utils
         // Takes the CSIDL of a folder and returns the pathname.
         // [DllImport("shell32.dll")]
 
-        // public static extern Int32 SHGetFolderPath(
+        // public static extern int SHGetFolderPath(
 
         // IntPtr hwndOwner,
 
@@ -97,7 +97,7 @@ namespace LanExchange.Plugin.Windows.Utils
         // Retrieves the IShellFolder interface for the desktop folder,
         // which is the root of the Shell's namespace. 
         [DllImport(ExternDll.Shell32)]
-        public static extern Int32 SHGetDesktopFolder(
+        public static extern int SHGetDesktopFolder(
             out IntPtr ppshf);
 
         // Retrieves ppidl of special folder
@@ -106,7 +106,7 @@ namespace LanExchange.Plugin.Windows.Utils
             ExactSpelling = true, 
             CharSet = CharSet.Ansi, 
             SetLastError = true)]
-        public static extern Int32 SHGetSpecialFolderLocation(
+        public static extern int SHGetSpecialFolderLocation(
             IntPtr hwndOwner, 
             CSIDL nFolder, 
             out IntPtr ppidl);
@@ -115,7 +115,7 @@ namespace LanExchange.Plugin.Windows.Utils
         // identifier list(PIDL) of a namespace object, and returns a specified
         // interface pointer on the parent object.
         [DllImport(ExternDll.Shell32)]
-        public static extern Int32 SHBindToParent(
+        public static extern int SHBindToParent(
             IntPtr pidl,            
             ref Guid riid,
             out IntPtr ppv,
@@ -150,7 +150,7 @@ namespace LanExchange.Plugin.Windows.Utils
         // SHGetRealIDL converts a simple PIDL to a full PIDL
         // [DllImport("shell32.dll")]
 
-        // public static extern Int32 SHGetRealIDL(
+        // public static extern int SHGetRealIDL(
 
         // IShellFolder psf,
 
@@ -185,7 +185,7 @@ namespace LanExchange.Plugin.Windows.Utils
 
         // SetLastError = true)]
 
-        // public static extern Int32 StrRetToBuf(
+        // public static extern int StrRetToBuf(
 
         // IntPtr pstr, 
 
@@ -558,6 +558,20 @@ namespace LanExchange.Plugin.Windows.Utils
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         public struct MENUITEMINFO 
         {
+            public int cbSize;
+            public MIIM fMask;
+            public MFT fType;
+            public MFS fState;
+            public uint wID;
+            public IntPtr hSubMenu;
+            public IntPtr hbmpChecked;
+            public IntPtr hbmpUnchecked;
+            public IntPtr dwItemData;
+            [MarshalAs(UnmanagedType.LPTStr)]
+            public string dwTypeData;
+            public int cch;
+            public IntPtr hbmpItem;
+
             public MENUITEMINFO(string text)
             {
                 cbSize = cbMenuItemInfo;
@@ -573,20 +587,6 @@ namespace LanExchange.Plugin.Windows.Utils
                 dwItemData = IntPtr.Zero;
                 hbmpItem = IntPtr.Zero;
             }
-
-            public int cbSize;
-            public MIIM fMask;
-            public MFT fType;
-            public MFS fState;
-            public uint wID;
-            public IntPtr hSubMenu;
-            public IntPtr hbmpChecked;
-            public IntPtr hbmpUnchecked;
-            public IntPtr dwItemData;
-            [MarshalAs(UnmanagedType.LPTStr)]
-            public string dwTypeData;
-            public int cch;
-            public IntPtr hbmpItem;
         }
 
         // A generalized Clipboard format, it is enhanced to encompass a 
@@ -689,14 +689,14 @@ namespace LanExchange.Plugin.Windows.Utils
         [StructLayout(LayoutKind.Sequential)]
         public struct POINT
         {
+            public int x;
+            public int y;
+
             public POINT(int x, int y)
             {
                 this.x = x;
                 this.y = y;
             }
-
-            public int x;
-            public int y;
         }
 
         // The SIZE structure specifies the width and height of a rectangle
@@ -854,18 +854,6 @@ namespace LanExchange.Plugin.Windows.Utils
             INCLUDESTATIC = 0x00000040,
             EXTENDEDVERBS = 0x00000100,
             RESERVED = 0xffff0000
-        }
-
-        // Flags specifying the information to return when calling IContextMenu::GetCommandString
-        [Flags]
-        public enum GCS : uint
-        {
-            VERBA = 0,
-            HELPTEXTA = 1,
-            VALIDATEA = 2,
-            VERBW = 4,
-            HELPTEXTW = 5,
-            VALIDATEW = 6
         }
 
         // Flags that specify the file information to retrieve with SHGetFileInfo

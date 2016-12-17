@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using LanExchange.Plugin.Windows.ContextMenu;
 using LanExchange.Plugin.Windows.Utils;
 using LanExchange.Presentation.Interfaces;
 

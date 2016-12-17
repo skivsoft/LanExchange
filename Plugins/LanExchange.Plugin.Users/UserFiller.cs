@@ -59,7 +59,7 @@ namespace LanExchange.Plugin.Users
             {
                 // execute filter query to Active Directory
                 searcher.SearchRoot = new DirectoryEntry(startPath);
-                searcher.PageSize = Int32.MaxValue;
+                searcher.PageSize = int.MaxValue;
                 searcher.Filter = "(objectCategory = person)"; // lockoutTime
                 // var filter = "(&(&(|(&(objectCategory = person)(objectSid=*)(!samAccountType:1.2.840.113556.1.4.804:=3))(&(objectCategory = person)(!objectSid=*))(&(objectCategory = group)(groupType:1.2.840.113556.1.4.804:=14)))objectCategory = user)(cn = khmau.isup_builder)))";
 
@@ -98,7 +98,7 @@ namespace LanExchange.Plugin.Users
             using (var searcher = new DirectorySearcher())
             {
                 searcher.SearchRoot = new DirectoryEntry(startPath);
-                searcher.PageSize = Int32.MaxValue;
+                searcher.PageSize = int.MaxValue;
                 searcher.Filter = "(objectCategory = person)";
                 SetupPropertiesToLoad(searcher);
                 searcher.PropertiesToLoad.Add(Constants.MEMBER_OF);
