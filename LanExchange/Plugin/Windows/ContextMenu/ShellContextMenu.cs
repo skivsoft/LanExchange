@@ -38,10 +38,10 @@ namespace LanExchange.Plugin.Windows.ContextMenu
         private const int S_OK = 0;
 
         private static readonly int InvokeCommandSize = Marshal.SizeOf(typeof(CMINVOKECOMMANDINFOEX));
-        private static Guid IID_IShellFolder = new Guid("{000214E6 - 0000-0000-C000 - 000000000046}");
-        private static Guid IID_IContextMenu = new Guid("{000214e4 - 0000-0000-c000 - 000000000046}");
-        private static Guid IID_IContextMenu2 = new Guid("{000214f4 - 0000-0000-c000 - 000000000046}");
-        private static Guid IID_IContextMenu3 = new Guid("{bcfce0a0-ec17 - 11d0 - 8d10 - 00a0c90f2719}");
+        private static Guid IID_IShellFolder = new Guid("{000214E6-0000-0000-C000-000000000046}");
+        private static Guid IID_IContextMenu = new Guid("{000214e4-0000-0000-c000-000000000046}");
+        private static Guid IID_IContextMenu2 = new Guid("{000214f4-0000-0000-c000-000000000046}");
+        private static Guid IID_IContextMenu3 = new Guid("{bcfce0a0-ec17-11d0-8d10-00a0c90f2719}");
 
         private IContextMenu contextMenu;
         private IContextMenu2 contextMenu2;

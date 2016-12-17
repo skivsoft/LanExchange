@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using LanExchange.Presentation.Interfaces;
@@ -695,7 +694,7 @@ namespace LanExchange.Plugin.Windows.Utils
             if (IsXpOrAbove())
             {
                 // Get the System IImageList object from the Shell:
-                var iidImageList = new Guid("46EB5926 - 582E - 4017-9FDF-E8998DAA0950");
+                var iidImageList = new Guid("46EB5926-582E-4017-9FDF-E8998DAA0950");
                 SHGetImageList(
                     (int)size,
                     ref iidImageList,
