@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LanExchange.WinForms</RootNamespace>
-    <AssemblyName>LanExchange</AssemblyName>
+    <AssemblyName>LanExchange.WinForms</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ApplicationIcon>LanExchange.ico</ApplicationIcon>
@@ -143,11 +143,12 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\Solution\packages\ILRepack.MSBuild.Task.1.0.9\build\ILRepack.MSBuild.Task.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\Solution\packages\ILRepack.MSBuild.Task.1.0.9\build\ILRepack.MSBuild.Task.targets'))" />
   </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
   <Target Name="AfterBuild">
+    <ItemGroup>
+      <InputAssemblies Include="$(OutputPath)\$(AssemblyName).exe" />
+      <InputAssemblies Include="$(OutputPath)\LanExchange.dll" />
+      <InputAssemblies Include="$(OutputPath)\LanExchange.Presentation.WinForms.dll" />
+    </ItemGroup>
+    <ILRepack Parallel="true" Internalize="true" InputAssemblies="@(InputAssemblies)" TargetKind="SameAsPrimaryAssembly" OutputFile="$(OutputPath)\LanExchange.exe" />
   </Target>
-  -->
 </Project>
