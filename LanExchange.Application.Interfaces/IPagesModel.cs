@@ -7,17 +7,25 @@ namespace LanExchange.Application.Interfaces
     public interface IPagesModel
     {
         event EventHandler<PanelEventArgs> PanelAdded;
+
         event EventHandler<PanelIndexEventArgs> PanelRemoved;
+
         event EventHandler<PanelIndexEventArgs> SelectedIndexChanged;
+
         event EventHandler Cleared;
 
-        bool Add(IPanelModel panel);
-        void RemoveAt(int index);
-        void Clear();
-        IPanelModel GetAt(int index);
-        void Assign(PagesDto dto);
-
         int Count { get; }
+
         int SelectedIndex { get; set; }
+
+        bool Add(IPanelModel panel);
+
+        void RemoveAt(int index);
+
+        void Clear();
+
+        IPanelModel GetAt(int index);
+
+        void Assign(PagesDto dto);
     }
 }

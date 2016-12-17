@@ -19,7 +19,6 @@ namespace LanExchange.Application.Implementation
         private readonly ILogService logService;
 
         [ImportMany]
-        // ReSharper disable once FieldCanBeMadeReadOnly.Local
         private IEnumerable<IPlugin> plugins;
 
         public PluginManager(ILogService logService)

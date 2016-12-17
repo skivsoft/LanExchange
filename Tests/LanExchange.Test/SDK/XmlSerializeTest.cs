@@ -43,7 +43,7 @@ namespace LanExchange.SDK
         {
             TestSomeAbstractBase obj = new TestSomeDescendant();
             obj.Hello = "World";
-            var extraTypes = new[] {typeof(TestSomeDescendant)};
+            var extraTypes = new[] { typeof(TestSomeDescendant) };
 
            var ser = new XmlSerializer(typeof(TestSomeAbstractBase), extraTypes);
             string result;

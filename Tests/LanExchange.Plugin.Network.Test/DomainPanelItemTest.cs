@@ -54,7 +54,7 @@ namespace LanExchange.Plugin.Network
         [Test]
         public void TestSerialization()
         {
-            var extraTypes = new[] {typeof(DomainPanelItem)};
+            var extraTypes = new[] { typeof(DomainPanelItem) };
 
            var ser = new XmlSerializer(typeof(PanelItemBase), extraTypes);
             using (var sw = new StringWriter())

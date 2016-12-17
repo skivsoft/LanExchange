@@ -12,7 +12,9 @@ namespace LanExchange.Application.Implementation
 
         public TranslationResourceManager(
             ITranslationService translationService,            
-            string baseName, Assembly assembly) : base(baseName, assembly)
+            string baseName,
+            Assembly assembly)
+            : base(baseName, assembly)
         {
             if (translationService != null) throw new ArgumentNullException(nameof(translationService));
 

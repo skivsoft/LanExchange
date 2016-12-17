@@ -63,7 +63,7 @@ namespace LanExchange.Application.Presenters
             // TODO hide model
             // if (objects == null) return;
             //// refresh only for current page
-            // var panelModel = pagesPresenter.GetItem(pagesPresenter.SelectedIndex);
+            // var panelModel = PagesPresenter.GetItem(PagesPresenter.SelectedIndex);
             // if (panelModel == null || !objects.Equals(panelModel)) 
             // return;
             //// get number of visible items(filtered) and number of total items

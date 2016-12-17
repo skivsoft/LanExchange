@@ -16,9 +16,7 @@ namespace LanExchange.Application.Implementation
         private readonly LinkedList<PanelItemBase> asyncQueue;
         private readonly List<Thread> threads;
         private long numThreads;
-
-        public event EventHandler<DataReadyArgs> DataReady;
-        public event EventHandler NumThreadsChanged;
+        private bool disposed;
 
         public LazyThreadPool()
         {
@@ -26,9 +24,48 @@ namespace LanExchange.Application.Implementation
             threads = new List<Thread>();
         }
 
+        public event EventHandler<DataReadyArgs> DataReady;
+
+        public event EventHandler NumThreadsChanged;
+
         public long NumThreads
         {
             get { return Interlocked.Read(ref numThreads); }
+        }
+
+        public IComparable AsyncGetData(PanelColumnHeader column, PanelItemBase panelItem)
+        {
+            IComparable result;
+            bool found;
+            lock (column)
+            {
+                found = column.LazyDict.TryGetValue(panelItem, out result);
+            }
+
+            if (found)
+                return result;
+            lock (asyncQueue)
+            {
+                if (asyncQueue.Contains(panelItem))
+                    asyncQueue.Remove(panelItem);
+                asyncQueue.AddFirst(panelItem);
+            }
+
+            UpdateThreads(column);
+            return null;
+        }
+
+        public void Dispose()
+        {
+            lock (threads)
+            {
+                if (!disposed)
+                {
+                    foreach (var t in threads.Where(t => t.ThreadState == ThreadState.Running))
+                        t.Abort();
+                    disposed = true;
+                }
+            }
         }
 
         private void DoDataReady(PanelItemBase item)
@@ -41,26 +78,6 @@ namespace LanExchange.Application.Implementation
         {
             if (NumThreadsChanged != null)
                 NumThreadsChanged(this, EventArgs.Empty);
-        }
-
-        public IComparable AsyncGetData(PanelColumnHeader column, PanelItemBase panelItem)
-        {
-            IComparable result;
-            bool found;
-            lock (column)
-            {
-                found = column.LazyDict.TryGetValue(panelItem, out result);
-            }
-            if (found)
-                return result;
-            lock (asyncQueue)
-            {
-                if (asyncQueue.Contains(panelItem))
-                    asyncQueue.Remove(panelItem);
-                asyncQueue.AddFirst(panelItem);
-            }
-            UpdateThreads(column);
-            return null;
         }
 
         private void AsyncEnum(object state)
@@ -81,27 +98,19 @@ namespace LanExchange.Application.Implementation
                         item = asyncQueue.First.Value;
                         asyncQueue.RemoveFirst();
                     }
+
                     var result = column.Callback(item);
+
                     // bool bFound = false;
-
                     // IComparable found;
-
                     // lock (column)
-
                     // {
-
                     // bFound = column.Dict.TryGetValue(item, out found);
-
                     // if (!bFound)
-
                     // column.Dict.Add(item, result);
-
                     // }
-
                     // if (!bFound)
-
                     // DoDataReady(item);
-
                     column.LazyDict.Add(item, result);
                     DoDataReady(item);
                 }
@@ -111,6 +120,7 @@ namespace LanExchange.Application.Implementation
                 }
                 ++number;
             }
+
             Interlocked.Decrement(ref numThreads);
             DoNumThreadsChanged();
         }
@@ -124,6 +134,7 @@ namespace LanExchange.Application.Implementation
                     for (int i = threads.Count - 1; i >= 0; i--)
                         if (threads[i].ThreadState == ThreadState.Stopped)
                             threads.RemoveAt(i);
+
                     // start new threads
                     while (NumThreads * NUM_CYCLES_IN_THREAD < asyncQueue.Count)
                     {
@@ -133,20 +144,5 @@ namespace LanExchange.Application.Implementation
                     }
                 }
         }
-
-        public void Dispose()
-        {
-            lock (threads)
-            {
-                if (!disposed)
-                {
-                    foreach (var t in threads.Where(t => t.ThreadState == ThreadState.Running))
-                        t.Abort();
-                    disposed = true;
-                }
-            }
-        }
-
-        private bool disposed;
     }
 }

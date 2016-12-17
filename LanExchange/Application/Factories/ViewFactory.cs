@@ -12,17 +12,17 @@ namespace LanExchange.Application.Factories
 
         public IPanelView CreatePanelView()
         {
-            return serviceProvider.Resolve<IPanelView>();
+            return ServiceProvider.Resolve<IPanelView>();
         }
 
         public IPagesView GetPagesView()
         {
-            return serviceProvider.Resolve<IPagesView>();
+            return ServiceProvider.Resolve<IPagesView>();
         }
 
         public IStatusPanelView CreateStatusPanelView()
         {
-            return serviceProvider.Resolve<IStatusPanelView>();
+            return ServiceProvider.Resolve<IStatusPanelView>();
         }
     }
 }

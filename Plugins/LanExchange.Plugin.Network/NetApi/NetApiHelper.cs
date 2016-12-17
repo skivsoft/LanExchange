@@ -29,7 +29,7 @@ namespace LanExchange.Plugin.Network.NetApi
                 uint totalentries;
                 retval = SafeNativeMethods.NetServerEnum(null, 101, out bufPtr, SafeNativeMethods.MAX_PREFERRED_LENGTH,
                     out entriesread, out totalentries, (uint)types, domain, ref resumeHandle);
-                if (retval == (int) NERR.NERR_SUCCESS || retval == (int)NERR.ERROR_MORE_DATA)
+                if (retval == (int)NERR.NERR_SUCCESS || retval == (int)NERR.ERROR_MORE_DATA)
                 {
                     var ptr = bufPtr;
                     for (int i = 0; i < entriesread; i++)
@@ -60,7 +60,7 @@ namespace LanExchange.Plugin.Network.NetApi
                 uint totalentries;
                 retval = SafeNativeMethods.NetShareEnum(computer, 1, out bufPtr, API_BUFFER_SIZE,
                     out entriesread, out totalentries, ref resumeHandle);
-                if (retval == (int) NERR.NERR_SUCCESS || retval == (int)NERR.ERROR_MORE_DATA)
+                if (retval == (int)NERR.NERR_SUCCESS || retval == (int)NERR.ERROR_MORE_DATA)
                 {
                     var ptr = bufPtr;
                     for (int i = 0; i < entriesread; i++)

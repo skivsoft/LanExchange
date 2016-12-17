@@ -135,7 +135,8 @@ namespace LanExchange.Application.Models
                     if (puntoService.SpecificContains(strList[i], filter1) ||
                         puntoService.SpecificContains(strList[i], filter2))
                         return true;
-                } else
+                }
+                else
                 if (filter1 != null && strList[i].Contains(filter1) || filter2 != null && strList[i].Contains(filter2))
                     return true;
             }

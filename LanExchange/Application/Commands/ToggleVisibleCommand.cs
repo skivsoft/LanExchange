@@ -1,5 +1,5 @@
-﻿using LanExchange.Presentation.Interfaces;
-using System;
+﻿using System;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Commands
 {

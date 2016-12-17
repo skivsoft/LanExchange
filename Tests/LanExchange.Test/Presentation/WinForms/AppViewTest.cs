@@ -2,7 +2,6 @@
 using Moq;
 using NUnit.Framework;
 
-// ReSharper disable once CheckNamespace
 namespace LanExchange.Presentation.WinForms.Forms
 {
     [TestFixture]

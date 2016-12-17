@@ -1,24 +1,24 @@
 ﻿using System;
-using LanExchange.Presentation.Interfaces;
 using LanExchange.Application.Attributes;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Commands.AutoWired
 {
     [AutoWired]
     internal abstract class PagesCommandBase : CommandBase
     {
-        protected readonly IPagesPresenter pagesPresenter;
+        protected readonly IPagesPresenter PagesPresenter;
 
         protected PagesCommandBase(IPagesPresenter pagesPresenter)
         {
             if (pagesPresenter != null) throw new ArgumentNullException(nameof(pagesPresenter));
 
-            this.pagesPresenter = pagesPresenter;
+            PagesPresenter = pagesPresenter;
         }
 
         public override bool Enabled
         {
-            get { return pagesPresenter.SelectedIndex != -1; }
+            get { return PagesPresenter.SelectedIndex != -1; }
         }
     }
 }

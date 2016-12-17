@@ -43,6 +43,14 @@ namespace LanExchange.Application
             Initialize();
         }
 
+        public void Run()
+        {
+            using (var mainView = windowFactory.CreateMainView())
+            {
+                appView.Run(mainView);
+            }
+        }
+
         private void Initialize()
         {
             translationService.SetResourceManagerTo<Resources>();
@@ -60,15 +68,8 @@ namespace LanExchange.Application
             {
                 logService.Log(exception);
             }
-            pluginManager.InitializePlugins(serviceProvider);
-        }
 
-        public void Run()
-        {
-            using (var mainView = windowFactory.CreateMainView())
-            {
-                appView.Run(mainView);
-            }
+            pluginManager.InitializePlugins(serviceProvider);
         }
     }
 }

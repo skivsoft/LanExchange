@@ -10,7 +10,7 @@ namespace LanExchange.Application.Commands.AutoWired
 
         protected override void InternalExecute()
         {
-            pagesPresenter.CommandReRead();
+            PagesPresenter.CommandReRead();
         }
     }
 }

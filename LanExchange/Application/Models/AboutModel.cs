@@ -52,7 +52,7 @@ namespace LanExchange.Application.Models
 
         private Version GetVersion()
         {
-            return entryAssembly == null ?  null : entryAssembly.GetName().Version;
+            return entryAssembly == null ? null : entryAssembly.GetName().Version;
         }
 
         [Localizable(false)]

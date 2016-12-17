@@ -1,6 +1,6 @@
 ﻿using System;
-using LanExchange.Presentation.Interfaces.Menu;
 using System.ComponentModel;
+using LanExchange.Presentation.Interfaces.Menu;
 using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Implementation.Menu

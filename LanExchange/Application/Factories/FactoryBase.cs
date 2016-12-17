@@ -4,13 +4,13 @@ namespace LanExchange.Application.Factories
 {
     internal abstract class FactoryBase
     {
-        protected readonly IServiceProvider serviceProvider;
+        protected readonly IServiceProvider ServiceProvider;
 
         protected FactoryBase(IServiceProvider serviceProvider)
         {
             if (serviceProvider != null) throw new ArgumentNullException(nameof(serviceProvider));
 
-            this.serviceProvider = serviceProvider;
+            ServiceProvider = serviceProvider;
         }
     }
 }

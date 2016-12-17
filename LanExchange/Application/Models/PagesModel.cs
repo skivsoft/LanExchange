@@ -16,11 +16,7 @@ namespace LanExchange.Application.Models
         private readonly IModelFactory modelFactory;
         private readonly List<IPanelModel> panels;
         private int selectedIndex;
-
-        public event EventHandler<PanelEventArgs> PanelAdded;
-        public event EventHandler<PanelIndexEventArgs> PanelRemoved;
-        public event EventHandler<PanelIndexEventArgs> SelectedIndexChanged;
-        public event EventHandler Cleared;
+        private int lockCount;
 
         public PagesModel(
             IPanelItemFactoryManager factoryManager,
@@ -39,12 +35,15 @@ namespace LanExchange.Application.Models
             selectedIndex = -1;
         }
 
+        public event EventHandler<PanelEventArgs> PanelAdded;
+        public event EventHandler<PanelIndexEventArgs> PanelRemoved;
+        public event EventHandler<PanelIndexEventArgs> SelectedIndexChanged;
+        public event EventHandler Cleared;
+
         public int Count
         {
             get { return panels.Count; }
         }
-
-        private int lockCount;
 
         public int SelectedIndex 
         {

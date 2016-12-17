@@ -119,7 +119,6 @@ namespace LanExchange.Plugin.Windows.Utils
         
         #region Private Enumerations
         [Flags]
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
         private enum SHGetFileInfoConstants
         {
             // SHGFI_ICON = 0x100,                // get icon 

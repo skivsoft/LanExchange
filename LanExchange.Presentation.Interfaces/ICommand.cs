@@ -10,7 +10,6 @@
         /// </summary>
         /// <value>
         /// <c>true</c> if enabled; otherwise, <c>false</c>.
-
         /// </value>
         bool Enabled { get; }
 

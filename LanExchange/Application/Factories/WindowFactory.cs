@@ -12,22 +12,22 @@ namespace LanExchange.Application.Factories
 
         public IAboutView CreateAboutView()
         {
-            return serviceProvider.Resolve<IAboutView>();
+            return ServiceProvider.Resolve<IAboutView>();
         }
 
         public IMainView CreateMainView()
         {
-            return serviceProvider.Resolve<IMainView>();
+            return ServiceProvider.Resolve<IMainView>();
         }
 
         public ICheckAvailabilityWindow CreateCheckAvailabilityWindow()
         {
-            return serviceProvider.Resolve<ICheckAvailabilityWindow>();
+            return ServiceProvider.Resolve<ICheckAvailabilityWindow>();
         }
 
         public IPanelView CreatePanelView()
         {
-            return serviceProvider.Resolve<IPanelView>();
+            return ServiceProvider.Resolve<IPanelView>();
         }
     }
 }

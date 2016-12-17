@@ -1,6 +1,6 @@
 ﻿using System;
-using LanExchange.Presentation.Interfaces;
 using LanExchange.Application.Attributes;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Commands.AutoWired
 {

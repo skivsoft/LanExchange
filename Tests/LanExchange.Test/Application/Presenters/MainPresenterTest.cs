@@ -31,8 +31,7 @@ namespace LanExchange.Application.Presenters
                 new Mock<IAppView>().Object,
                 new Mock<IProcessService>().Object,
                 new Mock<IImageManager>().Object,
-                new Mock<IMenuProducer>().Object
-                );
+                new Mock<IMenuProducer>().Object);
             return presenter;
         }
 

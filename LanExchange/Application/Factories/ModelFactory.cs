@@ -12,7 +12,7 @@ namespace LanExchange.Application.Factories
 
         public IPanelModel CreatePanelModel()
         {
-            return serviceProvider.Resolve<IPanelModel>();
+            return ServiceProvider.Resolve<IPanelModel>();
         }
     }
 }

@@ -12,7 +12,7 @@ namespace LanExchange.Plugin.FileSystem
         private readonly bool isDirectory;
         private readonly string name;
 
-        public ColumnSize(long value, bool isDirectory = true, string name = null )
+        public ColumnSize(long value, bool isDirectory = true, string name = null)
         {
             this.value = value;
             this.isDirectory = isDirectory;

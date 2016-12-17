@@ -12,7 +12,6 @@ namespace LanExchange.Plugin.Windows.Utils
     /// </summary>
     [Localizable(false)]
     [CLSCompliant(false)]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public static class ShellAPI
     {
         #region Variables and Constants

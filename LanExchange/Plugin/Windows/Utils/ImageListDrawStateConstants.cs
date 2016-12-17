@@ -7,7 +7,6 @@ namespace LanExchange.Plugin.Windows.Utils
     /// Enumeration containing XP ImageList Draw State options
     /// </summary>
     [Flags]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public enum ImageListDrawStateConstants
     {
         /// <summary>

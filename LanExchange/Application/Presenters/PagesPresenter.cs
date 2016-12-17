@@ -13,6 +13,7 @@ namespace LanExchange.Application.Presenters
         private readonly IImageManager imageManager;
         private readonly IPanelColumnManager panelColumns;
         private readonly IClipboardService clipboardService;
+        private bool escapeDown;
 
         public event EventHandler PanelViewFocusedItemChanged;
         public event EventHandler PanelViewFilterTextChanged;
@@ -345,8 +346,6 @@ namespace LanExchange.Application.Presenters
             if (model != null)
                 View.SetTabText(index, model.TabName);
         }
-
-        private bool escapeDown;
 
         public bool PerformEscapeDown()
         {

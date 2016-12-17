@@ -11,37 +11,25 @@ namespace LanExchange.Plugin.Windows.ContextMenu
 {
     /// <summary>
     /// "Stand-alone" shell context menu
-    /// /// It isn't really debugged but is mostly working.
-
+    /// It isn't really debugged but is mostly working.
     /// Create an instance and call ShowContextMenu with a list of FileInfo for the files.
     /// Limitation is that it only handles files in the same directory but it can be fixed
     /// by changing the way files are translated into PIDLs.
-    /// /// Based on FileBrowser in C# from CodeProject
-
+    /// Based on FileBrowser in C# from CodeProject
     /// http:// www.codeproject.com/useritems/FileBrowser.asp
-
-    /// /// Hooking class taken from MSDN Magazine Cutting Edge column
-
+    /// Hooking class taken from MSDN Magazine Cutting Edge column
     /// http:// msdn.microsoft.com/msdnmag/issues/02/10/CuttingEdge/
-
-    /// /// Andreas Johansson
-
+    /// Andreas Johansson
     /// afjohansson@hotmail.com
     /// http:// afjohansson.spaces.live.com
-
     /// </summary>
     /// <example>
     /// ShellContextMenu scm = new ShellContextMenu();
-
     /// FileInfo[] files = new FileInfo[1];
-
     /// files[0] = new FileInfo(@"c:\windows\notepad.exe");
-
     /// scm.ShowContextMenu(this.Handle, files, Cursor.Position);
-
     /// </example>
     [Localizable(false)]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class ShellContextMenu
     {
         private const int MAX_PATH = 260;
@@ -49,19 +37,19 @@ namespace LanExchange.Plugin.Windows.ContextMenu
         private const uint CMD_LAST = 30000;
         private const int S_OK = 0;
 
-        private static readonly int cbInvokeCommand = Marshal.SizeOf(typeof(CMINVOKECOMMANDINFOEX));
+        private static readonly int InvokeCommandSize = Marshal.SizeOf(typeof(CMINVOKECOMMANDINFOEX));
         private static Guid IID_IShellFolder = new Guid("{000214E6 - 0000-0000-C000 - 000000000046}");
         private static Guid IID_IContextMenu = new Guid("{000214e4 - 0000-0000-c000 - 000000000046}");
         private static Guid IID_IContextMenu2 = new Guid("{000214f4 - 0000-0000-c000 - 000000000046}");
         private static Guid IID_IContextMenu3 = new Guid("{bcfce0a0-ec17 - 11d0 - 8d10 - 00a0c90f2719}");
 
-        private IContextMenu _oContextMenu;
-        private IContextMenu2 _oContextMenu2;
-        private IContextMenu3 _oContextMenu3;
-        private IShellFolder _oDesktopFolder;
-        private IShellFolder _oParentFolder;
-        private IntPtr[] _arrPIDLs;
-        private string _strParentFolder;
+        private IContextMenu contextMenu;
+        private IContextMenu2 contextMenu2;
+        private IContextMenu3 contextMenu3;
+        private IShellFolder desktopFolder;
+        private IShellFolder parentFolder;
+        private IntPtr[] arrPIDLs;
+        private string strParentFolder;
 
         #region Destructor
         /// <summary>Ensure all resources get released</summary>
@@ -90,16 +78,14 @@ namespace LanExchange.Plugin.Windows.ContextMenu
             try
             {
                 // Application.AddMessageFilter(this);
-
-
-                _arrPIDLs = GetPIDL(arrFileInfo);
-                if (null == _arrPIDLs)
+                arrPIDLs = GetPIDL(arrFileInfo);
+                if (null == arrPIDLs)
                 {
                     ReleaseAll();
                     return;
                 }
 
-                if (false == GetContextMenuInterfaces(_oParentFolder, _arrPIDLs))
+                if (false == GetContextMenuInterfaces(parentFolder, arrPIDLs))
                 {
                     ReleaseAll();
                     return;
@@ -107,7 +93,7 @@ namespace LanExchange.Plugin.Windows.ContextMenu
 
                 pMenu = CreatePopupMenu();
 
-                _oContextMenu.QueryContextMenu(
+                contextMenu.QueryContextMenu(
                     pMenu,
                     0,
                     CMD_FIRST,
@@ -129,7 +115,7 @@ namespace LanExchange.Plugin.Windows.ContextMenu
 
                 if (nSelected != 0)
                 {
-                    InvokeCommand(_oContextMenu, nSelected, _strParentFolder, pointScreen, control, shift);
+                    InvokeCommand(contextMenu, nSelected, strParentFolder, pointScreen, control, shift);
                 }
             }
             finally
@@ -139,6 +125,7 @@ namespace LanExchange.Plugin.Windows.ContextMenu
                 {
                     DestroyMenu(pMenu);
                 }
+
                 ReleaseAll();
             }
         }
@@ -170,11 +157,11 @@ namespace LanExchange.Plugin.Windows.ContextMenu
             {
                 IntPtr tempPidl;
                 ShellAPI.SHGetSpecialFolderLocation(IntPtr.Zero, csidl, out tempPidl);
-                _arrPIDLs = new[] { tempPidl };
+                arrPIDLs = new[] { tempPidl };
 
-                _oParentFolder = GetDesktopFolder();
+                parentFolder = GetDesktopFolder();
 
-                if (false == GetContextMenuInterfaces(_oParentFolder, _arrPIDLs))
+                if (false == GetContextMenuInterfaces(parentFolder, arrPIDLs))
                 {
                     ReleaseAll();
                     return;
@@ -182,7 +169,7 @@ namespace LanExchange.Plugin.Windows.ContextMenu
 
                 pMenu = CreatePopupMenu();
 
-                _oContextMenu.QueryContextMenu(
+                contextMenu.QueryContextMenu(
                     pMenu,
                     0,
                     CMD_FIRST,
@@ -204,7 +191,7 @@ namespace LanExchange.Plugin.Windows.ContextMenu
 
                 if (nSelected != 0)
                 {
-                    InvokeCommand(_oContextMenu, nSelected, null, pointScreen, control, shift);
+                    InvokeCommand(contextMenu, nSelected, null, pointScreen, control, shift);
                 }
             }
             finally
@@ -214,6 +201,7 @@ namespace LanExchange.Plugin.Windows.ContextMenu
                 {
                     DestroyMenu(pMenu);
                 }
+
                 ReleaseAll();
             }
         }
@@ -229,7 +217,7 @@ namespace LanExchange.Plugin.Windows.ContextMenu
             bool shift)
         {
             var invoke = new CMINVOKECOMMANDINFOEX();
-            invoke.cbSize = cbInvokeCommand;
+            invoke.cbSize = InvokeCommandSize;
             invoke.lpVerb = (IntPtr)(nCmd - CMD_FIRST);
             invoke.lpDirectory = strFolder;
             invoke.lpVerbW = (IntPtr)(nCmd - CMD_FIRST);
@@ -267,11 +255,8 @@ namespace LanExchange.Plugin.Windows.ContextMenu
         private static extern bool DestroyMenu(IntPtr hMenu);
 
         // Determines the default menu item on the specified menu
-        // [DllImport(ExternDll.User32, SetLastError = true, CharSet = CharSet.Auto)]
-
-        // private static extern int GetMenuDefaultItem(IntPtr hMenu, bool fByPos, uint gmdiFlags);
-
-
+        [DllImport(ExternDll.User32, SetLastError = true, CharSet = CharSet.Auto)]
+        private static extern int GetMenuDefaultItem(IntPtr hMenu, bool fByPos, uint gmdiFlags);
         #endregion
 
         #region GetContextMenuInterfaces()
@@ -293,21 +278,23 @@ namespace LanExchange.Plugin.Windows.ContextMenu
 
             if (S_OK == nResult)
             {
-                _oContextMenu = (IContextMenu)Marshal.GetTypedObjectForIUnknown(pUnknownContextMenu, typeof(IContextMenu));
+                contextMenu = (IContextMenu)Marshal.GetTypedObjectForIUnknown(pUnknownContextMenu, typeof(IContextMenu));
 
                 IntPtr pUnknownContextMenu2;
                 if (S_OK == Marshal.QueryInterface(pUnknownContextMenu, ref IID_IContextMenu2, out pUnknownContextMenu2))
                 {
-                    _oContextMenu2 = (IContextMenu2)Marshal.GetTypedObjectForIUnknown(pUnknownContextMenu2, typeof(IContextMenu2));
+                    contextMenu2 = (IContextMenu2)Marshal.GetTypedObjectForIUnknown(pUnknownContextMenu2, typeof(IContextMenu2));
                 }
+
                 IntPtr pUnknownContextMenu3;
                 if (S_OK == Marshal.QueryInterface(pUnknownContextMenu, ref IID_IContextMenu3, out pUnknownContextMenu3))
                 {
-                    _oContextMenu3 = (IContextMenu3)Marshal.GetTypedObjectForIUnknown(pUnknownContextMenu3, typeof(IContextMenu3));
+                    contextMenu3 = (IContextMenu3)Marshal.GetTypedObjectForIUnknown(pUnknownContextMenu3, typeof(IContextMenu3));
                 }
 
                 return true;
             }
+
             return false;
         }
         #endregion
@@ -318,35 +305,40 @@ namespace LanExchange.Plugin.Windows.ContextMenu
         /// </summary>
         private void ReleaseAll()
         {
-            if (null != _oContextMenu)
+            if (null != contextMenu)
             {
-                Marshal.ReleaseComObject(_oContextMenu);
-                _oContextMenu = null;
+                Marshal.ReleaseComObject(contextMenu);
+                contextMenu = null;
             }
-            if (null != _oContextMenu2)
+
+            if (null != contextMenu2)
             {
-                Marshal.ReleaseComObject(_oContextMenu2);
-                _oContextMenu2 = null;
+                Marshal.ReleaseComObject(contextMenu2);
+                contextMenu2 = null;
             }
-            if (null != _oContextMenu3)
+
+            if (null != contextMenu3)
             {
-                Marshal.ReleaseComObject(_oContextMenu3);
-                _oContextMenu3 = null;
+                Marshal.ReleaseComObject(contextMenu3);
+                contextMenu3 = null;
             }
-            if (null != _oDesktopFolder)
+
+            if (null != desktopFolder)
             {
-                Marshal.ReleaseComObject(_oDesktopFolder);
-                _oDesktopFolder = null;
+                Marshal.ReleaseComObject(desktopFolder);
+                desktopFolder = null;
             }
-            if (null != _oParentFolder)
+
+            if (null != parentFolder)
             {
-                Marshal.ReleaseComObject(_oParentFolder);
-                _oParentFolder = null;
+                Marshal.ReleaseComObject(parentFolder);
+                parentFolder = null;
             }
-            if (null != _arrPIDLs)
+
+            if (null != arrPIDLs)
             {
-                FreePIDL(_arrPIDLs);
-                _arrPIDLs = null;
+                FreePIDL(arrPIDLs);
+                arrPIDLs = null;
             }
         }
         #endregion
@@ -358,7 +350,8 @@ namespace LanExchange.Plugin.Windows.ContextMenu
         /// <returns>IShellFolder for desktop folder</returns>
         private IShellFolder GetDesktopFolder()
         {
-            if (null != _oDesktopFolder) return _oDesktopFolder;
+            if (null != desktopFolder) return desktopFolder;
+
             // Get desktop IShellFolder
             IntPtr pUnkownDesktopFolder;
             int nResult = SHGetDesktopFolder(out pUnkownDesktopFolder);
@@ -366,9 +359,10 @@ namespace LanExchange.Plugin.Windows.ContextMenu
             {
                 throw new ShellContextMenuException("Failed to get the desktop shell folder");
             }
-            _oDesktopFolder = (IShellFolder)Marshal.GetTypedObjectForIUnknown(pUnkownDesktopFolder, typeof(IShellFolder));
 
-            return _oDesktopFolder;
+            desktopFolder = (IShellFolder)Marshal.GetTypedObjectForIUnknown(pUnkownDesktopFolder, typeof(IShellFolder));
+
+            return desktopFolder;
         }
         #endregion
 
@@ -380,7 +374,7 @@ namespace LanExchange.Plugin.Windows.ContextMenu
         /// <returns>IShellFolder for the folder(relative from the desktop)</returns>
         private IShellFolder GetParentFolder(string folderName)
         {
-            if (null == _oParentFolder)
+            if (null == parentFolder)
             {
                 IShellFolder oDesktopFolder = GetDesktopFolder();
                 if (null == oDesktopFolder)
@@ -398,27 +392,29 @@ namespace LanExchange.Plugin.Windows.ContextMenu
                     return null;
                 }
 
-                IntPtr pStrRet = Marshal.AllocCoTaskMem(MAX_PATH * 2 + 4);
+                IntPtr pStrRet = Marshal.AllocCoTaskMem((MAX_PATH * 2) + 4);
                 Marshal.WriteInt32(pStrRet, 0, 0);
-                _oDesktopFolder.GetDisplayNameOf(pPIDL, SHGNO.FORPARSING, pStrRet);
+                desktopFolder.GetDisplayNameOf(pPIDL, SHGNO.FORPARSING, pStrRet);
                 var strFolder = new StringBuilder(MAX_PATH);
                 StrRetToBuf(pStrRet, pPIDL, strFolder, MAX_PATH);
                 Marshal.FreeCoTaskMem(pStrRet);
-                _strParentFolder = strFolder.ToString();
+                strParentFolder = strFolder.ToString();
 
                 // Get the IShellFolder for folder
                 IntPtr pUnknownParentFolder;
                 nResult = oDesktopFolder.BindToObject(pPIDL, IntPtr.Zero, ref IID_IShellFolder, out pUnknownParentFolder);
+
                 // Free the PIDL first
                 Marshal.FreeCoTaskMem(pPIDL);
                 if (S_OK != nResult)
                 {
                     return null;
                 }
-                _oParentFolder = (IShellFolder)Marshal.GetTypedObjectForIUnknown(pUnknownParentFolder, typeof(IShellFolder));
+
+                parentFolder = (IShellFolder)Marshal.GetTypedObjectForIUnknown(pUnknownParentFolder, typeof(IShellFolder));
             }
 
-            return _oParentFolder;
+            return parentFolder;
         }
         #endregion
 
@@ -455,6 +451,7 @@ namespace LanExchange.Plugin.Windows.ContextMenu
                     FreePIDL(arrPIDL);
                     return null;
                 }
+
                 arrPIDL[n] = pPIDL;
                 n++;
             }
@@ -484,110 +481,6 @@ namespace LanExchange.Plugin.Windows.ContextMenu
         }
         #endregion
 
-        #region InvokeContextMenuDefault
-        // private void InvokeContextMenuDefault(FileInfo[] arrayOfFileInfo)
-
-        // {
-
-        // // Release all resources first.
-
-        // ReleaseAll();
-
-
-        // IntPtr pMenu = IntPtr.Zero;
-
-
-        // try
-
-        // {
-
-        // _arrPIDLs = GetPIDL(arrayOfFileInfo);
-
-        // if (null == _arrPIDLs)
-
-        // {
-
-        // ReleaseAll();
-
-        // return;
-
-        // }
-
-
-        // if (false == GetContextMenuInterfaces(_oParentFolder, _arrPIDLs))
-
-        // {
-
-        // ReleaseAll();
-
-        // return;
-
-        // }
-
-
-        // pMenu = CreatePopupMenu();
-
-
-        // int nResult = _oContextMenu.QueryContextMenu(
-
-        // pMenu,
-
-        // 0,
-
-        // CMD_FIRST,
-
-        // CMD_LAST,
-
-        // CMF.DEFAULTONLY |
-
-        // ((Control.ModifierKeys & Keys.Shift) != 0 ? CMF.EXTENDEDVERBS : 0));
-
-
-        // uint nDefaultCmd = (uint)GetMenuDefaultItem(pMenu, false, 0);
-
-        // if (nDefaultCmd >= CMD_FIRST)
-
-        // {
-
-        // InvokeCommand(_oContextMenu, nDefaultCmd, arrayOfFileInfo[0].DirectoryName, Control.MousePosition);
-
-        // }
-
-
-        // DestroyMenu(pMenu);
-
-        // pMenu = IntPtr.Zero;
-
-        // }
-
-        // catch
-
-        // {
-
-        // throw;
-
-        // }
-
-        // finally
-
-        // {
-
-        // if (pMenu != IntPtr.Zero)
-
-        // {
-
-        // DestroyMenu(pMenu);
-
-        // }
-
-        // ReleaseAll();
-
-        // }
-
-        // }
-
-        #endregion
-
         #region WindowsHookInvoked()
         /// <summary>
         /// Handle messages for context menu
@@ -596,20 +489,20 @@ namespace LanExchange.Plugin.Windows.ContextMenu
         {
             var cwp = (CWPSTRUCT)Marshal.PtrToStructure(e.LParam, typeof(CWPSTRUCT));
             
-            if (_oContextMenu2 != null &&
+            if (contextMenu2 != null &&
                 (cwp.message == (int)WM.INITMENUPOPUP ||
                  cwp.message == (int)WM.MEASUREITEM ||
                  cwp.message == (int)WM.DRAWITEM))
             {
-                if (_oContextMenu2.HandleMenuMsg((uint)cwp.message, cwp.wparam, cwp.lparam) == S_OK)
+                if (contextMenu2.HandleMenuMsg((uint)cwp.message, cwp.wparam, cwp.lparam) == S_OK)
                 {
                     return;
                 }
             }
 
-            if (_oContextMenu3 != null && cwp.message == (int)WM.MENUCHAR)
+            if (contextMenu3 != null && cwp.message == (int)WM.MENUCHAR)
             {
-                if (_oContextMenu3.HandleMenuMsg2((uint)cwp.message, cwp.wparam, cwp.lparam, IntPtr.Zero) == S_OK)
+                if (contextMenu3.HandleMenuMsg2((uint)cwp.message, cwp.wparam, cwp.lparam, IntPtr.Zero) == S_OK)
                 {
                 }
             }
