@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace LanExchange.Presentation.WinForms.Controls
 {
     [TestFixture]
-    class InfoPanelTest
+    public class InfoPanelTest
     {
         [Test]
         public void Ctor_Presenter_InitializeCalled()

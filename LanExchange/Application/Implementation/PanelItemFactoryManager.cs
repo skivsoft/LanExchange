@@ -21,6 +21,21 @@ namespace LanExchange.Application.Implementation
             defaultRoots = new List<PanelItemBase>();
         }
 
+        public IDictionary<Type, IPanelItemFactory> Types
+        {
+            get { return types; }
+        }
+
+        public IList<PanelItemBase> DefaultRoots
+        {
+            get { return defaultRoots; }
+        }
+
+        public bool IsEmpty
+        {
+            get { return types.Count == 0; }
+        }
+
         public void RegisterFactory<TPanelItem>(IPanelItemFactory factory) where TPanelItem : PanelItemBase
         {
             if (factory == null) throw new ArgumentNullException(nameof(factory));
@@ -35,11 +50,6 @@ namespace LanExchange.Application.Implementation
             if (types.TryGetValue(type, out foundFactory))
                 return foundFactory.GetAvailabilityChecker();
             return null;
-        }
-
-        public IDictionary<Type, IPanelItemFactory> Types
-        {
-            get { return types; }
         }
 
         public PanelItemBase CreateDefaultRoot(string typeName)
@@ -67,11 +77,6 @@ namespace LanExchange.Application.Implementation
             }
         }
 
-        public IList<PanelItemBase> DefaultRoots
-        {
-            get { return defaultRoots; }
-        }
-
         public bool Exists(Type type)
         {
             IPanelItemFactory factory;
@@ -87,11 +92,6 @@ namespace LanExchange.Application.Implementation
             result[types.Count] = typeof(PanelItemRootBase);
             result[types.Count + 1] = typeof(PanelItemDoubleDot);
             return result;
-        }
-
-        public bool IsEmpty
-        {
-            get { return types.Count == 0; }
         }
     }
 }

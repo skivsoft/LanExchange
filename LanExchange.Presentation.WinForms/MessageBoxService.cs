@@ -15,7 +15,6 @@ namespace LanExchange.Presentation.WinForms
                 MessageBoxDefaultButton.Button2);
         }
 
-
         public bool IsYes(int result)
         {
             return result == (int)DialogResult.Yes;

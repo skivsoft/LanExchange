@@ -8,6 +8,7 @@ namespace LanExchange.Domain.Interfaces
     public interface ISerializeService
     {
         void SerializeToFile<T>(string fileName, T dto, Type[] extraTypes);
+
         T DeserializeFromFile<T>(string fileName, Type[] extraTypes);
     }
 }

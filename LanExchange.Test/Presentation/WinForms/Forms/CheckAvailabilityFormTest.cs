@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace LanExchange.Presentation.WinForms.Forms
 {
     [TestFixture]
-    class CheckAvailabilityFormTest
+    public class CheckAvailabilityFormTest
     {
         [Test]
         public void Ctor_Presenter_InitializeCalled()

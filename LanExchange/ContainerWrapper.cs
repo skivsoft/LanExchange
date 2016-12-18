@@ -52,6 +52,7 @@ namespace LanExchange
             container.Verify();
             return this;
         }
+
         private void SuppressDisposableTransientComponentWarning<T>()
         {
             container.GetRegistration(typeof(T))

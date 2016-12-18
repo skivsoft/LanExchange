@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace LanExchange.Presentation.WinForms.Forms
 {
     [TestFixture]
-    class MainFormTest
+    public class MainFormTest
     {
         [Test]
         public void Ctor_Presenter_InitializeCalled()

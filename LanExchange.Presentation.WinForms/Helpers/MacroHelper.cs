@@ -22,6 +22,7 @@ namespace LanExchange.Presentation.WinForms.Helpers
                     var propValue = prop.GetValue(obj, null);
                     props.Add(string.Format(CultureInfo.InvariantCulture, MACRO_VAR_FMT, prop.Name), propValue == null ? string.Empty : propValue.ToString());
                 }
+
             return props;
         }
 

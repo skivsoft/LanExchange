@@ -36,6 +36,7 @@ namespace LanExchange.Application.Implementation
                         result += ch;
                 }
             }
+
             return result;
         }
 

@@ -8,6 +8,11 @@ namespace LanExchange.Plugin.Windows
     {
         private SysImageList imageList;
 
+        public Size Size
+        {
+            get { return imageList == null ? Size.Empty : imageList.Size; }
+        }
+
         public void Create(SysImageListSize size)
         {
             imageList = new SysImageList(size);
@@ -17,11 +22,6 @@ namespace LanExchange.Plugin.Windows
         {
             if (imageList != null)
                 imageList.Dispose();
-        }
-
-        public Size Size
-        {
-            get { return imageList == null ? Size.Empty : imageList.Size; }
         }
 
         public Icon GetIcon(int index)

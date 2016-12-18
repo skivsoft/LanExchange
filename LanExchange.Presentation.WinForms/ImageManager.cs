@@ -48,86 +48,6 @@ namespace LanExchange.Presentation.WinForms
             largeImageList.Dispose();
         }
 
-        private static Image MadeDisabledBitmap(Image bmp)
-        {
-            var result = new Bitmap(bmp.Width, bmp.Height);
-            using (var gr = Graphics.FromImage(result))
-            {
-                ControlPaint.DrawImageDisabled(gr, bmp, 0, 0, Color.Transparent);
-            }
-
-            return result;
-        }
-
-        private void Initialize()
-        {
-            shellService.FileIconInit(true);
-            using (var small = serviceFactory.CreateSysImageListService())
-            using (var large = serviceFactory.CreateSysImageListService())
-            {
-                small.Create(SysImageListSize.SmallIcons);
-                large.Create(SysImageListSize.LargeIcons);
-
-                InitializeImageLists(small, large);
-                RegisterWorkgroupIcon(small, large);
-                RegisterMyComputerIcon(small, large);
-                RegisterFolderIcon(small, large);
-
-                // register double dot icon
-                RegisterImage(PanelImageNames.DOUBLEDOT, Resources.back_16, Resources.back_32);
-                
-                // register user icon
-                RegisterImage(PanelImageNames.USER, Resources.user_16, Resources.user_32);
-                RegisterDisabledImage(PanelImageNames.USER + PanelImageNames.HiddenPostfix, Resources.user_16, Resources.user_32);
-            }
-        }
-
-        private void InitializeImageLists(ISysImageListService small, ISysImageListService large)
-        {
-            smallImageList = new ImageList();
-            smallImageList.ColorDepth = ColorDepth.Depth32Bit;
-            smallImageList.ImageSize = small.Size;
-            largeImageList = new ImageList();
-            largeImageList.ColorDepth = ColorDepth.Depth32Bit;
-            largeImageList.ImageSize = large.Size;
-        }
-
-        private void RegisterWorkgroupIcon(ISysImageListService small, ISysImageListService large)
-        {
-            var icon1 = small.GetIcon(SYSTEM_INDEX_WORKGROUP);
-            var icon2 = large.GetIcon(SYSTEM_INDEX_WORKGROUP);
-            RegisterImage(PanelImageNames.DOMAIN, icon1, icon2);
-        }
-
-        private void RegisterMyComputerIcon(ISysImageListService small, ISysImageListService large)
-        {
-            var icon1 = small.GetIcon(SYSTEM_INDEX_MYCOMPUTER);
-            var icon2 = large.GetIcon(SYSTEM_INDEX_MYCOMPUTER);
-            RegisterImage(PanelImageNames.COMPUTER, icon1, icon2);
-            if (icon1 != null && icon2 != null)
-            {
-                RegisterDisabledImage(PanelImageNames.COMPUTER + PanelImageNames.HiddenPostfix, icon1, icon2);
-                RegisterImageWithOtherColor(PanelImageNames.COMPUTER + PanelImageNames.RedPostfix, icon1, icon2, 2);
-                RegisterImageWithOtherColor(PanelImageNames.COMPUTER + PanelImageNames.GreenPostfix, icon1, icon2, 4);
-            }
-        }
-
-        private void RegisterFolderIcon(ISysImageListService small, ISysImageListService large)
-        {
-            var icon1 = small.GetIcon(SYSTEM_INDEX_FOLDER);
-            var icon2 = large.GetIcon(SYSTEM_INDEX_FOLDER);
-            RegisterImage(PanelImageNames.FOLDER, icon1, icon2);
-            if (icon1 != null && icon2 != null)
-                RegisterDisabledImage(PanelImageNames.FOLDER + PanelImageNames.HiddenPostfix, icon1, icon2);
-        }
-
-        private void RegisterImageWithOtherColor(string imageName, Icon icon1, Icon icon2, int shift)
-        {
-            var bitmap1 = BitmapUtils.MadeNewBitmap(icon1.ToBitmap(), 72 * shift);
-            var bitmap2 = BitmapUtils.MadeNewBitmap(icon2.ToBitmap(), 72 * shift);
-            RegisterImage(imageName, bitmap1, bitmap2);
-        }
-
         public int IndexOf(string name)
         {
             int index;
@@ -261,6 +181,86 @@ namespace LanExchange.Presentation.WinForms
                 listView.SmallImageList = smallImageList;
                 listView.LargeImageList = largeImageList;
             }
+        }
+
+        private static Image MadeDisabledBitmap(Image bmp)
+        {
+            var result = new Bitmap(bmp.Width, bmp.Height);
+            using (var gr = Graphics.FromImage(result))
+            {
+                ControlPaint.DrawImageDisabled(gr, bmp, 0, 0, Color.Transparent);
+            }
+
+            return result;
+        }
+
+        private void Initialize()
+        {
+            shellService.FileIconInit(true);
+            using (var small = serviceFactory.CreateSysImageListService())
+            using (var large = serviceFactory.CreateSysImageListService())
+            {
+                small.Create(SysImageListSize.SmallIcons);
+                large.Create(SysImageListSize.LargeIcons);
+
+                InitializeImageLists(small, large);
+                RegisterWorkgroupIcon(small, large);
+                RegisterMyComputerIcon(small, large);
+                RegisterFolderIcon(small, large);
+
+                // register double dot icon
+                RegisterImage(PanelImageNames.DOUBLEDOT, Resources.back_16, Resources.back_32);
+
+                // register user icon
+                RegisterImage(PanelImageNames.USER, Resources.user_16, Resources.user_32);
+                RegisterDisabledImage(PanelImageNames.USER + PanelImageNames.HiddenPostfix, Resources.user_16, Resources.user_32);
+            }
+        }
+
+        private void InitializeImageLists(ISysImageListService small, ISysImageListService large)
+        {
+            smallImageList = new ImageList();
+            smallImageList.ColorDepth = ColorDepth.Depth32Bit;
+            smallImageList.ImageSize = small.Size;
+            largeImageList = new ImageList();
+            largeImageList.ColorDepth = ColorDepth.Depth32Bit;
+            largeImageList.ImageSize = large.Size;
+        }
+
+        private void RegisterWorkgroupIcon(ISysImageListService small, ISysImageListService large)
+        {
+            var icon1 = small.GetIcon(SYSTEM_INDEX_WORKGROUP);
+            var icon2 = large.GetIcon(SYSTEM_INDEX_WORKGROUP);
+            RegisterImage(PanelImageNames.DOMAIN, icon1, icon2);
+        }
+
+        private void RegisterMyComputerIcon(ISysImageListService small, ISysImageListService large)
+        {
+            var icon1 = small.GetIcon(SYSTEM_INDEX_MYCOMPUTER);
+            var icon2 = large.GetIcon(SYSTEM_INDEX_MYCOMPUTER);
+            RegisterImage(PanelImageNames.COMPUTER, icon1, icon2);
+            if (icon1 != null && icon2 != null)
+            {
+                RegisterDisabledImage(PanelImageNames.COMPUTER + PanelImageNames.HiddenPostfix, icon1, icon2);
+                RegisterImageWithOtherColor(PanelImageNames.COMPUTER + PanelImageNames.RedPostfix, icon1, icon2, 2);
+                RegisterImageWithOtherColor(PanelImageNames.COMPUTER + PanelImageNames.GreenPostfix, icon1, icon2, 4);
+            }
+        }
+
+        private void RegisterFolderIcon(ISysImageListService small, ISysImageListService large)
+        {
+            var icon1 = small.GetIcon(SYSTEM_INDEX_FOLDER);
+            var icon2 = large.GetIcon(SYSTEM_INDEX_FOLDER);
+            RegisterImage(PanelImageNames.FOLDER, icon1, icon2);
+            if (icon1 != null && icon2 != null)
+                RegisterDisabledImage(PanelImageNames.FOLDER + PanelImageNames.HiddenPostfix, icon1, icon2);
+        }
+
+        private void RegisterImageWithOtherColor(string imageName, Icon icon1, Icon icon2, int shift)
+        {
+            var bitmap1 = BitmapUtils.MadeNewBitmap(icon1.ToBitmap(), 72 * shift);
+            var bitmap2 = BitmapUtils.MadeNewBitmap(icon2.ToBitmap(), 72 * shift);
+            RegisterImage(imageName, bitmap1, bitmap2);
         }
 
         private void RegisterDisabledImage(string name, Icon iconSmall, Icon iconLarge)

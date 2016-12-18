@@ -1,7 +1,7 @@
-﻿using LanExchange.Presentation.Interfaces;
-using LanExchange.Presentation.Interfaces.Menu;
-using System;
+﻿using System;
 using System.Windows.Forms;
+using LanExchange.Presentation.Interfaces;
+using LanExchange.Presentation.Interfaces.Menu;
 
 namespace LanExchange.Presentation.WinForms.Visitors
 {
@@ -36,14 +36,6 @@ namespace LanExchange.Presentation.WinForms.Visitors
             rootMenu.MenuItems.Add(submenu);
         }
 
-        private void AddItem(MenuItem menuItem)
-        {
-            if (submenu == null)
-                rootMenu.MenuItems.Add(menuItem);
-            else
-                submenu.MenuItems.Add(menuItem);
-        }
-
         public void VisitMenuElement(string text, string shortcut, ICommand command, bool isDefault)
         {
             var menuItem = new MenuItem(text);
@@ -58,6 +50,7 @@ namespace LanExchange.Presentation.WinForms.Visitors
                 {
                 }
             }
+
             menuItem.Enabled = command.Enabled;
             menuItem.Click += (sender, e) => command.Execute();
             menuItem.DefaultItem = isDefault;
@@ -67,6 +60,14 @@ namespace LanExchange.Presentation.WinForms.Visitors
         public void VisitSeparator()
         {
             AddItem(new MenuItem("-"));
+        }
+
+        private void AddItem(MenuItem menuItem)
+        {
+            if (submenu == null)
+                rootMenu.MenuItems.Add(menuItem);
+            else
+                submenu.MenuItems.Add(menuItem);
         }
     }
 }

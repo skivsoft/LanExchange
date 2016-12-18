@@ -4,15 +4,15 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Resources;
 using System.Windows.Forms;
-using LanExchange.Presentation.Interfaces;
 using static System.Windows.Forms.Menu;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Presentation.WinForms.Helpers
 {
     // TODO make it internal
     public static class TranslationHelper
     {
-        private static readonly IDictionary<Component, string> fieldsMap = new Dictionary<Component, string>();
+        private static readonly IDictionary<Component, string> FieldsMap = new Dictionary<Component, string>();
 
         /// <summary>
         /// Recursive translation every control.
@@ -41,13 +41,13 @@ namespace LanExchange.Presentation.WinForms.Helpers
             if (instance == null) throw new ArgumentNullException(nameof(instance));
             if (components == null) throw new ArgumentNullException(nameof(components));
 
-            fieldsMap.Clear();
+            FieldsMap.Clear();
             var fields = instance.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
             foreach (var field in fields)
             if (field.FieldType.IsSubclassOf(typeof(Component)))
             {
                 var component = (Component)field.GetValue(instance);
-                fieldsMap.Add(component, field.Name);
+                FieldsMap.Add(component, field.Name);
             }
 
             foreach (Component component in components.Components)
@@ -67,7 +67,7 @@ namespace LanExchange.Presentation.WinForms.Helpers
         private static string GetComponentName(Component component)
         {
             string result;
-            if (fieldsMap.TryGetValue(component, out result))
+            if (FieldsMap.TryGetValue(component, out result))
                 return result;
             return null;
         }

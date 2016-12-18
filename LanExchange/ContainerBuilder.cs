@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using LanExchange.Application;
 using LanExchange.Application.Attributes;
 using LanExchange.Application.Extensions;
@@ -16,9 +19,6 @@ using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Menu;
 using LanExchange.Presentation.Interfaces.Persistence;
 using SimpleInjector;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace LanExchange
 {

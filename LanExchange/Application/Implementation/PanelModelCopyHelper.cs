@@ -56,7 +56,11 @@ namespace LanExchange.Application.Implementation
 
         public PanelItemBase CurrentItem
         {
-            get { return currentItem; }
+            get
+            {
+                return currentItem;
+            }
+
             set
             {
                 currentItem = value;
@@ -111,6 +115,7 @@ namespace LanExchange.Application.Implementation
                         first = false;
                     }
             }
+
             return sb.ToString();
         }
 
@@ -123,6 +128,7 @@ namespace LanExchange.Application.Implementation
                 if (index > 0) sb.AppendLine();
                 sb.Append(GetColumnValue(colIndex));
             }
+
             return sb.ToString();
         }
     
@@ -134,6 +140,7 @@ namespace LanExchange.Application.Implementation
                 MoveTo(index);
                 result.Add(CurrentItem);
             }
+
             return result;
         }
     }

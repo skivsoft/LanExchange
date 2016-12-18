@@ -11,6 +11,11 @@ namespace LanExchange.Presentation.WinForms
             get { return Screen.PrimaryScreen.WorkingArea; }
         }
 
+        public Point CursorPosition
+        {
+            get { return Cursor.Position; }
+        }
+
         public Rectangle GetWorkingArea(Point pt)
         {
             return Screen.GetWorkingArea(pt);
@@ -19,11 +24,6 @@ namespace LanExchange.Presentation.WinForms
         public Rectangle GetWorkingArea(Rectangle rect)
         {
             return Screen.GetWorkingArea(rect);
-        }
-
-        public Point CursorPosition
-        {
-            get { return Cursor.Position; }
         }
     }
 }

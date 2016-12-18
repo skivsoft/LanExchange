@@ -29,6 +29,16 @@ namespace LanExchange.Misc
             get { return countColumns;  }
         }
 
+        public override string ImageName
+        {
+            get { return string.Empty; }
+        }
+
+        public override string ImageLegendText
+        {
+            get { return string.Empty; }
+        }
+
         public void SetCountColumns(int value)
         {
             countColumns = value;
@@ -42,12 +52,6 @@ namespace LanExchange.Misc
             return null;
         }
 
-        protected override void SetValue(int index, IComparable value)
-        {
-            data.Remove(index);
-            data.Add(index, value);
-        }
-
         public override object Clone()
         {
             var result = new CustomPanelItem(Parent, Name);
@@ -57,14 +61,10 @@ namespace LanExchange.Misc
             return result;
         }
 
-        public override string ImageName
+        protected override void SetValue(int index, IComparable value)
         {
-            get { return string.Empty; }
-        }
-
-        public override string ImageLegendText
-        {
-            get { return string.Empty; }
+            data.Remove(index);
+            data.Add(index, value);
         }
     }
 }

@@ -38,18 +38,14 @@ namespace LanExchange.Application.Implementation
             translits = new Dictionary<string, Type>();
             CurrentLanguage = DEFAULT_LANGUAGE;
         }
-        
-        private IEnumerable<string> ReadAllLines(string fileName)
-        {
-            string line;
-            using (var sr = new StreamReader(fileName, Encoding.UTF8))
-                while ((line = sr.ReadLine()) != null)
-                    yield return line;
-        }
 
         public string CurrentLanguage
         {
-            get { return currentLanguage; } 
+            get
+            {
+                return currentLanguage;
+            }
+
             set
             {
                 if (string.Compare(DEFAULT_LANGUAGE, value, StringComparison.OrdinalIgnoreCase) == 0)
@@ -70,34 +66,6 @@ namespace LanExchange.Application.Implementation
                         }
                     }
             }
-        }
-
-        private string GetBaseFileName(string fileName)
-        {
-            currentTranslit = null;
-            var baseLanguage = TranslateFromPO(fileName, ID_BASE);
-            if (!string.IsNullOrEmpty(baseLanguage))
-            {
-                var dirName = Path.GetDirectoryName(fileName);
-                if (dirName != null)
-                {
-                    var fname = Path.Combine(dirName, baseLanguage);
-                    if (File.Exists(fname))
-                    {
-                        SetupLanguage(fileName);
-                        return fname;
-                    }
-                }
-            }
-            return fileName;
-        }
-
-        private void SetupLanguage(string fileName)
-        {
-            Type tp;
-            var translit = TranslateFromPO(fileName, ID_TRANSLIT);
-            if (translits.TryGetValue(translit, out tp))
-                currentTranslit = (ITranslitStrategy)Activator.CreateInstance(tp);
         }
 
         public bool RightToLeft { get; private set; }
@@ -122,6 +90,7 @@ namespace LanExchange.Application.Implementation
                 {
                 }
             }
+
             return sorted.ToDictionary(pair => pair.Value, pair => pair.Key);
         }
 
@@ -142,34 +111,8 @@ namespace LanExchange.Application.Implementation
                 {
                 }
             }
+
             return result;
-        }
-
-        private string InternalTranslate(IEnumerable<string> lines, string id)
-        {
-            var marker = string.Format(CultureInfo.InvariantCulture, "msgid \"{0}\"", id);
-            var markerFound = false;
-            const string MSGSTR_MARKER = "msgstr \"";
-            foreach (var line in lines)
-            {
-                if (line.Equals(marker))
-                {
-                    markerFound = true;
-                    continue;
-                }
-                if (markerFound && line.StartsWith(MSGSTR_MARKER, StringComparison.Ordinal) && 
-                    line.Substring(line.Length - 1, 1).Equals("\""))
-                {
-                    var result = line.Substring(MSGSTR_MARKER.Length, line.Length - MSGSTR_MARKER.Length - 1);
-                    return result;
-                }
-            }
-            return id.StartsWith("@") ? string.Empty : id;
-        }
-
-        private string TranslateFromPO(string fileName, string id)
-        {
-            return InternalTranslate(ReadAllLines(fileName), id);
         }
 
         public string Translate(string id)
@@ -195,12 +138,92 @@ namespace LanExchange.Application.Implementation
             }
         }
 
+        [Localizable(false)]
+        public void SetResourceManagerTo<TClass>() where TClass : class
+        {
+            var resourceMan = new TranslationResourceManager(this, typeof(TClass).FullName, typeof(TClass).Assembly);
+
+            var fieldInfo = typeof(TClass).GetField("resourceMan", BindingFlags.Static | BindingFlags.NonPublic);
+            fieldInfo?.SetValue(null, resourceMan);
+        }
+
+        public void RegisterTranslit<TTranslit>() where TTranslit : ITranslitStrategy
+        {
+            translits.Add(typeof(TTranslit).Name, typeof(TTranslit));
+        }
+
+        private IEnumerable<string> ReadAllLines(string fileName)
+        {
+            string line;
+            using (var sr = new StreamReader(fileName, Encoding.UTF8))
+                while ((line = sr.ReadLine()) != null)
+                    yield return line;
+        }
+
+        private string GetBaseFileName(string fileName)
+        {
+            currentTranslit = null;
+            var baseLanguage = TranslateFromPO(fileName, ID_BASE);
+            if (!string.IsNullOrEmpty(baseLanguage))
+            {
+                var dirName = Path.GetDirectoryName(fileName);
+                if (dirName != null)
+                {
+                    var fname = Path.Combine(dirName, baseLanguage);
+                    if (File.Exists(fname))
+                    {
+                        SetupLanguage(fileName);
+                        return fname;
+                    }
+                }
+            }
+
+            return fileName;
+        }
+
+        private void SetupLanguage(string fileName)
+        {
+            Type tp;
+            var translit = TranslateFromPO(fileName, ID_TRANSLIT);
+            if (translits.TryGetValue(translit, out tp))
+                currentTranslit = (ITranslitStrategy)Activator.CreateInstance(tp);
+        }
+
+        private string InternalTranslate(IEnumerable<string> lines, string id)
+        {
+            var marker = string.Format(CultureInfo.InvariantCulture, "msgid \"{0}\"", id);
+            var markerFound = false;
+            const string MSGSTR_MARKER = "msgstr \"";
+            foreach (var line in lines)
+            {
+                if (line.Equals(marker))
+                {
+                    markerFound = true;
+                    continue;
+                }
+
+                if (markerFound && line.StartsWith(MSGSTR_MARKER, StringComparison.Ordinal) && 
+                    line.Substring(line.Length - 1, 1).Equals("\""))
+                {
+                    var result = line.Substring(MSGSTR_MARKER.Length, line.Length - MSGSTR_MARKER.Length - 1);
+                    return result;
+                }
+            }
+
+            return id.StartsWith("@") ? string.Empty : id;
+        }
+
+        private string TranslateFromPO(string fileName, string id)
+        {
+            return InternalTranslate(ReadAllLines(fileName), id);
+        }
+
         /// <summary>
         /// Translation of plural form in Kazakh language.
         /// </summary>
         /// <param name="num"></param>
         /// <returns>0: "-дан", 1: "-ден", 2: "-нан", 3: "-нен", 4: "-тан", 5: "-тен".</returns>
-        private static int PluralFormKazakh(int num)
+        private int PluralFormKazakh(int num)
         {
             if (num % 10 == 6 || num % 10 == 9 || num % 100 == 20 || num % 100 == 30)
                 return 0;
@@ -215,20 +238,6 @@ namespace LanExchange.Application.Implementation
             if (num % 10 == 3 || num % 10 == 4 || num % 10 == 5 || num % 100 == 70)
                 return 5;
             return 0;
-        }
-
-        [Localizable(false)]
-        public void SetResourceManagerTo<TClass>() where TClass : class
-        {
-            var resourceMan = new TranslationResourceManager(this, typeof(TClass).FullName, typeof(TClass).Assembly);
-
-            var fieldInfo = typeof(TClass).GetField("resourceMan", BindingFlags.Static | BindingFlags.NonPublic);
-            fieldInfo?.SetValue(null, resourceMan);
-        }
-
-        public void RegisterTranslit<TTranslit>() where TTranslit : ITranslitStrategy
-        {
-            translits.Add(typeof(TTranslit).Name, typeof(TTranslit));
         }
     }
 }

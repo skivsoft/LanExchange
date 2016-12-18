@@ -8,10 +8,25 @@ namespace LanExchange.Plugin.Windows
 {
     /// <summary> This class allows you to manage a hotkey </summary>
     [Localizable(false)]
-    // [CLSCompliant(false)]
-
     internal class HotkeysService : IHotkeyService
     {
+        public const int MOD_ALT = 1;
+        public const int MOD_CONTROL = 2;
+        public const int MOD_SHIFT = 4;
+        public const int MOD_WIN = 8;
+        public const int KeyX = 88;
+
+        /// <summary>Handle of the current process</summary>
+        private IntPtr handle;
+        
+        /// <summary>The ID for the hotkey</summary>
+        private short hotkeyId;
+
+        public string ShowWindowKey
+        {
+            get { return "Ctrl+Win+X"; }
+        }
+
         [DllImport(ExternDll.User32, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool RegisterHotKey(IntPtr hwnd, int id, uint fsModifiers, uint vk);
@@ -25,27 +40,27 @@ namespace LanExchange.Plugin.Windows
         [DllImport(ExternDll.Kernel32, SetLastError = true)]
         public static extern short GlobalDeleteAtom(short nAtom);
 
-        public const int MOD_ALT = 1;
-        public const int MOD_CONTROL = 2;
-        public const int MOD_SHIFT = 4;
-        public const int MOD_WIN = 8;
-        public const int KeyX = 88;
-
-        public HotkeysService()
+        public void Dispose()
         {
+            UnregisterGlobalHotKey();
         }
 
-        /// <summary>Handle of the current process</summary>
-        private IntPtr handle;
+        public bool RegisterShowWindowKey(IntPtr handle)
+        {
+            return RegisterGlobalHotKey(KeyX, MOD_CONTROL + MOD_WIN, handle);
+        }
 
-        /// <summary>The ID for the hotkey</summary>
-        private short hotkeyId;
+        public bool IsHotKey(short id)
+        {
+            return id == hotkeyId;
+        }
 
         /// <summary>Register the hotkey</summary>
         private bool RegisterGlobalHotKey(int hotkey, int modifiers, IntPtr handle)
         {
             UnregisterGlobalHotKey();
             this.handle = handle;
+
             // use the GlobalAddAtom API to get a unique ID(as suggested by MSDN)
             var atomName = this.handle.ToInt32().ToString("X8", CultureInfo.InvariantCulture) + GetType().FullName;
             hotkeyId = GlobalAddAtom(atomName);
@@ -58,30 +73,11 @@ namespace LanExchange.Plugin.Windows
             if (hotkeyId != 0)
             {
                 UnregisterHotKey(handle, hotkeyId);
+
                 // clean up the atom list
                 GlobalDeleteAtom(hotkeyId);
                 hotkeyId = 0;
             }
-        }
-
-        public void Dispose()
-        {
-            UnregisterGlobalHotKey();
-        }
-
-        public string ShowWindowKey
-        {
-            get { return "Ctrl+Win+X"; }
-        }
-
-        public bool RegisterShowWindowKey(IntPtr handle)
-        {
-            return RegisterGlobalHotKey(KeyX, MOD_CONTROL + MOD_WIN, handle);
-        }
-
-        public bool IsHotKey(short id)
-        {
-            return id == hotkeyId;
         }
     }
 }

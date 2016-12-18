@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using static LanExchange.Plugin.Windows.Utils.ShellAPI;
-using SHGNO = LanExchange.Plugin.Windows.ContextMenu.SHGNO;
+using LanExchange.Plugin.Windows.Enums;
 
 namespace LanExchange.Plugin.Windows.Utils
 {
@@ -20,7 +19,7 @@ namespace LanExchange.Plugin.Windows.Utils
             string pszDisplayName,
             ref uint pchEaten,
             out IntPtr ppidl,
-            ref ShellAPI.SFGAO pdwAttributes);
+            ref SFGAO pdwAttributes);
 
         // Allows a client to determine the contents of a folder by creating an item
         // identifier enumeration object and returning its IEnumIDList interface.
@@ -28,7 +27,7 @@ namespace LanExchange.Plugin.Windows.Utils
         [PreserveSig]
         int EnumObjects(
             IntPtr hwnd,
-            ShellAPI.SHCONTF grfFlags,
+            SHCONTF grfFlags,
             out IntPtr enumIDList);
 
         // Retrieves an IShellFolder object for a subfolder.
@@ -81,7 +80,7 @@ namespace LanExchange.Plugin.Windows.Utils
             uint cidl,
             [MarshalAs(UnmanagedType.LPArray)]
             IntPtr[] apidl,
-            ref ShellAPI.SFGAO rgfInOut);
+            ref SFGAO rgfInOut);
 
         // Retrieves an OLE interface that can be used to carry out actions on the
         // specified file objects or folders.

@@ -7,45 +7,45 @@ namespace LanExchange.Model
     [TestFixture]
     internal class CustomPanelItemTest
     {
+        private CustomPanelItem custom;
+
         [SetUp]
         public void SetUp()
         {
-            m_Custom = new CustomPanelItem(null, "test");
+            custom = new CustomPanelItem(null, "test");
         }
 
         [TearDown]
         public void TearDown()
         {
-            m_Custom = null;
+            custom = null;
         }
-
-        private CustomPanelItem m_Custom;
 
         [Test]
         public void ExceptionThis()
         {
             IComparable value;
-            Assert.Throws<ArgumentOutOfRangeException>(() => value = m_Custom[m_Custom.CountColumns]);
+            Assert.Throws<ArgumentOutOfRangeException>(() => value = custom[custom.CountColumns]);
         }
 
         [Test]
         public void GetValue()
         {
-            Assert.IsNull(m_Custom.GetValue(-1));
+            Assert.IsNull(custom.GetValue(-1));
         }
 
         [Test]
         public void TestFullItemName()
         {
-            Assert.AreEqual("test", m_Custom.FullName);
-            var subItem = new CustomPanelItem(m_Custom, "hello");
+            Assert.AreEqual("test", custom.FullName);
+            var subItem = new CustomPanelItem(custom, "hello");
             Assert.AreEqual("hello", subItem.FullName);
         }
 
         [Test]
         public void TestImageName()
         {
-            Assert.IsEmpty(m_Custom.ImageName);
+            Assert.IsEmpty(custom.ImageName);
         }
     }
 }

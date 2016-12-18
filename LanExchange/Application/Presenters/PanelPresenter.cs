@@ -12,8 +12,6 @@ namespace LanExchange.Application.Presenters
         private readonly ITranslationService translationService;
         private IPanelModel objects;
 
-        public event EventHandler CurrentPathChanged;
-
         public PanelPresenter(
             IPanelFillerManager panelFillers,
             IPanelColumnManager panelColumns,
@@ -29,6 +27,29 @@ namespace LanExchange.Application.Presenters
             this.panelColumns = panelColumns;
             this.pagesPresenter = pagesPresenter;
             this.translationService = translationService;
+        }
+
+        public event EventHandler CurrentPathChanged;
+
+        public IPanelModel Objects
+        {
+            get
+            {
+                return objects;
+            }
+
+            set
+            {
+                if (objects != null)
+                    objects.CurrentPath.Changed -= CurrentPath_Changed;
+                objects = value;
+                if (objects != null)
+                    objects.CurrentPath.Changed += CurrentPath_Changed;
+
+                // TODO hide model using events
+                // if (View.Filter != null)
+                // View.Filter.Presenter.SetModel(value);
+            }
         }
 
         public void SetupColumns()
@@ -89,36 +110,14 @@ namespace LanExchange.Application.Presenters
             // View.Filter.UpdateFromModel(Objects);
         }
 
-        private void CurrentPath_Changed(object sender, EventArgs e)
-        {
-            if (objects != null && CurrentPathChanged != null)
-                CurrentPathChanged(sender, e);
-        }
-
-        public IPanelModel Objects
-        {
-            get { return objects; }
-            set
-            {
-                if (objects != null)
-                    objects.CurrentPath.Changed -= CurrentPath_Changed;
-                objects = value;
-                if (objects != null)
-                    objects.CurrentPath.Changed += CurrentPath_Changed;
-                // TODO hide model using events
-                // if (View.Filter != null)
-                // View.Filter.Presenter.SetModel(value);
-            }
-        }
-
         public PanelItemBase GetFocusedPanelItem(bool canReturnParent)
         {
-            return null;
             // TODO hide model
             // var panelItem = View.FocusedItem;
             // if (canReturnParent && panelItem is PanelItemDoubleDot)
             // panelItem = panelItem.Parent;
             // return panelItem;
+            return null;
         }
 
         public bool CommandLevelDown()
@@ -229,6 +228,12 @@ namespace LanExchange.Application.Presenters
 
         protected override void InitializePresenter()
         {
+        }
+
+        private void CurrentPath_Changed(object sender, EventArgs e)
+        {
+            if (objects != null && CurrentPathChanged != null)
+                CurrentPathChanged(sender, e);
         }
     }
 }

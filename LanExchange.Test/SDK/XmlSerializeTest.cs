@@ -4,37 +4,6 @@ using NUnit.Framework;
 
 namespace LanExchange.SDK
 {
-    public class TestSomeBase
-    {
-        public string Hello;
-    }
-
-    public abstract class TestSomeAbstractBase
-    {
-        public abstract string Hello { get; set; }
-    }
-
-    public class TestServerInfo
-    {
-        public string Name;
-    }
-
-    public class TestSomeDescendant : TestSomeAbstractBase
-    {
-        private readonly TestServerInfo m_SI;
-
-        public TestSomeDescendant()
-        {
-            m_SI = new TestServerInfo();
-        }
-
-        public override string Hello
-        {
-            get { return m_SI.Name; }
-            set { m_SI.Name = value; }
-        }
-    }
-
     [TestFixture]
     internal class XmlSerializeTest
     {
@@ -45,13 +14,14 @@ namespace LanExchange.SDK
             obj.Hello = "World";
             var extraTypes = new[] { typeof(TestSomeDescendant) };
 
-           var ser = new XmlSerializer(typeof(TestSomeAbstractBase), extraTypes);
+            var ser = new XmlSerializer(typeof(TestSomeAbstractBase), extraTypes);
             string result;
             using (var sw = new StringWriter())
             {
                 ser.Serialize(sw, obj);
                 result = sw.ToString();
             }
+
             Assert.IsNotEmpty(result);
             using (var sr = new StringReader(result))
             {
@@ -72,7 +42,39 @@ namespace LanExchange.SDK
                 ser.Serialize(sw, obj);
                 result = sw.ToString();
             }
+
             Assert.IsNotEmpty(result);
+        }
+
+        public class TestSomeBase
+        {
+            public string Hello { get; set; }
+        }
+
+        public abstract class TestSomeAbstractBase
+        {
+            public abstract string Hello { get; set; }
+        }
+
+        public class TestServerInfo
+        {
+            public string Name { get; set; }
+        }
+
+        public class TestSomeDescendant : TestSomeAbstractBase
+        {
+            private readonly TestServerInfo si;
+
+            public TestSomeDescendant()
+            {
+                si = new TestServerInfo();
+            }
+
+            public override string Hello
+            {
+                get { return si.Name; }
+                set { si.Name = value; }
+            }
         }
     }
 }

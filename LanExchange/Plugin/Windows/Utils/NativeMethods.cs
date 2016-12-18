@@ -2,14 +2,13 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using LanExchange.Plugin.Windows.Structures;
 
 namespace LanExchange.Plugin.Windows.Utils
 {
     [Localizable(false)]
     internal static class NativeMethods
     {
-        public static HandleRef NullHandleRef = new HandleRef(null, IntPtr.Zero);
-
         public const int
             WM_QUERYENDSESSION = 0x0011,
             WM_ENDSESSION = 0x0016,
@@ -39,9 +38,10 @@ namespace LanExchange.Plugin.Windows.Utils
             LP_ENDSESSION_CRITICAL = 0x40000000,
             LP_ENDSESSION_LOGOFF   = 0x80000000;
 
+        public static HandleRef NullHandleRef = new HandleRef(null, IntPtr.Zero);
+
         private const int LVM_FIRST = 0x1000;
         private const int LVM_GETHEADER = LVM_FIRST + 31;
-
 
         private const int HDM_FIRST = 0x1200;
         private const int HDM_HITTEST = HDM_FIRST + 6;
@@ -60,50 +60,11 @@ namespace LanExchange.Plugin.Windows.Utils
 
         private const int SIF_POS = 0x0004;
 
-        [StructLayout(LayoutKind.Sequential)]
-        public struct HDITEM
-        {
-            public int mask;
-            public int cxy;
-            public IntPtr pszText;
-            public IntPtr hbm;
-            public int cchTextMax;
-            public int fmt;
-            public IntPtr lParam;
-            public int iImage;
-            public int iOrder;
-            // if (_WIN32_IE >= 0x0500)
-
-            public int type;
-            public IntPtr pvFilter;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        public class HDHITTESTINFO
-        {
-            public int pt_x;
-            public int pt_y;
-            public int flags;
-            public int iItem;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        public class SCROLLINFO
-        {
-            public int cbSize = Marshal.SizeOf(typeof(SCROLLINFO));
-            public int fMask;
-            public int nMin;
-            public int nMax;
-            public int nPage;
-            public int nPos;
-            public int nTrackPos;
-        }
-
         [DllImport(ExternDll.User32, CharSet = CharSet.Auto, SetLastError = true)]
         public static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
 
         [DllImport(ExternDll.User32, EntryPoint = "SendMessage", CharSet = CharSet.Auto)]
-        private static extern IntPtr SendMessageHDItem(IntPtr hWnd, int msg, int wParam, ref HDITEM hdi);
+        public static extern IntPtr SendMessageHDItem(IntPtr hWnd, int msg, int wParam, ref HDITEM hdi);
 
         [DllImport(ExternDll.User32, EntryPoint = "SendMessage", CharSet = CharSet.Auto)]
         public static extern IntPtr SendMessageHDHITTESTINFO(IntPtr hWnd, int msg, IntPtr wParam, [In, Out] HDHITTESTINFO lParam);
@@ -142,26 +103,19 @@ namespace LanExchange.Plugin.Windows.Utils
             item.fmt &= ~(HDF_SORTUP | HDF_SORTDOWN | HDF_IMAGE | HDF_BITMAP_ON_RIGHT);
 
             // if (NativeMethods.HasBuiltinSortIndicators())
-
             {
                 if (order == 1) // ascending
                     item.fmt |= HDF_SORTUP;
                 if (order == 2) // descending
                     item.fmt |= HDF_SORTDOWN;
             }
+
             // else
-
             // {
-
             // item.mask |= HDI_IMAGE;
-
             // item.fmt |= (HDF_IMAGE | HDF_BITMAP_ON_RIGHT);
-
             // item.iImage = imageIndex;
-
             // }
-
-
             SendMessageHDItem(hdrCntl, HDM_SETITEM, columnIndex, ref item);
         }
 
@@ -176,6 +130,7 @@ namespace LanExchange.Plugin.Windows.Utils
             int fnBar = horizontalBar ? SB_HORZ : SB_VERT;
 
             var scrollInfo = new SCROLLINFO();
+            scrollInfo.cbSize = Marshal.SizeOf(typeof(SCROLLINFO));
             scrollInfo.fMask = SIF_POS;
             if (GetScrollInfo(listViewHandle, fnBar, scrollInfo))
                 return scrollInfo.nPos;
@@ -206,6 +161,5 @@ namespace LanExchange.Plugin.Windows.Utils
                 return testInfo.iItem;
             return -1;
         }
-
     }
 }

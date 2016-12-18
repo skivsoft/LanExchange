@@ -2,6 +2,9 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using LanExchange.Plugin.Windows.Enums;
+using LanExchange.Plugin.Windows.Interfaces;
+using LanExchange.Plugin.Windows.Structures;
 using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.Windows.Utils
@@ -12,381 +15,48 @@ namespace LanExchange.Plugin.Windows.Utils
     [Localizable(false)]
     public sealed class SysImageList : IDisposable
     {
-        private const int MAX_PATH = 260;
-        private const int MAX_TYPE = 80;
-        
-        [DllImport(ExternDll.Shell32, CharSet = CharSet.Unicode)]
-        private static extern IntPtr SHGetFileInfo(
-            string pszPath, 
-            int dwFileAttributes,
-            ref SHFILEINFO psfi, 
-            uint cbFileInfo, 
-            uint uFlags);
-
-        // [DllImport("user32.dll")]
-
-        // private static extern int DestroyIcon(IntPtr hIcon);
-
-
         private const int FILE_ATTRIBUTE_NORMAL = 0x80;
-        // private const int FILE_ATTRIBUTE_DIRECTORY = 0x10;
-
-
-        // private const int FORMAT_MESSAGE_ALLOCATE_BUFFER = 0x100; 
-
-        // private const int FORMAT_MESSAGE_ARGUMENT_ARRAY = 0x2000;
-
-        // private const int FORMAT_MESSAGE_FROM_HMODULE = 0x800;
-
-        // private const int FORMAT_MESSAGE_FROM_STRING = 0x400;
-
-        // private const int FORMAT_MESSAGE_FROM_SYSTEM = 0x1000;
-
-        // private const int FORMAT_MESSAGE_IGNORE_INSERTS = 0x200;
-
-        // private const int FORMAT_MESSAGE_MAX_WIDTH_MASK = 0xFF;
-
-        // [DllImport("kernel32")]
-
-        // private extern static int FormatMessage (
-
-        // int dwFlags, 
-
-        // IntPtr lpSource, 
-
-        // int dwMessageId, 
-
-        // int dwLanguageId, 
-
-        // string lpBuffer,
-
-        // uint nSize, 
-
-        // int argumentsLong);
-
-
-        // [DllImport("kernel32")]
-
-        // private extern static int GetLastError();
-
-
-        [DllImport(ExternDll.Comctl32)]
-        private static extern int ImageList_Draw(
-            IntPtr hIml,
-            int i,
-            IntPtr hdcDst,
-            int x,
-            int y,
-            int fStyle);
-
-        [DllImport(ExternDll.Comctl32)]
-        private static extern int ImageList_DrawIndirect(
-            ref IMAGELISTDRAWPARAMS pimldp);
-
-        [DllImport(ExternDll.Comctl32)]
-        private static extern int ImageList_GetIconSize(
-            IntPtr himl, 
-            ref int cx, 
-            ref int cy);
-
-        [DllImport(ExternDll.Comctl32)]
-        private static extern IntPtr ImageList_GetIcon(
-            IntPtr himl, 
-            int i, 
-            int flags);
-
-        /// <summary>
-        /// SHGetImageList is not exported correctly in XP.  See KB316931
-        /// http:// support.microsoft.com/default.aspx?scid = kb;EN-US;Q316931
-
-        /// Apparently (and hopefully) ordinal 727 isn't going to change.
-        /// </summary>
-        [DllImport(ExternDll.Shell32, EntryPoint = "#727")]
-        private static extern int SHGetImageList(
-            int iImageList,
-            ref Guid riid,
-            ref IImageList ppv);
-
-        [DllImport(ExternDll.Shell32, EntryPoint = "#727")]
-        private static extern int SHGetImageListHandle(
-            int iImageList,
-            ref Guid riid,
-            ref IntPtr handle);
-
-        [Flags]
-        private enum SHGetFileInfoConstants
-        {
-            // SHGFI_ICON = 0x100,                // get icon 
-
-            // SHGFI_DISPLAYNAME = 0x200,         // get display name 
-
-            // SHGFI_TYPENAME = 0x400,            // get type name 
-
-            // SHGFI_ATTRIBUTES = 0x800,          // get attributes 
-
-            // SHGFI_ICONLOCATION = 0x1000,       // get icon location 
-
-            // SHGFI_EXETYPE = 0x2000,            // return exe type 
-
-            SHGFI_SYSICONINDEX = 0x4000,       // get system icon index 
-            // SHGFI_LINKOVERLAY = 0x8000,        // put a link overlay on icon 
-
-            // SHGFI_SELECTED = 0x10000,          // show icon in selected state 
-
-            // SHGFI_ATTR_SPECIFIED = 0x20000,    // get only specified attributes 
-
-            // SHGFI_LARGEICON = 0x0,             // get large icon 
-
-            SHGFI_SMALLICON = 0x1,             // get small icon 
-            // SHGFI_OPENICON = 0x2,              // get open icon 
-
-            // SHGFI_SHELLICONSIZE = 0x4,         // get shell size icon 
-
-            // SHGFI_PIDL = 0x8,                  // pszPath is a pidl 
-
-            SHGFI_USEFILEATTRIBUTES = 0x10,     // use passed dwFileAttribute 
-            // SHGFI_ADDOVERLAYS = 0x000000020,     // apply the appropriate overlays
-
-            // SHGFI_OVERLAYINDEX = 0x000000040     // Get the index of the overlay
-
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct RECT
-        {
-            readonly int left;
-            readonly int top;
-            readonly int right;
-            readonly int bottom;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct POINT
-        {
-            readonly int x;
-            readonly int y;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct IMAGELISTDRAWPARAMS                
-        {
-            public int cbSize;
-            public IntPtr himl;
-            public int i;
-            public IntPtr hdcDst;
-            public int x;
-            public int y;
-            public int cx;
-            public int cy;
-            private readonly int xBitmap;        // x offest from the upperleft of bitmap
-            private readonly int yBitmap;        // y offset from the upperleft of bitmap
-            private readonly int rgbBk;
-            public int rgbFg;
-            public int fStyle;
-            private readonly int dwRop;
-            private readonly int fState;
-            private readonly int Frame;
-            private readonly int crEffect;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct IMAGEINFO
-        {
-            private readonly IntPtr hbmImage;
-            private readonly IntPtr hbmMask;
-            private readonly int Unused1;
-            private readonly int Unused2;
-            private readonly RECT rcImage;
-        }
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-        private struct SHFILEINFO
-        {
-            private readonly IntPtr hIcon;
-            public readonly int iIcon;
-            private readonly int dwAttributes;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MAX_PATH)] 
-            private readonly string szDisplayName;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MAX_TYPE)] 
-            private readonly string szTypeName;
-        }
-
-        [ComImport]
-            [Guid("46EB5926-582E-4017-9FDF-E8998DAA0950")]
-            [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-            // helpstring("Image List"),
-
-            interface IImageList
-        {
-            [PreserveSig]
-            int Add(
-                IntPtr hbmImage, 
-                IntPtr hbmMask, 
-                ref int pi);
-
-            [PreserveSig]
-            int ReplaceIcon(
-                int i, 
-                IntPtr hicon, 
-                ref int pi);
-
-            [PreserveSig]
-            int SetOverlayImage(
-                int iImage, 
-                int iOverlay);
-
-            [PreserveSig]
-            int Replace(
-                int i,
-                IntPtr hbmImage, 
-                IntPtr hbmMask);
-
-            [PreserveSig]
-            int AddMasked(
-                IntPtr hbmImage, 
-                int crMask, 
-                ref int pi);
-
-            [PreserveSig]
-            int Draw(
-                ref IMAGELISTDRAWPARAMS pimldp);
-
-            [PreserveSig]
-            int Remove(
-                int i);
-
-            [PreserveSig]
-            int GetIcon(
-                int i, 
-                int flags, 
-                ref IntPtr picon);
-
-            [PreserveSig]
-            int GetImageInfo(
-                int i, 
-                ref IMAGEINFO pImageInfo);
-
-            [PreserveSig]
-            int Copy(
-                int iDst, 
-                IImageList punkSrc, 
-                int iSrc, 
-                int uFlags);
-
-            [PreserveSig]
-            int Merge(
-                int i1, 
-                IImageList punk2, 
-                int i2, 
-                int dx, 
-                int dy, 
-                ref Guid riid, 
-                ref IntPtr ppv);
-
-            [PreserveSig]
-            int Clone(
-                ref Guid riid, 
-                ref IntPtr ppv);
-
-            [PreserveSig]
-            int GetImageRect(
-                int i, 
-                ref RECT prc);
-
-            [PreserveSig]
-            int GetIconSize(
-                ref int cx, 
-                ref int cy);
-
-            [PreserveSig]
-            int SetIconSize(
-                int cx, 
-                int cy);
-
-            [PreserveSig]
-            int GetImageCount(
-                ref int pi);
-
-            [PreserveSig]
-            int SetImageCount(
-                int uNewCount);
-
-            [PreserveSig]
-            int SetBkColor(
-                int clrBk, 
-                ref int pclr);
-
-            [PreserveSig]
-            int GetBkColor(
-                ref int pclr);
-
-            [PreserveSig]
-            int BeginDrag(
-                int iTrack, 
-                int dxHotspot, 
-                int dyHotspot);
-
-            [PreserveSig]
-            int EndDrag();
-
-            [PreserveSig]
-            int DragEnter(
-                IntPtr hwndLock, 
-                int x, 
-                int y);
-
-            [PreserveSig]
-            int DragLeave(
-                IntPtr hwndLock);
-
-            [PreserveSig]
-            int DragMove(
-                int x, 
-                int y);
-
-            [PreserveSig]
-            int SetDragCursorImage(
-                ref IImageList punk, 
-                int iDrag, 
-                int dxHotspot, 
-                int dyHotspot);
-
-            [PreserveSig]
-            int DragShowNolock(
-                int fShow);
-
-            [PreserveSig]
-            int GetDragImage(
-                ref POINT ppt, 
-                ref POINT pptHotspot, 
-                ref Guid riid, 
-                ref IntPtr ppv);
-            
-            [PreserveSig]
-            int GetItemFlags(
-                int i, 
-                ref int dwFlags);
-
-            [PreserveSig]
-            int GetOverlayImage(
-                int iOverlay, 
-                ref int piIndex);
-        }
-
         private IntPtr hIml = IntPtr.Zero;
         private IImageList iImageList;
         private SysImageListSize size = SysImageListSize.SmallIcons;
         private bool disposed;
 
         /// <summary>
+        /// Creates a Small Icons SystemImageList 
+        /// </summary>
+        public SysImageList()
+        {
+            Create();
+        }
+
+        /// <summary>
+        /// Creates a SystemImageList with the specified size
+        /// </summary>
+        /// <param name="size">Size of System ImageList</param>
+        public SysImageList(SysImageListSize size)
+        {
+            this.size = size;
+            Create();
+        }
+
+        /// <summary>
+        /// Finalise for SysImageList
+        /// </summary>
+        ~SysImageList()
+        {
+            Dispose(false);
+        }
+
+        public string DisplayName { get; set; }
+
+        /// <summary>
         /// Gets the hImageList handle
         /// </summary>
         public IntPtr Handle
         {
-            get
-            {
-                return hIml;                
-            }
+            get { return hIml; }
         }
+
         /// <summary>
         /// Gets/sets the size of System Image List to retrieve.
         /// </summary>
@@ -396,12 +66,12 @@ namespace LanExchange.Plugin.Windows.Utils
             {
                 return size;
             }
+
             set
             {
                 size = value;
                 Create();
             }
-
         }
 
         /// <summary>
@@ -411,21 +81,54 @@ namespace LanExchange.Plugin.Windows.Utils
         {
             get
             {
-                int cx = 0; 
+                int cx = 0;
                 int cy = 0;
                 if (iImageList == null)
                 {
                     ImageList_GetIconSize(
                         hIml,
-                        ref cx, 
+                        ref cx,
                         ref cy);
                 }
                 else
                 {
                     iImageList.GetIconSize(ref cx, ref cy);
                 }
+
                 return new Size(cx, cy);
-            }        
+            }
+        }
+
+        /// <summary>
+        /// Clears up any resources associated with the SystemImageList
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Clears up any resources associated with the SystemImageList
+        /// when disposing is true.
+        /// </summary>
+        /// <param name="disposing">Whether the object is being disposed</param>
+        public void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+                    if (iImageList != null)
+                    {
+                        Marshal.ReleaseComObject(iImageList);
+                    }
+
+                    iImageList = null;
+                }
+            }
+
+            disposed = true;
         }
 
         /// <summary>
@@ -445,7 +148,6 @@ namespace LanExchange.Plugin.Windows.Utils
                     hIml,
                     index,
                     (int)ImageListDrawItemConstants.ILD_TRANSPARENT);
-
             }
             else
             {
@@ -458,7 +160,7 @@ namespace LanExchange.Plugin.Windows.Utils
             if (hIcon != IntPtr.Zero)
                 icon = System.Drawing.Icon.FromHandle(hIcon);
             else
-                icon = null;                
+                icon = null;
             return icon;
         }
 
@@ -481,15 +183,15 @@ namespace LanExchange.Plugin.Windows.Utils
         /// otherwise only hit the disk if no cached icon is available.</param>
         /// <returns>Index of the icon</returns>
         public int IconIndex(
-            string fileName, 
+            string fileName,
             bool forceLoadFromDisk)
         {
             return IconIndex(
-                fileName, 
+                fileName,
                 forceLoadFromDisk,
                 ShellIconStateConstants.ShellIconStateNormal);
         }
-        
+
         /// <summary>
         /// Returns the index of the icon for the specified file
         /// </summary>
@@ -520,7 +222,7 @@ namespace LanExchange.Plugin.Windows.Utils
                 dwAttr = FILE_ATTRIBUTE_NORMAL;
             }
             else
-            {                
+            {
                 dwAttr = 0;
             }
 
@@ -529,11 +231,11 @@ namespace LanExchange.Plugin.Windows.Utils
             // icon, for example sFileSpec = "C:\PANTS.DOC"
             var shfi = new SHFILEINFO();
             var shfiSize = (uint)Marshal.SizeOf(shfi.GetType());
-            IntPtr retVal = SHGetFileInfo( 
+            IntPtr retVal = SHGetFileInfo(
                 fileName,
                 dwAttr,
                 ref shfi,
-                shfiSize, 
+                shfiSize,
                 (uint)dwFlags | (uint)iconState);
 
             if (retVal.Equals(IntPtr.Zero))
@@ -541,10 +243,9 @@ namespace LanExchange.Plugin.Windows.Utils
                 System.Diagnostics.Debug.Assert(!retVal.Equals(IntPtr.Zero), "Failed to get icon index");
                 return 0;
             }
+
             return shfi.iIcon;
         }
-
-        public string DisplayName { get; set; }
 
         /// <summary>
         /// Draws an image
@@ -553,9 +254,9 @@ namespace LanExchange.Plugin.Windows.Utils
         /// <param name="index">Index of image to draw</param>
         /// <param name="x">X Position to draw at</param>
         /// <param name="y">Y Position to draw at</param>
-        public void DrawImage( 
+        public void DrawImage(
             IntPtr hdc,
-            int index, 
+            int index,
             int x,
             int y)
         {
@@ -580,11 +281,11 @@ namespace LanExchange.Plugin.Windows.Utils
             if (iImageList == null)
             {
                 ImageList_Draw(
-                    hIml, 
-                    index, 
-                    hdc, 
-                    x, 
-                    y, 
+                    hIml,
+                    index,
+                    hdc,
+                    x,
+                    y,
                     (int)flags);
             }
             else
@@ -599,7 +300,6 @@ namespace LanExchange.Plugin.Windows.Utils
                 pimldp.fStyle = (int)flags;
                 iImageList.Draw(ref pimldp);
             }
-            
         }
 
         /// <summary>
@@ -639,7 +339,6 @@ namespace LanExchange.Plugin.Windows.Utils
             }
             else
             {
-
                 iImageList.Draw(ref pimldp);
             }
         }
@@ -661,10 +360,80 @@ namespace LanExchange.Plugin.Windows.Utils
             {
                 ret = true;
             }
-            return ret;
-            // return false;
 
+            return ret;
         }
+
+        [DllImport(ExternDll.Shell32, CharSet = CharSet.Unicode)]
+        private static extern IntPtr SHGetFileInfo(
+            string pszPath,
+            int dwFileAttributes,
+            ref SHFILEINFO psfi,
+            uint cbFileInfo,
+            uint uFlags);
+
+        // [DllImport("user32.dll")]
+        // private static extern int DestroyIcon(IntPtr hIcon);
+        // private const int FILE_ATTRIBUTE_DIRECTORY = 0x10;
+        // private const int FORMAT_MESSAGE_ALLOCATE_BUFFER = 0x100; 
+        // private const int FORMAT_MESSAGE_ARGUMENT_ARRAY = 0x2000;
+        // private const int FORMAT_MESSAGE_FROM_HMODULE = 0x800;
+        // private const int FORMAT_MESSAGE_FROM_STRING = 0x400;
+        // private const int FORMAT_MESSAGE_FROM_SYSTEM = 0x1000;
+        // private const int FORMAT_MESSAGE_IGNORE_INSERTS = 0x200;
+        // private const int FORMAT_MESSAGE_MAX_WIDTH_MASK = 0xFF;
+        // [DllImport("kernel32")]
+        // private extern static int FormatMessage (
+        // int dwFlags, 
+        // IntPtr lpSource, 
+        // int dwMessageId, 
+        // int dwLanguageId, 
+        // string lpBuffer,
+        // uint nSize, 
+        // int argumentsLong);
+        // [DllImport("kernel32")]
+        // private extern static int GetLastError();
+        [DllImport(ExternDll.Comctl32)]
+        private static extern int ImageList_Draw(
+            IntPtr hIml,
+            int i,
+            IntPtr hdcDst,
+            int x,
+            int y,
+            int fStyle);
+
+        [DllImport(ExternDll.Comctl32)]
+        private static extern int ImageList_DrawIndirect(
+            ref IMAGELISTDRAWPARAMS pimldp);
+
+        [DllImport(ExternDll.Comctl32)]
+        private static extern int ImageList_GetIconSize(
+            IntPtr himl,
+            ref int cx,
+            ref int cy);
+
+        [DllImport(ExternDll.Comctl32)]
+        private static extern IntPtr ImageList_GetIcon(
+            IntPtr himl,
+            int i,
+            int flags);
+
+        /// <summary>
+        /// SHGetImageList is not exported correctly in XP.  See KB316931
+        /// http:// support.microsoft.com/default.aspx?scid = kb;EN-US;Q316931
+        /// Apparently (and hopefully) ordinal 727 isn't going to change.
+        /// </summary>
+        [DllImport(ExternDll.Shell32, EntryPoint = "#727")]
+        private static extern int SHGetImageList(
+            int iImageList,
+            ref Guid riid,
+            ref IImageList ppv);
+
+        [DllImport(ExternDll.Shell32, EntryPoint = "#727")]
+        private static extern int SHGetImageListHandle(
+            int iImageList,
+            ref Guid riid,
+            ref IntPtr handle);
 
         /// <summary>
         /// Creates the SystemImageList
@@ -697,6 +466,7 @@ namespace LanExchange.Plugin.Windows.Utils
                 {
                     dwFlags |= SHGetFileInfoConstants.SHGFI_SMALLICON;
                 }
+
                 // Get image list
                 var shfi = new SHFILEINFO();
                 var shfiSize = (uint)Marshal.SizeOf(shfi.GetType());
@@ -704,68 +474,13 @@ namespace LanExchange.Plugin.Windows.Utils
                 // Call SHGetFileInfo to get the image list handle
                 // using an arbitrary file:
                 hIml = SHGetFileInfo(
-                    ".txt", 
-                    FILE_ATTRIBUTE_NORMAL, 
-                    ref shfi, 
-                    shfiSize, 
+                    ".txt",
+                    FILE_ATTRIBUTE_NORMAL,
+                    ref shfi,
+                    shfiSize,
                     (uint)dwFlags);
                 System.Diagnostics.Debug.Assert(hIml != IntPtr.Zero, "Failed to create Image List");
             }
         }
-
-        /// <summary>
-        /// Creates a Small Icons SystemImageList 
-        /// </summary>
-        public SysImageList()
-        {
-            Create();
-        }
-        /// <summary>
-        /// Creates a SystemImageList with the specified size
-        /// </summary>
-        /// <param name="size">Size of System ImageList</param>
-        public SysImageList(SysImageListSize size)
-        {
-            this.size = size;
-            Create();
-        }
-
-        /// <summary>
-        /// Clears up any resources associated with the SystemImageList
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        /// <summary>
-        /// Clears up any resources associated with the SystemImageList
-        /// when disposing is true.
-        /// </summary>
-        /// <param name="disposing">Whether the object is being disposed</param>
-        public void Dispose(bool disposing)
-        {
-            if (!disposed)
-            {
-                if (disposing) 
-                {
-                    if (iImageList != null)
-                    {
-                        Marshal.ReleaseComObject(iImageList);
-                    }
-                    iImageList = null;
-                }
-            }
-            disposed = true;
-        }
-
-        /// <summary>
-        /// Finalise for SysImageList
-        /// </summary>
-        ~SysImageList()
-        {
-            Dispose(false);
-        }
-
     }
 }

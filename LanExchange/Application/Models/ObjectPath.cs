@@ -25,12 +25,6 @@ namespace LanExchange.Application.Models
         /// </summary>
         public event EventHandler Changed;
 
-        private void OnChanged()
-        {
-            if (Changed != null)
-                Changed(this, EventArgs.Empty);
-        }
-
         /// <summary>
         /// Clears this instance.
         /// </summary>
@@ -91,6 +85,12 @@ namespace LanExchange.Application.Models
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        private void OnChanged()
+        {
+            if (Changed != null)
+                Changed(this, EventArgs.Empty);
         }
     }
 }

@@ -69,14 +69,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\Presenters\MainPresenterTest.cs" />
-    <Compile Include="Misc\Impl\AddonManagerImplTest.cs" />
     <Compile Include="Model\FolderManagerTest.cs" />
-    <Compile Include="Model\PagesModelTest.cs" />
     <Compile Include="Model\PanelIndexEvenArgsTest.cs" />
     <Compile Include="Model\CustomPanelItemTest.cs" />
-    <Compile Include="Model\PanelItemListEventArgsTest.cs" />
     <Compile Include="Misc\Impl\PuntoSwitcherServiceEngRusTest.cs" />
-    <Compile Include="Misc\Impl\PuntoSwitcherServiceFactoryTest.cs" />
     <Compile Include="Application\Models\ObjectPathTest.cs" />
     <Compile Include="Presentation\WinForms\AppViewTest.cs" />
     <Compile Include="Presentation\WinForms\Controls\StatusPanelTest.cs" />

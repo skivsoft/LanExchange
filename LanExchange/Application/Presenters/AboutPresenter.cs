@@ -32,21 +32,6 @@ namespace LanExchange.Application.Presenters
             this.processService = processService;
         }
 
-        protected override void InitializePresenter()
-        {
-            View.TranslateUI();
-            LoadFromModel();
-        }
-
-        private void LoadFromModel()
-        {
-            View.Text = string.Format(CultureInfo.CurrentCulture, View.Text, model.Title);
-            View.VersionText = model.VersionFull;
-            View.CopyrightText = model.Copyright;
-            View.WebText = model.HomeLink;
-            View.WebToolTip = model.HomeLink;
-        }
-
         public void OpenHomeLink()
         {
             processService.Start(model.HomeLink);
@@ -55,6 +40,7 @@ namespace LanExchange.Application.Presenters
         public string GetDetailsRtf()
         {
             var sb = new StringBuilder();
+
             // sb.Append(@"{\rtf1\ansi");
             sb.Append(@"{\rtf1\ansi\deff0{\fonttbl{\f0 Microsoft Sans Serif;}}"); // \fnil\fcharset204
             sb.Append(@"\viewkind4\uc1\pard\f0\fs17 ");
@@ -71,6 +57,7 @@ namespace LanExchange.Application.Presenters
                     sb.AppendLine("    " + line);
                 }
             }
+
             sb.Append("}");
 
             return sb.ToString().Replace(Environment.NewLine, @"\line ");
@@ -79,6 +66,21 @@ namespace LanExchange.Application.Presenters
         public void PerformShowDetails()
         {
             View.DetailsVisible = !View.DetailsVisible;
+        }
+
+        protected override void InitializePresenter()
+        {
+            View.TranslateUI();
+            LoadFromModel();
+        }
+
+        private void LoadFromModel()
+        {
+            View.Text = string.Format(CultureInfo.CurrentCulture, View.Text, model.Title);
+            View.VersionText = model.VersionFull;
+            View.CopyrightText = model.Copyright;
+            View.WebText = model.HomeLink;
+            View.WebToolTip = model.HomeLink;
         }
     }
 }

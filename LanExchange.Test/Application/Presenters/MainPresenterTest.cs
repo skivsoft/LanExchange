@@ -1,8 +1,8 @@
-﻿using NUnit.Framework;
-using LanExchange.Application.Interfaces;
+﻿using LanExchange.Application.Interfaces;
 using LanExchange.Presentation.Interfaces;
-using Moq;
 using LanExchange.Presentation.Interfaces.Menu;
+using Moq;
+using NUnit.Framework;
 
 namespace LanExchange.Application.Presenters
 {
@@ -12,7 +12,7 @@ namespace LanExchange.Application.Presenters
         private IMainPresenter presenter;
         private Mock<IMainView> mockView;
 
-        private static IMainPresenter CreatePresenter()
+        public static IMainPresenter CreatePresenter()
         {
             var presenter = new MainPresenter(
                 new Mock<ILazyThreadPool>().Object,

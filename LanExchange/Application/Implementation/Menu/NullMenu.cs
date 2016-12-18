@@ -4,7 +4,7 @@ namespace LanExchange.Application.Implementation.Menu
 {
     internal sealed class NullMenu : IMenuElement
     {
-        private static readonly IMenuElement instance = new NullMenu();
+        private static readonly IMenuElement NullInstance = new NullMenu();
 
         private NullMenu()
         {
@@ -12,7 +12,7 @@ namespace LanExchange.Application.Implementation.Menu
 
         public static IMenuElement Instance
         {
-            get { return instance; }
+            get { return NullInstance; }
         }
 
         public void Accept(IMenuElementVisitor visitor)

@@ -24,13 +24,6 @@ namespace LanExchange.Plugin.Windows.Utils
         private const int TVSIL_NORMAL = 0;
         private const int TVSIL_STATE = 2;
 
-        [DllImport(ExternDll.Shell32, CharSet = CharSet.Auto)]
-        private static extern IntPtr SendMessage(
-            IntPtr hWnd, 
-            int wMsg, 
-            IntPtr wParam, 
-            IntPtr lParam);
-
         /// <summary>
         /// Associates a SysImageList with a ListView control
         /// </summary>
@@ -51,11 +44,12 @@ namespace LanExchange.Plugin.Windows.Utils
             {
                 wParam = (IntPtr)LVSIL_STATE;
             }
+
             SendMessage(
                 listView,
                 LVM_SETIMAGELIST,
                 wParam,
-                sysImageList.Handle);    
+                sysImageList.Handle);
         }
 
         /// <summary>
@@ -79,6 +73,13 @@ namespace LanExchange.Plugin.Windows.Utils
                 TVM_SETIMAGELIST,
                 wParam,
                 sysImageList.Handle);
-        }        
+        }
+
+        [DllImport(ExternDll.Shell32, CharSet = CharSet.Auto)]
+        private static extern IntPtr SendMessage(
+            IntPtr hWnd, 
+            int wMsg, 
+            IntPtr wParam, 
+            IntPtr lParam);
     }
 }

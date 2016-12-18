@@ -11,7 +11,6 @@ namespace LanExchange.Plugin.Windows.Utils
 
         /// <SecurityNote> 
         /// Critical: This elevates to unmanaged code permission 
-
         /// </SecurityNote>
         [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]

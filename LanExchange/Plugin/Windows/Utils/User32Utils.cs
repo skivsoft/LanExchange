@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using LanExchange.Plugin.Windows.Structures;
 
 namespace LanExchange.Plugin.Windows.Utils
 {
@@ -7,25 +8,6 @@ namespace LanExchange.Plugin.Windows.Utils
     {
         private const int LVM_FIRST = 0x1000;
         private const int LVM_SETITEMSTATE = LVM_FIRST + 43;
-
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-        public struct LVITEM
-        {
-            public int mask;
-            public int iItem;
-            public int iSubItem;
-            public int state;
-            public int stateMask;
-            [MarshalAs(UnmanagedType.LPTStr)]
-            public string pszText;
-            public int cchTextMax;
-            public int iImage;
-            public IntPtr lParam;
-            public int iIndent;
-            public int iGroupId;
-            public int cColumns;
-            public IntPtr puColumns;
-        }
 
         [DllImport(ExternDll.User32, EntryPoint = "SendMessage", CharSet = CharSet.Auto)]
         public static extern IntPtr SendMessageLVItem(IntPtr hWnd, int msg, int wParam, ref LVITEM lvi);

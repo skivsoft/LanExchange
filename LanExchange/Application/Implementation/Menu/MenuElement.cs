@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
-using LanExchange.Presentation.Interfaces.Menu;
 using LanExchange.Presentation.Interfaces;
+using LanExchange.Presentation.Interfaces.Menu;
 
 namespace LanExchange.Application.Implementation.Menu
 {

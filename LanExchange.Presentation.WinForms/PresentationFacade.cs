@@ -37,13 +37,12 @@ namespace LanExchange.Presentation.WinForms
             // Services
             // TODO remove singleton dependency on MainPresenter
             container.RegisterSingleton<IWaitingService, WaitingService>();
+
             // TODO remove singleton dependency on PagesPresenter
             container.RegisterSingleton<IClipboardService, ClipboardService>();
             container.RegisterTransient<ISystemInformationService, SystemInformationService>();
             container.RegisterSingleton<IMessageBoxService, MessageBoxService>();
             container.RegisterSingleton<IScreenService, ScreenService>();
-
-
             return container;
         }
     }

@@ -10,8 +10,6 @@ namespace LanExchange.Presentation.WinForms.Forms
         private readonly ICheckAvailabilityPresenter presenter;
         private PanelItemBase currentItem;
 
-        public event EventHandler ViewClosed;
-
         public CheckAvailabilityForm(ICheckAvailabilityPresenter presenter)
         {
             if (presenter == null) throw new ArgumentNullException(nameof(presenter));
@@ -21,6 +19,8 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.presenter = presenter;
             presenter.Initialize(this);
         }
+
+        public event EventHandler ViewClosed;
 
         public PanelItemBase CurrentItem
         {
@@ -64,6 +64,8 @@ namespace LanExchange.Presentation.WinForms.Forms
             set { lObject.Text = value; }
         }
 
+        public object CallerControl { get; set; }
+
         public void StartChecking()
         {
             presenter.StartChecking();
@@ -72,6 +74,17 @@ namespace LanExchange.Presentation.WinForms.Forms
         public void WaitAndShow()
         {
             presenter.WaitAndShow();
+        }
+
+        public void SetToolTip(string tooltip)
+        {
+            toolTip.SetToolTip(lObject, tooltip);
+        }
+
+        public void InvokeClose()
+        {
+            if (Visible)
+                Invoke(new Action(Close));
         }
 
         private void ButtonRun_Click(object sender, EventArgs e)
@@ -89,19 +102,6 @@ namespace LanExchange.Presentation.WinForms.Forms
             if (ViewClosed != null)
                 ViewClosed(this, EventArgs.Empty);
         }
-
-        public void SetToolTip(string tooltip)
-        {
-            toolTip.SetToolTip(lObject, tooltip);
-        }
-
-        public void InvokeClose()
-        {
-            if (Visible)
-                Invoke(new Action(Close));
-        }
-
-        public object CallerControl { get; set; }
 
         private void CheckAvailabilityForm_KeyDown(object sender, KeyEventArgs e)
         {

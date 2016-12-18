@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using LanExchange.Plugin.Windows.ContextMenu;
+using LanExchange.Plugin.Windows.Enums;
 using LanExchange.Plugin.Windows.Utils;
 using LanExchange.Presentation.Interfaces;
 
@@ -24,7 +24,7 @@ namespace LanExchange.Plugin.Windows
 
         public void ShowMyComputerContextMenu(IntPtr handle, Point position, bool control, bool shift)
         {
-            menu.ShowContextMenuForCSIDL(handle, ShellAPI.CSIDL.DRIVES, position, control, shift);
+            menu.ShowContextMenuForCSIDL(handle, CSIDL.DRIVES, position, control, shift);
         }
 
         public void OpenMyComputer()

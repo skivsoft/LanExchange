@@ -70,7 +70,7 @@ namespace LanExchange.Presentation.WinForms.Forms
             // 
             this.tipComps.IsBalloon = true;
             this.tipComps.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.tipComps.Popup += new System.Windows.Forms.PopupEventHandler(this.tipComps_Popup);
+            this.tipComps.Popup += new System.Windows.Forms.PopupEventHandler(this.TipComps_Popup);
             // 
             // MainMenu
             // 
@@ -88,14 +88,14 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.mPanelSep2,
             this.mExit});
             this.mPanel.Text = global::LanExchange.Presentation.WinForms.Properties.Resources.mPanel_Text;
-            this.mPanel.Popup += new System.EventHandler(this.mPanel_Popup);
+            this.mPanel.Popup += new System.EventHandler(this.MenuPanel_Popup);
             // 
             // mReRead
             // 
             this.mReRead.Index = 0;
             this.mReRead.Shortcut = System.Windows.Forms.Shortcut.CtrlR;
             this.mReRead.Text = "&Re-read";
-            this.mReRead.Click += new System.EventHandler(this.mReRead_Click);
+            this.mReRead.Click += new System.EventHandler(this.MenuReRead_Click);
             // 
             // mPanelSep2
             // 
@@ -117,7 +117,7 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.mViewList,
             this.mViewDetails});
             this.mView.Text = global::LanExchange.Presentation.WinForms.Properties.Resources.mView_Text;
-            this.mView.Popup += new System.EventHandler(this.mView_Popup);
+            this.mView.Popup += new System.EventHandler(this.MenuView_Popup);
             // 
             // mViewLarge
             // 
@@ -125,7 +125,7 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.mViewLarge.RadioCheck = true;
             this.mViewLarge.Tag = "";
             this.mViewLarge.Text = "La&rge icons";
-            this.mViewLarge.Click += new System.EventHandler(this.mView_Click);
+            this.mViewLarge.Click += new System.EventHandler(this.MenuView_Click);
             // 
             // mViewSmall
             // 
@@ -133,7 +133,7 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.mViewSmall.RadioCheck = true;
             this.mViewSmall.Tag = "";
             this.mViewSmall.Text = "Small ico&ns";
-            this.mViewSmall.Click += new System.EventHandler(this.mView_Click);
+            this.mViewSmall.Click += new System.EventHandler(this.MenuView_Click);
             // 
             // mViewList
             // 
@@ -141,7 +141,7 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.mViewList.RadioCheck = true;
             this.mViewList.Tag = "";
             this.mViewList.Text = "&List";
-            this.mViewList.Click += new System.EventHandler(this.mView_Click);
+            this.mViewList.Click += new System.EventHandler(this.MenuView_Click);
             // 
             // mViewDetails
             // 
@@ -150,13 +150,13 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.mViewDetails.RadioCheck = true;
             this.mViewDetails.Tag = "";
             this.mViewDetails.Text = "&Details";
-            this.mViewDetails.Click += new System.EventHandler(this.mView_Click);
+            this.mViewDetails.Click += new System.EventHandler(this.MenuView_Click);
             // 
             // mLanguage
             // 
             this.mLanguage.Index = 2;
             this.mLanguage.Text = global::LanExchange.Presentation.WinForms.Properties.Resources.mLanguage_Text;
-            this.mLanguage.Popup += new System.EventHandler(this.mLanguage_Popup);
+            this.mLanguage.Popup += new System.EventHandler(this.MenuLanguage_Popup);
             // 
             // mHelp
             // 
@@ -173,19 +173,19 @@ namespace LanExchange.Presentation.WinForms.Forms
             // 
             this.mHelpWeb.Index = 0;
             this.mHelpWeb.Text = "Lan&Exchange Webpage";
-            this.mHelpWeb.Click += new System.EventHandler(this.mWebPage_Click);
+            this.mHelpWeb.Click += new System.EventHandler(this.MenuWebPage_Click);
             // 
             // mHelpBugs
             // 
             this.mHelpBugs.Index = 1;
             this.mHelpBugs.Text = "&BugTracker Webpage";
-            this.mHelpBugs.Click += new System.EventHandler(this.mHelpBugs_Click);
+            this.mHelpBugs.Click += new System.EventHandler(this.MenuHelpBugs_Click);
             // 
             // mHelpLangs
             // 
             this.mHelpLangs.Index = 2;
             this.mHelpLangs.Text = "&Localization Webpage";
-            this.mHelpLangs.Click += new System.EventHandler(this.mHelpLangs_Click);
+            this.mHelpLangs.Click += new System.EventHandler(this.MenuHelpLangs_Click);
             // 
             // menuItem1
             // 

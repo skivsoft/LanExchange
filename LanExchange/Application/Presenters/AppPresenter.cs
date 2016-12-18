@@ -25,12 +25,6 @@ namespace LanExchange.Application.Presenters
             this.disposableManager = disposableManager;
         }
 
-        protected override void InitializePresenter()
-        {
-            View.SetExceptionHandlers();
-            View.InitVisualStyles();
-        }
-
         public void OnNonUIException(Exception exception)
         {
         }
@@ -47,6 +41,7 @@ namespace LanExchange.Application.Presenters
         public void OnExit()
         {
             pagesPresenter.SaveInstant();
+
             // dispose instances registered in plugins
             disposableManager.Dispose();
         }
@@ -63,6 +58,12 @@ namespace LanExchange.Application.Presenters
                 form.TranslateUI();
                 if (rtlChanged) form.Visible = true;
             }
+        }
+
+        protected override void InitializePresenter()
+        {
+            View.SetExceptionHandlers();
+            View.InitVisualStyles();
         }
     }
 }

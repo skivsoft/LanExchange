@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using LanExchange.Presentation.Interfaces;
 using LanExchange.Application.Commands;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Managers
 {

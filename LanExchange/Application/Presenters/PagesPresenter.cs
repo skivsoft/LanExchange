@@ -15,9 +15,6 @@ namespace LanExchange.Application.Presenters
         private readonly IClipboardService clipboardService;
         private bool escapeDown;
 
-        public event EventHandler PanelViewFocusedItemChanged;
-        public event EventHandler PanelViewFilterTextChanged;
-
         public PagesPresenter(
             IPagesModel model, 
             IPagesPersistenceService pagesService,
@@ -43,6 +40,40 @@ namespace LanExchange.Application.Presenters
             this.model.Cleared += ModelOnCleared;
         }
 
+        public event EventHandler PanelViewFocusedItemChanged;
+
+        public event EventHandler PanelViewFilterTextChanged;
+
+        public int Count
+        {
+            get { return model.Count; }
+        }
+
+        public int SelectedIndex
+        {
+            get { return model.SelectedIndex; }
+            set { model.SelectedIndex = value; }
+        }
+
+        public IPanelView ActivePanelView
+        {
+            get { return View.ActivePanelView; }
+        }
+
+        public PanelViewMode ViewMode
+        {
+            get
+            {
+                return View.ActivePanelView?.ViewMode ?? PanelViewMode.Details;
+            }
+
+            set
+            {
+                if (View.ActivePanelView != null)
+                    View.ActivePanelView.ViewMode = value;
+            }
+        }
+
         public bool CanSendToNewTab()
         {
             var sourcePanel = View.ActivePanelView;
@@ -53,6 +84,7 @@ namespace LanExchange.Application.Presenters
                 return false;
 
             return false;
+
             // TODO hide model
             // return sourcePanel.Presenter.Objects.Count > 1;
         }
@@ -100,6 +132,7 @@ namespace LanExchange.Application.Presenters
                 return false;
 
             return false;
+
             // TODO hide model
             // return !View.ActivePanelView.Presenter.Objects.TabName.Equals(items.Context);
         }
@@ -112,18 +145,23 @@ namespace LanExchange.Application.Presenters
             var items = (PanelItemBaseHolder)obj.GetData(typeof(PanelItemBaseHolder));
             var destObjects = model.GetAt(model.SelectedIndex);
             destObjects.DataType = items.DataType;
+
             // destObjects.CurrentPath.Push(PanelItemRoot.ROOT_OF_USERITEMS);
             foreach (var panelItem in items)
                 if (panelItem.GetType().Name.Equals(destObjects.DataType))
                 {
                     if (destObjects.Contains(panelItem))
                         continue;
+            
                     // add item to new panel
                     var newItem = (PanelItemBase)panelItem.Clone();
+                    
                     // newItem.Parent = PanelItemRootBase.ROOT_OF_USERITEMS;
                     destObjects.Items.Add(newItem);
                 }
+
             destObjects.AsyncRetrieveData(true);
+
             // m_View.ActivePanelView.Presenter.UpdateItemsAndStatus();
         }
 
@@ -134,11 +172,8 @@ namespace LanExchange.Application.Presenters
             // if (panelView == null) return;
             // var indexes = panelView.SelectedIndexes.GetEnumerator();
             // if (!indexes.MoveNext()) return;
-
-
             // var modified = false;
             // var firstIndex = -1;
-
             // foreach (int index in panelView.SelectedIndexes)
             // {
             // var comp = panelView.Presenter.Objects.GetItemAt(index);
@@ -180,11 +215,13 @@ namespace LanExchange.Application.Presenters
         public void CommandReRead()
         {
             var pageModel = model.GetAt(SelectedIndex);
+
             // clear refreshable columns
             if (pageModel.DataType != null)
                 foreach (var column in panelColumns.GetColumns(pageModel.DataType))
                     if (column.Callback != null && column.Refreshable)
                         column.LazyDict.Clear();
+            
             // var result = pageModel.RetrieveData(RetrieveMode.Sync, false);
             // pageModel.SetFillerResult(result, false);
             pageModel.AsyncRetrieveData(false);
@@ -243,18 +280,6 @@ namespace LanExchange.Application.Presenters
             // e.Panel.AsyncRetrieveData(false);
         }
 
-        private void InfoOnTabNameUpdated(object sender, EventArgs eventArgs)
-        {
-            var model = sender as IPanelModel;
-            if (model == null) return;
-            var index = IndexOf(model);
-            if (index != -1)
-            {
-                View.SetTabText(index, model.TabName);
-                View.SetTabImage(index, imageManager.IndexOf(model.ImageName));
-            }
-        }
-
         public void ModelOnPanelRemoved(object sender, PanelIndexEventArgs e)
         {
             View.RemoveTabAt(e.Index);
@@ -270,11 +295,6 @@ namespace LanExchange.Application.Presenters
         {
             View.SelectedIndex = e.Index;
             View.FocusPanelView();
-        }
-
-        private void ModelOnCleared(object sender, EventArgs e)
-        {
-            View.Clear();
         }
 
         public void DoPanelViewFocusedItemChanged(object sender, EventArgs e)
@@ -295,33 +315,8 @@ namespace LanExchange.Application.Presenters
                     SelectedIndex = index;
                     return true;
                 }
+
             return false;
-        }
-
-        public int Count
-        {
-            get { return model.Count; }
-        }
-
-        public int SelectedIndex
-        {
-            get { return model.SelectedIndex; }
-            set { model.SelectedIndex = value; }
-        }
-
-        public IPanelView ActivePanelView
-        {
-            get { return View.ActivePanelView; }
-        }
-
-        public PanelViewMode ViewMode
-        {
-            get { return View.ActivePanelView?.ViewMode ?? PanelViewMode.Details; }
-            set
-            {
-                if (View.ActivePanelView != null)
-                    View.ActivePanelView.ViewMode = value;
-            }
         }
 
         public void SaveInstant()
@@ -380,6 +375,23 @@ namespace LanExchange.Application.Presenters
 
         protected override void InitializePresenter()
         {
+        }
+
+        private void InfoOnTabNameUpdated(object sender, EventArgs eventArgs)
+        {
+            var model = sender as IPanelModel;
+            if (model == null) return;
+            var index = IndexOf(model);
+            if (index != -1)
+            {
+                View.SetTabText(index, model.TabName);
+                View.SetTabImage(index, imageManager.IndexOf(model.ImageName));
+            }
+        }
+
+        private void ModelOnCleared(object sender, EventArgs e)
+        {
+            View.Clear();
         }
     }
 }

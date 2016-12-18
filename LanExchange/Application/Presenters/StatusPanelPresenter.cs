@@ -27,17 +27,6 @@ namespace LanExchange.Application.Presenters
             this.imageManager = imageManager;
         }
 
-        protected override void InitializePresenter()
-        {
-            // show computer name
-            View.ComputerName = systemInformation.ComputerName;
-            View.ComputerImageIndex = imageManager.IndexOf(PanelImageNames.COMPUTER);
-
-            // show current user
-            View.UserName = systemInformation.UserName;
-            View.UserImageIndex = imageManager.IndexOf(PanelImageNames.USER);
-        }
-
         public void PerformComputerLeftClick()
         {
             shellService.OpenMyComputer();
@@ -52,6 +41,17 @@ namespace LanExchange.Application.Presenters
         public void PerformUserRightClick()
         {
             // TODO implement context menu for user
+        }
+
+        protected override void InitializePresenter()
+        {
+            // show computer name
+            View.ComputerName = systemInformation.ComputerName;
+            View.ComputerImageIndex = imageManager.IndexOf(PanelImageNames.COMPUTER);
+
+            // show current user
+            View.UserName = systemInformation.UserName;
+            View.UserImageIndex = imageManager.IndexOf(PanelImageNames.USER);
         }
     }
 }

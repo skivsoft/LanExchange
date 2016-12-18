@@ -19,49 +19,11 @@ namespace LanExchange.Application.Presenters
             this.imageManager = imageManager;
         }
 
-        protected override void InitializePresenter()
-        {
-            thread = new Thread(ThreadProc);
-            View.ViewClosed += ViewOnViewClosed;
-        }
-
-        private void ViewOnViewClosed(object sender, EventArgs e)
-        {
-            thread.Abort();
-        }
-
-        private void ThreadProc(object arg)
-        {
-            if (View.AvailabilityChecker == null || arg == null)
-                return;
-
-            // var panelItem = arg as PanelItemBase;
-            // if (panelItem == null) return;
-
-            bool available = false;
-            while (!available)
-            {
-                try
-                {
-                    // Thread.Sleep(10000);
-                    available = View.AvailabilityChecker();
-                }
-                catch (Exception e)
-                {
-                    Debug.Print(e.Message);
-                }
-            }
-            doneAndAvailable = true;
-            View.RunAction?.Invoke();
-            View.InvokeClose();
-        }
-
         public void OnCurrentItemChanged()
         {
             // TODO hide model
             // var currentItem = View.CurrentItem;
             // if (currentItem == null) return;
-
             // View.ObjectImage = imageManager.GetSmallImage(currentItem.ImageName);
             // View.ObjectText = currentItem.Name;
             // View.Icon = imageManager.GetSmallIcon(currentItem.ImageName);
@@ -81,7 +43,8 @@ namespace LanExchange.Application.Presenters
             do
             {
                 delta = DateTime.UtcNow - startTime;
-            } while (!doneAndAvailable && delta.Milliseconds < DELAY_FOR_SHOW);
+            }
+            while (!doneAndAvailable && delta.Milliseconds < DELAY_FOR_SHOW);
             if (!doneAndAvailable)
                 View.Visible = true;
         }
@@ -96,6 +59,43 @@ namespace LanExchange.Application.Presenters
         public void PerformCancel()
         {
             View.Close();
+        }
+
+        protected override void InitializePresenter()
+        {
+            thread = new Thread(ThreadProc);
+            View.ViewClosed += ViewOnViewClosed;
+        }
+
+        private void ViewOnViewClosed(object sender, EventArgs e)
+        {
+            thread.Abort();
+        }
+
+        private void ThreadProc(object arg)
+        {
+            if (View.AvailabilityChecker == null || arg == null)
+                return;
+
+            // var panelItem = arg as PanelItemBase;
+            // if (panelItem == null) return;
+            bool available = false;
+            while (!available)
+            {
+                try
+                {
+                    // Thread.Sleep(10000);
+                    available = View.AvailabilityChecker();
+                }
+                catch (Exception e)
+                {
+                    Debug.Print(e.Message);
+                }
+            }
+
+            doneAndAvailable = true;
+            View.RunAction?.Invoke();
+            View.InvokeClose();
         }
     }
 }

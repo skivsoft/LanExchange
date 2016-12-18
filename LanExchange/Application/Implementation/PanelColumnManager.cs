@@ -22,6 +22,7 @@ namespace LanExchange.Application.Implementation
                 found = new List<PanelColumnHeader>();
                 types.Add(typeName, found);
             }
+
             header.Index = found.Count;
             found.Add(header);
         }
@@ -48,31 +49,17 @@ namespace LanExchange.Application.Implementation
         {
             //// lock reorder for 0-column
             // if (oldIndex == 0 || newIndex == 0)
-
             // return false;
-
             // IList<PanelColumnHeader> result;
-
             // if (m_Types.TryGetValue(type, out result))
-
             // {
-
             // var temp = result[oldIndex];
-
             // result[oldIndex] = result[newIndex];
-
             // result[newIndex] = temp;
-
             // // m_Types.Remove(type);
-
-
             // // m_Types.Add(type, result);
-
-
             // return true;
-
             // }
-
             return false;
         }
     }

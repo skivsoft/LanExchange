@@ -10,6 +10,10 @@ namespace LanExchange.Application.Models
             SortOrder = sortOrder;
         }
 
+        public int ColumnIndex { get; set; }
+
+        public PanelSortOrder SortOrder { get; set; }
+
         public int Compare(PanelItemBase item1, PanelItemBase item2)
         {
             int result = item1.CompareTo(item2, ColumnIndex);
@@ -20,8 +24,5 @@ namespace LanExchange.Application.Models
                 return -result;
             return 0;
         }
-
-        public int ColumnIndex { get; set; }
-        public PanelSortOrder SortOrder { get; set; }
     }
 }

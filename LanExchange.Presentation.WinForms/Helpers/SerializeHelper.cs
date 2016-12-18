@@ -6,10 +6,8 @@ namespace LanExchange.Presentation.WinForms.Helpers
 {
     internal static class SerializeHelper
     {
-
         /// <summary>
         /// URL: http:// www.dailycoding.com/Posts/convert_image_to_base64_string_and_base64_string_to_image.aspx
-
         /// </summary>
         /// <param name="image"></param>
         /// <param name="format"></param>
@@ -21,6 +19,7 @@ namespace LanExchange.Presentation.WinForms.Helpers
                 // Convert Image to byte[]
                 image.Save(ms, format);
                 var imageBytes = ms.ToArray();
+             
                 // Convert byte[] to Base64 String
                 return Convert.ToBase64String(imageBytes);
             }

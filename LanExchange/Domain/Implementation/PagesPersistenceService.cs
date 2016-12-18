@@ -30,21 +30,6 @@ namespace LanExchange.Domain.Implementation
             this.logService = logService;
         }
 
-        private static void ForceCreatePath(string fileName)
-        {
-            var path = Path.GetDirectoryName(fileName);
-            if (path != null && !Directory.Exists(path))
-            {
-                ForceCreatePath(path);
-                Directory.CreateDirectory(path);
-            }
-        }
-
-        private Type[] GetExtraTypes()
-        {
-            return factoryManager.ToArray();
-        }
-
         public PagesDto LoadPages()
         {
             var fileName = folderManager.TabsConfigFileName;
@@ -57,6 +42,7 @@ namespace LanExchange.Domain.Implementation
                 {
                     logService.Log(exception);
                 }
+
             return PagesDto.Empty;
         }
 
@@ -72,6 +58,21 @@ namespace LanExchange.Domain.Implementation
             {
                 logService.Log(exception);
             }
+        }
+
+        private static void ForceCreatePath(string fileName)
+        {
+            var path = Path.GetDirectoryName(fileName);
+            if (path != null && !Directory.Exists(path))
+            {
+                ForceCreatePath(path);
+                Directory.CreateDirectory(path);
+            }
+        }
+
+        private Type[] GetExtraTypes()
+        {
+            return factoryManager.ToArray();
         }
     }
 }

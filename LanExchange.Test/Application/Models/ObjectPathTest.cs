@@ -6,9 +6,9 @@ using NUnit.Framework;
 namespace LanExchange.Application.Models
 {
     [TestFixture]
-    class ObjectPathTest
+    internal class ObjectPathTest
     {
-        IObjectPath<int> path;
+        private IObjectPath<int> path;
 
         [SetUp]
         public void SetUp()

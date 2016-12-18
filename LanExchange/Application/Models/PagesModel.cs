@@ -36,8 +36,11 @@ namespace LanExchange.Application.Models
         }
 
         public event EventHandler<PanelEventArgs> PanelAdded;
+
         public event EventHandler<PanelIndexEventArgs> PanelRemoved;
+
         public event EventHandler<PanelIndexEventArgs> SelectedIndexChanged;
+
         public event EventHandler Cleared;
 
         public int Count
@@ -51,6 +54,7 @@ namespace LanExchange.Application.Models
             {
                 return selectedIndex;
             }
+
             set
             {
                 selectedIndex = value;
@@ -68,26 +72,6 @@ namespace LanExchange.Application.Models
             if (index < 0 || index > panels.Count - 1)
                 return null;
             return panels[index];
-        }
-
-        private void NotifyPanelAdded(IPanelModel panel)
-        {
-            PanelAdded?.Invoke(this, new PanelEventArgs(panel));
-        }
-
-        private void NotifyPanelRemoved(int index)
-        {
-            PanelRemoved?.Invoke(this, new PanelIndexEventArgs(index));
-        }
-
-        private void NotifySelectedIndexChanged(int index)
-        {
-            SelectedIndexChanged?.Invoke(this, new PanelIndexEventArgs(index));
-        }
-
-        private void NotifyPanelCleared()
-        {
-            Cleared?.Invoke(this, EventArgs.Empty);
         }
 
         public bool Add(IPanelModel panel)
@@ -126,6 +110,7 @@ namespace LanExchange.Application.Models
                 panel.Assign(item);
                 Add(panel);
             }
+
             if (dto.SelectedIndex != -1)
                 SelectedIndex = dto.SelectedIndex;
 
@@ -135,12 +120,33 @@ namespace LanExchange.Application.Models
                 if (root == null)
                     root = factoryManager.CreateDefaultRoot(DEFAULT2_PANELITEMTYPE);
                 if (root == null) return;
+
                 // create default tab
                 var info = modelFactory.CreatePanelModel();
                 info.SetDefaultRoot(root);
                 info.DataType = panelFillers.GetFillType(root).Name;
                 Add(info);
             }
+        }
+
+        private void NotifyPanelAdded(IPanelModel panel)
+        {
+            PanelAdded?.Invoke(this, new PanelEventArgs(panel));
+        }
+
+        private void NotifyPanelRemoved(int index)
+        {
+            PanelRemoved?.Invoke(this, new PanelIndexEventArgs(index));
+        }
+
+        private void NotifySelectedIndexChanged(int index)
+        {
+            SelectedIndexChanged?.Invoke(this, new PanelIndexEventArgs(index));
+        }
+
+        private void NotifyPanelCleared()
+        {
+            Cleared?.Invoke(this, EventArgs.Empty);
         }
     }
 }

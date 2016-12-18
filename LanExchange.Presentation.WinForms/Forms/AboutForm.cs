@@ -26,6 +26,8 @@ namespace LanExchange.Presentation.WinForms.Forms
 
         public event EventHandler ViewClosed;
 
+        public bool RightToLeftValue { get; set; }
+
         public string VersionText
         {
             get { return eVersion.Text; }
@@ -112,8 +114,6 @@ namespace LanExchange.Presentation.WinForms.Forms
         {
             return ShowDialog() == DialogResult.OK;
         }
-
-        public bool RightToLeftValue { get; set; }
 
         private void OnFormClosed(object sender, FormClosedEventArgs e)
         {

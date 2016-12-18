@@ -13,16 +13,13 @@ namespace LanExchange.Presentation.WinForms
             subMenu2 = subMenu as ToolStripMenuItem;
         }
 
-        public static SubMenuAdapter CreateFrom(object subMenu)
-        {
-            if (subMenu is ContextMenuStrip || subMenu is ToolStripMenuItem)
-                return new SubMenuAdapter(subMenu);
-            return null;
-        }
-
         public object Tag
         {
-            get { return subMenu1 != null ? subMenu1.Tag : subMenu2.Tag; }
+            get
+            {
+                return subMenu1 != null ? subMenu1.Tag : subMenu2.Tag;
+            }
+
             set
             {
                 if (subMenu1 != null)
@@ -35,6 +32,13 @@ namespace LanExchange.Presentation.WinForms
         public ToolStripItemCollection Items
         {
             get { return subMenu1 != null ? subMenu1.Items : subMenu2.DropDownItems; }
+        }
+
+        public static SubMenuAdapter CreateFrom(object subMenu)
+        {
+            if (subMenu is ContextMenuStrip || subMenu is ToolStripMenuItem)
+                return new SubMenuAdapter(subMenu);
+            return null;
         }
     }
 }

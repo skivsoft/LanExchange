@@ -10,18 +10,16 @@ namespace LanExchange.Presentation.WinForms.Forms
     {
         private readonly IEditPresenter presenter;
 
-        public event EventHandler ViewClosed;
-
         public EditForm(IEditPresenter presenter)
         {
             if (presenter == null) throw new ArgumentNullException(nameof(presenter));
 
-
             InitializeComponent();
-
             this.presenter = presenter;
             presenter.Initialize(this);
         }
+
+        public event EventHandler ViewClosed;
 
         [Localizable(false)]
         public void SetColumns(IList<PanelColumnHeader> columns)
@@ -48,8 +46,10 @@ namespace LanExchange.Presentation.WinForms.Forms
                     maxWidth = label.Width;
                     labelHeight = label.Height;
                 }
+
                 top += LINE_DELTA;
             }
+
             Width = SPACE * 3 + maxWidth + EDIT_WIDTH + SystemInformation.FixedFrameBorderSize.Width * 2;
             Height = top + 100;
             top = SPACE;
@@ -71,12 +71,12 @@ namespace LanExchange.Presentation.WinForms.Forms
             return ShowDialog() == DialogResult.OK;
         }
 
-        private void buttonOK_Click(object sender, EventArgs e)
+        private void ButtonOK_Click(object sender, EventArgs e)
         {
             presenter.PerformOk();
         }
 
-        private void buttonCancel_Click(object sender, EventArgs e)
+        private void ButtonCancel_Click(object sender, EventArgs e)
         {
             presenter.PerformCancel();
         }

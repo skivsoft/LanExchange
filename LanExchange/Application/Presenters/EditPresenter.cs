@@ -19,6 +19,7 @@ namespace LanExchange.Application.Presenters
         {
             var columns = panelColumns.GetColumns(typeName);
             var columnsForView = columns.Where(header => !header.Refreshable).ToList();
+
             // TODO hide model
             // View.SetColumns(columnsForView);
         }
