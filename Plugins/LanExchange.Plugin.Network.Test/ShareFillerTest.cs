@@ -2,8 +2,8 @@
 using System.Collections.ObjectModel;
 using System.Windows.Forms;
 using LanExchange.Plugin.Network.NetApi;
-using NUnit.Framework;
 using LanExchange.Presentation.Interfaces;
+using NUnit.Framework;
 
 namespace LanExchange.Plugin.Network
 {
@@ -30,14 +30,12 @@ namespace LanExchange.Plugin.Network
         {
             var strategy = new ShareFiller();
             string domain = WorkstationInfo.FromComputer(null).LanGroup;
-            var computer = new ComputerPanelItem(new DomainPanelItem(new DomainRoot(), domain),
-                SystemInformation.ComputerName);
-            ShareFiller.ShowHiddenShares = true;
+            var computer = new ComputerPanelItem(new DomainPanelItem(new DomainRoot(), domain), SystemInformation.ComputerName);
+
             var result = new Collection<PanelItemBase>();
             strategy.AsyncFill(computer, result);
             Assert.Greater(result.Count, 0);
             Assert.IsInstanceOf<SharePanelItem>(result[0]);
-            ShareFiller.ShowHiddenShares = false;
             strategy.AsyncFill(computer, result);
         }
     }

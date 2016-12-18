@@ -13,6 +13,9 @@ namespace LanExchange.Presentation.WinForms
         private const int SYSTEM_INDEX_WORKGROUP  = 18;
         private const int SYSTEM_INDEX_FOLDER     = 4;
 
+        private static readonly Bitmap SmallEmpty = new Bitmap(16, 16);
+        private static readonly Bitmap LargeEmpty = new Bitmap(32, 32);
+
         private readonly IShell32Service shellService;
         private readonly IServiceFactory serviceFactory;
         private readonly ILogService logService;
@@ -21,9 +24,6 @@ namespace LanExchange.Presentation.WinForms
         private ImageList largeImageList;
         private Dictionary<string, int> namesMap;
         private int lastIndex;
-
-        private static readonly Bitmap SmallEmpty = new Bitmap(16, 16);
-        private static readonly Bitmap LargeEmpty = new Bitmap(32, 32);
 
         public ImageManager(
             IShell32Service shellService,
@@ -42,6 +42,23 @@ namespace LanExchange.Presentation.WinForms
             Initialize();
         }
 
+        public void Dispose()
+        {
+            smallImageList.Dispose();
+            largeImageList.Dispose();
+        }
+
+        private static Image MadeDisabledBitmap(Image bmp)
+        {
+            var result = new Bitmap(bmp.Width, bmp.Height);
+            using (var gr = Graphics.FromImage(result))
+            {
+                ControlPaint.DrawImageDisabled(gr, bmp, 0, 0, Color.Transparent);
+            }
+
+            return result;
+        }
+
         private void Initialize()
         {
             shellService.FileIconInit(true);
@@ -55,8 +72,10 @@ namespace LanExchange.Presentation.WinForms
                 RegisterWorkgroupIcon(small, large);
                 RegisterMyComputerIcon(small, large);
                 RegisterFolderIcon(small, large);
+
                 // register double dot icon
                 RegisterImage(PanelImageNames.DOUBLEDOT, Resources.back_16, Resources.back_32);
+                
                 // register user icon
                 RegisterImage(PanelImageNames.USER, Resources.user_16, Resources.user_32);
                 RegisterDisabledImage(PanelImageNames.USER + PanelImageNames.HiddenPostfix, Resources.user_16, Resources.user_32);
@@ -109,22 +128,6 @@ namespace LanExchange.Presentation.WinForms
             RegisterImage(imageName, bitmap1, bitmap2);
         }
 
-        public void Dispose()
-        {
-            smallImageList.Dispose();
-            largeImageList.Dispose();
-        }
-
-        private static Image MadeDisabledBitmap(Image bmp)
-        {
-            var result = new Bitmap(bmp.Width, bmp.Height);
-            using (var gr = Graphics.FromImage(result))
-            {
-                ControlPaint.DrawImageDisabled(gr, bmp, 0, 0, Color.Transparent);
-            }
-            return result;
-        }
-
         public int IndexOf(string name)
         {
             int index;
@@ -165,13 +168,6 @@ namespace LanExchange.Presentation.WinForms
             RegisterImage(name, imageSmall, imageLarge);
         }
 
-        private void RegisterDisabledImage(string name, Icon iconSmall, Icon iconLarge)
-        {
-            Image imageSmall = iconSmall == null ? null : iconSmall.ToBitmap();
-            Image imageLarge = iconLarge == null ? null : iconLarge.ToBitmap();
-            RegisterImage(name, MadeDisabledBitmap(imageSmall), MadeDisabledBitmap(imageLarge));
-        }
-
         public void UnregisterImage(string name)
         {
             int index;
@@ -206,6 +202,7 @@ namespace LanExchange.Presentation.WinForms
             {
                 result = Icon.FromHandle(bitmap.GetHicon());
             }
+
             return result;
         }
 
@@ -218,6 +215,7 @@ namespace LanExchange.Presentation.WinForms
             {
                 result = Icon.FromHandle(bitmap.GetHicon());
             }
+
             return result;
         }
 
@@ -265,5 +263,11 @@ namespace LanExchange.Presentation.WinForms
             }
         }
 
+        private void RegisterDisabledImage(string name, Icon iconSmall, Icon iconLarge)
+        {
+            Image imageSmall = iconSmall == null ? null : iconSmall.ToBitmap();
+            Image imageLarge = iconLarge == null ? null : iconLarge.ToBitmap();
+            RegisterImage(name, MadeDisabledBitmap(imageSmall), MadeDisabledBitmap(imageLarge));
+        }
     }
 }

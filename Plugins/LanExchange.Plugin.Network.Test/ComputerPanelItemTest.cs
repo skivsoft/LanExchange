@@ -1,15 +1,17 @@
 ﻿using System;
 using System.IO;
-using LanExchange.Plugin.Network.NetApi;
 using System.Xml.Serialization;
-using NUnit.Framework;
+using LanExchange.Plugin.Network.NetApi;
 using LanExchange.Presentation.Interfaces;
+using NUnit.Framework;
 
 namespace LanExchange.Plugin.Network
 {
     [TestFixture]
     internal class ComputerPanelItemTest
     {
+        private ComputerPanelItem comp;
+
         [SetUp]
         public void SetUp()
         {
@@ -19,70 +21,63 @@ namespace LanExchange.Plugin.Network
             info.Version.PlatformId = (uint)SV_101_PLATFORM.PLATFORM_ID_NT;
             info.Version.Major = 6;
             info.Version.Minor = 2;
-            m_Comp = new ComputerPanelItem(null, info);
+            comp = new ComputerPanelItem(null, info);
         }
 
         [TearDown]
         public void TearDown()
         {
-            m_Comp = null;
+            comp = null;
         }
 
-        private ComputerPanelItem m_Comp;
-
-        // [Test]
-
-        public void TestGetSchema()
-        {
-            // Assert.IsNull(m_Comp.GetSchema());
-
-        }
-
-        // [Test]
-
+        [Test]
         public void TestWriteXML()
         {
-            m_Comp.SI.Name = "QQQ";
-            m_Comp.SI.Comment = "WWW";
-            m_Comp.SI.Version.PlatformId = 1;
-            m_Comp.SI.Version.Type = 2;
-            m_Comp.SI.Version.Major = 3;
-            m_Comp.SI.Version.Minor = 4;
+            comp.SI.Name = "QQQ";
+            comp.SI.Comment = "WWW";
+            comp.SI.Version.PlatformId = 1;
+            comp.SI.Version.Type = 2;
+            comp.SI.Version.Major = 3;
+            comp.SI.Version.Minor = 4;
+            
             // try serialize
-            var ser = new XmlSerializer(m_Comp.GetType());
+            var ser = new XmlSerializer(comp.GetType());
             string content;
             using (var sw = new StringWriter())
             {
-                ser.Serialize(sw, m_Comp);
+                ser.Serialize(sw, comp);
                 content = sw.ToString();
             }
-            const string contentCheck =
+
+            const string ContentCheck =
                 "<ComputerPanelItem Name=\"QQQ\" PlatformID=\"1\" Version=\"3.4\" Type=\"2\" Comment=\"WWW\" />";
-            Assert.IsTrue(content.EndsWith(contentCheck));
+            Assert.IsTrue(content.EndsWith(ContentCheck));
         }
 
-        // [Test]
-
+        [Test]
         public void TestReadXML1()
         {
-            m_Comp.SI.Name = "QQQ";
-            m_Comp.SI.Comment = null;
-            m_Comp.SI.Version.PlatformId = 1;
-            m_Comp.SI.Version.Type = 2;
-            m_Comp.SI.Version.Major = 3;
-            m_Comp.SI.Version.Minor = 4;
+            comp.SI.Name = "QQQ";
+            comp.SI.Comment = null;
+            comp.SI.Version.PlatformId = 1;
+            comp.SI.Version.Type = 2;
+            comp.SI.Version.Major = 3;
+            comp.SI.Version.Minor = 4;
+
             // try serialize
-            var ser = new XmlSerializer(m_Comp.GetType());
+            var ser = new XmlSerializer(comp.GetType());
             string content;
             using (var sw = new StringWriter())
             {
-                ser.Serialize(sw, m_Comp);
+                ser.Serialize(sw, comp);
                 content = sw.ToString();
             }
+            
             // try deserialize
             TextReader tr = new StringReader(content);
             object result = ser.Deserialize(tr);
             tr.Close();
+            
             // check deserialize result
             Assert.IsNotNull(result);
             Assert.IsInstanceOf(typeof(ComputerPanelItem), result);
@@ -90,18 +85,18 @@ namespace LanExchange.Plugin.Network
             Assert.AreEqual(string.Empty, ((ComputerPanelItem)result).Comment);
         }
 
-        // [Test]
-
+        [Test]
         public void TestReadXML2()
         {
-            const string content =
+            const string Content =
                 "<ComputerPanelItem PlatformID=\"500\" Comment=\"WWW\" Version=\"5.1\" Type=\"11407\" />";
             var ser = new XmlSerializer(typeof(ComputerPanelItem));
 
             // try deserialize
-            TextReader tr = new StringReader(content);
+            TextReader tr = new StringReader(Content);
             object result = ser.Deserialize(tr);
             tr.Close();
+
             // check deserialize result
             Assert.IsNotNull(result);
             Assert.IsInstanceOf(typeof(ComputerPanelItem), result);
@@ -113,52 +108,52 @@ namespace LanExchange.Plugin.Network
         public void ExceptionThis()
         {
             IComparable value;
-            Assert.Throws<ArgumentOutOfRangeException>(() => value = m_Comp[m_Comp.CountColumns]);
+            Assert.Throws<ArgumentOutOfRangeException>(() => value = comp[comp.CountColumns]);
         }
 
         [Test]
         public void TestComputerPanelItem()
         {
-            m_Comp = new ComputerPanelItem(null, (ServerInfo)null);
-            Assert.IsNotNull(m_Comp.SI);
+            comp = new ComputerPanelItem(null, (ServerInfo)null);
+            Assert.IsNotNull(comp.SI);
         }
 
         [Test]
         public void TestFullName()
         {
-            Assert.AreEqual(@"\\COMP01", m_Comp.FullName);
-            var share = new SharePanelItem(m_Comp, "SHARE01");
+            Assert.AreEqual(@"\\COMP01", comp.FullName);
+            var share = new SharePanelItem(comp, "SHARE01");
             Assert.AreEqual(@"\\COMP01\SHARE01", share.FullName);
         }
 
         [Test]
         public void TestImageName()
         {
-            Assert.AreEqual(PanelImageNames.COMPUTER + PanelImageNames.GreenPostfix, m_Comp.ImageName);
-            m_Comp.IsReachable = false;
-            Assert.AreEqual(PanelImageNames.COMPUTER + PanelImageNames.GreenPostfix, m_Comp.ImageName);
-            m_Comp.Parent = new DomainRoot();
-            m_Comp.IsReachable = true;
-            Assert.AreEqual(PanelImageNames.COMPUTER, m_Comp.ImageName);
-            m_Comp.IsReachable = false;
-            Assert.AreEqual(PanelImageNames.COMPUTER + PanelImageNames.RedPostfix, m_Comp.ImageName);
+            Assert.AreEqual(PanelImageNames.COMPUTER + PanelImageNames.GreenPostfix, comp.ImageName);
+            comp.IsReachable = false;
+            Assert.AreEqual(PanelImageNames.COMPUTER + PanelImageNames.GreenPostfix, comp.ImageName);
+            comp.Parent = new DomainRoot();
+            comp.IsReachable = true;
+            Assert.AreEqual(PanelImageNames.COMPUTER, comp.ImageName);
+            comp.IsReachable = false;
+            Assert.AreEqual(PanelImageNames.COMPUTER + PanelImageNames.RedPostfix, comp.ImageName);
         }
 
         [Test]
         public void TestName()
         {
-            Assert.AreEqual("COMP01", m_Comp.Name);
-            m_Comp.Name = "test1";
-            Assert.AreEqual("test1", m_Comp.Name);
-            Assert.AreEqual("test1", m_Comp.SI.Name);
+            Assert.AreEqual("COMP01", comp.Name);
+            comp.Name = "test1";
+            Assert.AreEqual("test1", comp.Name);
+            Assert.AreEqual("test1", comp.SI.Name);
         }
 
         [Test]
         public void TestThis()
         {
-            Assert.AreEqual(m_Comp.Name, m_Comp[0]);
-            Assert.AreEqual(m_Comp.Comment, m_Comp[1]);
-            Assert.AreEqual(m_Comp.SI.Version, m_Comp[2]);
+            Assert.AreEqual(comp.Name, comp[0]);
+            Assert.AreEqual(comp.Comment, comp[1]);
+            Assert.AreEqual(comp.SI.Version, comp[2]);
         }
     }
 }

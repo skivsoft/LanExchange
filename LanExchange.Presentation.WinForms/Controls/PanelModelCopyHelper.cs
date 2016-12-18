@@ -29,7 +29,6 @@ namespace LanExchange.Presentation.WinForms.Controls
             indexes = new List<int>();
         }
 
- 
         public IPanelModel Model
         {
             get { return model; }
@@ -57,7 +56,11 @@ namespace LanExchange.Presentation.WinForms.Controls
 
         public PanelItemBase CurrentItem
         {
-            get { return currentItem; }
+            get
+            {
+                return currentItem;
+            }
+
             set
             {
                 currentItem = value;
@@ -71,10 +74,8 @@ namespace LanExchange.Presentation.WinForms.Controls
         {
             indexes.Sort();
             if (indexes.Count > 1)
-            {
                 if (indexes[0] == 0 && model.GetItemAt(0) is PanelItemDoubleDot)
                     indexes.Remove(0);
-            }
         }
 
         public void MoveTo(int index)
@@ -112,6 +113,7 @@ namespace LanExchange.Presentation.WinForms.Controls
                         first = false;
                     }
             }
+
             return sb.ToString();
         }
 
@@ -124,6 +126,7 @@ namespace LanExchange.Presentation.WinForms.Controls
                 if (index > 0) sb.AppendLine();
                 sb.Append(GetColumnValue(colIndex));
             }
+
             return sb.ToString();
         }
     
@@ -135,6 +138,7 @@ namespace LanExchange.Presentation.WinForms.Controls
                 MoveTo(index);
                 result.Add(CurrentItem);
             }
+
             return result;
         }
     }

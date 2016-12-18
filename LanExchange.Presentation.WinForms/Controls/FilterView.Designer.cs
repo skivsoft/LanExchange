@@ -46,9 +46,9 @@ namespace LanExchange.Presentation.WinForms.Controls
             this.imgClear.Size = new System.Drawing.Size(16, 16);
             this.imgClear.TabIndex = 8;
             this.imgClear.TabStop = false;
-            this.imgClear.Click += new System.EventHandler(this.imgClear_Click);
-            this.imgClear.MouseLeave += new System.EventHandler(this.imgClear_MouseLeave);
-            this.imgClear.MouseHover += new System.EventHandler(this.imgClear_MouseHover);
+            this.imgClear.Click += new System.EventHandler(this.ImageClear_Click);
+            this.imgClear.MouseLeave += new System.EventHandler(this.ImageClear_MouseLeave);
+            this.imgClear.MouseHover += new System.EventHandler(this.ImageClear_MouseHover);
             // 
             // eFilter
             // 
@@ -58,8 +58,8 @@ namespace LanExchange.Presentation.WinForms.Controls
             this.eFilter.Name = "eFilter";
             this.eFilter.Size = new System.Drawing.Size(436, 20);
             this.eFilter.TabIndex = 9;
-            this.eFilter.TextChanged += new System.EventHandler(this.eFilter_TextChanged);
-            this.eFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.eFilter_KeyDown);
+            this.eFilter.TextChanged += new System.EventHandler(this.EditFilter_TextChanged);
+            this.eFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EditFilter_KeyDown);
             // 
             // FilterView
             // 

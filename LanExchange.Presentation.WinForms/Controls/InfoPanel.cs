@@ -9,9 +9,8 @@ namespace LanExchange.Presentation.WinForms.Controls
     internal sealed partial class InfoPanel : UserControl, IInfoView
     {
         private readonly IInfoPresenter presenter;
-
-        private int numLines;
         private readonly IList<Label> lines;
+        private int numLines;
         
         public InfoPanel(IInfoPresenter presenter)
         {
@@ -31,7 +30,11 @@ namespace LanExchange.Presentation.WinForms.Controls
 
         public int NumLines
         {
-            get { return numLines; }
+            get
+            {
+                return numLines;
+            }
+
             set
             {
                 numLines = value;
@@ -42,6 +45,7 @@ namespace LanExchange.Presentation.WinForms.Controls
                     Controls.Add(control);
                     lines.Add(control);
                 }
+
                 for (int i = lines.Count - 1; i > numLines - 1; i--)
                 {
                     var label = lines[i];
@@ -49,16 +53,6 @@ namespace LanExchange.Presentation.WinForms.Controls
                     label.Dispose();
                 }
             }
-        }
-
-        private int GetLocationX()
-        {
-            return RightToLeft == RightToLeft.No ? 50 : Width - 50;
-        }
-
-        private static int GetLocationY(int index)
-        {
-            return 8 + index * 16;
         }
 
         public string GetLine(int index)
@@ -73,6 +67,16 @@ namespace LanExchange.Presentation.WinForms.Controls
             if (index < 0 || index > numLines - 1)
                 return;
             lines[index].Text = text;
+        }
+
+        private static int GetLocationY(int index)
+        {
+            return 8 + index * 16;
+        }
+
+        private int GetLocationX()
+        {
+            return RightToLeft == RightToLeft.No ? 50 : Width - 50;
         }
 
         private Label CreateLabelControl(int index)
@@ -113,7 +117,6 @@ namespace LanExchange.Presentation.WinForms.Controls
         // e.Cancel = !addonManager.BuildMenuForPanelItemType(popTop, pInfo.CurrentItem.GetType().Name);
         // addonManager.SetupMenuForPanelItem(popTop, pInfo.CurrentItem);
         // }
-
         // public void ClearInfoPanel()
         // {
         // pInfo.CurrentItem = null;
@@ -122,7 +125,6 @@ namespace LanExchange.Presentation.WinForms.Controls
         // pInfo.SetLine(index, string.Empty);
         // lItemsCount.Text = string.Empty;
         // }
-
         // private void FocusedItemChanged()
         // {
         // View.Info.CurrentItem = panelItem;
@@ -139,7 +141,6 @@ namespace LanExchange.Presentation.WinForms.Controls
         // for (int i = index; i < View.Info.NumLines; i++)
         // View.Info.SetLine(i, string.Empty);
         // }
-
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             // Ctrl+Up/Ctrl+Down - change number of info lines

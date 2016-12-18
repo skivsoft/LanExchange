@@ -11,7 +11,6 @@ namespace LanExchange.Plugin.Windows.Utils
     [Localizable(false)]
     public static class SysImageListHelper
     {
-        #region UnmanagedMethods
         private const int LVM_FIRST = 0x1000;
         private const int LVM_SETIMAGELIST = LVM_FIRST + 3;
 
@@ -31,7 +30,6 @@ namespace LanExchange.Plugin.Windows.Utils
             int wMsg, 
             IntPtr wParam, 
             IntPtr lParam);
-        #endregion
 
         /// <summary>
         /// Associates a SysImageList with a ListView control

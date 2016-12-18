@@ -30,8 +30,8 @@ namespace LanExchange.Presentation.WinForms.Helpers
         {
             // Convert Base64 String to byte[]
             byte[] imageBytes = Convert.FromBase64String(base64String);
-            var ms = new MemoryStream(imageBytes, 0, 
-            imageBytes.Length);
+            var ms = new MemoryStream(imageBytes, 0, imageBytes.Length);
+
             // Convert byte[] to Image
             ms.Write(imageBytes, 0, imageBytes.Length);
             return Image.FromStream(ms, true);

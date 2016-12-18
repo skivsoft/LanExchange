@@ -1,54 +1,53 @@
 ﻿using System;
 using System.IO;
 using System.Xml.Serialization;
-using NUnit.Framework;
 using LanExchange.Presentation.Interfaces;
+using NUnit.Framework;
 
 namespace LanExchange.Plugin.Network
 {
     [TestFixture]
     internal class DomainPanelItemTest
     {
+        private DomainPanelItem domain;
+
         [SetUp]
         public void SetUp()
         {
-            m_Domain = new DomainPanelItem(null, "DOMAIN");
+            domain = new DomainPanelItem(null, "DOMAIN");
         }
 
         [TearDown]
         public void TearDown()
         {
-            m_Domain = null;
+            domain = null;
         }
-
-        private DomainPanelItem m_Domain;
 
         [Test]
         public void ExceptionThis()
         {
             IComparable value;
-            Assert.Throws<ArgumentOutOfRangeException>(() => value = m_Domain[m_Domain.CountColumns]);
+            Assert.Throws<ArgumentOutOfRangeException>(() => value = domain[domain.CountColumns]);
         }
 
         [Test]
         public void TestFullName()
         {
-            Assert.IsEmpty(m_Domain.FullName);
+            Assert.IsEmpty(domain.FullName);
         }
 
         [Test]
         public void TestImageName()
         {
-            Assert.AreEqual(PanelImageNames.DOMAIN, m_Domain.ImageName);
+            Assert.AreEqual(PanelImageNames.DOMAIN, domain.ImageName);
         }
 
         [Test]
         public void TestName()
         {
-            // Assert.IsTrue(m_Domain.IsCacheable);
-
-            m_Domain.Name = "DOMAIN1";
-            Assert.AreEqual("DOMAIN1", m_Domain.Name);
+            // Assert.IsTrue(domain.IsCacheable);
+            domain.Name = "DOMAIN1";
+            Assert.AreEqual("DOMAIN1", domain.Name);
         }
 
         [Test]
@@ -59,7 +58,7 @@ namespace LanExchange.Plugin.Network
            var ser = new XmlSerializer(typeof(PanelItemBase), extraTypes);
             using (var sw = new StringWriter())
             {
-                ser.Serialize(sw, m_Domain);
+                ser.Serialize(sw, domain);
                 string result = sw.ToString();
                 Assert.IsNotEmpty(result);
             }
@@ -68,7 +67,7 @@ namespace LanExchange.Plugin.Network
         [Test]
         public void TestThis()
         {
-            Assert.AreEqual(m_Domain.Name, m_Domain[0]);
+            Assert.AreEqual(domain.Name, domain[0]);
         }
     }
 }

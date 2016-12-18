@@ -5,6 +5,20 @@ namespace LanExchange.Plugin.Translit
 {
     internal class KazakhCyrillicToArabic : ITranslitStrategy
     {
+        public string Transliterate(string text)
+        {
+            var result = string.Empty;
+            var upper = text.ToUpper();
+            for (int i = 0; i < upper.Length; i++)
+            {
+                var arabic = TR(text[i], upper[i]);
+                if (arabic != null)
+                result += arabic;
+            }
+
+            return result;
+        }
+
         private static string TR(char ch, char upper)
         {
             switch (upper)
@@ -54,19 +68,6 @@ namespace LanExchange.Plugin.Translit
                 case ',': return "،";
                 default: return ch.ToString(CultureInfo.CurrentUICulture);
             }
-        }
-
-        public string Transliterate(string text)
-        {
-            var result = string.Empty;
-            var upper = text.ToUpper();
-            for (int i = 0; i < upper.Length; i++)
-            {
-                var arabic = TR(text[i], upper[i]);
-                if (arabic != null)
-                result += arabic;
-            }
-            return result;
         }
     }
 }

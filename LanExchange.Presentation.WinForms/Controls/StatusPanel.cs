@@ -17,25 +17,6 @@ namespace LanExchange.Presentation.WinForms.Controls
             presenter.Initialize(this);
         }
 
-        private void lCompName_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-                presenter.PerformComputerLeftClick();
-
-            if (e.Button == MouseButtons.Right)
-            {
-                var control = (ModifierKeys & Keys.Control) != 0;
-                var shift = (ModifierKeys & Keys.Shift) != 0;
-                presenter.PerformComputerRightClick(control, shift);
-            }
-        }
-
-        private void lUserName_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-                presenter.PerformUserRightClick();
-        }
-
         public string ComputerName
         {
             get { return lCompName.Text; }
@@ -63,6 +44,25 @@ namespace LanExchange.Presentation.WinForms.Controls
         public void SetImageList(object imageList)
         {
             Status.ImageList = (ImageList)imageList;
+        }
+
+        private void LabelCompName_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+                presenter.PerformComputerLeftClick();
+
+            if (e.Button == MouseButtons.Right)
+            {
+                var control = (ModifierKeys & Keys.Control) != 0;
+                var shift = (ModifierKeys & Keys.Shift) != 0;
+                presenter.PerformComputerRightClick(control, shift);
+            }
+        }
+
+        private void LabelUserName_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+                presenter.PerformUserRightClick();
         }
     }
 }

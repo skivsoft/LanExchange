@@ -6,7 +6,7 @@ namespace LanExchange.Plugin.Network.NetApi
     [Serializable]
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     [CLSCompliant(false)]
-    public sealed class SERVER_INFO_101
+    public struct SERVER_INFO_101
     {
         [MarshalAs(UnmanagedType.U4)]
         public uint platform_id;

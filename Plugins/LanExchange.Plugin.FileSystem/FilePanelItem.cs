@@ -7,7 +7,6 @@ namespace LanExchange.Plugin.FileSystem
 {
     public class FilePanelItem : PanelItemBase
     {
-
         private string fileName;
         private FileInfo fileInfo;
 
@@ -25,8 +24,13 @@ namespace LanExchange.Plugin.FileSystem
 
         public string FileName
         {
-            get { return fileName; }
-            set { 
+            get
+            {
+                return fileName;
+            }
+
+            set
+            { 
                 fileName = value;
                 Name = Path.GetFileName(fileName);
                 fileInfo = new FileInfo(fileName);
@@ -60,6 +64,11 @@ namespace LanExchange.Plugin.FileSystem
             }
         }
 
+        public override string ImageLegendText
+        {
+            get { return string.Empty; }
+        }
+
         public override IComparable GetValue(int index)
         {
             switch (index)
@@ -73,11 +82,6 @@ namespace LanExchange.Plugin.FileSystem
                 default:
                     return base.GetValue(index);
             }
-        }
-
-        public override string ImageLegendText
-        {
-            get { return string.Empty; }
         }
 
         public override object Clone()

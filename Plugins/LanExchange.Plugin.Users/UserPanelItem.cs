@@ -26,13 +26,11 @@ namespace LanExchange.Plugin.Users
             get
             {
                 // return "CN=" + base.FullName;
-
                 return AdsPath;
             }
         }
 
         // [XmlAttribute]
-
         public string AdsPath { get; set; }
 
         [XmlAttribute]
@@ -80,6 +78,19 @@ namespace LanExchange.Plugin.Users
             get { return base.CountColumns + 9; }
         }
 
+        public override string ImageName
+        {
+            get
+            {
+                return IsAccountDisabled ? PanelImageNames.USER + PanelImageNames.RedPostfix : PanelImageNames.USER;
+            }
+        }
+
+        public override string ImageLegendText
+        {
+            get { return IsAccountDisabled ? Resources.Legend_UserDisabled : Resources.Legend_UserNormal; }
+        }
+
         public override IComparable GetValue(int index)
         {
             switch (index)
@@ -98,19 +109,6 @@ namespace LanExchange.Plugin.Users
             }
         }
 
-        public override string ImageName
-        {
-            get
-            {
-                return IsAccountDisabled ? PanelImageNames.USER + PanelImageNames.RedPostfix : PanelImageNames.USER;
-            }
-        }
-
-        public override string ImageLegendText
-        {
-            get { return IsAccountDisabled ? Resources.Legend_UserDisabled : Resources.Legend_UserNormal; }
-        }
-
         public override object Clone()
         {
             var result = new UserPanelItem(Parent, Name);
@@ -127,6 +125,5 @@ namespace LanExchange.Plugin.Users
             result.EmployeeID = EmployeeID;
             return result;
         }
-
     }
 }

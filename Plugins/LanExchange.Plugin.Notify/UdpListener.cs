@@ -8,8 +8,6 @@ namespace LanExchange.Plugin.Notify
     public class UdpListener : IDisposable
     {
         private readonly UdpClient udpClient;
-
-        public event EventHandler<MessageEventArgs> MessageReceived;
         private IPEndPoint endPoint;
 
         public UdpListener(int port)
@@ -20,6 +18,8 @@ namespace LanExchange.Plugin.Notify
             udpClient.Client.Bind(endPoint);
             udpClient.BeginReceive(ReceiveCallback, null);
         }
+
+        public event EventHandler<MessageEventArgs> MessageReceived;
 
         public void Dispose()
         {

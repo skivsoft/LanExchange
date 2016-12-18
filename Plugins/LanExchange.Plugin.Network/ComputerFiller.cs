@@ -21,7 +21,6 @@ namespace LanExchange.Plugin.Network
         {
             if (parent == null) throw new ArgumentNullException(nameof(parent));
 
-
             // get server list via OS api
             foreach (var item in NetApiHelper.NetServerEnum(parent.Name, SV_101_TYPES.SV_TYPE_ALL))
             {

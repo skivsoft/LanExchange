@@ -60,14 +60,14 @@
             this.lCompName.Size = new System.Drawing.Size(19, 17);
             this.lCompName.Text = "    ";
             this.lCompName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lCompName.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lCompName_MouseUp);
+            this.lCompName.MouseUp += new System.Windows.Forms.MouseEventHandler(this.LabelCompName_MouseUp);
             // 
             // lUserName
             // 
             this.lUserName.Name = "lUserName";
             this.lUserName.Size = new System.Drawing.Size(19, 17);
             this.lUserName.Text = "    ";
-            this.lUserName.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lUserName_MouseUp);
+            this.lUserName.MouseUp += new System.Windows.Forms.MouseEventHandler(this.LabelUserName_MouseUp);
             // 
             // StatusPanel
             // 

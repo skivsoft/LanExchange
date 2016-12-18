@@ -27,6 +27,7 @@ namespace LanExchange.Presentation.WinForms.Controls
             var handle = userService.GetHeaderControl(olv.Handle);
             if (handle != IntPtr.Zero)
                 AssignHandle(handle);
+
             // AssignHandle(NativeMethods.GetHeaderControl(olv));
         }
 
@@ -35,12 +36,15 @@ namespace LanExchange.Presentation.WinForms.Controls
         /// or -1 if the cursor is not over a column
         /// </summary>
         /// <returns>Index of the column under the cursor, or -1</returns>
-        public int ColumnIndexUnderCursor {
-            get {
+        public int ColumnIndexUnderCursor
+        {
+            get
+            {
                 Point pt = ListView.PointToClient(Cursor.Position);
 
                 pt.X += userService.GetScrollPosition(ListView.Handle, true);
                 return userService.GetColumnUnderPoint(Handle, pt);
+
                 // pt.X += NativeMethods.GetScrollPosition(ListView, true);
                 // return NativeMethods.GetColumnUnderPoint(Handle, pt);
             }

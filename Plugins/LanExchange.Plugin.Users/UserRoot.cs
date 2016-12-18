@@ -8,13 +8,8 @@ namespace LanExchange.Plugin.Users
 
         public UserRoot()
         {
-            startPath = LdapUtils.GetUserPath(PluginUsers.sysInfoService.UserName);
+            startPath = LdapUtils.GetUserPath(PluginUsers.SysInfoService.UserName);
             startPath = LdapUtils.GetDCNameFromPath(startPath, 2);
-        }
-
-        protected override string GetName()
-        {
-            return LdapUtils.GetLdapValue(startPath);
         }
 
         public override string ImageName
@@ -25,6 +20,11 @@ namespace LanExchange.Plugin.Users
         public override object Clone()
         {
             return new UserRoot();
+        }
+
+        protected override string GetName()
+        {
+            return LdapUtils.GetLdapValue(startPath);
         }
     }
 }

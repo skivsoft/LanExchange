@@ -53,7 +53,7 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.bRun.TabIndex = 1;
             this.bRun.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.bRun.UseVisualStyleBackColor = true;
-            this.bRun.Click += new System.EventHandler(this.bRun_Click);
+            this.bRun.Click += new System.EventHandler(this.ButtonRun_Click);
             // 
             // bCancel
             // 
@@ -65,7 +65,7 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.bCancel.TabIndex = 2;
             this.bCancel.Text = Resources.Cancel;
             this.bCancel.UseVisualStyleBackColor = true;
-            this.bCancel.Click += new System.EventHandler(this.bCancel_Click);
+            this.bCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
             // 
             // lObject
             // 

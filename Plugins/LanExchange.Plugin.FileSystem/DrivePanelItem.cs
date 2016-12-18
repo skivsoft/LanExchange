@@ -24,7 +24,11 @@ namespace LanExchange.Plugin.FileSystem
         [XmlIgnore]
         public DriveInfo Info
         {
-            get { return driveInfo; }
+            get
+            {
+                return driveInfo;
+            }
+
             set
             {
                 driveInfo = value;

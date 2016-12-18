@@ -1,7 +1,7 @@
-﻿using LanExchange.Presentation.Interfaces;
-using LanExchange.Presentation.Interfaces.Menu;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using LanExchange.Presentation.Interfaces;
+using LanExchange.Presentation.Interfaces.Menu;
 
 namespace LanExchange.Plugin.Shortcut
 {

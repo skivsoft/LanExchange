@@ -11,7 +11,6 @@ namespace LanExchange.Plugin.Users
         public PathDistinct()
         {
             dict = new Dictionary<string, int>(new StringEqualityComparer());
-
         }
 
         public IEnumerable<string> Items
@@ -23,15 +22,20 @@ namespace LanExchange.Plugin.Users
             }
         }
 
+        public int Count
+        {
+            get { return dict.Count; }
+        }
+
+        public string Prefix
+        {
+            get { return GetPrefix(); }
+        }
+
         public void Add(string path)
         {
             if (!dict.ContainsKey(path))
                 dict.Add(path, 0);
-        }
-
-        public int Count 
-        {
-            get { return dict.Count; }
         }
 
         [Localizable(false)]
@@ -59,18 +63,15 @@ namespace LanExchange.Plugin.Users
                         break;
                     }
                 }
+
                 if (allEqual)
                     result.Add(current);
                 else
                     break;
                 index++;
             }
-            return string.Join(@"\", result.ToArray());
-        }
 
-        public string Prefix
-        {
-            get { return GetPrefix(); }
+            return string.Join(@"\", result.ToArray());
         }
     }
 }

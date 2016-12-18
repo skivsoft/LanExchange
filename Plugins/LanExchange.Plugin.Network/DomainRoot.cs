@@ -5,11 +5,6 @@ namespace LanExchange.Plugin.Network
 {
     public sealed class DomainRoot : PanelItemRootBase
     {
-        protected override string GetName()
-        {
-            return Resources.Network;
-        }
-
         public override string ImageName
         {
             get { return PanelImageNames.DOMAIN; }
@@ -18,6 +13,11 @@ namespace LanExchange.Plugin.Network
         public override object Clone()
         {
             return new DomainRoot();
+        }
+
+        protected override string GetName()
+        {
+            return Resources.Network;
         }
     }
 }

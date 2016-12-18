@@ -5,7 +5,7 @@ namespace LanExchange.Plugin.Network
 {
     public sealed class ShareInfo : IComparable<ShareInfo>
     {
-        private readonly SHARE_INFO_1 shareInfo;
+        private SHARE_INFO_1 shareInfo;
 
         public ShareInfo()
         {
@@ -50,13 +50,9 @@ namespace LanExchange.Plugin.Network
             }
         }
 
-        #region IComparable<ShareInfo> implementation
-
         public int CompareTo(ShareInfo other)
         {
             return string.Compare(Name, other.Name, StringComparison.InvariantCultureIgnoreCase);
         }
-
-        #endregion
     }
 }

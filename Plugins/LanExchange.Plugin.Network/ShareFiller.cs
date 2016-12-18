@@ -8,8 +8,9 @@ namespace LanExchange.Plugin.Network
 {
     public sealed class ShareFiller : IPanelFiller
     {
-        public static bool ShowHiddenShares = true;
-        public static bool ShowPrinters = true;
+        public bool ShowHiddenShares { get; set; }
+
+        public bool ShowPrinters { get; set; }
 
         public bool IsParentAccepted(PanelItemBase parent)
         {
@@ -26,24 +27,20 @@ namespace LanExchange.Plugin.Network
         {
             if (parent == null) throw new ArgumentNullException(nameof(parent));
 
-
             // result.Add(new PanelItemDoubleDot(parent));
-
             foreach (var item in NetApiHelper.NetShareEnum(parent.Name))
             {
                 var si = new ShareInfo(item);
+
                 // if (!Settings.Settings.Instance.ShowHiddenShares && SI.IsHidden)
-
                 // continue;
-
                 // if (!Settings.Settings.Instance.ShowPrinters && SI.IsPrinter)
-
                 // continue;
-
-                if (!ShowHiddenShares && si.IsHidden || !ShowPrinters && si.IsPrinter)
+                if ((!ShowHiddenShares && si.IsHidden) || (!ShowPrinters && si.IsPrinter))
                     continue;
                 result.Add(new SharePanelItem(parent, si));
             }
+
             // enum logged users
             foreach (var item in NetworkHelper.NetWorkstationUserEnumNames(parent.Name))
             {

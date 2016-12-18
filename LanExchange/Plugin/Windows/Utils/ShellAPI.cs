@@ -14,8 +14,6 @@ namespace LanExchange.Plugin.Windows.Utils
     [CLSCompliant(false)]
     public static class ShellAPI
     {
-        #region Variables and Constants
-
         public const int MAX_PATH = 260;
         public const uint CMD_FIRST = 1;
         public const uint CMD_LAST = 30000;
@@ -28,12 +26,6 @@ namespace LanExchange.Plugin.Windows.Utils
         public static int cbFileInfo = Marshal.SizeOf(typeof(SHFILEINFO));
         public static int cbMenuItemInfo = Marshal.SizeOf(typeof(MENUITEMINFO));
         public static int cbInvokeCommand = Marshal.SizeOf(typeof(CMINVOKECOMMANDINFOEX));
-
-        #endregion
-
-        #region DLL Import
-
-        #region Shell32
 
         [DllImport(ExternDll.Shell32, EntryPoint = "#660")]
         public static extern bool FileIconInit(bool bFullInit);
@@ -168,10 +160,6 @@ namespace LanExchange.Plugin.Windows.Utils
             IntPtr pidl1,
             IntPtr pidl2);
 
-        #endregion
-
-        #region ShlwAPI
-
         // Takes a STRRET structure returned by IShellFolder::GetDisplayNameOf,
         // converts it to a string, and places the result in a buffer. 
         // [DllImport("shlwapi.dll", 
@@ -193,11 +181,6 @@ namespace LanExchange.Plugin.Windows.Utils
         // StringBuilder pszBuf, 
 
         // int cchBuf);
-
-
-        #endregion
-
-        #region User32
 
         // Sends the specified message to a window or windows
         [DllImport(ExternDll.User32, 
@@ -356,10 +339,6 @@ namespace LanExchange.Plugin.Windows.Utils
             IntPtr hMenu,
             int nPos);
 
-        #endregion
-
-        #region Comctl
-
         // Replaces an image with an icon or cursor
         [DllImport(ExternDll.Comctl32, 
             EntryPoint = "ImageList_ReplaceIcon", 
@@ -392,10 +371,6 @@ namespace LanExchange.Plugin.Windows.Utils
             IntPtr himl, 
             int index, 
             ILD flags);
-
-        #endregion
-
-        #region Ole32
 
         // Registers the specified window as one that can be the target of an OLE drag-and-drop 
         // operation and specifies the IDropTarget instance to use for drop operations
@@ -465,12 +440,6 @@ namespace LanExchange.Plugin.Windows.Utils
         public static extern int OleGetClipboard(
             out IntPtr ppDataObj);
 
-        #endregion
-
-        #endregion
-
-        #region Shell GUIDs
-
         public static Guid IID_DesktopGUID = new Guid("{00021400-0000-0000-C000-000000000046}");
 
         public static Guid IID_IShellFolder = new Guid("{000214E6-0000-0000-C000-000000000046}");
@@ -492,10 +461,6 @@ namespace LanExchange.Plugin.Windows.Utils
         public static Guid IID_IShellExtInit = new Guid("{000214e8-0000-0000-c000-000000000046}");
         public static Guid IID_IStream = new Guid("{0000000c-0000-0000-c000-000000000046}");
         public static Guid IID_IStorage = new Guid("{0000000B-0000-0000-C000-000000000046}");
-
-        #endregion
-
-        #region Structs
 
         // Contains strings returned from the IShellFolder interface methods
         [StructLayout(LayoutKind.Explicit)]
@@ -705,10 +670,6 @@ namespace LanExchange.Plugin.Windows.Utils
           public int cx; 
           public int cy; 
         }
-
-        #endregion
-
-        #region Enums
 
         // Used to retrieve directory paths to system special folders
         public enum CSIDL
@@ -1479,16 +1440,10 @@ namespace LanExchange.Plugin.Windows.Utils
             USESLOWTIP = 0x00008
         }
 
-        #endregion
-
-        #region Utility Methods
-
         public static DateTime FileTimeToDateTime(FILETIME fileTime)
         {
             var ticks = (((long)fileTime.dwHighDateTime) << 32) + fileTime.dwLowDateTime;
             return DateTime.FromFileTimeUtc(ticks);
         }
-
-        #endregion
     }
 }

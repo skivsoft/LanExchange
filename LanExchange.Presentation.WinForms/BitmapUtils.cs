@@ -19,6 +19,7 @@ namespace LanExchange.Presentation.WinForms
                     var newColor = FromAhsb(oldColor.A, newHue, oldColor.GetSaturation(), oldColor.GetBrightness());
                     result.SetPixel(x, y, newColor);
                 }
+
             return result;
         }
 
@@ -33,32 +34,33 @@ namespace LanExchange.Presentation.WinForms
         [Localizable(false)]
         public static Color FromAhsb(int alpha, float hue, float saturation, float brightness)
         {
-
             if (0 > alpha || 255 < alpha)
             {
-                throw new ArgumentOutOfRangeException(nameof(alpha), alpha,
-                  "Value must be within a range of 0 - 255.");
-            }
-            if (0f > hue || 360f < hue)
-            {
-                throw new ArgumentOutOfRangeException(nameof(hue), hue,
-                  "Value must be within a range of 0 - 360.");
-            }
-            if (0f > saturation || 1f < saturation)
-            {
-                throw new ArgumentOutOfRangeException(nameof(saturation), saturation,
-                  "Value must be within a range of 0 - 1.");
-            }
-            if (0f > brightness || 1f < brightness)
-            {
-                throw new ArgumentOutOfRangeException(nameof(brightness), brightness,
-                  "Value must be within a range of 0 - 1.");
+                throw new ArgumentOutOfRangeException(nameof(alpha), alpha, "Value must be within a range of 0 - 255.");
             }
 
-            if (saturation < 1E-10) // is equal zero?
+            if (0f > hue || 360f < hue)
             {
-                return Color.FromArgb(alpha, Convert.ToInt32(brightness * 255),
-                  Convert.ToInt32(brightness * 255), Convert.ToInt32(brightness * 255));
+                throw new ArgumentOutOfRangeException(nameof(hue), hue, "Value must be within a range of 0 - 360.");
+            }
+
+            if (0f > saturation || 1f < saturation)
+            {
+                throw new ArgumentOutOfRangeException(nameof(saturation), saturation, "Value must be within a range of 0 - 1.");
+            }
+
+            if (0f > brightness || 1f < brightness)
+            {
+                throw new ArgumentOutOfRangeException(nameof(brightness), brightness, "Value must be within a range of 0 - 1.");
+            }
+
+            if (saturation < 1E-10)
+            {
+                return Color.FromArgb(
+                    alpha,
+                    Convert.ToInt32(brightness * 255),
+                    Convert.ToInt32(brightness * 255),
+                    Convert.ToInt32(brightness * 255));
             }
 
             float fMax, fMid, fMin;
@@ -79,8 +81,9 @@ namespace LanExchange.Presentation.WinForms
             {
                 hue -= 360f;
             }
+
             hue /= 60f;
-            hue -= 2f * (float)Math.Floor(((iSextant + 1f) % 6f) / 2f);
+            hue -= 2f * (float)Math.Floor((iSextant + 1f) % 6f / 2f);
             if (0 == iSextant % 2)
             {
                 fMid = hue * (fMax - fMin) + fMin;
@@ -110,6 +113,5 @@ namespace LanExchange.Presentation.WinForms
                     return Color.FromArgb(alpha, iMax, iMid, iMin);
             }
         }
-
     }
 }

@@ -17,16 +17,6 @@ namespace LanExchange.Presentation.WinForms
         private readonly AddonMenuItem menuItem;
         private readonly Func<PanelItemBase, bool> checker;
 
-        public static string[] BuildCmdLine(PanelItemBase panelItem, AddonMenuItem menuItem)
-        {
-            var programFileName = menuItem.ProgramValue.ExpandedFileName;
-            var programArgs = EnvironmentHelper.ExpandCmdLine(menuItem.ProgramArgs);
-            programArgs = MacroHelper.ExpandPublicProperties(programArgs, panelItem);
-            return ProtocolHelper.IsProtocol(menuItem.ProgramRef.Id)
-                ? new[] { menuItem.ProgramRef.Id + programArgs }
-                : new[] { programFileName, programArgs };
-        }
-
         public AddonCommandStarter(
             IPanelItemFactoryManager factoryManager,
             IWindowFactory windowFactory,
@@ -45,18 +35,38 @@ namespace LanExchange.Presentation.WinForms
             checker = factoryManager.GetAvailabilityChecker(this.panelItem.GetType());
         }
 
+        public static string[] BuildCmdLine(PanelItemBase panelItem, AddonMenuItem menuItem)
+        {
+            var programFileName = menuItem.ProgramValue.ExpandedFileName;
+            var programArgs = EnvironmentHelper.ExpandCmdLine(menuItem.ProgramArgs);
+            programArgs = MacroHelper.ExpandPublicProperties(programArgs, panelItem);
+            return ProtocolHelper.IsProtocol(menuItem.ProgramRef.Id)
+                ? new[] { menuItem.ProgramRef.Id + programArgs }
+                : new[] { programFileName, programArgs };
+        }
+
+        public void Start()
+        {
+            if (!menuItem.AllowUnreachable && checker != null)
+                ShowCheckAvailabilityWindow();
+            else
+                InternalStart();
+        }
+
         [Localizable(false)]
         private void ShowCheckAvailabilityWindow()
         {
             // TODO hide model
             var form = windowFactory.CreateCheckAvailabilityWindow();
             form.Text = string.Format("{0} — {1}", panelItem.Name, menuItem.Text);
+
             // form.CurrentItem = panelItem;
             form.RunText = menuItem.Text;
             if (menuItem.ProgramValue != null)
                 form.RunImage = menuItem.ProgramValue.ProgramImage;
             form.CallerControl = this;
             form.RunAction = InternalStart;
+            
             // form.AvailabilityChecker = checker;
             form.StartChecking();
             form.WaitAndShow();
@@ -80,29 +90,24 @@ namespace LanExchange.Presentation.WinForms
                     default:
                         return;
                 }
+
                 if (!string.IsNullOrEmpty(menuItem.WorkingDirectory))
                 {
                     var path = MacroHelper.ExpandPublicProperties(menuItem.WorkingDirectory, panelItem);
+
                     // get parent directory if file was selected
                     if (File.Exists(path))
                         path = Path.GetDirectoryName(path);
                     if (!string.IsNullOrEmpty(path) && Directory.Exists(path))
                         startInfo.WorkingDirectory = path;
                 }
+
                 Process.Start(startInfo);
             }
             catch (Exception ex)
             {
                 MessageBoxHelper.ShowRunCmdError(string.Format(CultureInfo.InvariantCulture, "{0}\n{1}", string.Join(" ", cmdLine), ex.Message));
             }
-        }
-
-        public void Start()
-        {
-            if (!menuItem.AllowUnreachable && checker != null)
-                ShowCheckAvailabilityWindow();
-            else
-                InternalStart();
         }
     }
 }

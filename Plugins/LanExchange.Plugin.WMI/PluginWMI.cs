@@ -9,7 +9,6 @@ namespace LanExchange.Plugin.WMI
     {
         public void Initialize(IServiceProvider serviceProvider)
         {
-            
         }
     }
 }

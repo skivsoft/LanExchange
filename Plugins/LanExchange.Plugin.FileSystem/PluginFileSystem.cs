@@ -1,7 +1,7 @@
 ﻿using System;
+using System.ComponentModel.Composition;
 using System.IO;
 using LanExchange.Plugin.FileSystem.Properties;
-using System.ComponentModel.Composition;
 using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.FileSystem
@@ -9,7 +9,17 @@ namespace LanExchange.Plugin.FileSystem
     [Export(typeof(IPlugin))]
     public class PluginFileSystem : IPlugin
     {
-        public static IImageManager ImageManager;
+        public static IImageManager ImageManager { get; set; }
+
+        public static void RegisterImageForFileName(string fname)
+        {
+            if (ImageManager != null && ImageManager.IndexOf(fname) == -1)
+            {
+                var image1 = ImageManager.GetSmallImageOfFileName(fname);
+                var image2 = ImageManager.GetLargeImageOfFileName(fname);
+                ImageManager.RegisterImage(fname, image1, image2);
+            }
+        }
 
         public void Initialize(IServiceProvider serviceProvider)
         {
@@ -42,16 +52,6 @@ namespace LanExchange.Plugin.FileSystem
             // Register images for disk drives
             foreach (var drive in DriveInfo.GetDrives())
                 RegisterImageForFileName(drive.RootDirectory.Name);
-        }
-
-        public static void RegisterImageForFileName(string fname)
-        {
-            if (ImageManager != null && ImageManager.IndexOf(fname) == -1)
-            {
-                var image1 = ImageManager.GetSmallImageOfFileName(fname);
-                var image2 = ImageManager.GetLargeImageOfFileName(fname);
-                ImageManager.RegisterImage(fname, image1, image2);
-            }
         }
     }
 }

@@ -7,13 +7,51 @@ namespace LanExchange.Plugin.Network.NetApi
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     public sealed class WorkstationInfo
     {
-        private readonly int m_Id;
+        private readonly int id;
         [MarshalAs(UnmanagedType.LPWStr)]
-        private readonly string m_ComputerName;
+        private readonly string computerName;
         [MarshalAs(UnmanagedType.LPWStr)]
-        private readonly string m_LanGroup;
-        private readonly int m_VerMajor;
-        private readonly int m_VerMinor;
+        private readonly string lanGroup;
+        private readonly int verMajor;
+        private readonly int verMinor;
+
+        public WorkstationInfo(int id, string computerName, string lanGroup, int verMajor, int verMinor)
+        {
+            this.id = id;
+            this.computerName = computerName;
+            this.lanGroup = lanGroup;
+            this.verMajor = verMajor;
+            this.verMinor = verMinor;
+        }
+
+        private WorkstationInfo()
+        {
+        }
+
+        public int Id
+        {
+            get { return id; }
+        }
+
+        public string ComputerName
+        {
+            get { return computerName; }
+        }
+
+        public string LanGroup
+        {
+            get { return lanGroup; }
+        }
+
+        public int VerMajor
+        {
+            get { return verMajor; }
+        }
+
+        public int VerMinor
+        {
+            get { return verMinor; }
+        }
 
         public static WorkstationInfo FromComputer(string computerName)
         {
@@ -30,45 +68,8 @@ namespace LanExchange.Plugin.Network.NetApi
             {
                 SafeNativeMethods.NetApiBufferFree(buffer);
             }
+
             return result;
-        }
-
-        private WorkstationInfo()
-        {
-        }
-
-        public WorkstationInfo(int id, string computerName, string lanGroup, int verMajor, int verMinor)
-        {
-            m_Id = id;
-            m_ComputerName = computerName;
-            m_LanGroup = lanGroup;
-            m_VerMajor = verMajor;
-            m_VerMinor = verMinor;
-        }
-
-        public int Id
-        {
-            get { return m_Id; }
-        }
-
-        public string ComputerName
-        {
-            get { return m_ComputerName; }
-        }
-
-        public string LanGroup
-        {
-            get { return m_LanGroup; }
-        }
-
-        public int VerMajor
-        {
-            get { return m_VerMajor; }
-        }
-
-        public int VerMinor
-        {
-            get { return m_VerMinor; }
         }
     }
 }

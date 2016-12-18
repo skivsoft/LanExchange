@@ -38,18 +38,18 @@ namespace LanExchange.Plugin.Network
 
         public bool IsDomainController()
         {
-            const uint ctrl =
+            const uint CTRL =
                 (uint)SV_101_TYPES.SV_TYPE_DOMAIN_CTRL | (uint)SV_101_TYPES.SV_TYPE_DOMAIN_BAKCTRL;
-            return (type & ctrl) != 0;
+            return (type & CTRL) != 0;
         }
 
         public bool IsServer()
         {
-            const uint srv = (uint)SV_101_TYPES.SV_TYPE_SERVER;
-            const uint ctrl =
+            const uint SERVER = (uint)SV_101_TYPES.SV_TYPE_SERVER;
+            const uint CTRL =
                 (uint)SV_101_TYPES.SV_TYPE_DOMAIN_CTRL | (uint)SV_101_TYPES.SV_TYPE_DOMAIN_BAKCTRL;
-            const uint noctrl = (uint)SV_101_TYPES.SV_TYPE_SERVER_NT;
-            return (type & srv) != 0 && (type & (ctrl | noctrl)) != 0;
+            const uint NOCTRL = (uint)SV_101_TYPES.SV_TYPE_SERVER_NT;
+            return (type & SERVER) != 0 && (type & (CTRL | NOCTRL)) != 0;
         }
 
         public bool IsSqlServer()
@@ -131,9 +131,9 @@ namespace LanExchange.Plugin.Network
         public override string ToString()
         {
             // return string.Format("{0}.{1}.{2}.{3}", platform_id, ver_major, ver_minor, type);
-
             bool bServer = IsServer();
             var platform = (SV_101_PLATFORM)platformId;
+
             // OS2 same as NT
             if (platform == SV_101_PLATFORM.PLATFORM_ID_OS2)
                 platform = SV_101_PLATFORM.PLATFORM_ID_NT;
@@ -160,6 +160,7 @@ namespace LanExchange.Plugin.Network
                                 default:
                                     return string.Format("Windows NT {0}.{1}", major, minor);
                             }
+
                         case 5:
                             switch (minor)
                             {
@@ -172,6 +173,7 @@ namespace LanExchange.Plugin.Network
                                 default:
                                     return string.Format("Windows NT {0}.{1}", major, minor);
                             }
+
                         case 6:
                             switch (minor)
                             {
@@ -188,9 +190,11 @@ namespace LanExchange.Plugin.Network
                                 default:
                                     return string.Format("Windows NT {0}.{1}", major, minor);
                             }
+
                         default:
                             return string.Format("Windows NT {0}.{1}", major, minor);
                     }
+
                 case SV_101_PLATFORM.PLATFORM_ID_OSF:
                     return string.Format("OSF {0}.{1}", major, minor);
                 case SV_101_PLATFORM.PLATFORM_ID_VMS:
@@ -201,12 +205,8 @@ namespace LanExchange.Plugin.Network
         }
 
         // public override int GetHashCode()
-
         // {
-
         // return (int)m_PlatformID ^ (int)m_Major ^ (int)m_Minor ^ (int)m_Type;
-
         // }
-
     }
 }

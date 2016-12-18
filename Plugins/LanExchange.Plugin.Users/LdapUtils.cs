@@ -19,17 +19,17 @@ namespace LanExchange.Plugin.Users
                 if (found != null)
                     result = found.Path;
             }
+
             return result;
         }
 
         [Localizable(false)]
-        public static string GetLdapContainer(string ldapPath)
+        internal static string GetLdapContainer(string ldapPath)
         {
             var index = ldapPath.IndexOf(',');
             if (index == -1)
                 return string.Empty;
             return "LDAP:// " + ldapPath.Remove(0, index + 1);
-
         }
 
         /// <summary>
@@ -52,6 +52,7 @@ namespace LanExchange.Plugin.Users
                     masked = true;
                     continue;
                 }
+
                 if ((path[i] == ',' || path[i] == ';') && !masked)
                 {
                     list.Add(word);
@@ -63,6 +64,7 @@ namespace LanExchange.Plugin.Users
                     masked = false;
                 }
             }
+
             return list.ToArray();
         }
 
@@ -81,11 +83,12 @@ namespace LanExchange.Plugin.Users
                         list.Insert(0, arr[index]);
                         numOrgUnit--;
                     }
+
                     if (numOrgUnit == 0)
                         break;
                 }
-            return "LDAP:// " + string.Join(",", list.ToArray());
 
+            return "LDAP:// " + string.Join(",", list.ToArray());
         }
 
         [Localizable(false)]
@@ -108,6 +111,7 @@ namespace LanExchange.Plugin.Users
             {
                 Debug.Print(ex.Message);
             }
+
             return result;
         }
 
@@ -122,9 +126,11 @@ namespace LanExchange.Plugin.Users
                     visible = false;
                     continue;
                 }
+
                 result += ch;
                 if (!visible) visible = true;
             }
+
             return result;
         }
     }

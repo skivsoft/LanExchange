@@ -21,9 +21,8 @@ namespace LanExchange.Plugin.Network
 
         public DomainPanelItem(PanelItemBase parent, string domain) : base(parent)
         {
-            serverInfo = new ServerInfo {Name = domain, Comment = string.Empty};
-
-       }
+            serverInfo = new ServerInfo { Name = domain, Comment = string.Empty };
+        }
 
         [XmlAttribute]
         public override string Name
@@ -42,16 +41,16 @@ namespace LanExchange.Plugin.Network
             get { return PanelImageNames.DOMAIN; }
         }
 
+        public override string ImageLegendText
+        {
+            get { return string.Empty; }
+        }
+
         public override object Clone()
         {
             var result = new DomainPanelItem(Parent, serverInfo);
             result.Name = Name;
             return result;
-        }
-
-        public override string ImageLegendText
-        {
-            get { return string.Empty; }
         }
     }
 }

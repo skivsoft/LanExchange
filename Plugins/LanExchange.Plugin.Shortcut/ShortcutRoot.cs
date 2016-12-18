@@ -5,11 +5,6 @@ namespace LanExchange.Plugin.Shortcut
 {
     public class ShortcutRoot : PanelItemRootBase
     {
-        protected override string GetName()
-        {
-            return Resources.mHelpKeys_Text;
-        }
-
         public override string ImageName
         {
             get { return PanelImageNames.SHORTCUT; }
@@ -18,6 +13,11 @@ namespace LanExchange.Plugin.Shortcut
         public override object Clone()
         {
             return new ShortcutRoot();
+        }
+
+        protected override string GetName()
+        {
+            return Resources.mHelpKeys_Text;
         }
     }
 }

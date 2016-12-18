@@ -12,9 +12,7 @@ namespace LanExchange.Presentation.WinForms.Forms
     {
         private readonly IAboutPresenter presenter;
         private RichTextBox boxDetails;
-
-        public event EventHandler ViewClosed;
-        
+       
         public AboutForm(IAboutPresenter presenter)
         {
             if (presenter == null) throw new ArgumentNullException(nameof(presenter));
@@ -26,10 +24,56 @@ namespace LanExchange.Presentation.WinForms.Forms
             FormClosed += OnFormClosed;
         }
 
-        private void OnFormClosed(object sender, FormClosedEventArgs e)
+        public event EventHandler ViewClosed;
+
+        public string VersionText
         {
-            if (ViewClosed != null)
-                ViewClosed(this, EventArgs.Empty);
+            get { return eVersion.Text; }
+            set { eVersion.Text = value; }
+        }
+
+        public string CopyrightText
+        {
+            get
+            {
+                return eCopyright.Text;
+            }
+
+            set
+            {
+                eCopyright.Text = value;
+                lWeb.Top = eCopyright.Top + eCopyright.Height + 8;
+                eWeb.Top = lWeb.Top + lWeb.Height;
+            }
+        }
+
+        public string WebText
+        {
+            get { return eWeb.Text; }
+            set { eWeb.Text = value; }
+        }
+
+        public string WebToolTip
+        {
+            get { return tipAbout.GetToolTip(eWeb); }
+            set { tipAbout.SetToolTip(eWeb, value); }
+        }
+
+        public bool DetailsVisible
+        {
+            get
+            {
+                if (boxDetails == null) return false;
+                return boxDetails.Visible;
+            }
+
+            set
+            {
+                if (boxDetails == null)
+                    SetupBoxDetails();
+                boxDetails.Visible = value;
+                bShowDetails.Text = value ? Resources.HideDetails : Resources.ShowDetails;
+            }
         }
 
         public void TranslateUI()
@@ -64,62 +108,30 @@ namespace LanExchange.Presentation.WinForms.Forms
             boxDetails.BringToFront();
         }
 
-        private void eWeb_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        public bool ShowModalDialog()
+        {
+            return ShowDialog() == DialogResult.OK;
+        }
+
+        public bool RightToLeftValue { get; set; }
+
+        private void OnFormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (ViewClosed != null)
+                ViewClosed(this, EventArgs.Empty);
+        }
+
+        private void EditWeb_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             presenter.OpenHomeLink();
         }
 
-        public string VersionText
-        {
-            get { return eVersion.Text; }
-            set { eVersion.Text = value; }
-        }
-
-        public string CopyrightText
-        {
-            get { return eCopyright.Text; }
-            set
-            {
-                eCopyright.Text = value;
-                lWeb.Top = eCopyright.Top + eCopyright.Height + 8;
-                eWeb.Top = lWeb.Top + lWeb.Height;
-            }
-        }
-
-        public string WebText
-        {
-            get { return eWeb.Text; }
-            set { eWeb.Text = value; }
-        }
-
-        public string WebToolTip
-        {
-            get { return tipAbout.GetToolTip(eWeb); }
-            set { tipAbout.SetToolTip(eWeb, value); }
-        }
-
-        public bool DetailsVisible
-        {
-            get
-            {
-                if (boxDetails == null) return false;
-                return boxDetails.Visible;
-            }
-            set
-            {
-                if (boxDetails == null)
-                    SetupBoxDetails();
-                boxDetails.Visible = value;
-                bShowDetails.Text = value ? Resources.HideDetails : Resources.ShowDetails;
-            }
-        }
-
-        private void bShowDetails_Click(object sender, EventArgs e)
+        private void ButtonShowDetails_Click(object sender, EventArgs e)
         {
             presenter.PerformShowDetails();
         }
 
-        private void bClose_Click(object sender, EventArgs e)
+        private void ButtonClose_Click(object sender, EventArgs e)
         {
             Close();
         }
@@ -134,12 +146,5 @@ namespace LanExchange.Presentation.WinForms.Forms
             if (boxDetails != null)
                 boxDetails.RightToLeft = RightToLeftValue ? RightToLeft.Yes : RightToLeft.No;
         }
-
-        public bool ShowModalDialog()
-        {
-            return ShowDialog() == DialogResult.OK;
-        }
-
-        public bool RightToLeftValue { get; set; }
     }
 }

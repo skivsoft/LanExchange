@@ -34,24 +34,17 @@ namespace LanExchange.Plugin.FileSystem
             {
                 var file = new FilePanelItem(parent, fname);
                 result.Add(file);
+
                 // if (!file.IsDirectory && IsExecutable(fname))
-
                 // PluginFileSystem.RegisterImageForFileName(fname);
-
             }
         }
 
         // private bool IsExecutable(string fname)
-
         // {
-
         // var ext = Path.GetExtension(fname);
-
         // if (ext == null) return false;
-
         // return m_PathExt.Contains(ext.ToUpper() + ";");
-
         // }
-
     }
 }

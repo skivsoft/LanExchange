@@ -24,7 +24,11 @@ namespace LanExchange.Presentation.WinForms.Forms
 
         public PanelItemBase CurrentItem
         {
-            get { return currentItem; }
+            get
+            {
+                return currentItem;
+            }
+
             set
             {
                 currentItem = value;
@@ -48,32 +52,6 @@ namespace LanExchange.Presentation.WinForms.Forms
 
         public Func<bool> AvailabilityChecker { get; set; }
 
-        public void StartChecking()
-        {
-            presenter.StartChecking();
-        }
-
-        public void WaitAndShow()
-        {
-            presenter.WaitAndShow();
-        }
-
-        private void bRun_Click(object sender, EventArgs e)
-        {
-            presenter.PerformOk();
-        }
-
-        private void bCancel_Click(object sender, EventArgs e)
-        {
-            presenter.PerformCancel();
-        }
-
-        private void CheckAvailabilityForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            if (ViewClosed != null)
-                ViewClosed(this, EventArgs.Empty);
-        }
-
         public Image ObjectImage
         {
             get { return picObject.Image; }
@@ -84,6 +62,32 @@ namespace LanExchange.Presentation.WinForms.Forms
         {
             get { return lObject.Text; }
             set { lObject.Text = value; }
+        }
+
+        public void StartChecking()
+        {
+            presenter.StartChecking();
+        }
+
+        public void WaitAndShow()
+        {
+            presenter.WaitAndShow();
+        }
+
+        private void ButtonRun_Click(object sender, EventArgs e)
+        {
+            presenter.PerformOk();
+        }
+
+        private void ButtonCancel_Click(object sender, EventArgs e)
+        {
+            presenter.PerformCancel();
+        }
+
+        private void CheckAvailabilityForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (ViewClosed != null)
+                ViewClosed(this, EventArgs.Empty);
         }
 
         public void SetToolTip(string tooltip)

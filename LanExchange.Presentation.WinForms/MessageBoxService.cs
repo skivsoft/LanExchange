@@ -7,7 +7,9 @@ namespace LanExchange.Presentation.WinForms
     {
         public int AskQuestionFmt(string title, string format, params object[] args)
         {
-            return (int)MessageBox.Show(string.Format(format, args), title,
+            return (int)MessageBox.Show(
+                string.Format(format, args),
+                title,
                 MessageBoxButtons.YesNoCancel, 
                 MessageBoxIcon.Question, 
                 MessageBoxDefaultButton.Button2);

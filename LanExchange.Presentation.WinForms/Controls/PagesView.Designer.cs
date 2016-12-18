@@ -49,9 +49,9 @@ namespace LanExchange.Presentation.WinForms.Controls
             this.mCloseOther});
             this.popPages.Name = "popPages";
             this.popPages.Size = new System.Drawing.Size(169, 76);
-            this.popPages.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.popPages_Closed);
-            this.popPages.Opened += new System.EventHandler(this.popPages_Opened);
-            this.popPages.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.popPages_ItemClicked);
+            this.popPages.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.PopPages_Closed);
+            this.popPages.Opened += new System.EventHandler(this.PopPages_Opened);
+            this.popPages.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.PopPages_ItemClicked);
             // 
             // mReRead
             // 
@@ -59,7 +59,7 @@ namespace LanExchange.Presentation.WinForms.Controls
             this.mReRead.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
             this.mReRead.Size = new System.Drawing.Size(168, 22);
             this.mReRead.Text = Resources.mPanelReRead_Text;
-            this.mReRead.Click += new System.EventHandler(this.mReRead_Click);
+            this.mReRead.Click += new System.EventHandler(this.MenuReRead_Click);
             // 
             // toolStripSeparator2
             // 
@@ -72,14 +72,14 @@ namespace LanExchange.Presentation.WinForms.Controls
             this.mCloseTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
             this.mCloseTab.Size = new System.Drawing.Size(168, 22);
             this.mCloseTab.Text = Resources.mCloseTab_Text;
-            this.mCloseTab.Click += new System.EventHandler(this.mCloseTab_Click);
+            this.mCloseTab.Click += new System.EventHandler(this.MenuCloseTab_Click);
             // 
             // mCloseOther
             // 
             this.mCloseOther.Name = "mCloseOther";
             this.mCloseOther.Size = new System.Drawing.Size(168, 22);
             this.mCloseOther.Text = Resources.mCloseOther_Text;
-            this.mCloseOther.Click += new System.EventHandler(this.mCloseOther_Click);
+            this.mCloseOther.Click += new System.EventHandler(this.MenuCloseOther_Click);
             // 
             // Pages
             // 

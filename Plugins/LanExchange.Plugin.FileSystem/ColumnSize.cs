@@ -6,7 +6,7 @@ namespace LanExchange.Plugin.FileSystem
 {
     internal class ColumnSize : IComparable<ColumnSize>, IComparable
     {
-        public static ColumnSize Zero = new ColumnSize(0, true, string.Empty);
+        public static readonly ColumnSize Zero = new ColumnSize(0, true, string.Empty);
 
         private readonly long value;
         private readonly bool isDirectory;
@@ -47,6 +47,7 @@ namespace LanExchange.Plugin.FileSystem
                     return -1;
                 return string.Compare(Name, other.Name, StringComparison.Ordinal);
             }
+
             if (other.IsDirectory) return 1;
             if (Value < other.Value) return -1;
             if (Value > other.Value) return 1;

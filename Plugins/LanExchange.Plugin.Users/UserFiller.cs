@@ -14,6 +14,21 @@ namespace LanExchange.Plugin.Users
             return parent is UserRoot || parent is WorkspacePanelItem;
         }
 
+        [Localizable(false)]
+        public void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
+        {
+            var startPath = LdapUtils.GetDCNameFromPath(LdapUtils.GetUserPath(PluginUsers.SysInfoService.UserName), 2);
+            var workspace = parent as WorkspacePanelItem;
+            if (workspace != null)
+                FillUsersWithSameGroup(ref parent, ref result, startPath, workspace.AdsPath);
+            else
+                FillUsers(ref parent, ref result, startPath);
+        }
+
+        public void SyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
+        {
+        }
+
         private void SetupPropertiesToLoad(DirectorySearcher searcher)
         {
             searcher.PropertiesToLoad.Add(Constants.CN);
@@ -45,10 +60,9 @@ namespace LanExchange.Plugin.Users
             user.Description = LdapUtils.SearchResult_GetString(row, Constants.DESCRIPTION);
             user.UserAccControl = int.Parse(LdapUtils.SearchResult_GetString(row, Constants.ACCOUNT_CONTROL));
             user.EmployeeID = LdapUtils.SearchResult_GetString(row, Constants.EMPLOYEE_ID);
+
             // user.WorkPhone = "0x" + user.UserAccControl.ToString("X");
-
             // user.Description = row["lockoutTime"].ToString();
-
             return user;
         }
 
@@ -61,16 +75,12 @@ namespace LanExchange.Plugin.Users
                 searcher.SearchRoot = new DirectoryEntry(startPath);
                 searcher.PageSize = int.MaxValue;
                 searcher.Filter = "(objectCategory = person)"; // lockoutTime
+
                 // var filter = "(&(&(|(&(objectCategory = person)(objectSid=*)(!samAccountType:1.2.840.113556.1.4.804:=3))(&(objectCategory = person)(!objectSid=*))(&(objectCategory = group)(groupType:1.2.840.113556.1.4.804:=14)))objectCategory = user)(cn = khmau.isup_builder)))";
-
                 // var filter = "(&(&(&(objectCategory = person)(objectClass = user)(lockoutTime:1.2.840.113556.1.4.804:=4294967295))))";
-
                 // var filter = "(&(objectClass = user)(userAccountControl:1.2.840.113556.1.4.803:=16))";
-
                 // var filter = "((!userAccountControl:1.2.840.113556.1.4.803:=2))";
-
                 // var filter = "(!(userAccountControl:1.2.840.113556.1.4.803:=2))";
-
                 SetupPropertiesToLoad(searcher);
                 try
                 {
@@ -83,6 +93,7 @@ namespace LanExchange.Plugin.Users
 
                         result.Add(BuildUserFromSearchResult(parent, row));
                     }
+
                     results.Dispose();
                 }
                 catch (Exception ex)
@@ -115,6 +126,7 @@ namespace LanExchange.Plugin.Users
                         if (list.Contains(group))
                             result.Add(BuildUserFromSearchResult(parent, row));
                     }
+
                     results.Dispose();
                 }
                 catch (Exception ex)
@@ -122,22 +134,6 @@ namespace LanExchange.Plugin.Users
                     Debug.Print(ex.Message);
                 }
             }
-        }
-
-
-        [Localizable(false)]
-        public void AsyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
-        {
-            var startPath = LdapUtils.GetDCNameFromPath(LdapUtils.GetUserPath(PluginUsers.sysInfoService.UserName), 2);
-            var workspace = parent as WorkspacePanelItem;
-            if (workspace != null)
-                FillUsersWithSameGroup(ref parent, ref result, startPath, workspace.AdsPath);
-            else
-                FillUsers(ref parent, ref result, startPath);
-        }
-
-        public void SyncFill(PanelItemBase parent, ICollection<PanelItemBase> result)
-        {
         }
     }
 }

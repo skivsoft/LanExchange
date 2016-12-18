@@ -57,7 +57,7 @@ namespace LanExchange.Presentation.WinForms.Controls
             this.mNewItem});
             this.popComps.Name = "popComps";
             this.popComps.Size = new System.Drawing.Size(153, 148);
-            this.popComps.Opening += new System.ComponentModel.CancelEventHandler(this.popComps_Opening);
+            this.popComps.Opening += new System.ComponentModel.CancelEventHandler(this.PopComps_Opening);
             // 
             // mComp
             // 
@@ -78,7 +78,7 @@ namespace LanExchange.Presentation.WinForms.Controls
             this.mCopyMenu.Name = "mCopyMenu";
             this.mCopyMenu.Size = new System.Drawing.Size(152, 22);
             this.mCopyMenu.Text = Resources.mCopyMenu_Text;
-            this.mCopyMenu.DropDownOpening += new System.EventHandler(this.mCopyMenu_DropDownOpening);
+            this.mCopyMenu.DropDownOpening += new System.EventHandler(this.MenuCopyMenu_DropDownOpening);
             // 
             // mCopySelected
             // 
@@ -94,7 +94,7 @@ namespace LanExchange.Presentation.WinForms.Controls
             this.mPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
             this.mPaste.Size = new System.Drawing.Size(152, 22);
             this.mPaste.Text = Resources.mPaste_Text;
-            this.mPaste.Click += new System.EventHandler(this.mPaste_Click);
+            this.mPaste.Click += new System.EventHandler(this.MenuPaste_Click);
             // 
             // mDelete
             // 
@@ -102,7 +102,7 @@ namespace LanExchange.Presentation.WinForms.Controls
             this.mDelete.ShortcutKeyDisplayString = Resources.KeyDel;
             this.mDelete.Size = new System.Drawing.Size(152, 22);
             this.mDelete.Text = Resources.mDelete_Text;
-            this.mDelete.Click += new System.EventHandler(this.mDelete_Click);
+            this.mDelete.Click += new System.EventHandler(this.MenuDelete_Click);
             // 
             // mAfterDelete
             // 
@@ -143,10 +143,10 @@ namespace LanExchange.Presentation.WinForms.Controls
             this.LV.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.LV_ColumnClick);
             this.LV.ColumnReordered += new System.Windows.Forms.ColumnReorderedEventHandler(this.LV_ColumnReordered);
             this.LV.ColumnWidthChanged += new System.Windows.Forms.ColumnWidthChangedEventHandler(this.LV_ColumnWidthChanged);
-            this.LV.ItemActivate += new System.EventHandler(this.lvComps_ItemActivate);
-            this.LV.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lvComps_ItemSelectionChanged);
-            this.LV.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvComps_KeyDown);
-            this.LV.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lvComps_KeyPress);
+            this.LV.ItemActivate += new System.EventHandler(this.LVComps_ItemActivate);
+            this.LV.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.LVComps_ItemSelectionChanged);
+            this.LV.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LVComps_KeyDown);
+            this.LV.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.LVComps_KeyPress);
             this.LV.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LV_MouseDown);
             this.LV.MouseMove += new System.Windows.Forms.MouseEventHandler(this.LV_MouseMove);
             this.LV.MouseUp += new System.Windows.Forms.MouseEventHandler(this.LV_MouseUp);
@@ -163,7 +163,7 @@ namespace LanExchange.Presentation.WinForms.Controls
             this.pFilter.Size = new System.Drawing.Size(423, 30);
             this.pFilter.TabIndex = 27;
             this.pFilter.Visible = false;
-            this.pFilter.FilterCountChanged += new System.EventHandler(this.pFilter_FilterCountChanged);
+            this.pFilter.FilterCountChanged += new System.EventHandler(this.PanelFilter_FilterCountChanged);
             // 
             // PanelView
             // 

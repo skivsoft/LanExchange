@@ -5,11 +5,6 @@ namespace LanExchange.Plugin.FileSystem
 {
     public class FileRoot : PanelItemRootBase
     {
-        protected override string GetName()
-        {
-            return Resources.Computer;
-        }
-
         public override string ImageName
         {
             get { return PanelImageNames.COMPUTER; }
@@ -18,6 +13,11 @@ namespace LanExchange.Plugin.FileSystem
         public override object Clone()
         {
             return new FileRoot();
+        }
+
+        protected override string GetName()
+        {
+            return Resources.Computer;
         }
     }
 }

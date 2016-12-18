@@ -8,32 +8,11 @@ namespace LanExchange.Plugin.Network
     [Serializable]
     public sealed class ServerInfo
     {
+        private readonly OSVersion version;
         private string name;
         private string comment;
-        private readonly OSVersion version;
 
         private DateTime utcUpdated;
-
-        /// <summary>
-        /// Constructor without params is required for XML-serialization.
-        /// </summary>
-        // public ServerInfo()
-
-        // {
-
-        // }
-
-        public static ServerInfo FromNetApi32(SERVER_INFO_101 info)
-        {
-            var result = new ServerInfo();
-            result.name = info.name;
-            result.version.PlatformId = info.platform_id;
-            result.version.Major = info.version_major;
-            result.version.Minor = info.version_minor;
-            result.version.Type = info.type;
-            result.comment = info.comment;
-            return result;
-        }
 
         public ServerInfo()
         {
@@ -63,6 +42,18 @@ namespace LanExchange.Plugin.Network
             set { utcUpdated = value; }
         }
 
+        public static ServerInfo FromNetApi32(SERVER_INFO_101 info)
+        {
+            var result = new ServerInfo();
+            result.name = info.name;
+            result.version.PlatformId = info.platform_id;
+            result.version.Major = info.version_major;
+            result.version.Minor = info.version_minor;
+            result.version.Type = info.type;
+            result.comment = info.comment;
+            return result;
+        }
+
         public void ResetUtcUpdated()
         {
             utcUpdated = DateTime.UtcNow;
@@ -89,6 +80,7 @@ namespace LanExchange.Plugin.Network
                 sb.Append("d");
                 showSeconds = false;
             }
+
             if (diff.Hours > 0)
             {
                 if (sb.Length > 0) sb.Append(" ");
@@ -96,18 +88,21 @@ namespace LanExchange.Plugin.Network
                 sb.Append("h");
                 showSeconds = false;
             }
+
             if (diff.Minutes > 0)
             {
                 if (sb.Length > 0) sb.Append(" ");
                 sb.Append(diff.Minutes);
                 sb.Append("m");
             }
+
             if (showSeconds && diff.Seconds > 0)
             {
                 if (sb.Length > 0) sb.Append(" ");
                 sb.Append(diff.Seconds);
                 sb.Append("s");
             }
+
             return sb.ToString();
         }
     }

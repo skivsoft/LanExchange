@@ -12,7 +12,6 @@ namespace LanExchange.Plugin.Windows.Utils
     [Localizable(false)]
     public sealed class SysImageList : IDisposable
     {
-        #region UnmanagedCode
         private const int MAX_PATH = 260;
         private const int MAX_TYPE = 80;
         
@@ -114,9 +113,6 @@ namespace LanExchange.Plugin.Windows.Utils
             ref Guid riid,
             ref IntPtr handle);
 
-        #endregion
-        
-        #region Private Enumerations
         [Flags]
         private enum SHGetFileInfoConstants
         {
@@ -154,9 +150,7 @@ namespace LanExchange.Plugin.Windows.Utils
             // SHGFI_OVERLAYINDEX = 0x000000040     // Get the index of the overlay
 
         }
-        #endregion
 
-        #region Private ImageList structures
         [StructLayout(LayoutKind.Sequential)]
         private struct RECT
         {
@@ -215,9 +209,7 @@ namespace LanExchange.Plugin.Windows.Utils
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MAX_TYPE)] 
             private readonly string szTypeName;
         }
-        #endregion
 
-        #region Private ImageList COM Interop(XP)
         [ComImport]
             [Guid("46EB5926-582E-4017-9FDF-E8998DAA0950")]
             [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
@@ -380,18 +372,11 @@ namespace LanExchange.Plugin.Windows.Utils
                 ref int piIndex);
         }
 
-    #endregion
-
-        #region Member Variables
         private IntPtr hIml = IntPtr.Zero;
         private IImageList iImageList;
         private SysImageListSize size = SysImageListSize.SmallIcons;
         private bool disposed;
-        #endregion
 
-        #region Implementation
-
-        #region Properties
         /// <summary>
         /// Gets the hImageList handle
         /// </summary>
@@ -442,9 +427,7 @@ namespace LanExchange.Plugin.Windows.Utils
                 return new Size(cx, cy);
             }        
         }
-        #endregion
 
-        #region Methods
         /// <summary>
         /// Returns a GDI+ copy of the icon from the ImageList
         /// at the specified index.
@@ -729,9 +712,7 @@ namespace LanExchange.Plugin.Windows.Utils
                 System.Diagnostics.Debug.Assert(hIml != IntPtr.Zero, "Failed to create Image List");
             }
         }
-        #endregion
 
-        #region Constructor, Dispose, Destructor
         /// <summary>
         /// Creates a Small Icons SystemImageList 
         /// </summary>
@@ -787,8 +768,4 @@ namespace LanExchange.Plugin.Windows.Utils
         }
 
     }
-    #endregion
-
-    #endregion
-
 }

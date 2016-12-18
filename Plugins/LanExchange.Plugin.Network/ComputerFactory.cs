@@ -30,6 +30,7 @@ namespace LanExchange.Plugin.Network
             columnManager.RegisterColumn<ComputerPanelItem>(new PanelColumnHeader(Resources.NetworkName));
             columnManager.RegisterColumn<ComputerPanelItem>(new PanelColumnHeader(Resources.Description, 240));
             columnManager.RegisterColumn<ComputerPanelItem>(new PanelColumnHeader(Resources.OSVersion, 110) { Visible = false });
+
             // lazy columns
             columnManager.RegisterColumn<ComputerPanelItem>(new PanelColumnHeader(Resources.Ping, 110) { Callback = GetReachable, Visible = false, Refreshable = true });
             columnManager.RegisterColumn<ComputerPanelItem>(new PanelColumnHeader(Resources.IPAddress, 80) { Callback = GetIPAddress, Visible = false });
@@ -37,18 +38,8 @@ namespace LanExchange.Plugin.Network
             columnManager.RegisterColumn<ComputerPanelItem>(new PanelColumnHeader(Resources.LoggedUsers, 300) { Callback = GetLoggedUsers, Visible = false });
         }
 
-        private static bool InternalPing(PanelItemBase item)
-        {
-            var ipAddr = InternalGetIPAddress(item.Name);
-            using (var ping = new Ping())
-            {
-                var pingReply = ping.Send(ipAddr);
-                return pingReply != null && pingReply.Status == IPStatus.Success;
-            }
-        }
-
         [Localizable(false)]
-        public static IComparable GetReachable(PanelItemBase item)
+        public IComparable GetReachable(PanelItemBase item)
         {
             var ipAddr = InternalGetIPAddress(item.Name);
             string result = string.Empty;
@@ -70,6 +61,7 @@ namespace LanExchange.Plugin.Network
                     item.IsReachable = false;
                 }
             }
+
             return result;
         }
 
@@ -78,7 +70,7 @@ namespace LanExchange.Plugin.Network
         /// </summary>
         /// <param name="item">ComputerPanelItem object.</param>
         /// <returns>IPAddressComparable object.</returns>
-        public static IComparable GetIPAddress(PanelItemBase item)
+        public IComparable GetIPAddress(PanelItemBase item)
         {
             return new IPAddressComparable(InternalGetIPAddress(item.Name));
         }
@@ -87,28 +79,37 @@ namespace LanExchange.Plugin.Network
         /// Returns MAC address for specified computer "item".
         /// Sends ARP request to computer's ip address.
         /// URL: http:// www.codeproject.com/KB/IP/host_info_within_network.aspx
-
         /// </summary>
         /// <param name="item">ComputerPanelItem object.</param>
         /// <returns>MAC-address string.</returns>
-        public static IComparable GetMACAddress(PanelItemBase item)
+        public IComparable GetMACAddress(PanelItemBase item)
         {
-            if (PluginNetwork.macAddressService == null)
+            if (PluginNetwork.MacAddressService == null)
                 return null;
             var ipAddress = InternalGetIPAddress(item.Name);
-            return PluginNetwork.macAddressService.GetMACAddress(ipAddress);
-        }
-
-        private static IPAddress InternalGetIPAddress(string computerName)
-        {
-            return Dns.GetHostEntry(computerName).AddressList[0];
+            return PluginNetwork.MacAddressService.GetMACAddress(ipAddress);
         }
 
         [Localizable(false)]
-        public static IComparable GetLoggedUsers(PanelItemBase item)
+        public IComparable GetLoggedUsers(PanelItemBase item)
         {
             var list = NetworkHelper.NetWorkstationUserEnumNames(item.Name);
             return string.Join(", ", list.ToArray());
+        }
+
+        private bool InternalPing(PanelItemBase item)
+        {
+            var ipAddr = InternalGetIPAddress(item.Name);
+            using (var ping = new Ping())
+            {
+                var pingReply = ping.Send(ipAddr);
+                return pingReply != null && pingReply.Status == IPStatus.Success;
+            }
+        }
+
+        private IPAddress InternalGetIPAddress(string computerName)
+        {
+            return Dns.GetHostEntry(computerName).AddressList[0];
         }
     }
 }

@@ -5,64 +5,64 @@ namespace LanExchange.Plugin.Network
 {
     internal class ShareInfoTest
     {
-        private ShareInfo m_Share;
+        private ShareInfo share;
 
         [SetUp]
-        protected void SetUp()
+        public void SetUp()
         {
             var info = new SHARE_INFO_1();
-            m_Share = new ShareInfo(info);
+            share = new ShareInfo(info);
         }
 
         [TearDown]
-        protected void TearDown()
+        public void TearDown()
         {
-            m_Share = null;
+            share = null;
         }
 
         [Test]
         public void TestCtor()
         {
-            m_Share = new ShareInfo();
-            Assert.IsNull(m_Share.Name);
+            share = new ShareInfo();
+            Assert.IsNull(share.Name);
         }
 
         [Test]
         public void TestName()
         {
-            m_Share.Name = "C$";
-            Assert.AreEqual("C$", m_Share.Name);
+            share.Name = "C$";
+            Assert.AreEqual("C$", share.Name);
         }
 
         [Test]
         public void TestComment()
         {
-            m_Share.Comment = "the comment";
-            Assert.AreEqual("the comment", m_Share.Comment);
+            share.Comment = "the comment";
+            Assert.AreEqual("the comment", share.Comment);
         }
 
         [Test]
         public void TestIsHidden()
         {
-            m_Share.Name = "";
-            Assert.IsFalse(m_Share.IsHidden);
-            m_Share.Name = "C";
-            Assert.IsFalse(m_Share.IsHidden);
-            m_Share.Name = "D$";
-            Assert.IsTrue(m_Share.IsHidden);
+            share.Name = string.Empty;
+            Assert.IsFalse(share.IsHidden);
+            share.Name = "C";
+            Assert.IsFalse(share.IsHidden);
+            share.Name = "D$";
+            Assert.IsTrue(share.IsHidden);
         }
 
         [Test]
         public void TestCompareTo()
         {
             var other = new ShareInfo(new SHARE_INFO_1());
-            m_Share.Name = "CCC";
+            share.Name = "CCC";
             other.Name = "ccc";
-            Assert.AreEqual(0, m_Share.CompareTo(other));
+            Assert.AreEqual(0, share.CompareTo(other));
             other.Name = "DDd";
-            Assert.Less(m_Share.CompareTo(other), 0);
+            Assert.Less(share.CompareTo(other), 0);
             other.Name = "bbB";
-            Assert.Greater(m_Share.CompareTo(other), 0);
+            Assert.Greater(share.CompareTo(other), 0);
         }
     }
 }

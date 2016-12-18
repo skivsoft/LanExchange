@@ -5,7 +5,7 @@ namespace LanExchange.Plugin.Network.NetApi
 {
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     [CLSCompliant(false)]
-    public sealed class SHARE_INFO_1
+    public struct SHARE_INFO_1
     {
         [MarshalAs(UnmanagedType.LPWStr)]
         public string netname;

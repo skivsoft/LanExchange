@@ -8,7 +8,7 @@ namespace LanExchange.Plugin.Network
     [Export(typeof(IPlugin))]
     public sealed class PluginNetwork : IPlugin
     {
-        public static IMACAddressSerivice macAddressService { get; private set; }
+        public static IMACAddressSerivice MacAddressService { get; private set; }
 
         public void Initialize(IServiceProvider serviceProvider)
         {         
@@ -29,7 +29,7 @@ namespace LanExchange.Plugin.Network
             fillerManager.RegisterFiller<ComputerPanelItem>(new ComputerFiller());
             fillerManager.RegisterFiller<SharePanelItem>(new ShareFiller());
 
-            macAddressService = serviceProvider.Resolve<IMACAddressSerivice>();
+            MacAddressService = serviceProvider.Resolve<IMACAddressSerivice>();
         }
     }
 }

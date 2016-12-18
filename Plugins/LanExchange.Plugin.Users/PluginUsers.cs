@@ -10,8 +10,7 @@ namespace LanExchange.Plugin.Users
     {
         public const string LDAP_PREFIX = "LDAP:// ";
 
-
-        public static ISystemInformationService sysInfoService;
+        public static ISystemInformationService SysInfoService { get; set; }
 
         public void Initialize(IServiceProvider serviceProvider)
         {
@@ -27,7 +26,7 @@ namespace LanExchange.Plugin.Users
             factoryManager.RegisterFactory<WorkspacePanelItem>(new WorkspaceFactory());
 
             // Register new panel fillers
-            sysInfoService = serviceProvider.Resolve<ISystemInformationService>();
+            SysInfoService = serviceProvider.Resolve<ISystemInformationService>();
             var fillerManager = serviceProvider.Resolve<IPanelFillerManager>();
             fillerManager.RegisterFiller<UserPanelItem>(new UserFiller());
             fillerManager.RegisterFiller<WorkspacePanelItem>(new WorkspaceFiller());

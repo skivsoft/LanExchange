@@ -1,5 +1,4 @@
-﻿
-using LanExchange.Plugin.FileSystem.Test;
+﻿using LanExchange.Plugin.FileSystem.Test;
 using NUnit.Framework;
 
 namespace LanExchange.Plugin.FileSystem

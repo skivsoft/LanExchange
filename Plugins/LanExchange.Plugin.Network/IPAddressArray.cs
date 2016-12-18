@@ -29,12 +29,13 @@ namespace LanExchange.Plugin.Network
         [Localizable(false)]
         public override string ToString()
         {
-            var result = "";
+            var result = string.Empty;
             for (int i = 0; i < addresses.Length; i++)
             {
                 if (i > 0) result += ", ";
                 result += addresses[i].ToString();
             }
+
             return result;
         }
 

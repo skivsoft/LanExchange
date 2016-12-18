@@ -34,15 +34,15 @@ namespace LanExchange.Plugin.Shortcut
             get { return string.Empty; }
         }
 
+        public override int CountColumns
+        {
+            get { return base.CountColumns + 2; }
+        }
+
         public override object Clone()
         {
             var result = new ShortcutPanelItem(Parent, Name, action, context, customImageName);
             return result;
-        }
-
-        public override int CountColumns
-        {
-            get { return base.CountColumns + 2; }
         }
 
         public override IComparable GetValue(int index)

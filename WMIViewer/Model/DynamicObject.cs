@@ -92,8 +92,6 @@ namespace WMIViewer.Model
                 throw new ObjectNotFoundException(propertyName);
         }
 
-        #region Implementation of ICustomTypeDescriptor
-
         public TypeConverter GetConverter()
         {
             return TypeDescriptor.GetConverter(this, true);
@@ -153,8 +151,6 @@ namespace WMIViewer.Model
         {
             return TypeDescriptor.GetClassName(this, true);
         }
-
-        #endregion
 
         private object GetPropertyValue(string propertyName)
         {

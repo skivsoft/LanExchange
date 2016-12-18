@@ -1,14 +1,13 @@
 ﻿using System;
 using System.ComponentModel;
-using LanExchange.Plugin.Network.NetApi;
 using System.Xml.Serialization;
+using LanExchange.Plugin.Network.NetApi;
 using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Plugin.Network
 {
     [Serializable]
     public sealed class SharePanelItem : PanelItemBase// , IComparable<SharePanelItem>
-
     {
         private readonly ShareInfo shareInfo;
 
@@ -31,7 +30,7 @@ namespace LanExchange.Plugin.Network
 
         public SharePanelItem(PanelItemBase parent, string name) : base(parent)
         {
-            shareInfo = new ShareInfo(new SHARE_INFO_1 {netname = name});
+            shareInfo = new ShareInfo(new SHARE_INFO_1 { netname = name });
             Comment = string.Empty;
         }
 
@@ -57,16 +56,6 @@ namespace LanExchange.Plugin.Network
             get { return base.CountColumns + 1; }
         }
 
-        public override IComparable GetValue(int index)
-        {
-            switch (index)
-            {
-                case 1: return Comment;
-                default:
-                    return base.GetValue(index);
-            }
-        }
-
         public string ComputerName
         {
             get
@@ -77,8 +66,8 @@ namespace LanExchange.Plugin.Network
         }
 
         [XmlAttribute]
-        public override string Name 
-        { 
+        public override string Name
+        {
             get { return shareInfo.Name; }
             set { shareInfo.Name = value; }
         }
@@ -106,6 +95,21 @@ namespace LanExchange.Plugin.Network
             set { shareInfo.Comment = value; }
         }
 
+        public override string ImageLegendText
+        {
+            get { return string.Empty; }
+        }
+
+        public override IComparable GetValue(int index)
+        {
+            switch (index)
+            {
+                case 1: return Comment;
+                default:
+                    return base.GetValue(index);
+            }
+        }
+
         public override object Clone()
         {
             var result = new SharePanelItem(Parent, SHI);
@@ -113,11 +117,6 @@ namespace LanExchange.Plugin.Network
             result.Comment = Comment;
             result.ShareType = ShareType;
             return result;
-        }
-
-        public override string ImageLegendText
-        {
-            get { return string.Empty; }
         }
     }
 }

@@ -13,7 +13,7 @@ namespace LanExchange.Application.Factories
 
         public IAboutView CreateAboutView()
         {
-            return  Resolve<IAboutView>();
+            return Resolve<IAboutView>();
         }
 
         public IMainView CreateMainView()

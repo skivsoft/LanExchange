@@ -70,6 +70,94 @@ namespace LanExchange.Presentation.WinForms
             RegisterProgramsImages();
         }
 
+        public bool BuildMenuForPanelItemType(object popTop, string id)
+        {
+            if (!PanelItems.ContainsKey(id))
+                return false;
+
+            var subMenu = SubMenuAdapter.CreateFrom(popTop);
+            if (subMenu == null)
+                return false;
+
+            var tag = subMenu.Tag;
+            if (tag == null || !tag.Equals(id))
+            {
+                InternalBuildMenu(subMenu.Items, id);
+                subMenu.Tag = id;
+            }
+
+            return subMenu.Items.Count > 0;
+        }
+
+        public void SetupMenuForPanelItem(object popTop, PanelItemBase panelItem)
+        {
+            var subMenu = SubMenuAdapter.CreateFrom(popTop);
+            if (subMenu == null) return;
+
+            foreach (var menuItem in subMenu.Items)
+            {
+                var menuItem1 = menuItem as ToolStripMenuItem;
+                if (menuItem1 == null) continue;
+
+                var addonMenuItem = menuItem1.Tag as AddonMenuItem;
+                if (addonMenuItem == null) continue;
+
+                menuItem1.ToolTipText = string.Join(" ", AddonCommandStarter.BuildCmdLine(panelItem, addonMenuItem));
+
+                var item = (AddonMenuItem)menuItem1.Tag;
+                if (item != null)
+                    item.CurrentItem = panelItem;
+            }
+        }
+
+        public void ProcessKeyDown(object args)
+        {
+            // TODO hide model
+            // var pv = pagesPresenter.ActivePanelView;
+            // var e = args as KeyEventArgs;
+            // if (pv == null || e == null) return;
+            // var panelItem = pv.Presenter.GetFocusedPanelItem(true);
+            // if (panelItem == null) return;
+            // var typeId = panelItem.GetType().Name;
+            // if (!PanelItems.ContainsKey(typeId))
+            // return;
+            // var item = PanelItems[typeId];
+            // var shortcut = KeyboardUtils.KeyEventToString(e);
+            // foreach (var menuItem in item.ContextMenu)
+            // if (menuItem.ShortcutPresent && menuItem.ShortcutKeys.Equals(shortcut) && menuItem.Enabled)
+            // {
+            // new AddonCommandStarter(factoryManager, windowFactory, menuItem, panelItem).Start();
+            // e.Handled = true;
+            // break;
+            // }
+        }
+
+        /// <summary>
+        /// Run addon command marked with Default flag for current panelItem.
+        /// </summary>
+        public void RunDefaultCmdLine()
+        {
+            var pv = pagesPresenter.ActivePanelView;
+            if (pv == null) return;
+
+            // TODO hide model
+            // var panelItem = pv.Presenter.GetFocusedPanelItem(true);
+            // if (panelItem == null) return;
+
+            // var typeId = panelItem.GetType().Name;
+            // if (!PanelItems.ContainsKey(typeId))
+            // return;
+
+            // var item = PanelItems[typeId];
+            // AddonMenuItem defaultItem = null;
+            // foreach (var menuItem in item.ContextMenu)
+            // if (menuItem.Default && menuItem.Enabled)
+            // defaultItem = menuItem;
+
+            // if (defaultItem != null)
+            // new AddonCommandStarter(factoryManager, windowFactory, defaultItem, panelItem).Start();
+        }
+
         private void InternalLoadAddons()
         {
             foreach (var fileName in folderManager.GetAddonsFiles())
@@ -94,6 +182,7 @@ namespace LanExchange.Presentation.WinForms
                 imageManager.RegisterImage(imageName, pair.Value.ProgramImage, pair.Value.ProgramImage);
             }
         }
+
         private void LoadAddon(string fileName)
         {
             var addon = persistenceService.Load(fileName);
@@ -156,6 +245,7 @@ namespace LanExchange.Presentation.WinForms
                                 found.ContextMenu.Add(menuItem);
                         }
                     }
+
                 PanelItems.Add(item.Id, found);
             }
         }
@@ -178,53 +268,16 @@ namespace LanExchange.Presentation.WinForms
                     if (item.ProgramValue != null)
                         menuItem.Image = item.ProgramValue.ProgramImage;
                     menuItem.Enabled = item.Enabled;
+                    
                     // lookup last default menuItem
                     if (item.Default)
                         defaultItem = menuItem;
                     items.Add(menuItem);
                 }
             }
+
             if (defaultItem != null)
                 defaultItem.Font = new Font(defaultItem.Font, FontStyle.Bold);
-        }
-
-        public bool BuildMenuForPanelItemType(object popTop, string id)
-        {
-            if (!PanelItems.ContainsKey(id))
-                return false;
-
-            var subMenu = SubMenuAdapter.CreateFrom(popTop);
-            if (subMenu == null)
-                return false;
-
-            var tag = subMenu.Tag;
-            if (tag == null || !tag.Equals(id))
-            {
-                InternalBuildMenu(subMenu.Items, id);
-                subMenu.Tag = id;
-            }
-            return subMenu.Items.Count > 0;
-        }
-
-        public void SetupMenuForPanelItem(object popTop, PanelItemBase panelItem)
-        {
-            var subMenu = SubMenuAdapter.CreateFrom(popTop);
-            if (subMenu == null) return;
-
-            foreach (var menuItem in subMenu.Items)
-            {
-                var menuItem1 = menuItem as ToolStripMenuItem;
-                if (menuItem1 == null) continue;
-
-                var addonMenuItem = menuItem1.Tag as AddonMenuItem;
-                if (addonMenuItem == null) continue;
-
-                menuItem1.ToolTipText = string.Join(" ", AddonCommandStarter.BuildCmdLine(panelItem, addonMenuItem));
-
-                var item = (AddonMenuItem)menuItem1.Tag;
-                if (item != null)
-                    item.CurrentItem = panelItem;
-            }
         }
 
         /// <summary>
@@ -234,61 +287,13 @@ namespace LanExchange.Presentation.WinForms
         /// <param name="eventArgs"></param>
         private void MenuItemOnClick(object sender, EventArgs eventArgs)
         {
-            var menuItem = (sender as ToolStripMenuItem);
+            var menuItem = sender as ToolStripMenuItem;
             if (menuItem == null) return;
 
             var item = (AddonMenuItem)menuItem.Tag;
             if (item == null || !item.Enabled) return;
 
             new AddonCommandStarter(factoryManager, windowFactory, item, item.CurrentItem).Start();
-        }
-
-        public void ProcessKeyDown(object args)
-        {
-            // TODO hide model
-            // var pv = pagesPresenter.ActivePanelView;
-            // var e = args as KeyEventArgs;
-            // if (pv == null || e == null) return;
-            // var panelItem = pv.Presenter.GetFocusedPanelItem(true);
-            // if (panelItem == null) return;
-            // var typeId = panelItem.GetType().Name;
-            // if (!PanelItems.ContainsKey(typeId))
-            // return;
-            // var item = PanelItems[typeId];
-            // var shortcut = KeyboardUtils.KeyEventToString(e);
-            // foreach (var menuItem in item.ContextMenu)
-            // if (menuItem.ShortcutPresent && menuItem.ShortcutKeys.Equals(shortcut) && menuItem.Enabled)
-            // {
-            // new AddonCommandStarter(factoryManager, windowFactory, menuItem, panelItem).Start();
-            // e.Handled = true;
-            // break;
-            // }
-        }
-
-        /// <summary>
-        /// Run addon command marked with Default flag for current panelItem.
-        /// </summary>
-        public void RunDefaultCmdLine()
-        {
-            var pv = pagesPresenter.ActivePanelView;
-            if (pv == null) return;
-
-            // TODO hide model
-            // var panelItem = pv.Presenter.GetFocusedPanelItem(true);
-            // if (panelItem == null) return;
-
-            // var typeId = panelItem.GetType().Name;
-            // if (!PanelItems.ContainsKey(typeId))
-            // return;
-
-            // var item = PanelItems[typeId];
-            // AddonMenuItem defaultItem = null;
-            // foreach (var menuItem in item.ContextMenu)
-            // if (menuItem.Default && menuItem.Enabled)
-            // defaultItem = menuItem;
-
-            // if (defaultItem != null)
-            // new AddonCommandStarter(factoryManager, windowFactory, defaultItem, panelItem).Start();
         }
     }
 }

@@ -51,15 +51,12 @@ namespace LanExchange.Plugin.Windows.ContextMenu
         private IntPtr[] arrPIDLs;
         private string strParentFolder;
 
-        #region Destructor
         /// <summary>Ensure all resources get released</summary>
         ~ShellContextMenu()
         {
             ReleaseAll();
         }
-        #endregion
 
-        #region ShowContextMenu()
         /// <summary>
         /// Shows the context menu
         /// </summary>
@@ -129,9 +126,7 @@ namespace LanExchange.Plugin.Windows.ContextMenu
                 ReleaseAll();
             }
         }
-        #endregion
 
-        #region ShowContextMenuForCSIDL
         /// <summary>
         /// Shows the context menu
         /// </summary>
@@ -205,9 +200,7 @@ namespace LanExchange.Plugin.Windows.ContextMenu
                 ReleaseAll();
             }
         }
-        #endregion
 
-        #region InvokeCommand
         private static void InvokeCommand(
             IContextMenu oContextMenu,
             uint nCmd,
@@ -230,9 +223,6 @@ namespace LanExchange.Plugin.Windows.ContextMenu
 
             oContextMenu.InvokeCommand(ref invoke);
         }
-        #endregion
-
-        #region DLL Import
 
         // Retrieves the IShellFolder interface for the desktop folder, which is the root of the Shell's namespace.
         [DllImport(ExternDll.Shell32)]
@@ -257,9 +247,7 @@ namespace LanExchange.Plugin.Windows.ContextMenu
         // Determines the default menu item on the specified menu
         [DllImport(ExternDll.User32, SetLastError = true, CharSet = CharSet.Auto)]
         private static extern int GetMenuDefaultItem(IntPtr hMenu, bool fByPos, uint gmdiFlags);
-        #endregion
 
-        #region GetContextMenuInterfaces()
         /// <summary>Gets the interfaces to the context menu</summary>
         /// <param name="oParentFolder">Parent folder</param>
         /// <param name="arrayOfPIDL">PIDLs</param>
@@ -297,9 +285,7 @@ namespace LanExchange.Plugin.Windows.ContextMenu
 
             return false;
         }
-        #endregion
 
-        #region ReleaseAll()
         /// <summary>
         /// Release all allocated interfaces, PIDLs 
         /// </summary>
@@ -341,9 +327,7 @@ namespace LanExchange.Plugin.Windows.ContextMenu
                 arrPIDLs = null;
             }
         }
-        #endregion
 
-        #region GetDesktopFolder()
         /// <summary>
         /// Gets the desktop folder
         /// </summary>
@@ -364,9 +348,7 @@ namespace LanExchange.Plugin.Windows.ContextMenu
 
             return desktopFolder;
         }
-        #endregion
 
-        #region GetParentFolder()
         /// <summary>
         /// Gets the parent folder
         /// </summary>
@@ -416,9 +398,7 @@ namespace LanExchange.Plugin.Windows.ContextMenu
 
             return parentFolder;
         }
-        #endregion
 
-        #region GetPIDL()
         /// <summary>
         /// Get the PIDLs
         /// </summary>
@@ -458,9 +438,7 @@ namespace LanExchange.Plugin.Windows.ContextMenu
 
             return arrPIDL;
         }
-        #endregion
 
-        #region FreePIDL()
         /// <summary>
         /// Free the PIDLs
         /// </summary>
@@ -479,9 +457,7 @@ namespace LanExchange.Plugin.Windows.ContextMenu
                 }
             }
         }
-        #endregion
 
-        #region WindowsHookInvoked()
         /// <summary>
         /// Handle messages for context menu
         /// </summary>
@@ -507,6 +483,5 @@ namespace LanExchange.Plugin.Windows.ContextMenu
                 }
             }
         }
-        #endregion
     }
 }

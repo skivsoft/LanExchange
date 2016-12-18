@@ -26,6 +26,7 @@ namespace LanExchange.Plugin.Network
                 if (a1[i] < a2[i]) return -1;
                 if (a1[i] > a2[i]) return 1;
             }
+
             return 0;
         }
     }

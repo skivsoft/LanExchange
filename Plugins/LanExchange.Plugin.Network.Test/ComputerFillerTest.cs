@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using LanExchange.Plugin.Network.NetApi;
-using NUnit.Framework;
 using LanExchange.Presentation.Interfaces;
+using NUnit.Framework;
 
 namespace LanExchange.Plugin.Network
 {

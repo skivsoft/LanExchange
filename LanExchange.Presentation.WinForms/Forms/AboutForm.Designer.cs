@@ -55,7 +55,7 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.eWeb.TabIndex = 43;
             this.eWeb.TabStop = true;
             this.eWeb.Text = "    ";
-            this.eWeb.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.eWeb_LinkClicked);
+            this.eWeb.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.EditWeb_LinkClicked);
             // 
             // lWeb
             // 
@@ -91,7 +91,7 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.bClose.Size = new System.Drawing.Size(100, 23);
             this.bClose.TabIndex = 36;
             this.bClose.UseVisualStyleBackColor = true;
-            this.bClose.Click += new System.EventHandler(this.bClose_Click);
+            this.bClose.Click += new System.EventHandler(this.ButtonClose_Click);
             // 
             // bShowDetails
             // 
@@ -103,7 +103,7 @@ namespace LanExchange.Presentation.WinForms.Forms
             this.bShowDetails.Size = new System.Drawing.Size(100, 23);
             this.bShowDetails.TabIndex = 35;
             this.bShowDetails.UseVisualStyleBackColor = true;
-            this.bShowDetails.Click += new System.EventHandler(this.bShowDetails_Click);
+            this.bShowDetails.Click += new System.EventHandler(this.ButtonShowDetails_Click);
             // 
             // lCopyright
             // 

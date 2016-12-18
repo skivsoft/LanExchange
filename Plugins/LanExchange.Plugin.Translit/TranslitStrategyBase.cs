@@ -19,15 +19,15 @@ namespace LanExchange.Plugin.Translit
                 result = (abc[1] + separator + abc[1].ToLower()).Split(separator);
         }
 
+        public string Transliterate(string text)
+        {
+            return text.Aggregate(string.Empty, (current, t) => current + TR(t));
+        }
+
         private string TR(char ch)
         {
             var index = abc.IndexOf(ch);
             return index == -1 || index > result.Length - 1 ? ch.ToString(CultureInfo.InvariantCulture) : result[index];
-        }
-
-        public string Transliterate(string text)
-        {
-            return text.Aggregate(string.Empty, (current, t) => current + TR(t));
         }
     }
 }

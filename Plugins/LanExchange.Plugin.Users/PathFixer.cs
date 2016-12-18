@@ -29,6 +29,7 @@ namespace LanExchange.Plugin.Users
                     str = listEQ[1];
                 result.Append(str);
             }
+
             return result.ToString();
         }
     }

@@ -39,7 +39,6 @@ namespace LanExchange.Plugin.Windows.Utils
             LP_ENDSESSION_CRITICAL = 0x40000000,
             LP_ENDSESSION_LOGOFF   = 0x80000000;
 
-        #region Constants
         private const int LVM_FIRST = 0x1000;
         private const int LVM_GETHEADER = LVM_FIRST + 31;
 
@@ -60,10 +59,6 @@ namespace LanExchange.Plugin.Windows.Utils
         private const int SB_VERT = 1;
 
         private const int SIF_POS = 0x0004;
-        
-        #endregion
-
-        #region Structures
 
         [StructLayout(LayoutKind.Sequential)]
         public struct HDITEM
@@ -103,10 +98,6 @@ namespace LanExchange.Plugin.Windows.Utils
             public int nPos;
             public int nTrackPos;
         }
-        #endregion
-
-
-        #region Entry points
 
         [DllImport(ExternDll.User32, CharSet = CharSet.Auto, SetLastError = true)]
         public static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
@@ -119,8 +110,6 @@ namespace LanExchange.Plugin.Windows.Utils
 
         [DllImport(ExternDll.User32, CharSet = CharSet.Auto, ExactSpelling = true)]
         public static extern bool GetScrollInfo(IntPtr hWnd, int fnBar, SCROLLINFO scrollInfo);
-
-        #endregion
 
         /// <summary>
         /// Return the handle to the header control on the given list

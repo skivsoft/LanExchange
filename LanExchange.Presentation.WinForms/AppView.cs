@@ -1,9 +1,9 @@
 ﻿using System;
-using LanExchange.Presentation.Interfaces;
-using System.Windows.Forms;
-using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Windows.Forms;
+using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Presentation.WinForms
 {
@@ -27,6 +27,30 @@ namespace LanExchange.Presentation.WinForms
             Application.ThreadExit += ApplicationOnThreadExit;
         }
 
+        public void Run(IWindow mainView)
+        {
+            if (mainView == null) throw new ArgumentNullException(nameof(mainView));
+            Application.Run((Form)mainView);
+        }
+
+        public void InitVisualStyles()
+        {
+            Application.EnableVisualStyles();
+
+            // must be called before first form created
+            Application.SetCompatibleTextRenderingDefault(false);
+        }
+
+        public IEnumerable<IWindow> GetOpenWindows()
+        {
+            return Application.OpenForms.Cast<IWindow>();
+        }
+
+        public void Exit()
+        {
+            Application.Exit();
+        }
+
         private void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             presenter.OnNonUIException((Exception)e.ExceptionObject);
@@ -40,29 +64,6 @@ namespace LanExchange.Presentation.WinForms
         private void ApplicationOnThreadExit(object sender, EventArgs e)
         {
             presenter.OnExit();
-        }
-
-        public void Run(IWindow mainView)
-        {
-            if (mainView == null) throw new ArgumentNullException(nameof(mainView));
-            Application.Run((Form)mainView);
-        }
-
-        public void InitVisualStyles()
-        {
-            Application.EnableVisualStyles();
-            // must be called before first form created
-            Application.SetCompatibleTextRenderingDefault(false);
-        }
-
-        public IEnumerable<IWindow> GetOpenWindows()
-        {
-            return Application.OpenForms.Cast<IWindow>();
-        }
-
-        public void Exit()
-        {
-            Application.Exit();
         }
     }
 }

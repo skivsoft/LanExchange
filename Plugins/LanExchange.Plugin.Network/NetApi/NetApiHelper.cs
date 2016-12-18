@@ -27,8 +27,16 @@ namespace LanExchange.Plugin.Network.NetApi
                 IntPtr bufPtr;
                 uint entriesread;
                 uint totalentries;
-                retval = SafeNativeMethods.NetServerEnum(null, 101, out bufPtr, SafeNativeMethods.MAX_PREFERRED_LENGTH,
-                    out entriesread, out totalentries, (uint)types, domain, ref resumeHandle);
+                retval = SafeNativeMethods.NetServerEnum(
+                    null,
+                    101,
+                    out bufPtr,
+                    SafeNativeMethods.MAX_PREFERRED_LENGTH,
+                    out entriesread,
+                    out totalentries,
+                    (uint)types,
+                    domain,
+                    ref resumeHandle);
                 if (retval == (int)NERR.NERR_SUCCESS || retval == (int)NERR.ERROR_MORE_DATA)
                 {
                     var ptr = bufPtr;
@@ -39,15 +47,17 @@ namespace LanExchange.Plugin.Network.NetApi
                         result.Add(item);
                         ptr = (IntPtr)(ptr.ToInt64() + itemSize);
                     }
+
                     SafeNativeMethods.NetApiBufferFree(bufPtr);
                 }
-            } while (retval == (int)NERR.ERROR_MORE_DATA);
+            }
+            while (retval == (int)NERR.ERROR_MORE_DATA);
             return result;
         }
 
         public static IEnumerable<SHARE_INFO_1> NetShareEnum(string computer)
         {
-            const uint stypeIpc = (uint)SHARE_TYPE.STYPE_IPC;
+            const uint IPC = (uint)SHARE_TYPE.STYPE_IPC;
             uint resumeHandle = 0;
             int retval;
             var itemSize = Marshal.SizeOf(typeof(SHARE_INFO_1));
@@ -58,8 +68,14 @@ namespace LanExchange.Plugin.Network.NetApi
                 IntPtr bufPtr;
                 uint entriesread;
                 uint totalentries;
-                retval = SafeNativeMethods.NetShareEnum(computer, 1, out bufPtr, API_BUFFER_SIZE,
-                    out entriesread, out totalentries, ref resumeHandle);
+                retval = SafeNativeMethods.NetShareEnum(
+                    computer,
+                    1,
+                    out bufPtr,
+                    API_BUFFER_SIZE,
+                    out entriesread,
+                    out totalentries,
+                    ref resumeHandle);
                 if (retval == (int)NERR.NERR_SUCCESS || retval == (int)NERR.ERROR_MORE_DATA)
                 {
                     var ptr = bufPtr;
@@ -67,13 +83,15 @@ namespace LanExchange.Plugin.Network.NetApi
                     {
                         var shi1 = new SHARE_INFO_1();
                         Marshal.PtrToStructure(ptr, shi1);
-                        if ((shi1.type & stypeIpc) != stypeIpc)
+                        if ((shi1.type & IPC) != IPC)
                             result.Add(shi1);
                         ptr = (IntPtr)(ptr.ToInt64() + itemSize);
                     }
+
                     SafeNativeMethods.NetApiBufferFree(bufPtr);
                 }
-            } while (retval == (int)NERR.ERROR_MORE_DATA);
+            }
+            while (retval == (int)NERR.ERROR_MORE_DATA);
             return result;
         }
 
@@ -88,8 +106,14 @@ namespace LanExchange.Plugin.Network.NetApi
                 IntPtr bufPtr;
                 uint entriesread;
                 uint totalentries;
-                retval = SafeNativeMethods.NetWkstaUserEnum(computer, 1, out bufPtr, API_BUFFER_SIZE, 
-                    out entriesread, out totalentries, ref resumehandle);
+                retval = SafeNativeMethods.NetWkstaUserEnum(
+                    computer,
+                    1,
+                    out bufPtr,
+                    API_BUFFER_SIZE, 
+                    out entriesread,
+                    out totalentries,
+                    ref resumehandle);
                 switch (retval)
                 {
                     case (int)NERR.ERROR_MORE_DATA:
@@ -102,10 +126,12 @@ namespace LanExchange.Plugin.Network.NetApi
                             result.Add(item);
                             ptr = (IntPtr)(ptr.ToInt64() + itemSize);
                         }
+
                         SafeNativeMethods.NetApiBufferFree(bufPtr);
                         break;
                 }
-            } while (retval == (int)NERR.ERROR_MORE_DATA);
+            }
+            while (retval == (int)NERR.ERROR_MORE_DATA);
             return result;
         }
     }

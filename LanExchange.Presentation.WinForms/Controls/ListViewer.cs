@@ -8,10 +8,10 @@ namespace LanExchange.Presentation.WinForms.Controls
 {
     internal class ListViewer : ListView
     {
+        private readonly IntPtr minusOne = new IntPtr(-1);
         private readonly IUser32Service userService;
-
         private ToolTip toolTip;
-        public event EventHandler<ColumnClickEventArgs> ColumnRightClick;
+        private HeaderControl headerControl;
 
         public ListViewer(IUser32Service userService)
         {
@@ -19,9 +19,34 @@ namespace LanExchange.Presentation.WinForms.Controls
 
             this.userService = userService;
 
+            // switch off flikering only if not terminal session
             if (!SystemInformation.TerminalServerSession)
-                // switch off flikering only if not terminal session
                 SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);    
+        }
+
+        public event EventHandler<ColumnClickEventArgs> ColumnRightClick;
+
+        /// <summary>
+        /// Gets the header control for the ListView
+        /// </summary>
+        [Browsable(false)]
+        public HeaderControl HeaderControl
+        {
+            get { return headerControl ?? (headerControl = new HeaderControl(userService, this)); }
+        }
+
+        public bool ToolTipActive
+        {
+            get
+            {
+                return toolTip != null && toolTip.Active;
+            }
+
+            set
+            {
+                if (toolTip != null)
+                    toolTip.Active = value;
+            }
         }
 
         protected override void WndProc(ref Message m)
@@ -67,18 +92,6 @@ namespace LanExchange.Presentation.WinForms.Controls
             int columnIndex = HeaderControl.ColumnIndexUnderCursor;
             return HandleHeaderRightClick(columnIndex);
         }
-        readonly IntPtr minusOne = new IntPtr(-1);
-
-        /// <summary>
-        /// Gets the header control for the ListView
-        /// </summary>
-        [Browsable(false)]
-        public HeaderControl HeaderControl
-        {
-            get { return headerControl ?? (headerControl = new HeaderControl(userService, this)); }
-        }
-        private HeaderControl headerControl;
-
 
         /// <summary>
         /// The user has right clicked on the column headers. Do whatever is required
@@ -91,6 +104,7 @@ namespace LanExchange.Presentation.WinForms.Controls
                 ColumnRightClick(this, new ColumnClickEventArgs(columnIndex));
                 return true;
             }
+
             return false;
         }
 
@@ -113,16 +127,6 @@ namespace LanExchange.Presentation.WinForms.Controls
                 var info = HitTest(point);
                 if (info.Item != null)
                     toolTip.ToolTipTitle = info.Item.Text;
-            }
-        }
-
-        public bool ToolTipActive
-        {
-            get { return toolTip != null && toolTip.Active; }
-            set
-            {
-                if (toolTip != null)
-                    toolTip.Active = value;
             }
         }
     }

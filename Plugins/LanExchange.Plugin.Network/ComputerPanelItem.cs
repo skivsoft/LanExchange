@@ -17,16 +17,12 @@ namespace LanExchange.Plugin.Network
             serverInfo = new ServerInfo();
         }
 
-        public override int CountColumns
-        {
-            get { return base.CountColumns + 6; }
-        }
-
         /// <summary>
         /// Constructor creates ComputerPanelItem from <see cref="ServerInfo"/> object.
         /// </summary>
         /// <exception cref="ArgumentNullException"></exception>
-        public ComputerPanelItem(PanelItemBase parent, ServerInfo si) : base(parent)
+        public ComputerPanelItem(PanelItemBase parent, ServerInfo si)
+            : base(parent)
         {
             serverInfo = si ?? new ServerInfo();
         }
@@ -34,8 +30,12 @@ namespace LanExchange.Plugin.Network
         public ComputerPanelItem(PanelItemBase parent, string name) : base(parent)
         {
             serverInfo = new ServerInfo { Name = name };
+        }
 
-       }
+        public override int CountColumns
+        {
+            get { return base.CountColumns + 6; }
+        }
 
         public ServerInfo SI
         {
@@ -66,7 +66,11 @@ namespace LanExchange.Plugin.Network
         [XmlAttribute]
         public string Ver
         {
-            get { return string.Format("{0}.{1}", serverInfo.Version.Major, serverInfo.Version.Minor); }
+            get
+            {
+                return string.Format("{0}.{1}", serverInfo.Version.Major, serverInfo.Version.Minor);
+            }
+
             set
             {
                 var aValue = value.Split('.');
@@ -87,7 +91,11 @@ namespace LanExchange.Plugin.Network
         [XmlAttribute]
         public string Type
         {
-            get { return serverInfo.Version.Type.ToString("X"); }
+            get
+            {
+                return serverInfo.Version.Type.ToString("X");
+            }
+
             set
             {
                 uint uValue;
@@ -105,21 +113,6 @@ namespace LanExchange.Plugin.Network
 
         [XmlIgnore]
         public string LoggedUsers { get; set; }
-
-        public override IComparable GetValue(int index)
-        {
-            switch (index)
-            {
-                case 1: return Comment;
-                case 2: return serverInfo.Version;
-                case 3: return string.Empty;
-                case 4: return string.Empty;
-                case 5: return string.Empty;
-                case 6: return string.Empty;
-                default:
-                    return base.GetValue(index);
-            }
-        }
 
         public override string ImageName
         {
@@ -144,6 +137,21 @@ namespace LanExchange.Plugin.Network
                     default:
                         return string.Empty;
                 }
+            }
+        }
+
+        public override IComparable GetValue(int index)
+        {
+            switch (index)
+            {
+                case 1: return Comment;
+                case 2: return serverInfo.Version;
+                case 3: return string.Empty;
+                case 4: return string.Empty;
+                case 5: return string.Empty;
+                case 6: return string.Empty;
+                default:
+                    return base.GetValue(index);
             }
         }
 

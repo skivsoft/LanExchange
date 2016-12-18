@@ -31,8 +31,7 @@ namespace LanExchange.Plugin.Network
         public void TestNetServerEnumComps()
         {
             string domain = WorkstationInfo.FromComputer(null).LanGroup;
-            IEnumerable<SERVER_INFO_101> list = NetApiHelper.NetServerEnum(domain,
-                SV_101_TYPES.SV_TYPE_DOMAIN_ENUM);
+            IEnumerable<SERVER_INFO_101> list = NetApiHelper.NetServerEnum(domain, SV_101_TYPES.SV_TYPE_DOMAIN_ENUM);
             int count = 0;
             foreach (SERVER_INFO_101 item in list)
                 count++;
@@ -42,8 +41,7 @@ namespace LanExchange.Plugin.Network
         [Test]
         public void TestNetServerEnumDomains()
         {
-            IEnumerable<SERVER_INFO_101> list = NetApiHelper.NetServerEnum(null,
-                SV_101_TYPES.SV_TYPE_DOMAIN_ENUM);
+            IEnumerable<SERVER_INFO_101> list = NetApiHelper.NetServerEnum(null, SV_101_TYPES.SV_TYPE_DOMAIN_ENUM);
             IEnumerator<SERVER_INFO_101> enumerator = list.GetEnumerator();
             Assert.IsTrue(enumerator.MoveNext());
             Assert.IsNotEmpty(enumerator.Current.name);

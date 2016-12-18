@@ -20,6 +20,11 @@ namespace LanExchange.Plugin.Shortcut
             this.modelFactory = modelFactory;
         }
 
+        public bool Enabled
+        {
+            get { return true; }
+        }
+
         public void Execute()
         {
             var foundIndex = GetPanelIndexByDataType(typeof(ShortcutPanelItem));
@@ -32,12 +37,8 @@ namespace LanExchange.Plugin.Shortcut
                 pagesModel.Add(model);
                 foundIndex = pagesModel.Count - 1;
             }
-            pagesModel.SelectedIndex = foundIndex;
-        }
 
-        public bool Enabled
-        {
-            get { return true; }
+            pagesModel.SelectedIndex = foundIndex;
         }
 
         private int GetPanelIndexByDataType(Type dataType)
