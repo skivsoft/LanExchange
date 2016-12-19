@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using LanExchange.Application.Interfaces;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.WinForms.Helpers;
 using LanExchange.Presentation.WinForms.Properties;

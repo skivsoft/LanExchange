@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using LanExchange.Presentation.Interfaces;
+using LanExchange.Application.Interfaces;
 
 namespace LanExchange.Application.Implementation
 {

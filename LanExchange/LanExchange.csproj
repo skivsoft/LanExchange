@@ -156,15 +156,6 @@
     <Compile Include="Application\Commands\AutoWired\PagesCommandBase.cs" />
     <Compile Include="Application\Commands\ToggleVisibleCommand.cs" />
     <Compile Include="Application\Extensions\TypeExtension.cs" />
-    <Compile Include="Application\Implementation\EmptyLogService.cs" />
-    <Compile Include="Application\Implementation\Menu\MenuElement.cs" />
-    <Compile Include="Application\Implementation\Menu\MenuElementKind.cs" />
-    <Compile Include="Application\Implementation\Menu\MenuGroup.cs" />
-    <Compile Include="Application\Implementation\Menu\MenuProducer.cs" />
-    <Compile Include="Application\Implementation\Menu\MenuSeparator.cs" />
-    <Compile Include="Application\Implementation\Menu\NullMenu.cs" />
-    <Compile Include="Application\Implementation\PanelModelCopyHelper.cs" />
-    <Compile Include="Application\Implementation\ProcessService.cs" />
     <Compile Include="Application\Presenters\InfoPresenter.cs" />
     <Compile Include="Application\Presenters\StatusPanelPresenter.cs" />
     <Compile Include="ContainerWrapper.cs" />
@@ -174,29 +165,17 @@
     <Compile Include="Application\Factories\ServiceFactory.cs" />
     <Compile Include="Application\Factories\ViewFactory.cs" />
     <Compile Include="Application\Factories\WindowFactory.cs" />
-    <Compile Include="Application\Managers\CommandManager.cs" />
     <Compile Include="Application\Models\ObjectPath.cs" />
     <Compile Include="CoreFacade.cs" />
-    <Compile Include="Domain\Implementation\AddonPersistenceService.cs" />
-    <Compile Include="Domain\Implementation\PagesPersistenceService.cs" />
     <Compile Include="Application\AppBootstrap.cs" />
     <Compile Include="Application\Models\ColumnComparer.cs" />
     <Compile Include="ContainerBuilder.cs" />
-    <Compile Include="Application\Implementation\DisposableManager.cs" />
-    <Compile Include="Application\Implementation\TranslationResourceManager.cs" />
     <Compile Include="Application\Commands\AutoWired\AboutCommand.cs" />
     <Compile Include="Application\Commands\AutoWired\PagesCloseTabCommand.cs" />
     <Compile Include="Application\Commands\AutoWired\PagesCloseOtherCommand.cs" />
     <Compile Include="Application\Commands\AutoWired\PagesReReadCommand.cs" />
-    <Compile Include="Application\Implementation\PanelColumnManager.cs" />
-    <Compile Include="Application\Implementation\PanelFillerManager.cs" />
-    <Compile Include="Application\Implementation\PanelItemFactoryManager.cs" />
-    <Compile Include="Application\Implementation\TranslationService.cs" />
-    <Compile Include="Application\Implementation\FolderManager.cs" />
     <Compile Include="Application\Models\PagesModel.cs" />
     <Compile Include="Application\Models\PanelModel.cs" />
-    <Compile Include="Domain\Interfaces\ISerializeService.cs" />
-    <Compile Include="Infrastructure\XmlSerializeService.cs" />
     <Compile Include="Plugin\Windows\Enums\ADVF.cs" />
     <Compile Include="Plugin\Windows\Enums\CF.cs" />
     <Compile Include="Plugin\Windows\Enums\CLSCTX.cs" />
@@ -277,10 +256,7 @@
     <Compile Include="Plugin\Windows\Utils\UnsafeNativeMethods.cs" />
     <Compile Include="Plugin\Windows\Utils\User32Utils.cs" />
     <Compile Include="Application\Presenters\AppPresenter.cs" />
-    <Compile Include="Application\Implementation\PuntoSwitcherServiceEngRus.cs" />
     <Compile Include="Application\Models\AboutModel.cs" />
-    <Compile Include="Application\Implementation\LazyThreadPool.cs" />
-    <Compile Include="Application\Implementation\PluginManager.cs" />
     <Compile Include="Application\Presenters\AboutPresenter.cs" />
     <Compile Include="Application\Presenters\CheckAvailabilityPresenter.cs" />
     <Compile Include="Application\Presenters\EditPresenter.cs" />
@@ -352,9 +328,25 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\LanExchange.Application.Implementation\LanExchange.Application.Implementation.csproj">
+      <Project>{eb80061d-6be8-4442-80c3-bd870f05f4fa}</Project>
+      <Name>LanExchange.Application.Implementation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LanExchange.Application.Interfaces\LanExchange.Application.Interfaces.csproj">
       <Project>{1c003a71-105f-46dd-ad18-2c1534961a2e}</Project>
       <Name>LanExchange.Application.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LanExchange.Domain.Implementation\LanExchange.Domain.Implementation.csproj">
+      <Project>{9abdf79b-9340-43b5-b8b5-206b4d1fcb1b}</Project>
+      <Name>LanExchange.Domain.Implementation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LanExchange.Domain.Interfaces\LanExchange.Domain.Interfaces.csproj">
+      <Project>{039786cd-eddf-4a64-94ea-91e09b6a53c9}</Project>
+      <Name>LanExchange.Domain.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LanExchange.Infrastructure\LanExchange.Infrastructure.csproj">
+      <Project>{287b170a-538b-4e3d-844c-cd4a8ac1fd90}</Project>
+      <Name>LanExchange.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\LanExchange.Presentation.Interfaces\LanExchange.Presentation.Interfaces.csproj">
       <Project>{530BDBBA-A879-403C-83C5-A2F27BDABE05}</Project>

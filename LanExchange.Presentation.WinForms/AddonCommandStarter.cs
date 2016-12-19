@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using LanExchange.Application.Interfaces;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.Interfaces.Addons;
 using LanExchange.Presentation.WinForms.Helpers;

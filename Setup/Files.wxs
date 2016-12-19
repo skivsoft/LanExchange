@@ -18,17 +18,23 @@
       <Component Id="ChangeLog.md" Guid="2EA3B674-C8D3-496E-A574-5312AFB185AB">
         <File Id='ChangeLog.md' Source='$(var.SolutionDir)ChangeLog.md'/>
       </Component>
+      <Component Id='LanExchange.Presentation.Interfaces.dll' Guid="75A04444-D968-4ED1-B5F3-3F7147C42DB9">
+        <File Id='LanExchange.Presentation.Interfaces.dll' KeyPath='yes' Source='$(var.LibDir)LanExchange.Presentation.Interfaces.dll'/>
+      </Component>
+      <Component Id='LanExchange.Presentation.Interfaces.xml' Guid="0FB57C41-31B9-431E-9483-151540156BD2">
+        <File Id='LanExchange.Presentation.Interfaces.xml' KeyPath='yes' Source='$(var.LibDir)LanExchange.Presentation.Interfaces.xml'/>
+      </Component>
       <Component Id='LanExchange.Application.Interfaces.dll' Guid="6822777B-6AD6-483F-BB9D-7B451AE69B21">
         <File Id='LanExchange.Application.Interfaces.dll' KeyPath='yes' Source='$(var.LibDir)LanExchange.Application.Interfaces.dll'/>
       </Component>
       <Component Id='LanExchange.Application.Interfaces.xml' Guid="D667A21F-D7FD-4F34-A220-FCE266333A3D">
         <File Id='LanExchange.Application.Interfaces.xml' KeyPath='yes' Source='$(var.LibDir)LanExchange.Application.Interfaces.xml'/>
       </Component>
-      <Component Id='LanExchange.Presentation.Interfaces.dll' Guid="75A04444-D968-4ED1-B5F3-3F7147C42DB9">
-        <File Id='LanExchange.Presentation.Interfaces.dll' KeyPath='yes' Source='$(var.LibDir)LanExchange.Presentation.Interfaces.dll'/>
+      <Component Id='LanExchange.Domain.Interfaces.dll' Guid="CC4AD769-E0CF-401D-997E-20E919ACAD59">
+        <File Id='LanExchange.Domain.Interfaces.dll' KeyPath='yes' Source='$(var.LibDir)LanExchange.Domain.Interfaces.dll'/>
       </Component>
-      <Component Id='LanExchange.Presentation.Interfaces.xml' Guid="0FB57C41-31B9-431E-9483-151540156BD2">
-        <File Id='LanExchange.Application.Presentation.xml' KeyPath='yes' Source='$(var.LibDir)LanExchange.Presentation.Interfaces.xml'/>
+      <Component Id='LanExchange.Domain.Interfaces.xml' Guid="D2C44590-08B5-4518-92C8-425404DBDECF">
+        <File Id='LanExchange.Domain.Interfaces.xml' KeyPath='yes' Source='$(var.LibDir)LanExchange.Domain.Interfaces.xml'/>
       </Component>
       <Component Id="$(var.PluginNetwork).dll" Guid="84728A8A-6A8D-4467-8296-A87CBB288667">
         <File Id='$(var.PluginNetwork).dll' KeyPath='yes' Source='$(var.LibDir)$(var.PluginNetwork).dll'/>

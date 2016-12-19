@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using LanExchange.Application.Interfaces;
 using LanExchange.Presentation.Interfaces;
 using LanExchange.Presentation.WinForms.Properties;
 

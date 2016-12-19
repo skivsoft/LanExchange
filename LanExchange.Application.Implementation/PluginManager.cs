@@ -4,6 +4,7 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
 using System.Reflection;
+using LanExchange.Application.Interfaces;
 using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Implementation

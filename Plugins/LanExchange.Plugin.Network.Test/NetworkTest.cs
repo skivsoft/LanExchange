@@ -1,4 +1,5 @@
 ﻿using System;
+using LanExchange.Application.Interfaces;
 using LanExchange.Presentation.Interfaces;
 using Moq;
 using NUnit.Framework;

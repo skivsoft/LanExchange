@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LanExchange.Presentation.Interfaces
+namespace LanExchange.Application.Interfaces
 {
     public interface ILogService
     {

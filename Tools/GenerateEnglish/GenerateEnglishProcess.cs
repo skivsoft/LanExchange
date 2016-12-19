@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Resources;
 using System.Text;
-using LanExchange.Presentation.Interfaces;
+using LanExchange.Application.Interfaces;
 using LanExchange.Presentation.Interfaces.Addons;
 
 namespace GenerateEnglish

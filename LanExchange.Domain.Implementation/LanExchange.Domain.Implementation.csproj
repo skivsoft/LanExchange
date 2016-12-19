@@ -4,70 +4,63 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E372EA44-C801-422F-A13A-0427FB54A7E8}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{9ABDF79B-9340-43B5-B8B5-206B4D1FCB1B}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GenerateEnglish</RootNamespace>
-    <AssemblyName>GenerateEnglish</AssemblyName>
+    <RootNamespace>LanExchange.Domain.Implementation</RootNamespace>
+    <AssemblyName>LanExchange.Domain.Implementation</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\output\Debug\</OutputPath>
+    <OutputPath>..\output\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\output\Release\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\LanExchange.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GenerateEnglishProcess.cs" />
-    <Compile Include="Phrase.cs" />
-    <Compile Include="Program.cs" />
+    <None Include="..\LanExchange.snk">
+      <Link>LanExchange.snk</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\AnyAssemblyInfo.cs">
+      <Link>AnyAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SerializeHelper.cs" />
+    <Compile Include="DomainServices.cs" />
+    <Compile Include="PagesPersistenceService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\LanExchange.Application.Implementation\LanExchange.Application.Implementation.csproj">
-      <Project>{eb80061d-6be8-4442-80c3-bd870f05f4fa}</Project>
-      <Name>LanExchange.Application.Implementation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\LanExchange.Application.Interfaces\LanExchange.Application.Interfaces.csproj">
+    <ProjectReference Include="..\LanExchange.Application.Interfaces\LanExchange.Application.Interfaces.csproj">
       <Project>{1c003a71-105f-46dd-ad18-2c1534961a2e}</Project>
       <Name>LanExchange.Application.Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\LanExchange.Presentation.Interfaces\LanExchange.Presentation.Interfaces.csproj">
-      <Project>{530bdbba-a879-403c-83c5-a2f27bdabe05}</Project>
-      <Name>LanExchange.Presentation.Interfaces</Name>
+    <ProjectReference Include="..\LanExchange.Domain.Interfaces\LanExchange.Domain.Interfaces.csproj">
+      <Project>{039786cd-eddf-4a64-94ea-91e09b6a53c9}</Project>
+      <Name>LanExchange.Domain.Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\LanExchange\LanExchange.csproj">
-      <Project>{abd7f255-097f-4081-b5b5-1f2dd67b9db6}</Project>
-      <Name>LanExchange</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

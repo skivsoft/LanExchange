@@ -92,6 +92,10 @@
     <Compile Include="SDK\XmlSerializeTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LanExchange.Application.Implementation\LanExchange.Application.Implementation.csproj">
+      <Project>{eb80061d-6be8-4442-80c3-bd870f05f4fa}</Project>
+      <Name>LanExchange.Application.Implementation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LanExchange.Application.Interfaces\LanExchange.Application.Interfaces.csproj">
       <Project>{1c003a71-105f-46dd-ad18-2c1534961a2e}</Project>
       <Name>LanExchange.Application.Interfaces</Name>

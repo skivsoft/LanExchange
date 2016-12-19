@@ -6,10 +6,12 @@
       <ComponentRef Id="SimpleInjector.dll"/>
       <ComponentRef Id="SimpleInjector.xml"/>
       <ComponentRef Id="LanExchange.exe"/>
-      <ComponentRef Id="LanExchange.Application.Interfaces.dll"/>
-      <ComponentRef Id="LanExchange.Application.Interfaces.xml"/>
       <ComponentRef Id="LanExchange.Presentation.Interfaces.dll"/>
       <ComponentRef Id="LanExchange.Presentation.Interfaces.xml"/>
+      <ComponentRef Id="LanExchange.Application.Interfaces.dll"/>
+      <ComponentRef Id="LanExchange.Application.Interfaces.xml"/>
+      <ComponentRef Id="LanExchange.Domain.Interfaces.dll"/>
+      <ComponentRef Id="LanExchange.Domain.Interfaces.xml"/>
       <ComponentRef Id="$(var.PluginShortcut).dll" />
       <ComponentRef Id="LanExchangeShortcut"/>
       <ComponentRef Id="Russian.po"/>

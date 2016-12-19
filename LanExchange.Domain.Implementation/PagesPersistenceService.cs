@@ -2,7 +2,6 @@
 using System.IO;
 using LanExchange.Application.Interfaces;
 using LanExchange.Domain.Interfaces;
-using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Domain.Implementation
 {

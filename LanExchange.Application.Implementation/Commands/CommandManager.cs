@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using LanExchange.Application.Commands;
 using LanExchange.Presentation.Interfaces;
 
-namespace LanExchange.Application.Managers
+namespace LanExchange.Application.Implementation.Commands
 {
     internal sealed class CommandManager : ICommandManager
     {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using LanExchange.Presentation.Interfaces;
+using WinFormsApplication = System.Windows.Forms.Application;
 
 namespace LanExchange.Presentation.WinForms
 {
@@ -22,33 +23,33 @@ namespace LanExchange.Presentation.WinForms
         public void SetExceptionHandlers()
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
-            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-            Application.ThreadException += ApplicationOnThreadException;
-            Application.ThreadExit += ApplicationOnThreadExit;
+            WinFormsApplication.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+            WinFormsApplication.ThreadException += ApplicationOnThreadException;
+            WinFormsApplication.ThreadExit += ApplicationOnThreadExit;
         }
 
         public void Run(IWindow mainView)
         {
             if (mainView == null) throw new ArgumentNullException(nameof(mainView));
-            Application.Run((Form)mainView);
+            WinFormsApplication.Run((Form)mainView);
         }
 
         public void InitVisualStyles()
         {
-            Application.EnableVisualStyles();
+            WinFormsApplication.EnableVisualStyles();
 
             // must be called before first form created
-            Application.SetCompatibleTextRenderingDefault(false);
+            WinFormsApplication.SetCompatibleTextRenderingDefault(false);
         }
 
         public IEnumerable<IWindow> GetOpenWindows()
         {
-            return Application.OpenForms.Cast<IWindow>();
+            return System.Windows.Forms.Application.OpenForms.Cast<IWindow>();
         }
 
         public void Exit()
         {
-            Application.Exit();
+            System.Windows.Forms.Application.Exit();
         }
 
         private void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
