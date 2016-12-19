@@ -122,6 +122,26 @@
     <Content Include="LanExchange.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LanExchange.Application.Implementation\LanExchange.Application.Implementation.csproj">
+      <Project>{eb80061d-6be8-4442-80c3-bd870f05f4fa}</Project>
+      <Name>LanExchange.Application.Implementation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LanExchange.Application.Interfaces\LanExchange.Application.Interfaces.csproj">
+      <Project>{1c003a71-105f-46dd-ad18-2c1534961a2e}</Project>
+      <Name>LanExchange.Application.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LanExchange.Domain.Implementation\LanExchange.Domain.Implementation.csproj">
+      <Project>{9abdf79b-9340-43b5-b8b5-206b4d1fcb1b}</Project>
+      <Name>LanExchange.Domain.Implementation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LanExchange.Domain.Interfaces\LanExchange.Domain.Interfaces.csproj">
+      <Project>{039786cd-eddf-4a64-94ea-91e09b6a53c9}</Project>
+      <Name>LanExchange.Domain.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LanExchange.Infrastructure\LanExchange.Infrastructure.csproj">
+      <Project>{287b170a-538b-4e3d-844c-cd4a8ac1fd90}</Project>
+      <Name>LanExchange.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LanExchange.Presentation.Interfaces\LanExchange.Presentation.Interfaces.csproj">
       <Project>{530BDBBA-A879-403C-83C5-A2F27BDABE05}</Project>
       <Name>LanExchange.Presentation.Interfaces</Name>

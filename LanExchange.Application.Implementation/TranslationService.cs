@@ -12,7 +12,7 @@ using LanExchange.Presentation.Interfaces;
 namespace LanExchange.Application.Implementation
 {
     [Localizable(false)]
-    internal sealed class TranslationService : ITranslationService
+    public sealed class TranslationService : ITranslationService
     {
         private const string DEFAULT_LANGUAGE = "English";
         private const string ID_LANGUAGE = "@LANGUAGE_NAME";

@@ -6,7 +6,7 @@ using LanExchange.Presentation.Interfaces.Menu;
 namespace LanExchange.Application.Implementation.Menu
 {
     [ImmutableObject(true)]
-    internal sealed class MenuGroup : IMenuElement
+    public sealed class MenuGroup : IMenuElement
     {
         private readonly string text;
         private readonly IEnumerable<IMenuElement> elements;

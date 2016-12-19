@@ -1,4 +1,4 @@
-﻿namespace LanExchange.Application.Interfaces
+﻿namespace LanExchange.Presentation.Interfaces
 {
     public interface IFolderManager
     {

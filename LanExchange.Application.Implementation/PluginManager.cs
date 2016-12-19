@@ -13,7 +13,7 @@ namespace LanExchange.Application.Implementation
     /// The plugin manager implementation using MEF.
     /// </summary>
     /// <seealso cref="LanExchange.Presentation.Interfaces.IPluginManager" />
-    internal sealed class PluginManager : IPluginManager
+    public sealed class PluginManager : IPluginManager
     {
         private const string PLUGIN_MASK = "LanExchange.Plugin.*.dll";
         private readonly ILogService logService;

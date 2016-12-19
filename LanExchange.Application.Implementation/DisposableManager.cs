@@ -4,7 +4,7 @@ using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Implementation
 {
-    internal sealed class DisposableManager : IDisposableManager
+    public sealed class DisposableManager : IDisposableManager
     {
         private readonly IList<IDisposable> list;
 

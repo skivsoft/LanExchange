@@ -14,11 +14,19 @@ namespace LanExchange.Domain.Implementation
             this.serializeService = serializeService;
         }
 
-        public T DeserializeFromFile<T>(string fileName)
+        public void SerializeToFile<T>(string fileName, T dto, Type[] extraTypes)
+        {
+            if (string.IsNullOrEmpty(fileName)) throw new ArgumentNullException(nameof(fileName));
+            if (dto == null) throw new ArgumentNullException(nameof(dto));
+
+            serializeService.SerializeToFile(fileName, dto, extraTypes);
+        }
+
+        public T DeserializeFromFile<T>(string fileName, Type[] extraTypes)
         {
             if (string.IsNullOrEmpty(fileName)) throw new ArgumentNullException(nameof(fileName));
 
-            return serializeService.DeserializeFromFile<T>(fileName, new Type[0]);
+            return serializeService.DeserializeFromFile<T>(fileName, extraTypes);
         }
     }
 }

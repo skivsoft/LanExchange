@@ -2,7 +2,7 @@
 
 namespace LanExchange.Application.Implementation.Menu
 {
-    internal sealed class MenuProducer : IMenuProducer
+    public sealed class MenuProducer : IMenuProducer
     {
         public MenuProducer()
         {

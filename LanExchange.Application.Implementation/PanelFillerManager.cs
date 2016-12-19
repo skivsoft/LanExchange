@@ -6,7 +6,7 @@ using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Implementation
 {
-    internal sealed class PanelFillerManager : IPanelFillerManager
+    public sealed class PanelFillerManager : IPanelFillerManager
     {
         private readonly IDictionary<Type, IPanelFiller> fillers;
 

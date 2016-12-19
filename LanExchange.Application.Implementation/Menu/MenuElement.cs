@@ -6,7 +6,7 @@ using LanExchange.Presentation.Interfaces.Menu;
 namespace LanExchange.Application.Implementation.Menu
 {
     [ImmutableObject(true)]
-    internal sealed class MenuElement : IMenuElement
+    public sealed class MenuElement : IMenuElement
     {
         private readonly string text;
         private readonly string shortcut;

@@ -5,7 +5,7 @@ using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Implementation
 {
-    internal sealed class PuntoSwitcherServiceEngRus : IPuntoSwitcherService
+    public sealed class PuntoSwitcherServiceEngRus : IPuntoSwitcherService
     {
         [Localizable(false)] 
         private readonly string[] abc = 

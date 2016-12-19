@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using LanExchange.Presentation.Interfaces;
 
-namespace LanExchange.Application.Interfaces
+namespace LanExchange.Presentation.Interfaces
 {
     public interface IPanelItemFactoryManager
     {

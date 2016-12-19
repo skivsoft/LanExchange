@@ -1,31 +1,31 @@
 ﻿using System;
 using System.IO;
 using LanExchange.Application.Interfaces;
-using LanExchange.Domain.Interfaces;
+using LanExchange.Presentation.Interfaces;
 
-namespace LanExchange.Domain.Implementation
+namespace LanExchange.Application.Implementation
 {
-    internal sealed class PagesPersistenceService : IPagesPersistenceService
+    public sealed class PagesPersistenceService : IPagesPersistenceService
     {
         private readonly IFolderManager folderManager;
         private readonly IPanelItemFactoryManager factoryManager;
-        private readonly ISerializeService serializeService;
+        private readonly IDomainServices domainServices;
         private readonly ILogService logService;
 
         public PagesPersistenceService(
             IFolderManager folderManager, 
             IPanelItemFactoryManager factoryManager,
-            ISerializeService serializeService,
+            IDomainServices domainServices,
             ILogService logService)
         {
             if (folderManager == null) throw new ArgumentNullException(nameof(folderManager));
             if (factoryManager == null) throw new ArgumentNullException(nameof(factoryManager));
-            if (serializeService == null) throw new ArgumentNullException(nameof(serializeService));
+            if (domainServices == null) throw new ArgumentNullException(nameof(domainServices));
             if (logService == null) throw new ArgumentNullException(nameof(logService));
 
             this.folderManager = folderManager;
             this.factoryManager = factoryManager;
-            this.serializeService = serializeService;
+            this.domainServices = domainServices;
             this.logService = logService;
         }
 
@@ -35,7 +35,7 @@ namespace LanExchange.Domain.Implementation
             if (File.Exists(fileName))
                 try
                 {
-                    return serializeService.DeserializeFromFile<PagesDto>(fileName, GetExtraTypes());
+                    return domainServices.DeserializeFromFile<PagesDto>(fileName, GetExtraTypes());
                 }
                 catch (Exception exception)
                 {
@@ -51,7 +51,7 @@ namespace LanExchange.Domain.Implementation
             {
                 var fileName = folderManager.TabsConfigFileName;
                 ForceCreatePath(fileName);
-                serializeService.SerializeToFile(fileName, pages, GetExtraTypes());
+                domainServices.SerializeToFile(fileName, pages, GetExtraTypes());
             }
             catch (Exception exception)
             {

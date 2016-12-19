@@ -2,7 +2,7 @@
 
 namespace LanExchange.Application.Implementation.Menu
 {
-    internal sealed class NullMenu : IMenuElement
+    public sealed class NullMenu : IMenuElement
     {
         private static readonly IMenuElement NullInstance = new NullMenu();
 

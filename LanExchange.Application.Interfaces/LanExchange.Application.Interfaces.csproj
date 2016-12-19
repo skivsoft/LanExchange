@@ -96,11 +96,8 @@
     <Compile Include="EventArgs\PanelIndexEventArgs.cs" />
     <Compile Include="IAboutModel.cs" />
     <Compile Include="IDomainServices.cs" />
-    <Compile Include="IFolderManager.cs" />
     <Compile Include="IHotkeyService.cs" />
-    <Compile Include="ILogService.cs" />
     <Compile Include="IPagesModel.cs" />
-    <Compile Include="IPanelItemFactoryManager.cs" />
     <Compile Include="IProcessService.cs" />
     <Compile Include="EventArgs\PanelEventArgs.cs" />
     <Compile Include="PagesDto.cs" />

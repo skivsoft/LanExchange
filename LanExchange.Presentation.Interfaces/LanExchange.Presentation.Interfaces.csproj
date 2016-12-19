@@ -63,8 +63,10 @@
     <Compile Include="ICommand.cs" />
     <Compile Include="ICommandManager.cs" />
     <Compile Include="IDisposableManager.cs" />
+    <Compile Include="IFolderManager.cs" />
     <Compile Include="IImageManager.cs" />
     <Compile Include="ILazyThreadPool.cs" />
+    <Compile Include="ILogService.cs" />
     <Compile Include="IMACAddressSerivice.cs" />
     <Compile Include="IMessageBoxService.cs" />
     <Compile Include="IModelFactory.cs" />
@@ -73,6 +75,7 @@
     <Compile Include="IPanelFiller.cs" />
     <Compile Include="IPanelFillerManager.cs" />
     <Compile Include="IPanelItemFactory.cs" />
+    <Compile Include="IPanelItemFactoryManager.cs" />
     <Compile Include="IPanelModel.cs" />
     <Compile Include="IPlugin.cs" />
     <Compile Include="IPluginManager.cs" />

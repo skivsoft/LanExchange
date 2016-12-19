@@ -7,7 +7,7 @@ namespace LanExchange.Application.Implementation
     /// The process service implementation.
     /// </summary>
     /// <seealso cref="LanExchange.Application.Interfaces.IProcessService" />
-    internal sealed class ProcessService : IProcessService
+    public sealed class ProcessService : IProcessService
     {
         public void Start(string fileName)
         {

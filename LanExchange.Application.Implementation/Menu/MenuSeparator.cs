@@ -5,7 +5,7 @@ using LanExchange.Presentation.Interfaces.Menu;
 namespace LanExchange.Application.Implementation.Menu
 {
     [ImmutableObject(true)]
-    internal sealed class MenuSeparator : IMenuElement
+    public sealed class MenuSeparator : IMenuElement
     {
         public void Accept(IMenuElementVisitor visitor)
         {

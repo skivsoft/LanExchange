@@ -1,6 +1,6 @@
 ﻿namespace LanExchange.Application.Implementation.Menu
 {
-    internal enum MenuElementKind
+    public enum MenuElementKind
     {
         Normal,
         Default

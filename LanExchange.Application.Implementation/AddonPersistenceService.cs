@@ -5,7 +5,7 @@ using LanExchange.Presentation.Interfaces.Persistence;
 
 namespace LanExchange.Application.Implementation
 {
-    internal sealed class AddonPersistenceService : IAddonPersistenceService
+    public sealed class AddonPersistenceService : IAddonPersistenceService
     {
         private readonly IDomainServices domainServices;
 
@@ -17,7 +17,7 @@ namespace LanExchange.Application.Implementation
 
         public AddOn Load(string fileName)
         {
-            return domainServices.DeserializeFromFile<AddOn>(fileName);
+            return domainServices.DeserializeFromFile<AddOn>(fileName, new Type[0]);
         }
     }
 }

@@ -4,7 +4,7 @@ using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Implementation.Commands
 {
-    internal sealed class CommandManager : ICommandManager
+    public sealed class CommandManager : ICommandManager
     {
         private readonly Dictionary<string, ICommand> commands;
 

@@ -8,7 +8,7 @@ using LanExchange.Presentation.Interfaces;
 namespace LanExchange.Application.Implementation
 {
     /// TODO need refactoring
-    internal sealed class PanelModelCopyHelper
+    public sealed class PanelModelCopyHelper
     {
         private readonly IPanelModel model;
         private readonly IPanelColumnManager panelColumns;

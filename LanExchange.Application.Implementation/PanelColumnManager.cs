@@ -4,7 +4,7 @@ using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Implementation
 {
-    internal sealed class PanelColumnManager : IPanelColumnManager
+    public sealed class PanelColumnManager : IPanelColumnManager
     {
         private readonly IDictionary<string, IList<PanelColumnHeader>> types;
 

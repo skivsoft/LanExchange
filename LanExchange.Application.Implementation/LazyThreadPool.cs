@@ -9,7 +9,7 @@ using ThreadState = System.Threading.ThreadState;
 
 namespace LanExchange.Application.Implementation
 {
-    internal sealed class LazyThreadPool : ILazyThreadPool
+    public sealed class LazyThreadPool : ILazyThreadPool
     {
         private const int NUM_CYCLES_IN_THREAD = 10;
 

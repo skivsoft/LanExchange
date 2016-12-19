@@ -6,7 +6,7 @@ using LanExchange.Presentation.Interfaces;
 
 namespace LanExchange.Application.Implementation
 {
-    internal sealed class PanelItemFactoryManager : IPanelItemFactoryManager
+    public sealed class PanelItemFactoryManager : IPanelItemFactoryManager
     {
         private readonly IPanelColumnManager columnManager;
         private readonly IDictionary<Type, IPanelItemFactory> types;
